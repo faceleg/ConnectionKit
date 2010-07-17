@@ -1079,6 +1079,7 @@
 		CE6EE01611F129F100F00AAC /* KSKeepInTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EE00B11F129F100F00AAC /* KSKeepInTouch.xib */; };
 		CE6EE01711F129F100F00AAC /* KSPluginInstaller.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EE00D11F129F100F00AAC /* KSPluginInstaller.xib */; };
 		CE6EE01811F129F100F00AAC /* KSRegistration.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EE00F11F129F100F00AAC /* KSRegistration.xib */; };
+		CE6EE03911F12B7200F00AAC /* DMLocalizedNibBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6EE03811F12B7200F00AAC /* DMLocalizedNibBundle.m */; };
 		CE72DD6311F018CC0010E14C /* toolbar_empty_page.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE72DD6211F018CC0010E14C /* toolbar_empty_page.tiff */; };
 		CE733A611113A6F5009582EA /* SVBlogEntryBorderView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE733A5F1113A6F5009582EA /* SVBlogEntryBorderView.h */; };
 		CE733A621113A6F5009582EA /* SVBlogEntryBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE733A601113A6F5009582EA /* SVBlogEntryBorderView.m */; };
@@ -2665,6 +2666,7 @@
 		CE6EE00C11F129F100F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSKeepInTouch.xib; sourceTree = "<group>"; };
 		CE6EE00E11F129F100F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSPluginInstaller.xib; sourceTree = "<group>"; };
 		CE6EE01011F129F100F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSRegistration.xib; sourceTree = "<group>"; };
+		CE6EE03811F12B7200F00AAC /* DMLocalizedNibBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMLocalizedNibBundle.m; sourceTree = "<group>"; };
 		CE72DD6211F018CC0010E14C /* toolbar_empty_page.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_empty_page.tiff; sourceTree = "<group>"; };
 		CE733A5F1113A6F5009582EA /* SVBlogEntryBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBlogEntryBorderView.h; sourceTree = "<group>"; };
 		CE733A601113A6F5009582EA /* SVBlogEntryBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBlogEntryBorderView.m; sourceTree = "<group>"; };
@@ -3780,6 +3782,7 @@
 				3C202D1907DFC0AA00DE4994 /* SVApplicationController.m */,
 				3C202D1A07DFC0AA00DE4994 /* KTApplication.h */,
 				3C202D1B07DFC0AA00DE4994 /* KTApplication.m */,
+				CE6EE03811F12B7200F00AAC /* DMLocalizedNibBundle.m */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -6959,6 +6962,7 @@
 				CE23D96D11E6E65900E43369 /* KSPlainClipTextView.m in Sources */,
 				27DBBD5B11EF39AE00910BE7 /* WebViewEditingHelperClasses.m in Sources */,
 				27CC249E11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m in Sources */,
+				CE6EE03911F12B7200F00AAC /* DMLocalizedNibBundle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
