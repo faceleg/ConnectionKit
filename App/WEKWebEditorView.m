@@ -271,50 +271,26 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (!domRange) return nil;
     
     
-    WEKWebEditorItem *startItem = [[self contentItem] hitTestDOMNode:[domRange startContainer]];
-    while (startItem && ![startItem representedObject])
-    {
-        startItem = [startItem parentWebEditorItem];
-    }
-    
-    
-    WEKWebEditorItem *endItem = [[self contentItem] hitTestDOMNode:[domRange endContainer]];
-    while (endItem && ![endItem representedObject])
-    {
-        endItem = [endItem parentWebEditorItem];
-    }
+    WEKWebEditorItem <SVWebEditorText> *item = [self textItemForDOMRange:domRange];
     
     
     SVWebEditorTextRange *result = [SVWebEditorTextRange rangeWithDOMRange:domRange
-                                                              startElement:[startItem HTMLElement]
-                                                                    object:[startItem representedObject]
-                                                                endElement:[endItem HTMLElement]
-                                                                    object:[endItem representedObject]];
+                                                           containerObject:[item representedObject]
+                                                             containerNode:[item textHTMLElement]];
     return result;
 }
 
 - (void)setSelectedTextRange:(SVWebEditorTextRange *)textRange affinity:(NSSelectionAffinity)affinity;
 {
-    DOMRange *domRange = [[self HTMLDocument] createRange];
+    OBPRECONDITION(textRange);
     
-    id startObject = [textRange startObject];
-    id endObject = [textRange endObject];
-    
-    if (startObject && endObject)
+    id item = [[self contentItem] hitTestRepresentedObject:[textRange containerObject]];
+    if (item)
     {
-        WEKWebEditorItem *startItem = [[self contentItem] hitTestRepresentedObject:startObject];
-        if (startItem)
-        {
-            WEKWebEditorItem *endItem = [[self contentItem] hitTestRepresentedObject:endObject];
-            if (endItem)
-            {
-                [textRange populateDOMRange:domRange
-                           withStartElement:[startItem HTMLElement]
-                                 endElement:[endItem HTMLElement]];
+        DOMRange *domRange = [[self HTMLDocument] createRange];
+        [textRange populateDOMRange:domRange fromContainerNode:[item textHTMLElement]];
             
-                [self setSelectedDOMRange:domRange affinity:affinity];
-            }
-        }
+        [self setSelectedDOMRange:domRange affinity:affinity];
     }
 }
 

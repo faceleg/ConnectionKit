@@ -15,28 +15,23 @@
 @interface SVWebEditorTextRange : NSObject <NSCopying>
 {
   @private
-    id          _startObject;
-    NSUInteger  _startIndex;
-    id          _endObject;
-    NSUInteger  _endIndex;
+    id          _containerObject;
+    NSIndexPath *_startIndexPath;
+    NSIndexPath *_endIndexPath;
 }
 
-- (id)initWithStartObject:(id)startObject index:(NSUInteger)startIndex
-                endObject:(id)endObject index:(NSUInteger)endIndex;
+- (id)initWithContainerObject:(id)container
+               startIndexPath:(NSIndexPath *)startPath
+                 endIndexPath:(NSIndexPath *)endPath;
 
 + (SVWebEditorTextRange *)rangeWithDOMRange:(DOMRange *)domRange
-                               startElement:(DOMElement *)startElement
-                                     object:(id)startObject
-                                 endElement:(DOMElement *)endElement
-                                     object:(id)endObject;
+                            containerObject:(id)containerObject
+                              containerNode:(DOMNode *)containerNode;
 
-@property(nonatomic, retain, readonly) id startObject;
-@property(nonatomic, readonly) NSUInteger startIndex;
-@property(nonatomic, retain, readonly) id endObject;
-@property(nonatomic, readonly) NSUInteger endIndex;
+@property(nonatomic, retain, readonly) id containerObject;
+@property(nonatomic, copy, readonly) NSIndexPath *startIndexPath;
+@property(nonatomic, copy, readonly) NSIndexPath *endIndexPath;
 
-- (void)populateDOMRange:(DOMRange *)range
-        withStartElement:(DOMElement *)startElement
-              endElement:(DOMElement *)endElement;
+- (void)populateDOMRange:(DOMRange *)range fromContainerNode:(DOMNode *)container;
 
 @end
