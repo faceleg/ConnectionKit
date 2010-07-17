@@ -264,7 +264,6 @@
 		27196F811090AEDC0096B612 /* KSDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27196F7F1090AEDC0096B612 /* KSDocumentController.m */; };
 		27196F871090B1880096B612 /* KSInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27196F851090B1880096B612 /* KSInspector.h */; };
 		27196F881090B1880096B612 /* KSInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27196F861090B1880096B612 /* KSInspector.m */; };
-		27196FA41090BBC90096B612 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27196FA31090BBC90096B612 /* Inspector.xib */; };
 		271B48601051C2F4008B698C /* WEKWebEditorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 271B485E1051C2F4008B698C /* WEKWebEditorView.h */; };
 		271B48611051C2F4008B698C /* WEKWebEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 271B485F1051C2F4008B698C /* WEKWebEditorView.m */; };
 		271BFA4F10F00C2D006EA3A2 /* SVPageProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -482,7 +481,6 @@
 		27AD53A60D6B40C300883550 /* SVHTMLTemplateParser+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AD53A40D6B40C300883550 /* SVHTMLTemplateParser+Private.h */; };
 		27AE74750EEDE6CC00409D80 /* KTPublishingWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */; };
 		27AE74760EEDE6CC00409D80 /* KTPublishingWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */; };
-		27AE758D0EEE9D8000409D80 /* Publishing.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27AE758C0EEE9D8000409D80 /* Publishing.nib */; };
 		27AE75C80EEEB12D00409D80 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = 27AE75C60EEEB12D00409D80 /* error.png */; };
 		27AE75C90EEEB12D00409D80 /* finished.png in Resources */ = {isa = PBXBuildFile; fileRef = 27AE75C70EEEB12D00409D80 /* finished.png */; };
 		27AED14D1087CC9C005EDA77 /* SVDocWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AED14B1087CC9C005EDA77 /* SVDocWindow.h */; };
@@ -551,12 +549,6 @@
 		27E31BC60D4B79AE00895DA1 /* KTHTMLPlugInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31BC40D4B79AE00895DA1 /* KTHTMLPlugInWrapper.m */; };
 		27E31C330D4B7E1600895DA1 /* KTElementPlugInWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31C310D4B7E1600895DA1 /* KTElementPlugInWrapper.h */; settings = {ATTRIBUTES = (); }; };
 		27E31C340D4B7E1600895DA1 /* KTElementPlugInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31C320D4B7E1600895DA1 /* KTElementPlugInWrapper.m */; };
-		27E4CFF30EC30B6F000E85DD /* KSRegistration.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE20EC30B6F000E85DD /* KSRegistration.nib */; };
-		27E4CFF50EC30B6F000E85DD /* KSKeepInTouch.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE60EC30B6F000E85DD /* KSKeepInTouch.nib */; };
-		27E4CFF70EC30B6F000E85DD /* KSJoinList.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFEA0EC30B6F000E85DD /* KSJoinList.nib */; };
-		27E4CFF80EC30B6F000E85DD /* KSException.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFEC0EC30B6F000E85DD /* KSException.nib */; };
-		27E4CFF90EC30B6F000E85DD /* KSCrash.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFEE0EC30B6F000E85DD /* KSCrash.nib */; };
-		27E4CFFA0EC30B6F000E85DD /* KSBugReporterViews.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFF00EC30B6F000E85DD /* KSBugReporterViews.nib */; };
 		27E83A3810ABB1D6003B8F2F /* KSCollectionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E83A3710ABB1D6003B8F2F /* KSCollectionController.h */; settings = {ATTRIBUTES = (); }; };
 		27E83E4810D9A9BA00FBEC84 /* CalloutTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */; };
 		27EF1BD00DC1F9BF00976C66 /* SVSiteOutlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF1BCE0DC1F9BF00976C66 /* SVSiteOutlineViewController.m */; };
@@ -957,9 +949,6 @@
 		CE01A8260EAFD63600BDF264 /* KSWebViewWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7240EAFD63600BDF264 /* KSWebViewWindowController.m */; };
 		CE01A8270EAFD63600BDF264 /* WebView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7250EAFD63600BDF264 /* WebView+Karelia.h */; };
 		CE01A8280EAFD63600BDF264 /* WebView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7260EAFD63600BDF264 /* WebView+Karelia.m */; };
-		CE01A9500EAFDF2A00BDF264 /* KSPDFWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE01A8E40EAFDF2900BDF264 /* KSPDFWindow.nib */; };
-		CE01A9520EAFDF2A00BDF264 /* KSRTFDWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE01A8E60EAFDF2900BDF264 /* KSRTFDWindow.nib */; };
-		CE01A9530EAFDF2A00BDF264 /* KSWebViewWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE01A8E70EAFDF2900BDF264 /* KSWebViewWindow.nib */; };
 		CE033FA20B862BB90098735B /* Web-safe Mac:Windows.collection in Resources */ = {isa = PBXBuildFile; fileRef = CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */; };
 		CE043A6A10C7363600F76F97 /* KSRecentDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = CE043A6810C7363600F76F97 /* KSRecentDocument.h */; };
 		CE043A6B10C7363600F76F97 /* KSRecentDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CE043A6910C7363600F76F97 /* KSRecentDocument.m */; };
@@ -1044,7 +1033,6 @@
 		CE23D84D11E69AD800E43369 /* SVOffscreenWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2E80E30DB534930034E7B8 /* SVOffscreenWebViewController.m */; };
 		CE23D96C11E6E65900E43369 /* KSPlainClipTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE23D96A11E6E65900E43369 /* KSPlainClipTextView.h */; };
 		CE23D96D11E6E65900E43369 /* KSPlainClipTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */; };
-		CE23DBF811EBE4D800E43369 /* KSPluginInstaller.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE23DBF611EBE4D800E43369 /* KSPluginInstaller.xib */; };
 		CE250ADC08204B120061BE9B /* imageReplacementHeader.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */; };
 		CE26237F0A360332009467ED /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE26237E0A360332009467ED /* QTKit.framework */; };
 		CE26FA1408C4D9C500C9604B /* design-time.css in Resources */ = {isa = PBXBuildFile; fileRef = CE26FA1308C4D9C500C9604B /* design-time.css */; };
@@ -1075,9 +1063,22 @@
 		CE58139311DEA45D008478AF /* NSStatusUnavailable.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE58139011DEA45D008478AF /* NSStatusUnavailable.tiff */; };
 		CE5B1CB811E54A37005E2C5E /* KTFeedbackReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5B1CB611E54A37005E2C5E /* KTFeedbackReporter.h */; };
 		CE5B1CB911E54A38005E2C5E /* KTFeedbackReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5B1CB711E54A37005E2C5E /* KTFeedbackReporter.m */; };
-		CE5D02C611E66C4B00A4A2D1 /* KSFeedback.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE5D02C411E66C4B00A4A2D1 /* KSFeedback.xib */; };
 		CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5E55FB0EAFE98100A3EDDA /* Macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE66D15E083D305700AD46CD /* imageReplacementEntry.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */; };
+		CE6EDFE311F125A500F00AAC /* KSInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFE211F125A500F00AAC /* KSInspector.xib */; };
+		CE6EDFF211F126FD00F00AAC /* Publishing.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFF111F126FD00F00AAC /* Publishing.xib */; };
+		CE6EDFF411F1274F00F00AAC /* Publishing.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFF311F1274F00F00AAC /* Publishing.xib */; };
+		CE6EDFFE11F129DC00F00AAC /* KSPDFWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFFB11F129DC00F00AAC /* KSPDFWindow.xib */; };
+		CE6EDFFF11F129DC00F00AAC /* KSRTFDWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFFC11F129DC00F00AAC /* KSRTFDWindow.xib */; };
+		CE6EE00011F129DC00F00AAC /* KSWebViewWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFFD11F129DC00F00AAC /* KSWebViewWindow.xib */; };
+		CE6EE01111F129F100F00AAC /* KSBugReporterViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EE00111F129F100F00AAC /* KSBugReporterViews.xib */; };
+		CE6EE01211F129F100F00AAC /* KSCrash.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EE00311F129F100F00AAC /* KSCrash.xib */; };
+		CE6EE01311F129F100F00AAC /* KSException.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EE00511F129F100F00AAC /* KSException.xib */; };
+		CE6EE01411F129F100F00AAC /* KSFeedback.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EE00711F129F100F00AAC /* KSFeedback.xib */; };
+		CE6EE01511F129F100F00AAC /* KSJoinList.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EE00911F129F100F00AAC /* KSJoinList.xib */; };
+		CE6EE01611F129F100F00AAC /* KSKeepInTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EE00B11F129F100F00AAC /* KSKeepInTouch.xib */; };
+		CE6EE01711F129F100F00AAC /* KSPluginInstaller.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EE00D11F129F100F00AAC /* KSPluginInstaller.xib */; };
+		CE6EE01811F129F100F00AAC /* KSRegistration.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EE00F11F129F100F00AAC /* KSRegistration.xib */; };
 		CE72DD6311F018CC0010E14C /* toolbar_empty_page.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE72DD6211F018CC0010E14C /* toolbar_empty_page.tiff */; };
 		CE733A611113A6F5009582EA /* SVBlogEntryBorderView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE733A5F1113A6F5009582EA /* SVBlogEntryBorderView.h */; };
 		CE733A621113A6F5009582EA /* SVBlogEntryBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE733A601113A6F5009582EA /* SVBlogEntryBorderView.m */; };
@@ -1718,7 +1719,6 @@
 		27196F7F1090AEDC0096B612 /* KSDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSDocumentController.m; sourceTree = "<group>"; };
 		27196F851090B1880096B612 /* KSInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInspector.h; sourceTree = "<group>"; };
 		27196F861090B1880096B612 /* KSInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspector.m; sourceTree = "<group>"; };
-		27196FA31090BBC90096B612 /* Inspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Inspector.xib; sourceTree = "<group>"; };
 		271B485E1051C2F4008B698C /* WEKWebEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebEditorView.h; sourceTree = "<group>"; };
 		271B485F1051C2F4008B698C /* WEKWebEditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEKWebEditorView.m; sourceTree = "<group>"; };
 		271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageProtocol.h; sourceTree = "<group>"; };
@@ -1961,7 +1961,6 @@
 		27AD53A40D6B40C300883550 /* SVHTMLTemplateParser+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVHTMLTemplateParser+Private.h"; sourceTree = "<group>"; };
 		27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPublishingWindowController.h; sourceTree = "<group>"; };
 		27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPublishingWindowController.m; sourceTree = "<group>"; };
-		27AE758C0EEE9D8000409D80 /* Publishing.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = Publishing.nib; sourceTree = "<group>"; };
 		27AE75C60EEEB12D00409D80 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = ../../connection/error.png; sourceTree = SOURCE_ROOT; };
 		27AE75C70EEEB12D00409D80 /* finished.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = finished.png; path = ../../connection/finished.png; sourceTree = SOURCE_ROOT; };
 		27AED14B1087CC9C005EDA77 /* SVDocWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocWindow.h; sourceTree = "<group>"; };
@@ -2038,42 +2037,6 @@
 		27E31C320D4B7E1600895DA1 /* KTElementPlugInWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTElementPlugInWrapper.m; sourceTree = "<group>"; };
 		27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDataMigrationDocument.h; sourceTree = "<group>"; };
 		27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDataMigrationDocument.m; sourceTree = "<group>"; };
-		27E4CFE30EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSRegistration.nib; sourceTree = "<group>"; };
-		27E4CFE70EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSKeepInTouch.nib; sourceTree = "<group>"; };
-		27E4CFEB0EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSJoinList.nib; sourceTree = "<group>"; };
-		27E4CFED0EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSException.nib; sourceTree = "<group>"; };
-		27E4CFEF0EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSCrash.nib; sourceTree = "<group>"; };
-		27E4CFF10EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSBugReporterViews.nib; sourceTree = "<group>"; };
-		27E4CFFC0EC30B7A000E85DD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/KSKeepInTouch.nib; sourceTree = "<group>"; };
-		27E4CFFD0EC30B7A000E85DD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/KSRegistration.nib; sourceTree = "<group>"; };
-		27E4CFFE0EC30B7A000E85DD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/KSJoinList.nib; sourceTree = "<group>"; };
-		27E4D0000EC30B7A000E85DD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/KSBugReporterViews.nib; sourceTree = "<group>"; };
-		27E4D0010EC30B7A000E85DD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/KSCrash.nib; sourceTree = "<group>"; };
-		27E4D0020EC30B7A000E85DD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/KSException.nib; sourceTree = "<group>"; };
-		27E4D0030EC30B8D000E85DD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KSRegistration.nib; sourceTree = "<group>"; };
-		27E4D0050EC30B8D000E85DD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KSJoinList.nib; sourceTree = "<group>"; };
-		27E4D0060EC30B8D000E85DD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KSKeepInTouch.nib; sourceTree = "<group>"; };
-		27E4D0070EC30B8D000E85DD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KSException.nib; sourceTree = "<group>"; };
-		27E4D0090EC30B8D000E85DD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KSBugReporterViews.nib; sourceTree = "<group>"; };
-		27E4D00A0EC30B8D000E85DD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KSCrash.nib; sourceTree = "<group>"; };
-		27E4D00C0EC30B96000E85DD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/KSRegistration.nib; sourceTree = "<group>"; };
-		27E4D00D0EC30B96000E85DD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/KSJoinList.nib; sourceTree = "<group>"; };
-		27E4D00E0EC30B96000E85DD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/KSKeepInTouch.nib; sourceTree = "<group>"; };
-		27E4D00F0EC30B96000E85DD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/KSCrash.nib; sourceTree = "<group>"; };
-		27E4D0100EC30B96000E85DD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/KSException.nib; sourceTree = "<group>"; };
-		27E4D0120EC30B96000E85DD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/KSBugReporterViews.nib; sourceTree = "<group>"; };
-		27E4D0140EC30B9D000E85DD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KSKeepInTouch.nib; sourceTree = "<group>"; };
-		27E4D0150EC30B9E000E85DD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KSRegistration.nib; sourceTree = "<group>"; };
-		27E4D0160EC30B9E000E85DD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KSJoinList.nib; sourceTree = "<group>"; };
-		27E4D0170EC30B9E000E85DD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KSException.nib; sourceTree = "<group>"; };
-		27E4D0190EC30B9E000E85DD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KSCrash.nib; sourceTree = "<group>"; };
-		27E4D01A0EC30B9E000E85DD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KSBugReporterViews.nib; sourceTree = "<group>"; };
-		27E4D01C0EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSRegistration.nib; sourceTree = "<group>"; };
-		27E4D01D0EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSKeepInTouch.nib; sourceTree = "<group>"; };
-		27E4D01E0EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSJoinList.nib; sourceTree = "<group>"; };
-		27E4D0200EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSException.nib; sourceTree = "<group>"; };
-		27E4D0210EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSCrash.nib; sourceTree = "<group>"; };
-		27E4D0220EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSBugReporterViews.nib; sourceTree = "<group>"; };
 		27E83A3710ABB1D6003B8F2F /* KSCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCollectionController.h; sourceTree = "<group>"; };
 		27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = CalloutTemplate.html; sourceTree = "<group>"; };
 		27EAA90D0E30979A0068E6C5 /* Page URLs and Paths.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Page URLs and Paths.graffle"; sourceTree = "<group>"; };
@@ -2544,9 +2507,6 @@
 		CE01A7240EAFD63600BDF264 /* KSWebViewWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebViewWindowController.m; sourceTree = "<group>"; };
 		CE01A7250EAFD63600BDF264 /* WebView+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebView+Karelia.h"; sourceTree = "<group>"; };
 		CE01A7260EAFD63600BDF264 /* WebView+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebView+Karelia.m"; sourceTree = "<group>"; };
-		CE01A8E40EAFDF2900BDF264 /* KSPDFWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = KSPDFWindow.nib; sourceTree = "<group>"; };
-		CE01A8E60EAFDF2900BDF264 /* KSRTFDWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = KSRTFDWindow.nib; sourceTree = "<group>"; };
-		CE01A8E70EAFDF2900BDF264 /* KSWebViewWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = KSWebViewWindow.nib; sourceTree = "<group>"; };
 		CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "Web-safe Mac:Windows.collection"; sourceTree = "<group>"; };
 		CE043A6810C7363600F76F97 /* KSRecentDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSRecentDocument.h; sourceTree = "<group>"; };
 		CE043A6910C7363600F76F97 /* KSRecentDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSRecentDocument.m; sourceTree = "<group>"; };
@@ -2643,7 +2603,6 @@
 		CE23C54511E6829D00E43369 /* Designs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Designs; path = ../../Designs; sourceTree = SOURCE_ROOT; };
 		CE23D96A11E6E65900E43369 /* KSPlainClipTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPlainClipTextView.h; sourceTree = "<group>"; };
 		CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPlainClipTextView.m; sourceTree = "<group>"; };
-		CE23DBF711EBE4D800E43369 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSPluginInstaller.xib; sourceTree = "<group>"; };
 		CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementHeader.txt; sourceTree = "<group>"; };
 		CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SandvoxQuickLook.xcodeproj; path = ../Code/QuickLook/SandvoxQuickLook.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CE26237E0A360332009467ED /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
@@ -2690,9 +2649,22 @@
 		CE5A722E0E79DC26002925A8 /* SandvoxGraylistedLicenses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandvoxGraylistedLicenses.h; sourceTree = "<group>"; };
 		CE5B1CB611E54A37005E2C5E /* KTFeedbackReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTFeedbackReporter.h; sourceTree = "<group>"; };
 		CE5B1CB711E54A37005E2C5E /* KTFeedbackReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTFeedbackReporter.m; sourceTree = "<group>"; };
-		CE5D02C511E66C4B00A4A2D1 /* KSFeedback.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = KSFeedback.xib; path = en.lproj/KSFeedback.xib; sourceTree = "<group>"; };
 		CE5E55FB0EAFE98100A3EDDA /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementEntry.txt; sourceTree = "<group>"; };
+		CE6EDFE211F125A500F00AAC /* KSInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KSInspector.xib; sourceTree = "<group>"; };
+		CE6EDFF111F126FD00F00AAC /* Publishing.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Publishing.xib; sourceTree = "<group>"; };
+		CE6EDFF311F1274F00F00AAC /* Publishing.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Publishing.xib; sourceTree = "<group>"; };
+		CE6EDFFB11F129DC00F00AAC /* KSPDFWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KSPDFWindow.xib; sourceTree = "<group>"; };
+		CE6EDFFC11F129DC00F00AAC /* KSRTFDWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KSRTFDWindow.xib; sourceTree = "<group>"; };
+		CE6EDFFD11F129DC00F00AAC /* KSWebViewWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KSWebViewWindow.xib; sourceTree = "<group>"; };
+		CE6EE00211F129F100F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSBugReporterViews.xib; sourceTree = "<group>"; };
+		CE6EE00411F129F100F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSCrash.xib; sourceTree = "<group>"; };
+		CE6EE00611F129F100F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSException.xib; sourceTree = "<group>"; };
+		CE6EE00811F129F100F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSFeedback.xib; sourceTree = "<group>"; };
+		CE6EE00A11F129F100F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSJoinList.xib; sourceTree = "<group>"; };
+		CE6EE00C11F129F100F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSKeepInTouch.xib; sourceTree = "<group>"; };
+		CE6EE00E11F129F100F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSPluginInstaller.xib; sourceTree = "<group>"; };
+		CE6EE01011F129F100F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSRegistration.xib; sourceTree = "<group>"; };
 		CE72DD6211F018CC0010E14C /* toolbar_empty_page.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_empty_page.tiff; sourceTree = "<group>"; };
 		CE733A5F1113A6F5009582EA /* SVBlogEntryBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBlogEntryBorderView.h; sourceTree = "<group>"; };
 		CE733A601113A6F5009582EA /* SVBlogEntryBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBlogEntryBorderView.m; sourceTree = "<group>"; };
@@ -3120,7 +3092,7 @@
 				2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */,
 				27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */,
 				27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */,
-				27AE758C0EEE9D8000409D80 /* Publishing.nib */,
+				CE6EDFF311F1274F00F00AAC /* Publishing.xib */,
 			);
 			name = "Publishing UI";
 			sourceTree = "<group>";
@@ -3724,6 +3696,7 @@
 				3C202DF507E00CCC00DE4994 /* Product Dependencies */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 				3C1F511311D5758F0036B375 /* Cocoa.framework */,
+				CE6EDFF111F126FD00F00AAC /* Publishing.xib */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
@@ -3915,7 +3888,6 @@
 			children = (
 				3C26C4400BC597D200FF874D /* Localized */,
 				3C26C43D0BC597B900FF874D /* Non-Localized */,
-				CE22E5B80D7C71A10055D8E9 /* Shared */,
 			);
 			name = Interfaces;
 			sourceTree = "<group>";
@@ -4532,7 +4504,6 @@
 				CE578C8310A895DC004C5380 /* KSNonBlackTextFieldCell.h */,
 				CE578C8410A895DC004C5380 /* KSNonBlackTextFieldCell.m */,
 				279F5EB610A73E0A00F6511F /* KSInspectorViewController.m */,
-				27196FA31090BBC90096B612 /* Inspector.xib */,
 				CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */,
 				CE487740108FE2C9008417FD /* KSYellowStickyWindow.m */,
 				CE4FE30A1085427A00C43E31 /* KSShadowedRectView.h */,
@@ -5050,24 +5021,24 @@
 			path = WelcomeWindow;
 			sourceTree = "<group>";
 		};
-		CE22E5B80D7C71A10055D8E9 /* Shared */ = {
+		CE22E5B80D7C71A10055D8E9 /* Interfaces */ = {
 			isa = PBXGroup;
 			children = (
-				CE23DBF611EBE4D800E43369 /* KSPluginInstaller.xib */,
-				CE5D02C411E66C4B00A4A2D1 /* KSFeedback.xib */,
-				27E4CFE20EC30B6F000E85DD /* KSRegistration.nib */,
-				27E4CFE60EC30B6F000E85DD /* KSKeepInTouch.nib */,
-				27E4CFEA0EC30B6F000E85DD /* KSJoinList.nib */,
-				27E4CFEC0EC30B6F000E85DD /* KSException.nib */,
-				27E4CFEE0EC30B6F000E85DD /* KSCrash.nib */,
-				27E4CFF00EC30B6F000E85DD /* KSBugReporterViews.nib */,
-				CE01A8E40EAFDF2900BDF264 /* KSPDFWindow.nib */,
+				CE6EE00111F129F100F00AAC /* KSBugReporterViews.xib */,
+				CE6EE00311F129F100F00AAC /* KSCrash.xib */,
+				CE6EE00511F129F100F00AAC /* KSException.xib */,
+				CE6EE00711F129F100F00AAC /* KSFeedback.xib */,
+				CE6EE00911F129F100F00AAC /* KSJoinList.xib */,
+				CE6EE00B11F129F100F00AAC /* KSKeepInTouch.xib */,
+				CE6EE00D11F129F100F00AAC /* KSPluginInstaller.xib */,
+				CE6EE00F11F129F100F00AAC /* KSRegistration.xib */,
 				CE8D54C5112B0B23007AC2F0 /* KSProgressPanel.xib */,
-				CE01A8E60EAFDF2900BDF264 /* KSRTFDWindow.nib */,
-				CE01A8E70EAFDF2900BDF264 /* KSWebViewWindow.nib */,
+				CE6EDFE211F125A500F00AAC /* KSInspector.xib */,
+				CE6EDFFB11F129DC00F00AAC /* KSPDFWindow.xib */,
+				CE6EDFFC11F129DC00F00AAC /* KSRTFDWindow.xib */,
+				CE6EDFFD11F129DC00F00AAC /* KSWebViewWindow.xib */,
 			);
-			name = Shared;
-			path = ../../Shared/Interfaces;
+			path = Interfaces;
 			sourceTree = "<group>";
 		};
 		CE2556CC0D3432AF003A5B5E /* Products */ = {
@@ -5164,6 +5135,7 @@
 		CEC11A2E0D78BE0100513E70 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				CE22E5B80D7C71A10055D8E9 /* Interfaces */,
 				27CC248211F07277007FB3FE /* KSHTMLWriter */,
 				27CC0E2511EFBA02007FB3FE /* KSExtensibleManagedObject */,
 				CE1BE7AF11D2AD0700D875AE /* Graphics */,
@@ -5590,12 +5562,12 @@
 				8D15AC330486D014006FF6A4 /* Frameworks */,
 				3C99107209298C4400ED5CBF /* Generate Localizable.strings */,
 				CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings */,
-				3C1F512C11D576ED0036B375 /* Internationalize XIBs */,
 				3C202F4D07E0140100DE4994 /* Copy Frameworks */,
 				CEC10DFF0D7793AE00513E70 /* Copy Frameworks ALWAYS */,
 				CEC65E5D0E1AFD170065C3D0 /* Copy Sparkle - Strip Localizations */,
 				3CEC87370BF8DB4500CC732B /* Headers */,
 				8D15AC2B0486D014006FF6A4 /* Resources */,
+				3C1F512C11D576ED0036B375 /* Internationalize XIBs */,
 			);
 			buildRules = (
 			);
@@ -6073,16 +6045,6 @@
 				2709BC110D7C1C89003A1A37 /* KTArchivePageTemplate.html in Resources */,
 				277026740E1E645200407CD1 /* KTCommentsTemplate.html in Resources */,
 				3C382D610E98170600113137 /* dsa_pub.pem in Resources */,
-				CE01A9500EAFDF2A00BDF264 /* KSPDFWindow.nib in Resources */,
-				CE01A9520EAFDF2A00BDF264 /* KSRTFDWindow.nib in Resources */,
-				CE01A9530EAFDF2A00BDF264 /* KSWebViewWindow.nib in Resources */,
-				27E4CFF30EC30B6F000E85DD /* KSRegistration.nib in Resources */,
-				27E4CFF50EC30B6F000E85DD /* KSKeepInTouch.nib in Resources */,
-				27E4CFF70EC30B6F000E85DD /* KSJoinList.nib in Resources */,
-				27E4CFF80EC30B6F000E85DD /* KSException.nib in Resources */,
-				27E4CFF90EC30B6F000E85DD /* KSCrash.nib in Resources */,
-				27E4CFFA0EC30B6F000E85DD /* KSBugReporterViews.nib in Resources */,
-				27AE758D0EEE9D8000409D80 /* Publishing.nib in Resources */,
 				27AE75C80EEEB12D00409D80 /* error.png in Resources */,
 				27AE75C90EEEB12D00409D80 /* finished.png in Resources */,
 				27443266103D8693007E7FF0 /* LoadingPlaceholder.xib in Resources */,
@@ -6102,7 +6064,6 @@
 				3C9BC211103DF9CB00D2CF47 /* MediaInspector.xib in Resources */,
 				3C9BC214103DF9DF00D2CF47 /* HTMLEditor.xib in Resources */,
 				3C0B1D05104792B0002EE098 /* SVDesignChooser.xib in Resources */,
-				27196FA41090BBC90096B612 /* Inspector.xib in Resources */,
 				2782918F10912D5D008D0A64 /* DocumentInspector.xib in Resources */,
 				2782919110912E14008D0A64 /* PageInspector.xib in Resources */,
 				27A095341097598600F43746 /* PageletTemplate.html in Resources */,
@@ -6193,9 +6154,7 @@
 				CE58139111DEA45D008478AF /* NSStatusAvailable.tiff in Resources */,
 				CE58139211DEA45D008478AF /* NSStatusPartiallyAvailable.tiff in Resources */,
 				CE58139311DEA45D008478AF /* NSStatusUnavailable.tiff in Resources */,
-				CE5D02C611E66C4B00A4A2D1 /* KSFeedback.xib in Resources */,
 				2726DE8E11E699720000257D /* RawHTMLPlaceholder.html in Resources */,
-				CE23DBF811EBE4D800E43369 /* KSPluginInstaller.xib in Resources */,
 				CEB2EEFF11ED0558002DD050 /* Validate.tiff in Resources */,
 				CEB2EF0511ED08DF002DD050 /* NoNetwork.tiff in Resources */,
 				CE7B67CA11EE784600F56D8B /* MissingMediaQMark.png in Resources */,
@@ -6203,6 +6162,20 @@
 				CE36E59011EF95FF003EFCA8 /* designPlaceholder.tiff in Resources */,
 				CE36E5CA11EFA68E003EFCA8 /* plainText.tiff in Resources */,
 				CE72DD6311F018CC0010E14C /* toolbar_empty_page.tiff in Resources */,
+				CE6EDFE311F125A500F00AAC /* KSInspector.xib in Resources */,
+				CE6EDFF211F126FD00F00AAC /* Publishing.xib in Resources */,
+				CE6EDFF411F1274F00F00AAC /* Publishing.xib in Resources */,
+				CE6EDFFE11F129DC00F00AAC /* KSPDFWindow.xib in Resources */,
+				CE6EDFFF11F129DC00F00AAC /* KSRTFDWindow.xib in Resources */,
+				CE6EE00011F129DC00F00AAC /* KSWebViewWindow.xib in Resources */,
+				CE6EE01111F129F100F00AAC /* KSBugReporterViews.xib in Resources */,
+				CE6EE01211F129F100F00AAC /* KSCrash.xib in Resources */,
+				CE6EE01311F129F100F00AAC /* KSException.xib in Resources */,
+				CE6EE01411F129F100F00AAC /* KSFeedback.xib in Resources */,
+				CE6EE01511F129F100F00AAC /* KSJoinList.xib in Resources */,
+				CE6EE01611F129F100F00AAC /* KSKeepInTouch.xib in Resources */,
+				CE6EE01711F129F100F00AAC /* KSPluginInstaller.xib in Resources */,
+				CE6EE01811F129F100F00AAC /* KSRegistration.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6264,7 +6237,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "#foreach nibFile (${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib)\n# stringsFilePath=${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/${DEVELOPMENT_LANGUAGE}.lproj/`basename ${nibFile} .nib`.strings\n# xibFile=`basename ${nibFile} .nib`.xib\n# xibFilePath=`echo ${SOURCE_ROOT}/**/${xibFile}`\n# if [[ -e ${xibFilePath} ]] {\n#  ibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n#  ${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n#  rm ${stringsFilePath}~\n# }\n#end\n";
+			shellScript = "exit 0\n\nforeach nibFile (${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib) # getting every nib in the built product - but not plugins\n  echo \"Found compiled nib: ${nibFile}\"\n\n\n stringsFilePath=${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/en.lproj/`basename ${nibFile} .nib`.strings # The path where the strings file will go\n echo \"Strings will go into: ${stringsFilePath}\"\n\n xibFile=`basename ${nibFile} .nib`.xib\t# Look for the .xib file corresponding to that built nib file\n xibFilePath=`echo ${SOURCE_ROOT}/**/${xibFile}`\t# TRY to find the .xib file corresponding to that\n\n if [[ -e ${xibFilePath} ]] {\n  echo \"*** Getting strings out of Xib: ${xibFilePath}\"\n  ibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n  ${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n  rm ${stringsFilePath}~\n }\n\nend\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3E75F90F1C5F42002E3A9A /* ShellScript */ = {
@@ -7206,84 +7179,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		27E4CFE20EC30B6F000E85DD /* KSRegistration.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				27E4CFE30EC30B6F000E85DD /* en */,
-				27E4CFFD0EC30B7A000E85DD /* da */,
-				27E4D0030EC30B8D000E85DD /* de */,
-				27E4D00C0EC30B96000E85DD /* fr */,
-				27E4D0150EC30B9E000E85DD /* zh_CN */,
-				27E4D01C0EC30BA4000E85DD /* zh_TW */,
-			);
-			name = KSRegistration.nib;
-			sourceTree = "<group>";
-		};
-		27E4CFE60EC30B6F000E85DD /* KSKeepInTouch.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				27E4CFE70EC30B6F000E85DD /* en */,
-				27E4CFFC0EC30B7A000E85DD /* da */,
-				27E4D0060EC30B8D000E85DD /* de */,
-				27E4D00E0EC30B96000E85DD /* fr */,
-				27E4D0140EC30B9D000E85DD /* zh_CN */,
-				27E4D01D0EC30BA4000E85DD /* zh_TW */,
-			);
-			name = KSKeepInTouch.nib;
-			sourceTree = "<group>";
-		};
-		27E4CFEA0EC30B6F000E85DD /* KSJoinList.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				27E4CFEB0EC30B6F000E85DD /* en */,
-				27E4CFFE0EC30B7A000E85DD /* da */,
-				27E4D0050EC30B8D000E85DD /* de */,
-				27E4D00D0EC30B96000E85DD /* fr */,
-				27E4D0160EC30B9E000E85DD /* zh_CN */,
-				27E4D01E0EC30BA4000E85DD /* zh_TW */,
-			);
-			name = KSJoinList.nib;
-			sourceTree = "<group>";
-		};
-		27E4CFEC0EC30B6F000E85DD /* KSException.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				27E4CFED0EC30B6F000E85DD /* en */,
-				27E4D0020EC30B7A000E85DD /* da */,
-				27E4D0070EC30B8D000E85DD /* de */,
-				27E4D0100EC30B96000E85DD /* fr */,
-				27E4D0170EC30B9E000E85DD /* zh_CN */,
-				27E4D0200EC30BA4000E85DD /* zh_TW */,
-			);
-			name = KSException.nib;
-			sourceTree = "<group>";
-		};
-		27E4CFEE0EC30B6F000E85DD /* KSCrash.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				27E4CFEF0EC30B6F000E85DD /* en */,
-				27E4D0010EC30B7A000E85DD /* da */,
-				27E4D00A0EC30B8D000E85DD /* de */,
-				27E4D00F0EC30B96000E85DD /* fr */,
-				27E4D0190EC30B9E000E85DD /* zh_CN */,
-				27E4D0210EC30BA4000E85DD /* zh_TW */,
-			);
-			name = KSCrash.nib;
-			sourceTree = "<group>";
-		};
-		27E4CFF00EC30B6F000E85DD /* KSBugReporterViews.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				27E4CFF10EC30B6F000E85DD /* en */,
-				27E4D0000EC30B7A000E85DD /* da */,
-				27E4D0090EC30B8D000E85DD /* de */,
-				27E4D0120EC30B96000E85DD /* fr */,
-				27E4D01A0EC30B9E000E85DD /* zh_CN */,
-				27E4D0220EC30BA4000E85DD /* zh_TW */,
-			);
-			name = KSBugReporterViews.nib;
-			sourceTree = "<group>";
-		};
 		3C0B1D03104792B0002EE098 /* SVDesignChooser.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -7428,21 +7323,68 @@
 			name = LivePagesDisabled.html;
 			sourceTree = "<group>";
 		};
-		CE23DBF611EBE4D800E43369 /* KSPluginInstaller.xib */ = {
+		CE6EE00111F129F100F00AAC /* KSBugReporterViews.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				CE23DBF711EBE4D800E43369 /* en */,
+				CE6EE00211F129F100F00AAC /* en */,
 			);
-			name = KSPluginInstaller.xib;
-			path = ../../Shared/Interfaces;
-			sourceTree = SOURCE_ROOT;
+			name = KSBugReporterViews.xib;
+			sourceTree = "<group>";
 		};
-		CE5D02C411E66C4B00A4A2D1 /* KSFeedback.xib */ = {
+		CE6EE00311F129F100F00AAC /* KSCrash.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				CE5D02C511E66C4B00A4A2D1 /* KSFeedback.xib */,
+				CE6EE00411F129F100F00AAC /* en */,
+			);
+			name = KSCrash.xib;
+			sourceTree = "<group>";
+		};
+		CE6EE00511F129F100F00AAC /* KSException.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE6EE00611F129F100F00AAC /* en */,
+			);
+			name = KSException.xib;
+			sourceTree = "<group>";
+		};
+		CE6EE00711F129F100F00AAC /* KSFeedback.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE6EE00811F129F100F00AAC /* en */,
 			);
 			name = KSFeedback.xib;
+			sourceTree = "<group>";
+		};
+		CE6EE00911F129F100F00AAC /* KSJoinList.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE6EE00A11F129F100F00AAC /* en */,
+			);
+			name = KSJoinList.xib;
+			sourceTree = "<group>";
+		};
+		CE6EE00B11F129F100F00AAC /* KSKeepInTouch.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE6EE00C11F129F100F00AAC /* en */,
+			);
+			name = KSKeepInTouch.xib;
+			sourceTree = "<group>";
+		};
+		CE6EE00D11F129F100F00AAC /* KSPluginInstaller.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE6EE00E11F129F100F00AAC /* en */,
+			);
+			name = KSPluginInstaller.xib;
+			sourceTree = "<group>";
+		};
+		CE6EE00F11F129F100F00AAC /* KSRegistration.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE6EE01011F129F100F00AAC /* en */,
+			);
+			name = KSRegistration.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
