@@ -33,6 +33,7 @@
 {
     NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
     if (self == [NSBundle class]) {
+		NSLog(@"Switching in Wil Shipley's Amazing Localizer Bundle. W00T!");
         method_exchangeImplementations(class_getClassMethod(self, @selector(loadNibFile:externalNameTable:withZone:)), class_getClassMethod(self, @selector(deliciousLocalizingLoadNibFile:externalNameTable:withZone:)));
     }
     [autoreleasePool release];
@@ -43,9 +44,16 @@
 
 + (BOOL)deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone;
 {
+	NSLog(@"%s %@",__FUNCTION__, fileName);
+	
+	// Note: What about loading not from the main bundle? Can I try to load from where the nib file came from?
+	
     NSString *localizedStringsTableName = [[fileName lastPathComponent] stringByDeletingPathExtension];
     NSString *localizedStringsTablePath = [[NSBundle mainBundle] pathForResource:localizedStringsTableName ofType:@"strings"];
-    if (localizedStringsTablePath && ![[[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"English.lproj"]) {
+    if (localizedStringsTablePath
+		&& ![[[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"English.lproj"]
+		&& ![[[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"en.lproj"]
+		) {
         
         NSNib *nib = [[NSNib alloc] initWithContentsOfURL:[NSURL fileURLWithPath:fileName]];
         NSMutableArray *topLevelObjectsArray = [context objectForKey:NSNibTopLevelObjects];
@@ -61,7 +69,17 @@
         return success;
         
     } else {
-        return [self deliciousLocalizingLoadNibFile:fileName externalNameTable:context withZone:zone];
+		
+        if (localizedStringsTablePath)
+		{
+			NSLog(@"Not running through localizer because localizedStringsTablePath == nil");
+		}
+		else
+		{
+			NSLog(@"Not running through localizer because containing dir is not English: %@", [[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent]);
+		}
+		
+		return [self deliciousLocalizingLoadNibFile:fileName externalNameTable:context withZone:zone];
     }
 }
 
@@ -190,9 +208,9 @@
     if (localizedString != defaultValue) {
         return localizedString;
     } else { 
-#ifdef BETA_BUILD
+#ifdef DEBUG
         NSLog(@"        not going to localize string %@", string);
-        return string; // [string uppercaseString]
+        return [string uppercaseString];
 #else
         return string;
 #endif
