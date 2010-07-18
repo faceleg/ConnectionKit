@@ -262,6 +262,19 @@ typedef enum {  // this copied from WebPreferences+Private.h
         [window makeFirstResponder:[[range commonAncestorContainer] documentView]];
     }
     
+    
+    // Set selected items first
+    if (!_isChangingSelectedItems)
+    {
+        [self changeSelectionByDeselectingAll:YES
+                               orDeselectItem:nil
+                                  selectItems:[self selectableItemsInDOMRange:range]
+                                     DOMRange:range
+                                   isUIAction:NO];
+    }
+    
+    
+    // Apply selection to WebView
     [[self webView] setSelectedDOMRange:range affinity:selectionAffinity];
 }
 
