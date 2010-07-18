@@ -28,7 +28,11 @@
                startIndexPath:(NSIndexPath *)startPath
                  endIndexPath:(NSIndexPath *)endPath;
 {
-    [self init];
+    OBPRECONDITION(container);
+    OBPRECONDITION(startPath);
+    OBPRECONDITION(endPath);
+    
+    [super init];
     
     _containerObject = [container retain];
     _startIndexPath = [startPath copy];
