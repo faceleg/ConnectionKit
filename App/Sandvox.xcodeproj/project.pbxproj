@@ -110,7 +110,6 @@
 				3C53E3DF11EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3CF11EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3D911EE6B14005CF7B2 /* PBXTargetDependency */,
-				3C53E3E111EE6B14005CF7B2 /* PBXTargetDependency */,
 				3CBC728B11F0C6A600716937 /* PBXTargetDependency */,
 				3C53E3C311EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3E511EE6B14005CF7B2 /* PBXTargetDependency */,
@@ -1261,13 +1260,6 @@
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = DiggElement;
 		};
-		3C53E31311EE6786005CF7B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = FeedElement;
-		};
 		3C53E32311EE679C005CF7B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA900670D63C76100815310 /* IFrameElement.xcodeproj */;
@@ -1415,13 +1407,6 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = DeliciousElement;
 		};
-		3C53E3E011EE6B14005CF7B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = FeedElement;
-		};
 		3C53E3E211EE6B14005CF7B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
@@ -1477,6 +1462,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3C5A9A850D11E4DF0054058C;
 			remoteInfo = "iMedia - Use Specific Revision";
+		};
+		3C79F2EA11F3AEDF00B699EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Feed.svxElement */;
+			remoteInfo = FeedElement;
 		};
 		3C88838E0BFCB4A400921FA4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2241,7 +2233,7 @@
 		3CA901A20D63D45B00815310 /* LinkListElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LinkListElement.xcodeproj; path = ../OldPlugins/Elements/LinkListElement/LinkListElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CA9B30D0804643200C3053B /* KTDocument+Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Properties.m"; sourceTree = "<group>"; };
 		3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BadgeElement.xcodeproj; path = ../PlugIns/Elements/BadgeElement/BadgeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FeedElement.xcodeproj; path = ../OldPlugins/Elements/FeedElement/FeedElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FeedElement.xcodeproj; path = ../PlugIns/Elements/FeedElement/FeedElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CBDE9100EBA65D20059C56C /* KTLocalPublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTLocalPublishingEngine.h; sourceTree = "<group>"; };
 		3CBDE9110EBA65D20059C56C /* KTLocalPublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTLocalPublishingEngine.m; sourceTree = "<group>"; };
 		3CBFD395093C45930057668A /* KTSiteOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSiteOutlineView.h; sourceTree = "<group>"; };
@@ -4073,14 +4065,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3C53E31011EE6786005CF7B2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C53E31411EE6786005CF7B2 /* Feed.svxElement */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3C53E32011EE679C005CF7B2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -4387,6 +4371,14 @@
 				3C72D4F5094A24390061A876 /* libz.dylib */,
 			);
 			name = Libraries;
+			sourceTree = "<group>";
+		};
+		3C79F2E711F3AEDF00B699EE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3C79F2EB11F3AEDF00B699EE /* Feed.svxElement */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		3C951FF20D762D87009FCAC9 /* Common Headers */ = {
@@ -5685,7 +5677,7 @@
 					ProjectRef = 3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C53E31011EE6786005CF7B2 /* Products */;
+					ProductGroup = 3C79F2E711F3AEDF00B699EE /* Products */;
 					ProjectRef = 3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */;
 				},
 				{
@@ -5867,13 +5859,6 @@
 			remoteRef = 3C53E30B11EE6774005CF7B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3C53E31411EE6786005CF7B2 /* Feed.svxElement */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Feed.svxElement;
-			remoteRef = 3C53E31311EE6786005CF7B2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		3C53E32411EE679C005CF7B2 /* IFrame.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -5935,6 +5920,13 @@
 			fileType = wrapper.cfbundle;
 			path = Twitter.svxElement;
 			remoteRef = 3C53E41F11EE783B005CF7B2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3C79F2EB11F3AEDF00B699EE /* Feed.svxElement */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Feed.svxElement;
+			remoteRef = 3C79F2EA11F3AEDF00B699EE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3CBC719A11F02EB800716937 /* Badge.svxElement */ = {
@@ -7079,11 +7071,6 @@
 			isa = PBXTargetDependency;
 			name = DeliciousElement;
 			targetProxy = 3C53E3DE11EE6B14005CF7B2 /* PBXContainerItemProxy */;
-		};
-		3C53E3E111EE6B14005CF7B2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FeedElement;
-			targetProxy = 3C53E3E011EE6B14005CF7B2 /* PBXContainerItemProxy */;
 		};
 		3C53E3E311EE6B14005CF7B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
