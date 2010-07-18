@@ -41,6 +41,11 @@
     return self;
 }
 
+- (id)init;
+{
+    return [self initWithContainerObject:nil startIndexPath:nil endIndexPath:nil];
+}
+
 + (NSUInteger)indexOfNode:(DOMNode *)startContainer fromNode:(DOMNode *)rootNode;
 {
     DOMTreeWalker *treeWalker = [[rootNode ownerDocument]
