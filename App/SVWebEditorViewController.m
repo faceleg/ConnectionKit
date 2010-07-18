@@ -11,19 +11,20 @@
 #import "SVApplicationController.h"
 #import "SVArticle.h"
 #import "SVAttributedHTML.h"
-#import "SVPlugInGraphic.h"
+#import "KTDocument.h"
 #import "SVLogoImage.h"
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "SVGraphicDOMController.h"
 #import "SVGraphicFactory.h"
-#import "SVRichTextDOMController.h"
 #import "SVLink.h"
 #import "SVLinkManager.h"
 #import "SVMediaRecord.h"
+#import "SVPlugInGraphic.h"
 #import "KTSite.h"
 #import "SVSelectionBorder.h"
 #import "SVRawHTMLGraphic.h"
+#import "SVRichTextDOMController.h"
 #import "SVSidebar.h"
 #import "SVSidebarDOMController.h"
 #import "SVSidebarPageletsController.h"
@@ -31,7 +32,7 @@
 #import "SVWebContentAreaController.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
-#import "KTDocument.h"
+#import "SVWebEditorTextRange.h"
 
 #import "NSArray+Karelia.h"
 #import "NSResponder+Karelia.h"
@@ -62,6 +63,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 @property(nonatomic, retain, readonly) SVWebContentObjectsController *primitiveSelectedObjectsController;
 
+- (void)setSelectedTextRange:(SVWebEditorTextRange *)textRange affinity:(NSSelectionAffinity)affinity;
 @end
 
 
@@ -406,7 +408,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
         // …but only if WebView's First Responder
         if ([webEditor ks_followsResponder:[[webEditor window] firstResponder]])
         {
-            [webEditor setSelectedTextRange:_selectionToRestore affinity:NSSelectionAffinityDownstream];
+            [self setSelectedTextRange:_selectionToRestore affinity:NSSelectionAffinityDownstream];
         }
         
         [_selectionToRestore release]; _selectionToRestore = nil;
@@ -727,6 +729,38 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 #pragma mark Undo
 
+- (SVWebEditorTextRange *)selectedTextRange;
+{
+    WEKWebEditorView *webEditor = [self webEditor];
+    
+    DOMRange *domRange = [webEditor selectedDOMRange];
+    if (!domRange) return nil;
+    
+    
+    SVTextDOMController *item = [self textAreaForDOMRange:domRange];
+    
+    SVWebEditorTextRange *result = [SVWebEditorTextRange rangeWithDOMRange:domRange
+                                                           containerObject:[item representedObject]
+                                                             containerNode:[item textHTMLElement]];
+    return result;
+}
+
+- (void)setSelectedTextRange:(SVWebEditorTextRange *)textRange affinity:(NSSelectionAffinity)affinity;
+{
+    OBPRECONDITION(textRange);
+    
+    WEKWebEditorView *webEditor = [self webEditor];
+    
+    id item = [[webEditor contentItem] hitTestRepresentedObject:[textRange containerObject]];
+    if (item)
+    {
+        DOMRange *domRange = [[webEditor HTMLDocument] createRange];
+        [textRange populateDOMRange:domRange fromContainerNode:[item textHTMLElement]];
+        
+        [webEditor setSelectedDOMRange:domRange affinity:affinity];
+    }
+}
+
 - (void)undo_setSelectedTextRange:(SVWebEditorTextRange *)range;
 {
     // Ignore if not already marked for update, since that could potentially reset the selection in the distant future, which is very odd for users. Ideally, this situation won't arrise
@@ -741,7 +775,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     NSUndoManager *undoManager = [webEditor undoManager];
     
     [[undoManager prepareWithInvocationTarget:self]
-     undo_setSelectedTextRange:[webEditor selectedTextRange]];
+     undo_setSelectedTextRange:[self selectedTextRange]];
 }
 
 - (void)textDOMControllerDidChangeText:(SVTextDOMController *)controller; { }
@@ -1215,7 +1249,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     if ([undoManager isUndoRegistrationEnabled])
     {
         [[undoManager prepareWithInvocationTarget:self] 
-         undo_setSelectedTextRange:[webEditor selectedTextRange]];
+         undo_setSelectedTextRange:[self selectedTextRange]];
     }
 }
 

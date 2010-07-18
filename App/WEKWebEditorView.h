@@ -87,9 +87,6 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 @property(nonatomic, readonly) DOMRange *selectedDOMRange;
 - (void)setSelectedDOMRange:(DOMRange *)range affinity:(NSSelectionAffinity)selectionAffinity;
 
-- (SVWebEditorTextRange *)selectedTextRange;
-- (void)setSelectedTextRange:(SVWebEditorTextRange *)range affinity:(NSSelectionAffinity)affinity;
-
 @property(nonatomic, retain, readonly) id <SVWebEditorText> focusedText;    // KVO-compliant
 
 

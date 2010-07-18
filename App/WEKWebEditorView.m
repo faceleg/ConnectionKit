@@ -10,7 +10,6 @@
 
 #import "WEKWebView.h"
 #import "WEKRootItem.h"
-#import "SVWebEditorTextRange.h"
 #import "WEKWebKitPrivate.h"
 
 #import "KTApplication.h"
@@ -276,35 +275,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Apply selection to WebView
     [[self webView] setSelectedDOMRange:range affinity:selectionAffinity];
-}
-
-- (SVWebEditorTextRange *)selectedTextRange;
-{
-    DOMRange *domRange = [self selectedDOMRange];
-    if (!domRange) return nil;
-    
-    
-    WEKWebEditorItem <SVWebEditorText> *item = [self textItemForDOMRange:domRange];
-    
-    
-    SVWebEditorTextRange *result = [SVWebEditorTextRange rangeWithDOMRange:domRange
-                                                           containerObject:[item representedObject]
-                                                             containerNode:[item textHTMLElement]];
-    return result;
-}
-
-- (void)setSelectedTextRange:(SVWebEditorTextRange *)textRange affinity:(NSSelectionAffinity)affinity;
-{
-    OBPRECONDITION(textRange);
-    
-    id item = [[self contentItem] hitTestRepresentedObject:[textRange containerObject]];
-    if (item)
-    {
-        DOMRange *domRange = [[self HTMLDocument] createRange];
-        [textRange populateDOMRange:domRange fromContainerNode:[item textHTMLElement]];
-            
-        [self setSelectedDOMRange:domRange affinity:affinity];
-    }
 }
 
 @synthesize focusedText = _focusedText;
