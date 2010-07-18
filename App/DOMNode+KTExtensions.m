@@ -179,6 +179,8 @@
 {
 	NSIndexPath *result = nil;
 	
+    if (node == self) return [NSIndexPath indexPathWithIndexes:NULL length:0];
+    
 	DOMNode *parent = [self parentNode];
 	if (parent)
 	{
