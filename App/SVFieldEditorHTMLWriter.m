@@ -157,8 +157,8 @@
     }
     
     
-    // Open tag
-    [self openTag:elementName];
+    // Open tag. Make it inline so we match DOM exactly. (i.e text nodes take care of whitespace for us)
+    [self openTag:elementName writeInline:YES];
     
     
     // Write attributes
