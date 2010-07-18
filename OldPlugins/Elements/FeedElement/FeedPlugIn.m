@@ -88,16 +88,6 @@
 #pragma mark -
 #pragma mark HTML Generation
 
-- (void)writeHTML:(id <SVPlugInContext>)context
-{
-    if ( self.openLinksInNewWindow )
-    {
-        // target=_blank requires Transitional doc type
-        [context limitToMaxDocType:KTXHTMLTransitionalDocType];
-    }
-    [super writeHTML:context];
-}
-
 -(BOOL)validateURL:(id *)ioValue error:(NSError **)outError
 {
     BOOL result = YES;
