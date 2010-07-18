@@ -110,6 +110,7 @@
 				3C53E3DF11EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3CF11EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3D911EE6B14005CF7B2 /* PBXTargetDependency */,
+				3C79F2F211F3BF9900B699EE /* PBXTargetDependency */,
 				3CBC728B11F0C6A600716937 /* PBXTargetDependency */,
 				3C53E3C311EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3E511EE6B14005CF7B2 /* PBXTargetDependency */,
@@ -1468,6 +1469,13 @@
 			containerPortal = 3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Feed.svxElement */;
+			remoteInfo = FeedElement;
+		};
+		3C79F2F111F3BF9900B699EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* FeedElement */;
 			remoteInfo = FeedElement;
 		};
 		3C88838E0BFCB4A400921FA4 /* PBXContainerItemProxy */ = {
@@ -7106,6 +7114,11 @@
 			isa = PBXTargetDependency;
 			target = 3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */;
 			targetProxy = 3C5A9A9B0D11E74B0054058C /* PBXContainerItemProxy */;
+		};
+		3C79F2F211F3BF9900B699EE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FeedElement;
+			targetProxy = 3C79F2F111F3BF9900B699EE /* PBXContainerItemProxy */;
 		};
 		3C88838F0BFCB4A400921FA4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
