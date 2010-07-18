@@ -2901,8 +2901,6 @@
 			children = (
 				2792197B10BC631D00E590D5 /* WEKDOMController.h */,
 				2792197C10BC631D00E590D5 /* WEKDOMController.m */,
-				27BA06C61125A46900B9D8F4 /* SVWebEditorTextRange.h */,
-				27BA06C71125A46900B9D8F4 /* SVWebEditorTextRange.m */,
 				27F243B1106BC8B9007FEC56 /* WEKWebEditorItem.h */,
 				27F243B2106BC8B9007FEC56 /* WEKWebEditorItem.m */,
 				271B485E1051C2F4008B698C /* WEKWebEditorView.h */,
@@ -3102,6 +3100,8 @@
 		2759CC98103970FC00E2C046 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				27BA06C61125A46900B9D8F4 /* SVWebEditorTextRange.h */,
+				27BA06C71125A46900B9D8F4 /* SVWebEditorTextRange.m */,
 				CE2E80E20DB534930034E7B8 /* SVOffscreenWebViewController.h */,
 				CE2E80E30DB534930034E7B8 /* SVOffscreenWebViewController.m */,
 				CE733A5F1113A6F5009582EA /* SVBlogEntryBorderView.h */,
