@@ -1468,14 +1468,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Feed.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = FeedElement;
 		};
 		3C79F2F111F3BF9900B699EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* FeedElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = FeedElement;
 		};
 		3C88838E0BFCB4A400921FA4 /* PBXContainerItemProxy */ = {
