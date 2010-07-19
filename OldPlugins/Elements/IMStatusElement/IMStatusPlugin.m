@@ -35,7 +35,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 
 
 + (Class)inspectorViewControllerClass { return [IMStatusInspector class]; }
-+ (NSSet *)plugInKeys
++ (NSArray *)plugInKeys
 {
 	return [NSSet setWithObjects:@"headlineText", @"onlineText", @"offlineText", 
 			@"username", @"selectedIMService", nil];

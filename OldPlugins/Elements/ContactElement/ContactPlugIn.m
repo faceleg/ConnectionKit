@@ -200,7 +200,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	[super dealloc];
 }
 
-+ (NSSet *)plugInKeys
++ (NSArray *)plugInKeys
 {
 	return [NSSet setWithObjects:@"copyToSender", nil];	
 }

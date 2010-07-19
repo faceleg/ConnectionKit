@@ -17,7 +17,7 @@
 @synthesize collection = _collection;
 
 + (Class)inspectorViewControllerClass { return [RSSBadgeInspector class]; }
-+ (NSSet *)plugInKeys
++ (NSArray *)plugInKeys
 {
 	return [NSSet setWithObjects:@"iconStyle", @"collection", @"label", nil];
 }

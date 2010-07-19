@@ -173,7 +173,7 @@ NSString *PCSampleImageKey = @"sampleImage";
 
 
 
-+ (NSSet *)plugInKeys
++ (NSArray *)plugInKeys
 {
 	return [NSSet setWithObjects:@"selectedTheme", 
 			nil];

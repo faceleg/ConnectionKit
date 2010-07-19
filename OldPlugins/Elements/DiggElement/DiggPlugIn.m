@@ -67,7 +67,7 @@ diggCategory  (human readable version for popup) --> diggCategoryString
 
 @implementation DiggPlugIn
 
-+ (NSSet *)plugInKeys
++ (NSArray *)plugInKeys
 { 
     return [NSSet setWithObjects:@"openLinksInNewWindow", nil];
 }

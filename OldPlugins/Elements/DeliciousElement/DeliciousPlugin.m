@@ -47,7 +47,7 @@
 @implementation DeliciousPlugin
 
 + (Class)inspectorViewControllerClass { return [DeliciousInspector class]; }
-+ (NSSet *)plugInKeys
++ (NSArray *)plugInKeys
 {
 	return [NSSet setWithObjects:@"deliciousID", @"restrictedTags", @"sortChronologically", @"maxEntries", @"showTags", @"showExtended", @"listStyle", nil];
 }

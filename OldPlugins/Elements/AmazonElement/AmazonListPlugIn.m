@@ -210,7 +210,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 #pragma mark Properties
 
-+ (NSSet *)plugInKeys
++ (NSArray *)plugInKeys
 {
     return [NSSet setWithObjects:@"store", @"listSource", @"layout", @"showProductPreviews", @"frame", @"automaticListCode", @"automaticListType", @"automaticListSorting", @"showPrices", @"showThumbnails", @"showNewPricesOnly", @"showTitles", @"maxNumberProducts", @"showComments", @"showCreators", @"products", @"showLinkToList", nil];
 }
