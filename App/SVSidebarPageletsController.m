@@ -378,18 +378,14 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     return result;
 }
 
-- (BOOL)addObjectFromSerializedPagelet:(id)serializedPagelet;
+- (SVGraphic *)addObjectFromSerializedPagelet:(id)serializedPagelet;
 {
-    SVGraphic *graphic = [SVGraphic graphicWithSerializedProperties:serializedPagelet
+    SVGraphic *result = [SVGraphic graphicWithSerializedProperties:serializedPagelet
                                      insertIntoManagedObjectContext:[self managedObjectContext]];
     
-    if (graphic)
-    {
-        [self addObject:graphic];
-        return YES;
-    }
+    if (result) [self addObject:result];
     
-    return NO;
+    return result;
 }
 
 #pragma mark Automatic Rearranging

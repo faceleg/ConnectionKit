@@ -330,19 +330,33 @@
     SVWebEditorHTMLContext *context = [self HTMLContext];
     SVSidebarPageletsController *sidebarController = [context sidebarPageletsController];
     SVWebEditorViewController *viewController = [context webEditorViewController];
+    NSArrayController *graphicsController = [viewController graphicsController];
     
-    for (SVGraphic *aGraphic in [[viewController graphicsController] selectedObjects])
+    NSArray *graphics = [graphicsController selectedObjects];
+    NSMutableArray *sidebarPagelets = [[NSMutableArray alloc] initWithCapacity:[graphics count]];
+    
+    for (SVGraphic *aGraphic in graphics)
     {
         // Serialize
         id serializedPagelet = [aGraphic serializedProperties];
         
         // Deserialize into controller
-        [sidebarController addObjectFromSerializedPagelet:serializedPagelet];
+        SVGraphic *pagelet = [sidebarController addObjectFromSerializedPagelet:serializedPagelet];
+        if (pagelet) [sidebarPagelets addObject:pagelet];
     }
     
     
     // Remove originals. For some reason -delete: does not fire change notifications
     [[self webEditor] deleteForward:self];
+    
+    
+    // Update selection
+    BOOL selectInserted = [graphicsController selectsInsertedObjects];
+    [graphicsController setSelectsInsertedObjects:YES];
+    [graphicsController addObjects:sidebarPagelets];
+    [graphicsController setSelectsInsertedObjects:selectInserted];
+    
+    [sidebarPagelets release];
 }
 
 

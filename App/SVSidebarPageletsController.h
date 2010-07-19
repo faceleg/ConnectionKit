@@ -55,6 +55,6 @@
 - (BOOL)insertPageletsFromPasteboard:(NSPasteboard *)pboard
                atArrangedObjectIndex:(NSUInteger)index;
 
-- (BOOL)addObjectFromSerializedPagelet:(id)serializedPagelet;
+- (SVGraphic *)addObjectFromSerializedPagelet:(id)serializedPagelet;
 
 @end
