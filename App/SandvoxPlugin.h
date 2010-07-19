@@ -57,7 +57,6 @@
 #import "NSBundle+Karelia.h"
 #import "NSData+Karelia.h"
 #import "NSObject+Karelia.h"
-#import "NSScanner+Karelia.h"
 #import "NSSet+Karelia.h"
 #import "NSSet+KTExtensions.h"
 #import "NSString+KTExtensions.h"
