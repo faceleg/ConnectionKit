@@ -58,7 +58,6 @@
 // Foundation extensions
 #import "NSBundle+Karelia.h"
 #import "NSData+Karelia.h"
-#import "NSFileManager+Karelia.h"
 #import "NSHelpManager+Karelia.h"
 #import "NSIndexPath+Karelia.h"
 #import "NSIndexSet+Karelia.h"
