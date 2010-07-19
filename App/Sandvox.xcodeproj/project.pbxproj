@@ -888,7 +888,7 @@
 		CE01A7DD0EAFD63600BDF264 /* NSDate+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6D90EAFD63600BDF264 /* NSDate+Karelia.m */; };
 		CE01A7DE0EAFD63600BDF264 /* NSDateFormatter+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6DA0EAFD63600BDF264 /* NSDateFormatter+Karelia.h */; };
 		CE01A7DF0EAFD63600BDF264 /* NSDateFormatter+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6DB0EAFD63600BDF264 /* NSDateFormatter+Karelia.m */; };
-		CE01A7E00EAFD63600BDF264 /* NSDictionary+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6DC0EAFD63600BDF264 /* NSDictionary+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7E00EAFD63600BDF264 /* NSDictionary+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6DC0EAFD63600BDF264 /* NSDictionary+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A7E10EAFD63600BDF264 /* NSDictionary+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6DD0EAFD63600BDF264 /* NSDictionary+Karelia.m */; };
 		CE01A7E20EAFD63600BDF264 /* NSFileManager+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6DE0EAFD63600BDF264 /* NSFileManager+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A7E30EAFD63600BDF264 /* NSFileManager+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6DF0EAFD63600BDF264 /* NSFileManager+Karelia.m */; };
