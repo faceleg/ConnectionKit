@@ -161,7 +161,7 @@
     SVHTMLContext *feedContext = [SVHTMLContext currentContext];
     
     KSEscapedXMLEntitiesWriter *writer = [[KSEscapedXMLEntitiesWriter alloc]
-                                          initWithOutputWriter:feedContext];
+                                          initWithOutputXMLWriter:feedContext];
     
     SVHTMLContext *context = [[SVProxyHTMLContext alloc] initWithOutputWriter:writer target:feedContext];
     
