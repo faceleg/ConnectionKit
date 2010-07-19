@@ -31,10 +31,14 @@
 #pragma mark Tree
 
 @property(nonatomic, copy) NSArray *childWebEditorItems;
-@property(nonatomic, assign) WEKWebEditorItem *parentWebEditorItem;  // don't call setter directly
+@property(nonatomic, assign, readonly) WEKWebEditorItem *parentWebEditorItem;
+
 - (void)addChildWebEditorItem:(WEKWebEditorItem *)controller;
 - (void)replaceChildWebEditorItem:(WEKWebEditorItem *)oldItem with:(WEKWebEditorItem *)newItem;
 - (void)removeFromParentWebEditorItem;
+
+- (void)itemWillMoveToParentWebEditorItem:(WEKWebEditorItem *)newParentItem;
+- (void)itemDidMoveToParentWebEditorItem;
 
 - (NSEnumerator *)enumerator;
 

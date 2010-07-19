@@ -48,16 +48,40 @@
  */
 
 @synthesize childWebEditorItems = _childControllers;
-- (void)setChildWebEditorItems:(NSArray *)controllers
+- (void)setChildWebEditorItems:(NSArray *)newChildItems
 {
-    [[self childWebEditorItems] makeObjectsPerformSelector:@selector(setParentWebEditorItem:)
-                                                withObject:nil];
+    // Announce what will happen
+    NSArray *oldChildren = _childControllers;
     
-    controllers = [controllers copy];
-    [_childControllers release]; _childControllers = controllers;
+    [oldChildren makeObjectsPerformSelector:@selector(itemWillMoveToParentWebEditorItem:)
+                                 withObject:nil];
     
-    [controllers makeObjectsPerformSelector:@selector(setParentWebEditorItem:)
-                                 withObject:self];
+    
+    // Remove existing children
+    [oldChildren makeObjectsPerformSelector:@selector(setParentWebEditorItem:)
+                                 withObject:nil];
+    _childControllers = nil;    // still hung on to as oldChildren
+    
+    
+    // Let them know what happened
+    [oldChildren makeObjectsPerformSelector:@selector(itemDidMoveToParentWebEditorItem)];
+    [oldChildren release];
+    
+    
+    // Announce what will happen to new children
+    [newChildItems makeObjectsPerformSelector:@selector(itemWillMoveToParentWebEditorItem:)
+                                   withObject:self];
+    
+    
+    // Store new children
+    _childControllers = [newChildItems copy];
+    
+    [_childControllers makeObjectsPerformSelector:@selector(setParentWebEditorItem:)
+                                       withObject:self];
+    
+    
+    // Let them know what happened
+    [_childControllers makeObjectsPerformSelector:@selector(itemDidMoveToParentWebEditorItem)];
 }
 
 @synthesize parentWebEditorItem = _parentController;
@@ -129,6 +153,9 @@
         [children release];
     }
 }
+
+- (void)itemWillMoveToParentWebEditorItem:(WEKWebEditorItem *)newParentItem; { }
+- (void)itemDidMoveToParentWebEditorItem; { }
 
 - (NSEnumerator *)enumerator;
 {
