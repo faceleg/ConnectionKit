@@ -530,7 +530,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     // Unregister descendants
     for (WEKWebEditorItem *anItem in [item childWebEditorItems])
     {
-        [self registerWebEditorItem:anItem];
+        [self unregisterWebEditorItem:anItem];
     }
 }
 
