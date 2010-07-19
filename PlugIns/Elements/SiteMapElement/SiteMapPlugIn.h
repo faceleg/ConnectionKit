@@ -1,6 +1,6 @@
 //
 //  SiteMapPlugIn.h
-//  Sandvox SDK: SiteMapElement
+//  SiteMapElement
 //
 //  Copyright 2006-2010 Karelia Software. All rights reserved.
 //

@@ -1,6 +1,6 @@
 //
 //  SiteMapPlugIn.m
-//  Sandvox SDK: SiteMapElement
+//  SiteMapElement
 //
 //  Copyright 2006-2010 Karelia Software. All rights reserved.
 //
@@ -45,7 +45,7 @@
 #pragma mark -
 #pragma mark SVPlugIn
 
-+ (NSSet *)plugInKeys
++ (NSArray *)plugInKeys
 { 
     return [NSSet setWithObjects:
             @"compact", 
