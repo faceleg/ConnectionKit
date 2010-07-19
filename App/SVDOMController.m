@@ -194,7 +194,33 @@
     [super updateIfNeeded];
 }
 
+#pragma mark Dependencies
+
 - (NSSet *)dependencies { return [[_dependencies copy] autorelease]; }
+
+- (void)startObservingDependency:(KSObjectKeyPathPair *)pair;
+{
+    [[pair object] addObserver:self
+                    forKeyPath:[pair keyPath]
+                       options:0
+                       context:sWebViewDependenciesObservationContext];
+}
+
+- (void)startObservingDependencies;
+{
+    for (KSObjectKeyPathPair *aDependency in [self dependencies])
+    {
+        [self startObservingDependency:aDependency];
+    }
+}
+
+- (void)stopObservingDependencies;
+{
+    for (KSObjectKeyPathPair *aDependency in [self dependencies])
+    {
+        [[aDependency object] removeObserver:self forKeyPath:[aDependency keyPath]];
+    }
+}
 
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 {
@@ -206,23 +232,24 @@
         if (![_dependencies containsObject:pair])
         {
             [_dependencies addObject:pair];
-            
-            [[pair object] addObserver:self
-                            forKeyPath:[pair keyPath]
-                               options:0
-                               context:sWebViewDependenciesObservationContext];
+            if ([self observesDependencies]) [self startObservingDependency:pair];
         }
     }
 }
 
 - (void)removeAllDependencies;
 {
-    for (KSObjectKeyPathPair *aDependency in [self dependencies])
-    {
-        [[aDependency object] removeObserver:self forKeyPath:[aDependency keyPath]];
-    }
-    
+    if ([self observesDependencies]) [self stopObservingDependencies];
     [_dependencies removeAllObjects];
+}
+
+@synthesize observesDependencies = _isObservingDependencies;
+- (void)setObservesDependencies:(BOOL)observe;
+{
+    if (observe && ![self observesDependencies]) [self startObservingDependencies];
+    if (!observe && [self observesDependencies]) [self stopObservingDependencies];
+    
+    _isObservingDependencies = observe;
 }
 
 #pragma mark Sidebar

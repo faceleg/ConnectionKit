@@ -25,6 +25,7 @@
     // Updating
     BOOL                    _needsUpdate;
     NSMutableSet            *_dependencies;
+    BOOL                    _isObservingDependencies;
     SVWebEditorHTMLContext  *_context;
 }
 
@@ -57,9 +58,12 @@
 @property(nonatomic, readonly) BOOL needsUpdate;
 - (void)updateIfNeeded; // recurses down the tree
 
+
+#pragma mark Dependencies
 @property(nonatomic, copy, readonly) NSSet *dependencies;
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 - (void)removeAllDependencies;
+@property(nonatomic) BOOL observesDependencies;
 
 
 @end
