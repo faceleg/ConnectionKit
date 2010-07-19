@@ -295,6 +295,7 @@ handleNavigationAction:(NSDictionary *)actionInformation
 
 #pragma mark Web Editor Items
 - (void)webEditor:(WEKWebEditorView *)sender didAddItem:(WEKWebEditorItem *)item;
+- (void)webEditor:(WEKWebEditorView *)sender willRemoveItem:(WEKWebEditorItem *)item;
 
 
 @end
