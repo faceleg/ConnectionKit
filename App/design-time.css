@@ -20,6 +20,8 @@
     border-color:rgba(0,127,255,1);
 }
 
+#sidebar { min-height:230px; }
+
 
 /*  By default, nothing in article is selectable… */
 img, .article [contenteditable=true] > * {
