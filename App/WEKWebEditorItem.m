@@ -220,7 +220,17 @@
 {
     _selected = selected;
     
-    [[[self HTMLElement] documentView] setNeedsDisplayInRect:[self drawingRect]];
+    DOMElement *element = [self HTMLElement];
+    BOOL isVisible = [element isDescendantOfNode:[element ownerDocument]];
+    if (isVisible)
+    {
+        [[element documentView] setNeedsDisplayInRect:[self drawingRect]];
+    }
+    else
+    {
+        // Fallback to total refresh. #82192
+        [[element documentView] setNeedsDisplay:YES];
+    }
     
     [self updateToReflectSelection];
 }
