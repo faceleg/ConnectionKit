@@ -20,7 +20,6 @@
 - (void)initializeStoreSelectionPopupButton;
 - (void)prepareTableViews;
 - (void)centerLayoutSegmentIcons;
-- (void)initializeUnifiedTableButtons;
 
 - (void)observeChangesToListSource;
 - (void)stopObservingChangesToListSource;
@@ -53,7 +52,6 @@
 	[self initializeStoreSelectionPopupButton];
 	[self prepareTableViews];
 	[self centerLayoutSegmentIcons];
-	[self initializeUnifiedTableButtons];
 	
 	[self observeChangesToListSource];
 	[self observeChangesToAutomaticListData];
@@ -78,24 +76,6 @@
 	for (i = 0; i < [listLayoutSegmentedControl segmentCount]; i++) {
 		[listLayoutSegmentedControl setLabel: nil forSegment: i];
 	}
-}
-
-- (void)initializeUnifiedTableButtons
-{
-	// Set up the boxes under the tables
-	[manualTableViewButtonsBox setDrawsFrame: YES];
-	[manualTableViewButtonsBox setFill: NTBoxBevel];
-	[manualTableViewButtonsBox setBorderMask: (NTBoxLeft | NTBoxRight | NTBoxBottom)];
-	[manualTableViewButtonsBox setFrameColor: [NSColor lightGrayColor]];
-	
-	[automaticTableButtonsBox setDrawsFrame: YES];
-	[automaticTableButtonsBox setFill: NTBoxBevel];
-	[automaticTableButtonsBox setBorderMask: (NTBoxLeft | NTBoxRight | NTBoxBottom)];
-	[automaticTableButtonsBox setFrameColor: [NSColor lightGrayColor]];
-	
-	// Give the buttons their icons
-	[oManualListAddProductButton setImage:[NSImage imageNamed:NSImageNameAddTemplate]];
-	[oManualListRemoveProductButton setImage:[NSImage imageNamed:NSImageNameRemoveTemplate]];
 }
 
 #pragma mark Dealloc
