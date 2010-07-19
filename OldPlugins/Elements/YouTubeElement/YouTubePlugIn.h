@@ -1,10 +1,39 @@
 //
-//  YouTubeElementPlugin.h
-//  YouTubeElement
+//  YouTubePlugIn.h
+//  Sandvox SDK
 //
-//  Created by Dan Wood on 2/23/10.
-//  Copyright 2010 Karelia Software. All rights reserved.
+//  Copyright 2004-2010 Karelia Software. All rights reserved.
 //
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//  *  Redistribution of source code must retain the above copyright notice,
+//     this list of conditions and the follow disclaimer.
+//
+//  *  Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation
+//     and/or other material provided with the distribution.
+//
+//  *  Neither the name of Karelia Software nor the names of its contributors
+//     may be used to endorse or promote products derived from this software
+//     without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS-IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+//  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+//  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+//  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+//  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+//  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+//  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+//  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUR OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
+//
+//  Community Note: This code is distrubuted under a modified BSD License.
+//  We encourage you to share your Sandvox Plugins similarly.
+//
+
 
 #import <Cocoa/Cocoa.h>
 #import "SandvoxPlugin.h"
@@ -46,20 +75,20 @@ typedef enum {
 	
 }
 
-@property (copy) NSString *userVideoCode;
-@property (copy) NSString *videoID;
-@property (copy) NSColor *color2;
-@property (copy) NSColor *color1;
-@property (assign) unsigned videoSize;
-@property (assign, readonly) unsigned videoWidth;
-@property (assign, readonly) unsigned videoHeight;
-@property (assign) BOOL showBorder;
-@property (assign) BOOL widescreen;
-@property (assign) BOOL playHD;
-@property (assign) BOOL privacy;
-@property (assign) BOOL includeRelatedVideos;
-@property (assign) BOOL useCustomSecondaryColor;
-@property (readonly) NSString *sizeToolTip;
+@property (nonatomic, copy) NSString *userVideoCode;
+@property (nonatomic, copy) NSString *videoID;
+@property (nonatomic, copy) NSColor *color2;
+@property (nonatomic, copy) NSColor *color1;
+@property (nonatomic) unsigned videoSize;
+@property (nonatomic, readonly) unsigned videoWidth;
+@property (nonatomic, readonly) unsigned videoHeight;
+@property (nonatomic) BOOL showBorder;
+@property (nonatomic) BOOL widescreen;
+@property (nonatomic) BOOL playHD;
+@property (nonatomic) BOOL privacy;
+@property (nonatomic) BOOL includeRelatedVideos;
+@property (nonatomic) BOOL useCustomSecondaryColor;
+@property (nonatomic, readonly) NSString *sizeToolTip;
 
 + (NSColor *)defaultPrimaryColor;
 - (void)resetColors;

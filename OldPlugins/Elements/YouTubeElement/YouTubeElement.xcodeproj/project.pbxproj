@@ -108,9 +108,9 @@
 				CEF120DE0D90567900FCAC70 /* InfoPlist.strings */,
 				3C42E5B00D650888004F35FD /* Localizable.strings */,
 				3C921CA811F3D9FF0005DADD /* YouTube.xib */,
+				CEF120690D9055E600FCAC70 /* YouTubeTemplate.html */,
 				CEF120670D9055B700FCAC70 /* YouTube.icns */,
 				270461D30DAE7FF000D74480 /* youtube-logo.png */,
-				CEF120690D9055E600FCAC70 /* YouTubeTemplate.html */,
 				3C42E5C50D65091C004F35FD /* License.rtf */,
 			);
 			name = Resources;
@@ -119,14 +119,14 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				271696260DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.h */,
-				271696270DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m */,
-				2716969D0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.h */,
-				2716969E0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m */,
 				CE81C30C113460C200CF4B7F /* YouTubePlugIn.h */,
 				CE81C30D113460C200CF4B7F /* YouTubePlugIn.m */,
 				CE81C311113460DD00CF4B7F /* YouTubeInspector.h */,
 				CE81C312113460DD00CF4B7F /* YouTubeInspector.m */,
+				271696260DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.h */,
+				271696270DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m */,
+				2716969D0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.h */,
+				2716969E0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
