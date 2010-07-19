@@ -522,6 +522,18 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     }
 }
 
+- (void)unregisterWebEditorItem:(WEKWebEditorItem *)item;  // recurses through, registering descendants too
+{
+    // Turn off dependencies
+    [item setObservesDependencies:NO];
+    
+    // Unregister descendants
+    for (WEKWebEditorItem *anItem in [item childWebEditorItems])
+    {
+        [self registerWebEditorItem:anItem];
+    }
+}
+
 #pragma mark Text Areas
 
 - (SVTextDOMController *)textAreaForDOMNode:(DOMNode *)node;
@@ -1290,6 +1302,12 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
 {
     OBPRECONDITION(sender == [self webEditor]);
     [self registerWebEditorItem:item];
+}
+
+- (void)webEditor:(WEKWebEditorView *)sender willRemoveItem:(WEKWebEditorItem *)item;
+{
+    OBPRECONDITION(sender == [self webEditor]);
+    [self unregisterWebEditorItem:item];
 }
 
 #pragma mark NSDraggingDestination
