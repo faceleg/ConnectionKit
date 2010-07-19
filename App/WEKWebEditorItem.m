@@ -131,12 +131,22 @@
     NSMutableArray *children = [[self childWebEditorItems] mutableCopy];
     NSUInteger index = [children indexOfObject:oldItem];
     
+    
+    // Start swap
+    [oldItem itemWillMoveToParentWebEditorItem:nil];
     [oldItem setParentWebEditorItem:nil];
     [children replaceObjectAtIndex:index withObject:newItem];
     
-    [_childControllers release]; _childControllers = children;
+    // Alert new
+    [newItem itemWillMoveToParentWebEditorItem:self];
     
+    // Finish the swap
+    [_childControllers release]; _childControllers = children;
+    [oldItem itemDidMoveToParentWebEditorItem];
+    
+    // Alert new
     [newItem setParentWebEditorItem:self];
+    [newItem itemDidMoveToParentWebEditorItem];
 }
 
 - (void)removeFromParentWebEditorItem;
