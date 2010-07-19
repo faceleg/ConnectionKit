@@ -134,7 +134,7 @@
     return result;
 }
 
-- (NSString *)hyperlinkString { return myHyperlinkString; }
+@synthesize hyperlinkString = myHyperlinkString;
 
 - (void)setHyperlinkString:(NSString *)hyperlinkString
 {

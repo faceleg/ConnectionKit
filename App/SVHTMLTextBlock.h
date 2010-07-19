@@ -60,8 +60,7 @@
 - (NSString *)CSSClassName;
 
 
-- (NSString *)hyperlinkString;
-- (void)setHyperlinkString:(NSString *)hyperlinkString;
+@property(nonatomic, copy) NSString *hyperlinkString;
 
 - (NSString *)targetString;
 - (void)setTargetString:(NSString *)targetString;
