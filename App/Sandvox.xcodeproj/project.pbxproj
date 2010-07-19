@@ -697,7 +697,7 @@
 		3CE79D8A0D6260D000FCEE6D /* NSArray+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE79D880D6260D000FCEE6D /* NSArray+KTExtensions.m */; };
 		3CE79DB90D6261B300FCEE6D /* NSOutlineView+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CE79DB70D6261B300FCEE6D /* NSOutlineView+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		3CE79DBA0D6261B300FCEE6D /* NSOutlineView+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE79DB80D6261B300FCEE6D /* NSOutlineView+KTExtensions.m */; };
-		3CEC877A0BF8DD2700CC732B /* KT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1407DFC06100DE4994 /* KT.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3CEC877A0BF8DD2700CC732B /* KT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1407DFC06100DE4994 /* KT.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC877B0BF8DD2B00CC732B /* SVApplicationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1807DFC0AA00DE4994 /* SVApplicationController.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC877D0BF8DD3400CC732B /* KTDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D3307DFC0F000DE4994 /* KTDocument.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B100BF9092900CC732B /* KTApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1A07DFC0AA00DE4994 /* KTApplication.h */; settings = {ATTRIBUTES = (); }; };

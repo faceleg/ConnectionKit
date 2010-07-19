@@ -19,8 +19,6 @@
 
 // SandvoxPlugin.h is a convenience header that imports all "public" headers in Sandvox
 
-// defines/enums/strings used throughout Sandvox
-#import "KT.h"
 
 // Debugging
 #import "Debug.h"
