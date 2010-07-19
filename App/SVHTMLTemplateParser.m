@@ -526,7 +526,7 @@
 	}
 	
 	id target = [[self cache] valueForKeyPath:inRestOfTag];
-	NSString *result = [self pathToObject:target];
+	NSString *result = [[self pathToObject:target] stringByEscapingHTMLEntities];
 	return result;
 }
 
@@ -543,7 +543,7 @@
         result = [[SVHTMLContext currentContext] relativeURLStringOfURL:anObject];
     }
         
-	return [result stringByEscapingHTMLEntities];
+	return result;
 }
 
 #pragma mark Deprecated
