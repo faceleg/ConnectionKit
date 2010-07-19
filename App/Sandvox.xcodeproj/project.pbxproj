@@ -118,7 +118,7 @@
 				3C53E3D311EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3E711EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3DB11EE6B14005CF7B2 /* PBXTargetDependency */,
-				3C53E3D711EE6B14005CF7B2 /* PBXTargetDependency */,
+				3C9870A411F3D3AC0053A72C /* PBXTargetDependency */,
 				3C53E3D511EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3E311EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3C511EE6B14005CF7B2 /* PBXTargetDependency */,
@@ -1296,13 +1296,6 @@
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = RSSBadgeElement;
 		};
-		3C53E35811EE6826005CF7B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = SiteMapElement;
-		};
 		3C53E36011EE6830005CF7B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
@@ -1372,13 +1365,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = YouTubeElement;
-		};
-		3C53E3D611EE6B14005CF7B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = SiteMapElement;
 		};
 		3C53E3D811EE6B14005CF7B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1491,6 +1477,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3C96ADE10CA06FB900C5249F;
 			remoteInfo = "Update Version";
+		};
+		3C9870A111F3D3A00053A72C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* SiteMap.svxElement */;
+			remoteInfo = SiteMapElement;
+		};
+		3C9870A311F3D3AC0053A72C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* SiteMapElement */;
+			remoteInfo = SiteMapElement;
 		};
 		3C9B65930BFA7F7F007A4871 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2138,7 +2138,7 @@
 		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../../Shared/ThirdParty/Sparkle/Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		3C3F547C0D625919004885E7 /* Connection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Connection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3F54A10D625983004885E7 /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AmazonSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SiteMapElement.xcodeproj; path = ../OldPlugins/Elements/SiteMapElement/SiteMapElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SiteMapElement.xcodeproj; path = ../PlugIns/Elements/SiteMapElement/SiteMapElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RSSBadgeElement.xcodeproj; path = ../OldPlugins/Elements/RSSBadgeElement/RSSBadgeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E2990D64D253004F35FD /* PageCounterElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PageCounterElement.xcodeproj; path = ../OldPlugins/Elements/PageCounterElement/PageCounterElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E4090D64F93E004F35FD /* IndexElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IndexElement.xcodeproj; path = ../OldPlugins/Elements/IndexElement/IndexElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -4113,14 +4113,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3C53E35511EE6826005CF7B2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C53E35911EE6826005CF7B2 /* SiteMap.svxElement */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3C53E35D11EE6830005CF7B2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -4410,6 +4402,14 @@
 				CE15C2920E75C74D00755113 /* SandvoxSymbols.xcconfig */,
 			);
 			name = Configuration;
+			sourceTree = "<group>";
+		};
+		3C98709E11F3D3A00053A72C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3C9870A211F3D3A00053A72C /* SiteMap.svxElement */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		3CA9FD020D63A04A00815310 /* DataSources */ = {
@@ -5745,7 +5745,7 @@
 					ProjectRef = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C53E35511EE6826005CF7B2 /* Products */;
+					ProductGroup = 3C98709E11F3D3A00053A72C /* Products */;
 					ProjectRef = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
 				},
 				{
@@ -5902,13 +5902,6 @@
 			remoteRef = 3C53E35011EE681B005CF7B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3C53E35911EE6826005CF7B2 /* SiteMap.svxElement */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SiteMap.svxElement;
-			remoteRef = 3C53E35811EE6826005CF7B2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		3C53E36111EE6830005CF7B2 /* YouTube.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -5935,6 +5928,13 @@
 			fileType = wrapper.cfbundle;
 			path = Feed.svxElement;
 			remoteRef = 3C79F2EA11F3AEDF00B699EE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3C9870A211F3D3A00053A72C /* SiteMap.svxElement */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SiteMap.svxElement;
+			remoteRef = 3C9870A111F3D3A00053A72C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3CBC719A11F02EB800716937 /* Badge.svxElement */ = {
@@ -7055,11 +7055,6 @@
 			name = YouTubeElement;
 			targetProxy = 3C53E3D411EE6B14005CF7B2 /* PBXContainerItemProxy */;
 		};
-		3C53E3D711EE6B14005CF7B2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SiteMapElement;
-			targetProxy = 3C53E3D611EE6B14005CF7B2 /* PBXContainerItemProxy */;
-		};
 		3C53E3D911EE6B14005CF7B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = DownloadIndex;
@@ -7129,6 +7124,11 @@
 			isa = PBXTargetDependency;
 			target = 3C96ADE10CA06FB900C5249F /* UpdateVersion */;
 			targetProxy = 3C96ADF00CA074A900C5249F /* PBXContainerItemProxy */;
+		};
+		3C9870A411F3D3AC0053A72C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SiteMapElement;
+			targetProxy = 3C9870A311F3D3AC0053A72C /* PBXContainerItemProxy */;
 		};
 		3C9B65940BFA7F7F007A4871 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
