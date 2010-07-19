@@ -6,15 +6,15 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "YouTubeElementPlugin.h"
-#import "YouTubeElementInspector.h"
+#import "YouTubePlugIn.h"
+#import "YouTubeInspector.h"
 #import "YouTubeCocoaExtensions.h"
 
-@interface YouTubeElementPlugin ()
+@interface YouTubePlugIn ()
 @end
 
 
-@implementation YouTubeElementPlugin
+@implementation YouTubePlugIn
 
 @synthesize userVideoCode = _userVideoCode;
 @synthesize videoID = _videoID;
@@ -28,7 +28,7 @@
 @synthesize includeRelatedVideos = _includeRelatedVideos;
 @synthesize useCustomSecondaryColor = _useCustomSecondaryColor;
 
-+ (Class)inspectorViewControllerClass { return [YouTubeElementInspector class]; }
++ (Class)inspectorViewControllerClass { return [YouTubeInspector class]; }
 + (NSSet *)plugInKeys
 { 
     return [NSSet setWithObjects:@"userVideoCode", @"videoSize", @"color2", @"color1", @"widescreen", @"showBorder", @"includeRelatedVideos", @"useCustomSecondaryColor", @"privacy", @"playHD", nil];
@@ -100,7 +100,7 @@
 		
 		// Prepare initial colors
 		self.useCustomSecondaryColor = NO;
-		self.color2 = [YouTubeElementPlugin defaultPrimaryColor];
+		self.color2 = [YouTubePlugIn defaultPrimaryColor];
 	}
 	
 // Here we want to NOT allow resizing of element if it's in the sidebar.

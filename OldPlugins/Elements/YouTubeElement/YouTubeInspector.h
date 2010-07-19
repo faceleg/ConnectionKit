@@ -10,7 +10,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface YouTubeElementInspector : SVInspectorViewController {
+@interface YouTubeInspector : SVInspectorViewController {
 
 	
 }
