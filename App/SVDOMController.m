@@ -27,6 +27,7 @@
     [super init];
     
     _dependencies = [[NSMutableSet alloc] init];
+    [self setObservesDependencies:YES]; // in case a dependency got setup before -init
     
     return self;
 }
