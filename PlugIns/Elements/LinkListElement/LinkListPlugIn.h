@@ -52,7 +52,7 @@
 @property (nonatomic, retain) NSMutableArray *linkList;
 
 // UI tag, values are 1 or 0
-@property (nonatomic, assign) NSInteger layout;
-@property (nonatomic, assign) BOOL openLinksInNewWindow;
+@property (nonatomic) NSInteger layout;
+@property (nonatomic) BOOL openLinksInNewWindow;
 
 @end
