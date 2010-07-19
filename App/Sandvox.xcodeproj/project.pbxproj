@@ -929,7 +929,7 @@
 		CE01A80C0EAFD63600BDF264 /* AMRollOverButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7090EAFD63600BDF264 /* AMRollOverButtonCell.m */; };
 		CE01A80D0EAFD63600BDF264 /* AQDataExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70A0EAFD63600BDF264 /* AQDataExtensions.h */; };
 		CE01A80E0EAFD63600BDF264 /* AQDataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A70B0EAFD63600BDF264 /* AQDataExtensions.m */; };
-		CE01A80F0EAFD63600BDF264 /* BDAlias.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70C0EAFD63600BDF264 /* BDAlias.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A80F0EAFD63600BDF264 /* BDAlias.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70C0EAFD63600BDF264 /* BDAlias.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A8100EAFD63600BDF264 /* BDAlias.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A70D0EAFD63600BDF264 /* BDAlias.m */; };
 		CE01A8110EAFD63600BDF264 /* DNDArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70E0EAFD63600BDF264 /* DNDArrayController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A8120EAFD63600BDF264 /* DNDArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A70F0EAFD63600BDF264 /* DNDArrayController.m */; };
