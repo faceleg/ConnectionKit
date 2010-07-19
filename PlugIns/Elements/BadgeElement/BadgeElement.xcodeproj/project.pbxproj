@@ -17,7 +17,6 @@
 		3CA9FEC90D63BF2400815310 /* sandvox_icon_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEC30D63BF2400815310 /* sandvox_icon_white.png */; };
 		3CA9FEF20D63BFD400815310 /* BadgePlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9FEF10D63BFD400815310 /* BadgePlugIn.m */; };
 		3CA9FEF60D63BFE600815310 /* sandvox_castle.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEF30D63BFE600815310 /* sandvox_castle.png */; };
-		3CA9FEF70D63BFE600815310 /* sandvox_castle_white.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEF40D63BFE600815310 /* sandvox_castle_white.gif */; };
 		3CA9FEF80D63BFE600815310 /* sandvox_castle_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEF50D63BFE600815310 /* sandvox_castle_white.png */; };
 		3CA9FEFB0D63BFFE00815310 /* BadgeTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEF90D63BFFE00815310 /* BadgeTemplate.html */; };
 		3CA9FEFC0D63BFFE00815310 /* document.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEFA0D63BFFE00815310 /* document.icns */; };
@@ -286,7 +285,6 @@
 				3CA9FEC80D63BF2400815310 /* sandvox_castle_top_white.png in Resources */,
 				3CA9FEC90D63BF2400815310 /* sandvox_icon_white.png in Resources */,
 				3CA9FEF60D63BFE600815310 /* sandvox_castle.png in Resources */,
-				3CA9FEF70D63BFE600815310 /* sandvox_castle_white.gif in Resources */,
 				3CA9FEF80D63BFE600815310 /* sandvox_castle_white.png in Resources */,
 				3CA9FEFB0D63BFFE00815310 /* BadgeTemplate.html in Resources */,
 				3CA9FEFC0D63BFFE00815310 /* document.icns in Resources */,
