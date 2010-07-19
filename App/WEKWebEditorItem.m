@@ -159,6 +159,7 @@
     // Remove
     [self itemWillMoveToParentWebEditorItem:nil];
     [self setParentWebEditorItem:nil];
+    [self retain];  // need to stay alive for removal message
     
     NSMutableArray *children = [[parent childWebEditorItems] mutableCopy];
     [children removeObject:self];
@@ -173,6 +174,7 @@
     }
     
     [self itemDidMoveToParentWebEditorItem];
+    [self release];
 }
 
 - (void)itemWillMoveToParentWebEditorItem:(WEKWebEditorItem *)newParentItem; { }
