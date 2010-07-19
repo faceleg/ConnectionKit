@@ -151,6 +151,7 @@
 
 - (void)removeFromParentWebEditorItem;
 {
+    [self itemWillMoveToParentWebEditorItem:nil];
     [self setParentWebEditorItem:nil];
     
     WEKWebEditorItem *parent = [self parentWebEditorItem];
@@ -166,6 +167,8 @@
     {
         [children release];
     }
+    
+    [self itemDidMoveToParentWebEditorItem];
 }
 
 - (void)itemWillMoveToParentWebEditorItem:(WEKWebEditorItem *)newParentItem; { }
