@@ -511,6 +511,10 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     }
     
     
+    // Start observing dependencies
+    [item setObservesDependencies:YES];
+    
+    
     // Register descendants
     for (WEKWebEditorItem *anItem in [item childWebEditorItems])
     {

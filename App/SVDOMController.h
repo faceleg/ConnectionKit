@@ -110,6 +110,10 @@
 - (SVWebEditorHTMLContext *)HTMLContext;
 
 
+#pragma mark Dependencies
+- (void)setObservesDependencies:(BOOL)observe;
+
+
 #pragma mark Drag & Drop
 - (NSArray *)registeredDraggedTypes;
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node

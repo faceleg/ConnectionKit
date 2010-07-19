@@ -335,6 +335,8 @@
 
 - (SVWebEditorHTMLContext *)HTMLContext { return nil; }
 
+- (void)setObservesDependencies:(BOOL)observe; { }
+
 #pragma mark Drag & Drop
 
 - (NSArray *)registeredDraggedTypes; { return nil; }
