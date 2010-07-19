@@ -51,6 +51,6 @@
 @property(nonatomic) NSUInteger max;
 @property(nonatomic) NSUInteger summaryChars;
 @property(nonatomic, copy) NSString *key;
-@property(nonatomic) NSURL *feedURL;
+@property(nonatomic, copy) NSURL *feedURL;
 @end
 
