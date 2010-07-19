@@ -151,10 +151,14 @@
 
 - (void)removeFromParentWebEditorItem;
 {
+    // Bail early if there's nothing to do
+    WEKWebEditorItem *parent = [self parentWebEditorItem];
+    if (!parent) return;
+    
+    
+    // Remove
     [self itemWillMoveToParentWebEditorItem:nil];
     [self setParentWebEditorItem:nil];
-    
-    WEKWebEditorItem *parent = [self parentWebEditorItem];
     
     NSMutableArray *children = [[parent childWebEditorItems] mutableCopy];
     [children removeObject:self];
