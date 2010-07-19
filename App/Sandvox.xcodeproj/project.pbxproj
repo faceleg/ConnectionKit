@@ -906,7 +906,7 @@
 		CE01A7F50EAFD63600BDF264 /* NSString+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6F10EAFD63600BDF264 /* NSString+Karelia.m */; };
 		CE01A7F60EAFD63600BDF264 /* NSString+KareliaPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6F20EAFD63600BDF264 /* NSString+KareliaPrivate.h */; };
 		CE01A7F70EAFD63600BDF264 /* NSString+KareliaPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6F30EAFD63600BDF264 /* NSString+KareliaPrivate.m */; };
-		CE01A7F80EAFD63600BDF264 /* NSThread+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6F40EAFD63600BDF264 /* NSThread+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7F80EAFD63600BDF264 /* NSThread+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6F40EAFD63600BDF264 /* NSThread+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A7F90EAFD63600BDF264 /* NSThread+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6F50EAFD63600BDF264 /* NSThread+Karelia.m */; };
 		CE01A7FA0EAFD63600BDF264 /* NSURL+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6F60EAFD63600BDF264 /* NSURL+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A7FB0EAFD63600BDF264 /* NSURL+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6F70EAFD63600BDF264 /* NSURL+Karelia.m */; };
