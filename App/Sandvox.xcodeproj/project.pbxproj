@@ -884,7 +884,7 @@
 		CE01A7D90EAFD63600BDF264 /* NSCharacterSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6D50EAFD63600BDF264 /* NSCharacterSet+Karelia.m */; };
 		CE01A7DA0EAFD63600BDF264 /* NSData+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6D60EAFD63600BDF264 /* NSData+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A7DB0EAFD63600BDF264 /* NSData+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6D70EAFD63600BDF264 /* NSData+Karelia.m */; };
-		CE01A7DC0EAFD63600BDF264 /* NSDate+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6D80EAFD63600BDF264 /* NSDate+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7DC0EAFD63600BDF264 /* NSDate+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6D80EAFD63600BDF264 /* NSDate+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A7DD0EAFD63600BDF264 /* NSDate+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6D90EAFD63600BDF264 /* NSDate+Karelia.m */; };
 		CE01A7DE0EAFD63600BDF264 /* NSDateFormatter+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6DA0EAFD63600BDF264 /* NSDateFormatter+Karelia.h */; };
 		CE01A7DF0EAFD63600BDF264 /* NSDateFormatter+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6DB0EAFD63600BDF264 /* NSDateFormatter+Karelia.m */; };
@@ -1468,28 +1468,28 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* SiteMap.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = SiteMapElement;
 		};
 		3C9870A311F3D3AC0053A72C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* SiteMapElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = SiteMapElement;
 		};
 		3C9870EE11F3D5F60053A72C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA901A20D63D45B00815310 /* LinkListElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* LinkList.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = LinkListElement;
 		};
 		3C9870F011F3D6020053A72C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA901A20D63D45B00815310 /* LinkListElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* LinkListElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = LinkListElement;
 		};
 		3C9B65930BFA7F7F007A4871 /* PBXContainerItemProxy */ = {
