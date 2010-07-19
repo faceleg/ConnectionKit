@@ -341,6 +341,13 @@
 #pragma mark Language
 
 @dynamic language;
+- (BOOL)validateLanguage:(NSString **)language error:(NSError **)error;
+{
+    // Attempts at nil are coerced back to current value. Little bit of a hack. #78003
+    if (!*language) *language = [self language];
+    
+    return YES;
+}
 
 #pragma mark Site Outline
 
