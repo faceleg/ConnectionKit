@@ -102,24 +102,28 @@
     [[webEditor delegate] webEditor:webEditor didAddItem:self];
 }
 
-- (void)addChildWebEditorItem:(WEKWebEditorItem *)controller;
+- (void)addChildWebEditorItem:(WEKWebEditorItem *)item;
 {
-    OBPRECONDITION(controller);
+    OBPRECONDITION(item);
     
-    WEKWebEditorItem *parent = [controller parentWebEditorItem];
+    WEKWebEditorItem *parent = [item parentWebEditorItem];
     if (parent == self) return;   // nothing to do
     
     
     // Remove from existing parent
-    if (parent) [controller removeFromParentWebEditorItem];
+    if (parent) [item removeFromParentWebEditorItem];
     
     
     // Add
-    NSArray *children = [[self childWebEditorItems] arrayByAddingObject:controller];
-    if (!children) children = [NSArray arrayWithObject:controller];
+    [item itemWillMoveToParentWebEditorItem:self];
+    
+    NSArray *children = [[self childWebEditorItems] arrayByAddingObject:item];
+    if (!children) children = [NSArray arrayWithObject:item];
     [_childControllers release]; _childControllers = [children copy];
     
-    [controller setParentWebEditorItem:self];
+    [item setParentWebEditorItem:self];
+    
+    [item itemDidMoveToParentWebEditorItem];
 }
 
 - (void)replaceChildWebEditorItem:(WEKWebEditorItem *)oldItem with:(WEKWebEditorItem *)newItem;
