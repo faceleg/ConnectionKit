@@ -17,14 +17,14 @@
 {
     [super init];
     
-    _currentContext = [[SVMediaGatheringHTMLContext alloc] initWithUploadPath:nil publisher:self];
+    _context = [[SVMediaGatheringHTMLContext alloc] initWithUploadPath:nil publisher:self];
     
     return self;
 }
 
 - (void)dealloc;
 {
-    [_currentContext release];
+    [_context release];
     [super dealloc];
 }
 
@@ -46,7 +46,7 @@
 
 - (SVHTMLContext *)beginPublishingHTMLToPath:(NSString *)path
 {
-    return [[self publishingEngine] beginPublishingHTMLToPath:path];
+    return _context;
 }
 
 - (NSString *)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;

@@ -14,7 +14,7 @@
   @private
     id <SVPublisher>    _mediaPublisher;
     
-    SVHTMLContext   *_currentContext;
+    SVHTMLContext   *_context;
 }
 
 @property(nonatomic, retain) id <SVPublisher> publishingEngine;
