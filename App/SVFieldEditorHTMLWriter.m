@@ -90,6 +90,28 @@
             return [self handleInvalidDOMElement:element];
         }
         
+        
+        // Are we about to open an inline element which matches the one just written? If so, merge them into one. This is made possible by not yet having written the end tag of the element.
+        DOMElement *elementToMergeInto = [_pendingEndDOMElements lastObject];
+        if ([elementToMergeInto isEqualNode:element compareChildNodes:NO])
+        {
+            [_pendingEndDOMElements removeLastObject];
+            [_buffer discardBuffer];
+            [self pushElement:tagName];
+            
+            
+            // Write inner HTML
+            [self writeInnerOfDOMNode:element];
+            
+            
+            // Do the merge in the DOM
+            [[elementToMergeInto mutableChildDOMNodes] addObjectsFromArray:[element mutableChildDOMNodes]];
+            [[element parentNode] removeChild:element];
+            
+            
+            // Carry on. We know the element can't be deemed content in its own right since was checked in previous iteration
+            return [self endElementWithDOMElement:elementToMergeInto];
+        }
     }
         
         
@@ -99,29 +121,6 @@
 - (DOMNode *)_writeDOMElement:(DOMElement *)element;
 {
     NSString *tagName = [element tagName];
-    
-    
-    // Are we about to open an inline element which matches the one just written? If so, merge them into one. This is made possible by not yet having written the end tag of the element.
-    DOMElement *elementToMergeInto = [_pendingEndDOMElements lastObject];
-    if ([elementToMergeInto isEqualNode:element compareChildNodes:NO])
-    {
-        [_pendingEndDOMElements removeLastObject];
-        [_buffer discardBuffer];
-        [self pushElement:tagName];
-        
-        
-        // Write inner HTML
-        [self writeInnerOfDOMNode:element];
-        
-        
-        // Do the merge in the DOM
-        [[elementToMergeInto mutableChildDOMNodes] addObjectsFromArray:[element mutableChildDOMNodes]];
-        [[element parentNode] removeChild:element];
-        
-        
-        // Carry on. We know the element can't be deemed content in its own right since was checked in previous iteration
-        return [self endElementWithDOMElement:elementToMergeInto];
-    }
     
     
     
