@@ -82,6 +82,15 @@
              height:(NSNumber *)height
            fileType:(NSString *)type;
 {
+    // When scaling an image, need full suite of parameters
+    if (width || height)
+    {
+        OBPRECONDITION(width);
+        OBPRECONDITION(height);
+        OBPRECONDITION(type);
+    }
+    
+    
     // If the width and height match the original size, then keep that way
     SVMediaRecord *record = (SVMediaRecord *)media;
     
