@@ -75,7 +75,6 @@
     [super close];
     //[_publishingEngine release]; _publishingEngine = nil;     Messes up media gathering
     [_path release]; _path = nil;
-    [output release]; output = nil;
 }
 
 - (NSURL *)addMedia:(id <SVMedia>)media

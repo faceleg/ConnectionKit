@@ -106,8 +106,6 @@
 
 - (void)dealloc
 {
-    [_output release];
-    
     [_language release];
     [_baseURL release];
     [_currentPage release];
@@ -123,6 +121,7 @@
     
     OBASSERT(!_postHeaderBuffer);   // super should have called -close to set this to nil
     OBASSERT(!_calloutBuffer);
+    OBASSERT(!_output);
 }
 
 #pragma mark Status
@@ -730,6 +729,7 @@
     
     [_postHeaderBuffer release]; _postHeaderBuffer = nil;
     [_calloutBuffer release]; _calloutBuffer = nil;
+    [_output release]; _output = nil;
 }
 
 #pragma mark Legacy
