@@ -1181,14 +1181,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* YouTube.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = YouTubeElement;
 		};
 		3C17D2FD11F564440069BB92 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* YouTubeElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = YouTubeElement;
 		};
 		3C1F512611D576D00036B375 /* PBXContainerItemProxy */ = {
@@ -1691,8 +1691,8 @@
 		270E4B1510FA4DF500EF1FA0 /* SVLinkInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLinkInspector.m; sourceTree = "<group>"; };
 		270E82E510A4484D007E7848 /* KSInspectorTabsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInspectorTabsController.h; sourceTree = "<group>"; };
 		270E82E610A4484E007E7848 /* KSInspectorTabsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspectorTabsController.m; sourceTree = "<group>"; };
-		270F2BB01136B17D0090143E /* KSHTMLWriter+DOM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KSHTMLWriter+DOM.h"; sourceTree = "<group>"; };
-		270F2BB11136B17D0090143E /* KSHTMLWriter+DOM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KSHTMLWriter+DOM.m"; sourceTree = "<group>"; };
+		270F2BB01136B17D0090143E /* KSHTMLWriter+DOM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "KSHTMLWriter+DOM.h"; path = "DOM/KSHTMLWriter+DOM.h"; sourceTree = "<group>"; };
+		270F2BB11136B17D0090143E /* KSHTMLWriter+DOM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "KSHTMLWriter+DOM.m"; path = "DOM/KSHTMLWriter+DOM.m"; sourceTree = "<group>"; };
 		2710C254110A110D00A7B997 /* SVMediaProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaProtocol.h; sourceTree = "<group>"; };
 		2710C3B8110B358D00A7B997 /* SVPageTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageTitle.h; sourceTree = "<group>"; };
 		2710C3B9110B358D00A7B997 /* SVPageTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageTitle.m; sourceTree = "<group>"; };
@@ -3498,6 +3498,8 @@
 		27CC248211F07277007FB3FE /* KSHTMLWriter */ = {
 			isa = PBXGroup;
 			children = (
+				270F2BB01136B17D0090143E /* KSHTMLWriter+DOM.h */,
+				270F2BB11136B17D0090143E /* KSHTMLWriter+DOM.m */,
 				277E72F6113416A20081389F /* KSHTMLWriter.h */,
 				277E72F8113416A20081389F /* KSHTMLWriter.m */,
 				27EF99C011A4205600FC8424 /* KSXMLWriter.h */,
@@ -4797,8 +4799,6 @@
 				27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */,
 				27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */,
 				27DB902F11209AEA00B1895C /* DOMNamedNodeMap+Karelia.m */,
-				270F2BB01136B17D0090143E /* KSHTMLWriter+DOM.h */,
-				270F2BB11136B17D0090143E /* KSHTMLWriter+DOM.m */,
 			);
 			path = WebKit;
 			sourceTree = "<group>";
