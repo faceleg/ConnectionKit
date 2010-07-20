@@ -39,6 +39,8 @@
 #import "ContactPlugin.h"
 #import <NSString+Karelia.h>
 
+#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
+
 
 @implementation ContactField
 

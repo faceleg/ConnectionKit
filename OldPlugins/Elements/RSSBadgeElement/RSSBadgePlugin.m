@@ -9,6 +9,8 @@
 #import "RSSBadgePlugin.h"
 #import "RSSBadgeInspector.h"
 
+#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
+
 
 @implementation RSSBadgePlugin
 

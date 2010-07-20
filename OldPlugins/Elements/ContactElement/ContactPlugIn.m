@@ -44,6 +44,9 @@
 #include <openssl/blowfish.h>
 #include <zlib.h>
 
+#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
+
+
 // LocalizedStringInThisBundle(@"Please specify an address for the recipient using the Inspector.", "String_On_Page_Template")
 // LocalizedStringInThisBundle(@"Email address is missing.  Message cannot be sent.", "String_On_Page_Template")
 // LocalizedStringInThisBundle(@"No message has been entered.  Message cannot be sent.", "String_On_Page_Template")

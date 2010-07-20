@@ -38,6 +38,9 @@
 #import "SandvoxPlugin.h"
 
 
+#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
+
+
 @interface CollectionArchiveDelegate : SVPageletPlugIn
 {
 	IBOutlet KTLinkSourceView	*collectionLinkSourceView;

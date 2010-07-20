@@ -12,6 +12,9 @@
 #import "ABPerson+IMStatus.h"
 #import <AddressBook/AddressBook.h>
 
+#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
+
+
 NSString *IMServiceKey = @"service";
 NSString *IMHTMLKey = @"html"; 
 NSString *IMOnlineImageKey = @"online";
