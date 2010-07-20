@@ -307,7 +307,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     
     // Give focus to article? This has to wait until we're onscreen
-    if ([self articleShouldBecomeFocusedAfterNextLoad])
+    if (NO && [self articleShouldBecomeFocusedAfterNextLoad])
     {
         if ([[[self view] window] makeFirstResponder:[self webEditor]])
         {

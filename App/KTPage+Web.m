@@ -548,7 +548,8 @@
 		   @"* Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)",
 		   @"* This notice MUST stay intact for legal use",
 		   @"* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code",
-		   @"***********************************************/"]];
+		   @"***********************************************/"]
+					useCDATA:NO];	// Don't use CDATA since this isn't going to break the validator and we want it clean.
 	}
 }
 
