@@ -77,15 +77,28 @@
 
 #pragma mark Elements
 
+- (DOMNode *)willWriteDOMElement:(DOMElement *)element;
+{
+    DOMNode *result = [super willWriteDOMElement:element];
+    
+    if (result == element)
+    {
+        // Remove any tags not allowed. Repeat cycle for the node that takes its place
+        NSString *tagName = [element tagName];
+        if (![self validateTagName:tagName])
+        {
+            return [self handleInvalidDOMElement:element];
+        }
+        
+    }
+        
+        
+    return result;
+}
+
 - (DOMNode *)_writeDOMElement:(DOMElement *)element;
 {
-    // Remove any tags not allowed. Repeat cycle for the node that takes its place
     NSString *tagName = [element tagName];
-    if (![self validateTagName:tagName])
-    {
-        return [self handleInvalidDOMElement:element];
-    }
-    
     
     
     // Are we about to open an inline element which matches the one just written? If so, merge them into one. This is made possible by not yet having written the end tag of the element.
