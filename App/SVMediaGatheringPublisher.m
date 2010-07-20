@@ -54,6 +54,8 @@
     return [[self publishingEngine] publishMediaRepresentation:mediaRep];
 }
 
+- (void)addCSSString:(NSString *)css; { }
+
 - (NSString *)baseRemotePath; { return [[self publishingEngine] baseRemotePath]; }
 
 @end
