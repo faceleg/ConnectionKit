@@ -41,6 +41,10 @@
 
 @implementation YouTubePlugIn
 
+
+#pragma mark -
+#pragma mark SVPlugIn
+
 + (NSArray *)plugInKeys
 { 
     return [NSSet setWithObjects:
@@ -71,26 +75,30 @@
 }
 
 
-#pragma mark lifetime
+#pragma mark -
+#pragma mark Initialization
 
 - (id)init;
 {
     self = [super init];
     
-    
-    // Observer storage
-    [self addObserver:self
-		  forKeyPaths:[NSSet setWithObjects:@"userVideoCode", @"color2", @"color1", nil]
-			  options:NSKeyValueObservingOptionNew
-			  context:NULL];
-	
+    if ( self )
+    {
+        // Observer storage
+        [self addObserver:self
+              forKeyPaths:[NSSet setWithObjects:@"userVideoCode", @"color2", @"color1", nil]
+                  options:NSKeyValueObservingOptionNew
+                  context:NULL];
+    }
+
     return self;
 }
 
 - (void)dealloc
 {
 	// Remove old observations
-	[self removeObserver:self forKeyPaths:[NSSet setWithObjects:@"userVideoCode", @"color2", @"color1", nil]];
+	[self removeObserver:self 
+             forKeyPaths:[NSSet setWithObjects:@"userVideoCode", @"color2", @"color1", nil]];
 		
 	// Relase iVars
 	self.userVideoCode = nil;
@@ -101,55 +109,51 @@
 	[super dealloc];
 }
 
-
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
+- (void)awakeFromNew;
 {
-	[super awakeFromBundleAsNewlyCreatedObject:isNewObject];
-	
-	if (isNewObject)
-	{
-		// Try to load video from web browser
-		NSURL *URL = nil;
-		[NSAppleScript getWebBrowserURL:&URL title:NULL source:NULL];
-		if (URL && [URL youTubeVideoID])
-		{
-			self.userVideoCode = [URL absoluteString];
-		}
-		
-		// Initial size depends on our location
-		YouTubeVideoSize videoSize = YouTubeVideoSizeSmall;//([element isKindOfClass:[KTPagelet class]]) ? YouTubeVideoSizeSidebar : YouTubeVideoSizeSmall;
-		self.videoSize = videoSize;
-		self.widescreen = YES;
-		
-		// Prepare initial colors
-		self.useCustomSecondaryColor = NO;
-		self.color2 = [YouTubePlugIn defaultPrimaryColor];
-	}
-	
-// Here we want to NOT allow resizing of element if it's in the sidebar.
-//	// Pagelets cannot adjust their size
-//	if ([element isKindOfClass:[KTPagelet class]])
-//	{
-//		[videoSizeSlider setEnabled:NO];
-//	}
-//	// Pages should have a thumbnail
-//	else
+    [super awakeFromNew];
+    
+    // see if we can start with the frontmost URL in the default browser
+    id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
+    if ( location.URL && [location.URL youTubeVideoID] )
+    {
+        self.userVideoCode = [location.URL absoluteString];
+    }
+    
+    // Initial size depends on our location
+    YouTubeVideoSize videoSize = YouTubeVideoSizeSmall;//([element isKindOfClass:[KTPagelet class]]) ? YouTubeVideoSizeSidebar : YouTubeVideoSizeSmall;
+    self.videoSize = videoSize;
+    self.widescreen = YES;
+    
+    // Prepare initial colors
+    self.useCustomSecondaryColor = NO;
+    self.color2 = [YouTubePlugIn defaultPrimaryColor];  
+    
+    //FIXME: we need a thumbnail and straightening out this code
+    // Here we want to NOT allow resizing of element if it's in the sidebar.
+    //	// Pagelets cannot adjust their size
+    //	if ([element isKindOfClass:[KTPagelet class]])
+    //	{
+    //		[videoSizeSlider setEnabled:NO];
+    //	}
+    //	// Pages should have a thumbnail
+    //	else
 	{
 		
 		/*
 		 
-			NOT YET WORKING IN SANDVOX 2
+         NOT YET WORKING IN SANDVOX 2
 		 
-		if (![(KTPage *)element thumbnail])
-		{
-			[(KTPage *)element setThumbnail:[self defaultThumbnail]];
-		}
+         if (![(KTPage *)element thumbnail])
+         {
+         [(KTPage *)element setThumbnail:[self defaultThumbnail]];
+         }
 		 */
 	}
 }
 
 
-#pragma mark Plugin
+#pragma mark PlugIn
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
 					  ofObject:(id)object
@@ -187,18 +191,6 @@
 }
 
 
-/*	Cut a strict down -- we shouldn't have strict with the 'embed' tag
- */
-- (void)findMinimumDocType:(void *)aDocTypePointer forPage:(KTPage *)aPage
-{
-	int *docType = (int *)aDocTypePointer;
-	
-//	if (*docType > KTXHTMLTransitionalDocType)
-//	{
-//		*docType = KTXHTMLTransitionalDocType;
-//	}
-}
-
 #pragma mark Summaries
 
 - (NSString *)summaryHTMLKeyPath { return @"captionHTML"; }
@@ -206,6 +198,8 @@
 - (BOOL)summaryHTMLIsEditable { return YES; }
 
 #pragma mark Size
+
+//FIXME: if we switch to sidebar placement, we need to resize appropriately
 
 - (NSString *)sizeToolTip;
 {
@@ -249,11 +243,10 @@
 	return result;
 }
 
-- (unsigned) videoWidth
+- (NSUInteger)videoWidth
 {
-	unsigned widths[] = { 200, 320, 425, 480, 560, 640, 853, 1280	};
-	
-	unsigned result = widths[1];
+	NSUInteger widths[] = { 200, 320, 425, 480, 560, 640, 853, 1280 };
+	NSUInteger result = widths[1];
 	
 	if (self.videoSize < NUMBER_OF_VIDEO_SIZES)
 	{
@@ -266,13 +259,11 @@
 	return result;
 }
 
-
-
-- (unsigned) videoHeight
+- (NSUInteger)videoHeight
 {
-	unsigned heights[]		= { 150, 240, 319, 360, 420, 480, 640, 960	};	// above width * 3/4
-	unsigned heightsWide[]	= { 113, 180, 239, 270, 315, 360, 480, 720	};	// above width * 9/16
-	unsigned result = 0;
+	NSUInteger heights[]		= { 150, 240, 319, 360, 420, 480, 640, 960 };	// above width * 3/4
+	NSUInteger heightsWide[]	= { 113, 180, 239, 270, 315, 360, 480, 720 };	// above width * 9/16
+	NSUInteger result = 0;
 	
 	if (self.widescreen)
 	{
@@ -325,6 +316,7 @@
 
 #pragma mark Thumbnail
 
+//FIXME: seems like we need some thumbnail code
 - (id <IMBImageItem>)thumbnail;
 {
     return self;
@@ -341,45 +333,50 @@
     return IKImageBrowserPathRepresentationType;
 }
 
-#pragma mark Pasteboard
 
-+ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
+#pragma mark -
+#pragma mark SVPlugInPasteboardReading
+
+// returns an array of UTI strings of data types the receiver can read from the pasteboard and be initialized from. (required)
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
 {
-	return SVWebLocationGetReadablePasteboardTypes(pasteboard);
+    return SVWebLocationGetReadablePasteboardTypes(pasteboard);
 }
 
-+ (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type
-                                         pasteboard:(NSPasteboard *)pasteboard;
+// returns options for reading data of a specified type from a given pasteboard. (required)
++ (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type 
+                                               pasteboard:(NSPasteboard *)pasteboard
 {
     return SVPlugInPasteboardReadingAsWebLocation;
 }
 
-- (void)awakeFromPasteboardContents:(id)pasteboardContents ofType:(NSString *)type;
++ (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type
 {
-    // Only accept YouTube video URLs
-    id <SVWebLocation> location = pasteboardContents;
+    id <SVWebLocation> location = contents;
+    if ( [location conformsToProtocol:@protocol(SVWebLocation)] )
+    {
+        NSURL *URL = [location URL];
+        if ( [URL youTubeVideoID] )
+        {
+            return KTSourcePriorityReasonable;
+        }
+    }
     
-    if (location)
+	return KTSourcePriorityNone;
+}
+
+// returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
+- (void)awakeFromPasteboardContents:(id)propertyList ofType:(NSString *)type
+{
+    id <SVWebLocation> location = propertyList;
+    if ( [location conformsToProtocol:@protocol(SVWebLocation)] )
     {
         NSString *videoID = [[location URL] youTubeVideoID];
         if (videoID)
         {
-            [self setUserVideoCode:[[location URL] absoluteString]];
+            self.userVideoCode = [[location URL] absoluteString];
         }
-        else
-        {
-        }
-        
-        [location release];
     }
-    else
-    {
-    }
-}
-
-+ (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type
-{
-    return KTSourcePriorityNone;
 }
 
 

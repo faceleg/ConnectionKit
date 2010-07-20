@@ -63,31 +63,32 @@ typedef enum {
 	NSString *_videoID;
 	NSColor *_color2;
 	NSColor *_color1;
-	unsigned _videoSize;
-	unsigned _videoWidth;
-	unsigned _videoHeight;
+	NSUInteger _videoSize;
 	BOOL _showBorder;
 	BOOL _widescreen;
 	BOOL _privacy;
 	BOOL _playHD;
 	BOOL _includeRelatedVideos;
 	BOOL _useCustomSecondaryColor;
-	
 }
 
 @property (nonatomic, copy) NSString *userVideoCode;
 @property (nonatomic, copy) NSString *videoID;
+
 @property (nonatomic, copy) NSColor *color2;
 @property (nonatomic, copy) NSColor *color1;
-@property (nonatomic) unsigned videoSize;
-@property (nonatomic, readonly) unsigned videoWidth;
-@property (nonatomic, readonly) unsigned videoHeight;
+
+@property (nonatomic) NSUInteger videoSize;
+@property (nonatomic, readonly) NSUInteger videoWidth;
+@property (nonatomic, readonly) NSUInteger videoHeight;
+
 @property (nonatomic) BOOL showBorder;
 @property (nonatomic) BOOL widescreen;
 @property (nonatomic) BOOL playHD;
 @property (nonatomic) BOOL privacy;
 @property (nonatomic) BOOL includeRelatedVideos;
 @property (nonatomic) BOOL useCustomSecondaryColor;
+
 @property (nonatomic, readonly) NSString *sizeToolTip;
 
 + (NSColor *)defaultPrimaryColor;
