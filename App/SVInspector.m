@@ -17,6 +17,8 @@
 
 #import "KTDocWindowController.h"
 
+#import "NSImage+Karelia.h"
+
 #import <BWToolkitFramework/BWToolkitFramework.h>
 
 
