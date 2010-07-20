@@ -18,6 +18,8 @@
 
 #import "NSManagedObject+KTExtensions.h"
 
+#import "NSBitmapImageRep+Karelia.h"
+
 
 @implementation SVImage 
 
@@ -144,6 +146,12 @@
 #pragma mark Publishing
 
 @dynamic storageType;
+
+- (NSString *)type;
+{
+    return [NSBitmapImageRep ks_typeForBitmapImageFileType:[[self storageType] intValue]];
+}
+
 @dynamic compressionFactor;
 
 #pragma mark HTML
@@ -174,7 +182,8 @@
                           sourceMedia:media
                                   alt:alt
                                 width:[self width]
-                               height:[self height]];
+                               height:[self height]
+                                 type:[self type]];
     }
     else
     {

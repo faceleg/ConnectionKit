@@ -8,6 +8,7 @@
 
 #import "SVMediaRepresentation.h"
 
+#import "SVImageScalingOperation.h"
 #import "KTImageScalingURLProtocol.h"
 
 
@@ -68,10 +69,12 @@
                                      compressionFactor:1.0f
                                               fileType:[self fileType]];
         
-        NSData *result = [NSURLConnection
-                          sendSynchronousRequest:[NSURLRequest requestWithURL:URL]
-                          returningResponse:NULL
-                          error:NULL];
+        SVImageScalingOperation *op = [[SVImageScalingOperation alloc] initWithURL:URL];
+        [op start];
+        
+        NSData *result = [op result];
+        [op release];
+        
         return result;
     }
     else

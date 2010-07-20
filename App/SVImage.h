@@ -27,7 +27,10 @@
 
 
 #pragma mark Publishing
+
 @property(nonatomic, copy) NSNumber *storageType;  // NSBitmapImageFileType, mandatory
+- (NSString *)type;
+
 @property(nonatomic, copy) NSNumber *compressionFactor; // float, 0-1
 
 

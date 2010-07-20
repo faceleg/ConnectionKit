@@ -176,7 +176,8 @@ typedef enum {
                  sourceMedia:(SVMediaRecord *)media
                          alt:(NSString *)altText
                        width:(NSNumber *)width
-                      height:(NSNumber *)height;
+                      height:(NSNumber *)height
+                        type:(NSString *)type;
 
 
 #pragma mark Resource Files

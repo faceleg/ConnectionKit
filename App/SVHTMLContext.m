@@ -592,9 +592,10 @@
                  sourceMedia:(SVMediaRecord *)media
                          alt:(NSString *)altText
                        width:(NSNumber *)width
-                      height:(NSNumber *)height;
+                      height:(NSNumber *)height
+                        type:(NSString *)type;
 {
-    NSURL *URL = [self addMedia:media width:width height:height fileType:nil];
+    NSURL *URL = [self addMedia:media width:width height:height fileType:type];
     NSString *src = (URL ? [self relativeURLStringOfURL:URL] : @"");
     
     [self writeImageWithIdName:idName
