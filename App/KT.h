@@ -20,10 +20,6 @@
 // KT.h lists #defines, enums, and NSStrings that are used throughout Sandvox
 // they can only be #imported once, so they are kept separately from SandvoxPlugin.h
 
-// LocalizedStringInThisBundle should be used by PLUGINS, but WARNING not in category methods
-// as the class will have the wrong bundle. Code in Sandvox.app should always just use standard NSLocalized* macros.
-#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
-
 // Which comments provider (corresponds to pop-up tags in Info.nib)
 typedef enum {
 	KTCommentsProviderNone = 0,
