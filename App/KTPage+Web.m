@@ -275,7 +275,18 @@
 		if (contents) [[context mainCSS] appendString:contents];
 		
 	}
-		
+	if (HIER_MENU_HORIZONTAL == hierMenuType)
+	{
+		path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"css"];
+		contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+		if (contents) [[context mainCSS] appendString:contents];
+	}
+	if (HIER_MENU_VERTICAL == hierMenuType)
+	{
+		path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu-v" ofType:@"css"];
+		contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+		if (contents) [[context mainCSS] appendString:contents];
+	}
     
     // Load up main.css
     NSString *mainCSS = [NSString stringWithData:[[[self master] design] mainCSSData]
@@ -459,17 +470,7 @@
 	SVHTMLContext *context = [SVHTMLContext currentContext];
 	KTPage *currentParserPage = [[SVHTMLContext currentContext] page];
 	
-	NSString *className = [NSString stringWithFormat:@"sf%d", aTreeLevel];;
-	if (0 == aTreeLevel)
-	{
-		className = [className stringByAppendingString:@" sf-menu"];
-		HierMenuType hierMenuType = [[[self master] design] hierMenuType];
-		if (HIER_MENU_VERTICAL == hierMenuType)
-		{
-			className = [className stringByAppendingString:@" sf-vertical"];
-		}
-	}
-	[context startElement:@"ul" idName:nil className:className];
+	[context startElement:@"ul" idName:nil className:nil];
 
 	int i=1;	// 1-based iteration
 	int last = [anArray count];
@@ -482,7 +483,7 @@
 		if (page == currentParserPage)
 		{
 			[context startElement:@"li" idName:nil className:
-			 [NSString stringWithFormat:@"sf%d i%d %@%@ currentPage", aTreeLevel, i, (i%2)?@"o":@"e", (i==last)? @" last" : @""]];
+			 [NSString stringWithFormat:@"i%d %@%@ currentPage", i, (i%2)?@"o":@"e", (i==last)? @" last" : @""]];
 		}
 		else
 		{
@@ -493,13 +494,11 @@
 			}
 			
 			[context startElement:@"li" idName:nil className:
-			 [NSString stringWithFormat:@"sf%d i%d %@%@%@%@",
-			  aTreeLevel,
+			 [NSString stringWithFormat:@"i%d %@%@%@",
 			  i,
 			  (i%2)?@"o":@"e",
 			  (i==last)? @" last" : @"",
-			  isCurrentParent ? @" currentParent" : @"",
-			  aTreeLevel ? @" sfPop" : @""				// any popup one gets 'sfPop' to distinguish from non-popups
+			  isCurrentParent ? @" currentParent" : @""
 			  ]];
 			
 			NSString *urlString = [context relativeURLStringOfSiteItem:page];
@@ -553,13 +552,21 @@
 														pathForResource:@"ddsmoothmenu"
 														ofType:@"js"]];
 		NSURL *src = [context addResourceWithURL:ddsmoothmenu];
+		
+		
+		NSString *prelude = [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@", 
+ @"/***********************************************",
+ @"* Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)",
+ @"* This notice MUST stay intact for legal use",
+ @"* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code",
+ @"***********************************************/"];
+		NSString *init = [NSString stringWithFormat:
+@"ddsmoothmenu.init({ mainmenuid: 'sitemenu-content',orientation:'%@', classname:'%@',contentsource:'markup'})",					  
+			(hierMenuType == HIER_MENU_VERTICAL ? @"v" : @"h"),
+			(hierMenuType == HIER_MENU_VERTICAL ? @"ddsmoothmenu-v" : @"ddsmoothmenu")];
+		
 		[context writeScript:[src absoluteString]
-					contents:[NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@", 
-		   @"/***********************************************",
-		   @"* Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)",
-		   @"* This notice MUST stay intact for legal use",
-		   @"* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code",
-		   @"***********************************************/"]
+					contents:[NSString stringWithFormat:@"%@\n\n%@", prelude, init]
 					useCDATA:NO];	// Don't use CDATA since this isn't going to break the validator and we want it clean.
 	}
 }
