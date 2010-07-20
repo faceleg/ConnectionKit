@@ -71,7 +71,7 @@
     NSTextStorage *textStorage = [oSourceView textStorage];
     NSRange fullRange = NSMakeRange(0, [textStorage length]);
     [textStorage replaceCharactersInRange:fullRange withString:pageHTML];
-    [oSourceView recolorRange:fullRange];
+    [oSourceView recolorRange:NSMakeRange(0, [pageHTML length])];
 }
 
 - (void)webEditorViewControllerWillUpdate:(NSNotification *)aNotification
