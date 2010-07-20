@@ -355,7 +355,7 @@
 #pragma mark Other
 
 /*!	Generate path to javascript.  Nil if not there */
-- (NSString *)javascriptURLPath
+- (NSString *)javascriptURLPath	// loaded after jquery so this can contain jquery in it.
 {
 	NSString *result = nil;
 	
@@ -568,13 +568,37 @@
 					 orContents:prelude
 					   useCDATA:NO];	// Don't use CDATA since this isn't going to break the validator and we want it clean.
 
+/*
+		 These are ddsmoothmenu's options we could set here, or maybe I could modify the JS file that gets uploaded....
+		 
+		 //Specify full URL to down and right arrow images (23 is padding-right added to top level LIs with drop downs):
+		 arrowimages: {down:['downarrowclass', 'down.gif', 23], right:['rightarrowclass', 'right.gif']},
+		 transition: {overtime:300, outtime:300}, //duration of slide in/ out animation, in milliseconds
+		 shadow: {enable:true, offsetx:5, offsety:5}, //enable shadow?
+		 showhidedelay: {showdelay: 100, hidedelay: 200}, //set delay in milliseconds before sub menus appear and disappear, respectively
+*/
+		
+		NSURL *arrowDown = [NSURL fileURLWithPath:[[NSBundle mainBundle]
+													  pathForResource:@"down"
+													  ofType:@"gif"]];
+		NSURL *arrowDownSrc = [context addResourceWithURL:arrowDown];
+		NSURL *arrowRight = [NSURL fileURLWithPath:[[NSBundle mainBundle]
+												   pathForResource:@"right"
+												   ofType:@"gif"]];
+		NSURL *arrowRightSrc = [context addResourceWithURL:arrowRight];
+		
+		
+		NSString *arrowImageSet = [NSString stringWithFormat:
+@"ddsmoothmenu.arrowimages = {down:['downarrowclass', '%@', 23], right:['rightarrowclass', '%@']}",
+								   [arrowDownSrc absoluteString], [arrowRightSrc absoluteString]];
+		 
 		NSString *init = [NSString stringWithFormat:
 @"ddsmoothmenu.init({ mainmenuid: 'sitemenu-content',orientation:'%@', classname:'%@',contentsource:'markup'})",					  
 			(hierMenuType == HIER_MENU_VERTICAL ? @"v" : @"h"),
 			(hierMenuType == HIER_MENU_VERTICAL ? @"ddsmoothmenu-v" : @"ddsmoothmenu")];
 
 		[context writeScriptSrc:nil
-					 orContents:init
+					 orContents:[NSString stringWithFormat:@"%@\n%@", arrowImageSet, init]
 					   useCDATA:NO];	// Don't use CDATA since this isn't going to break the validator and we want it clean.
 		
 	}

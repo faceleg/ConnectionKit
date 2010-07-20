@@ -36,15 +36,16 @@
 
 [[=site.writeJQueryImport]]
 [[=writeHierMenuLoader]]
+[[if javascriptURLPath]]
+<script src="[[=&javascriptURLPath]]" type="text/javascript"></script>
+[[endif]]
+
 [[if parser.includeStyling]][[=writeStylesheetLinks]][[endif]]
 [[comment ESCAPE THE URL SO THAT ANY DOUBLE-DASH FROM AN IDN DOESNT PRODUCE ILLEGAL MARKUP]]
 <!--
 Photo credits for this website's design: <[[=-master.designDirectoryURL]]Credits.rtf>
 Licensing for this website's design:     <[[=-master.designDirectoryURL]]License.rtf>
 -->
-[[if javascriptURLPath]]
-<script src="[[=&javascriptURLPath]]" type="text/javascript"></script>
-[[endif]]
 [[if parser.isPublishing]]
 [[if master.wantsHaloscan]]
 [[if master.haloscanUserName]]
