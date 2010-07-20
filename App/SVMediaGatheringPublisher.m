@@ -8,8 +8,25 @@
 
 #import "SVMediaGatheringPublisher.h"
 
+#import "SVMediaGatheringHTMLContext.h"
+
 
 @implementation SVMediaGatheringPublisher
+
+- (id)init
+{
+    [super init];
+    
+    _currentContext = [[SVMediaGatheringHTMLContext alloc] initWithUploadPath:nil publisher:self];
+    
+    return self;
+}
+
+- (void)dealloc;
+{
+    [_currentContext release];
+    [super dealloc];
+}
 
 @synthesize publishingEngine = _mediaPublisher;
 

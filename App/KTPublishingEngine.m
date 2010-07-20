@@ -13,7 +13,6 @@
 #import "KTSite.h"
 #import "SVHTMLTextBlock.h"
 #import "KTMaster.h"
-#import "SVMediaGatheringHTMLContext.h"
 #import "SVMediaGatheringPublisher.h"
 #import "SVMediaRecord.h"
 #import "SVMediaRepresentation.h"
@@ -223,9 +222,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (SVHTMLContext *)beginPublishingHTMLToPath:(NSString *)path;
 {
-    // Media gathering uses a single special context
-    if (_currentContext) return _currentContext;
-    
     // Make context
     SVPublishingHTMLContext *result = [[SVPublishingHTMLContext alloc] initWithUploadPath:path
                                                                                 publisher:self];
@@ -347,19 +343,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)gatherMedia;
 {
     // Gather up media using special context
-    SVMediaGatheringHTMLContext *context = [[SVMediaGatheringHTMLContext alloc] initWithUploadPath:nil publisher:self];
-    
     SVMediaGatheringPublisher *pubContext = [[SVMediaGatheringPublisher alloc] init];
     [pubContext setPublishingEngine:self];
     
     _newMedia = [[NSMutableArray alloc] init];
-    _currentContext = context;
     
     KTPage *homePage = [[self site] rootPage];
     [homePage publish:pubContext recursively:YES];
     
-    _currentContext = nil;
-    [context release];
     [pubContext release];
     
     // Assign filenames to the new media

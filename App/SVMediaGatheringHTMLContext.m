@@ -24,6 +24,11 @@
     [super dealloc];
 }
 
+- (void)close;
+{
+    // Ignore
+}
+
 - (void)writeString:(NSString *)string;
 {
     // Ignore

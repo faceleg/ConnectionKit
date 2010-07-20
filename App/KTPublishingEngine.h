@@ -91,8 +91,6 @@ typedef enum {
     KTPublishingEngineStatus            _status;
     id <KTPublishingEngineDelegate>     _delegate;
     
-    SVHTMLContext   *_currentContext;
-    
 	id <CKConnection>	_connection;
     CKTransferRecord    *_rootTransferRecord;
     CKTransferRecord    *_baseTransferRecord;
