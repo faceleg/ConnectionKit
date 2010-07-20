@@ -1205,14 +1205,14 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     
     
     // A link to another page within the document should open that page. Let the delegate take care of deciding how to open it
-    KTPage *page = [[self HTMLContext] page];
-    NSURL *relativeURL = [URL URLRelativeToURL:[page URL]];
+    KTPage *myPage = [[self HTMLContext] page];
+    NSURL *relativeURL = [URL URLRelativeToURL:[myPage URL]];
     NSString *relativePath = [relativeURL relativePath];
     
     if (([[URL scheme] isEqualToString:@"applewebdata"] || [relativePath hasPrefix:kKTPageIDDesignator]) &&
         [[actionInfo objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther)
     {
-        KTPage *page = [[page site] pageWithPreviewURLPath:relativePath];
+        KTPage *page = [[myPage site] pageWithPreviewURLPath:relativePath];
         if (page)
         {
             [[self delegate] webEditorViewController:self openPage:page];
