@@ -303,13 +303,15 @@
 
 @implementation DOMElement (SVBodyText)
 
-- (DOMNode *)writeTopLevelParagraph:(KSHTMLWriter *)context;
+- (DOMNode *)writeTopLevelParagraph:(KSHTMLWriter *)writer;
 {
     //  Elements can be treated pretty normally
-    DOMNode *node = [context willWriteDOMElement:self];
+    DOMNode *node = [writer willWriteDOMElement:self];
     if (node == self)
     {
-        return [context _writeDOMElement:self];
+        [writer startElement:[self tagName] withDOMElement:self];
+        [writer writeInnerOfDOMNode:self];
+        return [writer endElementWithDOMElement:self];
     }
     else
     {
