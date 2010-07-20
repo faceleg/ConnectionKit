@@ -26,12 +26,6 @@
 }
 
 
-#pragma mark Writing
-
-// Overrides super's implementation to delete or modify some elements rather than really write them. The correct result is still returned so that the context can carry on recursing correctly.
-- (DOMNode *)_writeDOMElement:(DOMElement *)element;
-
-
 #pragma mark Cleanup
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 - (DOMElement *)changeDOMElement:(DOMElement *)element toTagName:(NSString *)tagName;
