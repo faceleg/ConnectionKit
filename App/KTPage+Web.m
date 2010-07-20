@@ -268,6 +268,7 @@
    
 	// Append appropriate CSS for the site menus.
 	HierMenuType hierMenuType = [[[self master] design] hierMenuType];
+	// First get the base CSS
 	if (HIER_MENU_NONE != hierMenuType)
 	{
 		path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu-base" ofType:@"css"];
@@ -470,7 +471,9 @@
 	SVHTMLContext *context = [SVHTMLContext currentContext];
 	KTPage *currentParserPage = [[SVHTMLContext currentContext] page];
 	
-	[context startElement:@"ul" idName:nil className:nil];
+	NSString *className = nil;
+	className = [NSString stringWithFormat:@"dd%d", aTreeLevel];
+	[context startElement:@"ul" idName:nil className:className];
 
 	int i=1;	// 1-based iteration
 	int last = [anArray count];
@@ -576,6 +579,7 @@
 	if (self.site.pagesInSiteMenu.count)	// Are there any pages in the site menu?
 	{
 		SVHTMLContext *context = [SVHTMLContext currentContext];
+		[context startNewline];
 		[context startElement:@"div" idName:@"sitemenu" className:nil];			// <div id="sitemenu">
 		[context startElement:@"h2" idName:nil className:@"hidden"];				// hidden skip navigation menu
 		[context writeString:
