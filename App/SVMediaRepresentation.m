@@ -72,7 +72,7 @@
         SVImageScalingOperation *op = [[SVImageScalingOperation alloc] initWithURL:URL];
         [op start];
         
-        NSData *result = [op result];
+        NSData *result = [[[op result] copy] autorelease];
         [op release];
         
         return result;
