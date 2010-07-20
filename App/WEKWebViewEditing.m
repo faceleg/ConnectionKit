@@ -83,11 +83,9 @@
 
 - (void)createLink:(NSString *)link userInterface:(BOOL)userInterface;
 {
-    DOMRange *selection = [self selectedDOMRange];
-    if ([selection collapsed])
+    if ([[self selectedDOMRange] collapsed])
     {
         [self selectWord:self];
-        selection = [self selectedDOMRange];
     }
     
     DOMDocument *document = [[self mainFrame] DOMDocument];
