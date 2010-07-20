@@ -234,7 +234,8 @@
 - (void)writeStylesheetLinks
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
-    
+    NSString *path = nil;
+	NSString *contents = nil;
     
     // Write link to main.CSS file -- the most specific
     NSURL *mainCSSURL = [context mainCSSURL];
@@ -249,19 +250,32 @@
 	// design's print.css but not for Quick Look
     if (![context isForQuickLookPreview])
 	{
-		NSString *printCSS = [self pathToDesignFile:@"print.css" inContext:context];
-		if (printCSS)
+		path = [self pathToDesignFile:@"print.css" inContext:context];
+		if (path)
         {
-            [context writeLinkToStylesheet:printCSS title:nil media:@"print"];
+            [context writeLinkToStylesheet:path title:nil media:@"print"];
         }
 	}
 	
+	//
+	// Build up the CSS string for previewing in web editor.  I think we might be able to avoid doing this in other cases.
+	//
 	
 	// Always include the global sandvox CSS.
-	NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
-    NSString *globalCSS = [NSString stringWithContentsOfFile:globalCSSFile encoding:NSUTF8StringEncoding error:NULL];
-    if (globalCSS) [[context mainCSS] appendString:globalCSS];
-    
+	path = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
+    contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    if (contents) [[context mainCSS] appendString:contents];
+   
+	// Append appropriate CSS for the site menus.
+	HierMenuType hierMenuType = [[[self master] design] hierMenuType];
+	if (HIER_MENU_NONE != hierMenuType)
+	{
+		path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu-base" ofType:@"css"];
+		contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+		if (contents) [[context mainCSS] appendString:contents];
+		
+	}
+		
     
     // Load up main.css
     NSString *mainCSS = [NSString stringWithData:[[[self master] design] mainCSSData]
@@ -279,6 +293,7 @@
                                                             error:NULL];
 		if (editingCSS) [[context mainCSS] appendString:editingCSS];
 	}
+	
 	
     
 	// For preview/quicklook mode, the banner CSS
@@ -448,12 +463,8 @@
 	if (0 == aTreeLevel)
 	{
 		className = [className stringByAppendingString:@" sf-menu"];
-		int hierMenuType = [[[self master] design] hierMenuType];
-		if (HIER_MENU_NAVBAR == hierMenuType)
-		{
-			className = [className stringByAppendingString:@" sf-navbar"];
-		}
-		else if (HIER_MENU_VERTICAL == hierMenuType)
+		HierMenuType hierMenuType = [[[self master] design] hierMenuType];
+		if (HIER_MENU_VERTICAL == hierMenuType)
 		{
 			className = [className stringByAppendingString:@" sf-vertical"];
 		}
@@ -533,8 +544,8 @@
 
 - (void)writeHierMenuLoader
 {
-	int hierMenuType = [[[self master] design] hierMenuType];
-	if (HIER_MENU_NONE != hierMenuType && ![[NSUserDefaults standardUserDefaults] boolForKey:@"disableHierMenus"])
+	HierMenuType hierMenuType = [[[self master] design] hierMenuType];
+	if (HIER_MENU_NONE != hierMenuType)
 	{
 		SVHTMLContext *context = [SVHTMLContext currentContext];
 		
@@ -575,9 +586,9 @@
 		KTSite *site = self.site;
 		NSArray *pagesInSiteMenu = site.pagesInSiteMenu;
 		
-		int hierMenuType = [[[self master] design] hierMenuType];
+		HierMenuType hierMenuType = [[[self master] design] hierMenuType];
 		NSMutableArray *forest = [NSMutableArray array];
-		if (HIER_MENU_NONE == hierMenuType || [[NSUserDefaults standardUserDefaults] boolForKey:@"disableHierMenus"])
+		if (HIER_MENU_NONE == hierMenuType)
 		{
 			// Flat menu, either by design's preference or user default
 			for (KTPage *siteMenuPage in pagesInSiteMenu)
@@ -643,7 +654,6 @@
 		[context writeEndTagWithComment:@"/sitemenu-content"];
 		[context writeEndTagWithComment:@"/sitemenu"];
 	}
-	return nil;
 }
 /*
  Based on this template markup:

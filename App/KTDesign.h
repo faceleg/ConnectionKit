@@ -8,7 +8,7 @@
 #import "KSPlugInWrapper.h"
 
 
-enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL, HIER_MENU_NAVBAR };
+typedef enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL } HierMenuType;
 // Horizontal: Usual horizontal layout, submenus spew down vertically
 // Vertical: Vertical layout of menus (e.g. in sidebar), submenus spew out vertically to the right
 // Navbar: Horizontal layout with sub-items layed out horizontally on the line below.
@@ -59,7 +59,7 @@ extern const int kDesignThumbHeight;
 - (NSString *)contributor;		// externally visible author's name, shows up in design chooser
 - (NSURL *)URL;
 - (int)textWidth;
-- (int)hierMenuType;
+- (HierMenuType)hierMenuType;
 - (NSDictionary *)imageReplacementTags;	// returns a dictionary, key is the tag (h3, #sitemenu li, etc.), value is URL to pull apart with options for renderer.
 - (NSString *)sidebarBorderable;
 - (NSString *)calloutBorderable;

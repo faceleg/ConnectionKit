@@ -438,14 +438,26 @@ const int kDesignThumbHeight = 65;
 	return result;
 }
 
-- (int)hierMenuType;
+- (HierMenuType)hierMenuType;
 {
-	NSNumber *hierMenuTypeNumber = [[self bundle] objectForInfoDictionaryKey:@"HierMenuType"];
-	if (hierMenuTypeNumber)
+	HierMenuType result = HIER_MENU_NONE;
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"disableHierMenus"])
 	{
-		return [hierMenuTypeNumber intValue];
+		result = HIER_MENU_NONE;		// Overridden by preference: no hier menus allowed.
 	}
-	return HIER_MENU_HORIZONTAL;		// default if not specified.  We may want to do HIER_MENU_NONE once designs are set up
+	else
+	{
+		NSNumber *hierMenuTypeNumber = [[self bundle] objectForInfoDictionaryKey:@"HierMenuType"];
+		if (hierMenuTypeNumber)
+		{
+			result =  [hierMenuTypeNumber intValue];
+		}
+		else
+		{
+			result = HIER_MENU_HORIZONTAL;		// default if not specified.  We may want to do HIER_MENU_NONE once designs are set up
+		}
+	}
+	return result;
 }
 
 - (BOOL)isFamilyPrototype;
