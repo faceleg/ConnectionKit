@@ -75,6 +75,48 @@
 }
 
 
+
+
+//FIXME: these should be moved to setters
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+					  ofObject:(id)object
+					    change:(NSDictionary *)change
+					   context:(void *)context
+{
+	// When the user sets a video code, figure the ID from it
+	if ([keyPath isEqualToString:@"userVideoCode"])
+	{
+		NSString *videoID = nil;
+		if (self.userVideoCode) videoID = [[NSURL URLWithString:self.userVideoCode] youTubeVideoID];
+		
+		self.videoID = videoID;
+	}
+	
+    
+	
+	// When the user adjusts the main colour WITHOUT having adjusted the secondary color, re-generate
+	// a new second colour from it
+	else if ([keyPath isEqualToString:@"color2"] && !self.useCustomSecondaryColor)
+	{
+		NSColor *lightenedColor = [[NSColor whiteColor] blendedColorWithFraction:0.5 ofColor:self.color2];
+		
+		myAutomaticallyUpdatingSecondaryColorFlag = YES;	// The flag is needed to stop us mis-interpeting the setter
+		self.color1 = lightenedColor;
+		myAutomaticallyUpdatingSecondaryColorFlag = NO;
+	}
+	
+	
+	// When the user sets their own secondary color mark it so no future changes are made by accident
+	else if ([keyPath isEqualToString:@"color1"] && !myAutomaticallyUpdatingSecondaryColorFlag)
+	{
+		self.useCustomSecondaryColor = YES;
+	}
+}
+
+//FIXME: waiting on API discussion with Mike about method for being told "you're being added or moved to a new location, please resize"
+
+
 #pragma mark -
 #pragma mark Initialization
 
@@ -129,74 +171,19 @@
     self.useCustomSecondaryColor = NO;
     self.color2 = [YouTubePlugIn defaultPrimaryColor];  
     
-    //FIXME: we need a thumbnail and straightening out this code
-    // Here we want to NOT allow resizing of element if it's in the sidebar.
-    //	// Pagelets cannot adjust their size
-    //	if ([element isKindOfClass:[KTPagelet class]])
-    //	{
-    //		[videoSizeSlider setEnabled:NO];
-    //	}
-    //	// Pages should have a thumbnail
-    //	else
-	{
-		
-		/*
-		 
-         NOT YET WORKING IN SANDVOX 2
-		 
-         if (![(KTPage *)element thumbnail])
-         {
-         [(KTPage *)element setThumbnail:[self defaultThumbnail]];
-         }
-		 */
-	}
+    //FIXME: waiting on API discussion with Mike to know the size of our container. issue here is that if we're in the sidebar, the size slider should be disabled
 }
 
 
-#pragma mark PlugIn
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-					  ofObject:(id)object
-					    change:(NSDictionary *)change
-					   context:(void *)context
-{
-	// When the user sets a video code, figure the ID from it
-	if ([keyPath isEqualToString:@"userVideoCode"])
-	{
-		NSString *videoID = nil;
-		if (self.userVideoCode) videoID = [[NSURL URLWithString:self.userVideoCode] youTubeVideoID];
-		
-		self.videoID = videoID;
-	}
-	
-		
-	
-	// When the user adjusts the main colour WITHOUT having adjusted the secondary color, re-generate
-	// a new second colour from it
-	else if ([keyPath isEqualToString:@"color2"] && !self.useCustomSecondaryColor)
-	{
-		NSColor *lightenedColor = [[NSColor whiteColor] blendedColorWithFraction:0.5 ofColor:self.color2];
-		
-		myAutomaticallyUpdatingSecondaryColorFlag = YES;	// The flag is needed to stop us mis-interpeting the setter
-		self.color1 = lightenedColor;
-		myAutomaticallyUpdatingSecondaryColorFlag = NO;
-	}
-	
-	
-	// When the user sets their own secondary color mark it so no future changes are made by accident
-	else if ([keyPath isEqualToString:@"color1"] && !myAutomaticallyUpdatingSecondaryColorFlag)
-	{
-		self.useCustomSecondaryColor = YES;
-	}
-}
-
-
+#pragma mark -
 #pragma mark Summaries
 
 - (NSString *)summaryHTMLKeyPath { return @"captionHTML"; }
 
 - (BOOL)summaryHTMLIsEditable { return YES; }
 
+
+#pragma mark -
 #pragma mark Size
 
 //FIXME: if we switch to sidebar placement, we need to resize appropriately
@@ -301,6 +288,7 @@
 }
 
 
+#pragma mark -
 #pragma mark Colors
 
 + (NSColor *)defaultPrimaryColor;
@@ -314,9 +302,12 @@
 	self.color2 = [[self class] defaultPrimaryColor];
 }
 
+
+#pragma mark -
 #pragma mark Thumbnail
 
-//FIXME: seems like we need some thumbnail code
+//FIXME: we need an SVPlugin protocol for supplying a thumbail (here, our thumbnail is just the icon)
+
 - (id <IMBImageItem>)thumbnail;
 {
     return self;
@@ -358,7 +349,7 @@
         NSURL *URL = [location URL];
         if ( [URL youTubeVideoID] )
         {
-            return KTSourcePriorityReasonable;
+            return KTSourcePrioritySpecialized;
         }
     }
     
