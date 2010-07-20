@@ -110,10 +110,10 @@
 {
 	int *docType = (int *)aDocTypePointer;
 	
-	if (*docType > KTXHTMLTransitionalDocType)
-	{
-		*docType = KTXHTMLTransitionalDocType;
-	}
+//	if (*docType > KTXHTMLTransitionalDocType)
+//	{
+//		*docType = KTXHTMLTransitionalDocType;
+//	}
 }
 
 @end

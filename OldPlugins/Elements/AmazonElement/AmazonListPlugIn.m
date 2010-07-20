@@ -149,28 +149,28 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	}
 }
 
-- (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
-{
-	[super awakeFromDragWithDictionary:aDataSourceDictionary];
-	
-	// Look for an Amazon URL
-	NSString *URLString = [aDataSourceDictionary valueForKey:kKTDataSourceURLString];
-	if (URLString)
-	{
-		NSURL *URL = [NSURL URLWithString:URLString];
-		NSString *ASIN = [URL amazonProductASIN];	// Product
-		
-        if (ASIN && ![ASIN isEqualToString:@""])
-		{
-			APManualListProduct *product = [[APManualListProduct alloc] init];
-			[self insertObject:product inProductsAtIndex:0];
-			
-			[product setProductCode:URLString];
-            [product validateValueForKey:@"productCode" error:NULL];
-			[product release];
-		}
-	}
-}
+//- (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
+//{
+//	[super awakeFromDragWithDictionary:aDataSourceDictionary];
+//	
+//	// Look for an Amazon URL
+//	NSString *URLString = [aDataSourceDictionary valueForKey:kKTDataSourceURLString];
+//	if (URLString)
+//	{
+//		NSURL *URL = [NSURL URLWithString:URLString];
+//		NSString *ASIN = [URL amazonProductASIN];	// Product
+//		
+//        if (ASIN && ![ASIN isEqualToString:@""])
+//		{
+//			APManualListProduct *product = [[APManualListProduct alloc] init];
+//			[self insertObject:product inProductsAtIndex:0];
+//			
+//			[product setProductCode:URLString];
+//            [product validateValueForKey:@"productCode" error:NULL];
+//			[product release];
+//		}
+//	}
+//}
 
 - (void)awakeFromNib
 {
@@ -468,34 +468,34 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	return result;
 }
 
-+ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
-                      fromPasteboard:(NSPasteboard *)pasteboard
-                             atIndex:(unsigned)dragIndex
-				  forCreatingPagelet:(BOOL)isCreatingPagelet;
-{
-    BOOL result = NO;
-    
-    NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pasteboard
-													  readWeblocFiles:YES
-													   ignoreFileURLs:YES];
-	
-	
-	if (webLocations && [webLocations count] > dragIndex)
-	{
-		NSURL *URL = [[webLocations objectAtIndex:dragIndex] URL];
-		NSString *title = [[webLocations objectAtIndex:dragIndex] title];
-		
-		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
-        if (!KSISNULL(title))
-		{
-			[aDictionary setObject:title forKey:kKTDataSourceTitle];
-		}
-		
-		result = YES;
-	}
-    
-    return result;
-}
+//+ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
+//                      fromPasteboard:(NSPasteboard *)pasteboard
+//                             atIndex:(unsigned)dragIndex
+//				  forCreatingPagelet:(BOOL)isCreatingPagelet;
+//{
+//    BOOL result = NO;
+//    
+//    NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pasteboard
+//													  readWeblocFiles:YES
+//													   ignoreFileURLs:YES];
+//	
+//	
+//	if (webLocations && [webLocations count] > dragIndex)
+//	{
+//		NSURL *URL = [[webLocations objectAtIndex:dragIndex] URL];
+//		NSString *title = [[webLocations objectAtIndex:dragIndex] title];
+//		
+//		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
+//        if (!KSISNULL(title))
+//		{
+//			[aDictionary setObject:title forKey:kKTDataSourceTitle];
+//		}
+//		
+//		result = YES;
+//	}
+//    
+//    return result;
+//}
 
 + (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type
 {
