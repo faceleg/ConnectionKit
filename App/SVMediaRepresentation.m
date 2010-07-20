@@ -11,6 +11,8 @@
 #import "SVImageScalingOperation.h"
 #import "KTImageScalingURLProtocol.h"
 
+#import "NSString+Karelia.h"
+
 
 @implementation SVMediaRepresentation
 
@@ -56,6 +58,21 @@
 {
     BOOL result = !([self width] || [self height]);
     return result;
+}
+
+- (NSString *)preferredFilename;    // what the media would like to named given the chance
+{
+    if ([self fileType])
+    {
+        NSString *name = [[[self mediaRecord] preferredFilename] stringByDeletingPathExtension];
+        
+        NSString *result = [name stringByAppendingPathExtension:
+                            [NSString filenameExtensionForUTI:[self fileType]]];
+        
+        return result;
+    }
+    
+    return [[self mediaRecord] preferredFilename];
 }
 
 - (NSData *)data;

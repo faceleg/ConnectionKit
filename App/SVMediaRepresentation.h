@@ -33,6 +33,8 @@
 @property(nonatomic, copy, readonly) NSString *fileType;
 - (BOOL)isNativeRepresentation;
 
+- (NSString *)preferredFilename;    // what the media would like to named given the chance
+
 - (NSData *)data;
 
 - (BOOL)isEqualToMediaRepresentation:(SVMediaRepresentation *)otherRep;

@@ -402,7 +402,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     id <SVMedia> media = [mediaRep mediaRecord];
     
     NSString *mediaDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:@"_Media"];
-    NSString *preferredFilename = [media preferredFilename];
+    NSString *preferredFilename = [mediaRep preferredFilename];
     NSString *pathExtension = [preferredFilename pathExtension];
     
     NSString *legalizedFileName = [[preferredFilename stringByDeletingPathExtension]
