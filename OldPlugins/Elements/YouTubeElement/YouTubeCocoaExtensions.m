@@ -57,7 +57,6 @@
 			[validCharacters retain];
 		}
 		
-		
 		NSCharacterSet *characters = [NSCharacterSet characterSetWithCharactersInString:self];
 		result = [validCharacters isSupersetOfSet:characters];
 	}
@@ -74,8 +73,7 @@
 	NSURL *result = nil;
 	
 	// Look for the open of such a tag
-	NSScanner *scanner = [[NSScanner alloc] initWithString:
-self];
+	NSScanner *scanner = [[NSScanner alloc] initWithString:self];
 	[scanner scanUpToString:@"<embed src=\"" intoString:NULL];
 	if (![scanner isAtEnd])
 	{
@@ -189,4 +187,3 @@ self];
 }
 
 @end
-
