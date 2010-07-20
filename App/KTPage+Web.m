@@ -563,14 +563,20 @@
  @"* This notice MUST stay intact for legal use",
  @"* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code",
  @"***********************************************/"];
+
+		[context writeScriptSrc:[src absoluteString]
+					 orContents:prelude
+					   useCDATA:NO];	// Don't use CDATA since this isn't going to break the validator and we want it clean.
+
 		NSString *init = [NSString stringWithFormat:
 @"ddsmoothmenu.init({ mainmenuid: 'sitemenu-content',orientation:'%@', classname:'%@',contentsource:'markup'})",					  
 			(hierMenuType == HIER_MENU_VERTICAL ? @"v" : @"h"),
 			(hierMenuType == HIER_MENU_VERTICAL ? @"ddsmoothmenu-v" : @"ddsmoothmenu")];
+
+		[context writeScriptSrc:nil
+					 orContents:init
+					   useCDATA:NO];	// Don't use CDATA since this isn't going to break the validator and we want it clean.
 		
-		[context writeScript:[src absoluteString]
-					contents:[NSString stringWithFormat:@"%@\n\n%@", prelude, init]
-					useCDATA:NO];	// Don't use CDATA since this isn't going to break the validator and we want it clean.
 	}
 }
 
