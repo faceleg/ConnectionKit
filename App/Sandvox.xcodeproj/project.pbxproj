@@ -119,7 +119,7 @@
 				3C53E3E711EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3DB11EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C9870A411F3D3AC0053A72C /* PBXTargetDependency */,
-				3C53E3D511EE6B14005CF7B2 /* PBXTargetDependency */,
+				3C17D2FE11F564440069BB92 /* PBXTargetDependency */,
 				3C53E3E311EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3C511EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3DD11EE6B14005CF7B2 /* PBXTargetDependency */,
@@ -1177,6 +1177,20 @@
 			remoteGlobalIDString = 3C15B85E0DC790A100DE9957;
 			remoteInfo = UpdateDesigns;
 		};
+		3C17D2FB11F5642A0069BB92 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* YouTube.svxElement */;
+			remoteInfo = YouTubeElement;
+		};
+		3C17D2FD11F564440069BB92 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* YouTubeElement */;
+			remoteInfo = YouTubeElement;
+		};
 		3C1F512611D576D00036B375 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
@@ -1296,13 +1310,6 @@
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = RSSBadgeElement;
 		};
-		3C53E36011EE6830005CF7B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = YouTubeElement;
-		};
 		3C53E3C211EE6B14005CF7B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA900670D63C76100815310 /* IFrameElement.xcodeproj */;
@@ -1344,13 +1351,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = ContactElement;
-		};
-		3C53E3D411EE6B14005CF7B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = YouTubeElement;
 		};
 		3C53E3D811EE6B14005CF7B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2734,7 +2734,7 @@
 		CEE09F7009ED94D8004850FB /* fr */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; lineEnding = 0; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEE09F7509ED9559004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
-		CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YouTubeElement.xcodeproj; path = ../OldPlugins/Elements/YouTubeElement/YouTubeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YouTubeElement.xcodeproj; path = ../Plugins1.6/Elements/YouTubeElement/YouTubeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CEF2889E11CC2D7300122D03 /* JSTalk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSTalk.framework; path = ../../Shared/ThirdParty/JSTalk/JSTalk.framework; sourceTree = "<group>"; };
 		CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageWebKitPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF9D0B00D862B5100BD9895 /* ImageWebKitPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ImageWebKitPlugin-Info.plist"; sourceTree = "<group>"; };
@@ -3771,6 +3771,14 @@
 			name = "Testing Frameworks";
 			sourceTree = "<group>";
 		};
+		3C17D2F811F5642A0069BB92 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3C17D2FC11F5642A0069BB92 /* YouTube.svxElement */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3C202D1707DFC06B00DE4994 /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -4109,14 +4117,6 @@
 			isa = PBXGroup;
 			children = (
 				3C53E35111EE681B005CF7B2 /* RSSBadge.svxElement */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		3C53E35D11EE6830005CF7B2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C53E36111EE6830005CF7B2 /* YouTube.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5753,7 +5753,7 @@
 					ProjectRef = 3C53E41811EE783B005CF7B2 /* TwitterElement.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C53E35D11EE6830005CF7B2 /* Products */;
+					ProductGroup = 3C17D2F811F5642A0069BB92 /* Products */;
 					ProjectRef = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
 				},
 			);
@@ -5802,6 +5802,13 @@
 			fileType = wrapper.framework;
 			path = AmazonSupport.framework;
 			remoteRef = 27E62FF80EC3060A0044ED36 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3C17D2FC11F5642A0069BB92 /* YouTube.svxElement */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = YouTube.svxElement;
+			remoteRef = 3C17D2FB11F5642A0069BB92 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3C53E2C111EE66FB005CF7B2 /* Download.svxIndex */ = {
@@ -5900,13 +5907,6 @@
 			fileType = wrapper.cfbundle;
 			path = RSSBadge.svxElement;
 			remoteRef = 3C53E35011EE681B005CF7B2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C53E36111EE6830005CF7B2 /* YouTube.svxElement */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = YouTube.svxElement;
-			remoteRef = 3C53E36011EE6830005CF7B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3C53E42011EE783B005CF7B2 /* Twitter.svxElement */ = {
@@ -7000,6 +7000,11 @@
 			target = 3C15B85E0DC790A100DE9957 /* UpdateDesigns */;
 			targetProxy = 3C15B8690DC7917B00DE9957 /* PBXContainerItemProxy */;
 		};
+		3C17D2FE11F564440069BB92 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = YouTubeElement;
+			targetProxy = 3C17D2FD11F564440069BB92 /* PBXContainerItemProxy */;
+		};
 		3C1F512711D576D00036B375 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3C1F510911D575510036B375 /* xibLocalizationPostprocessor */;
@@ -7044,11 +7049,6 @@
 			isa = PBXTargetDependency;
 			name = ContactElement;
 			targetProxy = 3C53E3D011EE6B14005CF7B2 /* PBXContainerItemProxy */;
-		};
-		3C53E3D511EE6B14005CF7B2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = YouTubeElement;
-			targetProxy = 3C53E3D411EE6B14005CF7B2 /* PBXContainerItemProxy */;
 		};
 		3C53E3D911EE6B14005CF7B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
