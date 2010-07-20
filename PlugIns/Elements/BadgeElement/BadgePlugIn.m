@@ -38,9 +38,6 @@
 #import "BadgeInspector.h"
 
 
-#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
-
-
 static NSArray *sBadgeNames = nil;
 static NSArray *sAltStrings = nil;
 
