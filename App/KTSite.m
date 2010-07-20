@@ -370,9 +370,7 @@
 					  scheme, JQUERY_VERSION, minimizationSuffix]];
 	}
 	
-	[context startNewline];
-	[context writeString:[NSString stringWithFormat:
-						  @"<script type=\"text/javascript\" src=\"%@\"></script>", [jQueryURL absoluteString]]];
+	[context writeScript:[jQueryURL absoluteString] contents:nil];
 
 	// Note: I may want to also get: http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js
 	// I would just put in parallel code.  However this might be better to be added with code injection by people who want it.

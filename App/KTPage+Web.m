@@ -531,7 +531,28 @@
 	[context endElement];	// ul
 }
 
-- (NSString *)sitemenu
+- (void)writeHierMenuLoader
+{
+	int hierMenuType = [[[self master] design] hierMenuType];
+	if (HIER_MENU_NONE != hierMenuType && ![[NSUserDefaults standardUserDefaults] boolForKey:@"disableHierMenus"])
+	{
+		SVHTMLContext *context = [SVHTMLContext currentContext];
+		
+		NSURL *ddsmoothmenu = [NSURL fileURLWithPath:[[NSBundle mainBundle]
+														pathForResource:@"ddsmoothmenu"
+														ofType:@"js"]];
+		NSURL *src = [context addResourceWithURL:ddsmoothmenu];
+		[context writeScript:[src absoluteString]
+					contents:[NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@", 
+		   @"/***********************************************",
+		   @"* Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)",
+		   @"* This notice MUST stay intact for legal use",
+		   @"* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code",
+		   @"***********************************************/"]];
+	}
+}
+
+- (void)writeSiteMenu
 {
 	if (self.site.pagesInSiteMenu.count)	// Are there any pages in the site menu?
 	{

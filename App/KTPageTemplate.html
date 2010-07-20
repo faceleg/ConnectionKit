@@ -35,7 +35,7 @@
 		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
 
 [[=site.writeJQueryImport]]
-		
+[[=writeHierMenuLoader]]
 [[if parser.includeStyling]][[=writeStylesheetLinks]][[endif]]
 [[comment ESCAPE THE URL SO THAT ANY DOUBLE-DASH FROM AN IDN DOESNT PRODUCE ILLEGAL MARKUP]]
 <!--
@@ -85,7 +85,7 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 						[[if !master.siteSubtitle.hidden]][[textblock property:master.siteSubtitle flags:"line" tag:p graphicalTextCode:st class:tagline placeholder:"Site Tagline"]][[endif]]
 					</div><!-- title -->
 					<div id="sitemenu-container">
-						[[=sitemenu]]
+						[[=writeSiteMenu]]
 					</div> <!-- sitemenu-container -->
 				</div> <!-- page-top -->
 				<div class="clear"></div>
