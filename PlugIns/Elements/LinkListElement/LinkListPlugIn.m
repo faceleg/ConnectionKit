@@ -37,6 +37,8 @@
 #import "LinkListPlugIn.h"
 #import <SVWebLocation.h>
 
+#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
+
 // LocalizedStringInThisBundle(@"(Add links via Details Inspector)", "String_On_Page_Template")
 
 @implementation LinkListPlugIn
