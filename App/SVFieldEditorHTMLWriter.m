@@ -344,7 +344,7 @@
     {
         // Do usual writing. Produces correct output, and handles possibility of a chain of unnormalized text nodes
         DOMNode *nodeToAppend = nextNode;
-        nextNode = [nodeToAppend performSelector:@selector(writeHTMLToContext:) withObject:self];
+        nextNode = [nodeToAppend performSelector:@selector(ks_writeHTML:) withObject:self];
         
         // Delete node by appending to ourself
         [textNode appendData:[nodeToAppend nodeValue]];
