@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KT.h"
 
 #import <iMedia/IMBImageItem.h>
 
