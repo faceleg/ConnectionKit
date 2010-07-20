@@ -91,6 +91,7 @@
         }
         
         
+        
         // Are we about to open an inline element which matches the one just written? If so, merge them into one. This is made possible by not yet having written the end tag of the element.
         DOMElement *elementToMergeInto = [_pendingEndDOMElements lastObject];
         if ([elementToMergeInto isEqualNode:element compareChildNodes:NO])
@@ -112,49 +113,40 @@
             // Carry on. We know the element can't be deemed content in its own right since was checked in previous iteration
             return [self endElementWithDOMElement:elementToMergeInto];
         }
+        
+        
+        
+        // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
+        if ([self hasOpenElementWithTagName:tagName])
+        {
+            // Shuffle up following nodes
+            DOMElement *parent = (DOMElement *)[element parentNode];
+            [parent flattenNodesAfterChild:element];
+            
+            
+            // It make take several moves up the tree till we find the conflicting element
+            while (![[parent tagName] isEqualToString:tagName])
+            {
+                // Move element across to a clone of its parent
+                DOMNode *clone = [parent cloneNode:NO];
+                [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
+                [clone appendChild:element];
+                parent = (DOMElement *)[parent parentNode];
+            }
+            
+            
+            // Now we're ready to flatten the conflict
+            [element copyInheritedStylingFromElement:parent];
+            [[parent parentNode] insertBefore:element refChild:[parent nextSibling]];
+            
+            
+            // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
+            return nil;
+        }
     }
         
         
     return result;
-}
-
-- (DOMNode *)_writeDOMElement:(DOMElement *)element;
-{
-    NSString *tagName = [element tagName];
-    
-    
-    
-    // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
-    if ([self hasOpenElementWithTagName:tagName])
-    {
-        // Shuffle up following nodes
-        DOMElement *parent = (DOMElement *)[element parentNode];
-        [parent flattenNodesAfterChild:element];
-        
-        
-        // It make take several moves up the tree till we find the conflicting element
-        while (![[parent tagName] isEqualToString:tagName])
-        {
-            // Move element across to a clone of its parent
-            DOMNode *clone = [parent cloneNode:NO];
-            [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
-            [clone appendChild:element];
-            parent = (DOMElement *)[parent parentNode];
-        }
-        
-        
-        // Now we're ready to flatten the conflict
-        [element copyInheritedStylingFromElement:parent];
-        [[parent parentNode] insertBefore:element refChild:[parent nextSibling]];
-        
-        
-        // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
-        return nil;
-    }
-    
-    
-    
-    return [super _writeDOMElement:element];
 }
 
 // Elements used for styling are worthless if they have no content of their own. We treat them specially by buffering internally until some actual content gets written. If there is none, go ahead and delete the element instead. Shouldn't need to call this directly; -writeDOMElement: does so internally.
