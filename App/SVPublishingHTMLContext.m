@@ -80,7 +80,7 @@
 - (NSURL *)addMedia:(id <SVMedia>)media
               width:(NSNumber *)width
              height:(NSNumber *)height
-           fileType:(NSString *)type;
+           type:(NSString *)type;
 {
     // When scaling an image, need full suite of parameters
     if (width || height)

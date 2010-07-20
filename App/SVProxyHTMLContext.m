@@ -50,9 +50,9 @@
 - (NSStringEncoding)encoding { return [_target encoding]; }
 - (void)setEncoding:(NSStringEncoding)flag { return [_target setEncoding:flag]; }
 
-- (NSURL *)addMedia:(id <SVMedia>)media width:(NSNumber *)width height:(NSNumber *)height fileType:(NSString *)type;
+- (NSURL *)addMedia:(id <SVMedia>)media width:(NSNumber *)width height:(NSNumber *)height type:(NSString *)type;
 {
-    return [_target addMedia:media width:width height:height fileType:type];
+    return [_target addMedia:media width:width height:height type:type];
 }
 
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;

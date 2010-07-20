@@ -571,13 +571,13 @@
 
 - (NSURL *)addMedia:(id <SVMedia>)media;
 {
-    return [self addMedia:media width:nil height:nil fileType:nil];
+    return [self addMedia:media width:nil height:nil type:nil];
 }
 
 - (NSURL *)addMedia:(id <SVMedia>)media
               width:(NSNumber *)width
              height:(NSNumber *)height
-           fileType:(NSString *)type;
+           type:(NSString *)type;
 {
     OBPRECONDITION(media);
     
@@ -595,7 +595,7 @@
                       height:(NSNumber *)height
                         type:(NSString *)type;
 {
-    NSURL *URL = [self addMedia:media width:width height:height fileType:type];
+    NSURL *URL = [self addMedia:media width:width height:height type:type];
     NSString *src = (URL ? [self relativeURLStringOfURL:URL] : @"");
     
     [self writeImageWithIdName:idName

@@ -272,9 +272,9 @@
 - (NSURL *)addMedia:(id <SVMedia>)media
               width:(NSNumber *)width
              height:(NSNumber *)height
-           fileType:(NSString *)type;
+           type:(NSString *)type;
 {
-    NSURL *result = [super addMedia:media width:width height:height fileType:type];
+    NSURL *result = [super addMedia:media width:width height:height type:type];
     [_media addObject:media];
     return result;
 }

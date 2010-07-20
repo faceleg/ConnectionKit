@@ -169,7 +169,7 @@ typedef enum {
 - (NSURL *)addMedia:(id <SVMedia>)media
               width:(NSNumber *)width   // nil means don't resize
              height:(NSNumber *)height  // ditto
-           fileType:(NSString *)type;   // nil means keep in native format
+               type:(NSString *)type;   // nil means keep in native format
 
 - (void)writeImageWithIdName:(NSString *)idName
                    className:(NSString *)className
