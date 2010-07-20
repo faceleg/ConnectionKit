@@ -26,7 +26,7 @@
     self = [self init];
     
     _path = [path copy];
-    _publishingEngine = [publisher retain];
+    _publisher = [publisher retain];
     
     return self;
 }
@@ -43,7 +43,7 @@
         
         
         // Give subclasses a chance to ignore the upload
-        KTPublishingEngine *publishingEngine = _publishingEngine;
+        KTPublishingEngine *publishingEngine = _publisher;
         KTPage *page = [self page];
         NSString *fullUploadPath = [[publishingEngine baseRemotePath]
                                     stringByAppendingPathComponent:_path];
@@ -99,10 +99,10 @@
                                   height:height
                                   fileType:type];
     
-    NSString *path = [_publishingEngine publishMediaRepresentation:rep];
+    NSString *path = [_publisher publishMediaRepresentation:rep];
     [rep release];
     
-    NSString *basePath = [_publishingEngine baseRemotePath];
+    NSString *basePath = [_publisher baseRemotePath];
     if (![basePath hasSuffix:@"/"]) basePath = [basePath stringByAppendingString:@"/"];
     NSString *relPath = [path pathRelativeToPath:basePath];
     
@@ -118,7 +118,7 @@
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
 {
     [super addResourceWithURL:resourceURL];
-    [_publishingEngine publishResourceAtURL:resourceURL];
+    [_publisher publishResourceAtURL:resourceURL];
     
     return [[[[self page] site] hostProperties] URLForResourceFile:
             [resourceURL lastPathComponent]];
@@ -129,7 +129,7 @@
     [super addCSSString:css];   // should have no effect
     
     // Append to main.css
-    [_publishingEngine addCSSString:css];
+    [_publisher addCSSString:css];
 }
 
 - (void)addCSSWithURL:(NSURL *)cssURL;
@@ -137,7 +137,7 @@
     [super addCSSWithURL:cssURL];   // should have no effect
     
     // Append to main.css
-    [_publishingEngine addCSSWithURL:cssURL];
+    [_publisher addCSSWithURL:cssURL];
 }
 
 #pragma mark Page

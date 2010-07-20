@@ -14,7 +14,7 @@
 @interface SVPublishingHTMLContext : SVHTMLContext
 {
   @private
-    id <SVPublisher>    _publishingEngine;
+    id <SVPublisher>    _publisher;
     NSString            *_path;
 }
 
