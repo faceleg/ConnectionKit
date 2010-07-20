@@ -25,12 +25,12 @@
 - (id)initWithMediaRecord:(SVMediaRecord *)mediaRecord
                     width:(NSNumber *)width
                    height:(NSNumber *)height
-                 fileType:(NSString *)type;
+                 type:(NSString *)type;
 
 @property(nonatomic, retain, readonly) SVMediaRecord *mediaRecord;
 @property(nonatomic, copy, readonly) NSNumber *width;
 @property(nonatomic, copy, readonly) NSNumber *height;
-@property(nonatomic, copy, readonly) NSString *fileType;
+@property(nonatomic, copy, readonly) NSString *type;
 - (BOOL)isNativeRepresentation;
 
 - (NSString *)preferredFilename;    // what the media would like to named given the chance

@@ -105,7 +105,7 @@
                                   initWithMediaRecord:record
                                   width:width
                                   height:height
-                                  fileType:type];
+                                  type:type];
     
     NSString *path = [_publisher publishMediaRepresentation:rep];
     [rep release];

@@ -28,7 +28,7 @@
 - (id)initWithMediaRecord:(SVMediaRecord *)mediaRecord
                     width:(NSNumber *)width
                    height:(NSNumber *)height
-                 fileType:(NSString *)type;
+                 type:(NSString *)type;
 {
     self = [self initWithMediaRecord:mediaRecord];
     
@@ -52,7 +52,7 @@
 @synthesize mediaRecord = _mediaRecord;
 @synthesize width = _width;
 @synthesize height = _height;
-@synthesize fileType = _type;
+@synthesize type = _type;
 
 - (BOOL)isNativeRepresentation;
 {
@@ -62,12 +62,12 @@
 
 - (NSString *)preferredFilename;    // what the media would like to named given the chance
 {
-    if ([self fileType])
+    if ([self type])
     {
         NSString *name = [[[self mediaRecord] preferredFilename] stringByDeletingPathExtension];
         
         NSString *result = [name stringByAppendingPathExtension:
-                            [NSString filenameExtensionForUTI:[self fileType]]];
+                            [NSString filenameExtensionForUTI:[self type]]];
         
         return result;
     }
@@ -84,7 +84,7 @@
                                            scalingMode:KSImageScalingModeAspectFit
                                             sharpening:0.0f
                                      compressionFactor:1.0f
-                                              fileType:[self fileType]];
+                                              fileType:[self type]];
         
         SVImageScalingOperation *op = [[SVImageScalingOperation alloc] initWithURL:URL];
         [op start];
@@ -105,7 +105,7 @@
     BOOL result = ([[self mediaRecord] isEqual:[otherRep mediaRecord]] &&
                    KSISEQUAL([self width], [otherRep width]) &&
                    KSISEQUAL([self height], [otherRep height]) &&
-                   KSISEQUAL([self fileType], [otherRep fileType]));
+                   KSISEQUAL([self type], [otherRep type]));
     return result;
 }
 
