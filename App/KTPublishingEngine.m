@@ -324,8 +324,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
     
     
-    // Record digest of the data for after publishing
-    [result setProperty:[data SHA1HashDigest] forKey:@"dataDigest"];
     [result setProperty:remotePath forKey:@"path"];
     
     return result;

@@ -135,6 +135,16 @@
     [super engineDidPublish:didPublish error:error];
 }
 
+- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
+{
+    CKTransferRecord *result = [super uploadData:data toPath:remotePath];
+    
+    // Record digest of the data for after publishing
+    [result setProperty:[data SHA1HashDigest] forKey:@"dataDigest"];
+    
+    return result;
+}
+
 /*	Supplement the default behaviour by also deleting any existing file first if the user requests it.
  */
 - (void)willUploadToPath:(NSString *)path;
