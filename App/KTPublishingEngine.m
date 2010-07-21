@@ -377,7 +377,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     {
         // Is there already an existing file on the server? If so, use that
         NSData *fileContents = [mediaRep data];
-        NSData *digest = [fileContents SHA1HashDigest];
+        NSData *digest = [fileContents SHA1Digest];
         
         SVPublishingRecord *publishingRecord = [[[self site] hostProperties] publishingRecordForSHA1Digest:digest];
         if (publishingRecord)

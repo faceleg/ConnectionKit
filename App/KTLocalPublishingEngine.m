@@ -85,7 +85,7 @@
     {
         SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:uploadPath];
         
-        NSData *digest = [data SHA1HashDigest];
+        NSData *digest = [data SHA1Digest];
         NSData *publishedDigest = [record SHA1Digest];
         
         if ([digest isEqualToData:publishedDigest]) return nil; 
@@ -157,7 +157,7 @@
     CKTransferRecord *result = [super uploadData:data toPath:remotePath];
     
     // Record digest of the data for after publishing
-    [result setProperty:[data SHA1HashDigest] forKey:@"dataDigest"];
+    [result setProperty:[data SHA1Digest] forKey:@"dataDigest"];
     
     return result;
 }
@@ -234,7 +234,7 @@
     NSString *versionString = [NSString stringWithFormat:@"<meta name=\"generator\" content=\"%@\" />",
                                [[self site] appNameVersion]];
     NSString *versionFreeHTML = [HTML stringByReplacing:versionString with:@"<meta name=\"generator\" content=\"Sandvox\" />"];
-    NSData *digest = [[versionFreeHTML dataUsingEncoding:encoding allowLossyConversion:YES] SHA1HashDigest];
+    NSData *digest = [[versionFreeHTML dataUsingEncoding:encoding allowLossyConversion:YES] SHA1Digest];
     
     
 	
@@ -305,7 +305,7 @@
 {
     BOOL result = YES;
     
-    NSData *digest = [mainCSSData SHA1HashDigest];
+    NSData *digest = [mainCSSData SHA1Digest];
     
     SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:path];
     NSData *publishedDigest = [record SHA1Digest];
