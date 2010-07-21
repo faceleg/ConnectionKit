@@ -564,9 +564,9 @@
  @"* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code",
  @"***********************************************/"];
 
-		[context writeScriptSrc:[src absoluteString]
-					 orContents:prelude
-					   useCDATA:NO];	// Don't use CDATA since this isn't going to break the validator and we want it clean.
+		[context startJavascriptElementWithSrc:[src absoluteString]];
+        [context writeString:prelude];
+        [context endElement];
 
 /*
 		 These are ddsmoothmenu's options we could set here, or maybe I could modify the JS file that gets uploaded....
