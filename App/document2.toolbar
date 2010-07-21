@@ -16,8 +16,8 @@
 		<string>NSToolbarFlexibleSpaceItem</string>
 		<string>toggleInfoShown:</string>
 		<string>toggleMediaBrowserShown:</string>
-		<string>NSToolbarShowFontsItem</string>
 		<string>NSToolbarShowColorsItem</string>
+		<string>NSToolbarShowFontsItem</string>
 	</array>
 	<key>item array</key>
 	<array>
