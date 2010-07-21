@@ -71,7 +71,6 @@ extern const int kDesignThumbHeight;
 - (NSString *)color;	// dark, light, or colorful
 - (NSString *)width;	// standard, wide, or flexible
 - (BOOL)menusUseNonBreakingSpaces;
-- (NSColor *)mainColor;		// from RGB string, to help with thumbnail variations
 
 // Images
 - (NSImage *)thumbnail;

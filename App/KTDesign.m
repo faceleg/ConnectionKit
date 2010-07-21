@@ -89,6 +89,8 @@ const int kDesignThumbHeight = 65;
 		NSLog(@"Couldn't find main.css for %@, not enabling design", [aCandidateBundle bundlePath]);
 	}
 	
+	// Point out problems in categorization. This will be useful for third-party designers to clean up their act :-)
+	
 	NSMutableString *categoryProblems = [NSMutableString string];
 	NSString *genre = [aCandidateBundle objectForInfoDictionaryKey:@"genre"];
 	NSString *color = [aCandidateBundle objectForInfoDictionaryKey:@"color"];
@@ -258,6 +260,8 @@ const int kDesignThumbHeight = 65;
 	return result;
 }
 
+// Handle variations
+
 - (id)pluginPropertyForKey:(NSString *)key
 {
 	NSDictionary *variationDict = [self variationDict];
@@ -271,6 +275,20 @@ const int kDesignThumbHeight = 65;
 	}
 	return [super pluginPropertyForKey:key];
 }
+
+// Backward compatibility for obsolete keys.  Check the regular key first, but then try obsolete version.
+
+- (id)pluginPropertyForKey:(NSString *)key obsoleteKey:(NSString *)key2
+{
+	NSString *result = [self pluginPropertyForKey:key];
+	if (!result)
+	{
+		result = [self pluginPropertyForKey:key2];
+	}
+	return result;
+}
+
+
 
 - (NSString *)title;
 {
@@ -327,7 +345,7 @@ const int kDesignThumbHeight = 65;
 	{
 		return [super title];
 	}
-	return [self pluginPropertyForKey:@"ParentTitle"];
+	return [self pluginPropertyForKey:@"parentTitle" obsoleteKey:@"ParentTitle"];
 
 }
 
@@ -337,7 +355,7 @@ const int kDesignThumbHeight = 65;
 	{
 		return [super identifier];
 	}
-	return [self pluginPropertyForKey:@"ParentBundleIdentifier"];
+	return [self pluginPropertyForKey:@"parentBundleIdentifier" obsoleteKey:@"ParentBundleIdentifier"];
 }
 
 
@@ -381,19 +399,19 @@ const int kDesignThumbHeight = 65;
 
 - (NSString *)sidebarBorderable
 {
-	return [self pluginPropertyForKey:@"SidebarBorderable"];
+	return [self pluginPropertyForKey:@"sidebarBorderable" obsoleteKey:@"SidebarBorderable"];
 }
 
 - (NSString *)calloutBorderable
 {
-	return [self pluginPropertyForKey:@"CalloutBorderable"];
+	return [self pluginPropertyForKey:@"calloutBorderable" obsoleteKey:@"CalloutBorderable"];
 }
 
 - (BOOL)menusUseNonBreakingSpaces
 {
 	BOOL result = YES;
 	
-	NSNumber *value = [self pluginPropertyForKey:@"KTMenusUseNonBreakingSpaces"];
+	NSNumber *value = [self pluginPropertyForKey:@"menusUseNonBreakingSpaces" obsoleteKey:@"KTMenusUseNonBreakingSpaces"];
 	if (value)
 	{
 		result = [value boolValue];
@@ -404,11 +422,7 @@ const int kDesignThumbHeight = 65;
 
 - (NSURL *)URL		// the URL where this design comes from
 {
-	NSString *urlString = [self pluginPropertyForKey:@"url"];
-	if (nil == urlString)
-	{
-		urlString = [self pluginPropertyForKey:@"URL"];
-	}
+	NSString *urlString = [self pluginPropertyForKey:@"url" obsoleteKey:@"URL"];
 
 	return (nil != urlString) ? [KSURLFormatter URLFromString:urlString] : nil;
 }
@@ -533,18 +547,6 @@ const int kDesignThumbHeight = 65;
 
 #pragma mark design coalescing into families
 
-- (NSColor *)mainColor
-{
-	NSColor *result = nil;
-	
-	NSString *hexColorString = [self pluginPropertyForKey:@"MainColor"];
-	if (hexColorString)
-	{
-		result = [NSColor colorFromHexRGB:hexColorString];
-	}
-	return result;
-}
-
 - (HierMenuType)hierMenuType;
 {
 	HierMenuType result = HIER_MENU_NONE;
@@ -554,7 +556,7 @@ const int kDesignThumbHeight = 65;
 	}
 	else
 	{
-		NSNumber *hierMenuTypeNumber = [self pluginPropertyForKey:@"HierMenuType"];
+		NSNumber *hierMenuTypeNumber = [self pluginPropertyForKey:@"hierMenuType" obsoleteKey:@"HierMenuType"];
 		if (hierMenuTypeNumber)
 		{
 			result =  [hierMenuTypeNumber intValue];
@@ -571,7 +573,7 @@ const int kDesignThumbHeight = 65;
 {
 	BOOL result = NO;
 	
-	NSNumber *value = [self pluginPropertyForKey:@"IsFamilyPrototype"];
+	NSNumber *value = [self pluginPropertyForKey:@"isFamilyPrototype" obsoleteKey:@"IsFamilyPrototype"];
 	if (value)
 	{
 		result = [value boolValue];
@@ -678,7 +680,12 @@ const int kDesignThumbHeight = 65;
 	if (!_resourceFileURLs)
 	{
 		NSMutableSet *buffer = [[NSMutableSet alloc] init];
-		NSArray *extraIgnoredFiles = [[[self bundle] infoDictionary] objectForKey:@"KTIgnoredResources"];
+		NSArray *extraIgnoredFiles = [[[self bundle] infoDictionary] objectForKey:@"ignoredResources"];
+		if (!extraIgnoredFiles)
+		{
+			// Obsolete key
+			extraIgnoredFiles = [[[self bundle] infoDictionary] objectForKey:@"KTIgnoredResources"];
+		}
 		
 		// Build up set of filenames to ignore, since they are from other variations
 		NSMutableSet *variationNamesToIgnore = [NSMutableSet set];
