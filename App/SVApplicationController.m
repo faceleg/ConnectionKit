@@ -420,7 +420,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithBool:YES], @"timestampShowTime",
 		[NSNumber numberWithShort:KTTimestampCreationDate], @"timestampType",
 		
-		[NSNumber numberWithBool:YES], @"enableImageReplacement",
+		[NSNumber numberWithBool:NO], @"enableImageReplacement",
 		@"html", @"fileExtension",
 		
 		[NSNumber numberWithBool:NO], @"DebugImageReplacement",
