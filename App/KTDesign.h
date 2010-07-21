@@ -11,8 +11,6 @@
 typedef enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL } HierMenuType;
 // Horizontal: Usual horizontal layout, submenus spew down vertically
 // Vertical: Vertical layout of menus (e.g. in sidebar), submenus spew out vertically to the right
-// Navbar: Horizontal layout with sub-items layed out horizontally on the line below.
-// http://users.tpg.com.au/j_birch/plugins/superfish/#examples
 
 @class KTImageScalingSettings, KTDesignFamily;
 
@@ -43,7 +41,7 @@ extern const int kDesignThumbHeight;
 @property (nonatomic, copy) NSSet *resourceFileURLs;
 @property (retain) KTDesign *familyPrototype;
 @property (retain) KTDesignFamily *family;
-@property (copy) NSMutableDictionary *thumbnails;
+@property (retain) NSMutableDictionary *thumbnails;
 @property  BOOL fontsLoaded;
 @property  (assign, getter=isContracted) BOOL contracted;
 @property  NSUInteger imageVersion;

@@ -75,15 +75,19 @@
 	for (NSValue *aRangeValue in [oDesignsArrayController rangesOfGroups])
 	{
 		NSRange range = [aRangeValue rangeValue];
-		if ([selIndex intersectsIndexesInRange:range])
+		BOOL expanded = [selIndex intersectsIndexesInRange:range];
+		if (expanded)
 		{
 			[theView expandGroupAtIndex:groupIndex];
 		}
 		else
 		{
 			[theView collapseGroupAtIndex:groupIndex];
-			LOG((@"Collapsing group index %d - is it working?", groupIndex));
+			LOG((@"Collapsing group index %d - %@", groupIndex, NSStringFromRange(range)));
 		}
+		
+		[self setContracted:!expanded forRange:range];
+
 		groupIndex++;
 	}
 }
@@ -243,7 +247,7 @@
 	}
 }
 
-#pragma mark ?
+#pragma mark Refresh when expanded/contracted
 
 - (void) setContracted:(BOOL)contracted forRange:(NSRange)range
 {
