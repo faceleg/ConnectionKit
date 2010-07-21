@@ -272,6 +272,11 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 @dynamic elementID;
 
+- (void)writeHTML;
+{
+    [[SVHTMLContext currentContext] writeGraphic:self];
+}
+
 #pragma mark Thumbnail
 
 - (id <IMBImageItem>)thumbnail { return nil; }
