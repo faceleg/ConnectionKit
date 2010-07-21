@@ -701,6 +701,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (BOOL)shouldChangeTextInDOMRange:(DOMRange *)range;   // calls -willChange when returning YES.
 {
+    OBPRECONDITION(range);
+    
+    
     // Dissallow edits outside the current text area
     BOOL result = YES;
     
