@@ -78,6 +78,23 @@
 #pragma mark -
 #pragma mark Connection
 
+- (CKTransferRecord *)publishData:(NSData *)data toPath:(NSString *)uploadPath;
+{
+    // Don't upload if the page isn't stale and we've been requested to only publish changes
+	if ([self onlyPublishChanges])
+    {
+        SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:uploadPath];
+        
+        NSData *digest = [data SHA1HashDigest];
+        NSData *publishedDigest = [record SHA1Digest];
+        
+        if ([digest isEqualToData:publishedDigest]) return nil; 
+    }
+    
+    
+    return [super publishData:data toPath:uploadPath];
+}
+
 /*  Once publishing is fully complete, without any errors, ping google if there is a sitemap
  */
 - (void)engineDidPublish:(BOOL)didPublish error:(NSError *)error
