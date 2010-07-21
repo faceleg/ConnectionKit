@@ -576,7 +576,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (IBAction)insertPagelet:(id)sender;
 {
-    if (![self tryToMakeSelectionPerformAction:_cmd with:sender])
+    if (![[self firstResponderItem] tryToPerform:_cmd with:sender])
     {
         [self insertPageletInSidebar:sender];
     }
