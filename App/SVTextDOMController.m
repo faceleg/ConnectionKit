@@ -107,6 +107,13 @@
 @synthesize isFieldEditor = _isFieldEditor;
 
 @synthesize textBlock = _textBlock;
+- (void)setTextBlock:(SVHTMLTextBlock *)textBlock;
+{
+    textBlock = [textBlock retain];
+    [_textBlock release]; _textBlock = textBlock;
+    
+    [self setEditable:[textBlock isEditable]];
+}
 
 #pragma mark Editing
 
