@@ -247,6 +247,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	BOOL isDirectory = NO;
     if ([[NSFileManager defaultManager] fileExistsAtPath:[localURL path] isDirectory:&isDirectory])
     {
+        [self willUploadToPath:remotePath];
+        
         // Is the URL actually a directory? If so, upload its contents
         if (isDirectory)
         {
@@ -287,16 +289,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;    
 }
 
-- (CKTransferRecord *)publishData:(NSData *)data toPath:(NSString *)remotePath
+/*  Raw, get me some stuff on the server!
+ */
+- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
 {
-	OBPRECONDITION(data);
-    OBPRECONDITION(remotePath);
+    [self willUploadToPath:remotePath];
     
-    if (![self shouldPublishToPath:remotePath]) return nil;
-    
-    
-    CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
-	
     id <CKConnection> connection = [self connection];
     OBASSERT(connection);
     [connection connect];	// Ensure we're connected
@@ -304,6 +302,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBASSERT(result);
     [result setName:[remotePath lastPathComponent]];
     
+    return result;
+}
+
+- (CKTransferRecord *)publishData:(NSData *)data toPath:(NSString *)remotePath
+{
+	OBPRECONDITION(data);
+    OBPRECONDITION(remotePath);
+    
+    if (![self shouldPublishToPath:remotePath]) return nil;
+    
+    CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
+	CKTransferRecord *result = [self uploadData:data toPath:remotePath];
     if (result)
     {
         [self didQueueUpload:result toDirectory:parent];
@@ -326,6 +336,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     BOOL result = ![_paths containsObject:path];
     return result;
 }
+
+- (void)willUploadToPath:(NSString *)path; { }
 
 - (void)didQueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
 {

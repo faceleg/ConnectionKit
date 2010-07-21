@@ -137,34 +137,16 @@
 
 /*	Supplement the default behaviour by also deleting any existing file first if the user requests it.
  */
-- (CKTransferRecord *)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
+- (void)willUploadToPath:(NSString *)path;
 {
-	OBPRECONDITION(localURL);
-    OBPRECONDITION([localURL isFileURL]);
-    OBPRECONDITION(remotePath);
+    OBPRECONDITION(path);
     
+    [super willUploadToPath:path];
     
     if ([[[self site] hostProperties] boolForKey:@"deletePagesWhenPublishing"])
 	{
-		[[self connection] deleteFile:remotePath];
+		[[self connection] deleteFile:path];
 	}
-	
-    return [super publishContentsOfURL:localURL toPath:remotePath];
-    
-}
-
-- (CKTransferRecord *)publishData:(NSData *)data toPath:(NSString *)remotePath
-{
-	OBPRECONDITION(data);
-    OBPRECONDITION(remotePath);
-    
-    
-    if ([[[self site] hostProperties] boolForKey:@"deletePagesWhenPublishing"])
-	{
-		[[self connection] deleteFile:remotePath];
-	}
-    
-	return [super publishData:data toPath:remotePath];
 }
 
 #pragma mark -

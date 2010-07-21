@@ -125,6 +125,9 @@ typedef enum {
 - (CKTransferRecord *)rootTransferRecord;
 - (CKTransferRecord *)baseTransferRecord;
 
+#pragma mark Uploads
+- (void)willUploadToPath:(NSString *)path;  // for subclasses
+
 
 @end
 
