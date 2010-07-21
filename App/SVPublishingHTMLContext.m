@@ -128,8 +128,7 @@
     [super addResourceWithURL:resourceURL];
     [_publisher publishResourceAtURL:resourceURL];
     
-    return [[[[self page] site] hostProperties] URLForResourceFile:
-            [resourceURL lastPathComponent]];
+    return [[[[self page] site] hostProperties] URLForResourceFile:[resourceURL lastPathComponent]];
 }
 
 - (void)addCSSString:(NSString *)css;

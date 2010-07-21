@@ -55,4 +55,6 @@
 - (NSURL *)URL { return [self.media fileURL]; }
 - (NSString *)fileName { return [self.media preferredFilename]; }
 
+- (KTMaster *)master; { return [[self parentPage] master]; }
+
 @end

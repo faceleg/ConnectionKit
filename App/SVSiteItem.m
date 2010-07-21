@@ -217,6 +217,8 @@
     [self setSite:site];
 }
 
+@dynamic master;
+
 #pragma mark Tree
 
 - (NSSet *)childItems { return nil; }

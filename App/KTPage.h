@@ -47,9 +47,6 @@ typedef enum {
 
 
 #pragma mark Properties
-
-@property(nonatomic, retain) KTMaster *master;
-
 @property(nonatomic, retain, readonly) SVSidebar *sidebar;
 @property(nonatomic, copy) NSNumber *showSidebar;
 

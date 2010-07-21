@@ -16,7 +16,7 @@
 #import <iMedia/IMBImageItem.h>
 
 
-@class KTSite, KTPage, KTCodeInjection, SVExternalLink, SVMediaRecord;
+@class KTSite, KTMaster, KTPage, KTCodeInjection, SVExternalLink, SVMediaRecord;
 @protocol SVWebContentViewController, SVMedia, SVPublisher;
 
 
@@ -81,6 +81,7 @@
 #pragma mark Site
 @property(nonatomic, retain) KTSite *site;
 - (void)setSite:(KTSite *)site recursively:(BOOL)recursive;
+@property(nonatomic, retain) KTMaster *master;
 
 
 #pragma mark Tree

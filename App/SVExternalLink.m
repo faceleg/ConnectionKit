@@ -58,4 +58,6 @@
 	return (nil != [self URL]);		// Maybe be even smarter about having a real URL?
 }
 
+- (KTMaster *)master; { return [[self parentPage] master]; }
+
 @end
