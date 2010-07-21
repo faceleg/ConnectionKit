@@ -250,15 +250,18 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)setSelectedDOMRange:(DOMRange *)range affinity:(NSSelectionAffinity)selectionAffinity;
 {
-    // It's not a good idea to give Web Editor DOM selection while it's not in the responder chain.
-    NSWindow *window = [self window];
-    OBASSERT([self ks_followsResponder:[window firstResponder]]);
-    
-    
-    // If we're the first responder, need to shift that over to the document view
-    if ([window firstResponder] == self)
+    if (range)
     {
-        [window makeFirstResponder:[[range commonAncestorContainer] documentView]];
+        // It's not a good idea to give Web Editor DOM selection while it's not in the responder chain.
+        NSWindow *window = [self window];
+        OBASSERT([self ks_followsResponder:[window firstResponder]]);
+        
+        
+        // If we're the first responder, need to shift that over to the document view
+        if ([window firstResponder] == self)
+        {
+            [window makeFirstResponder:[[range commonAncestorContainer] documentView]];
+        }
     }
     
     
