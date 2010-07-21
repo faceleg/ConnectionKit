@@ -3664,7 +3664,6 @@
 		2A37F4AAFDCFA73011CA2CEA /* Marvel */ = {
 			isa = PBXGroup;
 			children = (
-				3C1F511111D5757F0036B375 /* xibLocalizationPostprocessor.m */,
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Document */,
 				275E067A0DDA0F1A0072567F /* Model */,
@@ -3703,11 +3702,11 @@
 				3C72D4F4094A240E0061A876 /* Libraries */,
 				3C5A73770BF7B82600776464 /* Debugging */,
 				2786962A0C32C46E00430B63 /* Deprecated Classes */,
+				CE89FE3011F7B92D00B180EB /* Localization */,
 				CEC11A2E0D78BE0100513E70 /* Shared */,
 				3C202DF507E00CCC00DE4994 /* Product Dependencies */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 				3C1F511311D5758F0036B375 /* Cocoa.framework */,
-				CE6EDFF111F126FD00F00AAC /* Publishing.xib */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
@@ -3973,6 +3972,7 @@
 				3C9BC20D103DF9BA00D2CF47 /* KTTranscript.xib */,
 				3C9BC210103DF9CB00D2CF47 /* MediaInspector.xib */,
 				3C9BC213103DF9DF00D2CF47 /* HTMLEditor.xib */,
+				CE6EDFF111F126FD00F00AAC /* Publishing.xib */,
 			);
 			name = "Non-Localized";
 			sourceTree = "<group>";
@@ -5108,6 +5108,14 @@
 				CE7638101083F70600EEA9CF /* DropletLauncher */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CE89FE3011F7B92D00B180EB /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				3C1F511111D5757F0036B375 /* xibLocalizationPostprocessor.m */,
+			);
+			name = Localization;
 			sourceTree = "<group>";
 		};
 		CE9983160D614DD700F2DD12 /* Products */ = {
