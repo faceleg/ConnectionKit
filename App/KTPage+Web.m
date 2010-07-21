@@ -74,28 +74,34 @@
 /*	Generates the path to the specified file with the current page's design.
  *	Takes into account the HTML Generation Purpose to handle Quick Look etc.
  */
-- (NSString *)pathToDesignFile:(NSString *)filename inContext:(SVHTMLContext *)context;
+- (NSString *)pathToDesignFile:(NSString *)whichFileName inContext:(SVHTMLContext *)context;
 {
 	NSString *result = nil;
 	
 	// Return nil if the file doesn't actually exist
 	
 	KTDesign *design = [[self master] design];
-	NSString *localPath = [[[design bundle] bundlePath] stringByAppendingPathComponent:filename];
+	NSString *localPath = [[[design bundle] bundlePath] stringByAppendingPathComponent:whichFileName];
 	if ([[NSFileManager defaultManager] fileExistsAtPath:localPath])
 	{
 		if ([context isForQuickLookPreview])
         {
-            result = [[design bundle] quicklookDataForFile:filename];
+            result = [[design bundle] quicklookDataForFile:whichFileName];		// Hmm, this isn't going to pick up the variation or any other CSS
         }
         else if ([context isForEditing] && ![context baseURL])
         {
             result = [[NSURL fileURLWithPath:localPath] absoluteString];
+			
+			// Append variation index as fragment, so that we can switch among variations and see a different URL
+			if (NSNotFound != design.variationIndex)
+			{
+				result = [result stringByAppendingFormat:@"#var%d", design.variationIndex];
+			}
         }
         else
         {
             KTMaster *master = [(KTPage *)[context page] master];
-            NSURL *designFileURL = [NSURL URLWithString:filename relativeToURL:[master designDirectoryURL]];
+            NSURL *designFileURL = [NSURL URLWithString:whichFileName relativeToURL:[master designDirectoryURL]];
             result = [designFileURL stringRelativeToURL:[context baseURL]];
         }
 	}
