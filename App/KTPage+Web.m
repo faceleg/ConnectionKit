@@ -588,19 +588,19 @@
 												   ofType:@"gif"]];
 		NSURL *arrowRightSrc = [context addResourceWithURL:arrowRight];
 		
+		[context startJavascriptElementWithSrc:nil];
 		
-		NSString *arrowImageSet = [NSString stringWithFormat:
-@"ddsmoothmenu.arrowimages = {down:['downarrowclass', '%@', 23], right:['rightarrowclass', '%@']}",
-								   [arrowDownSrc absoluteString], [arrowRightSrc absoluteString]];
-		 
-		NSString *init = [NSString stringWithFormat:
-@"ddsmoothmenu.init({ mainmenuid: 'sitemenu-content',orientation:'%@', classname:'%@',contentsource:'markup'})",					  
-			(hierMenuType == HIER_MENU_VERTICAL ? @"v" : @"h"),
-			(hierMenuType == HIER_MENU_VERTICAL ? @"ddsmoothmenu-v" : @"ddsmoothmenu")];
-
-		[context writeJavascript:[NSString stringWithFormat:@"%@\n%@", arrowImageSet, init]
-                        useCDATA:NO];	// Don't use CDATA since this isn't going to break the validator and we want it clean.
-		
+		// [context startJavascriptCDATA];		// probably not needed
+		[context writeString:[NSString stringWithFormat:
+							  @"ddsmoothmenu.arrowimages = {down:['downarrowclass', '%@', 23], right:['rightarrowclass', '%@']}",
+							  [arrowDownSrc absoluteString], [arrowRightSrc absoluteString]]];
+		[context writeString:@"\n"];
+		[context writeString:[NSString stringWithFormat:
+							  @"ddsmoothmenu.init({ mainmenuid: 'sitemenu-content',orientation:'%@', classname:'%@',contentsource:'markup'})",					  
+							  (hierMenuType == HIER_MENU_VERTICAL ? @"v" : @"h"),
+							  (hierMenuType == HIER_MENU_VERTICAL ? @"ddsmoothmenu-v" : @"ddsmoothmenu")]];
+		// [context endJavascriptCDATA];
+		[context endElement];
 	}
 }
 
