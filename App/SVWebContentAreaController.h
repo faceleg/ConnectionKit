@@ -35,6 +35,7 @@ typedef enum {
     SVURLPreviewViewController          *_webPreviewController;
     NSViewController                    *_sourceViewController;
     SVLoadingPlaceholderViewController  *_placeholderViewController;
+    NSViewController                    *_multipleSelectionPlaceholder;
     
     NSArray *_selectedPages;
     

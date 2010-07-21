@@ -37,6 +37,8 @@
     _placeholderViewController = [[SVLoadingPlaceholderViewController alloc] init];
     [self addViewController:_placeholderViewController];
     
+    _multipleSelectionPlaceholder = [[NSViewController alloc] initWithNibName:@"MultipleSelectionPlaceholder" bundle:nil];
+    [self addViewController:_multipleSelectionPlaceholder];
     
     [self setSelectedIndex:0];
 }
@@ -64,6 +66,7 @@
     [_webEditorViewController release];
     [_sourceViewController release];
     [_placeholderViewController release];
+    [_multipleSelectionPlaceholder release];
     
     [_selectedPages release];
     
@@ -234,7 +237,14 @@
     }
     else
     {
-        [self presentLoadingViewController];
+        if ([[self selectedPages] count] == 1)
+        {
+            [self presentLoadingViewController];
+        }
+        else
+        {
+            [self setSelectedViewController:_multipleSelectionPlaceholder];
+        }
     }
 }
 
