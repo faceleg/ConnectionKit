@@ -597,9 +597,8 @@
 			(hierMenuType == HIER_MENU_VERTICAL ? @"v" : @"h"),
 			(hierMenuType == HIER_MENU_VERTICAL ? @"ddsmoothmenu-v" : @"ddsmoothmenu")];
 
-		[context writeScriptSrc:nil
-					 orContents:[NSString stringWithFormat:@"%@\n%@", arrowImageSet, init]
-					   useCDATA:NO];	// Don't use CDATA since this isn't going to break the validator and we want it clean.
+		[context writeJavascript:[NSString stringWithFormat:@"%@\n%@", arrowImageSet, init]
+                        useCDATA:NO];	// Don't use CDATA since this isn't going to break the validator and we want it clean.
 		
 	}
 }
