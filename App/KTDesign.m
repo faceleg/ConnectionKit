@@ -825,10 +825,6 @@ const int kDesignThumbHeight = 65;
  */
 - (id) imageRepresentation; /* required */
 {
-	if (NSNotFound != [[self description] rangeOfString:@"Aurora"].location)
-	{
-		NSLog(@"%@ %@ %p", self, self.isContracted ? @"CONTRACTED" : @"EXPANDED", self.familyPrototype); 
-	}
 	if (self.isContracted && [self.family.designs count] > 1 )
 	{
 		//return (id) [self.familyPrototype thumbnailCG];

@@ -289,7 +289,8 @@
 		if (contents) [[context mainCSS] appendString:contents];
 	}
     
-    // Load up main.css
+    // Load up main.css, which might override the ddsmoothmenu styles
+	
     NSString *mainCSS = [NSString stringWithData:[[[self master] design] mainCSSData]
                                         encoding:NSUTF8StringEncoding];
     if (mainCSS) [[context mainCSS] appendString:mainCSS];
