@@ -25,23 +25,32 @@ extern const int kDesignThumbHeight;
 @interface KTDesign : KSPlugInWrapper <IKImageBrowserItem>
 {
     @protected
-    NSImage *myThumbnail;
-	CGImageRef  myThumbnailCG;  // CGImageRefs aren't supposed to be pointers
-	NSSet	*myResourceFileURLs;
+    NSImage *_thumbnail;
+	CGImageRef  _thumbnailCG;  // CGImageRefs aren't supposed to be pointers
+	NSSet	*_resourceFileURLs;
 	KTDesign *_familyPrototype;
 	KTDesignFamily *_family;
 	NSMutableDictionary *_thumbnails;	// keyed by nsnumber for version so it can be arbitrary sized
 	
-	BOOL myFontsLoaded;
+	BOOL _fontsLoaded;
 	BOOL _contracted;
 	NSUInteger _imageVersion;
+	NSUInteger _variationIndex;
 }
 
-@property (assign, getter=isContracted) BOOL contracted;
+@property (copy) NSImage *thumbnail;
+@property  CGImageRef thumbnailCG;
+@property (nonatomic, copy) NSSet *resourceFileURLs;
 @property (retain) KTDesign *familyPrototype;
 @property (retain) KTDesignFamily *family;
-@property (assign) NSUInteger imageVersion;
-@property (retain) NSMutableDictionary *thumbnails;
+@property (copy) NSMutableDictionary *thumbnails;
+@property  BOOL fontsLoaded;
+@property  (assign, getter=isContracted) BOOL contracted;
+@property  NSUInteger imageVersion;
+@property  NSUInteger variationIndex;
+
+- (id)initWithBundle:(NSBundle *)bundle;
+- (id)initWithBundle:(NSBundle *)bundle variation:(NSUInteger)variationIndex;
 
 + (NSArray *)reorganizeDesigns:(NSArray *)designs familyRanges:(NSArray **)outRanges;
 - (NSString *)parentBundleIdentifier;
@@ -49,9 +58,6 @@ extern const int kDesignThumbHeight;
 + (NSArray *)genreValues;
 + (NSArray *)colorValues;
 + (NSArray *)widthValues;
-
-- (int)numberOfSubDesigns;
-- (NSArray *)subDesigns;
 
 + (NSString *)remotePathForDesignWithIdentifier:(NSString *)identifier;
 - (NSString *)remotePath;

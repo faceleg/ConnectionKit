@@ -32,11 +32,17 @@ const int kDesignThumbHeight = 65;
 
 @implementation KTDesign
 
-@synthesize contracted = _contracted;
+@synthesize thumbnail = _thumbnail;
+@synthesize thumbnailCG = _thumbnailCG;
+@synthesize resourceFileURLs = _resourceFileURLs;
 @synthesize familyPrototype = _familyPrototype;
 @synthesize family = _family;
-@synthesize imageVersion = _imageVersion;
 @synthesize thumbnails = _thumbnails;
+@synthesize fontsLoaded = _fontsLoaded;
+@synthesize contracted = _contracted;
+@synthesize imageVersion = _imageVersion;
+@synthesize variationIndex = _variationIndex;
+
 
 #pragma mark -
 #pragma mark Class Methods
@@ -72,28 +78,6 @@ const int kDesignThumbHeight = 65;
 + (void)load
 {
 	[self registerPluginClass:[self class] forFileExtension:kKTDesignExtension];
-}
-
-- (void) loadLocalFontsIfNeeded;
-{
-	if (!myFontsLoaded
-		&& [self hasLocalFonts] 
-		&& (nil != [self imageReplacementTags])
-		&& [[NSUserDefaults standardUserDefaults] boolForKey:@"LoadLocalFonts"])
-	{
-		[[self bundle] loadLocalFonts];			// load in the fonts (ON TIGER)
-	}
-	myFontsLoaded = YES;	// once this is called, no need to check or load again.
-}
-
-- (id)initWithBundle:(NSBundle *)bundle;
-{
-	if ((self = [super initWithBundle:bundle]) != nil)
-	{
-		;		// do not load local fonts;  we probably won't need them.
-		_imageVersion = NSNotFound;		// NSNotFound means not scrubbed yet, so use generic "parent" title
-	}
-	return self;
 }
 
 + (BOOL) validateBundle:(NSBundle *)aCandidateBundle;
@@ -210,37 +194,165 @@ const int kDesignThumbHeight = 65;
 #pragma mark -
 #pragma mark Init & Dealloc
 
+- (void) loadLocalFontsIfNeeded;
+{
+	if (!_fontsLoaded
+		&& [self hasLocalFonts] 
+		&& (nil != [self imageReplacementTags])
+		&& [[NSUserDefaults standardUserDefaults] boolForKey:@"LoadLocalFonts"])
+	{
+		[[self bundle] loadLocalFonts];			// load in the fonts (ON TIGER)
+	}
+	_fontsLoaded = YES;	// once this is called, no need to check or load again.
+}
+
+- (id)initWithBundle:(NSBundle *)bundle;
+{
+	if ((self = [self initWithBundle:bundle variation:NSNotFound]) != nil)
+	{
+		;
+	}
+	return self;
+}
+
+- (id)initWithBundle:(NSBundle *)bundle variation:(NSUInteger)variationIndex;
+{
+	_variationIndex = variationIndex;
+	_imageVersion = NSNotFound;		// NSNotFound means not scrubbed yet, so use generic "parent" title
+	if ((self = [super initWithBundle:bundle]) != nil)
+	{
+		;		// do not load local fonts;  we probably won't need them.
+		self.thumbnails = [NSMutableDictionary dictionary];
+	}
+	return self;
+}
+
 - (void)dealloc
 {
-    [myThumbnail release];
-	CGImageRelease(myThumbnailCG);  // CGImageRelease handles the ref being nil, unlike CFRelease
-	[myResourceFileURLs release];
-	self.familyPrototype = nil;
+ 	CGImageRelease(_thumbnailCG);  // CGImageRelease handles the ref being nil, unlike CFRelease
+	_thumbnailCG = nil;
+
+    self.thumbnail = nil;
+    self.resourceFileURLs = nil;
+    self.familyPrototype = nil;
+    self.family = nil;
+    self.thumbnails = nil;
 	
     [super dealloc];
 }
 
 #pragma mark -
+#pragma mark Variations
+
+- (NSDictionary *)variationDict		// nil if no variation
+{
+	NSDictionary *result = nil;
+	if (NSNotFound != _variationIndex)
+	{
+		NSArray *variations = [[[self bundle] infoDictionary] objectForKey:@"variations"];
+		if (_variationIndex < [variations count])
+		{
+			result = [variations objectAtIndex:_variationIndex];
+		}
+	}
+	return result;
+}
+
+- (id)pluginPropertyForKey:(NSString *)key
+{
+	NSDictionary *variationDict = [self variationDict];
+	if (variationDict)
+	{
+		id result = [variationDict objectForKey:key];
+		if (result)
+		{
+			return result;
+		}
+	}
+	return [super pluginPropertyForKey:key];
+}
+
+- (NSString *)title;
+{
+	NSDictionary *variationDict = [self variationDict];
+	if (variationDict)
+	{
+		NSString *suffix = [variationDict objectForKey:@"suffix"];
+		if (suffix)
+		{
+			return [NSString stringWithFormat:@"%@ %@", [super title], suffix];
+		}
+	}
+	return [super title];	
+}
+
+// For a variation, append the filename to the CFBundleIdentifier
+- (NSString *)identifier;
+{
+	NSDictionary *variationDict = [self variationDict];
+	if (variationDict)
+	{
+		NSString *file = [variationDict objectForKey:@"file"];
+		if (file)
+		{
+			return [NSString stringWithFormat:@"%@.%@", [super identifier], file];
+		}
+		else
+		{
+			NSLog(@"Cannot find 'file' key for variation %d in %@", _variationIndex, self);
+		}
+	}
+	return [super identifier];	
+}
+
+- (NSString *)thumbnailPath
+{
+	NSString *thumbnailName = @"thumbnail";
+	NSDictionary *variationDict = [self variationDict];
+	if (variationDict)
+	{
+		NSString *file = [variationDict objectForKey:@"file"];
+		if (file)
+		{
+			thumbnailName = [NSString stringWithFormat:@"%@.%@", file, thumbnailName];	// e.g. orange.thumbnail.tiff
+		}
+	}
+	NSString *path = [[self bundle] pathForImageResource:thumbnailName];
+	return path;
+}
+
+- (NSString *)parentTitle
+{
+	if (NSNotFound != _variationIndex)
+	{
+		return [super title];
+	}
+	return [self pluginPropertyForKey:@"ParentTitle"];
+
+}
+
+- (NSString *)parentBundleIdentifier
+{
+	if (NSNotFound != _variationIndex)
+	{
+		return [super identifier];
+	}
+	return [self pluginPropertyForKey:@"ParentBundleIdentifier"];
+}
+
+
+
+#pragma mark -
 #pragma mark Accessors
-
-- (int)numberOfSubDesigns;
-{
-	return 0;
-}
-
-- (NSArray *)subDesigns
-{
-	return nil;
-}
 
 - (NSString *)contributor
 {
-	return [[self bundle] objectForInfoDictionaryKey:@"contributor"];
+	return [self pluginPropertyForKey:@"contributor"];
 }
 
 - (NSString *)genre		// REQUIRED ... see genreValues
 {
-	NSString *result = [[self bundle] objectForInfoDictionaryKey:@"genre"];
+	NSString *result = [self pluginPropertyForKey:@"genre"];
 	if (![[KTDesign genreValues] containsObject:result])
 	{
 		result = nil;
@@ -249,7 +361,7 @@ const int kDesignThumbHeight = 65;
 }
 - (NSString *)color		// REQUIRED ... see colorValues
 {
-	NSString *result = [[self bundle] objectForInfoDictionaryKey:@"color"];
+	NSString *result = [self pluginPropertyForKey:@"color"];
 	if (![[KTDesign colorValues] containsObject:result])
 	{
 		result = nil;
@@ -258,7 +370,7 @@ const int kDesignThumbHeight = 65;
 }
 - (NSString *)width;	// standard [default], wide, or flexible
 {
-	NSString *result = [[self bundle] objectForInfoDictionaryKey:@"width"];
+	NSString *result = [self pluginPropertyForKey:@"width"];
 	if (!result || ![[KTDesign widthValues] containsObject:result])
 	{
 		result = @"standard";	// default to standard if not specified.
@@ -269,19 +381,19 @@ const int kDesignThumbHeight = 65;
 
 - (NSString *)sidebarBorderable
 {
-	return [[self bundle] objectForInfoDictionaryKey:@"SidebarBorderable"];
+	return [self pluginPropertyForKey:@"SidebarBorderable"];
 }
 
 - (NSString *)calloutBorderable
 {
-	return [[self bundle] objectForInfoDictionaryKey:@"CalloutBorderable"];
+	return [self pluginPropertyForKey:@"CalloutBorderable"];
 }
 
 - (BOOL)menusUseNonBreakingSpaces
 {
 	BOOL result = YES;
 	
-	NSNumber *value = [[self bundle] objectForInfoDictionaryKey:@"KTMenusUseNonBreakingSpaces"];
+	NSNumber *value = [self pluginPropertyForKey:@"KTMenusUseNonBreakingSpaces"];
 	if (value)
 	{
 		result = [value boolValue];
@@ -292,10 +404,10 @@ const int kDesignThumbHeight = 65;
 
 - (NSURL *)URL		// the URL where this design comes from
 {
-	NSString *urlString = [[self bundle] objectForInfoDictionaryKey:@"url"];
+	NSString *urlString = [self pluginPropertyForKey:@"url"];
 	if (nil == urlString)
 	{
-		urlString = [[self bundle] objectForInfoDictionaryKey:@"URL"];
+		urlString = [self pluginPropertyForKey:@"URL"];
 	}
 
 	return (nil != urlString) ? [KSURLFormatter URLFromString:urlString] : nil;
@@ -305,14 +417,14 @@ const int kDesignThumbHeight = 65;
 */
 - (NSURL *)placeholderImageURL;
 {
-	NSString *path = [[self bundle] pathForImageResource:@"placeholder"];
+	NSString *path = [[self bundle] pathForImageResource:@"placeholder"];		// just one placeholder per design
     if (path) return [NSURL fileURLWithPath:path];
     return nil;
 }
 
 - (int)textWidth
 {
-	NSString *textWidthString = [[self bundle] objectForInfoDictionaryKey:@"textWidth"];
+	NSString *textWidthString = [self pluginPropertyForKey:@"textWidth"];
 	int result = [textWidthString intValue];
 	if (0 == result)
 	{
@@ -325,7 +437,7 @@ const int kDesignThumbHeight = 65;
 
 - (NSDictionary *)imageReplacementTags
 {
-	return [[self bundle] objectForInfoDictionaryKey:@"imageReplacement"];
+	return [self pluginPropertyForKey:@"imageReplacement"];
 }
 
 - (NSImage *)replacementImageForCode:(NSString *)aCode string:(NSString *)aString size:(NSNumber *)aSize
@@ -361,7 +473,7 @@ const int kDesignThumbHeight = 65;
 	NSString *fileName = [params objectForKey:@"qtzFile"];
     if (!fileName) fileName = code;
     
-    NSString *path = [[self bundle] pathForResource:fileName ofType:@"qtz"];
+    NSString *path = [[self bundle] pathForResource:fileName ofType:@"qtz"];	// just one per design
     if (path)
     {
         return [NSURL fileURLWithPath:path];
@@ -374,43 +486,38 @@ const int kDesignThumbHeight = 65;
 
 - (NSImage *)thumbnail
 {
-	if (nil == myThumbnail)
+	if (nil == _thumbnail)
 	{
-		NSString *path = [[self bundle] pathForImageResource:@"thumbnail"];
+		NSString *path = [self thumbnailPath];
 		if (nil != path)
 		{
 			NSImage *unscaledThumb = [[[NSImage alloc] initByReferencingFile:path] autorelease];
 			[unscaledThumb normalizeSize];
-			myThumbnail = [[unscaledThumb imageWithMaxWidth:kDesignThumbWidth height:kDesignThumbHeight] retain];
+			_thumbnail = [[unscaledThumb imageWithMaxWidth:kDesignThumbWidth height:kDesignThumbHeight] retain];
 			// make sure thumbnail is not too big!
 		}
 	}
-	return myThumbnail;
+	return _thumbnail;
 }
 
 - (CGImageRef)thumbnailCG
 {
-	if (nil == myThumbnailCG)
+	if (nil == _thumbnailCG)
 	{
-		NSString *path = [[self bundle] pathForImageResource:@"thumbnail"];
+		NSString *path = [self thumbnailPath];
 		if (nil != path)
 		{
 			CGImageSourceRef source = CGImageSourceCreateWithURL((CFURLRef)[NSURL fileURLWithPath:path],nil);
 			if (source)
 			{
-				myThumbnailCG = CGImageSourceCreateImageAtIndex(source, 0, nil);
+				_thumbnailCG = CGImageSourceCreateImageAtIndex(source, 0, nil);
 				CFRelease(source);
 			}
 		}
 	}
-	return myThumbnailCG;
+	return _thumbnailCG;
 }
 
-
-+ (NSSet *)keyPathsForValuesAffectingThumbnailGloss
-{
-    return [NSSet setWithObject:@"thumbnail"];
-}
 
 
 // Special version that compares the titles - but uses the ParentTitle if it exists
@@ -421,7 +528,7 @@ const int kDesignThumbHeight = 65;
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"%@ %@", [super description], [[self bundle] bundleIdentifier]];
+	return [NSString stringWithFormat:@"%@ %@", [super description], [self identifier]];
 }
 
 #pragma mark design coalescing into families
@@ -430,7 +537,7 @@ const int kDesignThumbHeight = 65;
 {
 	NSColor *result = nil;
 	
-	NSString *hexColorString = [[self bundle] objectForInfoDictionaryKey:@"MainColor"];
+	NSString *hexColorString = [self pluginPropertyForKey:@"MainColor"];
 	if (hexColorString)
 	{
 		result = [NSColor colorFromHexRGB:hexColorString];
@@ -447,7 +554,7 @@ const int kDesignThumbHeight = 65;
 	}
 	else
 	{
-		NSNumber *hierMenuTypeNumber = [[self bundle] objectForInfoDictionaryKey:@"HierMenuType"];
+		NSNumber *hierMenuTypeNumber = [self pluginPropertyForKey:@"HierMenuType"];
 		if (hierMenuTypeNumber)
 		{
 			result =  [hierMenuTypeNumber intValue];
@@ -464,7 +571,7 @@ const int kDesignThumbHeight = 65;
 {
 	BOOL result = NO;
 	
-	NSNumber *value = [[self bundle] objectForInfoDictionaryKey:@"IsFamilyPrototype"];
+	NSNumber *value = [self pluginPropertyForKey:@"IsFamilyPrototype"];
 	if (value)
 	{
 		result = [value boolValue];
@@ -472,24 +579,14 @@ const int kDesignThumbHeight = 65;
 	return result;
 }
 
-- (NSString *)parentTitle
-{
-	return [[self bundle] objectForInfoDictionaryKey:@"ParentTitle"];
-}
-
 - (NSString *)titleOrParentTitle
 {
-	NSString *result = [[self bundle] objectForInfoDictionaryKey:@"ParentTitle"];
+	NSString *result = [self parentTitle];
 	if (!result)
 	{
 		result = [self title];
 	}
 	return result;
-}
-
-- (NSString *)parentBundleIdentifier
-{
-	return [[self bundle] objectForInfoDictionaryKey:@"ParentBundleIdentifier"];
 }
 
 #pragma mark -
@@ -509,7 +606,7 @@ const int kDesignThumbHeight = 65;
  */
 - (NSString *)remotePath
 {
-	NSString *result = [[self class] remotePathForDesignWithIdentifier:[[self bundle] bundleIdentifier]];
+	NSString *result = [[self class] remotePathForDesignWithIdentifier:[self identifier]];
 	return result;
 }
 
@@ -525,28 +622,28 @@ const int kDesignThumbHeight = 65;
 
 - (BOOL)hasLocalFonts
 {
-	BOOL result = [[[self bundle] objectForInfoDictionaryKey:@"hasLocalFonts"] boolValue];
+	BOOL result = [[self pluginPropertyForKey:@"hasLocalFonts"] boolValue];
 	return result;
 }
 
 - (NSString *)bannerCSSSelector
 {
-	NSString *result = [[self bundle] objectForInfoDictionaryKey:@"bannerCSSSelector"];
+	NSString *result = [self pluginPropertyForKey:@"bannerCSSSelector"];
 	return result;
 }
 
-- (NSString *)bannerName
-{
-	NSDictionary *info = [[self bundle] infoDictionary];
-	NSString *result = [info valueForKey:@"bannerName"];
-	return result;
-}
+// No longer needed, I believe
+//- (NSString *)bannerName
+//{
+//	NSDictionary *info = [[self bundle] infoDictionary];
+//	NSString *result = [info valueForKey:@"bannerName"];
+//	return result;
+//}
 
 - (NSSize)bannerSize
 {
-	NSDictionary *info = [[self bundle] infoDictionary];
-	int width = [[info valueForKey:@"bannerWidth"] intValue];
-	int height = [[info valueForKey:@"bannerHeight"] intValue];
+	int width = [[self pluginPropertyForKey:@"bannerWidth"] intValue];
+	int height = [[self pluginPropertyForKey:@"bannnerHeight"] intValue];
 	if (!width) width = 800;
 	if (!height) height = 200;
 	return NSMakeSize(width, height);
@@ -559,7 +656,7 @@ const int kDesignThumbHeight = 65;
 {
 	unsigned result = 771;
 	
-	NSNumber *viewport = [[self bundle] objectForInfoDictionaryKey:@"viewport"];
+	NSNumber *viewport = [self pluginPropertyForKey:@"viewport"];
 	if (viewport) {
 		unsigned probablyResult = [viewport unsignedIntValue];
 		if (probablyResult > 100)
@@ -578,10 +675,28 @@ const int kDesignThumbHeight = 65;
  */
 - (NSSet *)resourceFileURLs
 {
-	if (!myResourceFileURLs)
+	if (!_resourceFileURLs)
 	{
 		NSMutableSet *buffer = [[NSMutableSet alloc] init];
 		NSArray *extraIgnoredFiles = [[[self bundle] infoDictionary] objectForKey:@"KTIgnoredResources"];
+		
+		// Build up set of filenames to ignore, since they are from other variations
+		NSMutableSet *variationNamesToIgnore = [NSMutableSet set];
+		if (NSNotFound != _variationIndex)
+		{
+			NSArray *variations = [[[self bundle] infoDictionary] objectForKey:@"variations"];
+			for (NSUInteger i = 0 ; i < [variations count] ; i++)
+			{
+				if (i != _variationIndex)
+				{
+					NSDictionary *variation = [variations objectAtIndex:i];
+					NSString *file = [variation objectForKey:@"file"];
+					[variationNamesToIgnore addObject:file];	// folder name itself
+					[variationNamesToIgnore addObject:[file stringByAppendingPathExtension:@"css"]];
+					// Note: all thumbnails are ignored below.
+				}
+			}
+		}
 		
 		// Run through all files in the bundle
 		NSString *designBundlePath = [[self bundle] bundlePath];
@@ -591,26 +706,13 @@ const int kDesignThumbHeight = 65;
 		while (aFilename = [resourcesEnumerator nextObject])
 		{
 			// Ignore any special files
-			if ([aFilename isEqualToStringCaseInsensitive:@"Info.plist"] ||
-				[[aFilename stringByDeletingPathExtension] isEqualToString:@"thumbnail"] ||
-				[aFilename hasPrefix:@"."]) {
-				continue;
-			}
-			
-			if (extraIgnoredFiles)
-			{
-				 if ([extraIgnoredFiles containsObject:aFilename]) {
-					continue;
-				}
-			}
-			else
-			{
-				if ([[aFilename stringByDeletingPathExtension] isEqualToString:@"placeholder"]) {
-					continue;
-				}
-			}
-			
-			
+			if ([aFilename hasPrefix:@"."]) continue;			
+			if ([aFilename isEqualToStringCaseInsensitive:@"Info.plist"]) continue;
+			if ([[aFilename stringByDeletingPathExtension] hasSuffix:@"thumbnail"]) continue;
+			if ([variationNamesToIgnore containsObject:aFilename])	continue;
+			if (extraIgnoredFiles && [extraIgnoredFiles containsObject:aFilename])	continue;
+			if ([[aFilename stringByDeletingPathExtension] isEqualToString:@"placeholder"])	continue;
+						
 			// Locate the full path and add to the list if of a suitable type
             NSString *resourceFilePath = [designBundlePath stringByAppendingPathComponent:aFilename];
 			NSURL *resourceFileURL = [NSURL fileURLWithPath:resourceFilePath];
@@ -623,19 +725,18 @@ const int kDesignThumbHeight = 65;
 				OBASSERT(resourceFileURL);
                 [buffer addObject:resourceFileURL];
 			}
+			else
+			{
+				LOG((@"NOT uploading %@ since it is UTI:%@", aFilename, UTI));
+			}
 		}
 		
-		
-		// Ignore the thumbnail
-		[buffer removeObjectIgnoringNil:[[self bundle] pathForImageResource:@"thumbnail"]];
-		
-		
 		// Tidy up
-		myResourceFileURLs = [buffer copy];
+		_resourceFileURLs = [buffer copy];
 		[buffer release];
 	}
 	
-	return myResourceFileURLs;
+	return _resourceFileURLs;
 }
 
 /*	Returns the full data of the specified resource.
@@ -662,6 +763,23 @@ const int kDesignThumbHeight = 65;
 {
 	NSError *error = nil;
 	NSData *result = [self dataForResourceAtPath:@"main.css" MIMEType:NULL error:&error];
+	NSDictionary *variationDict = [self variationDict];
+	id file = [variationDict objectForKey:@"file"];
+	if (file)
+	{
+		NSString *fileCSS = [NSString stringWithFormat:@"%@.css", file];
+		NSData *variationData = [self dataForResourceAtPath:fileCSS MIMEType:NULL error:&error];
+		if (variationData)
+		{
+			NSMutableData *newResult = [NSMutableData dataWithData:result];
+			[newResult appendData:variationData];
+			result = [NSData dataWithData:newResult];
+		}
+		else
+		{
+			NSLog(@"Couldn't read %@ from %@", fileCSS, self);
+		}
+	}
 	
 	if (!result)
 	{
@@ -676,7 +794,12 @@ const int kDesignThumbHeight = 65;
 
 - (NSString *)  imageUID;  /* required */
 {
-	return [[self bundle] bundlePath];
+	NSString *result = [[self bundle] bundlePath];
+	if (NSNotFound != _variationIndex)
+	{
+		result = [result stringByAppendingFormat:@".%d", _variationIndex];
+	}
+	return result;
 }
 
 /*! 
@@ -695,6 +818,10 @@ const int kDesignThumbHeight = 65;
  */
 - (id) imageRepresentation; /* required */
 {
+	if (NSNotFound != [[self description] rangeOfString:@"Aurora"].location)
+	{
+		NSLog(@"%@ %@ %p", self, self.isContracted ? @"CONTRACTED" : @"EXPANDED", self.familyPrototype); 
+	}
 	if (self.isContracted && 0 != self.familyPrototype && [self.family.designs count] > 1 )
 	{
 		//return (id) [self.familyPrototype thumbnailCG];
@@ -712,6 +839,7 @@ const int kDesignThumbHeight = 65;
 			}
 			
 			KTDesign *whichDesign = (safeIndex == NSNotFound) ? [self familyPrototype] : [familyDesigns objectAtIndex:safeIndex];
+			NSLog(@"Using thumbnail of %@", whichDesign);
 			result = [whichDesign thumbnailCG];
 			
 			[self.thumbnails setObject:(id)result forKey:indexNumber];
