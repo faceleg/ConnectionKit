@@ -557,7 +557,7 @@
 		NSURL *src = [context addResourceWithURL:ddsmoothmenu];
 		
 		
-		NSString *prelude = [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@", 
+		NSString *prelude = [NSString stringWithFormat:@"\n%@\n%@\n%@\n%@\n%@", 
  @"/***********************************************",
  @"* Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)",
  @"* This notice MUST stay intact for legal use",
@@ -565,6 +565,7 @@
  @"***********************************************/"];
 
 		[context startJavascriptElementWithSrc:[src absoluteString]];
+        [context stopWritingInline];
         [context writeString:prelude];
         [context endElement];
 
