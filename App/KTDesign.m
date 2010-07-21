@@ -829,7 +829,7 @@ const int kDesignThumbHeight = 65;
 	{
 		NSLog(@"%@ %@ %p", self, self.isContracted ? @"CONTRACTED" : @"EXPANDED", self.familyPrototype); 
 	}
-	if (self.isContracted && 0 != self.familyPrototype && [self.family.designs count] > 1 )
+	if (self.isContracted && [self.family.designs count] > 1 )
 	{
 		//return (id) [self.familyPrototype thumbnailCG];
 		
@@ -844,8 +844,9 @@ const int kDesignThumbHeight = 65;
 			{
 				safeIndex = 0;	// make sure we don't overflow number of design variations.  Allow for NSNotFound
 			}
-			
-			KTDesign *whichDesign = (safeIndex == NSNotFound) ? [self familyPrototype] : [familyDesigns objectAtIndex:safeIndex];
+			KTDesign *familyPrototype = [self familyPrototype];
+			if (!familyPrototype) familyPrototype = self;	// use self, the first item in the list, as the prototype
+			KTDesign *whichDesign = (safeIndex == NSNotFound) ? familyPrototype : [familyDesigns objectAtIndex:safeIndex];
 			NSLog(@"Using thumbnail of %@", whichDesign);
 			result = [whichDesign thumbnailCG];
 			
