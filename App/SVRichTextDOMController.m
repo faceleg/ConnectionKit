@@ -366,6 +366,30 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Insertion
 
+- (DOMRange *)insertionRangeForPagelets
+{
+    WEKWebEditorView *webEditor = [self webEditor];
+    
+    // Figure out where to insert. Tweak a little when at the start of a paragraph. #81909
+    DOMRange *result = [webEditor selectedDOMRange];
+    if (result)
+    {
+        if ([result collapsed] &&
+            [result startOffset] == 0 &&
+            [[result startContainer] parentNode] == [self textHTMLElement])
+        {
+            [result setStartBefore:[result startContainer]];
+        }
+    }
+    else
+    {
+        result = [[[self HTMLElement] ownerDocument] createRange];
+        [result setStartBefore:[[webEditor selectedItem] HTMLElement]];
+    }
+    
+    return result;
+}
+
 - (void)addGraphic:(SVGraphic *)graphic placeInline:(BOOL)placeInline;
 {
     WEKWebEditorView *webEditor = [self webEditor];
@@ -386,29 +410,11 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [controller setHTMLContext:[self HTMLContext]];
     
     
-    // Figure out where to insert. Tweak a little when at the start of a paragraph. #81909
-    DOMRange *selection = [webEditor selectedDOMRange];
-    if (selection)
-    {
-        if ([selection collapsed] &&
-            [selection startOffset] == 0 &&
-            [[selection startContainer] parentNode] == [self textHTMLElement])
-        {
-            [selection setStartBefore:[selection startContainer]];
-        }
-    }
-    else
-    {
-        selection = [[[self HTMLElement] ownerDocument] createRange];
-        [selection setStartBefore:[[webEditor selectedItem] HTMLElement]];
-        OBPOSTCONDITION(selection);
-    }
-    
-    
-    if ([webEditor shouldChangeTextInDOMRange:selection])
+    DOMRange *insertionRange = [self insertionRangeForPagelets];
+    if ([webEditor shouldChangeTextInDOMRange:insertionRange])
     {
         // Generate & insert DOM node
-        [selection insertNode:[controller HTMLElement]];
+        [insertionRange insertNode:[controller HTMLElement]];
     
         // Insert controller – must do after node is inserted so descendant nodes can be located by ID
         WEKWebEditorItem *parentController = [self hitTestDOMNode:[controller HTMLElement]];
