@@ -34,6 +34,4 @@
     // Ignore
 }
 
-- (NSURL *)addResourceWithURL:(NSURL *)resourceURL; { return nil; }   // ignore also
-
 @end
