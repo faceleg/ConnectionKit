@@ -590,7 +590,6 @@
 		else	// hierarchical menu
 		{
 			NSString *path = nil;
-			NSString *contents = nil;
 
 			// Append appropriate CSS for the site menus.
 			HierMenuType hierMenuType = [[[self master] design] hierMenuType];
@@ -598,21 +597,18 @@
 			if (HIER_MENU_NONE != hierMenuType)
 			{
 				path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu-base" ofType:@"css"];
-				contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-				if (contents) [[context mainCSS] appendString:contents];
+                if (path) [context addCSSWithURL:[NSURL fileURLWithPath:path]];
 				
 			}
 			if (HIER_MENU_HORIZONTAL == hierMenuType)
 			{
 				path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"css"];
-				contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-				if (contents) [[context mainCSS] appendString:contents];
+                if (path) [context addCSSWithURL:[NSURL fileURLWithPath:path]];
 			}
 			if (HIER_MENU_VERTICAL == hierMenuType)
 			{
 				path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu-v" ofType:@"css"];
-				contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-				if (contents) [[context mainCSS] appendString:contents];
+                if (path) [context addCSSWithURL:[NSURL fileURLWithPath:path]];
 			}
 
 			
