@@ -3,6 +3,25 @@
 //  Created by William Jon Shipley on 2/13/05.
 //  Copyright © 2005-2009 Golden % Braeburn, LLC. All rights reserved except as below:
 //  This code is provided as-is, with no warranties or anything. You may use it in your projects as you wish, but you must leave this comment block (credits and copyright) intact. That's the only restriction -- Golden % Braeburn otherwise grants you a fully-paid, worldwide, transferrable license to use this code as you see fit, including but not limited to making derivative works.
+//
+//
+// Modified by Dan Wood of Karelia Software
+//
+// Some of this is inspired and modified by GTMUILocalizer from Google Toolbox http://google-toolbox-for-mac.googlecode.com
+// (BSD license)
+
+// KNOWN LIMITATIONS
+//
+// NOTE: NSToolbar localization support is limited to only working on the
+// default items in the toolbar. We cannot localize items that are on of the
+// customization palette but not in the default items because there is not an
+// API for NSToolbar to get all possible items. You are responsible for
+// localizing all non-default toolbar items by hand.
+//
+// Due to technical limitations, accessibility description cannot be localized.
+// See http://lists.apple.com/archives/Accessibility-dev/2009/Dec/msg00004.html
+// and http://openradar.appspot.com/7496255 for more information.
+
 
 
 #import <Cocoa/Cocoa.h>
@@ -65,6 +84,7 @@
 + (void)		_localizePlaceholderStringOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
 + (void)				  _localizeToolTipOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
 + (void)				    _localizeLabelOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
++ (void)			 _localizePaletteLabelOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
 @end
 
 
@@ -162,15 +182,52 @@
  
  */
 
++ (void)_localizeAccessibility:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
+{
+	NSArray *supportedAttrs = [object accessibilityAttributeNames];
+	if ([supportedAttrs containsObject:NSAccessibilityHelpAttribute]) {
+		NSString *accessibilityHelp
+		= [object accessibilityAttributeValue:NSAccessibilityHelpAttribute];
+		if (accessibilityHelp) {
+			NSString *localizedAccessibilityHelp
+			= [self _localizedStringForString:accessibilityHelp bundle:bundle table:table];
+			if (localizedAccessibilityHelp) {
+				
+				if ([object accessibilityIsAttributeSettable:NSAccessibilityHelpAttribute])
+				{
+					NSLog(@"ACCESSIBILITY: %@ %@", localizedAccessibilityHelp, localizedAccessibilityHelp);
+					[object accessibilitySetValue:localizedAccessibilityHelp
+									 forAttribute:NSAccessibilityHelpAttribute];
+				}
+				else
+				{
+					NSLog(@"DISALLOWED ACCESSIBILITY: %@ %@", localizedAccessibilityHelp, localizedAccessibilityHelp);
+
+				}
+			}
+		}
+	}
+}
+
+
+//
+// NOT SURE:
+// Should we localize NSWindowController's window and NSViewController's view? Probably not; they would be top-level objects in nib.
+// Or NSApplication's main menu? Probably same thing.
+
 
 + (void)_localizeStringsInObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
 {
+	// NSArray ... this is not directly in the nib, but for when we recurse.
+	
     if ([object isKindOfClass:[NSArray class]]) {
         NSArray *array = object;
         
         for (id nibItem in array)
             [self _localizeStringsInObject:nibItem bundle:bundle table:table];
-        
+	
+	// NSCell & subclasses
+		
     } else if ([object isKindOfClass:[NSCell class]]) {
         NSCell *cell = object;
         
@@ -198,26 +255,61 @@
             }
         }
         
+	// NSToolbar
+		
+    } else if ([object isKindOfClass:[NSToolbar class]]) {
+        NSToolbar *toolbar = object;
+		NSArray *items = [toolbar items];
+		for (NSToolbarItem *item in items)
+		{
+			[self _localizeLabelOfObject:item bundle:bundle table:table];
+			[self _localizePaletteLabelOfObject:item bundle:bundle table:table];
+			[self _localizeToolTipOfObject:item bundle:bundle table:table];
+		}
+		
+	// NSTableView
+	} else if ([object isKindOfClass:[NSToolbar class]]) {
+		NSTableView *tableView = (NSTableView *)object;
+		NSArray *columns = [tableView tableColumns];
+		for (NSTableColumn *column in columns)
+		{
+			[self _localizeStringValueOfObject:[column headerCell] bundle:bundle table:table];
+		}
+		
+	// NSMenu
+		
     } else if ([object isKindOfClass:[NSMenu class]]) {
         NSMenu *menu = object;
         [self _localizeTitleOfObject:menu bundle:bundle table:table];
         
         [self _localizeStringsInObject:[menu itemArray] bundle:bundle table:table];
         
+	// NSMenuItem
+		
     } else if ([object isKindOfClass:[NSMenuItem class]]) {
         NSMenuItem *menuItem = object;
         [self _localizeTitleOfObject:menuItem bundle:bundle table:table];
         
         [self _localizeStringsInObject:[menuItem submenu] bundle:bundle table:table];
         
+	// NSView + subclasses
+				
     } else if ([object isKindOfClass:[NSView class]]) {
         NSView *view = object;
         [self _localizeToolTipOfObject:view bundle:bundle table:table];
         
+		[self _localizeAccessibility:view bundle:bundle table:table];
+
+		[self _localizeStringsInObject:[view menu] bundle:bundle table:table];
+		
+		// NSBox
+		
         if ([view isKindOfClass:[NSBox class]]) {
             NSBox *box = (NSBox *)view;
             [self _localizeTitleOfObject:box bundle:bundle table:table];
-            
+           
+		// NSTabView
+			
         } else if ([view isKindOfClass:[NSTabView class]]) {
             NSTabView *tabView = (NSTabView *)view;
 			NSArray *tabViewItems = [tabView tabViewItems];
@@ -232,10 +324,17 @@
 					[self _localizeStringsInObject:viewToLocalize bundle:bundle table:table];
 				}
 			}
-            
+		
+		// NSControl + subclasses
+			
         } else if ([view isKindOfClass:[NSControl class]]) {
             NSControl *control = (NSControl *)view;
             
+			[self _localizeAccessibility:[control cell] bundle:bundle table:table];
+
+			
+			// NSButton
+			
             if ([view isKindOfClass:[NSButton class]]) {
                 NSButton *button = (NSButton *)control;
                 
@@ -247,7 +346,9 @@
                 } else
                     [self _localizeStringsInObject:[button cell] bundle:bundle table:table];
                 
-                
+			
+			// NSMatrix
+				
             } else if ([view isKindOfClass:[NSMatrix class]]) {
                 NSMatrix *matrix = (NSMatrix *)control;
                 
@@ -260,7 +361,9 @@
                     if (localizedCellToolTip)
                         [matrix setToolTip:localizedCellToolTip forCell:cell];
                 }
-                
+              
+			// NSSegmentedControl
+				
             } else if ([view isKindOfClass:[NSSegmentedControl class]]) {
                 NSSegmentedControl *segmentedControl = (NSSegmentedControl *)control;
                 
@@ -272,32 +375,95 @@
                     
                     [self _localizeStringsInObject:[segmentedControl menuForSegment:segmentIndex] bundle:bundle table:table];
                 }
-                
+             
+			// OTHER
+				
             } else
                 [self _localizeStringsInObject:[control cell] bundle:bundle table:table];
             
         }
         
+		// Then localize this view's subviews
+		
         [self _localizeStringsInObject:[view subviews] bundle:bundle table:table];
-        
+       
+	// NSWindow
+		
     } else if ([object isKindOfClass:[NSWindow class]]) {
         NSWindow *window = object;
         [self _localizeTitleOfObject:window bundle:bundle table:table];
         
         [self _localizeStringsInObject:[window contentView] bundle:bundle table:table];
-        
+		[self _localizeStringsInObject:[window toolbar] bundle:bundle table:table];
+
     }
+	
+	// Finally, bindings.  Basically lifted from the Google Toolkit.
+	NSArray *exposedBindings = [object exposedBindings];
+	if (exposedBindings) {
+		NSString *optionsToLocalize[] = {
+			NSDisplayNameBindingOption,
+			NSDisplayPatternBindingOption,
+			NSMultipleValuesPlaceholderBindingOption,
+			NSNoSelectionPlaceholderBindingOption,
+			NSNotApplicablePlaceholderBindingOption,
+			NSNullPlaceholderBindingOption,
+		};
+		for (NSString *exposedBinding in exposedBindings)
+		{
+			NSDictionary *bindingInfo = [object infoForBinding:exposedBinding];
+			if (bindingInfo) {
+				id observedObject = [bindingInfo objectForKey:NSObservedObjectKey];
+				NSString *path = [bindingInfo objectForKey:NSObservedKeyPathKey];
+				NSDictionary *options = [bindingInfo objectForKey:NSOptionsKey];
+				if (observedObject && path && options) {
+					NSMutableDictionary *newOptions 
+					= [NSMutableDictionary dictionaryWithDictionary:options];
+					BOOL valueChanged = NO;
+					for (size_t i = 0; 
+						 i < sizeof(optionsToLocalize) / sizeof(optionsToLocalize[0]);
+						 ++i) {
+						NSString *key = optionsToLocalize[i];
+						NSString *value = [newOptions objectForKey:key];
+						if ([value isKindOfClass:[NSString class]]) {
+							NSString *localizedValue = [self _localizedStringForString:value bundle:bundle table:table];
+							if (localizedValue) {
+								valueChanged = YES;
+								[newOptions setObject:localizedValue forKey:key];
+							}
+						}
+					}
+					if (valueChanged) {
+						// Only unbind and rebind if there is a change.
+						[object unbind:exposedBinding];
+						[object bind:exposedBinding 
+							toObject:observedObject 
+						 withKeyPath:path 
+							 options:newOptions];
+					}
+				}
+			}
+		}
+	}
+	
+	
 }
+
+
 
 + (NSString *)_localizedStringForString:(NSString *)string bundle:(NSBundle *)bundle table:(NSString *)table;
 {
     if (![string length])
         return nil;
     
+	if ([string hasPrefix:@"["])
+	{
+		NSLog(@"??? Double-translation of %@", string);
+	}
     static NSString *defaultValue = @"I AM THE DEFAULT VALUE";
     NSString *localizedString = [bundle localizedStringForKey:string value:defaultValue table:table];
     if (localizedString != defaultValue) {
-        return [NSString stringWithFormat:@"_____%@_____", localizedString];
+        return [NSString stringWithFormat:@"[_%@_]", localizedString];
     } else { 
 #ifdef DEBUG
         NSLog(@"        Can't find translation for string %@", string);
@@ -323,5 +489,6 @@ DM_DEFINE_LOCALIZE_BLAH_OF_OBJECT(stringValue, StringValue)
 DM_DEFINE_LOCALIZE_BLAH_OF_OBJECT(placeholderString, PlaceholderString)
 DM_DEFINE_LOCALIZE_BLAH_OF_OBJECT(toolTip, ToolTip)
 DM_DEFINE_LOCALIZE_BLAH_OF_OBJECT(label, Label)
+DM_DEFINE_LOCALIZE_BLAH_OF_OBJECT(paletteLabel, PaletteLabel)
 
 @end
