@@ -1036,6 +1036,38 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
+- (NSMenu *)menuForEvent:(NSEvent *)theEvent
+{
+    NSMenu *result = [super menuForEvent:theEvent];
+    
+    
+    // Where's the click? Is it a selection handle? They trigger special resize event
+    NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    
+    SVGraphicHandle handle;
+    WEKWebEditorItem *item = [self selectedItemAtPoint:location handle:&handle];
+    if (item && handle != kSVGraphicNoHandle)
+    {
+		return result;
+    }
+    
+    
+    // Non-selection handle, use the standard hit-testing
+    if (!item) item = [self selectableItemAtPoint:location];
+    
+    
+    // Ask WebView for menu if item wants it
+    if ([item allowsDirectAccessToWebViewWhenSelected])
+    {
+        NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+        NSView *targetView = [[self webView] hitTest:location];
+        result = [targetView menuForEvent:theEvent];
+    }
+    
+    
+    return result;
+}
+
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector
 {
     // If content also decides it's not interested in the event, we will be given it again as part of the responder chain. So, keep track of whether we're processing and ignore the event in such cases.
