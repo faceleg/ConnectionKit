@@ -110,7 +110,7 @@ typedef enum {
 
 #pragma mark CSS
 @property(nonatomic) BOOL includeStyling;
-@property(nonatomic, copy) NSURL *mainCSSURL;
+@property(nonatomic, copy, readonly) NSURL *mainCSSURL;
 
 
 #pragma mark Elements/Comments

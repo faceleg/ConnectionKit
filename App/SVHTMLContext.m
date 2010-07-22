@@ -144,8 +144,8 @@
     if (![self isForEditing])
     {
         NSString *cssPath = [page pathToDesignFile:@"main.css" inContext:self];
-        [self setMainCSSURL:[NSURL URLWithString:cssPath
-                                   relativeToURL:[self baseURL]]];
+        NSURL *cssURL = [[NSURL alloc] initWithString:cssPath relativeToURL:[self baseURL]];
+        [_mainCSSURL release]; _mainCSSURL = cssURL;
     }
     
     
