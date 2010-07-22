@@ -8,10 +8,52 @@
 #import <Cocoa/Cocoa.h>
 #import <objc/runtime.h>
 
-
 @interface NSBundle (DMLocalizedNibBundle)
 + (BOOL)deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone;
++ (BOOL)_deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone bundle:(NSBundle *)aBundle;
 @end
+
+
+// Try to swizzle in -[NSViewController loadView]
+
+@interface NSViewController (DMLocalizedNibBundle)
+- (void)deliciousLocalizingLoadView;
+@end
+
+@implementation NSViewController (DMLocalizedNibBundle)
+
++ (void)load;
+{
+    NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
+    if (self == [NSViewController class]) {
+		NSLog(@"Switching in NSViewController Localizer!");
+        method_exchangeImplementations(class_getInstanceMethod(self, @selector(loadView)), class_getInstanceMethod(self, @selector(deliciousLocalizingLoadView)));
+    }
+    [autoreleasePool release];
+}
+
+
+- (void)deliciousLocalizingLoadView
+{
+	NSString		*nibName	= [self nibName];
+	NSBundle		*nibBundle	= [self nibBundle];		
+	NSLog(@"%s %@ %@",__FUNCTION__, nibName, nibBundle);
+									if(!nibBundle) nibBundle = [NSBundle mainBundle];
+	NSString		*nibPath	= [nibBundle pathForResource:nibName ofType:@"nib"];
+	NSDictionary	*context	= [NSDictionary dictionaryWithObjectsAndKeys:self, NSNibOwner, nil];
+	
+	BOOL loaded = [NSBundle _deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil bundle:nibBundle];	// call through to support method
+	if (!loaded)
+	{
+		[NSBundle deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil];	// use old-fashioned way
+	}
+}
+
+@end
+
+
+
+
 
 @interface NSBundle ()
 + (void)				  _localizeStringsInObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
@@ -29,20 +71,34 @@
 
 #pragma mark NSObject
 
-//+ (void)load;
-//{
-//    NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
-//    if (self == [NSBundle class]) {
-//		NSLog(@"Switching in Wil Shipley's Amazing Localizer Bundle. W00T!");
-//        method_exchangeImplementations(class_getClassMethod(self, @selector(loadNibFile:externalNameTable:withZone:)), class_getClassMethod(self, @selector(deliciousLocalizingLoadNibFile:externalNameTable:withZone:)));
-//    }
-//    [autoreleasePool release];
-//}
++ (void)load;
+{
+    NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
+    if (self == [NSBundle class]) {
+		NSLog(@"Switching in NSBundle localizer. W00T!");
+        method_exchangeImplementations(class_getClassMethod(self, @selector(loadNibFile:externalNameTable:withZone:)), class_getClassMethod(self, @selector(deliciousLocalizingLoadNibFile:externalNameTable:withZone:)));
+    }
+    [autoreleasePool release];
+}
 
 
 #pragma mark API
 
+// Method that gets swapped
 + (BOOL)deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone;
+{
+	NSLog(@"%s %@",__FUNCTION__, fileName);
+	BOOL result = [self _deliciousLocalizingLoadNibFile:fileName externalNameTable:context withZone:zone bundle:[NSBundle mainBundle]];
+	if (!result)
+	{
+		// try original version
+		result = [self deliciousLocalizingLoadNibFile:fileName externalNameTable:context withZone:zone];
+	}
+	return result;
+}
+
+// Internal method, which gets an extra parameter for bundle
++ (BOOL)_deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone bundle:(NSBundle *)aBundle;
 {
 	NSLog(@"%s %@",__FUNCTION__, fileName);
 	
@@ -51,7 +107,7 @@
     NSString *localizedStringsTableName = [[fileName lastPathComponent] stringByDeletingPathExtension];
     NSString *localizedStringsTablePath = [[NSBundle mainBundle] pathForResource:localizedStringsTableName ofType:@"strings"];
     if (
-//		YES ||
+([NSUserName() isEqualToString:@"dwood"]) ||
 		localizedStringsTablePath
 		&& ![[[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"English.lproj"]
 		&& ![[[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"en.lproj"]
@@ -67,32 +123,14 @@
         }
         BOOL success = [nib instantiateNibWithExternalNameTable:context];
 		
-		
-		// Try to figure out bundle!
-		NSBundle *itsBundle = [NSBundle mainBundle];
-//		NSString *tryingPath = fileName;
-//		do
-//		{
-//			itsBundle = [NSBundle bundleWithPath:tryingPath];
-//			
-//			NSLog(@"Trying %@ -> %@", tryingPath, itsBundle);
-//			
-//			tryingPath = [tryingPath stringByDeletingLastPathComponent];
-//			
-//		}
-//		while (!itsBundle && [tryingPath length]);
-		
-		// Hmm, no, that doesn't really do it ... It's returning false positives, e.g. "Resources" directory of a bundle.
-	
-		
-        [self _localizeStringsInObject:topLevelObjectsArray bundle:itsBundle table:localizedStringsTableName];		// BUNDLE?
+        [self _localizeStringsInObject:topLevelObjectsArray bundle:aBundle table:localizedStringsTableName];		// BUNDLE?
         
         [nib release];
         return success;
         
     } else {
 		
-        if (localizedStringsTablePath)
+        if (nil == localizedStringsTablePath)
 		{
 			NSLog(@"Not running through localizer because localizedStringsTablePath == nil");
 		}
@@ -101,7 +139,7 @@
 			NSLog(@"Not running through localizer because containing dir is not English: %@", [[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent]);
 		}
 		
-		return [self deliciousLocalizingLoadNibFile:fileName externalNameTable:context withZone:zone];
+		return NO;		// not successful
     }
 }
 
@@ -228,10 +266,10 @@
     static NSString *defaultValue = @"I AM THE DEFAULT VALUE";
     NSString *localizedString = [bundle localizedStringForKey:string value:defaultValue table:table];
     if (localizedString != defaultValue) {
-        return localizedString;
+        return [NSString stringWithFormat:@"_____%@_____", localizedString];
     } else { 
 #ifdef DEBUG
-        NSLog(@"        not going to localize string %@", string);
+        NSLog(@"        Can't find translation for string %@", string);
         return [string uppercaseString];
 #else
         return string;
