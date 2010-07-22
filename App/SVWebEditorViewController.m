@@ -1199,11 +1199,6 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
                                                         frameName:nil];
         [dataSource addSubresource:resource];
         [resource release];
-
-		// Try to disallow caching
-		NSMutableURLRequest *result = [[request mutableCopy] autorelease];
-        [result setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-		request = result;
 }
     
     return request;
