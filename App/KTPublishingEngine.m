@@ -277,7 +277,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)publishData:(NSData *)data toPath:(NSString *)uploadPath;
 {
-    [self publishData:data toPath:uploadPath contentHash:nil];
+    [self publishData:data toPath:uploadPath cachedSHA1Digest:nil contentHash:nil];
 }
 
 - (void)publishData:(NSData *)data
