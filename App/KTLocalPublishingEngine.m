@@ -97,14 +97,18 @@
 
 - (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
 {
-    // Check the hash. Could be done more efficiently by not loading the entire file at once
-    NSData *data = [[NSData alloc] initWithContentsOfURL:localURL];
-    NSData *digest = [data SHA1Digest];
-    [data release];
-    
+    // Compare digests to know if it's worth publishing. Look up remote hash first to save us reading in the local file if possible
     SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:remotePath];
     NSData *publishedDigest = [record SHA1Digest];
-    if ([digest isEqualToData:publishedDigest]) return;
+    if (publishedDigest)
+    {
+        // Check the hash. Could be done more efficiently by not loading the entire file at once
+        NSData *data = [[NSData alloc] initWithContentsOfURL:localURL];
+        NSData *digest = [data SHA1Digest];
+        [data release];
+        
+        if ([digest isEqualToData:publishedDigest]) return;
+    }
     
     
     [super publishContentsOfURL:localURL toPath:remotePath];
