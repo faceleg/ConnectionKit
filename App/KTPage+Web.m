@@ -271,37 +271,7 @@
 	path = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
     contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
     if (contents) [[context mainCSS] appendString:contents];
-   
-	// Append appropriate CSS for the site menus.
-	HierMenuType hierMenuType = [[[self master] design] hierMenuType];
-	// First get the base CSS
-	if (HIER_MENU_NONE != hierMenuType)
-	{
-		path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu-base" ofType:@"css"];
-		contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-		if (contents) [[context mainCSS] appendString:contents];
-		
-	}
-	if (HIER_MENU_HORIZONTAL == hierMenuType)
-	{
-		path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"css"];
-		contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-		if (contents) [[context mainCSS] appendString:contents];
-	}
-	if (HIER_MENU_VERTICAL == hierMenuType)
-	{
-		path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu-v" ofType:@"css"];
-		contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-		if (contents) [[context mainCSS] appendString:contents];
-	}
-    
-    // Load up main.css, which might override the ddsmoothmenu styles
-	
-    NSString *mainCSS = [NSString stringWithData:[[[self master] design] mainCSSData]
-                                        encoding:NSUTF8StringEncoding];
-    if (mainCSS) [[context mainCSS] appendString:mainCSS];
-    
-    
+       
 	// If we're for editing, include additional editing CSS
 	if ([context isForEditing])
 	{
@@ -313,9 +283,16 @@
 		if (editingCSS) [[context mainCSS] appendString:editingCSS];
 	}
 	
+// TODO: put the design's CSS at the end, AFTER all the page components have loaded
 	
+	// Load up main.css from the DESIGN, which might override the generic stuff
+	
+    NSString *mainCSS = [NSString stringWithData:[[[self master] design] mainCSSData]
+                                        encoding:NSUTF8StringEncoding];
+    if (mainCSS) [[context mainCSS] appendString:mainCSS];
     
-	// For preview/quicklook mode, the banner CSS
+	
+	// For preview/quicklook mode, the banner CSS (after the design's main.css)
     [[self master] writeBannerCSS];
 }
 
@@ -648,6 +625,33 @@
 		}
 		else	// hierarchical menu
 		{
+			NSString *path = nil;
+			NSString *contents = nil;
+
+			// Append appropriate CSS for the site menus.
+			HierMenuType hierMenuType = [[[self master] design] hierMenuType];
+			// First get the base CSS
+			if (HIER_MENU_NONE != hierMenuType)
+			{
+				path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu-base" ofType:@"css"];
+				contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+				if (contents) [[context mainCSS] appendString:contents];
+				
+			}
+			if (HIER_MENU_HORIZONTAL == hierMenuType)
+			{
+				path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"css"];
+				contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+				if (contents) [[context mainCSS] appendString:contents];
+			}
+			if (HIER_MENU_VERTICAL == hierMenuType)
+			{
+				path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu-v" ofType:@"css"];
+				contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+				if (contents) [[context mainCSS] appendString:contents];
+			}
+
+			
 			// now to build up the hiearchical site menu.
 			// Array of dictionaries keyed with "page" and "children" array
 			NSMutableArray *childrenLookup = [NSMutableArray array];
