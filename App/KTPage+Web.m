@@ -137,9 +137,6 @@
     return result;
 }
 
-
-
-
 + (NSString *)pageTemplate
 {
 	static NSString *sPageTemplateString = nil;
@@ -182,7 +179,7 @@
 
 #pragma mark Code injection
 
-- (BOOL) canWriteCodeInjection:(SVHTMLContext *)aContext;
+- (BOOL)canWriteCodeInjection:(SVHTMLContext *)aContext;
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	return ([aContext isForPublishingProOnly]
@@ -241,7 +238,6 @@
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
     NSString *path = nil;
-	NSString *contents = nil;
     
     // Write link to main.CSS file -- the most specific
     NSURL *mainCSSURL = [context mainCSSURL];
@@ -262,38 +258,6 @@
             [context writeLinkToStylesheet:path title:nil media:@"print"];
         }
 	}
-	
-	//
-	// Build up the CSS string for previewing in web editor.  I think we might be able to avoid doing this in other cases.
-	//
-	
-	// Always include the global sandvox CSS.
-	path = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
-    contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-    if (contents) [[context mainCSS] appendString:contents];
-       
-	// If we're for editing, include additional editing CSS
-	if ([context isForEditing])
-	{
-		NSString *editingCSSPath = [[NSBundle mainBundle] overridingPathForResource:@"design-time"
-																			 ofType:@"css"];
-        NSString *editingCSS = [NSString stringWithContentsOfFile:editingCSSPath
-                                                         encoding:NSUTF8StringEncoding
-                                                            error:NULL];
-		if (editingCSS) [[context mainCSS] appendString:editingCSS];
-	}
-	
-// TODO: put the design's CSS at the end, AFTER all the page components have loaded
-	
-	// Load up main.css from the DESIGN, which might override the generic stuff
-	
-    NSString *mainCSS = [NSString stringWithData:[[[self master] design] mainCSSData]
-                                        encoding:NSUTF8StringEncoding];
-    if (mainCSS) [[context mainCSS] appendString:mainCSS];
-    
-	
-	// For preview/quicklook mode, the banner CSS (after the design's main.css)
-    [[self master] writeBannerCSS];
 }
 
 #pragma mark Publishing

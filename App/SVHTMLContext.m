@@ -8,14 +8,16 @@
 
 #import "SVWebEditorHTMLContext.h"
 
+#import "KTDesign.h"
 #import "SVGraphic.h"
 #import "KTHostProperties.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
+#import "KTMaster.h"
 #import "SVMediaRecord.h"
-#import "SVTemplate.h"
 #import "KTPage.h"
 #import "KTSite.h"
+#import "SVTemplate.h"
 #import "SVTextAttachment.h"
 #import "Registration.h"
 
@@ -137,7 +139,7 @@
 {
     OBPRECONDITION(page);
     
-	// Build the HTML    
+	// Prepare global properties
     [self setEncoding:[[[page master] valueForKey:@"charset"] encodingFromCharset]];
     [self setLanguage:[[page master] language]];
     
@@ -145,8 +147,22 @@
     [self setMainCSSURL:[NSURL URLWithString:cssPath
                                relativeToURL:[self baseURL]]];
 		
+    
+    
+    // Global CSS
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"sandvox" ofType:@"css"];
+    NSString *contents = [NSString stringWithContentsOfFile:path
+                                                   encoding:NSUTF8StringEncoding
+                                                      error:NULL];
+    if (contents) [[self mainCSS] appendString:contents];
+    
+	
+    
+    
+    // First Code Injection
 	[page writeCodeInjectionBeforeHTML];
-        
+    
+    
     // Start the document
     KTDocType docType = [self docType];
     [self startDocument:[[self class] stringFromDocType:docType]
@@ -170,6 +186,27 @@
             [self writeDocumentWithPage:page];
         }
     }
+	
+    // Load up main.css from the DESIGN, which might override the generic stuff
+	NSString *mainCSS = [NSString stringWithData:[[[page master] design] mainCSSData]
+                                        encoding:NSUTF8StringEncoding];
+    if (mainCSS) [[self mainCSS] appendString:mainCSS];
+    
+	
+	// For preview/quicklook mode, the banner CSS (after the design's main.css)
+    [[page master] writeBannerCSS];
+	
+    
+	// If we're for editing, include additional editing CSS
+	if ([self isForEditing])
+	{
+		NSString *editingCSSPath = [[NSBundle mainBundle] pathForResource:@"design-time"
+                                                                   ofType:@"css"];
+        NSString *editingCSS = [NSString stringWithContentsOfFile:editingCSSPath
+                                                         encoding:NSUTF8StringEncoding
+                                                            error:NULL];
+		if (editingCSS) [[self mainCSS] appendString:editingCSS];
+	}
 }
 
 
