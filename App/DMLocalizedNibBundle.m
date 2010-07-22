@@ -44,7 +44,11 @@
 + (void)load;
 {
     NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
-    if (self == [NSViewController class]) {
+    if (
+		
+		([NSUserName() isEqualToString:@"dwood"]) &&
+		
+		self == [NSViewController class]) {
 		NSLog(@"Switching in NSViewController Localizer!");
         method_exchangeImplementations(class_getInstanceMethod(self, @selector(loadView)), class_getInstanceMethod(self, @selector(deliciousLocalizingLoadView)));
     }
@@ -95,7 +99,11 @@
 + (void)load;
 {
     NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
-    if (self == [NSBundle class]) {
+    if (
+		
+		([NSUserName() isEqualToString:@"dwood"]) &&
+		
+		self == [NSBundle class]) {
 		NSLog(@"Switching in NSBundle localizer. W00T!");
         method_exchangeImplementations(class_getClassMethod(self, @selector(loadNibFile:externalNameTable:withZone:)), class_getClassMethod(self, @selector(deliciousLocalizingLoadNibFile:externalNameTable:withZone:)));
     }
@@ -128,7 +136,6 @@
     NSString *localizedStringsTableName = [[fileName lastPathComponent] stringByDeletingPathExtension];
     NSString *localizedStringsTablePath = [[NSBundle mainBundle] pathForResource:localizedStringsTableName ofType:@"strings"];
     if (
-([NSUserName() isEqualToString:@"dwood"]) ||
 		localizedStringsTablePath
 		&& ![[[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"English.lproj"]
 		&& ![[[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"en.lproj"]
@@ -467,7 +474,7 @@
     } else { 
 #ifdef DEBUG
         NSLog(@"        Can't find translation for string %@", string);
-        return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
+        return [NSString stringWithFormat:@"[%@]", string];
 #else
         return string;
 #endif
