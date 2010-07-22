@@ -72,7 +72,6 @@
     
     
     _includeStyling = YES;
-    _mainCSS = [[NSMutableString alloc] init];
     
     _liveDataFeeds = YES;
     [self setEncoding:NSUTF8StringEncoding];
@@ -113,7 +112,6 @@
     [_currentPage release];
     
     [_mainCSSURL release];
-    [_mainCSS release];
     
     [_headerMarkup release];
     [_endBodyMarkup release];
@@ -329,7 +327,6 @@
 
 @synthesize includeStyling = _includeStyling;
 
-@synthesize mainCSS = _mainCSS;
 @synthesize mainCSSURL = _mainCSSURL;
 
 - (void)addCSSString:(NSString *)css;

@@ -45,7 +45,6 @@ typedef enum {
     
     BOOL            _includeStyling;
     NSURL           *_mainCSSURL;
-    NSMutableString *_mainCSS;
     
     NSUInteger  _headerLevel;
 	
@@ -110,11 +109,7 @@ typedef enum {
 
 
 #pragma mark CSS
-
 @property(nonatomic) BOOL includeStyling;
-
-@property(nonatomic, readonly) NSMutableString *mainCSS;
-- (void)addCSSWithURL:(NSURL *)cssURL;
 @property(nonatomic, copy) NSURL *mainCSSURL;
 
 
