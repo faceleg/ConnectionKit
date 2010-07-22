@@ -33,12 +33,11 @@
 /*  Ignore most publishing commands */
 - (void)publishData:(NSData *)data toPath:(NSString *)remotePath;
 {
-    return nil;
 }
 - (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
 {
-    return nil;
 }
+
 - (NSString *)publishResourceAtURL:(NSURL *)fileURL;
 {
     return nil;
