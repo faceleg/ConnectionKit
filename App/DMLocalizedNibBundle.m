@@ -26,6 +26,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <objc/runtime.h>
+#import "Debug.h"
 
 #import "NSString+Karelia.h"
 
@@ -92,6 +93,10 @@
 + (void)				  _localizeToolTipOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level;
 + (void)				    _localizeLabelOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level;
 + (void)			 _localizePaletteLabelOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level;
+
+
++ (void) _resizeView:(NSView *)aView level:(NSUInteger)level;
+
 @end
 
 
@@ -170,6 +175,20 @@
         BOOL success = [nib instantiateNibWithExternalNameTable:context];
 		
         [self _localizeStringsInObject:topLevelObjectsArray bundle:aBundle table:localizedStringsTableName level:0];
+		
+		for (id *topLevelObject in topLevelObjectsArray)
+		{
+			if ([topLevelObject isKindOfClass:[NSView class]])
+			{
+				NSView *view = (NSView *)topLevelObject;
+				[self _resizeView:view level:0];
+			}
+			else if ([topLevelObject isKindOfClass:[NSWindow class]])
+			{
+				NSWindow *window = (NSWindow *)topLevelObject;
+				[self _resizeView:[window contentView] level:0];
+			}
+		}
         
         [nib release];
         return success;
@@ -243,9 +262,16 @@
 	}
 }
 
-+ (void) _resizeView:(NSView *)aView level:(NSUInteger)level
++ (void) _resizeView:(NSView *)aView level:(NSUInteger)level;
 {
 	LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], [[aView description] condenseWhiteSpace]);
+	level++;
+	
+	NSArray *subViews = [aView subviews];
+	for (NSView *subView in subViews)
+	{
+		[self _resizeView:subView level:level];
+	}
 }
 
 //
@@ -427,7 +453,7 @@
                     [self _localizeStringsInObject:[segmentedControl menuForSegment:segmentIndex] bundle:bundle table:table level:level];
                 }
              
-			// OTHER
+			// OTHER ... e.g. NSTextField NSSlider NSScroller NSImageView 
 				
             } else
 			{
@@ -440,10 +466,7 @@
 		// Then localize this view's subviews
 		
         [self _localizeStringsInObject:[view subviews] bundle:bundle table:table level:level];
-			
-		// After localizing (and resizing) subviews, resize this view to fit the contents.
-		[self _resizeView:view level:level];
-       
+			       
 	// NSWindow
 		
     } else if ([object isKindOfClass:[NSWindow class]]) {
@@ -519,7 +542,7 @@
 	}
     static NSString *defaultValue = @"I AM THE DEFAULT VALUE";
     NSString *localizedString = [bundle localizedStringForKey:string value:defaultValue table:table];
-    if (localizedString != defaultValue) {
+    if (![localizedString isEqualToString:defaultValue]) {
         return [NSString stringWithFormat:@"[_%@_]", localizedString];
     } else { 
 #ifdef DEBUG
