@@ -350,8 +350,11 @@
 	[context openTag:[self tagName]];
 	
 	// in some situations we generate both the main tag, and a <span class="in">
-    NSString *elementID = [self elementIdName];
-    if (elementID) [context writeAttribute:@"id" value:elementID];
+    if ([context isForEditing])
+    {
+        NSString *elementID = [self elementIdName];
+        if (elementID) [context writeAttribute:@"id" value:elementID];
+    }
     
     BOOL generateSpanIn = [self generateSpanIn];
 	// if (!generateSpanIn)	// Actually we want a custom class to show up even items with a span-in. 
