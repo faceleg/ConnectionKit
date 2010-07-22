@@ -116,9 +116,7 @@ const int kDesignThumbHeight = 65;
 #endif
 		)	
 	{
-		NSLog(@"In %@: %@", identifier, categoryProblems);
-		
-		// Should be NSLog though...
+		DJW((@"In %@: %@", identifier, categoryProblems));
 	}
 	
 	return result;
