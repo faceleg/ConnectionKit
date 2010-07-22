@@ -54,6 +54,7 @@
 }
 
 - (void)addCSSString:(NSString *)css; { }
+- (void)addCSSWithURL:(NSURL *)cssURL; { }
 
 - (NSString *)baseRemotePath; { return [[self publishingEngine] baseRemotePath]; }
 
