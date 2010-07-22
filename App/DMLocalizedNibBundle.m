@@ -27,6 +27,8 @@
 #import <Cocoa/Cocoa.h>
 #import <objc/runtime.h>
 
+#import "NSString+Karelia.h"
+
 @interface NSBundle (DMLocalizedNibBundle)
 + (BOOL)deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone;
 + (BOOL)_deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone bundle:(NSBundle *)aBundle;
@@ -60,11 +62,12 @@
 {
 	NSString		*nibName	= [self nibName];
 	NSBundle		*nibBundle	= [self nibBundle];		
-	NSLog(@"%s %@ %@",__FUNCTION__, nibName, nibBundle);
+	// NSLog(@"%s %@ %@",__FUNCTION__, nibName, nibBundle);
 									if(!nibBundle) nibBundle = [NSBundle mainBundle];
 	NSString		*nibPath	= [nibBundle pathForResource:nibName ofType:@"nib"];
 	NSDictionary	*context	= [NSDictionary dictionaryWithObjectsAndKeys:self, NSNibOwner, nil];
 	
+	NSLog(@"%@ Going to localize %@ with top objects: %@", [[nibBundle bundlePath] lastPathComponent], [nibPath lastPathComponent], [[context description] condenseWhiteSpace]);
 	BOOL loaded = [NSBundle _deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil bundle:nibBundle];	// call through to support method
 	if (!loaded)
 	{
@@ -79,16 +82,16 @@
 
 
 @interface NSBundle ()
-+ (void)				  _localizeStringsInObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
 + (NSString *)	 _localizedStringForString:(NSString *)string bundle:(NSBundle *)bundle table:(NSString *)table;
++ (void)				  _localizeStringsInObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level;
 // localize particular attributes in objects
-+ (void)					_localizeTitleOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
-+ (void)		   _localizeAlternateTitleOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
-+ (void)			  _localizeStringValueOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
-+ (void)		_localizePlaceholderStringOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
-+ (void)				  _localizeToolTipOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
-+ (void)				    _localizeLabelOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
-+ (void)			 _localizePaletteLabelOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
++ (void)					_localizeTitleOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level;
++ (void)		   _localizeAlternateTitleOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level;
++ (void)			  _localizeStringValueOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level;
++ (void)		_localizePlaceholderStringOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level;
++ (void)				  _localizeToolTipOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level;
++ (void)				    _localizeLabelOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level;
++ (void)			 _localizePaletteLabelOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level;
 @end
 
 
@@ -116,8 +119,19 @@
 // Method that gets swapped
 + (BOOL)deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone;
 {
-	NSLog(@"%s %@",__FUNCTION__, fileName);
-	BOOL result = [self _deliciousLocalizingLoadNibFile:fileName externalNameTable:context withZone:zone bundle:[NSBundle mainBundle]];
+	BOOL result = NO;
+	// Don't allow this to localize any file that is not in the app bundle!
+	if ([fileName hasPrefix:[[NSBundle mainBundle] bundlePath]])
+	{
+		// NSLog(@"%s %@",__FUNCTION__, fileName);
+
+		NSLog(@"Going to localize %@ with top objects: %@", [fileName lastPathComponent], [[context description] condenseWhiteSpace]);
+		result = [self _deliciousLocalizingLoadNibFile:fileName externalNameTable:context withZone:zone bundle:[NSBundle mainBundle]];
+	}
+	else
+	{
+		NSLog(@"%s is NOT LOCALIZING non-app loadNibFile:%@",__FUNCTION__, fileName);
+	}
 	if (!result)
 	{
 		// try original version
@@ -136,12 +150,14 @@
     NSString *localizedStringsTableName = [[fileName lastPathComponent] stringByDeletingPathExtension];
     NSString *localizedStringsTablePath = [[NSBundle mainBundle] pathForResource:localizedStringsTableName ofType:@"strings"];
     if (
+		
+	([NSUserName() isEqualToString:@"dwood"]) || 
+		
 		localizedStringsTablePath
 		&& ![[[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"English.lproj"]
 		&& ![[[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"en.lproj"]
 		)
 	{
-        
         NSNib *nib = [[NSNib alloc] initWithContentsOfURL:[NSURL fileURLWithPath:fileName]];
         NSMutableArray *topLevelObjectsArray = [context objectForKey:NSNibTopLevelObjects];
         if (!topLevelObjectsArray) {
@@ -149,9 +165,13 @@
             context = [NSMutableDictionary dictionaryWithDictionary:context];
             [(NSMutableDictionary *)context setObject:topLevelObjectsArray forKey:NSNibTopLevelObjects];
         }
+		
+		// Note: This will call awakeFromNib so you want to make sure not to load a new nib *from*
+		// awakeFromNib that inserts something into the view hiearchy, or you may have double-
+		// localization happening.
         BOOL success = [nib instantiateNibWithExternalNameTable:context];
 		
-        [self _localizeStringsInObject:topLevelObjectsArray bundle:aBundle table:localizedStringsTableName];		// BUNDLE?
+        [self _localizeStringsInObject:topLevelObjectsArray bundle:aBundle table:localizedStringsTableName level:0];
         
         [nib release];
         return success;
@@ -189,27 +209,36 @@
  
  */
 
-+ (void)_localizeAccessibility:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
++ (void)_localizeAccessibility:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level;
 {
+	// Hack -- don't localize accessibility properties of cells, since the AXHelp of a cell is copied from the tooltip of its enclosing button.
+	if ([object isKindOfClass:[NSCell class]]) return;
+	
 	NSArray *supportedAttrs = [object accessibilityAttributeNames];
 	if ([supportedAttrs containsObject:NSAccessibilityHelpAttribute]) {
 		NSString *accessibilityHelp
 		= [object accessibilityAttributeValue:NSAccessibilityHelpAttribute];
 		if (accessibilityHelp) {
-			NSString *localizedAccessibilityHelp
-			= [self _localizedStringForString:accessibilityHelp bundle:bundle table:table];
-			if (localizedAccessibilityHelp) {
-				
-				if ([object accessibilityIsAttributeSettable:NSAccessibilityHelpAttribute])
-				{
-					NSLog(@"ACCESSIBILITY: %@ %@", localizedAccessibilityHelp, localizedAccessibilityHelp);
-					[object accessibilitySetValue:localizedAccessibilityHelp
-									 forAttribute:NSAccessibilityHelpAttribute];
-				}
-				else
-				{
-					NSLog(@"DISALLOWED ACCESSIBILITY: %@ %@", localizedAccessibilityHelp, localizedAccessibilityHelp);
-
+			
+			NSString *toolTip = nil;		// get the tooltip and make sure it's not the same; Help seems to come from tooltip if undefined!
+			if ([object respondsToSelector:@selector(toolTip)]) toolTip = [object toolTip];
+			if (![accessibilityHelp isEqualToString:toolTip])
+			{
+				NSString *localizedAccessibilityHelp
+				= [self _localizedStringForString:accessibilityHelp bundle:bundle table:table];
+				if (localizedAccessibilityHelp) {
+					
+					if ([object accessibilityIsAttributeSettable:NSAccessibilityHelpAttribute])
+					{
+						NSLog(@"ACCESSIBILITY: %@ %@", localizedAccessibilityHelp, localizedAccessibilityHelp);
+						[object accessibilitySetValue:localizedAccessibilityHelp
+										 forAttribute:NSAccessibilityHelpAttribute];
+					}
+					else
+					{
+						NSLog(@"DISALLOWED ACCESSIBILITY: %@ %@", localizedAccessibilityHelp, localizedAccessibilityHelp);
+						
+					}
 				}
 			}
 		}
@@ -223,15 +252,23 @@
 // Or NSApplication's main menu? Probably same thing.
 
 
-+ (void)_localizeStringsInObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
++ (void)_localizeStringsInObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level;
 {
+	if ([object isKindOfClass:[NSPopUpButton class]])
+	{
+		NSLog(@"Popup Button");
+	}
+	if (!object) return;
+	if ([object isKindOfClass:[NSArray class]] && 0 == [object count]) return;		// SHORT CIRCUIT SO WE DON'T SEE LOGGING
+	LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], [[object description] condenseWhiteSpace]);
+	level++;	// recursion will incrememnt
 	// NSArray ... this is not directly in the nib, but for when we recurse.
 	
     if ([object isKindOfClass:[NSArray class]]) {
         NSArray *array = object;
         
         for (id nibItem in array)
-            [self _localizeStringsInObject:nibItem bundle:bundle table:table];
+            [self _localizeStringsInObject:nibItem bundle:bundle table:table level:level];
 	
 	// NSCell & subclasses
 		
@@ -244,21 +281,21 @@
             if ([actionCell isKindOfClass:[NSButtonCell class]]) {
                 NSButtonCell *buttonCell = (NSButtonCell *)actionCell;
                 if ([buttonCell imagePosition] != NSImageOnly) {
-                    [self _localizeTitleOfObject:buttonCell bundle:bundle table:table];
-                    [self _localizeStringValueOfObject:buttonCell bundle:bundle table:table];
-                    [self _localizeAlternateTitleOfObject:buttonCell bundle:bundle table:table];
+                    [self _localizeTitleOfObject:buttonCell bundle:bundle table:table level:level];
+                    [self _localizeStringValueOfObject:buttonCell bundle:bundle table:table level:level];
+                    [self _localizeAlternateTitleOfObject:buttonCell bundle:bundle table:table level:level];
                 }
                 
             } else if ([actionCell isKindOfClass:[NSTextFieldCell class]]) {
                 NSTextFieldCell *textFieldCell = (NSTextFieldCell *)actionCell;
                 // Following line is redundant with other code, localizes twice.
-                // [self _localizeTitleOfObject:textFieldCell bundle:bundle table:table];
-                [self _localizeStringValueOfObject:textFieldCell bundle:bundle table:table];
-                [self _localizePlaceholderStringOfObject:textFieldCell bundle:bundle table:table];
+                // [self _localizeTitleOfObject:textFieldCell bundle:bundle table:table level:level];
+                [self _localizeStringValueOfObject:textFieldCell bundle:bundle table:table level:level];
+                [self _localizePlaceholderStringOfObject:textFieldCell bundle:bundle table:table level:level];
                 
             } else if ([actionCell type] == NSTextCellType) {
-                [self _localizeTitleOfObject:actionCell bundle:bundle table:table];
-                [self _localizeStringValueOfObject:actionCell bundle:bundle table:table];
+                [self _localizeTitleOfObject:actionCell bundle:bundle table:table level:level];
+                [self _localizeStringValueOfObject:actionCell bundle:bundle table:table level:level];
             }
         }
         
@@ -269,9 +306,9 @@
 		NSArray *items = [toolbar items];
 		for (NSToolbarItem *item in items)
 		{
-			[self _localizeLabelOfObject:item bundle:bundle table:table];
-			[self _localizePaletteLabelOfObject:item bundle:bundle table:table];
-			[self _localizeToolTipOfObject:item bundle:bundle table:table];
+			[self _localizeLabelOfObject:item bundle:bundle table:table level:level];
+			[self _localizePaletteLabelOfObject:item bundle:bundle table:table level:level];
+			[self _localizeToolTipOfObject:item bundle:bundle table:table level:level];
 		}
 		
 	// NSTableView
@@ -280,40 +317,47 @@
 		NSArray *columns = [tableView tableColumns];
 		for (NSTableColumn *column in columns)
 		{
-			[self _localizeStringValueOfObject:[column headerCell] bundle:bundle table:table];
+			[self _localizeStringValueOfObject:[column headerCell] bundle:bundle table:table level:level];
 		}
 		
 	// NSMenu
 		
     } else if ([object isKindOfClass:[NSMenu class]]) {
         NSMenu *menu = object;
-        [self _localizeTitleOfObject:menu bundle:bundle table:table];
+				
+        [self _localizeTitleOfObject:menu bundle:bundle table:table level:level];
         
-        [self _localizeStringsInObject:[menu itemArray] bundle:bundle table:table];
+        [self _localizeStringsInObject:[menu itemArray] bundle:bundle table:table level:level];
         
 	// NSMenuItem
 		
     } else if ([object isKindOfClass:[NSMenuItem class]]) {
         NSMenuItem *menuItem = object;
-        [self _localizeTitleOfObject:menuItem bundle:bundle table:table];
+
+		[self _localizeTitleOfObject:menuItem bundle:bundle table:table level:level];
         
-        [self _localizeStringsInObject:[menuItem submenu] bundle:bundle table:table];
+        [self _localizeStringsInObject:[menuItem submenu] bundle:bundle table:table level:level];
         
 	// NSView + subclasses
 				
     } else if ([object isKindOfClass:[NSView class]]) {
-        NSView *view = object;
-        [self _localizeToolTipOfObject:view bundle:bundle table:table];
-        
-		[self _localizeAccessibility:view bundle:bundle table:table];
+        NSView *view = object;        
+		[self _localizeAccessibility:view bundle:bundle table:table level:level];
+		// Do tooltip AFTER AX since AX might just get value from tooltip. 
+        [self _localizeToolTipOfObject:view bundle:bundle table:table level:level];
 
-		[self _localizeStringsInObject:[view menu] bundle:bundle table:table];
+		// Contextual menu?  Anything else besides a popup button
+		// I am NOT going to localize this, because it seems to be automatically generated, and there
+		// tends to be multiple copies instantiated.  Since it's not instantiated in the nib (except perhaps
+		// as a top-level object) I don't want to localize it.
+		// Note: If I do, I have to be sure to not also localize a NSPopUpButton's menu, which uses the menu accessor.
+		//[self _localizeStringsInObject:[view menu] bundle:bundle table:table level:level];
 		
 		// NSBox
 		
         if ([view isKindOfClass:[NSBox class]]) {
             NSBox *box = (NSBox *)view;
-            [self _localizeTitleOfObject:box bundle:bundle table:table];
+            [self _localizeTitleOfObject:box bundle:bundle table:table level:level];
            
 		// NSTabView
 			
@@ -323,12 +367,12 @@
 		
 			for (NSTabViewItem *item in tabViewItems)
 			{
-				[self _localizeLabelOfObject:item bundle:bundle table:table];
+				[self _localizeLabelOfObject:item bundle:bundle table:table level:level];
 				
 				NSView *viewToLocalize = [item view];
 				if (![[view subviews] containsObject:viewToLocalize])	// don't localize one that is current subview
 				{
-					[self _localizeStringsInObject:viewToLocalize bundle:bundle table:table];
+					[self _localizeStringsInObject:viewToLocalize bundle:bundle table:table level:level];
 				}
 			}
 		
@@ -337,7 +381,7 @@
         } else if ([view isKindOfClass:[NSControl class]]) {
             NSControl *control = (NSControl *)view;
             
-			[self _localizeAccessibility:[control cell] bundle:bundle table:table];
+			[self _localizeAccessibility:[control cell] bundle:bundle table:table level:level];
 
 			
 			// NSButton
@@ -346,12 +390,13 @@
                 NSButton *button = (NSButton *)control;
                 
                 if ([button isKindOfClass:[NSPopUpButton class]]) {
+					// Note: Be careful not to localize this *and* the menu for an NSView. 
                     NSPopUpButton *popUpButton = (NSPopUpButton *)button;
                     NSMenu *menu = [popUpButton menu];
                     
-                    [self _localizeStringsInObject:[menu itemArray] bundle:bundle table:table];
+                    [self _localizeStringsInObject:[menu itemArray] bundle:bundle table:table level:level];
                 } else
-                    [self _localizeStringsInObject:[button cell] bundle:bundle table:table];
+                    [self _localizeStringsInObject:[button cell] bundle:bundle table:table level:level];
                 
 			
 			// NSMatrix
@@ -360,7 +405,7 @@
                 NSMatrix *matrix = (NSMatrix *)control;
                 
                 NSArray *cells = [matrix cells];
-                [self _localizeStringsInObject:cells bundle:bundle table:table];
+                [self _localizeStringsInObject:cells bundle:bundle table:table level:level];
                 
                 for (NSCell *cell in cells) {
                     
@@ -380,28 +425,28 @@
                     if (localizedSegmentLabel)
                         [segmentedControl setLabel:localizedSegmentLabel forSegment:segmentIndex];
                     
-                    [self _localizeStringsInObject:[segmentedControl menuForSegment:segmentIndex] bundle:bundle table:table];
+                    [self _localizeStringsInObject:[segmentedControl menuForSegment:segmentIndex] bundle:bundle table:table level:level];
                 }
              
 			// OTHER
 				
             } else
-                [self _localizeStringsInObject:[control cell] bundle:bundle table:table];
+                [self _localizeStringsInObject:[control cell] bundle:bundle table:table level:level];
             
         }
         
 		// Then localize this view's subviews
 		
-        [self _localizeStringsInObject:[view subviews] bundle:bundle table:table];
+        [self _localizeStringsInObject:[view subviews] bundle:bundle table:table level:level];
        
 	// NSWindow
 		
     } else if ([object isKindOfClass:[NSWindow class]]) {
         NSWindow *window = object;
-        [self _localizeTitleOfObject:window bundle:bundle table:table];
+        [self _localizeTitleOfObject:window bundle:bundle table:table level:level];
         
-        [self _localizeStringsInObject:[window contentView] bundle:bundle table:table];
-		[self _localizeStringsInObject:[window toolbar] bundle:bundle table:table];
+        [self _localizeStringsInObject:[window contentView] bundle:bundle table:table level:level];
+		[self _localizeStringsInObject:[window toolbar] bundle:bundle table:table level:level];
 
     }
 	
@@ -463,6 +508,10 @@
     if (![string length])
         return nil;
     
+	if ([[string uppercaseString] isEqualToString:@"MENU"])
+	{
+		NSLog(@"First instance");
+	}
 	if ([string hasPrefix:@"["])
 	{
 		NSLog(@"??? Double-translation of %@", string);
@@ -473,8 +522,8 @@
         return [NSString stringWithFormat:@"[_%@_]", localizedString];
     } else { 
 #ifdef DEBUG
-        NSLog(@"        Can't find translation for string %@", string);
-        return [NSString stringWithFormat:@"[%@]", string];
+ //       NSLog(@"        Can't find translation for string %@", string);
+        return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
 #else
         return string;
 #endif
@@ -483,7 +532,7 @@
 
 
 #define DM_DEFINE_LOCALIZE_BLAH_OF_OBJECT(blahName, capitalizedBlahName) \
-+ (void)_localize ##capitalizedBlahName ##OfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table; \
++ (void)_localize ##capitalizedBlahName ##OfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level; \
 { \
 NSString *localizedBlah = [self _localizedStringForString:[object blahName] bundle:bundle table:table]; \
 if (localizedBlah) \
