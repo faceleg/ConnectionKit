@@ -64,6 +64,7 @@
 + (void)			  _localizeStringValueOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
 + (void)		_localizePlaceholderStringOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
 + (void)				  _localizeToolTipOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
++ (void)				    _localizeLabelOfObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
 @end
 
 
@@ -147,6 +148,21 @@
 
 #pragma mark Private API
 
+
+/*
+ 
+ Aspects of a nib still to do:
+	NSTableView
+	AXDescription and AXRole
+	
+ Others?
+ 
+ Next up: stretching items....
+ 
+ 
+ */
+
+
 + (void)_localizeStringsInObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table;
 {
     if ([object isKindOfClass:[NSArray class]]) {
@@ -201,6 +217,21 @@
         if ([view isKindOfClass:[NSBox class]]) {
             NSBox *box = (NSBox *)view;
             [self _localizeTitleOfObject:box bundle:bundle table:table];
+            
+        } else if ([view isKindOfClass:[NSTabView class]]) {
+            NSTabView *tabView = (NSTabView *)view;
+			NSArray *tabViewItems = [tabView tabViewItems];
+		
+			for (NSTabViewItem *item in tabViewItems)
+			{
+				[self _localizeLabelOfObject:item bundle:bundle table:table];
+				
+				NSView *viewToLocalize = [item view];
+				if (![[view subviews] containsObject:viewToLocalize])	// don't localize one that is current subview
+				{
+					[self _localizeStringsInObject:viewToLocalize bundle:bundle table:table];
+				}
+			}
             
         } else if ([view isKindOfClass:[NSControl class]]) {
             NSControl *control = (NSControl *)view;
@@ -270,7 +301,7 @@
     } else { 
 #ifdef DEBUG
         NSLog(@"        Can't find translation for string %@", string);
-        return [string uppercaseString];
+        return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
 #else
         return string;
 #endif
@@ -291,5 +322,6 @@ DM_DEFINE_LOCALIZE_BLAH_OF_OBJECT(alternateTitle, AlternateTitle)
 DM_DEFINE_LOCALIZE_BLAH_OF_OBJECT(stringValue, StringValue)
 DM_DEFINE_LOCALIZE_BLAH_OF_OBJECT(placeholderString, PlaceholderString)
 DM_DEFINE_LOCALIZE_BLAH_OF_OBJECT(toolTip, ToolTip)
+DM_DEFINE_LOCALIZE_BLAH_OF_OBJECT(label, Label)
 
 @end
