@@ -52,7 +52,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)setRootTransferRecord:(CKTransferRecord *)rootRecord;
 
 - (BOOL)shouldPublishToPath:(NSString *)path;
-- (void)didQueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
+- (void)didEnqueueUpload:(CKTransferRecord *)record 
+           toDirectory:(CKTransferRecord *)parent
+           contentHash:(NSData *)contentHash;
 
 @end
 
@@ -277,7 +279,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             
             [result setName:[remotePath lastPathComponent]];
             
-            [self didQueueUpload:result toDirectory:parent];
+            [self didEnqueueUpload:result toDirectory:parent contentHash:nil];
         }
     }
     else
@@ -321,7 +323,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	CKTransferRecord *result = [self uploadData:data toPath:remotePath];
     if (result)
     {
-        [self didQueueUpload:result toDirectory:parent];
+        [self didEnqueueUpload:result toDirectory:parent contentHash:hash];
     }
     else
     {
@@ -342,7 +344,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)willUploadToPath:(NSString *)path; { }
 
-- (void)didQueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
+- (void)didEnqueueUpload:(CKTransferRecord *)record contentHash:(NSData *)contentHash; { }
+
+- (void)didEnqueueUpload:(CKTransferRecord *)record 
+           toDirectory:(CKTransferRecord *)parent
+           contentHash:(NSData *)contentHash;
 {
     [parent addContent:record];
     
@@ -351,6 +357,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     [[self connection] setPermissions:[self remoteFilePermissions]
                               forFile:path];
+    
+    [self didEnqueueUpload:record contentHash:contentHash];
 }
 
 #pragma mark Media

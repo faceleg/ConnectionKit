@@ -95,6 +95,37 @@
     return [super publishData:data toPath:uploadPath contentHash:hash];
 }
 
+- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
+{
+    CKTransferRecord *result = [super uploadData:data toPath:remotePath];
+    
+    // Record digest of the data for after publishing
+    [result setProperty:[data SHA1Digest] forKey:@"dataDigest"];
+    
+    return result;
+}
+
+/*	Supplement the default behaviour by also deleting any existing file first if the user requests it.
+ */
+- (void)willUploadToPath:(NSString *)path;
+{
+    OBPRECONDITION(path);
+    
+    [super willUploadToPath:path];
+    
+    if ([[[self site] hostProperties] boolForKey:@"deletePagesWhenPublishing"])
+	{
+		[[self connection] deleteFile:path];
+	}
+}
+
+- (void)didEnqueueUpload:(CKTransferRecord *)record contentHash:(NSData *)contentHash;
+{
+    [super didEnqueueUpload:record contentHash:contentHash];
+    
+    if (contentHash) [record setProperty:contentHash forKey:@"contentHash"];
+}
+
 /*  Once publishing is fully complete, without any errors, ping google if there is a sitemap
  */
 - (void)engineDidPublish:(BOOL)didPublish error:(NSError *)error
@@ -152,30 +183,6 @@
     [super engineDidPublish:didPublish error:error];
 }
 
-- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
-{
-    CKTransferRecord *result = [super uploadData:data toPath:remotePath];
-    
-    // Record digest of the data for after publishing
-    [result setProperty:[data SHA1Digest] forKey:@"dataDigest"];
-    
-    return result;
-}
-
-/*	Supplement the default behaviour by also deleting any existing file first if the user requests it.
- */
-- (void)willUploadToPath:(NSString *)path;
-{
-    OBPRECONDITION(path);
-    
-    [super willUploadToPath:path];
-    
-    if ([[[self site] hostProperties] boolForKey:@"deletePagesWhenPublishing"])
-	{
-		[[self connection] deleteFile:path];
-	}
-}
-
 #pragma mark -
 #pragma mark Content Generation
 
@@ -201,6 +208,7 @@
         
         NSData *digest = [transferRecord propertyForKey:@"dataDigest"];
         [record setSHA1Digest:digest];
+        [record setContentHash:[transferRecord propertyForKey:@"contentHash"]];
     }
     
     

@@ -95,9 +95,11 @@ typedef enum {
 
 
 #pragma mark Uploads
-- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
-- (void)willUploadToPath:(NSString *)path;  // for subclasses
 
+- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
+
+- (void)willUploadToPath:(NSString *)path;  // for subclasses
+- (void)didEnqueueUpload:(CKTransferRecord *)record contentHash:(NSData *)contentHash;
 
 @end
 
