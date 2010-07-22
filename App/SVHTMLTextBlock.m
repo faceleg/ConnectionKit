@@ -368,7 +368,7 @@
 		NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];
 		if (graphicalTextStyle)
 		{
-			if ([[SVHTMLContext currentContext] isForPublishing])    // id has already been supplied
+			if ([context isForPublishing])    // id has already been supplied
 			{
                 NSString *ID = [self graphicalTextCSSID];
                 [context writeAttribute:@"id" value:ID];
