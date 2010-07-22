@@ -240,7 +240,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION([localURL isFileURL]);
     OBPRECONDITION(remotePath);
     
-    if (![self shouldPublishToPath:remotePath]) return nil;
+    if (![self shouldPublishToPath:remotePath]) return;
     
     
     CKTransferRecord *result = nil;
@@ -286,9 +286,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     {
         NSLog(@"Not uploading contents of %@ as it does not exist", [localURL path]);
     }
-    
-    
-    return result;    
 }
 
 /*  Raw, get me some stuff on the server!
