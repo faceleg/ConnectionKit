@@ -1023,6 +1023,23 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
+- (WEKWebEditorItem *)itemHitTest:(NSPoint)location handle:(SVGraphicHandle *)outHandle;
+{
+    SVGraphicHandle handle;
+    WEKWebEditorItem *result = [self selectedItemAtPoint:location handle:&handle];
+    if (result)
+    {
+		if (outHandle) *outHandle = handle;
+    }
+    else
+    {
+        if (outHandle) *outHandle = kSVGraphicNoHandle;
+        result = [self selectableItemAtPoint:location];
+    }
+    
+    return result;
+}
+
 - (void)keyDown:(NSEvent *)theEvent
 {
     // Interpret delete keys specially, otherwise ignore key events
@@ -1041,19 +1058,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
     NSMenu *result = [super menuForEvent:theEvent];
     
     
-    // Where's the click? Is it a selection handle? They trigger special resize event
+    // Where's the click? Is it a selection handle? They don't want a menu
     NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
     
     SVGraphicHandle handle;
-    WEKWebEditorItem *item = [self selectedItemAtPoint:location handle:&handle];
-    if (item && handle != kSVGraphicNoHandle)
-    {
-		return result;
-    }
-    
-    
-    // Non-selection handle, use the standard hit-testing
-    if (!item) item = [self selectableItemAtPoint:location];
+    WEKWebEditorItem *item = [self itemHitTest:location handle:&handle];
+    if (item && handle != kSVGraphicNoHandle) return result;
     
     
     // Ask WebView for menu if item wants it
@@ -1202,18 +1212,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
     NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
     
     SVGraphicHandle handle;
-    WEKWebEditorItem *item = [self selectedItemAtPoint:location handle:&handle];
+    WEKWebEditorItem *item = [self itemHitTest:location handle:&handle];
     if (item && handle != kSVGraphicNoHandle)
     {
 		[self resizeItem:item usingHandle:handle withEvent:event];
         [_mouseDownEvent release]; _mouseDownEvent = nil;
 		return;
     }
-    
-    
-    
-    // Non-selection handle, use the standard hit-testing
-    if (!item) item = [self selectableItemAtPoint:location];
     
     
     
