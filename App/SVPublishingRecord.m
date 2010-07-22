@@ -122,6 +122,7 @@
 @dynamic date;
 @dynamic modificationDate;
 @dynamic SHA1Digest;
+@dynamic contentHash;
 @dynamic length;
 
 @end
