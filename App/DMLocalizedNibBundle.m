@@ -243,6 +243,10 @@
 	}
 }
 
++ (void) _resizeView:(NSView *)aView level:(NSUInteger)level
+{
+	LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], [[aView description] condenseWhiteSpace]);
+}
 
 //
 // NOT SURE:
@@ -305,15 +309,6 @@
 			[self _localizeToolTipOfObject:item bundle:bundle table:table level:level];
 		}
 		
-	// NSTableView
-	} else if ([object isKindOfClass:[NSToolbar class]]) {
-		NSTableView *tableView = (NSTableView *)object;
-		NSArray *columns = [tableView tableColumns];
-		for (NSTableColumn *column in columns)
-		{
-			[self _localizeStringValueOfObject:[column headerCell] bundle:bundle table:table level:level];
-		}
-		
 	// NSMenu
 		
     } else if ([object isKindOfClass:[NSMenu class]]) {
@@ -347,9 +342,19 @@
 		// Note: If I do, I have to be sure to not also localize a NSPopUpButton's menu, which uses the menu accessor.
 		//[self _localizeStringsInObject:[view menu] bundle:bundle table:table level:level];
 		
+		// NSTableView
+		
+		if ([object isKindOfClass:[NSTableView class]]) {
+			NSTableView *tableView = (NSTableView *)object;
+			NSArray *columns = [tableView tableColumns];
+			for (NSTableColumn *column in columns)
+			{
+				[self _localizeStringValueOfObject:[column headerCell] bundle:bundle table:table level:level];
+			}
+
 		// NSBox
 		
-        if ([view isKindOfClass:[NSBox class]]) {
+		} else if ([view isKindOfClass:[NSBox class]]) {
             NSBox *box = (NSBox *)view;
             [self _localizeTitleOfObject:box bundle:bundle table:table level:level];
            
@@ -425,13 +430,19 @@
 			// OTHER
 				
             } else
+			{
+				NSLog(@"LOCALIZING OTHER CONTROL: %@", [control class]);
                 [self _localizeStringsInObject:[control cell] bundle:bundle table:table level:level];
-            
+			}
+			
         }
         
 		// Then localize this view's subviews
 		
         [self _localizeStringsInObject:[view subviews] bundle:bundle table:table level:level];
+			
+		// After localizing (and resizing) subviews, resize this view to fit the contents.
+		[self _resizeView:view level:level];
        
 	// NSWindow
 		
