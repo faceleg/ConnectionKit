@@ -753,11 +753,16 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     if (!domRange) return nil;
     
     
-    SVTextDOMController *item = [self textAreaForDOMRange:domRange];
+    SVWebEditorTextRange *result = nil;
     
-    SVWebEditorTextRange *result = [SVWebEditorTextRange rangeWithDOMRange:domRange
-                                                           containerObject:[item representedObject]
-                                                             containerNode:[item textHTMLElement]];
+    SVTextDOMController *item = [self textAreaForDOMRange:domRange];
+    if (item)
+    {
+        result = [SVWebEditorTextRange rangeWithDOMRange:domRange
+                                         containerObject:[item representedObject]
+                                           containerNode:[item textHTMLElement]];
+    }
+    
     return result;
 }
 
