@@ -135,7 +135,7 @@
 
 #pragma mark Document
 
-- (void)writeDocumentWithPage:(KTPage *)page;
+- (void)startDocumentWithPage:(KTPage *)page
 {
     OBPRECONDITION(page);
     
@@ -146,7 +146,7 @@
     NSString *cssPath = [page pathToDesignFile:@"main.css" inContext:self];
     [self setMainCSSURL:[NSURL URLWithString:cssPath
                                relativeToURL:[self baseURL]]];
-		
+    
     
     
     // Global CSS
@@ -168,6 +168,12 @@
     [self startDocument:[[self class] stringFromDocType:docType]
                 isXHTML:(docType >= KTXHTMLTransitionalDocType)];
     
+}
+
+- (void)writeDocumentWithPage:(KTPage *)page;
+{
+    [self startDocumentWithPage:page];
+
     
     // It's template time!
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:page];
