@@ -67,7 +67,7 @@
 	NSString		*nibPath	= [nibBundle pathForResource:nibName ofType:@"nib"];
 	NSDictionary	*context	= [NSDictionary dictionaryWithObjectsAndKeys:self, NSNibOwner, nil];
 	
-	NSLog(@"%@ Going to localize %@ with top objects: %@", [[nibBundle bundlePath] lastPathComponent], [nibPath lastPathComponent], [[context description] condenseWhiteSpace]);
+	NSLog(@"loadView %@ going to localize %@ with top objects: %@", [[nibBundle bundlePath] lastPathComponent], [nibPath lastPathComponent], [[context description] condenseWhiteSpace]);
 	BOOL loaded = [NSBundle _deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil bundle:nibBundle];	// call through to support method
 	if (!loaded)
 	{
@@ -123,9 +123,7 @@
 	// Don't allow this to localize any file that is not in the app bundle!
 	if ([fileName hasPrefix:[[NSBundle mainBundle] bundlePath]])
 	{
-		// NSLog(@"%s %@",__FUNCTION__, fileName);
-
-		NSLog(@"Going to localize %@ with top objects: %@", [fileName lastPathComponent], [[context description] condenseWhiteSpace]);
+		NSLog(@"loadNibFile going to localize %@ with top objects: %@", [fileName lastPathComponent], [[context description] condenseWhiteSpace]);
 		result = [self _deliciousLocalizingLoadNibFile:fileName externalNameTable:context withZone:zone bundle:[NSBundle mainBundle]];
 	}
 	else
@@ -143,7 +141,7 @@
 // Internal method, which gets an extra parameter for bundle
 + (BOOL)_deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone bundle:(NSBundle *)aBundle;
 {
-	NSLog(@"%s %@",__FUNCTION__, fileName);
+	//NSLog(@"%s %@",__FUNCTION__, fileName);
 	
 	// Note: What about loading not from the main bundle? Can I try to load from where the nib file came from?
 	
@@ -254,13 +252,9 @@
 
 + (void)_localizeStringsInObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level;
 {
-	if ([object isKindOfClass:[NSPopUpButton class]])
-	{
-		NSLog(@"Popup Button");
-	}
 	if (!object) return;
-	if ([object isKindOfClass:[NSArray class]] && 0 == [object count]) return;		// SHORT CIRCUIT SO WE DON'T SEE LOGGING
-	LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], [[object description] condenseWhiteSpace]);
+	// if ([object isKindOfClass:[NSArray class]] && 0 == [object count]) return;		// SHORT CIRCUIT SO WE DON'T SEE LOGGING
+	// LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], [[object description] condenseWhiteSpace]);
 	level++;	// recursion will incrememnt
 	// NSArray ... this is not directly in the nib, but for when we recurse.
 	
@@ -508,10 +502,6 @@
     if (![string length])
         return nil;
     
-	if ([[string uppercaseString] isEqualToString:@"MENU"])
-	{
-		NSLog(@"First instance");
-	}
 	if ([string hasPrefix:@"["])
 	{
 		NSLog(@"??? Double-translation of %@", string);
