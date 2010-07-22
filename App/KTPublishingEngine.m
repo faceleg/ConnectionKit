@@ -379,6 +379,19 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                               forFile:path];
 }
 
+#pragma mark CSS
+
+- (void)addCSSString:(NSString *)css;
+{
+    if (![_plugInCSS containsObject:css]) [_plugInCSS addObject:css];
+}
+
+- (void)addCSSWithURL:(NSURL *)cssURL;
+{
+    cssURL = [cssURL absoluteURL];
+    if (![_plugInCSS containsObject:cssURL]) [_plugInCSS addObject:cssURL];
+}
+
 #pragma mark Media
 
 - (void)gatherMedia;
@@ -737,17 +750,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 		[self uploadMediaIfNeeded:media];
         [_graphicalTextBlocks ks_addObject:textBlock forKey:[textBlock graphicalTextCSSID]];
     }
-}
-
-- (void)addCSSString:(NSString *)css;
-{
-    if (![_plugInCSS containsObject:css]) [_plugInCSS addObject:css];
-}
-
-- (void)addCSSWithURL:(NSURL *)cssURL;
-{
-    cssURL = [cssURL absoluteURL];
-    if (![_plugInCSS containsObject:cssURL]) [_plugInCSS addObject:cssURL];
 }
 
 /*  KTRemotePublishingEngine uses digest to only upload this if it's changed
