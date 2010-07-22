@@ -317,7 +317,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	OBPRECONDITION(data);
     OBPRECONDITION(remotePath);
     
-    if (![self shouldPublishToPath:remotePath]) return nil;
+    if (![self shouldPublishToPath:remotePath]) return;
     
     CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
 	CKTransferRecord *result = [self uploadData:data toPath:remotePath];
@@ -332,8 +332,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     [result setProperty:remotePath forKey:@"path"];
-    
-    return result;
 }
     
 - (BOOL)shouldPublishToPath:(NSString *)path;
