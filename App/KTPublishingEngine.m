@@ -247,8 +247,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	BOOL isDirectory = NO;
     if ([[NSFileManager defaultManager] fileExistsAtPath:[localURL path] isDirectory:&isDirectory])
     {
-        CKTransferRecord *parent = [self willUploadToPath:remotePath];
-        
         // Is the URL actually a directory? If so, upload its contents
         if (isDirectory)
         {
@@ -263,19 +261,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         }
         else
         {
-            // Need to use -setName: otherwise the record will have the full path as its name            
-            id <CKConnection> connection = [self connection];
-            OBASSERT(connection);
-            [connection connect];	// Ensure we're connected
+            result = [self uploadContentsOfURL:localURL toPath:remotePath];
             
-            result = [connection uploadFile:[localURL path]
-                                     toFile:remotePath
-                       checkRemoteExistence:NO
-                                   delegate:nil];
-            
-            [result setName:[remotePath lastPathComponent]];
-            
-            [self didEnqueueUpload:result toDirectory:parent];
             [self didEnqueueUpload:result contentHash:nil];
         }
     }
@@ -306,6 +293,27 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (BOOL)shouldPublishToPath:(NSString *)path;
 {
     BOOL result = ![_paths containsObject:path];
+    return result;
+}
+
+- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
+{
+    CKTransferRecord *parent = [self willUploadToPath:remotePath];
+    
+    // Need to use -setName: otherwise the record will have the full path as its name            
+    id <CKConnection> connection = [self connection];
+    OBASSERT(connection);
+    [connection connect];	// Ensure we're connected
+    
+    CKTransferRecord *result = [connection uploadFile:[localURL path]
+                                               toFile:remotePath
+                                 checkRemoteExistence:NO
+                                             delegate:nil];
+    
+    [result setName:[remotePath lastPathComponent]];
+    
+    [self didEnqueueUpload:result toDirectory:parent];
+    
     return result;
 }
 
