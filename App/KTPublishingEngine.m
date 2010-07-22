@@ -280,7 +280,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [self publishData:data toPath:uploadPath contentHash:nil];
 }
 
-- (void)publishData:(NSData *)data toPath:(NSString *)remotePath contentHash:(NSData *)hash;
+- (void)publishData:(NSData *)data
+             toPath:(NSString *)remotePath
+   cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
+        contentHash:(NSData *)hash;
 {
 	OBPRECONDITION(data);
     OBPRECONDITION(remotePath);
@@ -288,7 +291,13 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (![self shouldPublishToPath:remotePath]) return;
     
 	CKTransferRecord *result = [self uploadData:data toPath:remotePath];
-    if (result) [self didEnqueueUpload:result toPath:remotePath cachedSHA1Digest:nil contentHash:hash];
+    if (result)
+    {
+        [self didEnqueueUpload:result
+                        toPath:remotePath
+              cachedSHA1Digest:digest
+                   contentHash:hash];
+    }
 }
     
 - (BOOL)shouldPublishToPath:(NSString *)path;

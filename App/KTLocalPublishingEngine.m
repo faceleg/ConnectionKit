@@ -78,21 +78,28 @@
 #pragma mark -
 #pragma mark Connection
 
-- (void)publishData:(NSData *)data toPath:(NSString *)uploadPath contentHash:(NSData *)hash;
+- (void)publishData:(NSData *)data
+             toPath:(NSString *)remotePath
+   cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
+        contentHash:(NSData *)hash;
 {
+    // Record digest of the data for after publishing
+    if (!digest) digest = [data SHA1Digest];
+    
+    
     // Don't upload if the page isn't stale and we've been requested to only publish changes
 	if ([self onlyPublishChanges])
     {
-        SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:uploadPath];
+        SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:remotePath];
         
-        NSData *digest = (hash ? hash : [data SHA1Digest]);
+        NSData *digest = (hash ? hash : digest);
         NSData *publishedDigest = (hash ? [record contentHash] : [record SHA1Digest]);
         
         if ([digest isEqualToData:publishedDigest]) return;
     }
     
     
-    return [super publishData:data toPath:uploadPath contentHash:hash];
+    return [super publishData:data toPath:remotePath cachedSHA1Digest:digest contentHash:hash];
 }
 
 - (void)publishContentsOfURL:(NSURL *)localURL
@@ -116,16 +123,6 @@
     
     
     [super publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest];
-}
-
-- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
-{
-    CKTransferRecord *result = [super uploadData:data toPath:remotePath];
-    
-    // Record digest of the data for after publishing
-    [result setProperty:[data SHA1Digest] forKey:@"dataDigest"];
-    
-    return result;
 }
 
 /*	Supplement the default behaviour by also deleting any existing file first if the user requests it.
