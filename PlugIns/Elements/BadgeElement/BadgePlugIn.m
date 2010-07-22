@@ -160,15 +160,21 @@ static NSArray *sAltStrings = nil;
 }
 
 // returns URL for current badge, suitable for use in HTML template
-- (NSURL *)badgeURL
+- (NSString *)badgeURLString
 {
     // find badge resource
     NSString *resourcePath = [[self bundle] pathForImageResource:[self currentBadgeName]];
     NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
     
     // add resource to context
-    NSURL *result = [[SVPageletPlugIn currentContext] addResourceWithURL:resourceURL];
+    NSURL *contextURL = [[SVPageletPlugIn currentContext] addResourceWithURL:resourceURL];
+    
+    // generate relative string for template
+    NSString *result = [[SVPageletPlugIn currentContext] relativeURLStringOfURL:contextURL];    
     return result;
+    
+    // alternative, in template, could do
+    // <img src="[[=writeBadgeSrc]]"…
 }
 
 
