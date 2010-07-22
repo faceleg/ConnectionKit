@@ -590,4 +590,14 @@
 	return [context liveDataFeeds];
 }
 
+#pragma mark Plug-in Private API
+
+/*!	Return a code that indicates what license is used.  To help with blacklists or detecting piracy.
+ *	Returns a nonsense value.
+ */
+- (NSString *)referralCode
+{
+	return (nil != gRegistrationHash) ? gRegistrationHash : @""; 
+}
+
 @end
