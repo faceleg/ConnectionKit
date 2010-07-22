@@ -282,7 +282,7 @@
         NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", [URL absoluteString]];
         
         
-        [[context mainCSS] appendString:css];
+        [context addCSSString:css];
 	}
 }
 

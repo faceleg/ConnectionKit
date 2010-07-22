@@ -143,20 +143,17 @@
     [self setEncoding:[[[page master] valueForKey:@"charset"] encodingFromCharset]];
     [self setLanguage:[[page master] language]];
     
-    NSString *cssPath = [page pathToDesignFile:@"main.css" inContext:self];
-    [self setMainCSSURL:[NSURL URLWithString:cssPath
-                               relativeToURL:[self baseURL]]];
-    
+    if (![self isForEditing])
+    {
+        NSString *cssPath = [page pathToDesignFile:@"main.css" inContext:self];
+        [self setMainCSSURL:[NSURL URLWithString:cssPath
+                                   relativeToURL:[self baseURL]]];
+    }
     
     
     // Global CSS
     NSString *path = [[NSBundle mainBundle] pathForResource:@"sandvox" ofType:@"css"];
-    NSString *contents = [NSString stringWithContentsOfFile:path
-                                                   encoding:NSUTF8StringEncoding
-                                                      error:NULL];
-    if (contents) [[self mainCSS] appendString:contents];
-    
-	
+    if (path) [self addCSSWithURL:[NSURL fileURLWithPath:path]];
     
     
     // First Code Injection
@@ -194,9 +191,9 @@
     }
 	
     // Load up main.css from the DESIGN, which might override the generic stuff
-	NSString *mainCSS = [NSString stringWithData:[[[page master] design] mainCSSData]
-                                        encoding:NSUTF8StringEncoding];
-    if (mainCSS) [[self mainCSS] appendString:mainCSS];
+    KTDesign *design = [[page master] design];
+    NSString *mainCSSPath = [[design bundle] pathForResource:@"main" ofType:@"css"];
+    if (mainCSSPath) [self addCSSWithURL:[NSURL fileURLWithPath:mainCSSPath]];
     
 	
 	// For preview/quicklook mode, the banner CSS (after the design's main.css)
@@ -208,10 +205,7 @@
 	{
 		NSString *editingCSSPath = [[NSBundle mainBundle] pathForResource:@"design-time"
                                                                    ofType:@"css"];
-        NSString *editingCSS = [NSString stringWithContentsOfFile:editingCSSPath
-                                                         encoding:NSUTF8StringEncoding
-                                                            error:NULL];
-		if (editingCSS) [[self mainCSS] appendString:editingCSS];
+        if (editingCSSPath) [self addCSSWithURL:[NSURL fileURLWithPath:editingCSSPath]];
 	}
 }
 

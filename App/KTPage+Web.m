@@ -250,7 +250,7 @@
 	
 	
 	// design's print.css but not for Quick Look
-    if (![context isForQuickLookPreview])
+    if ([context isForPublishing])
 	{
 		path = [self pathToDesignFile:@"print.css" inContext:context];
 		if (path)
