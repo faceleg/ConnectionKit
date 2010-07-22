@@ -52,9 +52,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)setRootTransferRecord:(CKTransferRecord *)rootRecord;
 
 - (BOOL)shouldPublishToPath:(NSString *)path;
-- (void)didEnqueueUpload:(CKTransferRecord *)record 
-           toDirectory:(CKTransferRecord *)parent
-           contentHash:(NSData *)contentHash;
+- (void)didEnqueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
 
 @end
 
@@ -249,7 +247,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	BOOL isDirectory = NO;
     if ([[NSFileManager defaultManager] fileExistsAtPath:[localURL path] isDirectory:&isDirectory])
     {
-        [self willUploadToPath:remotePath];
+        CKTransferRecord *parent = [self willUploadToPath:remotePath];
         
         // Is the URL actually a directory? If so, upload its contents
         if (isDirectory)
@@ -265,9 +263,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         }
         else
         {
-            // Create all required directories. Need to use -setName: otherwise the record will have the full path as its name
-            CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
-            
+            // Need to use -setName: otherwise the record will have the full path as its name            
             id <CKConnection> connection = [self connection];
             OBASSERT(connection);
             [connection connect];	// Ensure we're connected
@@ -279,7 +275,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             
             [result setName:[remotePath lastPathComponent]];
             
-            [self didEnqueueUpload:result toDirectory:parent contentHash:nil];
+            [self didEnqueueUpload:result toDirectory:parent];
+            [self didEnqueueUpload:result contentHash:nil];
         }
     }
     else
@@ -300,17 +297,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     if (![self shouldPublishToPath:remotePath]) return;
     
-    CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
 	CKTransferRecord *result = [self uploadData:data toPath:remotePath];
-    if (result)
-    {
-        [self didEnqueueUpload:result toDirectory:parent contentHash:hash];
-    }
-    else
-    {
-        NSLog(@"Unable to create transfer record for path:%@ data:%@", remotePath, data); // case 40520 logging
-    }
-    
+    if (result) [self didEnqueueUpload:result contentHash:hash];
     
     [result setProperty:remotePath forKey:@"path"];
 }
@@ -325,7 +313,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
 {
-    [self willUploadToPath:remotePath];
+    CKTransferRecord *parent = [self willUploadToPath:remotePath];
     
     id <CKConnection> connection = [self connection];
     OBASSERT(connection);
@@ -334,16 +322,27 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBASSERT(result);
     [result setName:[remotePath lastPathComponent]];
     
+    if (result)
+    {
+        [self didEnqueueUpload:result toDirectory:parent];
+    }
+    else
+    {
+        NSLog(@"Unable to create transfer record for path:%@ data:%@", remotePath, data); // case 40520 logging
+    }
+    
     return result;
 }
 
-- (void)willUploadToPath:(NSString *)path; { }
+- (CKTransferRecord *)willUploadToPath:(NSString *)path;
+{
+    CKTransferRecord *parent = [self createDirectory:[path stringByDeletingLastPathComponent]];
+    return parent;
+}
 
 - (void)didEnqueueUpload:(CKTransferRecord *)record contentHash:(NSData *)contentHash; { }
 
-- (void)didEnqueueUpload:(CKTransferRecord *)record 
-           toDirectory:(CKTransferRecord *)parent
-           contentHash:(NSData *)contentHash;
+- (void)didEnqueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
 {
     [parent addContent:record];
     
@@ -352,8 +351,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     [[self connection] setPermissions:[self remoteFilePermissions]
                               forFile:path];
-    
-    [self didEnqueueUpload:record contentHash:contentHash];
 }
 
 #pragma mark Media

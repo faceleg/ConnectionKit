@@ -107,16 +107,18 @@
 
 /*	Supplement the default behaviour by also deleting any existing file first if the user requests it.
  */
-- (void)willUploadToPath:(NSString *)path;
+- (CKTransferRecord *)willUploadToPath:(NSString *)path;
 {
     OBPRECONDITION(path);
     
-    [super willUploadToPath:path];
+    CKTransferRecord *result = [super willUploadToPath:path];
     
     if ([[[self site] hostProperties] boolForKey:@"deletePagesWhenPublishing"])
 	{
 		[[self connection] deleteFile:path];
 	}
+    
+    return result;
 }
 
 - (void)didEnqueueUpload:(CKTransferRecord *)record contentHash:(NSData *)contentHash;
