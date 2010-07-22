@@ -288,22 +288,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
 
-/*  Raw, get me some stuff on the server!
- */
-- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
-{
-    [self willUploadToPath:remotePath];
-    
-    id <CKConnection> connection = [self connection];
-    OBASSERT(connection);
-    [connection connect];	// Ensure we're connected
-    CKTransferRecord *result = [connection uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
-    OBASSERT(result);
-    [result setName:[remotePath lastPathComponent]];
-    
-    return result;
-}
-
 - (void)publishData:(NSData *)data toPath:(NSString *)uploadPath;
 {
     [self publishData:data toPath:uploadPath contentHash:nil];
@@ -334,6 +318,22 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (BOOL)shouldPublishToPath:(NSString *)path;
 {
     BOOL result = ![_paths containsObject:path];
+    return result;
+}
+
+/*  Raw, get me some stuff on the server!
+ */
+- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
+{
+    [self willUploadToPath:remotePath];
+    
+    id <CKConnection> connection = [self connection];
+    OBASSERT(connection);
+    [connection connect];	// Ensure we're connected
+    CKTransferRecord *result = [connection uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
+    OBASSERT(result);
+    [result setName:[remotePath lastPathComponent]];
+    
     return result;
 }
 
