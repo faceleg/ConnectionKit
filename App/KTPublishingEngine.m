@@ -305,7 +305,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-- (CKTransferRecord *)publishData:(NSData *)data toPath:(NSString *)remotePath
+- (void)publishData:(NSData *)data toPath:(NSString *)remotePath
 {
 	OBPRECONDITION(data);
     OBPRECONDITION(remotePath);
@@ -838,11 +838,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSData *digest = nil;
     if ([self shouldUploadMainCSSData:mainCSSData toPath:cssUploadPath digest:&digest])
     {
-        result = [self publishData:mainCSSData toPath:cssUploadPath];
+        [self publishData:mainCSSData toPath:cssUploadPath];
         
         if (digest)
         {
-            [result setProperty:master forKey:@"object"];
+            //[result setProperty:master forKey:@"object"];
         }
     }
     

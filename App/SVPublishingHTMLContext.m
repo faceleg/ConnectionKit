@@ -62,11 +62,9 @@
         // Upload page data. Store the page and its digest with the record for processing later
         if (fullUploadPath)
         {
-            CKTransferRecord *transferRecord = [publishingEngine publishData:pageData
-                                                                      toPath:fullUploadPath];
-            OBASSERT(transferRecord);
-            
-            if (page) [transferRecord setProperty:page forKey:@"object"];
+            [publishingEngine publishData:pageData toPath:fullUploadPath];
+            //OBASSERT(transferRecord);
+            //if (page) [transferRecord setProperty:page forKey:@"object"];
         }
     }
     

@@ -78,7 +78,7 @@
 #pragma mark -
 #pragma mark Connection
 
-- (CKTransferRecord *)publishData:(NSData *)data toPath:(NSString *)uploadPath;
+- (void)publishData:(NSData *)data toPath:(NSString *)uploadPath;
 {
     // Don't upload if the page isn't stale and we've been requested to only publish changes
 	if ([self onlyPublishChanges])
@@ -88,7 +88,7 @@
         NSData *digest = [data SHA1Digest];
         NSData *publishedDigest = [record SHA1Digest];
         
-        if ([digest isEqualToData:publishedDigest]) return nil; 
+        if ([digest isEqualToData:publishedDigest]) return; 
     }
     
     

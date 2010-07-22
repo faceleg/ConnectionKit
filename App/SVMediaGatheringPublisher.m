@@ -31,7 +31,7 @@
 @synthesize publishingEngine = _mediaPublisher;
 
 /*  Ignore most publishing commands */
-- (CKTransferRecord *)publishData:(NSData *)data toPath:(NSString *)remotePath;
+- (void)publishData:(NSData *)data toPath:(NSString *)remotePath;
 {
     return nil;
 }
