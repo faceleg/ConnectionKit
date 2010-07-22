@@ -387,6 +387,9 @@
 			}
 		}
 	}
+    
+    [context addDependencyOnObject:[context page] keyPath:@"master.graphicalTitleSize"];
+    
 	
 	// Close off the main tag
 	[context didStartElement];
