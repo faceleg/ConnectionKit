@@ -35,7 +35,7 @@
 {
     return nil;
 }
-- (CKTransferRecord *)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
+- (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
 {
     return nil;
 }

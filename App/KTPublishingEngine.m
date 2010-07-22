@@ -232,7 +232,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 /*	Use these methods instead of asking the connection directly. They will handle creating the
  *  appropriate directories first if needed.
  */
-- (CKTransferRecord *)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
+- (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
 {
 	OBPRECONDITION(localURL);
     OBPRECONDITION([localURL isFileURL]);

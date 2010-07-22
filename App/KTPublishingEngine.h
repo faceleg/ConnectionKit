@@ -49,7 +49,7 @@ extern int kMaxNumberOfFreePublishedPages;
 
 #pragma mark Raw
 // Call if you need to directly publish a resource. Publishing engine will take care of creating directories, permissions, etc. for you. Publishing data may be ignored if the engine determines the server is already up-to-date.
-- (CKTransferRecord *)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
+- (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
 - (void)publishData:(NSData *)data toPath:(NSString *)remotePath;
 
 - (NSString *)baseRemotePath;
