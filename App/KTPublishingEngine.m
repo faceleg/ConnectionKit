@@ -241,10 +241,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (![self shouldPublishToPath:remotePath]) return;
     
     
-    CKTransferRecord *result = nil;
-    
-	
-	BOOL isDirectory = NO;
+    BOOL isDirectory = NO;
     if ([[NSFileManager defaultManager] fileExistsAtPath:[localURL path] isDirectory:&isDirectory])
     {
         // Is the URL actually a directory? If so, upload its contents
@@ -261,8 +258,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         }
         else
         {
-            result = [self uploadContentsOfURL:localURL toPath:remotePath];
-            
+            CKTransferRecord *result = [self uploadContentsOfURL:localURL toPath:remotePath];
             [self didEnqueueUpload:result contentHash:nil];
         }
     }
