@@ -33,13 +33,23 @@
                                         //- (void)addGraphicalText:(NSString *)text code:(NSString *)code;
 
 
-#pragma mark Raw
+#pragma mark Generic Publishing
+
 // Call if you need to directly publish a resource. Publishing engine will take care of creating directories, permissions, etc. for you. Publishing data may be ignored if the engine determines the server is already up-to-date.
-- (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
 - (void)publishData:(NSData *)data toPath:(NSString *)remotePath;
+- (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
 
-- (void)publishData:(NSData *)data toPath:(NSString *)remotePath contentHash:(NSData *)hash;
+// The 2 methods above are just conveniences on these, which offer more flexibility
+- (void)publishData:(NSData *)data
+             toPath:(NSString *)remotePath
+        contentHash:(NSData *)hash;
 
+- (void)publishContentsOfURL:(NSURL *)localURL
+                      toPath:(NSString *)remotePath
+            cachedSHA1Digest:(NSData *)digest;  // save engine the trouble of calculating itself
+
+
+#pragma mark Paths
 - (NSString *)baseRemotePath;
 
 

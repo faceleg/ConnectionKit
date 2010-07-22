@@ -234,7 +234,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
 {
-	OBPRECONDITION(localURL);
+	[self publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:nil];
+}
+
+- (void)publishContentsOfURL:(NSURL *)localURL
+                      toPath:(NSString *)remotePath
+            cachedSHA1Digest:(NSData *)digest;
+{
+    OBPRECONDITION(localURL);
     OBPRECONDITION([localURL isFileURL]);
     OBPRECONDITION(remotePath);
     

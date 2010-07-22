@@ -95,7 +95,9 @@
     return [super publishData:data toPath:uploadPath contentHash:hash];
 }
 
-- (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
+- (void)publishContentsOfURL:(NSURL *)localURL
+                      toPath:(NSString *)remotePath
+            cachedSHA1Digest:(NSData *)digest;
 {
     // Compare digests to know if it's worth publishing. Look up remote hash first to save us reading in the local file if possible
     SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:remotePath];
@@ -111,7 +113,7 @@
     }
     
     
-    [super publishContentsOfURL:localURL toPath:remotePath];
+    [super publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest];
 }
 
 - (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
