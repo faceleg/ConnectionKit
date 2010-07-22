@@ -84,7 +84,14 @@
 {
     BOOL selectAfterUpdate = ([[self webEditor] focusedText] == self);
     
-    [[self innerTextHTMLElement] setInnerHTML:[self HTMLString]];
+    DOMHTMLElement *innerTextElement = [self innerTextHTMLElement];
+    [innerTextElement setInnerHTML:[self HTMLString]];
+    
+    [[self HTMLContext] push];  // graphical text generation currently relies on this
+    NSString *style = [[self textBlock] graphicalTextPreviewStyle];
+    [[self HTMLContext] pop];
+    [[[self textHTMLElement] style] setCssText:style];
+    
     
     // Mimic NSTextField and select all
     if (selectAfterUpdate)
