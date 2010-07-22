@@ -162,10 +162,15 @@
     
     // Now re-set title of page to be the appropriate untitled name
     NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetUntitled"];
-    NSString *presetTitle = [indexBundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
+    if (englishPresetTitle)
+    {
+        NSString *presetTitle = [indexBundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
+        
+        [collection setTitle:presetTitle];
+    }
     
-    [collection setTitle:presetTitle];
     
+    // Other settings
     NSDictionary *pageSettings = [presetDict objectForKey:@"KTPageSettings"];
     [collection setValuesForKeysWithDictionary:pageSettings];
         
