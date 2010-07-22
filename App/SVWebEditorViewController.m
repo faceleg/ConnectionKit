@@ -1169,38 +1169,6 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
            redirectResponse:(NSURLResponse *)redirectResponse
              fromDataSource:(WebDataSource *)dataSource;
 {
-    // Force the WebView to dump its cached resources from the WebDataSource so that any change to main.css gets picked up
-    /*
-    if ([[request mainDocumentURL] isEqual:[request URL]])
-    {
-        for (SVMediaRecord *aMediaRecord in [[self HTMLContext] media])
-        {
-            WebResource *resource = [aMediaRecord webResource];
-            if (resource) [dataSource addSubresource:resource];
-        }
-        
-        NSMutableURLRequest *result = [[request mutableCopy] autorelease];
-        [result setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-        return result;
-    }    */
-    
-    
-    // Preload main CSS
-    if ([[request URL] ks_isEqualToURL:[[self HTMLContext] mainCSSURL]])
-    {
-        SVHTMLContext *context = [self HTMLContext];
-        NSData *data = [[context mainCSS] dataUsingEncoding:NSUTF8StringEncoding];
-        CFStringRef charSet = CFStringConvertEncodingToIANACharSetName(kCFStringEncodingUTF8);
-        
-        WebResource *resource = [[WebResource alloc] initWithData:data
-                                                              URL:[request URL]
-                                                         MIMEType:@"text/css"
-                                                 textEncodingName:(NSString *)charSet
-                                                        frameName:nil];
-        [dataSource addSubresource:resource];
-        [resource release];
-}
-    
     return request;
 }
 
