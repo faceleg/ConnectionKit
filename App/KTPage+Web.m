@@ -100,7 +100,7 @@
         }
         else
         {
-            KTMaster *master = [(KTPage *)[context page] master];
+            KTMaster *master = [[context page] master];
             NSURL *designFileURL = [NSURL URLWithString:whichFileName relativeToURL:[master designDirectoryURL]];
             result = [designFileURL stringRelativeToURL:[context baseURL]];
         }
