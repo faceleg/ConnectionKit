@@ -95,6 +95,21 @@
     return [super publishData:data toPath:uploadPath contentHash:hash];
 }
 
+- (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
+{
+    // Check the hash. Could be done more efficiently by not loading the entire file at once
+    NSData *data = [[NSData alloc] initWithContentsOfURL:localURL];
+    NSData *digest = [data SHA1Digest];
+    [data release];
+    
+    SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:remotePath];
+    NSData *publishedDigest = [record SHA1Digest];
+    if ([digest isEqualToData:publishedDigest]) return;
+    
+    
+    [super publishContentsOfURL:localURL toPath:remotePath];
+}
+
 - (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
 {
     CKTransferRecord *result = [super uploadData:data toPath:remotePath];
