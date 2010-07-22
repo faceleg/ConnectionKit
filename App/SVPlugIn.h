@@ -62,6 +62,7 @@
 - (void)writeTitleOfPage:(id <SVPage>)page enclosingElement:(NSString *)element attributes:(NSDictionary *)attributes;
 
 // URLs
+- (NSString *)relativeURLStringOfURL:(NSURL *)URL;
 - (NSString *)relativeURLStringOfPage:(id <SVPage>)page;
 
 // Resources & Design
