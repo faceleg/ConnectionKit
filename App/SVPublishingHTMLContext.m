@@ -11,9 +11,10 @@
 #import "KTHostProperties.h"
 #import "SVMediaRepresentation.h"
 #import "KTPage.h"
-#import "KTPublishingEngine.h"
+#import "SVPublisher.h"
 #import "KTSite.h"
 
+#import "NSData+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
@@ -34,35 +35,33 @@
 - (void)close;
 {
     // Generate HTML data
-    NSString *output = [self mutableString];
-	if (output)
+    NSString *html = [self mutableString];
+	if (html)
     {
         NSStringEncoding encoding = [self encoding];
-        NSData *pageData = [output dataUsingEncoding:encoding allowLossyConversion:YES];
+        NSData *pageData = [html dataUsingEncoding:encoding allowLossyConversion:YES];
         OBASSERT(pageData);
         
         
         // Give subclasses a chance to ignore the upload
-        KTPublishingEngine *publishingEngine = _publisher;
+        id <SVPublisher> publishingEngine = _publisher;
         KTPage *page = [self page];
         NSString *fullUploadPath = [[publishingEngine baseRemotePath]
                                     stringByAppendingPathComponent:_path];
-        NSData *digest = nil;
-        if (![publishingEngine shouldUploadHTML:output
-                                       encoding:encoding
-                                        forPage:page
-                                         toPath:fullUploadPath
-                                         digest:&digest])
-        {
-            return;
-        }
+        
+        
+        // Generate data digest. It has to ignore the app version string
+        NSString *versionString = [NSString stringWithFormat:@"<meta name=\"generator\" content=\"%@\" />",
+                                   [[page site] appNameVersion]];
+        NSString *versionFreeHTML = [html stringByReplacing:versionString with:@"<meta name=\"generator\" content=\"Sandvox\" />"];
+        NSData *digest = [[versionFreeHTML dataUsingEncoding:encoding allowLossyConversion:YES] SHA1Digest];
         
         
         
         // Upload page data. Store the page and its digest with the record for processing later
         if (fullUploadPath)
         {
-            [publishingEngine publishData:pageData toPath:fullUploadPath];
+            [publishingEngine publishData:pageData toPath:fullUploadPath contentHash:digest];
             //OBASSERT(transferRecord);
             //if (page) [transferRecord setProperty:page forKey:@"object"];
         }

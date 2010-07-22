@@ -18,7 +18,7 @@
 #import "SVHTMLTextBlock.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTMaster.h"
-#import "KTPublishingEngine.h"
+#import "SVPublisher.h"
 #import "SVTitleBox.h"
 #import "SVWebEditorHTMLContext.h"
 

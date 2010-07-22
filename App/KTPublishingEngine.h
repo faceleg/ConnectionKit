@@ -20,42 +20,10 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Connection/Connection.h>
+#import "SVPublisher.h"
+
 
 extern int kMaxNumberOfFreePublishedPages;
-
-@class SVHTMLContext, SVMediaRepresentation;
-
-
-@protocol SVPublisher <NSObject>
-
-#pragma mark HTML
-// When you want to publish HTML, call -beginPublishingHTMLToPath: to obtain a context to write into. It will be correctly set up to handle linking in media etc. Call -close on the context once you're done to let the publishing engine know there will be no more HTML coming.
-- (SVHTMLContext *)beginPublishingHTMLToPath:(NSString *)path;
-
-
-#pragma mark Media
-- (NSString *)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
-
-
-#pragma mark Resource Files
-- (NSString *)publishResourceAtURL:(NSURL *)fileURL;
-
-
-#pragma mark Design
-- (void)addCSSString:(NSString *)css;
-- (void)addCSSWithURL:(NSURL *)cssURL;  // same terminology as SVHTMLContext
-//- (void)addGraphicalText:(NSString *)text code:(NSString *)code;
-
-
-#pragma mark Raw
-// Call if you need to directly publish a resource. Publishing engine will take care of creating directories, permissions, etc. for you. Publishing data may be ignored if the engine determines the server is already up-to-date.
-- (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
-- (void)publishData:(NSData *)data toPath:(NSString *)remotePath;
-
-- (NSString *)baseRemotePath;
-
-
-@end
 
 
 #pragma mark -
@@ -154,9 +122,6 @@ typedef enum {
 - (id <CKConnection>)connection;
 - (void)setConnection:(id <CKConnection>)connection;
 - (void)createConnection;
-
-// Pages
-- (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
 
 // Design
 - (void)uploadDesignIfNeeded;

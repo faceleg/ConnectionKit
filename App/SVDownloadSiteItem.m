@@ -10,7 +10,7 @@
 
 #import "SVMediaRecord.h"
 #import "KTPage.h"
-#import "KTPublishingEngine.h"
+#import "SVPublisher.h"
 
 #import "NSString+Karelia.h"
 

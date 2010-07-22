@@ -305,7 +305,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-- (void)publishData:(NSData *)data toPath:(NSString *)remotePath
+- (void)publishData:(NSData *)data toPath:(NSString *)uploadPath;
+{
+    [self publishData:data toPath:uploadPath contentHash:nil];
+}
+
+- (void)publishData:(NSData *)data toPath:(NSString *)remotePath contentHash:(NSData *)hash;
 {
 	OBPRECONDITION(data);
     OBPRECONDITION(remotePath);
@@ -643,13 +648,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSString *siteMapPath = [[self baseRemotePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
         [self publishData:gzipped toPath:siteMapPath];
     }
-}
-
-/*  Slightly messy support method that allows KTPublishingEngine to reject publishing non-stale pages
- */
-- (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
-{
-    return YES;
 }
 
 - (void)publishNonPageContent

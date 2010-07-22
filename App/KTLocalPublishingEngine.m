@@ -78,21 +78,21 @@
 #pragma mark -
 #pragma mark Connection
 
-- (void)publishData:(NSData *)data toPath:(NSString *)uploadPath;
+- (void)publishData:(NSData *)data toPath:(NSString *)uploadPath contentHash:(NSData *)hash;
 {
     // Don't upload if the page isn't stale and we've been requested to only publish changes
 	if ([self onlyPublishChanges])
     {
         SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:uploadPath];
         
-        NSData *digest = [data SHA1Digest];
-        NSData *publishedDigest = [record SHA1Digest];
+        NSData *digest = (hash ? hash : [data SHA1Digest]);
+        NSData *publishedDigest = (hash ? [record contentHash] : [record SHA1Digest]);
         
-        if ([digest isEqualToData:publishedDigest]) return; 
+        if ([digest isEqualToData:publishedDigest]) return;
     }
     
     
-    return [super publishData:data toPath:uploadPath];
+    return [super publishData:data toPath:uploadPath contentHash:hash];
 }
 
 /*  Once publishing is fully complete, without any errors, ping google if there is a sitemap
@@ -224,39 +224,6 @@
     }
 }
 
-- (BOOL)shouldUploadHTML:(NSString *)HTML
-                encoding:(NSStringEncoding)encoding
-                 forPage:(KTPage *)page
-                  toPath:(NSString *)uploadPath
-                  digest:(NSData **)outDigest;
-{
-    // Generate data digest. It has to ignore the app version string
-    NSString *versionString = [NSString stringWithFormat:@"<meta name=\"generator\" content=\"%@\" />",
-                               [[self site] appNameVersion]];
-    NSString *versionFreeHTML = [HTML stringByReplacing:versionString with:@"<meta name=\"generator\" content=\"Sandvox\" />"];
-    NSData *digest = [[versionFreeHTML dataUsingEncoding:encoding allowLossyConversion:YES] SHA1Digest];
-    
-    
-	
-	// Don't upload if the page isn't stale and we've been requested to only publish changes
-	if ([self onlyPublishChanges])
-    {
-        SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:uploadPath];
-        NSData *publishedDataDigest = [record SHA1Digest];
-        NSString *publishedPath = [page publishedPath];
-        
-        if (publishedDataDigest &&
-            (!publishedPath || [uploadPath isEqualToPOSIXPath:publishedPath]) &&   // 1.5.1 and earlier didn't store -publishedPath
-            [publishedDataDigest isEqualToData:digest])
-        {
-            return NO;
-        }
-    }
-    
-    
-    *outDigest = digest;
-    return YES;
-}
 @class KTMediaFileUpload;
 - (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media
 {
