@@ -789,7 +789,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     // Append banner CSS
-    [master writeBannerCSS];
+    [master writeBannerCSS:[SVHTMLContext currentContext]];
     
     
     

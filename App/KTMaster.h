@@ -24,7 +24,7 @@
 #import "SVMediaRecord.h"
 
 
-@class KTDesign, SVTitleBox, SVLogoImage, KTCodeInjection;
+@class KTDesign, SVTitleBox, SVLogoImage, KTCodeInjection, SVHTMLContext;
 
 
 @interface KTMaster : KSExtensibleManagedObject 
@@ -53,7 +53,7 @@
 
 @property(nonatomic, copy) NSNumber *bannerType;    // treat like BOOL for now
 
-- (void)writeBannerCSS;
+- (void)writeBannerCSS:(SVHTMLContext *)context;
 
 
 #pragma mark Logo

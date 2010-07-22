@@ -200,7 +200,7 @@
     
 	
 	// For preview/quicklook mode, the banner CSS (after the design's main.css)
-    [[page master] writeBannerCSS];
+    [[page master] writeBannerCSS:self];
 	
     
 	// If we're for editing, include additional editing CSS

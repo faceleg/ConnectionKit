@@ -262,14 +262,11 @@
 
 @dynamic bannerType;
 
-- (void)writeBannerCSS;
+- (void)writeBannerCSS:(SVHTMLContext *)context;
 {	
 	// If the user has specified a custom banner and the design supports it, load it in
 	if ([[self bannerType] boolValue] && [[self banner] fileURL])
 	{
-        SVHTMLContext *context = [SVHTMLContext currentContext];
-        
-        
 		NSMutableDictionary *scalingProperties = [[[self design] imageScalingPropertiesForUse:@"bannerImage"] mutableCopy];
 		OBASSERT(scalingProperties);
 		[scalingProperties setObject:(NSString *)kUTTypeJPEG forKey:@"fileType"];
