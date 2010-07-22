@@ -266,7 +266,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         else
         {
             CKTransferRecord *result = [self uploadContentsOfURL:localURL toPath:remotePath];
-            [self didEnqueueUpload:result contentHash:nil];
+            [self didEnqueueUpload:result toPath:remotePath cachedSHA1Digest:digest contentHash:nil];
         }
     }
     else
@@ -288,9 +288,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (![self shouldPublishToPath:remotePath]) return;
     
 	CKTransferRecord *result = [self uploadData:data toPath:remotePath];
-    if (result) [self didEnqueueUpload:result contentHash:hash];
-    
-    [result setProperty:remotePath forKey:@"path"];
+    if (result) [self didEnqueueUpload:result toPath:remotePath cachedSHA1Digest:nil contentHash:hash];
 }
     
 - (BOOL)shouldPublishToPath:(NSString *)path;
@@ -351,7 +349,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return parent;
 }
 
-- (void)didEnqueueUpload:(CKTransferRecord *)record contentHash:(NSData *)contentHash; { }
+- (void)didEnqueueUpload:(CKTransferRecord *)record
+                  toPath:(NSString *)path
+        cachedSHA1Digest:(NSData *)digest
+             contentHash:(NSData *)contentHash;
+{
+}
 
 - (void)didEnqueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
 {

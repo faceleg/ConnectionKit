@@ -99,18 +99,20 @@
                       toPath:(NSString *)remotePath
             cachedSHA1Digest:(NSData *)digest;
 {
+    // Hash if not already known
+    if (!digest)
+    {
+        // Could be done more efficiently by not loading the entire file at once
+        NSData *data = [[NSData alloc] initWithContentsOfURL:localURL];
+        digest = [data SHA1Digest];
+        [data release];
+    }
+    
+    
     // Compare digests to know if it's worth publishing. Look up remote hash first to save us reading in the local file if possible
     SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:remotePath];
     NSData *publishedDigest = [record SHA1Digest];
-    if (publishedDigest)
-    {
-        // Check the hash. Could be done more efficiently by not loading the entire file at once
-        NSData *data = [[NSData alloc] initWithContentsOfURL:localURL];
-        NSData *digest = [data SHA1Digest];
-        [data release];
-        
-        if ([digest isEqualToData:publishedDigest]) return;
-    }
+    if ([digest isEqualToData:publishedDigest]) return;
     
     
     [super publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest];
@@ -142,10 +144,15 @@
     return result;
 }
 
-- (void)didEnqueueUpload:(CKTransferRecord *)record contentHash:(NSData *)contentHash;
+- (void)didEnqueueUpload:(CKTransferRecord *)record
+                  toPath:(NSString *)path
+        cachedSHA1Digest:(NSData *)digest
+             contentHash:(NSData *)contentHash;
 {
-    [super didEnqueueUpload:record contentHash:contentHash];
+    [super didEnqueueUpload:record toPath:path cachedSHA1Digest:digest contentHash:contentHash];
     
+    [record setProperty:path forKey:@"path"];
+    if (digest) [record setProperty:digest forKey:@"dataDigest"];
     if (contentHash) [record setProperty:contentHash forKey:@"contentHash"];
 }
 

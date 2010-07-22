@@ -100,7 +100,10 @@ typedef enum {
 - (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
 
 - (CKTransferRecord *)willUploadToPath:(NSString *)path;  // for subclasses. Returns parent dir
-- (void)didEnqueueUpload:(CKTransferRecord *)record contentHash:(NSData *)contentHash;
+- (void)didEnqueueUpload:(CKTransferRecord *)record
+                  toPath:(NSString *)path
+        cachedSHA1Digest:(NSData *)digest
+             contentHash:(NSData *)contentHash;
 
 @end
 
