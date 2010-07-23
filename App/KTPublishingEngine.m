@@ -400,10 +400,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)publishDesign
 {
     KTDesign *design = [[[[self site] rootPage] master] design];
+    [design writeCSS:(id)self];
     
     
-    // Create the design directory
-	NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
+    NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
     
     
     // Upload the design's resources
