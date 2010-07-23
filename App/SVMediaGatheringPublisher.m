@@ -33,10 +33,15 @@
 /*  Ignore most publishing commands */
 - (void)publishData:(NSData *)data toPath:(NSString *)remotePath;
 {
+    [self publishData:data toPath:remotePath cachedSHA1Digest:nil contentHash:nil];
 }
 - (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
 {
+    [self publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:nil];
 }
+
+- (void)publishData:(NSData *)data toPath:(NSString *)remotePath cachedSHA1Digest:(NSData *)digest contentHash:(NSData *)hash { }
+- (void) publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath cachedSHA1Digest:(NSData *)digest { }
 
 - (NSString *)publishResourceAtURL:(NSURL *)fileURL;
 {
