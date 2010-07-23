@@ -35,7 +35,6 @@
 //
 
 #import "BadgePlugIn.h"
-#import "BadgeInspector.h"
 
 
 static NSArray *sBadgeNames = nil;
