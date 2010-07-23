@@ -685,6 +685,8 @@
 		3C9BC20E103DF9BA00D2CF47 /* KTTranscript.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC20D103DF9BA00D2CF47 /* KTTranscript.xib */; };
 		3C9BC211103DF9CB00D2CF47 /* MediaInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC210103DF9CB00D2CF47 /* MediaInspector.xib */; };
 		3C9BC214103DF9DF00D2CF47 /* HTMLEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC213103DF9DF00D2CF47 /* HTMLEditor.xib */; };
+		3CA6B98D11F9130B004A4794 /* YRKSpinningProgressIndicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CA6B98B11F9130B004A4794 /* YRKSpinningProgressIndicator.h */; };
+		3CA6B98E11F9130B004A4794 /* YRKSpinningProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA6B98C11F9130B004A4794 /* YRKSpinningProgressIndicator.m */; };
 		3CA9B30E0804643200C3053B /* KTDocument+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9B30D0804643200C3053B /* KTDocument+Properties.m */; };
 		3CBDE9120EBA65D20059C56C /* KTLocalPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CBDE9100EBA65D20059C56C /* KTLocalPublishingEngine.h */; };
 		3CBDE9130EBA65D20059C56C /* KTLocalPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDE9110EBA65D20059C56C /* KTLocalPublishingEngine.m */; };
@@ -2237,6 +2239,8 @@
 		3C9BC20D103DF9BA00D2CF47 /* KTTranscript.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KTTranscript.xib; sourceTree = "<group>"; };
 		3C9BC210103DF9CB00D2CF47 /* MediaInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaInspector.xib; sourceTree = "<group>"; };
 		3C9BC213103DF9DF00D2CF47 /* HTMLEditor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HTMLEditor.xib; sourceTree = "<group>"; };
+		3CA6B98B11F9130B004A4794 /* YRKSpinningProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YRKSpinningProgressIndicator.h; path = "../../yrk-spinning-progress-indicator/Code/YRKSpinningProgressIndicator.h"; sourceTree = SOURCE_ROOT; };
+		3CA6B98C11F9130B004A4794 /* YRKSpinningProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YRKSpinningProgressIndicator.m; path = "../../yrk-spinning-progress-indicator/Code/YRKSpinningProgressIndicator.m"; sourceTree = SOURCE_ROOT; };
 		3CA6BB480A086E54009DBBA8 /* KTUndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTUndoManager.h; sourceTree = "<group>"; };
 		3CA6BB490A086E54009DBBA8 /* KTUndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTUndoManager.m; sourceTree = "<group>"; };
 		3CA900670D63C76100815310 /* IFrameElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IFrameElement.xcodeproj; path = ../OldPlugins/Elements/IFrameElement/IFrameElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -4422,6 +4426,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3CA6B99111F91322004A4794 /* YRKSpinningProgressIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				3CA6B98B11F9130B004A4794 /* YRKSpinningProgressIndicator.h */,
+				3CA6B98C11F9130B004A4794 /* YRKSpinningProgressIndicator.m */,
+			);
+			name = YRKSpinningProgressIndicator;
+			sourceTree = "<group>";
+		};
 		3CA9FD020D63A04A00815310 /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
@@ -5191,10 +5204,11 @@
 		CEC69B02108E6F91000E6E84 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				CE75EA90111A550600474753 /* ESCursors */,
 				CEC69AF8108E6F7D000E6E84 /* MAAttachedWindow */,
 				3C2DA6E0104C7A790037D270 /* MGScopeBar */,
-				CE75EA90111A550600474753 /* ESCursors */,
 				CE2D42E41188BD910051E238 /* LIFlipEffect */,
+				3CA6B99111F91322004A4794 /* YRKSpinningProgressIndicator */,
 			);
 			path = ThirdParty;
 			sourceTree = "<group>";
@@ -5560,6 +5574,7 @@
 				CE23D96C11E6E65900E43369 /* KSPlainClipTextView.h in Headers */,
 				27CC249D11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h in Headers */,
 				27A1892D11F864F0004BEFC2 /* SVPublisher.h in Headers */,
+				3CA6B98D11F9130B004A4794 /* YRKSpinningProgressIndicator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6995,6 +7010,7 @@
 				27DBBD5B11EF39AE00910BE7 /* WebViewEditingHelperClasses.m in Sources */,
 				27CC249E11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m in Sources */,
 				CE6EE03911F12B7200F00AAC /* DMLocalizedNibBundle.m in Sources */,
+				3CA6B98E11F9130B004A4794 /* YRKSpinningProgressIndicator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
