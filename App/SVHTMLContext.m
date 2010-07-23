@@ -349,9 +349,7 @@
 {
     if (![self isForPublishing])
     {
-        [self startStyleElementWithType:@"text/css"];
-        [self writeString:css]; // for reasons I can't fathom, WebKit seems to ignore escaping inside inline styles #82579
-        [self endElement];
+        [self writeStyleElementWithCSSString:css];
     }
 }
 
