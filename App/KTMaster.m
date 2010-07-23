@@ -272,17 +272,20 @@
 		[scalingProperties setObject:(NSString *)kUTTypeJPEG forKey:@"fileType"];
 		
         NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
-        SVMediaRecord *banner = [self banner];
-        
-        NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[banner fileURL]
-                                     scalingProperties:scalingProperties];
-        [scalingProperties release];
-        
-        
-        NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", [URL absoluteString]];
-        
-        
-        [context addCSSString:css];
+        if (bannerCSSSelector)
+        {
+            SVMediaRecord *banner = [self banner];
+            
+            NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[banner fileURL]
+                                         scalingProperties:scalingProperties];
+            [scalingProperties release];
+            
+            
+            NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", [URL absoluteString]];
+            
+            
+            [context addCSSString:css];
+        }
 	}
 }
 
