@@ -13,6 +13,8 @@
 
 #import "NSImage+Karelia.h"
 
+#import "YRKSpinningProgressIndicator.h"
+
 
 @implementation SVLoadingPlaceholderViewController
 
@@ -32,8 +34,15 @@
 
 #pragma mark View
 
+- (void)loadView;
+{
+    [super loadView];
+    
+    [[self progressIndicator] setColor:[NSColor whiteColor]];
+}
+
 @synthesize progressIndicator = _progressIndicator;
-- (NSProgressIndicator *)progressIndicator
+- (YRKSpinningProgressIndicator *)progressIndicator
 {
     [self view];    // make sure it's loaded
     return _progressIndicator;
