@@ -563,6 +563,10 @@
 		27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */; };
 		27F243B3106BC8B9007FEC56 /* WEKWebEditorItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F243B1106BC8B9007FEC56 /* WEKWebEditorItem.h */; };
 		27F243B4106BC8B9007FEC56 /* WEKWebEditorItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F243B2106BC8B9007FEC56 /* WEKWebEditorItem.m */; };
+		27F2778111F9A33E00B7F8FA /* KSCSSWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F2777F11F9A33E00B7F8FA /* KSCSSWriter.h */; };
+		27F2778211F9A33E00B7F8FA /* KSCSSWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F2778011F9A33E00B7F8FA /* KSCSSWriter.m */; };
+		27F2778B11F9A54600B7F8FA /* KSForwardingWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F2778911F9A54600B7F8FA /* KSForwardingWriter.h */; };
+		27F2778C11F9A54600B7F8FA /* KSForwardingWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F2778A11F9A54600B7F8FA /* KSForwardingWriter.m */; };
 		27F36590115EB7BA003BDA5F /* SVArticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F3658E115EB7BA003BDA5F /* SVArticle.h */; };
 		27F36591115EB7BA003BDA5F /* SVArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F3658F115EB7BA003BDA5F /* SVArticle.m */; };
 		27F365ED11602161003BDA5F /* SVMetricsInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F365EB11602161003BDA5F /* SVMetricsInspector.h */; };
@@ -2057,6 +2061,10 @@
 		27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageScalingSettings.m; sourceTree = "<group>"; };
 		27F243B1106BC8B9007FEC56 /* WEKWebEditorItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebEditorItem.h; sourceTree = "<group>"; };
 		27F243B2106BC8B9007FEC56 /* WEKWebEditorItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEKWebEditorItem.m; sourceTree = "<group>"; };
+		27F2777F11F9A33E00B7F8FA /* KSCSSWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSCSSWriter.h; path = CSS/KSCSSWriter.h; sourceTree = "<group>"; };
+		27F2778011F9A33E00B7F8FA /* KSCSSWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSCSSWriter.m; path = CSS/KSCSSWriter.m; sourceTree = "<group>"; };
+		27F2778911F9A54600B7F8FA /* KSForwardingWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSForwardingWriter.h; sourceTree = "<group>"; };
+		27F2778A11F9A54600B7F8FA /* KSForwardingWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSForwardingWriter.m; sourceTree = "<group>"; };
 		27F3658E115EB7BA003BDA5F /* SVArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVArticle.h; sourceTree = "<group>"; };
 		27F3658F115EB7BA003BDA5F /* SVArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVArticle.m; sourceTree = "<group>"; };
 		27F365EB11602161003BDA5F /* SVMetricsInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMetricsInspector.h; sourceTree = "<group>"; };
@@ -3522,6 +3530,10 @@
 				270172F211CFBEF3001512F6 /* KSStringXMLEntityEscaping.m */,
 				27A6098311282AC0007C301F /* KSWriter.h */,
 				27A6098411282AC0007C301F /* KSWriter.m */,
+				27F2777F11F9A33E00B7F8FA /* KSCSSWriter.h */,
+				27F2778011F9A33E00B7F8FA /* KSCSSWriter.m */,
+				27F2778911F9A54600B7F8FA /* KSForwardingWriter.h */,
+				27F2778A11F9A54600B7F8FA /* KSForwardingWriter.m */,
 			);
 			name = KSHTMLWriter;
 			path = ../KSHTMLWriter;
@@ -5575,6 +5587,8 @@
 				27CC249D11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h in Headers */,
 				27A1892D11F864F0004BEFC2 /* SVPublisher.h in Headers */,
 				3CA6B98D11F9130B004A4794 /* YRKSpinningProgressIndicator.h in Headers */,
+				27F2778111F9A33E00B7F8FA /* KSCSSWriter.h in Headers */,
+				27F2778B11F9A54600B7F8FA /* KSForwardingWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7011,6 +7025,8 @@
 				27CC249E11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m in Sources */,
 				CE6EE03911F12B7200F00AAC /* DMLocalizedNibBundle.m in Sources */,
 				3CA6B98E11F9130B004A4794 /* YRKSpinningProgressIndicator.m in Sources */,
+				27F2778211F9A33E00B7F8FA /* KSCSSWriter.m in Sources */,
+				27F2778C11F9A54600B7F8FA /* KSForwardingWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

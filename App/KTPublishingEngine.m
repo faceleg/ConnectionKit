@@ -35,6 +35,7 @@
 #import "NSThread+Karelia.h"
 #import "NSURL+Karelia.h"
 
+#import "KSCSSWriter.h"
 #import "KSSimpleURLConnection.h"
 #import "KSPlugInWrapper.h"
 #import "KSThreadProxy.h"
@@ -754,17 +755,24 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (void)publishMainCSS
 {
+    NSMutableString *css = [NSMutableString string];
+    KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
+    
+    
     // Load up the CSS from the design
     KTMaster *master = [[[self site] rootPage] master];     OBASSERT(master);
     KTDesign *design = [master design];     if (!design) NSLog(@"No design found");
     NSString *mainCSSPath = [[design bundle] pathForResource:@"main" ofType:@"css"];
     
-    NSMutableString *mainCSS = nil;
     if (mainCSSPath)
     {
         NSError *error;
-        mainCSS = [[[NSMutableString alloc] initWithContentsOfFile:mainCSSPath usedEncoding:NULL error:&error] autorelease];
-        if (!mainCSS)
+        NSString *mainCSS = [[[NSMutableString alloc] initWithContentsOfFile:mainCSSPath usedEncoding:NULL error:&error] autorelease];
+        if (mainCSS)
+        {
+            [cssWriter writeCSSString:mainCSS];
+        }
+        else
         {
             NSLog(@"Unable to load CSS from %@, error: %@", mainCSSPath, [[error debugDescription] condenseWhiteSpace]);
             
@@ -780,9 +788,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     {
         NSLog(@"main.css file could not be located in design: %@", [[design bundle] bundlePath]);
     }
-    
-    if (!mainCSS) mainCSS = [[[NSMutableString alloc] init] autorelease];
-    
+        
     
     
     // Append banner CSS
@@ -799,12 +805,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                              fallbackEncoding:NSUTF8StringEncoding
                                                         error:NULL];
             
-            if (css) [mainCSS appendString:css];
+            if (css) [cssWriter writeCSSString:css];
         }
         else
         {
-            [mainCSS appendString:someCSS];
-            [mainCSS appendString:@"\n"];
+            [cssWriter writeCSSString:someCSS];
         }
     }
     
@@ -837,7 +842,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             NSString *mediaPath = [@".." stringByAppendingPathComponent:baseMediaPath];
             [CSS replace:@"_URL_" with:mediaPath];
             
-            [mainCSS appendString:CSS];
+            [cssWriter writeCSSString:CSS];
         }
         else
         {
@@ -848,9 +853,13 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
     
     
+    // Finished with the writer
+    [cssWriter release];
+    
+    
     
     // Upload the CSS if needed
-    NSData *mainCSSData = [[mainCSS unicodeNormalizedString] dataUsingEncoding:NSUTF8StringEncoding
+    NSData *mainCSSData = [[css unicodeNormalizedString] dataUsingEncoding:NSUTF8StringEncoding
                                                           allowLossyConversion:YES];
     
     NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
