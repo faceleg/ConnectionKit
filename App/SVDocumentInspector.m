@@ -84,6 +84,10 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
 	[super viewDidLoad];
     
     
+    // Bind banner type
+    [oBannerPickerController bind:@"bannerType" toObject:self withKeyPath:@"inspectedObjectsController.selection.master.bannerType" options:nil];
+    
+    
     // Observe & update pro stuff
     [[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateProView:)
@@ -113,20 +117,6 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
         
         KTMaster *master = [[[self inspectedObjectsController] selection] valueForKey:@"master"];
         [master setFaviconWithContentsOfURL:URL];
-    }
-}
-
-- (IBAction)chooseBanner:(id)sender;
-{
-	KTDocument *document = [self representedObject];
-    NSOpenPanel *panel = [document makeChooseDialog];
-    
-    if ([panel runModal] == NSFileHandlingPanelOKButton)
-    {
-        NSURL *URL = [panel URL];
-        
-        KTMaster *master = [[[self inspectedObjectsController] selection] valueForKey:@"master"];
-        [master setBannerWithContentsOfURL:URL];
     }
 }
 
