@@ -754,7 +754,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 /*  KTRemotePublishingEngine uses digest to only upload this if it's changed
  */
-- (CKTransferRecord *)uploadMainCSSIfNeeded
+- (void)uploadMainCSSIfNeeded
 {
     CKTransferRecord *result = nil;
     
@@ -861,27 +861,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
     NSString *cssUploadPath = [remoteDesignDirectoryPath stringByAppendingPathComponent:@"main.css"];
     
-    NSData *digest = nil;
-    if ([self shouldUploadMainCSSData:mainCSSData toPath:cssUploadPath digest:&digest])
-    {
-        [self publishData:mainCSSData toPath:cssUploadPath];
-        
-        if (digest)
-        {
-            //[result setProperty:master forKey:@"object"];
-        }
-    }
-    
-    
-    return result;
-}
-
-/*  KTRemotePublishingEngine overrides this to manage staleness
- */
-- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData toPath:(NSString *)path digest:(NSData **)outDigest;
-{
-    if (outDigest) *outDigest = nil;
-    return YES;
+    [self publishData:mainCSSData toPath:cssUploadPath];
 }
 
 // FIXME: This delegate method has been replaced by -[SVHTMLContext generatedTextBlocks]

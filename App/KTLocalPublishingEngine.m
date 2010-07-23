@@ -92,10 +92,10 @@
     {
         SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:remotePath];
         
-        NSData *digest = (hash ? hash : digest);
+        NSData *toPublishDigest = (hash ? hash : digest);
         NSData *publishedDigest = (hash ? [record contentHash] : [record SHA1Digest]);
         
-        if ([digest isEqualToData:publishedDigest]) return;
+        if ([toPublishDigest isEqualToData:publishedDigest]) return;
     }
     
     
@@ -301,25 +301,6 @@
     {
         [super uploadDesignIfNeeded];
     }
-}
-
-- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData toPath:(NSString *)path digest:(NSData **)outDigest;
-{
-    BOOL result = YES;
-    
-    NSData *digest = [mainCSSData SHA1Digest];
-    
-    SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:path];
-    NSData *publishedDigest = [record SHA1Digest];
-    
-    if ([self onlyPublishChanges] && publishedDigest && [publishedDigest isEqualToData:digest])
-    {
-        result = NO;
-    }
-    
-    if (digest) *outDigest = digest;
-    
-    return result;
 }
 
 #pragma mark -
