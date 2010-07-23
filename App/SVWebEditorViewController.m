@@ -1083,7 +1083,9 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     
     
     // Set our first responder item to match
-    id controller = [webEditor focusedText];
+    DOMRange *selection = [webEditor selectedDOMRange];
+    id controller = (selection ? [self textAreaForDOMRange:selection] : nil);
+    
     if (!controller)
     {
         NSSet *selection = [[NSSet alloc] initWithArray:[webEditor selectedItems]];
