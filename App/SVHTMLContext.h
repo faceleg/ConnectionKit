@@ -203,6 +203,12 @@ typedef enum {
 @end
 
 
+/*  VERY IMPORTANT:
+ *  SVHTMLContext conforms to SVPlugInContext, so look there for more methods/docs
+ *  END VERY IMPORANT MESSAGE
+ */
+
+
 #pragma mark -
 
 
