@@ -213,10 +213,13 @@
         }
     }
 	
-    // Load up main.css from the DESIGN, which might override the generic stuff
-    KTDesign *design = [[page master] design];
-    NSString *mainCSSPath = [[design bundle] pathForResource:@"main" ofType:@"css"];
-    if (mainCSSPath) [self addCSSWithURL:[NSURL fileURLWithPath:mainCSSPath]];
+    
+    // Load up DESIGN CSS, which might override the generic stuff
+    if (![self isForPublishing])    // during publishing, pub engine will take care of design CSS
+    {
+        KTDesign *design = [[page master] design];
+        [design writeCSS:self];
+    }
     
 	
 	// For preview/quicklook mode, the banner CSS (after the design's main.css)
