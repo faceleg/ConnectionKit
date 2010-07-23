@@ -26,6 +26,8 @@
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
+#import "KSCSSWriter.h"
+
 #import "Debug.h"
 #import "Macros.h"
 
@@ -375,16 +377,18 @@
 		{
 			if ([context isForPublishing])    // id has already been supplied
 			{
+                NSMutableString *css = [[NSMutableString alloc] init];
+                KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
+                
                 NSString *ID = [self graphicalTextCSSID];
                 [context writeAttribute:@"id" value:ID];
+                [cssWriter writeIDSelector:ID];
                 
-                NSString *css = [[NSString alloc] initWithFormat:
-                                 @"#%@ { %@ }",
-                                 ID,
-                                 graphicalTextStyle];
+                [cssWriter writeDeclarationBlock:graphicalTextStyle];
                 
                 [context addCSSString:css];
                 [css release];
+                [cssWriter release];
 			}
 			else
 			{
