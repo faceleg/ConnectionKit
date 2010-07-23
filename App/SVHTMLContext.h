@@ -83,6 +83,8 @@ typedef enum {
 // Not 100% sure I want to expose this!
 @property(nonatomic, retain, readonly) NSMutableString *mutableString;
 
+
+@property(nonatomic, retain, readonly) KTPage *page;    // does NOT affect .baseURL
 @property(nonatomic, copy) NSURL *baseURL;
 @property(nonatomic) BOOL liveDataFeeds;
 @property(nonatomic) NSStringEncoding encoding;   // UTF-8 by default
@@ -196,9 +198,6 @@ typedef enum {
 #pragma mark Raw Writing
 - (void)writeAttributedHTMLString:(NSAttributedString *)attributedHTML;
 
-
-// In for compatibility. Does NOT affect -baseURL; change manually if you need to
-@property(nonatomic, retain) KTPage *page;
 
 @end
 

@@ -34,7 +34,6 @@
 - (void)setIndentationLevel:(NSInteger)level { return [_target setIndentationLevel:level]; }
 
 - (KTPage *)page { return [_target page]; }
-- (void)setPage:(KTPage *)page { return [_target setPage:page]; }
 
 - (NSURL *)baseURL { return [_target baseURL]; }
 - (void)setBaseURL:(NSURL *)URL { return [_target setBaseURL:URL]; }

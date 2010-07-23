@@ -137,6 +137,12 @@
 {
     OBPRECONDITION(page);
     
+    
+    // Store the page
+    [page retain];
+    [_currentPage release]; _currentPage = page;
+    
+    
 	// Prepare global properties
     [self setEncoding:[[[page master] valueForKey:@"charset"] encodingFromCharset]];
     [self setLanguage:[[page master] language]];
@@ -221,7 +227,7 @@
 {
     // Copy across properties
     [self setIndentationLevel:[context indentationLevel]];
-    [self setPage:[context page]];
+    [_currentPage release]; _currentPage = [[context page] retain];
     [self setBaseURL:[context baseURL]];
     [self setIncludeStyling:[context includeStyling]];
     [self setLiveDataFeeds:[context liveDataFeeds]];

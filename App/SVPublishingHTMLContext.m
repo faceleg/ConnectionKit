@@ -150,10 +150,10 @@
 
 #pragma mark Page
 
-- (void)setPage:(KTPage *)page;
+- (void)startDocumentWithPage:(KTPage *)page;
 {
-    [super setPage:page];
     [self setBaseURL:[page URL]];
+    [super startDocumentWithPage:page];
 }
 
 @end

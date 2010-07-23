@@ -115,9 +115,7 @@
 {
     NSMutableString *result = [NSMutableString string];
     
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithMutableString:result];
-    [context setPage:self];
-	
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithMutableString:result];	
 	[context writeDocumentWithPage:self];
     
     [context release];
@@ -127,13 +125,11 @@
 - (NSString *)markupStringForEditing;   // for viewing source for debugging purposes.
 {
     NSMutableString *result = [NSMutableString string];
+    
 	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithMutableString:result];
-
-	[context setPage:self];
-
 	[context writeDocumentWithPage:self];
-
-	[context release];
+    [context release];
+    
     return result;
 }
 
@@ -266,7 +262,6 @@
 {
     NSString *path = [self uploadPath];
     SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:path];
-    [context setPage:self];
 	
     [context writeDocumentWithPage:self];
     

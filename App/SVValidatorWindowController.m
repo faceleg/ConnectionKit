@@ -84,7 +84,6 @@
 {
     NSMutableString *pageSource = [NSMutableString string];
     SVValidationHTMLContext *context = [[SVValidationHTMLContext alloc] initWithMutableString:pageSource];
-    [context setPage:page];
 	[context writeDocumentWithPage:page];
     
 	NSUInteger disabledPreviewObjectsCount = context.disabledPreviewObjectsCount;	// this will help us warn about items we are not validating

@@ -227,7 +227,6 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     NSMutableString *pageHTML = [[NSMutableString alloc] init];
 	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithMutableString:pageHTML];
     
-    [context setPage:page];
     [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey]];
     [context setSidebarPageletsController:[_graphicsController sidebarPageletsController]];
     
