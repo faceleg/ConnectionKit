@@ -287,6 +287,8 @@
             [context addCSSString:css];
         }
 	}
+    
+    [context addDependencyOnObject:self keyPath:@"bannerType"];
 }
 
 #pragma mark Logo
