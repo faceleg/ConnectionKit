@@ -724,8 +724,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     // Create the design directory
 	NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
-	CKTransferRecord *designTransferRecord = [self createDirectory:remoteDesignDirectoryPath];
-    [designTransferRecord setProperty:design forKey:@"object"];
     
     
     // Upload the design's resources
