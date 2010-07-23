@@ -569,6 +569,8 @@
 		27F2778C11F9A54600B7F8FA /* KSForwardingWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F2778A11F9A54600B7F8FA /* KSForwardingWriter.m */; };
 		27F2790A11F9F29400B7F8FA /* SVBannerPickerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F2790811F9F29400B7F8FA /* SVBannerPickerController.h */; };
 		27F2790B11F9F29400B7F8FA /* SVBannerPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F2790911F9F29400B7F8FA /* SVBannerPickerController.m */; };
+		27F27AAF11FA57C400B7F8FA /* BWRoundedRectBoxView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F27AAD11FA57C400B7F8FA /* BWRoundedRectBoxView.h */; };
+		27F27AB011FA57C400B7F8FA /* BWRoundedRectBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F27AAE11FA57C400B7F8FA /* BWRoundedRectBoxView.m */; };
 		27F36590115EB7BA003BDA5F /* SVArticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F3658E115EB7BA003BDA5F /* SVArticle.h */; };
 		27F36591115EB7BA003BDA5F /* SVArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F3658F115EB7BA003BDA5F /* SVArticle.m */; };
 		27F365ED11602161003BDA5F /* SVMetricsInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F365EB11602161003BDA5F /* SVMetricsInspector.h */; };
@@ -2069,6 +2071,8 @@
 		27F2778A11F9A54600B7F8FA /* KSForwardingWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSForwardingWriter.m; sourceTree = "<group>"; };
 		27F2790811F9F29400B7F8FA /* SVBannerPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBannerPickerController.h; sourceTree = "<group>"; };
 		27F2790911F9F29400B7F8FA /* SVBannerPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBannerPickerController.m; sourceTree = "<group>"; };
+		27F27AAD11FA57C400B7F8FA /* BWRoundedRectBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWRoundedRectBoxView.h; sourceTree = "<group>"; };
+		27F27AAE11FA57C400B7F8FA /* BWRoundedRectBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWRoundedRectBoxView.m; sourceTree = "<group>"; };
 		27F3658E115EB7BA003BDA5F /* SVArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVArticle.h; sourceTree = "<group>"; };
 		27F3658F115EB7BA003BDA5F /* SVArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVArticle.m; sourceTree = "<group>"; };
 		27F365EB11602161003BDA5F /* SVMetricsInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMetricsInspector.h; sourceTree = "<group>"; };
@@ -4693,6 +4697,8 @@
 				273DCFF010CBDC10003CCE97 /* KSArrayController.m */,
 				CE23D96A11E6E65900E43369 /* KSPlainClipTextView.h */,
 				CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */,
+				27F27AAD11FA57C400B7F8FA /* BWRoundedRectBoxView.h */,
+				27F27AAE11FA57C400B7F8FA /* BWRoundedRectBoxView.m */,
 			);
 			path = AppKit;
 			sourceTree = "<group>";
@@ -5596,6 +5602,7 @@
 				27F2778111F9A33E00B7F8FA /* KSCSSWriter.h in Headers */,
 				27F2778B11F9A54600B7F8FA /* KSForwardingWriter.h in Headers */,
 				27F2790A11F9F29400B7F8FA /* SVBannerPickerController.h in Headers */,
+				27F27AAF11FA57C400B7F8FA /* BWRoundedRectBoxView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7035,6 +7042,7 @@
 				27F2778211F9A33E00B7F8FA /* KSCSSWriter.m in Sources */,
 				27F2778C11F9A54600B7F8FA /* KSForwardingWriter.m in Sources */,
 				27F2790B11F9F29400B7F8FA /* SVBannerPickerController.m in Sources */,
+				27F27AB011FA57C400B7F8FA /* BWRoundedRectBoxView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
