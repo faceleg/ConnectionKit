@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">740</string>
+		<string key="IBDocument.InterfaceBuilderVersion">762</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">740</string>
+			<string key="NS.object.0">762</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -795,7 +795,7 @@
 										</object>
 										<object class="NSButton" id="545510401">
 											<reference key="NSNextResponder" ref="865099582"/>
-											<int key="NSvFlags">266</int>
+											<int key="NSvFlags">265</int>
 											<string key="NSFrame">{{107, 316}, {125, 28}}</string>
 											<reference key="NSSuperview" ref="865099582"/>
 											<bool key="NSEnabled">YES</bool>
@@ -837,7 +837,7 @@
 										</object>
 										<object class="NSPopUpButton" id="830823000">
 											<reference key="NSNextResponder" ref="865099582"/>
-											<int key="NSvFlags">268</int>
+											<int key="NSvFlags">266</int>
 											<string key="NSFrame">{{14, 346}, {216, 22}}</string>
 											<reference key="NSSuperview" ref="865099582"/>
 											<bool key="NSEnabled">YES</bool>
@@ -1262,7 +1262,7 @@
 										</object>
 										<object class="NSPopUpButton" id="396803696">
 											<reference key="NSNextResponder" ref="865099582"/>
-											<int key="NSvFlags">268</int>
+											<int key="NSvFlags">266</int>
 											<string key="NSFrame">{{14, 242}, {216, 22}}</string>
 											<reference key="NSSuperview" ref="865099582"/>
 											<bool key="NSEnabled">YES</bool>
@@ -3386,7 +3386,6 @@
 					<string>690.IBPluginDependency</string>
 					<string>692.IBPluginDependency</string>
 					<string>693.IBPluginDependency</string>
-					<string>694.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -3590,7 +3589,6 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4913,6 +4911,7 @@
 			</object>
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
+		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>
@@ -4924,5 +4923,24 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<string key="IBDocument.LastKnownRelativeProjectPath">Sandvox.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<bool key="EncodedWithXMLCoder">YES</bool>
+			<object class="NSArray" key="dict.sortedKeys">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>32favicon</string>
+				<string>NSMenuCheckmark</string>
+				<string>NSMenuMixedState</string>
+				<string>NSSwitch</string>
+				<string>PRO</string>
+			</object>
+			<object class="NSMutableArray" key="dict.values">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>{32, 32}</string>
+				<string>{9, 8}</string>
+				<string>{7, 2}</string>
+				<string>{15, 15}</string>
+				<string>{29, 14}</string>
+			</object>
+		</object>
 	</data>
 </archive>

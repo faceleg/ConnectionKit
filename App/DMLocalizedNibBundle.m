@@ -67,20 +67,25 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 	NSRect oldFrame = [view frame];		// keep track of original frame so we know how much it resized
 	NSRect fitFrame = oldFrame;			// only set differently when sizeToFit is called, so we know it was already called
 	NSRect newFrame = oldFrame;			// what we will be setting the frame to (if not already done)
-	
+		
 	if ([view isKindOfClass:[NSTextField class]] &&
 		[(NSTextField *)view isEditable]) {
 		// Don't try to sizeToFit because edit fields really don't want to be sized
 		// to what is in them as they are for users to enter things so honor their
 		// current size.
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
 	} else if ([view isKindOfClass:[NSPathControl class]]) {
 		// Don't try to sizeToFit because NSPathControls usually need to be able
 		// to display any path, so they shouldn't tight down to whatever they
 		// happen to be listing at the moment.
-#endif  // MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
+	} else if ([view isKindOfClass:[NSImageView class]]) {
+		// Definitely don't mess with size of an imageView
+	} else if ([view isKindOfClass:[NSPopUpButton class]]) {
+		// Popup buttons: Let's assume that we don't want to resize them.  Maybe later I can loop through strings
+		// to get a minimum width, though some popups are designed to already be less than longest string.
+		// But one thing is clear: I don't want to shrink one that is stretchy, since it's probably
+		// intended to fill a space.
 	} else {
-		// Genericaly fire a sizeToFit if it has one.
+		// Generically fire a sizeToFit if it has one.  e.g. NSTableColumn, NSProgressIndicator, (NSBox), NSMenuView, NSControl, NSTableView, NSText
 		if ([view respondsToSelector:@selector(sizeToFit)]) {
 			[view performSelector:@selector(sizeToFit)];
 			fitFrame = [view frame];
@@ -100,8 +105,11 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 			
 		}
 		
+		// AFTER calling sizeToFit, we might override this sizing that just happened
+		
 		if ([view isKindOfClass:[NSButton class]]) {
 			NSButton *button = (NSButton *)view;
+						
 			// -[NSButton sizeToFit] gives much worse results than IB's Size to Fit
 			// option for standard push buttons.
 			if (([button bezelStyle] == NSRoundedBezelStyle) &&
@@ -125,6 +133,15 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 				}
 			}
 		}
+	}
+	
+	// Now after we've tried all of this resizing, let's see if it's gotten narrower AND we wanted
+	// a stretchy view.  If a view is stretchy, it means we didn't really intend on shrinking it.
+	NSUInteger mask = [view autoresizingMask];
+	BOOL stretchyView = 0 != (mask & NSViewWidthSizable);	// If stretchy view, DO NOT SHRINK.
+	if (stretchyView && (NSWidth(newFrame) < NSWidth(oldFrame)))
+	{
+		newFrame = oldFrame;		// go back to the old frame; reject the size change.
 	}
 	
 	// Apply the offset, and see if we need to change the frame (again).
@@ -470,7 +487,13 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 		}
 		else if ([rowView isKindOfClass:[NSPopUpButton class]])
 		{
-			[desc appendFormat:@"{%@}", [((NSPopUpButton *)rowView) titleOfSelectedItem]];
+			NSPopUpButton *pop = (NSPopUpButton *)rowView;
+			NSString *selTitle = [pop titleOfSelectedItem];
+			if (!selTitle || [selTitle isEqualToString:@""])
+			{
+				selTitle = [pop itemTitleAtIndex:0];
+			}
+			[desc appendFormat:@"{%@}", selTitle];
 		}
 		else if ([rowView isKindOfClass:[NSButton class]])
 		{
@@ -561,39 +584,33 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 		return widthChange_;
 	}
 	
-	BOOL sumMode = NO;
 	NSMutableArray *rightAlignedSubViews = nil;
 	NSMutableArray *rightAlignedSubViewDeltas = nil;
-	
-	// ?????
-	sumMode = YES;
-	
+		
 	rightAlignedSubViews = [NSMutableArray array];
 	rightAlignedSubViewDeltas = [NSMutableArray array];
 	
 	// Size our rowViews
 
 	NSView *subView = nil;
-	CGFloat finalDelta = sumMode ? 0 : -CGFLOAT_MAX;
+	CGFloat finalDelta = 0;
 	NSPoint subViewOffset = NSZeroPoint;
 	for (subView in rowViews) {
-		if (sumMode) {
-			subViewOffset.x = finalDelta;
-		}
-		CGFloat delta = SizeToFit(subView, subViewOffset).width;
-		if (sumMode) {
-			finalDelta += delta;
-		} else {
-			if (delta > finalDelta) {
-				finalDelta = delta;
+
+		subViewOffset.x = finalDelta;	// we'll be moving it over by the so-far delta
+		
+		CGFloat thisDelta = SizeToFit(subView, subViewOffset).width;
+		if (0 != thisDelta)		// no point in looking if nothing changed
+		{
+			finalDelta += thisDelta;
+			
+			// Track the right anchored rowViews size changes so we can update them
+			// once we know this view's size.
+			if (IsRightAnchored(subView)) {
+				[rightAlignedSubViews addObject:subView];
+				NSNumber *nsDelta = [NSNumber numberWithFloat:thisDelta];
+				[rightAlignedSubViewDeltas addObject:nsDelta];
 			}
-		}
-		// Track the right anchored rowViews size changes so we can update them
-		// once we know this view's size.
-		if (IsRightAnchored(subView)) {
-			[rightAlignedSubViews addObject:subView];
-			NSNumber *nsDelta = [NSNumber numberWithFloat:delta];
-			[rightAlignedSubViewDeltas addObject:nsDelta];
 		}
 	}
 	
@@ -725,7 +742,7 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 	{
 		for (NSView *subview in [view subviews])
 		{
-			[self _resizeView:subview level:level];
+//			[self _resizeView:subview level:level];
 		}
 	}
 }
