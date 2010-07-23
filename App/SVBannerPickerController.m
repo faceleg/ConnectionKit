@@ -44,6 +44,17 @@
 }
 
 @synthesize canChooseBannerType = _canChooseBannerType;
+- (void)setNilValueForKey:(NSString *)key;
+{
+    if ([key isEqualToString:@"canChooseBannerType"])
+    {
+        [self setCanChooseBannerType:NO];
+    }
+    else
+    {
+        [super setNilValueForKey:key];
+    }
+}
 
 - (IBAction)bannerTypeChosen:(NSPopUpButton *)sender;
 {
