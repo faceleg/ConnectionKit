@@ -12,7 +12,7 @@ typedef enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL } HierMe
 // Horizontal: Usual horizontal layout, submenus spew down vertically
 // Vertical: Vertical layout of menus (e.g. in sidebar), submenus spew out vertically to the right
 
-@class KTImageScalingSettings, KTDesignFamily;
+@class KTImageScalingSettings, KTDesignFamily, SVHTMLContext;
 
 @protocol IKImageBrowserItem <NSObject> @end    // weirdly ImageKit only declares it as an informal protocol
 
@@ -105,7 +105,7 @@ extern const int kDesignThumbHeight;
 // Resource data
 - (NSSet *)resourceFileURLs;
 - (NSData *)dataForResourceAtPath:(NSString *)path MIMEType:(NSString **)mimeType error:(NSError **)error;
-- (NSData *)mainCSSData;
+- (void)writeCSS:(SVHTMLContext *)context;
 
 @end
 

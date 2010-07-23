@@ -24,7 +24,7 @@
 #import "NSURL+Karelia.h"
 #import "NSColor+Karelia.h"
 #import "KTDesignFamily.h"
-
+#import "SVHTMLContext.h"
 #import "Debug.h"
 
 const int kDesignThumbWidth = 100;
@@ -692,14 +692,16 @@ const int kDesignThumbHeight = 65;
 			NSArray *variations = [[[self bundle] infoDictionary] objectForKey:@"variations"];
 			for (NSUInteger i = 0 ; i < [variations count] ; i++)
 			{
+				NSDictionary *variation = [variations objectAtIndex:i];
+				NSString *file = [variation objectForKey:@"file"];
 				if (i != _variationIndex)
 				{
-					NSDictionary *variation = [variations objectAtIndex:i];
-					NSString *file = [variation objectForKey:@"file"];
-					[variationNamesToIgnore addObject:file];	// folder name itself
-					[variationNamesToIgnore addObject:[file stringByAppendingPathExtension:@"css"]];
-					// Note: all thumbnails are ignored below.
+					// ignore var. folder name except for var we're using
+					[variationNamesToIgnore addObject:file];
 				}
+				// Ignore all variation CSS files
+				[variationNamesToIgnore addObject:[file stringByAppendingPathExtension:@"css"]];
+				// Note: all thumbnails are ignored below.
 			}
 		}
 		
@@ -744,54 +746,22 @@ const int kDesignThumbHeight = 65;
 	return _resourceFileURLs;
 }
 
-/*	Returns the full data of the specified resource.
- *	If requested can also get the resource's MIME Type.
+/*	Every design should have a main.css file; this builds up its data (including variation data)
  */
-- (NSData *)dataForResourceAtPath:(NSString *)path MIMEType:(NSString **)mimeType error:(NSError **)error
+- (void)writeCSS:(SVHTMLContext *)context;
 {
 	NSString *basePath = [[self bundle] resourcePath];
-	NSString *fullPath = [basePath stringByAppendingPathComponent:path];
-	
-	NSData *result = [NSData dataWithContentsOfFile:fullPath options:0 error:error];
-	
-	if (result && mimeType)
-	{
-		*mimeType = [NSString MIMETypeForUTI:[NSString UTIForFileAtPath:fullPath]];
-	}
-	
-	return result;
-}
+	NSString *fullPath = [basePath stringByAppendingPathComponent:@"main.css"];
+    [context addCSSWithURL:[NSURL fileURLWithPath:fullPath]];
 
-/*	Every design should have a main.css file; this is a shortcut to get its data
- */
-- (NSData *)mainCSSData
-{
-	NSError *error = nil;
-	NSData *result = [self dataForResourceAtPath:@"main.css" MIMEType:NULL error:&error];
 	NSDictionary *variationDict = [self variationDict];
 	id file = [variationDict objectForKey:@"file"];
 	if (file)
 	{
 		NSString *fileCSS = [NSString stringWithFormat:@"%@.css", file];
-		NSData *variationData = [self dataForResourceAtPath:fileCSS MIMEType:NULL error:&error];
-		if (variationData)
-		{
-			NSMutableData *newResult = [NSMutableData dataWithData:result];
-			[newResult appendData:variationData];
-			result = [NSData dataWithData:newResult];
-		}
-		else
-		{
-			NSLog(@"Couldn't read %@ from %@", fileCSS, self);
-		}
+		fullPath = [basePath stringByAppendingPathComponent:fileCSS];
+		[context addCSSWithURL:[NSURL fileURLWithPath:fullPath]];
 	}
-	
-	if (!result)
-	{
-		NSLog(@"Couldn't find main.css in bundle %@. Error: %@", [self identifier], error);
-	}
-	
-	return result;
 }
 
 #pragma mark -
