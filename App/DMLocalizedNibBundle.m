@@ -23,12 +23,56 @@
 // and http://openradar.appspot.com/7496255 for more information.
 
 
+#define DEBUG_THIS_USER @"dwood"
 
 #import <Cocoa/Cocoa.h>
 #import <objc/runtime.h>
 #import "Debug.h"
 
 #import "NSString+Karelia.h"
+
+@interface NSValue (comparison)
+
+- (NSComparisonResult)compareRangeLocation:(NSValue *)otherRangeValue;
+
+@end
+
+@implementation NSValue (comparison)
+
+- (NSComparisonResult)compareRangeLocation:(NSValue *)otherRangeValue;
+{
+	NSUInteger location = [self rangeValue].location;
+	NSUInteger otherLocation = [otherRangeValue rangeValue].location;
+	
+	if (location == otherLocation) return NSOrderedSame;
+    else if (location > otherLocation) return NSOrderedDescending;
+    else return NSOrderedAscending;
+}
+
+@end
+
+@interface NSView (comparison)
+
+- (NSComparisonResult)compareViewFrameOriginX:(NSView *)otherView;
+
+@end
+
+@implementation NSView (comparison)
+
+- (NSComparisonResult)compareViewFrameOriginX:(NSView *)otherView;
+{
+	CGFloat originX = [self frame].origin.x;
+	CGFloat otherOriginX = [otherView frame].origin.x;
+	
+	if (originX == otherOriginX) return NSOrderedSame;
+    else if (originX > otherOriginX) return NSOrderedDescending;
+    else return NSOrderedAscending;
+}
+
+@end
+
+
+
 
 @interface NSBundle (DMLocalizedNibBundle)
 + (BOOL)deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone;
@@ -49,7 +93,7 @@
     NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
     if (
 		
-		([NSUserName() isEqualToString:@"dwood"]) &&
+		([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
 		self == [NSViewController class]) {
 		NSLog(@"Switching in NSViewController Localizer!");
@@ -109,7 +153,7 @@
     NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
     if (
 		
-		([NSUserName() isEqualToString:@"dwood"]) &&
+		([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
 		self == [NSBundle class]) {
 		NSLog(@"Switching in NSBundle localizer. W00T!");
@@ -176,7 +220,7 @@
 		
         [self _localizeStringsInObject:topLevelObjectsArray bundle:aBundle table:localizedStringsTableName level:0];
 		
-		for (id *topLevelObject in topLevelObjectsArray)
+		for (id topLevelObject in topLevelObjectsArray)
 		{
 			if ([topLevelObject isKindOfClass:[NSView class]])
 			{
@@ -185,6 +229,10 @@
 			}
 			else if ([topLevelObject isKindOfClass:[NSWindow class]])
 			{
+				
+				// Here, I think, I probably want to do some sort of call to the NSWindow delegate to ask
+				// what width it would like to be for various languages, so I can make the inspector window wider for French/German.
+				// That would keep it generic here.
 				NSWindow *window = (NSWindow *)topLevelObject;
 				[self _resizeView:[window contentView] level:0];
 			}
@@ -264,14 +312,109 @@
 
 + (void) _resizeView:(NSView *)aView level:(NSUInteger)level;
 {
-	LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], [[aView description] condenseWhiteSpace]);
+	//LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], [[aView description] condenseWhiteSpace]);
 	level++;
 	
 	NSArray *subViews = [aView subviews];
+	
+	// Dictionary, where keys are NSRange/NSValues (each representing a "row" of pixels in alignment) with value being NSMutableArray (left to right?) of subviews
+	NSMutableDictionary *rows = [NSMutableDictionary dictionary];
+	
+	for (NSView *subView in subViews)
+	{
+		NSRect frame = [subView frame];
+		// NSLog(@"%@ -> %@", subView, NSStringFromRect(frame));
+		NSRange yRange = NSMakeRange(frame.origin.y, frame.size.height);
+		// Fudge just a little bit ... chop off the bottom and top 2 pixels, so that things seem less likely to intersect
+		if (frame.size.height > 4)
+		{
+			yRange = NSMakeRange(frame.origin.y + 2, frame.size.height - 4);
+		}
+		
+		// Now see if this range intersects one of our index sets
+		BOOL found = NO;
+		for (NSValue *rowValue in [rows allKeys])
+		{
+			NSRange rowRange = [rowValue rangeValue];
+			if (NSIntersectionRange(rowRange, yRange).length)
+			{
+				// Add this subView to the list for this row
+				NSMutableArray *rowArray = [rows objectForKey:rowValue];
+				[rowArray addObject:subView];
+				
+				// Extend the row range if needed, and modify dictionary if it changed
+				NSRange newRowRange = NSUnionRange(rowRange, yRange);
+				if (!NSEqualRanges(newRowRange, rowRange))
+				{
+					[rows setObject:rowArray forKey:[NSValue valueWithRange:newRowRange]];
+					[rows removeObjectForKey:rowValue];
+				}
+				found = YES;
+				break;  // found, so no need to keep looking
+			}
+		}
+		if (!found)	// not found, make a new row entry
+		{
+			[rows setObject:[NSMutableArray arrayWithObject:subView] forKey:[NSValue valueWithRange:yRange]];
+		}
+	}
+	
+	// Let's dump out what we have now.
+	NSArray *sortedRanges = [[rows allKeys] sortedArrayUsingSelector:@selector(compareRangeLocation:)];
+	int i = 0;
+	for (NSValue *rowValue in [sortedRanges reverseObjectEnumerator])
+	{
+		NSRange rowRange = [rowValue rangeValue];
+		NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
+		NSArray *sortedRowViews = [subviewsOnThisRow sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
+		NSMutableString *desc = [NSMutableString string];
+		for (NSView *rowView in sortedRowViews)
+		{
+			if ([rowView isKindOfClass:[NSTextField class]])
+			{
+				NSTextField *field = (NSTextField *)rowView;
+				NSString *stringValue = [field stringValue];
+				if ([field isEditable])
+				{
+					[desc appendFormat:@"[%@           ]",stringValue];
+				}
+				else if ([[stringValue condenseWhiteSpace] isEqualToString:@""])
+				{
+					[desc appendFormat:@"\"%@\"",stringValue];
+				}
+				else
+				{
+					[desc appendString:stringValue];
+				}
+			}
+			else if ([rowView isKindOfClass:[NSPopUpButton class]])
+			{
+				[desc appendFormat:@"{%@}", [((NSPopUpButton *)rowView) titleOfSelectedItem]];
+			}
+			else if ([rowView isKindOfClass:[NSButton class]])
+			{
+				[desc appendFormat:@"{%@}", [((NSButton *)rowView) title]];
+			}
+			else
+			{
+				[desc appendFormat:@"<%@>",[[rowView class] description]];
+			}
+			[desc appendString:@" "];
+		}
+		
+		LogIt(@"%2d. [%3d-%-3d] %@", i++, rowRange.location, NSMaxRange(rowRange), desc);
+	}
+	
+	// Now resize the subviews...
+	
 	for (NSView *subView in subViews)
 	{
 		[self _resizeView:subView level:level];
+		
+		
+		
 	}
+	
 }
 
 //
@@ -457,7 +600,6 @@
 				
             } else
 			{
-				NSLog(@"LOCALIZING OTHER CONTROL: %@", [control class]);
                 [self _localizeStringsInObject:[control cell] bundle:bundle table:table level:level];
 			}
 			
@@ -547,7 +689,8 @@
     } else { 
 #ifdef DEBUG
  //       NSLog(@"        Can't find translation for string %@", string);
-        return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
+       // return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
+        return string;
 #else
         return string;
 #endif
