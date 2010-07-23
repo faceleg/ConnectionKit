@@ -117,9 +117,12 @@
     
     
     // Compare digests to know if it's worth publishing. Look up remote hash first to save us reading in the local file if possible
-    SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:remotePath];
-    NSData *publishedDigest = [record SHA1Digest];
-    if ([digest isEqualToData:publishedDigest]) return;
+    if ([self onlyPublishChanges])
+    {
+        SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:remotePath];
+        NSData *publishedDigest = [record SHA1Digest];
+        if ([digest isEqualToData:publishedDigest]) return;
+    }
     
     
     [super publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest];
