@@ -370,6 +370,14 @@
 		NSMutableString *desc = [NSMutableString string];
 		for (NSView *rowView in sortedRowViews)
 		{
+			NSUInteger mask = [rowView autoresizingMask];
+			NSString *leftMargin	= (mask & NSViewMinXMargin)		? @"···"	: @"———";
+			NSString *leftWidth		= (mask & NSViewWidthSizable)	? @"<ɕɕ"	: @"<··";
+			NSString *rightWidth	= (mask & NSViewWidthSizable)	? @"ɕɕ>"	: @"··>";
+			NSString *rightMargin	= (mask & NSViewMaxXMargin)		? @"···"	: @"———";
+			
+			[desc appendString:leftMargin];
+			[desc appendString:leftWidth];
 			if ([rowView isKindOfClass:[NSTextField class]])
 			{
 				NSTextField *field = (NSTextField *)rowView;
@@ -399,9 +407,10 @@
 			{
 				[desc appendFormat:@"<%@>",[[rowView class] description]];
 			}
+			[desc appendString:rightWidth];
+			[desc appendString:rightMargin];
 			[desc appendString:@" "];
 		}
-		
 		LogIt(@"%2d. [%3d-%-3d] %@", i++, rowRange.location, NSMaxRange(rowRange), desc);
 	}
 	
