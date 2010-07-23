@@ -164,6 +164,8 @@
     [self setEncoding:[[[page master] valueForKey:@"charset"] encodingFromCharset]];
     [self setLanguage:[[page master] language]];
     
+    
+    // For publishing, want to know the URL of main.css *on the server*
     if (![self isForEditing])
     {
         NSString *cssPath = [page pathToDesignFile:@"main.css" inContext:self];
