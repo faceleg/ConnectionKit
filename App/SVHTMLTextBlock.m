@@ -349,6 +349,7 @@
     // Main tag
 	[context openTag:[self tagName]];
 	
+    
 	// in some situations we generate both the main tag, and a <span class="in">
     if ([context isForEditing])
     {
@@ -365,7 +366,8 @@
 		}
 	}
 	
-	// TODO: Add in graphical text styling if there is any
+    
+	// Add in graphical text styling if there is any
 	if ([context includeStyling])
 	{
 		NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];

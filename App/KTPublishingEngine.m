@@ -462,47 +462,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         }
     }
     
-    
-    
-    // Append graphical text CSS. Use alphabetical ordering to maintain, er, sameness between publishes
-    NSArray *graphicalTextIDs = [[_graphicalTextBlocks allKeys] sortedArrayUsingSelector:@selector(compare:)];
-    NSArray *graphicalTextBlocks = [_graphicalTextBlocks objectsForKeys:graphicalTextIDs notFoundMarker:[NSNull null]];
-    
-    SVHTMLTextBlock *aTextBlock;
-    for (aTextBlock in graphicalTextBlocks)
-    {
-        KTMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
-        
-        NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
-        OBASSERT(path);
-        NSURL *url = [NSURL fileURLWithPath:path];
-        
-        NSError *textFileError;
-        NSMutableString *CSS = [NSMutableString stringWithContentsOfURL:url
-                                                       fallbackEncoding:NSUTF8StringEncoding
-                                                                  error:&textFileError];
-        if (CSS)
-        {
-            [CSS replace:@"_UNIQUEID_" with:[aTextBlock graphicalTextCSSID]];
-            [CSS replace:@"_WIDTH_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"width"]]];
-            [CSS replace:@"_HEIGHT_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"height"]]];
-            
-            NSString *baseMediaPath = [[aGraphicalText defaultUpload] pathRelativeToSite];
-            NSString *mediaPath = [@".." stringByAppendingPathComponent:baseMediaPath];
-            [CSS replace:@"_URL_" with:mediaPath];
-            
-            [cssWriter writeCSSString:CSS];
-        }
-        else
-        {
-            NSLog(@"Unable to read in image replacement CSS from %@, error: %@",
-                  url,
-                  [[textFileError debugDescription] condenseWhiteSpace]);
-        }
-    }
-    
-    
-    // Finished with the writer
     [cssWriter release];
     
     
