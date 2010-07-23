@@ -43,14 +43,14 @@ enum { BADGE_TEXT = 0 };
 {
   @private
     NSUInteger  _badgeTypeTag;
-    BOOL        _anonymous;
+    BOOL        _includeReferralCode;
     BOOL        _openLinkInNewWindow;
     NSString    *_badgeAltString;
     NSString    *_badgeTitleString;
 }
 
 @property(nonatomic) NSUInteger badgeTypeTag;
-@property(nonatomic) BOOL anonymous;
+@property(nonatomic) BOOL includeReferralCode;
 @property(nonatomic) BOOL openLinkInNewWindow;
 @property(nonatomic, copy) NSString *badgeAltString;
 @property(nonatomic, copy) NSString *badgeTitleString;

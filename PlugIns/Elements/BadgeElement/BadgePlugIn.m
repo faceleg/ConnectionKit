@@ -65,7 +65,7 @@ static NSArray *sAltStrings = nil;
 { 
     return [NSSet setWithObjects:
             @"badgeTypeTag", 
-            @"anonymous", 
+            @"includeReferralCode", 
             @"openLinkInNewWindow",
             nil];
 }
@@ -159,7 +159,8 @@ static NSArray *sAltStrings = nil;
 	return result;
 }
 
-// returns URL for current badge, suitable for use in HTML template
+// returns relatice URL for current badge, suitable for use in HTML template
+// alternatively, in template, could do <img src="[[=writeBadgeSrc]]"…
 - (NSString *)badgeURLString
 {
     // find badge resource
@@ -172,9 +173,6 @@ static NSArray *sAltStrings = nil;
     // generate relative string for template
     NSString *result = [[SVPageletPlugIn currentContext] relativeURLStringOfURL:contextURL];    
     return result;
-    
-    // alternative, in template, could do
-    // <img src="[[=writeBadgeSrc]]"…
 }
 
 
@@ -206,6 +204,6 @@ static NSArray *sAltStrings = nil;
 @synthesize badgeTitleString = _badgeTitleString;
 
 @synthesize badgeTypeTag = _badgeTypeTag;
-@synthesize anonymous = _anonymous;
+@synthesize includeReferralCode = _includeReferralCode;
 @synthesize openLinkInNewWindow = _openLinkInNewWindow;
 @end
