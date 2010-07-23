@@ -50,6 +50,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 @interface KTPublishingEngine ()
 
+- (void)publishMainCSSToPath:(NSString *)cssUploadPath;
+
 - (void)setRootTransferRecord:(CKTransferRecord *)rootRecord;
 
 - (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
@@ -393,6 +395,131 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (![_plugInCSS containsObject:cssURL]) [_plugInCSS addObject:cssURL];
 }
 
+#pragma mark Design
+
+- (void)publishDesign
+{
+    KTDesign *design = [[[[self site] rootPage] master] design];
+    
+    
+    // Create the design directory
+	NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
+    
+    
+    // Upload the design's resources
+	NSEnumerator *resourcesEnumerator = [[design resourceFileURLs] objectEnumerator];
+	NSURL *aResource;
+	while (aResource = [resourcesEnumerator nextObject])
+	{
+		NSString *filename = [aResource lastPathComponent];
+        NSString *uploadPath = [remoteDesignDirectoryPath stringByAppendingPathComponent:filename];
+        
+        if ([filename isEqualToString:@"main.css"])
+        {
+            [self publishMainCSSToPath:uploadPath];
+        }
+        else
+        {
+            [self publishContentsOfURL:aResource toPath:uploadPath];
+        }
+	}
+}
+
+- (void)addGraphicalTextBlock:(SVHTMLTextBlock *)textBlock;
+{
+    KTMediaFileUpload *media = [[[textBlock graphicalTextMedia] file] defaultUpload];
+	if (media)
+	{
+		[self uploadMediaIfNeeded:media];
+        [_graphicalTextBlocks ks_addObject:textBlock forKey:[textBlock graphicalTextCSSID]];
+    }
+}
+
+@class KTMediaFile;
+
+/*  KTRemotePublishingEngine uses digest to only upload this if it's changed
+ */
+- (void)publishMainCSSToPath:(NSString *)cssUploadPath;
+{
+    NSMutableString *css = [NSMutableString string];
+    KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
+    
+    
+    // Write CSS
+    for (id someCSS in _plugInCSS)
+    {
+        if ([someCSS isKindOfClass:[NSURL class]])
+        {
+            NSString *css = [NSString stringWithContentsOfURL:someCSS
+                                             fallbackEncoding:NSUTF8StringEncoding
+                                                        error:NULL];
+            
+            if (css) [cssWriter writeCSSString:css];
+        }
+        else
+        {
+            [cssWriter writeCSSString:someCSS];
+        }
+    }
+    
+    
+    
+    // Append graphical text CSS. Use alphabetical ordering to maintain, er, sameness between publishes
+    NSArray *graphicalTextIDs = [[_graphicalTextBlocks allKeys] sortedArrayUsingSelector:@selector(compare:)];
+    NSArray *graphicalTextBlocks = [_graphicalTextBlocks objectsForKeys:graphicalTextIDs notFoundMarker:[NSNull null]];
+    
+    SVHTMLTextBlock *aTextBlock;
+    for (aTextBlock in graphicalTextBlocks)
+    {
+        KTMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
+        
+        NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
+        OBASSERT(path);
+        NSURL *url = [NSURL fileURLWithPath:path];
+        
+        NSError *textFileError;
+        NSMutableString *CSS = [NSMutableString stringWithContentsOfURL:url
+                                                       fallbackEncoding:NSUTF8StringEncoding
+                                                                  error:&textFileError];
+        if (CSS)
+        {
+            [CSS replace:@"_UNIQUEID_" with:[aTextBlock graphicalTextCSSID]];
+            [CSS replace:@"_WIDTH_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"width"]]];
+            [CSS replace:@"_HEIGHT_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"height"]]];
+            
+            NSString *baseMediaPath = [[aGraphicalText defaultUpload] pathRelativeToSite];
+            NSString *mediaPath = [@".." stringByAppendingPathComponent:baseMediaPath];
+            [CSS replace:@"_URL_" with:mediaPath];
+            
+            [cssWriter writeCSSString:CSS];
+        }
+        else
+        {
+            NSLog(@"Unable to read in image replacement CSS from %@, error: %@",
+                  url,
+                  [[textFileError debugDescription] condenseWhiteSpace]);
+        }
+    }
+    
+    
+    // Finished with the writer
+    [cssWriter release];
+    
+    
+    
+    // Upload the CSS if needed
+    NSData *mainCSSData = [[css unicodeNormalizedString] dataUsingEncoding:NSUTF8StringEncoding
+                                                      allowLossyConversion:YES];
+    
+    [self publishData:mainCSSData toPath:cssUploadPath];
+}
+
+// FIXME: This delegate method has been replaced by -[SVHTMLContext generatedTextBlocks]
+- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(SVHTMLTextBlock *)textBlock
+{
+	[self addGraphicalTextBlock:textBlock];
+}
+
 #pragma mark Media
 
 - (void)gatherMedia;
@@ -483,8 +610,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     [_uploadedMediaReps setObject:path forKey:mediaRep];
 }
-
-@class KTMediaFile;
 
 #pragma mark Resource Files
 
@@ -702,7 +827,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
      }*/
     
     [self publishDesign];
-    [self publishMainCSS];
     
     
     // Upload sitemap if the site has one
@@ -714,164 +838,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [[self delegate] publishingEngineDidFinishGeneratingContent:self];
     
     [[self connection] disconnect]; // Once everything is uploaded, disconnect
-}
-
-#pragma mark Design
-
-- (void)publishDesign
-{
-    KTDesign *design = [[[[self site] rootPage] master] design];
-    
-    
-    // Create the design directory
-	NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
-    
-    
-    // Upload the design's resources
-	NSEnumerator *resourcesEnumerator = [[design resourceFileURLs] objectEnumerator];
-	NSURL *aResource;
-	while (aResource = [resourcesEnumerator nextObject])
-	{
-		NSString *filename = [aResource lastPathComponent];
-        if (![filename isEqualToString:@"main.css"])    // We handle uploading CSS separately
-        {
-            NSString *uploadPath = [remoteDesignDirectoryPath stringByAppendingPathComponent:filename];
-            [self publishContentsOfURL:aResource toPath:uploadPath];
-        }
-	}
-}
-
-- (void)addGraphicalTextBlock:(SVHTMLTextBlock *)textBlock;
-{
-    KTMediaFileUpload *media = [[[textBlock graphicalTextMedia] file] defaultUpload];
-	if (media)
-	{
-		[self uploadMediaIfNeeded:media];
-        [_graphicalTextBlocks ks_addObject:textBlock forKey:[textBlock graphicalTextCSSID]];
-    }
-}
-
-/*  KTRemotePublishingEngine uses digest to only upload this if it's changed
- */
-- (void)publishMainCSS
-{
-    NSMutableString *css = [NSMutableString string];
-    KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
-    
-    
-    // Load up the CSS from the design
-    KTMaster *master = [[[self site] rootPage] master];     OBASSERT(master);
-    KTDesign *design = [master design];     if (!design) NSLog(@"No design found");
-    NSString *mainCSSPath = [[design bundle] pathForResource:@"main" ofType:@"css"];
-    
-    if (mainCSSPath)
-    {
-        NSError *error;
-        NSString *mainCSS = [[[NSMutableString alloc] initWithContentsOfFile:mainCSSPath usedEncoding:NULL error:&error] autorelease];
-        if (mainCSS)
-        {
-            [cssWriter writeCSSString:mainCSS];
-        }
-        else
-        {
-            NSLog(@"Unable to load CSS from %@, error: %@", mainCSSPath, [[error debugDescription] condenseWhiteSpace]);
-            
-            NSLog(@"Attempting deprecated -initWithContentsOfFile: method instead");
-            mainCSS = [[NSMutableString alloc] initWithContentsOfFile:mainCSSPath];
-            if (!mainCSS)
-            {
-                NSLog(@"And that didn't work either!");
-            }
-        }
-    }
-    else
-    {
-        NSLog(@"main.css file could not be located in design: %@", [[design bundle] bundlePath]);
-    }
-        
-    
-    
-    // Append banner CSS
-    [master writeBannerCSS:[SVHTMLContext currentContext]];
-    
-    
-    
-    // Append plug-in-provided CSS
-    for (id someCSS in _plugInCSS)
-    {
-        if ([someCSS isKindOfClass:[NSURL class]])
-        {
-            NSString *css = [NSString stringWithContentsOfURL:someCSS
-                                             fallbackEncoding:NSUTF8StringEncoding
-                                                        error:NULL];
-            
-            if (css) [cssWriter writeCSSString:css];
-        }
-        else
-        {
-            [cssWriter writeCSSString:someCSS];
-        }
-    }
-    
-    
-    
-    // Append graphical text CSS. Use alphabetical ordering to maintain, er, sameness between publishes
-    NSArray *graphicalTextIDs = [[_graphicalTextBlocks allKeys] sortedArrayUsingSelector:@selector(compare:)];
-    NSArray *graphicalTextBlocks = [_graphicalTextBlocks objectsForKeys:graphicalTextIDs notFoundMarker:[NSNull null]];
-    
-    SVHTMLTextBlock *aTextBlock;
-    for (aTextBlock in graphicalTextBlocks)
-    {
-        KTMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
-        
-        NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
-        OBASSERT(path);
-        NSURL *url = [NSURL fileURLWithPath:path];
-        
-        NSError *textFileError;
-        NSMutableString *CSS = [NSMutableString stringWithContentsOfURL:url
-                                                       fallbackEncoding:NSUTF8StringEncoding
-                                                                  error:&textFileError];
-        if (CSS)
-        {
-            [CSS replace:@"_UNIQUEID_" with:[aTextBlock graphicalTextCSSID]];
-            [CSS replace:@"_WIDTH_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"width"]]];
-            [CSS replace:@"_HEIGHT_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"height"]]];
-            
-            NSString *baseMediaPath = [[aGraphicalText defaultUpload] pathRelativeToSite];
-            NSString *mediaPath = [@".." stringByAppendingPathComponent:baseMediaPath];
-            [CSS replace:@"_URL_" with:mediaPath];
-            
-            [cssWriter writeCSSString:CSS];
-        }
-        else
-        {
-            NSLog(@"Unable to read in image replacement CSS from %@, error: %@",
-                  url,
-                  [[textFileError debugDescription] condenseWhiteSpace]);
-        }
-    }
-    
-    
-    // Finished with the writer
-    [cssWriter release];
-    
-    
-    
-    // Upload the CSS if needed
-    NSData *mainCSSData = [[css unicodeNormalizedString] dataUsingEncoding:NSUTF8StringEncoding
-                                                          allowLossyConversion:YES];
-    
-    NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
-    NSString *cssUploadPath = [remoteDesignDirectoryPath stringByAppendingPathComponent:@"main.css"];
-    
-    [self publishData:mainCSSData toPath:cssUploadPath];
-}
-
-// FIXME: This delegate method has been replaced by -[SVHTMLContext generatedTextBlocks]
-- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(SVHTMLTextBlock *)textBlock
-{
-	[self addGraphicalTextBlock:textBlock];
 }
 
 #pragma mark Uploading Support
