@@ -23,7 +23,10 @@
     // Make sure an image is chosen
     if ([[self bannerType] boolValue])
     {
-        if (![self chooseBanner])
+        id banner = [[oInspectorViewController inspectedObjectsController]
+                     valueForKeyPath:@"selection.master.banner"];
+        
+        if (!banner && ![self chooseBanner])
         {
             [self setBannerType:[NSNumber numberWithBool:NO]];
             return;
