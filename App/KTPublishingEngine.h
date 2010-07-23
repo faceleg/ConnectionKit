@@ -126,7 +126,7 @@ typedef enum {
 - (void)createConnection;
 
 // Design
-- (void)uploadDesignIfNeeded;
+- (void)publishDesign;
 
 - (void)addGraphicalTextBlock:(SVHTMLTextBlock *)textBlock;
 - (void)publishMainCSS;

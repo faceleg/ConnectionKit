@@ -700,7 +700,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
      [self uploadMediaIfNeeded:bannerImage];
      }*/
     
-    [self uploadDesignIfNeeded];
+    [self publishDesign];
     [self publishMainCSS];
     
     
@@ -717,7 +717,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 #pragma mark Design
 
-- (void)uploadDesignIfNeeded
+- (void)publishDesign
 {
     KTDesign *design = [[[[self site] rootPage] master] design];
     

@@ -291,7 +291,7 @@
 #pragma mark -
 #pragma mark Design
 
-- (void)uploadDesignIfNeeded
+- (void)publishDesign
 {
     // When publishing changes, only upload the design if its published version is different to the current one
     //KTMaster *master = [[[self site] rootPage] master];
@@ -299,7 +299,7 @@
     if (![self onlyPublishChanges] ||
         !NO)
     {
-        [super uploadDesignIfNeeded];
+        [super publishDesign];
     }
 }
 
