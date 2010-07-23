@@ -129,7 +129,7 @@ typedef enum {
 - (void)uploadDesignIfNeeded;
 
 - (void)addGraphicalTextBlock:(SVHTMLTextBlock *)textBlock;
-- (void)uploadMainCSSIfNeeded;
+- (void)publishMainCSS;
 
 @end
 

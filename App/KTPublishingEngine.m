@@ -701,7 +701,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
      }*/
     
     [self uploadDesignIfNeeded];
-    [self uploadMainCSSIfNeeded];
+    [self publishMainCSS];
     
     
     // Upload sitemap if the site has one
@@ -754,11 +754,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 /*  KTRemotePublishingEngine uses digest to only upload this if it's changed
  */
-- (void)uploadMainCSSIfNeeded
+- (void)publishMainCSS
 {
-    CKTransferRecord *result = nil;
-    
-    
     // Load up the CSS from the design
     KTMaster *master = [[[self site] rootPage] master];     OBASSERT(master);
     KTDesign *design = [master design];     if (!design) NSLog(@"No design found");
