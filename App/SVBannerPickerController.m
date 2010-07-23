@@ -16,7 +16,34 @@
 
 @implementation SVBannerPickerController
 
+- (void)dealloc
+{
+    [_bannerType release];
+    
+    [super dealloc];
+}
+
+#pragma mark Banner Type
+
 @synthesize bannerType = _bannerType;
+- (NSNumber *)bannerType;
+{
+    NSNumber *result = _bannerType;
+    
+    // Ugly hack, but it works. Pretend design-supplied is selected when design doesn't support it
+    if (![self canChooseBannerType])
+    {
+        result = nil;
+    }
+    
+    return result;
+}
++ (NSSet *)keyPathsForValuesAffectingBannerType;
+{
+    return [NSSet setWithObject:@"canChooseBannerType"];
+}
+
+@synthesize canChooseBannerType = _canChooseBannerType;
 
 - (IBAction)bannerTypeChosen:(NSPopUpButton *)sender;
 {
@@ -39,6 +66,8 @@
     [[info objectForKey:NSObservedObjectKey] setValue:[self bannerType]
                                            forKeyPath:[info objectForKey:NSObservedKeyPathKey]];
 }
+
+#pragma mark Custom Banner
 
 - (IBAction)chooseBanner:(id)sender;
 {

@@ -19,9 +19,11 @@
     
   @private
     NSNumber    *_bannerType;
+    BOOL        _canChooseBannerType;
 }
 
 @property(nonatomic, copy) NSNumber *bannerType;    // bindable
+@property(nonatomic) BOOL canChooseBannerType;      // bindable
 - (IBAction)bannerTypeChosen:(NSPopUpButton *)sender;
 
 - (IBAction)chooseBanner:(id)sender;

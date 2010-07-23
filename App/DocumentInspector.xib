@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
+			<integer value="171"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1477,7 +1477,7 @@
 			<object class="NSUserDefaultsController" id="710903564">
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
-			<object class="NSCustomObject" id="484388203">
+			<object class="NSCustomObject" id="305345016">
 				<string key="NSClassName">SVBannerPickerController</string>
 			</object>
 		</object>
@@ -1756,22 +1756,6 @@
 					<int key="connectionID">539</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: inspectedObjectsController.selection.master.design.allowsBannerSubstitution</string>
-						<reference key="source" ref="830823000"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="830823000"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">enabled: inspectedObjectsController.selection.master.design.allowsBannerSubstitution</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.master.design.allowsBannerSubstitution</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">591</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">chooseFavicon:</string>
 						<reference key="source" ref="1001"/>
@@ -2026,7 +2010,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oPopUpButton</string>
-						<reference key="source" ref="484388203"/>
+						<reference key="source" ref="305345016"/>
 						<reference key="destination" ref="830823000"/>
 					</object>
 					<int key="connectionID">695</int>
@@ -2035,10 +2019,10 @@
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">selectedTag: bannerType</string>
 						<reference key="source" ref="830823000"/>
-						<reference key="destination" ref="484388203"/>
+						<reference key="destination" ref="305345016"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="830823000"/>
-							<reference key="NSDestination" ref="484388203"/>
+							<reference key="NSDestination" ref="305345016"/>
 							<string key="NSLabel">selectedTag: bannerType</string>
 							<string key="NSBinding">selectedTag</string>
 							<string key="NSKeyPath">bannerType</string>
@@ -2050,7 +2034,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">bannerTypeChosen:</string>
-						<reference key="source" ref="484388203"/>
+						<reference key="source" ref="305345016"/>
 						<reference key="destination" ref="830823000"/>
 					</object>
 					<int key="connectionID">702</int>
@@ -2058,7 +2042,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">chooseBanner:</string>
-						<reference key="source" ref="484388203"/>
+						<reference key="source" ref="305345016"/>
 						<reference key="destination" ref="545510401"/>
 					</object>
 					<int key="connectionID">703</int>
@@ -2066,58 +2050,74 @@
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oInspectorViewController</string>
-						<reference key="source" ref="484388203"/>
+						<reference key="source" ref="305345016"/>
 						<reference key="destination" ref="1001"/>
 					</object>
 					<int key="connectionID">704</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">hidden: inspectedObjectsController.selection.master.bannerType</string>
-						<reference key="source" ref="545510401"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="545510401"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">hidden: inspectedObjectsController.selection.master.bannerType</string>
-							<string key="NSBinding">hidden</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.master.bannerType</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">NSNegateBoolean</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">706</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">hidden: inspectedObjectsController.selection.master.bannerType</string>
-						<reference key="source" ref="283746977"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="283746977"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">hidden: inspectedObjectsController.selection.master.bannerType</string>
-							<string key="NSBinding">hidden</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.master.bannerType</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">NSNegateBoolean</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">708</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oBannerPickerController</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="484388203"/>
+						<reference key="destination" ref="305345016"/>
 					</object>
 					<int key="connectionID">709</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: bannerType</string>
+						<reference key="source" ref="545510401"/>
+						<reference key="destination" ref="305345016"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="545510401"/>
+							<reference key="NSDestination" ref="305345016"/>
+							<string key="NSLabel">hidden: bannerType</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">bannerType</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">711</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: bannerType</string>
+						<reference key="source" ref="283746977"/>
+						<reference key="destination" ref="305345016"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="283746977"/>
+							<reference key="NSDestination" ref="305345016"/>
+							<string key="NSLabel">hidden: bannerType</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">bannerType</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">713</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: canChooseBannerType</string>
+						<reference key="source" ref="830823000"/>
+						<reference key="destination" ref="305345016"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="830823000"/>
+							<reference key="NSDestination" ref="305345016"/>
+							<string key="NSLabel">enabled: canChooseBannerType</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">canChooseBannerType</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">715</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3179,7 +3179,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">694</int>
-						<reference key="object" ref="484388203"/>
+						<reference key="object" ref="305345016"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Banner Picker Controller</string>
 					</object>
@@ -3613,7 +3613,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">709</int>
+			<int key="maxID">715</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
