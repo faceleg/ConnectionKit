@@ -67,6 +67,9 @@ typedef enum {
 
 - (id)init; // calls through to -initWithMutableString:
 
+// For if you need a fresh context based off an existing one
+- (id)initWithOutputWriter:(id <KSWriter>)output inheritFromContext:(SVHTMLContext *)context;
+
 
 #pragma mark Status
 // Throws away any data that can be, ready for more to write. Mainly used to retry writing after a doctype change
@@ -95,8 +98,6 @@ typedef enum {
 - (BOOL)isForQuickLookPreview;
 - (BOOL)isForPublishing;
 - (BOOL)isForPublishingProOnly;
-
-- (void)copyPropertiesFromContext:(SVHTMLContext *)context;
 
 
 #pragma mark Doctype

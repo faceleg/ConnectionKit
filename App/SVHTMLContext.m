@@ -105,6 +105,23 @@
     return self;
 }
 
+- (id)initWithOutputWriter:(id <KSWriter>)output inheritFromContext:(SVHTMLContext *)context;
+{
+    if (self = [self initWithOutputWriter:output])
+    {
+        // Copy across properties
+        [self setIndentationLevel:[context indentationLevel]];
+        _currentPage = [[context page] retain];
+        _baseURL = [[context baseURL] copy];
+        [self setIncludeStyling:[context includeStyling]];
+        [self setLiveDataFeeds:[context liveDataFeeds]];
+        [self setDocType:[context docType]];
+        [self setEncoding:[context encoding]];
+    }
+    
+    return self;
+}
+
 - (void)dealloc
 {
     [_language release];
@@ -222,18 +239,6 @@
 @synthesize liveDataFeeds = _liveDataFeeds;
 @synthesize encoding = _stringEncoding;
 @synthesize language = _language;
-
-- (void)copyPropertiesFromContext:(SVHTMLContext *)context;
-{
-    // Copy across properties
-    [self setIndentationLevel:[context indentationLevel]];
-    [_currentPage release]; _currentPage = [[context page] retain];
-    [self setBaseURL:[context baseURL]];
-    [self setIncludeStyling:[context includeStyling]];
-    [self setLiveDataFeeds:[context liveDataFeeds]];
-    [self setDocType:[context docType]];
-    [self setEncoding:[context encoding]];
-}
 
 #pragma mark Doctype
 

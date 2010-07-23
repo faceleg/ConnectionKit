@@ -74,8 +74,7 @@
     NSMutableString *htmlString = [[NSMutableString alloc] init];
     
     SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
-                                       initWithOutputWriter:htmlString];
-    [context copyPropertiesFromContext:[self HTMLContext]];
+                                       initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
     
     [context push];
     [self writeRepresentedObjectHTML];

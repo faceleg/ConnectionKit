@@ -123,8 +123,8 @@
     {
         // Generate HTML
         NSMutableString *html = [[NSMutableString alloc] init];
-        SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:html];
-        [context copyPropertiesFromContext:[self HTMLContext]];
+        SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:html
+                                                                            inheritFromContext:[self HTMLContext]];
         
         for (SVGraphic *aGraphic in pagelets)
         {
@@ -192,8 +192,8 @@
         // Prepare to write HTML
         NSMutableString *editingHTML = [[NSMutableString alloc] init];
         OBASSERT(!_changeHTMLContext);
-        _changeHTMLContext = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:editingHTML];
-        [_changeHTMLContext copyPropertiesFromContext:[self HTMLContext]];
+        _changeHTMLContext = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:editingHTML
+                                                               inheritFromContext:[self HTMLContext]];
         
         
         // Try to de-archive custom HTML

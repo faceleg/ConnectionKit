@@ -135,8 +135,7 @@
     
     // Only generate the block if there is text to use
     // HACK: Don't want to report anything to the context while checking this, so pop on a fake context
-    SVHTMLContext *fakeContext = [[SVHTMLContext alloc] initWithOutputWriter:nil];
-    [fakeContext copyPropertiesFromContext:[SVHTMLContext currentContext]];
+    SVHTMLContext *fakeContext = [[SVHTMLContext alloc] initWithOutputWriter:nil inheritFromContext:[SVHTMLContext currentContext]];
     [fakeContext push];
 	if (YES)
     {

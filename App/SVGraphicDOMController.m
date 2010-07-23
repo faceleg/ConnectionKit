@@ -95,9 +95,8 @@
     NSMutableString *htmlString = [[NSMutableString alloc] init];
     
     SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
-                                       initWithOutputWriter:htmlString];
+                                       initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
     
-    [context copyPropertiesFromContext:[self HTMLContext]];
     [context setWebEditorViewController:[[self HTMLContext] webEditorViewController]];   // hacky
     [context writeGraphic:[self representedObject] withDOMController:self];
     
