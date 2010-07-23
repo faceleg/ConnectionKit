@@ -31,6 +31,126 @@
 
 #import "NSString+Karelia.h"
 
+
+
+// ===========================================================================
+// Based on GTMUILocalizerAndTweaker.m
+
+static BOOL IsRightAnchored(NSView *view) {
+	NSUInteger autoresizing = [view autoresizingMask];
+	BOOL viewRightAnchored =
+	((autoresizing & (NSViewMinXMargin | NSViewMaxXMargin)) == NSViewMinXMargin);
+	return viewRightAnchored;
+}
+
+// Constant for a forced string wrap in button cells (Opt-Return in IB inserts
+// this into the string).
+NSString * const kForcedWrapString = @"\xA";
+// Radio and Checkboxes (NSButtonCell) appears to use two different layout
+// algorithms for sizeToFit calls and drawing calls when there is a forced word
+// wrap in the title.  The result is a sizeToFit can tell you it all fits N
+// lines in the given rect, but at draw time, it draws as >N lines and never
+// gets as wide, resulting in a clipped control.  This fudge factor is what is
+// added to try and avoid these by giving the size calls just enough slop to
+// handle the differences.
+// radar://7831901 different wrapping between sizeToFit and drawing
+static const CGFloat kWrapperStringSlop = 0.9;
+
+static NSSize SizeToFit(NSView *view, NSPoint offset) {
+	
+//	// If we've got one of us within us, recurse (for grids)
+//	if ([view isKindOfClass:[GTMWidthBasedTweaker class]]) {
+//		GTMWidthBasedTweaker *widthAlignmentBox = (GTMWidthBasedTweaker *)view;
+//		return NSMakeSize([widthAlignmentBox tweakLayoutWithOffset:offset], 0);
+//	}
+	
+	NSRect oldFrame = [view frame];		// keep track of original frame so we know how much it resized
+	NSRect fitFrame = oldFrame;			// only set differently when sizeToFit is called, so we know it was already called
+	NSRect newFrame = oldFrame;			// what we will be setting the frame to (if not already done)
+	
+	if ([view isKindOfClass:[NSTextField class]] &&
+		[(NSTextField *)view isEditable]) {
+		// Don't try to sizeToFit because edit fields really don't want to be sized
+		// to what is in them as they are for users to enter things so honor their
+		// current size.
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
+	} else if ([view isKindOfClass:[NSPathControl class]]) {
+		// Don't try to sizeToFit because NSPathControls usually need to be able
+		// to display any path, so they shouldn't tight down to whatever they
+		// happen to be listing at the moment.
+#endif  // MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
+	} else {
+		// Genericaly fire a sizeToFit if it has one.
+		if ([view respondsToSelector:@selector(sizeToFit)]) {
+			[view performSelector:@selector(sizeToFit)];
+			fitFrame = [view frame];
+			newFrame = fitFrame;
+			
+			if ([view isKindOfClass:[NSMatrix class]]) {
+				NSMatrix *matrix = (NSMatrix *)view;
+				// See note on kWrapperStringSlop for why this is done.
+				for (NSCell *cell in [matrix cells]) {
+					if ([[cell title] rangeOfString:kForcedWrapString].location !=
+						NSNotFound) {
+						newFrame.size.width += kWrapperStringSlop;
+						break;
+					}
+				}
+			}
+			
+		}
+		
+		if ([view isKindOfClass:[NSButton class]]) {
+			NSButton *button = (NSButton *)view;
+			// -[NSButton sizeToFit] gives much worse results than IB's Size to Fit
+			// option for standard push buttons.
+			if (([button bezelStyle] == NSRoundedBezelStyle) &&
+				([[button cell] controlSize] == NSRegularControlSize)) {
+				// This is the amount of padding IB adds over a sizeToFit, empirically
+				// determined.
+				const CGFloat kExtraPaddingAmount = 12.0;
+				// Width is tricky, new buttons in IB are 96 wide, Carbon seems to have
+				// defaulted to 70, Cocoa seems to like 82.  But we go with 96 since
+				// that's what IB is doing these days.
+				const CGFloat kMinButtonWidth = (CGFloat)96.0;
+				newFrame.size.width = NSWidth(newFrame) + kExtraPaddingAmount;
+				if (NSWidth(newFrame) < kMinButtonWidth) {
+					newFrame.size.width = kMinButtonWidth;
+				}
+			} else {
+				// See note on kWrapperStringSlop for why this is done.
+				NSString *title = [button title];
+				if ([title rangeOfString:kForcedWrapString].location != NSNotFound) {
+					newFrame.size.width += kWrapperStringSlop;
+				}
+			}
+		}
+	}
+	
+	// Apply the offset, and see if we need to change the frame (again).
+	newFrame.origin.x += offset.x;
+	newFrame.origin.y += offset.y;
+	if (!NSEqualRects(fitFrame, newFrame)) {
+		[view setFrame:newFrame];
+	}
+	
+	// Return how much we changed size.
+	return NSMakeSize(NSWidth(newFrame) - NSWidth(oldFrame),
+					  NSHeight(newFrame) - NSHeight(oldFrame));
+}
+
+// ===========================================================================
+
+
+
+
+
+
+
+
+
+
+
 @interface NSValue (comparison)
 
 - (NSComparisonResult)compareRangeLocation:(NSValue *)otherRangeValue;
@@ -225,7 +345,11 @@
 			if ([topLevelObject isKindOfClass:[NSView class]])
 			{
 				NSView *view = (NSView *)topLevelObject;
-				[self _resizeView:view level:0];
+				
+				if ([fileName hasSuffix:@"DocumentInspector.nib"])
+				{
+					[self _resizeView:view level:0];
+				}
 			}
 			else if ([topLevelObject isKindOfClass:[NSWindow class]])
 			{
@@ -234,7 +358,7 @@
 				// what width it would like to be for various languages, so I can make the inspector window wider for French/German.
 				// That would keep it generic here.
 				NSWindow *window = (NSWindow *)topLevelObject;
-				[self _resizeView:[window contentView] level:0];
+				// [self _resizeView:[window contentView] level:0];
 			}
 		}
         
@@ -310,13 +434,76 @@
 	}
 }
 
-+ (void) _resizeView:(NSView *)aView level:(NSUInteger)level;
++ (NSString *)descViewsInRow:(NSArray *)sortedRowViews
 {
-	//LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], [[aView description] condenseWhiteSpace]);
-	level++;
-	
-	NSArray *subViews = [aView subviews];
-	
+	NSMutableString *desc = [NSMutableString string];
+	for (NSView *rowView in sortedRowViews)
+	{
+		NSUInteger mask = [rowView autoresizingMask];
+		BOOL stretchyLeft = 0 != (mask & NSViewMinXMargin);
+		BOOL stretchyView = 0 != (mask & NSViewWidthSizable);
+		BOOL stretchyRight = 0 != (mask & NSViewMaxXMargin);
+		
+		NSString *leftMargin	= stretchyLeft	? @"···"	: @"———";
+		NSString *leftWidth		= stretchyView	? @"<ɕɕ"	: @"<··";
+		NSString *rightWidth	= stretchyView	? @"ɕɕ>"	: @"··>";
+		NSString *rightMargin	= stretchyRight	? @"···"	: @"———";
+		
+		[desc appendString:leftMargin];
+		[desc appendString:leftWidth];
+		if ([rowView isKindOfClass:[NSTextField class]])
+		{
+			NSTextField *field = (NSTextField *)rowView;
+			NSString *stringValue = [field stringValue];
+			if ([field isEditable] || [field isBezeled] || [field isBordered])
+			{
+				[desc appendFormat:@"[%@           ]",stringValue];
+			}
+			else if ([[stringValue condenseWhiteSpace] isEqualToString:@""])
+			{
+				[desc appendFormat:@"\"%@\"",stringValue];
+			}
+			else
+			{
+				[desc appendString:stringValue];
+			}
+		}
+		else if ([rowView isKindOfClass:[NSPopUpButton class]])
+		{
+			[desc appendFormat:@"{%@}", [((NSPopUpButton *)rowView) titleOfSelectedItem]];
+		}
+		else if ([rowView isKindOfClass:[NSButton class]])
+		{
+			[desc appendFormat:@"{%@}", [((NSButton *)rowView) title]];
+		}
+		else
+		{
+			[desc appendFormat:@"<%@>",[[rowView class] description]];
+		}
+		[desc appendString:rightWidth];
+		[desc appendString:rightMargin];
+		[desc appendString:@" "];
+	}
+	return desc;
+}
+
++ (void)logRows:(NSDictionary *)rows
+{
+	NSArray *sortedRanges = [[rows allKeys] sortedArrayUsingSelector:@selector(compareRangeLocation:)];
+	int i = 0;
+	for (NSValue *rowValue in [sortedRanges reverseObjectEnumerator])
+	{
+		NSRange rowRange = [rowValue rangeValue];
+		NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
+		NSArray *sortedRowViews = [subviewsOnThisRow sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
+		NSString *desc = [self descViewsInRow:sortedRowViews];
+		LogIt(@"%2d. [%3d-%-3d] %@", i++, rowRange.location, NSMaxRange(rowRange), desc);
+	}	
+}
+
++ (NSDictionary *)rowArrangeSubviews:(NSView *)view
+{
+	NSArray *subViews = [view subviews];
 	// Dictionary, where keys are NSRange/NSValues (each representing a "row" of pixels in alignment) with value being NSMutableArray (left to right?) of subviews
 	NSMutableDictionary *rows = [NSMutableDictionary dictionary];
 	
@@ -358,72 +545,189 @@
 			[rows setObject:[NSMutableArray arrayWithObject:subView] forKey:[NSValue valueWithRange:yRange]];
 		}
 	}
+	return [NSDictionary dictionaryWithDictionary:rows];
+}
+
+
++ (CGFloat)tweakLayoutForView:(NSView *)encView rowViews:(NSArray *)rowViews withOffset:(NSPoint)offset
+{
+	NSString *desc = [self descViewsInRow:rowViews];
+	LogIt(@"%@", desc);
 	
-	// Let's dump out what we have now.
+	CGFloat widthChange_ = 0.0;
+	
+	if (![rowViews count]) {
+		widthChange_ = 0.0;
+		return widthChange_;
+	}
+	
+	BOOL sumMode = NO;
+	NSMutableArray *rightAlignedSubViews = nil;
+	NSMutableArray *rightAlignedSubViewDeltas = nil;
+	
+	// ?????
+	sumMode = YES;
+	
+	rightAlignedSubViews = [NSMutableArray array];
+	rightAlignedSubViewDeltas = [NSMutableArray array];
+	
+	// Size our rowViews
+
+	NSView *subView = nil;
+	CGFloat finalDelta = sumMode ? 0 : -CGFLOAT_MAX;
+	NSPoint subViewOffset = NSZeroPoint;
+	for (subView in rowViews) {
+		if (sumMode) {
+			subViewOffset.x = finalDelta;
+		}
+		CGFloat delta = SizeToFit(subView, subViewOffset).width;
+		if (sumMode) {
+			finalDelta += delta;
+		} else {
+			if (delta > finalDelta) {
+				finalDelta = delta;
+			}
+		}
+		// Track the right anchored rowViews size changes so we can update them
+		// once we know this view's size.
+		if (IsRightAnchored(subView)) {
+			[rightAlignedSubViews addObject:subView];
+			NSNumber *nsDelta = [NSNumber numberWithFloat:delta];
+			[rightAlignedSubViewDeltas addObject:nsDelta];
+		}
+	}
+	
+	// Are we pinned to the right of our parent?
+	BOOL rightAnchored = IsRightAnchored(encView);
+	
+	// Adjust our size (turn off auto resize, because we just fixed up all the
+	// objects within us).
+	BOOL autoresizesSubviews = [encView autoresizesSubviews];
+	if (autoresizesSubviews) {
+		[encView setAutoresizesSubviews:NO];
+	}
+	NSRect selfFrame = [encView frame];
+	selfFrame.size.width += finalDelta;
+	if (rightAnchored) {
+		// Right side is anchored, so we need to slide back to the left.
+		selfFrame.origin.x -= finalDelta;
+	}
+	selfFrame.origin.x += offset.x;
+	selfFrame.origin.y += offset.y;
+	[encView setFrame:selfFrame];
+	if (autoresizesSubviews) {
+		[encView setAutoresizesSubviews:autoresizesSubviews];
+	}
+	
+	// Now spin over the list of right aligned view and their size changes
+	// fixing up their positions so they are still right aligned in our final
+	// view.
+	for (NSUInteger lp = 0; lp < [rightAlignedSubViews count]; ++lp) {
+		subView = [rightAlignedSubViews objectAtIndex:lp];
+		CGFloat delta = [[rightAlignedSubViewDeltas objectAtIndex:lp] doubleValue];
+		NSRect viewFrame = [subView frame];
+		viewFrame.origin.x += -delta + finalDelta;
+		[subView setFrame:viewFrame];
+	}
+	/*
+	if (viewToSlideAndResize_) {
+		NSRect viewFrame = [viewToSlideAndResize_ frame];
+		if (!rightAnchored) {
+			// If our right wasn't anchored, this view slides (we push it right).
+			// (If our right was anchored, the assumption is the view is in front of
+			// us so its x shouldn't move.)
+			viewFrame.origin.x += finalDelta;
+		}
+		viewFrame.size.width -= finalDelta;
+		[viewToSlideAndResize_ setFrame:viewFrame];
+	}
+	if (viewToSlide_) {
+		NSRect viewFrame = [viewToSlide_ frame];
+		// Move the view the same direction we moved.
+		if (rightAnchored) {
+			viewFrame.origin.x -= finalDelta;
+		} else {
+			viewFrame.origin.x += finalDelta;
+		}
+		[viewToSlide_ setFrame:viewFrame];
+	}
+	if (viewToResize_) {
+		if ([viewToResize_ isKindOfClass:[NSWindow class]]) {
+			NSWindow *window = (NSWindow *)viewToResize_;
+			NSView *contentView = [window contentView];
+			NSRect windowFrame = [contentView convertRect:[window frame]
+												 fromView:nil];
+			windowFrame.size.width += finalDelta;
+			windowFrame = [contentView convertRect:windowFrame toView:nil];
+			[window setFrame:windowFrame display:YES];
+			// For some reason the content view is resizing, but not adjusting its
+			// origin, so correct it manually.
+			[contentView setFrameOrigin:NSMakePoint(0, 0)];
+			// TODO: should we update min size?
+		} else {
+			NSRect viewFrame = [viewToResize_ frame];
+			viewFrame.size.width += finalDelta;
+			[viewToResize_ setFrame:viewFrame];
+			// TODO: should we check if this view is right anchored, and adjust its
+			// x position also?
+		}
+	}
+	*/
+	widthChange_ = finalDelta;
+	return widthChange_;
+}
+
+
+
+
+
+
+
+
+
+
++ (void) _resizeView:(NSView *)view level:(NSUInteger)level;
+{
+	NSDictionary *rows = [self rowArrangeSubviews:view];
+	
+	[self logRows:rows];
+	
 	NSArray *sortedRanges = [[rows allKeys] sortedArrayUsingSelector:@selector(compareRangeLocation:)];
-	int i = 0;
+	CGFloat largestOffset = 0;
 	for (NSValue *rowValue in [sortedRanges reverseObjectEnumerator])
 	{
-		NSRange rowRange = [rowValue rangeValue];
 		NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
 		NSArray *sortedRowViews = [subviewsOnThisRow sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
-		NSMutableString *desc = [NSMutableString string];
-		for (NSView *rowView in sortedRowViews)
-		{
-			NSUInteger mask = [rowView autoresizingMask];
-			NSString *leftMargin	= (mask & NSViewMinXMargin)		? @"···"	: @"———";
-			NSString *leftWidth		= (mask & NSViewWidthSizable)	? @"<ɕɕ"	: @"<··";
-			NSString *rightWidth	= (mask & NSViewWidthSizable)	? @"ɕɕ>"	: @"··>";
-			NSString *rightMargin	= (mask & NSViewMaxXMargin)		? @"···"	: @"———";
-			
-			[desc appendString:leftMargin];
-			[desc appendString:leftWidth];
-			if ([rowView isKindOfClass:[NSTextField class]])
-			{
-				NSTextField *field = (NSTextField *)rowView;
-				NSString *stringValue = [field stringValue];
-				if ([field isEditable])
-				{
-					[desc appendFormat:@"[%@           ]",stringValue];
-				}
-				else if ([[stringValue condenseWhiteSpace] isEqualToString:@""])
-				{
-					[desc appendFormat:@"\"%@\"",stringValue];
-				}
-				else
-				{
-					[desc appendString:stringValue];
-				}
-			}
-			else if ([rowView isKindOfClass:[NSPopUpButton class]])
-			{
-				[desc appendFormat:@"{%@}", [((NSPopUpButton *)rowView) titleOfSelectedItem]];
-			}
-			else if ([rowView isKindOfClass:[NSButton class]])
-			{
-				[desc appendFormat:@"{%@}", [((NSButton *)rowView) title]];
-			}
-			else
-			{
-				[desc appendFormat:@"<%@>",[[rowView class] description]];
-			}
-			[desc appendString:rightWidth];
-			[desc appendString:rightMargin];
-			[desc appendString:@" "];
-		}
-		LogIt(@"%2d. [%3d-%-3d] %@", i++, rowRange.location, NSMaxRange(rowRange), desc);
+
+		CGFloat offset = [self tweakLayoutForView:view rowViews:sortedRowViews withOffset:NSZeroPoint];
+		NSLog(@"Offset for this row: %.2f", offset);
+		largestOffset = MAX(largestOffset,offset);		// pay attention to the largest amount we had to resize things
 	}
+	NSLog(@"Largest Offset for this whole view: %.2f", largestOffset);
 	
-	// Now resize the subviews...
+	//LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], [[view description] condenseWhiteSpace]);
+	level++;
 	
-	for (NSView *subView in subViews)
+	
+	// Now resize this row.  Use the Google methods as much as possible.
+	
+	
+	
+	if ([view isKindOfClass:[NSTabView class]])
 	{
-		[self _resizeView:subView level:level];
-		
-		
-		
+		NSArray *tabViewItems = [(NSTabView *)view tabViewItems];
+		for (NSTabViewItem *item in tabViewItems)		// resize tabviews instead of subviews
+		{
+			[self _resizeView:[item view] level:level];
+		}
 	}
-	
+	else
+	{
+		for (NSView *subview in [view subviews])
+		{
+			[self _resizeView:subview level:level];
+		}
+	}
 }
 
 //
@@ -698,8 +1002,8 @@
     } else { 
 #ifdef DEBUG
  //       NSLog(@"        Can't find translation for string %@", string);
-       // return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
-        return string;
+       return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
+       // return string;
 #else
         return string;
 #endif
