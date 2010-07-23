@@ -67,7 +67,16 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 	NSRect oldFrame = [view frame];		// keep track of original frame so we know how much it resized
 	NSRect fitFrame = oldFrame;			// only set differently when sizeToFit is called, so we know it was already called
 	NSRect newFrame = oldFrame;			// what we will be setting the frame to (if not already done)
-		
+
+	// Try to turn on some stuff that will help me see the new bounds
+	if ([view respondsToSelector:@selector(setBordered:)]) {
+		[((NSTextField *)view) setBordered:YES];
+	}
+	if ([view respondsToSelector:@selector(setDrawsBackground:)]) {
+		[((NSTextField *)view) setDrawsBackground:YES];
+	}
+	
+	
 	if ([view isKindOfClass:[NSTextField class]] &&
 		[(NSTextField *)view isEditable]) {
 		// Don't try to sizeToFit because edit fields really don't want to be sized
@@ -79,6 +88,8 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 		// happen to be listing at the moment.
 	} else if ([view isKindOfClass:[NSImageView class]]) {
 		// Definitely don't mess with size of an imageView
+	} else if ([view isKindOfClass:[NSBox class]]) {
+		// I don't think it's a good idea to let NSBox figure out its sizeToFit.
 	} else if ([view isKindOfClass:[NSPopUpButton class]]) {
 		// Popup buttons: Let's assume that we don't want to resize them.  Maybe later I can loop through strings
 		// to get a minimum width, though some popups are designed to already be less than longest string.
@@ -87,6 +98,7 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 	} else {
 		// Generically fire a sizeToFit if it has one.  e.g. NSTableColumn, NSProgressIndicator, (NSBox), NSMenuView, NSControl, NSTableView, NSText
 		if ([view respondsToSelector:@selector(sizeToFit)]) {
+			
 			[view performSelector:@selector(sizeToFit)];
 			fitFrame = [view frame];
 			newFrame = fitFrame;
@@ -141,6 +153,7 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 	BOOL stretchyView = 0 != (mask & NSViewWidthSizable);	// If stretchy view, DO NOT SHRINK.
 	if (stretchyView && (NSWidth(newFrame) < NSWidth(oldFrame)))
 	{
+		NSLog(@"Should we reset width of %@", view);
 		newFrame = oldFrame;		// go back to the old frame; reject the size change.
 	}
 	
@@ -370,12 +383,31 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 			}
 			else if ([topLevelObject isKindOfClass:[NSWindow class]])
 			{
-				
+				NSWindow *window = (NSWindow *)topLevelObject;
+			
 				// Here, I think, I probably want to do some sort of call to the NSWindow delegate to ask
 				// what width it would like to be for various languages, so I can make the inspector window wider for French/German.
 				// That would keep it generic here.
-				NSWindow *window = (NSWindow *)topLevelObject;
-				// [self _resizeView:[window contentView] level:0];
+				
+				// HACK for now to make the inspector window wider.
+				if ([fileName hasSuffix:@"KSInspector.nib"])
+				{
+					NSView *contentView = [window contentView];
+					NSRect windowFrame = [contentView convertRect:[window frame]
+														 fromView:nil];
+					windowFrame.size.width += 100;
+					windowFrame = [contentView convertRect:windowFrame toView:nil];
+					[window setFrame:windowFrame display:YES];	
+	
+					// For some reason the content view is resizing, but not adjusting its
+					// origin, so correct it manually.
+					[contentView setFrameOrigin:NSMakePoint(0, 0)];
+					// TODO: should we update min size?
+
+					// [self _resizeView:[window contentView] level:0];
+
+				}
+
 			}
 		}
         
@@ -717,7 +749,7 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 		NSArray *sortedRowViews = [subviewsOnThisRow sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
 
 		CGFloat offset = [self tweakLayoutForView:view rowViews:sortedRowViews withOffset:NSZeroPoint];
-		NSLog(@"Offset for this row: %.2f", offset);
+		// NSLog(@"Offset for this row: %.2f", offset);
 		largestOffset = MAX(largestOffset,offset);		// pay attention to the largest amount we had to resize things
 	}
 	NSLog(@"Largest Offset for this whole view: %.2f", largestOffset);
@@ -742,7 +774,7 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 	{
 		for (NSView *subview in [view subviews])
 		{
-//			[self _resizeView:subview level:level];
+			[self _resizeView:subview level:level];
 		}
 	}
 }

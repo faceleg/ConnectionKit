@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="171"/>
+			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -922,7 +922,7 @@
 										</object>
 										<object class="NSSlider" id="71765480">
 											<reference key="NSNextResponder" ref="865099582"/>
-											<int key="NSvFlags">268</int>
+											<int key="NSvFlags">270</int>
 											<string key="NSFrame">{{17, 152}, {170, 15}}</string>
 											<reference key="NSSuperview" ref="865099582"/>
 											<bool key="NSEnabled">YES</bool>
@@ -997,7 +997,7 @@
 										</object>
 										<object class="NSSlider" id="144525371">
 											<reference key="NSNextResponder" ref="865099582"/>
-											<int key="NSvFlags">268</int>
+											<int key="NSvFlags">266</int>
 											<string key="NSFrame">{{17, 21}, {210, 17}}</string>
 											<reference key="NSSuperview" ref="865099582"/>
 											<bool key="NSEnabled">YES</bool>
@@ -3390,7 +3390,7 @@
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{725, 255}, {230, 501}}</string>
+					<string>{{2468, 250}, {230, 501}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
