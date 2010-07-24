@@ -15,6 +15,8 @@
 #import "KTPage.h"
 #import "KTSite.h"
 
+#import "NSString+Karelia.h"
+
 
 @implementation SVSiteItem 
 
