@@ -366,14 +366,15 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Insertion
 
-- (DOMRange *)insertionRangeForPagelets
+- (DOMRange *)insertionRangeForGraphic:(SVGraphic *)graphic;
 {
     WEKWebEditorView *webEditor = [self webEditor];
     
-    // Figure out where to insert. Tweak a little when at the start of a paragraph. #81909
+    // Figure out where to insert
     DOMRange *result = [webEditor selectedDOMRange];
     if (result)
     {
+        // Tweak a little when at the start of a paragraph. #81909
         if ([result collapsed] &&
             [result startOffset] == 0 &&
             [[result startContainer] parentNode] == [self textHTMLElement])
@@ -383,8 +384,13 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     }
     else
     {
+        // Match the insertion's placement to the existing graphic. #82329
+        WEKWebEditorItem *selection = [webEditor selectedItem];
+        SVGraphic *selectedGraphic = [selection representedObject];
+        [[graphic textAttachment] setPlacement:[selectedGraphic placement]];
+        
         result = [[[self HTMLElement] ownerDocument] createRange];
-        [result setStartBefore:[[webEditor selectedItem] HTMLElement]];
+        [result setStartBefore:[selection HTMLElement]];
     }
     
     return result;
@@ -410,7 +416,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [controller setHTMLContext:[self HTMLContext]];
     
     
-    DOMRange *insertionRange = [self insertionRangeForPagelets];
+    DOMRange *insertionRange = [self insertionRangeForGraphic:graphic];
     if ([webEditor shouldChangeTextInDOMRange:insertionRange])
     {
         // Generate & insert DOM node
