@@ -29,7 +29,6 @@
 
 @implementation SVHTMLTemplateParser
 
-#pragma mark -
 #pragma mark Class Methods
 
 - (NSString *)calloutContainerTemplateHTML
@@ -48,7 +47,6 @@
 	return sCalloutContainerTemplateHTML;
 }
 
-#pragma mark -
 #pragma mark Init & Dealloc
 
 - (id)initWithPage:(KTPage *)page
@@ -128,6 +126,36 @@
 - (void)didParseTextBlock:(SVHTMLTextBlock *)textBlock { }
 
 #pragma mark Parsing
+
++ (SVHTMLTemplateParser *)currentTemplateParser;
+{
+    SVHTMLTemplateParser *result = [[[[NSThread currentThread] threadDictionary] objectForKey:@"SVHTMLTemplateParserStack"] lastObject];
+    return result;
+}
+
+- (BOOL)parseWithOutputWriter:(id <KSWriter>)stream;
+{
+    // Record us as the current template parser
+    NSMutableArray *stack = [[[NSThread currentThread] threadDictionary] objectForKey:@"SVHTMLTemplateParserStack"];
+    if (!stack)
+    {
+        stack = [NSMutableArray arrayWithCapacity:1];
+        [[[NSThread currentThread] threadDictionary] setObject:stack
+                                                        forKey:@"SVHTMLTemplateParserStack"];
+    }
+    [stack addObject:self];
+    
+    
+    // Do the parsing
+    BOOL result = [super parseWithOutputWriter:stream];
+    
+    
+    // Pop
+    [stack removeLastObject];
+    
+    
+    return result;
+}
 
 - (BOOL)parseIntoHTMLContext:(SVHTMLContext *)context;
 {
