@@ -1713,7 +1713,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             [event type] == NSOtherMouseDown)
         {
             DOMNode *node = [proposedRange startContainer];
-            if (nil != node && ![node enclosingContentEditableElement])
+            if (node && ![node enclosingContentEditableElement])
             {
                 if ([node nodeType] != DOM_TEXT_NODE)
                 {
@@ -1727,7 +1727,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 if (![view mouse:location inRect:textBox])
                 {
                     // There's no good text to select, so fall back to body
-                    range = [[self delegate] webEditor:self fallbackDOMRangeForNoSelection:event];
+                    range = [[self delegate] webEditor:self fallbackDOMRangeForNoSelection:proposedRange event:event];
                 }
             }
         }

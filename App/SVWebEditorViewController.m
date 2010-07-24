@@ -418,7 +418,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     {
         if ([webEditor ks_followsResponder:[[[self view] window] firstResponder]])
         {
-            DOMRange *range = [self webEditor:webEditor fallbackDOMRangeForNoSelection:nil];
+            DOMRange *range = [self webEditor:webEditor fallbackDOMRangeForNoSelection:nil event:nil];
             [webEditor setSelectedDOMRange:range affinity:0];
         }
     }
@@ -1128,12 +1128,30 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     }
 }
 
-- (DOMRange *)webEditor:(WEKWebEditorView *)sender fallbackDOMRangeForNoSelection:(NSEvent *)selectionEvent;
+- (DOMRange *)webEditor:(WEKWebEditorView *)sender
+fallbackDOMRangeForNoSelection:(DOMRange *)proposedRange
+                  event:(NSEvent *)selectionEvent;
 {
+    DOMRange *result = proposedRange;
+    
+    
+    // Did they click in the sidebar?
+    if (selectionEvent)
+    {
+        NSPoint location = [sender convertPointFromBase:[selectionEvent locationInWindow]];
+        NSDictionary *element = [[sender webView] elementAtPoint:location];
+        DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
+        
+        SVSidebarDOMController *sidebarController = [[[sender contentItem] hitTestDOMNode:node] sidebarDOMController];
+        if (sidebarController) return proposedRange;
+    }
+    
+    
+    // Figure out a good range in the article
     SVTextDOMController *item = (id)[self articleDOMController];
     DOMNode *articleNode = [item textHTMLElement];
     
-    DOMRange *result = [[articleNode ownerDocument] createRange];
+    result = [[articleNode ownerDocument] createRange];
     
     NSPoint location = [[articleNode documentView] convertPointFromBase:[selectionEvent locationInWindow]];
     if (selectionEvent && location.y < NSMidY([articleNode boundingBox]))
