@@ -13,6 +13,8 @@
 		27EF5CD60D6B9C7E0024575B /* NSData+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5CD40D6B9C7E0024575B /* NSData+QuickLook.m */; };
 		27EF5CDD0D6B9CF80024575B /* BDAlias+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5CDB0D6B9CF80024575B /* BDAlias+QuickLook.h */; };
 		27EF5CDE0D6B9CF80024575B /* BDAlias+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5CDC0D6B9CF80024575B /* BDAlias+QuickLook.m */; };
+		27F27C7A11FB4D9800B7F8FA /* KSForwardingWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F27C7811FB4D9800B7F8FA /* KSForwardingWriter.h */; };
+		27F27C7B11FB4D9800B7F8FA /* KSForwardingWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F27C7911FB4D9800B7F8FA /* KSForwardingWriter.m */; };
 		2C05A19C06CAA52B00D84F6F /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C05A19B06CAA52B00D84F6F /* GeneratePreviewForURL.m */; };
 		3CAC0AD211F3C31900A18E84 /* KSStringXMLEntityEscaping.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CAC0AD011F3C31900A18E84 /* KSStringXMLEntityEscaping.h */; };
 		3CAC0AD311F3C31900A18E84 /* KSStringXMLEntityEscaping.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CAC0AD111F3C31900A18E84 /* KSStringXMLEntityEscaping.m */; };
@@ -54,6 +56,8 @@
 		27EF5CD40D6B9C7E0024575B /* NSData+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+QuickLook.m"; sourceTree = "<group>"; };
 		27EF5CDB0D6B9CF80024575B /* BDAlias+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BDAlias+QuickLook.h"; sourceTree = SOURCE_ROOT; };
 		27EF5CDC0D6B9CF80024575B /* BDAlias+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BDAlias+QuickLook.m"; sourceTree = SOURCE_ROOT; };
+		27F27C7811FB4D9800B7F8FA /* KSForwardingWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSForwardingWriter.h; path = ../../../KSHTMLWriter/KSForwardingWriter.h; sourceTree = SOURCE_ROOT; };
+		27F27C7911FB4D9800B7F8FA /* KSForwardingWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSForwardingWriter.m; path = ../../../KSHTMLWriter/KSForwardingWriter.m; sourceTree = SOURCE_ROOT; };
 		2C05A19B06CAA52B00D84F6F /* GeneratePreviewForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratePreviewForURL.m; sourceTree = "<group>"; };
 		3CAC0AD011F3C31900A18E84 /* KSStringXMLEntityEscaping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSStringXMLEntityEscaping.h; path = ../../../KSHTMLWriter/KSStringXMLEntityEscaping.h; sourceTree = SOURCE_ROOT; };
 		3CAC0AD111F3C31900A18E84 /* KSStringXMLEntityEscaping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSStringXMLEntityEscaping.m; path = ../../../KSHTMLWriter/KSStringXMLEntityEscaping.m; sourceTree = SOURCE_ROOT; };
@@ -141,6 +145,8 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				27F27C7811FB4D9800B7F8FA /* KSForwardingWriter.h */,
+				27F27C7911FB4D9800B7F8FA /* KSForwardingWriter.m */,
 				3CAC0AE411F3C41F00A18E84 /* assertions.h */,
 				3CAC0AE511F3C41F00A18E84 /* assertions.m */,
 				3CAC0AE611F3C41F00A18E84 /* Debug.h */,
@@ -205,6 +211,7 @@
 				3CAC0AE911F3C41F00A18E84 /* assertions.h in Headers */,
 				3CAC0AEB11F3C41F00A18E84 /* Debug.h in Headers */,
 				3CAC0AED11F3C41F00A18E84 /* Macros.h in Headers */,
+				27F27C7A11FB4D9800B7F8FA /* KSForwardingWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +296,7 @@
 				3CAC0AE111F3C3CE00A18E84 /* KSXMLWriter.m in Sources */,
 				3CAC0AEA11F3C41F00A18E84 /* assertions.m in Sources */,
 				3CAC0AEC11F3C41F00A18E84 /* Debug.m in Sources */,
+				27F27C7B11FB4D9800B7F8FA /* KSForwardingWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
