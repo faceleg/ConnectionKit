@@ -81,7 +81,7 @@
 - (void)endElements:(SVHTMLContext *)context;
 
 - (BOOL)generateSpanIn;
-- (NSString *)processHTML:(NSString *)originalHTML;
+- (NSString *)processHTML:(NSString *)originalHTML context:(SVHTMLContext *)context;
 
 
 #pragma mark DOM Controller

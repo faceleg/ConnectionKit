@@ -342,7 +342,7 @@
     }
     else
     {
-        result = [self processHTML:result];
+        result = [self processHTML:result context:context];
         if (result) [context writeHTMLString:result];
     }
 }
@@ -434,7 +434,7 @@
 
 /*!	Given the page text, scan for all page ID references and convert to the proper relative links.
  */
-- (NSString *)fixPageLinksFromString:(NSString *)originalString
+- (NSString *)fixPageLinksFromString:(NSString *)originalString context:(SVHTMLContext *)context;
 {
 	NSMutableString *buffer = [NSMutableString string];
 	if (originalString)
@@ -459,7 +459,7 @@
 						NSString *newPath = nil;
 						if (thePage)
 						{
-							newPath = [[thePage URL] stringRelativeToURL:[[SVHTMLContext currentContext] baseURL]];
+							newPath = [context relativeURLStringOfPage:thePage];
 						}
 						
 						if (!newPath) newPath = @"#";	// Fallback
@@ -481,13 +481,13 @@
 
 /*  Support method that takes a block of HTML and applies to it anything special the receiver and the parser require
  */
-- (NSString *)processHTML:(NSString *)result
+- (NSString *)processHTML:(NSString *)result context:(SVHTMLContext *)context;
 {
     // Perform additional processing of the text according to HTML generation purpose
-	if (![[SVHTMLContext currentContext] isForEditing])
+	if (![context isForEditing])
 	{
 		// Fix page links
-		result = [self fixPageLinksFromString:result];
+		result = [self fixPageLinksFromString:result context:context];
 	}
     
     
