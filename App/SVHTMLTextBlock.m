@@ -100,7 +100,7 @@
 
 @synthesize customCSSClassName = _className;
 
-- (NSString *)CSSClassName;
+- (NSString *)CSSClassName:(SVHTMLContext *)context;
 {
     NSMutableArray *classNames = [[NSMutableArray alloc] init];
     
@@ -115,7 +115,7 @@
     // Editing
     if ([self isEditable])
     {
-        if ([[SVHTMLContext currentContext] isForEditing])
+        if ([context isForEditing])
         { 
             [classNames addObject:([self isRichText] ? @"kBlock" : @"kLine")];
         }
@@ -362,9 +362,10 @@
     BOOL generateSpanIn = [self generateSpanIn];
 	// if (!generateSpanIn)	// Actually we want a custom class to show up even items with a span-in. 
 	{
-		if (![[self CSSClassName] isEqualToString:@""])
+        NSString *className = [self CSSClassName:context];
+		if (![className isEqualToString:@""])
 		{
-			[context writeAttribute:@"class" value:[self CSSClassName]];
+			[context writeAttribute:@"class" value:className];
 		}
 	}
 	

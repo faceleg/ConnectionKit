@@ -57,7 +57,6 @@
 
 @property(nonatomic, copy) NSString *tagName;
 @property(nonatomic, copy) NSString *customCSSClassName;
-- (NSString *)CSSClassName;
 
 
 @property(nonatomic, copy) NSString *hyperlinkString;
