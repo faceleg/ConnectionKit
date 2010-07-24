@@ -114,7 +114,7 @@
 
 - (BOOL)isPagelet;
 {
-    // Images are no longer pages once you turn off all additional stuff like title & caption
+    // Images are no longer pagelets once you turn off all additional stuff like title & caption
     if ([[self placement] intValue] == SVGraphicPlacementInline &&
         ![self showsTitle] &&
         ![self showsIntroduction] &&
