@@ -153,7 +153,6 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 	BOOL stretchyView = 0 != (mask & NSViewWidthSizable);	// If stretchy view, DO NOT SHRINK.
 	if (stretchyView && (NSWidth(newFrame) < NSWidth(oldFrame)))
 	{
-		NSLog(@"Should we reset width of %@", view);
 		newFrame = oldFrame;		// go back to the old frame; reject the size change.
 	}
 	
@@ -399,12 +398,9 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 					windowFrame = [contentView convertRect:windowFrame toView:nil];
 					[window setFrame:windowFrame display:YES];	
 	
-					// For some reason the content view is resizing, but not adjusting its
-					// origin, so correct it manually.
-					[contentView setFrameOrigin:NSMakePoint(0, 0)];
 					// TODO: should we update min size?
 
-					// [self _resizeView:[window contentView] level:0];
+					[self _resizeView:[window contentView] level:0];
 
 				}
 
@@ -525,15 +521,32 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 			{
 				selTitle = [pop itemTitleAtIndex:0];
 			}
+			if (!selTitle || [selTitle isEqualToString:@""])
+			{
+				selTitle = @"NSPopUpButton";
+			}
+			
 			[desc appendFormat:@"{%@}", selTitle];
 		}
 		else if ([rowView isKindOfClass:[NSButton class]])
 		{
-			[desc appendFormat:@"{%@}", [((NSButton *)rowView) title]];
+			NSButton *button = (NSButton *)rowView;
+			NSString *title = [button title];
+
+			if (!title || [title isEqualToString:@""])
+			{
+				title = @"NSButton";
+			}
+			[desc appendFormat:@"{%@}", title];
+		}
+		else if ([rowView isKindOfClass:[NSSlider class]])
+		{
+			[desc appendString:@"=======O======="];
 		}
 		else
 		{
-			[desc appendFormat:@"<%@>",[[rowView class] description]];
+			//[desc appendFormat:@"<%@>",[[rowView class] description]];
+			[desc appendString:[rowView description]];
 		}
 		[desc appendString:rightWidth];
 		[desc appendString:rightMargin];
@@ -604,10 +617,10 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 }
 
 
-+ (CGFloat)tweakLayoutForView:(NSView *)encView rowViews:(NSArray *)rowViews withOffset:(NSPoint)offset
++ (CGFloat)tweakLayoutForView:(NSView *)encView rowViews:(NSArray *)rowViews withOffset:(NSPoint)offset level:(NSUInteger)level;
 {
 	NSString *desc = [self descViewsInRow:rowViews];
-	LogIt(@"%@", desc);
+	LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], desc);
 	
 	CGFloat widthChange_ = 0.0;
 	
@@ -646,27 +659,6 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 		}
 	}
 	
-	// Are we pinned to the right of our parent?
-	BOOL rightAnchored = IsRightAnchored(encView);
-	
-	// Adjust our size (turn off auto resize, because we just fixed up all the
-	// objects within us).
-	BOOL autoresizesSubviews = [encView autoresizesSubviews];
-	if (autoresizesSubviews) {
-		[encView setAutoresizesSubviews:NO];
-	}
-	NSRect selfFrame = [encView frame];
-	selfFrame.size.width += finalDelta;
-	if (rightAnchored) {
-		// Right side is anchored, so we need to slide back to the left.
-		selfFrame.origin.x -= finalDelta;
-	}
-	selfFrame.origin.x += offset.x;
-	selfFrame.origin.y += offset.y;
-	[encView setFrame:selfFrame];
-	if (autoresizesSubviews) {
-		[encView setAutoresizesSubviews:autoresizesSubviews];
-	}
 	
 	// Now spin over the list of right aligned view and their size changes
 	// fixing up their positions so they are still right aligned in our final
@@ -737,45 +729,74 @@ static NSSize SizeToFit(NSView *view, NSPoint offset) {
 
 + (void) _resizeView:(NSView *)view level:(NSUInteger)level;
 {
-	NSDictionary *rows = [self rowArrangeSubviews:view];
-	
-	[self logRows:rows];
-	
-	NSArray *sortedRanges = [[rows allKeys] sortedArrayUsingSelector:@selector(compareRangeLocation:)];
-	CGFloat largestOffset = 0;
-	for (NSValue *rowValue in [sortedRanges reverseObjectEnumerator])
+	if ([[view subviews] count])
 	{
-		NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
-		NSArray *sortedRowViews = [subviewsOnThisRow sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
+		// First handle the sub-views, so we are going OUT
+		if ([view isKindOfClass:[NSTabView class]])
+		{
+			NSArray *tabViewItems = [(NSTabView *)view tabViewItems];
+			for (NSTabViewItem *item in tabViewItems)		// resize tabviews instead of subviews
+			{
+				[self _resizeView:[item view] level:level+1];
+			}
+		}
+		else
+		{
+			for (NSView *subview in [view subviews])
+			{
+				[self _resizeView:subview level:level+1];
+			}
+		}
 
-		CGFloat offset = [self tweakLayoutForView:view rowViews:sortedRowViews withOffset:NSZeroPoint];
-		// NSLog(@"Offset for this row: %.2f", offset);
-		largestOffset = MAX(largestOffset,offset);		// pay attention to the largest amount we had to resize things
-	}
-	NSLog(@"Largest Offset for this whole view: %.2f", largestOffset);
-	
-	//LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], [[view description] condenseWhiteSpace]);
-	level++;
-	
-	
-	// Now resize this row.  Use the Google methods as much as possible.
-	
-	
-	
-	if ([view isKindOfClass:[NSTabView class]])
-	{
-		NSArray *tabViewItems = [(NSTabView *)view tabViewItems];
-		for (NSTabViewItem *item in tabViewItems)		// resize tabviews instead of subviews
+		
+		
+		NSDictionary *rows = [self rowArrangeSubviews:view];
+		
+		//	[self logRows:rows];
+		
+		NSArray *sortedRanges = [[rows allKeys] sortedArrayUsingSelector:@selector(compareRangeLocation:)];
+		CGFloat largestDelta = 0;
+		for (NSValue *rowValue in [sortedRanges reverseObjectEnumerator])
 		{
-			[self _resizeView:[item view] level:level];
+			NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
+			NSArray *sortedRowViews = [subviewsOnThisRow sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
+			
+			CGFloat delta = [self tweakLayoutForView:view rowViews:sortedRowViews withOffset:NSZeroPoint level:level];
+			// NSLog(@"Offset for this row: %.2f", offset);
+			largestDelta = MAX(largestDelta,delta);		// pay attention to the largest amount we had to resize things
 		}
-	}
-	else
-	{
-		for (NSView *subview in [view subviews])
+		
+		if (largestDelta)
 		{
-			[self _resizeView:subview level:level];
+			LogIt(@"%@%@ Largest Offset for this whole view: %.2f", [@"                                                            " substringToIndex:2*level], view, largestDelta);
+
+			// Are we pinned to the right of our parent?
+			BOOL rightAnchored = IsRightAnchored(view);
+			
+			// Adjust our size (turn off auto resize, because we just fixed up all the
+			// objects within us).
+			BOOL autoresizesSubviews = [view autoresizesSubviews];
+			if (autoresizesSubviews) {
+				[view setAutoresizesSubviews:NO];
+			}
+			NSRect selfFrame = [view frame];
+			selfFrame.size.width += largestDelta;
+			if (rightAnchored) {
+				// Right side is anchored, so we need to slide back to the left.
+				selfFrame.origin.x -= largestDelta;
+			}
+			//	selfFrame.origin.x += offset.x;
+			//	selfFrame.origin.y += offset.y;
+			[view setFrame:selfFrame];
+			if (autoresizesSubviews) {
+				[view setAutoresizesSubviews:autoresizesSubviews];
+			}
 		}
+		
+		
+		//LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], [[view description] condenseWhiteSpace]);
+		
+		
 	}
 }
 
