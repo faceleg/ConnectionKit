@@ -21,6 +21,8 @@
 #import "NSScanner+Karelia.h"
 #import "NSURL+Karelia.h"
 
+#import "KSStringXMLEntityEscaping.h"
+
 #import "Debug.h"
 
 
