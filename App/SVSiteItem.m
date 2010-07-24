@@ -283,9 +283,8 @@
 // Subclasses will do something useful
 - (void)publish:(id <SVPublisher>)publishingEngine recursively:(BOOL)recursive; { }
 
-- (void)writeContentRecursively:(BOOL)recursive;
+- (void)writeContent:(SVHTMLContext *)context recursively:(BOOL)recursive;
 {
-    SVHTMLContext *context = [SVHTMLContext currentContext];
 	if ([self title])
 	{
 		[context writeText:[self title]];

@@ -869,7 +869,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     // Page contents
-    [[[self site] rootPage] writeContentRecursively:YES];
+    [[[self site] rootPage] writeContent:context recursively:YES];
     
     
     // Tidy up

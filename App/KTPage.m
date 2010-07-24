@@ -296,11 +296,10 @@
 
 @dynamic article;
 
-- (void)writeContentRecursively:(BOOL)recursive
+- (void)writeContent:(SVHTMLContext *)context recursively:(BOOL)recursive;
 {
-    [super writeContentRecursively:recursive];
+    [super writeContent:context recursively:recursive];
     
-    SVHTMLContext *context = [SVHTMLContext currentContext];
     
     // Custom window title if specified
     NSString *windowTitle = [self windowTitle];
@@ -326,7 +325,7 @@
     {
         for (SVSiteItem *anItem in [self sortedChildren])
         {
-            [anItem writeContentRecursively:recursive];
+            [anItem writeContent:context recursively:recursive];
         }
     }
 }
