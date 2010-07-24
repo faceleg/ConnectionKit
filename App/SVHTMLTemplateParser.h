@@ -30,6 +30,10 @@
 
 
 @interface SVHTMLTemplateParser : SVTemplateParser
+{
+  @private
+    SVHTMLContext   *_context;  // weak, temporary ref
+}
 
 - (id)initWithPage:(KTPage *)page;	// Convenience method that parses the whole page
 
@@ -40,19 +44,21 @@
 
 //  Convenience method to do parsing while pushing and popping a context on the stack
 - (BOOL)parseIntoHTMLContext:(SVHTMLContext *)context;
+@property(nonatomic, readonly) SVHTMLContext *HTMLContext;
 
 // Convenience method that grabs the current HTML context and parses into that
 - (BOOL)parse;
 
 
-// Functions
+#pragma mark Functions
 - (NSString *)pathToObject:(id)anObject;
 
 
-// Prebuilt templates
+#pragma mark Prebuilt templates
 - (NSString *)calloutContainerTemplateHTML;
 
 - (NSString *)targetStringForPage:(id) aDestPage;
+
 
 @end
 

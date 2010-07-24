@@ -159,11 +159,18 @@
 
 - (BOOL)parseIntoHTMLContext:(SVHTMLContext *)context;
 {
+    _context = context;
     [context push];
+    
     BOOL result = [self parseWithOutputWriter:context];
+    
     [context pop];
+    _context = nil;
+    
     return result;
 }
+
+@synthesize HTMLContext = _context;
 
 - (BOOL)parse;
 {
