@@ -416,10 +416,11 @@
 
 #pragma mark Site Menu
 
-- (void)outputMenuForSiteMenuItems:(NSArray *)anArray treeLevel:(int)aTreeLevel
+- (void)writeMenu:(SVHTMLContext *)context
+ forSiteMenuItems:(NSArray *)anArray
+        treeLevel:(int)aTreeLevel
 {
-	SVHTMLContext *context = [SVHTMLContext currentContext];
-	KTPage *currentParserPage = [[SVHTMLContext currentContext] page];
+	KTPage *currentParserPage = [context page];
 	
 	NSString *className = nil;
 	className = [NSString stringWithFormat:@"dd%d", aTreeLevel];
@@ -482,7 +483,7 @@
 		
 		if ([children count])
 		{
-			[self outputMenuForSiteMenuItems:children treeLevel:aTreeLevel+1];
+			[self writeMenu:context forSiteMenuItems:children treeLevel:aTreeLevel+1];
 			[context endElement];	// li
         }
 		else
@@ -559,6 +560,7 @@
 	if (self.site.pagesInSiteMenu.count)	// Are there any pages in the site menu?
 	{
 		SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+        
 		[context startNewline];
 		[context startElement:@"div" idName:@"sitemenu" className:nil];			// <div id="sitemenu">
 		[context startElement:@"h2" idName:nil className:@"hidden"];				// hidden skip navigation menu
@@ -587,7 +589,7 @@
 				KSSiteMenuItem *item = [[[KSSiteMenuItem alloc] initWithPage:siteMenuPage] autorelease];
 				[forest addObject:item];
 			}
-			[self outputMenuForSiteMenuItems:forest treeLevel:0];
+			[self writeMenu:context forSiteMenuItems:forest treeLevel:0];
 		}
 		else	// hierarchical menu
 		{
@@ -661,7 +663,7 @@
 					[forest addObject:item];		// Add to our list of top-level menus
 				}
 			}	// end for
-			[self outputMenuForSiteMenuItems:forest treeLevel:0];
+			[self writeMenu:context forSiteMenuItems:forest treeLevel:0];
 		}
 		
 		
