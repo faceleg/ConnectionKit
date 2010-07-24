@@ -856,7 +856,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     // Use an HTML context for reading in content
     SVTextContentHTMLContext *context = [[SVTextContentHTMLContext alloc] initWithOutputWriter:result];
-    [context push];
     
     
     // Sidebar pagelets
@@ -870,11 +869,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     // Page contents
     [[[self site] rootPage] writeContent:context recursively:YES];
-    
-    
-    // Tidy up
-    [context pop];
     [context release];
+    
     
     return result;
 }

@@ -136,11 +136,9 @@
     // Only generate the block if there is text to use
     // HACK: Don't want to report anything to the context while checking this, so pop on a fake context
     SVHTMLContext *fakeContext = [[SVHTMLContext alloc] initWithOutputWriter:nil inheritFromContext:[self HTMLContext]];
-    [fakeContext push];
 	if (YES)
     {
         // Inform delegate
-        [fakeContext pop];  // pop early so -didParseTextBlock: goes to the original context
         [self didParseTextBlock:result];
     }
     else
@@ -148,7 +146,6 @@
         result = nil;
     }
     
-    [fakeContext pop];
     [fakeContext release];
     
     

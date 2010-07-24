@@ -208,19 +208,3 @@ typedef enum {
  *  END VERY IMPORANT MESSAGE
  */
 
-
-#pragma mark -
-
-
-@interface SVHTMLContext (CurrentContext)
-
-+ (SVHTMLContext *)currentContext;
-+ (void)pushContext:(SVHTMLContext *)context;
-+ (void)popContext;
-
-// Convenience methods for pushing and popping that will just do the right thing when the receiver is nil
-- (void)push;
-- (void)pop;    // only pops if receiver is the current context
-
-@end
-
