@@ -8,7 +8,7 @@
 
 #import "KTHTMLParserMasterCache.h"
 
-#import "SVTemplateParser.h"
+#import "SVHTMLTemplateParser.h"
 #import "SVHTMLContext.h"
 
 
@@ -161,7 +161,8 @@
 - (void)registerRequestedKeyPath:(NSString *)keyPath forObject:(NSObject *)object
 {
 	// Alert the context
-	[[SVHTMLContext currentContext] addDependencyOnObject:object keyPath:keyPath];
+	[[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]
+     addDependencyOnObject:object keyPath:keyPath];
 }
 
 @end

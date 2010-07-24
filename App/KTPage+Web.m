@@ -163,7 +163,7 @@
 
 - (void)writeMainContent
 {
-    SVHTMLContext *context = [SVHTMLContext currentContext];
+    SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
     
     SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[[self class] pageMainContentTemplate]
                                                                         component:[context page]];
@@ -186,18 +186,25 @@
 			);
 }
 
-- (void)writeCodeInjectionSection:(NSString *)aKey masterFirst:(BOOL)aMasterFirst;
+- (void)write:(SVHTMLContext *)context codeInjectionSection:(NSString *)aKey masterFirst:(BOOL)aMasterFirst;
 {
-	SVHTMLContext *context = [SVHTMLContext currentContext];
+    OBPRECONDITION(context);
+    
     if ([self canWriteCodeInjection:context])
 	{
         NSString *masterCode = [[[self master] codeInjection] valueForKey:aKey];
 		NSString *pageCode = [[self codeInjection] valueForKey:aKey];
-
+        
 		if (masterCode && aMasterFirst)		{	[context startNewline]; [context writeString:masterCode];	}
         if (pageCode)						{	[context startNewline]; [context writeString:pageCode];		}
 		if (masterCode && !aMasterFirst)	{	[context startNewline]; [context writeString:masterCode];	}
     }
+}
+
+- (void)writeCodeInjectionSection:(NSString *)aKey masterFirst:(BOOL)aMasterFirst;
+{
+	SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+    [self write:context codeInjectionSection:aKey masterFirst:aMasterFirst];
 }
 
 // Note: For the paired code injection points -- the start and end of the head, and the body -- we flip around
@@ -212,7 +219,7 @@
 // Special case: Show a space in between the two; no newlines.
 - (void)writeCodeInjectionBodyTag
 {
-	SVHTMLContext *context = [SVHTMLContext currentContext];
+	SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
     if ([self canWriteCodeInjection:context])
     {
         NSString *masterCode = [[[self master] codeInjection] valueForKey:@"bodyTag"];
@@ -232,7 +239,7 @@
  */
 - (void)writeStylesheetLinks
 {
-    SVHTMLContext *context = [SVHTMLContext currentContext];
+    SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
     NSString *path = nil;
     
     // Write link to main.CSS file -- the most specific
@@ -492,7 +499,7 @@
 	HierMenuType hierMenuType = [[[self master] design] hierMenuType];
 	if (HIER_MENU_NONE != hierMenuType)
 	{
-		SVHTMLContext *context = [SVHTMLContext currentContext];
+		SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
 		
 		NSURL *ddsmoothmenu = [NSURL fileURLWithPath:[[NSBundle mainBundle]
 														pathForResource:@"ddsmoothmenu"
@@ -551,7 +558,7 @@
 {
 	if (self.site.pagesInSiteMenu.count)	// Are there any pages in the site menu?
 	{
-		SVHTMLContext *context = [SVHTMLContext currentContext];
+		SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
 		[context startNewline];
 		[context startElement:@"div" idName:@"sitemenu" className:nil];			// <div id="sitemenu">
 		[context startElement:@"h2" idName:nil className:@"hidden"];				// hidden skip navigation menu

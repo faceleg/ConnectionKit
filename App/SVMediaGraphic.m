@@ -8,6 +8,7 @@
 
 #import "SVMediaGraphic.h"
 
+#import "SVHTMLTemplateParser.h"
 #import "SVMediaRecord.h"
 #import "SVWebEditorHTMLContext.h"
 
@@ -67,7 +68,7 @@
     {
         result = [media fileURL];
         if (!result) result = [[media URLResponse] URL];
-        [[SVHTMLContext currentContext] addMedia:media];
+        [[[SVHTMLTemplateParser currentTemplateParser] HTMLContext] addMedia:media];
     }
     else
     {
@@ -85,7 +86,7 @@
 - (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
 {    
     SVMediaRecord *media = [self media];
-    if (media) [[SVHTMLContext currentContext] addMedia:media];
+    if (media) [[[SVHTMLTemplateParser currentTemplateParser] HTMLContext] addMedia:media];
     
     NSURL *result = [self sourceURL];
     return result;

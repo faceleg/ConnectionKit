@@ -10,7 +10,7 @@
 
 #import "SVArticle.h"
 #import "SVAuxiliaryPageletText.h"
-#import "SVHTMLContext.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 #import "SVRichText.h"
 #import "SVTemplate.h"
@@ -261,7 +261,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 }
 
 // For the benefit of pagelet HTML template
-- (void)writeBody { [self writeBody:[SVHTMLContext currentContext]]; }
+- (void)writeBody { [self writeBody:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
 
 + (SVTemplate *)template;
 {
@@ -278,7 +278,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (void)writeHTML;
 {
-    [[SVHTMLContext currentContext] writeGraphic:self];
+    [[[SVHTMLTemplateParser currentTemplateParser] HTMLContext] writeGraphic:self];
 }
 
 #pragma mark Thumbnail

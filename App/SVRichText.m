@@ -11,7 +11,7 @@
 #import "SVTextAttachment.h"
 #import "SVGraphic.h"
 #import "SVRichTextDOMController.h"
-#import "SVHTMLContext.h"
+#import "SVHTMLTemplateParser.h"
 
 #import "NSArray+Karelia.h"
 #import "NSError+Karelia.h"
@@ -222,7 +222,7 @@
     [context writeString:[archive substringFromIndex:archiveIndex]];
 }
 
-- (void)writeText; { [self writeText:[SVHTMLContext currentContext]]; }
+- (void)writeText; { [self writeText:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
 
 #pragma mark Validation
 

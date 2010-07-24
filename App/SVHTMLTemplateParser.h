@@ -23,7 +23,7 @@
 #import "SVHTMLContext.h"
 
 
-@class KTDocument, KTHTMLParserMasterCache, SVHTMLContext, KTMediaFileUpload, SVHTMLTextBlock;
+@class KTDocument, KTHTMLParserMasterCache, KTMediaFileUpload, SVHTMLTextBlock;
 @class KTPage;
 @class KTMediaContainer;
 @protocol SVHTMLTemplateParserDelegate, SVMedia;
@@ -44,6 +44,7 @@
 //  Convenience method to do parsing while pushing and popping a context on the stack
 - (BOOL)parseIntoHTMLContext:(SVHTMLContext *)context;
 @property(nonatomic, readonly) SVHTMLContext *HTMLContext;
++ (SVHTMLTemplateParser *)currentTemplateParser;
 
 
 #pragma mark Functions

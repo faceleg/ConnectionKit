@@ -180,7 +180,7 @@
     
     
     // First Code Injection
-	[page writeCodeInjectionBeforeHTML];
+	[page write:self codeInjectionSection:@"beforeHTML" masterFirst:NO];
     
     
     // Start the document

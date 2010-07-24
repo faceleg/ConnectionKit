@@ -10,6 +10,7 @@
 
 #import "SVGraphic.h"
 #import "SVWebEditorHTMLContext.h"
+#import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
 #import "KTPage.h"
 #import "SVProxyHTMLContext.h"
@@ -142,7 +143,7 @@
 
 - (void)writeEarlyCallouts;
 {
-    [self writeEarlyCallouts:[SVHTMLContext currentContext]];
+    [self writeEarlyCallouts:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]];
 }
 
 - (void)writeText:(SVHTMLContext *)context range:(NSRange)range;
@@ -158,7 +159,7 @@
 
 - (void)writeRSSFeedItemDescription;
 {
-    SVHTMLContext *feedContext = [SVHTMLContext currentContext];
+    SVHTMLContext *feedContext = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
     
     KSEscapedXMLEntitiesWriter *writer = [[KSEscapedXMLEntitiesWriter alloc]
                                           initWithOutputXMLWriter:feedContext];

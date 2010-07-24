@@ -11,6 +11,7 @@
 #import "KT.h"
 #import "SVApplicationController.h"
 #import "KTHostProperties.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 
 #import "NSApplication+Karelia.h"
@@ -20,7 +21,7 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
-#import "SVHTMLContext.h"
+
 
 @interface KTSite ()
 - (NSArray *)_pagesInSiteMenu;
@@ -340,7 +341,7 @@
 #define JQUERY_VERSION @"1.4.2"
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	SVHTMLContext *context = [SVHTMLContext currentContext];
+	SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
 	NSURL *jQueryURL = nil;
 	NSString *minimizationSuffix = @".min";
 	NSURL *siteURL = [self.hostProperties siteURL];

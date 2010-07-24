@@ -9,7 +9,7 @@
 #import "SVContentObject.h"
 
 #import "SVDOMController.h"
-#import "SVHTMLContext.h"
+#import "SVHTMLTemplateParser.h"
 #import "SVBlogSummaryDOMController.h"
 
 
@@ -22,7 +22,7 @@
     [context writeHTMLString:[self HTMLString]];
 }
 
-- (void)writeHTML; { [self writeHTML:[SVHTMLContext currentContext]]; }
+- (void)writeHTML; { [self writeHTML:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
 
 #pragma mark Inspection
 

@@ -146,6 +146,9 @@ typedef enum {
 @end
 
 
+#pragma mark -
+
+
 @interface KTPage (Indexes)
 // Simple Accessors
 - (KTCollectionSummaryType)collectionSummaryType;
@@ -192,6 +195,9 @@ typedef enum {
 @end
 
 
+#pragma mark -
+
+
 @interface KTPage (Web)
 
 - (NSString *)markupString;   // HTML for publishing/viewing. Calls -writeDocumentWithPage: on a temp context
@@ -200,6 +206,8 @@ typedef enum {
 
 - (NSString *)javascriptURLPath;
 - (NSString *)comboTitleText;
+
+- (void)write:(SVHTMLContext *)context codeInjectionSection:(NSString *)aKey masterFirst:(BOOL)aMasterFirst;
 
 + (NSString *)stringFromDocType:(KTDocType)docType local:(BOOL)isLocal;		// UTILITY
 

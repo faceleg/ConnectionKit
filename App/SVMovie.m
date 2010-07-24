@@ -25,7 +25,7 @@
 
 - (void)writeBody:(SVHTMLContext *)context;
 {
-    [[SVHTMLContext currentContext] writeHTMLString:@"<p>[[MAKE ME WRITE SOME HTML!]]</p>"];
+    [context writeHTMLString:@"<p>[[MAKE ME WRITE SOME HTML!]]</p>"];
 }
 
 @end

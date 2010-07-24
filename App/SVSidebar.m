@@ -53,7 +53,7 @@
     }
 }
 
-- (void)writeHTML; { [self writeHTML:[SVHTMLContext currentContext]]; }
+- (void)writeHTML; { [self writeHTML:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
 
 - (void)writePageletsHTML:(SVHTMLContext *)context;
 {
@@ -74,7 +74,7 @@
 
 - (void)writePageletsHTML;
 {
-    [self writePageletsHTML:[SVHTMLContext currentContext]];
+    [self writePageletsHTML:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]];
 }
 
 - (NSString *)elementIdName; { return @"sidebar-container"; }
