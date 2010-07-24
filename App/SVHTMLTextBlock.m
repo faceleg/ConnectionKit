@@ -127,7 +127,7 @@
     
     
     // Graphical text
-    if ([self graphicalTextPreviewStyle]) [classNames addObject:@"replaced"];
+    if ([self graphicalTextPreviewStyle:context]) [classNames addObject:@"replaced"];
     
     
     // Turn into a single string
@@ -209,7 +209,7 @@
 	myGraphicalTextCode = code;
 }
 
-- (NSURL *)graphicalTextImageURL;
+- (NSURL *)graphicalTextImageURL:(SVHTMLContext *)context;
 {
     NSURL *result = nil;
 	
@@ -217,22 +217,20 @@
     NSString *graphicalTextCode = [self graphicalTextCode];
     if (graphicalTextCode)
     {    
-        KTPage *page = [[SVHTMLContext currentContext] page];
+        KTPage *page = [context page];
         KTMaster *master = [page master];
-        if ([[master enableImageReplacement] boolValue])
+        KTDesign *design = [master design];
+        
+        NSDictionary *graphicalTextSettings = [[design imageReplacementTags] objectForKey:graphicalTextCode];
+        
+        if (graphicalTextSettings)
         {
-            KTDesign *design = [master design];
-            NSDictionary *graphicalTextSettings = [[design imageReplacementTags] objectForKey:graphicalTextCode];
+            NSURL *composition = [design URLForCompositionForImageReplacementCode:graphicalTextCode];
+            NSString *string = [(SVTitleBox *)HTML_VALUE text];
             
-            if (graphicalTextSettings)
-            {
-                NSURL *composition = [design URLForCompositionForImageReplacementCode:graphicalTextCode];
-                NSString *string = [(SVTitleBox *)HTML_VALUE text];
-                
-                result = [NSURL imageReplacementURLWithRendererURL:composition
-                                                            string:string
-                                                              size:[master graphicalTitleSize]];
-            }
+            result = [NSURL imageReplacementURLWithRendererURL:composition
+                                                        string:string
+                                                          size:[master graphicalTitleSize]];
         }
     }
     
@@ -265,31 +263,34 @@
 
 /*	Returns nil if there is no graphical text in use
  */
-- (NSString *)graphicalTextPreviewStyle
+- (NSString *)graphicalTextPreviewStyle:(SVHTMLContext *)context;
 {
 	NSString *result = nil;
 	
 	    
-    NSURL *url = [self graphicalTextImageURL];
-    if (url)
+    if ([[[[context page] master] enableImageReplacement] boolValue])
     {
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:NULL error:NULL];
-        if (data)
+        NSURL *url = [self graphicalTextImageURL:context];
+        if (url)
         {
-            CIImage *image = [[CIImage alloc] initWithData:data];
-            if (image)
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:NULL error:NULL];
+            if (data)
             {
-                unsigned int width = [image extent].size.width;
-                unsigned int height = [image extent].size.height;
-                
-                result = [NSString stringWithFormat:
-                          @"text-align:left; text-indent:-9999px; background:url(%@) top left no-repeat; width:%upx; height:%upx;",
-                          [url absoluteString],
-                          width,
-                          height];
-                
-                [image release];
+                CIImage *image = [[CIImage alloc] initWithData:data];
+                if (image)
+                {
+                    unsigned int width = [image extent].size.width;
+                    unsigned int height = [image extent].size.height;
+                    
+                    result = [NSString stringWithFormat:
+                              @"text-align:left; text-indent:-9999px; background:url(%@) top left no-repeat; width:%upx; height:%upx;",
+                              [url absoluteString],
+                              width,
+                              height];
+                    
+                    [image release];
+                }
             }
         }
     }
@@ -373,7 +374,7 @@
 	// Add in graphical text styling if there is any
 	if ([context includeStyling])
 	{
-		NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];
+		NSString *graphicalTextStyle = [self graphicalTextPreviewStyle:context];
 		if (graphicalTextStyle)
 		{
 			if ([context isForPublishing])    // id has already been supplied

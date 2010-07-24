@@ -87,9 +87,7 @@
     DOMHTMLElement *innerTextElement = [self innerTextHTMLElement];
     [innerTextElement setInnerHTML:[self HTMLString]];
     
-    [[self HTMLContext] push];  // graphical text generation currently relies on this
-    NSString *style = [[self textBlock] graphicalTextPreviewStyle];
-    [[self HTMLContext] pop];
+    NSString *style = [[self textBlock] graphicalTextPreviewStyle:[self HTMLContext]];
     [[[self textHTMLElement] style] setCssText:style];
     
     
@@ -130,10 +128,7 @@
     
     
     // Restore graphical text
-    SVHTMLContext *context = [self HTMLContext];
-    [context push];
-    NSString *style = [[self textBlock] graphicalTextPreviewStyle];
-    [context pop];
+    NSString *style = [[self textBlock] graphicalTextPreviewStyle:[self HTMLContext]];
     
     if (style)
     {

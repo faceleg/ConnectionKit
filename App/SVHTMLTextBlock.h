@@ -69,9 +69,8 @@
 
 - (NSString *)graphicalTextCode;
 - (void)setGraphicalTextCode:(NSString *)code;
-- (NSURL *)graphicalTextImageURL;
 - (NSString *)graphicalTextCSSID;
-- (NSString *)graphicalTextPreviewStyle;
+- (NSString *)graphicalTextPreviewStyle:(SVHTMLContext *)context;
 
 
 #pragma mark HTML
