@@ -44,8 +44,6 @@
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document;
 @property(nonatomic, copy, readonly) NSString *elementIdName;
 
-// Uses the receiver's HTML context to call -HTMLString from the represented object
-- (void)writeRepresentedObjectHTML;
 @property(nonatomic, retain, readwrite) SVWebEditorHTMLContext *HTMLContext;
 
 

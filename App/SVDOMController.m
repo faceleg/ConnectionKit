@@ -76,9 +76,7 @@
     SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
                                        initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
     
-    [context push];
-    [self writeRepresentedObjectHTML];
-    [context pop];
+    [[self representedObject] writeHTML:context];
     
     
     // Create DOM objects from HTML
@@ -109,11 +107,6 @@
 }
 
 @synthesize elementIdName = _elementID;
-
-- (void)writeRepresentedObjectHTML;
-{
-    [[self representedObject] writeHTML:[SVHTMLContext currentContext]];
-}
 
 @synthesize HTMLContext = _context;
 
