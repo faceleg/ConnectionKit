@@ -223,6 +223,9 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
         {
             switch ([[textAttachment wrap] integerValue])
             {
+                case SVGraphicWrapNone:
+                    result = @"inline";
+                    break;
                 case SVGraphicWrapLeft:
                     result = @"narrow right";
                     break;
