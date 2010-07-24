@@ -96,7 +96,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 - (void)willTurnIntoFault
 {
     [_plugIn removeObserver:self forKeyPaths:[[_plugIn class] plugInKeys]];
-    [_plugIn setContainer:nil];
+    [_plugIn setValue:nil forKey:@"container"];
 	[_plugIn release];	_plugIn = nil;
 }
 
@@ -122,7 +122,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     _plugIn = [plugIn retain];
                
     
-    [plugIn setContainer:self];
+    [_plugIn setValue:self forKey:@"container"];
     
     // Observe the plug-in's properties so they can be synced back to the MOC
     [plugIn addObserver:self
