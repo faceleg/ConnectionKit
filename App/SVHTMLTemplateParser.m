@@ -172,11 +172,6 @@
 
 @synthesize HTMLContext = _context;
 
-- (BOOL)parse;
-{
-    return [self parseWithOutputWriter:[SVHTMLContext currentContext]];
-}
-
 /*	We make a couple of extra tweakes for HTML parsing
  */
 - (BOOL)prepareToParse

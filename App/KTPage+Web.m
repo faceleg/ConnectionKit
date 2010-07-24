@@ -169,7 +169,7 @@
                                                                         component:[context page]];
     
     [context setCurrentHeaderLevel:3];
-    [parser parse];
+    [parser parseIntoHTMLContext:context];
     [parser release];
 }
 
