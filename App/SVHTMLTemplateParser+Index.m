@@ -169,7 +169,7 @@
 		[textBlock setHasSpanIn:NO];
 		
 		NSMutableString *buffer = [NSMutableString stringWithString:@"<div"];
-        if ([[SVHTMLContext currentContext] isEditable])
+        if ([[self HTMLContext] isEditable])
         {
             [buffer appendFormat:@" id=\"%@\" class=\"kBlock kSummary kOptional kImageable\"", [textBlock elementIdName]];
         }

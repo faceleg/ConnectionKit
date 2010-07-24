@@ -90,7 +90,7 @@
 
 - (void)willWriteKeyPath
 {
-    SVHTMLContext *context = [SVHTMLContext currentContext];
+    SVHTMLContext *context = [self HTMLContext];
     [context startWritingInline];
     
     [super willWriteKeyPath];
@@ -102,7 +102,7 @@
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
 {
     [super didEncounterKeyPath:keyPath ofObject:object];
-	[[SVHTMLContext currentContext] addDependencyOnObject:object keyPath:keyPath];
+	[[self HTMLContext] addDependencyOnObject:object keyPath:keyPath];
 }
 
 - (void)didEncounterMediaFile:(id <SVMedia>)mediaFile upload:(KTMediaFileUpload *)upload
@@ -135,6 +135,14 @@
 
 - (BOOL)parseWithOutputWriter:(id <KSWriter>)stream;
 {
+    // Double-check have we got a context?
+    if (![self HTMLContext])
+    {
+        // If not, inherit from parent
+        return [self parseIntoHTMLContext:[[[self class] currentTemplateParser] HTMLContext]];
+    }
+    
+    
     // Record us as the current template parser
     NSMutableArray *stack = [[[NSThread currentThread] threadDictionary] objectForKey:@"SVHTMLTemplateParserStack"];
     if (!stack)
@@ -159,6 +167,8 @@
 
 - (BOOL)parseIntoHTMLContext:(SVHTMLContext *)context;
 {
+    OBPRECONDITION(context);
+    
     _context = context;
     [context push];
     
@@ -172,7 +182,7 @@
 
 @synthesize HTMLContext = _context;
 
-/*	We make a couple of extra tweakes for HTML parsing
+/*	We make a couple of extra tweaks for HTML parsing
  */
 - (BOOL)prepareToParse
 {
@@ -180,7 +190,7 @@
 	
 	if (result)
 	{
-		KTPage *page = [[SVHTMLContext currentContext] page];
+		KTPage *page = [[self HTMLContext] page];
         if (page) [[self cache] overrideKey:@"CurrentPage" withValue:page];
         
 		[[self cache] overrideKey:@"HTMLGenerationPurpose" withValue:[self valueForKey:@"HTMLGenerationPurpose"]];
@@ -200,7 +210,7 @@
 	if (comparisonType == kCompareNotEmptyOrEditing)	// mostly same test; we will "OR" with editing mode
 	{
         // When editing, no point doing comparison. In particular, it can register key paths that I'd rather not (#74630)
-		result = ([[SVHTMLContext currentContext] isForEditing] ||
+		result = ([[self HTMLContext] isForEditing] ||
                   [self isNotEmpty:[self parseValue:left]]);
 	}
 	else
@@ -323,7 +333,7 @@
 		else if ([keyword isEqualToString:@"flags"])
 		{
 			// Only generate these special classes if we are doing the local preview
-			if ([[SVHTMLContext currentContext] isForEditing])
+			if ([[self HTMLContext] isForEditing])
 			{		
 				value = [value lowercaseString];	// convert to lowercase before converting to classes
 				NSArray *flags = [value componentsSeparatedByWhitespace];
@@ -383,7 +393,7 @@
 	}
 	
 	// Mark for image replacement ONLY if QC supported.
-	KTPage *page = [[SVHTMLContext currentContext] page];
+	KTPage *page = [[self HTMLContext] page];
 	if ([page isKindOfClass:[KTArchivePage class]]) page = [page parentPage];
 	OBASSERT([page isKindOfClass:[KTPage class]]);
 
@@ -411,7 +421,7 @@
 {
 	NSString *result = @"";
 	
-	unsigned int index = [[SVHTMLContext currentContext] currentIteration];
+	unsigned int index = [[self HTMLContext] currentIteration];
 	if (index != NSNotFound)
 	{
 		result = [NSString stringWithFormat:@"i%i", index + 1];
@@ -426,7 +436,7 @@
 {
 	NSString *result = @"";
 	
-	unsigned int index = [[SVHTMLContext currentContext] currentIteration];
+	unsigned int index = [[self HTMLContext] currentIteration];
 	if (index != NSNotFound)
 	{
 		result = (0 == ((index + 1) % 2)) ? @"e" : @"o";
@@ -441,10 +451,10 @@
 {
 	NSString *result = @"";
 	
-	unsigned int index = [[SVHTMLContext currentContext] currentIteration];
+	unsigned int index = [[self HTMLContext] currentIteration];
 	if (index != NSNotFound)
 	{
-		int count = [[SVHTMLContext currentContext] currentIterationsCount];
+		int count = [[self HTMLContext] currentIterationsCount];
 		if (index == (count - 1))
 		{
 			result = @" last-item";
@@ -459,7 +469,7 @@
     // Send the loop parameters to the HTML context to keep track of. Iterating will automatically pop it from the stack
     if (specifiedNumberIterations > 0)
     {
-        [[SVHTMLContext currentContext] beginIteratingWithCount:specifiedNumberIterations];
+        [[self HTMLContext] beginIteratingWithCount:specifiedNumberIterations];
     }
     
     
@@ -475,7 +485,7 @@
 {
     // Increment the iteration after each run
     BOOL result = [super doForeachIterationWithObject:object template:template keyPath:keyPath];
-    [[SVHTMLContext currentContext] nextIteration];
+    [[self HTMLContext] nextIteration];
     return result;
 }
     
@@ -513,7 +523,7 @@
 		}
         if (resourceFilePath)
         {
-            result = [self resourceFilePath:[NSURL fileURLWithPath:resourceFilePath] relativeToPage:[[SVHTMLContext currentContext] page]];
+            result = [self resourceFilePath:[NSURL fileURLWithPath:resourceFilePath] relativeToPage:[[self HTMLContext] page]];
         }
     }
     
@@ -524,7 +534,7 @@
  */
 - (NSString *)resourceFilePath:(NSURL *)resourceURL relativeToPage:(KTPage *)page
 {
-	NSString *result = [[SVHTMLContext currentContext] relativeURLStringOfResourceFile:resourceURL];
+	NSString *result = [[self HTMLContext] relativeURLStringOfResourceFile:resourceURL];
     
 	// Tell the delegate
 	[self didEncounterResourceFile:resourceURL];
@@ -540,7 +550,7 @@
 		return @"";
 	}
 	
-	NSURL *sourceURL = [[SVHTMLContext currentContext] baseURL];
+	NSURL *sourceURL = [[self HTMLContext] baseURL];
 	KTPage *targetPage = [[self cache] valueForKeyPath:inRestOfTag];
 	
 	NSString *result = [[targetPage feedURL] stringRelativeToURL:sourceURL];
@@ -568,11 +578,11 @@
     
     if ([anObject isKindOfClass:[KTPage class]])
     {
-        result = [[SVHTMLContext currentContext] relativeURLStringOfSiteItem:anObject];
+        result = [[self HTMLContext] relativeURLStringOfSiteItem:anObject];
     }
     else if ([anObject isKindOfClass:[NSURL class]])
     {
-        result = [[SVHTMLContext currentContext] relativeURLStringOfURL:anObject];
+        result = [[self HTMLContext] relativeURLStringOfURL:anObject];
     }
         
 	return result;
@@ -585,28 +595,28 @@
 
 - (KTPage *)currentPage
 {
-    SVHTMLContext *context = [SVHTMLContext currentContext];
+    SVHTMLContext *context = [self HTMLContext];
     OBASSERT(context);
 	return [context page];
 }
 
 - (KTHTMLGenerationPurpose)HTMLGenerationPurpose
 {
-    SVHTMLContext *context = [SVHTMLContext currentContext];
+    SVHTMLContext *context = [self HTMLContext];
     OBASSERT(context);
 	return [context generationPurpose];
 }
 
 - (BOOL)isPublishing		// Used by templates
 {
-    SVHTMLContext *context = [SVHTMLContext currentContext];
+    SVHTMLContext *context = [self HTMLContext];
     OBASSERT(context);
 	return [context isForPublishing];
 }
 
 - (BOOL)includeStyling
 {
-    SVHTMLContext *context = [SVHTMLContext currentContext];
+    SVHTMLContext *context = [self HTMLContext];
     OBASSERT(context);
 	return [context includeStyling];
 }
@@ -615,7 +625,7 @@
  */
 - (BOOL)liveDataFeeds
 {
-    SVHTMLContext *context = [SVHTMLContext currentContext];
+    SVHTMLContext *context = [self HTMLContext];
     OBASSERT(context);
 	return [context liveDataFeeds];
 }

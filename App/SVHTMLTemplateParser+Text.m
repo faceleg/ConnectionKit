@@ -86,7 +86,7 @@
 													    hyperlink:hyperlink];
 		
 		// Generate HTML
-        SVHTMLContext *context = [SVHTMLContext currentContext];
+        SVHTMLContext *context = [self HTMLContext];
         [context startWritingInline];
 		[textBlock writeHTML:context];
 	}
@@ -135,7 +135,7 @@
     
     // Only generate the block if there is text to use
     // HACK: Don't want to report anything to the context while checking this, so pop on a fake context
-    SVHTMLContext *fakeContext = [[SVHTMLContext alloc] initWithOutputWriter:nil inheritFromContext:[SVHTMLContext currentContext]];
+    SVHTMLContext *fakeContext = [[SVHTMLContext alloc] initWithOutputWriter:nil inheritFromContext:[self HTMLContext]];
     [fakeContext push];
 	if (YES)
     {
