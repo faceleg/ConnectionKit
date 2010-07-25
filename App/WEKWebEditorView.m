@@ -1699,10 +1699,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     BOOL result = YES;
     DOMRange *range = proposedRange;
     
-    //id article = [[[self dataSource] page] article];
-    //WEKWebEditorItem *item = [[self contentItem] hitTestRepresentedObject:article];
-    //[proposedRange selectNodeContents:[item HTMLElement]];
-    
     
     // We only want a collapsed range to be selected by the mouse if it's within the bounds of the text (showing the text cursor)
     if (!proposedRange || [proposedRange collapsed])
