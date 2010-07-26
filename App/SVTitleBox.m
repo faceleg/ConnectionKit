@@ -11,6 +11,8 @@
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 
+#import "KSStringXMLEntityEscaping.h"
+
 
 @implementation SVTitleBox 
 
