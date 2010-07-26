@@ -10,6 +10,12 @@
 
 
 @interface SVCalloutDOMController : SVDOMController
+{
+  @private
+    DOMElement  *_calloutContent;
+}
+
+@property(nonatomic, retain) DOMElement *calloutContentElement;
 
 @end
 

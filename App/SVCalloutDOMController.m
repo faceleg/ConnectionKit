@@ -11,6 +11,28 @@
 
 @implementation SVCalloutDOMController
 
+#pragma mark Init & Dealloc
+
+- (void)dealloc
+{
+    [_calloutContent release];
+    [super dealloc];
+}
+
+#pragma mark DOM
+
+@synthesize calloutContentElement = _calloutContent;
+
+- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+{
+    [super loadHTMLElementFromDocument:document];
+    
+    DOMNodeList *nodes = [[self HTMLElement] getElementsByClassName:@"callout-content"];
+    [self setCalloutContentElement:(DOMElement *)[nodes item:0]];
+}
+
+#pragma mark Other
+
 - (NSString *)elementIdName;
 {
     return [NSString stringWithFormat:@"callout-controller-%p", self];
