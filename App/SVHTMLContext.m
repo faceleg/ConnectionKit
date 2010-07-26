@@ -400,6 +400,9 @@
     if ([graphic isPagelet])
     {
         // Pagelet
+        [self startNewline];        // needed to simulate a call to -startElement:
+        [self stopWritingInline];
+        
         SVTemplate *template = [[graphic class] template];
         
         SVHTMLTemplateParser *parser =
