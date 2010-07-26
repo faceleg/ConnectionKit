@@ -538,6 +538,8 @@
 		27DB903011209AEA00B1895C /* DOMNamedNodeMap+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */; };
 		27DB903111209AEA00B1895C /* DOMNamedNodeMap+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB902F11209AEA00B1895C /* DOMNamedNodeMap+Karelia.m */; };
 		27DBBD5B11EF39AE00910BE7 /* WebViewEditingHelperClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A093300D1DECDA00F57801 /* WebViewEditingHelperClasses.m */; };
+		27DDFDBE11FDB2040083C7C1 /* KSStringWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DDFDBC11FDB2040083C7C1 /* KSStringWriter.h */; };
+		27DDFDBF11FDB2040083C7C1 /* KSStringWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDFDBD11FDB2040083C7C1 /* KSStringWriter.m */; };
 		27DE6C5910A4F6EE00D71710 /* WrapInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27DE6C5810A4F6EE00D71710 /* WrapInspector.xib */; };
 		27E1BF4B115B8235000FF123 /* SVDocumentUndoManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */; };
 		27E1BF4C115B8235000FF123 /* SVDocumentUndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */; };
@@ -2030,6 +2032,8 @@
 		27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMElement+Karelia.m"; sourceTree = "<group>"; };
 		27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNamedNodeMap+Karelia.h"; sourceTree = "<group>"; };
 		27DB902F11209AEA00B1895C /* DOMNamedNodeMap+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMNamedNodeMap+Karelia.m"; sourceTree = "<group>"; };
+		27DDFDBC11FDB2040083C7C1 /* KSStringWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSStringWriter.h; sourceTree = "<group>"; };
+		27DDFDBD11FDB2040083C7C1 /* KSStringWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSStringWriter.m; sourceTree = "<group>"; };
 		27DE6C5810A4F6EE00D71710 /* WrapInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WrapInspector.xib; sourceTree = "<group>"; };
 		27DEC7900DDC3EB500D795F3 /* Media System.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Media System.graffle"; sourceTree = "<group>"; };
 		27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileEqualityTester.h; sourceTree = "<group>"; };
@@ -3539,6 +3543,8 @@
 				27F2778011F9A33E00B7F8FA /* KSCSSWriter.m */,
 				27F2778911F9A54600B7F8FA /* KSForwardingWriter.h */,
 				27F2778A11F9A54600B7F8FA /* KSForwardingWriter.m */,
+				27DDFDBC11FDB2040083C7C1 /* KSStringWriter.h */,
+				27DDFDBD11FDB2040083C7C1 /* KSStringWriter.m */,
 			);
 			name = KSHTMLWriter;
 			path = ../KSHTMLWriter;
@@ -5600,6 +5606,7 @@
 				27F2778B11F9A54600B7F8FA /* KSForwardingWriter.h in Headers */,
 				27F2790A11F9F29400B7F8FA /* SVBannerPickerController.h in Headers */,
 				27F27AAF11FA57C400B7F8FA /* BWRoundedRectBoxView.h in Headers */,
+				27DDFDBE11FDB2040083C7C1 /* KSStringWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7039,6 +7046,7 @@
 				27F2778C11F9A54600B7F8FA /* KSForwardingWriter.m in Sources */,
 				27F2790B11F9F29400B7F8FA /* SVBannerPickerController.m in Sources */,
 				27F27AB011FA57C400B7F8FA /* BWRoundedRectBoxView.m in Sources */,
+				27DDFDBF11FDB2040083C7C1 /* KSStringWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
