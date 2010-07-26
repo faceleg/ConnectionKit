@@ -10,9 +10,10 @@
 
 #import "SVRichTextDOMController.h"
 #import "SVGraphicDOMController.h"
-#import "SVImage.h"
+#import "SVImageDOMController.h"
 #import "SVMediaRecord.h"
 #import "SVTextAttachment.h"
+#import "SVWebEditorHTMLContext.h"
 
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
@@ -150,8 +151,9 @@
     
     
     // Create controller for graphic
-    SVDOMController *controller = [image newDOMController];
-    [controller setHTMLContext:[textController HTMLContext]];
+    SVImagePageletDOMController *controller = (SVImagePageletDOMController *)[image newDOMController];
+    [controller awakeFromHTMLContext:[textController HTMLContext]];
+    [[controller imageDOMController] setHTMLElement:imageElement];
     [controller setHTMLElement:imageElement];
     
     [textController addChildWebEditorItem:controller];

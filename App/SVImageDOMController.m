@@ -8,7 +8,6 @@
 
 #import "SVImageDOMController.h"
 
-#import "SVImage.h"
 #import "WebEditingKit.h"
 #import "SVWebEditorHTMLContext.h"
 
@@ -34,7 +33,8 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 
 - (NSString *)elementIdName;
 {
-    NSString *result = [@"image-" stringByAppendingString:[[self representedObject] elementIdName]];
+    NSString *idName = [[self representedObject] elementIdName];
+    NSString *result = (idName ? [@"image-" stringByAppendingString:idName] : nil);
     return result;
 }
 

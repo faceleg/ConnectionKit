@@ -7,6 +7,7 @@
 //
 
 #import "SVGraphicDOMController.h"
+#import "SVImage.h"
 
 
 @interface SVImageDOMController : SVGraphicDOMController
