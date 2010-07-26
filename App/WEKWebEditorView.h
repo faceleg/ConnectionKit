@@ -132,6 +132,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 - (id)selectableItemAtPoint:(NSPoint)point;
 - (id)selectableItemForDOMNode:(DOMNode *)node;
+- (id)selectableItemForRepresentedObject:(id)object;
 - (NSArray *)selectableItemsInDOMRange:(DOMRange *)range;
 
 

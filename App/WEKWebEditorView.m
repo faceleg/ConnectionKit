@@ -854,6 +854,23 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
+- (id)selectableItemForRepresentedObject:(id)anObject;
+{
+    WEKWebEditorItem *result = [[self contentItem] hitTestRepresentedObject:anObject];
+    if (![result isSelectable])
+    {
+        // If it's not selectable, root around the descendants
+        for (result in [result childWebEditorItems])
+        {
+            result = [result hitTestRepresentedObject:anObject];
+            if ([result isSelectable]) return result;
+        }
+        result = nil;
+    }
+    
+    return result;
+}
+
 - (NSArray *)selectableItemsInDOMRange:(DOMRange *)range
 {
     OBPRECONDITION(range);

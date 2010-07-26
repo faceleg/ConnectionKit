@@ -393,8 +393,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     for (id anObject in selectedObjects)
     {
-        id newItem = [[[self webEditor] contentItem] hitTestRepresentedObject:anObject];
-        if ([newItem isSelectable]) [newSelection addObject:newItem];
+        id newItem = [[self webEditor] selectableItemForRepresentedObject:anObject];
+        [newSelection addObject:newItem];
     }
     
     [[self webEditor] selectItems:newSelection byExtendingSelection:NO];   // this will feed back to us and the controller in notification
