@@ -513,6 +513,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         if (selectedItem)
         {
+            // Match WebView selection to item for inline images…
             DOMHTMLElement *domElement = [selectedItem HTMLElement];
             
             if ([self shouldSelectDOMElementInline:domElement])
@@ -520,6 +521,15 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 DOMRange *range = [[domElement ownerDocument] createRange];
                 [range selectNode:domElement];
                 [self setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
+            }
+            else
+            {
+                // …but for block stuff, move focus back to the Web Editor
+                NSResponder *firstResponder = [[self window] firstResponder];
+                if (firstResponder != self && [self ks_followsResponder:firstResponder])
+                {
+                    [[self window] makeFirstResponder:self];
+                }
             }
         }
         
