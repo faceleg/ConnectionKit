@@ -1142,26 +1142,27 @@ fallbackDOMRangeForNoSelection:(DOMRange *)proposedRange
         NSDictionary *element = [[sender webView] elementAtPoint:location];
         DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
         
-        SVSidebarDOMController *sidebarController = [[[sender contentItem] hitTestDOMNode:node] sidebarDOMController];
-        if (sidebarController) return proposedRange;
+        DOMElement *mainElement = [[node ownerDocument] getElementById:@"main"];
+        if ([node ks_isDescendantOfElement:mainElement])
+        {
+            // Figure out a good range in the article
+            SVTextDOMController *item = (id)[self articleDOMController];
+            DOMNode *articleNode = [item textHTMLElement];
+            
+            result = [[articleNode ownerDocument] createRange];
+            
+            NSPoint location = [[articleNode documentView] convertPointFromBase:[selectionEvent locationInWindow]];
+            if (selectionEvent && location.y < NSMidY([articleNode boundingBox]))
+            {
+                [result setStartBefore:[articleNode firstChild]];
+            }
+            else
+            {
+                [result setStartAfter:[articleNode lastChild]];
+            }
+        }
     }
     
-    
-    // Figure out a good range in the article
-    SVTextDOMController *item = (id)[self articleDOMController];
-    DOMNode *articleNode = [item textHTMLElement];
-    
-    result = [[articleNode ownerDocument] createRange];
-    
-    NSPoint location = [[articleNode documentView] convertPointFromBase:[selectionEvent locationInWindow]];
-    if (selectionEvent && location.y < NSMidY([articleNode boundingBox]))
-    {
-        [result setStartBefore:[articleNode firstChild]];
-    }
-    else
-    {
-        [result setStartAfter:[articleNode lastChild]];
-    }
     
     return result;
 }
