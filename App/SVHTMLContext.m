@@ -502,9 +502,9 @@
                 idName:[[self currentDOMController] elementIdName]
              className:[@"callout-container " stringByAppendingString:alignment]];
     
-    [self startElement:@"div" idName:nil className:@"callout"];
+    [self startElement:@"div" className:@"callout"];
     
-    [self startElement:@"div" idName:nil className:@"callout-content"];
+    [self startElement:@"div" className:@"callout-content"];
     
     
     // throw away buffered writing from before
