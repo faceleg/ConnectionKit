@@ -122,8 +122,14 @@
     if ([graphics count])
     {
         DOMRange *range = [[[self HTMLElement] ownerDocument] createRange];
-        [range setStartBefore:refNode];
-        
+        if (refNode)
+        {
+            [range setStartBefore:refNode];
+        }
+        else
+        {
+            [range setStart:[self textHTMLElement] offset:[[[self textHTMLElement] childNodes] length]];
+        }
         
         for (SVGraphic *aGraphic in graphics)
         {
