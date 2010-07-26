@@ -591,32 +591,6 @@
     return [self relativeURLStringOfSiteItem:(SVSiteItem *)page];
 }
 
-- (NSString *)relativeURLStringOfResourceFile:(NSURL *)resourceURL;
-{
-    NSString *result;
-	switch ([self generationPurpose])
-	{
-		case kSVHTMLGenerationPurposeEditing:
-			result = [resourceURL absoluteString];
-			break;
-            
-		case kSVHTMLGenerationPurposeQuickLookPreview:
-			result = [[BDAlias aliasWithPath:[resourceURL path]] quickLookPseudoTag];
-			break;
-			
-		default:
-		{
-			KTHostProperties *hostProperties = [[[self page] site] hostProperties];
-			NSURL *resourceFileURL = [hostProperties URLForResourceFile:[resourceURL lastPathComponent]];
-			result = [resourceFileURL stringRelativeToURL:[self baseURL]];
-			break;
-		}
-	}
-    
-	
-	return result;
-}
-
 /*	Generates the path to the specified file with the current page's design.
  *	Takes into account the HTML Generation Purpose to handle Quick Look etc.
  */

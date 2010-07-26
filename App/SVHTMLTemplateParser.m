@@ -533,12 +533,14 @@
  */
 - (NSString *)resourceFilePath:(NSURL *)resourceURL relativeToPage:(KTPage *)page
 {
-	NSString *result = [[self HTMLContext] relativeURLStringOfResourceFile:resourceURL];
+    SVHTMLContext *context = [self HTMLContext];
+	NSURL *result = [context addResourceWithURL:resourceURL];
+    
     
 	// Tell the delegate
 	[self didEncounterResourceFile:resourceURL];
     
-	return result;
+	return [context relativeURLStringOfURL:result];
 }
 
 - (NSString *)rsspathWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
