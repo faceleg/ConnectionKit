@@ -268,9 +268,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Set selected items first
     if (!_isChangingSelectedItems)
     {
+        NSArray *items = (range ? [self selectableItemsInDOMRange:range] : nil);
+        
         [self changeSelectionByDeselectingAll:YES
                                orDeselectItem:nil
-                                  selectItems:[self selectableItemsInDOMRange:range]
+                                  selectItems:items
                                      DOMRange:range
                                    isUIAction:NO];
     }
