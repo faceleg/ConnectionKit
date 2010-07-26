@@ -396,32 +396,21 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     return result;
 }
 
-- (void)addGraphic:(SVGraphic *)graphic placeInline:(BOOL)placeInline;
+- (void)insertGraphic:(SVGraphic *)graphic range:(DOMRange *)insertionRange;
 {
+    OBPRECONDITION(insertionRange);
+    
     WEKWebEditorView *webEditor = [self webEditor];
-    
-    
-    // Create text attachment for the graphic
-    SVTextAttachment *textAttachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
-                                                                     inManagedObjectContext:[graphic managedObjectContext]];
-    [textAttachment setGraphic:graphic];
-    [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
-    [textAttachment setCausesWrap:[NSNumber numberWithBool:!placeInline]];
-    [textAttachment setBody:[self representedObject]];
-    
-    
-    // Create controller for graphic
-    SVGraphicDOMController *controller = [[graphic newDOMController] autorelease];
-    [controller loadPlaceholderDOMElementInDocument:[[self HTMLElement] ownerDocument]];
-    [controller setHTMLContext:[self HTMLContext]];
-    
-    
-    DOMRange *insertionRange = [self insertionRangeForGraphic:graphic];
     if ([webEditor shouldChangeTextInDOMRange:insertionRange])
     {
+        // Create controller for graphic
+        SVGraphicDOMController *controller = [[graphic newDOMController] autorelease];
+        [controller loadPlaceholderDOMElementInDocument:[[self HTMLElement] ownerDocument]];
+        [controller setHTMLContext:[self HTMLContext]];
+        
         // Generate & insert DOM node
         [insertionRange insertNode:[controller HTMLElement]];
-    
+        
         // Insert controller – must do after node is inserted so descendant nodes can be located by ID
         WEKWebEditorItem *parentController = [self hitTestDOMNode:[controller HTMLElement]];
         [parentController addChildWebEditorItem:controller];
@@ -433,6 +422,24 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         [webEditor didChangeText];
     }
     
+}
+
+- (void)addGraphic:(SVGraphic *)graphic placeInline:(BOOL)placeInline;
+{
+    // Create text attachment for the graphic
+    SVTextAttachment *textAttachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
+                                                                     inManagedObjectContext:[graphic managedObjectContext]];
+    [textAttachment setGraphic:graphic];
+    [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
+    [textAttachment setCausesWrap:[NSNumber numberWithBool:!placeInline]];
+    [textAttachment setBody:[self representedObject]];
+    
+    
+    // Insert
+    DOMRange *insertionRange = [self insertionRangeForGraphic:graphic];
+    [self insertGraphic:graphic range:insertionRange];
+
+    
     
     
     // Select item.
@@ -440,12 +447,13 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [[[self HTMLContext] webEditorViewController] graphicsController];
     if ([selectionController setSelectedObjects:[NSArray arrayWithObject:graphic]])
     {
+        /*
         // For non-inline graphics, need the WebView to resign first responder. #79189
         BOOL select = YES;
         if (!placeInline) select = [[webEditor window] makeFirstResponder:webEditor];
         
         if (select) [webEditor selectItems:[NSArray arrayWithObject:controller]
-                      byExtendingSelection:NO];
+                      byExtendingSelection:NO];*/
     }
 }
 

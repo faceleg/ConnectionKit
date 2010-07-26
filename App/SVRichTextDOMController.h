@@ -29,6 +29,7 @@
 #pragma mark Content
 - (IBAction)insertFile:(id)sender;
 - (void)addGraphic:(SVGraphic *)graphic placeInline:(BOOL)placeInline;
+- (void)insertGraphic:(SVGraphic *)graphic range:(DOMRange *)insertionRange;
 
 
 #pragma mark Updates

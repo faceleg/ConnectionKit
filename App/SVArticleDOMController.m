@@ -113,62 +113,28 @@
 
 #pragma mark Insertion
 
-- (BOOL)insertGraphics:(NSArray *)pagelets beforeDOMNode:(DOMNode *)refNode;
+- (BOOL)insertGraphics:(NSArray *)graphics beforeDOMNode:(DOMNode *)refNode;
 {
     BOOL result = NO;
     
     
     // Insert into text
-    if ([pagelets count])
+    if ([graphics count])
     {
-        // Generate HTML
-        NSMutableString *html = [[NSMutableString alloc] init];
-        SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:html
-                                                                            inheritFromContext:[self HTMLContext]];
+        DOMRange *range = [[[self HTMLElement] ownerDocument] createRange];
+        [range setStartBefore:refNode];
         
-        for (SVGraphic *aGraphic in pagelets)
+        
+        for (SVGraphic *aGraphic in graphics)
         {
             // Give pagelet a chance to resize etc.
-            [aGraphic willInsertIntoPage:[context page]];
+            [aGraphic willInsertIntoPage:[[self HTMLContext] page]];
             
-            [context writeGraphic:aGraphic];
-        }
-        
-        
-        // Insert HTML into DOM, replacing caret if possible
-        if (_dragCaret && [_dragCaret nextSibling] == refNode)
-        {
-            [self replaceDragCaretWithHTMLString:html];
-        }
-        else
-        {
-            DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self HTMLElement] ownerDocument];
             
-            DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:html
-                                                                                baseURL:[context baseURL]];
-            
-            if (refNode)
-            {
-                [[refNode parentNode] insertBefore:fragment refChild:refNode];
-            }
-            else
-            {
-                [[self textHTMLElement] insertBefore:fragment refChild:refNode];
-            }
+            [self insertGraphic:aGraphic range:range];
         }
-        [html release];
         
         
-        // Insert controllers
-        for (WEKWebEditorItem *anItem in [[context rootDOMController] childWebEditorItems])
-        {
-            // Web Editor View Controller will pick up the insertion in its delegate method and handle the various side-effects.
-            [self addChildWebEditorItem:anItem];
-        }
-        [context release];
-        
-        
-        // Finish edit
         result = YES;
     }
     
