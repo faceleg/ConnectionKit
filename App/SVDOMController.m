@@ -152,6 +152,10 @@
     if (![self HTMLElement] && [self elementIdName]) return;
     
     
+    // Once we're marked for update, no point continuing to observe
+    [self setObservesDependencies:NO];
+    
+    
     // By default, controllers don't know how to update, so must update parent instead
     if ([self methodForSelector:@selector(update)] == 
         [SVDOMController instanceMethodForSelector:@selector(update)])
@@ -195,7 +199,7 @@
 {
     [[pair object] addObserver:self
                     forKeyPath:[pair keyPath]
-                       options:0
+                       options:NSKeyValueObservingOptionPrior
                        context:sWebViewDependenciesObservationContext];
 }
 
