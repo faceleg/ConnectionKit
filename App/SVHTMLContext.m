@@ -24,6 +24,7 @@
 #import "SVCalloutDOMController.h"  // don't like having to do this
 
 #import "BDAlias+QuickLook.h"
+#import "NSBundle+QuickLook.h"
 
 #import "NSIndexPath+Karelia.h"
 #import "NSString+Karelia.h"
@@ -168,7 +169,7 @@
     // For publishing, want to know the URL of main.css *on the server*
     if (![self isForEditing])
     {
-        NSString *cssPath = [page pathToDesignFile:@"main.css" inContext:self];
+        NSString *cssPath = [self relativeURLStringOfDesignFile:@"main.css"];
         NSURL *cssURL = [[NSURL alloc] initWithString:cssPath relativeToURL:[self baseURL]];
         [_mainCSSURL release]; _mainCSSURL = cssURL;
     }
@@ -615,6 +616,44 @@
 	// TODO: Tell the delegate
 	//[self didEncounterResourceFile:resourceURL];
     
+	return result;
+}
+
+/*	Generates the path to the specified file with the current page's design.
+ *	Takes into account the HTML Generation Purpose to handle Quick Look etc.
+ */
+- (NSString *)relativeURLStringOfDesignFile:(NSString *)whichFileName;
+{
+	NSString *result = nil;
+	
+	// Return nil if the file doesn't actually exist
+	
+	KTDesign *design = [[[self page] master] design];
+	NSString *localPath = [[[design bundle] bundlePath] stringByAppendingPathComponent:whichFileName];
+	if ([[NSFileManager defaultManager] fileExistsAtPath:localPath])
+	{
+		if ([self isForQuickLookPreview])
+        {
+            result = [[design bundle] quicklookDataForFile:whichFileName];		// Hmm, this isn't going to pick up the variation or any other CSS
+        }
+        else if ([self isForEditing] && ![self baseURL])
+        {
+            result = [[NSURL fileURLWithPath:localPath] absoluteString];
+			
+			// Append variation index as fragment, so that we can switch among variations and see a different URL
+			if (NSNotFound != design.variationIndex)
+			{
+				result = [result stringByAppendingFormat:@"#var%d", design.variationIndex];
+			}
+        }
+        else
+        {
+            KTMaster *master = [[self page] master];
+            NSURL *designFileURL = [NSURL URLWithString:whichFileName relativeToURL:[master designDirectoryURL]];
+            result = [self relativeURLStringOfURL:designFileURL];
+        }
+	}
+	
 	return result;
 }
 

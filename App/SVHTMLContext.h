@@ -156,6 +156,7 @@ typedef enum {
 // These methods try to generate as simple a URL string when possible. e.g. relative path, or page ID
 - (NSString *)relativeURLStringOfSiteItem:(SVSiteItem *)page;
 - (NSString *)relativeURLStringOfResourceFile:(NSURL *)resourceURL;
+- (NSString *)relativeURLStringOfDesignFile:(NSString *)whichFileName;
 
 
 #pragma mark Media

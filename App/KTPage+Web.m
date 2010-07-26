@@ -23,7 +23,6 @@
 #import "SVWebEditorHTMLContext.h"
 
 #import "NSBundle+KTExtensions.h"
-#import "NSBundle+QuickLook.h"
 
 #import "NSBundle+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
@@ -70,44 +69,6 @@
 
 
 @implementation KTPage (Web)
-
-/*	Generates the path to the specified file with the current page's design.
- *	Takes into account the HTML Generation Purpose to handle Quick Look etc.
- */
-- (NSString *)pathToDesignFile:(NSString *)whichFileName inContext:(SVHTMLContext *)context;
-{
-	NSString *result = nil;
-	
-	// Return nil if the file doesn't actually exist
-	
-	KTDesign *design = [[self master] design];
-	NSString *localPath = [[[design bundle] bundlePath] stringByAppendingPathComponent:whichFileName];
-	if ([[NSFileManager defaultManager] fileExistsAtPath:localPath])
-	{
-		if ([context isForQuickLookPreview])
-        {
-            result = [[design bundle] quicklookDataForFile:whichFileName];		// Hmm, this isn't going to pick up the variation or any other CSS
-        }
-        else if ([context isForEditing] && ![context baseURL])
-        {
-            result = [[NSURL fileURLWithPath:localPath] absoluteString];
-			
-			// Append variation index as fragment, so that we can switch among variations and see a different URL
-			if (NSNotFound != design.variationIndex)
-			{
-				result = [result stringByAppendingFormat:@"#var%d", design.variationIndex];
-			}
-        }
-        else
-        {
-            KTMaster *master = [[context page] master];
-            NSURL *designFileURL = [NSURL URLWithString:whichFileName relativeToURL:[master designDirectoryURL]];
-            result = [designFileURL stringRelativeToURL:[context baseURL]];
-        }
-	}
-	
-	return result;
-}
 
 #pragma mark HTML
 
@@ -255,7 +216,7 @@
 	// design's print.css but not for Quick Look
     if ([context isForPublishing])
 	{
-		path = [self pathToDesignFile:@"print.css" inContext:context];
+		path = [context relativeURLStringOfDesignFile:@"print.css"];
 		if (path)
         {
             [context writeLinkToStylesheet:path title:nil media:@"print"];
