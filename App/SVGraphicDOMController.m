@@ -9,6 +9,7 @@
 #import "SVGraphicDOMController.h"
 #import "SVGraphic.h"
 
+#import "SVCalloutDOMController.h"
 #import "SVRichTextDOMController.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
@@ -137,6 +138,26 @@
 		[subNode setType:@""];
 	}
     
+    
+    // Are we missing a callout?
+    SVGraphic *graphic = [self representedObject];
+    if ([graphic isCallout] && ![self calloutDOMController])
+    {
+        // Create a callout stack where we are know
+        SVCalloutDOMController *calloutController = [[SVCalloutDOMController alloc] initWithHTMLDocument:(DOMHTMLDocument *)document];
+        [calloutController createHTMLElement];
+        
+        [[[self HTMLElement] parentNode] replaceChild:[calloutController HTMLElement]
+                                             oldChild:[self HTMLElement]];
+        
+        // Then move ourself into the callout
+        [[calloutController calloutContentElement] appendChild:[self HTMLElement]];
+        
+        [self retain];
+        [[self parentWebEditorItem] replaceChildWebEditorItem:self with:calloutController];
+        [calloutController addChildWebEditorItem:self];
+        [self release];
+    }
     
     
     // Swap in updated node. Then get the Web Editor to hook new descendant controllers up to the new nodes
