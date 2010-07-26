@@ -31,6 +31,28 @@
     [self setCalloutContentElement:(DOMElement *)[nodes item:0]];
 }
 
+- (void)createHTMLElement;
+{
+    DOMHTMLDocument *document = [self HTMLDocument];
+    
+    // This logic is vry similar to SVHTMLContext. Wonder if there's a way to bring them together
+    
+    DOMElement *calloutContainer = [document createElement:@"DIV"];
+    [calloutContainer setAttribute:@"class" value:@"callout-container"];
+    
+    DOMElement *callout = [document createElement:@"DIV"];
+    [callout setAttribute:@"class" value:@"callout"];
+    [calloutContainer appendChild:callout];
+    
+    DOMElement *calloutContent = [document createElement:@"DIV"];
+    [calloutContent setAttribute:@"class" value:@"callout-content"];
+    [callout appendChild:calloutContent];
+    
+    
+    [self setHTMLElement:(DOMHTMLElement *)calloutContainer];
+    [self setCalloutContentElement:calloutContent];
+}
+
 #pragma mark Other
 
 - (NSString *)elementIdName;
