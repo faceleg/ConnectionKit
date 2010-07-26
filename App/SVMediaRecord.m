@@ -13,6 +13,7 @@
 #import "NSError+Karelia.h"
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
+#import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
 #import "BDAlias.h"
