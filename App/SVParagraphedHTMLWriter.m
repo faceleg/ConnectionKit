@@ -146,6 +146,7 @@
     [textAttachment setGraphic:image];
     [textAttachment setBody:text];
     [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
+    [textAttachment setCausesWrap:[NSNumber numberWithBool:NO]];
     
     
     // Create controller for graphic
