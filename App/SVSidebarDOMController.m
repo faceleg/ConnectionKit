@@ -148,7 +148,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 #pragma mark Placement Actions
 
-- (void)setPlacement:(SVGraphicPlacement)placement;
+- (void)placeSelection:(SVGraphicPlacement)placement;
 {
     SVRichText *article = [[[self HTMLContext] page] article];
     NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
@@ -174,12 +174,12 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 - (void)placeInline:(id)sender;
 {
-    [self setPlacement:SVGraphicPlacementInline];
+    [self placeSelection:SVGraphicPlacementInline];
 }
 
 - (void)placeAsCallout:(id)sender;
 {
-    [self setPlacement:SVGraphicPlacementCallout];
+    [self placeSelection:SVGraphicPlacementCallout];
 }
 
 - (void)placeInSidebar:(id)sender;
