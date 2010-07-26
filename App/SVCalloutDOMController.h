@@ -12,3 +12,11 @@
 @interface SVCalloutDOMController : SVDOMController
 
 @end
+
+
+#pragma mark -
+
+
+@interface WEKWebEditorItem (SVCalloutDOMController)
+- (SVCalloutDOMController *)calloutDOMController;
+@end

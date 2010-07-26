@@ -16,4 +16,19 @@
     return [NSString stringWithFormat:@"callout-controller-%p", self];
 }
 
+- (SVCalloutDOMController *)calloutDOMController;
+{
+    return self;
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation WEKWebEditorItem (SVCalloutDOMController)
+
+- (SVCalloutDOMController *)calloutDOMController; { return [[self parentWebEditorItem] calloutDOMController]; }
+
 @end
