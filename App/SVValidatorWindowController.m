@@ -8,13 +8,17 @@
 
 #import "SVValidatorWindowController.h"
 #import "KSProgressPanel.h"
-#import "NSString+Karelia.h"
 #import "KSSilencingConfirmSheet.h"
-#import "KSStringXMLEntityEscaping.h"
-#import "NSURL+Karelia.h"
 #import "SVHTMLContext.h"
 #import "KTPage.h"
 #import "SVRawHTMLGraphic.h"
+
+#import "NSString+Karelia.h"
+#import "NSURL+Karelia.h"
+
+#import "KSStringHTMLEntityUnescaping.h"
+#import "KSStringXMLEntityEscaping.h"
+
 
 @interface SVValidationHTMLContext : SVHTMLContext
 {
