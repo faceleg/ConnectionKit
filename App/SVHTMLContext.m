@@ -613,9 +613,7 @@
 		}
 	}
     
-	// TODO: Tell the delegate
-	//[self didEncounterResourceFile:resourceURL];
-    
+	
 	return result;
 }
 
