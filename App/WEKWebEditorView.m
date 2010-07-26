@@ -844,6 +844,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (NSArray *)selectableItemsInDOMRange:(DOMRange *)range
 {
+    OBPRECONDITION(range);
     if ([range collapsed]) return nil;  // shortcut
     
     
