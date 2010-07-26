@@ -133,10 +133,15 @@
 
 #pragma mark Graphics
 
-- (void)writeGraphic:(SVGraphic *)graphic;
+- (void)willWriteGraphic:(SVGraphic *)graphic;
 {
     // Register placement dependency early so it causes article to update, not graphic/callout
     [self addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
+}
+
+- (void)writeGraphic:(SVGraphic *)graphic;
+{
+    [self willWriteGraphic:graphic];
     
     
     // Handle callouts specially
@@ -175,6 +180,9 @@
 
 - (void)writeGraphic:(SVGraphic *)graphic withDOMController:(SVGraphicDOMController *)controller;
 {
+    [self willWriteGraphic:graphic];
+    
+    
     // Fake it and don't insert into hierarchy
     SVDOMController *currentController = _currentDOMController;
     _currentDOMController = controller;
