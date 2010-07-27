@@ -80,6 +80,19 @@
 
 #pragma mark Updating
 
+- (void)updateStyle
+{
+    // Regenerate style
+      SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc]
+                                       initWithOutputWriter:nil
+                                       inheritFromContext:[self HTMLContext]];
+    [[self textBlock] buildGraphicalText:context];
+    
+    NSString *style = [[context elementAttributes] objectForKey:@"style"];
+    [[[self textHTMLElement] style] setCssText:style];
+    [context release];
+}
+
 - (void)update
 {
     BOOL selectAfterUpdate = ([[self webEditor] focusedText] == self);
@@ -87,8 +100,9 @@
     DOMHTMLElement *innerTextElement = [self innerTextHTMLElement];
     [innerTextElement setInnerHTML:[self HTMLString]];
     
-    NSString *style = [[self textBlock] graphicalTextPreviewStyle:[self HTMLContext]];
-    [[[self textHTMLElement] style] setCssText:style];
+    
+    [self updateStyle];
+
     
     
     // Mimic NSTextField and select all
@@ -128,12 +142,7 @@
     
     
     // Restore graphical text
-    NSString *style = [[self textBlock] graphicalTextPreviewStyle:[self HTMLContext]];
-    
-    if (style)
-    {
-        [[[self HTMLElement] style] setCssText:style];
-    }
+    [self updateStyle];
 }
 
 - (void)webEditorTextDidChange;

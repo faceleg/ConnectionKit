@@ -200,7 +200,7 @@
     return result;
 }
 
-- (void)buildGraphicalText:(SVHTMLContext *)context
+- (void)buildGraphicalText:(SVHTMLContext *)context;
 {
     // Bail early if possible
     KTPage *page = [context page];
