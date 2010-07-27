@@ -99,16 +99,11 @@
 
 @synthesize customCSSClassName = _className;
 
-- (NSString *)CSSClassName:(SVHTMLContext *)context;
+- (void)writeClassNames:(SVHTMLContext *)context;
 {
-    NSMutableArray *classNames = [[NSMutableArray alloc] init];
-    
-    
     // Any custom classname specifed
-    if ([[self customCSSClassName] length] > 0)
-    {
-        [classNames addObject:[self customCSSClassName]];
-    }
+    NSString *customClass = [self customCSSClassName];
+    if ([customClass length]) [context addClassName:customClass];
     
     
     // Editing
@@ -116,23 +111,17 @@
     {
         if ([context isForEditing])
         { 
-            [classNames addObject:([self isRichText] ? @"kBlock" : @"kLine")];
+            [context addClassName:([self isRichText] ? @"kBlock" : @"kLine")];
         }
     }
     else
     {
-        [classNames addObject:@"in"];
+        [context addClassName:@"in"];
     }
     
     
     // Graphical text
-    if ([self graphicalTextPreviewStyle:context]) [classNames addObject:@"replaced"];
-    
-    
-    // Turn into a single string
-    NSString *result = [classNames componentsJoinedByString:@" "];
-    [classNames release];
-    return result;
+    if ([self graphicalTextPreviewStyle:context]) [context addClassName:@"replaced"];
 }
 
 @synthesize hyperlinkString = myHyperlinkString;
@@ -349,6 +338,10 @@
 
 - (void)startElements:(SVHTMLContext *)context;
 {
+    // Build up class
+    [self writeClassNames:context];
+    
+    
     // Main tag
 	[context openTag:[self tagName]];
 	
@@ -361,16 +354,7 @@
     }
     
     BOOL generateSpanIn = [self generateSpanIn];
-	// if (!generateSpanIn)	// Actually we want a custom class to show up even items with a span-in. 
-	{
-        NSString *className = [self CSSClassName:context];
-		if (![className isEqualToString:@""])
-		{
-			[context writeAttribute:@"class" value:className];
-		}
-	}
-	
-    
+	    
 	// Add in graphical text styling if there is any
 	if ([context includeStyling])
 	{
