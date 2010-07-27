@@ -177,35 +177,6 @@
     return result;
 }
 
-- (NSURL *)graphicalTextImageURL:(SVHTMLContext *)context;
-{
-    NSURL *result = nil;
-	
-    
-    NSString *graphicalTextCode = [self graphicalTextCode:context];
-    if (graphicalTextCode)
-    {    
-        KTPage *page = [context page];
-        KTMaster *master = [page master];
-        KTDesign *design = [master design];
-        
-        NSDictionary *graphicalTextSettings = [[design imageReplacementTags] objectForKey:graphicalTextCode];
-        
-        if (graphicalTextSettings)
-        {
-            NSURL *composition = [design URLForCompositionForImageReplacementCode:graphicalTextCode];
-            NSString *string = [(SVTitleBox *)HTML_VALUE text];
-            
-            result = [NSURL imageReplacementURLWithRendererURL:composition
-                                                        string:string
-                                                          size:[master graphicalTitleSize]];
-        }
-    }
-    
-	
-	return result;
-}
-
 - (NSString *)graphicalTextCSSID:(SVHTMLContext *)context
 {
     NSString *result = nil;
@@ -229,79 +200,80 @@
     return result;
 }
 
-/*	Returns nil if there is no graphical text in use
- */
-- (NSString *)graphicalTextPreviewStyle:(SVHTMLContext *)context;
-{
-	NSString *result = nil;
-	
-	    
-    if ([[[[context page] master] enableImageReplacement] boolValue])
-    {
-        NSURL *url = [self graphicalTextImageURL:context];
-        if (url)
-        {
-            NSURLRequest *request = [NSURLRequest requestWithURL:url];
-            NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:NULL error:NULL];
-            if (data)
-            {
-                CIImage *image = [[CIImage alloc] initWithData:data];
-                if (image)
-                {
-                    unsigned int width = [image extent].size.width;
-                    unsigned int height = [image extent].size.height;
-                    
-                    result = [NSString stringWithFormat:
-                              @"text-align:left; text-indent:-9999px; background:url(%@) top left no-repeat; width:%upx; height:%upx;",
-                              [url absoluteString],
-                              width,
-                              height];
-                    
-                    [image release];
-                }
-            }
-        }
-    }
-    
-	
-	return result;
-}
-
 - (void)buildGraphicalText:(SVHTMLContext *)context
 {
+    // Bail early if possible
+    KTPage *page = [context page];
+    KTMaster *master = [page master];
+    if (![[master enableImageReplacement] boolValue]) return;
+    
+    NSString *graphicalTextCode = [self graphicalTextCode:context];
+    if (!graphicalTextCode) return;
     
     
     
+    // What's the special URL to build the image?
+    KTDesign *design = [master design];
     
-    NSString *graphicalTextStyle = [self graphicalTextPreviewStyle:context];
-    if (graphicalTextStyle)
+    NSDictionary *graphicalTextSettings = [[design imageReplacementTags] objectForKey:graphicalTextCode];
+    if (!graphicalTextSettings) return;
+    
+    NSURL *composition = [design URLForCompositionForImageReplacementCode:graphicalTextCode];
+    NSString *text = [(SVTitleBox *)HTML_VALUE text];
+    
+    NSURL *url = [NSURL imageReplacementURLWithRendererURL:composition
+                                                    string:text
+                                                      size:[master graphicalTitleSize]];
+    OBASSERT(url);
+
+    
+    
+    // Load the image to learn size info
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:NULL error:NULL];
+    if (!data) return;
+    
+    CIImage *image = [[CIImage alloc] initWithData:data];
+    if (!image) return;
+    
+    unsigned width = [image extent].size.width;
+    unsigned height = [image extent].size.height;
+    [image release];
+    
+    NSString *cssText = [NSString stringWithFormat:
+                         @"text-align:left; text-indent:-9999px; background:url(%@) top left no-repeat; width:%upx; height:%upx;",
+                         [url absoluteString],
+                         width,
+                         height];
+    
+    
+    
+    // Apply the style
+    if ([context isForPublishing])
     {
-        if ([context isForPublishing])    // id has already been supplied
-        {
-            NSMutableString *css = [[NSMutableString alloc] init];
-            KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
-            
-            NSString *ID = [self graphicalTextCSSID:context];
-            [context addElementAttribute:@"id" value:ID];
-            [cssWriter writeIDSelector:ID];
-            
-            [cssWriter writeDeclarationBlock:graphicalTextStyle];
-            
-            [context addCSSString:css];
-            [css release];
-            [cssWriter release];
-        }
-        else
-        {
-            [context addElementAttribute:@"style" value:graphicalTextStyle];
-        }
+        NSMutableString *css = [[NSMutableString alloc] init];
+        KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
         
-        [context addDependencyOnObject:[context page] keyPath:@"master.graphicalTitleSize"];
+        NSString *ID = [self graphicalTextCSSID:context];
+        [context addElementAttribute:@"id" value:ID];
+        [cssWriter writeIDSelector:ID];
         
+        [cssWriter writeDeclarationBlock:cssText];
         
-        // Graphical text
-        [context addClassName:@"replaced"];
+        [context addCSSString:css];
+        [css release];
+        [cssWriter release];
     }
+    else
+    {
+        [context addElementAttribute:@"style" value:cssText];
+    }
+    
+    [context addDependencyOnObject:[context page] keyPath:@"master.graphicalTitleSize"];
+    
+    
+    // Graphical text
+    [context addClassName:@"replaced"];
 }
 
 #pragma mark HTML

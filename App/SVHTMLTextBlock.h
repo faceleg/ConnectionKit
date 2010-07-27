@@ -64,8 +64,6 @@
 @property(nonatomic, retain) id HTMLSourceObject;
 @property(nonatomic, copy) NSString *HTMLSourceKeyPath;
 
-- (NSString *)graphicalTextPreviewStyle:(SVHTMLContext *)context;
-
 
 #pragma mark HTML
 
