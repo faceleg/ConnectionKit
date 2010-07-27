@@ -292,7 +292,8 @@
  *	Finally, after processing, we insert the new tree into the webview's tree, and process editing
  *	nodes to bring us the green + markers.
  */
-- (void)bodyLoaded:(DOMHTMLElement *)loadedBody;
+- (void)offscreenWebViewController:(SVOffscreenWebViewController *)controller
+                       didLoadBody:(DOMHTMLElement *)loadedBody;
 {
 	DOMHTMLElement *element = [self elementWaitingForFragmentLoad];
     

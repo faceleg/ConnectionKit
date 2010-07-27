@@ -30,7 +30,7 @@ typedef enum {
 @class KTAbstractElement, SVRawHTMLGraphic;
 
 // Syntax-colored text file viewer:
-@interface KTHTMLEditorController : NSWindowController <KTAsyncOffscreenWebViewControllerDelegate>
+@interface KTHTMLEditorController : NSWindowController <SVOffscreenWebViewControllerDelegate>
 {
 	IBOutlet NSTextView*			textView;				// The text view used for editing code.
 	

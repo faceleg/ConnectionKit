@@ -120,7 +120,8 @@
     [htmlString release];
 }
 
-- (void)bodyLoaded:(DOMHTMLElement *)loadedBody;
+- (void)offscreenWebViewController:(SVOffscreenWebViewController *)controller
+                       didLoadBody:(DOMHTMLElement *)loadedBody;
 {
     // Pull the nodes across to the Web Editor
     DOMDocument *document = [[self HTMLElement] ownerDocument];

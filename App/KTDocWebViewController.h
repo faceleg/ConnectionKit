@@ -136,7 +136,8 @@
 - (void)reloadWebViewIfNeeded;
 
 - (void)replaceWebViewComponent:(KTWebViewComponent *)oldComponent withComponent:(KTWebViewComponent *)newComponent;
-- (void)bodyLoaded:(DOMHTMLElement *)loadedBody;	// Private
+- (void)offscreenWebViewController:(SVOffscreenWebViewController *)controller   // Private
+                       didLoadBody:(DOMHTMLElement *)loadedBody;
 
 // Web View component hierarchy
 - (KTWebViewComponent *)mainWebViewComponent;

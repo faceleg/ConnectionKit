@@ -9,11 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/Webkit.h>
 
-@protocol KTAsyncOffscreenWebViewControllerDelegate
 
-- (void)bodyLoaded:(DOMHTMLElement *)loadedBody;
-
-@end
+@protocol SVOffscreenWebViewControllerDelegate;
 
 
 @interface SVOffscreenWebViewController : NSWindowController
@@ -21,16 +18,25 @@
   @private
 	WebView     *_webView;
 	
-	id <KTAsyncOffscreenWebViewControllerDelegate> _delegate;
+	id <SVOffscreenWebViewControllerDelegate> _delegate;
 }
 
 + (DOMDocument *)DOMDocumentForHTMLString:(NSString *)inHTML baseURL:(NSURL *)aURL;
 
 @property(nonatomic, retain, readonly) WebView *webView;
-@property(nonatomic, assign) id <KTAsyncOffscreenWebViewControllerDelegate> delegate;
+@property(nonatomic, assign) id <SVOffscreenWebViewControllerDelegate> delegate;
 
 
 - (void)loadHTMLFragment:(NSString *)anHTMLFragment;
 - (void) stopLoading;
 
+@end
+
+
+#pragma mark -
+
+
+@protocol SVOffscreenWebViewControllerDelegate
+- (void)offscreenWebViewController:(SVOffscreenWebViewController *)controller
+                       didLoadBody:(DOMHTMLElement *)loadedBody;
 @end

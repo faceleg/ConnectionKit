@@ -11,7 +11,7 @@
 #import "SVOffscreenWebViewController.h"
 
 
-@interface SVGraphicDOMController : SVDOMController <KTAsyncOffscreenWebViewControllerDelegate>
+@interface SVGraphicDOMController : SVDOMController <SVOffscreenWebViewControllerDelegate>
 {
   @private
     DOMHTMLElement  *_bodyElement;

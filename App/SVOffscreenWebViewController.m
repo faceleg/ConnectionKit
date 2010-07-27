@@ -49,7 +49,8 @@ static BOOL sDoneLoading;
 
 /*!	Callback unlocks the lock so the foreground thread can proceed
  */
-+ (void)bodyLoaded:(DOMHTMLElement *)loadedBody;
++ (void)offscreenWebViewController:(SVOffscreenWebViewController *)controller
+                       didLoadBody:(DOMHTMLElement *)loadedBody;
 {
 	sDoneLoading = YES;
 }
@@ -189,7 +190,7 @@ static BOOL sDoneLoading;
 		{
 			body = (DOMHTMLElement *)[bodyList item:0];
 		}
-		[_delegate bodyLoaded:body];
+		[_delegate offscreenWebViewController:self didLoadBody:body];
 	}
 }
 
