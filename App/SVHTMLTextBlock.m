@@ -82,7 +82,7 @@
 
 @synthesize customCSSClassName = _className;
 
-- (void)writeClassNames:(SVHTMLContext *)context;
+- (void)buildClassName:(SVHTMLContext *)context;
 {
     // Any custom classname specifed
     NSString *customClass = [self customCSSClassName];
@@ -101,10 +101,6 @@
     {
         [context addClassName:@"in"];
     }
-    
-    
-    // Graphical text
-    if ([self graphicalTextPreviewStyle:context]) [context addClassName:@"replaced"];
 }
 
 @synthesize hyperlinkString = myHyperlinkString;
@@ -271,6 +267,43 @@
 	return result;
 }
 
+- (void)buildGraphicalText:(SVHTMLContext *)context
+{
+    
+    
+    
+    
+    NSString *graphicalTextStyle = [self graphicalTextPreviewStyle:context];
+    if (graphicalTextStyle)
+    {
+        if ([context isForPublishing])    // id has already been supplied
+        {
+            NSMutableString *css = [[NSMutableString alloc] init];
+            KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
+            
+            NSString *ID = [self graphicalTextCSSID:context];
+            [context addElementAttribute:@"id" value:ID];
+            [cssWriter writeIDSelector:ID];
+            
+            [cssWriter writeDeclarationBlock:graphicalTextStyle];
+            
+            [context addCSSString:css];
+            [css release];
+            [cssWriter release];
+        }
+        else
+        {
+            [context addElementAttribute:@"style" value:graphicalTextStyle];
+        }
+        
+        [context addDependencyOnObject:[context page] keyPath:@"master.graphicalTitleSize"];
+        
+        
+        // Graphical text
+        [context addClassName:@"replaced"];
+    }
+}
+
 #pragma mark HTML
 
 /*	Includes the editable tag(s) + innerHTML
@@ -322,38 +355,15 @@
 - (void)startElements:(SVHTMLContext *)context;
 {
     // Build up class
-    [self writeClassNames:context];
+    [self buildClassName:context];
     
     
     // Add in graphical text styling if there is any
 	if ([context includeStyling])
 	{
-		NSString *graphicalTextStyle = [self graphicalTextPreviewStyle:context];
-		if (graphicalTextStyle)
-		{
-			if ([context isForPublishing])    // id has already been supplied
-			{
-                NSMutableString *css = [[NSMutableString alloc] init];
-                KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
-                
-                NSString *ID = [self graphicalTextCSSID:context];
-                [context addElementAttribute:@"id" value:ID];
-                [cssWriter writeIDSelector:ID];
-                
-                [cssWriter writeDeclarationBlock:graphicalTextStyle];
-                
-                [context addCSSString:css];
-                [css release];
-                [cssWriter release];
-			}
-			else
-			{
-                [context addElementAttribute:@"style" value:graphicalTextStyle];
-			}
-		}
-	}
+		[self buildGraphicalText:context];
+    }
     
-    [context addDependencyOnObject:[context page] keyPath:@"master.graphicalTitleSize"];
     
 	// Main tag
 	[context startElement:[self tagName]];
