@@ -430,7 +430,6 @@
 		[textBlock setRichText:NO];
 		[textBlock setImportsGraphics:NO];
 		[textBlock setTagName:@"span"];
-		[textBlock setGraphicalTextCode:@"m"];		// Actually we are probably throwing away graphical text menus
 		
 		[textBlock setHTMLSourceObject:page];
 		[textBlock setHTMLSourceKeyPath:@"menuTitle"];

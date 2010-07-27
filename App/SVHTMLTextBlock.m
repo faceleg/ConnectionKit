@@ -58,7 +58,6 @@
     [_placeholder release];
 	[myHTMLTag release];
     [_className release];
-	[myGraphicalTextCode release];
 	[myHyperlinkString release];
 	[myTargetString release];
 	[myHTMLSourceObject release];
@@ -197,16 +196,17 @@
 
 #pragma mark Graphical Text
 
-/*	When the code is a non-nil value, if the design specifies it, we swap the text for special Quartz Composer
- *	generated images.
- */
-- (NSString *)graphicalTextCode { return myGraphicalTextCode; }
-
-- (void)setGraphicalTextCode:(NSString *)code
+- (NSString *)graphicalTextCode:(SVHTMLContext *)context;
 {
-	code = [code copy];
-	[myGraphicalTextCode release];
-	myGraphicalTextCode = code;
+    NSString *result = nil;
+    
+    id value = HTML_VALUE;
+    if ([value isKindOfClass:[SVTitleBox class]])
+    {
+        result = [value graphicalTextCode:context];
+    }
+    
+    return result;
 }
 
 - (NSURL *)graphicalTextImageURL:(SVHTMLContext *)context;
@@ -214,7 +214,7 @@
     NSURL *result = nil;
 	
     
-    NSString *graphicalTextCode = [self graphicalTextCode];
+    NSString *graphicalTextCode = [self graphicalTextCode:context];
     if (graphicalTextCode)
     {    
         KTPage *page = [context page];
@@ -238,11 +238,11 @@
 	return result;
 }
 
-- (NSString *)graphicalTextCSSID
+- (NSString *)graphicalTextCSSID:(SVHTMLContext *)context
 {
     NSString *result = nil;
     
-    if ([self graphicalTextCode])
+    if ([self graphicalTextCode:context])
     {
         NSMutableString *innerText = [[NSMutableString alloc] init];
         SVHTMLContext *context = [[SVTextContentHTMLContext alloc] initWithOutputWriter:innerText];
@@ -252,7 +252,7 @@
         
         result = [NSString stringWithFormat:
                   @"%@-%@",
-                  [self graphicalTextCode],
+                  [self graphicalTextCode:context],
                   [innerText stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
         [innerText release];
@@ -382,7 +382,7 @@
                 NSMutableString *css = [[NSMutableString alloc] init];
                 KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
                 
-                NSString *ID = [self graphicalTextCSSID];
+                NSString *ID = [self graphicalTextCSSID:context];
                 [context writeAttribute:@"id" value:ID];
                 [cssWriter writeIDSelector:ID];
                 

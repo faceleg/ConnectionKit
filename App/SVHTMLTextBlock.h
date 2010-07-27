@@ -26,7 +26,6 @@
     NSString		*myHTMLTag;
     NSString        *_className;
 	
-    NSString		*myGraphicalTextCode;
 	NSString		*myHyperlinkString;
 	NSString		*myTargetString;
 	
@@ -67,9 +66,6 @@
 @property(nonatomic, retain) id HTMLSourceObject;
 @property(nonatomic, copy) NSString *HTMLSourceKeyPath;
 
-- (NSString *)graphicalTextCode;
-- (void)setGraphicalTextCode:(NSString *)code;
-- (NSString *)graphicalTextCSSID;
 - (NSString *)graphicalTextPreviewStyle:(SVHTMLContext *)context;
 
 

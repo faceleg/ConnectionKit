@@ -17,7 +17,20 @@
 
 @property(nonatomic, copy) NSNumber *hidden;    // BOOL, required
 
+- (NSString *)graphicalTextCode:(SVHTMLContext *)context;
+
 @end
 
 
+#pragma mark -
 
+
+@interface SVSiteTitle : SVTitleBox
+@end
+
+
+#pragma mark -
+
+
+@interface SVSiteSubtitle : SVTitleBox
+@end

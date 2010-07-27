@@ -8,6 +8,9 @@
 
 #import "SVTitleBox.h"
 
+#import "SVHTMLContext.h"
+#import "KTPage.h"
+
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 
@@ -38,5 +41,38 @@
 }
 
 @dynamic hidden;
+
+#pragma mark Graphical Text
+
+- (NSString *)graphicalTextCode:(SVHTMLContext *)context;
+{
+    return nil;
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation SVSiteTitle 
+
+- (NSString *)graphicalTextCode:(SVHTMLContext *)context;
+{
+    return ([[context page] isRootPage] ? @"h1h" : @"h1");
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation SVSiteSubtitle 
+
+- (NSString *)graphicalTextCode:(SVHTMLContext *)context;
+{
+    return @"st";
+}
 
 @end

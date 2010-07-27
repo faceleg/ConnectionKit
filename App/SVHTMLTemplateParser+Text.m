@@ -120,7 +120,6 @@
 	{
 		[result setCustomCSSClassName:className];
 	}
-	[result setGraphicalTextCode:GTCode];
 	
 	if (hyperlink)
 	{
