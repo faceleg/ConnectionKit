@@ -123,6 +123,12 @@
     
     SVWebEditorViewController *controller = [[self HTMLContext] webEditorViewController];
     [controller performSelector:@selector(didUpdate)];
+    
+    // Force a redraw if affected. #82536
+    if ([self isSelected])
+    {
+        [[[self HTMLElement] documentView] setNeedsDisplay:YES];
+    }
 }
 
 - (void)updateToReflectSelection;
