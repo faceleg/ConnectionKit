@@ -514,13 +514,14 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	[defaultsBase addEntriesFromDictionary:syntaxColorDefaults];
 	
 	NSString *email = [KSEmailAddressComboBox primaryEmailAddress];
-	if (email)
-	{
-		[defaultsBase setObject:email forKey:@"KSEmailAddress"];
-	}
+	if (email) [defaultsBase setObject:email forKey:@"KSEmailAddress"];
 			
+    
+    
     [defaults registerDefaults:defaultsBase];
 	
+    
+    
 	// debugging domains -- we have to set default values to get them to show up in the table.
 	NSArray *domains = [NSArray arrayWithObjects:
 		ControllerDomain, CKTransportDomain, CKStateMachineDomain, CKParsingDomain, CKProtocolDomain, CKConnectionDomain, /* ThreadingDomain, */
