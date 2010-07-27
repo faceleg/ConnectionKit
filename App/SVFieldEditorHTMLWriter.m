@@ -181,11 +181,11 @@
                     [self removeUnsupportedCustomStyling:style];
                     
                     // Have to write it specially as changes don't show up in [anAttribute value] sadly
-                    [self addAttribute:@"style" value:[style cssText]];
+                    [self addElementAttribute:@"style" value:[style cssText]];
                 }
                 else
                 {
-                    [self addAttribute:attributeName value:[anAttribute value]];
+                    [self addElementAttribute:attributeName value:[anAttribute value]];
                 }
             }
             else

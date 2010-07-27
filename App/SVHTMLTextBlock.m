@@ -346,7 +346,7 @@
     if ([context isForEditing])
     {
         NSString *elementID = [self elementIdName];
-        if (elementID) [context addAttribute:@"id" value:elementID];
+        if (elementID) [context addElementAttribute:@"id" value:elementID];
     }
     
     
@@ -362,7 +362,7 @@
                 KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
                 
                 NSString *ID = [self graphicalTextCSSID:context];
-                [context addAttribute:@"id" value:ID];
+                [context addElementAttribute:@"id" value:ID];
                 [cssWriter writeIDSelector:ID];
                 
                 [cssWriter writeDeclarationBlock:graphicalTextStyle];
@@ -373,7 +373,7 @@
 			}
 			else
 			{
-                [context addAttribute:@"style" value:graphicalTextStyle];
+                [context addElementAttribute:@"style" value:graphicalTextStyle];
 			}
 		}
 	}
