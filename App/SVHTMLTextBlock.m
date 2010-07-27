@@ -68,23 +68,6 @@
 
 #pragma mark Accessors
 
-- (NSString *)elementIdName
-{
-    id value = HTML_VALUE;
-	if ([value isKindOfClass:[SVContentObject class]])
-    {
-        return [value elementIdName];
-    }
-    else
-    {
-        NSString *result = [NSString stringWithFormat:@"k-svxTextBlock-%@-%p",
-                            [self HTMLSourceKeyPath],
-                            [self HTMLSourceObject]];
-        
-        return result;
-    }
-}
-
 @synthesize placeholderString = _placeholder;
 
 @synthesize tagName = myHTMLTag;
@@ -342,14 +325,6 @@
     [self writeClassNames:context];
     
     
-    // in some situations we generate both the main tag, and a <span class="in">
-    if ([context isForEditing])
-    {
-        NSString *elementID = [self elementIdName];
-        if (elementID) [context addElementAttribute:@"id" value:elementID];
-    }
-    
-    
     // Add in graphical text styling if there is any
 	if ([context includeStyling])
 	{
@@ -491,7 +466,7 @@
     
     
     // Copy basic properties from text block
-    SVTextDOMController *result = [[SVTextFieldDOMController alloc] initWithElementIdName:[self elementIdName]];
+    SVTextDOMController *result = [[SVTextFieldDOMController alloc] init];
     [result setTextBlock:self];
     [result setEditable:[self isEditable]];
     [result setRichText:[self isRichText]];
