@@ -97,8 +97,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	BOOL _checkedExpiration;
 			
 	NSPoint _cascadePoint;
-	
-	KSProgressPanel *_progressPanel;
 }
 
 - (NSArray *) additionalPluginDictionaryForInstallerController:(KSPluginInstallerController *)controller;
@@ -127,7 +125,5 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction)reloadDebugTable:(id)sender;
 
 - (IBAction)showPluginWindow:(id)sender;
-
-@property (retain) KSProgressPanel *progressPanel;
 
 @end

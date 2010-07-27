@@ -265,7 +265,7 @@
 	
 	if (firstTimeSoReopenSavedDocuments)
 	{
-		showIfDefaultSet = [self reopenPreviouslyOpenedDocumentsUsingProgressPanel:[[NSApp delegate] progressPanel]];
+		showIfDefaultSet = [self reopenPreviouslyOpenedDocumentsUsingProgressPanel:nil];//[[NSApp delegate] progressPanel]];
 	}
 	
 	// Show it if we either force it to be shown, or it's allowed be shown if defaults set

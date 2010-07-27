@@ -569,8 +569,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	[pool release];
 }
 
-@synthesize progressPanel = _progressPanel;
-
 - (id)init
 {
     self = [super init];
@@ -591,7 +589,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 #ifdef OBSERVE_UNDO
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 #endif
-	self.progressPanel = nil;
+
 	[super dealloc];
 }
 
@@ -927,12 +925,12 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 #endif
 			// TODO: I've turned off the progress panel for now. In my opinion the app is fast enough to launch now that we don't need the panel. If this is confirmed, take out the panel code completely. Mike.
             
-			// put up a splash panel with a progress indicator
+			/*/ put up a splash panel with a progress indicator
 			_progressPanel = [[KSProgressPanel alloc] init];
 			[_progressPanel setMessageText:NSLocalizedString(@"Initializing...",
 															"Message while initializing launching application.")];
 			[_progressPanel setInformativeText:nil];
-			//[_progressPanel makeKeyAndOrderFront:self];
+			[_progressPanel makeKeyAndOrderFront:self];*/
 			
 			[SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
                                                        inMenu:oMoreGraphicsMenu
@@ -954,7 +952,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 				[[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindowInitial:!firstRun];	// launching, so try to reopen... unless it's first run.
 	#endif
 			}
-			[_progressPanel performClose:self];
 			
 			
 			// QE check AFTER the welcome message
@@ -963,8 +960,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	}
 	@finally
 	{
-		[_progressPanel performClose:self];
-        self.progressPanel = nil;
+		//[_progressPanel performClose:self];
 	}
 
 	
