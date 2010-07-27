@@ -161,10 +161,6 @@
     }
     
     
-    // Open tag. Make it inline so we match DOM exactly. (i.e text nodes take care of whitespace for us)
-    [self openTag:elementName writeInline:YES];
-    
-    
     // Write attributes
     if ([element hasAttributes]) // -[DOMElement attributes] is slow as it has to allocate an object. #78691
     {
@@ -185,11 +181,11 @@
                     [self removeUnsupportedCustomStyling:style];
                     
                     // Have to write it specially as changes don't show up in [anAttribute value] sadly
-                    [self writeAttribute:@"style" value:[style cssText]];
+                    [self addAttribute:@"style" value:[style cssText]];
                 }
                 else
                 {
-                    [self writeAttribute:attributeName value:[anAttribute value]];
+                    [self addAttribute:attributeName value:[anAttribute value]];
                 }
             }
             else
@@ -201,8 +197,8 @@
     }
     
     
-    // Close tag
-    [self didStartElement];
+    // Open tag. Make it inline so we match DOM exactly. (i.e text nodes take care of whitespace for us)
+    [self startElement:elementName writeInline:YES];
     
     
     // Finish setting up buffer

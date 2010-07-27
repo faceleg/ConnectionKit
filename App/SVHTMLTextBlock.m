@@ -342,20 +342,15 @@
     [self writeClassNames:context];
     
     
-    // Main tag
-	[context openTag:[self tagName]];
-	
-    
-	// in some situations we generate both the main tag, and a <span class="in">
+    // in some situations we generate both the main tag, and a <span class="in">
     if ([context isForEditing])
     {
         NSString *elementID = [self elementIdName];
-        if (elementID) [context writeAttribute:@"id" value:elementID];
+        if (elementID) [context addAttribute:@"id" value:elementID];
     }
     
-    BOOL generateSpanIn = [self generateSpanIn];
-	    
-	// Add in graphical text styling if there is any
+    
+    // Add in graphical text styling if there is any
 	if ([context includeStyling])
 	{
 		NSString *graphicalTextStyle = [self graphicalTextPreviewStyle:context];
@@ -367,7 +362,7 @@
                 KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
                 
                 NSString *ID = [self graphicalTextCSSID:context];
-                [context writeAttribute:@"id" value:ID];
+                [context addAttribute:@"id" value:ID];
                 [cssWriter writeIDSelector:ID];
                 
                 [cssWriter writeDeclarationBlock:graphicalTextStyle];
@@ -378,31 +373,31 @@
 			}
 			else
 			{
-                [context writeAttribute:@"style" value:graphicalTextStyle];
+                [context addAttribute:@"style" value:graphicalTextStyle];
 			}
 		}
 	}
     
     [context addDependencyOnObject:[context page] keyPath:@"master.graphicalTitleSize"];
     
+	// Main tag
+	[context startElement:[self tagName]];
 	
-	// Close off the main tag
-	[context didStartElement];
     
-	
+	    
 	
 	// Place a hyperlink if required
 	if ([self hyperlinkString])
 	{
-		[context openTag:@"a"];
-        [context writeString:@" "];
-        [context writeString:[self targetString]];
-        [context writeAttribute:@"href" value:[self hyperlinkString]];
-        [context didStartElement];
+        [context startAnchorElementWithHref:[self hyperlinkString]
+                                      title:nil
+                                     target:[self targetString]
+                                        rel:nil];
 	}
 	
 	
 	// Generate <span class="in"> if desired
+	BOOL generateSpanIn = [self generateSpanIn];
 	if (generateSpanIn)	// For normal, single-line text the span is the editable bit
 	{
         [context startElement:@"span" idName:nil className:@"in"];

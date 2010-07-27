@@ -320,15 +320,15 @@
 
 #pragma mark Element Primitives
 
-- (void)writeAttribute:(NSString *)attribute value:(NSString *)value;
+- (void)addAttribute:(NSString *)attribute value:(NSString *)value;
 {
-    [super writeAttribute:attribute value:value];
+    [super addAttribute:attribute value:value];
     
     // Was this an id attribute, removing our need to write one?
     if (_needsToWriteElementID && [attribute isEqualToString:@"id"]) _needsToWriteElementID = NO;
 }
 
-- (void)didStartElement;
+- (void)startElement:(NSString *)elementName writeInline:(BOOL)writeInline; // for more control
 {
     // First write an id attribute if it's needed
     // DOM Controllers need an ID so they can locate their element in the DOM. If the HTML doesn't normally contain an ID, insert it ourselves
@@ -337,7 +337,7 @@
         NSString *elementID = [[self currentDOMController] elementIdName];
         if (elementID)
         {
-            [self writeAttribute:@"id" value:elementID];
+            [self addAttribute:@"id" value:elementID];
             OBASSERT(!_needsToWriteElementID);
         }
         else
@@ -346,7 +346,7 @@
         }
     }
     
-    [super didStartElement];
+    [super startElement:elementName writeInline:writeInline];
 }
 
 @end

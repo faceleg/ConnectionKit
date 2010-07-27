@@ -239,11 +239,11 @@
 	 */
 	if (openInNewWindow)
 	{
-		return @"target=\"_BLANK\" ";
+		return @"_BLANK";
 	}
 	else
 	{
-		return @"";
+		return nil;
 	}
 }
 
