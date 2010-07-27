@@ -389,16 +389,22 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     // Match selection to controller
     NSArray *selectedObjects = [[self graphicsController] selectedObjects];
-    NSMutableArray *newSelection = [[NSMutableArray alloc] initWithCapacity:[selectedObjects count]];
+    NSMutableArray *newSelection = [NSMutableArray arrayWithCapacity:[selectedObjects count]];
     
     for (id anObject in selectedObjects)
     {
         id newItem = [[self webEditor] selectableItemForRepresentedObject:anObject];
-        [newSelection addObject:newItem];
+        if ([webEditor shouldSelectDOMElementInline:[newItem HTMLElement]])
+        {
+            newSelection = nil;
+        }
+        else
+        {
+            [newSelection addObject:newItem];
+        }
     }
     
-    [[self webEditor] selectItems:newSelection byExtendingSelection:NO];   // this will feed back to us and the controller in notification
-    [newSelection release];
+    [webEditor selectItems:newSelection byExtendingSelection:NO];   // this will feed back to us and the controller in notification
     
     
     // Restore selection…

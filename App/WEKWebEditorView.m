@@ -403,20 +403,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 #pragma mark Overall Selection
 
-- (BOOL)shouldSelectDOMElementInline:(DOMHTMLElement *)element;
-{
-    // Images are always selectable
-    if ([[element tagName] isEqualToString:@"IMG"]) return YES;
-    
-    
-    // Whether selecting the element should be inline (set the WebView's selection) or not (no WebView selection)
-    DOMCSSStyleDeclaration *style = [[self webView] computedStyleForElement:element
-                                                              pseudoElement:nil];
-    
-    BOOL result = ([[style display] isEqualToString:@"inline"] && [element isContentEditable]);
-    return result;
-}
-
 - (BOOL)changeSelectionByDeselectingAll:(BOOL)deselectAll
                          orDeselectItem:(WEKWebEditorItem *)itemToDeselect
                             selectItems:(NSArray *)itemsToSelect
@@ -585,6 +571,20 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     return YES;
+}
+
+- (BOOL)shouldSelectDOMElementInline:(DOMHTMLElement *)element;
+{
+    // Images are always selectable
+    if ([[element tagName] isEqualToString:@"IMG"]) return YES;
+    
+    
+    // Whether selecting the element should be inline (set the WebView's selection) or not (no WebView selection)
+    DOMCSSStyleDeclaration *style = [[self webView] computedStyleForElement:element
+                                                              pseudoElement:nil];
+    
+    BOOL result = ([[style display] isEqualToString:@"inline"] && [element isContentEditable]);
+    return result;
 }
 
 @synthesize selectionParentItems = _selectionParentItems;
