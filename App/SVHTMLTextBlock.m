@@ -21,6 +21,7 @@
 #import "SVTitleBox.h"
 #import "SVWebEditorHTMLContext.h"
 
+#import "NSData+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSScanner+Karelia.h"
 #import "NSString+Karelia.h"
@@ -177,29 +178,6 @@
     return result;
 }
 
-- (NSString *)graphicalTextCSSID:(SVHTMLContext *)context
-{
-    NSString *result = nil;
-    
-    if ([self graphicalTextCode:context])
-    {
-        NSMutableString *innerText = [[NSMutableString alloc] init];
-        SVHTMLContext *context = [[SVTextContentHTMLContext alloc] initWithOutputWriter:innerText];
-        
-        [self writeInnerHTML:context];
-        [context close]; [context release];
-        
-        result = [NSString stringWithFormat:
-                  @"%@-%@",
-                  [self graphicalTextCode:context],
-                  [innerText stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        
-        [innerText release];
-    }
-    
-    return result;
-}
-
 - (void)buildGraphicalText:(SVHTMLContext *)context;
 {
     // Bail early if possible
@@ -254,10 +232,14 @@
         NSMutableString *css = [[NSMutableString alloc] init];
         KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
         
-        NSString *ID = [self graphicalTextCSSID:context];
+        NSString *ID = [NSString stringWithFormat:
+                        @"%@-%@",
+                        graphicalTextCode,
+                        [[text dataUsingEncoding:NSUTF8StringEncoding] sha1DigestString]];
+                
         [context addElementAttribute:@"id" value:ID];
-        [cssWriter writeIDSelector:ID];
         
+        [cssWriter writeIDSelector:ID];
         [cssWriter writeDeclarationBlock:cssText];
         
         [context addCSSString:css];
