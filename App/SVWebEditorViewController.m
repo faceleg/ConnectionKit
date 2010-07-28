@@ -394,6 +394,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     for (id anObject in selectedObjects)
     {
         id newItem = [[self webEditor] selectableItemForRepresentedObject:anObject];
+        if (!newItem) continue; // TODO: remove the item from selection
         [newSelection addObject:newItem];
         
         // To select an inline element, the Web Editor or one of its descendants must first be selected
