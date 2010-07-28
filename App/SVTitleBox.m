@@ -70,9 +70,4 @@
 
 @implementation SVSiteSubtitle 
 
-- (NSString *)graphicalTextCode:(SVHTMLContext *)context;
-{
-    return @"st";
-}
-
 @end

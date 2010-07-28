@@ -47,9 +47,4 @@
     [[page archivePages] makeObjectsPerformSelector:@selector(updateTitle)];
 }
 
-- (NSString *)graphicalTextCode:(SVHTMLContext *)context;
-{
-    return @"h2";
-}
-
 @end
