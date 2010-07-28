@@ -500,11 +500,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSData *fileContents = [mediaRep data];
         NSData *digest = [fileContents SHA1Digest];
         
-        SVPublishingRecord *publishingRecord = [[[self site] hostProperties] publishingRecordForSHA1Digest:digest];
-        if (publishingRecord)
+        NSString *path = [self pathForFileWithSHA1Digest:digest];
+        if (path)
         {
             // Only upload the data if it's not already being done
-            NSString *path = [publishingRecord path];
             if (![_paths containsObject:path])
             {
                 [self publishData:fileContents toPath:path];
@@ -571,6 +570,21 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [self publishContentsOfURL:fileURL toPath:resourceRemotePath];
     
     return resourceRemotePath;
+}
+
+#pragma mark Publishing Records
+
+- (NSString *)pathForFileWithSHA1Digest:(NSData *)digest;
+{
+    OBPRECONDITION(digest);
+    
+    // TODO: Check queued uploads too. #83251
+    
+    SVPublishingRecord *publishingRecord = [[[self site] hostProperties]
+                                            publishingRecordForSHA1Digest:digest];
+    
+    NSString *result = [publishingRecord path];
+    return result;
 }
 
 #pragma mark Delegate

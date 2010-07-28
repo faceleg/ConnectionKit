@@ -101,6 +101,11 @@ typedef enum {
         cachedSHA1Digest:(NSData *)digest
              contentHash:(NSData *)contentHash;
 
+
+#pragma mark Publishing Records
+- (NSString *)pathForFileWithSHA1Digest:(NSData *)digest;
+
+
 @end
 
 
