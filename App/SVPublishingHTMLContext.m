@@ -132,6 +132,18 @@
     return [[[[self page] site] hostProperties] URLForResourceFile:[resourceURL lastPathComponent]];
 }
 
+- (NSURL *)addGraphicalTextData:(NSData *)imageData idName:(NSString *)idName;
+{
+    NSURL *result = [super addGraphicalTextData:imageData idName:idName];
+    
+    NSString *designPath = [_publisher designDirectoryPath];
+    NSString *uploadPath = [designPath stringByAppendingPathComponent:[result lastPathComponent]];
+    
+    [_publisher publishData:imageData toPath:uploadPath];
+    
+    return result;
+}
+
 - (void)addCSSString:(NSString *)css;
 {
     [super addCSSString:css];   // should have no effect

@@ -397,14 +397,20 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 #pragma mark Design
 
+- (NSString *)designDirectoryPath;
+{
+    KTDesign *design = [[[[self site] rootPage] master] design];
+    NSString *result = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
+    return result;
+}
+
 - (void)publishDesign
 {
     KTDesign *design = [[[[self site] rootPage] master] design];
     [design writeCSS:(id)self];
     
     
-    NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
-    
+    NSString *remoteDesignDirectoryPath = [self designDirectoryPath];    
     
     // Upload the design's resources
 	NSEnumerator *resourcesEnumerator = [[design resourceFileURLs] objectEnumerator];

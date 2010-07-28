@@ -63,4 +63,6 @@
 
 - (NSString *)baseRemotePath; { return [[self publishingEngine] baseRemotePath]; }
 
+- (NSString *)designDirectoryPath; { return nil; }
+
 @end

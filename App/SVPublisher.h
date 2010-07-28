@@ -28,9 +28,9 @@
 
 
 #pragma mark Design
+- (NSString *)designDirectoryPath;
 - (void)addCSSString:(NSString *)css;
 - (void)addCSSWithURL:(NSURL *)cssURL;  // same terminology as SVHTMLContext
-                                        //- (void)addGraphicalText:(NSString *)text code:(NSString *)code;
 
 
 #pragma mark Generic Publishing
