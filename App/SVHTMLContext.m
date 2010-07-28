@@ -649,23 +649,19 @@
     return result;
 }
 
-- (void)writeImageWithIdName:(NSString *)idName
-                   className:(NSString *)className
-                 sourceMedia:(SVMediaRecord *)media
-                         alt:(NSString *)altText
-                       width:(NSNumber *)width
-                      height:(NSNumber *)height
-                        type:(NSString *)type;
+- (void)writeImageWithSourceMedia:(SVMediaRecord *)media
+                              alt:(NSString *)altText
+                            width:(NSNumber *)width
+                           height:(NSNumber *)height
+                             type:(NSString *)type;
 {
     NSURL *URL = [self addMedia:media width:width height:height type:type];
     NSString *src = (URL ? [self relativeURLStringOfURL:URL] : @"");
     
-    [self writeImageWithIdName:idName
-                     className:className
-                           src:src
-                           alt:altText
-                         width:[width description]
-                        height:[height description]];
+    [self writeImageWithSrc:src
+                        alt:altText
+                      width:[width description]
+                     height:[height description]];
 }
 
 #pragma mark Resource Files

@@ -36,14 +36,6 @@
 //  <a href="...." target="..." rel="nofollow">
 - (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
 
-//  <img src="..." alt="..." width="..." height="..." />
-- (void)writeImageWithIdName:(NSString *)idName
-                   className:(NSString *)className
-                         src:(NSString *)src
-                         alt:(NSString *)alt
-                       width:(NSString *)width
-                      height:(NSString *)height;
-
 - (BOOL)isXHTML;
 
 @end

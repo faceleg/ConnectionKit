@@ -87,7 +87,7 @@
 {
     // Any custom classname specifed
     NSString *customClass = [self customCSSClassName];
-    if ([customClass length]) [context addClassName:customClass];
+    if ([customClass length]) [context pushElementClassName:customClass];
     
     
     // Editing
@@ -95,12 +95,12 @@
     {
         if ([context isForEditing])
         { 
-            [context addClassName:([self isRichText] ? @"kBlock" : @"kLine")];
+            [context pushElementClassName:([self isRichText] ? @"kBlock" : @"kLine")];
         }
     }
     else
     {
-        [context addClassName:@"in"];
+        [context pushElementClassName:@"in"];
     }
 }
 
@@ -249,7 +249,7 @@
         NSMutableString *css = [[NSMutableString alloc] init];
         KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
         
-        [context addElementAttribute:@"id" value:ID];
+        [context pushElementAttribute:@"id" value:ID];
         
         [cssWriter writeIDSelector:ID];
         
@@ -264,14 +264,14 @@
     else
     {
         NSString *cssText = [self graphicalTextStyleWithImageURL:url width:width height:height];
-        [context addElementAttribute:@"style" value:cssText];
+        [context pushElementAttribute:@"style" value:cssText];
     }
     
     [context addDependencyOnObject:[context page] keyPath:@"master.graphicalTitleSize"];
     
     
     // Graphical text
-    [context addClassName:@"replaced"];
+    [context pushElementClassName:@"replaced"];
 }
 
 #pragma mark HTML

@@ -168,13 +168,11 @@ typedef enum {
              height:(NSNumber *)height  // ditto
                type:(NSString *)type;   // nil means keep in native format
 
-- (void)writeImageWithIdName:(NSString *)idName
-                   className:(NSString *)className
-                 sourceMedia:(SVMediaRecord *)media
-                         alt:(NSString *)altText
-                       width:(NSNumber *)width
-                      height:(NSNumber *)height
-                        type:(NSString *)type;
+- (void)writeImageWithSourceMedia:(SVMediaRecord *)media
+                              alt:(NSString *)altText
+                            width:(NSNumber *)width
+                           height:(NSNumber *)height
+                             type:(NSString *)type;
 
 
 #pragma mark Resource Files

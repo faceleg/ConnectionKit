@@ -173,27 +173,28 @@
     // Image needs unique ID for DOM Controller to find
     NSString *idName = [@"image-" stringByAppendingString:[self elementID]];
     
+    
     // Actually write the image
+    [context pushElementAttribute:@"id" value:idName];
+    if (isPagelet) [context pushElementClassName:[self className]];
+    
     SVMediaRecord *media = [self media];
     if (media)
     {
-        [context writeImageWithIdName:idName
-                            className:(isPagelet ? nil : [self className])
-                          sourceMedia:media
-                                  alt:alt
-                                width:[self width]
-                               height:[self height]
-                                 type:[self type]];
+        [context writeImageWithSourceMedia:media
+                                       alt:alt
+                                     width:[self width]
+                                    height:[self height]
+                                      type:[self type]];
     }
     else
     {
         NSURL *URL = [self imagePreviewURL];
-        [context writeImageWithIdName:idName
-                            className:(isPagelet ? nil : [self className])
-                                  src:(URL ? [context relativeURLStringOfURL:URL] : @"")
-                                  alt:alt
-                                width:[[self width] description]
-                               height:[[self height] description]];
+        
+        [context writeImageWithSrc:(URL ? [context relativeURLStringOfURL:URL] : @"")
+                               alt:alt
+                             width:[[self width] description]
+                            height:[[self height] description]];
     }
     
     [context addDependencyOnObject:self keyPath:@"media"];
