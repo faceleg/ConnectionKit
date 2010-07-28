@@ -237,9 +237,9 @@ static NSDictionary *GroupSubviewsIntoRows(NSView *view)
 			}
 			if (numberOfIntersections >= 2)	// This view intersects with 2 or more views, so make it on a row by itself.
 			{
-//				NSRange yRange = CalcYRange(viewInRow);
-//				[adjustedRows setObject:[NSMutableArray arrayWithObject:viewInRow] forKey:[NSValue valueWithRange:yRange]];
-//				[remainingArray removeObject:viewInRow];
+				NSRange yRange = CalcYRange(viewInRow);
+				[adjustedRows setObject:[NSMutableArray arrayWithObject:viewInRow] forKey:[NSValue valueWithRange:yRange]];
+				[remainingArray removeObject:viewInRow];
 			}
 		}
 		[adjustedRows setObject:[NSArray arrayWithArray:remainingArray] forKey:rowValue];
@@ -354,11 +354,24 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 //		{
 //			NSLog(@"Break here");
 //		}
+		if ([subview isKindOfClass:[NSBox class]] && [subview frame].origin.y == 62.0)
+		{
+			NSLog(@"Break here - this is the separator line");
+		}
+		if ([subview isMemberOfClass:[NSView class]] && [subview frame].size.width == 59.0)
+		{
+			NSLog(@"Break here - this is the left box");
+		}
 		
 		// Hmm, what to do about a right-aligned text item that is anchored to the left?
 		
 		
 		NSRect originalRect = [subview frame];				// bounds before resizing
+		
+		if (previousOriginalMinX != NSNotFound && NSMinX(originalRect) < previousOriginalMaxX)
+		{
+			NSLog(@"minX of this is less than maxX of previous; must be overlapping");
+		}
 		
 		CGFloat sizeDelta = ResizeToFit(subview, level+1);	// How much it got increased (to the right)
 
