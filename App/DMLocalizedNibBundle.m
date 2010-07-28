@@ -148,7 +148,6 @@ static void LogRows(NSDictionary *rows)
 	{
 		NSRange rowRange = [rowValue rangeValue];
 		NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
-		NSArray *sortedRowViews = [subviewsOnThisRow sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
 		NSString *desc = DescViewsInRow(sortedRowViews);
 		LogIt(@"%2d. [%3d-%-3d] %@", i++, rowRange.location, NSMaxRange(rowRange), desc);
 	}	
@@ -242,7 +241,11 @@ static NSDictionary *GroupSubviewsIntoRows(NSView *view)
 				[remainingArray removeObject:viewInRow];
 			}
 		}
-		[adjustedRows setObject:[NSArray arrayWithArray:remainingArray] forKey:rowValue];
+		
+		// Now, before we set the rows key, sort the views by X location.
+		NSArray *sortedRowViews = [remainingArray sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
+
+		[adjustedRows setObject:sortedRowViews forKey:rowValue];
 	}
 	
 	return [NSDictionary dictionaryWithDictionary:adjustedRows];
@@ -475,7 +478,6 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 			for (NSValue *rowValue in [sortedRanges reverseObjectEnumerator])
 			{
 				NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
-				NSArray *sortedRowViews = [subviewsOnThisRow sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
 				
 				CGFloat rowDelta = ResizeRowViews(sortedRowViews, level+1);
 				delta = MAX(rowDelta, delta);	// save the max delta so we know how much to catch the others up to.
@@ -493,7 +495,6 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 			for (NSValue *rowValue in [sortedRanges reverseObjectEnumerator])
 			{
 				NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
-				NSArray *sortedRowViews = [subviewsOnThisRow sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
 				CGFloat rowDelta = [[deltasForRows objectForKey:rowValue] floatValue];
 				CGFloat neededDelta = delta - rowDelta;
 				
@@ -857,7 +858,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			{
 				NSView *view = (NSView *)topLevelObject;
 				
-				if ([fileName hasSuffix:@"PageInspector.nib"])		// THE ONLY ONE TO RESIZE, FOR NOW, JUST SO IT'S EASIER TO DEBUG.
+				// if ([fileName hasSuffix:@"PageInspector.nib"])		// THE ONLY ONE TO RESIZE, FOR NOW, JUST SO IT'S EASIER TO DEBUG.
 				{
 					CGFloat delta = ResizeToFit(view, 0);
 					if (delta) NSLog(@"############## Warning: Delta from resizing top-level %@ view: %f", [fileName lastPathComponent], delta);
@@ -877,12 +878,16 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 					NSView *contentView = [window contentView];
 					NSRect windowFrame = [contentView convertRect:[window frame]
 														 fromView:nil];
-//					windowFrame.size.width += 100;
+//					windowFrame.size.width += 200;
 //					windowFrame = [contentView convertRect:windowFrame toView:nil];
 //					[window setFrame:windowFrame display:YES];	
 					
 					// TODO: should we update min size?
 				}
+				
+				// Regular windows want 20 pixels right margin; utility windows 10 pixels.  I think from the HIG.
+				CGFloat desiredMargins = ([window styleMask] & NSUtilityWindowMask) ? 10 : 20;
+
 				CGFloat delta = ResizeToFit([window contentView], 0);
 				NSLog(@"Delta from resizing window-level view: %f.  Maybe I should be resizing the whole window?", delta);
 					
