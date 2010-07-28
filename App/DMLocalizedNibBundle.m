@@ -289,7 +289,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 	NSUInteger controlGroupingMargin = NSNotFound;	// try to give this a real value based on control size of first item that can be found
 	
 	NSString *desc = DescViewsInRow(rowViews);
-	LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], desc);
+	LogIt(@"%@ROW %@", [@"                                                            " substringToIndex:2*level], desc);
 	
 	
 	// Size our rowViews
@@ -303,13 +303,13 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 			controlGroupingMargin = GuessControlSizeGroupingMargin(subview);
 		}
 		
-		if ([subview isKindOfClass:[NSTextField class]] && [[subview stringValue] hasPrefix:@"[SCALE"])
-		{
-			NSLog(@"Break here");
-		}
+//		if ([subview isKindOfClass:[NSTextField class]] && [[subview stringValue] hasPrefix:@"[SCALE"])
+//		{
+//			NSLog(@"Break here");
+//		}
 			
 		NSRect originalRect = [subview frame];				// bounds before resizing
-		CGFloat sizeDelta = ResizeToFit(subview, level);	// How much it got increased (to the right)
+		CGFloat sizeDelta = ResizeToFit(subview, level+1);	// How much it got increased (to the right)
 
 		NSUInteger mask = [subview autoresizingMask];
 		BOOL anchorLeft = 0 == (mask & NSViewMinXMargin);
@@ -350,40 +350,46 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 
 static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 {
-	CGFloat delta = 0;
-	
+	CGFloat maxWidth = 0.0;
+	CGFloat delta = 0.0;
+
 	if ([[view subviews] count])
 	{
 		// TabView:  Just pass this down to the tabviews to handle, and get our largest width.
 		
 		if ([view isKindOfClass:[NSTabView class]])
 		{
-			CGFloat maxTabViewWidth = 0.0;
 			NSArray *tabViewItems = [(NSTabView *)view tabViewItems];
+			LogIt(@"%@TABVIEWS %@", [@"                                                            " substringToIndex:2*level], [[tabViewItems description] condenseWhiteSpace]);
 			for (NSTabViewItem *item in tabViewItems)		// resize tabviews instead of subviews
 			{
 				(void) ResizeToFit([item view], level+1);
 				CGFloat width = NSWidth([[item view] frame]);
 				
-				maxTabViewWidth = MAX(width,maxTabViewWidth);		// pay attention to the largest width we had to resize things
+				maxWidth = MAX(width,maxWidth);		// pay attention to the largest width we had to resize things
 			}
 			
 			// after resizing subviews, I should go through again and actually set the new dimensions?
 			for (NSTabViewItem *item in tabViewItems)		// resize tabviews instead of subviews
 			{
-				NSRect newFrame = [view frame];
-				newFrame.size.width = maxTabViewWidth;		// autoresizesSubviews should handle the details
-				[view setFrame:newFrame];
+				NSRect newFrame = [[item view] frame];
+				newFrame.size.width = maxWidth;		// autoresizesSubviews should handle the details
+				[[item view] setFrame:newFrame];
 			}
 			
-			
+			// Now the tricky part is to set this enclosing view properly
+			// From what I can tell, the tabview is always 20 pixels larger than its contained views.
+			NSRect originalFrame = [view frame];
+			NSRect newFrame = originalFrame;
+			newFrame.size.width = maxWidth + 20;
+			[view setFrame:newFrame];
+			delta = NSWidth(newFrame) - NSWidth(originalFrame);
 		}
 		else	// standard subviews, group into rows and find widest row.
 		{
 			NSDictionary *rows = GroupSubviewsIntoRows(view);
 			// LogRows(rows);
 			NSMutableDictionary *deltasForRows = [NSMutableDictionary dictionary];
-			CGFloat maxDelta = 0.0;
 		
 			NSArray *sortedRanges = [[rows allKeys] sortedArrayUsingSelector:@selector(compareRangeLocation:)];
 			for (NSValue *rowValue in [sortedRanges reverseObjectEnumerator])
@@ -391,60 +397,55 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 				NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
 				NSArray *sortedRowViews = [subviewsOnThisRow sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
 				
-				CGFloat rowDelta = ResizeRowViews(sortedRowViews, level);
-				maxDelta = MAX(rowDelta, maxDelta);	// save the max delta so we know how much to catch the others up to.
+				CGFloat rowDelta = ResizeRowViews(sortedRowViews, level+1);
+				delta = MAX(rowDelta, delta);	// save the max delta so we know how much to catch the others up to.
 				
 				[deltasForRows setObject:[NSNumber numberWithFloat:rowDelta] forKey:rowValue];
 								
 				// LogIt(@"Delta for this row: %.2f", delta);
 			}
 			
-			LogIt(@"%@", deltasForRows);
 			// After resizing rows, I should go through again and set the new dimensions to match the widest row
 			for (NSValue *rowValue in [sortedRanges reverseObjectEnumerator])
 			{
 				NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
 				NSArray *sortedRowViews = [subviewsOnThisRow sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
 				CGFloat rowDelta = [[deltasForRows objectForKey:rowValue] floatValue];
-				CGFloat neededDelta = maxDelta - rowDelta;
+				CGFloat neededDelta = delta - rowDelta;
 				
 				ResizeRowsByDelta(sortedRowViews, neededDelta);
 			}
-		}
-		
-		// Now we have the largest that the subviews had to resize; it's time to apply that to this view now but not its subviews.
-		
-		if (delta)
-		{
-			LogIt(@"%@%@ Largest Delta for this whole view: %.2f", [@"                                                            " substringToIndex:2*level], view, delta);
 			
-			// Are we pinned to the right of our parent?
-			BOOL rightAnchored = IsRightAnchored(view);
+			// Now we have the largest that the subviews had to resize; it's time to apply that to this view now but not its subviews.
+			if (delta)
+			{
+				LogIt(@"%@%@ Largest Delta for this whole view: %.2f", [@"                                                            " substringToIndex:2*level], view, delta);
+				
+				// Are we pinned to the right of our parent?
+				//			BOOL rightAnchored = IsRightAnchored(view);
+				// I THINK I DON'T NEED TO DO THIS ... THIS IS HANDLED IN THE ROW RESIZER.
+				
+				// Adjust our size (turn off auto resize, because we just fixed up all the
+				// objects within us).
+				BOOL autoresizesSubviews = [view autoresizesSubviews];
+				if (autoresizesSubviews) {
+					[view setAutoresizesSubviews:NO];
+				}
+				NSRect selfFrame = [view frame];
+				selfFrame.size.width += delta;
+				//			if (rightAnchored) {
+				//				// Right side is anchored, so we need to slide back to the left.
+				//				selfFrame.origin.x -= delta;
+				//			}
+				//	selfFrame.origin.x += delta.x;
+				//	selfFrame.origin.y += delta.y;
+				[view setFrame:selfFrame];
+				if (autoresizesSubviews) {
+					[view setAutoresizesSubviews:autoresizesSubviews];
+				}
+			}
 			
-			// Adjust our size (turn off auto resize, because we just fixed up all the
-			// objects within us).
-			BOOL autoresizesSubviews = [view autoresizesSubviews];
-			if (autoresizesSubviews) {
-				[view setAutoresizesSubviews:NO];
-			}
-			NSRect selfFrame = [view frame];
-			selfFrame.size.width += delta;
-			if (rightAnchored) {
-				// Right side is anchored, so we need to slide back to the left.
-				selfFrame.origin.x -= delta;
-			}
-			//	selfFrame.origin.x += delta.x;
-			//	selfFrame.origin.y += delta.y;
-			[view setFrame:selfFrame];
-			if (autoresizesSubviews) {
-				[view setAutoresizesSubviews:autoresizesSubviews];
-			}
 		}
-		
-		
-		LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], [[view description] condenseWhiteSpace]);
-		
-		
 	}
 	return delta;
 }
@@ -455,11 +456,14 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 
 static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 {
+	// logging newline comes at the end
+	Log(@"%@RESIZE %@", [@"                                                            " substringToIndex:2*level], [[view description] condenseWhiteSpace]);
 	CGFloat delta = 0.0;
 	
 	if ([[view subviews] count])		// Subviews: Get the subviews resized; that's the width this view wants to be.
 	{
-		delta = ResizeAnySubviews(view, level);
+		LogIt(@"");		// newline
+		delta = ResizeAnySubviews(view, level+1);
 	}
 	else	// A primitive view without subviews; size according to its contents
 	{
@@ -563,6 +567,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		
 		// Return how much we changed size.
 		delta = NSWidth(newFrame) - NSWidth(oldFrame);
+		if (!delta) LogIt(@" (no change)"); else LogIt(@" ... to %+.0f (∂ %.0f)", NSWidth(newFrame), delta);
 	}
 	return delta;
 }
@@ -665,7 +670,6 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 {
 	NSString		*nibName	= [self nibName];
 	NSBundle		*nibBundle	= [self nibBundle];		
-	// NSLog(@"%s %@ %@",__FUNCTION__, nibName, nibBundle);
 	if(!nibBundle) nibBundle = [NSBundle mainBundle];
 	NSString		*nibPath	= [nibBundle pathForResource:nibName ofType:@"nib"];
 	NSDictionary	*context	= [NSDictionary dictionaryWithObjectsAndKeys:self, NSNibOwner, nil];
