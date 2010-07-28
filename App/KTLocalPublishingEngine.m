@@ -299,22 +299,6 @@
     }
 }
 
-#pragma mark -
-#pragma mark Design
-
-- (void)publishDesign
-{
-    // When publishing changes, only upload the design if its published version is different to the current one
-    //KTMaster *master = [[[self site] rootPage] master];
-    //KTDesign *design = [master design];
-    if (![self onlyPublishChanges] ||
-        !NO)
-    {
-        [super publishDesign];
-    }
-}
-
-#pragma mark -
 #pragma mark Ping
 
 /*  Sends a GET request to the URL but does nothing with the result.

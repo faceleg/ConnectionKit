@@ -125,9 +125,6 @@ typedef enum {
 - (void)setConnection:(id <CKConnection>)connection;
 - (void)createConnection;
 
-// Design
-- (void)publishDesign;
-
 
 @end
 
