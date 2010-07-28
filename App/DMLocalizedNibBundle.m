@@ -240,6 +240,7 @@ static NSDictionary *GroupSubviewsIntoRows(NSView *view)
 
 #pragma mark Resizing Logic
 
+
 static void ResizeRowViewsToDelta(NSArray *rowViews, CGFloat delta)
 {
 	for (NSView *view in rowViews)
@@ -341,18 +342,21 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 		
 		if ([view isKindOfClass:[NSTabView class]])
 		{
+			CGFloat maxTabViewWidth = 0.0;
 			NSArray *tabViewItems = [(NSTabView *)view tabViewItems];
 			for (NSTabViewItem *item in tabViewItems)		// resize tabviews instead of subviews
 			{
-				CGFloat tabviewDelta = ResizeToFit([item view], level+1);
-				delta = MAX(delta,tabviewDelta);		// pay attention to the largest amount we had to resize things
+				(void) ResizeToFit([item view], level+1);
+				CGFloat width = NSWidth([[item view] frame]);
+				
+				maxTabViewWidth = MAX(width,maxTabViewWidth);		// pay attention to the largest width we had to resize things
 			}
 			
 			// after resizing subviews, I should go through again and actually set the new dimensions?
 			for (NSTabViewItem *item in tabViewItems)		// resize tabviews instead of subviews
 			{
 				NSRect newFrame = [view frame];
-				newFrame.size.width += delta;		// autoresizesSubviews should handle the details
+				newFrame.size.width = maxTabViewWidth;		// autoresizesSubviews should handle the details
 				[view setFrame:newFrame];
 			}
 			
@@ -361,8 +365,10 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 		else	// standard subviews, group into rows and find widest row.
 		{
 			NSDictionary *rows = GroupSubviewsIntoRows(view);
-			LogRows(rows);
-			
+			// LogRows(rows);
+			NSMutableDictionary *deltasForRows = [NSMutableDictionary dictionary];
+			CGFloat maxDelta = 0.0;
+		
 			NSArray *sortedRanges = [[rows allKeys] sortedArrayUsingSelector:@selector(compareRangeLocation:)];
 			for (NSValue *rowValue in [sortedRanges reverseObjectEnumerator])
 			{
@@ -370,17 +376,23 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 				NSArray *sortedRowViews = [subviewsOnThisRow sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
 				
 				CGFloat rowDelta = ResizeRowViews(sortedRowViews, level);
-				// NSLog(@"Delta for this row: %.2f", delta);
-				delta = MAX(delta,rowDelta);		// pay attention to the largest amount we had to resize things
+				maxDelta = MAX(rowDelta, maxDelta);	// save the max delta so we know how much to catch the others up to.
+				
+				[deltasForRows setObject:[NSNumber numberWithFloat:rowDelta] forKey:rowValue];
+								
+				// LogIt(@"Delta for this row: %.2f", delta);
 			}
 			
+			LogIt(@"%@", deltasForRows);
 			// After resizing rows, I should go through again and set the new dimensions to match the widest row
 			for (NSValue *rowValue in [sortedRanges reverseObjectEnumerator])
 			{
 				NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
 				NSArray *sortedRowViews = [subviewsOnThisRow sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
+				CGFloat rowDelta = [[deltasForRows objectForKey:rowValue] floatValue];
+				CGFloat neededDelta = maxDelta - rowDelta;
 				
-				ResizeRowViewsToDelta(sortedRowViews, delta);
+				ResizeRowViewsToDelta(sortedRowViews, neededDelta);
 			}
 		}
 		
@@ -414,7 +426,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 		}
 		
 		
-		//LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], [[view description] condenseWhiteSpace]);
+		LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], [[view description] condenseWhiteSpace]);
 		
 		
 	}
@@ -675,7 +687,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	// Don't allow this to localize any file that is not in the app bundle!
 	if ([fileName hasPrefix:[[NSBundle mainBundle] bundlePath]])
 	{
-		NSLog(@"loadNibFile going to localize %@ with top objects: %@", [fileName lastPathComponent], [[context description] condenseWhiteSpace]);
+		// NSLog(@"loadNibFile going to localize %@ with top objects: %@", [fileName lastPathComponent], [[context description] condenseWhiteSpace]);
 		result = [self _deliciousLocalizingLoadNibFile:fileName externalNameTable:context withZone:zone bundle:[NSBundle mainBundle]];
 	}
 	else
