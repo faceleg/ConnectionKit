@@ -31,9 +31,10 @@
 
 #import "NSString+Karelia.h"
 
-
 // ===========================================================================
 // Based on GTMUILocalizerAndTweaker.m
+
+#pragma mark Resizing Support
 
 static BOOL IsRightAnchored(NSView *view) {
 	NSUInteger autoresizing = [view autoresizingMask];
@@ -64,6 +65,34 @@ static void OffsetView(NSView *view, NSPoint offset)
 	newFrame.origin.y += offset.y;
 	[view setFrame:newFrame];
 }
+
+@interface NSView (desc)
+- (NSString *)description;
+@end
+@implementation NSView (desc)
+- (NSString *)description;
+{
+	NSMutableString *desc = [NSMutableString string];
+	NSUInteger mask = [self autoresizingMask];
+	BOOL stretchyLeft = 0 != (mask & NSViewMinXMargin);
+	BOOL stretchyView = 0 != (mask & NSViewWidthSizable);
+	BOOL stretchyRight = 0 != (mask & NSViewMaxXMargin);
+	
+	NSString *leftMargin	= stretchyLeft	? @"···"	: @"———";
+	NSString *leftWidth		= stretchyView	? @"<ɕɕ"	: @"<··";
+	NSString *rightWidth	= stretchyView	? @"ɕɕ>"	: @"··>";
+	NSString *rightMargin	= stretchyRight	? @"···"	: @"———";
+	
+	[desc appendString:leftMargin];
+	[desc appendString:leftWidth];
+	[desc appendString:[super description]];
+	[desc appendFormat:@" %.0f+%.0f ", [self frame].origin.x, [self frame].size.width];
+	[desc appendString:rightWidth];
+	[desc appendString:rightMargin];
+	return desc;
+}
+@end
+
 
 static NSString *DescView(NSView *view)
 {
@@ -129,8 +158,7 @@ static NSString *DescView(NSView *view)
 	}
 	else
 	{
-		//[desc appendFormat:@"<%@>",[[view class] description]];
-		[desc appendString:[view description]];
+		[desc appendFormat:@"<%@>",[[view class] description]];
 	}
 	[desc appendString:rightWidth];
 	[desc appendString:rightMargin];
@@ -142,7 +170,7 @@ static NSString *DescViewsInRow(NSArray *sortedRowViews)
 	NSMutableString *rowDesc = [NSMutableString string];
 	for (NSView *rowView in sortedRowViews)
 	{
-		NSString *desc = DescView(rowView);
+		NSString *desc = [rowView description];
 		[rowDesc appendString:desc];
 		[rowDesc appendString:@" "];
 	}
@@ -210,6 +238,47 @@ static NSDictionary *GroupSubviewsIntoRows(NSView *view)
 	return [NSDictionary dictionaryWithDictionary:rows];
 }
 
+#pragma mark Resizing Logic
+
+static void ResizeRowViewsToDelta(NSArray *rowViews, CGFloat delta)
+{
+	for (NSView *view in rowViews)
+	{
+		// Apply the struts and springs to each item
+		NSUInteger mask = [view autoresizingMask];
+		BOOL stretchyLeft = 0 != (mask & NSViewMinXMargin);
+		BOOL stretchyView = 0 != (mask & NSViewWidthSizable);
+		BOOL stretchyRight = 0 != (mask & NSViewMaxXMargin);
+		
+		NSRect newFrame = [view frame];
+		if (stretchyView)
+		{
+			if (stretchyLeft)
+			{
+				newFrame.size.width += delta/2.0;
+				newFrame.origin.x += delta/2.0;
+			}
+			else if (stretchyRight)
+			{
+				newFrame.size.width += delta/2.0;
+			}
+			else
+			{
+				newFrame.size.width += delta;		// the width gets half of it
+			}
+		}
+		else if (stretchyLeft && stretchyRight)
+		{
+			newFrame.origin.x += delta/2.0;
+		}
+		else if (stretchyLeft && !stretchyRight)
+		{
+			newFrame.origin.x += delta;
+		}
+		[view setFrame:newFrame];
+	}
+}
+
 static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 {
 	CGFloat delta = 0;
@@ -226,12 +295,12 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 	
 	// Size our rowViews
 	
-	NSView *subview = nil;
 	NSPoint subviewOffset = NSZeroPoint;
-	for (subview in rowViews) {
+	for (NSView *subview in rowViews) {
 		
 		subviewOffset.x = delta;	// we'll be moving it over by the so-far delta
 		
+		OffsetView(subview, subviewOffset);		// slide left edge over to running delta. I could do this before or after resizing, I guess....
 		CGFloat thisDelta = ResizeToFit(subview, level);
 		if (0 != thisDelta)		// no point in looking if nothing changed
 		{
@@ -241,8 +310,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 			// once we know this view's size.
 			if (IsRightAnchored(subview)) {
 				[rightAlignedSubViews addObject:subview];
-				NSNumber *nsDelta = [NSNumber numberWithFloat:thisDelta];
-				[rightAlignedSubViewDeltas addObject:nsDelta];
+				[rightAlignedSubViewDeltas addObject:[NSNumber numberWithFloat:thisDelta]];
 			}
 		}
 	}
@@ -251,57 +319,14 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 	// Now spin over the list of right aligned view and their size changes
 	// fixing up their positions so they are still right aligned in our final
 	// view.
-	for (NSUInteger lp = 0; lp < [rightAlignedSubViews count]; ++lp) {
-		subview = [rightAlignedSubViews objectAtIndex:lp];
-		CGFloat delta = [[rightAlignedSubViewDeltas objectAtIndex:lp] doubleValue];
-		NSRect viewFrame = [subview frame];
-		viewFrame.origin.x += -delta + delta;
-		[subview setFrame:viewFrame];
-	}
-	/*
-	 if (viewToSlideAndResize_) {
-	 NSRect viewFrame = [viewToSlideAndResize_ frame];
-	 if (!rightAnchored) {
-	 // If our right wasn't anchored, this view slides (we push it right).
-	 // (If our right was anchored, the assumption is the view is in front of
-	 // us so its x shouldn't move.)
-	 viewFrame.origin.x += delta;
-	 }
-	 viewFrame.size.width -= delta;
-	 [viewToSlideAndResize_ setFrame:viewFrame];
-	 }
-	 if (viewToSlide_) {
-	 NSRect viewFrame = [viewToSlide_ frame];
-	 // Move the view the same direction we moved.
-	 if (rightAnchored) {
-	 viewFrame.origin.x -= delta;
-	 } else {
-	 viewFrame.origin.x += delta;
-	 }
-	 [viewToSlide_ setFrame:viewFrame];
-	 }
-	 if (viewToResize_) {
-	 if ([viewToResize_ isKindOfClass:[NSWindow class]]) {
-	 NSWindow *window = (NSWindow *)viewToResize_;
-	 NSView *contentView = [window contentView];
-	 NSRect windowFrame = [contentView convertRect:[window frame]
-	 fromView:nil];
-	 windowFrame.size.width += delta;
-	 windowFrame = [contentView convertRect:windowFrame toView:nil];
-	 [window setFrame:windowFrame display:YES];
-	 // For some reason the content view is resizing, but not adjusting its
-	 // origin, so correct it manually.
-	 [contentView setFrameOrigin:NSMakePoint(0, 0)];
-	 // TODO: should we update min size?
-	 } else {
-	 NSRect viewFrame = [viewToResize_ frame];
-	 viewFrame.size.width += delta;
-	 [viewToResize_ setFrame:viewFrame];
-	 // TODO: should we check if this view is right anchored, and adjust its
-	 // x position also?
-	 }
-	 }
-	 */
+	//
+	// ????
+	//
+//	for (NSUInteger lp = 0; lp < [rightAlignedSubViews count]; ++lp) {
+//		subview = [rightAlignedSubViews objectAtIndex:lp];
+//		CGFloat eachDelta = [[rightAlignedSubViewDeltas objectAtIndex:lp] doubleValue];
+//		OffsetView(subview, NSMakePoint(delta - eachDelta, 0));
+//	}
 	return delta;
 }
 
@@ -322,6 +347,16 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 				CGFloat tabviewDelta = ResizeToFit([item view], level+1);
 				delta = MAX(delta,tabviewDelta);		// pay attention to the largest amount we had to resize things
 			}
+			
+			// after resizing subviews, I should go through again and actually set the new dimensions?
+			for (NSTabViewItem *item in tabViewItems)		// resize tabviews instead of subviews
+			{
+				NSRect newFrame = [view frame];
+				newFrame.size.width += delta;		// autoresizesSubviews should handle the details
+				[view setFrame:newFrame];
+			}
+			
+			
 		}
 		else	// standard subviews, group into rows and find widest row.
 		{
@@ -338,9 +373,18 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 				// NSLog(@"Delta for this row: %.2f", delta);
 				delta = MAX(delta,rowDelta);		// pay attention to the largest amount we had to resize things
 			}
+			
+			// After resizing rows, I should go through again and set the new dimensions to match the widest row
+			for (NSValue *rowValue in [sortedRanges reverseObjectEnumerator])
+			{
+				NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
+				NSArray *sortedRowViews = [subviewsOnThisRow sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
+				
+				ResizeRowViewsToDelta(sortedRowViews, delta);
+			}
 		}
 		
-		// Now we have the largest that the subviews had to resize; it's time to apply that to this view now.
+		// Now we have the largest that the subviews had to resize; it's time to apply that to this view now but not its subviews.
 		
 		if (delta)
 		{
@@ -377,120 +421,120 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 	return delta;
 }
 
+// Resizes a view to be the size it "wants" to be. Returns how much changed.
+// Does not try to do any reposititioning -- not its job.
+
 static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 {
-	// Start by resizing subviews.
-	// I don't think it's likely you will both have subviews *and* have a natural size, but I'll
-	// let both try, and take the largest resizing delta.
-	CGFloat delta = ResizeAnySubviews(view, level);
+	CGFloat delta = 0.0;
 	
-//	// If we've got one of us within us, recurse (for grids)
-//	if ([view isKindOfClass:[GTMWidthBasedTweaker class]]) {
-//		GTMWidthBasedTweaker *widthAlignmentBox = (GTMWidthBasedTweaker *)view;
-//		return NSMakeSize([widthAlignmentBox tweakLayoutWithOffset:delta], 0);
-//	}
-	
-	NSRect oldFrame = [view frame];		// keep track of original frame so we know how much it resized
-	NSRect fitFrame = oldFrame;			// only set differently when sizeToFit is called, so we know it was already called
-	NSRect newFrame = oldFrame;			// what we will be setting the frame to (if not already done)
+	if ([[view subviews] count])		// Subviews: Get the subviews resized; that's the width this view wants to be.
+	{
+		delta = ResizeAnySubviews(view, level);
+	}
+	else	// A primitive view without subviews; size according to its contents
+	{
+		NSRect oldFrame = [view frame];		// keep track of original frame so we know how much it resized
+		NSRect fitFrame = oldFrame;			// only set differently when sizeToFit is called, so we know it was already called
+		NSRect newFrame = oldFrame;			// what we will be setting the frame to (if not already done)
 
-//	// Try to turn on some stuff that will help me see the new bounds
-//	if ([view respondsToSelector:@selector(setBordered:)]) {
-//		[((NSTextField *)view) setBordered:YES];
-//	}
-//	if ([view respondsToSelector:@selector(setDrawsBackground:)]) {
-//		[((NSTextField *)view) setDrawsBackground:YES];
-//	}
-//	
-//	
-	if ([view isKindOfClass:[NSTextField class]] &&
-		[(NSTextField *)view isEditable]) {
-		// Don't try to sizeToFit because edit fields really don't want to be sized
-		// to what is in them as they are for users to enter things so honor their
-		// current size.
-	} else if ([view isKindOfClass:[NSPathControl class]]) {
-		// Don't try to sizeToFit because NSPathControls usually need to be able
-		// to display any path, so they shouldn't tight down to whatever they
-		// happen to be listing at the moment.
-	} else if ([view isKindOfClass:[NSImageView class]]) {
-		// Definitely don't mess with size of an imageView
-	} else if ([view isKindOfClass:[NSBox class]]) {
-		// I don't think it's a good idea to let NSBox figure out its sizeToFit.
-	} else if ([view isKindOfClass:[NSPopUpButton class]]) {
-		// Popup buttons: Let's assume that we don't want to resize them.  Maybe later I can loop through strings
-		// to get a minimum width, though some popups are designed to already be less than longest string.
-		// But one thing is clear: I don't want to shrink one that is stretchy, since it's probably
-		// intended to fill a space.
-	} else {
-		// Generically fire a sizeToFit if it has one.  e.g. NSTableColumn, NSProgressIndicator, (NSBox), NSMenuView, NSControl, NSTableView, NSText
-		if ([view respondsToSelector:@selector(sizeToFit)]) {
+	//	// Try to turn on some stuff that will help me see the new bounds
+	//	if ([view respondsToSelector:@selector(setBordered:)]) {
+	//		[((NSTextField *)view) setBordered:YES];
+	//	}
+	//	if ([view respondsToSelector:@selector(setDrawsBackground:)]) {
+	//		[((NSTextField *)view) setDrawsBackground:YES];
+	//	}
+	//	
+	//	
+		if ([view isKindOfClass:[NSTextField class]] &&
+			[(NSTextField *)view isEditable]) {
+			// Don't try to sizeToFit because edit fields really don't want to be sized
+			// to what is in them as they are for users to enter things so honor their
+			// current size.
+		} else if ([view isKindOfClass:[NSPathControl class]]) {
+			// Don't try to sizeToFit because NSPathControls usually need to be able
+			// to display any path, so they shouldn't tight down to whatever they
+			// happen to be listing at the moment.
+		} else if ([view isKindOfClass:[NSImageView class]]) {
+			// Definitely don't mess with size of an imageView
+		} else if ([view isKindOfClass:[NSBox class]]) {
+			// I don't think it's a good idea to let NSBox figure out its sizeToFit.
+		} else if ([view isKindOfClass:[NSPopUpButton class]]) {
+			// Popup buttons: Let's assume that we don't want to resize them.  Maybe later I can loop through strings
+			// to get a minimum width, though some popups are designed to already be less than longest string.
+			// But one thing is clear: I don't want to shrink one that is stretchy, since it's probably
+			// intended to fill a space.
+		} else {
+			// Generically fire a sizeToFit if it has one.  e.g. NSTableColumn, NSProgressIndicator, (NSBox), NSMenuView, NSControl, NSTableView, NSText
+			if ([view respondsToSelector:@selector(sizeToFit)]) {
+				
+				[view performSelector:@selector(sizeToFit)];
+				fitFrame = [view frame];
+				newFrame = fitFrame;
+				
+				if ([view isKindOfClass:[NSMatrix class]]) {
+					NSMatrix *matrix = (NSMatrix *)view;
+					// See note on kWrapperStringSlop for why this is done.
+					for (NSCell *cell in [matrix cells]) {
+						if ([[cell title] rangeOfString:kForcedWrapString].location !=
+							NSNotFound) {
+							newFrame.size.width += kWrapperStringSlop;
+							break;
+						}
+					}
+				}
+				
+			}
 			
-			[view performSelector:@selector(sizeToFit)];
-			fitFrame = [view frame];
-			newFrame = fitFrame;
+			// AFTER calling sizeToFit, we might override this sizing that just happened
 			
-			if ([view isKindOfClass:[NSMatrix class]]) {
-				NSMatrix *matrix = (NSMatrix *)view;
-				// See note on kWrapperStringSlop for why this is done.
-				for (NSCell *cell in [matrix cells]) {
-					if ([[cell title] rangeOfString:kForcedWrapString].location !=
-						NSNotFound) {
+			if ([view isKindOfClass:[NSButton class]]) {
+				NSButton *button = (NSButton *)view;
+							
+				// -[NSButton sizeToFit] gives much worse results than IB's Size to Fit
+				// option for standard push buttons.
+				if (([button bezelStyle] == NSRoundedBezelStyle) &&
+					([[button cell] controlSize] == NSRegularControlSize)) {
+					// This is the amount of padding IB adds over a sizeToFit, empirically
+					// determined.
+					const CGFloat kExtraPaddingAmount = 12.0;
+					// Width is tricky, new buttons in IB are 96 wide, Carbon seems to have
+					// defaulted to 70, Cocoa seems to like 82.  But we go with 96 since
+					// that's what IB is doing these days.
+					const CGFloat kMinButtonWidth = (CGFloat)96.0;
+					newFrame.size.width = NSWidth(newFrame) + kExtraPaddingAmount;
+					if (NSWidth(newFrame) < kMinButtonWidth) {
+						newFrame.size.width = kMinButtonWidth;
+					}
+				} else {
+					// See note on kWrapperStringSlop for why this is done.
+					NSString *title = [button title];
+					if ([title rangeOfString:kForcedWrapString].location != NSNotFound) {
 						newFrame.size.width += kWrapperStringSlop;
-						break;
 					}
 				}
 			}
+		}
+		
+		// Now after we've tried all of this resizing, let's see if it's gotten narrower AND we wanted
+		// a stretchy view.  If a view is stretchy, it means we didn't really intend on shrinking it.
+		NSUInteger mask = [view autoresizingMask];
+		BOOL stretchyView = 0 != (mask & NSViewWidthSizable);	// If stretchy view, DO NOT SHRINK.
+		if (stretchyView && (NSWidth(newFrame) < NSWidth(oldFrame)))
+		{
+			newFrame = oldFrame;		// go back to the old frame; reject the size change.
 			
+			// However there may be the case where we had to grow a neighbor and we want to shrink the springy view slightly.... Hmm...
 		}
 		
-		// AFTER calling sizeToFit, we might override this sizing that just happened
-		
-		if ([view isKindOfClass:[NSButton class]]) {
-			NSButton *button = (NSButton *)view;
-						
-			// -[NSButton sizeToFit] gives much worse results than IB's Size to Fit
-			// option for standard push buttons.
-			if (([button bezelStyle] == NSRoundedBezelStyle) &&
-				([[button cell] controlSize] == NSRegularControlSize)) {
-				// This is the amount of padding IB adds over a sizeToFit, empirically
-				// determined.
-				const CGFloat kExtraPaddingAmount = 12.0;
-				// Width is tricky, new buttons in IB are 96 wide, Carbon seems to have
-				// defaulted to 70, Cocoa seems to like 82.  But we go with 96 since
-				// that's what IB is doing these days.
-				const CGFloat kMinButtonWidth = (CGFloat)96.0;
-				newFrame.size.width = NSWidth(newFrame) + kExtraPaddingAmount;
-				if (NSWidth(newFrame) < kMinButtonWidth) {
-					newFrame.size.width = kMinButtonWidth;
-				}
-			} else {
-				// See note on kWrapperStringSlop for why this is done.
-				NSString *title = [button title];
-				if ([title rangeOfString:kForcedWrapString].location != NSNotFound) {
-					newFrame.size.width += kWrapperStringSlop;
-				}
-			}
+		if (!NSEqualRects(fitFrame, newFrame)) {
+			[view setFrame:newFrame];
 		}
-	}
-	
-	// Now after we've tried all of this resizing, let's see if it's gotten narrower AND we wanted
-	// a stretchy view.  If a view is stretchy, it means we didn't really intend on shrinking it.
-	NSUInteger mask = [view autoresizingMask];
-	BOOL stretchyView = 0 != (mask & NSViewWidthSizable);	// If stretchy view, DO NOT SHRINK.
-	if (stretchyView && (NSWidth(newFrame) < NSWidth(oldFrame)))
-	{
-		newFrame = oldFrame;		// go back to the old frame; reject the size change.
 		
-		// However there may be the case where we had to grow a neighbor and we want to shrink the springy view slightly.... Hmm...
+		// Return how much we changed size.
+		delta = NSWidth(newFrame) - NSWidth(oldFrame);
 	}
-	
-	if (!NSEqualRects(fitFrame, newFrame)) {
-		[view setFrame:newFrame];
-	}
-	
-	// Return how much we changed size.
-	CGFloat deltaFromResizing = NSWidth(newFrame) - NSWidth(oldFrame);
-	delta = MAX(delta, deltaFromResizing);
 	return delta;
 }
 
@@ -706,9 +750,10 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			{
 				NSView *view = (NSView *)topLevelObject;
 				
-				if ([fileName hasSuffix:@"DocumentInspector.nib"])
+				if ([fileName hasSuffix:@"DocumentInspector.nib"])		// THE ONLY ONE TO RESIZE, FOR NOW, JUST SO IT'S EASIER TO DEBUG.
 				{
-					ResizeToFit(view, 0);
+					CGFloat delta = ResizeToFit(view, 0);
+					NSLog(@"Delta from resizing top-level view: %f", delta);
 				}
 			}
 			else if ([topLevelObject isKindOfClass:[NSWindow class]])
@@ -731,7 +776,8 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 					
 					// TODO: should we update min size?
 					
-					ResizeToFit([window contentView], 0);
+					CGFloat delta = ResizeToFit([window contentView], 0);
+					NSLog(@"Delta from resizing window-level view: %f.  Maybe I should be resizing the whole window?", delta);
 					
 				}
 				
