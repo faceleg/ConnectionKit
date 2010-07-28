@@ -331,7 +331,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 	NSUInteger controlGroupingMargin = NSNotFound;	// try to give this a real value based on control size of first item that can be found
 	
 	NSString *desc = DescViewsInRow(rowViews);
-	LogIt(@"%@ROW %@", [@"                                                            " substringToIndex:2*level], desc);
+	// LogIt(@"%@ROW %@", [@"                                                            " substringToIndex:2*level], desc);
 	
 	
 	// Size our rowViews
@@ -339,7 +339,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 	NSPoint subviewOffset = NSZeroPoint;
 	for (NSView *subview in rowViews)
 	{
-		LogIt(@"%@ROWVIEW%@", [@"                                                            " substringToIndex:2*level+1], [subview description]);
+		// LogIt(@"%@ROWVIEW%@", [@"                                                            " substringToIndex:2*level+1], [subview description]);
 		// Try to figure out minimum spacing for groups of controls that are aligned differently
 		if (NSNotFound == controlGroupingMargin)
 		{
@@ -354,24 +354,24 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 //		{
 //			NSLog(@"Break here");
 //		}
-		if ([subview isKindOfClass:[NSBox class]] && [subview frame].origin.y == 62.0)
-		{
-			NSLog(@"Break here - this is the separator line");
-		}
-		if ([subview isMemberOfClass:[NSView class]] && [subview frame].size.width == 59.0)
-		{
-			NSLog(@"Break here - this is the left box");
-		}
+//		if ([subview isKindOfClass:[NSBox class]] && [subview frame].origin.y == 62.0)
+//		{
+//			NSLog(@"Break here - this is the separator line");
+//		}
+//		if ([subview isMemberOfClass:[NSView class]] && [subview frame].size.width == 59.0)
+//		{
+//			NSLog(@"Break here - this is the left box");
+//		}
 		
 		// Hmm, what to do about a right-aligned text item that is anchored to the left?
 		
 		
 		NSRect originalRect = [subview frame];				// bounds before resizing
 		
-		if (previousOriginalMinX != NSNotFound && NSMinX(originalRect) < previousOriginalMaxX)
-		{
-			NSLog(@"minX of this is less than maxX of previous; must be overlapping");
-		}
+//		if (previousOriginalMinX != NSNotFound && NSMinX(originalRect) < previousOriginalMaxX)
+//		{
+//			NSLog(@"minX of this is less than maxX of previous; must be overlapping");
+//		}
 		
 		CGFloat sizeDelta = ResizeToFit(subview, level+1);	// How much it got increased (to the right)
 
@@ -853,10 +853,10 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			{
 				NSView *view = (NSView *)topLevelObject;
 				
-				if ([fileName hasSuffix:@"MetricsInspector.nib"])		// THE ONLY ONE TO RESIZE, FOR NOW, JUST SO IT'S EASIER TO DEBUG.
+				// if ([fileName hasSuffix:@"MetricsInspector.nib"])		// THE ONLY ONE TO RESIZE, FOR NOW, JUST SO IT'S EASIER TO DEBUG.
 				{
 					CGFloat delta = ResizeToFit(view, 0);
-					LogIt(@"Delta from resizing top-level %@ view: %f", [fileName lastPathComponent], delta);
+					if (delta) NSLog(@"############## Warning: Delta from resizing top-level %@ view: %f", [fileName lastPathComponent], delta);
 				}
 			}
 			else if ([topLevelObject isKindOfClass:[NSWindow class]])
@@ -870,19 +870,18 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 				// HACK for now to make the inspector window wider.
 				if ([fileName hasSuffix:@"KSInspector.nib"])
 				{
-//					NSView *contentView = [window contentView];
-//					NSRect windowFrame = [contentView convertRect:[window frame]
-//														 fromView:nil];
+					NSView *contentView = [window contentView];
+					NSRect windowFrame = [contentView convertRect:[window frame]
+														 fromView:nil];
 //					windowFrame.size.width += 100;
 //					windowFrame = [contentView convertRect:windowFrame toView:nil];
 //					[window setFrame:windowFrame display:YES];	
 					
 					// TODO: should we update min size?
-					
-					// CGFloat delta = ResizeToFit([window contentView], 0);
-					// NSLog(@"Delta from resizing window-level view: %f.  Maybe I should be resizing the whole window?", delta);
-					
 				}
+				CGFloat delta = ResizeToFit([window contentView], 0);
+				NSLog(@"Delta from resizing window-level view: %f.  Maybe I should be resizing the whole window?", delta);
+					
 				
 			}
 		}

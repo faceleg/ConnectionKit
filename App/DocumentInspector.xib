@@ -656,7 +656,7 @@
 													</object>
 												</object>
 											</object>
-											<string key="NSFrame">{{7, 376}, {165, 43}}</string>
+											<string key="NSFrame">{{7, 376}, {163, 43}}</string>
 											<reference key="NSSuperview" ref="324127978"/>
 											<string key="NSClassName">NSView</string>
 										</object>
