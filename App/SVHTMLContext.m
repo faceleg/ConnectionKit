@@ -675,6 +675,17 @@
     return resourceURL; // subclasses will correct for publishing
 }
 
+#pragma mark Graphical Text
+
+- (NSURL *)addGraphicalTextData:(NSData *)imageData idName:(NSString *)idName;
+{
+    NSString *filename = [[idName legalizedWebPublishingFileName]
+                          stringByAppendingPathExtension:@"png"];
+    
+    NSURL *result = [NSURL URLWithString:filename relativeToURL:[self mainCSSURL]];
+    return result;
+}
+
 #pragma mark Iterations
 
 - (NSUInteger)currentIteration; { return [[self currentIterator] iteration]; }

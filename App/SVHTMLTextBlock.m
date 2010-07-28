@@ -237,6 +237,7 @@
                         graphicalTextCode,
                         [[text dataUsingEncoding:NSUTF8StringEncoding] sha1DigestString]];
                 
+        [context addGraphicalTextData:data idName:ID];
         [context addElementAttribute:@"id" value:ID];
         
         [cssWriter writeIDSelector:ID];
