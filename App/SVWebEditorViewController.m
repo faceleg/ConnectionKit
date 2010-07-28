@@ -394,13 +394,12 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     for (id anObject in selectedObjects)
     {
         id newItem = [[self webEditor] selectableItemForRepresentedObject:anObject];
+        [newSelection addObject:newItem];
+        
+        // To select an inline element, the Web Editor or one of its descendants must first be selected
         if ([webEditor shouldSelectDOMElementInline:[newItem HTMLElement]])
         {
-            newSelection = nil;
-        }
-        else
-        {
-            [newSelection addObject:newItem];
+            [[[self view] window] makeFirstResponder:webEditor];
         }
     }
     
