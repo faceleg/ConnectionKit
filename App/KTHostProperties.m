@@ -366,10 +366,7 @@ to be verified.
 	return result;
 }
 
-- (void)setStemURL:(NSString *)someString
-{
-	[self setWrappedValue:someString forKey:@"stemURL"];
-}
+@dynamic stemURL;
 
 /*!	Returns the base of the url like http://mysite.mydomain.com/~user/thisSite/ 
  */

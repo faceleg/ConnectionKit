@@ -35,6 +35,8 @@
 - (NSString *)remoteSiteURL;
 - (NSString *)uploadURL;
 
+@property(nonatomic, copy) NSString *stemURL;
+
 // Sane API starts here
 - (NSURL *)siteURL;
 - (NSString *)documentRoot;
