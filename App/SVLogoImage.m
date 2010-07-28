@@ -8,6 +8,7 @@
 
 #import "SVLogoImage.h"
 
+#import "SVMediaRecord.h"
 #import "KTPage.h"
 #import "SVWebEditorHTMLContext.h"
 
@@ -20,8 +21,14 @@
 {
     [super awakeFromInsert];
     
-    [self setPrimitiveValue:[NSNumber numberWithUnsignedInt:200] forKey:@"width"];
-    [self setPrimitiveValue:[NSNumber numberWithUnsignedInt:128] forKey:@"height"];
+    NSURL *placeholderURL = [NSURL fileURLWithPath:
+                             [[NSBundle mainBundle] pathForImageResource:@"LogoPlaceholder"]];
+    
+    [self setMedia:[SVMediaRecord placeholderMediaWithURL:placeholderURL
+                                               entityName:@"LogoMedia"
+                           insertIntoManagedObjectContext:[self managedObjectContext]]];
+    
+    [self makeOriginalSize];
 }
 
 - (void)createDefaultIntroAndCaption; { }
@@ -38,18 +45,6 @@
 - (NSNumber *)placement { return nil; }
 - (BOOL)isPlacementEditable; { return NO; }
 - (SVTextAttachment *)textAttachment { return nil; }
-
-- (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
-{
-    NSURL *result = [super imagePreviewURL];
-    
-    if (!result & ![self media])
-    {
-        result = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"LogoPlaceholder"]];
-    }
-    
-    return result;
-}
 
 #pragma mark Serialization
 
