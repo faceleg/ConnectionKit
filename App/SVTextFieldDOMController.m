@@ -123,7 +123,7 @@
     [super webEditorTextDidBeginEditing];
     
     // Remove any graphical text. But make sure to maintain element size otherwise editing feels weird
-    if ([[[self HTMLElement] elementClassName] rangeOfString:@"replaced"].location != NSNotFound)
+    if ([[[self HTMLElement] className] rangeOfString:@"replaced"].location != NSNotFound)
     {
         NSSize size = [[self HTMLElement] boundingBox].size;
         
