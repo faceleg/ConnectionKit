@@ -211,6 +211,11 @@
     
     
     [super engineDidPublish:didPublish error:error];
+    
+    
+    // Case 37891: Wipe the undo stack as we don't want the user to undo back past the publishing changes
+    NSUndoManager *undoManager = [[[self site] managedObjectContext] undoManager];
+    [undoManager removeAllActions];
 }
 
 #pragma mark -
