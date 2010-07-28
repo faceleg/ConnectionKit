@@ -36,13 +36,6 @@
 
 #pragma mark Resizing Support
 
-static BOOL IsRightAnchored(NSView *view) {
-	NSUInteger autoresizing = [view autoresizingMask];
-	BOOL viewRightAnchored =
-	((autoresizing & (NSViewMinXMargin | NSViewMaxXMargin)) == NSViewMinXMargin);
-	return viewRightAnchored;
-}
-
 // Constant for a forced string wrap in button cells (Opt-Return in IB inserts
 // this into the string).
 NSString * const kForcedWrapString = @"\xA";
@@ -285,7 +278,8 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 {
 	CGFloat accumulatingDelta = 0;
 	CGFloat runningMaxX = 0;
-	CGFloat previousOriginalMaxX = 0;
+	CGFloat previousOriginalMaxX = NSNotFound;
+	CGFloat previousOriginalMinX = NSNotFound;
 	NSUInteger controlGroupingMargin = NSNotFound;	// try to give this a real value based on control size of first item that can be found
 	
 	NSString *desc = DescViewsInRow(rowViews);
@@ -297,6 +291,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 	NSPoint subviewOffset = NSZeroPoint;
 	for (NSView *subview in rowViews)
 	{
+		LogIt(@"%@ROWVIEW%@", [@"                                                            " substringToIndex:2*level+1], desc);
 		// Try to figure out minimum spacing for groups of controls that are aligned differently
 		if (NSNotFound == controlGroupingMargin)
 		{
@@ -307,8 +302,21 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 //		{
 //			NSLog(@"Break here");
 //		}
-			
+//		if ([subview isKindOfClass:[NSButton class]] && [[subview title] hasPrefix:@"[GOOGLE"])
+//		{
+//			NSLog(@"Break here");
+//		}
+		
+		// Hmm, what to do about a right-aligned text item that is anchored to the left?
+		
+		
 		NSRect originalRect = [subview frame];				// bounds before resizing
+		
+		if (previousOriginalMinX != NSNotFound && NSMinX(originalRect) < previousOriginalMaxX)
+		{
+			NSLog(@"minX of this is less than maxX of previous; must be overlapping");
+		}
+		
 		CGFloat sizeDelta = ResizeToFit(subview, level+1);	// How much it got increased (to the right)
 
 		NSUInteger mask = [subview autoresizingMask];
@@ -322,12 +330,15 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 				moveLeft = floorf(sizeDelta/2.0);
 			}
 			else	// Anchored right. Try to keep right side constant, meaning we move to the left
+					// (or if sizeDelta < 1 then we are actually moving the left edge to the right
 			{
 				moveLeft = sizeDelta;
 			}
 		}
 		
-		CGFloat originalMargin = NSMinX(originalRect) - previousOriginalMaxX;
+		CGFloat originalMargin = (NSNotFound != previousOriginalMaxX)
+			? NSMinX(originalRect) - previousOriginalMaxX
+			: 0;
 		CGFloat acceptableMargin = MIN(originalMargin, (NSNotFound == controlGroupingMargin) ? kGroupMarginRegular : controlGroupingMargin);
 		
 		moveLeft = MIN(moveLeft, acceptableMargin);	// move left as much as you can, but maybe only "acceptableMargin" pixels
@@ -342,6 +353,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 		
 		
 		previousOriginalMaxX = NSMaxX(originalRect);
+		previousOriginalMinX = NSMinX(originalRect);
 	}
 	
 	return accumulatingDelta;
@@ -360,7 +372,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 		if ([view isKindOfClass:[NSTabView class]])
 		{
 			NSArray *tabViewItems = [(NSTabView *)view tabViewItems];
-			LogIt(@"%@TABVIEWS %@", [@"                                                            " substringToIndex:2*level], [[tabViewItems description] condenseWhiteSpace]);
+			// LogIt(@"%@TABVIEWS %@", [@"                                                            " substringToIndex:2*level], [[tabViewItems description] condenseWhiteSpace]);
 			for (NSTabViewItem *item in tabViewItems)		// resize tabviews instead of subviews
 			{
 				(void) ResizeToFit([item view], level+1);
@@ -419,11 +431,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 			// Now we have the largest that the subviews had to resize; it's time to apply that to this view now but not its subviews.
 			if (delta)
 			{
-				LogIt(@"%@%@ Largest Delta for this whole view: %.2f", [@"                                                            " substringToIndex:2*level], view, delta);
-				
-				// Are we pinned to the right of our parent?
-				//			BOOL rightAnchored = IsRightAnchored(view);
-				// I THINK I DON'T NEED TO DO THIS ... THIS IS HANDLED IN THE ROW RESIZER.
+				// LogIt(@"%@%@ Largest Delta for this whole view: %.2f", [@"                                                            " substringToIndex:2*level], view, delta);
 				
 				// Adjust our size (turn off auto resize, because we just fixed up all the
 				// objects within us).
@@ -433,12 +441,6 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 				}
 				NSRect selfFrame = [view frame];
 				selfFrame.size.width += delta;
-				//			if (rightAnchored) {
-				//				// Right side is anchored, so we need to slide back to the left.
-				//				selfFrame.origin.x -= delta;
-				//			}
-				//	selfFrame.origin.x += delta.x;
-				//	selfFrame.origin.y += delta.y;
 				[view setFrame:selfFrame];
 				if (autoresizesSubviews) {
 					[view setAutoresizesSubviews:autoresizesSubviews];
@@ -674,7 +676,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	NSString		*nibPath	= [nibBundle pathForResource:nibName ofType:@"nib"];
 	NSDictionary	*context	= [NSDictionary dictionaryWithObjectsAndKeys:self, NSNibOwner, nil];
 	
-	NSLog(@"loadView %@ going to localize %@ with top objects: %@", [[nibBundle bundlePath] lastPathComponent], [nibPath lastPathComponent], [[context description] condenseWhiteSpace]);
+	// NSLog(@"loadView %@ going to localize %@ with top objects: %@", [[nibBundle bundlePath] lastPathComponent], [nibPath lastPathComponent], [[context description] condenseWhiteSpace]);
 	BOOL loaded = [NSBundle _deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil bundle:nibBundle];	// call through to support method
 	if (!loaded)
 	{
@@ -783,10 +785,10 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			{
 				NSView *view = (NSView *)topLevelObject;
 				
-				if ([fileName hasSuffix:@"DocumentInspector.nib"])		// THE ONLY ONE TO RESIZE, FOR NOW, JUST SO IT'S EASIER TO DEBUG.
+				if ([fileName hasSuffix:@"MetricsInspector.nib"])		// THE ONLY ONE TO RESIZE, FOR NOW, JUST SO IT'S EASIER TO DEBUG.
 				{
 					CGFloat delta = ResizeToFit(view, 0);
-					NSLog(@"Delta from resizing top-level view: %f", delta);
+					LogIt(@"Delta from resizing top-level %@ view: %f", [fileName lastPathComponent], delta);
 				}
 			}
 			else if ([topLevelObject isKindOfClass:[NSWindow class]])
@@ -800,17 +802,17 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 				// HACK for now to make the inspector window wider.
 				if ([fileName hasSuffix:@"KSInspector.nib"])
 				{
-					NSView *contentView = [window contentView];
-					NSRect windowFrame = [contentView convertRect:[window frame]
-														 fromView:nil];
-					windowFrame.size.width += 100;
-					windowFrame = [contentView convertRect:windowFrame toView:nil];
-					[window setFrame:windowFrame display:YES];	
+//					NSView *contentView = [window contentView];
+//					NSRect windowFrame = [contentView convertRect:[window frame]
+//														 fromView:nil];
+//					windowFrame.size.width += 100;
+//					windowFrame = [contentView convertRect:windowFrame toView:nil];
+//					[window setFrame:windowFrame display:YES];	
 					
 					// TODO: should we update min size?
 					
-					CGFloat delta = ResizeToFit([window contentView], 0);
-					NSLog(@"Delta from resizing window-level view: %f.  Maybe I should be resizing the whole window?", delta);
+					// CGFloat delta = ResizeToFit([window contentView], 0);
+					// NSLog(@"Delta from resizing window-level view: %f.  Maybe I should be resizing the whole window?", delta);
 					
 				}
 				
@@ -1144,8 +1146,18 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     } else { 
 #ifdef DEBUG
  //       NSLog(@"        Can't find translation for string %@", string);
-       return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
+       //return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
        // return string;
+		// Simulate all strings being 40% longer
+		float len = [string length];
+		float extra = ceilf(0.40 * len);
+		extra = MIN(extra, 100);		// don't pad more than 100 chars
+		NSString *insert = [@"____________________________________________________________________________________________________" substringToIndex:(int)extra];
+		int halflen = len/2;
+		return [NSString stringWithFormat:@"%@%@%@",
+				[string substringToIndex:halflen],
+				insert,
+				[string substringFromIndex:halflen]];
 #else
         return string;
 #endif
