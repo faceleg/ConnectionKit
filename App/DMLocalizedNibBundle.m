@@ -86,36 +86,13 @@ static void OffsetView(NSView *view, NSPoint offset)
 	[desc appendString:leftMargin];
 	[desc appendString:leftWidth];
 	[desc appendString:[super description]];
-	[desc appendFormat:@" %.0f+%.0f ", [self frame].origin.x, [self frame].size.width];
-	[desc appendString:rightWidth];
-	[desc appendString:rightMargin];
-	return desc;
-}
-@end
-
-
-static NSString *DescView(NSView *view)
-{
-	NSMutableString *desc = [NSMutableString string];
-	NSUInteger mask = [view autoresizingMask];
-	BOOL stretchyLeft = 0 != (mask & NSViewMinXMargin);
-	BOOL stretchyView = 0 != (mask & NSViewWidthSizable);
-	BOOL stretchyRight = 0 != (mask & NSViewMaxXMargin);
-	
-	NSString *leftMargin	= stretchyLeft	? @"···"	: @"———";
-	NSString *leftWidth		= stretchyView	? @"<ɕɕ"	: @"<··";
-	NSString *rightWidth	= stretchyView	? @"ɕɕ>"	: @"··>";
-	NSString *rightMargin	= stretchyRight	? @"···"	: @"———";
-	
-	[desc appendString:leftMargin];
-	[desc appendString:leftWidth];
-	if ([view isKindOfClass:[NSTextField class]])
+	if ([self isKindOfClass:[NSTextField class]])
 	{
-		NSTextField *field = (NSTextField *)view;
+		NSTextField *field = (NSTextField *)self;
 		NSString *stringValue = [field stringValue];
 		if ([field isEditable] || [field isBezeled] || [field isBordered])
 		{
-			[desc appendFormat:@"[%@           ]",stringValue];
+			[desc appendFormat:@"#%@           #",stringValue];
 		}
 		else if ([[stringValue condenseWhiteSpace] isEqualToString:@""])
 		{
@@ -126,44 +103,37 @@ static NSString *DescView(NSView *view)
 			[desc appendString:stringValue];
 		}
 	}
-	else if ([view isKindOfClass:[NSPopUpButton class]])
+	else if ([self isKindOfClass:[NSPopUpButton class]])
 	{
-		NSPopUpButton *pop = (NSPopUpButton *)view;
+		NSPopUpButton *pop = (NSPopUpButton *)self;
 		NSString *selTitle = [pop titleOfSelectedItem];
 		if (!selTitle || [selTitle isEqualToString:@""])
 		{
 			selTitle = [pop itemTitleAtIndex:0];
 		}
-		if (!selTitle || [selTitle isEqualToString:@""])
+		if (selTitle && ![selTitle isEqualToString:@""])
 		{
-			selTitle = @"NSPopUpButton";
+			[desc appendFormat:@"{%@}", selTitle];
 		}
-		
-		[desc appendFormat:@"{%@}", selTitle];
 	}
-	else if ([view isKindOfClass:[NSButton class]])
+	else if ([self isKindOfClass:[NSButton class]])
 	{
-		NSButton *button = (NSButton *)view;
+		NSButton *button = (NSButton *)self;
 		NSString *title = [button title];
 		
-		if (!title || [title isEqualToString:@""])
+		if (title && ![title isEqualToString:@""])
 		{
-			title = @"NSButton";
+			[desc appendFormat:@"{%@}", title];
 		}
-		[desc appendFormat:@"{%@}", title];
 	}
-	else if ([view isKindOfClass:[NSSlider class]])
-	{
-		[desc appendString:@"=======O======="];
-	}
-	else
-	{
-		[desc appendFormat:@"<%@>",[[view class] description]];
-	}
+	
+	[desc appendFormat:@" %.0f+%.0f ", [self frame].origin.x, [self frame].size.width];
 	[desc appendString:rightWidth];
 	[desc appendString:rightMargin];
 	return desc;
 }
+@end
+
 
 static NSString *DescViewsInRow(NSArray *sortedRowViews)
 {
@@ -238,10 +208,30 @@ static NSDictionary *GroupSubviewsIntoRows(NSView *view)
 	return [NSDictionary dictionaryWithDictionary:rows];
 }
 
+const NSUInteger kGroupMarginRegular = 24;
+const NSUInteger kGroupMarginSmall = 16;
+
+static NSUInteger GuessControlSizeGroupingMargin(NSView *view)
+{
+	NSUInteger result = NSNotFound;					// keep it at NSNotFound unless we really can test.
+	if ([view respondsToSelector:@selector(cell)])
+	{
+		NSCell *cell = [((NSControl *)view) cell];
+		NSControlSize controlSize = [cell controlSize];
+		switch (controlSize)
+		{
+			case NSRegularControlSize: result = kGroupMarginRegular; break;	// Twice the normal button spacing for that size
+			case NSSmallControlSize: result = kGroupMarginSmall; break;	// according to Interface Builder guides.
+			case NSMiniControlSize: result = kGroupMarginSmall; break;		// are these in the HIG?
+		}
+	}
+	return result;
+}
+
 #pragma mark Resizing Logic
 
 
-static void ResizeRowViewsToDelta(NSArray *rowViews, CGFloat delta)
+static void ResizeRowsByDelta(NSArray *rowViews, CGFloat delta)
 {
 	for (NSView *view in rowViews)
 	{
@@ -280,55 +270,81 @@ static void ResizeRowViewsToDelta(NSArray *rowViews, CGFloat delta)
 	}
 }
 
+/*
+ Assumes we are looping through these from left to right, and that there aren't any wacky things like
+ right-anchored views to the left of left-anchored views.
+
+ Left-anchored views increase width, and move over the left edge only as much as needed to to keep relative position constant.
+ Views anchored neither left nor right are going be roughly centered, so take any change in width on the left and right sides equally.
+ Right-anchored views keep a constant right margin and increase width on the left side.
+ HOWEVER (for the center and right views), we want to make sure that the margin between views does not dip below MIN(20,currentDistance)
+	(or 10? Is ther some heuristic to apply, e.g. text size, current margins, etc.?
+ 
+ */
 static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 {
-	CGFloat delta = 0;
+	CGFloat accumulatingDelta = 0;
+	CGFloat runningMaxX = 0;
+	CGFloat previousOriginalMaxX = 0;
+	NSUInteger controlGroupingMargin = NSNotFound;	// try to give this a real value based on control size of first item that can be found
 	
 	NSString *desc = DescViewsInRow(rowViews);
 	LogIt(@"%@%@", [@"                                                            " substringToIndex:2*level], desc);
 	
 	
-	NSMutableArray *rightAlignedSubViews = nil;
-	NSMutableArray *rightAlignedSubViewDeltas = nil;
-	
-	rightAlignedSubViews = [NSMutableArray array];
-	rightAlignedSubViewDeltas = [NSMutableArray array];
-	
 	// Size our rowViews
 	
 	NSPoint subviewOffset = NSZeroPoint;
-	for (NSView *subview in rowViews) {
-		
-		subviewOffset.x = delta;	// we'll be moving it over by the so-far delta
-		
-		OffsetView(subview, subviewOffset);		// slide left edge over to running delta. I could do this before or after resizing, I guess....
-		CGFloat thisDelta = ResizeToFit(subview, level);
-		if (0 != thisDelta)		// no point in looking if nothing changed
+	for (NSView *subview in rowViews)
+	{
+		// Try to figure out minimum spacing for groups of controls that are aligned differently
+		if (NSNotFound == controlGroupingMargin)
 		{
-			delta += thisDelta;
+			controlGroupingMargin = GuessControlSizeGroupingMargin(subview);
+		}
+		
+		if ([subview isKindOfClass:[NSTextField class]] && [[subview stringValue] hasPrefix:@"[SCALE"])
+		{
+			NSLog(@"Break here");
+		}
 			
-			// Track the right anchored rowViews size changes so we can update them
-			// once we know this view's size.
-			if (IsRightAnchored(subview)) {
-				[rightAlignedSubViews addObject:subview];
-				[rightAlignedSubViewDeltas addObject:[NSNumber numberWithFloat:thisDelta]];
+		NSRect originalRect = [subview frame];				// bounds before resizing
+		CGFloat sizeDelta = ResizeToFit(subview, level);	// How much it got increased (to the right)
+
+		NSUInteger mask = [subview autoresizingMask];
+		BOOL anchorLeft = 0 == (mask & NSViewMinXMargin);
+		BOOL anchorRight = 0 == (mask & NSViewMaxXMargin);
+		CGFloat moveLeft = 0;
+		if (!anchorLeft)
+		{
+			if (!anchorRight)	// not anchored right, so stretchy left and right.  
+			{
+				moveLeft = floorf(sizeDelta/2.0);
+			}
+			else	// Anchored right. Try to keep right side constant, meaning we move to the left
+			{
+				moveLeft = sizeDelta;
 			}
 		}
+		
+		CGFloat originalMargin = NSMinX(originalRect) - previousOriginalMaxX;
+		CGFloat acceptableMargin = MIN(originalMargin, (NSNotFound == controlGroupingMargin) ? kGroupMarginRegular : controlGroupingMargin);
+		
+		moveLeft = MIN(moveLeft, acceptableMargin);	// move left as much as you can, but maybe only "acceptableMargin" pixels
+		
+		
+		subviewOffset.x = accumulatingDelta-moveLeft;	// we'll be moving it over by the so-far delta
+		OffsetView(subview, subviewOffset);				// slide left edge over to running delta.
+
+		runningMaxX = NSMaxX([subview frame]);
+		
+		accumulatingDelta += sizeDelta - moveLeft;	// take away however many pixels we moved left
+		
+		
+		previousOriginalMaxX = NSMaxX(originalRect);
 	}
 	
-	
-	// Now spin over the list of right aligned view and their size changes
-	// fixing up their positions so they are still right aligned in our final
-	// view.
-	//
-	// ????
-	//
-//	for (NSUInteger lp = 0; lp < [rightAlignedSubViews count]; ++lp) {
-//		subview = [rightAlignedSubViews objectAtIndex:lp];
-//		CGFloat eachDelta = [[rightAlignedSubViewDeltas objectAtIndex:lp] doubleValue];
-//		OffsetView(subview, NSMakePoint(delta - eachDelta, 0));
-//	}
-	return delta;
+	return accumulatingDelta;
 }
 
 
@@ -392,7 +408,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 				CGFloat rowDelta = [[deltasForRows objectForKey:rowValue] floatValue];
 				CGFloat neededDelta = maxDelta - rowDelta;
 				
-				ResizeRowViewsToDelta(sortedRowViews, neededDelta);
+				ResizeRowsByDelta(sortedRowViews, neededDelta);
 			}
 		}
 		
@@ -434,7 +450,8 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 }
 
 // Resizes a view to be the size it "wants" to be. Returns how much changed.
-// Does not try to do any reposititioning -- not its job.
+// Does not try to do any reposititioning -- not its job.  It increases the width, caller needs to decide if it should be moved left.
+// Note that a springy view is not allowed to shrink, at present.
 
 static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 {
