@@ -53,6 +53,10 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
                              entityName:(NSString *)entityName
          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
++ (SVMediaRecord *)placeholderMediaWithURL:(NSURL *)URL
+                                entityName:(NSString *)entityName
+            insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+
 
 #pragma mark Updating Media Records
 

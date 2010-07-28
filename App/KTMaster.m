@@ -474,19 +474,9 @@
     OBASSERT(URL);
     
     
-    SVMediaRecord *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
-                                                          inManagedObjectContext:[self managedObjectContext]];
-    
-    [result readFromURL:URL options:0 error:NULL];
-    [result setFilename:[@"Shared/" stringByAppendingString:[URL lastPathComponent]]];
-    [result setPreferredFilename:[URL lastPathComponent]];
-    [result setShouldCopyFileIntoDocument:[NSNumber numberWithBool:NO]];
-    
-    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[URL path]
-                                                                                error:NULL];
-    [result setFileAttributes:attributes];
-    
-    return result;
+    return [SVMediaRecord placeholderMediaWithURL:URL
+                                       entityName:entityName
+                   insertIntoManagedObjectContext:[self managedObjectContext]];
 }
 
 #pragma mark Support

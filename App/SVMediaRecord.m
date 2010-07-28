@@ -106,6 +106,25 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
++ (SVMediaRecord *)placeholderMediaWithURL:(NSURL *)URL
+                                entityName:(NSString *)entityName
+            insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVMediaRecord *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
+                                                          inManagedObjectContext:context];
+    
+    [result readFromURL:URL options:0 error:NULL];
+    [result setFilename:[@"Shared/" stringByAppendingString:[URL lastPathComponent]]];
+    [result setPreferredFilename:[URL lastPathComponent]];
+    [result setShouldCopyFileIntoDocument:[NSNumber numberWithBool:NO]];
+    
+    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[URL path]
+                                                                                error:NULL];
+    [result setFileAttributes:attributes];
+    
+    return result;
+}
+
 #pragma mark Dealloc
 
 - (void)dealloc
