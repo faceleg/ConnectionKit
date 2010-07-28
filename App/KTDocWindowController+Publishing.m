@@ -262,15 +262,19 @@
         if (returnCode == NSOKButton)
         {
             KTHostProperties *hostProperties = [[[self document] site] hostProperties];
-            [hostProperties setValue:[[controller siteURL] absoluteString] forKey:@"stemURL"];
-            
-            // host properties has an insane design from the 1.0 days. May need to reset localHosting value for stemURL to take effect. #43405
-            if (![hostProperties siteURL])
+            NSString *stemURL = [[controller siteURL] absoluteString];
+            if (![stemURL isEqualToString:[hostProperties stemURL]])
             {
-                [hostProperties setValue:nil forKey:@"localHosting"];
-            }
+                [hostProperties setStemURL:stemURL];
             
-            [[[[self document] site] rootPage] recursivelyInvalidateURL:YES];
+                // host properties has an insane design from the 1.0 days. May need to reset localHosting value for stemURL to take effect. #43405
+                if (![hostProperties siteURL])
+                {
+                    [hostProperties setValue:nil forKey:@"localHosting"];
+                }
+                
+                [[[[self document] site] rootPage] recursivelyInvalidateURL:YES];
+            }
         }
         
         [savePanel setDelegate:nil];
