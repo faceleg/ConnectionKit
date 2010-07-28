@@ -154,6 +154,19 @@ static void LogRows(NSDictionary *rows)
 	}	
 }
 
+static NSRange CalcYRange(NSView *view)
+{
+	NSRect frame = [view frame];
+	// NSLog(@"%@ -> %@", subview, NSStringFromRect(frame));
+	NSRange yRange = NSMakeRange(frame.origin.y, frame.size.height);
+	// Fudge just a little bit ... chop off the bottom and top 2 pixels, so that things seem less likely to intersect
+	if (frame.size.height > 4)
+	{
+		yRange = NSMakeRange(frame.origin.y + 2, frame.size.height - 4);
+	}
+	return yRange;
+}
+
 static NSDictionary *GroupSubviewsIntoRows(NSView *view)
 {
 	NSArray *subviews = [view subviews];
@@ -162,14 +175,7 @@ static NSDictionary *GroupSubviewsIntoRows(NSView *view)
 	
 	for (NSView *subview in subviews)
 	{
-		NSRect frame = [subview frame];
-		// NSLog(@"%@ -> %@", subview, NSStringFromRect(frame));
-		NSRange yRange = NSMakeRange(frame.origin.y, frame.size.height);
-		// Fudge just a little bit ... chop off the bottom and top 2 pixels, so that things seem less likely to intersect
-		if (frame.size.height > 4)
-		{
-			yRange = NSMakeRange(frame.origin.y + 2, frame.size.height - 4);
-		}
+		NSRange yRange = CalcYRange(subview);
 		
 		// Now see if this range intersects one of our index sets
 		BOOL found = NO;
@@ -179,14 +185,14 @@ static NSDictionary *GroupSubviewsIntoRows(NSView *view)
 			if (NSIntersectionRange(rowRange, yRange).length)
 			{
 				// Add this subview to the list for this row
-				NSMutableArray *rowArray = [rows objectForKey:rowValue];
-				[rowArray addObject:subview];
+				NSMutableArray *viewArray = [rows objectForKey:rowValue];
+				[viewArray addObject:subview];
 				
 				// Extend the row range if needed, and modify dictionary if it changed
 				NSRange newRowRange = NSUnionRange(rowRange, yRange);
 				if (!NSEqualRanges(newRowRange, rowRange))
 				{
-					[rows setObject:rowArray forKey:[NSValue valueWithRange:newRowRange]];
+					[rows setObject:viewArray forKey:[NSValue valueWithRange:newRowRange]];
 					[rows removeObjectForKey:rowValue];
 				}
 				found = YES;
@@ -198,7 +204,48 @@ static NSDictionary *GroupSubviewsIntoRows(NSView *view)
 			[rows setObject:[NSMutableArray arrayWithObject:subview] forKey:[NSValue valueWithRange:yRange]];
 		}
 	}
-	return [NSDictionary dictionaryWithDictionary:rows];
+	
+	// Now before returning the dictionary, go through each row, and look for views that overlap more than one other view.
+	// They are special cases that we want to make into their own row ... for background images, horizontal lines crossing through groups, etc.
+	NSMutableDictionary *adjustedRows = [NSMutableDictionary dictionary];
+	
+	for (NSValue *rowValue in [rows allKeys])	// Go through each row
+	{
+		NSArray *viewArray =  [rows objectForKey:rowValue];
+		
+		NSMutableArray *remainingArray = [[viewArray mutableCopy] autorelease];	// what doesn't get taken out
+		
+		for (NSView *viewInRow in viewArray)		// Go through each view on the row
+		{
+			NSRect rowViewFrame = [viewInRow frame];
+			NSRange rowViewXRange = NSMakeRange(rowViewFrame.origin.x, rowViewFrame.size.width);
+			NSUInteger numberOfIntersections = 0;
+			for (NSView *compareView in remainingArray)
+			{
+				// Go through the OTHER views on the row. Might as well not go through already-removed ones.
+				if (compareView != viewInRow)			// Of course don't compare to yourself.
+				{
+					NSRect compareViewFrame = [compareView frame];
+					NSRange compareViewXRange = NSMakeRange(compareViewFrame.origin.x, compareViewFrame.size.width);
+					
+					if (NSIntersectionRange(rowViewXRange, compareViewXRange).length)
+					{
+						numberOfIntersections++;
+						// I suppose we could break when we reach two intersections but these rows aren't going to have a lot of elements
+					}
+				}
+			}
+			if (numberOfIntersections >= 2)	// This view intersects with 2 or more views, so make it on a row by itself.
+			{
+				NSRange yRange = CalcYRange(viewInRow);
+				[adjustedRows setObject:[NSMutableArray arrayWithObject:viewInRow] forKey:[NSValue valueWithRange:yRange]];
+				[remainingArray removeObject:viewInRow];
+			}
+		}
+		[adjustedRows setObject:[NSArray arrayWithArray:remainingArray] forKey:rowValue];
+	}
+	
+	return [NSDictionary dictionaryWithDictionary:adjustedRows];
 }
 
 const NSUInteger kGroupMarginRegular = 24;
@@ -277,6 +324,7 @@ static void ResizeRowsByDelta(NSArray *rowViews, CGFloat delta)
 static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 {
 	CGFloat accumulatingDelta = 0;
+	CGFloat previousDelta = 0;
 	CGFloat runningMaxX = 0;
 	CGFloat previousOriginalMaxX = NSNotFound;
 	CGFloat previousOriginalMinX = NSNotFound;
@@ -291,7 +339,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 	NSPoint subviewOffset = NSZeroPoint;
 	for (NSView *subview in rowViews)
 	{
-		LogIt(@"%@ROWVIEW%@", [@"                                                            " substringToIndex:2*level+1], desc);
+		LogIt(@"%@ROWVIEW%@", [@"                                                            " substringToIndex:2*level+1], [subview description]);
 		// Try to figure out minimum spacing for groups of controls that are aligned differently
 		if (NSNotFound == controlGroupingMargin)
 		{
@@ -306,6 +354,14 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 //		{
 //			NSLog(@"Break here");
 //		}
+		if ([subview isKindOfClass:[NSBox class]] && [subview frame].origin.y == 62.0)
+		{
+			NSLog(@"Break here - this is the separator line");
+		}
+		if ([subview isMemberOfClass:[NSView class]] && [subview frame].size.width == 59.0)
+		{
+			NSLog(@"Break here - this is the left box");
+		}
 		
 		// Hmm, what to do about a right-aligned text item that is anchored to the left?
 		
@@ -339,18 +395,30 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 		CGFloat originalMargin = (NSNotFound != previousOriginalMaxX)
 			? NSMinX(originalRect) - previousOriginalMaxX
 			: 0;
-		CGFloat acceptableMargin = MIN(originalMargin, (NSNotFound == controlGroupingMargin) ? kGroupMarginRegular : controlGroupingMargin);
-		
-		moveLeft = MIN(moveLeft, acceptableMargin);	// move left as much as you can, but maybe only "acceptableMargin" pixels
-		
-		
-		subviewOffset.x = accumulatingDelta-moveLeft;	// we'll be moving it over by the so-far delta
-		OffsetView(subview, subviewOffset);				// slide left edge over to running delta.
-
-		runningMaxX = NSMaxX([subview frame]);
-		
-		accumulatingDelta += sizeDelta - moveLeft;	// take away however many pixels we moved left
-		
+		if (originalMargin >= 0)
+		{
+			// move things over an increment delta if we are not overlapping view to the left.
+	
+			CGFloat acceptableMargin = MIN(originalMargin, (NSNotFound == controlGroupingMargin) ? kGroupMarginRegular : controlGroupingMargin);
+			
+			moveLeft = MIN(moveLeft, acceptableMargin);	// move left as much as you can, but maybe only "acceptableMargin" pixels
+			
+			
+			subviewOffset.x = accumulatingDelta-moveLeft;	// we'll be moving it over by the so-far delta
+			OffsetView(subview, subviewOffset);				// slide left edge over to running delta.
+			
+			runningMaxX = NSMaxX([subview frame]);
+			
+			previousDelta = accumulatingDelta;
+			accumulatingDelta += sizeDelta - moveLeft;	// take away however many pixels we moved left			
+		}
+		else
+		{
+			// Overlapping views, so don't increase delta.  However we probably want to move over to match
+			// whatever the delta was on the previous view, so use that.
+			subviewOffset.x = previousDelta;
+			OffsetView(subview, subviewOffset);			
+		}
 		
 		previousOriginalMaxX = NSMaxX(originalRect);
 		previousOriginalMinX = NSMinX(originalRect);
@@ -459,12 +527,12 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 {
 	// logging newline comes at the end
-	Log(@"%@RESIZE %@", [@"                                                            " substringToIndex:2*level], [[view description] condenseWhiteSpace]);
+	//Log(@"%@RESIZE %@", [@"                                                            " substringToIndex:2*level], [[view description] condenseWhiteSpace]);
 	CGFloat delta = 0.0;
 	
 	if ([[view subviews] count])		// Subviews: Get the subviews resized; that's the width this view wants to be.
 	{
-		LogIt(@"");		// newline
+		//LogIt(@"");		// newline
 		delta = ResizeAnySubviews(view, level+1);
 	}
 	else	// A primitive view without subviews; size according to its contents
@@ -569,7 +637,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		
 		// Return how much we changed size.
 		delta = NSWidth(newFrame) - NSWidth(oldFrame);
-		if (!delta) LogIt(@" (no change)"); else LogIt(@" ... to %+.0f (∂ %.0f)", NSWidth(newFrame), delta);
+		// if (!delta) LogIt(@" (no change)"); else LogIt(@" ... to %+.0f (∂ %.0f)", NSWidth(newFrame), delta);
 	}
 	return delta;
 }
