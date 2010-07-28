@@ -58,6 +58,7 @@
 #import "KTMaster.h"
 #import "SVMediaRecord.h"
 #import "KTPage+Internal.h"
+#import "SVPublishingRecord.h"
 #import "SVSidebar.h"
 #import "KTSummaryWebViewTextBlock.h"
 #import "SVTextBox.h"
@@ -979,6 +980,14 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		{
 			NSLog(@"new hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);		
 		}
+        
+        
+        // Reset publishing records
+        for (SVPublishingRecord *aRecord in [[hostProperties rootPublishingRecord] contentRecords])
+        {
+            [[self managedObjectContext] deleteObject:aRecord]; // context should recurse and delete descendants
+        }
+        
 		
 		// All page and sitemap URLs are now invalid
         [[[self site] rootPage] recursivelyInvalidateURL:YES];
