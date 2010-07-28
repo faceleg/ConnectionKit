@@ -431,16 +431,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	}
 }
 
-- (void)addGraphicalTextBlock:(SVHTMLTextBlock *)textBlock;
-{
-    KTMediaFileUpload *media = [[[textBlock graphicalTextMedia] file] defaultUpload];
-	if (media)
-	{
-		[self uploadMediaIfNeeded:media];
-        [_graphicalTextBlocks ks_addObject:textBlock forKey:[textBlock graphicalTextCSSID]];
-    }
-}
-
 @class KTMediaFile;
 
 /*  KTRemotePublishingEngine uses digest to only upload this if it's changed
@@ -477,12 +467,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                                       allowLossyConversion:YES];
     
     [self publishData:mainCSSData toPath:cssUploadPath];
-}
-
-// FIXME: This delegate method has been replaced by -[SVHTMLContext generatedTextBlocks]
-- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(SVHTMLTextBlock *)textBlock
-{
-	[self addGraphicalTextBlock:textBlock];
 }
 
 #pragma mark Media

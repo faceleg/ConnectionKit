@@ -128,7 +128,6 @@ typedef enum {
 // Design
 - (void)publishDesign;
 
-- (void)addGraphicalTextBlock:(SVHTMLTextBlock *)textBlock;
 
 @end
 
