@@ -178,6 +178,19 @@
     return result;
 }
 
+- (NSString *)graphicalTextStyleWithImageURL:(NSURL *)url
+                                       width:(unsigned)width
+                                      height:(unsigned)height;
+{
+    NSString *result = [NSString stringWithFormat:
+                        @"text-align:left; text-indent:-9999px; background:url(%@) top left no-repeat !important; width:%upx; height:%upx;",
+                        [url absoluteString],
+                        width,
+                        height];
+    
+    return result;
+}
+
 - (void)buildGraphicalText:(SVHTMLContext *)context;
 {
     // Bail early if possible
@@ -218,30 +231,31 @@
     unsigned height = [image extent].size.height;
     [image release];
     
-    NSString *cssText = [NSString stringWithFormat:
-                         @"text-align:left; text-indent:-9999px; background:url(%@) top left no-repeat; width:%upx; height:%upx;",
-                         [url absoluteString],
-                         width,
-                         height];
-    
     
     
     // Apply the style
     if ([context isForPublishing])
     {
-        NSMutableString *css = [[NSMutableString alloc] init];
-        KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
-        
+        // Register with context
         NSString *ID = [NSString stringWithFormat:
                         @"%@-%@",
                         graphicalTextCode,
                         [[text dataUsingEncoding:NSUTF8StringEncoding] sha1DigestString]];
-                
-        [context addGraphicalTextData:data idName:ID];
+        
+        url = [context addGraphicalTextData:data idName:ID];
+        
+        
+        // Build proper CSS rule
+        NSMutableString *css = [[NSMutableString alloc] init];
+        KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
+        
         [context addElementAttribute:@"id" value:ID];
         
         [cssWriter writeIDSelector:ID];
-        [cssWriter writeDeclarationBlock:cssText];
+        
+        [cssWriter writeDeclarationBlock:[self graphicalTextStyleWithImageURL:url
+                                                                        width:width
+                                                                       height:height]];
         
         [context addCSSString:css];
         [css release];
@@ -249,6 +263,7 @@
     }
     else
     {
+        NSString *cssText = [self graphicalTextStyleWithImageURL:url width:width height:height];
         [context addElementAttribute:@"style" value:cssText];
     }
     
