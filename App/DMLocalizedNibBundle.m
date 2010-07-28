@@ -331,7 +331,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 	NSUInteger controlGroupingMargin = NSNotFound;	// try to give this a real value based on control size of first item that can be found
 	
 	NSString *desc = DescViewsInRow(rowViews);
-	// LogIt(@"%@ROW %@", [@"                                                            " substringToIndex:2*level], desc);
+	LogIt(@"%@ROW %@", [@"                                                            " substringToIndex:2*level], desc);
 	
 	
 	// Size our rowViews
@@ -339,7 +339,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 	NSPoint subviewOffset = NSZeroPoint;
 	for (NSView *subview in rowViews)
 	{
-		// LogIt(@"%@ROWVIEW%@", [@"                                                            " substringToIndex:2*level+1], [subview description]);
+		LogIt(@"%@ROWVIEW%@", [@"                                                            " substringToIndex:2*level+1], [subview description]);
 		// Try to figure out minimum spacing for groups of controls that are aligned differently
 		if (NSNotFound == controlGroupingMargin)
 		{
@@ -350,10 +350,10 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 //		{
 //			NSLog(@"Break here");
 //		}
-//		if ([subview isKindOfClass:[NSButton class]] && [[subview title] hasPrefix:@"[GOOGLE"])
-//		{
-//			NSLog(@"Break here");
-//		}
+		if ([subview isKindOfClass:[NSButton class]] && [[subview title] hasPrefix:@"Prefer links"])
+		{
+			NSLog(@"Break here");
+		}
 //		if ([subview isKindOfClass:[NSBox class]] && [subview frame].origin.y == 62.0)
 //		{
 //			NSLog(@"Break here - this is the separator line");
@@ -440,7 +440,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 		if ([view isKindOfClass:[NSTabView class]])
 		{
 			NSArray *tabViewItems = [(NSTabView *)view tabViewItems];
-			// LogIt(@"%@TABVIEWS %@", [@"                                                            " substringToIndex:2*level], [[tabViewItems description] condenseWhiteSpace]);
+			LogIt(@"%@TABVIEWS %@", [@"                                                            " substringToIndex:2*level], [[tabViewItems description] condenseWhiteSpace]);
 			for (NSTabViewItem *item in tabViewItems)		// resize tabviews instead of subviews
 			{
 				(void) ResizeToFit([item view], level+1);
@@ -482,7 +482,11 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 				
 				[deltasForRows setObject:[NSNumber numberWithFloat:rowDelta] forKey:rowValue];
 								
-				// LogIt(@"Delta for this row: %.2f", delta);
+				LogIt(@"Delta for this row: %.2f", delta);
+//				if (delta == 103.0)
+//				{
+//					NSLog(@"103");
+//				}
 			}
 			
 			// After resizing rows, I should go through again and set the new dimensions to match the widest row
@@ -499,7 +503,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 			// Now we have the largest that the subviews had to resize; it's time to apply that to this view now but not its subviews.
 			if (delta)
 			{
-				// LogIt(@"%@%@ Largest Delta for this whole view: %.2f", [@"                                                            " substringToIndex:2*level], view, delta);
+				LogIt(@"%@%@ Largest Delta for this whole view: %.2f", [@"                                                            " substringToIndex:2*level], view, delta);
 				
 				// Adjust our size (turn off auto resize, because we just fixed up all the
 				// objects within us).
@@ -527,12 +531,12 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 {
 	// logging newline comes at the end
-	//Log(@"%@RESIZE %@", [@"                                                            " substringToIndex:2*level], [[view description] condenseWhiteSpace]);
+	Log(@"%@RESIZE %@", [@"                                                            " substringToIndex:2*level], [[view description] condenseWhiteSpace]);
 	CGFloat delta = 0.0;
 	
 	if ([[view subviews] count])		// Subviews: Get the subviews resized; that's the width this view wants to be.
 	{
-		//LogIt(@"");		// newline
+		LogIt(@"");		// newline
 		delta = ResizeAnySubviews(view, level+1);
 	}
 	else	// A primitive view without subviews; size according to its contents
@@ -637,7 +641,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		
 		// Return how much we changed size.
 		delta = NSWidth(newFrame) - NSWidth(oldFrame);
-		// if (!delta) LogIt(@" (no change)"); else LogIt(@" ... to %+.0f (∂ %.0f)", NSWidth(newFrame), delta);
+		if (!delta) LogIt(@" (no change)"); else LogIt(@" ... to %+.0f (∂ %.0f)", NSWidth(newFrame), delta);
 	}
 	return delta;
 }
@@ -853,7 +857,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			{
 				NSView *view = (NSView *)topLevelObject;
 				
-				// if ([fileName hasSuffix:@"MetricsInspector.nib"])		// THE ONLY ONE TO RESIZE, FOR NOW, JUST SO IT'S EASIER TO DEBUG.
+				if ([fileName hasSuffix:@"PageInspector.nib"])		// THE ONLY ONE TO RESIZE, FOR NOW, JUST SO IT'S EASIER TO DEBUG.
 				{
 					CGFloat delta = ResizeToFit(view, 0);
 					if (delta) NSLog(@"############## Warning: Delta from resizing top-level %@ view: %f", [fileName lastPathComponent], delta);
