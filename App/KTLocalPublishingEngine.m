@@ -26,6 +26,7 @@
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
+#import "KSInvocationOperation.h"
 #import "KSThreadProxy.h"
 #import "KSUtilities.h"
 
@@ -126,7 +127,7 @@
         [invocation setArgument:&localURL atIndex:2];
         [invocation setArgument:&remotePath atIndex:3];
         
-        NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+        NSInvocationOperation *operation = [[KSInvocationOperation alloc] initWithInvocation:invocation];
         [_diskAccessQueue addOperation:operation];
         [operation release];
         
@@ -189,7 +190,28 @@
 
 - (void)finishPublishing;
 {
-    [_diskAccessQueue waitUntilAllOperationsAreFinished];
+    // It's quite likely there's still hashing operations running. We can't disconnect till all of those those have been published.
+    NSInvocationOperation *finishOp = [[NSInvocationOperation alloc]
+                                       initWithTarget:self
+                                       selector:@selector(reallyFinishPublishing)
+                                       object:nil];
+        
+    for (NSOperation *anOperation in [_diskAccessQueue operations])
+    {
+        [finishOp addDependency:anOperation];
+    }
+    
+    [_diskAccessQueue addOperation:finishOp];   // could go on any queue really, ideally +mainQueue
+    [finishOp release];
+}
+
+- (void)reallyFinishPublishing;
+{
+    if (![NSThread isMainThread])
+    {
+        return [[self ks_proxyOnThread:nil waitUntilDone:NO] reallyFinishPublishing];
+    }
+    
     [super finishPublishing];
 }
 
