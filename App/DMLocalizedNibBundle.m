@@ -358,7 +358,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 //		{
 //			NSLog(@"Break here");
 //		}
-		if ([subview isKindOfClass:[NSButton class]] && [[subview title] hasPrefix:@"Prefer links"])
+		if ([subview isKindOfClass:[NSButton class]] && [[subview title] hasPrefix:@"Prefer links op"])
 		{
 			NSLog(@"Break here");
 		}
@@ -382,6 +382,10 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 //		}
 		
 		CGFloat sizeDelta = ResizeToFit(subview, level+1);	// How much it got increased (to the right)
+//		if (sizeDelta == 27.0)
+//		{
+//			NSLog(@"break");
+//		}
 
 		NSUInteger mask = [subview autoresizingMask];
 		BOOL anchorLeft = 0 == (mask & NSViewMinXMargin);
@@ -397,6 +401,8 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 					// (or if sizeDelta < 1 then we are actually moving the left edge to the right
 			{
 				moveLeft = sizeDelta;
+				// Try this:  zero out accumulating delta since we are now right-aligned.
+				accumulatingDelta = 0;
 			}
 		}
 		
@@ -418,7 +424,10 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 			runningMaxX = NSMaxX([subview frame]);
 			
 			previousDelta = accumulatingDelta;
-			accumulatingDelta += sizeDelta - moveLeft;	// take away however many pixels we moved left			
+			accumulatingDelta += sizeDelta - moveLeft;	// take away however many pixels we moved left	
+			
+			// INSTEAD:
+			accumulatingDelta = runningMaxX - NSMaxX(originalRect);	// really calculate how much things have changed
 		}
 		else
 		{
@@ -499,29 +508,47 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 				NSView *lastView = [subviewsOnThisRow lastObject];
 				NSUInteger mask = [lastView autoresizingMask];
 				BOOL anchorRight = 0 == (mask & NSViewMaxXMargin);	// if anchored right, no matter what the margin was, we want to grow frame to match.
-								
+				BOOL stretchyView = 0 != (mask & NSViewWidthSizable);
+							
 				CGFloat newMaxX = NSMaxX([lastView frame]);
 				
-				if (anchorRight)
+				if (anchorRight)		// ?????  && !stretchyView
 				{
 					// use delta given by resize
-					LogIt(@"Anchored right, so using full delta of %.0f", rowDelta);
+					LogIt(@"%@ Anchored right, so using full delta of %.0f", lastView, rowDelta);
+					if (rowDelta == 106.0)
+					{
+						NSLog(@"break;");
+					}
 
 				}
-				else if ((originalMaxX != newMaxX) && (enclosingMaxX-newMaxX < 10))
+				else if (originalMaxX == newMaxX)
+				{
+					LogIt(@"Is delta equal to zero? It  should be %.0f", rowDelta);
+				}
+				else if (enclosingMaxX-newMaxX < 10)
 				{
 					LogIt(@"Delta for this row: %.0f, superMaxX:%.0f origMaxX:%.0f newMaxX:%.0f oldMarg:%.0f NewMarg:%.0f new-orig:%.0f suggested delta:%.0f", rowDelta, enclosingMaxX, originalMaxX, newMaxX, 
 						  enclosingMaxX - originalMaxX, enclosingMaxX-newMaxX, newMaxX - originalMaxX, 10 - (enclosingMaxX-newMaxX) );
 				
-					rowDelta = 10 - (enclosingMaxX-newMaxX);
+					// This doesn't work when the superview is a tab view that spills off the window (to avoid the edges)!
+					
+					CGFloat margin = 10.0;
+					if (enclosingMaxX == 254.0)
+					{
+						NSLog(@"FUDGE -- This is where the margin needs to be adjusted for the enclosing tab view");
+						margin += 17.0;
+					}
+					rowDelta = margin - (enclosingMaxX-newMaxX);
 				}
 				else
 				{
-					LogIt(@"Using row delta of %.0f", rowDelta);
+					LogIt(@"Row ended way before right margin, so using a delta of zero instead of %.0f", rowDelta);
 					if (rowDelta == 44.0)
 					{
 						NSLog(@"break");
 					}
+					rowDelta = 0.0;
 				}
 				
 				[deltasForRows setObject:[NSNumber numberWithFloat:rowDelta] forKey:rowValue];
