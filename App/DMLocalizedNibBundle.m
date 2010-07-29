@@ -526,10 +526,10 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 					// This doesn't work when the superview is a tab view that spills off the window (to avoid the edges)!
 					
 					CGFloat margin = 10.0;
-					if (enclosingMaxX == 254.0)
+					if ([[view superview] isKindOfClass:[NSTabView class]])
 					{
 						LogIt(@"FUDGE -- This is where the margin needs to be adjusted for the enclosing tab view");
-						margin += 17.0;
+						margin -= [[view superview] frame].origin.x;	// this will add 17 to the margin
 					}
 					rowDelta = margin - (enclosingMaxX-newMaxX);
 				}
