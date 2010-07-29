@@ -96,9 +96,11 @@
         DOMElement *elementToMergeInto = [_pendingEndDOMElements lastObject];
         if ([elementToMergeInto isEqualNode:element compareChildNodes:NO])
         {
+            // Dispose of markup: previous end tag, and this start tag
+            [_buffer beginBuffering];
+            [super startElement:tagName withDOMElement:element];
             [_pendingEndDOMElements removeLastObject];
             [_buffer discardBuffer];
-            [self pushElement:tagName];
             
             
             // Write inner HTML
