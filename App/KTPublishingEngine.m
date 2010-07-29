@@ -36,7 +36,6 @@
 #import "NSURL+Karelia.h"
 
 #import "KSCSSWriter.h"
-#import "KSSimpleURLConnection.h"
 #import "KSPlugInWrapper.h"
 #import "KSThreadProxy.h"
 
