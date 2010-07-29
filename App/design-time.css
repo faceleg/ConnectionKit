@@ -24,12 +24,12 @@
 
 
 /*  By default, nothing in article is selectable… */
-img, .article [contenteditable=true] > * {
+img, .article .kBlock[contenteditable=true] > * {
     -webkit-user-select:none;
 }
 
 /*  …except paragraphs. */
-.article [contenteditable=true] > p {
+.article .kBlock[contenteditable=true] > p {
     -webkit-user-select:inherit;
 }
 
