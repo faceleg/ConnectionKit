@@ -29,7 +29,6 @@
 
 #import "NSDictionary+Karelia.h"
 #import "NSTextView+KTExtensions.h"
-#import "NSThread+Karelia.h"
 
 #import "DOMNode+Karelia.h"
 #import "DOMNode+KTExtensions.h"

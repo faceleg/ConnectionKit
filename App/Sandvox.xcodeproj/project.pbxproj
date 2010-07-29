@@ -920,8 +920,6 @@
 		CE01A7F50EAFD63600BDF264 /* NSString+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6F10EAFD63600BDF264 /* NSString+Karelia.m */; };
 		CE01A7F60EAFD63600BDF264 /* NSString+KareliaPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6F20EAFD63600BDF264 /* NSString+KareliaPrivate.h */; };
 		CE01A7F70EAFD63600BDF264 /* NSString+KareliaPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6F30EAFD63600BDF264 /* NSString+KareliaPrivate.m */; };
-		CE01A7F80EAFD63600BDF264 /* NSThread+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6F40EAFD63600BDF264 /* NSThread+Karelia.h */; settings = {ATTRIBUTES = (); }; };
-		CE01A7F90EAFD63600BDF264 /* NSThread+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6F50EAFD63600BDF264 /* NSThread+Karelia.m */; };
 		CE01A7FA0EAFD63600BDF264 /* NSURL+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6F60EAFD63600BDF264 /* NSURL+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A7FB0EAFD63600BDF264 /* NSURL+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6F70EAFD63600BDF264 /* NSURL+Karelia.m */; };
 		CE01A7FC0EAFD63600BDF264 /* NSXMLElement+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6F80EAFD63600BDF264 /* NSXMLElement+Karelia.h */; };
@@ -2493,8 +2491,6 @@
 		CE01A6F10EAFD63600BDF264 /* NSString+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Karelia.m"; sourceTree = "<group>"; };
 		CE01A6F20EAFD63600BDF264 /* NSString+KareliaPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KareliaPrivate.h"; sourceTree = "<group>"; };
 		CE01A6F30EAFD63600BDF264 /* NSString+KareliaPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KareliaPrivate.m"; sourceTree = "<group>"; };
-		CE01A6F40EAFD63600BDF264 /* NSThread+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+Karelia.h"; sourceTree = "<group>"; };
-		CE01A6F50EAFD63600BDF264 /* NSThread+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+Karelia.m"; sourceTree = "<group>"; };
 		CE01A6F60EAFD63600BDF264 /* NSURL+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Karelia.h"; sourceTree = "<group>"; };
 		CE01A6F70EAFD63600BDF264 /* NSURL+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Karelia.m"; sourceTree = "<group>"; };
 		CE01A6F80EAFD63600BDF264 /* NSXMLElement+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSXMLElement+Karelia.h"; sourceTree = "<group>"; };
@@ -4790,8 +4786,6 @@
 				CE01A6F10EAFD63600BDF264 /* NSString+Karelia.m */,
 				CE01A6F20EAFD63600BDF264 /* NSString+KareliaPrivate.h */,
 				CE01A6F30EAFD63600BDF264 /* NSString+KareliaPrivate.m */,
-				CE01A6F40EAFD63600BDF264 /* NSThread+Karelia.h */,
-				CE01A6F50EAFD63600BDF264 /* NSThread+Karelia.m */,
 				CE01A6F60EAFD63600BDF264 /* NSURL+Karelia.h */,
 				CE01A6F70EAFD63600BDF264 /* NSURL+Karelia.m */,
 				CE01A6F80EAFD63600BDF264 /* NSXMLElement+Karelia.h */,
@@ -5433,7 +5427,6 @@
 				CE01A7F20EAFD63600BDF264 /* NSScanner+Karelia.h in Headers */,
 				CE01A7F40EAFD63600BDF264 /* NSString+Karelia.h in Headers */,
 				CE01A7F60EAFD63600BDF264 /* NSString+KareliaPrivate.h in Headers */,
-				CE01A7F80EAFD63600BDF264 /* NSThread+Karelia.h in Headers */,
 				CE01A7FA0EAFD63600BDF264 /* NSURL+Karelia.h in Headers */,
 				CE01A7FC0EAFD63600BDF264 /* NSXMLElement+Karelia.h in Headers */,
 				CE01A7FE0EAFD63600BDF264 /* RowHeightTransformer.h in Headers */,
@@ -6875,7 +6868,6 @@
 				CE01A7F30EAFD63600BDF264 /* NSScanner+Karelia.m in Sources */,
 				CE01A7F50EAFD63600BDF264 /* NSString+Karelia.m in Sources */,
 				CE01A7F70EAFD63600BDF264 /* NSString+KareliaPrivate.m in Sources */,
-				CE01A7F90EAFD63600BDF264 /* NSThread+Karelia.m in Sources */,
 				CE01A7FB0EAFD63600BDF264 /* NSURL+Karelia.m in Sources */,
 				CE01A7FD0EAFD63600BDF264 /* NSXMLElement+Karelia.m in Sources */,
 				CE01A7FF0EAFD63600BDF264 /* RowHeightTransformer.m in Sources */,

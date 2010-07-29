@@ -10,7 +10,6 @@
 
 #import "NSColor+Karelia.h"
 #import "NSObject+Karelia.h"
-#import "NSThread+Karelia.h"
 #import <QTKit/QTKit.h>
 #import "KSLicensedAppDelegate.h"
 #import "KSNetworkNotifier.h"

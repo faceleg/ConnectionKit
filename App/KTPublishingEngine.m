@@ -31,7 +31,6 @@
 #import "NSError+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSThread+Karelia.h"
 #import "NSURL+Karelia.h"
 
 #import "KSCSSWriter.h"

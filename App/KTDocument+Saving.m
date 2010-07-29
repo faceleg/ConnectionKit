@@ -37,7 +37,6 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSSet+Karelia.h"
-#import "NSThread+Karelia.h"
 #import "NSView+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 #import "NSURL+Karelia.h"

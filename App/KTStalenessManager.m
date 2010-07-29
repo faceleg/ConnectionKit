@@ -35,7 +35,6 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSThread+Karelia.h"
 
 
 @interface KTStalenessManager ()
