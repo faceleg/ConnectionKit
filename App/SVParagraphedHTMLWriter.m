@@ -62,7 +62,8 @@
     for (WEKWebEditorItem *anItem in [[self delegate] childWebEditorItems])
     {
         DOMNode *node = [anItem HTMLElement];
-        if (![node parentNode] && [node isEqualNode:aNode]) return anItem;
+        BOOL isOrphan = ![node isDescendantOfNode:[node ownerDocument]];
+        if (isOrphan && [node isEqualNode:aNode]) return anItem;
     }
     
     return nil;
