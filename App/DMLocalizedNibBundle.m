@@ -148,7 +148,7 @@ static void LogRows(NSDictionary *rows)
 	{
 		NSRange rowRange = [rowValue rangeValue];
 		NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
-		NSString *desc = DescViewsInRow(sortedRowViews);
+		NSString *desc = DescViewsInRow(subviewsOnThisRow);
 		LogIt(@"%2d. [%3d-%-3d] %@", i++, rowRange.location, NSMaxRange(rowRange), desc);
 	}	
 }
@@ -479,7 +479,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 			{
 				NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
 				
-				CGFloat rowDelta = ResizeRowViews(sortedRowViews, level+1);
+				CGFloat rowDelta = ResizeRowViews(subviewsOnThisRow, level+1);
 				delta = MAX(rowDelta, delta);	// save the max delta so we know how much to catch the others up to.
 				
 				[deltasForRows setObject:[NSNumber numberWithFloat:rowDelta] forKey:rowValue];
@@ -498,7 +498,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 				CGFloat rowDelta = [[deltasForRows objectForKey:rowValue] floatValue];
 				CGFloat neededDelta = delta - rowDelta;
 				
-				ResizeRowsByDelta(sortedRowViews, neededDelta);
+				ResizeRowsByDelta(subviewsOnThisRow, neededDelta);
 			}
 			
 			// Now we have the largest that the subviews had to resize; it's time to apply that to this view now but not its subviews.
@@ -886,7 +886,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 				}
 				
 				// Regular windows want 20 pixels right margin; utility windows 10 pixels.  I think from the HIG.
-				CGFloat desiredMargins = ([window styleMask] & NSUtilityWindowMask) ? 10 : 20;
+				// CGFloat desiredMargins = ([window styleMask] & NSUtilityWindowMask) ? 10 : 20;
 
 				CGFloat delta = ResizeToFit([window contentView], 0);
 				NSLog(@"Delta from resizing window-level view: %f.  Maybe I should be resizing the whole window?", delta);
