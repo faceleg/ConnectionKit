@@ -514,8 +514,6 @@
 		27C20F1011405105006D455E /* SVAuxiliaryPageletText.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C20F0C11405105006D455E /* SVAuxiliaryPageletText.m */; };
 		27C6FE610F1EBC8C00B58822 /* KTCodeInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C6FE5F0F1EBC8C00B58822 /* KTCodeInjection.h */; settings = {ATTRIBUTES = (); }; };
 		27C6FE620F1EBC8C00B58822 /* KTCodeInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */; };
-		27C98C9D0F1BA46B0079A84F /* KSSimpleURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */; };
-		27C98C9E0F1BA46B0079A84F /* KSSimpleURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */; };
 		27CC249D11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CC249B11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h */; };
 		27CC249E11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CC249C11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m */; };
 		27CD0A2B11AD684A0069E5AB /* WEKWebKitPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD0A2A11AD684A0069E5AB /* WEKWebKitPrivate.h */; };
@@ -5459,7 +5457,6 @@
 				27BCCCA20F09609E00B06B35 /* KTRemotePublishingEngine.h in Headers */,
 				270B67CE0F10E66900F6E076 /* KTPageDetailsController.h in Headers */,
 				2774DFAB0F16D87C0085A4D8 /* KTImageScalingURLProtocol.h in Headers */,
-				27C98C9D0F1BA46B0079A84F /* KSSimpleURLConnection.h in Headers */,
 				27C6FE610F1EBC8C00B58822 /* KTCodeInjection.h in Headers */,
 				CE9B4B420F5E0C780052134C /* UKDockProgressIndicator.h in Headers */,
 				27FC47EF1030CE7500A4A5E2 /* NSSet+Karelia.h in Headers */,
@@ -6900,7 +6897,6 @@
 				27BCCCA30F09609E00B06B35 /* KTRemotePublishingEngine.m in Sources */,
 				270B67CF0F10E66900F6E076 /* KTPageDetailsController.m in Sources */,
 				2774DFAC0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m in Sources */,
-				27C98C9E0F1BA46B0079A84F /* KSSimpleURLConnection.m in Sources */,
 				27C6FE620F1EBC8C00B58822 /* KTCodeInjection.m in Sources */,
 				279E79100F48566000BAB391 /* KSPluginInstallerController.m in Sources */,
 				CE9B4B430F5E0C780052134C /* UKDockProgressIndicator.m in Sources */,
