@@ -964,7 +964,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
         
     // Save the thumbnail to disk
-    NSImage *thumbnail = [[self proxyForThread:nil] _quickLookThumbnail];
+    NSImage *thumbnail = [[self ks_proxyOnThread:nil] _quickLookThumbnail];
     if (thumbnail)
     {
         NSURL *thumbnailURL = [[KTDocument quickLookURLForDocumentURL:docURL] URLByAppendingPathComponent:@"Thumbnail.png" isDirectory:NO];

@@ -350,7 +350,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	}
 	
 	// Notify the main thread that we're done
-	[[self proxyForMainThread] didGenerateCustomIcon:result forPage:page];
+	[[self ks_proxyOnThread:nil] didGenerateCustomIcon:result forPage:page];
 	
 	// Tidy up
 	[result release];
