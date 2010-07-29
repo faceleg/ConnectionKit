@@ -249,7 +249,6 @@
     [undoManager removeAllActions];
 }
 
-#pragma mark -
 #pragma mark Content Generation
 
 /*  Called when a transfer we are observing finishes. Mark its corresponding object non-stale and
@@ -295,35 +294,6 @@
             // It's probably a simple media object. Mark it non-stale.
             [object setBool:NO forKey:@"isStale"];
         }
-    }
-}
-
-@class KTMediaFileUpload;
-- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media
-{
-    if (![self onlyPublishChanges] || [media boolForKey:@"isStale"])
-    {
-        [super uploadMediaIfNeeded:media];
-    }
-}
-
-/*  This method gets called once all pages, media and designs have been processed. If there's nothing
- *  queued to be uploaded at this point, we want to cancel and tell the user
- */
-- (BOOL)uploadResourceFiles
-{
-    if ([self onlyPublishChanges] && [[[self baseTransferRecord] contents] count] == 0)
-    {
-        // Fake an error that the window controller will use to close itself
-        NSError *error = [NSError errorWithDomain:KTPublishingEngineErrorDomain
-											 code:KTPublishingEngineNothingToPublish
-										 userInfo:nil];
-        [self engineDidPublish:NO error:error];
-        return NO;
-    }
-    else
-    {
-        return [super uploadResourceFiles];
     }
 }
 
