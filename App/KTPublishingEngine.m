@@ -778,6 +778,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [self publishDesign];
     
     
+    [self finishPublishing];
+}
+
+- (void)finishPublishing;
+{
     // Upload sitemap if the site has one
     [self uploadGoogleSiteMapIfNeeded];
     
@@ -786,7 +791,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     _status = KTPublishingEngineStatusUploading;
     [[self delegate] publishingEngineDidFinishGeneratingContent:self];
     
-    [[self connection] disconnect]; // Once everything is uploaded, disconnect
+    [[self connection] disconnect];
+    // Once everything is uploaded, disconnect
 }
 
 #pragma mark Uploading Support

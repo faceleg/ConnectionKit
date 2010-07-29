@@ -123,6 +123,7 @@ typedef enum {
 
 // Control
 - (void)engineDidPublish:(BOOL)didPublish error:(NSError *)error;
+- (void)finishPublishing;
 
 // Connection
 - (id <CKConnection>)connection;

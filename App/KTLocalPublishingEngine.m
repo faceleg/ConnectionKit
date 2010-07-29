@@ -153,7 +153,8 @@
     NSData *digest = [data SHA1Digest];
     [data release];
     
-    [[self proxyForMainThread] publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest];
+    [[self ks_proxyOnThread:nil waitUntilDone:NO]
+     publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest];
 }
 
 /*	Supplement the default behaviour by also deleting any existing file first if the user requests it.
@@ -182,6 +183,14 @@
     [record setProperty:path forKey:@"path"];
     if (digest) [record setProperty:digest forKey:@"dataDigest"];
     if (contentHash) [record setProperty:contentHash forKey:@"contentHash"];
+}
+
+#pragma mark Status
+
+- (void)finishPublishing;
+{
+    [_diskAccessQueue waitUntilAllOperationsAreFinished];
+    [super finishPublishing];
 }
 
 /*  Once publishing is fully complete, without any errors, ping google if there is a sitemap
