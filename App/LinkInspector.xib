@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="140"/>
+			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -410,13 +410,13 @@
 					</object>
 					<object class="NSTextField" id="1061431300">
 						<reference key="NSNextResponder" ref="1005"/>
-						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{25, 10}, {197, 11}}</string>
+						<int key="NSvFlags">266</int>
+						<string key="NSFrame">{{25, 6}, {200, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="129127421">
-							<int key="NSCellFlags">68288064</int>
-							<int key="NSCellFlags2">272892928</int>
+							<int key="NSCellFlags">67239424</int>
+							<int key="NSCellFlags2">272891904</int>
 							<string key="NSContents">Hold down Shift key over a link to activate it</string>
 							<reference key="NSSupport" ref="22"/>
 							<reference key="NSControlView" ref="1061431300"/>
@@ -431,7 +431,7 @@
 					<object class="NSButton" id="751625205">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{7, 20}, {129, 18}}</string>
+						<string key="NSFrame">{{7, 30}, {129, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="815253543">
@@ -453,7 +453,7 @@
 					<object class="NSBox" id="558607766">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">10</int>
-						<string key="NSFrame">{{10, 44}, {210, 5}}</string>
+						<string key="NSFrame">{{10, 54}, {210, 5}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<string key="NSOffsets">{0, 0}</string>
 						<object class="NSTextFieldCell" key="NSTitleCell">
@@ -721,11 +721,11 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="558607766"/>
-							<reference ref="751625205"/>
 							<reference ref="1061431300"/>
 							<reference ref="700648405"/>
 							<reference ref="419155358"/>
 							<reference ref="685216708"/>
+							<reference ref="751625205"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
