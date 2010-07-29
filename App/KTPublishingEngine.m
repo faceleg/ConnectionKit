@@ -98,7 +98,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBASSERT(docRoot);
     
     
-    if (self = [super init])
+    if (self = [self init])
 	{
 		_site = [site retain];
         

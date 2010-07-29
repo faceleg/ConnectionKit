@@ -21,10 +21,12 @@
 #import "NSBundle+Karelia.h"
 #import "NSData+Karelia.h"
 #import "NSError+Karelia.h"
+#import "NSInvocation+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
+#import "KSThreadProxy.h"
 #import "KSUtilities.h"
 
 
@@ -38,8 +40,17 @@
 
 @implementation KTLocalPublishingEngine
 
-#pragma mark -
 #pragma mark Init & Dealloc
+
+- (id)init;
+{
+    [super init];
+    
+    _diskAccessQueue = [[NSOperationQueue alloc] init];
+    [_diskAccessQueue setMaxConcurrentOperationCount:1];
+    
+    return self;
+}
 
 - (id)initWithSite:(KTSite *)site onlyPublishChanges:(BOOL)publishChanges;
 {
@@ -67,15 +78,15 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+    [_diskAccessQueue release];
+    
 	[super dealloc];
 }
 
-#pragma mark -
 #pragma mark Accessors
 
 - (BOOL)onlyPublishChanges { return _onlyPublishChanges; }
 
-#pragma mark -
 #pragma mark Connection
 
 - (void)publishData:(NSData *)data
@@ -109,10 +120,17 @@
     // Hash if not already known
     if (!digest)
     {
-        // Could be done more efficiently by not loading the entire file at once
-        NSData *data = [[NSData alloc] initWithContentsOfURL:localURL];
-        digest = [data SHA1Digest];
-        [data release];
+        NSInvocation *invocation = [NSInvocation
+                                    invocationWithSelector:@selector(threaded_publishContentsOfURL:toPath:)
+                                    target:self];
+        [invocation setArgument:&localURL atIndex:2];
+        [invocation setArgument:&remotePath atIndex:3];
+        
+        NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+        [_diskAccessQueue addOperation:operation];
+        [operation release];
+        
+        return;
     }
     
     
@@ -126,6 +144,16 @@
     
     
     [super publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest];
+}
+
+- (void)threaded_publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
+{
+    // Could be done more efficiently by not loading the entire file at once
+    NSData *data = [[NSData alloc] initWithContentsOfURL:localURL];
+    NSData *digest = [data SHA1Digest];
+    [data release];
+    
+    [[self proxyForMainThread] publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest];
 }
 
 /*	Supplement the default behaviour by also deleting any existing file first if the user requests it.
