@@ -121,6 +121,11 @@ static void OffsetView(NSView *view, NSPoint offset)
 	}
 	
 	[desc appendFormat:@" %.0f+%.0f ", [self frame].origin.x, [self frame].size.width];
+	
+	// Not really working right for nested views?
+//	NSRect windowFrame = [self convertRect:[self frame] toView:nil];
+//	[desc appendFormat:@" [%.0f+%.0f] ", windowFrame.origin.x, windowFrame.size.width];
+	
 	[desc appendString:rightWidth];
 	[desc appendString:rightMargin];
 	return desc;
@@ -470,26 +475,59 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 		}
 		else	// standard subviews, group into rows and find widest row.
 		{
+			CGFloat enclosingMaxX = NSMaxX([view frame]);
+			
 			NSDictionary *rows = GroupSubviewsIntoRows(view);
 			// LogRows(rows);
 			NSMutableDictionary *deltasForRows = [NSMutableDictionary dictionary];
 		
-			NSArray *sortedRanges = [[rows allKeys] sortedArrayUsingSelector:@selector(compareRangeLocation:)];
+			NSArray *sortedRanges = [[rows allKeys] sortedArrayUsingSelector:@selector(compareRangeLocation:)];		// don't care about row order but easier to debug
 			for (NSValue *rowValue in [sortedRanges reverseObjectEnumerator])
 			{
 				NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
+
+				CGFloat originalMaxX = NSMaxX([[subviewsOnThisRow lastObject] frame]);
 				
-				CGFloat rowDelta = ResizeRowViews(subviewsOnThisRow, level+1);
-				delta = MAX(rowDelta, delta);	// save the max delta so we know how much to catch the others up to.
+				CGFloat rowDelta = 0;		// don't need to resize if it's before the right margin
+
+//				if (enclosingMaxX == 254.0)
+//				{
+//					NSLog(@"break here");
+//				}
+				rowDelta = ResizeRowViews(subviewsOnThisRow, level+1);
+
+				NSView *lastView = [subviewsOnThisRow lastObject];
+				NSUInteger mask = [lastView autoresizingMask];
+				BOOL anchorRight = 0 == (mask & NSViewMaxXMargin);	// if anchored right, no matter what the margin was, we want to grow frame to match.
+								
+				CGFloat newMaxX = NSMaxX([lastView frame]);
+				
+				if (anchorRight)
+				{
+					// use delta given by resize
+					LogIt(@"Anchored right, so using full delta of %.0f", rowDelta);
+
+				}
+				else if ((originalMaxX != newMaxX) && (enclosingMaxX-newMaxX < 10))
+				{
+					LogIt(@"Delta for this row: %.0f, superMaxX:%.0f origMaxX:%.0f newMaxX:%.0f oldMarg:%.0f NewMarg:%.0f new-orig:%.0f suggested delta:%.0f", rowDelta, enclosingMaxX, originalMaxX, newMaxX, 
+						  enclosingMaxX - originalMaxX, enclosingMaxX-newMaxX, newMaxX - originalMaxX, 10 - (enclosingMaxX-newMaxX) );
+				
+					rowDelta = 10 - (enclosingMaxX-newMaxX);
+				}
+				else
+				{
+					LogIt(@"Using row delta of %.0f", rowDelta);
+					if (rowDelta == 44.0)
+					{
+						NSLog(@"break");
+					}
+				}
 				
 				[deltasForRows setObject:[NSNumber numberWithFloat:rowDelta] forKey:rowValue];
-								
-				LogIt(@"Delta for this row: %.2f", delta);
-//				if (delta == 103.0)
-//				{
-//					NSLog(@"103");
-//				}
+				delta = MAX(rowDelta, delta);	// save the max delta so we know how much to catch the others up to.
 			}
+			
 			
 			// After resizing rows, I should go through again and set the new dimensions to match the widest row
 			for (NSValue *rowValue in [sortedRanges reverseObjectEnumerator])
@@ -504,6 +542,10 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 			// Now we have the largest that the subviews had to resize; it's time to apply that to this view now but not its subviews.
 			if (delta)
 			{
+				if (delta == 44.0)
+				{
+					NSLog(@"break");
+				}
 				LogIt(@"%@%@ Largest Delta for this whole view: %.2f", [@"                                                            " substringToIndex:2*level], view, delta);
 				
 				// Adjust our size (turn off auto resize, because we just fixed up all the
