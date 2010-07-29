@@ -220,10 +220,10 @@
         if ([_pendingStartTagDOMElements lastObject] == element)
         {
             // I'm not 100% sure this works with the new buffering code yet.
-            result = [element nextSibling];
+            [_buffer beginBuffering];   // resume buffering so the end tag doesn't get written
+            result = [super endElementWithDOMElement:element];
             
             [[element parentNode] removeChild:element];
-            [self popElement];
             [_pendingStartTagDOMElements removeLastObject];
             
             [_buffer discardBuffer];
