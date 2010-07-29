@@ -528,7 +528,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 					CGFloat margin = 10.0;
 					if ([[view superview] isKindOfClass:[NSTabView class]])
 					{
-						LogIt(@"FUDGE -- This is where the margin needs to be adjusted for the enclosing tab view");
+						NSLog(@"FUDGE -- This is where the margin needs to be adjusted for the enclosing tab view");
 						margin -= [[view superview] frame].origin.x;	// this will add 17 to the margin
 					}
 					rowDelta = margin - (enclosingMaxX-newMaxX);
@@ -685,6 +685,11 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 					if ([title rangeOfString:kForcedWrapString].location != NSNotFound) {
 						newFrame.size.width += kWrapperStringSlop;
 					}
+				}
+				
+				if (newFrame.size.width < oldFrame.size.width)
+				{
+					newFrame.size.width = oldFrame.size.width;		// DON'T SHRINK BUTTONS.
 				}
 			}
 		}
