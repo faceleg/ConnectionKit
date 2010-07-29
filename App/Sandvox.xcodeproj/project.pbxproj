@@ -538,6 +538,8 @@
 		27DB903011209AEA00B1895C /* DOMNamedNodeMap+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */; };
 		27DB903111209AEA00B1895C /* DOMNamedNodeMap+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB902F11209AEA00B1895C /* DOMNamedNodeMap+Karelia.m */; };
 		27DBBD5B11EF39AE00910BE7 /* WebViewEditingHelperClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A093300D1DECDA00F57801 /* WebViewEditingHelperClasses.m */; };
+		27DD06FA1201BDB90083C7C1 /* KSInvocationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DD06F81201BDB90083C7C1 /* KSInvocationOperation.h */; };
+		27DD06FB1201BDB90083C7C1 /* KSInvocationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DD06F91201BDB90083C7C1 /* KSInvocationOperation.m */; };
 		27DDFDBE11FDB2040083C7C1 /* KSStringWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DDFDBC11FDB2040083C7C1 /* KSStringWriter.h */; };
 		27DDFDBF11FDB2040083C7C1 /* KSStringWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDFDBD11FDB2040083C7C1 /* KSStringWriter.m */; };
 		27DE6C5910A4F6EE00D71710 /* WrapInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27DE6C5810A4F6EE00D71710 /* WrapInspector.xib */; };
@@ -2032,6 +2034,8 @@
 		27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMElement+Karelia.m"; sourceTree = "<group>"; };
 		27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNamedNodeMap+Karelia.h"; sourceTree = "<group>"; };
 		27DB902F11209AEA00B1895C /* DOMNamedNodeMap+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMNamedNodeMap+Karelia.m"; sourceTree = "<group>"; };
+		27DD06F81201BDB90083C7C1 /* KSInvocationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInvocationOperation.h; sourceTree = "<group>"; };
+		27DD06F91201BDB90083C7C1 /* KSInvocationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInvocationOperation.m; sourceTree = "<group>"; };
 		27DDFDBC11FDB2040083C7C1 /* KSStringWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSStringWriter.h; sourceTree = "<group>"; };
 		27DDFDBD11FDB2040083C7C1 /* KSStringWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSStringWriter.m; sourceTree = "<group>"; };
 		27DE6C5810A4F6EE00D71710 /* WrapInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WrapInspector.xib; sourceTree = "<group>"; };
@@ -4813,6 +4817,8 @@
 				2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */,
 				27CC249B11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h */,
 				27CC249C11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m */,
+				27DD06F81201BDB90083C7C1 /* KSInvocationOperation.h */,
+				27DD06F91201BDB90083C7C1 /* KSInvocationOperation.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -5616,6 +5622,7 @@
 				27F2790A11F9F29400B7F8FA /* SVBannerPickerController.h in Headers */,
 				27F27AAF11FA57C400B7F8FA /* BWRoundedRectBoxView.h in Headers */,
 				27DDFDBE11FDB2040083C7C1 /* KSStringWriter.h in Headers */,
+				27DD06FA1201BDB90083C7C1 /* KSInvocationOperation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7056,6 +7063,7 @@
 				27F2790B11F9F29400B7F8FA /* SVBannerPickerController.m in Sources */,
 				27F27AB011FA57C400B7F8FA /* BWRoundedRectBoxView.m in Sources */,
 				27DDFDBF11FDB2040083C7C1 /* KSStringWriter.m in Sources */,
+				27DD06FB1201BDB90083C7C1 /* KSInvocationOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
