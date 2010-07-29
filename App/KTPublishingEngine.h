@@ -45,7 +45,7 @@ typedef enum {
     KTPublishingEngineStatusFinished,
 } KTPublishingEngineStatus;
 
-@class KTSite, KTPage, SVHTMLTextBlock, SVHTMLTemplateParser;
+@class KTSite, KTPage, SVHTMLTextBlock;
 @protocol KTPublishingEngineDelegate;
 
 
