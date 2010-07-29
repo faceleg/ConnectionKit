@@ -3550,6 +3550,16 @@
 			path = ../KSHTMLWriter;
 			sourceTree = "<group>";
 		};
+		27DD06E21201BC950083C7C1 /* KSThreadProxy */ = {
+			isa = PBXGroup;
+			children = (
+				CE01A67B0EAFD63600BDF264 /* KSThreadProxy.h */,
+				CE01A67C0EAFD63600BDF264 /* KSThreadProxy.m */,
+			);
+			name = KSThreadProxy;
+			path = ../KSThreadProxy;
+			sourceTree = "<group>";
+		};
 		27DF88CE0D85785D00AEF4B5 /* Main Document Window */ = {
 			isa = PBXGroup;
 			children = (
@@ -4719,8 +4729,6 @@
 				CE01A69B0EAFD63600BDF264 /* NSError+Karelia.m */,
 				CE01A68C0EAFD63600BDF264 /* NSArray+Karelia.h */,
 				CE01A68D0EAFD63600BDF264 /* NSArray+Karelia.m */,
-				CE01A67B0EAFD63600BDF264 /* KSThreadProxy.h */,
-				CE01A67C0EAFD63600BDF264 /* KSThreadProxy.m */,
 				CE01A66B0EAFD63600BDF264 /* KSSelfRegisteringValueTransformer.h */,
 				CE01A66C0EAFD63600BDF264 /* KSSelfRegisteringValueTransformer.m */,
 				CE01A6480EAFD63600BDF264 /* KSNetworkNotifier.h */,
@@ -5205,6 +5213,7 @@
 				CE22E5B80D7C71A10055D8E9 /* Interfaces */,
 				27CC248211F07277007FB3FE /* KSHTMLWriter */,
 				27CC0E2511EFBA02007FB3FE /* KSExtensibleManagedObject */,
+				27DD06E21201BC950083C7C1 /* KSThreadProxy */,
 				CE1BE7AF11D2AD0700D875AE /* Graphics */,
 				CE01A6B50EAFD63600BDF264 /* Foundation */,
 				27FDEF10111B4C84001F4E60 /* Core Data */,
