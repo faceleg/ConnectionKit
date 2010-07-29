@@ -92,7 +92,7 @@
     {
         [orphanedItem setHTMLElement:imageElement];
         [[self delegate] write:self selectableItem:(SVGraphicDOMController *)orphanedItem];
-        return [orphanedItem HTMLElement];
+        return [[orphanedItem HTMLElement] nextSibling];
     }
     
     
