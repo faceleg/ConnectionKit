@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="2"/>
+			<integer value="171"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1019,7 +1019,7 @@
 										<object class="NSTextField" id="351864953">
 											<reference key="NSNextResponder" ref="865099582"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{14, 42}, {216, 14}}</string>
+											<string key="NSFrame">{{14, 42}, {69, 14}}</string>
 											<reference key="NSSuperview" ref="865099582"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="682569568">
@@ -1035,7 +1035,7 @@
 										<object class="NSTextField" id="368262625">
 											<reference key="NSNextResponder" ref="865099582"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{14, 99}, {216, 14}}</string>
+											<string key="NSFrame">{{14, 99}, {65, 14}}</string>
 											<reference key="NSSuperview" ref="865099582"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="318852034">
@@ -1177,7 +1177,7 @@
 										</object>
 										<object class="NSImageView" id="96297053">
 											<reference key="NSNextResponder" ref="865099582"/>
-											<int key="NSvFlags">265</int>
+											<int key="NSvFlags">268</int>
 											<object class="NSMutableSet" key="NSDragTypes">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 												<object class="NSArray" key="set.sortedObjects">
@@ -2260,12 +2260,12 @@
 							<reference ref="801528799"/>
 							<reference ref="909935514"/>
 							<reference ref="708103651"/>
-							<reference ref="970766255"/>
 							<reference ref="842751155"/>
 							<reference ref="396803696"/>
 							<reference ref="96297053"/>
 							<reference ref="137761113"/>
 							<reference ref="502030910"/>
+							<reference ref="970766255"/>
 						</object>
 						<reference key="parent" ref="708745229"/>
 					</object>
