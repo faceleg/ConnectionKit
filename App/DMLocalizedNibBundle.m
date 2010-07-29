@@ -5,7 +5,12 @@
 //  This code is provided as-is, with no warranties or anything. You may use it in your projects as you wish, but you must leave this comment block (credits and copyright) intact. That's the only restriction -- Golden % Braeburn otherwise grants you a fully-paid, worldwide, transferrable license to use this code as you see fit, including but not limited to making derivative works.
 //
 //
-// Modified by Dan Wood of Karelia Software
+// Modified HEAVILY by Dan Wood of Karelia Software
+//
+// Copyright 2010 Karela Software.  All rights reserved.
+//
+// TO DO: Figure out a licensing scheme if we are going to distribute it.
+//
 //
 // Some of this is inspired and modified by GTMUILocalizer from Google Toolbox http://google-toolbox-for-mac.googlecode.com
 // (BSD license)
@@ -338,8 +343,8 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 	CGFloat previousOriginalMinX = NSNotFound;
 	NSUInteger controlGroupingMargin = NSNotFound;	// try to give this a real value based on control size of first item that can be found
 	
-	NSString *desc = DescViewsInRow(rowViews);
-	LogIt(@"%@ROW %@", [@"                                                            " substringToIndex:2*level], desc);
+	//NSString *desc = DescViewsInRow(rowViews);
+	//LogIt(@"%@ROW %@", [@"                                                            " substringToIndex:2*level], desc);
 	
 	
 	// Size our rowViews
@@ -347,21 +352,21 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 	NSPoint subviewOffset = NSZeroPoint;
 	for (NSView *subview in rowViews)
 	{
-		LogIt(@"%@ROWVIEW%@", [@"                                                            " substringToIndex:2*level+1], [subview description]);
+		//LogIt(@"%@ROWVIEW%@", [@"                                                            " substringToIndex:2*level+1], [subview description]);
 		// Try to figure out minimum spacing for groups of controls that are aligned differently
 		if (NSNotFound == controlGroupingMargin)
 		{
 			controlGroupingMargin = GuessControlSizeGroupingMargin(subview);
 		}
 		
-//		if ([subview isKindOfClass:[NSTextField class]] && [[subview stringValue] hasPrefix:@"[SCALE"])
+//		if ([subview isKindOfClass:[NSTextField class]] && [[subview stringValue] hasPrefix:@"Hold down Shift key ove"])
 //		{
 //			NSLog(@"Break here");
 //		}
-		if ([subview isKindOfClass:[NSButton class]] && [[subview title] hasPrefix:@"Prefer links op"])
-		{
-			NSLog(@"Break here");
-		}
+//		if ([subview isKindOfClass:[NSButton class]] && [[subview title] hasPrefix:@"Prefer links op"])
+//		{
+//			NSLog(@"Break here");
+//		}
 //		if ([subview isKindOfClass:[NSBox class]] && [subview frame].origin.y == 62.0)
 //		{
 //			NSLog(@"Break here - this is the separator line");
@@ -382,10 +387,6 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 //		}
 		
 		CGFloat sizeDelta = ResizeToFit(subview, level+1);	// How much it got increased (to the right)
-//		if (sizeDelta == 27.0)
-//		{
-//			NSLog(@"break");
-//		}
 
 		NSUInteger mask = [subview autoresizingMask];
 		BOOL anchorLeft = 0 == (mask & NSViewMinXMargin);
@@ -457,7 +458,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 		if ([view isKindOfClass:[NSTabView class]])
 		{
 			NSArray *tabViewItems = [(NSTabView *)view tabViewItems];
-			LogIt(@"%@TABVIEWS %@", [@"                                                            " substringToIndex:2*level], [[tabViewItems description] condenseWhiteSpace]);
+			//LogIt(@"%@TABVIEWS %@", [@"                                                            " substringToIndex:2*level], [[tabViewItems description] condenseWhiteSpace]);
 			for (NSTabViewItem *item in tabViewItems)		// resize tabviews instead of subviews
 			{
 				(void) ResizeToFit([item view], level+1);
@@ -499,10 +500,6 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 				
 				CGFloat rowDelta = 0;		// don't need to resize if it's before the right margin
 
-//				if (enclosingMaxX == 254.0)
-//				{
-//					NSLog(@"break here");
-//				}
 				rowDelta = ResizeRowViews(subviewsOnThisRow, level+1);
 
 				NSView *lastView = [subviewsOnThisRow lastObject];
@@ -515,39 +512,30 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 				if (anchorRight)		// ?????  && !stretchyView
 				{
 					// use delta given by resize
-					LogIt(@"%@ Anchored right, so using full delta of %.0f", lastView, rowDelta);
-					if (rowDelta == 106.0)
-					{
-						NSLog(@"break;");
-					}
+					//LogIt(@"%@ Anchored right, so using full delta of %.0f", lastView, rowDelta);
 
 				}
 				else if (originalMaxX == newMaxX)
 				{
-					LogIt(@"Is delta equal to zero? It  should be %.0f", rowDelta);
+					//LogIt(@"Is delta equal to zero? It  should be %.0f", rowDelta);
 				}
 				else if (enclosingMaxX-newMaxX < 10)
 				{
-					LogIt(@"Delta for this row: %.0f, superMaxX:%.0f origMaxX:%.0f newMaxX:%.0f oldMarg:%.0f NewMarg:%.0f new-orig:%.0f suggested delta:%.0f", rowDelta, enclosingMaxX, originalMaxX, newMaxX, 
-						  enclosingMaxX - originalMaxX, enclosingMaxX-newMaxX, newMaxX - originalMaxX, 10 - (enclosingMaxX-newMaxX) );
+					//LogIt(@"Delta for this row: %.0f, superMaxX:%.0f origMaxX:%.0f newMaxX:%.0f oldMarg:%.0f NewMarg:%.0f new-orig:%.0f suggested delta:%.0f", rowDelta, enclosingMaxX, originalMaxX, newMaxX, enclosingMaxX - originalMaxX, enclosingMaxX-newMaxX, newMaxX - originalMaxX, 10 - (enclosingMaxX-newMaxX) );
 				
 					// This doesn't work when the superview is a tab view that spills off the window (to avoid the edges)!
 					
 					CGFloat margin = 10.0;
 					if (enclosingMaxX == 254.0)
 					{
-						NSLog(@"FUDGE -- This is where the margin needs to be adjusted for the enclosing tab view");
+						LogIt(@"FUDGE -- This is where the margin needs to be adjusted for the enclosing tab view");
 						margin += 17.0;
 					}
 					rowDelta = margin - (enclosingMaxX-newMaxX);
 				}
 				else
 				{
-					LogIt(@"Row ended way before right margin, so using a delta of zero instead of %.0f", rowDelta);
-					if (rowDelta == 44.0)
-					{
-						NSLog(@"break");
-					}
+					//LogIt(@"Row ended way before right margin, so using a delta of zero instead of %.0f", rowDelta);
 					rowDelta = 0.0;
 				}
 				
@@ -569,11 +557,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 			// Now we have the largest that the subviews had to resize; it's time to apply that to this view now but not its subviews.
 			if (delta)
 			{
-				if (delta == 44.0)
-				{
-					NSLog(@"break");
-				}
-				LogIt(@"%@%@ Largest Delta for this whole view: %.2f", [@"                                                            " substringToIndex:2*level], view, delta);
+				//LogIt(@"%@%@ Largest Delta for this whole view: %.2f", [@"                                                            " substringToIndex:2*level], view, delta);
 				
 				// Adjust our size (turn off auto resize, because we just fixed up all the
 				// objects within us).
@@ -601,12 +585,14 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 {
 	// logging newline comes at the end
-	Log(@"%@RESIZE %@", [@"                                                            " substringToIndex:2*level], [[view description] condenseWhiteSpace]);
+	//Log(@"%@RESIZE %@", [@"                                                            " substringToIndex:2*level], [[view description] condenseWhiteSpace]);
+	// SEE BELOW TO FINISH THE LINE WITH A LogIt
+	
 	CGFloat delta = 0.0;
 	
 	if ([[view subviews] count])		// Subviews: Get the subviews resized; that's the width this view wants to be.
 	{
-		LogIt(@"");		// newline
+		//LogIt(@"");		// newline
 		delta = ResizeAnySubviews(view, level+1);
 	}
 	else	// A primitive view without subviews; size according to its contents
@@ -614,6 +600,9 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		NSRect oldFrame = [view frame];		// keep track of original frame so we know how much it resized
 		NSRect fitFrame = oldFrame;			// only set differently when sizeToFit is called, so we know it was already called
 		NSRect newFrame = oldFrame;			// what we will be setting the frame to (if not already done)
+
+		NSUInteger mask = [view autoresizingMask];
+		BOOL stretchyView = 0 != (mask & NSViewWidthSizable);	// If stretchy view, DO NOT SHRINK.
 
 	//	// Try to turn on some stuff that will help me see the new bounds
 	//	if ([view respondsToSelector:@selector(setBordered:)]) {
@@ -629,6 +618,11 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			// Don't try to sizeToFit because edit fields really don't want to be sized
 			// to what is in them as they are for users to enter things so honor their
 			// current size.
+		} else if ([view isKindOfClass:[NSTextField class]]
+				   && [[((NSControl *)view) cell] lineBreakMode] <= NSLineBreakByCharWrapping) {
+			// A multi-line text field (I assume it's only going to have wrapping if it's multi-line) ... don't resize;
+			// assume that developer has put in some padding, since we don't want to try to guess multiple line word wrapping
+			//LogIt(@"Not Resizing wrapping text field: %@", [view stringValue]);
 		} else if ([view isKindOfClass:[NSPathControl class]]) {
 			// Don't try to sizeToFit because NSPathControls usually need to be able
 			// to display any path, so they shouldn't tight down to whatever they
@@ -643,6 +637,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			// But one thing is clear: I don't want to shrink one that is stretchy, since it's probably
 			// intended to fill a space.
 		} else {
+			
 			// Generically fire a sizeToFit if it has one.  e.g. NSTableColumn, NSProgressIndicator, (NSBox), NSMenuView, NSControl, NSTableView, NSText
 			if ([view respondsToSelector:@selector(sizeToFit)]) {
 				
@@ -696,8 +691,6 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		
 		// Now after we've tried all of this resizing, let's see if it's gotten narrower AND we wanted
 		// a stretchy view.  If a view is stretchy, it means we didn't really intend on shrinking it.
-		NSUInteger mask = [view autoresizingMask];
-		BOOL stretchyView = 0 != (mask & NSViewWidthSizable);	// If stretchy view, DO NOT SHRINK.
 		if (stretchyView && (NSWidth(newFrame) < NSWidth(oldFrame)))
 		{
 			newFrame = oldFrame;		// go back to the old frame; reject the size change.
@@ -711,7 +704,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		
 		// Return how much we changed size.
 		delta = NSWidth(newFrame) - NSWidth(oldFrame);
-		if (!delta) LogIt(@" (no change)"); else LogIt(@" ... to %+.0f (∂ %.0f)", NSWidth(newFrame), delta);
+		//if (!delta) LogIt(@" (no change)"); else LogIt(@" ... to %+.0f (∂ %.0f)", NSWidth(newFrame), delta);
 	}
 	return delta;
 }
@@ -803,7 +796,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
 		self == [NSViewController class]) {
-		NSLog(@"Switching in NSViewController Localizer!");
+		//NSLog(@"Switching in NSViewController Localizer!");
         method_exchangeImplementations(class_getInstanceMethod(self, @selector(loadView)), class_getInstanceMethod(self, @selector(deliciousLocalizingLoadView)));
     }
     [autoreleasePool release];
@@ -839,7 +832,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
 		self == [NSBundle class]) {
-		NSLog(@"Switching in NSBundle localizer. W00T!");
+		//NSLog(@"Switching in NSBundle localizer. W00T!");
         method_exchangeImplementations(class_getClassMethod(self, @selector(loadNibFile:externalNameTable:withZone:)), class_getClassMethod(self, @selector(deliciousLocalizingLoadNibFile:externalNameTable:withZone:)));
     }
     [autoreleasePool release];
@@ -927,7 +920,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			{
 				NSView *view = (NSView *)topLevelObject;
 				
-				// if ([fileName hasSuffix:@"PageInspector.nib"])		// THE ONLY ONE TO RESIZE, FOR NOW, JUST SO IT'S EASIER TO DEBUG.
+				//if ([fileName hasSuffix:@"LinkInspector.nib"])		// THE ONLY ONE TO RESIZE, FOR NOW, JUST SO IT'S EASIER TO DEBUG.
 				{
 					CGFloat delta = ResizeToFit(view, 0);
 					if (delta) NSLog(@"############## Warning: Delta from resizing top-level %@ view: %f", [fileName lastPathComponent], delta);
@@ -958,7 +951,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 				// CGFloat desiredMargins = ([window styleMask] & NSUtilityWindowMask) ? 10 : 20;
 
 				CGFloat delta = ResizeToFit([window contentView], 0);
-				NSLog(@"Delta from resizing window-level view: %f.  Maybe I should be resizing the whole window?", delta);
+				NSLog(@"##### Delta from resizing window-level view: %f.  Maybe I should be resizing the whole window?", delta);
 					
 				
 			}
