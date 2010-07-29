@@ -349,8 +349,16 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
          postNotificationName:sSVWebEditorViewControllerWillUpdateNotification
          object:self];
     
+		float delay = 0.1f;
+#ifdef DEBUG
+		if ([NSUserName() isEqualToString:@"dwood"])
+		{
+			NSLog(@"Dan Testing longer delay");
+			delay = 1.0f;
+		}
+#endif
         // If the update takes too long, switch over to placeholder
-        [self performSelector:@selector(updateDidTimeout) withObject:nil afterDelay:0.1f];
+        [self performSelector:@selector(updateDidTimeout) withObject:nil afterDelay:delay];
     }
     
     
