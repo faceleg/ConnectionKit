@@ -312,6 +312,17 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark DOM
 
+- (void)setHTMLElement:(DOMHTMLElement *)element;
+{
+    // Is this a change due to being orphaned while editing? If so, pass down to image controller too. #83312
+    if ([self HTMLElement] == [[self imageDOMController] HTMLElement])
+    {
+        [[self imageDOMController] setHTMLElement:element];
+    }
+    
+    [super setHTMLElement:element];
+}
+
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document;
 {
     // Hook up image controller first
