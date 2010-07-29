@@ -467,62 +467,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 #pragma mark Media
 
-- (void)gatherMedia;
-{
-    // Gather up media using special context
-    SVMediaGatheringPublisher *pubContext = [[SVMediaGatheringPublisher alloc] init];
-    [pubContext setPublishingEngine:self];
-    
-    _newMedia = [[NSMutableArray alloc] init];
-    
-    KTPage *homePage = [[self site] rootPage];
-    [homePage publish:pubContext recursively:YES];
-    
-    [pubContext release];
-    
-    // Assign filenames to the new media
-    for (SVMediaRepresentation *mediaRep in _newMedia)
-    {
-        [self uploadMediaRepresentation:mediaRep];
-    }
-    [_newMedia release]; _newMedia = nil;
-}
-
-- (NSString *)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
-{
-    if ([self status] == KTPublishingEngineStatusGatheringMedia)
-    {
-        // Is there already an existing file on the server? If so, use that
-        NSData *fileContents = [mediaRep data];
-        NSData *digest = [fileContents SHA1Digest];
-        
-        NSString *path = [self pathForFileWithSHA1Digest:digest];
-        if (path)
-        {
-            // Only upload the data if it's not already being done
-            if (![_paths containsObject:path])
-            {
-                [self publishData:fileContents toPath:path];
-            }
-            
-            [_uploadedMediaReps setObject:path forKey:mediaRep];
-        }
-        else
-        {
-            // Put off uploading until all media has been gathered
-            [_newMedia addObject:mediaRep];
-        }
-        
-        return nil;
-    }
-    else
-    {
-        NSString *result = [_uploadedMediaReps objectForKey:mediaRep];
-        return result;
-    }
-}
-
-- (void)uploadMediaRepresentation:(SVMediaRepresentation *)mediaRep
+- (void)publishNewMediaRepresentation:(SVMediaRepresentation *)mediaRep
 {
     //  The media rep does not already exist on the server, so need to assign it a new path
     id <SVMedia> media = [mediaRep mediaRecord];
@@ -553,6 +498,56 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (fileContents) [self publishData:fileContents toPath:path];
     
     [_uploadedMediaReps setObject:path forKey:mediaRep];
+}
+
+- (void)gatherMedia;
+{
+    // Gather up media using special context
+    SVMediaGatheringPublisher *pubContext = [[SVMediaGatheringPublisher alloc] init];
+    [pubContext setPublishingEngine:self];
+    
+    _newMedia = [[NSMutableArray alloc] init];
+    
+    KTPage *homePage = [[self site] rootPage];
+    [homePage publish:pubContext recursively:YES];
+    
+    [pubContext release];
+    
+    // Assign filenames to the new media
+    for (SVMediaRepresentation *mediaRep in _newMedia)
+    {
+        [self publishNewMediaRepresentation:mediaRep];
+    }
+    [_newMedia release]; _newMedia = nil;
+}
+
+- (NSString *)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
+{
+    if ([self status] == KTPublishingEngineStatusGatheringMedia)
+    {
+        // Is there already an existing file on the server? If so, use that
+        NSData *fileContents = [mediaRep data];
+        NSData *digest = [fileContents SHA1Digest];
+        
+        NSString *path = [self pathForFileWithSHA1Digest:digest];
+        if (path)
+        {
+            [self publishData:fileContents toPath:path];
+            [_uploadedMediaReps setObject:path forKey:mediaRep];
+        }
+        else
+        {
+            // Put off uploading until all media has been gathered
+            [_newMedia addObject:mediaRep];
+        }
+        
+        return nil;
+    }
+    else
+    {
+        NSString *result = [_uploadedMediaReps objectForKey:mediaRep];
+        return result;
+    }
 }
 
 #pragma mark Resource Files
