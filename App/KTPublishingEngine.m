@@ -108,7 +108,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         _uploadedMediaReps = [[NSMutableDictionary alloc] init];
         
         _plugInCSS = [[NSMutableArray alloc] init];
-        _graphicalTextBlocks = [[NSMutableDictionary alloc] init];
         
         _documentRootPath = [docRoot copy];
         _subfolderPath = [subfolder copy];
@@ -131,7 +130,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [_paths release];
     
     [_plugInCSS release];
-    [_graphicalTextBlocks release];
 	
 	[super dealloc];
 }

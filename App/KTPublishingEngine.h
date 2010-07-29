@@ -69,7 +69,6 @@ typedef enum {
     NSMutableArray      *_newMedia;
     
     NSMutableArray      *_plugInCSS;    // mixture of string CSS snippets, and CSS URLs
-    NSMutableDictionary *_graphicalTextBlocks;
 }
 
 - (id)initWithSite:(KTSite *)site
