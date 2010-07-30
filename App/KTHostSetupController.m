@@ -41,9 +41,11 @@ TO DO:
 #import "NSObject+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLFormatter.h"
 #import "NSWorkspace+Karelia.h"
+
 #import "NTSUTaskController.h"
+#import "KSURLFormatter.h"
 
 #import <AddressBook/AddressBook.h>
 #import <Connection/Connection.h> // for CKAbstractConnection, ConnectionOpenPanel, EMKeychainItem, and EMKeychainProxy

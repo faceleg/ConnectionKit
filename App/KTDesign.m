@@ -13,6 +13,9 @@
 #import "KTImageScalingSettings.h"
 #import "KTStringRenderer.h"
 
+#import "KTDesignFamily.h"
+#import "SVHTMLContext.h"
+
 #import "NSApplication+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
@@ -21,10 +24,10 @@
 #import "NSSet+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSArray+Karelia.h"
-#import "NSURL+Karelia.h"
 #import "NSColor+Karelia.h"
-#import "KTDesignFamily.h"
-#import "SVHTMLContext.h"
+
+#import "KSURLFormatter.h"
+
 #import "Debug.h"
 
 const int kDesignThumbWidth = 100;

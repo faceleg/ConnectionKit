@@ -19,6 +19,8 @@
 #import "NSURL+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 
+#import "KSURLFormatter.h"
+
 #import "debug.h"
 
 

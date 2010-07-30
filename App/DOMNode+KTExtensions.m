@@ -12,7 +12,7 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLFormatter.h"
 
 #import <WebKit/WebKit.h>
 #import "DOMNodeList+KTExtensions.h"
