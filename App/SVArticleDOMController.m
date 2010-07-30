@@ -244,8 +244,8 @@
 
 - (IBAction)placeInline:(id)sender;    // tells all selected graphics to become placed as block
 {
-    SVWebEditorHTMLContext *context = [self HTMLContext];
-    SVWebEditorViewController *viewController = [context webEditorViewController];
+    SVWebEditorViewController *viewController = [self webEditorViewController];
+    OBASSERT(viewController);
     
     for (SVGraphic *aGraphic in [[viewController graphicsController] selectedObjects])
     {
@@ -274,8 +274,8 @@
     [self moveToBlockLevel:sender];
     
     
-    SVWebEditorHTMLContext *context = [self HTMLContext];
-    SVWebEditorViewController *viewController = [context webEditorViewController];
+    SVWebEditorViewController *viewController = [self webEditorViewController];
+    OBASSERT(viewController);
     
     for (SVGraphic *aGraphic in [[viewController graphicsController] selectedObjects])
     {        
@@ -301,7 +301,7 @@
     // Insert copies into sidebar
     SVWebEditorHTMLContext *context = [self HTMLContext];
     SVSidebarPageletsController *sidebarController = [context sidebarPageletsController];
-    SVWebEditorViewController *viewController = [context webEditorViewController];
+    SVWebEditorViewController *viewController = [self webEditorViewController]; OBASSERT(viewController);
     NSArrayController *graphicsController = [viewController graphicsController];
     
     NSArray *graphics = [graphicsController selectedObjects];

@@ -153,8 +153,8 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     SVRichText *article = [[[self HTMLContext] page] article];
     NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
     
-    SVWebEditorHTMLContext *context = [self HTMLContext];
-    SVWebEditorViewController *viewController = [context webEditorViewController];
+    SVWebEditorViewController *viewController = [self webEditorViewController];
+    OBASSERT(viewController);
     
     for (SVGraphic *aGraphic in [[viewController graphicsController] selectedObjects])
     {
