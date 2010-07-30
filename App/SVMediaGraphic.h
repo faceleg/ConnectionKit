@@ -20,8 +20,6 @@
 
 @property(nonatomic, copy) NSURL *externalSourceURL;
 
-- (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
-
 - (BOOL)hasFile;    // for bindings
 
 

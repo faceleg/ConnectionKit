@@ -83,15 +83,6 @@
     [self setExternalSourceURL:URL];
 }
 
-- (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
-{    
-    SVMediaRecord *media = [self media];
-    if (media) [[[SVHTMLTemplateParser currentTemplateParser] HTMLContext] addMedia:media];
-    
-    NSURL *result = [self sourceURL];
-    return result;
-}
-
 - (BOOL)hasFile; { return YES; }
 
 #pragma mark Size

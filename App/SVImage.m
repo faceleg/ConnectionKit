@@ -189,7 +189,7 @@
     }
     else
     {
-        NSURL *URL = [self imagePreviewURL];
+        NSURL *URL = [self externalSourceURL];
         
         [context writeImageWithSrc:(URL ? [context relativeURLStringOfURL:URL] : @"")
                                alt:alt
@@ -223,7 +223,7 @@
     NSData *data = [media fileContents];
     [propertyList setValue:data forKey:@"fileContents"];
     
-    NSURL *URL = [self imagePreviewURL];
+    NSURL *URL = [self sourceURL];
     [propertyList setValue:[URL absoluteString] forKey:@"sourceURL"];
 }
 
