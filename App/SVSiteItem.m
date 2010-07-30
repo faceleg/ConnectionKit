@@ -359,7 +359,8 @@
 
 - (BOOL)includeInSiteMaps;
 {
-    BOOL result = [[self includeInSiteMap] boolValue] && ![self isDraftOrHasDraftAncestor];
+    BOOL result = ([[self includeInSiteMap] boolValue] && 
+                   ([self datePublished] || ![self isDraftOrHasDraftAncestor]));
     return result;
 }
 
