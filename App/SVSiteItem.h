@@ -56,7 +56,7 @@
 
 @property(nonatomic, copy) NSNumber *isPublishableInDemo;    // BOOL, mandatory
 
-@property(nonatomic) BOOL includeInIndex;
+@property(nonatomic, copy) NSNumber *includeInIndex;
 
 
 #pragma mark URL

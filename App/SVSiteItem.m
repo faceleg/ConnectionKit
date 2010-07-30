@@ -131,11 +131,10 @@
 	return result;
 }
 
-- (BOOL)includeInIndex { return [self wrappedBoolForKey:@"includeInIndex"]; }
-
-- (void)setIncludeInIndex:(BOOL)flag
+@dynamic includeInIndex;
+- (void)setIncludeInIndex:(NSNumber *)flag
 {
-	[self setWrappedBool:flag forKey:@"includeInIndex"];
+	[self setWrappedValue:flag forKey:@"includeInIndex"];
 	
 	
 	// We must update the parent's list of pages
@@ -210,7 +209,7 @@
 
 - (BOOL)includeInIndexAndPublish
 {
-	BOOL result = [self includeInIndex];
+	BOOL result = [[self includeInIndex] boolValue];
 	if (result)
 	{
 		// thinks it should be in index, so see if maybe we shouldn't publish it.  Faster to check serverPath first.
@@ -361,6 +360,13 @@
 {
     return [SVLink linkWithSiteItem:self
                     openInNewWindow:[[self openInNewWindow] boolValue]];
+}
+
+- (BOOL)includeInIndexes;
+{
+    BOOL result = ([[self includeInIndex] boolValue] && 
+                   ([self datePublished] || ![self isDraftOrHasDraftAncestor]));
+    return result;
 }
 
 - (BOOL)includeInSiteMaps;
