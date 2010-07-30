@@ -59,6 +59,13 @@
 	[[self site] invalidatePagesInSiteMenuCache];
 }
 
+- (BOOL)shouldIncludeInSiteMenu;    // takes into account draft status etc.
+{
+    BOOL result = ([[self includeInSiteMenu] boolValue] && 
+                   ([self datePublished] || ![self isDraftOrHasDraftAncestor]));
+    return result;
+}
+
 - (NSString *)menuTitle;
 {
     NSString *result = [self customMenuTitle];
