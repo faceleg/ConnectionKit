@@ -27,8 +27,6 @@
     
     SVSidebarDOMController      *_sidebarDOMController;
     SVSidebarPageletsController *_sidebarPageletsController;
-    
-    SVWebEditorViewController   *_viewController;   // weak ref
 }
 
 #pragma mark Root

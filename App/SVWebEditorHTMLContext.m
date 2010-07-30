@@ -23,10 +23,6 @@
 
 
 @interface SVWebEditorHTMLContext ()
-#pragma mark View Controller
-@property(nonatomic, assign) SVWebEditorViewController *webEditorViewController;
-
-
 - (void)endDOMController;
 @end
 
@@ -306,10 +302,6 @@
 
 @synthesize sidebarPageletsController = _sidebarPageletsController;
 - (NSArrayController *)cachedSidebarPageletsController; { return [self sidebarPageletsController]; }
-
-#pragma mark View Controller
-
-@synthesize webEditorViewController = _viewController;
 
 #pragma mark Element Primitives
 
