@@ -21,6 +21,7 @@
 @property(nonatomic, copy) NSURL *externalSourceURL;
 
 - (BOOL)hasFile;    // for bindings
+- (NSURL *)sourceURL;
 
 
 #pragma mark Size

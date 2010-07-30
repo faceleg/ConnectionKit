@@ -8,7 +8,6 @@
 
 #import "SVMediaGraphic.h"
 
-#import "SVHTMLTemplateParser.h"
 #import "SVMediaRecord.h"
 #import "SVWebEditorHTMLContext.h"
 
@@ -59,7 +58,7 @@
     [self setExternalSourceURLString:[URL absoluteString]];
 }
 
-- (NSURL *)sourceURL  // for bindings
+- (NSURL *)sourceURL;
 {
     NSURL *result = nil;
     
@@ -68,7 +67,6 @@
     {
         result = [media fileURL];
         if (!result) result = [[media URLResponse] URL];
-        [[[SVHTMLTemplateParser currentTemplateParser] HTMLContext] addMedia:media];
     }
     else
     {
@@ -76,11 +74,6 @@
     }
     
     return result;
-}
-
-- (void)setSourceURL:(NSURL *)URL;
-{
-    [self setExternalSourceURL:URL];
 }
 
 - (BOOL)hasFile; { return YES; }
