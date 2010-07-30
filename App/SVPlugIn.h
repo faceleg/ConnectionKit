@@ -11,35 +11,8 @@
 #import <iMedia/IMBImageItem.h>
 
 
-@class KSHTMLWriter, SVInspectorViewController;
-@protocol SVPlugInContext, SVPage, SVPageletPlugInContainer;
-
-#pragma mark -
-
-@protocol SVHTMLWriter
-
-- (void)startElement:(NSString *)elementName attributes:(NSDictionary *)attributes;
-- (void)startElement:(NSString *)tagName;
-- (void)startElement:(NSString *)tagName className:(NSString *)className;
-- (void)startElement:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
-- (void)endElement;
-
-- (void)writeText:(NSString *)string;
-
-//  Writes a newline character and the tabs to match -indentationLevel. Nornally newlines are automatically written for you; call this if you need an extra one.
-- (void)startNewline;
-
-- (void)writeComment:(NSString *)comment;   // escapes the string, and wraps in a comment tag
-
-- (void)writeHTMLString:(NSString *)html;   // great for when you have an existing snippet of HTML
-
-//  <a href="...." target="..." rel="nofollow">
-- (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
-
-- (BOOL)isXHTML;
-
-@end
-
+@class SVInspectorViewController;
+@protocol SVHTMLWriter, SVPage, SVPageletPlugInContainer;
 
 #pragma mark -
 
@@ -70,6 +43,34 @@
 - (BOOL)shouldWriteServerSideScripts;   // YES when -isForPublishing, but not when validating page
 
 - (id <SVPage>)page;
+
+@end
+
+
+#pragma mark -
+
+
+@protocol SVHTMLWriter
+
+- (void)startElement:(NSString *)elementName attributes:(NSDictionary *)attributes;
+- (void)startElement:(NSString *)tagName;
+- (void)startElement:(NSString *)tagName className:(NSString *)className;
+- (void)startElement:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
+- (void)endElement;
+
+- (void)writeText:(NSString *)string;
+
+//  Writes a newline character and the tabs to match -indentationLevel. Nornally newlines are automatically written for you; call this if you need an extra one.
+- (void)startNewline;
+
+- (void)writeComment:(NSString *)comment;   // escapes the string, and wraps in a comment tag
+
+- (void)writeHTMLString:(NSString *)html;   // great for when you have an existing snippet of HTML
+
+//  <a href="...." target="..." rel="nofollow">
+- (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
+
+- (BOOL)isXHTML;
 
 @end
 
