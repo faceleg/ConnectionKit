@@ -22,7 +22,6 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
-#import "NSURL+Karelia.h"
 #import "NSScanner+Karelia.h"
 
 #import "Debug.h"
