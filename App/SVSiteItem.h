@@ -74,7 +74,7 @@
 - (BOOL) canPreview;
 
 #pragma mark Publishing
-@property(nonatomic, copy) NSString *publishedPath;
+@property(nonatomic, copy) NSDate *datePublished;
 - (BOOL)includeInIndexAndPublish;
 
 

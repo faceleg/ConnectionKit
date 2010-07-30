@@ -115,11 +115,9 @@
 	BOOL result = ![[self valueForKey:@"includeInSiteMap"] boolValue];		// exclude from site map?
 	if (!result)
 	{
-		// Not excluded by the flag, see if we should exclude it becuase it's an unpublished draft.
-		NSString *serverPath = [self publishedPath];
-		
+		// Not excluded by the flag, see if we should exclude it becuase it's an unpublished draft.		
 		// thinks it should be in index, so see if maybe we shouldn't publish it.  Faster to check serverPath first.
-		if (nil == serverPath && [self isDraftOrHasDraftAncestor])
+		if (![self datePublished] && [self isDraftOrHasDraftAncestor])
 		{
 			result = YES;	// DON'T include if if hasn't been published before, and if it's draft
 		}
@@ -192,10 +190,10 @@
 
 #pragma mark Publishing
 
-@dynamic publishedPath;
-- (void)setPublishedPath:(NSString *)path
+@dynamic datePublished;
+- (void)setDatePublished:(NSDate *)date
 {
-	[self setWrappedValue:path forKey:@"publishedPath"];
+	[self setWrappedValue:date forKey:@"datePublished"];
 	
 	// Our status in the index could depend on this key
 	[[self parentPage] invalidatePagesInIndexCache];
@@ -210,8 +208,7 @@
 	if (result)
 	{
 		// thinks it should be in index, so see if maybe we shouldn't publish it.  Faster to check serverPath first.
-		NSString *serverPath = [self publishedPath];
-		if (nil == serverPath && [[self isDraft] boolValue])		// Ask if page ITSELF is a draft.  Do not inherit here.
+		if (![self datePublished] && [[self isDraft] boolValue])		// Ask if page ITSELF is a draft.  Do not inherit here.
 		{
 			result = NO;	// DON'T include if if hasn't been published before, and if it's draft
 		}

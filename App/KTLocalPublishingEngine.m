@@ -314,7 +314,7 @@
     {
         if ([object isKindOfClass:[KTPage class]])
         {
-            [object setPublishedPath:path];
+            [object setDatePublished:[NSDate date]];
         }
         else if ([object isKindOfClass:[KTMaster class]] ||
                  [object isKindOfClass:[KTDesign class]])

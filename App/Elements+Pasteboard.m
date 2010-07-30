@@ -187,7 +187,7 @@
                                 @"site",
                                 @"thumbnailMediaIdentifier", @"customSiteOutlineIconIdentifier",
                                 @"isStale",
-                                @"publishedPath", nil];
+                                @"datePublished", nil];
 		
         [result unionSet:myIgnoredKeys];
 		sIgnoredKeys = [result copy];

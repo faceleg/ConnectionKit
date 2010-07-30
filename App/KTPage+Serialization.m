@@ -87,7 +87,7 @@
                         @"uniqueID",
                         @"fileName",
                         @"shouldUpdateFileNameWhenTitleChanges",
-                        @"publishedPath",
+                        @"datePublished",
                         nil];
     }
     
