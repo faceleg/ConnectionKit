@@ -225,8 +225,12 @@
     WEKWebEditorView *webEditor = [self webEditor];
     if ([webEditor shouldChangeText:self])
     {
-        // Move graphic back to be top-level
+        // Move graphic back to be top-level. Finding the right element to operate on can be a little tricky. Normally it's the controller's own node, but in the case of callouts, want to operate on the callout, not element. #83445
         WEKWebEditorItem *controller = [webEditor selectedItem];
+        while ([controller parentWebEditorItem] != self)
+        {
+            controller = [controller parentWebEditorItem];
+        }
         
         DOMElement *element = [controller HTMLElement];
         DOMNode *parent = [element parentNode];
