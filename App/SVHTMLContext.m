@@ -19,7 +19,7 @@
 #import "KTSite.h"
 #import "SVTemplate.h"
 #import "SVTextAttachment.h"
-#import "Registration.h"
+#import "SVWebEditingURL.h"
 
 #import "SVCalloutDOMController.h"  // don't like having to do this
 
@@ -29,6 +29,8 @@
 #import "NSIndexPath+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
+
+#import "Registration.h"
 
 
 @interface SVHTMLIterator : NSObject
@@ -551,8 +553,10 @@
     switch ([self generationPurpose])
     {
         case kSVHTMLGenerationPurposeEditing:
-            result = [URL absoluteString];
+            result = [URL webEditorPreviewPath];
+            if (!result) result = [URL absoluteString];
             break;
+            
         default:
             result = [URL stringRelativeToURL:[self baseURL]];
             break;
@@ -569,9 +573,6 @@
     
     switch ([self generationPurpose])
     {
-        case kSVHTMLGenerationPurposeEditing:
-            result = [page previewPath];
-            break;
         case kSVHTMLGenerationPurposeQuickLookPreview:
             result= @"javascript:void(0)";
             break;
