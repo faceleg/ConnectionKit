@@ -10,6 +10,7 @@
 #import "SVGraphic.h"
 
 #import "SVCalloutDOMController.h"
+#import "SVContentDOMController.h"
 #import "SVRichTextDOMController.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
@@ -98,7 +99,7 @@
     SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
                                        initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
     
-    [context setWebEditorViewController:[[self HTMLContext] webEditorViewController]];   // hacky
+    [[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
     [context writeGraphic:[self representedObject] withDOMController:self];
     
     

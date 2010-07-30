@@ -48,10 +48,6 @@
 @property(nonatomic, retain) SVSidebarPageletsController *sidebarPageletsController;
 
 
-#pragma mark View Controller
-@property(nonatomic, assign) SVWebEditorViewController *webEditorViewController;
-
-
 @end
 
 

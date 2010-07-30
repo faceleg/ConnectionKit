@@ -16,8 +16,9 @@
 extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 
-@class KTPage, SVDOMController, SVTextDOMController, KTHTMLEditorController;
-@class SVWebContentObjectsController, SVWebContentAreaController;
+@class KTPage, SVDOMController, SVContentDOMController, SVTextDOMController;
+@class KTHTMLEditorController, SVWebContentAreaController;
+@class SVWebContentObjectsController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
 
@@ -35,9 +36,10 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     SVWebContentObjectsController   *_graphicsController;
     
     // Controllers
-    WEKWebEditorItem    *_firstResponderItem;
-    NSObject            *_draggingDestination;  // weak ref
-	KTHTMLEditorController *_HTMLEditorController;
+    SVContentDOMController  *_contentItem;
+    WEKWebEditorItem        *_firstResponderItem;
+    NSObject                *_draggingDestination;  // weak ref
+	KTHTMLEditorController  *_HTMLEditorController;
     
     // Updating
     BOOL                    _needsUpdate, _willUpdate;
@@ -81,6 +83,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 @property(nonatomic, retain) WEKWebEditorItem *firstResponderItem;  // like NSWindow.firstResponder
 @property (nonatomic, retain) KTHTMLEditorController *HTMLEditorController;
 
+@property(nonatomic, retain, readonly) SVContentDOMController *contentDOMController;
 @property(nonatomic, retain, readonly) SVWebEditorHTMLContext *HTMLContext;
 
 - (void)registerWebEditorItem:(WEKWebEditorItem *)item;  // recurses through, registering descendants too

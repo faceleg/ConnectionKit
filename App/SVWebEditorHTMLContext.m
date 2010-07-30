@@ -23,6 +23,10 @@
 
 
 @interface SVWebEditorHTMLContext ()
+#pragma mark View Controller
+@property(nonatomic, assign) SVWebEditorViewController *webEditorViewController;
+
+
 - (void)endDOMController;
 @end
 

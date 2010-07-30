@@ -11,6 +11,7 @@
 #import "SVApplicationController.h"
 #import "SVArticle.h"
 #import "SVAttributedHTML.h"
+#import "SVContentDOMController.h"
 #import "KTDocument.h"
 #import "SVLogoImage.h"
 #import "KTMaster.h"
@@ -59,6 +60,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 - (void)willUpdate;
 - (void)didUpdate;  // if an asynchronous update, called after the update finishes
 
+@property(nonatomic, retain, readwrite) SVContentDOMController *contentDOMController;
 @property(nonatomic, retain, readwrite) SVWebEditorHTMLContext *HTMLContext;
 
 @property(nonatomic, retain, readonly) SVWebContentObjectsController *primitiveSelectedObjectsController;
@@ -234,7 +236,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     // Go for it. You write that HTML girl!
 	if (page) [context writeDocumentWithPage:page];
     [context flush];
-    
+        
     
     //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the
     //  background. It will be removed again after has finished since the webview will be properly part of the view hierarchy.
@@ -242,7 +244,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     // Turned this off because I'm not sure it's needed - Mike
     //[[self webView] setHostWindow:[[self view] window]];   // TODO: Our view may be outside the hierarchy too; it woud be better to figure out who our window controller is and use that.
     
-    [self setHTMLContext:context];
+    [self setHTMLContext:context];  // sets .contentDOMController as a side-effect
     
     
     // Record location
@@ -288,7 +290,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     SVWebEditorHTMLContext *context = [self HTMLContext];
     [_loadedPage release]; _loadedPage = [[context page] retain];
-    [webEditor setContentItem:[context rootDOMController]];
+    [webEditor setContentItem:[self contentDOMController]];
     
     [[self graphicsController] setSelectedObjects:selection];    // restore selection
     
@@ -496,14 +498,24 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 @synthesize firstResponderItem = _firstResponderItem;
 
+@synthesize contentDOMController = _contentItem;
+- (void)setContentDOMController:(SVContentDOMController *)controller;
+{
+    [[self contentDOMController] setWebEditorViewController:nil];
+    
+    [controller retain];
+    [_contentItem release]; _contentItem = controller;
+    
+    [controller setWebEditorViewController:self];
+}
+
 @synthesize HTMLContext = _context;
 - (void)setHTMLContext:(SVWebEditorHTMLContext *)context;
 {
     if (context != [self HTMLContext])
     {
-        [[self HTMLContext] setWebEditorViewController:nil];
         [_context release]; _context = [context retain];
-        [context setWebEditorViewController:self];
+        [self setContentDOMController:[context rootDOMController]];
     }
 }
 

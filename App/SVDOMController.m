@@ -121,7 +121,8 @@
 {
     _needsUpdate = NO;
     
-    SVWebEditorViewController *controller = [[self HTMLContext] webEditorViewController];
+    SVWebEditorViewController *controller = [self webEditorViewController];
+    OBASSERT(controller);
     [controller performSelector:@selector(didUpdate)];
     
     // Force a redraw if affected. #82536
@@ -171,7 +172,7 @@
     
     
     // Try to get hold of the controller in charge of update coalescing
-	SVWebEditorViewController *controller = [[self HTMLContext] webEditorViewController];
+	SVWebEditorViewController *controller = [self webEditorViewController];
     if ([controller respondsToSelector:@selector(scheduleUpdate)] || ![self webEditor])
     {
         _needsUpdate = YES;
@@ -179,6 +180,7 @@
     }
     else
     {
+        OBASSERT(controller);
         [self update];
     }
 }
@@ -187,7 +189,8 @@
 {
     if ([self needsUpdate])
     {
-        SVWebEditorViewController *controller = [[self HTMLContext] webEditorViewController];
+        SVWebEditorViewController *controller = [self webEditorViewController];
+        OBASSERT(controller);
         [controller performSelector:@selector(willUpdate)];
         
         [self update];
@@ -327,7 +330,8 @@
 
 - (void)setNeedsUpdate;
 {
-    SVWebEditorViewController *controller = [[self HTMLContext] webEditorViewController];
+    SVWebEditorViewController *controller = [self webEditorViewController];
+    OBASSERT(controller);
     if ([controller respondsToSelector:_cmd])
     {
         [controller performSelector:_cmd];
