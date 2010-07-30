@@ -266,7 +266,7 @@
     // Include in site menu if appropriate
     if ([parent isRootPage] && [[parent childItems] count] < 7)
     {
-        [object setIncludeInSiteMenu:YES];
+        [object setIncludeInSiteMenu:[NSNumber numberWithBool:YES]];
     }
 }
 
