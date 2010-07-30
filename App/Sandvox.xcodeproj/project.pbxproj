@@ -789,7 +789,7 @@
 		CE01A7510EAFD63600BDF264 /* KSNoCascadeWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A64C0EAFD63600BDF264 /* KSNoCascadeWindow.h */; };
 		CE01A7520EAFD63600BDF264 /* KSNoCascadeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A64D0EAFD63600BDF264 /* KSNoCascadeWindow.m */; };
 		CE01A7530EAFD63600BDF264 /* KSOverrideConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A64E0EAFD63600BDF264 /* KSOverrideConstants.h */; };
-		CE01A7540EAFD63600BDF264 /* KSURLInfoField.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A64F0EAFD63600BDF264 /* KSURLInfoField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7540EAFD63600BDF264 /* KSURLInfoField.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A64F0EAFD63600BDF264 /* KSURLInfoField.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A7550EAFD63600BDF264 /* KSURLInfoField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6500EAFD63600BDF264 /* KSURLInfoField.m */; };
 		CE01A7580EAFD63600BDF264 /* KSPDFViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6530EAFD63600BDF264 /* KSPDFViewController.h */; };
 		CE01A7590EAFD63600BDF264 /* KSPDFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6540EAFD63600BDF264 /* KSPDFViewController.m */; };
