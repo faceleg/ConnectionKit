@@ -52,6 +52,7 @@
 #import "KSTrimFirstLineFormatter.h"
 #import "KSVerticallyAlignedTextCell.h"
 #import "SVWebLocation.h"
+#import "SVURLFormatter.h"
 
 // Foundation extensions
 #import "NSBundle+Karelia.h"
