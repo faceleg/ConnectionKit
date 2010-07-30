@@ -357,7 +357,11 @@
                     openInNewWindow:[[self openInNewWindow] boolValue]];
 }
 
-- (BOOL)includeInSiteMaps; { return [[self includeInSiteMap] boolValue]; }
+- (BOOL)includeInSiteMaps;
+{
+    BOOL result = [[self includeInSiteMap] boolValue] && ![self isDraftOrHasDraftAncestor];
+    return result;
+}
 
 - (NSString *)language { return nil; }
 
