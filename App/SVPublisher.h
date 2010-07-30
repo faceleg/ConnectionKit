@@ -12,6 +12,15 @@
 @class SVHTMLContext, SVMediaRepresentation;
 
 
+@protocol SVPublishedObject
+- (void)setDatePublished:(NSDate *)date;
+@end
+
+
+
+#pragma mark -
+
+
 @protocol SVPublisher <NSObject>
 
 #pragma mark HTML
@@ -43,7 +52,8 @@
 - (void)publishData:(NSData *)data
              toPath:(NSString *)remotePath
    cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
-        contentHash:(NSData *)hash;
+        contentHash:(NSData *)hash
+             object:(id <SVPublishedObject>)object;
 
 - (void)publishContentsOfURL:(NSURL *)localURL
                       toPath:(NSString *)remotePath
@@ -55,5 +65,3 @@
 
 
 @end
-
-

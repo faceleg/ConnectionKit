@@ -40,8 +40,15 @@
     [self publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:nil];
 }
 
-- (void)publishData:(NSData *)data toPath:(NSString *)remotePath cachedSHA1Digest:(NSData *)digest contentHash:(NSData *)hash { }
-- (void) publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath cachedSHA1Digest:(NSData *)digest { }
+- (void)publishData:(NSData *)data
+             toPath:(NSString *)remotePath
+   cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
+        contentHash:(NSData *)hash
+             object:(id <SVPublishedObject>)object;
+{
+}
+
+- (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath cachedSHA1Digest:(NSData *)digest { }
 
 - (NSString *)publishResourceAtURL:(NSURL *)fileURL;
 {

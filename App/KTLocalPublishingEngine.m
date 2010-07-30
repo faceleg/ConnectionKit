@@ -93,7 +93,8 @@
 - (void)publishData:(NSData *)data
              toPath:(NSString *)remotePath
    cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
-        contentHash:(NSData *)hash;
+        contentHash:(NSData *)hash
+             object:(id <SVPublishedObject>)object;
 {
     // Record digest of the data for after publishing
     if (!digest) digest = [data SHA1Digest];
@@ -111,7 +112,7 @@
     }
     
     
-    return [super publishData:data toPath:remotePath cachedSHA1Digest:digest contentHash:hash];
+    return [super publishData:data toPath:remotePath cachedSHA1Digest:digest contentHash:hash object:object];
 }
 
 - (void)publishContentsOfURL:(NSURL *)localURL
@@ -293,11 +294,10 @@
     if ([transferRecord error]) return; // bail
     
     
-    id object = [transferRecord propertyForKey:@"object"];
-    NSString *path = [transferRecord propertyForKey:@"path"];
     
     
     //  Update publishing records to match
+    NSString *path = [transferRecord propertyForKey:@"path"];
     if (path && ![transferRecord isDirectory])
     {
         SVPublishingRecord *record = [[[self site] hostProperties] regularFilePublishingRecordWithPath:path];
@@ -308,23 +308,13 @@
     }
     
     
-    // Any other processing (left over from 1.6 really)
+    // Mark when the object corresponding to the file was published
+    id <SVPublishedObject> object = [transferRecord propertyForKey:@"object"];
+    
     if ([self status] > KTPublishingEngineStatusNotStarted &&
         [self status] < KTPublishingEngineStatusFinished)
     {
-        if ([object isKindOfClass:[KTPage class]])
-        {
-            [object setDatePublished:[NSDate date]];
-        }
-        else if ([object isKindOfClass:[KTMaster class]] ||
-                 [object isKindOfClass:[KTDesign class]])
-        {
-        }
-        else
-        {
-            // It's probably a simple media object. Mark it non-stale.
-            [object setBool:NO forKey:@"isStale"];
-        }
+        [object setDatePublished:[NSDate date]];
     }
 }
 

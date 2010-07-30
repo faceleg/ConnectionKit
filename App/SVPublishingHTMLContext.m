@@ -64,10 +64,8 @@
             [publishingEngine publishData:pageData
                                    toPath:fullUploadPath
                          cachedSHA1Digest:nil
-                              contentHash:digest];
-            
-            //OBASSERT(transferRecord);
-            //if (page) [transferRecord setProperty:page forKey:@"object"];
+                              contentHash:digest
+                                   object:page];
         }
     }
     
