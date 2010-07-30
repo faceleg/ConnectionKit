@@ -590,13 +590,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
 @synthesize selectionParentItems = _selectionParentItems;
 - (void)setSelectionParentItems:(NSArray *)items
 {
+    if ([items isEqualToArray:[self selectionParentItems]]) return;
+    
     // Let them know
     [[self selectionParentItems] setBool:NO forKey:@"editing"];
     [items setBool:YES forKey:@"editing"];
     
     // Store items
-    items = [items copy];
-    [_selectionParentItems release]; _selectionParentItems = items;
+    [_selectionParentItems release]; _selectionParentItems = [items copy];
 }
 
 #pragma mark Keyboard-Induced selection
