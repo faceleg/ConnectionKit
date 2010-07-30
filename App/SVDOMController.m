@@ -331,7 +331,6 @@
 - (void)setNeedsUpdate;
 {
     SVWebEditorViewController *controller = [self webEditorViewController];
-    OBASSERT(controller);
     if ([controller respondsToSelector:_cmd])
     {
         [controller performSelector:_cmd];
