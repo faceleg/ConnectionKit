@@ -43,18 +43,6 @@
     return self;
 }
 
-- (id)initWithOutputWriter:(id <KSWriter>)output
-         rootDOMController:(SVDOMController *)rootController;
-{
-    if (self = [self initWithOutputWriter:output])
-    {
-        [_rootController release]; _currentDOMController = _rootController = rootController;
-        [[self rootDOMController] awakeFromHTMLContext:self];   // so it stores ref to us
-    }
-    
-    return self;
-}
-
 - (void)dealloc
 {
     [_sidebarPageletsController release];

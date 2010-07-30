@@ -31,11 +31,6 @@
     SVWebEditorViewController   *_viewController;   // weak ref
 }
 
-#pragma mark Creatng an HTML Context
-- (id)initWithOutputWriter:(id <KSWriter>)output
-         rootDOMController:(SVDOMController *)rootController;
-
-
 #pragma mark Root
 @property(nonatomic, retain, readonly) SVDOMController *rootDOMController;
 - (void)addDOMController:(SVDOMController *)controller; // adds to the current controller
