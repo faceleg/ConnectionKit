@@ -10,6 +10,7 @@
 
 #import "SVApplicationController.h"
 #import "SVCalloutDOMController.h"
+#import "SVContentDOMController.h"
 #import "SVGraphicDOMController.h"
 #import "SVHTMLTextBlock.h"
 #import "SVRichText.h"
@@ -60,7 +61,7 @@
     
     
     [_rootController release];
-    _currentDOMController = _rootController = [[SVDOMController alloc] init];
+    _currentDOMController = _rootController = [[SVContentDOMController alloc] init];
     
     [[self rootDOMController] awakeFromHTMLContext:self];   // so it stores ref to us
     

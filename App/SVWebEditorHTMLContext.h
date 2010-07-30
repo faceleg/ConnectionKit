@@ -11,7 +11,7 @@
 #import "SVGraphicDOMController.h"
 
 
-@class SVWebEditorViewController, SVSidebarDOMController;
+@class SVWebEditorViewController, SVContentDOMController, SVSidebarDOMController;
 @class SVContentObject, SVSidebar, SVSidebarPageletsController;
 @class SVMediaRecord;
 
@@ -19,9 +19,9 @@
 @interface SVWebEditorHTMLContext : SVHTMLContext
 {
   @private
-    SVDOMController *_rootController;
-    SVDOMController *_currentDOMController;  // weak ref
-    BOOL            _needsToWriteElementID;
+    SVContentDOMController  *_rootController;
+    SVDOMController         *_currentDOMController;  // weak ref
+    BOOL                    _needsToWriteElementID;
         
     NSMutableSet    *_media;
     
@@ -32,7 +32,7 @@
 }
 
 #pragma mark Root
-@property(nonatomic, retain, readonly) SVDOMController *rootDOMController;
+@property(nonatomic, retain, readonly) SVContentDOMController *rootDOMController;
 - (void)addDOMController:(SVDOMController *)controller; // adds to the current controller
 
 
