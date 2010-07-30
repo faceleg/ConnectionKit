@@ -417,11 +417,17 @@
     }
     else if ([graphic mustBePagelet])
     {
-        // Single <DIV> to enclose the graphic HTML
-        //NSString *classname = [NSString stringWithFormat:@"%@", [graphic className]];
+        // <div class="graphic-container center">
+        [self pushElementClassName:@"graphic-container"];
         [self startElement:@"div" className:[graphic className]];
         
+        // <div class="graphic">
+        [self startElement:@"div" className:@"graphic"];
+        
+        // Graphic body
+        [self startElement:@"div"];
         [graphic writeBody:self];
+        [self endElement];
         
         // Caption if requested
         if ([graphic showsCaption])
@@ -438,6 +444,7 @@
         }
         
         // Finish up
+        [self endElement];
         [self endElement];
     }
     else
