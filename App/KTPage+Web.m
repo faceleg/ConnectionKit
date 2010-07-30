@@ -416,7 +416,7 @@
 			  isCurrentParent ? @" currentParent" : @""
 			  ]];
 			
-			NSString *urlString = [context relativeURLStringOfSiteItem:page];
+			NSString *urlString = [context relativeURLStringOfURL:[page URL]];
 			
 			[context startAnchorElementWithHref:urlString title:[page title] target:nil rel:nil];
 			// TODO: targetStringForPage:targetPage

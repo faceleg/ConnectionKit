@@ -589,7 +589,7 @@
 
 - (NSString *)relativeURLStringOfPage:(id <SVPage>)page;
 {
-    return [self relativeURLStringOfSiteItem:(SVSiteItem *)page];
+    return [self relativeURLStringOfURL:[(SVSiteItem *)page URL]];
 }
 
 /*	Generates the path to the specified file with the current page's design.

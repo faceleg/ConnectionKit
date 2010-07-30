@@ -582,7 +582,7 @@
     
     if ([anObject isKindOfClass:[KTPage class]])
     {
-        result = [[self HTMLContext] relativeURLStringOfSiteItem:anObject];
+        result = [[self HTMLContext] relativeURLStringOfURL:[anObject URL]];
     }
     else if ([anObject isKindOfClass:[NSURL class]])
     {
