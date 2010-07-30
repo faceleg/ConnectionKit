@@ -301,7 +301,7 @@
         result = [[[self site] hostProperties] siteURL];
         
         // The siteURL may not include index.html, so we have to guarantee it here
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"])
+        if (!result || [[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"])
         {
             result = [NSURL URLWithString:[self indexFilename] relativeToURL:result];
         }
