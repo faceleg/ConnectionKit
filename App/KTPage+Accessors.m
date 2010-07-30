@@ -58,7 +58,7 @@
 	
 	
 	// This may also affect the site menu
-	if ([self includeInSiteMenu])
+	if ([[self includeInSiteMenu] boolValue])
 	{
 		[[self valueForKey:@"site"] invalidatePagesInSiteMenuCache];
 	}

@@ -254,7 +254,7 @@
 	NSMutableDictionary *entry = [NSMutableDictionary dictionary];
 	[entry setObject:url forKey:@"loc"];
 	float levelFraction = 1.0 / aLevel;
-	if ([aPage boolForKey:@"includeInSiteMenu"] && aLevel > 1)	// boost items in site menu?
+	if ([[aPage includeInSiteMenu] boolValue] && aLevel > 1)	// boost items in site menu?
 	{
 		if (ioSiteMenuCounter)
 		{

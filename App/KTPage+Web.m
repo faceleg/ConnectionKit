@@ -403,7 +403,7 @@
 		else
 		{
 			BOOL isCurrentParent = NO;
-			if (!currentParserPage.includeInSiteMenu && page == currentParserPage.parentPage && currentParserPage.parentPage.index)
+			if (!currentParserPage.includeInSiteMenu.boolValue && page == currentParserPage.parentPage && currentParserPage.parentPage.index)
 			{
 				isCurrentParent = YES;
 			}
