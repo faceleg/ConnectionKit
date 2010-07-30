@@ -386,7 +386,7 @@
 		[contentView setAutoresizesSubviews:NO];
 	}
 
-	[oRecentBox removeFromSuperview];		// take out this whole box so we can't tab there, etc.
+// CAUSES CRASHES?	[oRecentBox removeFromSuperview];		// take out this whole box so we can't tab there, etc.
 	[[self window] setContentSize:size];
 
 	if (autoresizesSubviews) {

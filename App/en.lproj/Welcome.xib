@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="229"/>
+			<integer value="6"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -39,7 +39,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSWindowTemplate" id="90877191">
-				<int key="NSWindowStyleMask">15</int>
+				<int key="NSWindowStyleMask">7</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{159, 557}, {920, 482}}</string>
 				<int key="NSWTFlags">1886912512</int>
@@ -419,7 +419,7 @@
 										</object>
 										<object class="NSImageView" id="509516743">
 											<reference key="NSNextResponder" ref="916748901"/>
-											<int key="NSvFlags">269</int>
+											<int key="NSvFlags">266</int>
 											<object class="NSMutableSet" key="NSDragTypes">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 												<object class="NSArray" key="set.sortedObjects">
@@ -432,7 +432,7 @@
 													<string>NeXT TIFF v4.0 pasteboard type</string>
 												</object>
 											</object>
-											<string key="NSFrame">{{19, 192}, {616, 245}}</string>
+											<string key="NSFrame">{{-3, 192}, {660, 245}}</string>
 											<reference key="NSSuperview" ref="916748901"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSImageCell" key="NSCell" id="1059984044">
@@ -444,7 +444,7 @@
 												</object>
 												<int key="NSAlign">0</int>
 												<int key="NSScale">2</int>
-												<int key="NSStyle">1</int>
+												<int key="NSStyle">0</int>
 												<bool key="NSAnimates">NO</bool>
 											</object>
 											<bool key="NSEditable">YES</bool>
