@@ -64,79 +64,6 @@ static void OffsetView(NSView *view, NSPoint offset)
 	[view setFrame:newFrame];
 }
 
-@interface NSView (desc)
-- (NSString *)description;
-@end
-@implementation NSView (desc)
-- (NSString *)description;
-{
-	NSMutableString *desc = [NSMutableString string];
-	NSUInteger mask = [self autoresizingMask];
-	BOOL stretchyLeft = 0 != (mask & NSViewMinXMargin);
-	BOOL stretchyView = 0 != (mask & NSViewWidthSizable);
-	BOOL stretchyRight = 0 != (mask & NSViewMaxXMargin);
-	
-	NSString *leftMargin	= stretchyLeft	? @"···"	: @"———";
-	NSString *leftWidth		= stretchyView	? @"<ɕɕ"	: @"<··";
-	NSString *rightWidth	= stretchyView	? @"ɕɕ>"	: @"··>";
-	NSString *rightMargin	= stretchyRight	? @"···"	: @"———";
-	
-	[desc appendString:leftMargin];
-	[desc appendString:leftWidth];
-	[desc appendString:[super description]];
-	if ([self isKindOfClass:[NSTextField class]])
-	{
-		NSTextField *field = (NSTextField *)self;
-		NSString *stringValue = [field stringValue];
-		if ([field isEditable] || [field isBezeled] || [field isBordered])
-		{
-			[desc appendFormat:@"#%@           #",stringValue];
-		}
-		else if ([[stringValue condenseWhiteSpace] isEqualToString:@""])
-		{
-			[desc appendFormat:@"\"%@\"",stringValue];
-		}
-		else
-		{
-			[desc appendString:stringValue];
-		}
-	}
-	else if ([self isKindOfClass:[NSPopUpButton class]])
-	{
-		NSPopUpButton *pop = (NSPopUpButton *)self;
-		NSString *selTitle = [pop titleOfSelectedItem];
-		if (!selTitle || [selTitle isEqualToString:@""])
-		{
-			selTitle = [pop itemTitleAtIndex:0];
-		}
-		if (selTitle && ![selTitle isEqualToString:@""])
-		{
-			[desc appendFormat:@"{%@}", selTitle];
-		}
-	}
-	else if ([self isKindOfClass:[NSButton class]])
-	{
-		NSButton *button = (NSButton *)self;
-		NSString *title = [button title];
-		
-		if (title && ![title isEqualToString:@""])
-		{
-			[desc appendFormat:@"{%@}", title];
-		}
-	}
-	
-	[desc appendFormat:@" %.0f+%.0f ", [self frame].origin.x, [self frame].size.width];
-	
-	// Not really working right for nested views?
-//	NSRect windowFrame = [self convertRect:[self frame] toView:nil];
-//	[desc appendFormat:@" [%.0f+%.0f] ", windowFrame.origin.x, windowFrame.size.width];
-	
-	[desc appendString:rightWidth];
-	[desc appendString:rightMargin];
-	return desc;
-}
-@end
-
 
 static NSString *DescViewsInRow(NSArray *sortedRowViews)
 {
@@ -150,6 +77,7 @@ static NSString *DescViewsInRow(NSArray *sortedRowViews)
 	return rowDesc;
 }
 
+#if 0
 static void LogRows(NSDictionary *rows)
 {
 	NSArray *sortedRanges = [[rows allKeys] sortedArrayUsingSelector:@selector(compareRangeLocation:)];
@@ -162,6 +90,7 @@ static void LogRows(NSDictionary *rows)
 		LogIt(@"%2d. [%3d-%-3d] %@", i++, rowRange.location, NSMaxRange(rowRange), desc);
 	}	
 }
+#endif
 
 static NSRange CalcYRange(NSView *view)
 {
