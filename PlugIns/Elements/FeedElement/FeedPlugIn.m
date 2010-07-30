@@ -35,7 +35,7 @@
 //
 
 #import "FeedPlugIn.h"
-#import <KSURLFormatter.h>
+#import <SVURLFormatter.h>
 #import <SVWebLocation.h>
 
 
@@ -128,7 +128,7 @@
 	if ( [[result scheme] isEqualToString:@"feed"] )	// convert feed://
 	{
         NSString *string = [NSString stringWithFormat:@"http://%@", [[result absoluteString] substringFromIndex:7]];
-        result = [KSURLFormatter URLFromString:string];
+        result = [SVURLFormatter URLFromString:string];
 	}
 	return result;
 }

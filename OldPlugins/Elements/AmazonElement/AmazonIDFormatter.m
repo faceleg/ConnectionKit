@@ -9,7 +9,7 @@
 #import "AmazonIDFormatter.h"
 
 #import "SandvoxPlugin.h"
-#import "KSURLFormatter.h"
+#import "SVURLFormatter.h"
 
 
 @implementation AmazonIDFormatter
@@ -24,7 +24,7 @@
 	if (result)
 	{
 		// If a URL was entered, leave it intact
-		NSURL *URL = [KSURLFormatter URLFromString:*anObject];
+		NSURL *URL = [SVURLFormatter URLFromString:*anObject];
 		if (!(URL && [URL hasNetworkLocation]))
 		{
 			// Convert to uppercase and remove unwanted characters

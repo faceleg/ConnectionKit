@@ -11,5 +11,6 @@
 
 // Do NOT try to subclass SVURLFormatter as your code will definitely break at some point
 @interface SVURLFormatter : NSFormatter
++ (NSURL *)URLFromString:(NSString *)string;    // convenience
 - (NSURL *)URLFromString:(NSString *)string;    // convenience
 @end
