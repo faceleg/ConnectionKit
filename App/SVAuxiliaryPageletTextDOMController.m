@@ -22,7 +22,7 @@
 {
     if ([self shouldDisplayPlaceholderString])
     {
-        [[self textHTMLElement] setInnerText:NSLocalizedString(@"Double-click to edit", "placeholder")];
+        [[self textHTMLElement] setInnerHTML:NSLocalizedString(@"<p>Double-click to edit</p>", "placeholder")];
     }
 }
 
