@@ -557,6 +557,9 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			// to display any path, so they shouldn't tight down to whatever they
 			// happen to be listing at the moment.
 		} else if ([view isKindOfClass:[NSImageView class]]) {
+			
+			
+			LogIt(@"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    %@", [[view image] name]);
 			// Definitely don't mess with size of an imageView
 		} else if ([view isKindOfClass:[NSBox class]]) {
 			// I don't think it's a good idea to let NSBox figure out its sizeToFit.
@@ -832,7 +835,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     NSString *localizedStringsTablePath = [[NSBundle mainBundle] pathForResource:localizedStringsTableName ofType:@"strings"];
     if (
 		
-		([NSUserName() isEqualToString:@"dwood"]) || 
+		([NSUserName() isEqualToString:DEBUG_THIS_USER]) || 
 		
 		localizedStringsTablePath
 		&& ![[[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"English.lproj"]
