@@ -608,6 +608,8 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 					if (NSWidth(newFrame) < kMinButtonWidth) {
 						newFrame.size.width = kMinButtonWidth;
 					}
+					
+					
 				} else {
 					// See note on kWrapperStringSlop for why this is done.
 					NSString *title = [button title];
@@ -616,7 +618,11 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 					}
 				}
 				
-				if (newFrame.size.width < oldFrame.size.width)
+				// Don't let bordered buttons shrink
+				
+				if ( [button isBordered]
+					&&
+					(newFrame.size.width < oldFrame.size.width))
 				{
 					newFrame.size.width = oldFrame.size.width;		// DON'T SHRINK BUTTONS.
 				}
