@@ -37,7 +37,7 @@
 
 #pragma mark Navigation
 
-@property(nonatomic) BOOL includeInSiteMenu;
+@property(nonatomic, copy) NSNumber *includeInSiteMenu;
 
 @property(nonatomic, copy, readonly) NSString *menuTitle;   // derived from .customMenuTitle or .title
 @property(nonatomic, copy) NSString *customMenuTitle;

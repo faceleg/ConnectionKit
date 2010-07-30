@@ -50,13 +50,12 @@
 
 #pragma mark Navigation
 
-- (BOOL)includeInSiteMenu { return [self wrappedBoolForKey:@"includeInSiteMenu"]; }
-
 /*	In addition to a standard setter, we must also invalidate old site menu
  */
-- (void)setIncludeInSiteMenu:(BOOL)include;
+@dynamic includeInSiteMenu;
+- (void)setIncludeInSiteMenu:(NSNumber *)include;
 {
-	[self setWrappedBool:include forKey:@"includeInSiteMenu"];
+	[self setWrappedValue:include forKey:@"includeInSiteMenu"];
 	[[self site] invalidatePagesInSiteMenuCache];
 }
 
