@@ -320,6 +320,11 @@
 
 #pragma mark Updating
 
+- (SVWebEditorViewController *)webEditorViewController;
+{
+    return [[self parentWebEditorItem] webEditorViewController];
+}
+
 - (void)setNeedsUpdate;
 {
     SVWebEditorViewController *controller = [[self HTMLContext] webEditorViewController];
