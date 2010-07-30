@@ -2117,7 +2117,7 @@
 		3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = ../../Shared/ThirdParty/BWToolkit/BWToolkitFramework.framework; sourceTree = SOURCE_ROOT; };
 		3C0C02040905882300CFFE3E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SandvoxInvalidLicenses.h; path = ../../Shared/Licensing/SandvoxInvalidLicenses.h; sourceTree = SOURCE_ROOT; };
-		3C1F510A11D575510036B375 /* xibLocalizationProcessor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xibLocalizationProcessor; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C1F510A11D575510036B375 /* xibLocalizationPostprocessor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xibLocalizationPostprocessor; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C1F511111D5757F0036B375 /* xibLocalizationPostprocessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = xibLocalizationPostprocessor.m; path = ../../Shared/ThirdParty/GoldenBraeburn/DeliciousLocalization/xibLocalizationPostprocessor.m; sourceTree = SOURCE_ROOT; };
 		3C1F511311D5758F0036B375 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		3C202D1407DFC06100DE4994 /* KT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KT.h; sourceTree = "<group>"; };
@@ -2877,7 +2877,7 @@
 				274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */,
 				CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */,
 				CE16DC590D8711790077C779 /* MovieWebKitPlugin.bundle */,
-				3C1F510A11D575510036B375 /* xibLocalizationProcessor */,
+				3C1F510A11D575510036B375 /* xibLocalizationPostprocessor */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5653,7 +5653,7 @@
 			);
 			name = xibLocalizationPostprocessor;
 			productName = xibLocalizationProcessor;
-			productReference = 3C1F510A11D575510036B375 /* xibLocalizationProcessor */;
+			productReference = 3C1F510A11D575510036B375 /* xibLocalizationPostprocessor */;
 			productType = "com.apple.product-type.tool";
 		};
 		8D15AC270486D014006FF6A4 /* Sandvox-ExecutableOnly */ = {
@@ -6582,7 +6582,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "\n# we are getting into a confusing situation where Xcode is editing the Headers in the built product\n# when showing errors in plugin builds, meaning that local fixes are getting lost\n#\n# so, let's try setting the Locked bit to warn the developer that they are editing the wrong file\n\nfor file in ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/*.h\ndo\n\t/usr/bin/SetFile -a L ${file}\ndone\n";
+			shellScript = "\n# we are getting into a confusing situation where Xcode is editing the Headers in the built product\n# when showing errors in plugin builds, meaning that local fixes are getting lost\n#\n# so, let's try setting the Locked bit to warn the developer that they are editing the wrong file\n\nfor file in ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/*.h\ndo\n\tif [ \"/usr/bin/GetFileInfo -a l ${file}\" == \"0\" ]\n\tthen\n \t\t/usr/bin/SetFile -a L ${file}\n\tfi\ndone\n";
 			showEnvVarsInLog = 0;
 		};
 		3CBC651A11EFD04800716937 /* ShellScript */ = {
