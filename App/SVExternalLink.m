@@ -9,6 +9,7 @@
 #import "SVExternalLink.h"
 
 #import "SVURLPreviewViewController.h"
+#import "SVWebEditingURL.h"
 
 #import "NSURL+Karelia.h"
 
@@ -19,11 +20,13 @@
 
 - (NSURL *)URL
 {
-    NSString *urlString = [self linkURLString];
     NSURL *result = nil;
+    
+    NSString *urlString = [self linkURLString];
     if (urlString)
     {
-        result = [NSURL URLWithString:urlString];
+        result = [[NSURL URLWithString:urlString]
+                  URLWithWebEditorPreviewPath:[self previewPath]];
     }
     
     return result;

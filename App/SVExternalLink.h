@@ -13,7 +13,7 @@
 @interface SVExternalLink : SVSiteItem  
 
 @property(nonatomic, retain) NSString *linkURLString;
-@property(nonatomic, copy) NSURL *URL;  // wrapper around .linkURLString
+- (void)setURL:(NSURL *)URL;  // wrapper around .linkURLString
 
 @end
 

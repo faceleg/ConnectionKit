@@ -13,7 +13,8 @@
 #import "SVLink.h"
 #import "SVMediaRecord.h"
 #import "KTPage.h"
-#import "KTSite.h"
+#import "KTSite.h"]
+#import "SVWebEditingURL.h"
 
 #import "NSString+Karelia.h"
 
@@ -141,7 +142,16 @@
 
 #pragma mark URL
 
-- (NSURL *)URL { return nil; }
+// For display in the placeholder webview
+- (NSURL *)URL
+{
+    NSString *filename = [[self fileName] legalizedWebPublishingFilename];
+    
+    return [[[SVWebEditingURL alloc] initWithString:filename
+                                      relativeToURL:[[self parentPage] URL]
+                               webEditorPreviewPath:[self previewPath]] autorelease];
+}
+
 - (NSString *)fileName { return nil; }
 - (BOOL) canPreview { return NO; }
 

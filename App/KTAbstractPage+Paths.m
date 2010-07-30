@@ -20,6 +20,7 @@
 #import "KTSite.h"
 #import "KTHostProperties.h"
 #import "KTMaster.h"
+#import "SVWebEditingURL.h"
 
 #import "NSManagedObject+KTExtensions.h"
 #import "NSSet+Karelia.h"
@@ -319,7 +320,7 @@
         }
     }
 	
-	return result;
+	return [result URLWithWebEditorPreviewPath:[self previewPath]];
 }
 
 

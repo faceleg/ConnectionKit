@@ -51,14 +51,6 @@
     [publishingEngine publishContentsOfURL:[media fileURL] toPath:uploadPath];
 }
 
-// For display in the placeholder webview
-- (NSURL *)URL
-{
-    NSString *filename = [[self fileName] legalizedWebPublishingFilename];
-    return [NSURL URLWithString:filename
-                  relativeToURL:[[self parentPage] URL]];
-}
-
 - (NSString *)fileName { return [self.media preferredFilename]; }
 
 - (KTMaster *)master; { return [[self parentPage] master]; }
