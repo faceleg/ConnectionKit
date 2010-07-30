@@ -379,7 +379,20 @@
 		size = NSMakeSize(NSMinX(separatorFrame)-1, NSHeight(contentViewRect));
 	}
 	
+	// Resize the window ... however, turn off autoresizing so that it doesn't reposition stuff.
+	NSView *contentView = [[self window] contentView];
+	BOOL autoresizesSubviews = [contentView autoresizesSubviews];
+	if (autoresizesSubviews) {
+		[contentView setAutoresizesSubviews:NO];
+	}
+
+	[oRecentBox removeFromSuperview];		// take out this whole box so we can't tab there, etc.
 	[[self window] setContentSize:size];
+
+	if (autoresizesSubviews) {
+		[contentView setAutoresizesSubviews:autoresizesSubviews];
+	}
+	
 	[[self window] center];
 	[super showWindow:sender];
 }
