@@ -6582,7 +6582,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "\n# we are getting into a confusing situation where Xcode is editing the Headers in the built product\n# when showing errors in plugin builds, meaning that local fixes are getting lost\n#\n# so, let's try setting the Locked bit to warn the developer that they are editing the wrong file\n\nfor file in ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/*.h\ndo\n\tif [ \"/usr/bin/GetFileInfo -a l ${file}\" == \"0\" ]\n\tthen\n \t\t/usr/bin/SetFile -a L ${file}\n\tfi\ndone\n";
+			shellScript = "\n# we are getting into a confusing situation where Xcode is editing the Headers in the built product\n# when showing errors in plugin builds, meaning that local fixes are getting lost\n#\n# so, let's try setting the Locked bit to warn the developer that they are editing the wrong file\n\nfor file in ${BUILT_PRODUCTS_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/*.h\ndo\n\tif [ \"${BUILD_STYLE}\" == \"Debug\" ]\n\tthen\n\t\tif [ \"/usr/bin/GetFileInfo -a l ${file}\" == \"0\" ]\n\t\tthen\n \t\t\t/usr/bin/SetFile -a L ${file}\n\t\tfi\n\tfi\ndone\n";
 			showEnvVarsInLog = 0;
 		};
 		3CBC651A11EFD04800716937 /* ShellScript */ = {
