@@ -29,9 +29,9 @@
 [[if parser.HTMLGenerationPurpose]][[if master.faviconMedia]]
 		<link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
 [[endif2]][[endif]]
-[[if feedURL]]
+[[if feedURL]][[if parser.HTMLGenerationPurpose]]
 		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&title]]" href="[[=&feedURL]]" />
-[[endif]]
+[[endif2]][[endif]]
 		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
 
 [[=site.writeJQueryImport]]
