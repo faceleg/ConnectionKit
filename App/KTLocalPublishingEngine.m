@@ -117,16 +117,18 @@
 
 - (void)publishContentsOfURL:(NSURL *)localURL
                       toPath:(NSString *)remotePath
-            cachedSHA1Digest:(NSData *)digest;
+            cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
+                      object:(id <SVPublishedObject>)object;
 {
     // Hash if not already known
     if (!digest)
     {
         NSInvocation *invocation = [NSInvocation
-                                    invocationWithSelector:@selector(threaded_publishContentsOfURL:toPath:)
+                                    invocationWithSelector:@selector(threaded_publishContentsOfURL:toPath:object:)
                                     target:self];
         [invocation setArgument:&localURL atIndex:2];
         [invocation setArgument:&remotePath atIndex:3];
+        [invocation setArgument:&object atIndex:4];
         
         NSInvocationOperation *operation = [[KSInvocationOperation alloc] initWithInvocation:invocation];
         [_diskAccessQueue addOperation:operation];
@@ -145,10 +147,10 @@
     }
     
     
-    [super publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest];
+    [super publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest object:object];
 }
 
-- (void)threaded_publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
+- (void)threaded_publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath object:object;
 {
     // Could be done more efficiently by not loading the entire file at once
     NSData *data = [[NSData alloc] initWithContentsOfURL:localURL];
@@ -156,7 +158,7 @@
     [data release];
     
     [[self ks_proxyOnThread:nil waitUntilDone:NO]
-     publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest];
+     publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest object:object];
 }
 
 /*	Supplement the default behaviour by also deleting any existing file first if the user requests it.
@@ -178,9 +180,12 @@
 - (void)didEnqueueUpload:(CKTransferRecord *)record
                   toPath:(NSString *)path
         cachedSHA1Digest:(NSData *)digest
-             contentHash:(NSData *)contentHash;
+             contentHash:(NSData *)contentHash
+                  object:(id <SVPublishedObject>)object;
 {
-    [super didEnqueueUpload:record toPath:path cachedSHA1Digest:digest contentHash:contentHash];
+    if (object) [record setProperty:object forKey:@"object"];
+    
+    [super didEnqueueUpload:record toPath:path cachedSHA1Digest:digest contentHash:contentHash object:object];
     
     [record setProperty:path forKey:@"path"];
     if (digest) [record setProperty:digest forKey:@"dataDigest"];

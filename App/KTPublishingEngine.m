@@ -235,12 +235,13 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
 {
-	[self publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:nil];
+	[self publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:nil object:nil];
 }
 
 - (void)publishContentsOfURL:(NSURL *)localURL
                       toPath:(NSString *)remotePath
-            cachedSHA1Digest:(NSData *)digest;
+            cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
+                      object:(id <SVPublishedObject>)object;
 {
     OBPRECONDITION(localURL);
     OBPRECONDITION([localURL isFileURL]);
@@ -267,7 +268,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         else
         {
             CKTransferRecord *result = [self uploadContentsOfURL:localURL toPath:remotePath];
-            [self didEnqueueUpload:result toPath:remotePath cachedSHA1Digest:digest contentHash:nil];
+            [self didEnqueueUpload:result toPath:remotePath cachedSHA1Digest:digest contentHash:nil object:object];
         }
     }
     else
@@ -293,14 +294,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (![self shouldPublishToPath:remotePath]) return;
     
 	CKTransferRecord *result = [self uploadData:data toPath:remotePath];
-    if (object) [result setProperty:object forKey:@"object"];
     
     if (result)
     {
         [self didEnqueueUpload:result
                         toPath:remotePath
               cachedSHA1Digest:digest
-                   contentHash:hash];
+                   contentHash:hash
+                        object:object];
     }
 }
     
@@ -365,7 +366,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)didEnqueueUpload:(CKTransferRecord *)record
                   toPath:(NSString *)path
         cachedSHA1Digest:(NSData *)digest
-             contentHash:(NSData *)contentHash;
+             contentHash:(NSData *)contentHash
+                  object:(id <SVPublishedObject>)object;
 {
 }
 

@@ -57,7 +57,8 @@
 
 - (void)publishContentsOfURL:(NSURL *)localURL
                       toPath:(NSString *)remotePath
-            cachedSHA1Digest:(NSData *)digest;  // save engine the trouble of calculating itself
+            cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
+                      object:(id <SVPublishedObject>)object;
 
 
 #pragma mark Paths

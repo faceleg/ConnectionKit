@@ -98,7 +98,8 @@ typedef enum {
 - (void)didEnqueueUpload:(CKTransferRecord *)record
                   toPath:(NSString *)path
         cachedSHA1Digest:(NSData *)digest
-             contentHash:(NSData *)contentHash;
+             contentHash:(NSData *)contentHash
+                  object:(id <SVPublishedObject>)object;
 
 
 #pragma mark Publishing Records

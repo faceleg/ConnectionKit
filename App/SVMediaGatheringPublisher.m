@@ -33,11 +33,11 @@
 /*  Ignore most publishing commands */
 - (void)publishData:(NSData *)data toPath:(NSString *)remotePath;
 {
-    [self publishData:data toPath:remotePath cachedSHA1Digest:nil contentHash:nil];
+    [self publishData:data toPath:remotePath cachedSHA1Digest:nil contentHash:nil object:nil];
 }
 - (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
 {
-    [self publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:nil];
+    [self publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:nil object:nil];
 }
 
 - (void)publishData:(NSData *)data
@@ -48,7 +48,12 @@
 {
 }
 
-- (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath cachedSHA1Digest:(NSData *)digest { }
+- (void)publishContentsOfURL:(NSURL *)localURL
+                      toPath:(NSString *)remotePath
+            cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
+                      object:(id <SVPublishedObject>)object;
+{
+}
 
 - (NSString *)publishResourceAtURL:(NSURL *)fileURL;
 {
