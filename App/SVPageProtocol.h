@@ -18,7 +18,6 @@
 - (NSString *)identifier;
 
 - (NSString *)title;
-//- (NSString *)titleHTMLString;
 
 - (NSString *)language;
 
