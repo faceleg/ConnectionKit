@@ -939,10 +939,6 @@
 		CE01A8060EAFD63600BDF264 /* TrimFirstLineTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7020EAFD63600BDF264 /* TrimFirstLineTransformer.m */; };
 		CE01A8070EAFD63600BDF264 /* TrimTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7030EAFD63600BDF264 /* TrimTransformer.h */; };
 		CE01A8080EAFD63600BDF264 /* TrimTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7040EAFD63600BDF264 /* TrimTransformer.m */; };
-		CE01A8090EAFD63600BDF264 /* AMRollOverButton.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7060EAFD63600BDF264 /* AMRollOverButton.h */; };
-		CE01A80A0EAFD63600BDF264 /* AMRollOverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7070EAFD63600BDF264 /* AMRollOverButton.m */; };
-		CE01A80B0EAFD63600BDF264 /* AMRollOverButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7080EAFD63600BDF264 /* AMRollOverButtonCell.h */; };
-		CE01A80C0EAFD63600BDF264 /* AMRollOverButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7090EAFD63600BDF264 /* AMRollOverButtonCell.m */; };
 		CE01A80D0EAFD63600BDF264 /* AQDataExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70A0EAFD63600BDF264 /* AQDataExtensions.h */; };
 		CE01A80E0EAFD63600BDF264 /* AQDataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A70B0EAFD63600BDF264 /* AQDataExtensions.m */; };
 		CE01A80F0EAFD63600BDF264 /* BDAlias.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70C0EAFD63600BDF264 /* BDAlias.h */; settings = {ATTRIBUTES = (); }; };
@@ -2516,10 +2512,6 @@
 		CE01A7020EAFD63600BDF264 /* TrimFirstLineTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrimFirstLineTransformer.m; sourceTree = "<group>"; };
 		CE01A7030EAFD63600BDF264 /* TrimTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrimTransformer.h; sourceTree = "<group>"; };
 		CE01A7040EAFD63600BDF264 /* TrimTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrimTransformer.m; sourceTree = "<group>"; };
-		CE01A7060EAFD63600BDF264 /* AMRollOverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMRollOverButton.h; sourceTree = "<group>"; };
-		CE01A7070EAFD63600BDF264 /* AMRollOverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMRollOverButton.m; sourceTree = "<group>"; };
-		CE01A7080EAFD63600BDF264 /* AMRollOverButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMRollOverButtonCell.h; sourceTree = "<group>"; };
-		CE01A7090EAFD63600BDF264 /* AMRollOverButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMRollOverButtonCell.m; sourceTree = "<group>"; };
 		CE01A70A0EAFD63600BDF264 /* AQDataExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AQDataExtensions.h; sourceTree = "<group>"; };
 		CE01A70B0EAFD63600BDF264 /* AQDataExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AQDataExtensions.m; sourceTree = "<group>"; };
 		CE01A70C0EAFD63600BDF264 /* BDAlias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDAlias.h; sourceTree = "<group>"; };
@@ -4836,10 +4828,6 @@
 		CE01A7050EAFD63600BDF264 /* Imported */ = {
 			isa = PBXGroup;
 			children = (
-				CE01A7060EAFD63600BDF264 /* AMRollOverButton.h */,
-				CE01A7070EAFD63600BDF264 /* AMRollOverButton.m */,
-				CE01A7080EAFD63600BDF264 /* AMRollOverButtonCell.h */,
-				CE01A7090EAFD63600BDF264 /* AMRollOverButtonCell.m */,
 				CE01A70A0EAFD63600BDF264 /* AQDataExtensions.h */,
 				CE01A70B0EAFD63600BDF264 /* AQDataExtensions.m */,
 				CE01A70C0EAFD63600BDF264 /* BDAlias.h */,
@@ -5451,8 +5439,6 @@
 				CE01A8040EAFD63600BDF264 /* Symbolicator.h in Headers */,
 				CE01A8050EAFD63600BDF264 /* TrimFirstLineTransformer.h in Headers */,
 				CE01A8070EAFD63600BDF264 /* TrimTransformer.h in Headers */,
-				CE01A8090EAFD63600BDF264 /* AMRollOverButton.h in Headers */,
-				CE01A80B0EAFD63600BDF264 /* AMRollOverButtonCell.h in Headers */,
 				CE01A80D0EAFD63600BDF264 /* AQDataExtensions.h in Headers */,
 				CE01A80F0EAFD63600BDF264 /* BDAlias.h in Headers */,
 				CE01A8110EAFD63600BDF264 /* DNDArrayController.h in Headers */,
@@ -6909,8 +6895,6 @@
 				CE01A8030EAFD63600BDF264 /* StripHTMLTransformer.m in Sources */,
 				CE01A8060EAFD63600BDF264 /* TrimFirstLineTransformer.m in Sources */,
 				CE01A8080EAFD63600BDF264 /* TrimTransformer.m in Sources */,
-				CE01A80A0EAFD63600BDF264 /* AMRollOverButton.m in Sources */,
-				CE01A80C0EAFD63600BDF264 /* AMRollOverButtonCell.m in Sources */,
 				CE01A80E0EAFD63600BDF264 /* AQDataExtensions.m in Sources */,
 				CE01A8100EAFD63600BDF264 /* BDAlias.m in Sources */,
 				CE01A8120EAFD63600BDF264 /* DNDArrayController.m in Sources */,
