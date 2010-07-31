@@ -215,24 +215,6 @@
     [self setDatePublished:nil]; // #83550
 }
 
-
-// Derived accessor to determine if page should be included in the index AND it has been published or not draft
-// In other words, if it's a draft, don't include -- but if it's a draft that is already published, keep it
-
-- (BOOL)includeInIndexAndPublish
-{
-	BOOL result = [[self includeInIndex] boolValue];
-	if (result)
-	{
-		// thinks it should be in index, so see if maybe we shouldn't publish it.  Faster to check serverPath first.
-		if (![self datePublished] && [[self isDraft] boolValue])		// Ask if page ITSELF is a draft.  Do not inherit here.
-		{
-			result = NO;	// DON'T include if if hasn't been published before, and if it's draft
-		}
-	}
-	return result;
-}
-
 #pragma mark Site
 
 @dynamic site;

@@ -296,7 +296,7 @@
 	static NSPredicate *result;
 	if (!result)
 	{
-		result = [[NSPredicate predicateWithFormat:@"includeInIndexAndPublish == 1"] retain];
+		result = [[NSPredicate predicateWithFormat:@"shouldIncludeInIndexes == 1"] retain];
 	}
 	
 	return result;

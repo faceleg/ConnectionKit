@@ -77,7 +77,6 @@
 #pragma mark Publishing
 @property(nonatomic, copy) NSDate *datePublished;
 - (void)recursivelyInvalidateURL:(BOOL)recursive;
-- (BOOL)includeInIndexAndPublish;
 
 
 #pragma mark Site
