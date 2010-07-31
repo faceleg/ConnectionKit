@@ -204,6 +204,18 @@
 	[[self parentPage] invalidatePagesInIndexCache];
 }
 
+/*	Sends out a KVO notification that the page's URL has changed. Upon the next request for the URL it will be
+ *	regenerated and cached.
+ *	KTAbstractPage does not support children, so it is up to KTPage to implement the recursive portion.
+ *
+ *	If the URL is invalid, it can be assumed that the site structure must have changed, so we also post a notification.
+ */
+- (void)recursivelyInvalidateURL:(BOOL)recursive
+{
+    [self setDatePublished:nil]; // #83550
+}
+
+
 // Derived accessor to determine if page should be included in the index AND it has been published or not draft
 // In other words, if it's a draft, don't include -- but if it's a draft that is already published, keep it
 

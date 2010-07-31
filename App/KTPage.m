@@ -171,7 +171,6 @@
 	return page;
 }
 
-#pragma mark -
 #pragma mark Awake
 
 /*!	Early initialization.  Note that we don't know our bundle yet!  Use awakeFromBundle for later init.
@@ -419,7 +418,10 @@
  */
 - (void)recursivelyInvalidateURL:(BOOL)recursive
 {
-	[super recursivelyInvalidateURL:recursive];
+	[self willChangeValueForKey:@"URL"];
+	[self setPrimitiveValue:nil forKey:@"URL"];
+    
+    [super recursivelyInvalidateURL:recursive];
 	
 	// Children should be affected last since they depend on parents' path
 	if (recursive)
@@ -441,6 +443,8 @@
             [aPage recursivelyInvalidateURL:YES];
 		}
 	}
+    
+	[self didChangeValueForKey:@"URL"];
 }
 
 #pragma mark Thumbnail

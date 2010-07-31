@@ -89,8 +89,7 @@ KTCollectionPathStyle;
 
 
 // Publishing
-- (void)recursivelyInvalidateURL:(BOOL)recursive;
-
 - (NSString *)uploadPath;
+
 
 @end

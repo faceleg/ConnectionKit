@@ -967,10 +967,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	if (returnCode)
 	{
 		// init code only for new documents
-		NSUndoManager *undoManager = [self undoManager];
 		
-		//[undoManager beginUndoGrouping];
-		//KTStoredDictionary *hostProperties = [[self site] wrappedValueForKey:@"hostProperties"];
 		KTHostProperties *hostProperties = [sheetController properties];
 		[self setValue:hostProperties forKeyPath:@"site.hostProperties"];
 
@@ -995,6 +992,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		
 		
 		
+		NSUndoManager *undoManager = [self undoManager];
 		[undoManager setActionName:NSLocalizedString(@"Host Settings", @"Undo name")];
 				
 		// Check encoding from host properties

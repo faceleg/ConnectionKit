@@ -324,21 +324,6 @@
 }
 
 
-/*	Sends out a KVO notification that the page's URL has changed. Upon the next request for the URL it will be
- *	regenerated and cached.
- *	KTAbstractPage does not support children, so it is up to KTPage to implement the recursive portion.
- *
- *	If the URL is invalid, it can be assumed that the site structure must have changed, so we also post a notification.
- */
-- (void)recursivelyInvalidateURL:(BOOL)recursive
-{
-	[self willChangeValueForKey:@"URL"];
-	[self setPrimitiveValue:nil forKey:@"URL"];
-	
-	[self didChangeValueForKey:@"URL"];
-}
-
-
 /*	The index.html file is not included in collection paths unless the user defaults say to.
  *	If you ask this of the home page, will either return an empty string or index.html.
  */
