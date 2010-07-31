@@ -433,7 +433,7 @@
             OBASSERT(anItem != self);
             OBASSERT(![[anItem childItems] containsObject:self]);
             
-            [[anItem pageRepresentation] recursivelyInvalidateURL:YES];
+            [anItem recursivelyInvalidateURL:YES];
 		}
 		
 		NSSet *archives = [self archivePages];
