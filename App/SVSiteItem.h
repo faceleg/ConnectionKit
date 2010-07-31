@@ -13,14 +13,16 @@
 
 #import "KSExtensibleManagedObject.h"
 #import "SVPageProtocol.h"
+#import "SVPublisher.h"
+
 #import <iMedia/IMBImageItem.h>
 
 
 @class KTSite, KTMaster, KTPage, KTCodeInjection, SVExternalLink, SVMediaRecord, SVHTMLContext;
-@protocol SVWebContentViewController, SVMedia, SVPublisher;
+@protocol SVWebContentViewController, SVMedia;
 
 
-@interface SVSiteItem : KSExtensibleManagedObject <SVPage>
+@interface SVSiteItem : KSExtensibleManagedObject <SVPage, SVPublishedObject>
 
 #pragma mark Identifier
 @property(nonatomic, copy, readonly) NSString *uniqueID;

@@ -48,7 +48,10 @@
     uploadPath = [uploadPath stringByAppendingPathComponent:
                   [[media preferredFilename] legalizedWebPublishingFilename]];
     
-    [publishingEngine publishContentsOfURL:[media fileURL] toPath:uploadPath];
+    [publishingEngine publishContentsOfURL:[media fileURL]
+                                    toPath:uploadPath
+                          cachedSHA1Digest:nil
+                                    object:self];
 }
 
 - (NSString *)fileName { return [self.media preferredFilename]; }
