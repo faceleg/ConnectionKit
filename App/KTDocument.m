@@ -987,8 +987,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		
 		// All page and sitemap URLs are now invalid
         [[[self site] rootPage] recursivelyInvalidateURL:YES];
-        [self willChangeValueForKey:@"publishedSitemapURL"];
-        [self didChangeValueForKey:@"publishedSitemapURL"];
 		
 		
 		

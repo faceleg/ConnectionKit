@@ -313,26 +313,6 @@
 	return result;
 }
 
-/*! returns publishSiteURL/sitemap.xml */
-- (NSString *)publishedSitemapURL
-{
-	NSString *result;
-    
-    NSURL *siteURL = [[self hostProperties] siteURL];
-	if (!siteURL)
-	{
-		result = @""; // show placeholder in UI
-	}
-	else
-	{
-		NSURL *sitemapURL = [NSURL URLWithString:@"sitemap.xml.gz" relativeToURL:siteURL];
-        result = [sitemapURL absoluteString];
-	}
-	
-	return result;
-}
-
-#pragma mark -
 #pragma mark jQuery
 
 - (void)writeJQueryImport
