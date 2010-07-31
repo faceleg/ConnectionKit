@@ -29,7 +29,7 @@
 	
     // If the page hasn't been published yet, update the filename to match
 	KTPage *page = [self page];
-	if ([page shouldUpdateFileNameWhenTitleChanges])
+	if ([page shouldUpdateFileNameWhenTitleChanges] && ![page datePublished])
 	{
 		[page setFileName:[page suggestedFileName]];
 	}
