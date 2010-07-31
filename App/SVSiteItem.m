@@ -362,14 +362,14 @@
                     openInNewWindow:[[self openInNewWindow] boolValue]];
 }
 
-- (BOOL)includeInIndexes;
+- (BOOL)shouldIncludeInIndexes;
 {
     BOOL result = ([[self includeInIndex] boolValue] && 
                    ([self datePublished] || ![self isDraftOrHasDraftAncestor]));
     return result;
 }
 
-- (BOOL)includeInSiteMaps;
+- (BOOL)shouldIncludeInSiteMaps;
 {
     BOOL result = ([[self includeInSiteMap] boolValue] && 
                    ([self datePublished] || ![self isDraftOrHasDraftAncestor]));

@@ -28,8 +28,8 @@
 
 // Navigation
 - (SVLink *)link;
-- (BOOL)includeInIndexes;
-- (BOOL)includeInSiteMaps;
+- (BOOL)shouldIncludeInIndexes;
+- (BOOL)shouldIncludeInSiteMaps;
 
 @end
 

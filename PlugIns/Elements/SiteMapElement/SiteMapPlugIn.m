@@ -121,7 +121,7 @@
              asSection:(BOOL)asSection
           wantsCompact:(BOOL)wantsCompact
 {	
-    if ( [aPage includeInSiteMaps] ) // we must check this since we're recursive
+    if ( [aPage shouldIncludeInSiteMaps] ) // we must check this since we're recursive
 	{
         // observe observable keypaths for aPage
         id<NSFastEnumeration> keyPaths = [aPage automaticRearrangementKeyPaths];
@@ -136,7 +136,7 @@
 		NSMutableArray *children = [NSMutableArray array];
         for ( id<SVPage> childPage in [aPage childPages] )
         {
-            if ( [childPage includeInSiteMaps] ) [children addObject:childPage];
+            if ( [childPage shouldIncludeInSiteMaps] ) [children addObject:childPage];
         }
         
         // if asSection emit <h3>, else emit <li>
