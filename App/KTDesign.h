@@ -104,7 +104,6 @@ extern const int kDesignThumbHeight;
 
 // Resource data
 - (NSSet *)resourceFileURLs;
-- (NSData *)dataForResourceAtPath:(NSString *)path MIMEType:(NSString **)mimeType error:(NSError **)error;
 - (void)writeCSS:(SVHTMLContext *)context;
 
 @end
