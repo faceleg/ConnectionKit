@@ -102,6 +102,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 		_site = [site retain];
         
         _paths = [[NSMutableSet alloc] init];
+        _pathsByDigest = [[NSMutableDictionary alloc] init];
         
         _plugInCSS = [[NSMutableArray alloc] init];
         
@@ -124,6 +125,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [_subfolderPath release];
     
     [_paths release];
+    [_pathsByDigest release];
     
     [_plugInCSS release];
 	
@@ -380,6 +382,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
              contentHash:(NSData *)contentHash
                   object:(id <SVPublishedObject>)object;
 {
+    if (digest) [_pathsByDigest setObject:path forKey:digest];
 }
 
 - (void)didEnqueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
@@ -581,12 +584,16 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 {
     OBPRECONDITION(digest);
     
-    // TODO: Check queued uploads too. #83251
+    NSString *result = [_pathsByDigest objectForKey:digest];
     
-    SVPublishingRecord *publishingRecord = [[[self site] hostProperties]
-                                            publishingRecordForSHA1Digest:digest];
+    if (!result)
+    {
+        SVPublishingRecord *publishingRecord = [[[self site] hostProperties]
+                                                publishingRecordForSHA1Digest:digest];
+        
+        result = [publishingRecord path];
+    }
     
-    NSString *result = [publishingRecord path];
     return result;
 }
 

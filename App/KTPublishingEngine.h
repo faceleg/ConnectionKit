@@ -63,7 +63,8 @@ typedef enum {
     CKTransferRecord    *_rootTransferRecord;
     CKTransferRecord    *_baseTransferRecord;
     
-    NSMutableSet    *_paths;    // all the paths which are in use by the site
+    NSMutableSet        *_paths;    // all the paths which are in use by the site
+    NSMutableDictionary *_pathsByDigest;
     
     NSMutableArray      *_plugInCSS;    // mixture of string CSS snippets, and CSS URLs
 }
