@@ -382,6 +382,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
              contentHash:(NSData *)contentHash
                   object:(id <SVPublishedObject>)object;
 {
+    [_paths addObject:path];
     if (digest) [_pathsByDigest setObject:path forKey:digest];
 }
 
@@ -390,8 +391,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [parent addContent:record];
     
     NSString *path = [record path];
-    [_paths addObject:path];
-    
     [[self connection] setPermissions:[self remoteFilePermissions]
                               forFile:path];
 }

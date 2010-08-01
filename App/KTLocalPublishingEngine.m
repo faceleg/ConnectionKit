@@ -108,7 +108,12 @@
         NSData *toPublishDigest = (hash ? hash : digest);
         NSData *publishedDigest = (hash ? [record contentHash] : [record SHA1Digest]);
         
-        if ([toPublishDigest isEqualToData:publishedDigest]) return;
+        if ([toPublishDigest isEqualToData:publishedDigest])
+        {
+            // Pretend we uploaded so the engine still tracks path/digest etc.
+            [self didEnqueueUpload:nil toPath:remotePath cachedSHA1Digest:digest contentHash:hash object:object];
+            return;
+        }
     }
     
     
@@ -143,7 +148,12 @@
     {
         SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:remotePath];
         NSData *publishedDigest = [record SHA1Digest];
-        if ([digest isEqualToData:publishedDigest]) return;
+        if ([digest isEqualToData:publishedDigest])
+        {
+            // Pretend we uploaded so the engine still tracks path/digest etc.
+            [self didEnqueueUpload:nil toPath:remotePath cachedSHA1Digest:digest contentHash:nil object:object];
+            return;
+        }
     }
     
     
