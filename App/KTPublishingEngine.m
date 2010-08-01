@@ -556,31 +556,32 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (NSString *)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
 {
-    if ([self status] == KTPublishingEngineStatusGatheringMedia)
+    // Is there already an existing file on the server? If so, use that
+    NSData *fileContents = [mediaRep data];
+    NSData *digest = [fileContents SHA1Digest];
+    
+    NSString *path = [self pathForFileWithSHA1Digest:digest];
+    if (path)
     {
-        // Is there already an existing file on the server? If so, use that
-        NSData *fileContents = [mediaRep data];
-        NSData *digest = [fileContents SHA1Digest];
+        [self publishData:fileContents toPath:path cachedSHA1Digest:digest contentHash:nil object:nil];
+        [_uploadedMediaReps setObject:path forKey:mediaRep];
         
-        NSString *path = [self pathForFileWithSHA1Digest:digest];
-        if (path)
-        {
-            [self publishData:fileContents toPath:path];
-            [_uploadedMediaReps setObject:path forKey:mediaRep];
-        }
-        else
-        {
-            // Put off uploading until all media has been gathered
-            [_newMedia addObject:mediaRep];
-        }
-        
-        return nil;
+        return path;
+    }
+    
+    
+    if (!path && [self status] == KTPublishingEngineStatusGatheringMedia)
+    {
+        // Put off uploading until all media has been gathered
+        [_newMedia addObject:mediaRep];
     }
     else
     {
         NSString *result = [_uploadedMediaReps objectForKey:mediaRep];
         return result;
     }
+    
+    return path;
 }
 
 #pragma mark Resource Files
