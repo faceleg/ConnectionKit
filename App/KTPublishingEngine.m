@@ -516,7 +516,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                       [legalizedFileName stringByAppendingPathExtension:pathExtension]];
     
     NSUInteger count = 1;
-    while ([_paths containsObject:path])
+    while (![self shouldPublishToPath:path])
     {
         count++;
         NSString *fileName = [legalizedFileName stringByAppendingFormat:@"-%u", count];
