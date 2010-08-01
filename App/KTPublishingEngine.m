@@ -102,7 +102,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 		_site = [site retain];
         
         _paths = [[NSMutableSet alloc] init];
-        _uploadedMediaReps = [[NSMutableDictionary alloc] init];
         
         _plugInCSS = [[NSMutableArray alloc] init];
         
@@ -500,58 +499,16 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 #pragma mark Media
 
-- (void)publishNewMediaRepresentation:(SVMediaRepresentation *)mediaRep
-{
-    //  The media rep does not already exist on the server, so need to assign it a new path
-    id <SVMedia> media = [mediaRep mediaRecord];
-    
-    NSString *mediaDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:@"_Media"];
-    NSString *preferredFilename = [mediaRep preferredFilename];
-    NSString *pathExtension = [preferredFilename pathExtension];
-    
-    NSString *legalizedFileName = [[preferredFilename stringByDeletingPathExtension]
-                                   legalizedWebPublishingFileName];
-    
-    NSString *path = [mediaDirectoryPath stringByAppendingPathComponent:
-                      [legalizedFileName stringByAppendingPathExtension:pathExtension]];
-    
-    NSUInteger count = 1;
-    while (![self shouldPublishToPath:path])
-    {
-        count++;
-        NSString *fileName = [legalizedFileName stringByAppendingFormat:@"-%u", count];
-        
-        path = [mediaDirectoryPath stringByAppendingPathComponent:
-                [fileName stringByAppendingPathExtension:pathExtension]];
-    }
-    
-    
-    // Upload
-    NSData *fileContents = [mediaRep data];
-    if (fileContents) [self publishData:fileContents toPath:path];
-    
-    [_uploadedMediaReps setObject:path forKey:mediaRep];
-}
-
 - (void)gatherMedia;
 {
-    // Gather up media using special context
+    // Publish any media that has been published before (so it maintains its path). Ignore all else
     SVMediaGatheringPublisher *pubContext = [[SVMediaGatheringPublisher alloc] init];
     [pubContext setPublishingEngine:self];
-    
-    _newMedia = [[NSMutableArray alloc] init];
     
     KTPage *homePage = [[self site] rootPage];
     [homePage publish:pubContext recursively:YES];
     
     [pubContext release];
-    
-    // Assign filenames to the new media
-    for (SVMediaRepresentation *mediaRep in _newMedia)
-    {
-        [self publishNewMediaRepresentation:mediaRep];
-    }
-    [_newMedia release]; _newMedia = nil;
 }
 
 - (NSString *)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
@@ -560,28 +517,49 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSData *fileContents = [mediaRep data];
     NSData *digest = [fileContents SHA1Digest];
     
-    NSString *path = [self pathForFileWithSHA1Digest:digest];
-    if (path)
+    NSString *result = [self pathForFileWithSHA1Digest:digest];
+    if (!result)
     {
-        [self publishData:fileContents toPath:path cachedSHA1Digest:digest contentHash:nil object:nil];
-        [_uploadedMediaReps setObject:path forKey:mediaRep];
-        
-        return path;
+        // New media should only be published once we know where all the existing stuff is going
+        if ([self status] > KTPublishingEngineStatusGatheringMedia)
+        {
+            //  The media rep does not already exist on the server, so need to assign it a new path
+            NSString *mediaDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:@"_Media"];
+            NSString *preferredFilename = [mediaRep preferredFilename];
+            NSString *pathExtension = [preferredFilename pathExtension];
+            
+            NSString *legalizedFileName = [[preferredFilename stringByDeletingPathExtension]
+                                           legalizedWebPublishingFileName];
+            
+            result = [mediaDirectoryPath stringByAppendingPathComponent:
+                              [legalizedFileName stringByAppendingPathExtension:pathExtension]];
+            
+            NSUInteger count = 1;
+            while (![self shouldPublishToPath:result])
+            {
+                count++;
+                NSString *fileName = [legalizedFileName stringByAppendingFormat:@"-%u", count];
+                
+                result = [mediaDirectoryPath stringByAppendingPathComponent:
+                        [fileName stringByAppendingPathExtension:pathExtension]];
+            }
+            
+            OBASSERT(result);
+        }
     }
     
     
-    if (!path && [self status] == KTPublishingEngineStatusGatheringMedia)
+    // Publish!
+    if (result)
     {
-        // Put off uploading until all media has been gathered
-        [_newMedia addObject:mediaRep];
-    }
-    else
-    {
-        NSString *result = [_uploadedMediaReps objectForKey:mediaRep];
-        return result;
+        [self publishData:fileContents
+                   toPath:result
+         cachedSHA1Digest:digest
+              contentHash:nil
+                   object:nil];
     }
     
-    return path;
+    return result;
 }
 
 #pragma mark Resource Files

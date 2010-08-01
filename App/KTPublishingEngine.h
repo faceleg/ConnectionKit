@@ -65,9 +65,6 @@ typedef enum {
     
     NSMutableSet    *_paths;    // all the paths which are in use by the site
     
-    NSMutableDictionary *_uploadedMediaReps;
-    NSMutableArray      *_newMedia;
-    
     NSMutableArray      *_plugInCSS;    // mixture of string CSS snippets, and CSS URLs
 }
 
