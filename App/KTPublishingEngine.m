@@ -244,10 +244,22 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                       object:(id <SVPublishedObject>)object;
 {
     OBPRECONDITION(localURL);
-    OBPRECONDITION([localURL isFileURL]);
     OBPRECONDITION(remotePath);
     
     if (![self shouldPublishToPath:remotePath]) return;
+    
+    
+    // Non-file URLs need to be uploaded as data
+    if (![localURL isFileURL])
+    {
+        // Ideally this code should be async to improve performance. But right now we're only using it to load banner, which is likely cached, so should be fast enough.
+        NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:localURL]
+                                             returningResponse:NULL
+                                                         error:NULL];
+        
+        if (data) [self publishData:data toPath:remotePath];
+        return;
+    }
     
     
     BOOL isDirectory = NO;
@@ -474,8 +486,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (NSURL *)addBannerWithURL:(NSURL *)sourceURL;
 {
-    NSURL *designURL = [[[[self site] rootPage] master] designDirectoryURL];
+    // Publish source
+    NSString *bannerPath = [[self designDirectoryPath] stringByAppendingPathComponent:@"banner.jpeg"];
+    [self publishContentsOfURL:sourceURL toPath:bannerPath];
     
+    // Where will it be published to?
+    NSURL *designURL = [[[[self site] rootPage] master] designDirectoryURL];
     NSURL *result = [designURL URLByAppendingPathComponent:@"banner.jpeg" isDirectory:NO];
     return result;
 }
