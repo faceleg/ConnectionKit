@@ -179,7 +179,8 @@ typedef enum {
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
 
 
-#pragma mark Graphical Text
+#pragma mark Design
+- (NSURL *)addBannerWithURL:(NSURL *)sourceURL;
 - (NSURL *)addGraphicalTextData:(NSData *)imageData idName:(NSString *)idName;
 
 

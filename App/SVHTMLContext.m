@@ -679,7 +679,12 @@
     return resourceURL; // subclasses will correct for publishing
 }
 
-#pragma mark Graphical Text
+#pragma mark Design
+
+- (NSURL *)addBannerWithURL:(NSURL *)sourceURL;
+{
+    return sourceURL;
+}
 
 - (NSURL *)addGraphicalTextData:(NSData *)imageData idName:(NSString *)idName;
 {

@@ -280,6 +280,8 @@
                                          scalingProperties:scalingProperties];
             [scalingProperties release];
             
+            URL = [context addBannerWithURL:URL];
+            
             
             NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", [URL absoluteString]];
             
