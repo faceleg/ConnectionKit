@@ -42,7 +42,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 	KTHTMLEditorController  *_HTMLEditorController;
     
     // Updating
-    BOOL                    _needsUpdate, _willUpdate;
+    BOOL                    _needsUpdate, _willUpdate, _reload;
     NSUInteger              _updatesCount;
     NSRect                  _visibleRect;
     SVWebEditorTextRange    *_selectionToRestore;

@@ -334,6 +334,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (void)update;
 {
+    _reload = NO;
 	[self loadPage:[[self HTMLContext] page]];
 	
     // Clearly the webview is no longer in need of refreshing
@@ -486,7 +487,11 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     }
 }
 
-- (IBAction)reload:(id)sender { [self setNeedsUpdate]; }
+- (IBAction)reload:(id)sender
+{
+    _reload = YES;
+    [self loadPage:[[self HTMLContext] page]];
+}
 
 #pragma mark Content
 
@@ -938,6 +943,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     KTPage *page = [[controller selectedPage] pageRepresentation];
     if (page != [[self HTMLContext] page])
     {
+        _reload = NO;
         [self loadPage:page];
         
         // UI-wise it might be better to test if the page contains the HTML loaded into the editor
@@ -1215,7 +1221,16 @@ fallbackDOMRangeForNoSelection:(DOMRange *)proposedRange
            redirectResponse:(NSURLResponse *)redirectResponse
              fromDataSource:(WebDataSource *)dataSource;
 {
-    return request;
+    if (_reload)
+    {
+        NSMutableURLRequest *result = [[request mutableCopy] autorelease];
+        [result setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+        return result;
+    }
+    else
+    {
+        return request;
+    }
 }
 
 - (void)webEditor:(WEKWebEditorView *)sender handleNavigationAction:(NSDictionary *)actionInfo request:(NSURLRequest *)request;
