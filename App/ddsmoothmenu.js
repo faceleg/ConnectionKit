@@ -13,13 +13,23 @@
 //** July 27th, 09" (v1.31): Fixed bug so shadows can be disabled if desired.
 //** Feb 2nd, 10" (v1.4): Adds ability to specify delay before sub menus appear and disappear, respectively. See showhidedelay variable below
 
+/*
+2010-08: Adapted for use in Sandvox 2.
+*/
+
+
+
 var ddsmoothmenu={
 
-//Specify full URL to down and right arrow images (23 is padding-right added to top level LIs with drop downs):
-arrowimages: {down:['downarrowclass', 'down.gif', 23], right:['rightarrowclass', 'right.gif']},
-transition: {overtime:300, outtime:300}, //duration of slide in/ out animation, in milliseconds
-shadow: {enable:true, offsetx:5, offsety:5}, //enable shadow?
-showhidedelay: {showdelay: 100, hidedelay: 200}, //set delay in milliseconds before sub menus appear and disappear, respectively
+/* 2010-08-01 ssp: 
+	Use shorter times. Check whether they may still be too long. 
+	We don't use the padding right feature and want none of it. 
+*/
+//Specify full URL to down and right arrow images (0 is padding-right added to top level LIs with drop downs):
+arrowimages: {down:['downarrowclass', 'down.gif', 0], right:['rightarrowclass', 'right.gif']},
+transition: {overtime:20, outtime:300}, //duration of slide in/ out animation, in milliseconds
+shadow: {enable:false, offsetx:5, offsety:5}, //enable shadow?
+showhidedelay: {showdelay: 40, hidedelay: 80}, //set delay in milliseconds before sub menus appear and disappear, respectively
 
 ///////Stop configuring beyond here///////////////////////////
 
@@ -48,25 +58,52 @@ buildmenu:function($, setting){
 	var $mainmenu=$("#"+setting.mainmenuid+">ul") //reference main menu UL
 	$mainmenu.parent().get(0).className=setting.classname || "ddsmoothmenu"
 	var $headers=$mainmenu.find("ul").parent()
+	/* ssp, 2010-08-01
+	replaced selector a:eq(0) by a:eq(0),.in:eq(0) in the following lines, 
+		so we cann affect the .currentItem without an a but just a span.in as well.
+	*/
 	$headers.hover(
 		function(e){
-			$(this).children('a:eq(0)').addClass('selected')
+			$(this).children('a:eq(0),.in:eq(0)').addClass('selected');
 		},
 		function(e){
-			$(this).children('a:eq(0)').removeClass('selected')
+			$(this).children('a:eq(0),.in:eq(0)').removeClass('selected');
 		}
 	)
 	$headers.each(function(i){ //loop through each LI header
-		var $curobj=$(this).css({zIndex: 100-i}) //reference current LI header
+		var $curobj=$(this).css({zIndex: 100000-i}) //reference current LI header
 		var $subul=$(this).find('ul:eq(0)').css({display:'block'})
 		$subul.data('timers', {})
 		this._dimensions={w:this.offsetWidth, h:this.offsetHeight, subulw:$subul.outerWidth(), subulh:$subul.outerHeight()}
 		this.istopheader=$curobj.parents("ul").length==1? true : false //is top level header?
 		$subul.css({top:this.istopheader && setting.orientation!='v'? this._dimensions.h+"px" : 0})
-		$curobj.children("a:eq(0)").css(this.istopheader? {paddingRight: smoothmenu.arrowimages.down[2]} : {}).append( //add arrow images
+		/* 2010-08-01, ssp:
+			The following lines removed because we handle the padding in CSS in Sandvox.
+			$curobj.children("a:eq(0),.in:eq(0)").css(this.istopheader? {paddingRight: smoothmenu.arrowimages.down[2]} : {}).append( //add arrow images
 			'<img src="'+ (this.istopheader && setting.orientation!='v'? smoothmenu.arrowimages.down[1] : smoothmenu.arrowimages.right[1])
 			+'" class="' + (this.istopheader && setting.orientation!='v'? smoothmenu.arrowimages.down[0] : smoothmenu.arrowimages.right[0])
 			+ '" style="border:0;" />'
+		*/		
+		
+		/* 2010-08-01, ssp:
+			Slightly change DOM, to take into account the span.in and the potential lack of link.
+			Old DOM: a > img
+			New DOM: a > span.in > img for items with a link and span.in > img for .currentPage.
+			Also remove style="border:0" because it's part of our CSS already.
+		*/
+		var firstLink = $curobj.children("a:eq(0)");
+		var element;
+		if (firstLink.length == 1) {
+			element = firstLink.children(".in:eq(0)");
+		}
+		else {
+			element = $curobj.children(".in:eq(0)");
+		}
+		
+		element.append( //add arrow images
+			'<img src="'+ (this.istopheader && setting.orientation!='v'? smoothmenu.arrowimages.down[1] : smoothmenu.arrowimages.right[1])
+			+'" class="' + (this.istopheader && setting.orientation!='v'? smoothmenu.arrowimages.down[0] : smoothmenu.arrowimages.right[0])
+			+ '" />'
 		)
 		if (smoothmenu.shadow.enable){
 			this._shadowoffset={x:(this.istopheader?$subul.offset().left+smoothmenu.shadow.offsetx : this._dimensions.w), y:(this.istopheader? $subul.offset().top+smoothmenu.shadow.offsety : $curobj.position().top)} //store this shadow's offsets
