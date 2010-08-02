@@ -447,7 +447,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 				NSView *lastView = [subviewsOnThisRow lastObject];
 				NSUInteger mask = [lastView autoresizingMask];
 				BOOL anchorRight = 0 == (mask & NSViewMaxXMargin);	// if anchored right, no matter what the margin was, we want to grow frame to match.
-				BOOL stretchyView = 0 != (mask & NSViewWidthSizable);
+				// BOOL stretchyView = 0 != (mask & NSViewWidthSizable);
 							
 				CGFloat newMaxX = NSMaxX([lastView frame]);
 				

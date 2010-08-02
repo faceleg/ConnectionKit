@@ -35,34 +35,34 @@
 #import "Registration.h"
 
 
-@interface KSSiteMenuItem : NSObject
+@interface SVSiteMenuItem : NSObject
 {
-	KTPage *_page;
-	NSMutableArray *_childPages;
+	SVSiteItem *_siteItem;
+	NSMutableArray *_childItems;
 }
-@property (retain) KTPage *page;
-@property (retain) NSMutableArray *childPages;
+@property (retain) SVSiteItem *siteItem;
+@property (retain) NSMutableArray *childItems;
 
 @end
 
-@implementation KSSiteMenuItem
+@implementation SVSiteMenuItem
 
-@synthesize page = _page;
-@synthesize childPages = _childPages;
+@synthesize siteItem = _siteItem;
+@synthesize childItems = _childItems;
 
-- (id)initWithPage:(KTPage *)aPage
+- (id)initWithSiteItem:(SVSiteItem *)aSiteItem
 {
 	if ((self = [super init]) != nil)
 	{
-		self.page = aPage;
-		self.childPages = [NSMutableArray array];
+		self.siteItem = aSiteItem;
+		self.childItems = [NSMutableArray array];
 	}
 	return self;
 }
 
 - (NSUInteger)hash
 {
-	return [[[[self page] objectID] description] hash];
+	return [[[[self siteItem] objectID] description] hash];
 }
 @end
 
@@ -390,12 +390,12 @@
 	int i=1;	// 1-based iteration
 	int last = [anArray count];
 
-	for (KSSiteMenuItem *item in anArray)
+	for (SVSiteMenuItem *item in anArray)
 	{
-		KTPage *page = item.page;
-		NSArray *children = item.childPages;
+		SVSiteItem *siteItem = item.siteItem;
+		NSArray *children = item.childItems;
 
-		if (page == currentParserPage)
+		if (siteItem == currentParserPage)
 		{
 			[context startElement:@"li" idName:nil className:
 			 [NSString stringWithFormat:@"i%d %@%@%@ currentPage", i, (i%2)?@"o":@"e", (i==last)? @" last" : @"", [children count] ? @" hasSubmenu" : @""]];
@@ -403,7 +403,7 @@
 		else
 		{
 			BOOL isCurrentParent = NO;
-			if (!currentParserPage.includeInSiteMenu.boolValue && page == currentParserPage.parentPage && currentParserPage.parentPage.index)
+			if (!currentParserPage.includeInSiteMenu.boolValue && siteItem == currentParserPage.parentPage && currentParserPage.parentPage.index)
 			{
 				isCurrentParent = YES;
 			}
@@ -417,9 +417,9 @@
 			  isCurrentParent ? @" currentParent" : @""
 			  ]];
 			
-			NSString *urlString = [context relativeURLStringOfURL:[page URL]];
+			NSString *urlString = [context relativeURLStringOfURL:[siteItem URL]];
 			
-			[context startAnchorElementWithHref:urlString title:[page title] target:nil rel:nil];
+			[context startAnchorElementWithHref:urlString title:[siteItem title] target:nil rel:nil];
 			// TODO: targetStringForPage:targetPage
 		}
 		
@@ -432,12 +432,12 @@
 		[textBlock setImportsGraphics:NO];
 		[textBlock setTagName:@"span"];
 		
-		[textBlock setHTMLSourceObject:page];
+		[textBlock setHTMLSourceObject:siteItem];
 		[textBlock setHTMLSourceKeyPath:@"menuTitle"];
 		
 		[textBlock writeHTML:context];
 		
-		if (page != currentParserPage)
+		if (siteItem != currentParserPage)
 		{
 			[context endElement];	// a
 		}
@@ -548,10 +548,13 @@
 		if (HIER_MENU_NONE == hierMenuType)
 		{
 			// Flat menu, either by design's preference or user default
-			for (KTPage *siteMenuPage in pagesInSiteMenu)
+			for (SVSiteItem *siteMenuItem in pagesInSiteMenu)
 			{
-				KSSiteMenuItem *item = [[[KSSiteMenuItem alloc] initWithPage:siteMenuPage] autorelease];
-				[forest addObject:item];
+				if ([siteMenuItem shouldIncludeInSiteMenu])
+				{
+					SVSiteMenuItem *item = [[[SVSiteMenuItem alloc] initWithSiteItem:siteMenuItem] autorelease];
+					[forest addObject:item];
+				}
 			}
 			[self writeMenu:context forSiteMenuItems:forest treeLevel:0];
 		}
@@ -572,47 +575,50 @@
 			// Array of dictionaries keyed with "page" and "children" array
 			NSMutableArray *childrenLookup = [NSMutableArray array];
 			// Assume we are traversing tree in sorted order, so children will always be found after parent, which makes it easy to build this tree.
-			for (KTPage *siteMenuPage in pagesInSiteMenu)
+			for (SVSiteItem *siteMenuItem in pagesInSiteMenu)
 			{
-				BOOL wasSubPage = NO;
-				KTPage *parent = siteMenuPage;
-				KSSiteMenuItem *item = nil;
-				do // loop through, looking to see if this (or parent) page is a sub-page of an already-found page in the site menu.
+				if ([siteMenuItem shouldIncludeInSiteMenu])
 				{
-					KSSiteMenuItem *itemToAddTo = nil;
-					// See if this is already known about
-					for (KSSiteMenuItem *checkItem in childrenLookup)
+					BOOL wasSubPage = NO;
+					KTPage *parent = (KTPage *)siteMenuItem;		// Parent will *always* be a KTPage once we calculate it
+					SVSiteMenuItem *item = nil;
+					do // loop through, looking to see if this (or parent) page is a sub-page of an already-found page in the site menu.
 					{
-						if (checkItem.page == parent)
+						SVSiteMenuItem *itemToAddTo = nil;
+						// See if this is already known about
+						for (SVSiteMenuItem *checkItem in childrenLookup)
 						{
-							itemToAddTo = checkItem;
-							break;
+							if (checkItem.siteItem == parent)
+							{
+								itemToAddTo = checkItem;
+								break;
+							}
+						}					
+						if (itemToAddTo)	// Was there a parent menu item?
+						{
+							// If so, create a new entry for this page, with an empty array of children; add to list of children
+							item = [[[SVSiteMenuItem alloc] initWithSiteItem:siteMenuItem] autorelease];
+							[itemToAddTo.childItems addObject:item];
+							parent = nil;	// stop looking
+							wasSubPage = YES;
 						}
-					}					
-					if (itemToAddTo)	// Was there a parent menu item?
-					{
-						// If so, create a new entry for this page, with an empty array of children; add to list of children
-						item = [[[KSSiteMenuItem alloc] initWithPage:siteMenuPage] autorelease];
-						[itemToAddTo.childPages addObject:item];
-						parent = nil;	// stop looking
-						wasSubPage = YES;
+						else // No, this page (or its parent) was not in the menu list so go up one level to keep looking.
+						{
+							parent = [parent parentPage];
+						}
 					}
-					else // No, this page (or its parent) was not in the menu list so go up one level to keep looking.
+					while (nil != parent && ![parent isRoot]);	// Stop when we reach root. Note that we don't put items under root.
+					
+					if (!item)
 					{
-						parent = [parent parentPage];
+						item = [[[SVSiteMenuItem alloc] initWithSiteItem:siteMenuItem] autorelease];
 					}
-				}
-				while (nil != parent && ![parent isRoot]);	// Stop when we reach root. Note that we don't put items under root.
-
-				if (!item)
-				{
-					item = [[[KSSiteMenuItem alloc] initWithPage:siteMenuPage] autorelease];
-				}
-				[childrenLookup addObject:item];		// quick lookup from page to children
-
-				if (!wasSubPage)	// Not a sub-page, so it's a top-level menu item.
-				{
-					[forest addObject:item];		// Add to our list of top-level menus
+					[childrenLookup addObject:item];		// quick lookup from page to children
+					
+					if (!wasSubPage)	// Not a sub-page, so it's a top-level menu item.
+					{
+						[forest addObject:item];		// Add to our list of top-level menus
+					}
 				}
 			}	// end for
 			[self writeMenu:context forSiteMenuItems:forest treeLevel:0];
