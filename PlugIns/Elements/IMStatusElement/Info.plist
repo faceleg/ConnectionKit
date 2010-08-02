@@ -81,8 +81,6 @@
 	<dict>
 		<key>selectedIMService</key>
 		<integer>0</integer>
-		<key>showBorder</key>
-		<false/>
 	</dict>
 	<key>KTPluginName</key>
 	<string>IM Status</string>
