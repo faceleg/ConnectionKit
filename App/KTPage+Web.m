@@ -403,7 +403,9 @@
 		else
 		{
 			BOOL isCurrentParent = NO;
-			if (!currentParserPage.includeInSiteMenu.boolValue && siteItem == currentParserPage.parentPage && currentParserPage.parentPage.index)
+			
+			// define currentParent as being that this menu item is along the path to the currently generated page.
+			if (currentParserPage != siteItem && [currentParserPage isDescendantOfItem:siteItem])
 			{
 				isCurrentParent = YES;
 			}
