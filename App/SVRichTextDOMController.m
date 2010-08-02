@@ -110,10 +110,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     _isUpdating = NO;
 }
 
-#pragma mark Editability
-
-- (BOOL)isSelectable { return NO; }
-
 #pragma mark Controlling Editing Behaviour
 
 - (void)webEditorTextDidBeginEditing;

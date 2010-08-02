@@ -305,12 +305,12 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 
 @synthesize imageDOMController = _imageDOMController;
 
-- (BOOL)isSelectable;
+- (DOMElement *)selectableDOMElement;
 {
     // Normally we are, but not for chrome-less images
-    BOOL result = ([self HTMLElement] == [[self imageDOMController] HTMLElement] ?
-                   NO :
-                   [super isSelectable]);
+    DOMElement *result = ([self HTMLElement] == [[self imageDOMController] HTMLElement] ?
+                          nil :
+                          [super selectableDOMElement]);
     return result;
 }
 

@@ -22,6 +22,7 @@
 + (SVGraphicDOMController *)graphicPlaceholderDOMController;
 
 @property(nonatomic, retain) DOMHTMLElement *bodyHTMLElement;
+- (DOMElement *)graphicDOMElement;
 - (void)loadPlaceholderDOMElementInDocument:(DOMDocument *)document;
 
 

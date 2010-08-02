@@ -60,6 +60,12 @@
 
 @synthesize bodyHTMLElement = _bodyElement;
 
+- (DOMElement *)graphicDOMElement;
+{
+    id result = [[[self HTMLElement] getElementsByClassName:@"graphic"] item:0];
+    return result;
+}
+
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document;
 {
     [super loadHTMLElementFromDocument:document];
@@ -181,7 +187,12 @@
 
 #pragma mark State
 
-- (BOOL)isSelectable { return YES; }
+- (DOMElement *)selectableDOMElement;
+{
+    DOMElement *result = [self graphicDOMElement];
+    if (!result) result = [self HTMLElement];
+    return result;
+}
 
 - (void)setEditing:(BOOL)editing;
 {

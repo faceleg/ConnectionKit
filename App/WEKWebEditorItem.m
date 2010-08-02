@@ -199,19 +199,21 @@
 
 #pragma mark Selection
 
-- (BOOL)isSelectable; { return NO; }
+- (BOOL)isSelectable; { return [self selectableDOMElement] != nil; }
+
+- (DOMElement *)selectableDOMElement; { return nil; }
 
 - (void)updateToReflectSelection;
 {
     if ([self isSelected] || [self isEditing])
     {
-        [[[self HTMLElement] style] setProperty:@"outline"
-                                          value:@"1px gray solid"
-                                       priority:@""];
+        [[[self selectableDOMElement] style] setProperty:@"outline"
+                                                   value:@"1px gray solid"
+                                                priority:@""];
     }
     else
     {
-        [[[self HTMLElement] style] removeProperty:@"outline"];
+        [[[self selectableDOMElement] style] removeProperty:@"outline"];
     }
 }
 
@@ -385,7 +387,7 @@
 
 - (NSRect)rect;
 {
-    return [[self HTMLElement] boundingBox];
+    return [[self selectableDOMElement] boundingBox];
 }
 
 - (NSRect)drawingRect;  // expressed in our DOM node's document view's coordinates

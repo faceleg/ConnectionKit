@@ -45,7 +45,8 @@
 
 #pragma mark Selection
 
-- (BOOL)isSelectable;   // default is NO. Subclass for more complexity, shouldn't worry about KVO
+- (BOOL)isSelectable;   // convenience for -selectableDOMElement
+- (DOMElement *)selectableDOMElement;   // default is nil. Subclass for more complexity, shouldn't worry about KVO
 - (unsigned int)resizingMask;
 
 @property(nonatomic, getter=isSelected) BOOL selected;  // draw selection handles & outline when YES
