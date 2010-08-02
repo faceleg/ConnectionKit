@@ -834,7 +834,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Look for children at the deepest possible level (normally top-level). Keep backing out until we find something of use
     
     result = [[self contentItem] hitTestDOMNode:nextNode];
-    while (result && ![result isSelectable])
+    while (result && ![nextNode ks_isDescendantOfElement:[result selectableDOMElement]])
     {
         result = [result parentWebEditorItem];
     }
