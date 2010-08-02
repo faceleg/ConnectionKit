@@ -507,10 +507,13 @@
 							  @"ddsmoothmenu.arrowimages = {down:['downarrowclass', '%@', 23], right:['rightarrowclass', '%@']}",
 							  [arrowDownSrc absoluteString], [arrowRightSrc absoluteString]]];
 		[context writeString:@"\n"];
+		
+		BOOL isVertical = hierMenuType == HIER_MENU_VERTICAL || (hierMenuType == HIER_MENU_VERTICAL_IF_SIDEBAR && [[self showSidebar] boolValue]);
+		
 		[context writeString:[NSString stringWithFormat:
 							  @"ddsmoothmenu.init({ mainmenuid: 'sitemenu-content',orientation:'%@', classname:'%@',contentsource:'markup'})",					  
-							  (hierMenuType == HIER_MENU_VERTICAL ? @"v" : @"h"),
-							  (hierMenuType == HIER_MENU_VERTICAL ? @"ddsmoothmenu-v" : @"ddsmoothmenu")]];
+							  (isVertical ? @"v" : @"h"),
+							  (isVertical ? @"ddsmoothmenu-v" : @"ddsmoothmenu")]];
 		// [context endJavascriptCDATA];
 		[context endElement];
 	}

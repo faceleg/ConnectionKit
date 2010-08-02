@@ -564,7 +564,7 @@ const int kDesignThumbHeight = 65;
 		}
 		else
 		{
-			result = HIER_MENU_HORIZONTAL;		// default if not specified.  We may want to do HIER_MENU_NONE once designs are set up
+			result = HIER_MENU_NONE;		// default if not specified.
 		}
 	}
 	return result;

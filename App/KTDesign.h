@@ -8,7 +8,7 @@
 #import "KSPlugInWrapper.h"
 
 
-typedef enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL } HierMenuType;
+typedef enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL, HIER_MENU_VERTICAL_IF_SIDEBAR } HierMenuType;
 // Horizontal: Usual horizontal layout, submenus spew down vertically
 // Vertical: Vertical layout of menus (e.g. in sidebar), submenus spew out vertically to the right
 
