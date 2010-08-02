@@ -40,6 +40,7 @@
 
 typedef enum { IMServiceIChat, IMServiceSkype, IMServiceYahoo = 2, } IMService;
 
+@class IMStatusService;
 
 @interface IMStatusPlugIn : SVPageletPlugIn 
 {
@@ -52,6 +53,9 @@ typedef enum { IMServiceIChat, IMServiceSkype, IMServiceYahoo = 2, } IMService;
     NSString *_offlineText;
     NSString *_onlineText;
 }
+
+@property (readonly) NSArray *services;
+@property (readonly) IMStatusService *selectedService;
 
 @property (nonatomic, retain) NSString *username;
 @property (nonatomic, assign) NSUInteger selectedIMService;
