@@ -1,8 +1,8 @@
 //
 //  IMStatusService.m
-//  IMStatusPagelet
+//  IMStatusPlugIn
 //
-//  Copyright 2007-2009 Karelia Software. All rights reserved.
+//  Copyright 2007-2010 Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -37,11 +37,6 @@
 #import "IMStatusService.h"
 
 #import "SandvoxPlugin.h"
-
-
-@interface IMStatusService (Private)
-
-@end
 
 
 @implementation IMStatusService

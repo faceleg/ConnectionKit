@@ -1,8 +1,8 @@
 //
-//  IMStatusPageletDelegate.h
-//  IMStatusPagelet
+//  IMStatusPlugIn.h
+//  IMStatusPlugIn
 //
-//  Copyright 2006-2009 Karelia Software. All rights reserved.
+//  Copyright 2006-2010 Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -41,10 +41,24 @@
 typedef enum { IMServiceIChat, IMServiceSkype, IMServiceYahoo = 2, } IMService;
 
 
-@interface IMStatusPageletDelegate : KTAbstractPluginDelegate 
+@interface IMStatusPlugIn : SVPageletPlugIn 
 {
-	NSMutableArray *myConfigs;
+	NSMutableArray *_configs;
+    
+    NSString *_username;
+    NSUInteger _selectedIMService;
+    
+    NSString *_headlineText;
+    NSString *_offlineText;
+    NSString *_onlineText;
 }
+
+@property (nonatomic, retain) NSString *username;
+@property (nonatomic, assign) NSUInteger selectedIMService;
+
+@property (nonatomic, retain) NSString *headlineText;
+@property (nonatomic, retain) NSString *offlineText;
+@property (nonatomic, retain) NSString *onlineText;
 
 @end
 

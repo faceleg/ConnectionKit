@@ -1,8 +1,8 @@
 //
-//  IMStatusPageletDelegate.m
-//  IMStatusPagelet
+//  SVPageletPlugIn.m
+//  SVPageletPlugIn
 //
-//  Copyright 2006-2009 Karelia Software. All rights reserved.
+//  Copyright 2006-2010 Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -34,7 +34,7 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "IMStatusPageletDelegate.h"
+#import "IMStatusPlugIn.h"
 
 #import "IMStatusService.h"
 
@@ -48,18 +48,119 @@ NSString *IMOfflineImageKey = @"offline";
 NSString *IMWantBorderKey = @"wantBorder";
 
 
-@interface IMStatusPageletDelegate (Private)
+// LocalizedStringInThisBundle(@"(Please set your ID using the Pagelet Inspector)", @"Used in template");
+
+
+
+@interface IMStatusPlugIn (Private)
 - (NSString *)onlineImagePath;
 - (NSString *)offlineImagePath;
 @end
 
 
-@implementation IMStatusPageletDelegate
+@implementation IMStatusPlugIn
+
+- (id)init	// Note: [self bundle] not yet defined!
+{
+	if ((self = [super init]))
+	{
+		_configs = [[NSMutableArray alloc] initWithCapacity:4];
+		
+		NSMutableDictionary *ichat = [NSMutableDictionary dictionary];
+		[ichat setObject:@"iChat" forKey:IMServiceKey];
+		[ichat setObject:@"<a class=\"imageLink\" href=\"aim:goim?screenname=#USER#\"><img src=\"http://big.oscar.aol.com/#USER#?on_url=#ONLINE#&amp;off_url=#OFFLINE#\" alt=\"#HEADLINE#\" width=\"175\" height=\"75\" border=\"0\" /></a>" forKey:IMHTMLKey];
+		[ichat setObject:@"online.png" forKey:IMOnlineImageKey];
+		[ichat setObject:@"offline.png" forKey:IMOfflineImageKey];
+		[_configs addObject:ichat];
+		
+		
+		NSMutableDictionary *skype = [NSMutableDictionary dictionary];
+		[skype setObject:@"Skype" forKey:IMServiceKey];
+		[skype setObject:@"<script type=\"text/javascript\" src=\"http://download.skype.com/share/skypebuttons/js/skypeCheck.js\"></script><a class=\"imageLink\" href=\"skype:#USER#?call\"><img src=\"http://mystatus.skype.com/bigclassic/#USER#\" style=\"border: none;\" width=\"182\" height=\"44\" alt=\"#HEADLINE#\" /></a>" forKey:IMHTMLKey];
+		[skype setObject:[NSNumber numberWithBool:YES] forKey:IMWantBorderKey];
+		NSString *pathForSkype = [[NSBundle bundleForClass:[self class]] pathForImageResource:@"online_skype"];
+		if (pathForSkype) {
+			[skype setObject:pathForSkype forKey:IMOnlineImageKey];
+		}
+		[_configs addObject:skype];
+		
+		
+		NSMutableDictionary *yahoo = [NSMutableDictionary dictionary];
+		[yahoo setObject:@"Yahoo! Messenger" forKey:IMServiceKey];
+		[yahoo setObject:@"<a class=\"imageLink\" href=\"<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=#USER#&src=pg\"><img border=\"0\" src=\"http://opi.yahoo.com/online?u=#USER#&m=g&t=1\" /></a>" forKey:IMHTMLKey];
+		[yahoo setObject:@"online.png" forKey:IMOnlineImageKey];
+		[yahoo setObject:@"offline.png" forKey:IMOfflineImageKey];
+		[_configs addObject:yahoo];
+		
+		
+		// Add any from user defaults
+		NSArray *ud = [[NSUserDefaults standardUserDefaults] objectForKey:@"IMServices"];
+		if (ud)
+		{ 
+			[_configs addObjectsFromArray:ud];
+		}	
+	}
+	return self;
+}
+
+- (void)dealloc
+{
+    [_configs release]; _configs = nil;
+    self.username = nil;
+    self.headlineText = nil;
+    self.offlineText = nil;
+    self.onlineText = nil;
+	[super dealloc];
+}
+
+- (void)awakeFromNew;
+{
+    [super awakeFromNew];
+
+    self.headlineText = LocalizedStringInThisBundle(@"Chat with me", @"Short headline for badge inviting website viewer to iChat/Skype chat with the owner of the website");
+    self.offlineText = LocalizedStringInThisBundle(@"offline", @"status indicator of chat; offline or unavailable");
+    self.onlineText = LocalizedStringInThisBundle(@"online", @"status indicator of chat; online or available");
+    
+    // Try to set the username and service from the user's address book
+    ABPerson *card = [[ABAddressBook sharedAddressBook] me];
+    
+    NSUInteger service = IMServiceSkype;
+    NSString *testname = [card firstAIMUsername];
+    if ( testname ) 
+    {
+        service = IMServiceIChat;
+    }
+    else
+    {
+        testname = [card firstYahooUsername];
+        if ( testname ) 
+        {
+            service = IMServiceYahoo;
+        }
+        //FIXME: why aren't we setting Skype name?
+    }
+    
+    self.selectedIMService = service;
+    self.username = testname;
+}
+
+
+#pragma mark -
+#pragma mark SVPlugIn
+
++ (NSArray *)plugInKeys
+{ 
+    return [NSSet setWithObjects:
+            @"username", 
+            @"selectedIMService", 
+            nil];
+}
+
 
 #pragma mark -
 #pragma mark Initialization
 
-+ (void) initialize
++ (void)initialize
 {
 	// Value transformers
 	NSValueTransformer *valueTransformer;
@@ -96,91 +197,6 @@ NSString *IMWantBorderKey = @"wantBorder";
 	return sOfflineBaseImage;
 }
 
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
-{
-	if (isNewObject)
-	{
-		[[self delegateOwner] setObject:LocalizedStringInThisBundle(@"Chat with me", @"Short headline for badge inviting website viewer to iChat/Skype chat with the owner of the website") forKey:@"headlineText"];
-		[[self delegateOwner] setObject:LocalizedStringInThisBundle(@"offline", @"status indicator of chat; offline or unavailable") forKey:@"offlineText"];
-		[[self delegateOwner] setObject:LocalizedStringInThisBundle(@"online", @"status indicator of chat; online or available") forKey:@"onlineText"];
-		
-		// Try to set the username and service from the user's address book
-		ABPerson *card = [[ABAddressBook sharedAddressBook] me];
-		
-		int service = IMServiceSkype;
-		NSString *username = nil;
-		
-		username = [card firstAIMUsername];
-		if (username) {
-			service = IMServiceIChat;
-		}
-		else
-		{
-			username = [card firstYahooUsername];
-			if (username) {
-				service = IMServiceYahoo;
-			}
-		}
-		
-		[[self delegateOwner] setInteger:service forKey:@"selectedIMService"];
-		[[self delegateOwner] setObject:username forKey:@"username"];
-	}
-	
-	// LocalizedStringInThisBundle(@"(Please set your ID using the Pagelet Inspector)", @"Used in template");
-	
-}
-
-- (id)init	// Note: [self bundle] not yet defined!
-{
-	if ((self = [super init]))
-	{
-		myConfigs = [[NSMutableArray alloc] initWithCapacity:4];
-		
-		NSMutableDictionary *ichat = [NSMutableDictionary dictionary];
-		[ichat setObject:@"iChat" forKey:IMServiceKey];
-		[ichat setObject:@"<a class=\"imageLink\" href=\"aim:goim?screenname=#USER#\"><img src=\"http://big.oscar.aol.com/#USER#?on_url=#ONLINE#&amp;off_url=#OFFLINE#\" alt=\"#HEADLINE#\" width=\"175\" height=\"75\" border=\"0\" /></a>" forKey:IMHTMLKey];
-		[ichat setObject:@"online.png" forKey:IMOnlineImageKey];
-		[ichat setObject:@"offline.png" forKey:IMOfflineImageKey];
-		[myConfigs addObject:ichat];
-		
-		
-		NSMutableDictionary *skype = [NSMutableDictionary dictionary];
-		[skype setObject:@"Skype" forKey:IMServiceKey];
-		[skype setObject:@"<script type=\"text/javascript\" src=\"http://download.skype.com/share/skypebuttons/js/skypeCheck.js\"></script><a class=\"imageLink\" href=\"skype:#USER#?call\"><img src=\"http://mystatus.skype.com/bigclassic/#USER#\" style=\"border: none;\" width=\"182\" height=\"44\" alt=\"#HEADLINE#\" /></a>" forKey:IMHTMLKey];
-		[skype setObject:[NSNumber numberWithBool:YES] forKey:IMWantBorderKey];
-		NSString *pathForSkype = [[NSBundle bundleForClass:[self class]] pathForImageResource:@"online_skype"];
-		if (pathForSkype) {
-			[skype setObject:pathForSkype forKey:IMOnlineImageKey];
-		}
-		[myConfigs addObject:skype];
-		
-		
-		NSMutableDictionary *yahoo = [NSMutableDictionary dictionary];
-		[yahoo setObject:@"Yahoo! Messenger" forKey:IMServiceKey];
-		[yahoo setObject:@"<a class=\"imageLink\" href=\"<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=#USER#&src=pg\"><img border=\"0\" src=\"http://opi.yahoo.com/online?u=#USER#&m=g&t=1\" /></a>" forKey:IMHTMLKey];
-		[yahoo setObject:@"online.png" forKey:IMOnlineImageKey];
-		[yahoo setObject:@"offline.png" forKey:IMOfflineImageKey];
-		[myConfigs addObject:yahoo];
-		
-		
-		// Add any from user defaults
-		NSArray *ud = [[NSUserDefaults standardUserDefaults] objectForKey:@"IMServices"];
-		if (ud)
-		{ 
-			[myConfigs addObjectsFromArray:ud];
-		}	
-	}
-	return self;
-}
-
-#pragma mark -
-#pragma mark Dealloc
-
-- (void)dealloc
-{
-	[myConfigs release];
-	[super dealloc];
-}
 
 #pragma mark -
 #pragma mark Services
@@ -194,7 +210,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 
 - (IMStatusService *)selectedService
 {
-	return [[IMStatusService services] objectAtIndex:[[self delegateOwner] integerForKey:@"selectedIMService"]];
+	return [[IMStatusService services] objectAtIndex:self.selectedIMService];
 }
 
 #pragma mark -
@@ -231,7 +247,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	
 	// Parse the code to get the finished HTML
 	[result replaceOccurrencesOfString:@"#USER#" 
-						    withString:[[[self delegateOwner] valueForKey:@"username"] stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
+						    withString:[self.username stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
 							   options:NSLiteralSearch 
 							     range:NSMakeRange(0, [result length])];
 	
@@ -240,6 +256,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	{
 		// How we reference the path depends on publishing/previewing
 		if (isPublishing) {
+            // need to ask context for resource URL
 			onlineImagePath = [[[[[self page] documentInfo] hostProperties] URLForResourceFile:onlineImagePath] absoluteString];
 		}
 		else {
@@ -272,7 +289,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	}
 
 	[result replaceOccurrencesOfString:@"#HEADLINE#" 
-						    withString:[[self delegateOwner] valueForKey:@"headlineText"] 
+						    withString:self.headlineText 
 							   options:NSLiteralSearch 
 							     range:NSMakeRange(0, [result length])];
 	
@@ -338,8 +355,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 
 - (BOOL) wantBorder
 {
-	BOOL result = [[[myConfigs objectAtIndex:[[[self delegateOwner] objectForKey:@"selectedIMService"] unsignedIntValue]]
- objectForKey:IMWantBorderKey] boolValue];
+	BOOL result = [[[_configs objectAtIndex:self.selectedIMService] objectForKey:IMWantBorderKey] boolValue];
 	return result;
 }
 
@@ -352,8 +368,8 @@ NSString *IMWantBorderKey = @"wantBorder";
 	if ([[service serviceIdentifier] isEqualToString:@"aim"])
 	{
 		NSImage *compositedImage = [self imageWithBaseImage:[[self class] baseOnlineIChatImage]
-												   headline:[[self delegateOwner] valueForKey:@"headlineText"]
-													 status:[[self delegateOwner] valueForKey:@"onlineText"]];
+												   headline:self.headlineText
+													 status:self.onlineText];
 		
 		NSData *pngRepresentation = [[compositedImage bitmap] representationUsingType:NSPNGFileType
                                                                            properties:[NSDictionary dictionary]];
@@ -373,8 +389,8 @@ NSString *IMWantBorderKey = @"wantBorder";
 	if ([[service serviceIdentifier] isEqualToString:@"aim"])
 	{
 		NSImage *compositedImage = [self imageWithBaseImage:[[self class] baseOfflineIChatImage]
-												   headline:[[self delegateOwner] valueForKey:@"headlineText"]
-													 status:[[self delegateOwner] valueForKey:@"offlineText"]];
+												   headline:self.headlineText
+													 status:self.offlineText];
 		
 		NSData *pngRepresentation = [[compositedImage bitmap] representationUsingType:NSPNGFileType
                                                                            properties:[NSDictionary dictionary]];
@@ -400,15 +416,16 @@ NSString *IMWantBorderKey = @"wantBorder";
 
 - (NSString *)serviceHTML
 {
-	NSNumber *selectedService = [[self delegateOwner] objectForKey:@"selectedIMService"];
-	NSMutableString *html = [NSMutableString stringWithString:[[myConfigs objectAtIndex:[selectedService unsignedIntValue]] objectForKey:IMHTMLKey]];
+    NSUInteger selectedService = self.selectedIMService;
+	NSMutableString *html = [NSMutableString stringWithString:[[_configs objectAtIndex:selectedService] objectForKey:IMHTMLKey]];
 	[html replaceOccurrencesOfString:@"#USER#" 
-						  withString:[[self delegateOwner] valueForKey:@"username"] 
+						  withString:self.username 
 							 options:NSLiteralSearch 
 							   range:NSMakeRange(0,[html length])];
 	if ([self onlineImagePath])
 	{
 		[html replaceOccurrencesOfString:@"#ONLINE#" 
+         //FIXME: use context resource URL
 							  withString:[[[[[self page] documentInfo] hostProperties] URLForResourceFile:[self onlineImagePath]] absoluteString] 
 								 options:NSLiteralSearch 
 								   range:NSMakeRange(0,[html length])];
@@ -417,6 +434,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	if ([self offlineImagePath])
 	{
 		[html replaceOccurrencesOfString:@"#OFFLINE#" 
+         //FIXME: use context resource URL
 							  withString:[[[[[self page] documentInfo] hostProperties] URLForResourceFile:[self offlineImagePath]] absoluteString]
 								 options:NSLiteralSearch 
 								   range:NSMakeRange(0,[html length])];
@@ -424,7 +442,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 
 	// put in the headline for the alt text
 	[html replaceOccurrencesOfString:@"#HEADLINE#" 
-						  withString:[[self delegateOwner] valueForKey:@"headlineText"] 
+						  withString:self.headlineText 
 							 options:NSLiteralSearch 
 							   range:NSMakeRange(0,[html length])];
 	
@@ -434,6 +452,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 
 // called via recursiveComponentPerformSelector
 
+//FIXME: writeHTML should be reserving the resources
 - (void)addResourcesToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage
 {
 	NSString *on = [self onlineImagePath];
@@ -455,5 +474,13 @@ NSString *IMWantBorderKey = @"wantBorder";
 </array>
 */
 
+#pragma mark -
+#pragma mark Properties
+
+@synthesize username = _username;
+@synthesize selectedIMService = _selectedIMService;
+@synthesize headlineText = _headlineText;
+@synthesize offlineText = _offlineText;
+@synthesize onlineText = _onlineText;
 
 @end
