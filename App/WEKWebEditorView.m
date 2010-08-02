@@ -500,7 +500,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         if (selectedItem)
         {
             // Match WebView selection to item for inline images…
-            DOMHTMLElement *domElement = [selectedItem HTMLElement];
+            DOMHTMLElement *domElement = [selectedItem selectableDOMElement];
             
             if ([self shouldSelectDOMElementInline:domElement])
             {
@@ -522,7 +522,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // There's no selected items left, so move cursor to left of deselected item. Don't want to do this though if the item is being deselected due to removal from the Web Editor
         else if ([itemToDeselect webEditor] == self)
         {
-            DOMElement *element = [itemToDeselect HTMLElement];
+            DOMElement *element = [itemToDeselect selectableDOMElement];
             DOMRange *range = [[element ownerDocument] createRange];
             [range setStartBefore:element];
             [range collapse:YES];

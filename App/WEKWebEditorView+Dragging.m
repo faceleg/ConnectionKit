@@ -140,7 +140,7 @@
     // Hide the dragged items so it looks like a proper drag
     for (WEKWebEditorItem *anItem in [self draggedItems])
     {
-        //[[[anItem HTMLElement] style] setProperty:@"opacity" value:@"0" priority:@""];        
+        //[[[anItem selectableDOMElement] style] setProperty:@"opacity" value:@"0" priority:@""];        
     }
 }
 
@@ -191,7 +191,7 @@
     // Restore opacity
     for (WEKWebEditorItem *anItem in [self draggedItems])
     {
-        [[[anItem HTMLElement] style] removeProperty:@"opacity"];        
+        [[[anItem selectableDOMElement] style] removeProperty:@"opacity"];        
     }
     
     // Ditch the items
@@ -318,7 +318,7 @@
     NSImage *dragImage;
     NSPoint origin;
     
-    DOMElement *element = [item HTMLElement];
+    DOMElement *element = [item selectableDOMElement];
     NSImage *image = [element performSelector:@selector(renderedImage)];
     if (!image) image = [element image];
     if (!image);    // could fallback to snapshotting view here
