@@ -383,6 +383,21 @@
     return result;
 }
 
+- (NSRect)rect;
+{
+    return [[self HTMLElement] boundingBox];
+}
+
+- (NSRect)drawingRect;  // expressed in our DOM node's document view's coordinates
+{
+    SVSelectionBorder *border = [self newSelectionBorder];
+    
+    NSRect result = [border drawingRectForGraphicBounds:[self rect]];
+    [border release];
+    
+    return result;
+}
+
 #pragma mark Drawing
 
 - (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;
@@ -391,7 +406,7 @@
     {
         // Draw if we're in the dirty rect (otherwise drawing can get pretty pricey)
         DOMElement *element = [self HTMLElement];
-        NSRect frameRect = [view convertRect:[element boundingBox]
+        NSRect frameRect = [view convertRect:[self rect]
                                     fromView:[element documentView]];
 
 		
@@ -408,16 +423,6 @@
         
         [border release];
     }
-}
-
-- (NSRect)drawingRect;  // expressed in our DOM node's document view's coordinates
-{
-    SVSelectionBorder *border = [self newSelectionBorder];
-    
-    NSRect result = [border drawingRectForGraphicBounds:[[self HTMLElement] boundingBox]];
-    [border release];
-    
-    return result;
 }
 
 - (SVSelectionBorder *)newSelectionBorder;

@@ -79,12 +79,13 @@
 
 #pragma mark Layout
 - (NSRect)boundingBox;  // like -[DOMNode boundingBox] but performs union with subcontroller boxes
+- (NSRect)rect;
+- (NSRect)drawingRect;  // expressed in our DOM node's document view's coordinates
 
 
 #pragma mark Drawing
 // dirtyRect is expressed in the view's co-ordinate system. view is not necessarily the context being drawn into (but generally is)
 - (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;
-- (NSRect)drawingRect;  // expressed in our DOM node's document view's coordinates
 
 - (SVSelectionBorder *)newSelectionBorder;
 

@@ -928,7 +928,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         [border setResizingMask:[result resizingMask]];
         
         NSView *docView = [[result HTMLElement] documentView];
-        NSRect frame = [border frameRectForGraphicBounds:[[result HTMLElement] boundingBox]];
+        NSRect frame = [border frameRectForGraphicBounds:[result rect]];
         
         if ([border mouse:[docView convertPoint:point fromView:self]
                 isInFrame:frame
@@ -975,7 +975,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
         [border setEditing:YES];
-        NSRect frameRect = [[anItem HTMLElement] boundingBox];
+        NSRect frameRect = [anItem rect];
         NSRect drawingRect = [border drawingRectForGraphicBounds:frameRect];
         if ([view needsToDrawRect:drawingRect])
         {
