@@ -398,7 +398,7 @@
 		if (page == currentParserPage)
 		{
 			[context startElement:@"li" idName:nil className:
-			 [NSString stringWithFormat:@"i%d %@%@ currentPage", i, (i%2)?@"o":@"e", (i==last)? @" last" : @""]];
+			 [NSString stringWithFormat:@"i%d %@%@%@ currentPage", i, (i%2)?@"o":@"e", (i==last)? @" last" : @"", [children count] ? @" hasSubmenu" : @""]];
 		}
 		else
 		{
@@ -409,10 +409,11 @@
 			}
 			
 			[context startElement:@"li" idName:nil className:
-			 [NSString stringWithFormat:@"i%d %@%@%@",
+			 [NSString stringWithFormat:@"i%d %@%@%@%@",
 			  i,
 			  (i%2)?@"o":@"e",
 			  (i==last)? @" last" : @"",
+			  [children count] ? @" hasSubmenu" : @"",
 			  isCurrentParent ? @" currentParent" : @""
 			  ]];
 			
@@ -560,21 +561,9 @@
 			// First get the base CSS
 			if (HIER_MENU_NONE != hierMenuType)
 			{
-				path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu-base" ofType:@"css"];
-                if (path) [context addCSSWithURL:[NSURL fileURLWithPath:path]];
-				
-			}
-			if (HIER_MENU_HORIZONTAL == hierMenuType)
-			{
 				path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"css"];
                 if (path) [context addCSSWithURL:[NSURL fileURLWithPath:path]];
 			}
-			if (HIER_MENU_VERTICAL == hierMenuType)
-			{
-				path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu-v" ofType:@"css"];
-                if (path) [context addCSSWithURL:[NSURL fileURLWithPath:path]];
-			}
-
 			
 			// now to build up the hiearchical site menu.
 			// Array of dictionaries keyed with "page" and "children" array
