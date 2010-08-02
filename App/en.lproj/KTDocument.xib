@@ -11,7 +11,7 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="1768"/>
+			<integer value="2045"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -474,7 +474,7 @@
 																<reference key="NSBackgroundColor" ref="97692237"/>
 																<object class="NSColor" key="NSTextColor">
 																	<int key="NSColorSpace">3</int>
-																	<bytes key="NSWhite">MC42NzAwMDAwMTY3AA</bytes>
+																	<bytes key="NSWhite">MC40OTU5Njc3NDU4AA</bytes>
 																</object>
 															</object>
 														</object>
