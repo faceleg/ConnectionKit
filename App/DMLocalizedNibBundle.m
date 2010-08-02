@@ -288,7 +288,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 			controlGroupingMargin = GuessControlSizeGroupingMargin(subview);
 		}
 		
-		if ([subview isKindOfClass:[NSTextField class]] && [[subview stringValue] hasPrefix:@"While e"])
+		if ([subview isKindOfClass:[NSTextField class]] && [[subview stringValue] hasPrefix:@"Tit___le"])
 		{
 			NSLog(@"Break here");
 		}
@@ -321,11 +321,14 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 		// where we have to resize some things later in the box, since the field doesn't get stretched.
 		// So you really ought to be aligning right when you want right justification.
 		NSTextAlignment alignment = NSNaturalTextAlignment;
-		if ([subview respondsToSelector:@selector(alignment)])
+		if ([subview isKindOfClass:[NSTextField class]] && [subview respondsToSelector:@selector(alignment)])
 		{
 			alignment = [((NSControl *)subview) alignment];
 		}
-//		NSLog(@"alignment = %d", alignment);
+		if (NSLeftTextAlignment != alignment && NSNaturalTextAlignment != alignment)
+		{
+			NSLog(@"****************************** alignment for %@ = %d", subview, alignment);
+		}
 		
 		NSUInteger mask = [subview autoresizingMask];
 		BOOL anchorLeft = 0 == (mask & NSViewMinXMargin);
@@ -339,9 +342,12 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 				 // Anchored right. Try to keep right side constant, meaning we move to the left
 				// (or if sizeDelta < 1 then we are actually moving the left edge to the right
 		{
+			if (anchorRight)
+			{
+				// Try this:  zero out accumulating delta since we are now right-aligned.
+				accumulatingDelta = 0;
+			}
 			moveLeft = sizeDelta;
-			// Try this:  zero out accumulating delta since we are now right-aligned.
-			accumulatingDelta = 0;
 		}
 		
 		CGFloat originalMargin = (NSNotFound != previousOriginalMaxX)
