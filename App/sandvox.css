@@ -24,10 +24,11 @@ div.text-navigation div { display:inline; margin:0px 0.5em; }
 
 /* 2.0 wrap compatibility. 2.0-compatible designs can further adjust these if they need */
 img.wide { display:block; }
-.narrow.left { float:left; }
-.narrow.right { float:right; }
-.wide.center { margin-left:auto; margin-right:auto; }
-.wide.right { margin-left:auto; }
+img.narrow.left { float:left; }
+img.narrow.right { float:right; }
+.wide.left .graphic, img.wide.left { margin-left:0px; margin-right:auto; }
+.wide.center .graphic, img.wide.center { margin-left:auto; margin-right:auto; }
+.wide.right .graphic, img.wide.right { margin-left:auto; margin-right:0px; }
 
  
 /* Firefox reduce dotted lines on links */
