@@ -559,7 +559,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		} else if ([view isKindOfClass:[NSImageView class]]) {
 			
 			
-			LogIt(@"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    %@", [[view image] name]);
+			// LogIt(@"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    %@", [[view image] name]);
 			// Definitely don't mess with size of an imageView
 		} else if ([view isKindOfClass:[NSBox class]]) {
 			// I don't think it's a good idea to let NSBox figure out its sizeToFit.
