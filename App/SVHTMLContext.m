@@ -453,6 +453,7 @@
             [textBlock writeHTML:self];
             [textBlock release];
         }
+        [self addDependencyOnObject:graphic keyPath:@"showsCaption"];
         
         
         // Finish up
