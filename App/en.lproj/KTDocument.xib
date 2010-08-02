@@ -11,7 +11,7 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="1726"/>
+			<integer value="1768"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -613,8 +613,8 @@
 													<array class="NSMutableArray" key="NSSubviews">
 														<object class="NSTextField" id="718781323">
 															<reference key="NSNextResponder" ref="607898317"/>
-															<int key="NSvFlags">268</int>
-															<string key="NSFrame">{{0, 15}, {95, 14}}</string>
+															<int key="NSvFlags">265</int>
+															<string key="NSFrame">{{0, 19}, {95, 14}}</string>
 															<reference key="NSSuperview" ref="607898317"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTextFieldCell" key="NSCell" id="824802089">
@@ -632,7 +632,7 @@
 														</object>
 														<object class="NSTextField" id="360802322">
 															<reference key="NSNextResponder" ref="607898317"/>
-															<int key="NSvFlags">268</int>
+															<int key="NSvFlags">265</int>
 															<string key="NSFrame">{{0, 6}, {95, 14}}</string>
 															<reference key="NSSuperview" ref="607898317"/>
 															<bool key="NSEnabled">YES</bool>
@@ -651,7 +651,7 @@
 														</object>
 														<object class="NSTextField" id="84209680">
 															<reference key="NSNextResponder" ref="607898317"/>
-															<int key="NSvFlags">268</int>
+															<int key="NSvFlags">265</int>
 															<string key="NSFrame">{{57, 42}, {38, 14}}</string>
 															<reference key="NSSuperview" ref="607898317"/>
 															<bool key="NSEnabled">YES</bool>
@@ -667,7 +667,7 @@
 														</object>
 														<object class="NSTextField" id="680529185">
 															<reference key="NSNextResponder" ref="607898317"/>
-															<int key="NSvFlags">268</int>
+															<int key="NSvFlags">265</int>
 															<string key="NSFrame">{{22, 24}, {73, 14}}</string>
 															<reference key="NSSuperview" ref="607898317"/>
 															<bool key="NSEnabled">YES</bool>
@@ -2085,6 +2085,8 @@
 				<string key="2033.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2035.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2036.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2044.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2045.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>

@@ -288,10 +288,10 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 			controlGroupingMargin = GuessControlSizeGroupingMargin(subview);
 		}
 		
-		if ([subview isKindOfClass:[NSTextField class]] && [[subview stringValue] hasPrefix:@"Tit___le"])
-		{
-			NSLog(@"Break here");
-		}
+//		if ([subview isKindOfClass:[NSTextField class]] && [[subview stringValue] hasPrefix:@"Meta Des"])
+//		{
+//			NSLog(@"Break here");
+//		}
 //		if ([subview isKindOfClass:[NSButton class]] && [[subview title] hasPrefix:@"Prefer links op"])
 //		{
 //			NSLog(@"Break here");
@@ -317,8 +317,8 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 		
 		CGFloat sizeDelta = ResizeToFit(subview, level+1);	// How much it got increased (to the right)
 
-		// Try to guess intent by looking at alignment too.  However this won't really solve the issue
-		// where we have to resize some things later in the box, since the field doesn't get stretched.
+		// Note: Looking at alignment doesn't really work that well.
+		// When we have to resize some things later in the box, the field other fields doesn't get stretched.
 		// So you really ought to be aligning right when you want right justification.
 		NSTextAlignment alignment = NSNaturalTextAlignment;
 		if ([subview isKindOfClass:[NSTextField class]] && [subview respondsToSelector:@selector(alignment)])
@@ -327,27 +327,26 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 		}
 		if (NSLeftTextAlignment != alignment && NSNaturalTextAlignment != alignment)
 		{
-			NSLog(@"****************************** alignment for %@ = %d", subview, alignment);
+//			DJW((@"****************************** alignment for %@ = %d", subview, alignment));
 		}
 		
 		NSUInteger mask = [subview autoresizingMask];
 		BOOL anchorLeft = 0 == (mask & NSViewMinXMargin);
 		BOOL anchorRight = 0 == (mask & NSViewMaxXMargin);
 		CGFloat moveLeft = 0;
-		if ((!anchorRight && !anchorLeft) || NSCenterTextAlignment == alignment)	// center
+		if (!anchorLeft)
 		{
-			moveLeft = floorf(sizeDelta/2.0);
-		}
-		else if (anchorRight || NSRightTextAlignment == alignment)
-				 // Anchored right. Try to keep right side constant, meaning we move to the left
-				// (or if sizeDelta < 1 then we are actually moving the left edge to the right
-		{
-			if (anchorRight)
+			if (!anchorRight)	// not anchored right, so stretchy left and right.  
 			{
+				moveLeft = floorf(sizeDelta/2.0);
+			}
+			else	// Anchored right. Try to keep right side constant, meaning we move to the left
+				// (or if sizeDelta < 1 then we are actually moving the left edge to the right
+			{ 
+				moveLeft = sizeDelta;
 				// Try this:  zero out accumulating delta since we are now right-aligned.
 				accumulatingDelta = 0;
 			}
-			moveLeft = sizeDelta;
 		}
 		
 		CGFloat originalMargin = (NSNotFound != previousOriginalMaxX)
@@ -567,7 +566,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			// assume that developer has put in some padding, since we don't want to try to guess multiple line word wrapping
 			//LogIt(@"Not Resizing wrapping text field: %@", [view stringValue]);
 		} else if ([view isKindOfClass:[NSPathControl class]]) {
-			// Don't try to sizeToFit because NSPathConftrols usually need to be able
+			// Don't try to sizeToFit because NSPathControls usually need to be able
 			// to display any path, so they shouldn't tight down to whatever they
 			// happen to be listing at the moment.
 		} else if ([view isKindOfClass:[NSImageView class]]) {
@@ -905,11 +904,14 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 				// CGFloat desiredMargins = ([window styleMask] & NSUtilityWindowMask) ? 10 : 20;
 
 				CGFloat delta = ResizeToFit([window contentView], 0);
-				windowFrame.size.width += delta;
-				NSLog(@"##### Delta from resizing window-level view: %f.  Resized the whole window.", delta);
-				// TODO: should we update min size?
-				windowFrame = [contentView convertRect:windowFrame toView:nil];
-				[window setFrame:windowFrame display:YES];	
+				if (delta > 0)
+				{
+					windowFrame.size.width += delta;
+					NSLog(@"##### Delta from resizing window-level view: %f.  Resized the whole window.", delta);
+					// TODO: should we update min size?
+					windowFrame = [contentView convertRect:windowFrame toView:nil];
+					[window setFrame:windowFrame display:YES];	
+				}
 			}
 		}
         
