@@ -293,7 +293,22 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (id)valueForUndefinedKey:(NSString *)key
 {
+    if ([key isEqualToString:@"width"] && [[self placement] intValue] == SVGraphicPlacementInline)
+    {
+        return [[self textAttachment] width];
+    }
+    
     return NSNotApplicableMarker;
+}
+
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key;
+{
+    if ([key isEqualToString:@"width"] && [[self placement] intValue] == SVGraphicPlacementInline)
+    {
+        return [[self textAttachment] setWidth:value];
+    }
+    
+    [super setValue:value forUndefinedKey:key];
 }
 
 #pragma mark Serialization
