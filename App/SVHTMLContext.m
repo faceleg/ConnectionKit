@@ -421,13 +421,22 @@
         [self pushElementClassName:@"graphic-container"];
         [self startElement:@"div" className:[graphic className]];
         
+        
         // <div class="graphic">
+        NSNumber *width = [[graphic textAttachment] width];
+        if (width)
+        {
+            NSString *style = [NSString stringWithFormat:@"width:%upx", [width unsignedIntValue]];
+            [self pushElementAttribute:@"style" value:style];
+        }
         [self startElement:@"div" className:@"graphic"];
+        
         
         // Graphic body
         [self startElement:@"div"];
         [graphic writeBody:self];
         [self endElement];
+        
         
         // Caption if requested
         if ([graphic showsCaption])
@@ -442,6 +451,7 @@
             [textBlock writeHTML:self];
             [textBlock release];
         }
+        
         
         // Finish up
         [self endElement];
