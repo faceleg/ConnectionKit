@@ -1444,14 +1444,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42E4830D64FCE3004F35FD /* IMStatusElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* IMStatus.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = IMStatusElement;
 		};
 		3C8544A912061D69000A19C3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* YouTubeElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = YouTubeElement;
 		};
 		3C88838E0BFCB4A400921FA4 /* PBXContainerItemProxy */ = {
@@ -2722,7 +2722,7 @@
 		CE9B4B410F5E0C780052134C /* UKDockProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKDockProgressIndicator.m; sourceTree = "<group>"; };
 		CE9E525E111C933B00BEF1C8 /* SVDocumentInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocumentInspector.h; sourceTree = "<group>"; };
 		CE9E525F111C933B00BEF1C8 /* SVDocumentInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocumentInspector.m; sourceTree = "<group>"; };
-		CEA962C20AF6A924008A1367 /* sandvox.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sandvox.css; sourceTree = "<group>"; };
+		CEA962C20AF6A924008A1367 /* sandvox.css */ = {isa = PBXFileReference; explicitFileType = text.css; fileEncoding = 4; path = sandvox.css; sourceTree = "<group>"; };
 		CEA9AE8A0A6420F600855897 /* ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = ja; path = ja.lproj/Credits.html; sourceTree = "<group>"; };
 		CEA9AE8F0A6420F700855897 /* ja */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; lineEnding = 0; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEA9AE950A6420F700855897 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
