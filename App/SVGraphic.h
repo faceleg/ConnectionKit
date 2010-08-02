@@ -133,7 +133,7 @@ extern NSString *kSVGraphicPboardType;
 - (void)writeBody:(SVHTMLContext *)context;  // Subclasses MUST override
 
 @property(nonatomic, retain, readonly) NSString *elementID;
-- (NSString *)className;
+- (void)buildClassName:(SVHTMLContext *)context;
 
 + (SVTemplate *)template;
    

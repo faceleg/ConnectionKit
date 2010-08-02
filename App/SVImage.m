@@ -176,7 +176,7 @@
     
     // Actually write the image
     [context pushElementAttribute:@"id" value:idName];
-    if (isPagelet && [self className]) [context pushElementClassName:[self className]];
+    if (isPagelet) [self buildClassName:context];
     
     SVMediaRecord *media = [self media];
     if (media)

@@ -418,8 +418,8 @@
     else if ([graphic mustBePagelet])
     {
         // <div class="graphic-container center">
-        [self pushElementClassName:@"graphic-container"];
-        [self startElement:@"div" className:[graphic className]];
+        [graphic buildClassName:self];
+        [self startElement:@"div" className:@"graphic-container"];
         
         
         // <div class="graphic">

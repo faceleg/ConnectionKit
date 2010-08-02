@@ -84,7 +84,11 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Push property change into DOM
-    [element setClassName:[image className]];
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:nil inheritFromContext:[self HTMLContext]];
+    [image buildClassName:context];
+    [element setClassName:[context elementClassName]];
+    [context release];
+    
     [element setAttribute:@"width" value:[[image width] description]];
     [element setAttribute:@"height" value:[[image height] description]];
     

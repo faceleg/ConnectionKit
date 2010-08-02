@@ -213,10 +213,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 #pragma mark HTML
 
-- (NSString *)className;
+- (void)buildClassName:(SVHTMLContext *)context;
 {
-    NSString *result = nil;
-    
     if (![self isCallout])
     {
         SVTextAttachment *textAttachment = [self textAttachment];
@@ -225,28 +223,28 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
             switch ([[textAttachment wrap] integerValue])
             {
                 case SVGraphicWrapNone:
-                    result = @"inline";
+                    [context pushElementClassName:@"inline"];
                     break;
                 case SVGraphicWrapLeft:
-                    result = @"narrow right";
+                    [context pushElementClassName:@"narrow right"];
                     break;
                 case SVGraphicWrapRight:
-                    result = @"narrow left";
+                    [context pushElementClassName:@"narrow left"];
                     break;
                 case SVGraphicWrapLeftSplit:
-                    result = @"wide right";
+                    [context pushElementClassName:@"wide right"];
                     break;
                 case SVGraphicWrapCenterSplit:
-                    result = @"wide center";
+                    [context pushElementClassName:@"wide center"];
                     break;
                 case SVGraphicWrapRightSplit:
-                    result = @"wide left";
+                    [context pushElementClassName:@"wide left"];
                     break;
             }
+            [context addDependencyOnObject:self keyPath:@"textAttachment.wrap"];
         }
+        [context addDependencyOnObject:self keyPath:@"textAttachment.causesWrap"];
     }
-    
-    return result;
 }
 
 + (NSSet *)keyPathsForValuesAffectingClassName
