@@ -18,6 +18,7 @@
 #import "KTPage.h"
 #import "SVGraphicDOMController.h"
 #import "SVGraphicFactory.h"
+#import "KTHTMLEditorController.h"
 #import "SVLink.h"
 #import "SVLinkManager.h"
 #import "SVMediaRecord.h"
@@ -45,12 +46,19 @@
 #import "KSCollectionController.h"
 #import "KSPlugInWrapper.h"
 #import "KSSilencingConfirmSheet.h"
-#import "KTHTMLEditorController.h"
 
 #import <BWToolkitFramework/BWToolkitFramework.h>
 
 
 NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewControllerWillUpdateNotification";
+
+
+@interface DOMNode (KSHTMLWriter)
+- (BOOL)ks_isDescendantOfDOMNode:(DOMNode *)possibleAncestor;
+@end
+
+
+#pragma mark -
 
 
 @interface SVWebEditorViewController ()
@@ -405,13 +413,20 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     for (id anObject in selectedObjects)
     {
         id newItem = [[self webEditor] selectableItemForRepresentedObject:anObject];
-        if (!newItem) continue; // TODO: remove the item from selection
-        [newSelection addObject:newItem];
-        
-        // To select an inline element, the Web Editor or one of its descendants must first be selected
-        if ([webEditor shouldSelectDOMElementInline:[newItem HTMLElement]])
+        if ([[newItem HTMLElement] ks_isDescendantOfDOMNode:[[newItem HTMLElement] ownerDocument]])
         {
-            [[[self view] window] makeFirstResponder:webEditor];
+            [newSelection addObject:newItem];
+            
+            // To select an inline element, the Web Editor or one of its descendants must first be selected
+            if ([webEditor shouldSelectDOMElementInline:[newItem HTMLElement]])
+            {
+                [[[self view] window] makeFirstResponder:webEditor];
+            }
+        }
+        else
+        {
+            // #83787
+            [[self graphicsController] removeSelectedObjects:[NSArray arrayWithObject:anObject]];
         }
     }
     
