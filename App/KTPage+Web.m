@@ -526,7 +526,7 @@
 	if (self.site.pagesInSiteMenu.count)	// Are there any pages in the site menu?
 	{
 		SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
-        
+		        
 		[context startNewline];
 		[context startElement:@"div" idName:@"sitemenu" className:nil];			// <div id="sitemenu">
 		[context startElement:@"h2" idName:nil className:@"hidden"];				// hidden skip navigation menu
