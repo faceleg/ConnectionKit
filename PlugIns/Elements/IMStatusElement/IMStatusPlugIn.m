@@ -122,18 +122,19 @@ NSString *IMWantBorderKey = @"wantBorder";
     NSDictionary *divAttrs = [NSDictionary dictionaryWithObject:@"" forKey:@"style"];
     [[context HTMLWriter] startElement:@"div" attributes:divAttrs];
     
+    [context addDependencyForKeyPath:@"username" ofObject:self];
+
     if ( self.username )
     {
         // add our dependent keys
-        [context addDependencyForKeyPath:@"username" ofObject:self];
         [context addDependencyForKeyPath:@"selectedServiceIndex" ofObject:self];
         
-        if ( self.selectedServiceIsIChat )
-        {
+        //if ( self.selectedServiceIsIChat )
+        //{
             [context addDependencyForKeyPath:@"headlineText" ofObject:self];
             [context addDependencyForKeyPath:@"offlineText" ofObject:self];
             [context addDependencyForKeyPath:@"onlineText" ofObject:self];
-        }
+       // }
         
         // Get the appropriate code for the publishing mode
         IMStatusService *service = [self selectedService];
