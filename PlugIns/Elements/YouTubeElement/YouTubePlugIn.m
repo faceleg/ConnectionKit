@@ -77,72 +77,14 @@
 
 
 
-//FIXME: these should be moved to setters
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-					  ofObject:(id)object
-					    change:(NSDictionary *)change
-					   context:(void *)context
-{
-	// When the user sets a video code, figure the ID from it
-	if ([keyPath isEqualToString:@"userVideoCode"])
-	{
-		NSString *videoID = nil;
-		if (self.userVideoCode) videoID = [[NSURL URLWithString:self.userVideoCode] youTubeVideoID];
-		
-		self.videoID = videoID;
-	}
-	
-    
-	
-	// When the user adjusts the main colour WITHOUT having adjusted the secondary color, re-generate
-	// a new second colour from it
-	else if ([keyPath isEqualToString:@"color2"] && !self.useCustomSecondaryColor)
-	{
-		NSColor *lightenedColor = [[NSColor whiteColor] blendedColorWithFraction:0.5 ofColor:self.color2];
-		
-		myAutomaticallyUpdatingSecondaryColorFlag = YES;	// The flag is needed to stop us mis-interpeting the setter
-		self.color1 = lightenedColor;
-		myAutomaticallyUpdatingSecondaryColorFlag = NO;
-	}
-	
-	
-	// When the user sets their own secondary color mark it so no future changes are made by accident
-	else if ([keyPath isEqualToString:@"color1"] && !myAutomaticallyUpdatingSecondaryColorFlag)
-	{
-		self.useCustomSecondaryColor = YES;
-	}
-}
-
 //FIXME: waiting on API discussion with Mike about method for being told "you're being added or moved to a new location, please resize"
 
 
 #pragma mark -
 #pragma mark Initialization
 
-- (id)init;
-{
-    self = [super init];
-    
-    if ( self )
-    {
-        // Observer storage
-        [self addObserver:self
-              forKeyPaths:[NSSet setWithObjects:@"userVideoCode", @"color2", @"color1", nil]
-                  options:NSKeyValueObservingOptionNew
-                  context:NULL];
-    }
-
-    return self;
-}
-
 - (void)dealloc
 {
-	// Remove old observations
-	[self removeObserver:self 
-             forKeyPaths:[NSSet setWithObjects:@"userVideoCode", @"color2", @"color1", nil]];
-		
-	// Relase iVars
 	self.userVideoCode = nil;
 	self.videoID = nil;
 	self.color2 = nil;
@@ -365,15 +307,57 @@
 #pragma mark -
 #pragma mark Properties
 
-@synthesize userVideoCode = _userVideoCode;
 @synthesize videoID = _videoID;
-@synthesize color1 = _color1;
-@synthesize color2 = _color2;
 @synthesize widescreen = _widescreen;
 @synthesize playHD = _playHD;
 @synthesize privacy = _privacy;
 @synthesize showBorder = _showBorder;
 @synthesize includeRelatedVideos = _includeRelatedVideos;
 @synthesize useCustomSecondaryColor = _useCustomSecondaryColor;
+
+@synthesize userVideoCode = _userVideoCode;
+- (void)setUserVideoCode:(NSString *)string
+{
+    [_userVideoCode release];
+    _userVideoCode = [string copy];
+    
+    // When the user sets a video code, figure the ID from it
+    NSString *videoID = nil;
+    if ( nil != _userVideoCode ) videoID = [[NSURL URLWithString:self.userVideoCode] youTubeVideoID];
+    self.videoID = videoID;
+}
+
+@synthesize color2 = _color2;
+- (void)setColor2:(NSColor *)color
+{
+    [_color2 release];
+    _color2 = [color copy];
+    
+    // When the user adjusts the main colour WITHOUT having adjusted the secondary color, re-generate
+	// a new second colour from it
+	if ( !self.useCustomSecondaryColor )
+	{
+		NSColor *lightenedColor = [[NSColor whiteColor] blendedColorWithFraction:0.5 ofColor:_color2];
+		
+		myAutomaticallyUpdatingSecondaryColorFlag = YES;	// The flag is needed to stop us mis-interpeting the setter
+		self.color1 = lightenedColor;
+		myAutomaticallyUpdatingSecondaryColorFlag = NO;
+	}
+    
+}
+
+@synthesize color1 = _color1;
+- (void)setColor1:(NSColor *)color
+{
+    [_color1 release];
+    _color1 = [color copy];
+    
+    // When the user sets their own secondary color mark it so no future changes are made by accident
+	if ( !myAutomaticallyUpdatingSecondaryColorFlag )
+	{
+		self.useCustomSecondaryColor = YES;
+	}
+}
+
 
 @end
