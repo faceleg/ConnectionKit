@@ -104,7 +104,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 
 + (NSArray *)plugInKeys
 { 
-    return [NSSet setWithObjects:
+    return [NSArray setWithObjects:
             @"username", 
             @"selectedServiceIndex", 
             nil];
