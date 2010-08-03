@@ -40,7 +40,7 @@
 			<key>action</key>
 			<string>insertPagelet:</string>
 			<key>help</key>
-			<string>TOOLTIP_ADD_PAGELET</string>
+			<string>TOOLTIP_INSERT_TEXT_BOX</string>
 			<key>identifier</key>
 			<string>insertPagelet</string>
 			<key>image</key>
@@ -58,7 +58,7 @@
 			<key>identifier</key>
 			<string>addPageletPop:</string>
 			<key>image</key>
-			<string>toolbar_add_pagelet</string>
+			<string>toolbar_objects</string>
 			<key>label</key>
 			<string>TOOLBAR_ADD_PAGELET</string>
 			<key>paletteLabel</key>
@@ -174,11 +174,27 @@
 			<key>identifier</key>
 			<string>publishAll</string>
 			<key>image</key>
-			<string>toolbar_publish</string>
+			<string>toolbar_publish_all</string>
 			<key>label</key>
 			<string>TOOLBAR_PUBLISH_ALL</string>
 			<key>paletteLabel</key>
 			<string>PALETTE_PUBLISH_ALL</string>
+			<key>target</key>
+			<string>windowcontroller</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>export:</string>
+			<key>help</key>
+			<string>TOOLTIP_EXPORT</string>
+			<key>identifier</key>
+			<string>export</string>
+			<key>image</key>
+			<string>toolbar_expot</string>
+			<key>label</key>
+			<string>TOOLBAR_EXPORT</string>
+			<key>paletteLabel</key>
+			<string>PALETTE_EXPORT</string>
 			<key>target</key>
 			<string>windowcontroller</string>
 		</dict>

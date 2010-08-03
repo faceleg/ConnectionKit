@@ -286,35 +286,35 @@
     // Indexes
 	item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory indexFactories]
                                            title:NSLocalizedString(@"Indexes", "menu item")];
- 	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+ 	[item setIconImage:[NSImage imageNamed:@"toolbar_index"]];
 	[menu addItem:item];
 	
     
 	// Badges
     item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory badgeFactories]
                                            title:NSLocalizedString(@"Badges", "menu item")];
-	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+	[item setIconImage:[NSImage imageNamed:@"toolbar_badge"]];
 	[menu addItem:item];
 	
     
 	// Embedded
     item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory embeddedFactories]
                                            title:NSLocalizedString(@"Embedded", "menu item")];
-	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+	[item setIconImage:[NSImage imageNamed:@"toolbar_frame"]];
     [menu addItem:item];
 	
     
 	// Social
     item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory socialFactories]
                                            title:NSLocalizedString(@"Social", "menu item")];
-	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+	[item setIconImage:[NSImage imageNamed:@"toolbar_social"]];
     [menu addItem:item];
 	
     
 	// More
     item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory moreGraphicFactories]
                                            title:NSLocalizedString(@"More", "menu item")];
-	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+	[item setIconImage:[NSImage imageNamed:@"toolbar_other"]];
     [menu addItem:item];
 	
     self.rawHTMLMenuItem = item = [SVGraphicFactory menuItemWithGraphicFactory:

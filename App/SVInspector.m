@@ -85,14 +85,14 @@
     _documentInspector = [[SVDocumentInspector alloc] initWithNibName:@"DocumentInspector" bundle:nil];
     [_documentInspector setIdentifier:@"com.karelia.Sandvox.DocumentInspector"];
     [_documentInspector setTitle:NSLocalizedString(@"Document", @"Document Inspector")];
-    [_documentInspector setIcon:[NSImage imageFromOSType:kGenericDocumentIcon] ];
+    [_documentInspector setIcon:[NSImage imageNamed:@"document_inspector"] ];
     
     
     // Page
     _pageInspector = [[SVPageInspector alloc] initWithNibName:@"PageInspector" bundle:nil];
     [_pageInspector setIdentifier:@"com.karelia.Sandvox.PageInspector"];
     [_pageInspector setTitle:NSLocalizedString(@"Page", @"Page Inspector")];
-    [_pageInspector setIcon:[NSImage imageNamed:@"toolbar_new_page"]];
+    [_pageInspector setIcon:[NSImage imageNamed:@"page_inspector"]];
     
     
     // Collection
@@ -106,34 +106,34 @@
     _wrapInspector = [[SVWrapInspector alloc] initWithNibName:@"WrapInspector" bundle:nil];
     [_wrapInspector setIdentifier:@"com.karelia.Sandvox.WrapInspector"];
     [_wrapInspector setTitle:NSLocalizedString(@"Wrap", @"Wrap Inspector")];
-    [_wrapInspector setIcon:[NSImage imageNamed:@"WrapInspector"]];
+    [_wrapInspector setIcon:[NSImage imageNamed:@"wrap_inspector"]];
     
     
     // Graphic
     _graphicInspector = [[KSInspectorViewController alloc] initWithNibName:@"GraphicInspector" bundle:nil];
     [_graphicInspector setIdentifier:@"com.karelia.Sandvox.GraphicInspector"];
     [_graphicInspector setTitle:NSLocalizedString(@"Graphic", @"Graphic Inspector")];
-    [_graphicInspector setIcon:[NSImage imageNamed:NSImageNameIconViewTemplate]];
+    [_graphicInspector setIcon:[NSImage imageNamed:@"graphic_inspector"]];
     
     
     // Metrics
     _metricsInspector = [[SVMetricsInspector alloc] initWithNibName:@"MetricsInspector" bundle:nil];
     [_metricsInspector setIdentifier:@"com.karelia.Sandvox.MetricsInspector"];
     [_metricsInspector setTitle:NSLocalizedString(@"Metrics", @"Metrics Inspector")];
-    [_metricsInspector setIcon:[NSImage imageNamed:NSImageNameActionTemplate]];
+    [_metricsInspector setIcon:[NSImage imageNamed:@"metrics_inspector"]];
     
     
     // Links
     _linkInspector = [[SVLinkInspector alloc] initWithNibName:@"LinkInspector" bundle:nil];
     [_linkInspector setIdentifier:@"com.karelia.Sandvox.LinkInspector"];
     [_linkInspector setTitle:NSLocalizedString(@"Link", @"Link Inspector")];
-    [_linkInspector setIcon:[NSImage imageNamed:NSImageNameFollowLinkFreestandingTemplate]];
+    [_linkInspector setIcon:[NSImage imageNamed:@"link_inspector"]];
     
     // Plug-in
     _plugInInspector = [[SVPlugInInspector alloc] initWithNibName:@"PlugInInspector" bundle:nil];
     [_plugInInspector setIdentifier:@"com.karelia.Sandvox.PlugInInspector"];
     [_plugInInspector setTitle:NSLocalizedString(@"Plug-in", @"Plug-in Inspector")];
-    [_metricsInspector setIcon:[NSImage imageNamed:NSImageNameActionTemplate]];
+    [_plugInInspector setIcon:[NSImage imageNamed:NSImageNameActionTemplate]];
     
     
     //  Finish up

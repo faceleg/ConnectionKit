@@ -35,6 +35,11 @@
 #define PALETTE_PUBLISH_ALL NSLocalizedStringWithDefaultValue(@"PALETTE_PUBLISH_ALL", nil, [NSBundle mainBundle], @"Publish All", @"")
 #define TOOLTIP_PUBLISH_ALL NSLocalizedStringWithDefaultValue(@"TOOLTIP_PUBLISH_ALL", nil, [NSBundle mainBundle], @"Send entire site to your ISP.", @"tooltip")
 
+#define TOOLBAR_EXPORT NSLocalizedStringWithDefaultValue(@"TOOLBAR_EXPORT", nil, [NSBundle mainBundle], @"Export", @"")
+#define PALETTE_EXPORT NSLocalizedStringWithDefaultValue(@"PALETTE_EXPORT", nil, [NSBundle mainBundle], @"Export", @"")
+#define TOOLTIP_EXPORT NSLocalizedStringWithDefaultValue(@"TOOLTIP_EXPORT", nil, [NSBundle mainBundle], @"Export site to your local hard drive.", @"tooltip")
+
+
 #define TOOLBAR_TOGGLE_MEDIA NSLocalizedStringWithDefaultValue(@"TOOLBAR_TOGGLE_MEDIA", nil, [NSBundle mainBundle], @"Media", @"")
 #define PALETTE_TOGGLE_MEDIA NSLocalizedStringWithDefaultValue(@"PALETTE_TOGGLE_MEDIA", nil, [NSBundle mainBundle], @"Media", @"")
 #define TOOLTIP_TOGGLE_MEDIA NSLocalizedStringWithDefaultValue(@"TOOLTIP_TOGGLE_MEDIA", nil, [NSBundle mainBundle], @"Show/Hide Media Browser", @"tooltip")

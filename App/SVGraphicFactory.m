@@ -61,7 +61,7 @@
 
 - (NSImage *)pluginIcon
 {
-    return [NSImage imageFromOSType:kToolbarCustomizeIcon];
+    return [NSImage imageNamed:@"toolbar_text"];
 }
 
 - (NSUInteger)priority; { return 1; }
@@ -90,7 +90,7 @@
 
 - (NSImage *)pluginIcon
 {
-    return [NSImage imageFromOSType:kToolbarDeleteIcon];
+    return [NSImage imageNamed:@"toolbar_image"];
 }
 
 - (NSUInteger)priority; { return 1; }
@@ -155,11 +155,11 @@
 #pragma mark -
 
 
-@interface SVMovieFactory : SVGraphicFactory
+@interface SVVideoFactory : SVGraphicFactory
 @end
 
 
-@implementation SVMovieFactory
+@implementation SVVideoFactory
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
@@ -174,7 +174,35 @@
 
 - (NSImage *)pluginIcon
 {
-    return [NSImage imageFromOSType:kToolbarFavoritesIcon];
+    return [NSImage imageNamed:@"toolbar_video"];
+}
+
+@end
+
+
+#pragma mark -
+
+
+@interface SVAudioFactory : SVGraphicFactory
+@end
+
+
+@implementation SVAudioFactory
+
+- (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVMovie *result = [SVMovie insertNewMovieInManagedObjectContext:context];			// SHOULD BE SVAUDIO
+    [result setWidth:[NSNumber numberWithUnsignedInt:200]];
+    [result setHeight:[NSNumber numberWithUnsignedInt:200]];
+    
+    return result;
+}
+
+- (NSString *)name { return NSLocalizedString(@"Audio", @"name of object to insert"); }
+
+- (NSImage *)pluginIcon
+{
+    return [NSImage imageNamed:@"toolbar_audio"];
 }
 
 @end
@@ -254,6 +282,7 @@ static NSPointerArray   *sFactories;
 static id <SVGraphicFactory> sSharedTextBoxFactory;
 static id <SVGraphicFactory> sImageFactory;
 static id <SVGraphicFactory> sVideoFactory;
+static id <SVGraphicFactory> sAudioFactory;
 static KSSortedMutableArray *sIndexFactories;
 static KSSortedMutableArray *sBadgeFactories;
 static KSSortedMutableArray *sEmbeddedFactories;
@@ -281,10 +310,15 @@ static id <SVGraphicFactory> sRawHTMLFactory;
     
     if (!sVideoFactory)
     {
-        sVideoFactory = [[SVMovieFactory alloc] init];
+        sVideoFactory = [[SVVideoFactory alloc] init];
         [self registerFactory:sVideoFactory];
     }
-    
+	if (!sAudioFactory)
+    {
+        sAudioFactory = [[SVAudioFactory alloc] init];
+        [self registerFactory:sAudioFactory];
+    }
+	
     if (!sRawHTMLFactory)
     {
         sRawHTMLFactory = [[SVRawHTMLFactory alloc] init];
@@ -356,6 +390,7 @@ static id <SVGraphicFactory> sRawHTMLFactory;
 + (id <SVGraphicFactory>)textBoxFactory; { return sSharedTextBoxFactory; }
 + (id <SVGraphicFactory>)imageFactory; { return sImageFactory; }
 + (id <SVGraphicFactory>)videoFactory; { return sVideoFactory; }
++ (id <SVGraphicFactory>)audioFactory; { return sAudioFactory; }
 + (id <SVGraphicFactory>)rawHTMLFactory; { return sRawHTMLFactory; }
 
 #pragma mark Menu
