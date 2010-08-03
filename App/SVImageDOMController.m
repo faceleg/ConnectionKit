@@ -148,91 +148,65 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 
 #define MINDIMENSION 16.0
 
+- (NSSize)sizeByMovingHandle:(SVGraphicHandle *)handle toPoint:(NSPoint)point;
+{
+    NSSize result = [super sizeByMovingHandle:handle toPoint:point];
+	
+    
+    return result;
+}
+
 - (SVGraphicHandle)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point
 {
-    BOOL resizingWidth = NO;
-    BOOL resizingHeight = NO;
+    NSSize size = [self sizeByMovingHandle:&handle toPoint:point];
+    
+        
+    // Size calculated – now what to store?
+    BOOL resizingWidth = (handle == kSVGraphicUpperLeftHandle ||
+                          handle == kSVGraphicMiddleLeftHandle ||
+                          handle == kSVGraphicLowerLeftHandle ||
+                          handle == kSVGraphicUpperRightHandle ||
+                          handle == kSVGraphicMiddleRightHandle ||
+                          handle == kSVGraphicLowerRightHandle);
+    
+    BOOL resizingHeight = (handle == kSVGraphicUpperLeftHandle ||
+                           handle == kSVGraphicUpperMiddleHandle ||
+                           handle == kSVGraphicUpperRightHandle ||
+                           handle == kSVGraphicLowerLeftHandle ||
+                           handle == kSVGraphicLowerMiddleHandle ||
+                           handle == kSVGraphicLowerRightHandle);
     
     
-    // Start with the original bounds.
-    NSRect bounds = [[self selectableDOMElement] boundingBox];
-    
-    // Is the user changing the width of the graphic?
-    if (handle == kSVGraphicUpperLeftHandle ||
-        handle == kSVGraphicMiddleLeftHandle ||
-        handle == kSVGraphicLowerLeftHandle)
-    {
-        // Change the left edge of the graphic.
-        resizingWidth = YES;
-        bounds.size.width = NSMaxX(bounds) - point.x;
-        bounds.origin.x = point.x;
-    }
-    else if (handle == kSVGraphicUpperRightHandle ||
-             handle == kSVGraphicMiddleRightHandle ||
-             handle == kSVGraphicLowerRightHandle)
-    {
-        // Change the right edge of the graphic.
-        resizingWidth = YES;
-        bounds.size.width = point.x - bounds.origin.x;
-    }
-    
-    // Did the user actually flip the graphic over?   OR RESIZE TO TOO SMALL?
-    if (bounds.size.width <= MINDIMENSION) bounds.size.width = MINDIMENSION;
-    
-    
-    
-    // Is the user changing the height of the graphic?
-    if (handle == kSVGraphicUpperLeftHandle ||
-        handle == kSVGraphicUpperMiddleHandle ||
-        handle == kSVGraphicUpperRightHandle) 
-    {
-        // Change the top edge of the graphic.
-        resizingHeight = YES;
-        bounds.size.height = NSMaxY(bounds) - point.y;
-        bounds.origin.y = point.y;
-    }
-    else if (handle == kSVGraphicLowerLeftHandle ||
-             handle == kSVGraphicLowerMiddleHandle ||
-             handle == kSVGraphicLowerRightHandle)
-    {
-        // Change the bottom edge of the graphic.
-        resizingHeight = YES;
-        bounds.size.height = point.y - bounds.origin.y;
-    }
-    
-    // Did the user actually flip the graphic upside down?   OR RESIZE TO TOO SMALL?
-    if (bounds.size.height<=MINDIMENSION) bounds.size.height = MINDIMENSION;
-    
-    
-    // Size calculated – now what to store?
     SVImage *image = [self representedObject];
 	CGSize originalSize = [image originalSize];
 	
 #define SNAP 4
 	// Snap to original size if you are very close to it
-	if (resizingWidth && ( abs(bounds.size.width - originalSize.width) < SNAP) )
+	if (resizingWidth && ( abs(size.width - originalSize.width) < SNAP) )
 	{
-		bounds.size.width = originalSize.width;
+		size.width = originalSize.width;
 	}
-	if (resizingHeight && ( abs(bounds.size.height - originalSize.height) < SNAP) )
+	if (resizingHeight && ( abs(size.height - originalSize.height) < SNAP) )
 	{
-		bounds.size.height = originalSize.height;
+		size.height = originalSize.height;
 	}
-	
+    
+    
+    // Apply the change
     if (resizingWidth)
     {
         if (resizingHeight)
         {
-            [image setSize:bounds.size];
+            [image setSize:size];
         }
         else
         {
-            [image setWidth:[NSNumber numberWithFloat:bounds.size.width]];
+            [image setWidth:[NSNumber numberWithFloat:size.width]];
         }
     }
     else if (resizingHeight)
     {
-        [image setHeight:[NSNumber numberWithFloat:bounds.size.height]];
+        [image setHeight:[NSNumber numberWithFloat:size.height]];
     }
     
     
