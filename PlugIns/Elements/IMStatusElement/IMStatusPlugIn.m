@@ -173,7 +173,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 
             // fix up HTML
             [writeableHTMLCode replaceOccurrencesOfString:@"#ONLINE#" 
-                                               withString:[onlineImagePath stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
+                                               withString:onlineImagePath
                                                   options:NSLiteralSearch 
                                                     range:NSMakeRange(0,[writeableHTMLCode length])];
         }
@@ -189,7 +189,7 @@ NSString *IMWantBorderKey = @"wantBorder";
             
             // fix up HTML
             [writeableHTMLCode replaceOccurrencesOfString:@"#OFFLINE#" 
-                                               withString:[offlineImagePath stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES] 
+                                               withString:offlineImagePath 
                                                   options:NSLiteralSearch 
                                                     range:NSMakeRange(0,[writeableHTMLCode length])];
         }
