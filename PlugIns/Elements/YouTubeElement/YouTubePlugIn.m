@@ -49,7 +49,6 @@
 { 
     return [NSArray arrayWithObjects:
             @"userVideoCode", 
-            @"videoSize", 
             @"color2", 
             @"color1", 
             @"widescreen", 
@@ -163,16 +162,12 @@
         self.userVideoCode = [location.URL absoluteString];
     }
     
-    // Initial size depends on our location
-    YouTubeVideoSize videoSize = YouTubeVideoSizeSmall;//([element isKindOfClass:[KTPagelet class]]) ? YouTubeVideoSizeSidebar : YouTubeVideoSizeSmall;
-    self.videoSize = videoSize;
+    // hint to user: prefer widescreen
     self.widescreen = YES;
     
     // Prepare initial colors
     self.useCustomSecondaryColor = NO;
     self.color2 = [YouTubePlugIn defaultPrimaryColor];  
-    
-    //FIXME: waiting on API discussion with Mike to know the size of our container. issue here is that if we're in the sidebar, the size slider should be disabled
 }
 
 
@@ -374,7 +369,6 @@
 @synthesize videoID = _videoID;
 @synthesize color1 = _color1;
 @synthesize color2 = _color2;
-@synthesize videoSize = _videoSize;
 @synthesize widescreen = _widescreen;
 @synthesize playHD = _playHD;
 @synthesize privacy = _privacy;
