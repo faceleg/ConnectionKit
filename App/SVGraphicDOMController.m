@@ -185,6 +185,30 @@
     [_offscreenWebViewController release]; _offscreenWebViewController = nil;
 }
 
+- (void)updateSize;
+{
+    SVGraphic *graphic = [self representedObject];
+    DOMElement *element = [self graphicDOMElement];
+    
+    [[element style] setWidth:[NSString stringWithFormat:@"%@px",
+                               [[graphic textAttachment] width]]];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if ([[self webEditor] inLiveGraphicResize])
+    {
+        [self updateSize];
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
 #pragma mark State
 
 - (DOMElement *)selectableDOMElement;
