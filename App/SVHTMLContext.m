@@ -469,7 +469,7 @@
 {
     // If the placement changes, want whole Text Area to update
     [self addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
-    if ([graphic isPagelet])
+    if ([graphic isPagelet])    // #83929
     {
         [self addDependencyForKeyPath:@"showsTitle" ofObject:graphic];
         [self addDependencyForKeyPath:@"showsIntroduction" ofObject:graphic];
