@@ -176,8 +176,6 @@
 }
 
 
-
-
 #pragma mark -
 #pragma mark HTML Generation
 

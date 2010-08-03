@@ -89,8 +89,6 @@ typedef enum {
 @property (nonatomic) BOOL includeRelatedVideos;
 @property (nonatomic) BOOL useCustomSecondaryColor;
 
-@property (nonatomic, readonly) NSString *sizeToolTip;
-
 + (NSColor *)defaultPrimaryColor;
 - (void)resetColors;
 
