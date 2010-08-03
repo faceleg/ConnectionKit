@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27958D561208B9650006D4FA /* IMStatusImageURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 27958D551208B9650006D4FA /* IMStatusImageURLProtocol.m */; };
 		3C42E4240D64FB4B004F35FD /* ABPerson+IMStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E41F0D64FB4B004F35FD /* ABPerson+IMStatus.m */; };
 		3C42E4250D64FB4B004F35FD /* IMStatusPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E4210D64FB4B004F35FD /* IMStatusPlugIn.m */; };
 		3C42E4260D64FB4B004F35FD /* IMStatusService.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E4230D64FB4B004F35FD /* IMStatusService.m */; };
@@ -27,6 +28,8 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		27958D541208B9650006D4FA /* IMStatusImageURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMStatusImageURLProtocol.h; sourceTree = "<group>"; };
+		27958D551208B9650006D4FA /* IMStatusImageURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMStatusImageURLProtocol.m; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* IMStatusElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMStatusElement_Prefix.pch; sourceTree = "<group>"; };
 		3C42E41E0D64FB4B004F35FD /* ABPerson+IMStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ABPerson+IMStatus.h"; sourceTree = "<group>"; };
 		3C42E41F0D64FB4B004F35FD /* ABPerson+IMStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ABPerson+IMStatus.m"; sourceTree = "<group>"; };
@@ -128,6 +131,8 @@
 				3C42E4210D64FB4B004F35FD /* IMStatusPlugIn.m */,
 				3C42E4220D64FB4B004F35FD /* IMStatusService.h */,
 				3C42E4230D64FB4B004F35FD /* IMStatusService.m */,
+				27958D541208B9650006D4FA /* IMStatusImageURLProtocol.h */,
+				27958D551208B9650006D4FA /* IMStatusImageURLProtocol.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -274,6 +279,7 @@
 				3C42E4240D64FB4B004F35FD /* ABPerson+IMStatus.m in Sources */,
 				3C42E4250D64FB4B004F35FD /* IMStatusPlugIn.m in Sources */,
 				3C42E4260D64FB4B004F35FD /* IMStatusService.m in Sources */,
+				27958D561208B9650006D4FA /* IMStatusImageURLProtocol.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

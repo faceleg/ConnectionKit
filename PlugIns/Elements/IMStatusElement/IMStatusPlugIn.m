@@ -35,7 +35,9 @@
 //
 
 #import "IMStatusPlugIn.h"
+
 #import "IMStatusService.h"
+#import "IMStatusImageURLProtocol.h"
 
 #import "ABPerson+IMStatus.h"
 #import <AddressBook/AddressBook.h>
@@ -48,13 +50,11 @@ NSString *IMOfflineImageKey = @"offline";
 NSString *IMWantBorderKey = @"wantBorder";
 
 
-@interface IMStatusPlugIn (Private)
-- (NSString *)onlineImagePath;
-- (NSString *)offlineImagePath;
-- (NSImage *)imageWithBaseImage:(NSImage *)aBaseImage 
-                       headline:(NSString *)aHeadline 
-                         status:(NSString *)aStatus;
+@interface IMStatusPlugIn ()
 @end
+
+
+#pragma mark -
 
 
 @implementation IMStatusPlugIn
@@ -162,15 +162,14 @@ NSString *IMWantBorderKey = @"wantBorder";
                                               options:NSLiteralSearch 
                                                 range:NSMakeRange(0, [writeableHTMLCode length])];
         
-        NSString *onlineImagePath = [self onlineImagePath];
-        if ( onlineImagePath )
+        NSURL *onlineImageURL = [IMStatusImageURLProtocol URLWithBaseImageURL:[IMStatusImageURLProtocol baseOnlineImageURL] headline:[self headlineText] status:[self onlineText]];
+        if (onlineImageURL)
         {
             // add resource to context
-            NSURL *onlineImageURL = [NSURL fileURLWithPath:onlineImagePath];
             NSURL *contextURL = [context addResourceWithURL:onlineImageURL];
             
             // generate relative string
-            onlineImagePath = [context relativeURLStringOfURL:contextURL];    
+            NSString *onlineImagePath = [context relativeURLStringOfURL:contextURL];    
 
             // fix up HTML
             [writeableHTMLCode replaceOccurrencesOfString:@"#ONLINE#" 
@@ -179,15 +178,14 @@ NSString *IMWantBorderKey = @"wantBorder";
                                                     range:NSMakeRange(0,[writeableHTMLCode length])];
         }
         
-        NSString *offlineImagePath = [self offlineImagePath];
-        if ( offlineImagePath )
+        NSURL *offlineImageURL = [IMStatusImageURLProtocol URLWithBaseImageURL:[IMStatusImageURLProtocol baseOfflineImageURL] headline:[self headlineText] status:[self offlineText]];
+        if ( offlineImageURL )
         {
             // add resource to context
-            NSURL *offlineImageURL = [NSURL fileURLWithPath:offlineImagePath];
             NSURL *contextURL = [context addResourceWithURL:offlineImageURL];
             
             // generate relative string
-            onlineImagePath = [context relativeURLStringOfURL:contextURL];    
+            NSString *offlineImagePath = [context relativeURLStringOfURL:contextURL];    
             
             // fix up HTML
             [writeableHTMLCode replaceOccurrencesOfString:@"#OFFLINE#" 
@@ -215,121 +213,6 @@ NSString *IMWantBorderKey = @"wantBorder";
     [[context HTMLWriter] endElement]; // </div>
 }
 
-
-#pragma mark -
-#pragma mark Badge Image Generation
-
-+ (NSImage *)baseOnlineIChatImage
-{
-	static NSImage *sOnlineBaseImage;
-	
-	if (!sOnlineBaseImage)
-	{
-		NSString *path = [[NSBundle bundleForClass:[self class]] pathForImageResource:@"online"];
-		sOnlineBaseImage = [[NSImage alloc] initWithContentsOfFile:path];
-		[sOnlineBaseImage normalizeSize];
-	}
-	
-	return sOnlineBaseImage;
-}
-
-+ (NSImage *)baseOfflineIChatImage
-{
-	static NSImage *sOfflineBaseImage;
-	
-	if (!sOfflineBaseImage)
-	{
-		NSString *path = [[NSBundle bundleForClass:[self class]] pathForImageResource:@"offline"];
-		sOfflineBaseImage = [[NSImage alloc] initWithContentsOfFile:path];
-		[sOfflineBaseImage normalizeSize];
-	}
-	
-	return sOfflineBaseImage;
-}
-
-- (NSString *)onlineImagePath
-{
-	IMStatusService *service = [self selectedService];
-	NSString *result = [service onlineImagePath];
-	
-	// We have to make a special exception for the ichat service
-	if ([[service serviceIdentifier] isEqualToString:@"aim"])
-	{
-		NSImage *compositedImage = [self imageWithBaseImage:[[self class] baseOnlineIChatImage]
-												   headline:self.headlineText
-													 status:self.onlineText];
-		
-		NSData *pngRepresentation = [[compositedImage bitmap] representationUsingType:NSPNGFileType
-                                                                           properties:[NSDictionary dictionary]];
-		result = [NSTemporaryDirectory() stringByAppendingPathComponent:@"online.png"];
-		[pngRepresentation writeToFile:result atomically:NO];
-	}
-	
-	return result;
-}
-
-- (NSString *)offlineImagePath
-{
-	IMStatusService *service = [self selectedService];
-	NSString *result = [service offlineImagePath];
-	
-	// We have to make a special exception for the ichat service
-	if ([[service serviceIdentifier] isEqualToString:@"aim"])
-	{
-		NSImage *compositedImage = [self imageWithBaseImage:[[self class] baseOfflineIChatImage]
-												   headline:self.headlineText
-													 status:self.offlineText];
-		
-		NSData *pngRepresentation = [[compositedImage bitmap] representationUsingType:NSPNGFileType
-                                                                           properties:[NSDictionary dictionary]];
-		
-        result = [NSTemporaryDirectory() stringByAppendingPathComponent:@"offline.png"];
-		[pngRepresentation writeToFile:result atomically:NO];
-	}
-	
-	return result;
-}
-
-- (NSImage *)imageWithBaseImage:(NSImage *)aBaseImage headline:(NSString *)aHeadline status:(NSString *)aStatus
-{
-	NSFont* font1 = [NSFont boldSystemFontOfSize:[NSFont systemFontSize]];
-	NSFont* font2 = [NSFont boldSystemFontOfSize:[NSFont smallSystemFontSize]];
-	NSShadow *aShadow = [[[NSShadow alloc] init] autorelease];
-	[aShadow setShadowOffset:NSMakeSize(0.5, -2.0)];
-	[aShadow setShadowBlurRadius:2.0];
-	[aShadow setShadowColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.7]];
-	
-	NSMutableDictionary *attributes1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-		font1, NSFontAttributeName, 
-		aShadow, NSShadowAttributeName, 
-		[NSColor colorWithCalibratedWhite:1.0 alpha:1.0], NSForegroundColorAttributeName,
-		nil];
-
-	NSMutableDictionary *attributes2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-		font2, NSFontAttributeName, 
-		aShadow, NSShadowAttributeName, 
-		[NSColor colorWithCalibratedWhite:1.0 alpha:1.0], NSForegroundColorAttributeName,
-		nil];
-	
-	NSSize textSize1 = [aHeadline sizeWithAttributes:attributes1];
-	if (textSize1.width > 100)
-	{
-		attributes1 = attributes2;	// use the smaller size if it's going to be too large to fit well, but otherwise overflow...
-	}
-
-	NSImage *result = [[[NSImage alloc] initWithSize:[aBaseImage size]] autorelease];
-	[result lockFocus];
-	[aBaseImage drawAtPoint:NSZeroPoint fromRect:NSMakeRect(0,0,[aBaseImage size].width, [aBaseImage size].height) operation:NSCompositeCopy fraction:1.0];
-	
-	[aHeadline drawAtPoint:NSMakePoint(19,40) withAttributes:attributes1];
-	[aStatus drawAtPoint:NSMakePoint(32,12) withAttributes:attributes2];
-
-	[result unlockFocus];
-	return result;
-}
-
-
-#pragma mark -
 #pragma mark Properties
 
 - (NSArray *)services
