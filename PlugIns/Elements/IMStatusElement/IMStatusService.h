@@ -58,13 +58,6 @@
 - (NSString *)serviceName;
 - (NSString *)serviceIdentifier;
 
-- (NSString *)badgeHTMLWithUsername:(NSString *)username
-						   headline:(NSString *)headline
-						onlineLabel:(NSString *)onlineLabel
-					   offlineLabel:(NSString *)offlineLabel
-					   isPublishing:(BOOL)isPublishing
-					    livePreview:(BOOL)isLivePreview;
-
 - (NSString *)publishingHTMLCode;
 - (NSString *)livePreviewHTMLCode;
 - (NSString *)nonLivePreviewHTMLCode;

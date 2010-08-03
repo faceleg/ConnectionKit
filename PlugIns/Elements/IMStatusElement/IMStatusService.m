@@ -36,8 +36,6 @@
 
 #import "IMStatusService.h"
 
-#import "SandvoxPlugin.h"
-
 
 @implementation IMStatusService
 
@@ -61,9 +59,6 @@
 	return sServices;
 }
 
-#pragma mark -
-#pragma mark Init & Dealloc
-
 + (NSArray *)servicesWithArrayOfDictionaries:(NSArray *)services resourcePath:(NSString *)resourcePath
 {
 	NSMutableArray *result = [NSMutableArray arrayWithCapacity:1];
@@ -82,6 +77,10 @@
 	
 	return result;
 }
+
+
+#pragma mark -
+#pragma mark Init & Dealloc
 
 - (id)initWithDictionary:(NSDictionary *)dictionary resourcePath:(NSString *)resources
 {
@@ -104,12 +103,16 @@
 {
 	[myName release];
 	[myIdentifier release];
+    [myResourcesPath release];
+    [myOnlineImagePath release];
+    [myOfflineImagePath release];
 	[myPublishingHTML release];
 	[myLivePreviewHTML release];
 	[myNonLivePreviewHTML release];
 	
 	[super dealloc];
 }
+
 
 #pragma mark -
 #pragma mark Accessors
@@ -142,6 +145,7 @@
 	return result;
 }
 
+
 #pragma mark -
 #pragma mark HTML
 
@@ -169,57 +173,6 @@
 	{
 		result = [self livePreviewHTMLCode];
 	}
-	
-	return result;
-}
-
-- (NSString *)badgeHTMLWithUsername:(NSString *)username
-						   headline:(NSString *)headline
-						onlineLabel:(NSString *)onlineLabel
-					   offlineLabel:(NSString *)offlineLabel
-					   isPublishing:(BOOL)isPublishing
-					    livePreview:(BOOL)isLivePreview
-{
-	// Get the appropriate code for the publishing mode
-	NSString *HTMLCode = nil;
-	if (isPublishing) {
-		HTMLCode = [self publishingHTMLCode];
-	}
-	else if (isLivePreview) {
-		HTMLCode = [self livePreviewHTMLCode];
-	}
-	else {
-		HTMLCode = [self nonLivePreviewHTMLCode];
-	}
-	
-	NSMutableString *result = [NSMutableString stringWithString:HTMLCode];
-	
-	// Parse the code to get the finished HTML
-	[result replaceOccurrencesOfString:@"#USER#" 
-						    withString:[username stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
-							   options:NSLiteralSearch 
-							     range:NSMakeRange(0, [result length])];
-	
-	if ([self onlineImagePath])
-	{
-		[result replaceOccurrencesOfString:@"#ONLINE#" 
-							  withString:[self onlineImagePath] 
-								 options:NSLiteralSearch 
-								   range:NSMakeRange(0,[result length])];
-	}
-	
-	if ([self offlineImagePath])
-	{
-		[result replaceOccurrencesOfString:@"#OFFLINE#" 
-							  withString:[self onlineImagePath] 
-								 options:NSLiteralSearch 
-								   range:NSMakeRange(0,[result length])];
-	}
-
-	[result replaceOccurrencesOfString:@"#HEADLINE#" 
-						    withString:headline 
-							   options:NSLiteralSearch 
-							     range:NSMakeRange(0, [result length])];
 	
 	return result;
 }
