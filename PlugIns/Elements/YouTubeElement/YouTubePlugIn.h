@@ -1,6 +1,6 @@
 //
 //  YouTubePlugIn.h
-//  Sandvox SDK
+//  YoutTubeElement
 //
 //  Copyright 2004-2010 Karelia Software. All rights reserved.
 //
