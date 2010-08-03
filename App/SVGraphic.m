@@ -393,7 +393,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     if (![self showBorder]) [self setBordered:NO];
 }
 
-#pragma mark SVPageletPlugInContainer
+#pragma mark SVPlugInContainer
 
 - (NSString *)title	// get title, but without attributes
 {
@@ -418,8 +418,13 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (BOOL)showsTitle
 {
-    NSNumber *hidden = [[self titleBox] hidden];
-    return (hidden && ![hidden boolValue]);
+    BOOL result = NO;
+    if ([[self placement] intValue] != SVGraphicPlacementInline)
+    {
+        NSNumber *hidden = [[self titleBox] hidden];
+        result = (hidden && ![hidden boolValue]);
+    }
+    return result;
 }
 - (void)setShowsTitle:(BOOL)show { [[self titleBox] setHidden:[NSNumber numberWithBool:!show]]; }
 + (NSSet *)keyPathsForValuesAffectingShowsTitle; { return [NSSet setWithObject:@"titleBox.hidden"]; }
@@ -428,16 +433,19 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 - (void)setBordered:(BOOL)border { [self setShowBorder:[NSNumber numberWithBool:border]]; }
 + (NSSet *)keyPathsForValuesAffectingBordered { return [NSSet setWithObject:@"showBorder"]; }
 
-#pragma mark SVPlugInContainer
-
 @dynamic title;
 @dynamic showsTitle;
 @dynamic bordered;
 
 - (BOOL)showsIntroduction
 {
-    NSNumber *hidden = [[self introduction] hidden];
-    return (hidden && ![hidden boolValue]);
+    BOOL result = NO;
+    if ([[self placement] intValue] != SVGraphicPlacementInline)
+    {
+        NSNumber *hidden = [[self introduction] hidden];
+        result = (hidden && ![hidden boolValue]);
+    }
+    return result;
 }
 - (void)setShowsIntroduction:(BOOL)show { [[self introduction] setHidden:[NSNumber numberWithBool:!show]]; }
 + (NSSet *)keyPathsForValuesAffectingShowsIntroduction; { return [NSSet setWithObject:@"introduction.hidden"]; }
