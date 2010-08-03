@@ -176,6 +176,14 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     }
 }
 
+- (NSSize)minSize;
+{
+    // Remove the 200px width restriction
+    NSSize result = [super minSize];
+    result.width = result.height;
+    return result;
+}
+
 - (NSPoint)locationOfHandle:(SVGraphicHandle)handle;
 {
     SVSelectionBorder *border = [self newSelectionBorder];

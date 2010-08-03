@@ -260,7 +260,7 @@
     return result;
 }
 
-#define MINDIMENSION 16.0
+- (NSSize)minSize; { return NSMakeSize(200.0f, 16.0f); }
 
 - (NSSize)sizeByMovingHandle:(SVGraphicHandle *)handle toPoint:(NSPoint)point;
 {    
@@ -285,7 +285,8 @@
     }
     
     // Did the user actually flip the graphic over?   OR RESIZE TO TOO SMALL?
-    if (bounds.size.width <= MINDIMENSION) bounds.size.width = MINDIMENSION;
+    NSSize minSize = [self minSize];
+    if (bounds.size.width <= minSize.width) bounds.size.width = minSize.width;
     
     
     
@@ -307,7 +308,7 @@
     }
     
     // Did the user actually flip the graphic upside down?   OR RESIZE TO TOO SMALL?
-    if (bounds.size.height<=MINDIMENSION) bounds.size.height = MINDIMENSION;
+    if (bounds.size.height<=minSize.height) bounds.size.height = minSize.height;
     
     return bounds.size;
 }
