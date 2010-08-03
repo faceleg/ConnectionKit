@@ -657,7 +657,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						</object>
 					</object>
 				</object>
-				<string key="NSFrameSize">{230, 294}</string>
+				<string key="NSFrameSize">{230, 292}</string>
 				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -954,7 +954,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<string key="label">enabled: inspectedObjectsController.selection.isPlacementEditable</string>
 						<reference key="source" ref="544062517"/>
 						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="824239568">
+						<object class="NSNibBindingConnector" key="connector" id="661203175">
 							<reference key="NSSource" ref="544062517"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">enabled: inspectedObjectsController.selection.isPlacementEditable</string>
@@ -1074,7 +1074,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<string key="label">enabled2: inspectedObjectsController.selection.canHaveIntroduction</string>
 						<reference key="source" ref="298414928"/>
 						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="761121164">
+						<object class="NSNibBindingConnector" key="connector" id="572341971">
 							<reference key="NSSource" ref="298414928"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">enabled2: inspectedObjectsController.selection.canHaveIntroduction</string>
@@ -1530,7 +1530,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<boolean value="NO"/>
 								</object>
 							</object>
-							<reference key="NSPreviousConnector" ref="824239568"/>
+							<reference key="NSPreviousConnector" ref="661203175"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
@@ -1566,7 +1566,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<boolean value="NO"/>
 								</object>
 							</object>
-							<reference key="NSPreviousConnector" ref="761121164"/>
+							<reference key="NSPreviousConnector" ref="572341971"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
@@ -1920,7 +1920,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>{{645, 417}, {230, 294}}</string>
+					<string>{{645, 419}, {230, 292}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{628, 654}</string>
 					<string>{{217, 442}, {480, 272}}</string>
