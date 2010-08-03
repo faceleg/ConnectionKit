@@ -233,7 +233,7 @@
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">4325376</int>
 							<string key="NSContents">Service</string>
-							<object class="NSFont" key="NSSupport" id="915763786">
+							<object class="NSFont" key="NSSupport" id="31593081">
 								<string key="NSName">LucidaGrande-Bold</string>
 								<double key="NSSize">11</double>
 								<int key="NSfFlags">16</int>
@@ -288,7 +288,7 @@
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">4325376</int>
 							<string key="NSContents">Username</string>
-							<reference key="NSSupport" ref="915763786"/>
+							<reference key="NSSupport" ref="31593081"/>
 							<reference key="NSControlView" ref="620839491"/>
 							<reference key="NSBackgroundColor" ref="864347249"/>
 							<reference key="NSTextColor" ref="23826548"/>
@@ -401,7 +401,7 @@ eSBzZXR0aW5ncyBhbGxvdyB3ZWIgdmlzaXRvcnMgdG8gc2VlIHlvdXIgb25saW5lIHN0YXR1cy4</str
 						<string key="label">content: inspectedObjectsController.selection.services</string>
 						<reference key="source" ref="1055563210"/>
 						<reference key="destination" ref="544088952"/>
-						<object class="NSNibBindingConnector" key="connector" id="284492853">
+						<object class="NSNibBindingConnector" key="connector" id="1068765469">
 							<reference key="NSSource" ref="1055563210"/>
 							<reference key="NSDestination" ref="544088952"/>
 							<string key="NSLabel">content: inspectedObjectsController.selection.services</string>
@@ -417,37 +417,17 @@ eSBzZXR0aW5ncyBhbGxvdyB3ZWIgdmlzaXRvcnMgdG8gc2VlIHlvdXIgb25saW5lIHN0YXR1cy4</str
 						<string key="label">contentValues: inspectedObjectsController.selection.services.serviceName</string>
 						<reference key="source" ref="1055563210"/>
 						<reference key="destination" ref="544088952"/>
-						<object class="NSNibBindingConnector" key="connector" id="202082592">
+						<object class="NSNibBindingConnector" key="connector" id="947355867">
 							<reference key="NSSource" ref="1055563210"/>
 							<reference key="NSDestination" ref="544088952"/>
 							<string key="NSLabel">contentValues: inspectedObjectsController.selection.services.serviceName</string>
 							<string key="NSBinding">contentValues</string>
 							<string key="NSKeyPath">inspectedObjectsController.selection.services.serviceName</string>
-							<reference key="NSPreviousConnector" ref="284492853"/>
+							<reference key="NSPreviousConnector" ref="1068765469"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
 					<int key="connectionID">104</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">hidden: inspectedObjectsController.selection.selectedServiceIsIChat</string>
-						<reference key="source" ref="944286783"/>
-						<reference key="destination" ref="544088952"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="944286783"/>
-							<reference key="NSDestination" ref="544088952"/>
-							<string key="NSLabel">hidden: inspectedObjectsController.selection.selectedServiceIsIChat</string>
-							<string key="NSBinding">hidden</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.selectedServiceIsIChat</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">NSNegateBoolean</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">109</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -460,11 +440,27 @@ eSBzZXR0aW5ncyBhbGxvdyB3ZWIgdmlzaXRvcnMgdG8gc2VlIHlvdXIgb25saW5lIHN0YXR1cy4</str
 							<string key="NSLabel">selectedIndex: inspectedObjectsController.selection.selectedServiceIndex</string>
 							<string key="NSBinding">selectedIndex</string>
 							<string key="NSKeyPath">inspectedObjectsController.selection.selectedServiceIndex</string>
-							<reference key="NSPreviousConnector" ref="202082592"/>
+							<reference key="NSPreviousConnector" ref="947355867"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
 					<int key="connectionID">110</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: inspectedObjectsController.selection.selectedServiceIndex</string>
+						<reference key="source" ref="944286783"/>
+						<reference key="destination" ref="544088952"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="944286783"/>
+							<reference key="NSDestination" ref="544088952"/>
+							<string key="NSLabel">hidden: inspectedObjectsController.selection.selectedServiceIndex</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.selectedServiceIndex</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">112</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -744,7 +740,7 @@ eSBzZXR0aW5ncyBhbGxvdyB3ZWIgdmlzaXRvcnMgdG8gc2VlIHlvdXIgb25saW5lIHN0YXR1cy4</str
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">110</int>
+			<int key="maxID">112</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
