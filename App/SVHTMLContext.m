@@ -177,11 +177,6 @@
     }
     
     
-    // Global CSS
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"sandvox" ofType:@"css"];
-    if (path) [self addCSSWithURL:[NSURL fileURLWithPath:path]];
-    
-    
     // First Code Injection
 	[page write:self codeInjectionSection:@"beforeHTML" masterFirst:NO];
     
@@ -191,6 +186,10 @@
     [self startDocument:[[self class] stringFromDocType:docType]
                 isXHTML:(docType >= KTXHTMLTransitionalDocType)];
     
+    
+    // Global CSS
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"sandvox" ofType:@"css"];
+    if (path) [self addCSSWithURL:[NSURL fileURLWithPath:path]];
 }
 
 - (void)writeDocumentWithPage:(KTPage *)page;
