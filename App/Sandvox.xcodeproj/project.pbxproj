@@ -29,6 +29,39 @@
 			name = UpdateInvalidLicenses;
 			productName = UpdateLicenses;
 		};
+		3C3ED287120894800080EB6E /* UpdateKSThreadProxy */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 3C3ED289120894800080EB6E /* Build configuration list for PBXAggregateTarget "UpdateKSThreadProxy" */;
+			buildPhases = (
+				3C3ED288120894800080EB6E /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = UpdateKSThreadProxy;
+			productName = KSHTMLWriter;
+		};
+		3C3ED293120894F70080EB6E /* UpdateConnectionKit */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 3C3ED295120894F70080EB6E /* Build configuration list for PBXAggregateTarget "UpdateConnectionKit" */;
+			buildPhases = (
+				3C3ED294120894F70080EB6E /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = UpdateConnectionKit;
+			productName = KSHTMLWriter;
+		};
+		3C3ED29D120895580080EB6E /* UpdateYRKSpinningProgressIndicator */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 3C3ED29F120895580080EB6E /* Build configuration list for PBXAggregateTarget "UpdateYRKSpinningProgressIndicator" */;
+			buildPhases = (
+				3C3ED29E120895580080EB6E /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = UpdateYRKSpinningProgressIndicator;
+			productName = KSHTMLWriter;
+		};
 		3C5A77C50EB6E0880049B898 /* PackageAndDeploySDK */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 3C5A77E20EB6E1050049B898 /* Build configuration list for PBXAggregateTarget "PackageAndDeploySDK" */;
@@ -52,17 +85,6 @@
 			name = "iMedia-UpdateRevision";
 			productName = "iMedia - Use Specific Revision";
 		};
-		3C5A9A950D11E68A0054058C /* ConnectionKit-UpdateRevision */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 3C5A9A980D11E6A90054058C /* Build configuration list for PBXAggregateTarget "ConnectionKit-UpdateRevision" */;
-			buildPhases = (
-				3C5A9A940D11E68A0054058C /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = "ConnectionKit-UpdateRevision";
-			productName = "ConnectionKit - Use Specific Revision";
-		};
 		3C88838D0BFCB49C00921FA4 /* BuildAndPackageRelease */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 3C8883980BFCB4EE00921FA4 /* Build configuration list for PBXAggregateTarget "BuildAndPackageRelease" */;
@@ -70,7 +92,6 @@
 				3C88838C0BFCB49C00921FA4 /* Build Disk Image */,
 			);
 			dependencies = (
-				3C5A9A9A0D11E7440054058C /* PBXTargetDependency */,
 				3C5A9A9C0D11E74B0054058C /* PBXTargetDependency */,
 				3C3E76450F1C6B7A002E3A9A /* PBXTargetDependency */,
 				3C88838F0BFCB4A400921FA4 /* PBXTargetDependency */,
@@ -1215,6 +1236,34 @@
 			remoteGlobalIDString = 3C3E75FA0F1C5F42002E3A9A;
 			remoteInfo = UpdateLicenses;
 		};
+		3C3ED2A7120895C70080EB6E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C3ED287120894800080EB6E;
+			remoteInfo = UpdateKSThreadProxy;
+		};
+		3C3ED2A9120895CF0080EB6E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C3ED293120894F70080EB6E;
+			remoteInfo = UpdateConnectionKit;
+		};
+		3C3ED2AB120895D50080EB6E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C3ED29D120895580080EB6E;
+			remoteInfo = UpdateYRKSpinningProgressIndicator;
+		};
+		3C3ED2AD120895E60080EB6E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C5A9A850D11E4DF0054058C;
+			remoteInfo = "iMedia-UpdateRevision";
+		};
 		3C4CDF2E1207413A002AF966 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42E4830D64FCE3004F35FD /* IMStatusElement.xcodeproj */;
@@ -1417,13 +1466,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3C96ADE10CA06FB900C5249F;
 			remoteInfo = UpdateVersion;
-		};
-		3C5A9A990D11E7440054058C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C5A9A950D11E68A0054058C;
-			remoteInfo = "ConnectionKit - Use Specific Revision";
 		};
 		3C5A9A9B0D11E74B0054058C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -5664,8 +5706,12 @@
 			dependencies = (
 				3C96ADF10CA074A900C5249F /* PBXTargetDependency */,
 				3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */,
+				3C3ED2AE120895E60080EB6E /* PBXTargetDependency */,
+				3C3ED2AA120895CF0080EB6E /* PBXTargetDependency */,
 				3CBC655A11EFD5E500716937 /* PBXTargetDependency */,
 				3CBC727711F0C5E000716937 /* PBXTargetDependency */,
+				3C3ED2A8120895C70080EB6E /* PBXTargetDependency */,
+				3C3ED2AC120895D50080EB6E /* PBXTargetDependency */,
 				27E4D4510EC30CEE000E85DD /* PBXTargetDependency */,
 				CED864B110AA41DC002DF34F /* PBXTargetDependency */,
 				CE559B621085296D008870B5 /* PBXTargetDependency */,
@@ -5858,10 +5904,12 @@
 				3C15B85E0DC790A100DE9957 /* UpdateDesigns */,
 				3C3E75FA0F1C5F42002E3A9A /* UpdateInvalidLicenses */,
 				3CE2B2B70D7F1DD900E2711E /* UpdateShared */,
-				3CBC651B11EFD04800716937 /* UpdateKSExtensibleManagedObject */,
 				3CBC727311F0C59E00716937 /* UpdateKSHTMLWriter */,
+				3C3ED287120894800080EB6E /* UpdateKSThreadProxy */,
+				3C3ED293120894F70080EB6E /* UpdateConnectionKit */,
+				3C3ED29D120895580080EB6E /* UpdateYRKSpinningProgressIndicator */,
+				3CBC651B11EFD04800716937 /* UpdateKSExtensibleManagedObject */,
 				3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */,
-				3C5A9A950D11E68A0054058C /* ConnectionKit-UpdateRevision */,
 				CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */,
 				CE16DC580D8711790077C779 /* MovieWebKitPlugin */,
 				3C1F510911D575510036B375 /* xibLocalizationPostprocessor */,
@@ -6349,6 +6397,48 @@
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE SandvoxInvalidLicenses.h FOR RELEASE BUILDS\n###\n\ncurl --proxy-anyauth --insecure --user \"xcode:home.cooking.32\" \"https://secure.karelia.com/private/invalidLicenses.h.php?app=1\" -o \"${SRCROOT}/../../Shared/Licensing/SandvoxInvalidLicenses.h\"\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
+		3C3ED288120894800080EB6E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\n###\n### PULL KSThreadProxy FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSThreadProxy\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSThreadProxy from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSThreadProxy\"\n\npopd\n\nexit 0\n";
+			showEnvVarsInLog = 0;
+		};
+		3C3ED294120894F70080EB6E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\n###\n### PULL ConnectionKit FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../connection\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling ConnectionKit from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling ConnectionKit\"\n\npopd\n\nexit 0\n";
+			showEnvVarsInLog = 0;
+		};
+		3C3ED29E120895580080EB6E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\n###\n### PULL yrk-spinning-progress-indicator FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../yrk-spinning-progress-indicator\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling yrk-spinning-progress-indicator from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling yrk-spinning-progress-indicator\"\n\npopd\n\nexit 0\n";
+			showEnvVarsInLog = 0;
+		};
 		3C5A77C40EB6E0880049B898 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -6375,20 +6465,6 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE IMEDIA_REVISION FOR RELEASE BUILDS\n###\n\nIMEDIA_PATH=${SRCROOT}/../../imedia\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\nif [ -e /usr/local/bin/svn ]\nthen\n\tSVN_PATH=/usr/local/bin/svn\nelif [ -e /usr/bin/svn ]\nthen\n\tSVN_PATH=/usr/bin/svn\nelif [ -e /opt/local/bin/svn ]\nthen\n\tSVN_PATH=/opt/local/bin/svn\nelse\n\techo \"ERROR - CANT FIND SVN\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"syncing iMedia with revision ${IMEDIA_REVISION}\"\ncd ${IMEDIA_PATH}\n${SVN_PATH} update -r${IMEDIA_REVISION}\necho \"finished syncing iMedia\"\n\npopd\n\nexit 0\n";
-			showEnvVarsInLog = 0;
-		};
-		3C5A9A940D11E68A0054058C /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE CONNECTION KIT FOR RELEASE BUILDS\n###\n\nCK_PATH=${SRCROOT}/../../connection\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/bin/svn ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling latest ConnectionKit\"\ncd ${CK_PATH}\n${GIT_PATH} pull\necho \"finished pulling ConnectionKit\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C88838C0BFCB49C00921FA4 /* Build Disk Image */ = {
@@ -6580,7 +6656,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL KSHTMLWriter FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSHTMLWriter\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSHTMLWriter from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSHTMLWriter\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL KSHTMLWriter FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSHTMLWriter\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSHTMLWriter from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSHTMLWriter\"\n\npopd\n\nexit 0\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3CD5B7830DCA668D006EE4D9 /* ShellScript */ = {
@@ -7112,6 +7188,26 @@
 			target = 3C3E75FA0F1C5F42002E3A9A /* UpdateInvalidLicenses */;
 			targetProxy = 3C3E76440F1C6B7A002E3A9A /* PBXContainerItemProxy */;
 		};
+		3C3ED2A8120895C70080EB6E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C3ED287120894800080EB6E /* UpdateKSThreadProxy */;
+			targetProxy = 3C3ED2A7120895C70080EB6E /* PBXContainerItemProxy */;
+		};
+		3C3ED2AA120895CF0080EB6E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C3ED293120894F70080EB6E /* UpdateConnectionKit */;
+			targetProxy = 3C3ED2A9120895CF0080EB6E /* PBXContainerItemProxy */;
+		};
+		3C3ED2AC120895D50080EB6E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C3ED29D120895580080EB6E /* UpdateYRKSpinningProgressIndicator */;
+			targetProxy = 3C3ED2AB120895D50080EB6E /* PBXContainerItemProxy */;
+		};
+		3C3ED2AE120895E60080EB6E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */;
+			targetProxy = 3C3ED2AD120895E60080EB6E /* PBXContainerItemProxy */;
+		};
 		3C4CDF2F1207413A002AF966 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = IMStatusElement;
@@ -7186,11 +7282,6 @@
 			isa = PBXTargetDependency;
 			target = 3C96ADE10CA06FB900C5249F /* UpdateVersion */;
 			targetProxy = 3C5A77C90EB6E08F0049B898 /* PBXContainerItemProxy */;
-		};
-		3C5A9A9A0D11E7440054058C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C5A9A950D11E68A0054058C /* ConnectionKit-UpdateRevision */;
-			targetProxy = 3C5A9A990D11E7440054058C /* PBXContainerItemProxy */;
 		};
 		3C5A9A9C0D11E74B0054058C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7544,6 +7635,7 @@
 		};
 		3C15B85F0DC790A200DE9957 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				DEPLOYMENT_POSTPROCESSING = YES;
 				PRODUCT_NAME = UpdateDesigns;
@@ -7612,9 +7704,58 @@
 		};
 		3C3E75FC0F1C5F42002E3A9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				DEPLOYMENT_POSTPROCESSING = YES;
 				PRODUCT_NAME = UpdateLicenses;
+			};
+			name = Release;
+		};
+		3C3ED28A120894800080EB6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = KSHTMLWriter;
+			};
+			name = Debug;
+		};
+		3C3ED28B120894800080EB6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
+				PRODUCT_NAME = KSHTMLWriter;
+			};
+			name = Release;
+		};
+		3C3ED296120894F70080EB6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = KSHTMLWriter;
+			};
+			name = Debug;
+		};
+		3C3ED297120894F70080EB6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
+				PRODUCT_NAME = KSHTMLWriter;
+			};
+			name = Release;
+		};
+		3C3ED2A0120895580080EB6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = KSHTMLWriter;
+			};
+			name = Debug;
+		};
+		3C3ED2A1120895580080EB6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
+				PRODUCT_NAME = KSHTMLWriter;
 			};
 			name = Release;
 		};
@@ -7648,23 +7789,6 @@
 			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = iMediaFramework;
-			};
-			name = Debug;
-		};
-		3C5A9A960D11E68B0054058C /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				DEPLOYMENT_POSTPROCESSING = YES;
-				PRODUCT_NAME = ConnectionFramework;
-			};
-			name = Release;
-		};
-		3C5A9A970D11E68B0054058C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				PRODUCT_NAME = ConnectionFramework;
 			};
 			name = Debug;
 		};
@@ -7750,42 +7874,32 @@
 		3CBC651C11EFD04900716937 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = UpdateKSExtensibleManagedObject;
 			};
 			name = Debug;
 		};
 		3CBC651D11EFD04900716937 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				DEPLOYMENT_POSTPROCESSING = YES;
 				PRODUCT_NAME = UpdateKSExtensibleManagedObject;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
 		3CBC727411F0C59E00716937 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = KSHTMLWriter;
 			};
 			name = Debug;
 		};
 		3CBC727511F0C59E00716937 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				DEPLOYMENT_POSTPROCESSING = YES;
 				PRODUCT_NAME = KSHTMLWriter;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -7808,6 +7922,7 @@
 		};
 		3CE2B2B80D7F1DD900E2711E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				DEPLOYMENT_POSTPROCESSING = YES;
 				PRODUCT_NAME = UpdateShared;
@@ -7964,6 +8079,33 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		3C3ED289120894800080EB6E /* Build configuration list for PBXAggregateTarget "UpdateKSThreadProxy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C3ED28A120894800080EB6E /* Debug */,
+				3C3ED28B120894800080EB6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3C3ED295120894F70080EB6E /* Build configuration list for PBXAggregateTarget "UpdateConnectionKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C3ED296120894F70080EB6E /* Debug */,
+				3C3ED297120894F70080EB6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3C3ED29F120895580080EB6E /* Build configuration list for PBXAggregateTarget "UpdateYRKSpinningProgressIndicator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C3ED2A0120895580080EB6E /* Debug */,
+				3C3ED2A1120895580080EB6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3C5A77E20EB6E1050049B898 /* Build configuration list for PBXAggregateTarget "PackageAndDeploySDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -7978,15 +8120,6 @@
 			buildConfigurations = (
 				3C5A9A870D11E4DF0054058C /* Debug */,
 				3C5A9A860D11E4DF0054058C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3C5A9A980D11E6A90054058C /* Build configuration list for PBXAggregateTarget "ConnectionKit-UpdateRevision" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3C5A9A970D11E68B0054058C /* Debug */,
-				3C5A9A960D11E68B0054058C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
