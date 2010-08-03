@@ -65,15 +65,16 @@
 {
     return [NSSet setWithObjects:@"videoSize", @"widescreen", @"showBorder", nil];
 }
+
 + (NSSet *)keyPathsForValuesAffectingVideoHeight
 {
     return [NSSet setWithObjects:@"videoSize", @"widescreen", @"showBorder", nil];
 }
+
 + (NSSet *)keyPathsForValuesAffectingSizeToolTip
 {
     return [NSSet setWithObjects:@"videoWidth", @"widescreen", nil];
 }
-
 
 
 
@@ -175,116 +176,105 @@
 }
 
 
-#pragma mark -
-#pragma mark Summaries
-
-- (NSString *)summaryHTMLKeyPath { return @"captionHTML"; }
-
-- (BOOL)summaryHTMLIsEditable { return YES; }
 
 
 #pragma mark -
-#pragma mark Size
+#pragma mark HTML Generation
 
-//FIXME: if we switch to sidebar placement, we need to resize appropriately
-
-- (NSString *)sizeToolTip;
+- (void)writeHTML:(id <SVPlugInContext>)context
 {
-	NSString *result = nil;
-	static NSArray *sToolTipsNormal = nil;
-	static NSArray *sToolTipsWide = nil;
-	if (!sToolTipsWide)
-	{		
-		sToolTipsNormal = [[NSArray alloc] initWithObjects:
-						   NSLocalizedString(@"200 pixels wide including any border.", "tooltip description of slider value"),
-						   NSLocalizedString(@"320 pixels wide; original size for classic, flat-screen videos.", "tooltip description of slider value"),
-						   NSLocalizedString(@"425 pixels wide; standard size of classic YouTube video.", "tooltip description of slider value"),
-						   NSLocalizedString(@"480 pixels wide; double size for classic, flat-screen videos.", "tooltip description of slider value"),
-						   NSLocalizedString(@"560 pixels wide.", "tooltip description of slider value"),
-						   NSLocalizedString(@"640 pixels wide.", "tooltip description of slider value"),
-						   NSLocalizedString(@"853 pixels wide. (Wide design required.)", "tooltip description of slider value"),
-						   NSLocalizedString(@"1280 pixels wide. (Wide design required.)", "tooltip description of slider value"),
-					 nil];
-		sToolTipsWide = [[NSArray alloc] initWithObjects:
-						 NSLocalizedString(@"200 pixels wide including any border.", "tooltip description of slider value"),
-						 NSLocalizedString(@"320 pixels wide.", "tooltip description of slider value"),
-						 NSLocalizedString(@"425 pixels wide.", "tooltip description of slider value"),
-						 NSLocalizedString(@"480 pixels wide.", "tooltip description of slider value"),
-						 NSLocalizedString(@"560 pixels wide.", "tooltip description of slider value"),
-						 NSLocalizedString(@"640 pixels wide; 360p size", "tooltip description of slider value"),
-						 NSLocalizedString(@"853 pixels wide; 480p size. (Wide design required.)", "tooltip description of slider value"),
-						 NSLocalizedString(@"1280 pixels wide; 720p size. (Wide design required.)", "tooltip description of slider value"),
-						 nil];
-	}
-	if (self.videoSize < NUMBER_OF_VIDEO_SIZES)
-	{
-		if (self.widescreen)
-		{
-			result = [sToolTipsWide objectAtIndex:self.videoSize];
-		}
-		else
-		{
-			result = [sToolTipsNormal objectAtIndex:self.videoSize];
-		}
-	}
-	return result;
+    [super writeHTML:context];
+    [context addDependencyForKeyPath:@"container.containerWidth" ofObject:self];
+    [context addDependencyForKeyPath:@"showBorder" ofObject:self];
+    [context addDependencyForKeyPath:@"widescreen" ofObject:self];
+    [context addDependencyForKeyPath:@"playHD" ofObject:self];
+    [context addDependencyForKeyPath:@"privacy" ofObject:self];
+    [context addDependencyForKeyPath:@"includeRelatedVideos" ofObject:self];    
 }
 
 - (NSUInteger)videoWidth
 {
-	NSUInteger widths[] = { 200, 320, 425, 480, 560, 640, 853, 1280 };
-	NSUInteger result = widths[1];
-	
-	if (self.videoSize < NUMBER_OF_VIDEO_SIZES)
-	{
-		result = widths[self.videoSize];
-	}
-	if (self.showBorder && self.videoSize != YouTubeVideoSizeSidebar)	// do not increase width for sidebar!
-	{
-		result += 20;
-	}	
-	return result;
+//	NSUInteger widths[] = { 200, 320, 425, 480, 560, 640, 853, 1280 };
+//	NSUInteger result = widths[1];
+//	
+//	if (self.videoSize < NUMBER_OF_VIDEO_SIZES)
+//	{
+//		result = widths[self.videoSize];
+//	}
+//	if (self.showBorder && self.videoSize != YouTubeVideoSizeSidebar)	// do not increase width for sidebar!
+//	{
+//		result += 20;
+//	}	
+//	return result;
+    
+    NSUInteger result = 480; // start with something
+    
+    NSNumber *containerWidth = [[self container] containerWidth];
+    if ( containerWidth )
+    {
+        result = [containerWidth unsignedIntegerValue];
+    }
+    
+    return result;
 }
 
 - (NSUInteger)videoHeight
 {
-	NSUInteger heights[]		= { 150, 240, 319, 360, 420, 480, 640, 960 };	// above width * 3/4
-	NSUInteger heightsWide[]	= { 113, 180, 239, 270, 315, 360, 480, 720 };	// above width * 9/16
-	NSUInteger result = 0;
-	
-	if (self.widescreen)
-	{
-		result = heightsWide[1];
-		if (self.videoSize == YouTubeVideoSizeSidebar && self.showBorder)	// special case for bordered in sidebar
-		{
-			// Borders leaves 180 pixels for width of video
-			result = 101;
-		}
-		else if (self.videoSize < NUMBER_OF_VIDEO_SIZES)
-		{
-			result = heightsWide[self.videoSize];
-		}
-	}
-	else
-	{
-		result = heights[1];
-		if (self.videoSize == YouTubeVideoSizeSidebar && self.showBorder)	// special case for bordered in sidebar
-		{
-			// Borders leaves 180 pixels for width of video
-			result = 135;
-		}
-		else if (self.videoSize < 8)
-		{
-			result = heights[self.videoSize];
-		}
-	}	
-	if (self.showBorder && self.videoSize != YouTubeVideoSizeSidebar) 
-	{
-		result += 20;
-	}
-	result += 25;	// room for the control bar.
-	
-	return result;
+//	NSUInteger heights[]		= { 150, 240, 319, 360, 420, 480, 640, 960 };	// above width * 3/4
+//	NSUInteger heightsWide[]	= { 113, 180, 239, 270, 315, 360, 480, 720 };	// above width * 9/16
+//	NSUInteger result = 0;
+//	
+//	if (self.widescreen)
+//	{
+//		result = heightsWide[1];
+//		if (self.videoSize == YouTubeVideoSizeSidebar && self.showBorder)	// special case for bordered in sidebar
+//		{
+//			// Borders leaves 180 pixels for width of video
+//			result = 101;
+//		}
+//		else if (self.videoSize < NUMBER_OF_VIDEO_SIZES)
+//		{
+//			result = heightsWide[self.videoSize];
+//		}
+//	}
+//	else
+//	{
+//		result = heights[1];
+//		if (self.videoSize == YouTubeVideoSizeSidebar && self.showBorder)	// special case for bordered in sidebar
+//		{
+//			// Borders leaves 180 pixels for width of video
+//			result = 135;
+//		}
+//		else if (self.videoSize < 8)
+//		{
+//			result = heights[self.videoSize];
+//		}
+//	}	
+//	if (self.showBorder && self.videoSize != YouTubeVideoSizeSidebar) 
+//	{
+//		result += 20;
+//	}
+//	result += 25;	// room for the control bar.
+//	
+//	return result;
+    
+    NSUInteger width = [self videoWidth];
+    
+    NSUInteger result = (width * 3)/4;
+    if ( self.widescreen )
+    {
+        result = (width * 9)/16;
+    }
+    
+    if ( self.showBorder )
+    {
+        result += 20;
+    }
+    
+    result += 25; // room for the control bar
+    
+    return result;
+
 }
 
 
@@ -301,6 +291,14 @@
 	self.useCustomSecondaryColor = NO;
 	self.color2 = [[self class] defaultPrimaryColor];
 }
+
+
+#pragma mark -
+#pragma mark Summaries
+
+- (NSString *)summaryHTMLKeyPath { return @"captionHTML"; }
+
+- (BOOL)summaryHTMLIsEditable { return YES; }
 
 
 #pragma mark -
