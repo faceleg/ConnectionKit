@@ -312,7 +312,7 @@
 						<object class="NSMutableArray" key="NSCells">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="NSButtonCell" id="126046436">
-								<int key="NSCellFlags">-1543373312</int>
+								<int key="NSCellFlags">604110336</int>
 								<int key="NSCellFlags2">131072</int>
 								<string key="NSContents">Inline (moves with text)</string>
 								<object class="NSFont" key="NSSupport" id="26">
@@ -954,7 +954,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<string key="label">enabled: inspectedObjectsController.selection.isPlacementEditable</string>
 						<reference key="source" ref="544062517"/>
 						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="1061849176">
+						<object class="NSNibBindingConnector" key="connector" id="824239568">
 							<reference key="NSSource" ref="544062517"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">enabled: inspectedObjectsController.selection.isPlacementEditable</string>
@@ -1074,7 +1074,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<string key="label">enabled2: inspectedObjectsController.selection.canHaveIntroduction</string>
 						<reference key="source" ref="298414928"/>
 						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="750830824">
+						<object class="NSNibBindingConnector" key="connector" id="761121164">
 							<reference key="NSSource" ref="298414928"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">enabled2: inspectedObjectsController.selection.canHaveIntroduction</string>
@@ -1530,7 +1530,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<boolean value="NO"/>
 								</object>
 							</object>
-							<reference key="NSPreviousConnector" ref="1061849176"/>
+							<reference key="NSPreviousConnector" ref="824239568"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
@@ -1566,7 +1566,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<boolean value="NO"/>
 								</object>
 							</object>
-							<reference key="NSPreviousConnector" ref="750830824"/>
+							<reference key="NSPreviousConnector" ref="761121164"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
