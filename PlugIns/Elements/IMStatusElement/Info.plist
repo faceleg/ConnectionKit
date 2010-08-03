@@ -79,7 +79,7 @@
 	<true/>
 	<key>KTPluginInitialProperties</key>
 	<dict>
-		<key>selectedIMService</key>
+		<key>selectedServiceIndex</key>
 		<integer>0</integer>
 	</dict>
 	<key>KTPluginName</key>
@@ -90,8 +90,6 @@
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
 	<string>Contact Me</string>
-	<key>KTTemplateName</key>
-	<string>IMStatusTemplate</string>
 	<key>NSPrincipalClass</key>
 	<string>IMStatusPlugIn</string>
 </dict>
