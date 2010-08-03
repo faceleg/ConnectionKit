@@ -9,6 +9,14 @@
 #import "SVCalloutDOMController.h"
 
 
+@interface DOMElement (SVCalloutDOMController)
+- (DOMNodeList *)getElementsByClassName:(NSString *)name;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVCalloutDOMController
 
 #pragma mark Init & Dealloc
