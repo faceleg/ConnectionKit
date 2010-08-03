@@ -156,7 +156,6 @@ NSString *IMWantBorderKey = @"wantBorder";
 
         NSMutableString *writeableHTMLCode = [NSMutableString stringWithString:serviceHTMLCode];
         
-        //FIXME: do we still need -stringByAddingPercentEscapesWithSpacesAsPlusCharacters? expose it
         [writeableHTMLCode replaceOccurrencesOfString:@"#USER#" 
                                            withString:[self.username stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
                                               options:NSLiteralSearch 
@@ -173,7 +172,6 @@ NSString *IMWantBorderKey = @"wantBorder";
             onlineImagePath = [context relativeURLStringOfURL:contextURL];    
 
             // fix up HTML
-            //FIXME: do we still need -stringByAddingPercentEscapesWithSpacesAsPlusCharacters? expose it
             [writeableHTMLCode replaceOccurrencesOfString:@"#ONLINE#" 
                                                withString:[onlineImagePath stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
                                                   options:NSLiteralSearch 
@@ -191,18 +189,16 @@ NSString *IMWantBorderKey = @"wantBorder";
             onlineImagePath = [context relativeURLStringOfURL:contextURL];    
             
             // fix up HTML
-            //FIXME: do we still need -stringByAddingPercentEscapesWithSpacesAsPlusCharacters? expose it
             [writeableHTMLCode replaceOccurrencesOfString:@"#OFFLINE#" 
-                                               withString:offlineImagePath 
+                                               withString:[offlineImagePath stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES] 
                                                   options:NSLiteralSearch 
                                                     range:NSMakeRange(0,[writeableHTMLCode length])];
         }
         
         if ( self.headlineText )
         {
-            //FIXME: why aren't we using -stringByAddingPercentEscapesWithSpacesAsPlusCharacters here?
             [writeableHTMLCode replaceOccurrencesOfString:@"#HEADLINE#" 
-                                               withString:self.headlineText 
+                                               withString:[self.headlineText stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES] 
                                                   options:NSLiteralSearch 
                                                     range:NSMakeRange(0, [writeableHTMLCode length])];
         }
