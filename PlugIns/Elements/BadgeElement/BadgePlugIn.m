@@ -62,7 +62,7 @@ static NSArray *sAltStrings = nil;
 
 + (NSArray *)plugInKeys
 { 
-    return [NSSet setWithObjects:
+    return [NSArray arrayWithObjects:
             @"badgeTypeTag", 
             @"includeReferralCode", 
             @"openLinkInNewWindow",

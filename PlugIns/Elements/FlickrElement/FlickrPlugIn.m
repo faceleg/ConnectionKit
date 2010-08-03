@@ -53,7 +53,7 @@
 
 + (NSArray *)plugInKeys
 { 
-    return [NSSet setWithObjects:
+    return [NSArray arrayWithObjects:
             @"flickrID", 
             @"tag", 
             @"number", 

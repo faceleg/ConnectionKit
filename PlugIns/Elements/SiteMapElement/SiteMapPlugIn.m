@@ -47,7 +47,7 @@
 
 + (NSArray *)plugInKeys
 { 
-    return [NSSet setWithObjects:
+    return [NSArray arrayWithObjects:
             @"compact", 
             @"sections", 
             @"showHome", 

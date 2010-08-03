@@ -94,7 +94,7 @@
 
 + (NSArray *)plugInKeys
 { 
-    return [NSSet setWithObjects:
+    return [NSArray arrayWithObjects:
             @"linkList", 
             @"layout", 
             @"openInNewWindow", nil];

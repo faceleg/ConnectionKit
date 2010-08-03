@@ -56,7 +56,7 @@
 
 + (NSArray *)plugInKeys
 { 
-    return [NSSet setWithObjects:
+    return [NSArray arrayWithObjects:
             @"feedURL", 
             @"max", 
             @"key", 
