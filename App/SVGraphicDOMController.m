@@ -246,7 +246,7 @@
 
 #define MINDIMENSION 16.0
 
-- (NSInteger)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point
+- (SVGraphicHandle)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point
 {
     BOOL resizingWidth = NO;
     BOOL resizingHeight = NO;

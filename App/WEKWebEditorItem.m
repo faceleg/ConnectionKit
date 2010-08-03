@@ -364,7 +364,7 @@
 
 - (unsigned int)resizingMask; { return 0; }
 
-- (NSInteger)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point;
+- (SVGraphicHandle)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point;
 {    
     SUBCLASSMUSTIMPLEMENT;
     [self doesNotRecognizeSelector:_cmd];
