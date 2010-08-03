@@ -1179,7 +1179,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
 fallbackDOMRangeForNoSelection:(DOMRange *)proposedRange
                   event:(NSEvent *)selectionEvent;
 {
-    DOMRange *result = proposedRange;
+    DOMRange *result = nil;
     
     
     // Did they click in the sidebar?
