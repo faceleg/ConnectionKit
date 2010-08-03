@@ -252,13 +252,7 @@
 {
 	BWToolbarPullDownItem *result = [[BWToolbarPullDownItem alloc] initWithItemIdentifier:identifier];
     
-    
-    // Prepare the image	// ALREADY HAS ADD BADGE INCORPORATED!  image = [image imageWithCompositedAddBadge];
-	NSImage *image = [NSImage imageNamed:@"toolbar_add_pagelet"];
-    [result setImage:image];
-    
-    
-    // Generate the menu
+	// Generate the menu
     NSPopUpButton *pulldownButton = [result popUpButton];
     NSMenu *menu = [pulldownButton menu];
     

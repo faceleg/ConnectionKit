@@ -3,7 +3,7 @@
 
 #define TOOLBAR_ADD_PAGE NSLocalizedStringWithDefaultValue(@"TOOLBAR_ADD_PAGE", nil, [NSBundle mainBundle], @"New", @"")
 #define PALETTE_ADD_PAGE NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGE", nil, [NSBundle mainBundle], @"New Page", @"")
-#define PALETTE_ADD_PAGE_POPUP NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGE_POPUP", nil, [NSBundle mainBundle], @"Pages", @"")
+#define PALETTE_ADD_PAGE_POPUP NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGE_POPUP", nil, [NSBundle mainBundle], @"New", @"")
 #define TOOLTIP_ADD_PAGE NSLocalizedStringWithDefaultValue(@"TOOLTIP_ADD_PAGE", nil, [NSBundle mainBundle], @"Add a new page to your site.", @"tooltip")
 
 #define TOOLBAR_INSERT_TEXT_BOX NSLocalizedStringWithDefaultValue(@"TOOLBAR_INSERT_TEXT_BOX", nil, [NSBundle mainBundle], @"Text Box", @"")

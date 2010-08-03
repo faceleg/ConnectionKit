@@ -230,7 +230,7 @@
 
 - (NSImage *)pluginIcon
 {
-    return [NSImage imageNamed:@"html_element"];
+    return [NSImage imageNamed:@"toolbar_html_element"];
 }
 
 @end
