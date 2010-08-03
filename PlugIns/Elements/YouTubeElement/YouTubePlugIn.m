@@ -142,7 +142,7 @@
 //	}	
 //	return result;
     
-    NSUInteger result = 480; // start with something
+    NSUInteger result = 200; // start with something
     
     NSNumber *containerWidth = [[self container] containerWidth];
     if ( containerWidth )
@@ -209,7 +209,6 @@
     result += 25; // room for the control bar
     
     return result;
-
 }
 
 
