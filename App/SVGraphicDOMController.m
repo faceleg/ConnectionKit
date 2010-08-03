@@ -244,6 +244,84 @@
     return result;
 }
 
+#define MINDIMENSION 16.0
+
+- (NSInteger)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point
+{
+    BOOL resizingWidth = NO;
+    BOOL resizingHeight = NO;
+    
+    
+    // Start with the original bounds.
+    NSRect bounds = [[self selectableDOMElement] boundingBox];
+    
+    // Is the user changing the width of the graphic?
+    if (handle == kSVGraphicUpperLeftHandle ||
+        handle == kSVGraphicMiddleLeftHandle ||
+        handle == kSVGraphicLowerLeftHandle)
+    {
+        // Change the left edge of the graphic.
+        resizingWidth = YES;
+        bounds.size.width = NSMaxX(bounds) - point.x;
+        bounds.origin.x = point.x;
+    }
+    else if (handle == kSVGraphicUpperRightHandle ||
+             handle == kSVGraphicMiddleRightHandle ||
+             handle == kSVGraphicLowerRightHandle)
+    {
+        // Change the right edge of the graphic.
+        resizingWidth = YES;
+        bounds.size.width = point.x - bounds.origin.x;
+    }
+    
+    // Did the user actually flip the graphic over?   OR RESIZE TO TOO SMALL?
+    if (bounds.size.width <= MINDIMENSION) bounds.size.width = MINDIMENSION;
+    
+    
+    
+    // Is the user changing the height of the graphic?
+    if (handle == kSVGraphicUpperLeftHandle ||
+        handle == kSVGraphicUpperMiddleHandle ||
+        handle == kSVGraphicUpperRightHandle) 
+    {
+        // Change the top edge of the graphic.
+        resizingHeight = YES;
+        bounds.size.height = NSMaxY(bounds) - point.y;
+        bounds.origin.y = point.y;
+    }
+    else if (handle == kSVGraphicLowerLeftHandle ||
+             handle == kSVGraphicLowerMiddleHandle ||
+             handle == kSVGraphicLowerRightHandle)
+    {
+        // Change the bottom edge of the graphic.
+        resizingHeight = YES;
+        bounds.size.height = point.y - bounds.origin.y;
+    }
+    
+    // Did the user actually flip the graphic upside down?   OR RESIZE TO TOO SMALL?
+    if (bounds.size.height<=MINDIMENSION) bounds.size.height = MINDIMENSION;
+    
+    
+    // Size calculated – now what to store?
+    SVGraphic *graphic = [self representedObject];
+	
+    if (resizingWidth)
+    {
+        [graphic setValue:[NSNumber numberWithFloat:bounds.size.width] forKey:@"width"];
+    }
+    
+    
+    
+    // The DOM has been updated, which may have caused layout. So position the mouse cursor to match
+    /*point = [self locationOfHandle:handle];
+     NSView *view = [[self HTMLElement] documentView];
+     NSPoint basePoint = [[view window] convertBaseToScreen:[view convertPoint:point toView:nil]];
+     CGWarpMouseCursorPosition(NSPointToCGPoint(basePoint));
+     */
+    
+    return handle;
+}
+
 @end
 
 
