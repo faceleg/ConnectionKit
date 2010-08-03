@@ -214,6 +214,22 @@
 
 #pragma mark Resize
 
+- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
+{
+    // Size calculated – now what to store?
+    SVGraphic *graphic = [self representedObject];
+	[graphic setValue:[NSNumber numberWithFloat:size.width] forKey:@"width"];
+    
+    
+    
+    // The DOM has been updated, which may have caused layout. So position the mouse cursor to match
+    /*point = [self locationOfHandle:handle];
+     NSView *view = [[self HTMLElement] documentView];
+     NSPoint basePoint = [[view window] convertBaseToScreen:[view convertPoint:point toView:nil]];
+     CGWarpMouseCursorPosition(NSPointToCGPoint(basePoint));
+     */
+}
+
 - (unsigned int)resizingMask
 {
     DOMElement *element = [self graphicDOMElement];
@@ -296,23 +312,10 @@
     return bounds.size;
 }
 
-- (SVGraphicHandle)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point
+- (SVGraphicHandle)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point;
 {
     NSSize size = [self sizeByMovingHandle:&handle toPoint:point];
-
-    // Size calculated – now what to store?
-    SVGraphic *graphic = [self representedObject];
-	[graphic setValue:[NSNumber numberWithFloat:size.width] forKey:@"width"];
-    
-    
-    
-    // The DOM has been updated, which may have caused layout. So position the mouse cursor to match
-    /*point = [self locationOfHandle:handle];
-     NSView *view = [[self HTMLElement] documentView];
-     NSPoint basePoint = [[view window] convertBaseToScreen:[view convertPoint:point toView:nil]];
-     CGWarpMouseCursorPosition(NSPointToCGPoint(basePoint));
-     */
-    
+    [self resizeToSize:size byMovingHandle:handle];
     return handle;
 }
 

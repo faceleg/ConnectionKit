@@ -125,42 +125,8 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Resizing
 
-- (NSPoint)locationOfHandle:(SVGraphicHandle)handle;
+- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
 {
-    SVSelectionBorder *border = [self newSelectionBorder];
-    
-    NSPoint result = [border locationOfHandle:handle
-                                    frameRect:[border frameRectForGraphicBounds:
-                                               [[self HTMLElement] boundingBox]]];
-    
-    [border release];
-    return result;
-}
-
-- (DOMElement *)graphicDOMElement; { return [self HTMLElement]; }
-
-- (unsigned int)resizingMask
-{
-    // Super's behaviour is enough to handle width, but we want height to be adjustable too.
-    unsigned int result = (kCALayerBottomEdge | [super resizingMask]);
-    return result;
-}
-
-#define MINDIMENSION 16.0
-
-- (NSSize)sizeByMovingHandle:(SVGraphicHandle *)handle toPoint:(NSPoint)point;
-{
-    NSSize result = [super sizeByMovingHandle:handle toPoint:point];
-	
-    
-    return result;
-}
-
-- (SVGraphicHandle)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point
-{
-    NSSize size = [self sizeByMovingHandle:&handle toPoint:point];
-    
-        
     // Size calculated – now what to store?
     BOOL resizingWidth = (handle == kSVGraphicUpperLeftHandle ||
                           handle == kSVGraphicMiddleLeftHandle ||
@@ -177,11 +143,11 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
                            handle == kSVGraphicLowerRightHandle);
     
     
-    SVImage *image = [self representedObject];
+    // Snap to original size if you are very close to it
+	SVImage *image = [self representedObject];
 	CGSize originalSize = [image originalSize];
 	
 #define SNAP 4
-	// Snap to original size if you are very close to it
 	if (resizingWidth && ( abs(size.width - originalSize.width) < SNAP) )
 	{
 		size.width = originalSize.width;
@@ -208,18 +174,30 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     {
         [image setHeight:[NSNumber numberWithFloat:size.height]];
     }
-    
-    
-    
-    // The DOM has been updated, which may have caused layout. So position the mouse cursor to match
-    /*point = [self locationOfHandle:handle];
-    NSView *view = [[self HTMLElement] documentView];
-    NSPoint basePoint = [[view window] convertBaseToScreen:[view convertPoint:point toView:nil]];
-    CGWarpMouseCursorPosition(NSPointToCGPoint(basePoint));
-    */
-    
-    return handle;
 }
+
+- (NSPoint)locationOfHandle:(SVGraphicHandle)handle;
+{
+    SVSelectionBorder *border = [self newSelectionBorder];
+    
+    NSPoint result = [border locationOfHandle:handle
+                                    frameRect:[border frameRectForGraphicBounds:
+                                               [[self HTMLElement] boundingBox]]];
+    
+    [border release];
+    return result;
+}
+
+- (DOMElement *)graphicDOMElement; { return [self HTMLElement]; }
+
+- (unsigned int)resizingMask
+{
+    // Super's behaviour is enough to handle width, but we want height to be adjustable too.
+    unsigned int result = (kCALayerBottomEdge | [super resizingMask]);
+    return result;
+}
+
+#define MINDIMENSION 16.0
 
 #pragma mark Drawing
 
