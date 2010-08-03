@@ -106,7 +106,10 @@ NSString *IMWantBorderKey = @"wantBorder";
 { 
     return [NSArray setWithObjects:
             @"username", 
-            @"selectedServiceIndex", 
+            @"selectedServiceIndex",
+            @"headlineText",
+            @"offlineText",
+            @"onlineText",
             nil];
 }
 
