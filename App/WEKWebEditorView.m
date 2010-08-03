@@ -1137,10 +1137,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Tell controllers not to draw selected during resize
     _resizingGraphic = YES;
     
-    NSArray *selection = [[self selectedItems] copy];   // running event loop might change selection
-    [selection setValue:[NSNumber numberWithBool:NO] forKey:@"selected"];
-    
-    
     while ([event type] != NSLeftMouseUp)
     {
         // Handle the event
@@ -1152,10 +1148,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     
     _resizingGraphic = NO;
-    
-    // Tell controllers they're selected again
-    [selection setValue:[NSNumber numberWithBool:YES] forKey:@"selected"];
-    [selection release];
     
     // Update cursor for finish location
     [[NSCursor arrowCursor] set];

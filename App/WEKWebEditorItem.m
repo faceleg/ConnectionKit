@@ -420,6 +420,7 @@
         if ([view needsToDrawRect:borderDrawingRect])
         {
             [border setResizingMask:[self resizingMask]];
+            [border setEditing:[[self webEditor] inLiveGraphicResize]];
             [border drawWithGraphicBounds:frameRect inView:view];
         }
         
