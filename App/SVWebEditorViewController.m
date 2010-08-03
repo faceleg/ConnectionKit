@@ -1363,6 +1363,15 @@ fallbackDOMRangeForNoSelection:(DOMRange *)proposedRange
 
 - (NSObject *)destinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
 {
+    // Claim all non-textual drags
+    NSPasteboard *pasteboard = [dragInfo draggingPasteboard];
+    NSArray *types = [pasteboard types];
+    if ([types containsObject:NSStringPboardType])
+    {
+        return nil;
+    }
+    
+    
     WEKWebEditorView *webEditor = [self webEditor];
     
     NSDictionary *element = [[webEditor webView] elementAtPoint:
