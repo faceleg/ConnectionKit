@@ -35,11 +35,11 @@
 //
 
 #import "IMStatusPlugIn.h"
-
 #import "IMStatusService.h"
 
 #import "ABPerson+IMStatus.h"
 #import <AddressBook/AddressBook.h>
+
 
 NSString *IMServiceKey = @"service";
 NSString *IMHTMLKey = @"html"; 
@@ -48,64 +48,19 @@ NSString *IMOfflineImageKey = @"offline";
 NSString *IMWantBorderKey = @"wantBorder";
 
 
-// LocalizedStringInThisBundle(@"(Please set your ID using the Pagelet Inspector)", @"Used in template");
-
-
-
 @interface IMStatusPlugIn (Private)
 - (NSString *)onlineImagePath;
 - (NSString *)offlineImagePath;
+- (NSImage *)imageWithBaseImage:(NSImage *)aBaseImage 
+                       headline:(NSString *)aHeadline 
+                         status:(NSString *)aStatus;
 @end
 
 
 @implementation IMStatusPlugIn
 
-- (id)init	// Note: [self bundle] not yet defined!
-{
-	if ((self = [super init]))
-	{
-		_configs = [[NSMutableArray alloc] initWithCapacity:4];
-		
-		NSMutableDictionary *ichat = [NSMutableDictionary dictionary];
-		[ichat setObject:@"iChat" forKey:IMServiceKey];
-		[ichat setObject:@"<a class=\"imageLink\" href=\"aim:goim?screenname=#USER#\"><img src=\"http://big.oscar.aol.com/#USER#?on_url=#ONLINE#&amp;off_url=#OFFLINE#\" alt=\"#HEADLINE#\" width=\"175\" height=\"75\" border=\"0\" /></a>" forKey:IMHTMLKey];
-		[ichat setObject:@"online.png" forKey:IMOnlineImageKey];
-		[ichat setObject:@"offline.png" forKey:IMOfflineImageKey];
-		[_configs addObject:ichat];
-		
-		
-		NSMutableDictionary *skype = [NSMutableDictionary dictionary];
-		[skype setObject:@"Skype" forKey:IMServiceKey];
-		[skype setObject:@"<script type=\"text/javascript\" src=\"http://download.skype.com/share/skypebuttons/js/skypeCheck.js\"></script><a class=\"imageLink\" href=\"skype:#USER#?call\"><img src=\"http://mystatus.skype.com/bigclassic/#USER#\" style=\"border: none;\" width=\"182\" height=\"44\" alt=\"#HEADLINE#\" /></a>" forKey:IMHTMLKey];
-		[skype setObject:[NSNumber numberWithBool:YES] forKey:IMWantBorderKey];
-		NSString *pathForSkype = [[NSBundle bundleForClass:[self class]] pathForImageResource:@"online_skype"];
-		if (pathForSkype) {
-			[skype setObject:pathForSkype forKey:IMOnlineImageKey];
-		}
-		[_configs addObject:skype];
-		
-		
-		NSMutableDictionary *yahoo = [NSMutableDictionary dictionary];
-		[yahoo setObject:@"Yahoo! Messenger" forKey:IMServiceKey];
-		[yahoo setObject:@"<a class=\"imageLink\" href=\"<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=#USER#&src=pg\"><img border=\"0\" src=\"http://opi.yahoo.com/online?u=#USER#&m=g&t=1\" /></a>" forKey:IMHTMLKey];
-		[yahoo setObject:@"online.png" forKey:IMOnlineImageKey];
-		[yahoo setObject:@"offline.png" forKey:IMOfflineImageKey];
-		[_configs addObject:yahoo];
-		
-		
-		// Add any from user defaults
-		NSArray *ud = [[NSUserDefaults standardUserDefaults] objectForKey:@"IMServices"];
-		if (ud)
-		{ 
-			[_configs addObjectsFromArray:ud];
-		}	
-	}
-	return self;
-}
-
 - (void)dealloc
 {
-    [_configs release]; _configs = nil;
     self.username = nil;
     self.headlineText = nil;
     self.offlineText = nil;
@@ -124,24 +79,23 @@ NSString *IMWantBorderKey = @"wantBorder";
     // Try to set the username and service from the user's address book
     ABPerson *card = [[ABAddressBook sharedAddressBook] me];
     
-    NSUInteger service = IMServiceSkype;
-    NSString *testname = [card firstAIMUsername];
-    if ( testname ) 
+    NSUInteger serviceIndex = IMServiceSkype;
+    NSString *serviceUsername = [card firstAIMUsername];
+    if ( serviceUsername ) 
     {
-        service = IMServiceIChat;
+        serviceIndex = IMServiceIChat;
     }
     else
     {
-        testname = [card firstYahooUsername];
-        if ( testname ) 
+        serviceUsername = [card firstYahooUsername];
+        if ( serviceUsername ) 
         {
-            service = IMServiceYahoo;
+            serviceIndex = IMServiceYahoo;
         }
-        //FIXME: why aren't we setting Skype name?
     }
     
-    self.selectedIMService = service;
-    self.username = testname;
+    self.selectedServiceIndex = serviceIndex;
+    self.username = serviceUsername;
 }
 
 
@@ -152,22 +106,118 @@ NSString *IMWantBorderKey = @"wantBorder";
 { 
     return [NSSet setWithObjects:
             @"username", 
-            @"selectedIMService", 
+            @"selectedServiceIndex", 
             nil];
 }
 
 
 #pragma mark -
-#pragma mark Initialization
+#pragma mark HTML Generation
 
-+ (void)initialize
+- (void)writeHTML:(id <SVPlugInContext>)context
 {
-	// Value transformers
-	NSValueTransformer *valueTransformer;
-	valueTransformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:IMServiceIChat]];
-	[NSValueTransformer setValueTransformer:valueTransformer forName:@"IMStatusPageletServiceIsIChat"];
-	[valueTransformer release];
+    NSDictionary *divAttrs = [NSDictionary dictionaryWithObject:@"" forKey:@"style"];
+    [[context HTMLWriter] startElement:@"div" attributes:divAttrs];
+    
+    if ( self.username )
+    {
+        // add our dependent keys
+        [context addDependencyForKeyPath:@"username" ofObject:self];
+        [context addDependencyForKeyPath:@"selectedServiceIndex" ofObject:self];
+        
+        if ( self.selectedServiceIsIChat )
+        {
+            [context addDependencyForKeyPath:@"headlineText" ofObject:self];
+            [context addDependencyForKeyPath:@"offlineText" ofObject:self];
+            [context addDependencyForKeyPath:@"onlineText" ofObject:self];
+        }
+        
+        // Get the appropriate code for the publishing mode
+        IMStatusService *service = [self selectedService];
+        
+        NSString *serviceHTMLCode = nil;
+        if ( [context isForPublishing] ) 
+        {
+            serviceHTMLCode = [service publishingHTMLCode];
+        }
+        else if ( [context liveDataFeeds] ) 
+        {
+            serviceHTMLCode = [service livePreviewHTMLCode];
+        }
+        else 
+        {
+            serviceHTMLCode = [service nonLivePreviewHTMLCode];
+        }
+        
+        // Parse the code to get the finished HTML
+
+        NSMutableString *writeableHTMLCode = [NSMutableString stringWithString:serviceHTMLCode];
+        
+        //FIXME: do we still need -stringByAddingPercentEscapesWithSpacesAsPlusCharacters? expose it
+        [writeableHTMLCode replaceOccurrencesOfString:@"#USER#" 
+                                           withString:[self.username stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
+                                              options:NSLiteralSearch 
+                                                range:NSMakeRange(0, [writeableHTMLCode length])];
+        
+        NSString *onlineImagePath = [self onlineImagePath];
+        if ( onlineImagePath )
+        {
+            // add resource to context
+            NSURL *onlineImageURL = [NSURL fileURLWithPath:onlineImagePath];
+            NSURL *contextURL = [context addResourceWithURL:onlineImageURL];
+            
+            // generate relative string
+            onlineImagePath = [context relativeURLStringOfURL:contextURL];    
+
+            // fix up HTML
+            //FIXME: do we still need -stringByAddingPercentEscapesWithSpacesAsPlusCharacters? expose it
+            [writeableHTMLCode replaceOccurrencesOfString:@"#ONLINE#" 
+                                               withString:[onlineImagePath stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
+                                                  options:NSLiteralSearch 
+                                                    range:NSMakeRange(0,[writeableHTMLCode length])];
+        }
+        
+        NSString *offlineImagePath = [self offlineImagePath];
+        if ( offlineImagePath )
+        {
+            // add resource to context
+            NSURL *offlineImageURL = [NSURL fileURLWithPath:offlineImagePath];
+            NSURL *contextURL = [context addResourceWithURL:offlineImageURL];
+            
+            // generate relative string
+            onlineImagePath = [context relativeURLStringOfURL:contextURL];    
+            
+            // fix up HTML
+            //FIXME: do we still need -stringByAddingPercentEscapesWithSpacesAsPlusCharacters? expose it
+            [writeableHTMLCode replaceOccurrencesOfString:@"#OFFLINE#" 
+                                               withString:offlineImagePath 
+                                                  options:NSLiteralSearch 
+                                                    range:NSMakeRange(0,[writeableHTMLCode length])];
+        }
+        
+        if ( self.headlineText )
+        {
+            //FIXME: why aren't we using -stringByAddingPercentEscapesWithSpacesAsPlusCharacters here?
+            [writeableHTMLCode replaceOccurrencesOfString:@"#HEADLINE#" 
+                                               withString:self.headlineText 
+                                                  options:NSLiteralSearch 
+                                                    range:NSMakeRange(0, [writeableHTMLCode length])];
+        }
+        
+        [[context HTMLWriter] writeHTMLString:writeableHTMLCode];
+    }
+    else
+    {
+        NSString *noIDMessage = LocalizedStringInThisBundle(@"(Please set your ID using the object inspector)", @"");
+        [[context HTMLWriter] writeText:noIDMessage];
+    }
+
+    [[context HTMLWriter] endElement]; // </div>
 }
+
+
+#pragma mark -
+#pragma mark Badge Image Generation
 
 + (NSImage *)baseOnlineIChatImage
 {
@@ -195,168 +245,6 @@ NSString *IMWantBorderKey = @"wantBorder";
 	}
 	
 	return sOfflineBaseImage;
-}
-
-
-#pragma mark -
-#pragma mark Services
-
-/*	Convenient shortcut to the equivalent class method so it can be bound to
- */
-- (NSArray *)services
-{
-	return [IMStatusService services];
-}
-
-- (IMStatusService *)selectedService
-{
-	return [[IMStatusService services] objectAtIndex:self.selectedIMService];
-}
-
-#pragma mark -
-#pragma mark HTML
-
-- (NSString *)generateHTMLPublishing:(BOOL)isPublishing livePreview:(BOOL)isLivePreview
-{
-	//return nil;
-	
-	/*
-	return [[self selectedService] badgeHTMLWithUsername:[[self delegateOwner] valueForKey:@"username"]
-												headline:[[self delegateOwner] valueForKey:@"headlineText"]
-											 onlineLabel:[[self delegateOwner] valueForKey:@"onlineText"]
-											offlineLabel:[[self delegateOwner] valueForKey:@"offlineText"]
-											isPublishing:publishing
-											 livePreview:livePreview];
-											*/
-											
-	IMStatusService *service = [self selectedService];
-	
-	// Get the appropriate code for the publishing mode
-	NSString *HTMLCode = nil;
-	if (isPublishing) {
-		HTMLCode = [service publishingHTMLCode];
-	}
-	else if (isLivePreview) {
-		HTMLCode = [service livePreviewHTMLCode];
-	}
-	else {
-		HTMLCode = [service nonLivePreviewHTMLCode];
-	}
-	
-	NSMutableString *result = [NSMutableString stringWithString:HTMLCode];
-	
-	// Parse the code to get the finished HTML
-	[result replaceOccurrencesOfString:@"#USER#" 
-						    withString:[self.username stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
-							   options:NSLiteralSearch 
-							     range:NSMakeRange(0, [result length])];
-	
-	NSString *onlineImagePath = [self onlineImagePath];
-	if (onlineImagePath)
-	{
-		// How we reference the path depends on publishing/previewing
-		if (isPublishing) {
-            // need to ask context for resource URL
-			onlineImagePath = [[[[[self page] documentInfo] hostProperties] URLForResourceFile:onlineImagePath] absoluteString];
-		}
-		else {
-			NSURL *baseURL = [NSURL fileURLWithPath:onlineImagePath];
-			onlineImagePath = [baseURL absoluteString];
-		}
-		
-		[result replaceOccurrencesOfString:@"#ONLINE#" 
-							  withString:[onlineImagePath stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
-								 options:NSLiteralSearch 
-								   range:NSMakeRange(0,[result length])];
-	}
-	
-	NSString *offlineImagePath = [self offlineImagePath];
-	if (offlineImagePath)
-	{
-		// How we reference the path depends on publishing/previewing
-		if (isPublishing) {
-			offlineImagePath = [[[[[self page] documentInfo] hostProperties] URLForResourceFile:offlineImagePath] absoluteString];
-		}
-		else {
-			NSURL *baseURL = [NSURL fileURLWithPath:offlineImagePath];
-			offlineImagePath = [baseURL absoluteString];
-		}
-		
-		[result replaceOccurrencesOfString:@"#OFFLINE#" 
-							  withString:offlineImagePath 
-								 options:NSLiteralSearch 
-								   range:NSMakeRange(0,[result length])];
-	}
-
-	[result replaceOccurrencesOfString:@"#HEADLINE#" 
-						    withString:self.headlineText 
-							   options:NSLiteralSearch 
-							     range:NSMakeRange(0, [result length])];
-	
-	return result;
-}
-
-- (NSString *)publishingHTML
-{
-	return [self generateHTMLPublishing:YES livePreview:NO];
-}
-
-- (NSString *)livePreviewHTML
-{
-	return [self generateHTMLPublishing:NO livePreview:YES];
-}
-
-- (NSString *)nonLivePreviewHTML
-{
-	return [self generateHTMLPublishing:NO livePreview:NO];
-}
-
-#pragma mark -
-#pragma mark Other
-
-
-- (NSImage *)imageWithBaseImage:(NSImage *)aBaseImage headline:(NSString *)aHeadline status:(NSString *)aStatus
-{
-	NSFont* font1 = [NSFont boldSystemFontOfSize:[NSFont systemFontSize]];
-	NSFont* font2 = [NSFont boldSystemFontOfSize:[NSFont smallSystemFontSize]];
-	NSShadow *aShadow = [[[NSShadow alloc] init] autorelease];
-	[aShadow setShadowOffset:NSMakeSize(0.5, -2.0)];
-	[aShadow setShadowBlurRadius:2.0];
-	[aShadow setShadowColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.7]];
-	
-	NSMutableDictionary *attributes1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-		font1, NSFontAttributeName, 
-		aShadow, NSShadowAttributeName, 
-		[NSColor colorWithCalibratedWhite:1.0 alpha:1.0], NSForegroundColorAttributeName,
-		nil];
-
-	NSMutableDictionary *attributes2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-		font2, NSFontAttributeName, 
-		aShadow, NSShadowAttributeName, 
-		[NSColor colorWithCalibratedWhite:1.0 alpha:1.0], NSForegroundColorAttributeName,
-		nil];
-	
-	NSSize textSize1 = [aHeadline sizeWithAttributes:attributes1];
-	if (textSize1.width > 100)
-	{
-		attributes1 = attributes2;	// use the smaller size if it's going to be too large to fit well, but otherwise overflow...
-	}
-
-	NSImage *result = [[[NSImage alloc] initWithSize:[aBaseImage size]] autorelease];
-	[result lockFocus];
-	[aBaseImage drawAtPoint:NSZeroPoint fromRect:NSMakeRect(0,0,[aBaseImage size].width, [aBaseImage size].height) operation:NSCompositeCopy fraction:1.0];
-	
-	[aHeadline drawAtPoint:NSMakePoint(19,40) withAttributes:attributes1];
-	[aStatus drawAtPoint:NSMakePoint(32,12) withAttributes:attributes2];
-
-	[result unlockFocus];
-	return result;
-}
-
-- (BOOL) wantBorder
-{
-	BOOL result = [[[_configs objectAtIndex:self.selectedIMService] objectForKey:IMWantBorderKey] boolValue];
-	return result;
 }
 
 - (NSString *)onlineImagePath
@@ -402,83 +290,65 @@ NSString *IMWantBorderKey = @"wantBorder";
 	return result;
 }
 
-//- (NSString *)resourceDirectory
-//{
-//	if ([[self document] publishingMode] == kGeneratingPreview)
-//	{
-//		return [[NSURL fileURLWithPath:[ resourcePath]] absoluteString];
-//	}
-//	else
-//	{
-//		return [[self document] absolutePathToResourcePath];
-//	}
-//}
-
-- (NSString *)serviceHTML
+- (NSImage *)imageWithBaseImage:(NSImage *)aBaseImage headline:(NSString *)aHeadline status:(NSString *)aStatus
 {
-    NSUInteger selectedService = self.selectedIMService;
-	NSMutableString *html = [NSMutableString stringWithString:[[_configs objectAtIndex:selectedService] objectForKey:IMHTMLKey]];
-	[html replaceOccurrencesOfString:@"#USER#" 
-						  withString:self.username 
-							 options:NSLiteralSearch 
-							   range:NSMakeRange(0,[html length])];
-	if ([self onlineImagePath])
-	{
-		[html replaceOccurrencesOfString:@"#ONLINE#" 
-         //FIXME: use context resource URL
-							  withString:[[[[[self page] documentInfo] hostProperties] URLForResourceFile:[self onlineImagePath]] absoluteString] 
-								 options:NSLiteralSearch 
-								   range:NSMakeRange(0,[html length])];
-	}
+	NSFont* font1 = [NSFont boldSystemFontOfSize:[NSFont systemFontSize]];
+	NSFont* font2 = [NSFont boldSystemFontOfSize:[NSFont smallSystemFontSize]];
+	NSShadow *aShadow = [[[NSShadow alloc] init] autorelease];
+	[aShadow setShadowOffset:NSMakeSize(0.5, -2.0)];
+	[aShadow setShadowBlurRadius:2.0];
+	[aShadow setShadowColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.7]];
 	
-	if ([self offlineImagePath])
+	NSMutableDictionary *attributes1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+		font1, NSFontAttributeName, 
+		aShadow, NSShadowAttributeName, 
+		[NSColor colorWithCalibratedWhite:1.0 alpha:1.0], NSForegroundColorAttributeName,
+		nil];
+
+	NSMutableDictionary *attributes2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+		font2, NSFontAttributeName, 
+		aShadow, NSShadowAttributeName, 
+		[NSColor colorWithCalibratedWhite:1.0 alpha:1.0], NSForegroundColorAttributeName,
+		nil];
+	
+	NSSize textSize1 = [aHeadline sizeWithAttributes:attributes1];
+	if (textSize1.width > 100)
 	{
-		[html replaceOccurrencesOfString:@"#OFFLINE#" 
-         //FIXME: use context resource URL
-							  withString:[[[[[self page] documentInfo] hostProperties] URLForResourceFile:[self offlineImagePath]] absoluteString]
-								 options:NSLiteralSearch 
-								   range:NSMakeRange(0,[html length])];
+		attributes1 = attributes2;	// use the smaller size if it's going to be too large to fit well, but otherwise overflow...
 	}
 
-	// put in the headline for the alt text
-	[html replaceOccurrencesOfString:@"#HEADLINE#" 
-						  withString:self.headlineText 
-							 options:NSLiteralSearch 
-							   range:NSMakeRange(0,[html length])];
+	NSImage *result = [[[NSImage alloc] initWithSize:[aBaseImage size]] autorelease];
+	[result lockFocus];
+	[aBaseImage drawAtPoint:NSZeroPoint fromRect:NSMakeRect(0,0,[aBaseImage size].width, [aBaseImage size].height) operation:NSCompositeCopy fraction:1.0];
 	
-	return html;
+	[aHeadline drawAtPoint:NSMakePoint(19,40) withAttributes:attributes1];
+	[aStatus drawAtPoint:NSMakePoint(32,12) withAttributes:attributes2];
+
+	[result unlockFocus];
+	return result;
 }
 
-
-// called via recursiveComponentPerformSelector
-
-//FIXME: writeHTML should be reserving the resources
-- (void)addResourcesToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage
-{
-	NSString *on = [self onlineImagePath];
-	NSString *off = [self offlineImagePath];
-	
-	if (on && off)
-	{
-		// only add if we have both as only on is a placeholder
-		[aSet addObject:on];
-		[aSet addObject:off];
-	}
-}
-
-/* took out:
-<key>KTPluginResourcesNeeded</key>
-<array>
-<string>online.png</string>
-<string>offline.png</string>
-</array>
-*/
 
 #pragma mark -
 #pragma mark Properties
 
+- (NSArray *)services
+{
+	return [IMStatusService services];
+}
+
+- (IMStatusService *)selectedService
+{
+	return [[IMStatusService services] objectAtIndex:self.selectedServiceIndex];
+}
+
+- (BOOL)selectedServiceIsIChat
+{
+    return (IMServiceIChat == self.selectedServiceIndex);
+}
+
 @synthesize username = _username;
-@synthesize selectedIMService = _selectedIMService;
+@synthesize selectedServiceIndex = _selectedServiceIndex;
 @synthesize headlineText = _headlineText;
 @synthesize offlineText = _offlineText;
 @synthesize onlineText = _onlineText;
