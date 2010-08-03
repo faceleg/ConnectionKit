@@ -317,7 +317,7 @@
 @synthesize userVideoCode = _userVideoCode;
 - (void)setUserVideoCode:(NSString *)string
 {
-    [_userVideoCode release];
+    [_userVideoCode autorelease];
     _userVideoCode = [string copy];
     
     // When the user sets a video code, figure the ID from it
@@ -329,7 +329,7 @@
 @synthesize color2 = _color2;
 - (void)setColor2:(NSColor *)color
 {
-    [_color2 release];
+    [_color2 autorelease];
     _color2 = [color copy];
     
     // When the user adjusts the main colour WITHOUT having adjusted the secondary color, re-generate
@@ -348,7 +348,7 @@
 @synthesize color1 = _color1;
 - (void)setColor1:(NSColor *)color
 {
-    [_color1 release];
+    [_color1 autorelease];
     _color1 = [color copy];
     
     // When the user sets their own secondary color mark it so no future changes are made by accident
