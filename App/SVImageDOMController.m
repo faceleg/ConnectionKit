@@ -155,7 +155,7 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Start with the original bounds.
-    NSRect bounds = [[self HTMLElement] boundingBox];
+    NSRect bounds = [[self selectableDOMElement] boundingBox];
     
     // Is the user changing the width of the graphic?
     if (handle == kSVGraphicUpperLeftHandle ||
