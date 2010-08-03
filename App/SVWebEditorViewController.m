@@ -389,7 +389,9 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     }
     
     
+    // Need no further action during live resize
     WEKWebEditorView *webEditor = [self webEditor];
+    if ([webEditor inLiveGraphicResize]) return;
     
     
     // Cancel the timer
