@@ -389,7 +389,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     }
     
     
-    // Need no further action during live resize
+    // Need no further action during live resize. #83927
     WEKWebEditorView *webEditor = [self webEditor];
     if ([webEditor inLiveGraphicResize]) return;
     
