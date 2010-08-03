@@ -21,7 +21,7 @@
 
 var ddsmoothmenu={
 
-/* 2010-08-01 ssp: 
+/* 2010-08-01, ssp: 
 	Use shorter times. Check whether they may still be too long. 
 	We don't use the padding right feature and want none of it. 
 */
@@ -58,8 +58,8 @@ buildmenu:function($, setting){
 	var $mainmenu=$("#"+setting.mainmenuid+">ul") //reference main menu UL
 	$mainmenu.parent().get(0).className=setting.classname || "ddsmoothmenu"
 	var $headers=$mainmenu.find("ul").parent()
-	/* ssp, 2010-08-01
-	replaced selector a:eq(0) by a:eq(0),.in:eq(0) in the following lines, 
+	/* 2010-08-01, ssp
+		Replaced selector a:eq(0) by a:eq(0),.in:eq(0) in the following lines, 
 		so we cann affect the .currentItem without an a but just a span.in as well.
 	*/
 	$headers.hover(
@@ -71,6 +71,9 @@ buildmenu:function($, setting){
 		}
 	)
 	$headers.each(function(i){ //loop through each LI header
+		/* 2010-08-01, ssp:
+			Use really high z-index, so we are sure to exceed z-indices used in all designs.
+		*/
 		var $curobj=$(this).css({zIndex: 100000-i}) //reference current LI header
 		var $subul=$(this).find('ul:eq(0)').css({display:'block'})
 		$subul.data('timers', {})
@@ -100,11 +103,12 @@ buildmenu:function($, setting){
 			element = $curobj.children(".in:eq(0)");
 		}
 		
-		element.append( //add arrow images
-			'<img src="'+ (this.istopheader && setting.orientation!='v'? smoothmenu.arrowimages.down[1] : smoothmenu.arrowimages.right[1])
-			+'" class="' + (this.istopheader && setting.orientation!='v'? smoothmenu.arrowimages.down[0] : smoothmenu.arrowimages.right[0])
-			+ '" />'
-		)
+		/* 2010-08-03, ssp:
+			Don't use images like original but insert a div instead,
+			which will be styles approriately by CSS.
+		*/
+		element.append('<span class="submenu-indicator"></span>');
+		
 		if (smoothmenu.shadow.enable){
 			this._shadowoffset={x:(this.istopheader?$subul.offset().left+smoothmenu.shadow.offsetx : this._dimensions.w), y:(this.istopheader? $subul.offset().top+smoothmenu.shadow.offsety : $curobj.position().top)} //store this shadow's offsets
 			if (this.istopheader)
