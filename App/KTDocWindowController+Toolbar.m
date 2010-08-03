@@ -212,11 +212,22 @@
     return [result autorelease];
 }
 
-- (NSToolbarItem *)makeIndexesToolbarItemWithIdentifier:(NSString *)identifier;
+- (NSToolbarItem *)makeIndexesToolbarItemWithIdentifier:(NSString *)identifier
+											  imageName:(NSString *)imageName;
 {
     BWToolbarPullDownItem *result = [[BWToolbarPullDownItem alloc] initWithItemIdentifier:identifier];
     
-    
+	// construct pulldown button ... composite the Add.
+	
+    NSImage *image = [NSImage imageNamed:imageName];
+	image = [[image copy] autorelease];
+	[image setScalesWhenResized:YES];
+	[image setSize:NSMakeSize(32.0,32.0)];
+	
+    image = [image imageWithCompositedAddBadge];
+    [result setImage:image];
+
+	
     // Generate the menu
     NSPopUpButton *pulldownButton = [result popUpButton];
     NSMenu *menu = [pulldownButton menu];
@@ -276,7 +287,12 @@
 	item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
 	[menu addItem:item]; 
     
+ 	// Video item
+	factory = [SVGraphicFactory audioFactory];
+	item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
+	[menu addItem:item]; 
     
+	
     // Indexes
 	item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory indexFactories]
                                            title:NSLocalizedString(@"Indexes", "menu item")];
@@ -344,7 +360,8 @@
             }
             else if ([[itemInfo valueForKey:@"view"] isEqualToString:@"IndexesPopUpButton"])
             {
-                result = [self makeIndexesToolbarItemWithIdentifier:itemIdentifier];
+                result = [self makeIndexesToolbarItemWithIdentifier:itemIdentifier
+						  imageName:[itemInfo valueForKey:@"image"]];
             }
             // cosmetics
 			
