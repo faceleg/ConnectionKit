@@ -450,6 +450,11 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 - (void)setShowsCaption:(BOOL)show { [[self caption] setHidden:[NSNumber numberWithBool:!show]]; }
 + (NSSet *)keyPathsForValuesAffectingShowsCaption; { return [NSSet setWithObject:@"caption.hidden"]; }
 
+- (NSNumber *)containerWidth;
+{
+    return [[self textAttachment] width];
+}
+
 - (void)disableUndoRegistration;
 {
     NSUndoManager *undoManager = [[self managedObjectContext] undoManager];

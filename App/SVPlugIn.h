@@ -88,6 +88,8 @@
 
 @property(nonatomic, getter=isBordered) BOOL bordered;
 
+- (NSNumber *)containerWidth;   // applies to inline graphics only at the moment, so may well be nil
+
 #pragma mark Undo Management    // don't have direct access to undo manager
 - (void)disableUndoRegistration;
 - (void)enableUndoRegistration;
