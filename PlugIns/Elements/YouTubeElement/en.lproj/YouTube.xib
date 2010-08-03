@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">786</string>
+		<string key="IBDocument.InterfaceBuilderVersion">788</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">786</string>
+			<string key="NS.object.0">788</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<integer value="7"/>
@@ -31,27 +31,6 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">258</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="NSSlider" id="95040270">
-						<reference key="NSNextResponder" ref="717826297"/>
-						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{68, 170}, {150, 18}}</string>
-						<reference key="NSSuperview" ref="717826297"/>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSSliderCell" key="NSCell" id="929971740">
-							<int key="NSCellFlags">-2080244224</int>
-							<int key="NSCellFlags2">131072</int>
-							<string key="NSContents"/>
-							<reference key="NSControlView" ref="95040270"/>
-							<double key="NSMaxValue">7</double>
-							<double key="NSMinValue">0.0</double>
-							<double key="NSValue">2</double>
-							<double key="NSAltIncValue">0.0</double>
-							<int key="NSNumberOfTickMarks">8</int>
-							<int key="NSTickMarkPosition">1</int>
-							<bool key="NSAllowsTickMarkValuesOnly">YES</bool>
-							<bool key="NSVertical">NO</bool>
-						</object>
-					</object>
 					<object class="NSMatrix" id="533155529">
 						<reference key="NSNextResponder" ref="717826297"/>
 						<int key="NSvFlags">268</int>
@@ -203,22 +182,6 @@
 							<string key="NSContents">Options:</string>
 							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="278091649"/>
-							<reference key="NSBackgroundColor" ref="641998819"/>
-							<reference key="NSTextColor" ref="831622716"/>
-						</object>
-					</object>
-					<object class="NSTextField" id="323756990">
-						<reference key="NSNextResponder" ref="717826297"/>
-						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{23, 170}, {42, 14}}</string>
-						<reference key="NSSuperview" ref="717826297"/>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="853782839">
-							<int key="NSCellFlags">68288064</int>
-							<int key="NSCellFlags2">71435264</int>
-							<string key="NSContents">Size:</string>
-							<reference key="NSSupport" ref="26"/>
-							<reference key="NSControlView" ref="323756990"/>
 							<reference key="NSBackgroundColor" ref="641998819"/>
 							<reference key="NSTextColor" ref="831622716"/>
 						</object>
@@ -628,38 +591,6 @@
 					<int key="connectionID">541</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.videoSize</string>
-						<reference key="source" ref="95040270"/>
-						<reference key="destination" ref="217433952"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="95040270"/>
-							<reference key="NSDestination" ref="217433952"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.videoSize</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.videoSize</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">546</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">toolTip: inspectedObjectsController.selection.sizeToolTip</string>
-						<reference key="source" ref="95040270"/>
-						<reference key="destination" ref="217433952"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="95040270"/>
-							<reference key="NSDestination" ref="217433952"/>
-							<string key="NSLabel">toolTip: inspectedObjectsController.selection.sizeToolTip</string>
-							<string key="NSBinding">toolTip</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.sizeToolTip</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">547</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">view</string>
 						<reference key="source" ref="217433952"/>
@@ -710,8 +641,6 @@
 							<reference ref="665618836"/>
 							<reference ref="278091649"/>
 							<reference ref="533155529"/>
-							<reference ref="95040270"/>
-							<reference ref="323756990"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">View</string>
@@ -892,32 +821,6 @@
 						<reference key="object" ref="106142555"/>
 						<reference key="parent" ref="278091649"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">542</int>
-						<reference key="object" ref="95040270"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="929971740"/>
-						</array>
-						<reference key="parent" ref="717826297"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">543</int>
-						<reference key="object" ref="929971740"/>
-						<reference key="parent" ref="95040270"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">544</int>
-						<reference key="object" ref="323756990"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="853782839"/>
-						</array>
-						<reference key="parent" ref="717826297"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">545</int>
-						<reference key="object" ref="853782839"/>
-						<reference key="parent" ref="323756990"/>
-					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -962,11 +865,6 @@
 				<string key="534.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="534.ImportedFromIB2"/>
 				<string key="535.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="542.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="543.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="544.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="544.ImportedFromIB2"/>
-				<string key="545.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="7.IBEditorWindowLastContentRect">{{64, 509}, {250, 247}}</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="7.ImportedFromIB2"/>
@@ -1547,22 +1445,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSResponder.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSSlider</string>
-					<string key="superclassName">NSControl</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">AppKit.framework/Headers/NSSlider.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSSliderCell</string>
-					<string key="superclassName">NSActionCell</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">AppKit.framework/Headers/NSSliderCell.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
