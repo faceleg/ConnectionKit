@@ -458,66 +458,159 @@
 	[context endElement];	// ul
 }
 
+
+// Create the site menu forest.  Needed in both writeHierMenuLoader and writeSiteMenu.  Maybe cache value later?
+
+- (NSArray *)createSiteMenuForestIsHierarchical:(BOOL *)outHierarchical;
+{
+	BOOL isHierarchical = NO;
+	KTSite *site = self.site;
+	NSArray *pagesInSiteMenu = site.pagesInSiteMenu;
+
+	HierMenuType hierMenuType = [[[self master] design] hierMenuType];
+	NSMutableArray *forest = [NSMutableArray array];
+	if (HIER_MENU_NONE == hierMenuType)
+	{
+		// Flat menu, either by design's preference or user default
+		for (SVSiteItem *siteMenuItem in pagesInSiteMenu)
+		{
+			if ([siteMenuItem shouldIncludeInSiteMenu])
+			{
+				SVSiteMenuItem *item = [[[SVSiteMenuItem alloc] initWithSiteItem:siteMenuItem] autorelease];
+				[forest addObject:item];
+			}
+		}
+	}
+	else	// hierarchical menu
+	{
+		// build up the hierarchical site menu.
+		// Array of dictionaries keyed with "page" and "children" array
+		NSMutableArray *childrenLookup = [NSMutableArray array];
+		// Assume we are traversing tree in sorted order, so children will always be found after parent, which makes it easy to build this tree.
+		for (SVSiteItem *siteMenuItem in pagesInSiteMenu)
+		{
+			if ([siteMenuItem shouldIncludeInSiteMenu])
+			{
+				BOOL wasSubPage = NO;
+				KTPage *parent = (KTPage *)siteMenuItem;		// Parent will *always* be a KTPage once we calculate it
+				SVSiteMenuItem *item = nil;
+				do // loop through, looking to see if this (or parent) page is a sub-page of an already-found page in the site menu.
+				{
+					SVSiteMenuItem *itemToAddTo = nil;
+					// See if this is already known about
+					for (SVSiteMenuItem *checkItem in childrenLookup)
+					{
+						if (checkItem.siteItem == parent)
+						{
+							itemToAddTo = checkItem;
+							break;
+						}
+					}					
+					if (itemToAddTo)	// Was there a parent menu item?
+					{
+						// If so, create a new entry for this page, with an empty array of children; add to list of children
+						item = [[[SVSiteMenuItem alloc] initWithSiteItem:siteMenuItem] autorelease];
+						[itemToAddTo.childItems addObject:item];
+						parent = nil;	// stop looking
+						wasSubPage = YES;
+						isHierarchical = YES;		// there is a hierarchical menu here
+					}
+					else // No, this page (or its parent) was not in the menu list so go up one level to keep looking.
+					{
+						parent = [parent parentPage];
+					}
+				}
+				while (nil != parent && ![parent isRoot]);	// Stop when we reach root. Note that we don't put items under root.
+				
+				if (!item)
+				{
+					item = [[[SVSiteMenuItem alloc] initWithSiteItem:siteMenuItem] autorelease];
+				}
+				[childrenLookup addObject:item];		// quick lookup from page to children
+				
+				if (!wasSubPage)	// Not a sub-page, so it's a top-level menu item.
+				{
+					[forest addObject:item];		// Add to our list of top-level menus
+				}
+			}
+		}	// end for
+	}
+	if (outHierarchical)
+	{
+		*outHierarchical = isHierarchical;
+	}
+	return forest;
+}
+
+
 - (void)writeHierMenuLoader
 {
 	HierMenuType hierMenuType = [[[self master] design] hierMenuType];
-	if (HIER_MENU_NONE != hierMenuType)
+	if (HIER_MENU_NONE != hierMenuType && self.site.pagesInSiteMenu.count)
 	{
-		SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
-		
-		NSURL *ddsmoothmenu = [NSURL fileURLWithPath:[[NSBundle mainBundle]
-														pathForResource:@"ddsmoothmenu"
-														ofType:@"js"]];
-		NSURL *src = [context addResourceWithURL:ddsmoothmenu];
-		
-		
-		NSString *prelude = [NSString stringWithFormat:@"\n%@\n%@\n%@\n%@\n%@", 
- @"/***********************************************",
- @"* Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)",
- @"* This notice MUST stay intact for legal use",
- @"* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code",
- @"***********************************************/"];
-
-		[context startJavascriptElementWithSrc:[src absoluteString]];
-        [context stopWritingInline];
-        [context writeString:prelude];
-        [context endElement];
-
-/*
-		 These are ddsmoothmenu's options we could set here, or maybe I could modify the JS file that gets uploaded....
-		 
-		 //Specify full URL to down and right arrow images (23 is padding-right added to top level LIs with drop downs):
-		 arrowimages: {down:['downarrowclass', 'down.gif', 23], right:['rightarrowclass', 'right.gif']},
-		 transition: {overtime:300, outtime:300}, //duration of slide in/ out animation, in milliseconds
-		 shadow: {enable:true, offsetx:5, offsety:5}, //enable shadow?
-		 showhidedelay: {showdelay: 100, hidedelay: 200}, //set delay in milliseconds before sub menus appear and disappear, respectively
-*/
-		
-		NSURL *arrowDown = [NSURL fileURLWithPath:[[NSBundle mainBundle]
-													  pathForResource:@"down"
-													  ofType:@"gif"]];
-		NSURL *arrowDownSrc = [context addResourceWithURL:arrowDown];
-		NSURL *arrowRight = [NSURL fileURLWithPath:[[NSBundle mainBundle]
-												   pathForResource:@"right"
-												   ofType:@"gif"]];
-		NSURL *arrowRightSrc = [context addResourceWithURL:arrowRight];
-		
-		[context startJavascriptElementWithSrc:nil];
-		
-		// [context startJavascriptCDATA];		// probably not needed
-		[context writeString:[NSString stringWithFormat:
-							  @"ddsmoothmenu.arrowimages = {down:['downarrowclass', '%@', 23], right:['rightarrowclass', '%@']}",
-							  [arrowDownSrc absoluteString], [arrowRightSrc absoluteString]]];
-		[context writeString:@"\n"];
-		
-		BOOL isVertical = hierMenuType == HIER_MENU_VERTICAL || (hierMenuType == HIER_MENU_VERTICAL_IF_SIDEBAR && [[self showSidebar] boolValue]);
-		
-		[context writeString:[NSString stringWithFormat:
-							  @"ddsmoothmenu.init({ mainmenuid: 'sitemenu-content',orientation:'%@', classname:'%@',contentsource:'markup'})",					  
-							  (isVertical ? @"v" : @"h"),
-							  (isVertical ? @"ddsmoothmenu-v" : @"ddsmoothmenu")]];
-		// [context endJavascriptCDATA];
-		[context endElement];
+		// Now check if we *really* have a hierarchy.  No point in writing out loader if site menu is flat.
+		BOOL isHierarchical = NO;
+		(void) [self createSiteMenuForestIsHierarchical:&isHierarchical];
+		if (isHierarchical)
+		{
+			SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+			
+			NSString *path = nil;
+			
+			path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"css"];
+			[context addCSSWithURL:[NSURL fileURLWithPath:path]];
+			
+			path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"js"];
+			NSURL *src = [context addResourceWithURL:[NSURL fileURLWithPath:path]];
+			
+			NSString *prelude = [NSString stringWithFormat:@"\n%@\n%@\n%@\n%@\n%@", 
+@"/***********************************************",
+@"* Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)",
+@"* This notice MUST stay intact for legal use",
+@"* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code",
+@"***********************************************/"];
+			
+			[context startJavascriptElementWithSrc:[src absoluteString]];
+			[context stopWritingInline];
+			[context writeString:prelude];
+			[context endElement];
+			
+			/*
+			 These are ddsmoothmenu's options we could set here, or maybe I could modify the JS file that gets uploaded....
+			 
+			 //Specify full URL to down and right arrow images (23 is padding-right added to top level LIs with drop downs):
+			 arrowimages: {down:['downarrowclass', 'down.gif', 23], right:['rightarrowclass', 'right.gif']},
+			 transition: {overtime:300, outtime:300}, //duration of slide in/ out animation, in milliseconds
+			 shadow: {enable:true, offsetx:5, offsety:5}, //enable shadow?
+			 showhidedelay: {showdelay: 100, hidedelay: 200}, //set delay in milliseconds before sub menus appear and disappear, respectively
+			 */
+			
+			NSURL *arrowDown = [NSURL fileURLWithPath:[[NSBundle mainBundle]
+													   pathForResource:@"down"
+													   ofType:@"gif"]];
+			NSURL *arrowDownSrc = [context addResourceWithURL:arrowDown];
+			NSURL *arrowRight = [NSURL fileURLWithPath:[[NSBundle mainBundle]
+														pathForResource:@"right"
+														ofType:@"gif"]];
+			NSURL *arrowRightSrc = [context addResourceWithURL:arrowRight];
+			
+			[context startJavascriptElementWithSrc:nil];
+			
+			// [context startJavascriptCDATA];		// probably not needed
+			[context writeString:[NSString stringWithFormat:
+								  @"ddsmoothmenu.arrowimages = {down:['downarrowclass', '%@', 23], right:['rightarrowclass', '%@']}",
+								  [arrowDownSrc absoluteString], [arrowRightSrc absoluteString]]];
+			[context writeString:@"\n"];
+			
+			BOOL isVertical = hierMenuType == HIER_MENU_VERTICAL || (hierMenuType == HIER_MENU_VERTICAL_IF_SIDEBAR && [[self showSidebar] boolValue]);
+			
+			[context writeString:[NSString stringWithFormat:
+								  @"ddsmoothmenu.init({ mainmenuid: 'sitemenu-content',orientation:'%@', classname:'%@',contentsource:'markup'})",					  
+								  (isVertical ? @"v" : @"h"),
+								  (isVertical ? @"ddsmoothmenu-v" : @"ddsmoothmenu")]];
+			// [context endJavascriptCDATA];
+			[context endElement];
+		}
 	}
 }
 
@@ -544,89 +637,10 @@
 		
 		[context startElement:@"div" idName:@"sitemenu-content" className:nil];		// <div id="sitemenu-content">
 	
-		KTSite *site = self.site;
-		NSArray *pagesInSiteMenu = site.pagesInSiteMenu;
 		
-		HierMenuType hierMenuType = [[[self master] design] hierMenuType];
-		NSMutableArray *forest = [NSMutableArray array];
-		if (HIER_MENU_NONE == hierMenuType)
-		{
-			// Flat menu, either by design's preference or user default
-			for (SVSiteItem *siteMenuItem in pagesInSiteMenu)
-			{
-				if ([siteMenuItem shouldIncludeInSiteMenu])
-				{
-					SVSiteMenuItem *item = [[[SVSiteMenuItem alloc] initWithSiteItem:siteMenuItem] autorelease];
-					[forest addObject:item];
-				}
-			}
-			[self writeMenu:context forSiteMenuItems:forest treeLevel:0];
-		}
-		else	// hierarchical menu
-		{
-			NSString *path = nil;
+		NSArray *forest = [self createSiteMenuForestIsHierarchical:nil];
+		[self writeMenu:context forSiteMenuItems:forest treeLevel:0];
 
-			// Append appropriate CSS for the site menus.
-			HierMenuType hierMenuType = [[[self master] design] hierMenuType];
-			// First get the base CSS
-			if (HIER_MENU_NONE != hierMenuType)
-			{
-				path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"css"];
-                if (path) [context addCSSWithURL:[NSURL fileURLWithPath:path]];
-			}
-			
-			// now to build up the hiearchical site menu.
-			// Array of dictionaries keyed with "page" and "children" array
-			NSMutableArray *childrenLookup = [NSMutableArray array];
-			// Assume we are traversing tree in sorted order, so children will always be found after parent, which makes it easy to build this tree.
-			for (SVSiteItem *siteMenuItem in pagesInSiteMenu)
-			{
-				if ([siteMenuItem shouldIncludeInSiteMenu])
-				{
-					BOOL wasSubPage = NO;
-					KTPage *parent = (KTPage *)siteMenuItem;		// Parent will *always* be a KTPage once we calculate it
-					SVSiteMenuItem *item = nil;
-					do // loop through, looking to see if this (or parent) page is a sub-page of an already-found page in the site menu.
-					{
-						SVSiteMenuItem *itemToAddTo = nil;
-						// See if this is already known about
-						for (SVSiteMenuItem *checkItem in childrenLookup)
-						{
-							if (checkItem.siteItem == parent)
-							{
-								itemToAddTo = checkItem;
-								break;
-							}
-						}					
-						if (itemToAddTo)	// Was there a parent menu item?
-						{
-							// If so, create a new entry for this page, with an empty array of children; add to list of children
-							item = [[[SVSiteMenuItem alloc] initWithSiteItem:siteMenuItem] autorelease];
-							[itemToAddTo.childItems addObject:item];
-							parent = nil;	// stop looking
-							wasSubPage = YES;
-						}
-						else // No, this page (or its parent) was not in the menu list so go up one level to keep looking.
-						{
-							parent = [parent parentPage];
-						}
-					}
-					while (nil != parent && ![parent isRoot]);	// Stop when we reach root. Note that we don't put items under root.
-					
-					if (!item)
-					{
-						item = [[[SVSiteMenuItem alloc] initWithSiteItem:siteMenuItem] autorelease];
-					}
-					[childrenLookup addObject:item];		// quick lookup from page to children
-					
-					if (!wasSubPage)	// Not a sub-page, so it's a top-level menu item.
-					{
-						[forest addObject:item];		// Add to our list of top-level menus
-					}
-				}
-			}	// end for
-			[self writeMenu:context forSiteMenuItems:forest treeLevel:0];
-		}
 		
 		
 		[context writeEndTagWithComment:@"/sitemenu-content"];
