@@ -55,7 +55,6 @@
 
 - (IBAction)resetColors:(id)sender
 {
-	// so you need to iterate through [[self inspectedObjectsController] selectedObjects]
 	NSArray *objects = [[self inspectedObjectsController] selectedObjects];
 	for (YouTubePlugIn *plugin in objects)
 	{
