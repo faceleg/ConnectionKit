@@ -137,31 +137,12 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     return result;
 }
 
+- (DOMElement *)graphicDOMElement; { return [self HTMLElement]; }
+
 - (unsigned int)resizingMask
 {
-    DOMHTMLElement *element = [self HTMLElement];
-    NSString *className = [element className];
-    DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element pseudoElement:@""];
-    
-    unsigned int widthMask = kCALayerRightEdge; // default to adjustment from right-hand edge
-    
-    
-    // Decide the mask by testing the DOM. For inline elements, not hard. But for block-level stuff I haven't figured out the right stuff to test, so fall back to checking class name since we ought to be in control of that.
-    if ([[style getPropertyValue:@"float"] isEqualToString:@"right"] ||
-        [[style textAlign] isEqualToString:@"right"] ||
-        [className rangeOfString:@" right"].location != NSNotFound)
-    {
-        widthMask = kCALayerLeftEdge;
-    }
-    else if ([[style textAlign] isEqualToString:@"center"] ||
-             [className rangeOfString:@" center"].location != NSNotFound)
-    {
-        widthMask = widthMask | kCALayerLeftEdge;
-    }
-    
-    
-    // Finish up
-    unsigned int result = (kCALayerBottomEdge | widthMask);
+    // Super's behaviour is enough to handle width, but we want height to be adjustable too.
+    unsigned int result = (kCALayerBottomEdge | [super resizingMask]);
     return result;
 }
 
