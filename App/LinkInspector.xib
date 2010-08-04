@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
+			<integer value="138"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1023,6 +1023,7 @@
 						<int key="objectID">173</int>
 						<reference key="object" ref="844523311"/>
 						<reference key="parent" ref="0"/>
+						<string key="objectName">URL Formatter</string>
 					</object>
 				</object>
 			</object>
