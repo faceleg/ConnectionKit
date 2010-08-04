@@ -58,14 +58,14 @@
 	BOOL _useCustomSecondaryColor;
 }
 
+@property (nonatomic, readonly) NSUInteger videoWidth;
+@property (nonatomic, readonly) NSUInteger videoHeight;
+
 @property (nonatomic, copy) NSString *userVideoCode;
 @property (nonatomic, copy) NSString *videoID;
 
 @property (nonatomic, copy) NSColor *color2;
 @property (nonatomic, copy) NSColor *color1;
-
-@property (nonatomic, readonly) NSUInteger videoWidth;
-@property (nonatomic, readonly) NSUInteger videoHeight;
 
 @property (nonatomic) BOOL showBorder;
 @property (nonatomic) BOOL widescreen;

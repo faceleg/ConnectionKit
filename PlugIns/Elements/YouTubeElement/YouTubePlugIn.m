@@ -60,25 +60,6 @@
             nil];
 }
 
-+ (NSSet *)keyPathsForValuesAffectingVideoWidth
-{
-    return [NSSet setWithObjects:@"videoSize", @"widescreen", @"showBorder", nil];
-}
-
-+ (NSSet *)keyPathsForValuesAffectingVideoHeight
-{
-    return [NSSet setWithObjects:@"videoSize", @"widescreen", @"showBorder", nil];
-}
-
-+ (NSSet *)keyPathsForValuesAffectingSizeToolTip
-{
-    return [NSSet setWithObjects:@"videoWidth", @"widescreen", nil];
-}
-
-
-
-//FIXME: waiting on API discussion with Mike about method for being told "you're being added or moved to a new location, please resize"
-
 
 #pragma mark -
 #pragma mark Initialization
@@ -129,20 +110,7 @@
 
 - (NSUInteger)videoWidth
 {
-//	NSUInteger widths[] = { 200, 320, 425, 480, 560, 640, 853, 1280 };
-//	NSUInteger result = widths[1];
-//	
-//	if (self.videoSize < NUMBER_OF_VIDEO_SIZES)
-//	{
-//		result = widths[self.videoSize];
-//	}
-//	if (self.showBorder && self.videoSize != YouTubeVideoSizeSidebar)	// do not increase width for sidebar!
-//	{
-//		result += 20;
-//	}	
-//	return result;
-    
-    NSUInteger result = 200; // start with something
+    NSUInteger result = 200; // start with something, small enough to fit in sidebar if need be
     
     NSNumber *containerWidth = [[self container] containerWidth];
     if ( containerWidth )
@@ -155,10 +123,7 @@
 
 - (NSUInteger)videoHeight
 {
-//	NSUInteger heights[]		= { 150, 240, 319, 360, 420, 480, 640, 960 };	// above width * 3/4
-//	NSUInteger heightsWide[]	= { 113, 180, 239, 270, 315, 360, 480, 720 };	// above width * 9/16
-//	NSUInteger result = 0;
-//	
+    //FIXME: what about these old calculations for border if in sidebar?
 //	if (self.widescreen)
 //	{
 //		result = heightsWide[1];
@@ -193,12 +158,16 @@
 //	
 //	return result;
     
-    NSUInteger width = [self videoWidth];
+    NSUInteger result = 0;
     
-    NSUInteger result = (width * 3)/4;
+    NSUInteger width = [self videoWidth];
     if ( self.widescreen )
     {
         result = (width * 9)/16;
+    }
+    else
+    {
+        result = (width * 3)/4;
     }
     
     if ( self.showBorder )
@@ -357,6 +326,5 @@
 		self.useCustomSecondaryColor = YES;
 	}
 }
-
 
 @end
