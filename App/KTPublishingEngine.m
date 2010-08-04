@@ -466,7 +466,21 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                              fallbackEncoding:NSUTF8StringEncoding
                                                         error:NULL];
             
-            if (css) [cssWriter writeCSSString:css];
+            if (css)
+			{
+#ifdef VARIANT_BETA
+				[cssWriter writeCSSString:
+				 [NSString stringWithFormat:@"/* ----------- Source: %@ ----------- */",
+				  [[someCSS path] lastPathComponent]]];
+#endif
+				[cssWriter writeCSSString:css];
+
+#ifdef VARIANT_BETA
+				[cssWriter writeCSSString:
+				 [NSString stringWithFormat:@"/* ----------- End:    %@ ----------- */",
+				  [[someCSS path] lastPathComponent]]];
+#endif
+			}
         }
         else
         {
