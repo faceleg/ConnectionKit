@@ -140,7 +140,7 @@
     NSArray *result = [NSArray arrayWithObjects:
                        _documentInspector,
                        _pageInspector,
-                       _collectionInspector,
+                       // _collectionInspector,		NOT USING THIS ... THOUGH MIKE MAY CHANGE HIS MIND :-)
                        _wrapInspector,
                        _graphicInspector,
                        _metricsInspector,
