@@ -545,7 +545,24 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 - (void)writeString:(NSString *)string;
 {
-    [_writer writeString:string];
+	NSLog(@"writeString: %@", [string stringByReplacing:@"\n" with:@"\\n"]);
+	if (_lastWrittenStringEndedInNewline)
+	{
+		NSRange rangeOfFirstNonNewline = [string rangeOfCharacterFromSet:[NSCharacterSet nonFullNewlineCharacterSet]];
+		if (NSNotFound != rangeOfFirstNonNewline.location)
+		{
+			string = [string substringFromIndex:rangeOfFirstNonNewline.location];
+		}
+		else
+		{
+			string = @"";
+		}
+	}
+	[_writer writeString:string];
+	if ([string hasSuffix:@"\n"])
+	{
+		_lastWrittenStringEndedInNewline = YES;
+	}
 }
 
 - (void)close; { [_writer close]; }

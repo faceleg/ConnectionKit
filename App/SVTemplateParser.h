@@ -42,6 +42,7 @@
 	
 	NSUInteger  _ifFunctionDepth;
     NSUInteger  _foreachFunctionDepth;
+	BOOL		_lastWrittenStringEndedInNewline;
 }
 
 - (id)initWithTemplate:(NSString *)templateString component:(id)parsedComponent;
