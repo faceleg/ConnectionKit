@@ -556,12 +556,15 @@
 			SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
 			
 			NSString *path = nil;
+			NSURL *src = nil;
 			
+			// Note: We want to add the CSS as a separate link; *not* merging it into main.css, so that it can access the arrow images in _Resources.
 			path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"css"];
-			[context addCSSWithURL:[NSURL fileURLWithPath:path]];
+			src = [context addResourceWithURL:[NSURL fileURLWithPath:path]];
+			[context writeLinkToStylesheet:[src absoluteString] title:@"ddsmoothmenu" media:nil];
 			
 			path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"js"];
-			NSURL *src = [context addResourceWithURL:[NSURL fileURLWithPath:path]];
+			src = [context addResourceWithURL:[NSURL fileURLWithPath:path]];
 			
 			NSString *prelude = [NSString stringWithFormat:@"\n%@\n%@\n%@\n%@\n%@", 
 @"/***********************************************",
