@@ -114,8 +114,11 @@
         {
             // Dispose of markup: previous end tag, and this start tag
             [_output cancelFlushOnNextWrite];
+            [_output beginBuffering];
+            
             [super startElement:tagName withDOMElement:element];
             [_pendingEndDOMElements removeLastObject];
+            
             [_output discardBuffer];
             
             
