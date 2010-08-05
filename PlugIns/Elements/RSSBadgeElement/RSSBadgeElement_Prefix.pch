@@ -1,0 +1,10 @@
+//
+// Prefix header for all source files of the 'RSSBadgeElement' target in the 'RSSBadgeElement' project.
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+    #import "Debug.h"
+    #import "Macros.h"
+    #import "assertions.h"
+#endif
