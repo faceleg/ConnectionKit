@@ -133,7 +133,7 @@
     _plugInInspector = [[SVPlugInInspector alloc] initWithNibName:@"PlugInInspector" bundle:nil];
     [_plugInInspector setIdentifier:@"com.karelia.Sandvox.PlugInInspector"];
     [_plugInInspector setTitle:NSLocalizedString(@"Plug-in", @"Plug-in Inspector")];
-    [_plugInInspector setIcon:[NSImage imageNamed:NSImageNameActionTemplate]];
+    [_plugInInspector setIcon:[NSImage imageNamed:@"plugin_inspector"]];
     
     
     //  Finish up
