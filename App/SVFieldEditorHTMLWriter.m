@@ -158,6 +158,7 @@
     if (isStyling)
     {
         // ..so push onto the stack, ready to write if requested. But only if it's not to be merged with the previous element
+        [_buffer cancelFlushOnNextWrite];   // as we're about to write into the buffer
         [_pendingStartTagDOMElements addObject:element];
         [_buffer beginBuffering];
     }
