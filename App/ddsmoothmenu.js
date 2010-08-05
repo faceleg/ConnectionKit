@@ -21,12 +21,11 @@
 
 var ddsmoothmenu={
 
-/* 2010-08-01, ssp: 
+/* 2010-08-05, ssp: 
 	Use shorter times. Check whether they may still be too long. 
-	We don't use the padding right feature and want none of it. 
+	Remove arrow image setup, we do this in CSS.
 */
 //Specify full URL to down and right arrow images (0 is padding-right added to top level LIs with drop downs):
-arrowimages: {down:['downarrowclass', 'down.gif', 0], right:['rightarrowclass', 'right.gif']},
 transition: {overtime:20, outtime:300}, //duration of slide in/ out animation, in milliseconds
 shadow: {enable:false, offsetx:5, offsety:5}, //enable shadow?
 showhidedelay: {showdelay: 40, hidedelay: 80}, //set delay in milliseconds before sub menus appear and disappear, respectively
@@ -36,22 +35,10 @@ showhidedelay: {showdelay: 40, hidedelay: 80}, //set delay in milliseconds befor
 detectwebkit: navigator.userAgent.toLowerCase().indexOf("applewebkit")!=-1, //detect WebKit browsers (Safari, Chrome etc)
 detectie6: document.all && !window.XMLHttpRequest,
 
-getajaxmenu:function($, setting){ //function to fetch external page containing the panel DIVs
-	var $menucontainer=$('#'+setting.contentsource[0]) //reference empty div on page that will hold menu
-	$menucontainer.html("Loading Menu...")
-	$.ajax({
-		url: setting.contentsource[1], //path to external menu file
-		async: true,
-		error:function(ajaxrequest){
-			$menucontainer.html('Error fetching content. Server Response: '+ajaxrequest.responseText)
-		},
-		success:function(content){
-			$menucontainer.html(content)
-			ddsmoothmenu.buildmenu($, setting)
-		}
-	})
-},
 
+/* 2010-08-05, ssp
+	Removed getajaxmenu funktion, our menus are in markup.
+*/
 
 buildmenu:function($, setting){
 	var smoothmenu=ddsmoothmenu
@@ -109,16 +96,9 @@ buildmenu:function($, setting){
 		*/
 		element.append('<span class="submenu-indicator"></span>');
 		
-		if (smoothmenu.shadow.enable){
-			this._shadowoffset={x:(this.istopheader?$subul.offset().left+smoothmenu.shadow.offsetx : this._dimensions.w), y:(this.istopheader? $subul.offset().top+smoothmenu.shadow.offsety : $curobj.position().top)} //store this shadow's offsets
-			if (this.istopheader)
-				$parentshadow=$(document.body)
-			else{
-				var $parentLi=$curobj.parents("li:eq(0)")
-				$parentshadow=$parentLi.get(0).$shadow
-			}
-			this.$shadow=$('<div class="ddshadow'+(this.istopheader? ' toplevelshadow' : '')+'"></div>').prependTo($parentshadow).css({left:this._shadowoffset.x+'px', top:this._shadowoffset.y+'px'})  //insert shadow DIV and set it to parent node for the next shadow div
-		}
+		/* 2010-08-05, ssp:
+			Remove shadow code, we do this in CSS.
+		*/
 		$curobj.hover(
 			function(e){
 				var $targetul=$subul //reference UL to reveal
@@ -160,23 +140,13 @@ buildmenu:function($, setting){
 	$mainmenu.find("ul").css({display:'none', visibility:'visible'})
 },
 
+/* 2010-08-05, ssp
+	Remove custom menu colour and shadow code, we do this in CSS.
+	Remove AJAX menu building, our menus are in markup.
+*/
 init:function(setting){
-	if (typeof setting.customtheme=="object" && setting.customtheme.length==2){ //override default menu colors (default/hover) with custom set?
-		var mainmenuid='#'+setting.mainmenuid
-		var mainselector=(setting.orientation=="v")? mainmenuid : mainmenuid+', '+mainmenuid
-		document.write('<style type="text/css">\n'
-			+mainselector+' ul li a {background:'+setting.customtheme[0]+';}\n'
-			+mainmenuid+' ul li a:hover {background:'+setting.customtheme[1]+';}\n'
-		+'</style>')
-	}
-	this.shadow.enable=(document.all && !window.XMLHttpRequest)? false : this.shadow.enable //in IE6, always disable shadow
 	jQuery(document).ready(function($){ //ajax menu?
-		if (typeof setting.contentsource=="object"){ //if external ajax menu
-			ddsmoothmenu.getajaxmenu($, setting)
-		}
-		else{ //else if markup menu
-			ddsmoothmenu.buildmenu($, setting)
-		}
+		ddsmoothmenu.buildmenu($, setting)
 	})
 }
 

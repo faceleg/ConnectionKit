@@ -96,7 +96,7 @@
 /* Sub level menu links style */
 #sitemenu-content ul li ul li span.in {
 	width: auto; /* width of sub menus ******************* */
-	padding: 5px;
+	padding: 5px 15px 5px 5px;
 	margin: 0;
 	border-top-width: 0;
 	border-bottom: 1px solid #ddd;
