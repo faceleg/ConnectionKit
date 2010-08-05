@@ -164,6 +164,7 @@
         [self retain];
         [[self parentWebEditorItem] replaceChildWebEditorItem:self with:calloutController];
         [calloutController addChildWebEditorItem:self];
+        [calloutController release];
         [self release];
     }
     
