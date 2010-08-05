@@ -335,15 +335,16 @@ static id <SVGraphicFactory> sRawHTMLFactory;
         !sMoreFactories)
     {
         // Order plug-ins first by priority, then by name
-        NSSortDescriptor *prioritySort = [[NSSortDescriptor alloc] initWithKey:@"priority"
-                                                                     ascending:YES];
+        //      I've turned off priority support for now to try a pure alphabetical approach - Mike
+        //NSSortDescriptor *prioritySort = [[NSSortDescriptor alloc] initWithKey:@"priority"
+        //                                                             ascending:YES];
         NSSortDescriptor *nameSort = [[NSSortDescriptor alloc]
                                       initWithKey:@"name"
                                       ascending:YES
                                       selector:@selector(caseInsensitiveCompare:)];
         
-        NSArray *sortDescriptors = [NSArray arrayWithObjects:prioritySort, nameSort, nil];
-        [prioritySort release];
+        NSArray *sortDescriptors = [NSArray arrayWithObjects:/*prioritySort, */nameSort, nil];
+        //[prioritySort release];
         [nameSort release];
         
         
