@@ -238,7 +238,7 @@
         // If there was no actual content inside the element, then it should be thrown away. We can tell this by examining the stack
         if ([_pendingStartTagDOMElements lastObject] == element)
         {
-            [_output beginBuffering];   // resume buffering so the end tag doesn't get written
+            [_output cancelFlushOnNextWrite];   // resume buffering so the end tag doesn't get written
             
             result = [super endElementWithDOMElement:element];
             
