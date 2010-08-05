@@ -23,14 +23,9 @@
 #sidebar { min-height:190px; }
 
 
-/*  By default, nothing in article is selectable… */
-img, .article .kBlock[contenteditable=true] > * {
+/*  By default, <DIV>s in article is selectable… */
+img, .article .kBlock[contenteditable=true] > div {
     -webkit-user-select:none;
-}
-
-/*  …except paragraphs. */
-.article .kBlock[contenteditable=true] > p {
-    -webkit-user-select:inherit;
 }
 
 
