@@ -56,7 +56,7 @@
     if (_output)
     {
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(megaBufferedWriterWillFlush:)
+                                                 selector:@selector(outputWillFlush:)
                                                      name:KSStringWriterWillFlushNotification
                                                    object:_output];
     }
@@ -444,7 +444,7 @@
 
 #pragma mark Buffering
 
-- (void)megaBufferedWriterWillFlush:(KSMegaBufferedWriter *)bufferedWriter;
+- (void)outputWillFlush:(KSStringWriter *)bufferedWriter;
 {
     // Before actually writing the string, push through any pending Elements.
     [_pendingStartTagDOMElements removeAllObjects];
