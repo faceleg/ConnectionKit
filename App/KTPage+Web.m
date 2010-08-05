@@ -42,6 +42,7 @@
 }
 @property (retain) SVSiteItem *siteItem;
 @property (retain) NSMutableArray *childItems;
+- (BOOL)containsSiteItem:(SVSiteItem *)aSiteItem;
 
 @end
 
@@ -60,10 +61,32 @@
 	return self;
 }
 
+- (BOOL)containsSiteItem:(SVSiteItem *)aSiteItem;
+{
+	if (self.siteItem == aSiteItem)
+	{
+		return YES;
+	}
+	for (SVSiteMenuItem *childMenuItem in self.childItems)
+	{
+		if ([childMenuItem containsSiteItem:aSiteItem])
+		{
+			return YES;	// recurse
+		}
+	}
+	return NO;
+}
+
 - (NSUInteger)hash
 {
 	return [[[[self siteItem] objectID] description] hash];
 }
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"%@: %@, children: %@", [self class], self.siteItem, self.childItems];
+}
+
 @end
 
 
@@ -402,13 +425,11 @@
 		}
 		else
 		{
-			BOOL isCurrentParent = NO;
-			
 			// define currentParent as being that this menu item is along the path to the currently generated page.
-			if (currentParserPage != siteItem && [currentParserPage isDescendantOfItem:siteItem])
-			{
-				isCurrentParent = YES;
-			}
+			BOOL isCurrentParent = (currentParserPage != siteItem
+									&& [currentParserPage isDescendantOfItem:siteItem]
+									&& [item containsSiteItem:currentParserPage]
+									);
 			
 			[context startElement:@"li" idName:nil className:
 			 [NSString stringWithFormat:@"i%d %@%@%@%@",
