@@ -178,7 +178,9 @@
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 {
     // Ignore callout <div>s
-    if ([[element tagName] isEqualToString:@"DIV"] &&
+    NSString *tagName = [element tagName];
+    
+    if ([tagName isEqualToString:@"DIV"] &&
         [[element className] hasPrefix:@"callout-container"])
     {
         return [element nextSibling];
@@ -186,26 +188,34 @@
     
     
     // Images need to create a corresponding model object & DOM controller
-    else if ([[element tagName] isEqualToString:@"IMG"])
+    else if ([tagName isEqualToString:@"IMG"])
     {
         return [self convertImageElementToGraphic:(DOMHTMLImageElement *)element];
     }
     
     
-    // Invalid top-level elements should be converted into paragraphs
+    // Completely invalid, or top-level elements should be converted into paragraphs
     else if ([self openElementsCount] == 0)
     {
-        DOMElement *result = [self changeDOMElement:element toTagName:@"P"];
-        return result;  // pretend the element was written, but retry on this new node
+        return [self changeDOMElement:element toTagName:@"P"];
     }
+    
+    
+    // Non-top-level block elements should be converted into paragraphs higher up the tree
     else
     {
-        // Non-top-level block elements should be converted into paragraphs higher up the tree
         DOMDocument *doc = [element ownerDocument];
         DOMCSSStyleDeclaration *style = [doc getComputedStyle:element pseudoElement:nil];
         if ([[style getPropertyValue:@"display"] isEqualToString:@"block"])
         {
-            return [self handleInvalidBlockElement:element];
+            if ([[self class] validateElement:tagName])
+            {
+                return [self handleInvalidBlockElement:element];
+            }
+            else
+            {
+                return [self changeDOMElement:element toTagName:@"P"];
+            }
         }
         else
         {
