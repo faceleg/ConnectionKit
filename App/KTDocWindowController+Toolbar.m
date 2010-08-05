@@ -308,32 +308,32 @@
 	[menu addItem:item];
 	
     
-	// Badges
+	/*/ Badges
     item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory badgeFactories]
                                            title:NSLocalizedString(@"Badges", "menu item")];
 	[item setIconImage:[NSImage imageNamed:@"toolbar_badge"]];
-	[menu addItem:item];
+	[menu addItem:item];*/
 	
     
-	// Embedded
+	/*/ Embedded
     item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory embeddedFactories]
                                            title:NSLocalizedString(@"Embedded", "menu item")];
 	[item setIconImage:[NSImage imageNamed:@"toolbar_frame"]];
-    [menu addItem:item];
+    [menu addItem:item];*/
 	
     
-	// Social
+	/*/ Social
     item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory socialFactories]
                                            title:NSLocalizedString(@"Social", "menu item")];
 	[item setIconImage:[NSImage imageNamed:@"toolbar_social"]];
-    [menu addItem:item];
+    [menu addItem:item];*/
 	
     
 	// More
-    item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory moreGraphicFactories]
-                                           title:NSLocalizedString(@"More", "menu item")];
-	[item setIconImage:[NSImage imageNamed:@"toolbar_other"]];
-    [menu addItem:item];
+    [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
+                                               inMenu:menu
+                                              atIndex:[[menu itemArray] count]];
+	
 	
     return [result autorelease];
 }

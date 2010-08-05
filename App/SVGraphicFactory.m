@@ -362,7 +362,7 @@ static id <SVGraphicFactory> sRawHTMLFactory;
                 case KTPluginCategoryIndex:
                     [sIndexFactories addObject:aFactory];
                     break;
-                case KTPluginCategoryBadge:
+                /*case KTPluginCategoryBadge:
                     [sBadgeFactories addObject:aFactory];
                     break;
                 case KTPluginCategoryEmbedded:
@@ -370,7 +370,7 @@ static id <SVGraphicFactory> sRawHTMLFactory;
                     break;
                 case KTPluginCategorySocial:
                     [sSocialFactories addObject:aFactory];
-                    break;
+                    break;*/
                 default:
                     [sMoreFactories addObject:aFactory];
                     break;
