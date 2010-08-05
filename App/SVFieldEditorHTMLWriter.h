@@ -15,15 +15,18 @@
 
 #import "SVDOMToHTMLWriter.h"
 #import "KSMegaBufferedWriter.h"
+#import "KSStringWriter.h";
 
 
 @interface SVFieldEditorHTMLWriter : SVDOMToHTMLWriter <KSMegaBufferedWriterDelegate>
 {
     NSMutableArray          *_pendingStartTagDOMElements;
   @private
-    NSMutableArray          *_pendingEndDOMElements;
-    KSMegaBufferedWriter    *_buffer;
+    NSMutableArray  *_pendingEndDOMElements;
+    KSStringWriter  *_output;
 }
+
+- (id)initWithOutputStringWriter:(KSStringWriter *)output;
 
 
 #pragma mark Cleanup

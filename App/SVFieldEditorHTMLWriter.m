@@ -44,13 +44,24 @@
 
 @implementation SVFieldEditorHTMLWriter
 
-- (id)initWithOutputWriter:(id <KSWriter>)output;	// designated initializer
+- (id)initWithOutputWriter:(id <KSWriter>)output;
+{
+    return [self initWithOutputStringWriter:(id)output];    // should blow up!
+}
+
+- (id)initWithOutputStringWriter:(KSStringWriter *)output;
 {
     // All writing goes through a buffer first
-    _buffer = [[KSMegaBufferedWriter alloc] initWithOutputWriter:output];
-    [_buffer setDelegate:self];
+    _output = [output retain];
+    if (_output)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(megaBufferedWriterWillFlush:)
+                                                     name:KSStringWriterWillFlushNotification
+                                                   object:_output];
+    }
     
-    self = [super initWithOutputWriter:_buffer];
+    self = [super initWithOutputWriter:_output];
     
     _pendingStartTagDOMElements = [[NSMutableArray alloc] init];
     _pendingEndDOMElements = [[NSMutableArray alloc] init];
@@ -69,8 +80,13 @@
 
 - (void)close;
 {
-    [_buffer setDelegate:nil];
-    [_buffer release]; _buffer = nil;
+    if (_output)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:KSStringWriterWillFlushNotification
+                                                      object:_output];
+        [_output release]; _output = nil;
+    }
     
     [super close];
 }
@@ -97,10 +113,10 @@
         if ([elementToMergeInto isEqualNode:element compareChildNodes:NO])
         {
             // Dispose of markup: previous end tag, and this start tag
-            [_buffer beginBuffering];
+            [_output beginBuffering];
             [super startElement:tagName withDOMElement:element];
             [_pendingEndDOMElements removeLastObject];
-            [_buffer discardBuffer];
+            [_output discardBuffer];
             
             
             // Write inner HTML
@@ -158,9 +174,9 @@
     if (isStyling)
     {
         // ..so push onto the stack, ready to write if requested. But only if it's not to be merged with the previous element
-        [_buffer cancelFlushOnNextWrite];   // as we're about to write into the buffer
+        //[_output cancelFlushOnNextWrite];   // as we're about to write into the buffer
         [_pendingStartTagDOMElements addObject:element];
-        [_buffer beginBuffering];
+        [_output beginBuffering];
     }
     
     
@@ -205,7 +221,7 @@
     
     
     // Finish setting up buffer
-    if (isStyling) [_buffer flushOnNextWrite];
+    if (isStyling) [_output flushOnNextWrite];
 }
 
 - (DOMNode *)endElementWithDOMElement:(DOMElement *)element;
@@ -222,15 +238,15 @@
         // If there was no actual content inside the element, then it should be thrown away. We can tell this by examining the stack
         if ([_pendingStartTagDOMElements lastObject] == element)
         {
-            [_buffer beginBuffering];   // resume buffering so the end tag doesn't get written
+            [_output beginBuffering];   // resume buffering so the end tag doesn't get written
             
             result = [super endElementWithDOMElement:element];
             
             [[element parentNode] removeChild:element];
             [_pendingStartTagDOMElements removeLastObject];
             
-            [_buffer flushOnNextWrite];
-            [_buffer discardBuffer];    // will cancel -flushOnNextWrite if that was the last buffer
+            [_output flushOnNextWrite];
+            [_output discardBuffer];    // will cancel -flushOnNextWrite if that was the last buffer
         }
         else
         {
@@ -241,9 +257,9 @@
             else
             {
                 // Close the element, but wait and see if the next sibling is equal & therefore to be merged
-                [_buffer beginBuffering];
+                [_output beginBuffering];
                 result = [super endElementWithDOMElement:element];
-                [_buffer flushOnNextWrite];
+                [_output flushOnNextWrite];
                 
                 [_pendingEndDOMElements addObject:element];
             }
