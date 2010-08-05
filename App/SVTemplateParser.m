@@ -545,7 +545,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 - (void)writeString:(NSString *)string;
 {
-	NSLog(@"writeString: %@", [string stringByReplacing:@"\n" with:@"\\n"]);
+	// DJW(((@"writeString: %@", [string stringByReplacing:@"\n" with:@"\\n"]));
 	if (_lastWrittenStringEndedInNewline)
 	{
 		NSRange rangeOfFirstNonNewline = [string rangeOfCharacterFromSet:[NSCharacterSet nonFullNewlineCharacterSet]];
