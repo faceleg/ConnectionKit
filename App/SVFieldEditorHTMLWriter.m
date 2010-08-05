@@ -418,14 +418,11 @@
 
 - (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style;
 {
-    for (int i = 0; i < [style length]; i++)
+    for (int i = [style length]; i > 0;)
     {
-        NSString *propertyName = [style item:i];
-        if (![self validateStyleProperty:propertyName])
-        {
-            [style removeProperty:propertyName];
-            i--;
-        }
+        i--;
+        NSString *name = [style item:i];
+        if (![self validateStyleProperty:name]) [style removeProperty:name];
     }
 }
 
