@@ -185,11 +185,14 @@
     }
     
     
-    // Invalid top-level elements should be converted into paragraphs
+    // Images need to create a corresponding model object & DOM controller
     else if ([[element tagName] isEqualToString:@"IMG"])
     {
         return [self convertImageElementToGraphic:(DOMHTMLImageElement *)element];
     }
+    
+    
+    // Invalid top-level elements should be converted into paragraphs
     else if ([self openElementsCount] == 0)
     {
         DOMElement *result = [self changeDOMElement:element toTagName:@"P"];
@@ -228,25 +231,25 @@
 
 #pragma mark Validation
 
-- (BOOL)validateTagName:(NSString *)tagName
+- (BOOL)validateElement:(NSString *)tagName
 {
+    BOOL result;
+    
     // Only a handul of block-level elements are supported. They can only appear at the top-level, or directly inside a list item
     if ([tagName isEqualToString:@"P"] ||
         [tagName isEqualToString:@"UL"] ||
         [tagName isEqualToString:@"OL"])
     {
-        BOOL result = ([self openElementsCount] == 0 ||
-                       [[self topElement] isEqualToStringCaseInsensitive:@"LI"]);
-        
-        return result;
+        result = ([self openElementsCount] == 0 ||
+                  [[self topElement] isEqualToStringCaseInsensitive:@"LI"]);
     }
     else
     {
-        BOOL result = ([tagName isEqualToString:@"A"] ||
-                       [super validateTagName:tagName]);
-    
-        return result;
+        result = ([tagName isEqualToString:@"A"] ||
+                  [super validateElement:tagName]);
     }
+    
+    return result;
 }
 
 - (BOOL)validateAttribute:(NSString *)attributeName;

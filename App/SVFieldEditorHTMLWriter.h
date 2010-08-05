@@ -34,7 +34,7 @@
 
 
 #pragma mark Tag Whitelist
-- (BOOL)validateTagName:(NSString *)tagName;
+- (BOOL)validateElement:(NSString *)tagName;
 + (BOOL)isElementWithTagNameContent:(NSString *)tagName;
 
 
