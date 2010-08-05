@@ -184,6 +184,7 @@
     // Start the document
     KTDocType docType = [self docType];
     [self startDocument:[[self class] stringFromDocType:docType]
+               encoding:[[[page master] charset] encodingFromCharset]
                 isXHTML:(docType >= KTXHTMLTransitionalDocType)];
     
     
