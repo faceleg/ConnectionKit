@@ -34,6 +34,7 @@
 #import "DOMRange+Karelia.h"
 
 #import "KSOrderedManagedObjectControllers.h"
+#import "KSStringWriter.h"
 
 
 static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
@@ -142,10 +143,10 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     //  Write the whole out using a special stream
     
        
-    NSMutableString *html = [[NSMutableString alloc] init];
+    KSStringWriter *stringWriter = [[KSStringWriter alloc] init];
     
     SVParagraphedHTMLWriter *writer = 
-    [[SVParagraphedHTMLWriter alloc] initWithOutputWriter:html];
+    [[SVParagraphedHTMLWriter alloc] initWithOutputWriter:stringWriter];
     
     [writer setDelegate:self];
     [writer setAllowsPagelets:[self allowsPagelets]];
@@ -164,6 +165,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     SVRichText *textObject = [self representedObject];
+    NSString *html = [stringWriter string];
+    
     if (![html isEqualToString:[textObject string]])
     {
         _isUpdating = YES;
@@ -193,6 +196,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // Finish up
     [html release];
     [writer release];
+    [stringWriter release];
+    
     [super webEditorTextDidChange];
 }
 
