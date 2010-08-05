@@ -230,12 +230,14 @@
 
 - (BOOL)validateTagName:(NSString *)tagName
 {
-    // Paragraphs are permitted in body text
+    // Only a handul of block-level elements are supported. They can only appear at the top-level, or directly inside a list item
     if ([tagName isEqualToString:@"P"] ||
         [tagName isEqualToString:@"UL"] ||
         [tagName isEqualToString:@"OL"])
     {
-        BOOL result = ([self openElementsCount] == 0 || [self topElementIsList]);
+        BOOL result = ([self openElementsCount] == 0 ||
+                       [[self topElement] isEqualToStringCaseInsensitive:@"LI"]);
+        
         return result;
     }
     else
