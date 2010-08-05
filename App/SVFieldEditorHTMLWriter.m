@@ -113,7 +113,7 @@
         if ([elementToMergeInto isEqualNode:element compareChildNodes:NO])
         {
             // Dispose of markup: previous end tag, and this start tag
-            [_output beginBuffering];
+            [_output cancelFlushOnNextWrite];
             [super startElement:tagName withDOMElement:element];
             [_pendingEndDOMElements removeLastObject];
             [_output discardBuffer];
@@ -174,7 +174,7 @@
     if (isStyling)
     {
         // ..so push onto the stack, ready to write if requested. But only if it's not to be merged with the previous element
-        //[_output cancelFlushOnNextWrite];   // as we're about to write into the buffer
+        [_output cancelFlushOnNextWrite];   // as we're about to write into the buffer
         [_pendingStartTagDOMElements addObject:element];
         [_output beginBuffering];
     }
