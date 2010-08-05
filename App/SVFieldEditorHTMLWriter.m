@@ -222,14 +222,15 @@
         // If there was no actual content inside the element, then it should be thrown away. We can tell this by examining the stack
         if ([_pendingStartTagDOMElements lastObject] == element)
         {
-            // I'm not 100% sure this works with the new buffering code yet.
             [_buffer beginBuffering];   // resume buffering so the end tag doesn't get written
+            
             result = [super endElementWithDOMElement:element];
             
             [[element parentNode] removeChild:element];
             [_pendingStartTagDOMElements removeLastObject];
             
-            [_buffer discardBuffer];
+            [_buffer flushOnNextWrite];
+            [_buffer discardBuffer];    // will cancel -flushOnNextWrite if that was the last buffer
         }
         else
         {
