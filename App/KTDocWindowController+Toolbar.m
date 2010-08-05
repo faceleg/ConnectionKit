@@ -306,7 +306,12 @@
                                            title:NSLocalizedString(@"Indexes", "menu item")];
  	[item setIconImage:[NSImage imageNamed:@"toolbar_index"]];
 	[menu addItem:item];
-	
+    
+    
+    // ---
+    item = [NSMenuItem separatorItem];
+	[menu addItem:item];
+    
     
 	/*/ Badges
     item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory badgeFactories]
