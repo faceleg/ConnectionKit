@@ -2578,8 +2578,8 @@
 		CE01A7040EAFD63600BDF264 /* TrimTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrimTransformer.m; sourceTree = "<group>"; };
 		CE01A70A0EAFD63600BDF264 /* AQDataExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AQDataExtensions.h; sourceTree = "<group>"; };
 		CE01A70B0EAFD63600BDF264 /* AQDataExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AQDataExtensions.m; sourceTree = "<group>"; };
-		CE01A70C0EAFD63600BDF264 /* BDAlias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDAlias.h; sourceTree = "<group>"; };
-		CE01A70D0EAFD63600BDF264 /* BDAlias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDAlias.m; sourceTree = "<group>"; };
+		CE01A70C0EAFD63600BDF264 /* BDAlias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BDAlias.h; path = ../../bdalias/BDAlias.h; sourceTree = "<group>"; };
+		CE01A70D0EAFD63600BDF264 /* BDAlias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BDAlias.m; path = ../../bdalias/BDAlias.m; sourceTree = "<group>"; };
 		CE01A70E0EAFD63600BDF264 /* DNDArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNDArrayController.h; sourceTree = "<group>"; };
 		CE01A70F0EAFD63600BDF264 /* DNDArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNDArrayController.m; sourceTree = "<group>"; };
 		CE01A7100EAFD63600BDF264 /* NSBezierPath_AMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBezierPath_AMAdditions.h; sourceTree = "<group>"; };
