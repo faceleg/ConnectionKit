@@ -385,7 +385,6 @@
                    [tagName isEqualToString:@"STRONG"] ||
                    [tagName isEqualToString:@"EM"] ||
                    [[self class] isElementWithTagNameContent:tagName] ||
-                   [tagName isEqualToString:@"P"] ||    // used to be covered by -isElementWithTagNameContent:
                    [tagName isEqualToString:@"SUP"] ||
                    [tagName isEqualToString:@"SUB"]);
     
