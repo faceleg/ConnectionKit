@@ -381,18 +381,25 @@
 
 - (BOOL)validateElement:(NSString *)tagName;
 {
-    BOOL result = ([tagName isEqualToString:@"SPAN"] ||
-                   [tagName isEqualToString:@"STRONG"] ||
-                   [tagName isEqualToString:@"EM"] ||
-                   [tagName isEqualToString:@"BR"] ||
-                   [tagName isEqualToString:@"SUP"] ||
-                   [tagName isEqualToString:@"SUB"]);
+    BOOL result = [[self class] validateElement:tagName];
     
     // List items are permitted inside of a list. We don't actually allow lists, but this is handy for subclasses that do implement lists
     if (!result && [tagName isEqualToString:@"LI"])
     {
         if ([self topElementIsList]) result = YES;
     }
+    
+    return result;
+}
+
++ (BOOL)validateElement:(NSString *)tagName;    // can this sort of element ever be valid?
+{
+    BOOL result = ([tagName isEqualToString:@"SPAN"] ||
+                   [tagName isEqualToString:@"STRONG"] ||
+                   [tagName isEqualToString:@"EM"] ||
+                   [tagName isEqualToString:@"BR"] ||
+                   [tagName isEqualToString:@"SUP"] ||
+                   [tagName isEqualToString:@"SUB"]);
     
     return result;
 }

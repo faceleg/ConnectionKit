@@ -34,7 +34,8 @@
 
 
 #pragma mark Tag Whitelist
-- (BOOL)validateElement:(NSString *)tagName;
+- (BOOL)validateElement:(NSString *)tagName;    // is it valid right now?
++ (BOOL)validateElement:(NSString *)tagName;    // can this sort of element ever be valid?
 + (BOOL)isElementWithTagNameContent:(NSString *)tagName;
 
 

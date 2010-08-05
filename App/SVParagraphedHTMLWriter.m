@@ -245,10 +245,19 @@
     }
     else
     {
-        result = ([tagName isEqualToString:@"A"] ||
-                  [super validateElement:tagName]);
+        result = [super validateElement:tagName];
     }
     
+    return result;
+}
+
++ (BOOL)validateElement:(NSString *)tagName;    // can this sort of element ever be valid?
+{
+    BOOL result = ([super validateElement:tagName] ||
+                   [tagName isEqualToString:@"P"] ||
+                   [tagName isEqualToString:@"A"] ||
+                   [tagName isEqualToString:@"UL"] ||
+                   [tagName isEqualToString:@"OL"]);
     return result;
 }
 
