@@ -287,12 +287,20 @@
 	item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
 	[menu addItem:item]; 
     
- 	// Video item
+    
+ 	// Audio item
 	factory = [SVGraphicFactory audioFactory];
 	item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
 	[menu addItem:item]; 
     
 	
+    // Raw HTML
+    self.rawHTMLMenuItem = item = [SVGraphicFactory menuItemWithGraphicFactory:
+                                   [SVGraphicFactory rawHTMLFactory]];
+    
+	[menu addItem:item];
+	
+    
     // Indexes
 	item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory indexFactories]
                                            title:NSLocalizedString(@"Indexes", "menu item")];
@@ -326,11 +334,6 @@
                                            title:NSLocalizedString(@"More", "menu item")];
 	[item setIconImage:[NSImage imageNamed:@"toolbar_other"]];
     [menu addItem:item];
-	
-    self.rawHTMLMenuItem = item = [SVGraphicFactory menuItemWithGraphicFactory:
-                                   [SVGraphicFactory rawHTMLFactory]];
-    
-	[menu addItem:item];
 	
     return [result autorelease];
 }
