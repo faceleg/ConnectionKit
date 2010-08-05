@@ -193,14 +193,15 @@
             // Check each attribute should be written
             DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
             NSString *attributeName = [anAttribute name];
+            NSString *tagName = elementName;
             
-            if ([self validateAttribute:attributeName])
+            if ([self validateAttribute:attributeName ofElementWithTagName:tagName])
             {
                 // Validate individual styling
                 if ([attributeName isEqualToString:@"style"])
                 {
                     DOMCSSStyleDeclaration *style = [element style];
-                    [self removeUnsupportedCustomStyling:style];
+                    [self removeUnsupportedCustomStyling:style fromElementWithTagName:tagName];
                     
                     // Have to write it specially as changes don't show up in [anAttribute value] sadly
                     [self pushElementAttribute:@"style" value:[style cssText]];
@@ -414,12 +415,11 @@
 
 #pragma mark Attribute Whitelist
 
-- (BOOL)validateAttribute:(NSString *)attributeName;
+- (BOOL)validateAttribute:(NSString *)attributeName ofElementWithTagName:(NSString *)tagName;
 {
     BOOL result = NO;
     
-    // Allow class and style on any element except <br>
-    NSString *tagName = [self topElement];
+    // Allow class and style on any element except <BR>
     if (tagName && ![tagName isEqualToString:@"BR"])
     {
         result = ([attributeName isEqualToString:@"class"] ||
@@ -431,7 +431,7 @@
 
 #pragma mark Styling Whitelist
 
-- (BOOL)validateStyleProperty:(NSString *)propertyName;
+- (BOOL)validateStyleProperty:(NSString *)propertyName ofElementWithTagName:(NSString *)tagName;
 {
     BOOL result = ([propertyName isEqualToString:@"font"] ||
                    [propertyName hasPrefix:@"font-"] ||
@@ -441,13 +441,14 @@
     return result;
 }
 
-- (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style;
+- (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style
+                fromElementWithTagName:(NSString *)tagName;
 {
     for (int i = [style length]; i > 0;)
     {
         i--;
         NSString *name = [style item:i];
-        if (![self validateStyleProperty:name]) [style removeProperty:name];
+        if (![self validateStyleProperty:name ofElementWithTagName:tagName]) [style removeProperty:name];
     }
 }
 

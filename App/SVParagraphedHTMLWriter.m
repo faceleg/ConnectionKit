@@ -271,10 +271,10 @@
     return result;
 }
 
-- (BOOL)validateAttribute:(NSString *)attributeName;
+- (BOOL)validateAttribute:(NSString *)attributeName ofElementWithTagName:(NSString *)tagName;
 {
     // Super doesn't allow links; we do.
-    if ([[self topElement] isEqualToString:@"a"])
+    if ([tagName isEqualToString:@"A"])
     {
         BOOL result = ([attributeName isEqualToString:@"href"] ||
                        [attributeName isEqualToString:@"target"] ||
@@ -290,17 +290,16 @@
     }
     else
     {
-        return [super validateAttribute:attributeName];
+        return [super validateAttribute:attributeName ofElementWithTagName:tagName];
     }
 }
 
-- (BOOL)validateStyleProperty:(NSString *)propertyName;
+- (BOOL)validateStyleProperty:(NSString *)propertyName ofElementWithTagName:(NSString *)tagName;
 {
-    BOOL result = [super validateStyleProperty:propertyName];
+    BOOL result = [super validateStyleProperty:propertyName ofElementWithTagName:tagName];
     
     if (!result && [propertyName isEqualToString:@"text-align"])
     {
-        NSString *tagName = [self topElement];
         if ([tagName isEqualToString:@"p"])
         {
             result = YES;

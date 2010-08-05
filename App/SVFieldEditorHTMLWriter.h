@@ -40,12 +40,13 @@
 
 
 #pragma mark Attribute Whitelist
-- (BOOL)validateAttribute:(NSString *)attributeName;
+- (BOOL)validateAttribute:(NSString *)attributeName ofElementWithTagName:(NSString *)tagName;
 
 
 #pragma mark Styling Whitelist
-- (BOOL)validateStyleProperty:(NSString *)propertyName;
-- (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style;
+- (BOOL)validateStyleProperty:(NSString *)propertyName ofElementWithTagName:(NSString *)tagName;
+- (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style
+                fromElementWithTagName:(NSString *)tagName;
 
 
 @end
