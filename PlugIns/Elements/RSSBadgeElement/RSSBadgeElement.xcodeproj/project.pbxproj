@@ -22,6 +22,7 @@
 		3C42DDE20D64CAC0004F35FD /* xml.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDD80D64CAC0004F35FD /* xml.gif */; };
 		3C42DDE80D64CAFE004F35FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDE40D64CAFE004F35FD /* Localizable.strings */; };
 		3C42DE010D64CB6C004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DE000D64CB6C004F35FD /* License.rtf */; };
+		3C67D763120A717700D16A11 /* RSSBadgeInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C67D762120A717700D16A11 /* RSSBadgeInspector.m */; };
 		3CD80754120A6CC400E0848F /* RSSBadgeInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CD80752120A6CC400E0848F /* RSSBadgeInspector.xib */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
@@ -65,6 +66,8 @@
 		3C42DE000D64CB6C004F35FD /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
 		3C42DE020D64CB7E004F35FD /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C42DE030D64CB7E004F35FD /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C67D761120A717700D16A11 /* RSSBadgeInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSBadgeInspector.h; sourceTree = "<group>"; };
+		3C67D762120A717700D16A11 /* RSSBadgeInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSBadgeInspector.m; sourceTree = "<group>"; };
 		3CD80753120A6CC400E0848F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RSSBadgeInspector.xib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* RSSBadge.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSSBadge.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -136,6 +139,8 @@
 			children = (
 				3C42DDC80D64CA9B004F35FD /* RSSBadgePlugIn.h */,
 				3C42DDC90D64CA9B004F35FD /* RSSBadgePlugIn.m */,
+				3C67D761120A717700D16A11 /* RSSBadgeInspector.h */,
+				3C67D762120A717700D16A11 /* RSSBadgeInspector.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -286,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C42DDCA0D64CA9B004F35FD /* RSSBadgePlugIn.m in Sources */,
+				3C67D763120A717700D16A11 /* RSSBadgeInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

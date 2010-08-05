@@ -1,5 +1,5 @@
 //
-//  RSSBadgePlugIn.h
+//  RSSBadgeInspector.h
 //  RSSBadgeElement
 //
 //  Copyright 2006-2010 Karelia Software. All rights reserved.
@@ -34,50 +34,21 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
+
 #import <Cocoa/Cocoa.h>
 #import "SandvoxPlugin.h"
 
-
-typedef enum {
-	RSSBadgeIconStyleNone = 0,
-	RSSBadgeIconStyleStandardOrangeSmall = 1,
-	RSSBadgeIconStyleStandardOrangeLarge = 2,
-	RSSBadgeIconStyleStandardGraySmall = 3,
-	RSSBadgeIconStyleStandardGrayLarge = 4,
-	RSSBadgeIconStyleAppleRSS = 5,
-	RSSBadgeIconStyleFlatXML = 6,
-	RSSBadgeIconStyleFlatRSS = 7,
-} RSSBadgeIconStyle;
-
-typedef enum {
-	RSSBadgeIconPositionLeft = 1,
-	RSSBadgeIconPositionRight = 2,
-} RSSBadgeIconPosition;
-
-
 @class MAImagePopUpButton;
 
-
-@interface RSSBadgePlugIn : SVPageletPlugIn
+@interface RSSBadgeInspector : SVInspectorViewController 
 {
-  @private
-    RSSBadgeIconStyle _iconStyle;
-	NSString *_label;
-	id<SVPage> _collection;
+
+	IBOutlet KTLinkSourceView	*collectionLinkSourceView;
+	IBOutlet MAImagePopUpButton	*iconTypePopupButton;
+
 }
 
 // IB Actions
 - (IBAction)clearCollectionLink:(id)sender;
-
-// Collection accessors
-- (BOOL)useLargeIconLayout;
-
-- (NSString *)feedIconResourcePath;
-
-
-@property (nonatomic, assign) RSSBadgeIconStyle iconStyle;
-@property (nonatomic, copy) NSString *label;
-@property (nonatomic, retain) id<SVPage> collection;
-
 
 @end
