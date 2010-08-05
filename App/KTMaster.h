@@ -77,8 +77,9 @@
 @property(nonatomic, copy) NSNumber *timestampShowTime;
 
 
-#pragma mark Language
+#pragma mark Language & Charset
 @property(nonatomic, copy) NSString *language;
+@property(nonatomic, copy) NSString *charset;
 
 
 #pragma mark Comments

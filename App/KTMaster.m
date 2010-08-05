@@ -353,6 +353,8 @@
     return YES;
 }
 
+@dynamic charset;
+
 #pragma mark Site Outline
 
 - (KTCodeInjection *)codeInjection
