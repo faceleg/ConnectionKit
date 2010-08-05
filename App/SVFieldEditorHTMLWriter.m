@@ -384,7 +384,7 @@
     BOOL result = ([tagName isEqualToString:@"SPAN"] ||
                    [tagName isEqualToString:@"STRONG"] ||
                    [tagName isEqualToString:@"EM"] ||
-                   [[self class] isElementWithTagNameContent:tagName] ||
+                   [tagName isEqualToString:@"BR"] ||
                    [tagName isEqualToString:@"SUP"] ||
                    [tagName isEqualToString:@"SUB"]);
     
