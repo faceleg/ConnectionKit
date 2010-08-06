@@ -55,29 +55,27 @@ typedef enum {
 } RSSBadgeIconPosition;
 
 
-@class MAImagePopUpButton;
-
-
 @interface RSSBadgePlugIn : SVPageletPlugIn
 {
   @private
+    id<SVPage> _collection;
+
     RSSBadgeIconStyle _iconStyle;
+    RSSBadgeIconPosition _iconPosition;
 	NSString *_label;
-	id<SVPage> _collection;
+    NSString *_titleText;
 }
 
-// IB Actions
-- (IBAction)clearCollectionLink:(id)sender;
 
-// Collection accessors
 - (BOOL)useLargeIconLayout;
-
 - (NSString *)feedIconResourcePath;
 
-
-@property (nonatomic, assign) RSSBadgeIconStyle iconStyle;
-@property (nonatomic, copy) NSString *label;
+//FIXME: do we really want to retain this? what happens if you delete the page?
 @property (nonatomic, retain) id<SVPage> collection;
 
+@property (nonatomic, assign) RSSBadgeIconStyle iconStyle;
+@property (nonatomic, assign) RSSBadgeIconPosition iconPosition;
+@property (nonatomic, copy) NSString *label;
+@property (nonatomic, copy) NSString *titleText;
 
 @end
