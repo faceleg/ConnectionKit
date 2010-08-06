@@ -40,15 +40,12 @@
 
 @class MAImagePopUpButton;
 
-@interface RSSBadgeInspector : SVInspectorViewController 
+@interface RSSBadgeInspector : SVInspectorViewController <KTLinkSourceViewDelegate>
 {
-
 	IBOutlet KTLinkSourceView	*collectionLinkSourceView;
 	IBOutlet MAImagePopUpButton	*iconTypePopupButton;
-
 }
 
-// IB Actions
 - (IBAction)clearCollectionLink:(id)sender;
 
 @end

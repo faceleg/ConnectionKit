@@ -41,11 +41,9 @@
 
 @implementation RSSBadgeInspector
 
-- (NSString *)nibName { return @"RSSBadge"; }
-
 
 #pragma mark -
-#pragma mark Init
+#pragma mark Initialization
 
 + (void)initialize
 {
@@ -65,23 +63,20 @@
 
 - (void)awakeFromNib
 {
-//	// Connect up the target icon if needed
-//	[collectionLinkSourceView setConnected:([[self delegateOwner] valueForKey:@"collection"] != nil)];
-
 	// Connect up the target icon if needed
 	NSArray *selectedObjects = [[self inspectedObjectsController] selectedObjects];
-	KTPage *collection = (KTPage *)[NSNull null];		// placeholder for not known
+	id<SVPage> collection = (id<SVPage>)[NSNull null];		// placeholder for not known
 	NSCellStateValue state = NSMixedState;
-	for (RSSBadgePlugIn *plugin in selectedObjects)
+	for ( RSSBadgePlugIn *plugin in selectedObjects )
 	{
-		if (collection == (KTPage *)[NSNull null])
+		if ( (collection == (id<SVPage>)[NSNull null]) )
 		{
 			collection = plugin.collection;	// first pass through
 			state = (nil != collection) ? NSOnState : NSOffState;
 		}
 		else
 		{
-			if (collection != plugin.collection)
+			if ( collection != plugin.collection )
 			{
 				state = NSMixedState;
 				break;		// no point in continuing; it's a mixed state and there's no going back
@@ -92,15 +87,10 @@
 }
 
 
-
-
-
-
 #pragma mark -
-#pragma mark Link source dragging
+#pragma mark KTLinkSourceViewDelegate
 
-
-- (void)linkSourceConnectedTo:(KTPage *)aPage;
+- (void)linkSourceConnectedTo:(id<SVPage>)aPage;
 {
 	if (aPage)
 	{
@@ -109,20 +99,11 @@
 	}
 }
 
-//- (IBAction)clearCollectionLink:(id)sender
-//{
-//	[[self delegateOwner] setValue:nil forKey:@"collection"];
-//	[collectionLinkSourceView setConnected:NO];
-//}
-
 - (IBAction)clearCollectionLink:(id)sender
 {
+    //FIXME: shouldn't we iterate through all [[self inspectedObjectsController] selectedObjects]?
 	[[[self inspectedObjectsController] selection] setValue:nil forKey:@"collection"];
 	[collectionLinkSourceView setConnected:NO];
 }
-
-
-
-
 
 @end
