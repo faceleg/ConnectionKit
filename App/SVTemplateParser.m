@@ -545,24 +545,21 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 - (void)writeString:(NSString *)string;
 {
-	// DJW(((@"writeString: %@", [string stringByReplacing:@"\n" with:@"\\n"]));
-	if (_lastWrittenStringEndedInNewline)
+    // Disregard 2 newlines in a row
+	if (_lastCharacterWrittenWasNewline)
 	{
-		NSRange rangeOfFirstNonNewline = [string rangeOfCharacterFromSet:[NSCharacterSet nonFullNewlineCharacterSet]];
-		if (NSNotFound != rangeOfFirstNonNewline.location)
-		{
-			string = [string substringFromIndex:rangeOfFirstNonNewline.location];
-		}
-		else
-		{
-			string = @"";
-		}
+        if ([string hasPrefix:@"\n"])
+        {
+            if ([string length] == 1) return;   // special case where there's nothing to do
+            
+            string = [string substringFromIndex:1];
+        }
 	}
-	[_writer writeString:string];
-	if ([string hasSuffix:@"\n"])
-	{
-		_lastWrittenStringEndedInNewline = YES;
-	}
+	
+    
+    // Carry on writing. Track if the last character was a newline
+    [_writer writeString:string];
+    _lastCharacterWrittenWasNewline = [string hasSuffix:@"\n"];
 }
 
 - (void)close; { [_writer close]; }
