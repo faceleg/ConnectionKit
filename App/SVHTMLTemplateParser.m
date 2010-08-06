@@ -88,12 +88,12 @@
 	return (nil != gRegistrationHash) ? gRegistrationHash : @""; 
 }
 
-- (void)willWriteKeyPath
+- (void)writeString:(NSString *)string;
 {
-    SVHTMLContext *context = [self HTMLContext];
-    [context startWritingInline];
+    [super writeString:string];
     
-    [super willWriteKeyPath];
+    // Reset the context to inline writing since we've taken control again
+    [[self HTMLContext] startWritingInline];
 }
 
 #pragma mark -
