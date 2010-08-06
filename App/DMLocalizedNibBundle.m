@@ -65,17 +65,17 @@ static void OffsetView(NSView *view, NSPoint offset)
 }
 
 
-static NSString *DescViewsInRow(NSArray *sortedRowViews)
-{
-	NSMutableString *rowDesc = [NSMutableString string];
-	for (NSView *rowView in sortedRowViews)
-	{
-		NSString *desc = [rowView description];
-		[rowDesc appendString:desc];
-		[rowDesc appendString:@" "];
-	}
-	return rowDesc;
-}
+//static NSString *DescViewsInRow(NSArray *sortedRowViews)
+//{
+//	NSMutableString *rowDesc = [NSMutableString string];
+//	for (NSView *rowView in sortedRowViews)
+//	{
+//		NSString *desc = [rowView description];
+//		[rowDesc appendString:desc];
+//		[rowDesc appendString:@" "];
+//	}
+//	return rowDesc;
+//}
 
 #if 0
 static void LogRows(NSDictionary *rows)

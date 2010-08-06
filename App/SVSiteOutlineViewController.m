@@ -7,6 +7,7 @@
 //
 
 #import "SVSiteOutlineViewController.h"
+#import "Elements+Pasteboard.h"
 
 #import "KTDocument.h"
 #import "KTSite.h"

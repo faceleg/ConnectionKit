@@ -406,7 +406,6 @@
 {
 	KTPage *currentParserPage = [context page];
 	
-	NSString *className = nil;
 	[context startElement:@"ul" idName:nil className:nil];
 
 	int i=1;	// 1-based iteration
