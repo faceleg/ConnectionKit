@@ -646,7 +646,6 @@
 		
 		[context addDependencyOnObject:self keyPath:@"site.pagesInSiteMenu"];
 
-		[context startNewline];
 		[context startElement:@"div" idName:@"sitemenu" className:nil];			// <div id="sitemenu">
 		[context startElement:@"h2" idName:nil className:@"hidden"];				// hidden skip navigation menu
 		[context writeString:
