@@ -91,6 +91,10 @@
     [super close];
 }
 
+#pragma mark Properties
+
+@synthesize importsGraphics = _allowsImages;
+
 #pragma mark Elements
 
 - (DOMNode *)willWriteDOMElement:(DOMElement *)element;

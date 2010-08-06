@@ -23,9 +23,15 @@
   @private
     NSMutableArray  *_pendingEndDOMElements;
     KSStringWriter  *_output;
+    
+    BOOL    _allowsImages;
 }
 
 - (id)initWithOutputStringWriter:(KSStringWriter *)output;
+
+
+#pragma mark Properties
+@property(nonatomic) BOOL importsGraphics;
 
 
 #pragma mark Cleanup

@@ -30,6 +30,7 @@
     if (self = [super initWithOutputStringWriter:stream])
     {
         _attachments = [[NSMutableSet alloc] init];
+        [self setImportsGraphics:YES];
     }
     
     return self;
