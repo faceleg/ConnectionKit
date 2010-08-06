@@ -69,7 +69,7 @@ typedef enum {
 - (BOOL)useLargeIconLayout;
 - (NSString *)feedIconResourcePath;
 
-//FIXME: do we really want to retain this? what happens if you delete the page?
+//FIXME: do we really want to retain this? what happens if you delete the page? how will this pagelet unhook itself from the deleted collection?
 @property (nonatomic, retain) id<SVPage> collection;
 
 @property (nonatomic, assign) RSSBadgeIconStyle iconStyle;
