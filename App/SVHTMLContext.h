@@ -32,6 +32,7 @@ typedef enum {
 {
   @private
     NSMutableString *_output;
+    NSUInteger      _charactersWritten;
     
     NSURL   *_baseURL;
     KTPage	*_currentPage;
@@ -85,7 +86,7 @@ typedef enum {
 
 // Not 100% sure I want to expose this!
 @property(nonatomic, retain, readonly) NSMutableString *mutableString;
-
+@property(nonatomic, readonly) NSUInteger totalCharactersWritten;
 
 @property(nonatomic, retain, readonly) KTPage *page;    // does NOT affect .baseURL
 @property(nonatomic, copy) NSURL *baseURL;

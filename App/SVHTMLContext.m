@@ -242,6 +242,7 @@
 #pragma mark Properties
 
 @synthesize mutableString = _output;
+@synthesize totalCharactersWritten = _charactersWritten;
 
 @synthesize baseURL = _baseURL;
 @synthesize liveDataFeeds = _liveDataFeeds;
@@ -820,6 +821,12 @@
         // Advance the search
         location = location + effectiveRange.length;
     }
+}
+
+- (void)writeString:(NSString *)string;
+{
+    [super writeString:string];
+    _charactersWritten += [string length];
 }
 
 - (void)close;
