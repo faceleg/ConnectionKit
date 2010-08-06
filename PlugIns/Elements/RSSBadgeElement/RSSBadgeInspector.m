@@ -84,6 +84,7 @@
 		}
 	}
 	[collectionLinkSourceView setConnected:(state == NSOnState)];
+    [collectionLinkSourceView setEnabled:YES];
 }
 
 
