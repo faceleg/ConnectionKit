@@ -16,6 +16,7 @@
 #import "SVGraphic.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVInspectorViewController.h"
+#import "KTPage.h"
 #import "SVPlugIn.h"
 #import "SVSidebar.h"
 #import "SVTemplate.h"
@@ -236,8 +237,9 @@ static id <SVPlugInContext> sCurrentContext;
 
 - (id <SVPage>)pageWithIdentifier:(NSString *)identifier;
 {
-    KTPage *result = [KTPage pageWithUniqueID:identifier
-                                       inManagedObjectContext:[[self delegateOwner] managedObjectContext]];
+    KTPage *result = [KTPage
+                      pageWithUniqueID:identifier
+                      inManagedObjectContext:[(NSManagedObject *)[self container] managedObjectContext]];
     return result;
 }
 
