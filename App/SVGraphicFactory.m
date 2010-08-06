@@ -191,7 +191,7 @@
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVVideo *result = [SVVideo insertNewMovieInManagedObjectContext:context];			// SHOULD BE SVAUDIO
+    SVVideo *result = [SVAudio insertNewMovieInManagedObjectContext:context];
     [result setWidth:[NSNumber numberWithUnsignedInt:200]];
     [result setHeight:[NSNumber numberWithUnsignedInt:200]];
     
