@@ -359,7 +359,6 @@
 
 - (void)addCSSWithURL:(NSURL *)cssURL;
 {
-#warning Mike, can you check if this maybe should actually be [self isForEditing] ? How does QuickLook fit in here?
     if (![self isForPublishing])
     {
         [self writeLinkToStylesheet:[self relativeURLStringOfURL:cssURL]
