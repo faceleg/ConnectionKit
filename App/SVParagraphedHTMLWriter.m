@@ -8,16 +8,7 @@
 
 #import "SVParagraphedHTMLWriter.h"
 
-#import "SVRichTextDOMController.h"
-#import "SVGraphicDOMController.h"
-#import "SVImageDOMController.h"
-#import "SVMediaRecord.h"
-#import "SVTextAttachment.h"
-#import "SVWebEditorHTMLContext.h"
-
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
-
 #import "DOMNode+Karelia.h"
 
 
@@ -58,18 +49,6 @@
 
 #pragma mark Cleanup
 
-- (WEKWebEditorItem *)orphanedWebEditorItemMatchingDOMNode:(DOMNode *)aNode;
-{
-    for (WEKWebEditorItem *anItem in [[self delegate] childWebEditorItems])
-    {
-        DOMNode *node = [anItem HTMLElement];
-        BOOL isOrphan = ![node isDescendantOfNode:[node ownerDocument]];
-        if (isOrphan && [node isEqualNode:aNode]) return anItem;
-    }
-    
-    return nil;
-}
-
 - (DOMNode *)handleInvalidBlockElement:(DOMElement *)element;
 {
     // Move the element and its next siblings up a level. Next stage of recursion will find them there
@@ -85,97 +64,6 @@
     return nil;
 }
 
-- (DOMNode *)convertImageElementToGraphic:(DOMHTMLImageElement *)imageElement;
-{
-    // Is there an orphaned item we should reconnect to?
-    WEKWebEditorItem *orphanedItem = [self orphanedWebEditorItemMatchingDOMNode:imageElement];
-    if (orphanedItem)
-    {
-        [orphanedItem setHTMLElement:imageElement];
-        [[self delegate] write:self selectableItem:(SVGraphicDOMController *)orphanedItem];
-        return [[orphanedItem HTMLElement] nextSibling];
-    }
-    
-    
-    // Make an image object
-    SVRichTextDOMController *textController = [self delegate];
-    SVRichText *text = [textController representedObject];
-    NSManagedObjectContext *context = [text managedObjectContext];
-    
-    SVMediaRecord *media;
-    NSURL *URL = [imageElement absoluteImageURL];
-    if ([URL isFileURL])
-    {
-        media = [SVMediaRecord mediaWithURL:URL
-                                 entityName:@"GraphicMedia"
-             insertIntoManagedObjectContext:context
-                                      error:NULL];
-    }
-    else
-    {
-        WebResource *resource = [[[[imageElement ownerDocument] webFrame] dataSource] subresourceForURL:URL];
-        
-        media = [SVMediaRecord mediaWithWebResource:resource
-                                         entityName:@"GraphicMedia"
-                     insertIntoManagedObjectContext:context];
-        
-        [media setPreferredFilename:[@"pastedImage" stringByAppendingPathExtension:[URL pathExtension]]];
-    }
-    
-    SVImage *image = [SVImage insertNewImageInManagedObjectContext:context];
-    [image setMedia:media];
-    
-    
-    // Try to divine image size
-    int width = [imageElement width];
-    int height = [imageElement height];
-    
-    if (width > 0 && height > 0)
-    {
-        [image setWidth:[NSNumber numberWithInt:width]];
-        [image setHeight:[NSNumber numberWithInt:height]];
-    }
-    else
-    {
-        [image makeOriginalSize];
-    }
-    [image setConstrainProportions:YES];
-    
-    
-    // Make corresponding text attachment
-    SVTextAttachment *textAttachment = [NSEntityDescription
-                                        insertNewObjectForEntityForName:@"TextAttachment"
-                                        inManagedObjectContext:context];
-    [textAttachment setGraphic:image];
-    [textAttachment setBody:text];
-    [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
-    [textAttachment setCausesWrap:[NSNumber numberWithBool:NO]];
-    
-    
-    // Create controller for graphic
-    SVImagePageletDOMController *controller = (SVImagePageletDOMController *)[image newDOMController];
-    [controller awakeFromHTMLContext:[textController HTMLContext]];
-    [[controller imageDOMController] setHTMLElement:imageElement];
-    [controller setHTMLElement:imageElement];
-    
-    [textController addChildWebEditorItem:controller];
-    [controller release];
-    
-    
-    // Replace old DOM element with new one
-    DOMNode *result = [imageElement nextSibling];
-    DOMNode *parentNode = [imageElement parentNode];
-    [parentNode removeChild:imageElement];
-    [parentNode insertBefore:[controller HTMLElement] refChild:result];
-    
-    
-    // Write the replacement
-    [textController write:self selectableItem:controller];
-    
-    
-    return result;
-}
-
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 {
     // Ignore callout <div>s
@@ -185,13 +73,6 @@
         [[element className] hasPrefix:@"callout-container"])
     {
         return [element nextSibling];
-    }
-    
-    
-    // Images need to create a corresponding model object & DOM controller
-    else if ([tagName isEqualToString:@"IMG"])
-    {
-        return [self convertImageElementToGraphic:(DOMHTMLImageElement *)element];
     }
     
     
