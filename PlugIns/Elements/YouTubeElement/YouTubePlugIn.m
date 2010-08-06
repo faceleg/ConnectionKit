@@ -110,7 +110,7 @@
 
 - (NSUInteger)videoWidth
 {
-    NSUInteger result = 200; // start with something, small enough to fit in sidebar if need be
+    NSUInteger result = 360; // start with something, small enough to fit in sidebar if need be
     
     NSNumber *containerWidth = [[self container] containerWidth];
     if ( containerWidth )
@@ -123,7 +123,8 @@
 
 - (NSUInteger)videoHeight
 {
-    //FIXME: what about these old calculations for border if in sidebar?
+    //FIXME: need API for knowing if in sidebar/callout to account for these add'l sizing calcs
+    
 //	if (self.widescreen)
 //	{
 //		result = heightsWide[1];
@@ -207,7 +208,7 @@
 #pragma mark -
 #pragma mark Thumbnail
 
-//FIXME: we need an SVPlugin protocol for supplying a thumbail (here, our thumbnail is just the icon)
+//FIXME: need API for supplying a real thumbail (here, our thumbnail is just the icon)
 
 - (id <IMBImageItem>)thumbnail;
 {
