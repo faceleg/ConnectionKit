@@ -63,6 +63,10 @@
 
 - (void)awakeFromNib
 {
+    // enable target icon
+    //FIXME: remove this if KTLinkSourceView is enabled by default #84080
+    [collectionLinkSourceView setEnabled:YES];
+
 	// Connect up the target icon if needed
 	NSArray *selectedObjects = [[self inspectedObjectsController] selectedObjects];
 	id<SVPage> collection = (id<SVPage>)[NSNull null];		// placeholder for not known
@@ -84,7 +88,6 @@
 		}
 	}
 	[collectionLinkSourceView setConnected:(state == NSOnState)];
-    [collectionLinkSourceView setEnabled:YES];
 }
 
 
@@ -98,13 +101,6 @@
 		[[[self inspectedObjectsController] selection] setValue:aPage forKey:@"collection"];
 		[collectionLinkSourceView setConnected:YES];
 	}
-}
-
-- (IBAction)clearCollectionLink:(id)sender
-{
-    //FIXME: shouldn't we iterate through all [[self inspectedObjectsController] selectedObjects]?
-	[[[self inspectedObjectsController] selection] setValue:nil forKey:@"collection"];
-	[collectionLinkSourceView setConnected:NO];
 }
 
 @end

@@ -43,9 +43,6 @@
 @interface RSSBadgeInspector : SVInspectorViewController <KTLinkSourceViewDelegate>
 {
 	IBOutlet KTLinkSourceView	*collectionLinkSourceView;
-	IBOutlet MAImagePopUpButton	*iconTypePopupButton;
 }
-
-- (IBAction)clearCollectionLink:(id)sender;
 
 @end
