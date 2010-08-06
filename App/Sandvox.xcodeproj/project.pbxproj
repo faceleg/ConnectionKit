@@ -1185,6 +1185,9 @@
 		CED8650910AA45AF002DF34F /* iMedia.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = CEB122FB10AA0F6A00E36F07 /* iMedia.framework */; };
 		CEDA2D84120CC6B1005FE23E /* SVAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = CEDA2D82120CC6B1005FE23E /* SVAudio.h */; };
 		CEDA2D85120CC6B1005FE23E /* SVAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDA2D83120CC6B1005FE23E /* SVAudio.m */; };
+		CEDA2DC0120CD437005FE23E /* SVVideoInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = CEDA2DBE120CD437005FE23E /* SVVideoInspector.h */; };
+		CEDA2DC1120CD437005FE23E /* SVVideoInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDA2DBF120CD437005FE23E /* SVVideoInspector.m */; };
+		CEDA2DD2120CD676005FE23E /* SVVideo.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDA2DD1120CD676005FE23E /* SVVideo.xib */; };
 		CEDE1DC50A5C6B8C0055352C /* NonStandardURL.html in Resources */ = {isa = PBXBuildFile; fileRef = CEC4DB2F0935179500D75C23 /* NonStandardURL.html */; };
 		CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EA307E0101100DE4994 /* Acknowledgments.rtf */; };
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
@@ -2854,6 +2857,9 @@
 		CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ObjectiveFlickr.xcodeproj; path = ../../imedia/ObjectiveFlickr/ObjectiveFlickr.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CEDA2D82120CC6B1005FE23E /* SVAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVAudio.h; sourceTree = "<group>"; };
 		CEDA2D83120CC6B1005FE23E /* SVAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAudio.m; sourceTree = "<group>"; };
+		CEDA2DBE120CD437005FE23E /* SVVideoInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVVideoInspector.h; sourceTree = "<group>"; };
+		CEDA2DBF120CD437005FE23E /* SVVideoInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVVideoInspector.m; sourceTree = "<group>"; };
+		CEDA2DD1120CD676005FE23E /* SVVideo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SVVideo.xib; sourceTree = "<group>"; };
 		CEDE18960A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = zh_TW; path = zh_TW.lproj/Credits.html; sourceTree = "<group>"; };
 		CEDE189B0A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEDE18A10A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -3015,6 +3021,7 @@
 				27F365E2116020B1003BDA5F /* Metrics Inspector */,
 				27F365E1116020A9003BDA5F /* Link Inspector */,
 				27F365E01160209B003BDA5F /* Plug-In Inspector */,
+				CEDA2DCA120CD583005FE23E /* Other Inspectors */,
 			);
 			name = Inspector;
 			sourceTree = "<group>";
@@ -5368,6 +5375,16 @@
 			path = ThirdParty;
 			sourceTree = "<group>";
 		};
+		CEDA2DCA120CD583005FE23E /* Other Inspectors */ = {
+			isa = PBXGroup;
+			children = (
+				CEDA2DD1120CD676005FE23E /* SVVideo.xib */,
+				CEDA2DBE120CD437005FE23E /* SVVideoInspector.h */,
+				CEDA2DBF120CD437005FE23E /* SVVideoInspector.m */,
+			);
+			name = "Other Inspectors";
+			sourceTree = "<group>";
+		};
 		CEF9D0BE0D862C2000BD9895 /* WebKit Plug-ins */ = {
 			isa = PBXGroup;
 			children = (
@@ -5734,6 +5751,7 @@
 				27DD0A571202FC120083C7C1 /* SVWebEditingURL.h in Headers */,
 				27DD0B58120329A80083C7C1 /* SVURLFormatter.h in Headers */,
 				CEDA2D84120CC6B1005FE23E /* SVAudio.h in Headers */,
+				CEDA2DC0120CD437005FE23E /* SVVideoInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6408,6 +6426,7 @@
 				CE01E7331208A8590093565F /* toolbar_text.tiff in Resources */,
 				CE01E7341208A8590093565F /* toolbar_video.tiff in Resources */,
 				CEE2C64F120B25E7000E3C0E /* plugin_inspector.tiff in Resources */,
+				CEDA2DD2120CD676005FE23E /* SVVideo.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7238,6 +7257,7 @@
 				27DD0A581202FC120083C7C1 /* SVWebEditingURL.m in Sources */,
 				27DD0B59120329A80083C7C1 /* SVURLFormatter.m in Sources */,
 				CEDA2D85120CC6B1005FE23E /* SVAudio.m in Sources */,
+				CEDA2DC1120CD437005FE23E /* SVVideoInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

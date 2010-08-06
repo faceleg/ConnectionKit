@@ -10,6 +10,7 @@
 
 #import "SVHTMLContext.h"
 #import "SVMediaRecord.h"
+#import "SVVideoInspector.h"
 
 
 @implementation SVVideo 
@@ -27,5 +28,18 @@
 {
     [context writeHTMLString:@"<p>[[MAKE ME WRITE SOME HTML!]]</p>"];
 }
+
++ (NSString *)plugInIdentifier; // use standard reverse DNS-style string
+{
+	return @"com.karelia.sandvox.SVVideo";
+}
+
++ (SVInspectorViewController *)makeInspectorViewController;
+{
+    SVInspectorViewController *result = nil;
+    result = [[[SVVideoInspector alloc] initWithNibName:@"SVVideo" bundle:[NSBundle mainBundle]] autorelease];
+    return result;
+}
+
 
 @end
