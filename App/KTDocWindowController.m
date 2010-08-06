@@ -646,28 +646,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		
 		result = ( ![selection containsObject:[[[self document] site] rootPage]] );
 	}
-    else if ( itemAction == @selector(pasteViaContextualMenu:) )
-    {
-        if ( ![self canPastePages] )
-        {
-            result = NO;
-        }
-		else
-		{
-			id context = [menuItem representedObject];
-			id selection = [context valueForKey:kKTSelectedObjectsKey];
-			if ( [selection isKindOfClass:[NSArray class]] )
-			{
-				KTPage *firstPage = [selection objectAtIndex:0];
-				result = ( [firstPage isCollection] );
-			}
-			else
-			{
-				KTPage *page = selection;
-				result = ( [page isCollection] );
-			}
-		}
-    }
 
 	// DEFAULT: let webKit handle it
     
