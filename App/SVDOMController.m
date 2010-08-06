@@ -126,7 +126,7 @@
     [controller performSelector:@selector(didUpdate)];
     
     // Force a redraw if affected. #82536
-    if ([self isSelected])
+    if ([self isSelected] && ![[self webEditor] inLiveGraphicResize])
     {
         [[[self HTMLElement] documentView] setNeedsDisplay:YES];
     }
