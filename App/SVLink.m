@@ -81,6 +81,7 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
+    [aCoder encodeObject:[self page] forKey:@"page"];   // should fail if page is non-nil
     [aCoder encodeInteger:[self linkType] forKey:@"type"];
     [aCoder encodeObject:[self URLString] forKey:@"URLString"];
     [aCoder encodeBool:[self openInNewWindow] forKey:@"openInNewWindow"];
