@@ -94,7 +94,7 @@
 #pragma mark -
 #pragma mark KTLinkSourceViewDelegate
 
-- (void)linkSourceConnectedTo:(id<SVPage>)aPage;
+- (void)linkSourceConnectedTo:(id<SVPage>)aPage
 {
 	if (aPage)
 	{
