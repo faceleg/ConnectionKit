@@ -257,7 +257,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
             KTMissingMediaController *missingMediaController =
 			[[KTMissingMediaController alloc] initWithWindowNibName:@"MissingMedia"];	// We'll release it after closing the sheet
             
-            [missingMediaController setMediaManager:[(KTDocument *)[self document] mediaManager]];
+            //[missingMediaController setMediaManager:[(KTDocument *)[self document] mediaManager]];
             
             NSArray *sortedMissingMedia = [missingMedia allObjects];    // Not actually performing any sorting
             [missingMediaController setMissingMedia:sortedMissingMedia];
