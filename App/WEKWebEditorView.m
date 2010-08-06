@@ -1135,6 +1135,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     // Tell controllers not to draw selected during resize
+    NSView *docView = [[item HTMLElement] documentView];
+    [docView setNeedsDisplayInRect:[item drawingRect]];
     _resizingGraphic = YES;
     
     while ([event type] != NSLeftMouseUp)
@@ -1142,13 +1144,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // Handle the event
         event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
         [[self documentView] autoscroll:event];
-        NSPoint handleLocation = [[[item HTMLElement] documentView] convertPoint:[event locationInWindow] 
-                                                                        fromView:nil];
+        NSPoint handleLocation = [docView convertPoint:[event locationInWindow] fromView:nil];
         handle = [item resizeByMovingHandle:handle toPoint:handleLocation];
     }
     
     _resizingGraphic = NO;
-    [[[item HTMLElement] documentView] setNeedsDisplayInRect:[item drawingRect]];
+    [docView setNeedsDisplayInRect:[item drawingRect]];
     
     
     // Update cursor for finish location
