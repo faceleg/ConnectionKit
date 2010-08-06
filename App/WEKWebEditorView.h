@@ -100,7 +100,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 - (IBAction)deselectAll:(id)sender; // Action method, so asks the delegate if selection should change first
 
-- (BOOL)shouldSelectDOMElementInline:(DOMHTMLElement *)element;
+- (BOOL)shouldSelectDOMElementInline:(DOMElement *)element;
 
 #pragma mark Editing
 

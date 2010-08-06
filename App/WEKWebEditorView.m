@@ -500,7 +500,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         if (selectedItem)
         {
             // Match WebView selection to item for inline images…
-            DOMHTMLElement *domElement = [selectedItem selectableDOMElement];
+            DOMElement *domElement = [selectedItem selectableDOMElement];
             
             if ([self shouldSelectDOMElementInline:domElement])
             {
@@ -573,7 +573,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return YES;
 }
 
-- (BOOL)shouldSelectDOMElementInline:(DOMHTMLElement *)element;
+- (BOOL)shouldSelectDOMElementInline:(DOMElement *)element;
 {
     // Images are always selectable
     if ([[element tagName] isEqualToString:@"IMG"]) return YES;
@@ -583,7 +583,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
     DOMCSSStyleDeclaration *style = [[self webView] computedStyleForElement:element
                                                               pseudoElement:nil];
     
-    BOOL result = ([[style display] isEqualToString:@"inline"] && [element isContentEditable]);
+    BOOL result = ([[style display] isEqualToString:@"inline"] &&
+                   [element isKindOfClass:[DOMHTMLElement class]] &&
+                   [(DOMHTMLElement *)element isContentEditable]);
+    
     return result;
 }
 
