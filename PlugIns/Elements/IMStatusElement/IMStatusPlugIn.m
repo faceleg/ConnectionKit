@@ -170,12 +170,16 @@ NSString *IMWantBorderKey = @"wantBorder";
             
             // generate relative string
             NSString *onlineImagePath = [context relativeURLStringOfURL:contextURL];    
-
+            onlineImagePath = NSMakeCollectable(CFXMLCreateStringByEscapingEntities(NULL,
+                                                                                    (CFStringRef)onlineImagePath,
+                                                                                    NULL));
+            
             // fix up HTML
             [writeableHTMLCode replaceOccurrencesOfString:@"#ONLINE#" 
                                                withString:onlineImagePath
                                                   options:NSLiteralSearch 
                                                     range:NSMakeRange(0,[writeableHTMLCode length])];
+             [onlineImagePath release];
         }
         
         NSURL *offlineImageURL = [IMStatusImageURLProtocol URLWithBaseImageURL:[IMStatusImageURLProtocol baseOfflineImageURL] headline:[self headlineText] status:[self offlineText]];
@@ -186,12 +190,16 @@ NSString *IMWantBorderKey = @"wantBorder";
             
             // generate relative string
             NSString *offlineImagePath = [context relativeURLStringOfURL:contextURL];    
+            offlineImagePath = NSMakeCollectable(CFXMLCreateStringByEscapingEntities(NULL,
+                                                                                     (CFStringRef)offlineImagePath,
+                                                                                     NULL));
             
             // fix up HTML
             [writeableHTMLCode replaceOccurrencesOfString:@"#OFFLINE#" 
                                                withString:offlineImagePath 
                                                   options:NSLiteralSearch 
                                                     range:NSMakeRange(0,[writeableHTMLCode length])];
+            [offlineImagePath release];
         }
         
         if ( self.headlineText )
