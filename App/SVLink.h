@@ -21,7 +21,7 @@ typedef enum {
 } SVLinkType;
 
 
-@class KTPage, SVHTMLContext;
+@class SVSiteItem, SVHTMLContext;
 
 
 @interface SVLink : NSObject <NSCopying, NSCoding>
@@ -29,21 +29,21 @@ typedef enum {
   @private
     SVLinkType  _type;
     NSString    *_URLString;
-    KTPage      *_page;
+    SVSiteItem  *_page;
     BOOL        _openInNewWindow;
 }
 
 #pragma mark Creating a link
-+ (id)linkWithSiteItem:(KTPage *)item openInNewWindow:(BOOL)openInNewWindow;
++ (id)linkWithSiteItem:(SVSiteItem *)item openInNewWindow:(BOOL)openInNewWindow;
 - (id)initWithURLString:(NSString *)urlString openInNewWindow:(BOOL)openInNewWindow;
-- (id)initWithPage:(KTPage *)page openInNewWindow:(BOOL)openInNewWindow;
+- (id)initWithPage:(SVSiteItem *)page openInNewWindow:(BOOL)openInNewWindow;
 - (id)initLinkToFullSizeImageOpensInNewWindow:(BOOL)openInNewWindow;
 
 
 #pragma mark Link Properties
 @property(nonatomic, readonly) SVLinkType linkType;
 @property(nonatomic, copy, readonly) NSString *URLString;   // should always be non-nil
-@property(nonatomic, retain, readonly) KTPage *page;// non-nil only if created from a page
+@property(nonatomic, retain, readonly) SVSiteItem *page;// non-nil only if created from a page
 @property(nonatomic, readonly) BOOL openInNewWindow;
 
 - (NSString *)targetDescription;    // normally anchor's href, but for page targets, the page title

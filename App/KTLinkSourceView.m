@@ -138,7 +138,7 @@ static NSImage *sTargetSetImage = nil;
 	[self setNeedsDisplay:YES];
 	
 	// Get the page from the pasteboard
-	KTPage *targetPage = [[connector link] page];
+	id targetPage = [[connector link] page];
 
 	[targetCursor pop];
 	[targetCursor release];

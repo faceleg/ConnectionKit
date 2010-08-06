@@ -10,7 +10,7 @@
 
 #import "KT.h"
 #import "SVHTMLContext.h"
-#import "KTPage.h"
+#import "SVSiteItem.h"
 
 
 @implementation SVLink
@@ -35,7 +35,7 @@
     return self;
 }
 
-- (id)initWithPage:(KTPage *)page openInNewWindow:(BOOL)openInNewWindow;
+- (id)initWithPage:(SVSiteItem *)page openInNewWindow:(BOOL)openInNewWindow;
 {
     OBPRECONDITION(page);
     
