@@ -100,7 +100,7 @@
 
 
 #pragma mark Pasteboard
-// Default implementation returns result of +supportedPasteboardTypesForCreatingPagelet: (if receiver confroms to KTDataSource) for backward compatibility.
+// Default implementation returns result of +supportedPasteboardTypesForCreatingPagelet: (if receiver conforms to KTDataSource) for backward compatibility.
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
 
 
