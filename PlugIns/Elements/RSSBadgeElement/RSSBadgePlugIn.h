@@ -63,7 +63,6 @@ typedef enum {
     RSSBadgeIconStyle _iconStyle;
     RSSBadgeIconPosition _iconPosition;
 	NSString *_label;
-    NSString *_titleText;
 }
 
 
@@ -76,6 +75,5 @@ typedef enum {
 @property (nonatomic, assign) RSSBadgeIconStyle iconStyle;
 @property (nonatomic, assign) RSSBadgeIconPosition iconPosition;
 @property (nonatomic, copy) NSString *label;
-@property (nonatomic, copy) NSString *titleText;
 
 @end

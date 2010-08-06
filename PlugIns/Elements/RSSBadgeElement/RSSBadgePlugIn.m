@@ -54,7 +54,6 @@
             @"iconPosition", 
             @"iconStyle", 
             @"label", 
-            @"titleText", 
             nil];
 }
 
@@ -101,7 +100,6 @@
     [context addDependencyForKeyPath:@"iconStyle" ofObject:self];
     [context addDependencyForKeyPath:@"iconPosition" ofObject:self];
     [context addDependencyForKeyPath:@"label" ofObject:self];
-    [context addDependencyForKeyPath:@"titleText" ofObject:self];
 
     // add resources
     NSString *path = [self feedIconResourcePath];
@@ -170,6 +168,5 @@
 @synthesize iconStyle = _iconStyle;
 @synthesize iconPosition = _iconPosition;
 @synthesize label = _label;
-@synthesize titleText = _titleText;
 
 @end
