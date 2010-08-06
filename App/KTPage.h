@@ -183,8 +183,6 @@ typedef enum {
 - (NSString *)customSummaryHTML;
 - (void)setCustomSummaryHTML:(NSString *)HTML;
 
-- (NSString *)titleListHTMLWithSorting:(SVCollectionSortOrder)sortType;
-
 
 #pragma mark Archive
 @property(nonatomic, copy) NSNumber *collectionGenerateArchives;    // BOOL, required

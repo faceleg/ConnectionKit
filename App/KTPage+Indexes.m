@@ -543,32 +543,6 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 
 - (void)setCustomSummaryHTML:(NSString *)HTML { [self setWrappedValue:HTML forKey:@"customSummaryHTML"]; }
 
-#pragma mark title list
-
-/*	Constructs the HTML for a title list-style summary using the specified ordering
- */
-- (NSString *)titleListHTMLWithSorting:(SVCollectionSortOrder)sortType;
-{
-	NSMutableString *result = [NSMutableString stringWithString:@"<ul>\n"];
-	
-	NSArray *allSortedChildren = [self childrenWithSorting:sortType
-                                                 ascending:YES
-                                                   inIndex:NO];
-    
-	NSRange childrenRange = NSMakeRange(0, MIN([allSortedChildren count], [self integerForKey:@"collectionSummaryMaxPages"]));
-	NSArray *sortedChildren = [allSortedChildren subarrayWithRange:childrenRange];
-	
-	KTPage *aPage;
-	for (aPage in sortedChildren)
-	{
-		[result appendFormat:@"\t<li>%@</li>\n", [[aPage titleBox] textHTMLString]];
-	}
-	
-	[result appendFormat:@"</ul>"];
-	
-	return result;
-}
-
 #pragma mark -
 #pragma mark Archives
 
