@@ -19,7 +19,7 @@
 
 - (void)writeHTML:(SVHTMLContext *)context; // default calls -HTMLString and writes that to the current context
 {    
-    [context writeHTMLString:[self HTMLString]];
+    SUBCLASSMUSTIMPLEMENT;
 }
 
 - (void)writeHTML; { [self writeHTML:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
