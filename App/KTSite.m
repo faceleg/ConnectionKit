@@ -22,6 +22,8 @@
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
+#import "KSStringXMLEntityEscaping.h"
+
 
 @interface KTSite ()
 - (NSArray *)_pagesInSiteMenu;
