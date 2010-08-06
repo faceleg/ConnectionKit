@@ -38,8 +38,6 @@
 	<string>bundleIcon.icns</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
-		<key>collectionID</key>
-		<string></string>
 		<key>iconPosition</key>
 		<integer>1</integer>
 		<key>iconStyle</key>
@@ -47,8 +45,6 @@
 	</dict>
 	<key>KTPluginName</key>
 	<string>RSS Badge</string>
-	<key>KTPluginNibFile</key>
-	<string>RSSBadge</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
