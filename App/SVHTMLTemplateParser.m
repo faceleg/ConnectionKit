@@ -10,7 +10,6 @@
 
 #import "KTSite.h"
 #import "KTPage+Internal.h"
-#import "KTArchivePage.h"
 #import "KTHostProperties.h"
 #import "KTImageScalingURLProtocol.h"
 
@@ -52,8 +51,7 @@
 - (id)initWithPage:(KTPage *)page
 {
 	// Archive pages are specially parsed so that the component is the parent page.
-	KTPage *component = (KTPage *)page;
-	if ([page isKindOfClass:[KTArchivePage class]]) component = [page parentPage];
+	KTPage *component = page;
 	
 	
 	// Create the parser and set up as much of the environment as possible
@@ -396,7 +394,6 @@
 	
 	// Mark for image replacement ONLY if QC supported.
 	KTPage *page = [[self HTMLContext] page];
-	if ([page isKindOfClass:[KTArchivePage class]]) page = [page parentPage];
 	OBASSERT([page isKindOfClass:[KTPage class]]);
 
 	//OBASSERT([self document]);

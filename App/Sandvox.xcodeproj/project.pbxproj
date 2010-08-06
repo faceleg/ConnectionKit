@@ -383,8 +383,6 @@
 		2759CC9C1039711300E2C046 /* SVWebEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */; };
 		2759CC9F103976D800E2C046 /* SVWebContentAreaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */; };
 		2759CCA0103976D800E2C046 /* SVWebContentAreaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */; };
-		275AA3900D7844BB009F98AA /* KTArchivePage.h in Headers */ = {isa = PBXBuildFile; fileRef = 275AA38E0D7844BB009F98AA /* KTArchivePage.h */; };
-		275AA3910D7844BB009F98AA /* KTArchivePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 275AA38F0D7844BB009F98AA /* KTArchivePage.m */; };
 		2764AA1E1188D16C00D8E1BB /* SVArticleDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2764AA1C1188D16C00D8E1BB /* SVArticleDOMController.h */; };
 		2764AA1F1188D16C00D8E1BB /* SVArticleDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2764AA1D1188D16C00D8E1BB /* SVArticleDOMController.m */; };
 		276503480EAD29D200461A0E /* KTAbstractPage+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276503470EAD29D200461A0E /* KTAbstractPage+Internal.h */; };
@@ -5443,7 +5441,6 @@
 				3C1FA3940D6C994C0008AAD9 /* NSPersistentStoreCoordinator+KTExtensions.h in Headers */,
 				3CE2CA4C0D6D51F500B2D56B /* NSString+KTExtensions.h in Headers */,
 				270ABF9C0D76E85500C80911 /* KTAbstractPage.h in Headers */,
-				275AA3900D7844BB009F98AA /* KTArchivePage.h in Headers */,
 				CEC11F770D79355700513E70 /* NSImage+KTExtensions.h in Headers */,
 				27A82FEC0D915AAB005FF13D /* KTWebPathsProtocol.h in Headers */,
 				27D6DE9C0DCFA95800C8834F /* KTHostProperties.h in Headers */,
@@ -6951,7 +6948,6 @@
 				27EF5CE40D6B9D210024575B /* BDAlias+QuickLook.m in Sources */,
 				27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */,
 				270ABF9D0D76E85500C80911 /* KTAbstractPage.m in Sources */,
-				275AA3910D7844BB009F98AA /* KTArchivePage.m in Sources */,
 				27D90AD90D7ED62800C13012 /* SVHTMLTemplateParser+Text.m in Sources */,
 				27EF1BD00DC1F9BF00976C66 /* SVSiteOutlineViewController.m in Sources */,
 				2730D66E0DE18ACA004858F5 /* SVTemplateParser.m in Sources */,

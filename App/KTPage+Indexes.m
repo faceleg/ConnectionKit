@@ -9,7 +9,6 @@
 #import "KTPage.h"
 
 #import "KTAbstractIndex.h"
-#import "KTArchivePage.h"
 #import "SVHTMLContext.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTIndexPluginWrapper.h"
@@ -551,7 +550,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 /*	Searches through our archive pages for one containing the specified date.
  *	If archives are disabled, always returns nil.
  */
-- (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag
+- (KTAbstractPage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag
 {
 	OBPRECONDITION(timestamp);
 	
@@ -560,7 +559,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	
 	NSArray *archives = [[self archivePages] allObjects];
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"archiveStartDate <= %@ AND archiveEndDate > %@", timestamp, timestamp];
-	KTArchivePage *result = [[archives filteredArrayUsingPredicate:predicate] firstObjectKS];
+	KTAbstractPage *result = [[archives filteredArrayUsingPredicate:predicate] firstObjectKS];
 	
 	if (!result && flag)
 	{
@@ -576,13 +575,13 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 		
 		
 		// Create the archive.
-		result = [KTArchivePage pageWithParent:self entityName:@"ArchivePage"];
+		result = [/*KTArchivePage*/KTAbstractPage pageWithParent:self entityName:@"ArchivePage"];
 		[result setValue:monthStart forKey:@"archiveStartDate"];
 		[result setValue:monthEnd forKey:@"archiveEndDate"];
 		
 		
 		// Give the archive a decent title
-		[result updateTitle];
+		//[result updateTitle];
 	}
 	
 	return result;

@@ -32,7 +32,7 @@ typedef enum {
 } SVCollectionSortOrder;
 
 
-@class KTArchivePage, KTAbstractIndex, KTMaster, SVPageTitle, SVRichText, SVGraphic, SVMediaRecord, KTCodeInjection, SVHTMLContext;
+@class KTAbstractIndex, KTMaster, SVPageTitle, SVRichText, SVGraphic, SVMediaRecord, KTCodeInjection, SVHTMLContext;
 
 
 @interface KTPage : KTAbstractPage
@@ -186,7 +186,7 @@ typedef enum {
 
 #pragma mark Archive
 @property(nonatomic, copy) NSNumber *collectionGenerateArchives;    // BOOL, required
-- (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag;
+- (KTAbstractPage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag;
 - (NSArray *)sortedArchivePages;
 
 

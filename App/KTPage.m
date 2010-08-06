@@ -437,7 +437,7 @@
 		}
 		
 		NSSet *archives = [self archivePages];
-		for (KTArchivePage *aPage in archives)
+		for (KTAbstractPage *aPage in archives)
 		{
 			OBASSERT(![aPage isKindOfClass:[KTPage class]]);
             [aPage recursivelyInvalidateURL:YES];

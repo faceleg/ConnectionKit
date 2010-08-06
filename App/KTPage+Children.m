@@ -7,7 +7,6 @@
 //
 
 #import "KTPage.h"
-#import "KTArchivePage.h"
 
 #import "KTSite.h"
 
@@ -90,7 +89,7 @@
         [page recursivelyInvalidateURL:YES];
         
         // Create an archive to contain the page if needed
-        [self archivePageForTimestamp:[page timestampDate] createIfNotFound:YES];
+        //[self archivePageForTimestamp:[page timestampDate] createIfNotFound:YES];
     }
 }
 
