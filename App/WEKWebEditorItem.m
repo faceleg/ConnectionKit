@@ -208,7 +208,7 @@
     if ([self isSelected] || [self isEditing])
     {
         [[[self selectableDOMElement] style] setProperty:@"outline"
-                                                   value:@"1px gray solid"
+                                                   value:@"1px rgba(0,127,255,0.5) solid"
                                                 priority:@""];
     }
     else
