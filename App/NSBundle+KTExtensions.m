@@ -26,8 +26,6 @@
   
  */
 
-#warning Maybe use ATSApplicationFontsPath bundle key
-
 - (void)loadLocalFonts
 {
 	NSString *fontsFolder = [self resourcePath];
