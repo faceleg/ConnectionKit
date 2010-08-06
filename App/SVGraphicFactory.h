@@ -52,6 +52,7 @@
 + (id <SVGraphicFactory>)textBoxFactory;
 + (id <SVGraphicFactory>)imageFactory;
 + (id <SVGraphicFactory>)videoFactory;
++ (id <SVGraphicFactory>)audioFactory;
 + (NSArray *)indexFactories;
 + (NSArray *)badgeFactories;
 + (NSArray *)embeddedFactories;
