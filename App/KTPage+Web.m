@@ -407,8 +407,7 @@
 	KTPage *currentParserPage = [context page];
 	
 	NSString *className = nil;
-	className = [NSString stringWithFormat:@"dd%d", aTreeLevel];
-	[context startElement:@"ul" idName:nil className:className];
+	[context startElement:@"ul" idName:nil className:nil];
 
 	int i=1;	// 1-based iteration
 	int last = [anArray count];
