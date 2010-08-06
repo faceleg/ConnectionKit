@@ -682,7 +682,6 @@
 		3C682B1D0D622F6400B4D485 /* KTPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B1C0D622F6400B4D485 /* KTPage.m */; };
 		3C682B350D62302F00B4D485 /* KTAbstractIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B340D62302F00B4D485 /* KTAbstractIndex.m */; };
 		3C682B440D62308D00B4D485 /* SVHTMLTemplateParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B430D62308D00B4D485 /* SVHTMLTemplateParser.m */; };
-		3C682B470D62317E00B4D485 /* KTRTFDImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B460D62317E00B4D485 /* KTRTFDImporter.m */; };
 		3C682B4C0D6231DA00B4D485 /* KTStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B4B0D6231DA00B4D485 /* KTStrings.m */; };
 		3C682B510D6231F600B4D485 /* KTScaledImageTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3C682B500D6231F600B4D485 /* KTScaledImageTypes.plist */; };
 		3C682B570D62321900B4D485 /* CropMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B560D62321900B4D485 /* CropMarker.m */; };
@@ -703,7 +702,6 @@
 		3C682BC40D6234F500B4D485 /* KTDataSourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B2D0D62300B00B4D485 /* KTDataSourceProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BC60D6234F900B4D485 /* KTAbstractIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B330D62302A00B4D485 /* KTAbstractIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BCB0D62350800B4D485 /* SVHTMLTemplateParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B420D62308300B4D485 /* SVHTMLTemplateParser.h */; settings = {ATTRIBUTES = (); }; };
-		3C682BCC0D62350D00B4D485 /* KTRTFDImporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B450D62317600B4D485 /* KTRTFDImporter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BD20D62352800B4D485 /* KTImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B640D62325F00B4D485 /* KTImageView.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BD40D62352D00B4D485 /* KTLinkConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B6A0D62327900B4D485 /* KTLinkConnector.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BD50D62353300B4D485 /* KTLinkSourceView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B6D0D62328600B4D485 /* KTLinkSourceView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -5418,7 +5416,6 @@
 				3C682BC40D6234F500B4D485 /* KTDataSourceProtocol.h in Headers */,
 				3C682BC60D6234F900B4D485 /* KTAbstractIndex.h in Headers */,
 				3C682BCB0D62350800B4D485 /* SVHTMLTemplateParser.h in Headers */,
-				3C682BCC0D62350D00B4D485 /* KTRTFDImporter.h in Headers */,
 				3C682BD20D62352800B4D485 /* KTImageView.h in Headers */,
 				3C682BD40D62352D00B4D485 /* KTLinkConnector.h in Headers */,
 				3C682BD50D62353300B4D485 /* KTLinkSourceView.h in Headers */,
@@ -6924,7 +6921,6 @@
 				3C682B1D0D622F6400B4D485 /* KTPage.m in Sources */,
 				3C682B350D62302F00B4D485 /* KTAbstractIndex.m in Sources */,
 				3C682B440D62308D00B4D485 /* SVHTMLTemplateParser.m in Sources */,
-				3C682B470D62317E00B4D485 /* KTRTFDImporter.m in Sources */,
 				3C682B4C0D6231DA00B4D485 /* KTStrings.m in Sources */,
 				3C682B570D62321900B4D485 /* CropMarker.m in Sources */,
 				3C682B5A0D62322400B4D485 /* CroppingImageView.m in Sources */,

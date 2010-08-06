@@ -72,9 +72,6 @@
 //  Drag-and-Drop
 #import "KTLinkSourceView.h"
 
-//  RTFD to HTML conversion
-#import "KTRTFDImporter.h"
-
 // Third Party
 #import "DNDArrayController.h"
 #import "NTBoxView.h"
