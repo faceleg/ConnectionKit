@@ -12,6 +12,7 @@
 #import "SVImage.h"
 #import "SVMediaRecord.h"
 #import "SVVideo.h"
+#import "SVAudio.h"
 #import "SVPlugIn.h"
 #import "SVRawHTMLGraphic.h"
 #import "SVTextBox.h"
@@ -191,7 +192,7 @@
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVVideo *result = [SVAudio insertNewMovieInManagedObjectContext:context];
+    SVAudio *result = [SVAudio insertNewMovieInManagedObjectContext:context];
     [result setWidth:[NSNumber numberWithUnsignedInt:200]];
     [result setHeight:[NSNumber numberWithUnsignedInt:200]];
     
