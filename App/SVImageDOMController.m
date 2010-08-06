@@ -79,9 +79,6 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     DOMHTMLElement *element = [self HTMLElement];
     SVImage *image = [self representedObject];
     
-    BOOL liveResize = [[self webEditor] inLiveGraphicResize];
-    if (!liveResize) [[element documentView] setNeedsDisplayInRect:[self drawingRect]];
-    
     
     // Push property change into DOM
     SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:nil inheritFromContext:[self HTMLContext]];
@@ -91,10 +88,6 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     
     [element setAttribute:@"width" value:[[image width] description]];
     [element setAttribute:@"height" value:[[image height] description]];
-    
-    
-    // and then mark the resulting area for drawing
-    if (!liveResize) [[element documentView] setNeedsDisplayInRect:[self drawingRect]];
     
     
     // Finish
