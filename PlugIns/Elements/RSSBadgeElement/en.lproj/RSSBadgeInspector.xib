@@ -31,22 +31,22 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">256</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="NSTextField" id="532255298">
+					<object class="NSTextField" id="805354018">
 						<reference key="NSNextResponder" ref="61768080"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{7, 147}, {216, 14}}</string>
 						<reference key="NSSuperview" ref="61768080"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="1004574799">
+						<object class="NSTextFieldCell" key="NSCell" id="535567471">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272761856</int>
 							<string key="NSContents">Appearance</string>
-							<object class="NSFont" key="NSSupport" id="845468772">
+							<object class="NSFont" key="NSSupport" id="636845050">
 								<string key="NSName">LucidaGrande-Bold</string>
 								<double key="NSSize">11</double>
 								<int key="NSfFlags">16</int>
 							</object>
-							<reference key="NSControlView" ref="532255298"/>
+							<reference key="NSControlView" ref="805354018"/>
 							<object class="NSColor" key="NSBackgroundColor" id="754980698">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
@@ -67,7 +67,7 @@
 							</object>
 						</object>
 					</object>
-					<object class="NSBox" id="52704394">
+					<object class="NSBox" id="162138445">
 						<reference key="NSNextResponder" ref="61768080"/>
 						<int key="NSvFlags">12</int>
 						<string key="NSFrame">{{10, 167}, {210, 5}}</string>
@@ -82,7 +82,7 @@
 								<double key="NSSize">13</double>
 								<int key="NSfFlags">1044</int>
 							</object>
-							<object class="NSColor" key="NSBackgroundColor" id="1032848540">
+							<object class="NSColor" key="NSBackgroundColor" id="450623635">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
 								<string key="NSColorName">textBackgroundColor</string>
@@ -101,18 +101,18 @@
 						<int key="NSTitlePosition">0</int>
 						<bool key="NSTransparent">NO</bool>
 					</object>
-					<object class="NSTextField" id="564301414">
+					<object class="NSTextField" id="710552441">
 						<reference key="NSNextResponder" ref="61768080"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{7, 241}, {216, 14}}</string>
 						<reference key="NSSuperview" ref="61768080"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="721404625">
+						<object class="NSTextFieldCell" key="NSCell" id="626565151">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272761856</int>
 							<string key="NSContents">Feed</string>
-							<reference key="NSSupport" ref="845468772"/>
-							<reference key="NSControlView" ref="564301414"/>
+							<reference key="NSSupport" ref="636845050"/>
+							<reference key="NSControlView" ref="710552441"/>
 							<reference key="NSBackgroundColor" ref="754980698"/>
 							<reference key="NSTextColor" ref="468385846"/>
 						</object>
@@ -436,7 +436,7 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="737785466"/>
 							<bool key="NSDrawsBackground">YES</bool>
-							<reference key="NSBackgroundColor" ref="1032848540"/>
+							<reference key="NSBackgroundColor" ref="450623635"/>
 							<object class="NSColor" key="NSTextColor">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
@@ -612,7 +612,7 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<string key="label">enabled: inspectedObjectsController.selection.iconStyle</string>
 						<reference key="source" ref="937895231"/>
 						<reference key="destination" ref="195534072"/>
-						<object class="NSNibBindingConnector" key="connector" id="196019827">
+						<object class="NSNibBindingConnector" key="connector" id="578870271">
 							<reference key="NSSource" ref="937895231"/>
 							<reference key="NSDestination" ref="195534072"/>
 							<string key="NSLabel">enabled: inspectedObjectsController.selection.iconStyle</string>
@@ -645,7 +645,7 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 								<integer value="-1" key="NSNullPlaceholder"/>
 								<string key="NSValueTransformerName">RSSBadgeIconIsNotStandardGrayLarge</string>
 							</dictionary>
-							<reference key="NSPreviousConnector" ref="196019827"/>
+							<reference key="NSPreviousConnector" ref="578870271"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
@@ -748,13 +748,13 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<array class="NSMutableArray" key="children">
 							<reference ref="582818839"/>
 							<reference ref="92933055"/>
-							<reference ref="564301414"/>
+							<reference ref="710552441"/>
 							<reference ref="37790605"/>
 							<reference ref="331571993"/>
 							<reference ref="672319930"/>
 							<reference ref="413710117"/>
-							<reference ref="52704394"/>
-							<reference ref="532255298"/>
+							<reference ref="162138445"/>
+							<reference ref="805354018"/>
 							<reference ref="937895231"/>
 							<reference ref="58735465"/>
 							<reference ref="737785466"/>
@@ -963,34 +963,34 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">214</int>
-						<reference key="object" ref="564301414"/>
+						<reference key="object" ref="710552441"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="721404625"/>
+							<reference ref="626565151"/>
 						</array>
 						<reference key="parent" ref="61768080"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">215</int>
-						<reference key="object" ref="721404625"/>
-						<reference key="parent" ref="564301414"/>
+						<reference key="object" ref="626565151"/>
+						<reference key="parent" ref="710552441"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">225</int>
-						<reference key="object" ref="52704394"/>
+						<reference key="object" ref="162138445"/>
 						<reference key="parent" ref="61768080"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">226</int>
-						<reference key="object" ref="532255298"/>
+						<reference key="object" ref="805354018"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="1004574799"/>
+							<reference ref="535567471"/>
 						</array>
 						<reference key="parent" ref="61768080"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">227</int>
-						<reference key="object" ref="1004574799"/>
-						<reference key="parent" ref="532255298"/>
+						<reference key="object" ref="535567471"/>
+						<reference key="parent" ref="805354018"/>
 					</object>
 				</array>
 			</object>
@@ -1094,17 +1094,6 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<object class="IBPartialClassDescription">
 					<string key="className">KTLinkSourceView</string>
 					<string key="superclassName">NSView</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">delegate</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">delegate</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">delegate</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
@@ -1182,6 +1171,25 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				</object>
 			</array>
 			<array class="NSMutableArray" key="referencedPartialClassDescriptionsV3.1+">
+				<object class="IBPartialClassDescription">
+					<string key="className">KTLinkSourceView</string>
+					<string key="superclassName">NSView</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">delegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">delegate</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">delegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBDocumentRelativeSource</string>
+						<string key="minorKey">../../../../App/KTLinkSourceView.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">SVInspectorViewController</string>
 					<string key="superclassName">NSViewController</string>
