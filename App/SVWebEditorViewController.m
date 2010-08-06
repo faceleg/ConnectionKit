@@ -1366,8 +1366,13 @@ fallbackDOMRangeForNoSelection:(DOMRange *)proposedRange
 - (NSObject *)destinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
 {
     // Claim all non-textual drags. Specialist stuff like graphics we want though!
+    NSArray *types = [NSArray arrayWithObjects:
+                      kSVGraphicPboardType,
+                      NSURLPboardType,
+                      NSFilenamesPboardType,
+                      NSStringPboardType, nil];
+    
     NSPasteboard *pasteboard = [dragInfo draggingPasteboard];
-    NSArray *types = [NSArray arrayWithObjects:kSVGraphicPboardType, NSStringPboardType, nil];
     NSString *bestType = [pasteboard availableTypeFromArray:types];
     
     if ([bestType isEqualToString:NSStringPboardType])
