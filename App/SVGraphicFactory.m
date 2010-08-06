@@ -11,7 +11,7 @@
 #import "KTElementPlugInWrapper.h"
 #import "SVImage.h"
 #import "SVMediaRecord.h"
-#import "SVMovie.h"
+#import "SVVideo.h"
 #import "SVPlugIn.h"
 #import "SVRawHTMLGraphic.h"
 #import "SVTextBox.h"
@@ -163,7 +163,7 @@
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVMovie *result = [SVMovie insertNewMovieInManagedObjectContext:context];
+    SVVideo *result = [SVVideo insertNewMovieInManagedObjectContext:context];
     [result setWidth:[NSNumber numberWithUnsignedInt:200]];
     [result setHeight:[NSNumber numberWithUnsignedInt:200]];
     
@@ -191,7 +191,7 @@
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVMovie *result = [SVMovie insertNewMovieInManagedObjectContext:context];			// SHOULD BE SVAUDIO
+    SVVideo *result = [SVVideo insertNewMovieInManagedObjectContext:context];			// SHOULD BE SVAUDIO
     [result setWidth:[NSNumber numberWithUnsignedInt:200]];
     [result setHeight:[NSNumber numberWithUnsignedInt:200]];
     

@@ -6,17 +6,17 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVMovie.h"
+#import "SVVideo.h"
 
 #import "SVHTMLContext.h"
 #import "SVMediaRecord.h"
 
 
-@implementation SVMovie 
+@implementation SVVideo 
 
-+ (SVMovie *)insertNewMovieInManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVVideo *)insertNewMovieInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVMovie *result = [NSEntityDescription insertNewObjectForEntityForName:@"Movie"
+    SVVideo *result = [NSEntityDescription insertNewObjectForEntityForName:@"Movie"
                                                     inManagedObjectContext:context];
     return result;
 }

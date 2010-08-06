@@ -354,8 +354,8 @@
 		2747DA3D10FE8DE6007428BB /* SVExternalLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DA3910FE8DE6007428BB /* SVExternalLink.m */; };
 		2747DF8211009B59007428BB /* SVURLPreviewViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DF8011009B59007428BB /* SVURLPreviewViewController.h */; };
 		2747DF8311009B59007428BB /* SVURLPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DF8111009B59007428BB /* SVURLPreviewViewController.m */; };
-		274B8CC7116A76EE00AAADB6 /* SVMovie.h in Headers */ = {isa = PBXBuildFile; fileRef = 274B8CC5116A76EE00AAADB6 /* SVMovie.h */; };
-		274B8CC8116A76EE00AAADB6 /* SVMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = 274B8CC6116A76EE00AAADB6 /* SVMovie.m */; };
+		274B8CC7116A76EE00AAADB6 /* SVVideo.h in Headers */ = {isa = PBXBuildFile; fileRef = 274B8CC5116A76EE00AAADB6 /* SVVideo.h */; };
+		274B8CC8116A76EE00AAADB6 /* SVVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 274B8CC6116A76EE00AAADB6 /* SVVideo.m */; };
 		274DF567114EB01600AC8C03 /* SVPageletTitleBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 274DF565114EB01600AC8C03 /* SVPageletTitleBox.h */; };
 		274DF568114EB01600AC8C03 /* SVPageletTitleBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 274DF566114EB01600AC8C03 /* SVPageletTitleBox.m */; };
 		274E77EC0D62699D004F89C2 /* NSObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAE0D62347100B4D485 /* NSObject+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
@@ -1183,6 +1183,8 @@
 		CED45AED0947891100BB172E /* CheckOpenGL.qtz in Resources */ = {isa = PBXBuildFile; fileRef = CED45AEC0947891100BB172E /* CheckOpenGL.qtz */; };
 		CED45B900947904D00BB172E /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED45B8F0947904D00BB172E /* ScreenSaver.framework */; };
 		CED8650910AA45AF002DF34F /* iMedia.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = CEB122FB10AA0F6A00E36F07 /* iMedia.framework */; };
+		CEDA2D84120CC6B1005FE23E /* SVAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = CEDA2D82120CC6B1005FE23E /* SVAudio.h */; };
+		CEDA2D85120CC6B1005FE23E /* SVAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDA2D83120CC6B1005FE23E /* SVAudio.m */; };
 		CEDE1DC50A5C6B8C0055352C /* NonStandardURL.html in Resources */ = {isa = PBXBuildFile; fileRef = CEC4DB2F0935179500D75C23 /* NonStandardURL.html */; };
 		CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EA307E0101100DE4994 /* Acknowledgments.rtf */; };
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
@@ -1874,8 +1876,8 @@
 		2747DA3910FE8DE6007428BB /* SVExternalLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVExternalLink.m; sourceTree = "<group>"; };
 		2747DF8011009B59007428BB /* SVURLPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVURLPreviewViewController.h; sourceTree = "<group>"; };
 		2747DF8111009B59007428BB /* SVURLPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVURLPreviewViewController.m; sourceTree = "<group>"; };
-		274B8CC5116A76EE00AAADB6 /* SVMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMovie.h; sourceTree = "<group>"; };
-		274B8CC6116A76EE00AAADB6 /* SVMovie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMovie.m; sourceTree = "<group>"; };
+		274B8CC5116A76EE00AAADB6 /* SVVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVVideo.h; sourceTree = "<group>"; };
+		274B8CC6116A76EE00AAADB6 /* SVVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVVideo.m; sourceTree = "<group>"; };
 		274DF565114EB01600AC8C03 /* SVPageletTitleBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageletTitleBox.h; sourceTree = "<group>"; };
 		274DF566114EB01600AC8C03 /* SVPageletTitleBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageletTitleBox.m; sourceTree = "<group>"; };
 		274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MetaSandvox.mdimporter; path = /Users/Mike/Developer/Builds/Products/Debug/MetaSandvox.mdimporter; sourceTree = "<absolute>"; };
@@ -2850,6 +2852,8 @@
 		CED45AEC0947891100BB172E /* CheckOpenGL.qtz */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = CheckOpenGL.qtz; sourceTree = "<group>"; };
 		CED45B8F0947904D00BB172E /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = /System/Library/Frameworks/ScreenSaver.framework; sourceTree = "<absolute>"; };
 		CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ObjectiveFlickr.xcodeproj; path = ../../imedia/ObjectiveFlickr/ObjectiveFlickr.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CEDA2D82120CC6B1005FE23E /* SVAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVAudio.h; sourceTree = "<group>"; };
+		CEDA2D83120CC6B1005FE23E /* SVAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAudio.m; sourceTree = "<group>"; };
 		CEDE18960A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = zh_TW; path = zh_TW.lproj/Credits.html; sourceTree = "<group>"; };
 		CEDE189B0A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEDE18A10A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -4376,8 +4380,10 @@
 				27B82D9511D4A9A00086CB6E /* SVRawHTMLGraphic.m */,
 				27990F46119D956800D07FDF /* loremipsum1.html */,
 				27990F47119D956800D07FDF /* loremipsum2.html */,
-				274B8CC5116A76EE00AAADB6 /* SVMovie.h */,
-				274B8CC6116A76EE00AAADB6 /* SVMovie.m */,
+				274B8CC5116A76EE00AAADB6 /* SVVideo.h */,
+				274B8CC6116A76EE00AAADB6 /* SVVideo.m */,
+				CEDA2D82120CC6B1005FE23E /* SVAudio.h */,
+				CEDA2D83120CC6B1005FE23E /* SVAudio.m */,
 				27A617651123005100004FED /* TextBoxBodyTemplate.html */,
 				27A617121122FA0000004FED /* SVTextBox.h */,
 				27A617131122FA0000004FED /* SVTextBox.m */,
@@ -5682,7 +5688,7 @@
 				27F365ED11602161003BDA5F /* SVMetricsInspector.h in Headers */,
 				27B0BF6C1168B8840084BFE0 /* SVGraphicFactory.h in Headers */,
 				27B0C1B111694F250084BFE0 /* SVMediaGraphic.h in Headers */,
-				274B8CC7116A76EE00AAADB6 /* SVMovie.h in Headers */,
+				274B8CC7116A76EE00AAADB6 /* SVVideo.h in Headers */,
 				278ACCC8116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h in Headers */,
 				CED05D25116E5105003228C5 /* SVPublishingHTMLContext.h in Headers */,
 				2796DEE311733440000DD6EC /* SVMediaGatheringHTMLContext.h in Headers */,
@@ -5727,6 +5733,7 @@
 				27DD09421202DF980083C7C1 /* SVContentDOMController.h in Headers */,
 				27DD0A571202FC120083C7C1 /* SVWebEditingURL.h in Headers */,
 				27DD0B58120329A80083C7C1 /* SVURLFormatter.h in Headers */,
+				CEDA2D84120CC6B1005FE23E /* SVAudio.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7187,7 +7194,7 @@
 				27F365EE11602161003BDA5F /* SVMetricsInspector.m in Sources */,
 				27B0BF6D1168B8840084BFE0 /* SVGraphicFactory.m in Sources */,
 				27B0C1B311694F250084BFE0 /* SVMediaGraphic.m in Sources */,
-				274B8CC8116A76EE00AAADB6 /* SVMovie.m in Sources */,
+				274B8CC8116A76EE00AAADB6 /* SVVideo.m in Sources */,
 				278ACCC9116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m in Sources */,
 				CED05D26116E5105003228C5 /* SVPublishingHTMLContext.m in Sources */,
 				2796DEE411733440000DD6EC /* SVMediaGatheringHTMLContext.m in Sources */,
@@ -7230,6 +7237,7 @@
 				27DD09431202DF980083C7C1 /* SVContentDOMController.m in Sources */,
 				27DD0A581202FC120083C7C1 /* SVWebEditingURL.m in Sources */,
 				27DD0B59120329A80083C7C1 /* SVURLFormatter.m in Sources */,
+				CEDA2D85120CC6B1005FE23E /* SVAudio.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

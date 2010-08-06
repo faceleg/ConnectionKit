@@ -12,9 +12,9 @@
 @class SVMediaRecord;
 
 
-@interface SVMovie : SVMediaGraphic
+@interface SVVideo : SVMediaGraphic
 
-+ (SVMovie *)insertNewMovieInManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVVideo *)insertNewMovieInManagedObjectContext:(NSManagedObjectContext *)context;
 
 @property(nonatomic, retain) SVMediaRecord *posterFrame;
 
