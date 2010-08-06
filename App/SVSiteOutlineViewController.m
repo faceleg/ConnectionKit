@@ -1195,53 +1195,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
     
     return NO;
-    
-    
-    // The new page must be a child of something
-    NSPasteboard *pboard = [info draggingPasteboard];
-	
-	BOOL cameFromProgram = nil != [info draggingSource];
-	
-	if (cameFromProgram)
-	{
-		if  ([[self outlineView] isEqual:[info draggingSource]])
-		{
-			// drag is internal to document
-			if ([pboard availableTypeFromArray:[NSArray arrayWithObject:kKTOutlineDraggingPboardType]])
-			{
-				BOOL result = [self moveSiteItems:pboard intoCollection:collection childIndex:index];
-				return result;
-			}
-			else if ( NO )
-			{
-				// other internal pboard types
-				;
-			}
-		}
-		else if ([pboard availableTypeFromArray:[NSArray arrayWithObject:kKTPagesPboardType]])
-		{
-			// we have some pages on the pasteboard that we want to add at the drop point
-			NSData *pboardData = [pboard dataForType:kKTPagesPboardType];
-			if (pboardData)
-			{
-				NSArray *archivedPages = [NSKeyedUnarchiver unarchiveObjectWithData:pboardData];
-				return [self acceptArchivedPagesDrop:archivedPages ontoPage:collection childIndex:index];
-			}
-		}
-	}
-	
-	// this should be a drag in from outside the application, or an internal drag not covered above.
-	// we want to find a drag source for it and let it do its thing
-	int dropIndex = index;
-	id dropItem = collection;
-	if ( nil == dropItem )
-	{
-		dropItem = [self rootPage];
-		dropIndex = index-1;
-	}
-	//LOG((@"accepting drop from external source on %@ at index %i", [dropItem fileName], dropIndex));
-	BOOL result = [[self windowController] addPagesViaDragToCollection:dropItem atIndex:dropIndex draggingInfo:info];
-	return result;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView
