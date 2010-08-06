@@ -114,7 +114,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)addExternalLinkPage:(id)sender; // external link
 - (IBAction)addRawTextPage:(id)sender;      // Raw HTML page
 - (IBAction)addFilePage:(id)sender;         // uses open panel to select a file, then inserts
-- (IBAction)group:(id)sender;
 
 @property(retain) SVDesignChooserWindowController *designChooserWindowController;
 - (IBAction)chooseDesign:(id)sender;
