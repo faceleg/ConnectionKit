@@ -460,7 +460,14 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (NSNumber *)containerWidth;
 {
-    return [[self textAttachment] width];
+    if ([[self placement] intValue] == SVGraphicPlacementInline)
+    {
+        return [[self textAttachment] width];
+    }
+    else
+    {
+        return [NSNumber numberWithUnsignedInt:200];
+    }
 }
 
 - (void)disableUndoRegistration;
