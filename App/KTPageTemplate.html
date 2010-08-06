@@ -33,13 +33,11 @@
 		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&title]]" href="[[=&feedURL]]" />
 [[endif2]][[endif]]
 		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
-
-[[=site.writeJQueryImport]]
+		[[=site.writeJQueryImport]]
 [[=writeHierMenuLoader]]
 [[if javascriptURLPath]]
-<script src="[[=&javascriptURLPath]]" type="text/javascript"></script>
+		<script src="[[=&javascriptURLPath]]" type="text/javascript"></script>
 [[endif]]
-
 [[if parser.includeStyling]][[=writeStylesheetLinks]][[endif]]
 [[comment ESCAPE THE URL SO THAT ANY DOUBLE-DASH FROM AN IDN DOESNT PRODUCE ILLEGAL MARKUP]]
 <!--
@@ -54,7 +52,6 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 [[endif2]]
 [[endif]]
 [[=parser.outputWriter.writeExtraHeaders]]
-
 [[=writeCodeInjectionHeadArea]]
 	</head>
 	<body class="sandvox [[if !titleBox.hidden]]has-page-title[[else]]no-page-title[[endif]] [[if showSidebar]]allow-sidebar[[else]]no-sidebar[[endif]] [[if master.bannerType]]has-custom-banner[[else]]no-custom-banner[[endif]][[if isRootPage]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[=writeCodeInjectionBodyTag]]>
@@ -99,7 +96,6 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 					</div> <!-- main -->
 				</div> <!-- content -->
 				<div class="clear"></div>
-
 				<div id="page-bottom">
 					<div id="page-bottom-contents">
 						[[if !master.footer.hidden]][[textblock property:master.footer flags:"line" placeholder:"Footer"]][[endif]]
@@ -110,7 +106,6 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 			<div id="extraDiv1"><span></span></div><div id="extraDiv2"><span></span></div><div id="extraDiv3"><span></span></div><div id="extraDiv4"><span></span></div><div id="extraDiv5"><span></span></div><div id="extraDiv6"><span></span></div>
 		</div> <!-- specific body type -->
 [[=parser.outputWriter.writeEndBodyString]]
-
 [[if parser.isPublishing]]
 [[if site.googleAnalyticsCode]]
 [[=site.googleAnalyticsCode]]
@@ -144,9 +139,7 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 [[endif3]]
 [[endif2]]
 [[endif]]
-
 [[=writeCodeInjectionBodyTagEnd]]
-
 [[if parser.HTMLGenerationPurpose==10]]
 <!-- Quick Look preview sticky-note -->
 	<style type="text/css">
@@ -212,6 +205,5 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 	</div>
 <!-- /Quick Look preview sticky-note -->
 [[endif]]
-
 	</body>
 </html>
