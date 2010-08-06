@@ -26,10 +26,15 @@
 - (id <SVPage>)rootPage;
 - (id <NSFastEnumeration>)automaticRearrangementKeyPaths;
 
-// Navigation
+
+#pragma mark Navigation
+
 - (SVLink *)link;
+- (NSURL *)feedURL;
+
 - (BOOL)shouldIncludeInIndexes;
 - (BOOL)shouldIncludeInSiteMaps;
+
 
 @end
 
