@@ -31,22 +31,22 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">256</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="NSTextField" id="703899815">
+					<object class="NSTextField" id="662374603">
 						<reference key="NSNextResponder" ref="61768080"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{7, 147}, {216, 14}}</string>
 						<reference key="NSSuperview" ref="61768080"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="285631920">
+						<object class="NSTextFieldCell" key="NSCell" id="201102554">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272761856</int>
 							<string key="NSContents">Appearance</string>
-							<object class="NSFont" key="NSSupport" id="635623150">
+							<object class="NSFont" key="NSSupport" id="163402851">
 								<string key="NSName">LucidaGrande-Bold</string>
 								<double key="NSSize">11</double>
 								<int key="NSfFlags">16</int>
 							</object>
-							<reference key="NSControlView" ref="703899815"/>
+							<reference key="NSControlView" ref="662374603"/>
 							<object class="NSColor" key="NSBackgroundColor" id="754980698">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
@@ -67,7 +67,7 @@
 							</object>
 						</object>
 					</object>
-					<object class="NSBox" id="163212803">
+					<object class="NSBox" id="817993847">
 						<reference key="NSNextResponder" ref="61768080"/>
 						<int key="NSvFlags">12</int>
 						<string key="NSFrame">{{10, 167}, {210, 5}}</string>
@@ -82,7 +82,7 @@
 								<double key="NSSize">13</double>
 								<int key="NSfFlags">1044</int>
 							</object>
-							<object class="NSColor" key="NSBackgroundColor" id="634730791">
+							<object class="NSColor" key="NSBackgroundColor" id="124200249">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
 								<string key="NSColorName">textBackgroundColor</string>
@@ -101,18 +101,18 @@
 						<int key="NSTitlePosition">0</int>
 						<bool key="NSTransparent">NO</bool>
 					</object>
-					<object class="NSTextField" id="1004800131">
+					<object class="NSTextField" id="688737878">
 						<reference key="NSNextResponder" ref="61768080"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{7, 241}, {216, 14}}</string>
 						<reference key="NSSuperview" ref="61768080"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="422989042">
+						<object class="NSTextFieldCell" key="NSCell" id="939371658">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272761856</int>
 							<string key="NSContents">Feed</string>
-							<reference key="NSSupport" ref="635623150"/>
-							<reference key="NSControlView" ref="1004800131"/>
+							<reference key="NSSupport" ref="163402851"/>
+							<reference key="NSControlView" ref="688737878"/>
 							<reference key="NSBackgroundColor" ref="754980698"/>
 							<reference key="NSTextColor" ref="468385846"/>
 						</object>
@@ -410,7 +410,7 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="737785466"/>
 							<bool key="NSDrawsBackground">YES</bool>
-							<reference key="NSBackgroundColor" ref="634730791"/>
+							<reference key="NSBackgroundColor" ref="124200249"/>
 							<object class="NSColor" key="NSTextColor">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
@@ -578,7 +578,7 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<string key="label">enabled: inspectedObjectsController.selection.iconStyle</string>
 						<reference key="source" ref="937895231"/>
 						<reference key="destination" ref="195534072"/>
-						<object class="NSNibBindingConnector" key="connector" id="802536455">
+						<object class="NSNibBindingConnector" key="connector" id="691924623">
 							<reference key="NSSource" ref="937895231"/>
 							<reference key="NSDestination" ref="195534072"/>
 							<string key="NSLabel">enabled: inspectedObjectsController.selection.iconStyle</string>
@@ -611,7 +611,7 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 								<integer value="-1" key="NSNullPlaceholder"/>
 								<string key="NSValueTransformerName">RSSBadgeIconIsNotStandardGrayLarge</string>
 							</dictionary>
-							<reference key="NSPreviousConnector" ref="802536455"/>
+							<reference key="NSPreviousConnector" ref="691924623"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
@@ -667,14 +667,6 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">formatter</string>
-						<reference key="source" ref="331571993"/>
-						<reference key="destination" ref="818385646"/>
-					</object>
-					<int key="connectionID">212</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">view</string>
 						<reference key="source" ref="195534072"/>
 						<reference key="destination" ref="61768080"/>
@@ -714,12 +706,12 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<array class="NSMutableArray" key="children">
 							<reference ref="582818839"/>
 							<reference ref="92933055"/>
-							<reference ref="1004800131"/>
+							<reference ref="688737878"/>
 							<reference ref="37790605"/>
 							<reference ref="331571993"/>
 							<reference ref="413710117"/>
-							<reference ref="163212803"/>
-							<reference ref="703899815"/>
+							<reference ref="817993847"/>
+							<reference ref="662374603"/>
 							<reference ref="937895231"/>
 							<reference ref="58735465"/>
 							<reference ref="737785466"/>
@@ -915,34 +907,34 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">214</int>
-						<reference key="object" ref="1004800131"/>
+						<reference key="object" ref="688737878"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="422989042"/>
+							<reference ref="939371658"/>
 						</array>
 						<reference key="parent" ref="61768080"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">215</int>
-						<reference key="object" ref="422989042"/>
-						<reference key="parent" ref="1004800131"/>
+						<reference key="object" ref="939371658"/>
+						<reference key="parent" ref="688737878"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">225</int>
-						<reference key="object" ref="163212803"/>
+						<reference key="object" ref="817993847"/>
 						<reference key="parent" ref="61768080"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">226</int>
-						<reference key="object" ref="703899815"/>
+						<reference key="object" ref="662374603"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="285631920"/>
+							<reference ref="201102554"/>
 						</array>
 						<reference key="parent" ref="61768080"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">227</int>
-						<reference key="object" ref="285631920"/>
-						<reference key="parent" ref="703899815"/>
+						<reference key="object" ref="201102554"/>
+						<reference key="parent" ref="662374603"/>
 					</object>
 				</array>
 			</object>
@@ -1049,14 +1041,6 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">MAImagePopUpButton</string>
-					<string key="superclassName">NSPopUpButton</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">NSApplication</string>
 					<string key="superclassName">NSResponder</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -1088,31 +1072,17 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<object class="IBPartialClassDescription">
 					<string key="className">RSSBadgeInspector</string>
 					<string key="superclassName">SVInspectorViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">clearCollectionLink:</string>
-						<string key="NS.object.0">id</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">collectionLinkSourceView</string>
+						<string key="NS.object.0">KTLinkSourceView</string>
 					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">clearCollectionLink:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">clearCollectionLink:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="collectionLinkSourceView">KTLinkSourceView</string>
-						<string key="iconTypePopupButton">MAImagePopUpButton</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="collectionLinkSourceView">
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">collectionLinkSourceView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
 							<string key="name">collectionLinkSourceView</string>
 							<string key="candidateClassName">KTLinkSourceView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="iconTypePopupButton">
-							<string key="name">iconTypePopupButton</string>
-							<string key="candidateClassName">MAImagePopUpButton</string>
-						</object>
-					</dictionary>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">RSSBadgeInspector.h</string>
