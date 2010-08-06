@@ -21,6 +21,14 @@
 #import "NSBitmapImageRep+Karelia.h"
 
 
+@interface SVImage ()
+@property(nonatomic, copy) NSData *linkData;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVImage 
 
 + (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;
@@ -141,7 +149,38 @@
 
 #pragma mark Link
 
-@dynamic link;
+- (SVLink *)link;
+{
+    [self willAccessValueForKey:@"link"];
+    SVLink *result = [self primitiveValueForKey:@"link"];
+    [self didAccessValueForKey:@"link"];
+    
+    if (!result)
+    {
+        NSData *data = [self linkData];
+        if (data)
+        {
+            result = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            // FIXME: if the link is to a page, generate a matching link object that actually references the page
+            [self setPrimitiveValue:result forKey:@"link"];
+        }
+    }
+    
+    return result;
+}
+
+- (void)setLink:(SVLink *)link;
+{
+    [self willChangeValueForKey:@"link"];
+    [self setPrimitiveValue:link forKey:@"link"];
+    [self didChangeValueForKey:@"link"];
+    
+    NSData *data = (link ? [NSKeyedArchiver archivedDataWithRootObject:link] : nil);
+    // FIXME: If the link is to a page, actually archive a different link that references the ID-only
+    [self setLinkData:data];
+}
+
+@dynamic linkData;
 
 #pragma mark Publishing
 
