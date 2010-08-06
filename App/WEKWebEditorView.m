@@ -1148,6 +1148,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     
     _resizingGraphic = NO;
+    [[[item HTMLElement] documentView] setNeedsDisplayInRect:[item drawingRect]];
+    
     
     // Update cursor for finish location
     [[NSCursor arrowCursor] set];
