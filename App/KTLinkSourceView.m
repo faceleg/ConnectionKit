@@ -81,9 +81,9 @@ static NSImage *sTargetSetImage = nil;
 	if (!_flags.isConnecting)	// no shadow when we're connecting
 	{
 		NSShadow *aShadow = [[[NSShadow alloc] init] autorelease];
-		[aShadow setShadowOffset:NSMakeSize(1,-3)];
-		[aShadow setShadowBlurRadius:3.0];
-		[aShadow setShadowColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.75]];
+		[aShadow setShadowOffset:NSMakeSize(0,-2)];
+		[aShadow setShadowBlurRadius:2.0];
+		[aShadow setShadowColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.67]];
 		[aShadow set];
 	}
 	
