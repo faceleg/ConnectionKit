@@ -1195,6 +1195,20 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     [self setFirstResponderItem:controller];
 }
 
+- (SVLink *)webEditor:(WEKWebEditorView *)sender willSelectLink:(SVLink *)link;
+{
+    SVSiteItem *siteItem = [SVSiteItem 
+                            siteItemForPreviewPath:[link URLString]
+                            inManagedObjectContext:[[[self HTMLContext] page] managedObjectContext]];
+    
+    if (siteItem)
+    {
+        link = [SVLink linkWithSiteItem:siteItem openInNewWindow:[link openInNewWindow]];
+    }
+    
+    return link;
+}
+
 - (DOMRange *)webEditor:(WEKWebEditorView *)sender
 fallbackDOMRangeForNoSelection:(DOMRange *)proposedRange
                   event:(NSEvent *)selectionEvent;

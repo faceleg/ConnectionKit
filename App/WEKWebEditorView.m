@@ -1862,19 +1862,18 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     
     //  Update Link Manager to match
+    SVLink *link = nil;
+    
     NSArray *anchors = [webView selectedAnchorElements];
     if ([anchors count] == 1)
     {
         DOMHTMLAnchorElement *anchor = [anchors objectAtIndex:0];
         
-        SVLink *link = [[SVLink alloc] initWithURLString:[anchor href] openInNewWindow:NO];
-        [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[webView canCreateLink]];
-        [link release];
+        link = [SVLink linkWithURLString:[anchor href] openInNewWindow:NO];
+        link = [[self delegate] webEditor:self willSelectLink:link];
     }
-    else
-    {
-        [[SVLinkManager sharedLinkManager] setSelectedLink:nil editable:[webView canCreateLink]];
-    }
+    
+    [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[webView canCreateLink]];
     
     
     // Let focused text know its selection has changed

@@ -19,7 +19,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 
 @protocol WEKWebEditorDataSource, WEKWebEditorDelegate;
-@class WEKWebEditorItem, SVWebEditorTextRange;
+@class WEKWebEditorItem, SVWebEditorTextRange, SVLink;
 @class WEKWebView, WEKRootItem;
 
 
@@ -268,6 +268,8 @@ fallbackDOMRangeForNoSelection:(DOMRange *)proposedRange
 
 //  Delegate is automatically subscribed to SVWebEditorViewDidChangeSelectionNotification
 - (void)webEditorDidChangeSelection:(NSNotification *)notification;
+
+- (SVLink *)webEditor:(WEKWebEditorView *)sender willSelectLink:(SVLink *)link;
 
    
 #pragma mark Loading
