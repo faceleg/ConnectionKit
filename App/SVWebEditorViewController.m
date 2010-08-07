@@ -52,6 +52,8 @@
 
 NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewControllerWillUpdateNotification";
 
+static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObservation";
+
 
 @interface DOMNode (KSHTMLWriter)
 - (BOOL)ks_isDescendantOfDOMNode:(DOMNode *)possibleAncestor;
@@ -93,12 +95,16 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [_graphicsController setPreservesSelection:NO];    // we'll take care of that
     [_graphicsController setSelectsInsertedObjects:NO];
     [_graphicsController setObjectClass:[NSObject class]];
+    
+    [_graphicsController addObserver:self forKeyPath:@"selection.link" options:0 context:sSelectedLinkObservationContext];
         
     return self;
 }
     
 - (void)dealloc
-{    
+{
+    [_graphicsController removeObserver:self forKeyPath:@"selection.link"];
+    
     [[[self webEditor] undoManager] removeAllActionsWithTarget:self];
     
     [self setWebEditor:nil];   // needed to tear down data source
@@ -578,6 +584,39 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     for (WEKWebEditorItem *anItem in [item childWebEditorItems])
     {
         [self unregisterWebEditorItem:anItem];
+    }
+}
+
+#pragma mark Selection
+
+- (void)synchronizeLinkManagerWithSelection:(DOMRange *)range;
+{
+    if (!range)
+    {
+        SVLink *link = [[self graphicsController] ks_valueForKeyPath:@"selection.link"
+                                          raisesForNotApplicableKeys:NO];
+        
+        if (NSIsControllerMarker(link))
+        {
+            [[SVLinkManager sharedLinkManager] setSelectedLink:nil
+                                                      editable:(link == NSMultipleValuesMarker)];
+        }
+        else
+        {
+            [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:YES];
+        }
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == sSelectedLinkObservationContext)
+    {
+        [self synchronizeLinkManagerWithSelection:[[self webEditor] selectedDOMRange]];
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 
@@ -1119,24 +1158,6 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         // Match the controller's selection to the view
         NSArray *objects = [proposedSelectedItems valueForKey:@"representedObject"];
         result = [[self graphicsController] setSelectedObjects:objects];
-        
-        
-        // Match link manager to selection
-        if (!proposedRange)
-        {
-            SVLink *link = [[self graphicsController] ks_valueForKeyPath:@"selection.link"
-                                              raisesForNotApplicableKeys:NO];
-            
-            if (NSIsControllerMarker(link))
-            {
-                [[SVLinkManager sharedLinkManager] setSelectedLink:nil
-                                                          editable:(link == NSMultipleValuesMarker)];
-            }
-            else
-            {
-                [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:YES];
-            }
-        }
     }
     
     return result;
