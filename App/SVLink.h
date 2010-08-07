@@ -24,7 +24,7 @@ typedef enum {
 @class SVSiteItem, SVHTMLContext;
 
 
-@interface SVLink : NSObject <NSCopying, NSCoding>
+@interface SVLink : NSObject <NSCopying, NSCoding>  // NSCoding DOESN'T apply to page links
 {
   @private
     SVLinkType  _type;
