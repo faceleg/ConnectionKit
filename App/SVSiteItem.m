@@ -27,6 +27,30 @@
 
 - (NSString *)identifier { return [self uniqueID]; }
 
++ (KTPage *)siteItemForPreviewPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)context;
+{
+	KTPage *result = nil;
+	
+	// skip media objects ... starting or containing Media if it's not a request in the main frame
+	if ( NSNotFound == [path rangeOfString:[[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"]].location )
+	{
+		int whereTilde = [path rangeOfString:kKTPageIDDesignator options:NSBackwardsSearch].location;	// special mark internally to look up page IDs
+		if (NSNotFound != whereTilde)
+		{
+			NSString *idString = [path substringFromIndex:whereTilde+[kKTPageIDDesignator length]];
+			result = [KTPage pageWithUniqueID:idString inManagedObjectContext:context];
+		}
+		
+        // This logic was in the SVSite equivalent of this method. Still applies?
+        /*else if ([path hasSuffix:@"/"])
+		{
+			result = [self rootPage];
+		}*/
+	}
+	return result;
+}
+
+
 #pragma mark Title
 
 @dynamic title;

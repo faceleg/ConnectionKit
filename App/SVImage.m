@@ -10,6 +10,7 @@
 
 #import "SVApplicationController.h"
 #import "SVImageDOMController.h"
+#import "SVLink.h"
 #import "KTMaster.h"
 #import "SVMediaRecord.h"
 #import "KTPage.h"
@@ -161,7 +162,12 @@
         if (data)
         {
             result = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-            // FIXME: if the link is to a page, generate a matching link object that actually references the page
+            
+            SVSiteItem *page = [SVSiteItem siteItemForPreviewPath:[result URLString]
+                                       inManagedObjectContext:[self managedObjectContext]];
+            
+            if (page) result = [SVLink linkWithSiteItem:page openInNewWindow:[result openInNewWindow]];
+
             [self setPrimitiveValue:result forKey:@"link"];
         }
     }
@@ -175,8 +181,14 @@
     [self setPrimitiveValue:link forKey:@"link"];
     [self didChangeValueForKey:@"link"];
     
+    
+    // If the link is to a page, actually archive a different link that references the ID-only
+    if ([link page])
+    {
+        link = [SVLink linkWithURLString:[link URLString] openInNewWindow:[link openInNewWindow]];
+    }
+    
     NSData *data = (link ? [NSKeyedArchiver archivedDataWithRootObject:link] : nil);
-    // FIXME: If the link is to a page, actually archive a different link that references the ID-only
     [self setLinkData:data];
 }
 

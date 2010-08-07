@@ -17,6 +17,11 @@
 
 #pragma mark Creating a Link
 
++ (id)linkWithURLString:(NSString *)urlString openInNewWindow:(BOOL)openInNewWindow;
+{
+    return [[[self alloc] initWithURLString:urlString openInNewWindow:openInNewWindow] autorelease];
+}
+
 + (id)linkWithSiteItem:(SVSiteItem *)item openInNewWindow:(BOOL)openInNewWindow;
 {
     return [[[self alloc] initWithPage:item openInNewWindow:openInNewWindow] autorelease];

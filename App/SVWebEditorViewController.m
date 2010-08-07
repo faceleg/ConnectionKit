@@ -1256,7 +1256,7 @@ fallbackDOMRangeForNoSelection:(DOMRange *)proposedRange
     if (([[URL scheme] isEqualToString:@"applewebdata"] || [relativePath hasPrefix:kKTPageIDDesignator]) &&
         [[actionInfo objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther)
     {
-        KTPage *page = [[myPage site] pageWithPreviewURLPath:relativePath];
+        KTPage *page = [KTPage siteItemForPreviewPath:relativePath inManagedObjectContext:[myPage managedObjectContext]];
         if (page)
         {
             [[self delegate] webEditorViewController:self openPage:page];

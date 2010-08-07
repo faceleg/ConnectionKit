@@ -457,9 +457,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         NSString *linkURLString = [anchorElement getAttribute:@"href"]; // -href will give the URL a scheme etc. if there's no base URL
         if ([linkURLString hasPrefix:kKTPageIDDesignator])
         {
-            NSString *pageID = [linkURLString substringFromIndex:[kKTPageIDDesignator length]];
-            KTPage *target = [KTPage pageWithUniqueID:pageID
-                                               inManagedObjectContext:[[self representedObject] managedObjectContext]];
+            KTPage *target = [KTPage siteItemForPreviewPath:linkURLString
+                                 inManagedObjectContext:[[self representedObject] managedObjectContext]];
             
             if (target)
             {

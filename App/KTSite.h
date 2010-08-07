@@ -42,7 +42,6 @@ typedef enum {
 
 - (KTPage *)rootPage;
 @property(nonatomic, retain, readonly) NSSet *siteItems;
-- (KTPage *)pageWithPreviewURLPath:(NSString *)path;
 
 
 #pragma mark Media
