@@ -36,6 +36,7 @@
 #import "SVWebEditorTextRange.h"
 
 #import "NSArray+Karelia.h"
+#import "NSObject+Karelia.h"
 #import "NSResponder+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "NSWorkspace+Karelia.h"
@@ -1154,15 +1155,8 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     // Do something?? link related
     if (![[self webEditor] selectedDOMRange])
     {
-        SVLink *link = NSNotApplicableMarker;
-        @try
-        {
-            [[self graphicsController] valueForKeyPath:@"selection.link"];
-        }
-        @catch (NSException *exception)
-        {
-            if (![[exception name] isEqualToString:NSUndefinedKeyException]) @throw exception;
-        }
+        SVLink *link = [[self graphicsController] ks_valueForKeyPath:@"selection.link"
+                                          raisesForNotApplicableKeys:NO];
         
         if (NSIsControllerMarker(link))
         {
