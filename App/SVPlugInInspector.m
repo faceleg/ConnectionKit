@@ -13,6 +13,7 @@
 #import "SVPlugIn.h"
 
 #import "NSArrayController+Karelia.h"
+#import "NSObject+Karelia.h"
 
 
 static NSString *sPlugInInspectorInspectedObjectsObservation = @"PlugInInspectorInspectedObjectsObservation";
@@ -55,16 +56,8 @@ change context:(void *)context
 {
     if (context == sPlugInInspectorInspectedObjectsObservation)
     {
-        NSString *identifier = nil;
-        @try
-        {
-            identifier = [[[self inspectedObjectsController] selection] valueForKeyPath:@"plugInIdentifier"];
-        }
-        @catch (NSException *exception)
-        {
-            if (![[exception name] isEqualToString:NSUndefinedKeyException]) @throw exception;
-        }
-        
+        NSString *identifier = [[self inspectedObjectsController] ks_valueForKeyPath:@"selection.plugInIdentifier"
+                                                          raisesForNotApplicableKeys:NO];
         
         SVInspectorViewController *inspector = nil;
         if (NSIsControllerMarker(identifier))
