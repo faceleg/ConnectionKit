@@ -1119,6 +1119,24 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         // Match the controller's selection to the view
         NSArray *objects = [proposedSelectedItems valueForKey:@"representedObject"];
         result = [[self graphicsController] setSelectedObjects:objects];
+        
+        
+        // Match link manager to selection
+        if (!proposedRange)
+        {
+            SVLink *link = [[self graphicsController] ks_valueForKeyPath:@"selection.link"
+                                              raisesForNotApplicableKeys:NO];
+            
+            if (NSIsControllerMarker(link))
+            {
+                [[SVLinkManager sharedLinkManager] setSelectedLink:nil
+                                                          editable:(link == NSMultipleValuesMarker)];
+            }
+            else
+            {
+                [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:YES];
+            }
+        }
     }
     
     return result;
@@ -1150,24 +1168,6 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         }
     }
     [self setFirstResponderItem:controller];
-    
-    
-    // Do something?? link related
-    if (![[self webEditor] selectedDOMRange])
-    {
-        SVLink *link = [[self graphicsController] ks_valueForKeyPath:@"selection.link"
-                                          raisesForNotApplicableKeys:NO];
-        
-        if (NSIsControllerMarker(link))
-        {
-            [[SVLinkManager sharedLinkManager] setSelectedLink:nil
-                                                      editable:(link == NSMultipleValuesMarker)];
-        }
-        else
-        {
-            [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:YES];
-        }
-    }
 }
 
 - (DOMRange *)webEditor:(WEKWebEditorView *)sender
