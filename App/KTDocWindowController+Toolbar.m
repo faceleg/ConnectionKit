@@ -395,15 +395,18 @@
             }
             else if ( [target isEqualToString:@"firstresponder"] ) 
 			{
-                [result setTarget:nil];		// but can we do validation?
+                if ([result action] == @selector(orderFrontLinkPanel:))
+                {
+                    [result setTarget:[SVLinkManager sharedLinkManager]];
+                }
+                else
+                {
+                    [result setTarget:nil];		// but can we do validation?
+                }
             }
             else if ( [target isEqualToString:@"document"] ) 
 			{
                 [result setTarget:[self document]];
-            }
-            else if ([result action] == @selector(orderFrontLinkPanel:))
-            {
-                [result setTarget:[SVLinkManager sharedLinkManager]];
             }
             else
 			{
