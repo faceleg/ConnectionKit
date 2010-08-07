@@ -8,8 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-
-@class SVLink;
+#import "SVLink.h"
 
 
 @interface SVLinkManager : NSObject <NSUserInterfaceValidations>

@@ -19,7 +19,6 @@
 #import "SVGraphicDOMController.h"
 #import "SVGraphicFactory.h"
 #import "KTHTMLEditorController.h"
-#import "SVLink.h"
 #import "SVLinkManager.h"
 #import "SVMediaRecord.h"
 #import "SVPlugInGraphic.h"
