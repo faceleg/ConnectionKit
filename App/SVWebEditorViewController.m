@@ -612,7 +612,10 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 {
     if (context == sSelectedLinkObservationContext)
     {
-        [self synchronizeLinkManagerWithSelection:[[self webEditor] selectedDOMRange]];
+        if (!_isChangingSelection)
+        {
+            [self synchronizeLinkManagerWithSelection:[[self webEditor] selectedDOMRange]];
+        }
     }
     else
     {
@@ -1157,7 +1160,11 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
                                                             
         // Match the controller's selection to the view
         NSArray *objects = [proposedSelectedItems valueForKey:@"representedObject"];
+        
+        _isChangingSelection = YES;
         result = [[self graphicsController] setSelectedObjects:objects];
+        [self synchronizeLinkManagerWithSelection:proposedRange];
+        _isChangingSelection = NO;
     }
     
     return result;
