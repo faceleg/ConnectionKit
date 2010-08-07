@@ -899,6 +899,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
             result = [snapshot imageWithMaxWidth:512 height:512 
                                                       behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect
                                                      alignment:NSImageAlignTop];
+			OBASSERT(result);
             // Now composite "SANDVOX" at the bottom
             NSFont* font = [NSFont boldSystemFontOfSize:95];				// Emperically determine font size
             NSShadow *aShadow = [[[NSShadow alloc] init] autorelease];

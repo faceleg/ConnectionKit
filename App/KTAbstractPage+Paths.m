@@ -52,7 +52,7 @@
 - (NSString *)fileName
 {
 	NSString *result = [self wrappedValueForKey:@"fileName"];
-	if (!result || [result isEqualToString:@""])
+	if (![self isRoot] && (!result || [result isEqualToString:@""]))
 	{
 		NSLog(@"WARNING: Empty filename for page: %@", [self titleHTML]);
 	}
