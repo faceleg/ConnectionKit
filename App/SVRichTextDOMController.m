@@ -303,7 +303,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     else
     {
         // Graphics are written as-is. Callouts write their contents
-        if ([controller isSelectable])
+        if ([controller isKindOfClass:[SVGraphicDOMController class]])
         {
             if (![self write:writer selectableItem:controller]) result = element;
         }
