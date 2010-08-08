@@ -47,10 +47,6 @@
 @property(nonatomic) BOOL wrapRightSplit;
 
 
-#pragma mark Metrics
-@property(nonatomic, copy) NSNumber *width; // integer 16
-
-
 #pragma mark Validation
 - (BOOL)validateWrapping:(NSError **)outError;
 

@@ -121,6 +121,10 @@ extern NSString *kSVGraphicPboardType;
 @property(nonatomic, retain) SVTextAttachment *textAttachment;
 
 
+#pragma mark Metrics
+@property(nonatomic, copy) NSNumber *width;
+
+
 #pragma mark Sidebar
 
 // Checks that a given set of pagelets have unique sort keys

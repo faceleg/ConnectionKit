@@ -443,7 +443,7 @@
             [self pushElementAttribute:@"style" value:style];
         }
         
-        [self addDependencyOnObject:graphic keyPath:@"textAttachment.width"];
+        [self addDependencyOnObject:graphic keyPath:@"width"];
         [self startElement:@"div"];
         
         

@@ -172,6 +172,10 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 @dynamic showBackground;
 @dynamic showBorder;
 
+#pragma mark Metrics
+
+@dynamic width;
+
 #pragma mark Sidebar
 
 + (BOOL)validateSortKeyForPagelets:(NSSet **)pagelets error:(NSError **)error;
@@ -295,22 +299,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (id)valueForUndefinedKey:(NSString *)key
 {
-    if ([key isEqualToString:@"width"] && [[self placement] intValue] == SVGraphicPlacementInline)
-    {
-        return [[self textAttachment] width];
-    }
-    
     return NSNotApplicableMarker;
-}
-
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key;
-{
-    if ([key isEqualToString:@"width"] && [[self placement] intValue] == SVGraphicPlacementInline)
-    {
-        return [[self textAttachment] setWidth:value];
-    }
-    
-    [super setValue:value forUndefinedKey:key];
 }
 
 #pragma mark Serialization
@@ -466,7 +455,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 {
     if ([[self placement] intValue] == SVGraphicPlacementInline)
     {
-        return [[self textAttachment] width];
+        return [self width];
     }
     else
     {

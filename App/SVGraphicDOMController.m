@@ -192,7 +192,7 @@
     DOMElement *element = [self graphicDOMElement];
     
     [[element style] setWidth:[NSString stringWithFormat:@"%@px",
-                               [[graphic textAttachment] width]]];
+                               [graphic width]]];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath

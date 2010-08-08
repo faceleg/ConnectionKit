@@ -11,6 +11,8 @@
 #import "SVMediaRecord.h"
 #import "SVWebEditorHTMLContext.h"
 
+#import "NSError+Karelia.h"
+
 
 @interface SVMediaGraphic ()
 
@@ -96,6 +98,19 @@
         [self setPrimitiveValue:[NSNumber numberWithUnsignedInteger:height] forKey:@"height"];
         [self didChangeValueForKey:@"height"];
     }
+}
+- (BOOL)validateWidth:(NSNumber **)width error:(NSError **)error;
+{
+    // SVGraphic.width is optional. For media graphics it becomes compulsary
+    BOOL result = (*width != nil);
+    if (!result && error)
+    {
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                     code:NSValidationMissingMandatoryPropertyError
+                     localizedDescription:@"width is a mandatory property"];
+    }
+    
+    return result;
 }
 
 @dynamic height;

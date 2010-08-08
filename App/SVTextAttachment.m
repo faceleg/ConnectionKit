@@ -176,10 +176,6 @@
     return [NSSet setWithObjects:@"wrap", @"causesWrap", nil];
 }
 
-#pragma mark Metrics
-
-@dynamic width;
-
 #pragma mark Validation
 
 - (BOOL)validateWrap:(NSNumber **)wrap error:(NSError **)outError;

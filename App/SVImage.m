@@ -117,15 +117,6 @@
 
 #pragma mark Metrics
 
-- (void)setWidth:(NSNumber *)width;
-{
-    [super setWidth:width];
-    
-    // Pass on to text attachment too
-    if ([width unsignedIntegerValue] < 200) width = [NSNumber numberWithInt:200];
-    [[self textAttachment] setWidth:width];
-}
-
 @dynamic alternateText;
 
 #pragma mark Placement
