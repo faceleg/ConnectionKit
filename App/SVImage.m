@@ -123,21 +123,32 @@
 
 - (BOOL)isPagelet;
 {
+    BOOL result = [super isPagelet];
+    
     // Images are no longer pagelets once you turn off all additional stuff like title & caption
     if ([[self placement] intValue] == SVGraphicPlacementInline &&
         ![self showsTitle] &&
         ![self showsIntroduction] &&
         ![self showsCaption])
     {
-        return NO;
+        SVTextAttachment *attachment = [self textAttachment];
+        if (![[attachment causesWrap] boolValue])
+        {
+            result = NO;
+        }
+        else
+        {
+            SVGraphicWrap wrap = [[attachment wrap] intValue];
+            result = !(wrap == SVGraphicWrapRight ||
+                       wrap == SVGraphicWrapLeft ||
+                       wrap == SVGraphicWrapCenter);
+        }
     }
-    else
-    {
-        return [super isPagelet];
-    }
+    
+    return result;
 }
 
-- (BOOL)mustBePagelet; { return NO; }
+- (BOOL)canDisplayInline; { return YES; }
 
 + (NSSet *)keyPathsForValuesAffectingIsPagelet;
 {

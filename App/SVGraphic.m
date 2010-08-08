@@ -82,7 +82,9 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return result;
 }
 
-- (BOOL)mustBePagelet; { return YES; }
+- (BOOL)mustBePagelet; { return ![self canDisplayInline]; }
+
+- (BOOL)canDisplayInline; { return NO; }
 
 - (BOOL)isCallout;  // whether to generate enclosing <div class="callout"> etc.
 {
