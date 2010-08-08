@@ -394,26 +394,31 @@
 
 #pragma mark Graphics
 
+- (void)writePagelet:(SVGraphic *)graphic
+{
+    // Pagelet
+    [self startNewline];        // needed to simulate a call to -startElement:
+    [self stopWritingInline];
+    
+    SVTemplate *template = [[graphic class] template];
+    
+    SVHTMLTemplateParser *parser =
+    [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
+                                         component:graphic];
+    
+    [parser parseIntoHTMLContext:self];
+    [parser release];
+}
+
 - (void)writeGraphicIgnoringCallout:(SVGraphic *)graphic
 {
     // Update number of graphics
-      _numberOfGraphics++;
+    _numberOfGraphics++;
     
     
     if ([graphic isPagelet])
     {
-        // Pagelet
-        [self startNewline];        // needed to simulate a call to -startElement:
-        [self stopWritingInline];
-        
-        SVTemplate *template = [[graphic class] template];
-        
-        SVHTMLTemplateParser *parser =
-        [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
-                                             component:graphic];
-        
-        [parser parseIntoHTMLContext:self];
-        [parser release];
+        [self writePagelet:graphic];
     }
     else if (![graphic displayInline])
     {
