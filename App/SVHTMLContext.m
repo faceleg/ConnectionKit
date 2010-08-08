@@ -423,8 +423,7 @@
         
         
         // <div class="graphic">
-        SVTextAttachment *attachment = [graphic textAttachment];
-        NSNumber *width = [attachment width];
+        NSNumber *width = [graphic valueForKey:@"width"];
         if (width)
         {
             NSString *style = [NSString stringWithFormat:@"width:%upx", [width unsignedIntValue]];
