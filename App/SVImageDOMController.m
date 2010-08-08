@@ -242,9 +242,10 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 - (DOMElement *)selectableDOMElement;
 {
     // Normally we are, but not for chrome-less images
-    DOMElement *result = ([self HTMLElement] == [[self imageDOMController] HTMLElement] ?
-                          nil :
-                          [super selectableDOMElement]);
+    DOMElement *imageElement = [[self imageDOMController] HTMLElement];
+    DOMElement *result = [super selectableDOMElement];
+    
+    if (result == imageElement) result = nil;
     return result;
 }
 
