@@ -424,7 +424,7 @@
         
         // <div class="graphic"> or <img class="graphic">
         [self pushElementClassName:@"graphic"];
-        if ([graphic canDisplayInline]) // special case for images
+        if (![graphic showsCaption] && [graphic canDisplayInline]) // special case for images
         {
             [graphic writeBody:self];
             [self endElement];
