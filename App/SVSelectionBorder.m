@@ -282,29 +282,32 @@
         BOOL canResizeRight = (mask & kCALayerRightEdge);
         BOOL canResizeBottom = (mask & kCALayerBottomEdge);
         
-        [self drawSelectionHandleAtPoint:NSMakePoint(minX, minY)
-                                  inView:view
-                                 enabled:(canResizeTop && canResizeLeft)];
-        
-        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, minY)
-                                  inView:view
-                                 enabled:(canResizeTop && canResizeRight)];
-        
-        [self drawSelectionHandleAtPoint:NSMakePoint(minX, maxY)
-                                  inView:view
-                                 enabled:(canResizeBottom && canResizeLeft)];
-        
-        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, maxY)
-                                  inView:view
-                                 enabled:(canResizeBottom && canResizeRight)];
-        
-        [self drawSelectionHandleAtPoint:NSMakePoint(midX, minY)
-                                  inView:view
-                                 enabled:canResizeTop];
-        
-        [self drawSelectionHandleAtPoint:NSMakePoint(midX, maxY)
-                                  inView:view
-                                 enabled:canResizeBottom];
+        if (canResizeTop || canResizeBottom || !(canResizeLeft || canResizeRight))
+        {
+            [self drawSelectionHandleAtPoint:NSMakePoint(minX, minY)
+                                      inView:view
+                                     enabled:(canResizeTop && canResizeLeft)];
+            
+            [self drawSelectionHandleAtPoint:NSMakePoint(maxX, minY)
+                                      inView:view
+                                     enabled:(canResizeTop && canResizeRight)];
+            
+            [self drawSelectionHandleAtPoint:NSMakePoint(minX, maxY)
+                                      inView:view
+                                     enabled:(canResizeBottom && canResizeLeft)];
+            
+            [self drawSelectionHandleAtPoint:NSMakePoint(maxX, maxY)
+                                      inView:view
+                                     enabled:(canResizeBottom && canResizeRight)];
+            
+            [self drawSelectionHandleAtPoint:NSMakePoint(midX, minY)
+                                      inView:view
+                                     enabled:canResizeTop];
+            
+            [self drawSelectionHandleAtPoint:NSMakePoint(midX, maxY)
+                                      inView:view
+                                     enabled:canResizeBottom];
+        }
         
         [self drawSelectionHandleAtPoint:NSMakePoint(minX, midY)
                                   inView:view
