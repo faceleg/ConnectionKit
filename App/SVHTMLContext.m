@@ -422,15 +422,25 @@
         [self startElement:@"div" className:@"graphic-container"];
         
         
-        // <div class="graphic">
+        // <div class="graphic"> or <img class="graphic">
+        [self pushElementClassName:@"graphic"];
+        
         NSNumber *width = [graphic valueForKey:@"width"];
         if (width)
         {
             NSString *style = [NSString stringWithFormat:@"width:%upx", [width unsignedIntValue]];
             [self pushElementAttribute:@"style" value:style];
         }
+        
+        if ([graphic canDisplayInline]) // special case for images
+        {
+            [graphic writeBody:self];
+            [self endElement];
+            return;
+        }
+            
         [self addDependencyOnObject:graphic keyPath:@"textAttachment.width"];
-        [self startElement:@"div" className:@"graphic"];
+        [self startElement:@"div"];
         
         
         // Graphic body
