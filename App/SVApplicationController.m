@@ -292,7 +292,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		
 #ifndef VARIANT_RELEASE
 		[NSNumber numberWithBool:YES],			@"ShowScoutMessages",	// Alerts when there is a "Scout message" from submitting a bug/error
-//		@"Beta Testing Reports",				@"AssignSubmission",	// Virtual user for beta testing reports, DON'T go to normal support person when testing
+		@"Beta Testing Reports",				@"AssignSubmission",	// Virtual user for beta testing reports, DON'T go to normal support person when testing
 #else
 		[NSNumber numberWithBool:NO],			@"ShowScoutMessages",
 #endif
