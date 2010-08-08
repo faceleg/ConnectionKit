@@ -424,6 +424,12 @@
         
         // <div class="graphic"> or <img class="graphic">
         [self pushElementClassName:@"graphic"];
+        if ([graphic canDisplayInline]) // special case for images
+        {
+            [graphic writeBody:self];
+            [self endElement];
+            return;
+        }
         
         NSNumber *width = [graphic valueForKey:@"width"];
         if (width)
@@ -432,13 +438,6 @@
             [self pushElementAttribute:@"style" value:style];
         }
         
-        if ([graphic canDisplayInline]) // special case for images
-        {
-            [graphic writeBody:self];
-            [self endElement];
-            return;
-        }
-            
         [self addDependencyOnObject:graphic keyPath:@"textAttachment.width"];
         [self startElement:@"div"];
         
