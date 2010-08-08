@@ -75,6 +75,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 #pragma mark Pagelet
 
+- (BOOL)displayInline; { return NO; }
+
 // Inline graphics are not pagelets, but everything else is
 - (BOOL)isPagelet;
 {

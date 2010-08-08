@@ -121,34 +121,49 @@
 
 #pragma mark Placement
 
-- (BOOL)isPagelet;
+- (BOOL)displayInline;
 {
-    BOOL result = [super isPagelet];
+    BOOL result = [super displayInline];
     
-    // Images are no longer pagelets once you turn off all additional stuff like title & caption
-    if ([[self placement] intValue] == SVGraphicPlacementInline &&
-        ![self showsTitle] &&
-        ![self showsIntroduction] &&
-        ![self showsCaption])
+    // Images become inline once you turn off all additional stuff like title & caption
+    if (![self isPagelet])
     {
         SVTextAttachment *attachment = [self textAttachment];
         if (![[attachment causesWrap] boolValue])
         {
-            result = NO;
+            result = YES;
         }
         else
         {
             SVGraphicWrap wrap = [[attachment wrap] intValue];
-            result = !(wrap == SVGraphicWrapRight ||
-                       wrap == SVGraphicWrapLeft ||
-                       wrap == SVGraphicWrapCenter);
+            result = (wrap == SVGraphicWrapRight ||
+                      wrap == SVGraphicWrapLeft ||
+                      wrap == SVGraphicWrapCenter);
         }
     }
     
     return result;
 }
 
+- (BOOL)isPagelet;
+{
+    // Images are no longer pagelets once you turn off all additional stuff like title & caption
+    if ([[self placement] intValue] == SVGraphicPlacementInline &&
+        ![self showsTitle] &&
+        ![self showsIntroduction] &&
+        ![self showsCaption])
+    {
+        return NO;
+    }
+    else
+    {
+        return [super isPagelet];
+    }
+}
+
 - (BOOL)canDisplayInline; { return YES; }
+
+- (BOOL)mustBePagelet; { return NO; }
 
 + (NSSet *)keyPathsForValuesAffectingIsPagelet;
 {

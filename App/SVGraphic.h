@@ -79,7 +79,10 @@ extern NSString *kSVGraphicPboardType;
 
 #pragma mark Pagelet
 
+- (BOOL)displayInline;
 - (BOOL)isPagelet;      // whether to generate <div class="pagelet"> etc. HTML. KVO-compliant
+
+
 - (BOOL)canDisplayInline;   // NO for most graphics. Images and Raw HTML return YES
 - (BOOL)mustBePagelet;  // convenience for -canDisplayInline
 

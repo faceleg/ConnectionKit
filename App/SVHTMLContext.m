@@ -415,7 +415,7 @@
         [parser parseIntoHTMLContext:self];
         [parser release];
     }
-    else if ([graphic mustBePagelet])
+    else if (![graphic displayInline])
     {
         // <div class="graphic-container center">
         [graphic buildClassName:self];
