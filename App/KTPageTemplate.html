@@ -65,9 +65,9 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 						<span id="logo-container">[[=master.logo.writeHTML]]</span>
 [[endif2]]
 [[if master.siteTitle.hidden]]
-						<h1 class="hidden">[[=master.siteTitleHTMLString]]</h1>
+						<h1 class="title hidden">[[=master.siteTitleHTMLString]]</h1>
 [[else2]]
-						[[if master.siteTitle]][[textblock property:master.siteTitle flags:"line" tag:h1 placeholder:"Site Title"]][[endif3]]
+						[[if master.siteTitle]][[textblock property:master.siteTitle flags:"line" tag:h1 placeholder:"Site Title" class:"title"]][[endif3]]
 [[endif2]]
 [[else]]
 [[if master.logo.hidden]]
@@ -75,9 +75,9 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 						<a class="imageLink" href="[[path site.rootPage]]"><span id="logo-container">[[=master.logo.writeHTML]]</span></a>
 [[endif2]]
 [[if master.siteTitle.hidden]][[comment WE HAVE TO QUERY ROOT -  THE PROPERTY IS NOT OPTIONAL PER PAGE.]]
-						<h1 class="hidden"><a href="[[path site.rootPage]]">[[=master.siteTitleHTMLString]]</a></h1>
+						<h1 class="title hidden"><a href="[[path site.rootPage]]">[[=master.siteTitleHTMLString]]</a></h1>
 [[else2]]
-						[[if master.siteTitle]][[textblock property:master.siteTitle flags:"line" tag:h1 hyperlink:site.rootPage]][[endif3]]
+						[[if master.siteTitle]][[textblock property:master.siteTitle flags:"line" tag:h1 hyperlink:site.rootPage class:"title"]][[endif3]]
 [[endif2]]
 [[endif]]
 						[[if !master.siteSubtitle.hidden]][[textblock property:master.siteSubtitle flags:"line" tag:p class:tagline placeholder:"Site Tagline"]][[endif]]
