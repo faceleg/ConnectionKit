@@ -292,7 +292,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 //		{
 //			NSLog(@"Break here");
 //		}
-		if ([subview isKindOfClass:[NSButton class]] && [[subview title] hasPrefix:@"Can___cel"])
+		if ([subview isKindOfClass:[NSButton class]] && [[((NSButton *)subview) title] hasPrefix:@"Can___cel"])
 		{
 			NSLog(@"Break here");
 		}
@@ -581,6 +581,8 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			// to get a minimum width, though some popups are designed to already be less than longest string.
 			// But one thing is clear: I don't want to shrink one that is stretchy, since it's probably
 			// intended to fill a space.
+		} else if ([view isKindOfClass:[NSButton class]] && [[view title] isEqualToString:@""]) {
+			// Buttons without any titles: Don't try to resize.  We don't want a graphic to think that it can get a new size.
 		} else {
 			
 			// Generically fire a sizeToFit if it has one.  e.g. NSTableColumn, NSProgressIndicator, (NSBox), NSMenuView, NSControl, NSTableView, NSText
@@ -876,10 +878,10 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			{
 				NSView *view = (NSView *)topLevelObject;
 				
-				//if ([fileName hasSuffix:@"LinkInspector.nib"])		// THE ONLY ONE TO RESIZE, FOR NOW, JUST SO IT'S EASIER TO DEBUG.
+				//if ([fileName hasSuffix:@"KSBugReporterViews.nib"])		// THE ONLY ONE TO RESIZE, FOR NOW, JUST SO IT'S EASIER TO DEBUG.
 				{
 					CGFloat delta = ResizeToFit(view, 0);
-					if (delta) NSLog(@"############## Warning: Delta from resizing top-level %@ view: %f", [fileName lastPathComponent], delta);
+					if (delta) DJW((@"############## Warning: Delta from resizing top-level %@ view: %f", [fileName lastPathComponent], delta));
 				}
 			}
 			else if ([topLevelObject isKindOfClass:[NSWindow class]])
@@ -911,7 +913,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 				if (delta > 0)
 				{
 					windowFrame.size.width += delta;
-					NSLog(@"##### Delta from resizing window-level view: %f.  Resized the whole window.", delta);
+					DJW((@"##### Delta from resizing window-level view: %f.  Resized the whole window.", delta));
 					// TODO: should we update min size?
 					windowFrame = [contentView convertRect:windowFrame toView:nil];
 					[window setFrame:windowFrame display:YES];	

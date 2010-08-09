@@ -86,11 +86,12 @@
 		BOOL expanded = [selIndex intersectsIndexesInRange:range];
 		if (expanded)
 		{
-			if ([theView respondsToSelector:@selector(expandGroupAtIndex:)])	// 10.5 headers lie
+			if ([theView respondsToSelector:@selector(expandGroupAtIndex:)])	// 10.5 headers lie; only in 10.6
 			{
 				[theView expandGroupAtIndex:groupIndex];
 			}
-			if ([theView respondsToSelector:@selector(expandGroup:)])	// 10.5 headers lie
+			else if ([theView respondsToSelector:@selector(expandGroup:)]
+					 && [theView respondsToSelector:@selector(layoutManager)])	// 10.5 workaround
 			{
 				id lm = [theView layoutManager];
 				NSArray *groups = [lm groups];
@@ -100,12 +101,13 @@
 		}
 		else
 		{
-			if ([theView respondsToSelector:@selector(collapseGroupAtIndex:)])	// 10.5 headers lie
+			if ([theView respondsToSelector:@selector(collapseGroupAtIndex:)])	// 10.5 headers lie; only in 10.6
 			{
 				[theView collapseGroupAtIndex:groupIndex];
 				LOG((@"Collapsing group index %d - %@", groupIndex, NSStringFromRange(range)));
 			}
-			if ([theView respondsToSelector:@selector(collapseGroup:)])	// 10.5 headers lie
+			else if ([theView respondsToSelector:@selector(collapseGroup:)]
+					 && [theView respondsToSelector:@selector(layoutManager)])	// 10.5 workaround
 			{
 				id lm = [theView layoutManager];
 				NSArray *groups = [lm groups];
