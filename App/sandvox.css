@@ -30,6 +30,14 @@ img.narrow.right { float:right; }
 .wide.center .graphic, img.wide.center { margin-left:auto; margin-right:auto; }
 .wide.right .graphic, img.wide.right { margin-left:auto; margin-right:0px; }
 
+/* Captioned graphics */
+#main .graphic img {
+    margin:0;
+    border:none;
+    padding:0;
+    max-width:none;
+}
+
  
 /* Firefox reduce dotted lines on links */
 .photo-navigation a:focus, .replaced a:focus {overflow:hidden;}
