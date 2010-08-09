@@ -31,7 +31,7 @@ img.narrow.right { float:right; }
 .wide.right .graphic, img.wide.right { margin-left:auto; margin-right:0px; }
 
 /* Captioned graphics */
-#main .graphic img {
+#main .graphic img, #main .graphic object {
     margin:0;
     border:none;
     padding:0;
