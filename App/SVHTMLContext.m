@@ -444,9 +444,16 @@
         
         
         // Graphic body
-        [self startElement:@"div"];
-        [graphic writeBody:self];
-        [self endElement];
+        if ([graphic canDisplayInline])
+        {
+            [graphic writeBody:self];
+        }
+        else
+        {
+            [self startElement:@"div"];
+            [graphic writeBody:self];
+            [self endElement];
+        }
         
         
         // Caption if requested
