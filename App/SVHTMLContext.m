@@ -79,7 +79,6 @@
     _includeStyling = YES;
     
     _liveDataFeeds = YES;
-    [self setEncoding:NSUTF8StringEncoding];
     
     _docType = KTXHTMLTransitionalDocType;
     _maxDocType = NSIntegerMax;
@@ -112,7 +111,7 @@
 
 - (id)initWithOutputWriter:(id <KSWriter>)output inheritFromContext:(SVHTMLContext *)context;
 {
-    if (self = [self initWithOutputWriter:output])
+    if (self = [self initWithOutputWriter:output encoding:[context encoding]])
     {
         // Copy across properties
         [self setIndentationLevel:[context indentationLevel]];
@@ -121,7 +120,6 @@
         [self setIncludeStyling:[context includeStyling]];
         [self setLiveDataFeeds:[context liveDataFeeds]];
         [self setDocType:[context docType]];
-        [self setEncoding:[context encoding]];
     }
     
     return self;
@@ -166,7 +164,6 @@
     
     
 	// Prepare global properties
-    [self setEncoding:[[[page master] valueForKey:@"charset"] encodingFromCharset]];
     [self setLanguage:[[page master] language]];
     
     
@@ -248,7 +245,6 @@
 
 @synthesize baseURL = _baseURL;
 @synthesize liveDataFeeds = _liveDataFeeds;
-@synthesize encoding = _stringEncoding;
 @synthesize language = _language;
 
 #pragma mark Doctype

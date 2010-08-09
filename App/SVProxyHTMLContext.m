@@ -47,7 +47,6 @@
 - (KTDocType)docType; { return [_target docType]; }
 
 - (NSStringEncoding)encoding { return [_target encoding]; }
-- (void)setEncoding:(NSStringEncoding)flag { return [_target setEncoding:flag]; }
 
 - (NSURL *)addMedia:(id <SVMedia>)media width:(NSNumber *)width height:(NSNumber *)height type:(NSString *)type;
 {

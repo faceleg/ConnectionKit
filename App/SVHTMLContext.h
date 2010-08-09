@@ -39,7 +39,6 @@ typedef enum {
     KTPage	*_currentPage;
     
 	BOOL                _liveDataFeeds;
-    NSStringEncoding    _stringEncoding;
     NSString            *_language;
     
     KTDocType   _docType;
@@ -92,7 +91,6 @@ typedef enum {
 @property(nonatomic, retain, readonly) KTPage *page;    // does NOT affect .baseURL
 @property(nonatomic, copy) NSURL *baseURL;
 @property(nonatomic) BOOL liveDataFeeds;
-@property(nonatomic) NSStringEncoding encoding;   // UTF-8 by default
 @property(nonatomic, copy) NSString *language;
 
 @property(nonatomic, readonly) KTHTMLGenerationPurpose generationPurpose;
