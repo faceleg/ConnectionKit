@@ -44,13 +44,13 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 {
     [[self representedObject] removeObserver:self forKeyPath:@"width"];
     [[self representedObject] removeObserver:self forKeyPath:@"height"];
-    [[self representedObject] removeObserver:self forKeyPath:@"wrap"];
+    //[[self representedObject] removeObserver:self forKeyPath:@"wrap"];
     
     [super setRepresentedObject:image];
     
     [image addObserver:self forKeyPath:@"width" options:0 context:sImageSizeObservationContext];
     [image addObserver:self forKeyPath:@"height" options:0 context:sImageSizeObservationContext];
-    [image addObserver:self forKeyPath:@"wrap" options:0 context:sImageSizeObservationContext];
+    //[image addObserver:self forKeyPath:@"wrap" options:0 context:sImageSizeObservationContext];
 }
 
 #pragma mark Selection
