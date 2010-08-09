@@ -29,6 +29,7 @@
                            insertIntoManagedObjectContext:[self managedObjectContext]]];
     
     [self makeOriginalSize];
+    [self setTypeToPublish:[[self media] UTI]];
 }
 
 - (void)createDefaultIntroAndCaption; { }

@@ -60,6 +60,7 @@
     {
         SVMediaRecord *media = [[[page rootPage] master] makePlaceholdImageMediaWithEntityName:@"GraphicMedia"];
         [self setMedia:media];
+        [self setTypeToPublish:[media UTI]];
         
         [self makeOriginalSize];    // calling super will scale back down if needed
         [self setConstrainProportions:YES];
