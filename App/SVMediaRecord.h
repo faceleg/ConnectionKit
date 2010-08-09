@@ -106,7 +106,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 - (WebResource *)webResource;
 - (BOOL)areContentsCached;
 - (NSURLResponse *)URLResponse; // for in-memory media
-- (NSString *)UTI;
+- (NSString *)typeOfFile;
 
 #pragma mark Comparing Files
 

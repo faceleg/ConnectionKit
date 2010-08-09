@@ -18,6 +18,6 @@
 
 - (NSString *)filename; // non-nil value means the media should be inside the doc package (or deleted)
 - (NSString *)preferredFilename;    // what the media would like to named given the chance
-- (NSString *)UTI;					// Based on preferred filename, what the UTI is
+- (NSString *)typeOfFile;           // based on preferred filename, what the UTI is
 
 @end

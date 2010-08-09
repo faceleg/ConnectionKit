@@ -29,7 +29,7 @@
                            insertIntoManagedObjectContext:[self managedObjectContext]]];
     
     [self makeOriginalSize];
-    [self setTypeToPublish:[[self media] UTI]];
+    [self setTypeToPublish:[[self media] typeOfFile]];
 }
 
 - (void)createDefaultIntroAndCaption; { }

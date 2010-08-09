@@ -38,7 +38,7 @@
     
     SVImage *result = [self insertNewImageInManagedObjectContext:[media managedObjectContext]];
     [result setMedia:media];
-    [result setTypeToPublish:[media UTI]];
+    [result setTypeToPublish:[media typeOfFile]];
     
     [result makeOriginalSize];
     [result setConstrainProportions:YES];
@@ -60,7 +60,7 @@
     {
         SVMediaRecord *media = [[[page rootPage] master] makePlaceholdImageMediaWithEntityName:@"GraphicMedia"];
         [self setMedia:media];
-        [self setTypeToPublish:[media UTI]];
+        [self setTypeToPublish:[media typeOfFile]];
         
         [self makeOriginalSize];    // calling super will scale back down if needed
         [self setConstrainProportions:YES];
@@ -105,7 +105,7 @@
     }
     
     // Match file type
-    [self setTypeToPublish:[[self media] UTI]];
+    [self setTypeToPublish:[[self media] typeOfFile]];
 }
 
 #pragma mark Metrics

@@ -192,7 +192,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	}
     else if (nil != (media =[item mediaRepresentation]))
     {
-		NSString *UTI = [media UTI];
+		NSString *UTI = [media typeOfFile];
 		if ([UTI conformsToUTI:(NSString *)kUTTypeHTML])
 		{
 			result = [NSImage imageNamed:@"plainText"];

@@ -364,7 +364,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (BOOL) mediaIsEditableText:(id <SVMedia>)aMedia
 {
-	NSString *UTI = [aMedia UTI];
+	NSString *UTI = [aMedia typeOfFile];
 	BOOL result = ([UTI conformsToUTI:(NSString *)kUTTypePlainText]
 				   || [UTI conformsToUTI:(NSString *)kUTTypeHTML] );
 		// Let's try not allowing kUTTypeXML or KUTTypeHTML or other variants of kUTTypeText
