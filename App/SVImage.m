@@ -275,7 +275,6 @@
     }
     
     [context addDependencyOnObject:self keyPath:@"media"];
-    [context addDependencyOnObject:self keyPath:@"className"];
     
     
     if ([self isPagelet] && [self link]) [context endElement];

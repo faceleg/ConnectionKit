@@ -255,11 +255,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     }
 }
 
-+ (NSSet *)keyPathsForValuesAffectingClassName
-{
-    return [NSSet setWithObjects:@"textAttachment.causesWrap", @"textAttachment.wrap", nil];
-}
-
 - (void)writeBody:(SVHTMLContext *)context;
 {
     SUBCLASSMUSTIMPLEMENT;
