@@ -475,6 +475,7 @@
 - (void)draggingExited:(id <NSDraggingInfo>)sender;
 {
     [self removeDragCaret];
+    [[self webEditor] removeDragCaret];
     [[self webEditor] moveDragHighlightToDOMNode:nil];
 }
 
