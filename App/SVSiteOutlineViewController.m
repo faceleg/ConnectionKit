@@ -1255,9 +1255,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
 	
     // Insert each item in turn. By running in reverse we can keep reusing the same index
-    NSEnumerator *itemsEnumerator = [items reverseObjectEnumerator];	
-    SVSiteItem *anItem;
-    while (anItem = [itemsEnumerator nextObject])
+    for (SVSiteItem *anItem in [items reverseObjectEnumerator])
     {
         [anItem retain];
         
