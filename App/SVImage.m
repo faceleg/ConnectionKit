@@ -220,6 +220,10 @@
     NSBitmapImageFileType result = [NSBitmapImageRep typeForUTI:[self typeToPublish]];
     return result;
 }
+- (void) setStorageType:(NSBitmapImageFileType)storageType;
+{
+    [self setTypeToPublish:[NSBitmapImageRep ks_typeForBitmapImageFileType:storageType]];
+}
 + (NSSet *)keyPathsForValuesAffectingStorageType;
 {
     return [NSSet setWithObject:@"typeToPublish"];

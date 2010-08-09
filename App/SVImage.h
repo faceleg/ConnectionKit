@@ -28,7 +28,7 @@
 
 #pragma mark Publishing
 
-@property(nonatomic, readonly) NSBitmapImageFileType storageType;
+@property(nonatomic) NSBitmapImageFileType storageType;
 @property(nonatomic, copy) NSString *typeToPublish;
 
 @property(nonatomic, copy) NSNumber *compressionFactor; // float, 0-1
