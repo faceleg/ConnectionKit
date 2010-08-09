@@ -54,7 +54,7 @@ typedef enum {
     
     NSMutableString         *_headerMarkup;
     NSMutableString         *_endBodyMarkup;
-    KSMegaBufferedWriter    *_postHeaderBuffer;
+    NSUInteger              _headerMarkupIndex;
     
     NSMutableArray  *_iteratorsStack;
     

@@ -65,11 +65,8 @@
 
 - (id)initWithOutputWriter:(id <KSWriter>)output; // designated initializer
 {
-    // One buffer to hold page markup until we have collected all head info
-    _postHeaderBuffer = [[KSMegaBufferedWriter alloc] initWithOutputWriter:output];
-    
-    // And another buffer for grouping callouts
-    _calloutBuffer = [[KSMegaBufferedWriter alloc] initWithOutputWriter:_postHeaderBuffer];
+    // Buffer for grouping callouts
+    _calloutBuffer = [[KSMegaBufferedWriter alloc] initWithOutputWriter:output];
     [_calloutBuffer setDelegate:self];
     
     
@@ -139,7 +136,6 @@
     
     [super dealloc];
     
-    OBASSERT(!_postHeaderBuffer);   // super should have called -close to set this to nil
     OBASSERT(!_calloutBuffer);
     OBASSERT(!_output);
 }
@@ -761,8 +757,8 @@
 
 - (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
 {
-    // Start buffering into a temporary string writer
-    [_postHeaderBuffer beginBuffering];
+    // Record where to make the insert
+    _headerMarkupIndex = [[self outputStringWriter] length];
 }
 
 - (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
@@ -773,11 +769,8 @@
 - (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
 {
     // Finish buffering extra header
-    [[[_postHeaderBuffer valueForKey:@"_outputs"] objectAtIndex:0]  // hack to get underlying stream
-     writeString:[self extraHeaderMarkup]];
-    
-    [_postHeaderBuffer flush];
-    
+    [[self outputStringWriter] insertString:[self extraHeaderMarkup]
+                                    atIndex:_headerMarkupIndex];
     
     // Write the end body markup
     [self writeString:[self endBodyMarkup]];
@@ -843,7 +836,6 @@
 {
     [super close];
     
-    [_postHeaderBuffer release]; _postHeaderBuffer = nil;
     [_calloutBuffer release]; _calloutBuffer = nil;
     [_output release]; _output = nil;
 }
