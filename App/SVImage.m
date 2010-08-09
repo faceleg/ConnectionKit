@@ -38,6 +38,7 @@
     
     SVImage *result = [self insertNewImageInManagedObjectContext:[media managedObjectContext]];
     [result setMedia:media];
+    [result setTypeToPublish:[media UTI]];
     
     [result makeOriginalSize];
     [result setConstrainProportions:YES];
@@ -50,18 +51,6 @@
     SVImage *result = [NSEntityDescription insertNewObjectForEntityForName:@"Image"
                                                     inManagedObjectContext:context];
     return result;
-}
-
-- (void)awakeFromInsert
-{
-    [super awakeFromInsert];
-    
-    // Use same format & compression as last image
-    BOOL prefersPNG = [[NSUserDefaults standardUserDefaults] boolForKey:kSVPrefersPNGImageFormatKey];
-    if (prefersPNG)
-    {
-        [self setStorageType:[NSNumber numberWithInteger:NSPNGFileType]];
-    }
 }
 
 - (void)willInsertIntoPage:(KTPage *)page;
@@ -113,6 +102,9 @@
         [self makeOriginalSize];
         if ([[self width] isGreaterThan:width]) [self setWidth:width];
     }
+    
+    // Match file type
+    [self setTypeToPublish:[[self media] UTI]];
 }
 
 #pragma mark Metrics
@@ -222,12 +214,17 @@
 
 #pragma mark Publishing
 
-@dynamic storageType;
-
-- (NSString *)type;
+- (NSBitmapImageFileType)storageType;
 {
-    return [NSBitmapImageRep ks_typeForBitmapImageFileType:[[self storageType] intValue]];
+    NSBitmapImageFileType result = [NSBitmapImageRep typeForUTI:[self typeToPublish]];
+    return result;
 }
++ (NSSet *)keyPathsForValuesAffectingStorageType;
+{
+    return [NSSet setWithObject:@"typeToPublish"];
+}
+
+@dynamic typeToPublish;
 
 @dynamic compressionFactor;
 
@@ -262,7 +259,7 @@
                                        alt:alt
                                      width:[self width]
                                     height:[self height]
-                                      type:[self type]];
+                                      type:[self typeToPublish]];
     }
     else
     {
