@@ -69,7 +69,7 @@
 	
 	
 	// If inserting a page into a manually sorted collection, place the page at the end of it
-	if ([self collectionSortOrder] == SVCollectionSortManually)
+	if ([[self collectionSortOrder] intValue] == SVCollectionSortManually)
 	{
 		unsigned index = [[[self sortedChildren] lastObject] childIndex] + 1;
 		[item setChildIndex:index];
