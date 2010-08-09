@@ -240,8 +240,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     // Construct HTML Context
-    NSMutableString *pageHTML = [[NSMutableString alloc] init];
-	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithMutableString:pageHTML];
+	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
     
     [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey]];
     [context setSidebarPageletsController:[_graphicsController sidebarPageletsController]];
@@ -273,12 +272,12 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     // Load the HTML into the webview
+    NSString *pageHTML = [[context outputStringWriter] string];
     [webEditor loadHTMLString:pageHTML baseURL:pageURL];
     
     
     // Tidy up
     [context release];
-    [pageHTML release];
 }
 
 - (KTPage *)loadedPage; // the last page to successfully load into Web Editor

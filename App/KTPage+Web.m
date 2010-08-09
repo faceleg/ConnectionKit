@@ -97,21 +97,20 @@
 
 - (NSString *)markupString;   // creates a temporary HTML context and calls -writeHTML
 {
-    NSMutableString *result = [NSMutableString string];
-    
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithMutableString:result];	
+    SVHTMLContext *context = [[SVHTMLContext alloc] init];	
 	[context writeDocumentWithPage:self];
     
+    NSString *result = [[context outputStringWriter] string];
     [context release];
     return result;
 }
 
 - (NSString *)markupStringForEditing;   // for viewing source for debugging purposes.
 {
-    NSMutableString *result = [NSMutableString string];
-    
-	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithMutableString:result];
+    SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
 	[context writeDocumentWithPage:self];
+    
+	NSString *result = [[context outputStringWriter] string];
     [context release];
     
     return result;

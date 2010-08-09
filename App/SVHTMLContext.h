@@ -24,6 +24,7 @@ typedef enum {
 #pragma mark -
 
 
+@class KSStringWriter;
 @class KTPage, SVSiteItem, SVGraphic, SVHTMLTextBlock, SVLink, SVMediaRecord;
 @protocol SVMedia;
 
@@ -31,7 +32,7 @@ typedef enum {
 @interface SVHTMLContext : KSHTMLWriter <SVPlugInContext, SVHTMLWriter, KSMegaBufferedWriterDelegate>
 {
   @private
-    NSMutableString *_output;
+    KSStringWriter  *_output;
     NSUInteger      _charactersWritten;
     
     NSURL   *_baseURL;
@@ -64,7 +65,7 @@ typedef enum {
 #pragma mark Init
 
 // Like -initWithOutputWriter: but gives the context more info about the output. In practice this means that if a page component changes the doctype, the output will be wiped and the page rewritten with the new doctype.
-- (id)initWithMutableString:(NSMutableString *)output;
+- (id)initWithOutputStringWriter:(KSStringWriter *)output;
 
 - (id)init; // calls through to -initWithMutableString:
 
@@ -85,7 +86,7 @@ typedef enum {
 #pragma mark Properties
 
 // Not 100% sure I want to expose this!
-@property(nonatomic, retain, readonly) NSMutableString *mutableString;
+@property(nonatomic, retain, readonly) KSStringWriter *outputStringWriter;
 @property(nonatomic, readonly) NSUInteger totalCharactersWritten;
 
 @property(nonatomic, retain, readonly) KTPage *page;    // does NOT affect .baseURL

@@ -30,6 +30,8 @@
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
+#import "KSStringWriter.h"
+
 #import "Registration.h"
 
 
@@ -90,7 +92,7 @@
     return self;
 }
 
-- (id)initWithMutableString:(NSMutableString *)output;
+- (id)initWithOutputStringWriter:(KSStringWriter *)output;
 {
     if (self = [self initWithOutputWriter:output])
     {
@@ -102,8 +104,8 @@
 
 - (id)init;
 {
-    NSMutableString *output = [[NSMutableString alloc] init];
-    self = [self initWithMutableString:output];
+    KSStringWriter *output = [[KSStringWriter alloc] init];
+    self = [self initWithOutputStringWriter:output];
     [output release];
     return self;
 }
@@ -148,7 +150,7 @@
 
 - (void)reset;
 {
-    [[self mutableString] setString:@""];
+    [[self outputStringWriter] removeAllCharacters];
 }
 
 #pragma mark Document
@@ -208,7 +210,7 @@
     if (_maxDocType > KTHTML5DocType) _maxDocType = KTXHTMLTransitionalDocType;
     if (_maxDocType != [self docType])
     {
-        if ([self mutableString])
+        if ([self outputStringWriter])
         {
             [self reset];
             [self setDocType:_maxDocType];
@@ -241,7 +243,7 @@
 
 #pragma mark Properties
 
-@synthesize mutableString = _output;
+@synthesize outputStringWriter = _output;
 @synthesize totalCharactersWritten = _charactersWritten;
 
 @synthesize baseURL = _baseURL;

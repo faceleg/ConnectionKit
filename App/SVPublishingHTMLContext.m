@@ -35,7 +35,7 @@
 - (void)close;
 {
     // Generate HTML data
-    NSString *html = [self mutableString];
+    NSString *html = [[self outputStringWriter] string];
 	if (html)
     {
         NSStringEncoding encoding = [self encoding];

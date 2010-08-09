@@ -882,21 +882,19 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	OBASSERT([NSThread currentThread] == [self thread]);
     
     // Put together the HTML for the thumbnail
-    NSMutableString *thumbnailHTML = [[NSMutableString alloc] init];
-    SVHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithMutableString:thumbnailHTML];
-    
+    SVHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
     [context setLiveDataFeeds:NO];
     
     [context writeDocumentWithPage:[[self site] rootPage]];
-	[context release];
+	
+    NSString *thumbnailHTML = [[context outputStringWriter] string];
+    [context release];
     
 	
     // Load into webview
     [self performSelectorOnMainThread:@selector(_startGeneratingQuickLookThumbnailWithHTML:)
                            withObject:thumbnailHTML
                         waitUntilDone:YES];
-    
-    [thumbnailHTML release];
 }
 
 - (void)_startGeneratingQuickLookThumbnailWithHTML:(NSString *)thumbnailHTML
@@ -1081,10 +1079,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 {
     OBASSERT([NSThread currentThread] == [self thread]);
     
-    NSMutableString *result = [NSMutableString string];
-    
-    SVHTMLContext *context = [[SVQuickLookPreviewHTMLContext alloc] initWithMutableString:result];
+    SVHTMLContext *context = [[SVQuickLookPreviewHTMLContext alloc] init];
     [context writeDocumentWithPage:[[self site] rootPage]];
+    
+    NSString *result = [[context outputStringWriter] string];
     [context release];
     
     return result;
