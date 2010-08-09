@@ -255,7 +255,7 @@
     
     // Actually write the image
     [context pushElementAttribute:@"id" value:idName];
-    [self buildClassName:context];
+    if ([self displayInline]) [self buildClassName:context];
     
     SVMediaRecord *media = [self media];
     if (media)
