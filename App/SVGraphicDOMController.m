@@ -191,8 +191,7 @@
     SVGraphic *graphic = [self representedObject];
     DOMElement *element = [self graphicDOMElement];
     
-    [[element style] setWidth:[NSString stringWithFormat:@"%@px",
-                               [graphic width]]];
+    [[element style] setWidth:[NSString stringWithFormat:@"%@px", [graphic containerWidth]]];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -243,7 +242,7 @@
 {
     // Size calculated – now what to store?
     SVGraphic *graphic = [self representedObject];
-	[graphic setValue:[NSNumber numberWithFloat:size.width] forKey:@"width"];
+	[graphic setWidth:[NSNumber numberWithFloat:size.width]];
     
     
     

@@ -432,7 +432,7 @@
             return;
         }
         
-        NSNumber *width = [graphic valueForKey:@"width"];
+        NSNumber *width = [graphic containerWidth];
         if (width)
         {
             NSString *style = [NSString stringWithFormat:@"width:%upx", [width unsignedIntValue]];
