@@ -292,10 +292,10 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 //		{
 //			NSLog(@"Break here");
 //		}
-//		if ([subview isKindOfClass:[NSButton class]] && [[subview title] hasPrefix:@"Prefer links op"])
-//		{
-//			NSLog(@"Break here");
-//		}
+		if ([subview isKindOfClass:[NSButton class]] && [[subview title] hasPrefix:@"Can___cel"])
+		{
+			NSLog(@"Break here");
+		}
 //		if ([subview isKindOfClass:[NSBox class]] && [subview frame].origin.y == 62.0)
 //		{
 //			NSLog(@"Break here - this is the separator line");
@@ -345,7 +345,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 			{ 
 				moveLeft = sizeDelta;
 				// Try this:  zero out accumulating delta since we are now right-aligned.
-				accumulatingDelta = 0;
+				//accumulatingDelta = 0;		... not good on KSCrash.nib
 			}
 		}
 		
@@ -899,6 +899,10 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 				{
 //					windowFrame.size.width += 200;
 				}
+//				if ([fileName hasSuffix:@"KSCrash.nib"])
+//				{
+//					NSLog(@"Gonna check out KSCrash.nib");
+//				}
 				
 				// Regular windows want 20 pixels right margin; utility windows 10 pixels.  I think from the HIG.
 				// CGFloat desiredMargins = ([window styleMask] & NSUtilityWindowMask) ? 10 : 20;
