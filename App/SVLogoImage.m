@@ -46,6 +46,8 @@
 - (BOOL)isPlacementEditable; { return NO; }
 - (SVTextAttachment *)textAttachment { return nil; }
 
+- (SVLink *)link; { return NSNotApplicableMarker; }
+
 #pragma mark Serialization
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
