@@ -14,6 +14,14 @@
 #import "SVDesignsController.h"
 #import "SVDesignChooserImageBrowserView.h"
 
+@interface IKImageBrowserView (Private10_5)
+
+- (void) collapseGroup:group;
+- (void) expandGroup:group;
+- (id) layoutManager;
+
+@end
+
 @implementation SVDesignChooserViewController
 
 #pragma mark Init & Dealloc
@@ -78,12 +86,33 @@
 		BOOL expanded = [selIndex intersectsIndexesInRange:range];
 		if (expanded)
 		{
-			[theView expandGroupAtIndex:groupIndex];
+			if ([theView respondsToSelector:@selector(expandGroupAtIndex:)])	// 10.5 headers lie
+			{
+				[theView expandGroupAtIndex:groupIndex];
+			}
+			if ([theView respondsToSelector:@selector(expandGroup:)])	// 10.5 headers lie
+			{
+				id lm = [theView layoutManager];
+				NSArray *groups = [lm groups];
+				id group = [groups objectAtIndex:groupIndex];
+				[theView expandGroup:group];
+			}
 		}
 		else
 		{
-			[theView collapseGroupAtIndex:groupIndex];
-			LOG((@"Collapsing group index %d - %@", groupIndex, NSStringFromRange(range)));
+			if ([theView respondsToSelector:@selector(collapseGroupAtIndex:)])	// 10.5 headers lie
+			{
+				[theView collapseGroupAtIndex:groupIndex];
+				LOG((@"Collapsing group index %d - %@", groupIndex, NSStringFromRange(range)));
+			}
+			if ([theView respondsToSelector:@selector(collapseGroup:)])	// 10.5 headers lie
+			{
+				id lm = [theView layoutManager];
+				NSArray *groups = [lm groups];
+				id group = [groups objectAtIndex:groupIndex];
+				[theView collapseGroup:group];
+				LOG((@"Collapsing group index %d - %@", groupIndex, NSStringFromRange(range)));
+			}
 		}
 		
 		[self setContracted:!expanded forRange:range];
