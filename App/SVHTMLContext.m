@@ -108,7 +108,9 @@
 
 - (id)initWithOutputWriter:(id <KSWriter>)output inheritFromContext:(SVHTMLContext *)context;
 {
-    if (self = [self initWithOutputWriter:output encoding:[context encoding]])
+    NSStringEncoding encoding = (context ? [context encoding] : NSUTF8StringEncoding);
+    
+    if (self = [self initWithOutputWriter:output encoding:encoding])
     {
         // Copy across properties
         [self setIndentationLevel:[context indentationLevel]];
