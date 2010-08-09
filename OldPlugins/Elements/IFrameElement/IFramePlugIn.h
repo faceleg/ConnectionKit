@@ -1,8 +1,8 @@
 //
-//  IFramePageletDelegate.h
-//  Sandvox SDK
+//  IFramePlugIn.h
+//  IFrameElement
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2010 Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -36,10 +36,19 @@
 
 #import "SandvoxPlugin.h"
 
-@class WebView;
-@interface IFramePageletDelegate : SVPageletPlugIn 
+@interface IFramePlugIn : SVPageletPlugIn 
 {
+    @private
+    NSURL *_linkURL;
+    NSUInteger _iFrameHeight;
+    NSUInteger _iFrameWidth;
+    BOOL _iFrameIsBordered;
 }
+
+@property (nonatomic, retain) NSURL *linkURL;
+@property (nonatomic) NSUInteger iFrameHeight;
+@property (nonatomic) NSUInteger iFrameWidth;
+@property (nonatomic) BOOL iFrameIsBordered;
 
 @end
 

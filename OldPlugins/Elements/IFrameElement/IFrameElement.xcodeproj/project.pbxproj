@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3CA9003D0D63C61C00815310 /* IFramePageletDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9003C0D63C61C00815310 /* IFramePageletDelegate.m */; };
-		3CA900410D63C62400815310 /* IFramePageletTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900400D63C62400815310 /* IFramePageletTemplate.html */; };
-		3CA900470D63C63600815310 /* IFramePagelet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900420D63C63600815310 /* IFramePagelet.nib */; };
+		3C3CA3D31210AD8D00FC6A67 /* IFramePagelet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C3CA3D11210AD8D00FC6A67 /* IFramePagelet.xib */; };
+		3CA9003D0D63C61C00815310 /* IFramePlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9003C0D63C61C00815310 /* IFramePlugIn.m */; };
+		3CA900410D63C62400815310 /* IFrameTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900400D63C62400815310 /* IFrameTemplate.html */; };
 		3CA900480D63C63600815310 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900450D63C63600815310 /* Localizable.strings */; };
 		3CA9005F0D63C69200815310 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9005E0D63C69200815310 /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
@@ -21,31 +21,24 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* IFrameElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFrameElement_Prefix.pch; sourceTree = "<group>"; };
-		3CA9003B0D63C61C00815310 /* IFramePageletDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFramePageletDelegate.h; sourceTree = "<group>"; };
-		3CA9003C0D63C61C00815310 /* IFramePageletDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFramePageletDelegate.m; sourceTree = "<group>"; };
-		3CA900400D63C62400815310 /* IFramePageletTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = IFramePageletTemplate.html; sourceTree = "<group>"; };
-		3CA900430D63C63600815310 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
+		3C3CA3D21210AD8D00FC6A67 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IFramePagelet.xib; sourceTree = "<group>"; };
+		3CA9003B0D63C61C00815310 /* IFramePlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFramePlugIn.h; sourceTree = "<group>"; };
+		3CA9003C0D63C61C00815310 /* IFramePlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFramePlugIn.m; sourceTree = "<group>"; };
+		3CA900400D63C62400815310 /* IFrameTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = IFrameTemplate.html; sourceTree = "<group>"; };
 		3CA900440D63C63600815310 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3CA900460D63C63600815310 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3CA900490D63C64200815310 /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
 		3CA9004A0D63C64200815310 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3CA9004B0D63C64200815310 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3CA9004C0D63C64C00815310 /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
 		3CA9004D0D63C64C00815310 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3CA9004E0D63C64C00815310 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3CA9004F0D63C65700815310 /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
 		3CA900500D63C65700815310 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3CA900510D63C65700815310 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3CA900520D63C66200815310 /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
 		3CA900530D63C66200815310 /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3CA900540D63C66200815310 /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3CA900550D63C66E00815310 /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
 		3CA900560D63C66E00815310 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3CA900570D63C66E00815310 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3CA900580D63C67C00815310 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
 		3CA900590D63C67C00815310 /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3CA9005A0D63C67C00815310 /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3CA9005B0D63C68600815310 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
 		3CA9005C0D63C68600815310 /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3CA9005D0D63C68600815310 /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3CA9005E0D63C69200815310 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
@@ -94,8 +87,8 @@
 			isa = PBXGroup;
 			children = (
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				3CA900400D63C62400815310 /* IFramePageletTemplate.html */,
-				3CA900420D63C63600815310 /* IFramePagelet.nib */,
+				3CA900400D63C62400815310 /* IFrameTemplate.html */,
+				3C3CA3D11210AD8D00FC6A67 /* IFramePagelet.xib */,
 				3CA900450D63C63600815310 /* Localizable.strings */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3CA9005E0D63C69200815310 /* License.rtf */,
@@ -106,8 +99,8 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3CA9003B0D63C61C00815310 /* IFramePageletDelegate.h */,
-				3CA9003C0D63C61C00815310 /* IFramePageletDelegate.m */,
+				3CA9003B0D63C61C00815310 /* IFramePlugIn.h */,
+				3CA9003C0D63C61C00815310 /* IFramePlugIn.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -211,10 +204,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
-				3CA900410D63C62400815310 /* IFramePageletTemplate.html in Resources */,
-				3CA900470D63C63600815310 /* IFramePagelet.nib in Resources */,
+				3CA900410D63C62400815310 /* IFrameTemplate.html in Resources */,
 				3CA900480D63C63600815310 /* Localizable.strings in Resources */,
 				3CA9005F0D63C69200815310 /* License.rtf in Resources */,
+				3C3CA3D31210AD8D00FC6A67 /* IFramePagelet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,7 +236,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CA9003D0D63C61C00815310 /* IFramePageletDelegate.m in Sources */,
+				3CA9003D0D63C61C00815310 /* IFramePlugIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,19 +258,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		3CA900420D63C63600815310 /* IFramePagelet.nib */ = {
+		3C3CA3D11210AD8D00FC6A67 /* IFramePagelet.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3CA900430D63C63600815310 /* en */,
-				3CA900490D63C64200815310 /* da */,
-				3CA9004C0D63C64C00815310 /* de */,
-				3CA9004F0D63C65700815310 /* fr */,
-				3CA900520D63C66200815310 /* it */,
-				3CA900550D63C66E00815310 /* ja */,
-				3CA900580D63C67C00815310 /* zh_CN */,
-				3CA9005B0D63C68600815310 /* zh_TW */,
+				3C3CA3D21210AD8D00FC6A67 /* en */,
 			);
-			name = IFramePagelet.nib;
+			name = IFramePagelet.xib;
 			sourceTree = "<group>";
 		};
 		3CA900450D63C63600815310 /* Localizable.strings */ = {
