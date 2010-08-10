@@ -75,4 +75,3 @@
 
 // Third Party
 #import "DNDArrayController.h"
-#import "NTBoxView.h"
