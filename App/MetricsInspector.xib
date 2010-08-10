@@ -101,7 +101,7 @@
 								</object>
 							</object>
 						</object>
-						<string key="NSFrame">{{0, 101}, {57, 144}}</string>
+						<string key="NSFrameSize">{57, 144}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<string key="NSClassName">NSView</string>
 					</object>
@@ -377,14 +377,14 @@
 								</object>
 							</object>
 						</object>
-						<string key="NSFrame">{{58, 101}, {172, 144}}</string>
+						<string key="NSFrame">{{58, 0}, {172, 144}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<string key="NSClassName">NSView</string>
 					</object>
 					<object class="NSBox" id="763670620">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{10, 134}, {210, 5}}</string>
+						<string key="NSFrame">{{10, 33}, {210, 5}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<string key="NSOffsets">{0, 0}</string>
 						<object class="NSTextFieldCell" key="NSTitleCell">
@@ -404,7 +404,7 @@
 						<bool key="NSTransparent">NO</bool>
 					</object>
 				</object>
-				<string key="NSFrameSize">{230, 248}</string>
+				<string key="NSFrameSize">{230, 147}</string>
 				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -997,7 +997,7 @@
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>{{815, 691}, {230, 248}}</string>
+					<string>{{815, 792}, {230, 147}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{628, 654}</string>
 					<string>{{217, 442}, {480, 272}}</string>
