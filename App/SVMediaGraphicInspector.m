@@ -11,6 +11,7 @@
 #import "KTDocument.h"
 
 #import "NSBundle+Karelia.h"
+#import "NSString+Karelia.h"
 
 
 @implementation SVMediaGraphicInspector
@@ -64,7 +65,7 @@
     [window makeFirstResponder:oURLField];
 }
 
-- (NSArray *)commonFileTypes;		// try to figure out allowed file types for all selections
+- (NSArray *)allowedFileTypes;		// try to figure out allowed file types for all selections
 {
 	NSMutableSet *types = [NSMutableSet set];
 	for (id inspectedObject in [self inspectedObjects])
@@ -81,7 +82,7 @@
 {
     KTDocument *document = [self representedObject];
     NSOpenPanel *panel = [document makeChooseDialog];
-	[panel setAllowedFileTypes:[self commonFileTypes]];
+	[panel setAllowedFileTypes:[self allowedFileTypes]];
     
     if ([panel runModal] == NSFileHandlingPanelOKButton)
     {
@@ -90,6 +91,56 @@
         [[self inspectedObjects] makeObjectsPerformSelector:@selector(setMediaWithURL:)
                                                  withObject:URL];
     }
+}
+
+- (NSDragOperation)pathInfoField:(KSURLInfoField *)field
+				validateFileDrop:(NSString *)path 
+				   operationMask:(NSDragOperation)dragMask;
+{
+	// Check that the path looks like it is compatible with one of the allowed file types
+	NSArray *allowedFileTypes = [self allowedFileTypes];
+	BOOL OK = NO;
+	if (allowedFileTypes && [allowedFileTypes count])
+	{
+		for (NSString *UTI in allowedFileTypes)
+		{
+			if ([[NSString UTIForFileAtPath:path] conformsToUTI:UTI])
+			{
+				OK = YES;
+				break;
+			}
+		}
+	}
+	else
+	{
+		OK = YES;		// be permissive; no allowed file types defined
+	}
+	return OK ? dragMask & NSDragOperationCopy : NSDragOperationNone;
+}
+
+- (BOOL)pathInfoField:(KSURLInfoField *)field
+ performDragOperation:(id <NSDraggingInfo>)sender
+	 expectedDropType:(NSDragOperation)dragOp;
+{
+	BOOL result = NO;
+	NSPasteboard *pasteboard = [sender draggingPasteboard];
+
+	// Only allow through suitable file drags
+	if ([pasteboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]])
+	{
+		NSArray *files = [pasteboard propertyListForType:NSFilenamesPboardType];
+		if (files && [files count] == 1)
+		{
+			NSString *path = [files objectAtIndex:0];
+			NSURL *URL = [NSURL fileURLWithPath:path];
+
+			[[self inspectedObjects] makeObjectsPerformSelector:@selector(setMediaWithURL:)
+													 withObject:URL];
+			result = YES;
+		
+		}
+	}
+	return result;
 }
 
 @end
