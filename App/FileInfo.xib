@@ -56,7 +56,7 @@
 					<object class="NSTextField" id="964983158">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{10, 9}, {179, 24}}</string>
+						<string key="NSFrame">{{10, 4}, {179, 24}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="737161372">
@@ -94,7 +94,7 @@
 					<object class="NSTextField" id="50087367">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{10, 9}, {179, 24}}</string>
+						<string key="NSFrame">{{10, 4}, {179, 24}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="1047623543">
@@ -111,7 +111,7 @@
 					<object class="NSTextField" id="223489947">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{7, 41}, {50, 14}}</string>
+						<string key="NSFrame">{{7, 36}, {50, 14}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="560719387">
@@ -144,7 +144,7 @@
 					<object class="BWAnchoredPopUpButton" id="729072524">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">265</int>
-						<string key="NSFrame">{{188, 9}, {32, 24}}</string>
+						<string key="NSFrame">{{188, 4}, {32, 24}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="BWAnchoredPopUpButtonCell" key="NSCell" id="159228678">
@@ -223,7 +223,7 @@
 						</object>
 					</object>
 				</object>
-				<string key="NSFrameSize">{230, 63}</string>
+				<string key="NSFrameSize">{230, 58}</string>
 				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -595,7 +595,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{480, 943}, {230, 63}}</string>
+					<string>{{480, 948}, {230, 58}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{628, 654}</string>
 					<string>{{357, 416}, {480, 272}}</string>
