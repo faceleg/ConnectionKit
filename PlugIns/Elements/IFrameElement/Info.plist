@@ -49,5 +49,7 @@
 	<string>IFrameTemplate</string>
 	<key>NSPrincipalClass</key>
 	<string>IFramePlugIn</string>
+	<key>KTPluginNibFile</key>
+	<string>IFrameInspector</string>
 </dict>
 </plist>
