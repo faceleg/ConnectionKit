@@ -35,10 +35,8 @@
 //
 
 
-#import <Cocoa/Cocoa.h>
 #import "SandvoxPlugin.h"
 
-@class MAImagePopUpButton;
 
 @interface RSSBadgeInspector : SVInspectorViewController <KTLinkSourceViewDelegate>
 {

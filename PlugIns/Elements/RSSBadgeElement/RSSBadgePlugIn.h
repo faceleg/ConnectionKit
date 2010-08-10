@@ -55,22 +55,16 @@ typedef enum {
 } RSSBadgeIconPosition;
 
 
-@interface RSSBadgePlugIn : SVPlugIn
+@interface RSSBadgePlugIn : SVIndexPlugIn
 {
   @private
-    id<SVPage> _collection;
-
     RSSBadgeIconStyle _iconStyle;
     RSSBadgeIconPosition _iconPosition;
 	NSString *_label;
 }
 
-
 - (BOOL)useLargeIconLayout;
 - (NSString *)feedIconResourcePath;
-
-//FIXME: do we really want to retain this? what happens if you delete the page? how will this pagelet unhook itself from the deleted collection?
-@property (nonatomic, retain) id<SVPage> collection;
 
 @property (nonatomic, assign) RSSBadgeIconStyle iconStyle;
 @property (nonatomic, assign) RSSBadgeIconPosition iconPosition;

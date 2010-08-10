@@ -82,9 +82,9 @@
     
     // Try and connect to our parent collection
     id<SVPage> parent = page;
-    if (!self.collection && [parent feedURL])
+    if (!self.indexedCollection && [parent feedURL])
     {
-        self.collection = parent;
+        self.indexedCollection = parent;
     }
 }
 
@@ -164,7 +164,6 @@
 #pragma mark -
 #pragma mark Properties
 
-@synthesize collection = _collection;
 @synthesize iconStyle = _iconStyle;
 @synthesize iconPosition = _iconPosition;
 @synthesize label = _label;

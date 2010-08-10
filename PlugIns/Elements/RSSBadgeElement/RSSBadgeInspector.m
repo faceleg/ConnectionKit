@@ -75,12 +75,12 @@
 	{
 		if ( (collection == (id<SVPage>)[NSNull null]) )
 		{
-			collection = plugin.collection;	// first pass through
+			collection = plugin.indexedCollection;	// first pass through
 			state = (nil != collection) ? NSOnState : NSOffState;
 		}
 		else
 		{
-			if ( collection != plugin.collection )
+			if ( collection != plugin.indexedCollection )
 			{
 				state = NSMixedState;
 				break;		// no point in continuing; it's a mixed state and there's no going back
@@ -98,7 +98,7 @@
 {
 	if (aPage)
 	{
-		[[[self inspectedObjectsController] selection] setValue:aPage forKey:@"collection"];
+		[[[self inspectedObjectsController] selection] setValue:aPage forKey:@"indexedCollection"];
 		[collectionLinkSourceView setConnected:YES];
 	}
 }

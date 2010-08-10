@@ -1,15 +1,15 @@
 <div class="rssBadge">
-[[if collection]]
-[[if collection.feedURL]]
+[[if indexedCollection]]
+[[if indexedCollection.feedURL]]
 [[if useLargeIconLayout]]
 	<div class="largeRSSBadgeIcon">
 		<a class="imageLink"
-			href="[[rsspath collection]]"
+			href="[[rsspath indexedCollection]]"
 			title="[['To subscribe to this feed, drag or copy/paste this link to an RSS reader application.]]"><img
 			class="largeRSSBadgeIcon"
 			src="[[resourcepath feedIconResourcePath]]" alt="RSS" /></a>
 		<p class="largeRSSBadgeIcon">
-			<a href="[[rsspath collection]]"
+			<a href="[[rsspath indexedCollection]]"
 				title="[['To subscribe to this feed, drag or copy/paste this link to an RSS reader application.]]">[[=&label]]</a>
 		</p>
 	</div>
@@ -17,15 +17,15 @@
 	<p>
 [[if iconPosition==1]]
 		<a class="imageLink"
-			href="[[rsspath collection]]"
+			href="[[rsspath indexedCollection]]"
 			title="[['To subscribe to this feed, drag or copy/paste this link to an RSS reader application.]]"><img
 			class="smallRSSBadgeIcon smallRSSBadgeIconLeft" src="[[resourcepath feedIconResourcePath]]" alt="RSS" /></a>
 [[endif4]]
-		<a href="[[rsspath collection]]"
+		<a href="[[rsspath indexedCollection]]"
 			title="[['To subscribe to this feed, drag or copy/paste this link to an RSS reader application.]]">[[=&label]]</a>
 [[if iconPosition==1]][[else4]]
 		<a class="imageLink"
-			href="[[rsspath collection]]"
+			href="[[rsspath indexedCollection]]"
 			title="[['To subscribe to this feed, drag or copy/paste this link to an RSS reader application.]]"><img
 			class="smallRSSBadgeIcon smallRSSBadgeIconRight"
 			src="[[resourcepath feedIconResourcePath]]" alt="RSS" /></a>
