@@ -71,6 +71,15 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     return YES;//[super allowsDirectAccessToWebViewWhenSelected];
 }
 
+- (BOOL)tryToRemove;
+{
+    // Remove parent controller instead of ourself
+    WEKWebEditorItem *parent = [self parentWebEditorItem];
+    OBASSERT([parent isKindOfClass:[SVImagePageletDOMController class]]);
+    
+    return [parent tryToRemove];
+}
+
 #pragma mark Updating
 
 - (void)update;
