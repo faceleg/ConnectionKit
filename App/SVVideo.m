@@ -15,6 +15,7 @@
 #import <QTKit/QTKit.h>
 #include <zlib.h>
 #import "NSImage+Karelia.h"
+#import "NSString+Karelia.h"
 
 @implementation SVVideo 
 
@@ -60,7 +61,7 @@
 
 - (void)writeBody:(SVHTMLContext *)context;
 {
-	NSString *type = [self coedecType];
+	NSString *type = [self codecType];
     // Image needs unique ID for DOM Controller to find
     NSString *idName = [@"video-" stringByAppendingString:[self elementID]];
     
