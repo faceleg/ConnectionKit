@@ -138,7 +138,7 @@ static id <SVPlugInContext> sCurrentContext;
 
 #pragma mark Storage
 
-+ (NSArray *)plugInKeys; { return nil; }
++ (NSArray *)plugInKeys; { return [NSArray array]; }
 
 - (id)serializedValueForKey:(NSString *)key;
 {
