@@ -181,12 +181,20 @@ static id <SVPlugInContext> sCurrentContext;
     NSNumber *widthValue = (width ? [NSNumber numberWithUnsignedInteger:width] : nil);
     [(SVGraphic *)[self container] setWidth:widthValue];
 }
++ (NSSet *)keyPathsForValuesAffectingWidth;
+{
+    return [NSSet setWithObject:@"container.width"];
+}
 
 - (NSUInteger)height; { return [[(SVGraphic *)[self container] height] unsignedIntegerValue]; }
 - (void)setHeight:(NSUInteger)height;
 {
     NSNumber *heightValue = (height ? [NSNumber numberWithUnsignedInteger:height] : nil);
     [(SVGraphic *)[self container] setHeight:heightValue];
+}
++ (NSSet *)keyPathsForValuesAffectingHeight;
+{
+    return [NSSet setWithObject:@"container.height"];
 }
 
 #pragma mark Thumbnail
