@@ -8,6 +8,8 @@
 
 #import "SVIndexPlugIn.h"
 
+#import "SVPageProtocol.h"
+
 
 @implementation SVIndexPlugIn
 
@@ -17,6 +19,41 @@
     
     // Indexes should generally fill full width
     [[self container] setContainerWidth:nil];
+}
+
+@synthesize indexedCollection = _collection;
+
+#pragma mark Serialization
+
++ (NSArray *)plugInKeys;
+{
+    NSArray *result = [[super plugInKeys] arrayByAddingObject:@"indexedCollection"];
+    OBPOSTCONDITION(result);
+    return result;
+}
+
+- (id)serializedValueForKey:(NSString *)key;
+{
+    if ([key isEqualToString:@"indexedCollection"])
+    {
+        return [[self indexedCollection] identifier];
+    }
+    else
+    {
+        return [super serializedValueForKey:key];
+    }
+}
+
+- (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key;
+{
+    if ([key isEqualToString:@"indexedCollection"])
+    {
+        // TODO: Locate page by ID
+    }
+    else
+    {
+        [super setSerializedValue:serializedValue forKey:key];
+    }
 }
 
 @end

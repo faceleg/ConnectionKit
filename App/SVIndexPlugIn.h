@@ -12,7 +12,10 @@
 
 @interface SVIndexPlugIn : SVPlugIn
 {
-
+  @private
+    id <SVPage> _collection;
 }
+
+@property(nonatomic, retain) id <SVPage> indexedCollection;
 
 @end
