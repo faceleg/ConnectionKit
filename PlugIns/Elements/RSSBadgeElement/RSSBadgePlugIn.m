@@ -50,11 +50,13 @@
 
 + (NSArray *)plugInKeys
 { 
-    return [NSArray arrayWithObjects:
+    NSArray *plugInKeys = [NSArray arrayWithObjects:
             @"iconPosition", 
             @"iconStyle", 
             @"label", 
             nil];
+    
+    return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
 }
 
 
