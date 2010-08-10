@@ -29,7 +29,7 @@
 			</object>
 			<object class="NSCustomView" id="61768080">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">256</int>
+				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSTextField" id="1007704550">
 						<reference key="NSNextResponder" ref="61768080"/>
