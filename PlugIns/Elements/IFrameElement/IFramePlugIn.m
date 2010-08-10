@@ -91,8 +91,6 @@
 #pragma mark -
 #pragma mark Properties
 
-@synthesize iFrameHeight = _iFrameHeight;
-@synthesize iFrameWidth = _iFrameWidth;
 @synthesize linkURL = _linkURL;
 
 @synthesize iFrameIsBordered = _iFrameIsBordered;

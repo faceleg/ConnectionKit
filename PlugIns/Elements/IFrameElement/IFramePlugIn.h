@@ -39,15 +39,11 @@
 @interface IFramePlugIn : SVPlugIn 
 {
     @private
-    NSURL *_linkURL;
-    NSUInteger _iFrameHeight;
-    NSUInteger _iFrameWidth;
-    BOOL _iFrameIsBordered;
+    NSURL       *_linkURL;
+    BOOL        _iFrameIsBordered;
 }
 
 @property (nonatomic, retain) NSURL *linkURL;
-@property (nonatomic) NSUInteger iFrameHeight;
-@property (nonatomic) NSUInteger iFrameWidth;
 @property (nonatomic) BOOL iFrameIsBordered;
 
 @end

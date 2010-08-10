@@ -34,10 +34,6 @@
 	<string>/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericURLIcon.icns</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
-		<key>iFrameHeight</key>
-		<integer>200</integer>
-		<key>iFrameWidth</key>
-		<integer>0</integer>
 		<key>linkURL</key>
 		<string></string>
 	</dict>
