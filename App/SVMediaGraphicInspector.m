@@ -51,6 +51,7 @@
     [otherView setFrame:otherViewFrame];
     [view addSubview:otherView];
     
+    [self setContentHeightForViewInInspector:0];    // reset so -setView: handles it
     [self setView:view];
     [view release];
 }
