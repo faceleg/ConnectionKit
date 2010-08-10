@@ -25,7 +25,7 @@
 
 #pragma mark Publishing
 
-@property(nonatomic, copy) NSString *typeToPublish;	// Note: We don't have integer storageType; just use UTI
+@property(nonatomic, copy) NSString *codecType;	// Note: We don't have integer storageType; just use UTI
 
 @end
 

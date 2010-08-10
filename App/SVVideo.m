@@ -6,31 +6,6 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-/*
- 
- kUTTypeQuickTimeMovie,
- public.avi
- kUTTypeMPEG, 
- public.mpeg-4,
- com.microsoft.windows-​media-wmv
- 
- com.adobe.flash-video
- public.ogg-theora
- public.webm
- 
- 
- 
- Audio UTIs:
- kUTTypeMP3
- kUTTypeMPEG4Audio
- public.ogg-vorbis
-  ... check that it's not kUTTypeAppleProtected​MPEG4Audio
- public.aiff-audio
- com.microsoft.waveform-​audio  (.wav)
- 
- */
- 
- 
 
 #import "SVVideo.h"
 
@@ -39,7 +14,7 @@
 #import "SVVideoInspector.h"
 #import <QTKit/QTKit.h>
 #include <zlib.h>
-
+#import "NSImage+Karelia.h"
 
 @implementation SVVideo 
 
@@ -62,7 +37,7 @@
 		
 		
         [self setMedia:media];
-        [self setTypeToPublish:[media typeOfFile]];
+        [self setCodecType:[media typeOfFile]];
         
         [self makeOriginalSize];    // calling super will scale back down if needed
         [self setConstrainProportions:YES];
@@ -85,7 +60,7 @@
 
 - (void)writeBody:(SVHTMLContext *)context;
 {
-	NSString *type = [self typeToPublish];
+	NSString *type = [self coedecType];
     // Image needs unique ID for DOM Controller to find
     NSString *idName = [@"video-" stringByAppendingString:[self elementID]];
     
@@ -98,7 +73,7 @@
 	NSURL *URL = [self externalSourceURL];
     if (media)
     {
-	    URL = [context addMedia:media width:[self width] height:[self height] type:[self typeToPublish]];
+	    URL = [context addMedia:media width:[self width] height:[self height] type:[self codecType]];
 	}
 	
 	NSString *src = @"";
@@ -185,7 +160,7 @@
 
 #pragma mark Publishing
 
-@dynamic typeToPublish;
+@dynamic codecType;
 
 
 #pragma mark Thumbnail
@@ -209,12 +184,28 @@
     }
     
     // Match file type
-    [self setTypeToPublish:[[self media] typeOfFile]];
+    [self setcodecType:[[self media] typeOfFile]];
 }
 
 - (NSArray *) allowedFileTypes
 {
 	return [NSArray arrayWithObject:(NSString *)kUTTypeMovie];
+}
+
+
+- (NSString *)icon
+{
+	NSString *result = nil;
+	// result = [NSImage imageNamed:@"caution"]; break;	// like 10.6 NSCaution but better for small sizes
+	result = [NSImage imageFromOSType:kAlertNoteIcon];
+	// result = [NSImage imageNamed:@"checkmark"]; break;
+
+	return result;
+}
+
+- (NSString *)info
+{
+	return @"seminuliferous seminuria seminvariant seminvariantive semioblivion semioblivious semiobscurity semioccasional semioccasionally semiocclusive semioctagonal semiofficial semiofficially semiography Semionotidae Semionotus semiopacity semiopacous semiopal semiopalescent semiopaque semiopened semiorb semiorbicular semiorbicularis semiorbiculate semiordinate semiorganized semioriental semioscillation semiosseous semiostracism semiotic semiotician semioval semiovaloid semiovate";
 }
 
 
