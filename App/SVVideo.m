@@ -91,7 +91,7 @@
 	BOOL microsoftTag = [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-​media-wmv"];
 	
 	// quicktime fallback, but not for mp4.  We may want to be more selective of mpeg-4 types though.
-	BOOL quicktimeTag = ([type conformsToUTI:kUTTypeQuickTimeMovie] || [type conformsToUTI:kUTTypeMPEG])
+	BOOL quicktimeTag = ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
 		&& ![type conformsToUTI:@"public.mpeg-4"];
 	
 	if (quicktimeTag)
@@ -185,7 +185,7 @@
     }
     
     // Match file type
-    [self setcodecType:[[self media] typeOfFile]];
+    [self setCodecType:[[self media] typeOfFile]];
 }
 
 - (NSArray *) allowedFileTypes
@@ -193,20 +193,83 @@
 	return [NSArray arrayWithObject:(NSString *)kUTTypeMovie];
 }
 
-
-- (NSString *)icon
++ (NSSet *)keyPathsForValuesAffectingIcon
 {
-	NSString *result = nil;
-	// result = [NSImage imageNamed:@"caution"]; break;	// like 10.6 NSCaution but better for small sizes
-	result = [NSImage imageFromOSType:kAlertNoteIcon];
-	// result = [NSImage imageNamed:@"checkmark"]; break;
+    return [NSSet setWithObjects:@"codecType", nil];
+}
++ (NSSet *)keyPathsForValuesAffectingInfo
+{
+    return [NSSet setWithObjects:@"codecType", nil];
+}
+
+
+- (NSImage *)icon
+{
+	NSImage *result = nil;
+	NSString *type = self.codecType;
+	
+	if (!type)												// no movie -- don't bother with icon
+	{
+		result = nil;
+	}
+	else if (![type conformsToUTI:(NSString *)kUTTypeMovie])			// BAD
+	{
+		result = [NSImage imageFromOSType:kAlertStopIcon];
+	}
+	else if ([type conformsToUTI:@"public.h264.ios"])		// HAPPY!  everything-compatible
+	{
+		result =[ NSImage imageNamed:@"checkmark"];;
+	}
+	else if ([type conformsToUTI:@"public.mpeg-4"])			// might not be iOS compatible
+	{
+		result = [NSImage imageFromOSType:kAlertNoteIcon];
+	}
+	else													// everything else
+	{
+		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
+	}
 
 	return result;
 }
 
 - (NSString *)info
 {
-	return @"seminuliferous seminuria seminvariant seminvariantive semioblivion semioblivious semiobscurity semioccasional semioccasionally semiocclusive semioctagonal semiofficial semiofficially semiography Semionotidae Semionotus semiopacity semiopacous semiopal semiopalescent semiopaque semiopened semiorb semiorbicular semiorbicularis semiorbiculate semiordinate semiorganized semioriental semioscillation semiosseous semiostracism semiotic semiotician semioval semiovaloid semiovate";
+	NSString *result = @"";
+	NSString *type = self.codecType;
+	
+	if (!type)												// no movie -- don't bother with icon
+	{
+		result = NSLocalizedString(@"For maximum browser compatibility, please select a MPEG-4 (h.264) file.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+	}
+	else if (![type conformsToUTI:(NSString *)kUTTypeMovie])			// BAD
+	{
+		result = NSLocalizedString(@"This does not seem to be a video file that can be shared on the web.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+	}
+	else if ([type conformsToUTI:@"public.h264.ios"])		// HAPPY!  everything-compatible
+	{
+		result = NSLocalizedString(@"This should be compatible with a wide range of devices, including Mac OS, iOS, and Windows.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+	}
+	else if ([type conformsToUTI:@"public.mpeg-4"])			// might not be iOS compatible
+	{
+		result = NSLocalizedString(@"This should be compatible with Macs and Windows.  Please test on an iOS device.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+	}
+	else if ([type conformsToUTI:@"public.ogg-theora"] || [type conformsToUTI:@"public.webm"])
+	{
+		result = NSLocalizedString(@"This will only play on certain browsers.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+	}
+	else if ([type conformsToUTI:@"com.adobe.flash-video"])
+	{
+		result = NSLocalizedString(@"This will play on Mac and Windows, but not iOS devices like iPhone or iPad.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+	}
+	else if ([type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-​media-wmv"])
+	{
+		result = NSLocalizedString(@"This will play on PCs and only on Macs with \\U201Cflip4Mac\\U201D installed.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+	}
+	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
+	{
+		result = NSLocalizedString(@"This will play on Macs and only Windows PCs with QuickTime installed.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+	}
+	return result;
 }
 
 
