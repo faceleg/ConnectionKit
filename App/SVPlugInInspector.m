@@ -124,6 +124,8 @@ change context:(void *)context
         
         [view setFrame:[[self view] frame]];
         [[self view] addSubview:view];
+		
+		[_selectedInspector setRepresentedObject:[self representedObject]];
     }
     @catch (NSException *exception)
     {
