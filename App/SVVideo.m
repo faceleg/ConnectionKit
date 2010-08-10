@@ -85,6 +85,7 @@
 
 - (void)writeBody:(SVHTMLContext *)context;
 {
+	NSString *type = [self typeToPublish];
     // Image needs unique ID for DOM Controller to find
     NSString *idName = [@"video-" stringByAppendingString:[self elementID]];
     
@@ -105,6 +106,57 @@
 	{
 		src = [context relativeURLStringOfURL:URL];
 	}
+	
+	// video || flash (not mutually exclusive) are mutually exclusive with microsoft, quicktime
+	
+	BOOL videoTag = [type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"public.ogg-theora"] || [type conformsToUTI:@"public.webm"];
+	BOOL flashTag = [type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"com.adobe.flash-video"];
+	
+	BOOL microsoftTag = [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-​media-wmv"];
+	
+	// quicktime fallback, but not for mp4.  We may want to be more selective of mpeg-4 types though.
+	BOOL quicktimeTag = ([type conformsToUTI:kUTTypeQuickTimeMovie] || [type conformsToUTI:kUTTypeMPEG])
+		&& ![type conformsToUTI:@"public.mpeg-4"];
+	
+	if (quicktimeTag)
+	{
+		
+	}
+	else if (microsoftTag)
+	{
+		
+		
+		
+	}
+	else if (videoTag || flashTag)
+	{
+		if (videoTag)	// start the video tag
+		{
+			
+		}
+		
+		if (flashTag)	// inner
+		{
+			
+		}
+		
+		if (videoTag)	// close the video tag
+		{
+			
+		}
+		
+	}
+	else	// none of the above -- indicate that we don't know what to insert
+	{
+	
+		
+		
+		
+	}
+	
+	
+	
+	
 	 
 	[context pushElementAttribute:@"src" value:src];
 	[context pushElementAttribute:@"width" value:[[self width] description]];
