@@ -260,6 +260,8 @@
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
+	
+		<!-- Misc -->
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
@@ -274,7 +276,7 @@
 			<key>UTTypeIdentifier</key>
 			<string>public.css</string>
 			<key>UTTypeReferenceURL</key>
-			<string>http://www.w3.org/TR/REC-CSS2/</string>
+			<string>http://www.w3.org/TR/CSS2/</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.macos.ostype</key>
@@ -297,9 +299,9 @@
 			<key>UTTypeDescription</key>
 			<string>Macromedia Flash</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.macromedia.shockwave-flash</string>
+			<string>com.adobe.shockwave-flash</string>
 			<key>UTTypeReferenceURL</key>
-			<string>http://www.macromedia.com/software/flash/</string>
+			<string>http://www.adobe.com/products/flash/</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -310,6 +312,113 @@
 				<string>application/x-shockwave-flash</string>
 			</dict>
 		</dict>
+		
+		<!-- Video -->
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.movie</string>
+				<string>public.audiovisual-​content</string>
+				<string>public.data</string>
+				<string>public.item</string>
+				<string>public.content</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Flash Video</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.adobe.flash-video</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.adobe.com/devnet/flv/</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>flv</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>video/x-flv</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.movie</string>
+				<string>public.audiovisual-​content</string>
+				<string>public.data</string>
+				<string>public.item</string>
+				<string>public.content</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Theora Video File</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.ogg-theora</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.theora.org/</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ogv</string>
+					<string>ogm</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>video/ogg</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.movie</string>
+				<string>public.audiovisual-​content</string>
+				<string>public.data</string>
+				<string>public.item</string>
+				<string>public.content</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Webm Video</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.webm</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.webmproject.org/</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>webm</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>video/webm</string>
+			</dict>
+		</dict>
+
+		<!-- Audio -->
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.audio</string>
+				<string>public.audiovisual-​content</string>
+				<string>public.data</string>
+				<string>public.item</string>
+				<string>public.content</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Ogg Vorbis Audio</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.ogg-vorbis</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.vorbis.org/</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ogg</string>
+					<string>oga</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>audio/ogg</string>
+			</dict>
+		</dict>
+
 	</array>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>

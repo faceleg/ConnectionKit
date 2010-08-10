@@ -1,5 +1,5 @@
 //
-//  SVMovie.h
+//  SVVideo.h
 //  Sandvox
 //
 //  Created by Mike on 05/04/2010.
@@ -17,6 +17,10 @@
 + (SVVideo *)insertNewMovieInManagedObjectContext:(NSManagedObjectContext *)context;
 
 @property(nonatomic, retain) SVMediaRecord *posterFrame;
+
+#pragma mark Publishing
+
+@property(nonatomic, copy) NSString *typeToPublish;	// Note: We don't have integer storageType; just use UTI
 
 @end
 
