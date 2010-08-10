@@ -1563,7 +1563,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 		request:(NSURLRequest *)request
 		  frame:(WebFrame *)frame decisionListener:(id <WebPolicyDecisionListener>)listener
 {
-    if ([self isStartingLoad])
+    if (frame != [sender mainFrame] || [self isStartingLoad])
     {
         // We want to allow initial loading of the webview…
         [listener use];
