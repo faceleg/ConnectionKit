@@ -139,9 +139,9 @@
 				3C9870A411F3D3AC0053A72C /* PBXTargetDependency */,
 				3C8544AA12061D69000A19C3 /* PBXTargetDependency */,
 				3C53E3E311EE6B14005CF7B2 /* PBXTargetDependency */,
-				3C53E3C511EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C0049581210CB9A006BAD9C /* PBXTargetDependency */,
 				3C4CDF2F1207413A002AF966 /* PBXTargetDependency */,
+				3C9CF9B0121201D8005CFDD4 /* PBXTargetDependency */,
 				3C53E3DD11EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3CB11EE6B14005CF7B2 /* PBXTargetDependency */,
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
@@ -1326,13 +1326,6 @@
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = DownloadIndex;
 		};
-		3C53E2C811EE670B005CF7B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = GeneralIndex;
-		};
 		3C53E2D011EE6715005CF7B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C095BEB0D5D280500DE6F62 /* ListingIndex.xcodeproj */;
@@ -1388,13 +1381,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = PageCounterElement;
-		};
-		3C53E3C411EE6B14005CF7B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = GeneralIndex;
 		};
 		3C53E3C811EE6B14005CF7B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1556,6 +1542,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D15AC270486D014006FF6A4;
 			remoteInfo = Marvel;
+		};
+		3C9CF9AA12120196005CFDD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* General.svxIndex */;
+			remoteInfo = GeneralIndex;
+		};
+		3C9CF9AF121201D8005CFDD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* GeneralIndex */;
+			remoteInfo = GeneralIndex;
 		};
 		3CA7881B0DB571DE0014AD7E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2187,7 +2187,7 @@
 		32DBCF750370BD2300C91783 /* Marvel_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Marvel_Prefix.pch; sourceTree = "<group>"; };
 		3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Sandvox.xcconfig; path = ../Xcode/Configurations/Sandvox.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DownloadIndex.xcodeproj; path = ../OldPlugins/Indexes/DownloadIndex/DownloadIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GeneralIndex.xcodeproj; path = ../OldPlugins/Indexes/GeneralIndex/GeneralIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GeneralIndex.xcodeproj; path = ../PlugIns/Indexes/GeneralIndex/GeneralIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C095BEB0D5D280500DE6F62 /* ListingIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ListingIndex.xcodeproj; path = ../OldPlugins/Indexes/ListingIndex/ListingIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PhotoGridIndex.xcodeproj; path = ../OldPlugins/Indexes/PhotoGridIndex/PhotoGridIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C0B1D04104792B0002EE098 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVDesignChooser.xib; sourceTree = "<group>"; };
@@ -4189,14 +4189,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3C53E2C511EE670B005CF7B2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C53E2C911EE670B005CF7B2 /* General.svxIndex */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3C53E2CD11EE6715005CF7B2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -4558,6 +4550,14 @@
 			isa = PBXGroup;
 			children = (
 				3C9870EF11F3D5F60053A72C /* LinkList.svxElement */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3C9CF9A712120196005CFDD4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3C9CF9AB12120196005CFDD4 /* General.svxIndex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5898,7 +5898,7 @@
 					ProjectRef = 3C42E4F10D650429004F35FD /* FlickrElement.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C53E2C511EE670B005CF7B2 /* Products */;
+					ProductGroup = 3C9CF9A712120196005CFDD4 /* Products */;
 					ProjectRef = 3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */;
 				},
 				{
@@ -6026,13 +6026,6 @@
 			remoteRef = 3C53E2C011EE66FB005CF7B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3C53E2C911EE670B005CF7B2 /* General.svxIndex */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = General.svxIndex;
-			remoteRef = 3C53E2C811EE670B005CF7B2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		3C53E2D111EE6715005CF7B2 /* Listing.svxIndex */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -6122,6 +6115,13 @@
 			fileType = wrapper.cfbundle;
 			path = LinkList.svxElement;
 			remoteRef = 3C9870EE11F3D5F60053A72C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3C9CF9AB12120196005CFDD4 /* General.svxIndex */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = General.svxIndex;
+			remoteRef = 3C9CF9AA12120196005CFDD4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3CB86EDF11F5F9950038E174 /* YouTube.svxElement */ = {
@@ -7320,11 +7320,6 @@
 			name = IMStatusElement;
 			targetProxy = 3C4CDF2E1207413A002AF966 /* PBXContainerItemProxy */;
 		};
-		3C53E3C511EE6B14005CF7B2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = GeneralIndex;
-			targetProxy = 3C53E3C411EE6B14005CF7B2 /* PBXContainerItemProxy */;
-		};
 		3C53E3C911EE6B14005CF7B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = IndexElement;
@@ -7414,6 +7409,11 @@
 			isa = PBXTargetDependency;
 			target = 8D15AC270486D014006FF6A4 /* Sandvox-ExecutableOnly */;
 			targetProxy = 3C9B65930BFA7F7F007A4871 /* PBXContainerItemProxy */;
+		};
+		3C9CF9B0121201D8005CFDD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GeneralIndex;
+			targetProxy = 3C9CF9AF121201D8005CFDD4 /* PBXContainerItemProxy */;
 		};
 		3CA7881C0DB571DE0014AD7E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
