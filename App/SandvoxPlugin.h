@@ -27,6 +27,7 @@
 
 // Plugins (abstract superclass of all plugins)
 #import "SVPageletPlugIn.h"
+#import "SVIndexPlugIn.h"
 #import "SVPlugIn.h"
 
 #import "SVInspectorViewController.h"

@@ -246,7 +246,7 @@
 /* Begin PBXBuildFile section */
 		270172B611CFB566001512F6 /* SVProxyHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 270172B411CFB566001512F6 /* SVProxyHTMLContext.h */; };
 		270172B711CFB566001512F6 /* SVProxyHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 270172B511CFB566001512F6 /* SVProxyHTMLContext.m */; };
-		270172F311CFBEF3001512F6 /* KSStringXMLEntityEscaping.h in Headers */ = {isa = PBXBuildFile; fileRef = 270172F111CFBEF3001512F6 /* KSStringXMLEntityEscaping.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		270172F311CFBEF3001512F6 /* KSStringXMLEntityEscaping.h in Headers */ = {isa = PBXBuildFile; fileRef = 270172F111CFBEF3001512F6 /* KSStringXMLEntityEscaping.h */; settings = {ATTRIBUTES = (); }; };
 		270172F411CFBEF3001512F6 /* KSStringXMLEntityEscaping.m in Sources */ = {isa = PBXBuildFile; fileRef = 270172F211CFBEF3001512F6 /* KSStringXMLEntityEscaping.m */; };
 		2701749D11D10417001512F6 /* SVWebEditorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2701749B11D10417001512F6 /* SVWebEditorView.h */; };
 		2701749E11D10417001512F6 /* SVWebEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2701749C11D10417001512F6 /* SVWebEditorView.m */; };
@@ -270,7 +270,7 @@
 		270E4B1710FA4DF500EF1FA0 /* SVLinkInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E4B1510FA4DF500EF1FA0 /* SVLinkInspector.m */; };
 		270E82E710A4484E007E7848 /* KSInspectorTabsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E82E510A4484D007E7848 /* KSInspectorTabsController.h */; settings = {ATTRIBUTES = (); }; };
 		270E82E810A4484E007E7848 /* KSInspectorTabsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E82E610A4484E007E7848 /* KSInspectorTabsController.m */; };
-		270F2BB21136B17D0090143E /* KSHTMLWriter+DOM.h in Headers */ = {isa = PBXBuildFile; fileRef = 270F2BB01136B17D0090143E /* KSHTMLWriter+DOM.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		270F2BB21136B17D0090143E /* KSHTMLWriter+DOM.h in Headers */ = {isa = PBXBuildFile; fileRef = 270F2BB01136B17D0090143E /* KSHTMLWriter+DOM.h */; settings = {ATTRIBUTES = (); }; };
 		270F2BB31136B17D0090143E /* KSHTMLWriter+DOM.m in Sources */ = {isa = PBXBuildFile; fileRef = 270F2BB11136B17D0090143E /* KSHTMLWriter+DOM.m */; };
 		2710C255110A110D00A7B997 /* SVMediaProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2710C254110A110D00A7B997 /* SVMediaProtocol.h */; };
 		2710C3BA110B358D00A7B997 /* SVPageTitle.h in Headers */ = {isa = PBXBuildFile; fileRef = 2710C3B8110B358D00A7B997 /* SVPageTitle.h */; };
@@ -426,7 +426,7 @@
 		277E71D41133094E0081389F /* SVWrapInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E71D21133094E0081389F /* SVWrapInspector.m */; };
 		277E724D1133595A0081389F /* SVGraphicDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E724B1133595A0081389F /* SVGraphicDOMController.h */; };
 		277E724E1133595A0081389F /* SVGraphicDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E724C1133595A0081389F /* SVGraphicDOMController.m */; };
-		277E72F7113416A20081389F /* KSHTMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E72F6113416A20081389F /* KSHTMLWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		277E72F7113416A20081389F /* KSHTMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E72F6113416A20081389F /* KSHTMLWriter.h */; settings = {ATTRIBUTES = (); }; };
 		277E72F9113416A20081389F /* KSHTMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E72F8113416A20081389F /* KSHTMLWriter.m */; };
 		277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 277EE9200CFD8CFF005617FE /* KTStalenessManager.h */; settings = {ATTRIBUTES = (); }; };
 		277FDC3911CD3F810083F1BF /* SVPublishDataWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 277FDC3711CD3F810083F1BF /* SVPublishDataWriter.h */; };
@@ -496,7 +496,7 @@
 		27A3578A10E6D59D00C99FB3 /* SVTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A3578810E6D59D00C99FB3 /* SVTemplate.m */; };
 		27A50E8A0D19282B00149038 /* SVHTMLTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A50E880D19282B00149038 /* SVHTMLTextBlock.h */; settings = {ATTRIBUTES = (); }; };
 		27A50E8B0D19282B00149038 /* SVHTMLTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50E890D19282B00149038 /* SVHTMLTextBlock.m */; };
-		27A6098511282AC0007C301F /* KSWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A6098311282AC0007C301F /* KSWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27A6098511282AC0007C301F /* KSWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A6098311282AC0007C301F /* KSWriter.h */; settings = {ATTRIBUTES = (); }; };
 		27A6098611282AC0007C301F /* KSWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A6098411282AC0007C301F /* KSWriter.m */; };
 		27A617141122FA0000004FED /* SVTextBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A617121122FA0000004FED /* SVTextBox.h */; };
 		27A617151122FA0000004FED /* SVTextBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A617131122FA0000004FED /* SVTextBox.m */; };
@@ -596,7 +596,7 @@
 		27EF5C9C0D6B974E0024575B /* NSBundle+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5C9A0D6B974E0024575B /* NSBundle+QuickLook.m */; };
 		27EF5CE30D6B9D210024575B /* BDAlias+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5CE10D6B9D210024575B /* BDAlias+QuickLook.h */; };
 		27EF5CE40D6B9D210024575B /* BDAlias+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5CE20D6B9D210024575B /* BDAlias+QuickLook.m */; };
-		27EF99C111A4205600FC8424 /* KSXMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF99C011A4205600FC8424 /* KSXMLWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27EF99C111A4205600FC8424 /* KSXMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF99C011A4205600FC8424 /* KSXMLWriter.h */; settings = {ATTRIBUTES = (); }; };
 		27EF99C311A4205600FC8424 /* KSXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF99C211A4205600FC8424 /* KSXMLWriter.m */; };
 		27F0341A0D34E55B005CD5B7 /* KTImageScalingSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */; settings = {ATTRIBUTES = (); }; };
 		27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */; };
@@ -977,7 +977,7 @@
 		CE01A8120EAFD63600BDF264 /* DNDArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A70F0EAFD63600BDF264 /* DNDArrayController.m */; };
 		CE01A8130EAFD63600BDF264 /* NSBezierPath_AMAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7100EAFD63600BDF264 /* NSBezierPath_AMAdditions.h */; };
 		CE01A8140EAFD63600BDF264 /* NSBezierPath_AMAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7110EAFD63600BDF264 /* NSBezierPath_AMAdditions.m */; };
-		CE01A8150EAFD63600BDF264 /* NTBoxView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7120EAFD63600BDF264 /* NTBoxView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A8150EAFD63600BDF264 /* NTBoxView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7120EAFD63600BDF264 /* NTBoxView.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A8160EAFD63600BDF264 /* NTBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7130EAFD63600BDF264 /* NTBoxView.m */; };
 		CE01A8170EAFD63600BDF264 /* NTSUTaskController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7140EAFD63600BDF264 /* NTSUTaskController.h */; };
 		CE01A8180EAFD63600BDF264 /* NTSUTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7150EAFD63600BDF264 /* NTSUTaskController.m */; };
