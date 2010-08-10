@@ -3011,7 +3011,6 @@
 				27F365E2116020B1003BDA5F /* Metrics Inspector */,
 				27F365E1116020A9003BDA5F /* Link Inspector */,
 				27F365E01160209B003BDA5F /* Plug-In Inspector */,
-				CEDA2DCA120CD583005FE23E /* Other Inspectors */,
 			);
 			name = Inspector;
 			sourceTree = "<group>";
@@ -3712,6 +3711,9 @@
 		27F365E01160209B003BDA5F /* Plug-In Inspector */ = {
 			isa = PBXGroup;
 			children = (
+				CEDA2DD1120CD676005FE23E /* SVVideo.xib */,
+				CEDA2DBE120CD437005FE23E /* SVVideoInspector.h */,
+				CEDA2DBF120CD437005FE23E /* SVVideoInspector.m */,
 				273D764310EC134F003F5BA8 /* PlugInInspector.xib */,
 				273D764E10EC169F003F5BA8 /* SVPlugInInspector.h */,
 				273D764F10EC169F003F5BA8 /* SVPlugInInspector.m */,
@@ -5354,16 +5356,6 @@
 				3CA6B99111F91322004A4794 /* YRKSpinningProgressIndicator */,
 			);
 			path = ThirdParty;
-			sourceTree = "<group>";
-		};
-		CEDA2DCA120CD583005FE23E /* Other Inspectors */ = {
-			isa = PBXGroup;
-			children = (
-				CEDA2DD1120CD676005FE23E /* SVVideo.xib */,
-				CEDA2DBE120CD437005FE23E /* SVVideoInspector.h */,
-				CEDA2DBF120CD437005FE23E /* SVVideoInspector.m */,
-			);
-			name = "Other Inspectors";
 			sourceTree = "<group>";
 		};
 		CEF9D0BE0D862C2000BD9895 /* WebKit Plug-ins */ = {
