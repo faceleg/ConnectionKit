@@ -556,6 +556,8 @@
 		27D47EBF115A60CB007550F6 /* SVCalloutDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D705810E8ECB4003F5BA8 /* SVCalloutDOMController.h */; };
 		27D47EC0115A60CB007550F6 /* SVCalloutDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D705910E8ECB4003F5BA8 /* SVCalloutDOMController.m */; };
 		27D6DE9C0DCFA95800C8834F /* KTHostProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = CEAE1667084530C1007025D4 /* KTHostProperties.h */; settings = {ATTRIBUTES = (); }; };
+		27D7340612118E3400722189 /* SVIndexPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D7340412118E3400722189 /* SVIndexPlugIn.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27D7340712118E3400722189 /* SVIndexPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D7340512118E3400722189 /* SVIndexPlugIn.m */; };
 		27D90AD90D7ED62800C13012 /* SVHTMLTemplateParser+Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D90AD80D7ED62800C13012 /* SVHTMLTemplateParser+Text.m */; };
 		27D9A259117FB49000049638 /* SVAuxiliaryPageletTextDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D9A257117FB49000049638 /* SVAuxiliaryPageletTextDOMController.h */; };
 		27D9A25A117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D9A258117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m */; };
@@ -2090,6 +2092,8 @@
 		27CE81171137EEB100EE1A6F /* SVImageReplacementURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVImageReplacementURLProtocol.m; sourceTree = "<group>"; };
 		27D353B611A9CC7200BC4DB8 /* KSComparisonValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSComparisonValueTransformer.h; sourceTree = "<group>"; };
 		27D353B711A9CC7200BC4DB8 /* KSComparisonValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSComparisonValueTransformer.m; sourceTree = "<group>"; };
+		27D7340412118E3400722189 /* SVIndexPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndexPlugIn.h; sourceTree = "<group>"; };
+		27D7340512118E3400722189 /* SVIndexPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndexPlugIn.m; sourceTree = "<group>"; };
 		27D90AD80D7ED62800C13012 /* SVHTMLTemplateParser+Text.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVHTMLTemplateParser+Text.m"; sourceTree = "<group>"; };
 		27D90B390D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContinueReadingLinkTextBlock.h; sourceTree = "<group>"; };
 		27D90B3A0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContinueReadingLinkTextBlock.m; sourceTree = "<group>"; };
@@ -2990,6 +2994,8 @@
 				279DA31011901E150094EF12 /* KSWebLocation+SVWebLocation.h */,
 				27DD0B56120329A80083C7C1 /* SVURLFormatter.h */,
 				27DD0B57120329A80083C7C1 /* SVURLFormatter.m */,
+				27D7340412118E3400722189 /* SVIndexPlugIn.h */,
+				27D7340512118E3400722189 /* SVIndexPlugIn.m */,
 			);
 			name = "2.0 Plug-in System";
 			sourceTree = "<group>";
@@ -5727,6 +5733,7 @@
 				27DD0B58120329A80083C7C1 /* SVURLFormatter.h in Headers */,
 				CEDA2D84120CC6B1005FE23E /* SVAudio.h in Headers */,
 				CEDA2DC0120CD437005FE23E /* SVVideoInspector.h in Headers */,
+				27D7340612118E3400722189 /* SVIndexPlugIn.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7222,6 +7229,7 @@
 				27DD0B59120329A80083C7C1 /* SVURLFormatter.m in Sources */,
 				CEDA2D85120CC6B1005FE23E /* SVAudio.m in Sources */,
 				CEDA2DC1120CD437005FE23E /* SVVideoInspector.m in Sources */,
+				27D7340712118E3400722189 /* SVIndexPlugIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

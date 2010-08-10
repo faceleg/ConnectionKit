@@ -123,11 +123,3 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 - (void)awakeFromPasteboardContents:(id)pasteboardContents ofType:(NSString *)type;
 @end
 
-
-#pragma mark -
-
-
-@protocol SVIndexPlugIn
-// We need an API! In the meantime, the protocol declaration serves as a placeholder for the registration system.
-@end
-
