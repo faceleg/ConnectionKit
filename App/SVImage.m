@@ -12,6 +12,7 @@
 #import "SVImageDOMController.h"
 #import "SVLink.h"
 #import "KTMaster.h"
+#import "SVMediaGraphicInspector.h"
 #import "SVMediaRecord.h"
 #import "KTPage.h"
 #import "SVTextAttachment.h"
@@ -283,6 +284,22 @@
 }
 
 - (BOOL)shouldPublishEditingElementID; { return NO; }
+
+#pragma mark Inspector
+
+- (NSString *)plugInIdentifier; // use standard reverse DNS-style string
+{
+	return @"com.karelia.sandvox.SVImage";
+}
+
++ (SVInspectorViewController *)makeInspectorViewController;
+{
+    SVInspectorViewController *result = [[[SVMediaGraphicInspector alloc]
+                                          initWithNibName:@"SVImage" bundle:nil]
+                                         autorelease];
+    
+    return result;
+}
 
 #pragma mark Thumbnail
 
