@@ -18,6 +18,11 @@
 
 @property(nonatomic, retain) SVMediaRecord *posterFrame;
 
+@property(assign) BOOL autoplay;
+@property(assign) BOOL controller;
+@property(assign) BOOL kioskmode;
+@property(assign) BOOL loop;
+
 #pragma mark Publishing
 
 @property(nonatomic, copy) NSString *typeToPublish;	// Note: We don't have integer storageType; just use UTI

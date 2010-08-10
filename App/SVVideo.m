@@ -50,7 +50,38 @@
     return result;
 }
 
+- (void)willInsertIntoPage:(KTPage *)page;
+{
+    // Placeholder image
+    if (![self media])
+    {
+        SVMediaRecord *media = // [[[page rootPage] master] makePlaceholdImageMediaWithEntityName:];
+		[SVMediaRecord placeholderMediaWithURL:[NSURL fileURLWithPath:@"/System/Library/Compositions/Sunset.mov"]
+									entityName:@"GraphicMedia"
+				insertIntoManagedObjectContext:[self managedObjectContext]];
+		
+		
+        [self setMedia:media];
+        [self setTypeToPublish:[media typeOfFile]];
+        
+        [self makeOriginalSize];    // calling super will scale back down if needed
+        [self setConstrainProportions:YES];
+    }
+    
+    [super willInsertIntoPage:page];
+    
+    // Show caption
+    if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)
+    {
+        [self setShowsCaption:YES];
+    }
+}
+
 @dynamic posterFrame;
+@dynamic autoplay;
+@dynamic controller;
+@dynamic kioskmode;
+@dynamic loop;
 
 - (void)writeBody:(SVHTMLContext *)context;
 {
@@ -111,8 +142,13 @@
 + (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObject:@"posterFrame"]; }
 
 
+@end
 
-// OLD
+
+
+#pragma mark -
+#pragma mark OLDER STUFF
+
 
 
 
