@@ -48,7 +48,9 @@
 {
     if ([key isEqualToString:@"indexedCollection"])
     {
-        // TODO: Locate page by ID
+        [self setIndexedCollection:(serializedValue ?
+                                    [self pageWithIdentifier:serializedValue] :
+                                    nil)];
     }
     else
     {
