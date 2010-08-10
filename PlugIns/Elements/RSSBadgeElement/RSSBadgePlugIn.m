@@ -65,6 +65,8 @@
 
 - (void)didAddToPage:(id <SVPage>)page;
 {
+    id <SVPage> oldPage = [self indexedCollection];
+    
     [super didAddToPage:page];
     
     if ( !self.label )
@@ -82,11 +84,10 @@
         self.label = theString;
     }
     
-    // Try and connect to our parent collection
-    id<SVPage> parent = page;
-    if (!self.indexedCollection && [parent feedURL])
+    // Default behaviour is to hook the index up to the collection it was inserted into. If collection doesn't support RSS, undo that
+    if (!oldPage && ![self.indexedCollection feedURL])
     {
-        self.indexedCollection = parent;
+        self.indexedCollection = nil;
     }
 }
 
