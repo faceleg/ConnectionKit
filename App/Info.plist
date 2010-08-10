@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ClickToFlashOptOut</key>
-	<true/>
+	<false/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDocumentTypes</key>
@@ -260,8 +260,6 @@
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
-	
-		<!-- Misc -->
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
@@ -312,8 +310,6 @@
 				<string>application/x-shockwave-flash</string>
 			</dict>
 		</dict>
-		
-		<!-- Video -->
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
@@ -391,8 +387,6 @@
 				<string>video/webm</string>
 			</dict>
 		</dict>
-
-		<!-- Audio -->
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
@@ -419,7 +413,6 @@
 				<string>audio/ogg</string>
 			</dict>
 		</dict>
-
 	</array>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
