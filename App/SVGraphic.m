@@ -175,6 +175,17 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 #pragma mark Metrics
 
 @dynamic width;
+- (BOOL)validateWidth:(NSNumber **)width error:(NSError **)error;
+{
+    // Subclasses can override to accept smaller widths
+    BOOL result = ((*width == nil) || [*width unsignedIntegerValue] >= 200);
+    if (!result && error)
+    {
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationNumberTooSmallError localizedDescription:@"Width of standard pagelets must be 200 pixels or greater"];
+    }
+    
+    return result;
+}
 
 #pragma mark Sidebar
 
