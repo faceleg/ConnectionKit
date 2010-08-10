@@ -187,15 +187,15 @@ static id <SVPlugInContext> sCurrentContext;
 {
     SVInspectorViewController *result = nil;
     
+    // Take a stab at Inspector class name
+    NSString *className = [NSStringFromClass([self class])
+                           stringByReplacing:@"PlugIn" with:@"Inspector"];
+    
     
     // Take a stab at Inspector nib
     NSBundle *bundle = [NSBundle bundleForClass:self];
     NSString *nibName = [bundle objectForInfoDictionaryKey:@"KTPluginNibFile"];
-    
-    
-    // Take a stab at Inspector class name
-    NSString *className = [NSStringFromClass([self class])
-                           stringByReplacing:@"PlugIn" with:@"Inspector"];
+    if ( !nibName ) nibName = className;
     
     Class class = NSClassFromString(className);
     if (!class && nibName)
