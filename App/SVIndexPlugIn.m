@@ -21,6 +21,14 @@
     [[self container] setContainerWidth:nil];
 }
 
+- (void)didAddToPage:(id <SVPage>)page;
+{
+    if (![self indexedCollection])
+    {
+        if ([page isCollection]) [self setIndexedCollection:page];
+    }
+}
+
 @synthesize indexedCollection = _collection;
 
 #pragma mark Serialization
