@@ -15,6 +15,7 @@
 #import "NSImage+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
+#import "QTMovie+Karelia.h"
 
 #import "BDAlias.h"
 
@@ -466,19 +467,31 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 {
     CGSize result = CGSizeZero;
     
-    CIImage *image = [CIImage imageWithIMBImageItem:self];
-    if (image)
-    {
-        result = [image extent].size;
+	if ([[self typeOfFile] conformsToUTI:(NSString *)kUTTypeImage])
+	{
+		CIImage *image = [CIImage imageWithIMBImageItem:self];
+		if (image)
+		{
+			result = [image extent].size;
+		}
+		else
+		{
+			NSImage *image = [NSImage imageWithIMBImageItem:self];
+			if (image)
+			{
+				result = NSSizeToCGSize([image size]);
+			}
+		}
+	}
+	else if ([[self typeOfFile] conformsToUTI:(NSString *)kUTTypeMovie])
+	{
+		NSSize dimensions = [QTMovie dimensionsOfMovieWithIMBImageItem:self];
+		result = NSSizeToCGSize(dimensions);
     }
-    else
-    {
-        NSImage *image = [NSImage imageWithIMBImageItem:self];
-        if (image)
-        {
-            result = NSSizeToCGSize([image size]);
-        }
-    }
+	else
+	{
+		NSLog(@"Unknown file type %@ for media", [self typeOfFile]);
+	}
     
     return result;
 }

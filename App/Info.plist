@@ -334,6 +334,7 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>flv</string>
+					<string>f4v</string>
 				</array>
 				<key>public.mime-type</key>
 				<string>video/x-flv</string>
