@@ -7,7 +7,7 @@
 //
 
 #import "SVContentObject.h"
-#import "SVPlugIn.h"
+#import "SVPageletPlugIn.h"
 #import <iMedia/IMBImageItem.h>
 
 #import "NSManagedObject+KTExtensions.h"    // for serialization
@@ -155,6 +155,7 @@ extern NSString *kSVGraphicPboardType;
 //  1.  Implement -plugInIdentifier to return a unique value like a plug-in would
 //  2.  Override +makeInspectorViewController to create and return a controller
 + (SVInspectorViewController *)makeInspectorViewController;
+@property(nonatomic, retain, readonly) SVPlugIn *plugIn;
 
 
 #pragma mark Serialization

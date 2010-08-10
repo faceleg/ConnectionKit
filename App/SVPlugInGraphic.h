@@ -28,7 +28,6 @@
                          inManagedObjectContext:(NSManagedObjectContext *)context;
 
 
-@property(nonatomic, retain, readonly) SVPlugIn *plugIn;
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
 - (KTElementPlugInWrapper *)plugInWrapper;
 
