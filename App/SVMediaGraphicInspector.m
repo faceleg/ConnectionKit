@@ -64,10 +64,24 @@
     [window makeFirstResponder:oURLField];
 }
 
+- (NSArray *)commonFileTypes;		// try to figure out allowed file types for all selections
+{
+	NSMutableSet *types = [NSMutableSet set];
+	for (id inspectedObject in [self inspectedObjects])
+	{
+		if ([inspectedObject respondsToSelector:@selector(allowedFileTypes)])
+		{
+			[types addObjectsFromArray:[inspectedObject allowedFileTypes]];
+		}
+	}
+	return [types allObjects];
+}
+
 - (IBAction)chooseFile:(id)sender;
 {
     KTDocument *document = [self representedObject];
     NSOpenPanel *panel = [document makeChooseDialog];
+	[panel setAllowedFileTypes:[self commonFileTypes]];
     
     if ([panel runModal] == NSFileHandlingPanelOKButton)
     {

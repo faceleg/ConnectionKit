@@ -142,6 +142,30 @@
 + (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObject:@"posterFrame"]; }
 
 
+
+
+- (void)setMediaWithURL:(NSURL *)URL;
+{
+    [super setMediaWithURL:URL];
+    
+    if ([self constrainProportions])    // generally true
+    {
+        // Resize image to fit in space
+        NSNumber *width = [self width];
+        [self makeOriginalSize];
+        if ([[self width] isGreaterThan:width]) [self setWidth:width];
+    }
+    
+    // Match file type
+    [self setTypeToPublish:[[self media] typeOfFile]];
+}
+
+- (NSArray *) allowedFileTypes
+{
+	return [NSArray arrayWithObject:(NSString *)kUTTypeMovie];
+}
+
+
 @end
 
 

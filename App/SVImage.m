@@ -109,6 +109,11 @@
     [self setTypeToPublish:[[self media] typeOfFile]];
 }
 
+- (NSArray *) allowedFileTypes
+{
+	return [NSArray arrayWithObject:(NSString *)kUTTypeImage];
+}
+
 #pragma mark Metrics
 
 @dynamic alternateText;
