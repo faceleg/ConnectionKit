@@ -68,6 +68,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
                                DOMRange:(DOMRange *)domRange
                              isUIAction:(BOOL)consultDelegateFirst;
 
+- (void)changeFirstResponderAndWebViewSelectionToSelectItem:(WEKWebEditorItem *)item;
+
 @property(nonatomic, copy) NSArray *selectionParentItems;
 
 
@@ -499,24 +501,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         if (selectedItem)
         {
-            // Match WebView selection to item for inline images…
-            DOMElement *domElement = [selectedItem selectableDOMElement];
-            
-            if ([self shouldSelectDOMElementInline:domElement])
-            {
-                DOMRange *range = [[domElement ownerDocument] createRange];
-                [range selectNode:domElement];
-                [self setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
-            }
-            else
-            {
-                // …but for block stuff, move focus back to the Web Editor
-                NSResponder *firstResponder = [[self window] firstResponder];
-                if (firstResponder != self && [self ks_followsResponder:firstResponder])
-                {
-                    [[self window] makeFirstResponder:self];
-                }
-            }
+            [self changeFirstResponderAndWebViewSelectionToSelectItem:selectedItem];
         }
         
         // There's no selected items left, so move cursor to left of deselected item. Don't want to do this though if the item is being deselected due to removal from the Web Editor
@@ -573,15 +558,45 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return YES;
 }
 
-- (BOOL)shouldSelectDOMElementInline:(DOMElement *)element;
+- (void)changeFirstResponderAndWebViewSelectionToSelectItem:(WEKWebEditorItem *)item;
 {
-    // Images are always selectable
-    if ([[element tagName] isEqualToString:@"IMG"]) return YES;
+    OBPRECONDITION(item);
     
     
+    // Try to match WebView selection to item when reasonable
+    DOMElement *domElement = [item selectableDOMElement];
+    
+    if ([self shouldTrySelectingDOMElementInline:domElement])
+    {
+        DOMRange *range = [[domElement ownerDocument] createRange];
+        [range selectNode:domElement];
+        [self setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
+        
+        // Was it a success though?
+        if (![[self selectedDOMRange] collapsed]) return;
+    }
+    
+    
+    // …but for block stuff, move focus back to the Web Editor
+    NSResponder *firstResponder = [[self window] firstResponder];
+    if (firstResponder != self && [self ks_followsResponder:firstResponder])
+    {
+        [[self window] makeFirstResponder:self];
+    }
+}
+
+- (BOOL)shouldTrySelectingDOMElementInline:(DOMElement *)element;
+{
     // Whether selecting the element should be inline (set the WebView's selection) or not (no WebView selection)
     DOMCSSStyleDeclaration *style = [[self webView] computedStyleForElement:element
                                                               pseudoElement:nil];
+    
+    // Inline/float images are always selectable
+    if ([[element tagName] isEqualToString:@"IMG"])
+    {
+        return YES;
+    }
+    
     
     BOOL result = ([[style display] isEqualToString:@"inline"] &&
                    [element isKindOfClass:[DOMHTMLElement class]] &&
@@ -638,7 +653,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
             WEKWebEditorItem *item = [self selectableItemForDOMNode:previousNode];
             DOMHTMLElement *element = [item HTMLElement];
             
-            if (element == previousNode && [self shouldSelectDOMElementInline:element])
+            if (element == previousNode && [self shouldTrySelectingDOMElementInline:element])
             {
                 result = [self changeSelectionByDeselectingAll:YES
                                                 orDeselectItem:nil
@@ -682,7 +697,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
             WEKWebEditorItem *item = [self selectableItemForDOMNode:nextNode];
             DOMHTMLElement *element = [item HTMLElement];
             
-            if (element == nextNode && [self shouldSelectDOMElementInline:element])
+            if (element == nextNode && [self shouldTrySelectingDOMElementInline:element])
             {
                 result = [self changeSelectionByDeselectingAll:YES
                                                 orDeselectItem:nil
@@ -1259,7 +1274,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // If the item is non-inline, simulate -acceptsFirstResponder by making self the first responder
     DOMHTMLElement *element = [item HTMLElement];
-    if (![self shouldSelectDOMElementInline:element] || ![element isContentEditable])
+    if (![self shouldTrySelectingDOMElementInline:element] || ![element isContentEditable])
     {
         [[self window] makeFirstResponder:self];
     }

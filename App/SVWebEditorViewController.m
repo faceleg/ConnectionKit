@@ -422,7 +422,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
             [newSelection addObject:newItem];
             
             // To select an inline element, the Web Editor or one of its descendants must first be selected
-            if ([webEditor shouldSelectDOMElementInline:[newItem HTMLElement]])
+            if ([webEditor shouldTrySelectingDOMElementInline:[newItem HTMLElement]])
             {
                 [[[self view] window] makeFirstResponder:webEditor];
             }
