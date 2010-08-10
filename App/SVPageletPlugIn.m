@@ -173,6 +173,22 @@ static id <SVPlugInContext> sCurrentContext;
 
 - (void)didAddToPage:(id <SVPage>)page; { }
 
+#pragma mark Metrics
+
+- (NSUInteger)width; { return [[(SVGraphic *)[self container] width] unsignedIntegerValue]; }
+- (void)setWidth:(NSUInteger)width;
+{
+    NSNumber *widthValue = (width ? [NSNumber numberWithUnsignedInteger:width] : nil);
+    [(SVGraphic *)[self container] setWidth:widthValue];
+}
+
+- (NSUInteger)height; { return [[(SVGraphic *)[self container] height] unsignedIntegerValue]; }
+- (void)setHeight:(NSUInteger)height;
+{
+    NSNumber *heightValue = (height ? [NSNumber numberWithUnsignedInteger:height] : nil);
+    [(SVGraphic *)[self container] setHeight:heightValue];
+}
+
 #pragma mark Thumbnail
 
 - (id <IMBImageItem>)thumbnail; { return nil; }

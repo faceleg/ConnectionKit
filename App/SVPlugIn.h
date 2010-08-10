@@ -88,8 +88,7 @@
 
 @property(nonatomic, getter=isBordered) BOOL bordered;
 
-// Width is nil when unknown. You should generally try to use CSS to fill the width available. If your markup is unsuitable for that, aim at 200 pixels. Setter method is considered a "request" so may not actually change anything, at least not right away.
-@property(nonatomic, copy) NSNumber *containerWidth;
+@property(nonatomic, copy) NSNumber *containerWidth;    // switch over to .contentWidth please
 
 
 #pragma mark Undo Management
