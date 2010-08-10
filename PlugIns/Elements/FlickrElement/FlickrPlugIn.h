@@ -38,7 +38,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface FlickrPlugIn : SVPageletPlugIn 
+@interface FlickrPlugIn : SVPlugIn 
 {
 	NSString *_flickrID;    // Flickr URL code
 	NSString *_tag;         // photo tag

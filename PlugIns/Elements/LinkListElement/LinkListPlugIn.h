@@ -37,7 +37,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface LinkListPlugIn : SVPageletPlugIn <SVPlugInPasteboardReading>
+@interface LinkListPlugIn : SVPlugIn <SVPlugInPasteboardReading>
 {
   @private
     NSMutableArray *_linkList;

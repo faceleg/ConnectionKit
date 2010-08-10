@@ -55,7 +55,7 @@ typedef enum {
 } RSSBadgeIconPosition;
 
 
-@interface RSSBadgePlugIn : SVPageletPlugIn
+@interface RSSBadgePlugIn : SVPlugIn
 {
   @private
     id<SVPage> _collection;

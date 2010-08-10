@@ -45,7 +45,7 @@ typedef enum {
 @class AutomaticAmazonListController;
 
 
-@interface AmazonListPlugIn : SVPageletPlugIn <KTDataSource>
+@interface AmazonListPlugIn : SVPlugIn <KTDataSource>
 {
   @private
     AmazonStoreCountry      _store;

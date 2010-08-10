@@ -226,7 +226,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		sLocalizations = [[NSDictionary alloc] initWithContentsOfFile:[[self bundle] pathForResource:@"ContactStrings" ofType:@"plist"]];
 	}
 	
-	NSString *languageCode = [[[SVPageletPlugIn currentContext] page] language];
+	NSString *languageCode = [[[SVPlugIn currentContext] page] language];
 	
 	NSDictionary *result = [sLocalizations objectForKey:languageCode];
 	
@@ -343,12 +343,12 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 - (NSString *)uniqueID
 {
-	return [[SVPageletPlugIn currentContext] numberOfGraphicsOnPage];
+	return [[SVPlugIn currentContext] numberOfGraphicsOnPage];
 }
 
 - (NSString *)CSSURLs	// used to allow our off-site page to load the CSS on the client's site
 {
-	return [[[SVPageletPlugIn currentContext] mainCSSURL] absoluteString];
+	return [[[SVPlugIn currentContext] mainCSSURL] absoluteString];
 }
 
 - (NSString *)subjectPrompt

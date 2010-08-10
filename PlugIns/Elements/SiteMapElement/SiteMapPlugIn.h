@@ -38,7 +38,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface SiteMapPlugIn : SVPageletPlugIn
+@interface SiteMapPlugIn : SVPlugIn
 {
   @private
     BOOL _compact;

@@ -37,7 +37,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface FeedPlugIn : SVPageletPlugIn <SVPlugInPasteboardReading>
+@interface FeedPlugIn : SVPlugIn <SVPlugInPasteboardReading>
 {
   @private
     BOOL        _openLinksInNewWindow;

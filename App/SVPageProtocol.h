@@ -39,7 +39,7 @@
 @end
 
 
-@interface SVPageletPlugIn (SVPage)
+@interface SVPlugIn (SVPage)
 - (id <SVPage>)pageWithIdentifier:(NSString *)identifier;
 @end
 

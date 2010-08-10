@@ -148,7 +148,7 @@
 	// LocalizedStringInThisBundle(@":", "used for colons after each label")
 	
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	NSString *language = [[[SVPageletPlugIn currentContext] page] language];
+	NSString *language = [[[SVPlugIn currentContext] page] language];
 	NSString *colon = [bundle localizedStringForString:@":" language:language];
 	
 	NSString *result = [[self label] stringByAppendingString:colon];

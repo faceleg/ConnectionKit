@@ -42,7 +42,7 @@ typedef enum { IMServiceIChat, IMServiceSkype, IMServiceYahoo = 2, } IMService;
 
 @class IMStatusService;
 
-@interface IMStatusPlugIn : SVPageletPlugIn 
+@interface IMStatusPlugIn : SVPlugIn 
 {
     NSString *_username;
     NSUInteger _selectedServiceIndex;

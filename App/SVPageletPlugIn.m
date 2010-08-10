@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVPageletPlugIn.h"
+#import "SVPlugIn.h"
 #import "SVPageProtocol.h"
 
 #import "KTDataSourceProtocol.h"
@@ -29,7 +29,7 @@
 NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 
-@interface SVPageletPlugIn ()
+@interface SVPlugIn ()
 @property(nonatomic, assign, readwrite) id <SVPageletPlugInContainer> container;
 @end
 
@@ -37,7 +37,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 #pragma mark -
 
 
-@implementation SVPageletPlugIn
+@implementation SVPlugIn
 
 #pragma mark Initialization & Tear Down
 
@@ -235,7 +235,7 @@ static id <SVPlugInContext> sCurrentContext;
 #pragma mark -
 
 
-@implementation SVPageletPlugIn (SVPage)
+@implementation SVPlugIn (SVPage)
 
 - (id <SVPage>)pageWithIdentifier:(NSString *)identifier;
 {

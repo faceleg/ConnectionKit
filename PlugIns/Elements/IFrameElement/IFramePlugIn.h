@@ -36,7 +36,7 @@
 
 #import "SandvoxPlugin.h"
 
-@interface IFramePlugIn : SVPageletPlugIn 
+@interface IFramePlugIn : SVPlugIn 
 {
     @private
     NSURL *_linkURL;

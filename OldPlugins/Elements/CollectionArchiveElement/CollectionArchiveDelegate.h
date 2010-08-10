@@ -41,7 +41,7 @@
 #define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 
 
-@interface CollectionArchiveDelegate : SVPageletPlugIn
+@interface CollectionArchiveDelegate : SVPlugIn
 {
 	IBOutlet KTLinkSourceView	*collectionLinkSourceView;
 }

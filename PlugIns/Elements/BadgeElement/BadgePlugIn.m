@@ -167,10 +167,10 @@ static NSArray *sAltStrings = nil;
     NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
     
     // add resource to context
-    NSURL *contextURL = [[SVPageletPlugIn currentContext] addResourceWithURL:resourceURL];
+    NSURL *contextURL = [[SVPlugIn currentContext] addResourceWithURL:resourceURL];
     
     // generate relative string for template
-    NSString *result = [[SVPageletPlugIn currentContext] relativeURLStringOfURL:contextURL];    
+    NSString *result = [[SVPlugIn currentContext] relativeURLStringOfURL:contextURL];    
     return result;
 }
 

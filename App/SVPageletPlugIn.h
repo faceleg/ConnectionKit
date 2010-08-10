@@ -13,7 +13,7 @@
 @protocol SVPage, SVPageletPlugInContainer;
 
 
-@interface SVPageletPlugIn : NSObject
+@interface SVPlugIn : NSObject
 {
   @private
     id <SVPageletPlugInContainer>   _container;

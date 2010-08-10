@@ -42,7 +42,7 @@
 
 @interface ContactFieldsArrayController : DNDArrayController
 {
-	IBOutlet SVPageletPlugIn *pluginDelegate;
+	IBOutlet SVPlugIn *pluginDelegate;
 }
 
 @end

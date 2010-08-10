@@ -40,7 +40,7 @@
 @class ContactFieldsArrayController, ContactField;
 
 
-@interface ContactPlugIn : SVPageletPlugIn
+@interface ContactPlugIn : SVPlugIn
 {
   @private
 

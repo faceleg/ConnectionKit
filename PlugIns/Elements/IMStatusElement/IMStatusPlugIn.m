@@ -1,6 +1,6 @@
 //
-//  SVPageletPlugIn.m
-//  SVPageletPlugIn
+//  SVPlugIn.m
+//  SVPlugIn
 //
 //  Copyright 2006-2010 Karelia Software. All rights reserved.
 //
