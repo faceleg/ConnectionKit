@@ -462,6 +462,16 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     }
 }
 
+- (void)setContainerWidth:(NSNumber *)width;
+{
+    if (width && [width unsignedIntegerValue] < 200)
+    {
+        width = [NSNumber numberWithInt:200];
+    }
+    
+    [self setWidth:width];
+}
+
 - (void)disableUndoRegistration;
 {
     NSUndoManager *undoManager = [[self managedObjectContext] undoManager];

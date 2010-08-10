@@ -88,9 +88,12 @@
 
 @property(nonatomic, getter=isBordered) BOOL bordered;
 
-- (NSNumber *)containerWidth;   // applies to inline graphics only at the moment, so may well be nil
+// Width is nil when unknown. You should generally try to use CSS to fill the width available. If your markup is unsuitable for that, aim at 200 pixels. Setter method is considered a "request" so may not actually change anything, at least not right away.
+@property(nonatomic, copy) NSNumber *containerWidth;
 
-#pragma mark Undo Management    // don't have direct access to undo manager
+
+#pragma mark Undo Management
+// Don't have direct access to undo manager
 - (void)disableUndoRegistration;
 - (void)enableUndoRegistration;
 
