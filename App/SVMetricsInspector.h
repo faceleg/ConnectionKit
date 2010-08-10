@@ -18,9 +18,6 @@
     IBOutlet NSTextField    *oURLField;
 }
 
-- (IBAction)enterExternalURL:(id)sender;
-- (IBAction)chooseFile:(id)sender;
-
 - (IBAction)makeOriginalSize:(NSButton *)sender;
 
 @end

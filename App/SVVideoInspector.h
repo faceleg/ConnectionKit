@@ -6,10 +6,11 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import "SVInspectorViewController.h"
 
-@interface SVVideoInspector : SVInspectorViewController {
+#import "SVMediaGraphicInspector.h"
+
+
+@interface SVVideoInspector : SVMediaGraphicInspector {
 
 }
 
