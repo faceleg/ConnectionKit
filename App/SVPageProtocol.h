@@ -22,6 +22,7 @@
 - (NSString *)language;
 
 // Most SVPage methods aren't KVO-compliant. Instead, observe all of -automaticRearrangementKeyPaths.
+@property(nonatomic, readonly) BOOL isCollection;   // or is it enough to test if childPages is non-nil?
 - (NSArray *)childPages; 
 - (id <SVPage>)rootPage;
 - (id <NSFastEnumeration>)automaticRearrangementKeyPaths;
