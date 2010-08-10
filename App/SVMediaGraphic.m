@@ -82,7 +82,6 @@
 
 #pragma mark Size
 
-@dynamic width;
 - (void)setWidth:(NSNumber *)width;
 {
     [self willChangeValueForKey:@"width"];
@@ -113,7 +112,6 @@
     return result;
 }
 
-@dynamic height;
 - (void)setHeight:(NSNumber *)height;
 {
     [self willChangeValueForKey:@"height"];

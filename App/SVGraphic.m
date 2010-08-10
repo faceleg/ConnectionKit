@@ -187,6 +187,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return result;
 }
 
+@dynamic height;
+
 #pragma mark Sidebar
 
 + (BOOL)validateSortKeyForPagelets:(NSSet **)pagelets error:(NSError **)error;

@@ -123,6 +123,7 @@ extern NSString *kSVGraphicPboardType;
 
 #pragma mark Metrics
 @property(nonatomic, copy) NSNumber *width;
+@property(nonatomic, copy) NSNumber *height;
 
 
 #pragma mark Sidebar
