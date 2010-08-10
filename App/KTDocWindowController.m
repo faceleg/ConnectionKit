@@ -620,8 +620,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// "Visit Published Page" visitPublishedPage:
 	else if ( itemAction == @selector(visitPublishedPage:) ) 
 	{
-		NSURL *pageURL = [[[[self siteOutlineViewController] content] selection] valueForKey:@"URL"];
-		result = (pageURL && !NSIsControllerMarker(pageURL));
+		NSDate *published = [[[self siteOutlineViewController] content]
+                             valueForKeyPath:@"selection.datePublished"];
+        
+		result = (published && !NSIsControllerMarker(published));
 	}
 
 	else if ( itemAction == @selector(submitSiteToDirectory:) ) 
