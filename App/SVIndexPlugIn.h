@@ -16,6 +16,8 @@
     id <SVPage> _collection;
 }
 
+- (void)awakeFromNew;   // indexes use this to set their width to nil
+
 @property(nonatomic, retain) id <SVPage> indexedCollection;
 
 @end
