@@ -314,7 +314,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.movie</string>
-				<string>public.audiovisual-​content</string>
+				<string>public.audiovisual-content</string>
 				<string>public.data</string>
 				<string>public.item</string>
 				<string>public.content</string>
@@ -340,7 +340,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.movie</string>
-				<string>public.audiovisual-​content</string>
+				<string>public.audiovisual-content</string>
 				<string>public.data</string>
 				<string>public.item</string>
 				<string>public.content</string>
@@ -366,7 +366,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.movie</string>
-				<string>public.audiovisual-​content</string>
+				<string>public.audiovisual-content</string>
 				<string>public.data</string>
 				<string>public.item</string>
 				<string>public.content</string>
@@ -387,11 +387,77 @@
 				<string>video/webm</string>
 			</dict>
 		</dict>
+
+
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.mpeg-4</string>
+				<string>public.movie</string>
+				<string>public.audiovisual-content</string>
+				<string>public.data</string>
+				<string>public.item</string>
+				<string>public.content</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>H.264 Video</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.h264</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.itu.int/rec/T-REC-H.264/en</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mp4</string>
+					<string>mpg4</string>
+					<string>h264</string>
+					<string>264</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>video/mp4</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.h264</string>
+				<string>public.mpeg-4</string>
+				<string>public.movie</string>
+				<string>public.audiovisual-content</string>
+				<string>public.data</string>
+				<string>public.item</string>
+				<string>public.content</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>H.264 Video, iOS compatible</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.h264.ios</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.itu.int/rec/T-REC-H.264/en</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mp4</string>
+					<string>mpg4</string>
+					<string>h264</string>
+					<string>264</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>video/mp4</string>
+			</dict>
+		</dict>
+
+
+
+
+
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.audio</string>
-				<string>public.audiovisual-​content</string>
+				<string>public.audiovisual-content</string>
 				<string>public.data</string>
 				<string>public.item</string>
 				<string>public.content</string>
