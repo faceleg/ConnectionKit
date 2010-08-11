@@ -579,7 +579,7 @@
 			// Note: We want to add the CSS as a separate link; *not* merging it into main.css, so that it can access the arrow images in _Resources.
 			path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"css"];
 			src = [context addResourceWithURL:[NSURL fileURLWithPath:path]];
-			[context writeLinkToStylesheet:[src absoluteString] title:@"ddsmoothmenu" media:nil];
+			[context writeLinkToStylesheet:[src absoluteString] title:nil media:nil];	// nil title; we don't want a title! https://bugs.webkit.org/show_bug.cgi?id=43870
 			
 			path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"js"];
 			src = [context addResourceWithURL:[NSURL fileURLWithPath:path]];
