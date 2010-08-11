@@ -19,6 +19,7 @@
 #import "KSWebLocation.h"
 
 #import "NSArray+Karelia.h"
+#import "NSColor+Karelia.h"
 #import "NSResponder+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
@@ -370,6 +371,29 @@
     }
 }
 
+#pragma mark Drawing
+
+- (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;
+{
+    if (_displayDropOutline)
+    {
+        [[NSColor aquaColor] set];
+        NSFrameRectWithWidth([self drawingRect], 1.0f);
+    }
+}
+
+- (NSRect)drawingRect;
+{
+    if (_displayDropOutline)
+    {
+        return NSInsetRect([[self HTMLElement] boundingBox], -1.0f, -1.0f);
+    }
+    else
+    {
+        return [super drawingRect];
+    }
+}
+
 #pragma mark Dragging Destination
 
 - (DOMNode *)childForDraggingInfo:(id <NSDraggingInfo>)sender;
@@ -456,19 +480,23 @@
     if (!result) result = mask & NSDragOperationCopy;
     if (!result) result = mask & NSDragOperationGeneric;
     
+    
     if (result) 
     {
         [self moveDragCaretToBeforeDOMNode:aNode draggingInfo:sender];
-        [[self webEditor] moveDragHighlightToDOMNode:[self dropOutlineDOMElement]];
-    }
-    
-    
-    if (!result)
-    {
-        [self removeDragCaret];
-        [[self webEditor] moveDragHighlightToDOMNode:nil];
-    }
+        //[[self webEditor] moveDragHighlightToDOMNode:[self dropOutlineDOMElement]];
         
+        _displayDropOutline = YES;
+        [self setNeedsDisplay];
+    }
+    else
+    {
+        [self setNeedsDisplay];
+        [self removeDragCaret];
+        //[[self webEditor] moveDragHighlightToDOMNode:nil];
+    }
+    
+    
     return result;
 }
 
@@ -476,7 +504,7 @@
 {
     [self removeDragCaret];
     [[self webEditor] removeDragCaret];
-    [[self webEditor] moveDragHighlightToDOMNode:nil];
+    //[[self webEditor] moveDragHighlightToDOMNode:nil];
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)dragInfo;
@@ -535,7 +563,7 @@
 - (void)concludeDragOperation:(id <NSDraggingInfo>)sender;
 {
     [self removeDragCaret];
-    [[self webEditor] moveDragHighlightToDOMNode:nil];
+    //[[self webEditor] moveDragHighlightToDOMNode:nil];
     [[self webEditor] removeDragCaret];
 }
 
@@ -576,6 +604,11 @@
                      afterDelay:0.25];
     
     [_dragCaret release]; _dragCaret = nil;
+    
+    
+    // Stop drawing outline too
+    [self setNeedsDisplay];
+    _displayDropOutline = NO;
 }
 
 - (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)dragInfo;

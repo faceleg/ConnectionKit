@@ -20,6 +20,7 @@
     SVCalloutDOMController  *_earlyCalloutController;
     
     DOMElement  *_dragCaret;
+    BOOL        _displayDropOutline;
 }
 
 - (IBAction)insertPagelet:(id)sender;
