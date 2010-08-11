@@ -40,7 +40,7 @@
 		3C970B000D5CFF5F0070D4A1 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
 		3C970B060D5D05FB0070D4A1 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C970B070D5D05FB0070D4A1 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
-		8D5B49B6048680CD000E48DA /* Listing.svxIndex */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Listing.svxIndex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B6048680CD000E48DA /* Listing.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Listing.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEB4FDAD10309DFF0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEB4FDAE10309DFF0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* Listing.svxIndex */,
+				8D5B49B6048680CD000E48DA /* Listing.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -161,7 +161,7 @@
 			name = ListingIndex;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = ListingIndex;
-			productReference = 8D5B49B6048680CD000E48DA /* Listing.svxIndex */;
+			productReference = 8D5B49B6048680CD000E48DA /* Listing.svxElement */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -266,7 +266,7 @@
 					0x50300000,
 				);
 				PRODUCT_NAME = Listing;
-				WRAPPER_EXTENSION = svxIndex;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Debug;
 		};
@@ -280,7 +280,7 @@
 					0x50300000,
 				);
 				PRODUCT_NAME = Listing;
-				WRAPPER_EXTENSION = svxIndex;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
 		};
