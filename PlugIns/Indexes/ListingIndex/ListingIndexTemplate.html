@@ -1,7 +1,7 @@
 <ul>
-[[foreach pages item]]
+[[foreach indexedCollection.childPages item]]
 	<li class="[[i]] [[eo]][[last]]">
-		[[textblock property:item.titleHTML flags:"line" tag:h3 hyperlink:item]]
+		[[textblock property:item.title flags:"line" tag:h3 hyperlink:item]]
 	</li>
 [[endForEach]]
 </ul>
