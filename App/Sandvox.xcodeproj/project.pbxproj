@@ -143,7 +143,7 @@
 				3C4CDF2F1207413A002AF966 /* PBXTargetDependency */,
 				3C9CF9B0121201D8005CFDD4 /* PBXTargetDependency */,
 				3C9CFA0312120468005CFDD4 /* PBXTargetDependency */,
-				3C53E3CB11EE6B14005CF7B2 /* PBXTargetDependency */,
+				3C004C60121251E4006BAD9C /* PBXTargetDependency */,
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
 				CE2556D60D3432DA003A5B5E /* PBXTargetDependency */,
 				3C15B86A0DC7917B00DE9957 /* PBXTargetDependency */,
@@ -1256,6 +1256,20 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = IFrameElement;
 		};
+		3C004C5D121251D4006BAD9C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* PhotoGrid.svxIndex */;
+			remoteInfo = PhotoGridIndex;
+		};
+		3C004C5F121251E4006BAD9C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* PhotoGridIndex */;
+			remoteInfo = PhotoGridIndex;
+		};
 		3C15B8690DC7917B00DE9957 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
@@ -1326,13 +1340,6 @@
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = DownloadIndex;
 		};
-		3C53E2D811EE6721005CF7B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = PhotoGridIndex;
-		};
 		3C53E2E011EE6740005CF7B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
@@ -1381,13 +1388,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = IndexElement;
-		};
-		3C53E3CA11EE6B14005CF7B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = PhotoGridIndex;
 		};
 		3C53E3D011EE6B14005CF7B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2189,7 +2189,7 @@
 		3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DownloadIndex.xcodeproj; path = ../OldPlugins/Indexes/DownloadIndex/DownloadIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GeneralIndex.xcodeproj; path = ../PlugIns/Indexes/GeneralIndex/GeneralIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C095BEB0D5D280500DE6F62 /* ListingIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ListingIndex.xcodeproj; path = ../PlugIns/Indexes/ListingIndex/ListingIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PhotoGridIndex.xcodeproj; path = ../OldPlugins/Indexes/PhotoGridIndex/PhotoGridIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PhotoGridIndex.xcodeproj; path = ../PlugIns/Indexes/PhotoGridIndex/PhotoGridIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C0B1D04104792B0002EE098 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVDesignChooser.xib; sourceTree = "<group>"; };
 		3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = ../../Shared/ThirdParty/BWToolkit/BWToolkitFramework.framework; sourceTree = SOURCE_ROOT; };
 		3C0C02040905882300CFFE3E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -3917,6 +3917,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3C004C5A121251D4006BAD9C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3C004C5E121251D4006BAD9C /* PhotoGrid.svxIndex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3C0B1D53104798F5002EE098 /* Design Chooser */ = {
 			isa = PBXGroup;
 			children = (
@@ -4185,14 +4193,6 @@
 			isa = PBXGroup;
 			children = (
 				3C53E2C111EE66FB005CF7B2 /* Download.svxIndex */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		3C53E2D511EE6721005CF7B2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C53E2D911EE6721005CF7B2 /* PhotoGrid.svxIndex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5938,7 +5938,7 @@
 					ProjectRef = 3C42E2990D64D253004F35FD /* PageCounterElement.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C53E2D511EE6721005CF7B2 /* Products */;
+					ProductGroup = 3C004C5A121251D4006BAD9C /* Products */;
 					ProjectRef = 3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */;
 				},
 				{
@@ -6019,18 +6019,18 @@
 			remoteRef = 3C0049551210CB87006BAD9C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		3C004C5E121251D4006BAD9C /* PhotoGrid.svxIndex */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PhotoGrid.svxIndex;
+			remoteRef = 3C004C5D121251D4006BAD9C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		3C53E2C111EE66FB005CF7B2 /* Download.svxIndex */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = Download.svxIndex;
 			remoteRef = 3C53E2C011EE66FB005CF7B2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C53E2D911EE6721005CF7B2 /* PhotoGrid.svxIndex */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = PhotoGrid.svxIndex;
-			remoteRef = 3C53E2D811EE6721005CF7B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3C53E2E111EE6740005CF7B2 /* CollectionArchive.svxElement */ = {
@@ -7275,6 +7275,11 @@
 			name = IFrameElement;
 			targetProxy = 3C0049571210CB9A006BAD9C /* PBXContainerItemProxy */;
 		};
+		3C004C60121251E4006BAD9C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PhotoGridIndex;
+			targetProxy = 3C004C5F121251E4006BAD9C /* PBXContainerItemProxy */;
+		};
 		3C15B86A0DC7917B00DE9957 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3C15B85E0DC790A100DE9957 /* UpdateDesigns */;
@@ -7324,11 +7329,6 @@
 			isa = PBXTargetDependency;
 			name = IndexElement;
 			targetProxy = 3C53E3C811EE6B14005CF7B2 /* PBXContainerItemProxy */;
-		};
-		3C53E3CB11EE6B14005CF7B2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PhotoGridIndex;
-			targetProxy = 3C53E3CA11EE6B14005CF7B2 /* PBXContainerItemProxy */;
 		};
 		3C53E3D111EE6B14005CF7B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
