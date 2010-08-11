@@ -1,6 +1,6 @@
-[[foreach pages item]]
+[[foreach indexedCollection.childPages item]]
 	<div class="article [[i]] [[eo]][[last]]">
-[[if page.collectionHyperlinkPageTitles]]
+[[if indexedCollection.collectionHyperlinkPageTitles]]
 		[[textblock property:item.titleHTML flags:"line" tag:h3 graphicalTextCode:h3 hyperlink:item]]
 [[else]]
 		[[textblock property:item.titleHTML flags:"line" tag:h3 graphicalTextCode:h3]]
@@ -20,7 +20,7 @@
 [[parseComponent item parser.calloutContainerTemplateHTML]]
 [[endif2]]
 [[endif]]
-		<div class="article-summary">[[summary item page.collectionTruncateCharacters]]</div>
+		<div class="article-summary">[[summary item indexedCollection.collectionTruncateCharacters]]</div>
 		<div class="article-info">
 [[if page.collectionTruncateCharacters>0]]
 			<div class="continue-reading-link">
