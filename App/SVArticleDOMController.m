@@ -459,7 +459,7 @@
     if (result) 
     {
         [self moveDragCaretToBeforeDOMNode:aNode draggingInfo:sender];
-        [[self webEditor] moveDragHighlightToDOMNode:[self HTMLElement]];
+        [[self webEditor] moveDragHighlightToDOMNode:[self dropOutlineDOMElement]];
     }
     
     
@@ -634,6 +634,11 @@
     [(DOMHTMLElement *)_dragCaret setOuterHTML:html];
     
     [_dragCaret release]; _dragCaret = nil;
+}
+
+- (DOMElement *)dropOutlineDOMElement;
+{
+    return [[[self HTMLElement] ownerDocument] getElementById:@"main-content"];
 }
 
 #pragma mark Hit-Test

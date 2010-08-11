@@ -76,7 +76,7 @@
         if (node)
         {
             WEKWebEditorItem *item = [[self contentItem] hitTestDOMNode:node];
-            [view setNeedsDisplayInRect:[item boundingBox]];
+            [view setNeedsDisplayInRect:(item ? [item boundingBox] : [node boundingBox])];
         }
         
         /*

@@ -36,5 +36,7 @@
 - (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)dragInfo;
 - (void)replaceDragCaretWithHTMLString:(NSString *)html;
 
+- (DOMElement *)dropOutlineDOMElement;
+
 
 @end

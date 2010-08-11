@@ -973,7 +973,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (_dragHighlightNode)
     {
         WEKWebEditorItem *item = [[self contentItem] hitTestDOMNode:_dragHighlightNode];
-        NSRect dropRect = [item boundingBox];    // pretending it's a node
+        NSRect dropRect = (item ? [item boundingBox] : [_dragHighlightNode boundingBox]);    // pretending it's a node
         
         [[NSColor aquaColor] setFill];
         NSFrameRectWithWidth(dropRect, 1.0f);
