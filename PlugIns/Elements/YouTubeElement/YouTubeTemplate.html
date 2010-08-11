@@ -11,7 +11,7 @@
 	</div>
 </div>
 [[else2]]
-<div class="svx-placeholder">
+<div class="svx-placeholder" style="width:[[=videoWidth]]px; height:[[=videoHeight]]px;">
 	<p>[['This is a placeholder for the YouTube video at:]]</p>
 	<p><a href="[[=&userVideoCode]]">[[=&userVideoCode]]</a></p>
 	<p>[['To see the video in Sandvox, please enable live data feeds in the Preferences.]]</p>
@@ -20,8 +20,8 @@
 
 [[else]]
 [[if userVideoCode]]
-<div class="svx-placeholder">[['Sorry, but no YouTube video was found for the code you entered.]]</div>
+<div class="svx-placeholder" style="width:[[=videoWidth]]px; height:[[=videoHeight]]px;">[['Sorry, but no YouTube video was found for the code you entered.]]</div>
 [[else2]]
-<div class="svx-placeholder">[['Please use the Inspector to specify a YouTube video.]]</div>
+<div class="svx-placeholder" style="width:[[=videoWidth]]px; height:[[=videoHeight]]px;">[['Please use the Inspector to specify a YouTube video.]]</div>
 [[endif2]]
 [[endif]]
