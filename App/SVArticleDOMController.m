@@ -378,7 +378,7 @@
     if (_displayDropOutline)
     {
         [[NSColor aquaColor] set];
-        NSFrameRectWithWidth([self drawingRect], 1.0f);
+        NSFrameRectWithWidth([self drawingRect], 2.0f);
     }
 }
 
@@ -386,7 +386,7 @@
 {
     if (_displayDropOutline)
     {
-        return NSInsetRect([[self HTMLElement] boundingBox], -1.0f, -1.0f);
+        return [[self dropOutlineDOMElement] boundingBox];
     }
     else
     {
@@ -486,8 +486,11 @@
         [self moveDragCaretToBeforeDOMNode:aNode draggingInfo:sender];
         //[[self webEditor] moveDragHighlightToDOMNode:[self dropOutlineDOMElement]];
         
-        _displayDropOutline = YES;
-        [self setNeedsDisplay];
+        if (!_displayDropOutline)
+        {
+            _displayDropOutline = YES;
+            [self setNeedsDisplay];
+        }
     }
     else
     {
@@ -671,8 +674,7 @@
 
 - (DOMElement *)dropOutlineDOMElement;
 {
-    return [self HTMLElement];
-    return [[[self HTMLElement] ownerDocument] getElementById:@"main-content"];
+    return [[[self HTMLElement] ownerDocument] getElementById:@"page"];
 }
 
 #pragma mark Hit-Test
