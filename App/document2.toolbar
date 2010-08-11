@@ -6,12 +6,14 @@
 	<array>
 		<string>addPagePop:</string>
 		<string>chooseDesign:</string>
-		<string>NSToolbarSeparatorItem</string>
-		<string>setupHost:</string>
-		<string>saveToHost:</string>
+		<string>NSToolbarSpaceItem</string>
+		<string>NSToolbarSpaceItem</string>
 		<string>NSToolbarFlexibleSpaceItem</string>
 		<string>addPageletPop:</string>
 		<string>showLinkPanel:</string>
+		<string>NSToolbarFlexibleSpaceItem</string>
+		<string>setupHost:</string>
+		<string>saveToHost:</string>
 		<string>NSToolbarFlexibleSpaceItem</string>
 		<string>toggleInfoShown:</string>
 		<string>toggleMediaBrowserShown:</string>
