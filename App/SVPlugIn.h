@@ -71,6 +71,7 @@
 - (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
 
 - (BOOL)isXHTML;
+- (NSStringEncoding)encoding;   // default is UTF-8
 
 @end
 
