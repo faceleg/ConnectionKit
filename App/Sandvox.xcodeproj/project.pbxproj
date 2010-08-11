@@ -1123,6 +1123,7 @@
 		CE58139111DEA45D008478AF /* NSStatusAvailable.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE58138E11DEA45D008478AF /* NSStatusAvailable.tiff */; };
 		CE58139211DEA45D008478AF /* NSStatusPartiallyAvailable.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE58138F11DEA45D008478AF /* NSStatusPartiallyAvailable.tiff */; };
 		CE58139311DEA45D008478AF /* NSStatusUnavailable.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE58139011DEA45D008478AF /* NSStatusUnavailable.tiff */; };
+		CE5A77FE12135D770085C5EE /* player_flv_maxi.swf in Resources */ = {isa = PBXBuildFile; fileRef = CE5A77FD12135D770085C5EE /* player_flv_maxi.swf */; };
 		CE5B1CB811E54A37005E2C5E /* KTFeedbackReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5B1CB611E54A37005E2C5E /* KTFeedbackReporter.h */; };
 		CE5B1CB911E54A38005E2C5E /* KTFeedbackReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5B1CB711E54A37005E2C5E /* KTFeedbackReporter.m */; };
 		CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5E55FB0EAFE98100A3EDDA /* Macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2770,6 +2771,7 @@
 		CE58138F11DEA45D008478AF /* NSStatusPartiallyAvailable.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = NSStatusPartiallyAvailable.tiff; sourceTree = "<group>"; };
 		CE58139011DEA45D008478AF /* NSStatusUnavailable.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = NSStatusUnavailable.tiff; sourceTree = "<group>"; };
 		CE5A722E0E79DC26002925A8 /* SandvoxGraylistedLicenses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandvoxGraylistedLicenses.h; sourceTree = "<group>"; };
+		CE5A77FD12135D770085C5EE /* player_flv_maxi.swf */ = {isa = PBXFileReference; lastKnownFileType = file; path = player_flv_maxi.swf; sourceTree = "<group>"; };
 		CE5B1CB611E54A37005E2C5E /* KTFeedbackReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTFeedbackReporter.h; sourceTree = "<group>"; };
 		CE5B1CB711E54A37005E2C5E /* KTFeedbackReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTFeedbackReporter.m; sourceTree = "<group>"; };
 		CE5E55FB0EAFE98100A3EDDA /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
@@ -4087,6 +4089,7 @@
 		3C202E9807E00F8500DE4994 /* Executables */ = {
 			isa = PBXGroup;
 			children = (
+				CE5A77FD12135D770085C5EE /* player_flv_maxi.swf */,
 				3C202E9607E00F8000DE4994 /* png2ico */,
 			);
 			name = Executables;
@@ -6402,6 +6405,7 @@
 				CEDA2DD2120CD676005FE23E /* SVVideo.xib in Resources */,
 				27D7347312119F3100722189 /* FileInfo.xib in Resources */,
 				27D7350F1211CC3C00722189 /* SVImage.xib in Resources */,
+				CE5A77FE12135D770085C5EE /* player_flv_maxi.swf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
