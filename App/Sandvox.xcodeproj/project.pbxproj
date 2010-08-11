@@ -390,8 +390,6 @@
 		2765061F0EAE417200461A0E /* NSDocument+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2765061D0EAE417200461A0E /* NSDocument+KTExtensions.m */; };
 		276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 276688F40D63625F0019686C /* CIImage+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 276688F50D63625F0019686C /* CIImage+KTExtensions.m */; };
-		27668FC40D63D3070019686C /* KTIndexPlugInWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 27668FC20D63D3070019686C /* KTIndexPlugInWrapper.h */; settings = {ATTRIBUTES = (); }; };
-		27668FC50D63D3070019686C /* KTIndexPlugInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 27668FC30D63D3070019686C /* KTIndexPlugInWrapper.m */; };
 		276A6E8F110B4312006FD9F7 /* SVMediaRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 276A6E8D110B4312006FD9F7 /* SVMediaRecord.h */; };
 		276A6E90110B4312006FD9F7 /* SVMediaRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A6E8E110B4312006FD9F7 /* SVMediaRecord.m */; };
 		276A6F74110B5B7B006FD9F7 /* SVDownloadSiteItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 276A6F72110B5B7B006FD9F7 /* SVDownloadSiteItem.h */; };
@@ -5439,7 +5437,6 @@
 				274E78010D626A49004F89C2 /* NSSet+KTExtensions.h in Headers */,
 				274E78080D626A93004F89C2 /* NSManagedObjectContext+KTExtensions.h in Headers */,
 				276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */,
-				27668FC40D63D3070019686C /* KTIndexPlugInWrapper.h in Headers */,
 				27AD53A60D6B40C300883550 /* SVHTMLTemplateParser+Private.h in Headers */,
 				27EF5C9B0D6B974E0024575B /* NSBundle+QuickLook.h in Headers */,
 				27EF5CE30D6B9D210024575B /* BDAlias+QuickLook.h in Headers */,
@@ -6943,7 +6940,6 @@
 				3CE79DBA0D6261B300FCEE6D /* NSOutlineView+KTExtensions.m in Sources */,
 				274E829D0D627328004F89C2 /* NSDocumentController+KTExtensions.m in Sources */,
 				276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */,
-				27668FC50D63D3070019686C /* KTIndexPlugInWrapper.m in Sources */,
 				27EF5C9C0D6B974E0024575B /* NSBundle+QuickLook.m in Sources */,
 				27EF5CE40D6B9D210024575B /* BDAlias+QuickLook.m in Sources */,
 				27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */,

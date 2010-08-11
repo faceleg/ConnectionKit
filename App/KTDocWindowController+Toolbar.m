@@ -25,7 +25,6 @@
 #import "SVApplicationController.h"
 #import "KT.h"
 #import "KTElementPlugInWrapper.h"
-#import "KTIndexPlugInWrapper.h"
 #import "SVLinkManager.h"
 #import "SVGraphicFactory.h"
 #import "KTToolbars.h"
@@ -183,7 +182,7 @@
 
     NSMenu *collectionsMenu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"Collections", "toolbar menu")];
     [item setSubmenu:collectionsMenu];
-    [KTIndexPlugInWrapper populateMenuWithCollectionPresets:collectionsMenu atIndex:0];
+    [KTElementPlugInWrapper populateMenuWithCollectionPresets:collectionsMenu atIndex:0];
     [collectionsMenu release];
     
 
