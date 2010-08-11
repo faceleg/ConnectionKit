@@ -63,12 +63,6 @@
 {
 	NSString *type = [self codecType];
     // Image needs unique ID for DOM Controller to find
-    NSString *idName = [@"video-" stringByAppendingString:[self elementID]];
-    
-    
-    // Actually write the video
-    [context pushElementAttribute:@"id" value:idName];
-    if ([self displayInline]) [self buildClassName:context];
     
     SVMediaRecord *media = [self media];
 	NSURL *URL = [self externalSourceURL];
@@ -106,6 +100,9 @@
 	}
 	else if (videoTag || flashTag)
 	{
+		NSString *idNameVideo  = [@"video-" stringByAppendingString:[self elementID]];
+		NSString *idNameObject = [@"object-" stringByAppendingString:[self elementID]];
+
 		if (videoTag)	// start the video tag
 		{
 			// Write the fallback method.  COULD WRITE THIS IN JQUERY TO BE MORE TERSE?
@@ -118,7 +115,11 @@
 				[[context extraHeaderMarkup] appendString:oneTimeScript];
 			}
 			
-			[context pushElementAttribute:@"src" value:src];	// only one source, so we might as well do it inline rather than source tag
+			
+			// Actually write the video
+			[context pushElementAttribute:@"id" value:idNameVideo];
+			if ([self displayInline]) [self buildClassName:context];
+			[context pushElementAttribute:@"src" value:src];
 			[context pushElementAttribute:@"width" value:[[self width] description]];
 			[context pushElementAttribute:@"height" value:[[self height] description]];
 			if (self.controller)	[context pushElementAttribute:@"controls" value:@"controls"];	// boolean attribute
@@ -141,25 +142,43 @@
 		
 		if (flashTag)	// inner
 		{
-			/*
-			 <object id="requiredForIE8" width="640" height="360" type="application/x-shockwave-flash" data="player_flv_maxi.swf">
-			 <param name="movie" value="player_flv_maxi.swf" />
-			 <param name="flashvars" value="margin=0&amp;startimage=big_buck_bunny.jpg&amp;flv=big_buck_bunny.mp4" /><!-- from params -->
-			 <img src="big_buck_bunny.jpg" width="640" height="360" alt="__TITLE__" title="No video playback capabilities, please download the video below" />
-			 </object>
-*/
+			[context pushElementAttribute:@"id" value:idNameObject];
+			if ([self displayInline]) [self buildClassName:context];
+			[context pushElementAttribute:@"type" value:@"application/x-shockwave-flash"];
+			[context pushElementAttribute:@"data" value:@"player_flv_maxi.swf"];
+			[context pushElementAttribute:@"width" value:[[self width] description]];
+			[context pushElementAttribute:@"height" value:[[self height] description]];
+			[context startElement:@"object"];
+		
+			NSString *flashvars = @"margin=0&amp;startimage=big_buck_bunny.jpg&amp;flv=big_buck_bunny.mp4";
+			NSString *playerPath = @"player_flv_maxi.swf";
 			
+			[context startElement:@"param" attributes:NSDICT(@"movie", @"name", playerPath, @"value")];
+			[context endElement];
+			[context startElement:@"param" attributes:NSDICT(@"flashvars", @"name", flashvars, @"value")];
+			[context endElement];
+		}
+		
+		if (NO)		// poster
+		{
+			// 			 <img src="big_buck_bunny.jpg" width="640" height="360" alt="__TITLE__" title="No video playback capabilities, please download the video below" />
+
+		}
+		
+		if (flashTag)
+		{
+			[context endElement];	//  </object>
 		}
 		
 		if (videoTag)	// close the video tag
 		{
 			[context endElement];
 			
-			// Now write the post-video surgery since onerror doesn't really work
+			// Now write the post-video-tag surgery since onerror doesn't really work
 			
 			[context startJavascriptElementWithSrc:nil];
 			[context stopWritingInline];
-			[context writeString:[NSString stringWithFormat:@"var video = document.getElementById('%@');", idName]];
+			[context writeString:[NSString stringWithFormat:@"var video = document.getElementById('%@');", idNameVideo]];
 			
 			/*
 			 <script>
@@ -299,35 +318,35 @@
 	
 	if (!type)												// no movie -- don't bother with icon
 	{
-		result = NSLocalizedString(@"For maximum browser compatibility, please select a MPEG-4 (h.264) file.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+		result = NSLocalizedString(@"Use MPEG-4 (h.264) video for maximum compatibility.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
 	else if (![type conformsToUTI:(NSString *)kUTTypeMovie])			// BAD
 	{
-		result = NSLocalizedString(@"This does not seem to be a video file that can be shared on the web.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+		result = NSLocalizedString(@"Video cannot be played in most browsers.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
 	else if ([type conformsToUTI:@"public.h264.ios"])		// HAPPY!  everything-compatible
 	{
-		result = NSLocalizedString(@"This should be compatible with a wide range of devices, including Mac OS, iOS, and Windows.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+		result = NSLocalizedString(@"Video is compatible with a wide range of devices.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
 	else if ([type conformsToUTI:@"public.mpeg-4"])			// might not be iOS compatible
 	{
-		result = NSLocalizedString(@"This should be compatible with Macs and Windows.  Please test on an iOS device.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+		result = NSLocalizedString(@"This video may not be compatible with iOS devices; please verify.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
 	else if ([type conformsToUTI:@"public.ogg-theora"] || [type conformsToUTI:@"public.webm"])
 	{
-		result = NSLocalizedString(@"This will only play on certain browsers.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+		result = NSLocalizedString(@"Video will only play on certain browsers.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
 	else if ([type conformsToUTI:@"com.adobe.flash-video"])
 	{
-		result = NSLocalizedString(@"This will play on Mac and Windows, but not iOS devices like iPhone or iPad.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+		result = NSLocalizedString(@"Video will not play on iOS devices", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
 	else if ([type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-​media-wmv"])
 	{
-		result = NSLocalizedString(@"This will play on PCs and only on Macs with \\U201Cflip4Mac\\U201D installed.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+		result = NSLocalizedString(@"Video will not play on Macs unless \\U201CFlip4Mac\\U201D is installed", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
 	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
 	{
-		result = NSLocalizedString(@"This will play on Macs and only Windows PCs with QuickTime installed.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+		result = NSLocalizedString(@"Video will not play on Windows PCs unless QuickTime is installed", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
 	return result;
 }

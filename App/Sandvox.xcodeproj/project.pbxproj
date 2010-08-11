@@ -1260,14 +1260,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* PhotoGrid.svxIndex */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = PhotoGridIndex;
 		};
 		3C004C5F121251E4006BAD9C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* PhotoGridIndex */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = PhotoGridIndex;
 		};
 		3C15B8690DC7917B00DE9957 /* PBXContainerItemProxy */ = {
@@ -4549,7 +4549,7 @@
 		3C9CF9A712120196005CFDD4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3C9CF9AB12120196005CFDD4 /* General.svxIndex */,
+				3C9CF9AB12120196005CFDD4 /* General.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4557,7 +4557,7 @@
 		3C9CF9FD1212045B005CFDD4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3C9CFA011212045B005CFDD4 /* Listing.svxIndex */,
+				3C9CFA011212045B005CFDD4 /* Listing.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6110,17 +6110,17 @@
 			remoteRef = 3C9870EE11F3D5F60053A72C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3C9CF9AB12120196005CFDD4 /* General.svxIndex */ = {
+		3C9CF9AB12120196005CFDD4 /* General.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = General.svxIndex;
+			path = General.svxElement;
 			remoteRef = 3C9CF9AA12120196005CFDD4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3C9CFA011212045B005CFDD4 /* Listing.svxIndex */ = {
+		3C9CFA011212045B005CFDD4 /* Listing.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = Listing.svxIndex;
+			path = Listing.svxElement;
 			remoteRef = 3C9CFA001212045B005CFDD4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
