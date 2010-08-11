@@ -57,6 +57,9 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     BOOL    _isProcessingEvent;
     BOOL    _isForwardingCommandToWebView;
     
+    // Drawing
+    NSMutableSet    *_itemsToDraw;
+    
     // Datasource/delegate
     id <WEKWebEditorDataSource>  _dataSource;    // weak ref as you'd expect
     id <WEKWebEditorDelegate>    _delegate;      // "
@@ -122,6 +125,9 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 // The editor contains a variety of subviews. When it needs the effect of drawing an overlay above them this method is called, telling you the view that is being drawn into, and where.
 - (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view;
 - (void)drawSelectionRect:(NSRect)dirtyRect inView:(NSView *)view;
+
+@property(nonatomic, copy, readonly) NSSet *itemsToDisplay;
+- (void)setNeedsDisplayForItem:(WEKWebEditorItem *)item;
 
 - (BOOL)inLiveGraphicResize;
 

@@ -110,6 +110,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // other ivars
     _selectedItems = [[NSMutableArray alloc] init];
+    _itemsToDraw = [[NSMutableSet alloc] init];
     
     
     // WebView
@@ -993,30 +994,38 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [border setMinSize:NSMakeSize(5.0f, 5.0f)];
     
     
-    // Draw selection parent items
-    for (WEKWebEditorItem *anItem in [self selectionParentItems])
+    // Draw items
+    for (WEKWebEditorItem *anItem in [self itemsToDisplay])
     {
-        // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
-        [border setEditing:YES];
-        NSRect frameRect = [anItem rect];
-        NSRect drawingRect = [border drawingRectForGraphicBounds:frameRect];
-        if ([view needsToDrawRect:drawingRect])
+        // Is the item actually for drawing?
+        NSRect drawingRect = [anItem drawingRect];
+        if (drawingRect.size.width == 0.0f && drawingRect.size.height == 0.0f)
         {
-            [border drawWithGraphicBounds:frameRect inView:view];
+            [_itemsToDraw removeObject:anItem];
         }
-    }
-    
-    
-    // Draw actual selection
-    [border setEditing:NO];
-    for (WEKWebEditorItem *anItem in [self selectedItems])
-    {
-        [anItem drawRect:dirtyRect inView:view];
+        else
+        {
+            // Only draw if the item is in the dirty rect (otherwise can get pretty pricey)
+            if ([view needsToDrawRect:drawingRect]) [anItem drawRect:dirtyRect inView:view];
+        }
     }
     
     
     // Tidy up
     [border release];
+}
+
+- (NSSet *)itemsToDisplay;
+{
+    return [[_itemsToDraw copy] autorelease];
+}
+
+- (void)setNeedsDisplayForItem:(WEKWebEditorItem *)item;
+{
+    NSRect drawingRect = [item drawingRect];
+    [[self documentView] setNeedsDisplayInRect:drawingRect];
+    
+    [_itemsToDraw addObject:item];
 }
 
 - (BOOL)inLiveGraphicResize; { return _resizingGraphic; }
@@ -1158,9 +1167,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     // Tell controllers not to draw selected during resize
-    NSView *docView = [[item HTMLElement] documentView];
-    [docView setNeedsDisplayInRect:[item drawingRect]];
+    [self setNeedsDisplayForItem:item];
     _resizingGraphic = YES;
+    
+    NSView *docView = [[item HTMLElement] documentView];
     
     while ([event type] != NSLeftMouseUp)
     {
@@ -1172,7 +1182,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     
     _resizingGraphic = NO;
-    [docView setNeedsDisplayInRect:[item drawingRect]];
+    [self setNeedsDisplayForItem:item];
     
     
     // Update cursor for finish location

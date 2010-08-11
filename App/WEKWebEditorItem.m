@@ -226,15 +226,21 @@
 @synthesize selected = _selected;
 - (void)setSelected:(BOOL)selected
 {
-    _selected = selected;
+    // -setNeedsDisplay relies on -drawingRect being right. So depending on if selecting or deselecting, have to call it at the right time.
+    if (selected)
+    {
+        _selected = selected;
+        [self setNeedsDisplay];
+    }
+    else
+    {
+        [self setNeedsDisplay];
+        _selected = selected;
+    }
     
     DOMElement *element = [self HTMLElement];
     BOOL isVisible = [element isDescendantOfNode:[element ownerDocument]];
-    if (isVisible)
-    {
-        [[element documentView] setNeedsDisplayInRect:[self drawingRect]];
-    }
-    else
+    if (!isVisible)
     {
         // Fallback to total refresh. #82192
         [[element documentView] setNeedsDisplay:YES];
@@ -398,12 +404,23 @@
 
 - (NSRect)drawingRect;  // expressed in our DOM node's document view's coordinates
 {
-    SVSelectionBorder *border = [self newSelectionBorder];
+    NSRect result = NSZeroRect; // by default, don't draw
     
-    NSRect result = [border drawingRectForGraphicBounds:[self rect]];
-    [border release];
+    if ([self isSelected] || [self isEditing])
+    {
+        SVSelectionBorder *border = [self newSelectionBorder];
+        result = [border drawingRectForGraphicBounds:[self rect]];
+        [border release];
+    }
     
     return result;
+}
+
+#pragma mark Display
+
+- (void)setNeedsDisplay;    // shortcut to -[WEKWebEditorView setNeedsDisplayForItem:] 
+{
+    [[self webEditor] setNeedsDisplayForItem:self];
 }
 
 #pragma mark Drawing

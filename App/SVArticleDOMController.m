@@ -638,6 +638,7 @@
 
 - (DOMElement *)dropOutlineDOMElement;
 {
+    return [self HTMLElement];
     return [[[self HTMLElement] ownerDocument] getElementById:@"main-content"];
 }
 
