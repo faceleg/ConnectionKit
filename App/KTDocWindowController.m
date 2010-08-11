@@ -19,7 +19,6 @@
 #import "KTElementPlugInWrapper.h"
 #import "KTHostProperties.h"
 #import "SVHTMLTextBlock.h"
-#import "KTIndexPlugInWrapper.h"
 #import "KTMissingMediaController.h"
 #import "KTPage+Internal.h"
 #import "SVSidebar.h"
