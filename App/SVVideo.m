@@ -153,10 +153,8 @@
 			NSString *flashvars = @"margin=0&amp;startimage=big_buck_bunny.jpg&amp;flv=big_buck_bunny.mp4";
 			NSString *playerPath = @"player_flv_maxi.swf";
 			
-			[context startElement:@"param" attributes:NSDICT(@"movie", @"name", playerPath, @"value")];
-			[context endElement];
-			[context startElement:@"param" attributes:NSDICT(@"flashvars", @"name", flashvars, @"value")];
-			[context endElement];
+			[context writeParamElementWithName:@"movie" value:playerPath];
+			[context writeParamElementWithName:@"flashvars" value:flashvars];
 		}
 		
 		if (NO)		// poster
