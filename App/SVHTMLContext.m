@@ -388,6 +388,20 @@
     [self closeComment];
 }
 
+// Override to sort the keys so that they are always consistently written.
+- (void)startElement:(NSString *)elementName attributes:(NSDictionary *)attributes;
+{
+	NSArray *sortedAttributes = [attributes sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    for (NSString *aName in sortedAttributes)
+    {
+        NSString *aValue = [attributes objectForKey:aName];
+        [self pushElementAttribute:aName value:aValue];
+    }
+    
+    [self startElement:elementName];
+}
+
+
 #pragma mark Graphics
 
 - (void)writePagelet:(SVGraphic *)graphic
