@@ -1437,7 +1437,7 @@ fallbackDOMRangeForNoSelection:(DOMRange *)proposedRange
         
         // Fallback to article if reasonable. #82408
         DOMElement *pageContent = [[[self webEditor] HTMLDocument]
-                                   getElementById:@"page-content"];
+                                   getElementById:@"page"];
         
         if ([node ks_isDescendantOfElement:pageContent])
         {
