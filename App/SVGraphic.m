@@ -312,6 +312,19 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return NSNotApplicableMarker;
 }
 
+- (id)valueForKey:(NSString *)key;
+{
+    // This is a quite an ugly HACK really!
+    // For auto-height items don't let the height be user-editable
+    id result = [super valueForKey:key];
+    if ([key isEqualToString:@"height"] && !result)
+    {
+        result = NSNotApplicableMarker;
+    }
+    
+    return result;
+}
+
 #pragma mark Serialization
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
