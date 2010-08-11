@@ -24,6 +24,8 @@
 	<string>${SVN_VERSION}</string>
 	<key>KSMinimumAppVersion</key>
 	<string>2.0</string>
+	<key>KTCategory</key>
+	<integer>2</integer>
 	<key>KTCSSClassName</key>
 	<string>general-index</string>
 	<key>KTIndexNavigationArrowsStyle</key>
