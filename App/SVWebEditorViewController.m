@@ -1423,7 +1423,8 @@ fallbackDOMRangeForNoSelection:(DOMRange *)proposedRange
     
     if (!result)
     {
-        // Don't allow drops of pagelets inside non-page body text.
+        // Don't allow drops of pagelets inside non-page body text
+        // This doesn't make sense to me – Mike
         if ([dragInfo draggingSource] == webEditor && [[webEditor draggedItems] count])
         {
             if (![[[[[self textAreaForDOMNode:node] representedObject] entity] name]
@@ -1431,6 +1432,16 @@ fallbackDOMRangeForNoSelection:(DOMRange *)proposedRange
             {
                 result = nil;
             }
+        }
+        
+        
+        // Fallback to article if reasonable. #82408
+        DOMElement *pageContent = [[[self webEditor] HTMLDocument]
+                                   getElementById:@"page-content"];
+        
+        if ([node ks_isDescendantOfElement:pageContent])
+        {
+            result = [self articleDOMController];
         }
     }
     
