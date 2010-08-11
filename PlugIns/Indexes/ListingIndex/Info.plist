@@ -69,6 +69,6 @@
 	<key>KTTemplateName</key>
 	<string>ListingIndexTemplate</string>
 	<key>NSPrincipalClass</key>
-	<string>SVIndexPlugIn</string>
+	<string>ListingIndex</string>
 </dict>
 </plist>
