@@ -20,8 +20,8 @@
 
 @property(assign) BOOL autoplay;
 @property(assign) BOOL controller;
-@property(assign) BOOL kioskmode;
 @property(assign) BOOL loop;
+@property(assign) BOOL preload;
 
 #pragma mark Publishing
 

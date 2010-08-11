@@ -56,7 +56,7 @@
 @dynamic posterFrame;
 @dynamic autoplay;
 @dynamic controller;
-@dynamic kioskmode;
+@dynamic preload;
 @dynamic loop;
 
 - (void)writeBody:(SVHTMLContext *)context;
@@ -66,7 +66,7 @@
     NSString *idName = [@"video-" stringByAppendingString:[self elementID]];
     
     
-    // Actually write the image
+    // Actually write the video
     [context pushElementAttribute:@"id" value:idName];
     if ([self displayInline]) [self buildClassName:context];
     
@@ -108,24 +108,89 @@
 	{
 		if (videoTag)	// start the video tag
 		{
+			// Write the fallback method.  COULD WRITE THIS IN JQUERY TO BE MORE TERSE?
+			
+			NSString *oneTimeScript = @"<script type='text/javascript'>\nfunction fallback(video) {\n while (video.firstChild) {\n  if (video.firstChild.nodeName == 'SOURCE') {\n   video.removeChild(video.firstChild);\n  } else {\n   video.parentNode.insertBefore(video.firstChild, video);\n  }\n }\n video.parentNode.removeChild(video);\n}\n</script>\n";
+			
+			NSRange whereOneTimeScript = [[context extraHeaderMarkup] rangeOfString:oneTimeScript];
+			if (NSNotFound == whereOneTimeScript.location)
+			{
+				[[context extraHeaderMarkup] appendString:oneTimeScript];
+			}
+			
+			[context pushElementAttribute:@"src" value:src];	// only one source, so we might as well do it inline rather than source tag
+			[context pushElementAttribute:@"width" value:[[self width] description]];
+			[context pushElementAttribute:@"height" value:[[self height] description]];
+			if (self.controller)	[context pushElementAttribute:@"controls" value:@"controls"];	// boolean attribute
+			if (self.autoplay)		[context pushElementAttribute:@"controls" value:@"controls"];	// boolean attribute
+			if (self.loop)			[context pushElementAttribute:@"loop" value:@"loop"];			// boolean attribute
+			[context pushElementAttribute:@"preload" value:(self.preload) ? @"auto" : @"none" ];
+
+			// POSTER: poster="....."
+			
+			[context startElement:@"video"];
+
+			// source
+			[context pushElementAttribute:@"src" value:src];
+			[context pushElementAttribute:@"type" value:[NSString MIMETypeForUTI:type]];
+			[context pushElementAttribute:@"onerror" value:@"fallback(this.parentNode)"];
+			[context startElement:@"source"];
+			 
 			
 		}
 		
 		if (flashTag)	// inner
 		{
+			/*
+			 <object id="requiredForIE8" width="640" height="360" type="application/x-shockwave-flash" data="player_flv_maxi.swf">
+			 <param name="movie" value="player_flv_maxi.swf" />
+			 <param name="flashvars" value="margin=0&amp;startimage=big_buck_bunny.jpg&amp;flv=big_buck_bunny.mp4" /><!-- from params -->
+			 <img src="big_buck_bunny.jpg" width="640" height="360" alt="__TITLE__" title="No video playback capabilities, please download the video below" />
+			 </object>
+*/
 			
 		}
 		
 		if (videoTag)	// close the video tag
 		{
+			[context endElement];
+			
+			// Now write the post-video surgery since onerror doesn't really work
+			
+			[context startJavascriptElementWithSrc:nil];
+			[context stopWritingInline];
+			[context writeString:[NSString stringWithFormat:@"var video = document.getElementById('%@');", idName]];
+			
+			/*
+			 <script>
+			 var video = document.getElementById('video1234');
+			 if (video.canPlayType && video.canPlayType('video/mp4')) {
+			 // canPlayType is overoptimistic, so we have browser sniff.
+			 if (navigator.userAgent.indexOf('WebKit/') <= -1) {
+			 // Only webkit-browsers can play this natively
+			 fallback(video);
+			 }
+			 } else {
+			 fallback(video);
+			 }
+			 </script>
+			 
+			 
+			 
+			 
+			 */
+			
+			
+			// [context writeString:surgery];
+			[context endElement];
 			
 		}
 		
 	}
 	else	// none of the above -- indicate that we don't know what to insert
 	{
-	
 		
+		 
 		
 		
 	}
@@ -134,11 +199,6 @@
 	
 	
 	 
-	[context pushElementAttribute:@"src" value:src];
-	[context pushElementAttribute:@"width" value:[[self width] description]];
-	[context pushElementAttribute:@"height" value:[[self height] description]];
-	[context startElement:@"video"];
-	[context endElement];
     
     [context addDependencyOnObject:self keyPath:@"media"];
 }
