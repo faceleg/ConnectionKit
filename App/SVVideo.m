@@ -16,6 +16,7 @@
 #include <zlib.h>
 #import "NSImage+Karelia.h"
 #import "NSString+Karelia.h"
+#import "NSBundle+Karelia.h"
 
 @implementation SVVideo 
 
@@ -61,26 +62,38 @@
 
 - (void)writeBody:(SVHTMLContext *)context;
 {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSString *type = [self codecType];
     // Image needs unique ID for DOM Controller to find
     
     SVMediaRecord *media = [self media];
-	NSURL *URL = [self externalSourceURL];
+	NSURL *movieSourceURL = [self externalSourceURL];
     if (media)
     {
-	    URL = [context addMedia:media width:[self width] height:[self height] type:[self codecType]];
+	    movieSourceURL = [context addMedia:media width:[self width] height:[self height] type:[self codecType]];
 	}
 	
-	NSString *src = @"";
-	if (URL)
+	NSString *movieSourcePath = @"";
+	if (movieSourceURL)
 	{
-		src = [context relativeURLStringOfURL:URL];
+		movieSourcePath = [context relativeURLStringOfURL:movieSourceURL];
+	}
+	
+	NSString *posterSourcePath = @"";
+	NSURL *posterSourceURL = nil;
+	if (self.posterFrame)
+	{
+		posterSourceURL = [context addMedia:self.posterFrame width:[self width] height:[self height] type:self.posterFrame.typeOfFile];
+		posterSourcePath = [context relativeURLStringOfURL:posterSourceURL];
 	}
 	
 	// video || flash (not mutually exclusive) are mutually exclusive with microsoft, quicktime
 	
 	BOOL videoTag = [type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"public.ogg-theora"] || [type conformsToUTI:@"public.webm"];
-	BOOL flashTag = [type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"com.adobe.flash-video"];
+	if ([defaults boolForKey:@"avoidVideoTag"]) videoTag = NO;
+	
+	BOOL flashTag = [type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"com.adobe.flash.video"];
+	if ([defaults boolForKey:@"avoidFlashVideo"]) flashTag = NO;
 	
 	BOOL microsoftTag = [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-​media-wmv"];
 	
@@ -90,13 +103,19 @@
 	
 	if (quicktimeTag)
 	{
-		
+		[context pushElementAttribute:@"width" value:[[self width] description]];
+		[context pushElementAttribute:@"height" value:[[self height] description]];
+		[context startElement:@"div"];
+		[context writeElement:@"p" text:NSLocalizedString(@"QuickTime Video", @"")];
+		[context endElement];		// the div
 	}
 	else if (microsoftTag)
 	{
-		
-		
-		
+		[context pushElementAttribute:@"width" value:[[self width] description]];
+		[context pushElementAttribute:@"height" value:[[self height] description]];
+		[context startElement:@"div"];
+		[context writeElement:@"p" text:NSLocalizedString(@"Microsoft Video", @"")];
+		[context endElement];		// the div
 	}
 	else if (videoTag || flashTag)
 	{
@@ -119,7 +138,7 @@
 			// Actually write the video
 			[context pushElementAttribute:@"id" value:idNameVideo];
 			if ([self displayInline]) [self buildClassName:context];
-			[context pushElementAttribute:@"src" value:src];
+			[context pushElementAttribute:@"src" value:movieSourcePath];
 			[context pushElementAttribute:@"width" value:[[self width] description]];
 			[context pushElementAttribute:@"height" value:[[self height] description]];
 			if (self.controller)	[context pushElementAttribute:@"controls" value:@"controls"];	// boolean attribute
@@ -132,35 +151,135 @@
 			[context startElement:@"video"];
 
 			// source
-			[context pushElementAttribute:@"src" value:src];
+			[context pushElementAttribute:@"src" value:movieSourcePath];
 			[context pushElementAttribute:@"type" value:[NSString MIMETypeForUTI:type]];
 			[context pushElementAttribute:@"onerror" value:@"fallback(this.parentNode)"];
 			[context startElement:@"source"];
-			 
+			[context endElement];
 			
 		}
 		
 		if (flashTag)	// inner
 		{
-			[context pushElementAttribute:@"id" value:idNameObject];
+			NSString *videoFlashPlayer	= [defaults objectForKey:@"videoFlashPlayer"];	// to override player type
+				// Known types: f4player jwplayer flvplayer osflv flowplayer.  Otherwise must specify videoFlashFormat.
+			if (!videoFlashPlayer) videoFlashPlayer = @"flvplayer";
+			NSString *videoFlashPath	= [defaults objectForKey:@"videoFlashPath"];	// override must specify path/URL on server
+			NSString *videoFlashExtras	= [defaults objectForKey:@"videoFlashExtras"];	// extra parameters to override for any player
+			NSString *videoFlashFormat	= [defaults objectForKey:@"videoFlashFormat"];	// format pattern with %{value1}@ and %{value2}@ for movie, poster
+			NSString *videoFlashBarHeight= [defaults objectForKey:@"videoFlashBarHeight"];	// height that the navigation bar adds
+			BOOL videoFlashRequiresFullURL = [defaults boolForKey:@"videoFlashRequiresFullURL"];	// usually not, but YES for flowplayer
+			
+			if ([videoFlashPlayer isEqualToString:@"flowplayer"]) videoFlashRequiresFullURL = YES;
+			
+			NSDictionary *noPosterParamLookup
+			= NSDICT(
+					 @"video=%@",                                  @"f4player",	
+					 @"file=%@",                                   @"jwplayer",	
+					 @"flv=%@&margin=0",                           @"flvplayer",	
+					 @"movie=%@",                                  @"osflv",		
+					 @"config={\"playlist\":[{\"url\":\"%@\"}]}",  @"flowplayer");
+			NSDictionary *posterParamLookup
+			= NSDICT(
+					 @"video=%{value1}@&thumbnail=%{value2}@",         @"f4player",
+					 @"file=%{value1}@&image=%{value2}@",              @"jwplayer",
+					 @"flv=%{value1}@&startimage=%{value2}@&margin=0", @"flvplayer",
+					 @"movie=%{value1}@&previewimage=%{value2}@",      @"osflv",	
+					 @"config={\"playlist\":[{\"url\":\"%{value2}@\"},{\"url\":\"%{value1}@\",\"autoPlay\":false,\"autoBuffering\":true}]}",
+						@"flowplayer");
+			NSDictionary *barHeightLookup
+			= NSDICT(
+					 [NSNumber numberWithShort:0],  @"f4player",	
+					 [NSNumber numberWithShort:24], @"jwplayer",	
+					 [NSNumber numberWithShort:0],  @"flvplayer",	
+					 [NSNumber numberWithShort:25], @"osflv",		
+					 [NSNumber numberWithShort:0],   @"flowplayer");
+			
+			NSUInteger barHeight = 0;
+			if (videoFlashBarHeight)
+			{
+				barHeight= [videoFlashBarHeight intValue];
+			}
+			else
+			{
+				barHeight = [[barHeightLookup objectForKey:videoFlashPlayer] intValue];
+			}
+
+			NSString *flashVarFormatString = nil;
+			if (videoFlashFormat)		// override format?
+			{
+				flashVarFormatString = videoFlashFormat;
+			}
+			else
+			{
+				NSDictionary *formatLookupDict = (self.posterFrame) ? posterParamLookup : noPosterParamLookup;
+				flashVarFormatString = [formatLookupDict objectForKey:videoFlashPlayer];
+			}
+			if (videoFlashExtras)	// append other parameters (usually like key1=value1&key2=value2)
+			{
+				flashVarFormatString = [NSString stringWithFormat:@"%@&%@", flashVarFormatString, videoFlashExtras];
+			}
+			// Now build up the string
+			NSString *flashVars = nil;
+			NSString *movieSourcePathOrURLString  = videoFlashRequiresFullURL ? [movieSourceURL  absoluteString] : movieSourcePath;
+			NSString *posterSourcePathOrURLString = videoFlashRequiresFullURL ? [posterSourceURL absoluteString] : posterSourcePath;
+			if (self.posterFrame)
+			{
+				flashVars = [NSString stringWithFormat:flashVarFormatString, movieSourcePathOrURLString, posterSourcePathOrURLString];
+			}
+			else
+			{
+				flashVars = [NSString stringWithFormat:flashVarFormatString, movieSourcePathOrURLString];
+			}
+			NSString *playerPath = nil;
+			if (videoFlashPath)
+			{
+				playerPath = videoFlashPath;		// specified by defaults
+			}
+			else
+			{
+				NSString *localPlayerPath = [[NSBundle mainBundle] pathForResource:@"player_flv_maxi" ofType:@"swf"];
+				NSURL *playerURL = [context addResourceWithURL:[NSURL fileURLWithPath:localPlayerPath]];
+				playerPath = [context relativeURLStringOfURL:playerURL];
+			}
+			
+			[context pushElementAttribute:@"id" value:idNameObject];	// ID on <object> apparently required for IE8
 			if ([self displayInline]) [self buildClassName:context];
 			[context pushElementAttribute:@"type" value:@"application/x-shockwave-flash"];
-			[context pushElementAttribute:@"data" value:@"player_flv_maxi.swf"];
+			[context pushElementAttribute:@"data" value:playerPath];
 			[context pushElementAttribute:@"width" value:[[self width] description]];
-			[context pushElementAttribute:@"height" value:[[self height] description]];
+			
+			NSUInteger heightWithBar = barHeight + [[self height] intValue];
+			[context pushElementAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 			[context startElement:@"object"];
-		
-			NSString *flashvars = @"margin=0&amp;startimage=big_buck_bunny.jpg&amp;flv=big_buck_bunny.mp4";
-			NSString *playerPath = @"player_flv_maxi.swf";
 			
 			[context writeParamElementWithName:@"movie" value:playerPath];
-			[context writeParamElementWithName:@"flashvars" value:flashvars];
+			[context writeParamElementWithName:@"flashvars" value:flashVars];
+			
+			NSDictionary *videoFlashExtraParams = [defaults objectForKey:@"videoFlashExtraParams"];
+			if ([videoFlashExtraParams respondsToSelector:@selector(keyEnumerator)])	// sanity check
+			{
+				for (NSString *key in videoFlashExtraParams)
+				{
+					[context writeParamElementWithName:key value:[videoFlashExtraParams objectForKey:key]];
+				}
+			}
 		}
 		
-		if (NO)		// poster
-		{
-			// 			 <img src="big_buck_bunny.jpg" width="640" height="360" alt="__TITLE__" title="No video playback capabilities, please download the video below" />
-
+		if (self.posterFrame)		// image within the video or object tag as a fallback
+		{			
+			// Get a title to indicate that the movie cannot play inline.  (Suggest downloading, if we provide a link)
+			KTPage *thePage = [context page];
+			NSString *language = [thePage language];
+			NSString *cannotViewTitle = [[NSBundle mainBundle] localizedStringForString:@"cannotViewTitleText"
+																						language:language
+																						fallback:
+												  NSLocalizedStringWithDefaultValue(@"cannotViewTitleText", nil, [NSBundle mainBundle], @"Cannot view this video from the browser.", @"Warning to show when a video cannot be played")];
+			
+			NSString *altForMovieFallback = [[posterSourcePath lastPathComponent] stringByDeletingPathExtension];// Cheating ... What would be a good alt ?
+			
+			[context pushElementAttribute:@"title" value:cannotViewTitle];
+			[context writeImageWithSrc:posterSourcePath alt:altForMovieFallback width:[[self width] description] height:[[self height] description]];
 		}
 		
 		if (flashTag)
@@ -173,43 +292,35 @@
 			[context endElement];
 			
 			// Now write the post-video-tag surgery since onerror doesn't really work
+			// This is hackish browser-sniffing!  Maybe later we can do away with this (especially if we can get > 1 video source)
 			
 			[context startJavascriptElementWithSrc:nil];
 			[context stopWritingInline];
-			[context writeString:[NSString stringWithFormat:@"var video = document.getElementById('%@');", idNameVideo]];
+			[context writeString:[NSString stringWithFormat:@"var video = document.getElementById('%@');\n", idNameVideo]];
+			[context writeString:[NSString stringWithFormat:@"if (video.canPlayType && video.canPlayType('%@')) {\n", [NSString MIMETypeForUTI:type]]];
+			[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
 			
-			/*
-			 <script>
-			 var video = document.getElementById('video1234');
-			 if (video.canPlayType && video.canPlayType('video/mp4')) {
-			 // canPlayType is overoptimistic, so we have browser sniff.
-			 if (navigator.userAgent.indexOf('WebKit/') <= -1) {
-			 // Only webkit-browsers can play this natively
-			 fallback(video);
-			 }
-			 } else {
-			 fallback(video);
-			 }
-			 </script>
-			 
-			 
-			 
-			 
-			 */
-			
-			
-			// [context writeString:surgery];
+			// we have mp4, so no ogv/webm, so force a fallback if NOT webkit-based.
+			if ([type conformsToUTI:@"public.mpeg-4"])
+			{
+				[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play this natively\n\t\tfallback(video);\n\t}\n"];
+			}
+			else	// we have an ogv or webm (or something else?) so fallback if it's Safari, which won't handle it
+			{
+				[context writeString:@"\tif (navigator.userAgent.indexOf(' Safari/') > -1) {\n\t\t// Safari can't play this natively\n\t\tfallback(video);\n\t}\n"];
+			}
+			[context writeString:@"} else {\n\tfallback(video);\n"];
 			[context endElement];
-			
 		}
 		
 	}
 	else	// none of the above -- indicate that we don't know what to insert
 	{
-		
-		 
-		
-		
+		[context pushElementAttribute:@"width" value:[[self width] description]];
+		[context pushElementAttribute:@"height" value:[[self height] description]];
+		[context startElement:@"div"];
+		[context writeElement:@"p" text:NSLocalizedString(@"Unable to show video. Perhaps it is not a recognized video format.", @"Warning shown to user when video can't be embedded")];
+		[context endElement];		// the div
 	}
 	
 	
@@ -334,7 +445,7 @@
 	{
 		result = NSLocalizedString(@"Video will only play on certain browsers.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
-	else if ([type conformsToUTI:@"com.adobe.flash-video"])
+	else if ([type conformsToUTI:@"com.adobe.flash.video"])
 	{
 		result = NSLocalizedString(@"Video will not play on iOS devices", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
