@@ -193,6 +193,8 @@ static id <SVPlugInContext> sCurrentContext;
     return [NSSet setWithObject:@"container.height"];
 }
 
+- (NSUInteger)minHeight; { return 1; }
+
 - (BOOL)constrainProportions; { return NO; }
 
 + (BOOL)sizeIsExplicit; { return NO; }

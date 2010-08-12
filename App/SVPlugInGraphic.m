@@ -294,6 +294,8 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 }
 + (NSSet *)keyPathsForValuesAffectingContentHeight; { return [NSSet setWithObject:@"plugIn.height"]; }
 
+- (NSUInteger)minHeight; { return [[self plugIn] minHeight]; }
+
 
 - (BOOL)constrainProportions; { return [[self plugIn] constrainProportions]; }
 - (void)setConstrainProportions:(BOOL)constrain;
