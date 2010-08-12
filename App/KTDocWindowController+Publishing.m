@@ -27,6 +27,7 @@
 #import "NSObject+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "NSWorkspace+Karelia.h"
+#import "NSToolbar+Karelia.h"
 
 #import "Registration.h"
 
@@ -80,11 +81,13 @@
     [windowController release];
 }
 
-/*  Usually acts just like -publishSiteChanges: but calls -publishEntireSite: if the Option key is pressed
+/*  Usually acts just like -publishSiteChanges: but calls -publishEntireSite: if the Option key is pressed (when there is no PublishAll)
  */
 - (IBAction)publishSiteFromToolbar:(NSToolbarItem *)sender;
 {
-    if ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask)
+	NSToolbarItem *publishAllToolbarItem = [[[self window] toolbar] itemWithIdentifier:@"publishAll"];
+
+    if (!publishAllToolbarItem && ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) )
     {
         [self publishSiteAll:sender];
     }

@@ -71,14 +71,17 @@
 {
 }
 
-/*  Holding down the option key should change "Publish" to "Publish All"
+/*  Holding down the option key should change "Publish" to "Publish All" (unless the publishAll item is there)
  *  Similar code also exists in -validateToolbarItem: since their's a few edge cases that -flagsChanged: doesn't catch
  */
 - (void)flagsChanged:(NSEvent *)theEvent
 {
-    NSToolbarItem *toolbarItem = [[[self window] toolbar] itemWithIdentifier:@"saveToHost:"];
-    [toolbarItem setLabel:([theEvent modifierFlags] & NSAlternateKeyMask ? TOOLBAR_PUBLISH_ALL : TOOLBAR_PUBLISH)];
-    
+    NSToolbarItem *publishAllToolbarItem = [[[self window] toolbar] itemWithIdentifier:@"publishAll"];
+	if (!publishAllToolbarItem)
+	{
+		NSToolbarItem *toolbarItem = [[[self window] toolbar] itemWithIdentifier:@"saveToHost:"];
+		[toolbarItem setLabel:([theEvent modifierFlags] & NSAlternateKeyMask ? TOOLBAR_PUBLISH_ALL : TOOLBAR_PUBLISH)];
+	}
     
     [super flagsChanged:theEvent];
 }

@@ -43,6 +43,7 @@
 #import "NSResponder+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSWindow+Karelia.h"
+#import "NSToolbar+Karelia.h"
 
 #import "KSProgressPanel.h"
 
@@ -690,8 +691,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     // Validate the -publishSiteFromToolbar: item here because -flagsChanged: doesn't catch all edge cases
     else if (action == @selector(publishSiteFromToolbar:))
     {
-        [toolbarItem setLabel:
-         ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) ? TOOLBAR_PUBLISH_ALL : TOOLBAR_PUBLISH];
+		NSToolbarItem *publishAllToolbarItem = [[[self window] toolbar] itemWithIdentifier:@"publishAll"];
+		if (!publishAllToolbarItem)
+		{
+			[toolbarItem setLabel:
+			 ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) ? TOOLBAR_PUBLISH_ALL : TOOLBAR_PUBLISH];
+		}
+		
     }
     
     return result;
