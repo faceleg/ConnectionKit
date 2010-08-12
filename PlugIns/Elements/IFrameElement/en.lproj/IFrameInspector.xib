@@ -33,7 +33,7 @@
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSTextField" id="328061010">
 						<reference key="NSNextResponder" ref="1000737777"/>
-						<int key="NSvFlags">266</int>
+						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{7, 59}, {147, 14}}</string>
 						<reference key="NSSuperview" ref="1000737777"/>
 						<bool key="NSEnabled">YES</bool>
@@ -70,7 +70,7 @@
 					<object class="NSTextField" id="394107175">
 						<reference key="NSNextResponder" ref="1000737777"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{10, 32}, {230, 19}}</string>
+						<string key="NSFrame">{{10, 32}, {210, 19}}</string>
 						<reference key="NSSuperview" ref="1000737777"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="512414552">
@@ -103,7 +103,7 @@
 					</object>
 					<object class="NSButton" id="989891539">
 						<reference key="NSNextResponder" ref="1000737777"/>
-						<int key="NSvFlags">266</int>
+						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{7, 8}, {90, 18}}</string>
 						<reference key="NSSuperview" ref="1000737777"/>
 						<bool key="NSEnabled">YES</bool>
@@ -129,7 +129,7 @@
 						</object>
 					</object>
 				</array>
-				<string key="NSFrameSize">{250, 81}</string>
+				<string key="NSFrameSize">{230, 81}</string>
 				<reference key="NSSuperview"/>
 				<object class="NSMutableString" key="NSClassName">
 					<characters key="NS.bytes">NSView</characters>
@@ -287,7 +287,7 @@
 				<string key="111.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="112.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="119.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="5.IBEditorWindowLastContentRect">{{763, 579}, {250, 81}}</string>
+				<string key="5.IBEditorWindowLastContentRect">{{763, 579}, {230, 81}}</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="5.ImportedFromIB2"/>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
