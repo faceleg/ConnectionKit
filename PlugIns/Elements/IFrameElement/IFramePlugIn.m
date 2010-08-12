@@ -41,7 +41,6 @@
 @implementation IFramePlugIn
 
 
-#pragma mark -
 #pragma mark SVPlugIn
 
 + (NSArray *)plugInKeys
@@ -76,6 +75,24 @@
     // Set our "show border" checkbox from the defaults
     self.iFrameIsBordered = [[NSUserDefaults standardUserDefaults] boolForKey:@"iFramePageletIsBordered"];
 }
+
+#pragma mark HTML Generation
+
+- (void)writeHTML:(id <SVPlugInContext>)context
+{
+    [super writeHTML:context];
+    [context addDependencyForKeyPath:@"linkURL" ofObject:self];
+    [context addDependencyForKeyPath:@"iFrameIsBordered" ofObject:self];
+}
+
+- (void)startObjectElement;
+{
+    id <SVPlugInContext> context = [SVPlugIn currentContext];
+    [[context HTMLWriter] startElement:@"div" bindSizeToPlugIn:self attributes:nil];
+}
+
+- (void)endElement; { [[[SVPlugIn currentContext] HTMLWriter] endElement]; }
+
 
 #pragma mark Metrics
 
