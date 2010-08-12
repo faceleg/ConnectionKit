@@ -792,6 +792,13 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		self == [NSBundle class]) {
 		//NSLog(@"Switching in NSBundle localizer. W00T!");
         method_exchangeImplementations(class_getClassMethod(self, @selector(loadNibFile:externalNameTable:withZone:)), class_getClassMethod(self, @selector(deliciousLocalizingLoadNibFile:externalNameTable:withZone:)));
+		
+		
+		// DEBUG-ONLY ... localizedStringForKey gets a longer version installed
+		method_exchangeImplementations(class_getInstanceMethod(self, @selector(localizedStringForKey:value:table:)), class_getInstanceMethod(self, @selector(debugLocalizedStringForKey:value:table:)));
+
+
+		
     }
     [autoreleasePool release];
 }
@@ -818,7 +825,34 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	return result;
 }
 
-
+- (NSString *)debugLocalizedStringForKey:(NSString *)key value:(NSString *)value table:(NSString *)tableName;
+{
+	NSString *string = [self debugLocalizedStringForKey:key value:value table:tableName];
+	
+	if (![string isEqualToString:@"I AM THE DEFAULT VALUE"])
+	{
+		//       NSLog(@"        Can't find translation for string %@", string);
+		//return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
+		// return string;
+		// Simulate all strings being 40% longer
+		float len = [string length];
+		float extra = ceilf(0.40 * len);
+		extra = MIN(extra, 100);		// don't pad more than 100 chars
+		NSString *insert = [@"...................................................................................................." substringToIndex:(int)extra];
+		int halflen = len/2;
+		// NSLog(@"half char = %c", [string characterAtIndex:halflen-1]);
+		if ([string characterAtIndex:halflen] == '%')
+		{
+			halflen -= 1;	// don't split up a %@
+		}
+		string = [NSString stringWithFormat:@"%@%@%@",
+				[string substringToIndex:halflen],
+				insert,
+				[string substringFromIndex:halflen]];
+		
+	}
+	return string;
+}
 
 
 
