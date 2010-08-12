@@ -39,6 +39,10 @@
 #import "YouTubeCocoaExtensions.h"
 
 
+#define YOUTUBE_BORDER_HEIGHT 20
+#define YOUTUBE_CONTROLBAR_HEIGHT 25
+
+
 @implementation YouTubePlugIn
 
 
@@ -127,42 +131,6 @@
 
 - (NSUInteger)height
 {
-    //FIXME: need API for knowing if in sidebar/callout to account for these add'l sizing calcs
-    
-//	if (self.widescreen)
-//	{
-//		result = heightsWide[1];
-//		if (self.videoSize == YouTubeVideoSizeSidebar && self.showBorder)	// special case for bordered in sidebar
-//		{
-//			// Borders leaves 180 pixels for width of video
-//			result = 101;
-//		}
-//		else if (self.videoSize < NUMBER_OF_VIDEO_SIZES)
-//		{
-//			result = heightsWide[self.videoSize];
-//		}
-//	}
-//	else
-//	{
-//		result = heights[1];
-//		if (self.videoSize == YouTubeVideoSizeSidebar && self.showBorder)	// special case for bordered in sidebar
-//		{
-//			// Borders leaves 180 pixels for width of video
-//			result = 135;
-//		}
-//		else if (self.videoSize < 8)
-//		{
-//			result = heights[self.videoSize];
-//		}
-//	}	
-//	if (self.showBorder && self.videoSize != YouTubeVideoSizeSidebar) 
-//	{
-//		result += 20;
-//	}
-//	result += 25;	// room for the control bar.
-//	
-//	return result;
-    
     NSUInteger result = 0;
     
     NSUInteger width = [self width];
@@ -177,17 +145,37 @@
     
     if ( self.showBorder )
     {
-        result += 20;
+        result += YOUTUBE_BORDER_HEIGHT;
     }
     
-    result += 25; // room for the control bar
+    result += YOUTUBE_CONTROLBAR_HEIGHT; // always leave room for the control bar
     
     return result;
 }
+
 - (void)setHeight:(NSUInteger)height;
 {
-    // TODO: Calculate corresponding width and call [self setWidth:] with it.
+    // account for control bar (always there)
+    NSUInteger videoHeight = height - YOUTUBE_CONTROLBAR_HEIGHT;
+    
+    // account for YouTube's (colored) border, if showing
+    if ( self.showBorder ) videoHeight -= YOUTUBE_BORDER_HEIGHT;
+    
+    //FIXME: we need to constrain height to be not less than YOUTUBE_CONTROLBAR_HEIGHT +/- YOUTUBE_BORDER_HEIGHT + 1
+    
+    NSUInteger videoWidth = 0;
+    if ( self.widescreen )
+    {
+        videoWidth = (videoHeight * 16)/9;
+    }
+    else
+    {
+        videoWidth = (videoHeight * 4)/3;
+    }
+    
+    [self setWidth:videoWidth];
 }
+
 + (NSSet *)keyPathsForValuesAffectingHeight;
 {
     return [NSSet setWithObject:@"width"];
