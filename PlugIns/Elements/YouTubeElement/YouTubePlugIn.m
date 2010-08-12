@@ -108,18 +108,7 @@
     [context addDependencyForKeyPath:@"includeRelatedVideos" ofObject:self];    
 }
 
-- (NSUInteger)videoWidth
-{
-    NSUInteger result = 360; // start with something, small enough to fit in sidebar if need be
-    
-    NSNumber *containerWidth = [[self container] containerWidth];
-    if ( containerWidth )
-    {
-        result = [containerWidth unsignedIntegerValue];
-    }
-    
-    return result;
-}
+#pragma mark Metrics
 
 - (NSUInteger)videoHeight
 {
@@ -161,7 +150,7 @@
     
     NSUInteger result = 0;
     
-    NSUInteger width = [self videoWidth];
+    NSUInteger width = [self width];
     if ( self.widescreen )
     {
         result = (width * 9)/16;
@@ -181,8 +170,8 @@
     return result;
 }
 
++ (BOOL)sizeIsExplicit; { return YES; }
 
-#pragma mark -
 #pragma mark Colors
 
 + (NSColor *)defaultPrimaryColor;

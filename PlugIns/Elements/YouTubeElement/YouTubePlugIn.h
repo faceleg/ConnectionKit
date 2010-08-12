@@ -58,9 +58,6 @@
 	BOOL _useCustomSecondaryColor;
 }
 
-@property (nonatomic, readonly) NSUInteger videoWidth;
-@property (nonatomic, readonly) NSUInteger videoHeight;
-
 @property (nonatomic, copy) NSString *userVideoCode;
 @property (nonatomic, copy) NSString *videoID;
 
