@@ -170,6 +170,7 @@
     return result;
 }
 
+- (BOOL)constrainProportions; { return YES; }
 + (BOOL)sizeIsExplicit; { return YES; }
 
 #pragma mark Colors
