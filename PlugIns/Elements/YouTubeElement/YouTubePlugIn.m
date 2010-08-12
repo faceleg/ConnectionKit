@@ -100,12 +100,7 @@
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
     [super writeHTML:context];
-    [context addDependencyForKeyPath:@"container.containerWidth" ofObject:self];
-    [context addDependencyForKeyPath:@"showBorder" ofObject:self];
     [context addDependencyForKeyPath:@"widescreen" ofObject:self];
-    [context addDependencyForKeyPath:@"playHD" ofObject:self];
-    [context addDependencyForKeyPath:@"privacy" ofObject:self];
-    [context addDependencyForKeyPath:@"includeRelatedVideos" ofObject:self];    
 }
 
 #pragma mark Metrics
