@@ -261,7 +261,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     SVPlugIn *plugIn = [self plugIn];
     
     NSNumber *result = nil;
-    if ([[plugIn class] sizeIsExplicit] || [[self placement] intValue] == SVGraphicPlacementInline)
+    if ([[plugIn class] sizeIsExplicit])
     {
         NSUInteger height = [plugIn height];
         if (height) result = [NSNumber numberWithUnsignedInteger:height];
