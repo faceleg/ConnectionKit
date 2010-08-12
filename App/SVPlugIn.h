@@ -11,7 +11,7 @@
 #import <iMedia/IMBImageItem.h>
 
 
-@class SVInspectorViewController;
+@class SVPlugIn, SVInspectorViewController;
 @protocol SVHTMLWriter, SVPage, SVPageletPlugInContainer;
 
 #pragma mark -
@@ -69,6 +69,11 @@
 
 //  <a href="...." target="..." rel="nofollow">
 - (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
+
+// The element's size will be taken from plug-in's .width and .height properties. When editing, that will be kept up-to-date, live.
+- (void)startElement:(NSString *)elementName
+    bindSizeToPlugIn:(SVPlugIn *)plugIn
+          attributes:(NSDictionary *)attributes;
 
 - (BOOL)isXHTML;
 - (NSStringEncoding)encoding;   // default is UTF-8

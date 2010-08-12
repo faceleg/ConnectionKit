@@ -134,6 +134,12 @@ typedef enum {
 - (NSUInteger)numberOfGraphicsOnPage; // incremented for each call to -writeGraphic:
 
 
+#pragma mark Metrics
+- (void)startElement:(NSString *)elementName
+    bindSizeToObject:(NSObject *)object
+          attributes:(NSDictionary *)attributes;
+
+
 #pragma mark Callouts
 - (void)startCalloutForGraphic:(SVGraphic *)graphic;
 - (BOOL)isWritingCallout;

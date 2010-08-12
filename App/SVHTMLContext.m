@@ -595,6 +595,25 @@
     [_calloutAlignment release]; _calloutAlignment = nil;
 }
 
+#pragma mark Metrics
+
+- (void)startElement:(NSString *)elementName
+    bindSizeToObject:(NSObject *)object
+          attributes:(NSDictionary *)attributes;
+{
+    [self pushElementAttribute:@"width" value:[[object valueForKey:@"width"] description]];
+    [self pushElementAttribute:@"height" value:[[object valueForKey:@"height"] description]];
+    
+    [self startElement:elementName attributes:attributes];
+}
+
+- (void)startElement:(NSString *)elementName
+    bindSizeToPlugIn:(SVPlugIn *)plugIn
+          attributes:(NSDictionary *)attributes;
+{
+    [self startElement:elementName bindSizeToObject:plugIn attributes:attributes];
+}
+
 #pragma mark URLs/Paths
 
 - (NSString *)relativeURLStringOfURL:(NSURL *)URL;
