@@ -93,8 +93,6 @@
     self.color2 = [YouTubePlugIn defaultPrimaryColor];  
 }
 
-
-#pragma mark -
 #pragma mark HTML Generation
 
 - (void)writeHTML:(id <SVPlugInContext>)context
@@ -102,6 +100,28 @@
     [super writeHTML:context];
     [context addDependencyForKeyPath:@"widescreen" ofObject:self];
 }
+
+- (void)startObjectElement;
+{
+    id <SVPlugInContext> context = [SVPlugIn currentContext];
+    
+    if ([context liveDataFeeds])
+    {
+        NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"application/x-shockwave-flash"
+                                                               forKey:@"type"];
+        [[context HTMLWriter] startElement:@"object"
+                          bindSizeToPlugIn:self
+                                attributes:attributes];
+    }
+    else
+    {
+        NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
+                                                               forKey:@"class"];
+        [[context HTMLWriter] startElement:@"div" bindSizeToPlugIn:self attributes:attributes];
+    }
+}
+
+- (void)endElement; { [[[SVPlugIn currentContext] HTMLWriter] endElement]; }
 
 #pragma mark Metrics
 
