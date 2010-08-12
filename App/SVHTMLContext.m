@@ -391,7 +391,7 @@
 // Override to sort the keys so that they are always consistently written.
 - (void)startElement:(NSString *)elementName attributes:(NSDictionary *)attributes;
 {
-	NSArray *sortedAttributes = [attributes sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+	NSArray *sortedAttributes = [[attributes allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     for (NSString *aName in sortedAttributes)
     {
         NSString *aValue = [attributes objectForKey:aName];
@@ -601,8 +601,20 @@
     bindSizeToObject:(NSObject *)object
           attributes:(NSDictionary *)attributes;
 {
-    [self pushElementAttribute:@"width" value:[[object valueForKey:@"width"] description]];
-    [self pushElementAttribute:@"height" value:[[object valueForKey:@"height"] description]];
+    NSNumber *width = [object valueForKey:@"width"];
+    NSNumber *height = [object valueForKey:@"height"];
+    
+    // Only some elements support directly sizing. Others have to use CSS
+    if ([elementName isEqualToString:@"img"] || [elementName isEqualToString:@"object"] || [elementName isEqualToString:@"embed"] || [elementName isEqualToString:@"iframe"])
+    {
+        [self pushElementAttribute:@"width" value:[width description]];
+        [self pushElementAttribute:@"height" value:[height description]];
+    }
+    else
+    {
+        NSString *style = [NSString stringWithFormat:@"width:%@px; height:%@px;", width, height];
+        [self pushElementAttribute:@"style" value:style];
+    }
     
     [self startElement:elementName attributes:attributes];
 }
