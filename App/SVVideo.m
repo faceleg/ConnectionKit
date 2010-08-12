@@ -20,6 +20,35 @@
 
 @implementation SVVideo 
 
+- (void)dealloc
+{
+	[self removeObserver:self forKeyPath:@"autoplay"];
+	[self removeObserver:self forKeyPath:@"controller"];
+	[super dealloc];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+	if ([keyPath isEqualToString:@"autoplay"])
+	{
+		if (self.autoplay.boolValue)	// if we turn on autoplay, we also turn on preload
+		{
+			self.preload = NSBOOL(YES);
+		}
+		
+	}
+	else if ([keyPath isEqualToString:@"controller"])
+	{
+		if (!self.controller.boolValue)	// if we turn off controller, we turn on autoplay so we can play!
+		{
+			self.autoplay = NSBOOL(YES);
+		}
+	}
+}
+
 + (SVVideo *)insertNewMovieInManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVVideo *result = [NSEntityDescription insertNewObjectForEntityForName:@"Movie"
@@ -29,6 +58,9 @@
 
 - (void)willInsertIntoPage:(KTPage *)page;
 {
+	[self addObserver:self forKeyPath:@"autoplay"	options:(NSKeyValueObservingOptionNew) context:nil];
+	[self addObserver:self forKeyPath:@"controller"	options:(NSKeyValueObservingOptionNew) context:nil];
+
     // Placeholder image
     if (![self media])
     {
@@ -138,15 +170,15 @@
 			// Actually write the video
 			[context pushElementAttribute:@"id" value:idNameVideo];
 			if ([self displayInline]) [self buildClassName:context];
-			[context pushElementAttribute:@"src" value:movieSourcePath];
 			[context pushElementAttribute:@"width" value:[[self width] description]];
 			[context pushElementAttribute:@"height" value:[[self height] description]];
-			if (self.controller)	[context pushElementAttribute:@"controls" value:@"controls"];	// boolean attribute
-			if (self.autoplay)		[context pushElementAttribute:@"controls" value:@"controls"];	// boolean attribute
-			if (self.loop)			[context pushElementAttribute:@"loop" value:@"loop"];			// boolean attribute
-			[context pushElementAttribute:@"preload" value:(self.preload) ? @"auto" : @"none" ];
+			
+			if (self.controller.boolValue)	[context pushElementAttribute:@"controls" value:@"controls"];		// boolean attribute
+			if (self.autoplay.boolValue)	[context pushElementAttribute:@"autoplay" value:@"autoplay"];
+			[context pushElementAttribute:@"preload" value:self.preload.boolValue ? @"auto" : @"none" ];
+			if (self.loop.boolValue)		[context pushElementAttribute:@"loop" value:@"loop"];
 
-			// POSTER: poster="....."
+			// POSTER: poster="....." Maybe some sort of iPad sniffing to disallow?
 			
 			[context startElement:@"video"];
 
@@ -215,22 +247,34 @@
 				NSDictionary *formatLookupDict = (self.posterFrame) ? posterParamLookup : noPosterParamLookup;
 				flashVarFormatString = [formatLookupDict objectForKey:videoFlashPlayer];
 			}
-			if (videoFlashExtras)	// append other parameters (usually like key1=value1&key2=value2)
-			{
-				flashVarFormatString = [NSString stringWithFormat:@"%@&%@", flashVarFormatString, videoFlashExtras];
-			}
-			// Now build up the string
-			NSString *flashVars = nil;
+
+			// Now instantiate the string from the format
+			NSMutableString *flashVars = nil;
 			NSString *movieSourcePathOrURLString  = videoFlashRequiresFullURL ? [movieSourceURL  absoluteString] : movieSourcePath;
 			NSString *posterSourcePathOrURLString = videoFlashRequiresFullURL ? [posterSourceURL absoluteString] : posterSourcePath;
 			if (self.posterFrame)
 			{
-				flashVars = [NSString stringWithFormat:flashVarFormatString, movieSourcePathOrURLString, posterSourcePathOrURLString];
+				flashVars = [NSMutableString stringWithFormat:flashVarFormatString, movieSourcePathOrURLString, posterSourcePathOrURLString];
 			}
 			else
 			{
-				flashVars = [NSString stringWithFormat:flashVarFormatString, movieSourcePathOrURLString];
+				flashVars = [NSMutableString stringWithFormat:flashVarFormatString, movieSourcePathOrURLString];
 			}
+			
+			
+			if ([videoFlashPlayer isEqualToString:@"flvplayer"])
+			{
+				[flashVars appendFormat:@"&showplayer=%@", (self.controller.boolValue) ? @"autohide" : @"never"];
+				if (self.autoplay.boolValue)	[flashVars appendString:@"&autoplay=1"];
+				if (self.preload.boolValue)		[flashVars appendString:@"&autoload=1"];
+				if (self.loop.boolValue)		[flashVars appendString:@"&loop=1"];
+			}
+			if (videoFlashExtras)	// append other parameters (usually like key1=value1&key2=value2)
+			{
+				[flashVars appendString:@"&"];
+				[flashVars appendString:videoFlashExtras];
+			}
+			
 			NSString *playerPath = nil;
 			if (videoFlashPath)
 			{

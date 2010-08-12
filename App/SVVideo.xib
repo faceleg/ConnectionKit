@@ -34,7 +34,7 @@
 					<object class="NSTextField" id="413958448">
 						<reference key="NSNextResponder" ref="913361672"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{31, 209}, {192, 42}}</string>
+						<string key="NSFrame">{{31, 229}, {192, 42}}</string>
 						<reference key="NSSuperview" ref="913361672"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="335458967">
@@ -78,7 +78,7 @@
 							<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
 							<string>NeXT TIFF v4.0 pasteboard type</string>
 						</set>
-						<string key="NSFrame">{{10, 236}, {16, 16}}</string>
+						<string key="NSFrame">{{10, 256}, {16, 16}}</string>
 						<reference key="NSSuperview" ref="913361672"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSImageCell" key="NSCell" id="949739336">
@@ -98,7 +98,7 @@
 					<object class="NSBox" id="628658729">
 						<reference key="NSNextResponder" ref="913361672"/>
 						<int key="NSvFlags">10</int>
-						<string key="NSFrame">{{10, 198}, {210, 5}}</string>
+						<string key="NSFrame">{{10, 218}, {210, 5}}</string>
 						<reference key="NSSuperview" ref="913361672"/>
 						<string key="NSOffsets">{0, 0}</string>
 						<object class="NSTextFieldCell" key="NSTitleCell">
@@ -156,16 +156,16 @@
 					<object class="NSMatrix" id="878256204">
 						<reference key="NSNextResponder" ref="913361672"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{10, 112}, {127, 58}}</string>
+						<string key="NSFrame">{{10, 112}, {127, 78}}</string>
 						<reference key="NSSuperview" ref="913361672"/>
 						<bool key="NSEnabled">YES</bool>
-						<int key="NSNumRows">3</int>
+						<int key="NSNumRows">4</int>
 						<int key="NSNumCols">1</int>
 						<array class="NSMutableArray" key="NSCells">
 							<object class="NSButtonCell" id="918964117">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Automatically play</string>
+								<string key="NSContents">Show controller</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="878256204"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -231,7 +231,7 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 							<object class="NSButtonCell" id="751711492">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Show Controller</string>
+								<string key="NSContents">Automatically play</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="878256204"/>
 								<int key="NSTag">1</int>
@@ -246,13 +246,27 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 							<object class="NSButtonCell" id="864557290">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Loop</string>
+								<string key="NSContents">Automatically load</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="878256204"/>
 								<int key="NSTag">2</int>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">2</int>
 								<reference key="NSNormalImage" ref="780932167"/>
+								<reference key="NSAlternateImage" ref="429312519"/>
+								<string key="NSAlternateContents"/>
+								<int key="NSPeriodicDelay">200</int>
+								<int key="NSPeriodicInterval">25</int>
+							</object>
+							<object class="NSButtonCell" id="653184270">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">131072</int>
+								<string key="NSContents">Loop</string>
+								<reference key="NSSupport" ref="26"/>
+								<reference key="NSControlView" ref="878256204"/>
+								<int key="NSTag">-1</int>
+								<int key="NSButtonFlags">1211912703</int>
+								<int key="NSButtonFlags2">2</int>
 								<reference key="NSAlternateImage" ref="429312519"/>
 								<string key="NSAlternateContents"/>
 								<int key="NSPeriodicDelay">200</int>
@@ -277,8 +291,7 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 							<int key="NSPeriodicDelay">200</int>
 							<int key="NSPeriodicInterval">25</int>
 						</object>
-						<int key="NSSelectedRow">-1</int>
-						<int key="NSSelectedCol">-1</int>
+						<reference key="NSSelectedCell" ref="918964117"/>
 						<reference key="NSBackgroundColor" ref="462958731"/>
 						<reference key="NSCellBackgroundColor" ref="462958731"/>
 					</object>
@@ -305,7 +318,7 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 					<object class="NSTextField" id="328372100">
 						<reference key="NSNextResponder" ref="913361672"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{7, 178}, {49, 14}}</string>
+						<string key="NSFrame">{{7, 198}, {49, 14}}</string>
 						<reference key="NSSuperview" ref="913361672"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="656828391">
@@ -319,7 +332,7 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 						</object>
 					</object>
 				</array>
-				<string key="NSFrameSize">{230, 252}</string>
+				<string key="NSFrameSize">{230, 272}</string>
 				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 				<string key="NSExtension">NSResponder</string>
@@ -334,38 +347,6 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 						<reference key="destination" ref="913361672"/>
 					</object>
 					<int key="connectionID">160</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.autoplay</string>
-						<reference key="source" ref="918964117"/>
-						<reference key="destination" ref="36281372"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="918964117"/>
-							<reference key="NSDestination" ref="36281372"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.autoplay</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.autoplay</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">161</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.controller</string>
-						<reference key="source" ref="751711492"/>
-						<reference key="destination" ref="36281372"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="751711492"/>
-							<reference key="NSDestination" ref="36281372"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.controller</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.controller</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">162</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -402,10 +383,10 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: inspectedObjectsController.selection.loop</string>
-						<reference key="source" ref="864557290"/>
+						<reference key="source" ref="653184270"/>
 						<reference key="destination" ref="36281372"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="864557290"/>
+							<reference key="NSSource" ref="653184270"/>
 							<reference key="NSDestination" ref="36281372"/>
 							<string key="NSLabel">value: inspectedObjectsController.selection.loop</string>
 							<string key="NSBinding">value</string>
@@ -413,7 +394,95 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">174</int>
+					<int key="connectionID">177</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.autoplay</string>
+						<reference key="source" ref="751711492"/>
+						<reference key="destination" ref="36281372"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="751711492"/>
+							<reference key="NSDestination" ref="36281372"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.autoplay</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.autoplay</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">179</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.controller</string>
+						<reference key="source" ref="751711492"/>
+						<reference key="destination" ref="36281372"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="751711492"/>
+							<reference key="NSDestination" ref="36281372"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.controller</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.controller</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">184</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.controller</string>
+						<reference key="source" ref="918964117"/>
+						<reference key="destination" ref="36281372"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="918964117"/>
+							<reference key="NSDestination" ref="36281372"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.controller</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.controller</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">185</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.autoplay</string>
+						<reference key="source" ref="864557290"/>
+						<reference key="destination" ref="36281372"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="864557290"/>
+							<reference key="NSDestination" ref="36281372"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.autoplay</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.autoplay</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">187</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.preload</string>
+						<reference key="source" ref="864557290"/>
+						<reference key="destination" ref="36281372"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="864557290"/>
+							<reference key="NSDestination" ref="36281372"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.preload</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.preload</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">188</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -450,9 +519,9 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 							<reference ref="628658729"/>
 							<reference ref="324963362"/>
 							<reference ref="413958448"/>
-							<reference ref="878256204"/>
 							<reference ref="967306371"/>
 							<reference ref="562366246"/>
+							<reference ref="878256204"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">View</string>
@@ -465,6 +534,7 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 							<reference ref="751711492"/>
 							<reference ref="864557290"/>
 							<reference ref="1021531392"/>
+							<reference ref="653184270"/>
 						</array>
 						<reference key="parent" ref="913361672"/>
 					</object>
@@ -558,6 +628,11 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 						<reference key="object" ref="335458967"/>
 						<reference key="parent" ref="413958448"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">176</int>
+						<reference key="object" ref="653184270"/>
+						<reference key="parent" ref="878256204"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -581,9 +656,10 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 				<string key="168.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="169.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="170.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="176.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="21.ImportedFromIB2"/>
-				<string key="7.IBEditorWindowLastContentRect">{{57, 754}, {230, 252}}</string>
+				<string key="7.IBEditorWindowLastContentRect">{{57, 734}, {230, 272}}</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="7.IBViewEditorWindowController.showingLayoutRectangles"/>
 				<boolean value="YES" key="7.ImportedFromIB2"/>
@@ -594,7 +670,7 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">175</int>
+			<int key="maxID">188</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -18,10 +18,10 @@
 
 @property(nonatomic, retain) SVMediaRecord *posterFrame;
 
-@property(assign) BOOL autoplay;
-@property(assign) BOOL controller;
-@property(assign) BOOL loop;
-@property(assign) BOOL preload;
+@property(nonatomic, copy) NSNumber *autoplay;
+@property(nonatomic, copy) NSNumber *controller;	// BOOLs
+@property(nonatomic, copy) NSNumber *loop;
+@property(nonatomic, copy) NSNumber *preload;
 
 #pragma mark Publishing
 
