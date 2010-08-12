@@ -205,13 +205,7 @@
 
 - (void)updateToReflectSelection;
 {
-    if ([self isSelected])
-    {
-        [[[self selectableDOMElement] style] setProperty:@"outline"
-                                                   value:@"1px rgba(0,127,255,0.5) solid"
-                                                priority:@""];
-    }
-    else if ([self isEditing])
+    if ([self isEditing])
     {
         [[[self selectableDOMElement] style] setProperty:@"outline"
                                                    value:@"1px gray solid"
