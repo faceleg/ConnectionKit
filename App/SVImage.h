@@ -18,7 +18,7 @@
 + (SVImage *)insertNewImageInManagedObjectContext:(NSManagedObjectContext *)context;
 
 
-#pragma mark Metrics
+#pragma mark Special
 @property(nonatomic, copy) NSString *alternateText;
 
 

@@ -189,6 +189,18 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 @dynamic height;
 
+- (NSNumber *)contentWidth;
+{
+    return ([[self placement] intValue] == SVGraphicPlacementInline ?
+            [self width] :
+            NSNotApplicableMarker);
+}
+- (void)setContentWidth:(NSNumber *)width;
+{
+    [self setWidth:width];
+}
++ (NSSet *)keyPathsForValuesAffectingContentWidth; { return [NSSet setWithObject:@"width"]; }
+
 #pragma mark Sidebar
 
 + (BOOL)validateSortKeyForPagelets:(NSSet **)pagelets error:(NSError **)error;
@@ -310,19 +322,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 - (id)valueForUndefinedKey:(NSString *)key
 {
     return NSNotApplicableMarker;
-}
-
-- (id)valueForKey:(NSString *)key;
-{
-    // This is a quite an ugly HACK really!
-    // For auto-height items don't let the height be user-editable
-    id result = [super valueForKey:key];
-    if ([key isEqualToString:@"height"] && !result)
-    {
-        result = NSNotApplicableMarker;
-    }
-    
-    return result;
 }
 
 #pragma mark Serialization

@@ -24,7 +24,10 @@
 - (NSURL *)sourceURL;
 
 
-#pragma mark Size
+#pragma mark Metrics
+
+@property(nonatomic, copy) NSNumber *contentWidth;
+@property(nonatomic, copy) NSNumber *contentHeight;
 
 // If -constrainProportions returns YES, sizing methods will adjust to maintain proportions
 - (void)setSize:(NSSize)size;   // convenience

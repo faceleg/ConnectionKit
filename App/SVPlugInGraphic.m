@@ -231,6 +231,54 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [context setCurrentHeaderLevel:level];
 }
 
+#pragma mark Metrics
+
+- (NSNumber *)contentWidth;
+{
+    SVPlugIn *plugIn = [self plugIn];
+    
+    NSNumber *result = nil;
+    if ([[plugIn class] sizeIsExplicit] || [[self placement] intValue] == SVGraphicPlacementInline)
+    {
+        NSUInteger width = [plugIn width];
+        if (width) result = [NSNumber numberWithUnsignedInteger:width];
+    }
+    else
+    {
+        result = NSNotApplicableMarker;
+    }
+    
+    return result;
+}
+- (void)setContentWidth:(NSNumber *)width;
+{
+    [[self plugIn] setWidth:[width unsignedIntegerValue]];
+}
++ (NSSet *)keyPathsForValuesAffectingContentWidth; { return [NSSet setWithObject:@"plugIn.width"]; }
+
+- (NSNumber *)contentHeight;
+{
+    SVPlugIn *plugIn = [self plugIn];
+    
+    NSNumber *result = nil;
+    if ([[plugIn class] sizeIsExplicit] || [[self placement] intValue] == SVGraphicPlacementInline)
+    {
+        NSUInteger height = [plugIn height];
+        if (height) result = [NSNumber numberWithUnsignedInteger:height];
+    }
+    else
+    {
+        result = NSNotApplicableMarker;
+    }
+    
+    return result;
+}
+- (void)setContentHeight:(NSNumber *)height;
+{
+    [[self plugIn] setHeight:[height unsignedIntegerValue]];
+}
++ (NSSet *)keyPathsForValuesAffectingContentHeight; { return [NSSet setWithObject:@"plugIn.height"]; }
+
 #pragma mark Thumbnail
 
 - (id <IMBImageItem>)thumbnail;

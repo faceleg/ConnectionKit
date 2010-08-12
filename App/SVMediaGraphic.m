@@ -82,66 +82,11 @@
 
 #pragma mark Size
 
-- (void)setWidth:(NSNumber *)width;
-{
-    [self willChangeValueForKey:@"width"];
-    [self setPrimitiveValue:width forKey:@"width"];
-    [self didChangeValueForKey:@"width"];
-    
-    NSNumber *aspectRatio = [self constrainedAspectRatio];
-    if (aspectRatio)
-    {
-        NSUInteger height = ([width floatValue] / [aspectRatio floatValue]);
-        
-        [self willChangeValueForKey:@"height"];
-        [self setPrimitiveValue:[NSNumber numberWithUnsignedInteger:height] forKey:@"height"];
-        [self didChangeValueForKey:@"height"];
-    }
-}
-- (BOOL)validateWidth:(NSNumber **)width error:(NSError **)error;
-{
-    // SVGraphic.width is optional. For media graphics it becomes compulsary
-    BOOL result = (*width != nil);
-    if (!result && error)
-    {
-        *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                     code:NSValidationMissingMandatoryPropertyError
-                     localizedDescription:@"width is a mandatory property"];
-    }
-    
-    return result;
-}
+- (NSNumber *)contentWidth; { return [self width]; }
+- (void)setContentWidth:(NSNumber *)width; { [self setWidth:width]; }
 
-- (void)setHeight:(NSNumber *)height;
-{
-    [self willChangeValueForKey:@"height"];
-    [self setPrimitiveValue:height forKey:@"height"];
-    [self didChangeValueForKey:@"height"];
-    
-    NSNumber *aspectRatio = [self constrainedAspectRatio];
-    if (aspectRatio)
-    {
-        NSUInteger width = ([height floatValue] * [aspectRatio floatValue]);
-        
-        [self willChangeValueForKey:@"width"];
-        [self setPrimitiveValue:[NSNumber numberWithUnsignedInteger:width] forKey:@"width"];
-        [self didChangeValueForKey:@"width"];
-    }
-}
-- (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
-{
-    // SVGraphic.width is optional. For media graphics it becomes compulsary
-    BOOL result = (*height != nil);
-    if (!result && error)
-    {
-        *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                     code:NSValidationMissingMandatoryPropertyError
-                     localizedDescription:@"height is a mandatory property"];
-    }
-    
-    return result;
-}
-
+- (NSNumber *)contentHeight; { return [self height]; }
+- (void)setContentHeight:(NSNumber *)height; { [self setContentHeight:height]; }
 
 - (void)setSize:(NSSize)size;
 {
@@ -210,5 +155,67 @@
 }
 
 - (BOOL)canMakeOriginalSize; { return YES; }
+
+#pragma mark Size, inherited
+
+- (void)setWidth:(NSNumber *)width;
+{
+    [self willChangeValueForKey:@"width"];
+    [self setPrimitiveValue:width forKey:@"width"];
+    [self didChangeValueForKey:@"width"];
+    
+    NSNumber *aspectRatio = [self constrainedAspectRatio];
+    if (aspectRatio)
+    {
+        NSUInteger height = ([width floatValue] / [aspectRatio floatValue]);
+        
+        [self willChangeValueForKey:@"height"];
+        [self setPrimitiveValue:[NSNumber numberWithUnsignedInteger:height] forKey:@"height"];
+        [self didChangeValueForKey:@"height"];
+    }
+}
+- (BOOL)validateWidth:(NSNumber **)width error:(NSError **)error;
+{
+    // SVGraphic.width is optional. For media graphics it becomes compulsary
+    BOOL result = (*width != nil);
+    if (!result && error)
+    {
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                     code:NSValidationMissingMandatoryPropertyError
+                     localizedDescription:@"width is a mandatory property"];
+    }
+    
+    return result;
+}
+
+- (void)setHeight:(NSNumber *)height;
+{
+    [self willChangeValueForKey:@"height"];
+    [self setPrimitiveValue:height forKey:@"height"];
+    [self didChangeValueForKey:@"height"];
+    
+    NSNumber *aspectRatio = [self constrainedAspectRatio];
+    if (aspectRatio)
+    {
+        NSUInteger width = ([height floatValue] * [aspectRatio floatValue]);
+        
+        [self willChangeValueForKey:@"width"];
+        [self setPrimitiveValue:[NSNumber numberWithUnsignedInteger:width] forKey:@"width"];
+        [self didChangeValueForKey:@"width"];
+    }
+}
+- (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
+{
+    // SVGraphic.width is optional. For media graphics it becomes compulsary
+    BOOL result = (*height != nil);
+    if (!result && error)
+    {
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                     code:NSValidationMissingMandatoryPropertyError
+                     localizedDescription:@"height is a mandatory property"];
+    }
+    
+    return result;
+}
 
 @end
