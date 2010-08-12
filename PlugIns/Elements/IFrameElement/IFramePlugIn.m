@@ -46,8 +46,6 @@
 + (NSArray *)plugInKeys
 { 
     return [NSArray arrayWithObjects:
-            @"iFrameHeight", 
-            @"iFrameWidth", 
             @"iFrameIsBordered",
             @"linkURL",
             nil];
@@ -104,8 +102,17 @@
                       bindSizeToPlugIn:self
                             attributes:attributes];
 }
-
 - (void)endIFrameElement; { [[[SVPlugIn currentContext] HTMLWriter] endElement]; }
+
+- (void)startPlaceholderElement
+{
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
+                                                           forKey:@"class"];
+    [[[SVPlugIn currentContext] HTMLWriter] startElement:@"div" 
+                                        bindSizeToPlugIn:self 
+                                              attributes:attributes];
+}
+- (void)endPlaceholderElement; { [[[SVPlugIn currentContext] HTMLWriter] endElement]; }
 
 
 #pragma mark Metrics

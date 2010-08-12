@@ -4,7 +4,7 @@
 	<a href="[[=&linkURL]]" title="[[=&container.title]]">[[=container.title]]</a>
 [[=endIFrameElement]]
 [[else]]
-<div class="svx-placeholder" style="width:[[if width]][[=width]]px[[else2]]100%[[endif2]]; height:[[if height]][[=height]][[else2]]200[[endif2]]px;">
+[[=startPlaceholderElement]]
 	[['Placeholder for:]] [[=&linkURL]]
-</div>
+[[=endPlaceholderElement]]
 [[endif]]
