@@ -77,18 +77,10 @@
     self.iFrameIsBordered = [[NSUserDefaults standardUserDefaults] boolForKey:@"iFramePageletIsBordered"];
 }
 
+#pragma mark Metrics
 
--(BOOL)validateiFrameWidth:(id *)ioValue error:(NSError **)outError 
-{
-    if ( *ioValue == nil || [*ioValue isEqual:@""] ) 
-    {
-        *ioValue = [NSNumber numberWithFloat:0.0];
-    }
-    return YES;
-}
++ (BOOL)sizeIsExplicit { return YES; }
 
-
-#pragma mark -
 #pragma mark Properties
 
 @synthesize linkURL = _linkURL;
