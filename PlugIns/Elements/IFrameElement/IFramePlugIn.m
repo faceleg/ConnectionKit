@@ -76,6 +76,7 @@
     self.iFrameIsBordered = [[NSUserDefaults standardUserDefaults] boolForKey:@"iFramePageletIsBordered"];
 }
 
+
 #pragma mark HTML Generation
 
 - (void)writeHTML:(id <SVPlugInContext>)context
@@ -84,19 +85,41 @@
     [context addDependencyForKeyPath:@"linkURL" ofObject:self];
     [context addDependencyForKeyPath:@"iFrameIsBordered" ofObject:self];
 }
-
-- (void)startObjectElement;
+                                     
+- (void)writeIFrameElement
 {
     id <SVPlugInContext> context = [SVPlugIn currentContext];
-    [[context HTMLWriter] startElement:@"div" bindSizeToPlugIn:self attributes:nil];
+    
+    NSString *class = (self.iFrameIsBordered) ? @"iframe-border" : @"iframe-no-border";
+    NSString *frameBorder = (self.iFrameIsBordered) ? @"1" : @"0";
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                class, @"class",
+                                [self.linkURL absoluteString], @"src",
+                                @"test iframe", @"title",
+                                frameBorder, @"frameBorder",
+                                nil];
+    
+    // write iframe
+    // width and height attrs are included by writer
+    [[context HTMLWriter] startElement:@"object"
+                      bindSizeToPlugIn:self
+                            attributes:attributes];
+    
+    
+    // write anchor in case iframe isn't supported by browser
+    [[context HTMLWriter] startAnchorElementWithHref:[self.linkURL absoluteString]
+                                               title:[self.container title] 
+                                              target:nil 
+                                                 rel:nil];
+    [[context HTMLWriter] endElement]; // </a>
+    [[context HTMLWriter] endElement]; // </iframe>
 }
-
-- (void)endElement; { [[[SVPlugIn currentContext] HTMLWriter] endElement]; }
 
 
 #pragma mark Metrics
 
 + (BOOL)sizeIsExplicit { return YES; }
+
 
 #pragma mark Properties
 
