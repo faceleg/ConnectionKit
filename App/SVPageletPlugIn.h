@@ -75,14 +75,18 @@
 - (void)writeInnerHTML:(id <SVPlugInContext>)context;
 
 
-#pragma mark Pages
-- (void)didAddToPage:(id <SVPage>)page;
-
-
 #pragma mark Metrics
+
 // Size methods return 0 when unknown/'auto' sized. You should generally try to use CSS to fill the space available. If your markup is unsuitable for that, aim at 200 pixels. Setter methods are considered a "request" so may not actually change anything, at least not right away.
 @property(nonatomic) NSUInteger width;
 @property(nonatomic) NSUInteger height;
+
+// Default is NO. If your plug-in is based around a sizeable object (e.g. YouTube) return YES to get proper behaviour. This makes width editable in the Inspector when not placed inline (and perhaps more, but you get the idea)
++ (BOOL)sizeIsExplicit;
+
+
+#pragma mark Pages
+- (void)didAddToPage:(id <SVPage>)page;
 
 
 #pragma mark The Wider World

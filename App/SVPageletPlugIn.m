@@ -169,10 +169,6 @@ static id <SVPlugInContext> sCurrentContext;
     [self setValue:[NSNumber numberWithInteger:0] forKey:key];
 }
 
-#pragma mark Pages
-
-- (void)didAddToPage:(id <SVPage>)page; { }
-
 #pragma mark Metrics
 
 - (NSUInteger)width; { return [[(SVGraphic *)[self container] width] unsignedIntegerValue]; }
@@ -196,6 +192,12 @@ static id <SVPlugInContext> sCurrentContext;
 {
     return [NSSet setWithObject:@"container.height"];
 }
+
++ (BOOL)sizeIsExplicit; { return NO; }
+
+#pragma mark Pages
+
+- (void)didAddToPage:(id <SVPage>)page; { }
 
 #pragma mark Thumbnail
 
