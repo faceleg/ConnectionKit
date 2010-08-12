@@ -86,7 +86,7 @@
     [context addDependencyForKeyPath:@"iFrameIsBordered" ofObject:self];
 }
                                      
-- (void)writeIFrameElement
+- (void)startIFrameElement
 {
     id <SVPlugInContext> context = [SVPlugIn currentContext];
     
@@ -103,16 +103,9 @@
     [[context HTMLWriter] startElement:@"iframe"
                       bindSizeToPlugIn:self
                             attributes:attributes];
-    
-    // write anchor in case iframe isn't supported by browser
-    [[context HTMLWriter] startAnchorElementWithHref:[self.linkURL absoluteString]
-                                               title:[self.container title] 
-                                              target:nil 
-                                                 rel:nil];
-    
-    [[context HTMLWriter] endElement]; // </a>
-    [[context HTMLWriter] endElement]; // </iframe>
 }
+
+- (void)endIFrameElement; { [[[SVPlugIn currentContext] HTMLWriter] endElement]; }
 
 
 #pragma mark Metrics
