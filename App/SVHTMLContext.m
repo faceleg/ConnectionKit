@@ -52,6 +52,8 @@
 
 @interface SVHTMLContext ()
 - (void)endCallout;
+- (void)pushAttributes:(NSDictionary *)attributes;
+
 - (SVHTMLIterator *)currentIterator;
 @end
 
@@ -391,16 +393,19 @@
 // Override to sort the keys so that they are always consistently written.
 - (void)startElement:(NSString *)elementName attributes:(NSDictionary *)attributes;
 {
-	NSArray *sortedAttributes = [[attributes allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+	[self pushAttributes:attributes];
+    [self startElement:elementName];
+}
+
+- (void)pushAttributes:(NSDictionary *)attributes;
+{
+    NSArray *sortedAttributes = [[attributes allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     for (NSString *aName in sortedAttributes)
     {
         NSString *aValue = [attributes objectForKey:aName];
         [self pushElementAttribute:aName value:aValue];
     }
-    
-    [self startElement:elementName];
 }
-
 
 #pragma mark Graphics
 
@@ -597,9 +602,7 @@
 
 #pragma mark Metrics
 
-- (void)startElement:(NSString *)elementName
-    bindSizeToObject:(NSObject *)object
-          attributes:(NSDictionary *)attributes;
+- (void)startElement:(NSString *)elementName bindSizeToObject:(NSObject *)object;
 {
     NSNumber *width = [object valueForKey:@"width"];
     NSNumber *height = [object valueForKey:@"height"];
@@ -616,14 +619,16 @@
         [self pushElementAttribute:@"style" value:style];
     }
     
-    [self startElement:elementName attributes:attributes];
+    [self startElement:elementName];
 }
 
 - (void)startElement:(NSString *)elementName
     bindSizeToPlugIn:(SVPlugIn *)plugIn
           attributes:(NSDictionary *)attributes;
 {
-    [self startElement:elementName bindSizeToObject:plugIn attributes:attributes];
+    // Push the extra attributes
+    [self pushAttributes:attributes];
+    [self startElement:elementName bindSizeToObject:plugIn];
 }
 
 #pragma mark URLs/Paths

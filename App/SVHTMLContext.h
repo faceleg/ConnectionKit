@@ -135,9 +135,7 @@ typedef enum {
 
 
 #pragma mark Metrics
-- (void)startElement:(NSString *)elementName
-    bindSizeToObject:(NSObject *)object
-          attributes:(NSDictionary *)attributes;
+- (void)startElement:(NSString *)elementName bindSizeToObject:(NSObject *)object;
 
 
 #pragma mark Callouts
