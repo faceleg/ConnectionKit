@@ -604,6 +604,12 @@
 
 - (void)startElement:(NSString *)elementName bindSizeToObject:(NSObject *)object;
 {
+    [self buildAttributesForElement:elementName bindSizeToObject:object];
+    [self startElement:elementName];
+}
+
+- (void)buildAttributesForElement:elementName bindSizeToObject:(NSObject *)object;  // support
+{
     NSNumber *width = [object valueForKey:@"width"];
     NSNumber *height = [object valueForKey:@"height"];
     
@@ -618,8 +624,6 @@
         NSString *style = [NSString stringWithFormat:@"width:%@px; height:%@px;", width, height];
         [self pushElementAttribute:@"style" value:style];
     }
-    
-    [self startElement:elementName];
 }
 
 - (void)startElement:(NSString *)elementName

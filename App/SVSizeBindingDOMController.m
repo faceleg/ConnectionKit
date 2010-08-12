@@ -10,6 +10,7 @@
 
 #import "SVGraphicDOMController.h"
 #import "SVPageletPlugIn.h"
+#import "SVWebEditorHTMLContext.h"
 
 
 static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
@@ -59,8 +60,18 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Push size change into DOM
-    [element setAttribute:@"width" value:[[object valueForKey:@"width"] description]];
-    [element setAttribute:@"height" value:[[object valueForKey:@"height"] description]];
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:nil
+                                                      inheritFromContext:[self HTMLContext]];
+    
+    [context buildAttributesForElement:[[element tagName] lowercaseString] bindSizeToObject:object];
+    
+    NSDictionary *attributes = [context elementAttributes];
+    [element setAttribute:@"width" value:[attributes objectForKey:@"width"]];
+    [element setAttribute:@"height" value:[attributes objectForKey:@"height"]];
+    [element setAttribute:@"style" value:[attributes objectForKey:@"style"]];
+    
+    [context release];
+    
     
     
     // Finish
