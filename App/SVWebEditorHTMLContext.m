@@ -15,6 +15,7 @@
 #import "SVHTMLTextBlock.h"
 #import "SVRichText.h"
 #import "SVSidebarDOMController.h"
+#import "SVSizeBindingDOMController.h"
 #import "SVTemplateParser.h"
 #import "SVTextFieldDOMController.h"
 #import "SVTitleBox.h"
@@ -204,6 +205,21 @@
     
     // Only once the callout buffer flushes can we be sure the element ended.
     if (writingCallout) [self endDOMController];
+}
+
+#pragma mark Metrics
+
+- (void)startElement:(NSString *)elementName bindSizeToObject:(NSObject *)object;
+{
+    SVDOMController *controller = [[SVSizeBindingDOMController alloc]
+                                   initWithRepresentedObject:object];
+    
+    [self startDOMController:controller];
+    [controller release];
+    
+    [super startElement:elementName bindSizeToObject:object];
+    
+    [self endDOMController];
 }
 
 #pragma mark Text Blocks
