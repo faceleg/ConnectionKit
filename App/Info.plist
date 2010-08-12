@@ -265,12 +265,9 @@
 			<array>
 				<string>public.source-code</string>
 				<string>public.plain-text</string>
-				<string>public.text</string>
-				<string>public.data</string>
-				<string>public.item</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Cascading Style Sheet</string>
+			<string>Cascading Style Sheet SANDVOX</string>
 			<key>UTTypeIdentifier</key>
 			<string>public.css</string>
 			<key>UTTypeReferenceURL</key>
@@ -291,11 +288,9 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.audiovisual-content</string>
-				<string>public.data</string>
-				<string>public.item</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Macromedia Flash</string>
+			<string>Macromedia Flash SANDVOX</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.adobe.shockwave-flash</string>
 			<key>UTTypeReferenceURL</key>
@@ -312,41 +307,34 @@
 		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.movie</string>
-				<string>public.audiovisual-content</string>
-				<string>public.data</string>
-				<string>public.item</string>
-				<string>public.content</string>
-			</array>
+			<string>public.movie</string>
 			<key>UTTypeDescription</key>
-			<string>Flash Video</string>
+			<string>Flash video</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.adobe.flash-video</string>
-			<key>UTTypeReferenceURL</key>
-			<string>http://www.adobe.com/devnet/flv/</string>
+			<string>com.adobe.flash.video</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
 					<string>flv</string>
 					<string>f4v</string>
+					<string>f4p</string>
+					<string>f4a</string>
+					<string>f4b</string>
 				</array>
 				<key>public.mime-type</key>
-				<string>video/x-flv</string>
+				<array>
+					<string>video/x-flv</string>
+				</array>
 			</dict>
 		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.movie</string>
-				<string>public.audiovisual-content</string>
-				<string>public.data</string>
-				<string>public.item</string>
-				<string>public.content</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Theora Video File</string>
+			<string>Theora Video File SANDVOX</string>
 			<key>UTTypeIdentifier</key>
 			<string>public.ogg-theora</string>
 			<key>UTTypeReferenceURL</key>
@@ -366,13 +354,9 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.movie</string>
-				<string>public.audiovisual-content</string>
-				<string>public.data</string>
-				<string>public.item</string>
-				<string>public.content</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Webm Video</string>
+			<string>Webm Video SANDVOX</string>
 			<key>UTTypeIdentifier</key>
 			<string>public.webm</string>
 			<key>UTTypeReferenceURL</key>
@@ -394,13 +378,9 @@
 			<array>
 				<string>public.mpeg-4</string>
 				<string>public.movie</string>
-				<string>public.audiovisual-content</string>
-				<string>public.data</string>
-				<string>public.item</string>
-				<string>public.content</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>H.264 Video</string>
+			<string>H.264 Video SANDVOX</string>
 			<key>UTTypeIdentifier</key>
 			<string>public.h264</string>
 			<key>UTTypeReferenceURL</key>
@@ -424,13 +404,9 @@
 				<string>public.h264</string>
 				<string>public.mpeg-4</string>
 				<string>public.movie</string>
-				<string>public.audiovisual-content</string>
-				<string>public.data</string>
-				<string>public.item</string>
-				<string>public.content</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>H.264 Video, iOS compatible</string>
+			<string>H.264 Video, iOS compatible SANDVOX</string>
 			<key>UTTypeIdentifier</key>
 			<string>public.h264.ios</string>
 			<key>UTTypeReferenceURL</key>
@@ -457,13 +433,9 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.audio</string>
-				<string>public.audiovisual-content</string>
-				<string>public.data</string>
-				<string>public.item</string>
-				<string>public.content</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Ogg Vorbis Audio</string>
+			<string>Ogg Vorbis Audio SANDVOX</string>
 			<key>UTTypeIdentifier</key>
 			<string>public.ogg-vorbis</string>
 			<key>UTTypeReferenceURL</key>
