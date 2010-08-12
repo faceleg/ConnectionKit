@@ -110,7 +110,7 @@
 
 #pragma mark Metrics
 
-- (NSUInteger)videoHeight
+- (NSUInteger)height
 {
     //FIXME: need API for knowing if in sidebar/callout to account for these add'l sizing calcs
     
@@ -168,6 +168,14 @@
     result += 25; // room for the control bar
     
     return result;
+}
+- (void)setHeight:(NSUInteger)height;
+{
+    // TODO: Calculate corresponding width and call [self setWidth:] with it.
+}
++ (NSSet *)keyPathsForValuesAffectingHeight;
+{
+    return [NSSet setWithObject:@"width"];
 }
 
 - (BOOL)constrainProportions; { return YES; }
