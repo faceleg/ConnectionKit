@@ -581,7 +581,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			// to get a minimum width, though some popups are designed to already be less than longest string.
 			// But one thing is clear: I don't want to shrink one that is stretchy, since it's probably
 			// intended to fill a space.
-		} else if ([view isKindOfClass:[NSButton class]] && [[view title] isEqualToString:@""]) {
+		} else if ([view isKindOfClass:[NSButton class]] && [[((NSButton *)view) title] isEqualToString:@""]) {
 			// Buttons without any titles: Don't try to resize.  We don't want a graphic to think that it can get a new size.
 		} else {
 			
