@@ -193,6 +193,8 @@ static id <SVPlugInContext> sCurrentContext;
     return [NSSet setWithObject:@"container.height"];
 }
 
+- (BOOL)constrainProportions; { return NO; }
+
 + (BOOL)sizeIsExplicit; { return NO; }
 
 #pragma mark Pages

@@ -81,6 +81,8 @@
 @property(nonatomic) NSUInteger width;
 @property(nonatomic) NSUInteger height;
 
+- (BOOL)constrainProportions;   // default is NO
+
 // Default is NO. If your plug-in is based around a sizeable object (e.g. YouTube) return YES to get proper behaviour. This makes width editable in the Inspector when not placed inline (and perhaps more, but you get the idea)
 + (BOOL)sizeIsExplicit;
 
