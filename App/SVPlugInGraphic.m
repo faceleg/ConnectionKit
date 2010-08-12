@@ -256,6 +256,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 }
 + (NSSet *)keyPathsForValuesAffectingContentWidth; { return [NSSet setWithObject:@"plugIn.width"]; }
 
+
 - (NSNumber *)contentHeight;
 {
     SVPlugIn *plugIn = [self plugIn];
@@ -278,6 +279,19 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [[self plugIn] setHeight:[height unsignedIntegerValue]];
 }
 + (NSSet *)keyPathsForValuesAffectingContentHeight; { return [NSSet setWithObject:@"plugIn.height"]; }
+
+
+- (BOOL)constrainProportions; { return [[self plugIn] constrainProportions]; }
+- (void)setConstrainProportions:(BOOL)constrain;
+{
+    [[self plugIn] setBool:constrain forKey:@"constrainProportions"];
+}
+
+
+- (BOOL)isConstrainProportionsEditable;
+{
+    return [[self plugIn] respondsToSelector:@selector(setConstrainProportions:)];
+}
 
 #pragma mark Thumbnail
 

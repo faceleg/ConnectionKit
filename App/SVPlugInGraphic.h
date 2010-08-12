@@ -32,5 +32,8 @@
 - (KTElementPlugInWrapper *)plugInWrapper;
 
 
+#pragma mark Metrics
+@property(nonatomic, readonly) BOOL constrainProportions;
+- (BOOL)isConstrainProportionsEditable;
 
 @end
