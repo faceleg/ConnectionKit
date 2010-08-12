@@ -88,6 +88,20 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 - (void)didAddToPage:(id <SVPage>)page;
 {
     [super didAddToPage:page];
+    
+    // Start off at a decent size
+    if ([[[self plugIn] class] sizeIsExplicit])
+    {
+        NSUInteger maxWidth = 490;
+        if ([self isPagelet]) maxWidth = 200;
+        
+        if ([[self plugIn] width] > maxWidth)
+        {
+            [[self plugIn] setWidth:maxWidth];
+        }
+    }
+    
+    // Pass on
     [[self plugIn] didAddToPage:page];
 }
 
