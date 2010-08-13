@@ -130,9 +130,9 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 - (void)dealloc
 {
-    [_URL release];
-    [_URLResponse release];
-    [_nextObject release];
+    [_URL release];			_URL = nil;
+    [_URLResponse release];	_URLResponse = nil;
+    [_nextObject release];	_nextObject = nil;
     
     [super dealloc];
 }
