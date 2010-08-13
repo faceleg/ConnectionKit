@@ -36,106 +36,70 @@
 
 #import "CollectionIndexPlugIn.h"
 
-// LocalizedStringInThisBundle(@"Please specify the collection to index using the Pagelet Inspector.", "String_On_Page_Template")
-
+// LocalizedStringInThisBundle(@"Please specify the collection to index using the PlugIn Inspector.", "String_On_Page_Template")
 
 
 @implementation CollectionIndexPlugIn
 
-+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
-{
-	if ([key isEqualToString:@"indexedPage"])
-	{
-		return NO;
-	}
-	else
-	{
-		return [super automaticallyNotifiesObserversForKey:key];
-	}
+
+#pragma mark SVIndexPlugIn
+
++ (NSArray *)plugInKeys
+{ 
+    NSArray *plugInKeys = [NSArray arrayWithObjects:
+                           @"maxItems", 
+                           @"enableMaxItems", 
+                           @"includeSummaries", 
+                           @"maxSummaryCharacters", 
+                           nil];
+    
+    return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
 }
 
-#pragma mark -
-#pragma mark Init & Dealloc
 
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreated
+#pragma mark HTML Generation
+
+- (void)writeHTML:(id <SVPlugInContext>)context
 {
-	// We want to know when changes are made to the context so that we know if our collection has been deleted
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(indexedPageMayHaveBeenDeleted:)
-												 name:NSManagedObjectContextObjectsDidChangeNotification
-											   object:[[self delegateOwner] managedObjectContext]];
+    [super writeHTML:context];
     
-    // 1.5 plugins won't have a maxSummaryCharacters value. We need to provide one
-    if (!isNewlyCreated)
+    // add dependencies
+    [context addDependencyForKeyPath:@"maxItems" ofObject:self];
+    [context addDependencyForKeyPath:@"enableMaxItems" ofObject:self];
+    [context addDependencyForKeyPath:@"includeSummaries" ofObject:self];
+    [context addDependencyForKeyPath:@"maxSummaryCharacters" ofObject:self];
+}
+
+
+#pragma mark Properties
+
+// hoping this overrides SVIndexPlugIn accessor properly
+- (void)setIndexedCollection:(id <SVPage>)collection
+{
+    // when we change indexedCollection, set the containers title to the title of the collection, or to
+    // KTPluginUntitledName if collection is nil
+
+    [super setIndexedCollection:collection];
+    if ( collection )
     {
-        if (![[self delegateOwner] valueForKey:@"enableMaxItems"])
-        {
-            [[self delegateOwner] setBool:YES forKey:@"enableMaxItems"];
-        }
-        
-        if (![[self delegateOwner] valueForKey:@"maxSummaryCharacters"])
-        {
-            [[self delegateOwner] setInteger:1000 forKey:@"maxSummaryCharacters"];
-        }
+        [self.container setTitle:[collection title]];
+    }
+    else
+    {
+        NSString *defaultTitle = [[self bundle] objectForInfoDictionaryKey:@"KTPluginUntitledName"];
+        [self.container setTitle:defaultTitle];
     }
 }
 
-
-- (void)dealloc
+@synthesize maxItems = _maxItems;
+- (NSUInteger)maxItems
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self
-												    name:NSManagedObjectContextObjectsDidChangeNotification
-												  object:[[self delegateOwner] managedObjectContext]];
-	
-	[super dealloc];
+    // return 0 if user has disabled maximum
+    return (self.enableMaxItems) ? _maxItems : 0;
 }
 
-#pragma mark -
-#pragma mark Index details
-
-// When changing the collection, change pagelet title HTML to match
-- (void)plugin:(id)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
-{
-	if ([key isEqualToString:@"indexedPage"] && [value isKindOfClass:[KTPage class]])   // Sanity check for imports
-	{
-		if (!value)
-		{
-			[[self delegateOwner] setTitleHTML:[[self bundle] objectForInfoDictionaryKey:@"KTPluginUntitledName"]];
-		}
-		else
-		{
-			[[self delegateOwner] setTitleHTML:[value titleText]];
-		}
-	}
-}
-
-/*	If our collection is deleted, set indexedPage to nil
- */
-- (void)indexedPageMayHaveBeenDeleted:(NSNotification *)notification
-{
-	NSSet *deletedObjects = [[notification userInfo] objectForKey:NSDeletedObjectsKey];
-	if ([deletedObjects containsObject:[[self delegateOwner] valueForKey:@"indexedPage"]])
-	{
-		[[self delegateOwner] setValue:nil forKey:@"indexedPage"];
-	}
-}
-
-#pragma mark -
-#pragma mark HTML
-
-/*  Supplements the -maxItems property stored in our element by returning 0 if the user has disabled the maximum
- */
-- (unsigned)maxItems
-{
-    unsigned result = 0;
-    
-    if ([[self delegateOwner] boolForKey:@"enableMaxItems"])
-    {
-        result = [[self delegateOwner] integerForKey:@"maxItems"];
-    }
-    
-    return result;
-}
-
+@synthesize enableMaxItems = _enableMaxItems;
+@synthesize includeSummaries = _includeSummaries;
+@synthesize maxSummaryCharacters = _maxSummaryCharacters;
 
 @end
