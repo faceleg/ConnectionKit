@@ -132,28 +132,61 @@
 	// quicktime fallback, but not for mp4.  We may want to be more selective of mpeg-4 types though.
 	BOOL quicktimeTag = ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
 		&& ![type conformsToUTI:@"public.mpeg-4"];
-	
+		
+	NSString *idNameVideo  = [@"video-" stringByAppendingString:[self elementID]];
+	NSString *idNameObject = [@"object-" stringByAppendingString:[self elementID]];
+
 	if (quicktimeTag)
 	{
+		[context pushElementAttribute:@"id" value:idNameObject];	// ID on <object> apparently required for IE8
 		[context pushElementAttribute:@"width" value:[[self width] description]];
 		[context pushElementAttribute:@"height" value:[[self height] description]];
-		[context startElement:@"div"];
-		[context writeElement:@"p" text:NSLocalizedString(@"QuickTime Video", @"")];
-		[context endElement];		// the div
+		[context pushElementAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
+		[context pushElementAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
+		[context startElement:@"object"];
+		
+		if (self.posterFrame && !self.autoplay.boolValue)	// poster and not auto-starting? make it an href
+		{
+			[context writeParamElementWithName:@"src" value:posterSourcePath];
+			[context writeParamElementWithName:@"href" value:movieSourcePath];
+			[context writeParamElementWithName:@"target" value:@"myself"];
+		}
+		else
+		{
+			[context writeParamElementWithName:@"src" value:movieSourcePath];
+		}
+
+		[context writeParamElementWithName:@"autoplay" value:self.autoplay.boolValue ? @"true" : @"false"];
+		[context writeParamElementWithName:@"controller" value:self.controller.boolValue ? @"true" : @"false"];
+		[context writeParamElementWithName:@"loop" value:self.loop.boolValue ? @"true" : @"false"];
+		[context writeParamElementWithName:@"scale" value:@"tofit"];
+		[context writeParamElementWithName:@"type" value:@"video/quicktime"];
+		[context writeParamElementWithName:@"pluginspage" value:@"http://www.apple.com/quicktime/download/"];
+		
+			
+			
 	}
 	else if (microsoftTag)
 	{
+		// I don't think there is any way to use the poster frame for a click to play
+		
+		[context pushElementAttribute:@"id" value:idNameObject];	// ID on <object> apparently required for IE8
 		[context pushElementAttribute:@"width" value:[[self width] description]];
 		[context pushElementAttribute:@"height" value:[[self height] description]];
-		[context startElement:@"div"];
-		[context writeElement:@"p" text:NSLocalizedString(@"Microsoft Video", @"")];
-		[context endElement];		// the div
+		[context pushElementAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
+		[context startElement:@"object"];
+
+		[context writeParamElementWithName:@"url" value:movieSourcePath];
+		[context writeParamElementWithName:@"autostart" value:self.autoplay.boolValue ? @"true" : @"false"];
+		[context writeParamElementWithName:@"showcontrols" value:self.controller.boolValue ? @"true" : @"false"];
+		[context writeParamElementWithName:@"playcount" value:self.loop.boolValue ? @"9999" : @"1"];
+		[context writeParamElementWithName:@"type" value:@"application/x-oleobject"];
+		[context writeParamElementWithName:@"uiMode" value:@"mini"];
+		[context writeParamElementWithName:@"pluginspage" value:@"http://microsoft.com/windows/mediaplayer/en/download/"];
+		
 	}
 	else if (videoTag || flashTag)
 	{
-		NSString *idNameVideo  = [@"video-" stringByAppendingString:[self elementID]];
-		NSString *idNameObject = [@"object-" stringByAppendingString:[self elementID]];
-
 		if (videoTag)	// start the video tag
 		{
 			// Write the fallback method.  COULD WRITE THIS IN JQUERY TO BE MORE TERSE?
@@ -326,13 +359,15 @@
 			[context writeImageWithSrc:posterSourcePath alt:altForMovieFallback width:[[self width] description] height:[[self height] description]];
 		}
 		
-		if (flashTag)
+		if (flashTag || quicktimeTag || microsoftTag)	// time to end all of these objects
 		{
+			OBASSERT([@"object" isEqualToString:[context topElement]]);
 			[context endElement];	//  </object>
 		}
 		
 		if (videoTag)	// close the video tag
 		{
+			OBASSERT([@"video" isEqualToString:[context topElement]]);
 			[context endElement];
 			
 			// Now write the post-video-tag surgery since onerror doesn't really work
