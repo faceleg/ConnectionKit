@@ -10,7 +10,6 @@
 		3C42E3A80D64F768004F35FD /* CollectionIndexPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E3A70D64F768004F35FD /* CollectionIndexPlugIn.m */; };
 		3C42E3AD0D64F776004F35FD /* IndexTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E3AB0D64F776004F35FD /* IndexTemplate.html */; };
 		3C42E3AE0D64F776004F35FD /* listing.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E3AC0D64F776004F35FD /* listing.icns */; };
-		3C42E3B40D64F780004F35FD /* IndexPagelet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E3AF0D64F780004F35FD /* IndexPagelet.nib */; };
 		3C42E3B50D64F780004F35FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E3B20D64F780004F35FD /* Localizable.strings */; };
 		3C42E3CF0D64F7FB004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E3CE0D64F7FB004F35FD /* License.rtf */; };
 		3C79300B1214E4E100C83139 /* CollectionInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C79300A1214E4E100C83139 /* CollectionInspector.m */; };
@@ -28,28 +27,20 @@
 		3C42E3A70D64F768004F35FD /* CollectionIndexPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionIndexPlugIn.m; sourceTree = "<group>"; };
 		3C42E3AB0D64F776004F35FD /* IndexTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = IndexTemplate.html; sourceTree = "<group>"; };
 		3C42E3AC0D64F776004F35FD /* listing.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = listing.icns; sourceTree = "<group>"; };
-		3C42E3B00D64F780004F35FD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/IndexPagelet.nib; sourceTree = "<group>"; };
 		3C42E3B10D64F780004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E3B30D64F780004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C42E3B70D64F797004F35FD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/IndexPagelet.nib; sourceTree = "<group>"; };
 		3C42E3B80D64F797004F35FD /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E3B90D64F797004F35FD /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C42E3BA0D64F7A2004F35FD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/IndexPagelet.nib; sourceTree = "<group>"; };
 		3C42E3BB0D64F7A2004F35FD /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E3BC0D64F7A2004F35FD /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C42E3BD0D64F7AE004F35FD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/IndexPagelet.nib; sourceTree = "<group>"; };
 		3C42E3BE0D64F7AE004F35FD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E3BF0D64F7AE004F35FD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C42E3C00D64F7B9004F35FD /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/IndexPagelet.nib; sourceTree = "<group>"; };
 		3C42E3C10D64F7B9004F35FD /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E3C20D64F7B9004F35FD /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C42E3C30D64F7C3004F35FD /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/IndexPagelet.nib; sourceTree = "<group>"; };
 		3C42E3C40D64F7C3004F35FD /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E3C50D64F7C3004F35FD /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C42E3C60D64F7D2004F35FD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/IndexPagelet.nib; sourceTree = "<group>"; };
 		3C42E3C70D64F7D2004F35FD /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E3C80D64F7D2004F35FD /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C42E3C90D64F7DB004F35FD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/IndexPagelet.nib; sourceTree = "<group>"; };
 		3C42E3CA0D64F7DB004F35FD /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E3CB0D64F7DB004F35FD /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C42E3CE0D64F7FB004F35FD /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
@@ -84,7 +75,6 @@
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
 				3C42E3D40D64F815004F35FD /* Xcode Configurations */,
-				3C7930181214E62000C83139 /* CollectionIndexInspector.xib */,
 			);
 			name = IndexElement;
 			sourceTree = "<group>";
@@ -102,8 +92,8 @@
 			isa = PBXGroup;
 			children = (
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				3C42E3AF0D64F780004F35FD /* IndexPagelet.nib */,
 				3C42E3AB0D64F776004F35FD /* IndexTemplate.html */,
+				3C7930181214E62000C83139 /* CollectionIndexInspector.xib */,
 				3C42E3AC0D64F776004F35FD /* listing.icns */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C42E3B20D64F780004F35FD /* Localizable.strings */,
@@ -224,7 +214,6 @@
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				3C42E3AD0D64F776004F35FD /* IndexTemplate.html in Resources */,
 				3C42E3AE0D64F776004F35FD /* listing.icns in Resources */,
-				3C42E3B40D64F780004F35FD /* IndexPagelet.nib in Resources */,
 				3C42E3B50D64F780004F35FD /* Localizable.strings in Resources */,
 				3C42E3CF0D64F7FB004F35FD /* License.rtf in Resources */,
 				3C79301A1214E62000C83139 /* CollectionIndexInspector.xib in Resources */,
@@ -277,21 +266,6 @@
 				3C42E3CA0D64F7DB004F35FD /* zh_TW */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		3C42E3AF0D64F780004F35FD /* IndexPagelet.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3C42E3B00D64F780004F35FD /* en */,
-				3C42E3B70D64F797004F35FD /* da */,
-				3C42E3BA0D64F7A2004F35FD /* de */,
-				3C42E3BD0D64F7AE004F35FD /* fr */,
-				3C42E3C00D64F7B9004F35FD /* it */,
-				3C42E3C30D64F7C3004F35FD /* ja */,
-				3C42E3C60D64F7D2004F35FD /* zh_CN */,
-				3C42E3C90D64F7DB004F35FD /* zh_TW */,
-			);
-			name = IndexPagelet.nib;
 			sourceTree = "<group>";
 		};
 		3C42E3B20D64F780004F35FD /* Localizable.strings */ = {
