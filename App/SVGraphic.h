@@ -128,6 +128,8 @@ extern NSString *kSVGraphicPboardType;
 
 @property(nonatomic, copy) NSNumber *contentWidth;
 
+- (NSNumber *)containerWidth;
+
 
 #pragma mark Sidebar
 

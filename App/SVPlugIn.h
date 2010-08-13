@@ -94,8 +94,6 @@
 
 @property(nonatomic, getter=isBordered) BOOL bordered;
 
-@property(nonatomic, copy) NSNumber *containerWidth;    // switch over to .contentWidth please
-
 
 #pragma mark Undo Management
 // Don't have direct access to undo manager

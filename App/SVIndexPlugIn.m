@@ -18,7 +18,7 @@
     [super awakeFromNew];
     
     // Indexes should generally fill full width
-    [[self container] setContainerWidth:nil];
+    [self setWidth:0];
 }
 
 - (void)didAddToPage:(id <SVPage>)page;
