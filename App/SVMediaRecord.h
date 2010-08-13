@@ -53,9 +53,10 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
                              entityName:(NSString *)entityName
          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
-+ (SVMediaRecord *)placeholderMediaWithURL:(NSURL *)URL
-                                entityName:(NSString *)entityName
-            insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+// 'bundled' means the URL should be inside either the app or design bundle
++ (SVMediaRecord *)mediaWithBundledURL:(NSURL *)URL
+                            entityName:(NSString *)entityName
+        insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
 #pragma mark Updating Media Records

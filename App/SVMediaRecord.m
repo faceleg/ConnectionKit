@@ -107,7 +107,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
-+ (SVMediaRecord *)placeholderMediaWithURL:(NSURL *)URL
++ (SVMediaRecord *)mediaWithBundledURL:(NSURL *)URL
                                 entityName:(NSString *)entityName
             insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {

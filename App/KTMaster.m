@@ -477,7 +477,7 @@
     OBASSERT(URL);
     
     
-    return [SVMediaRecord placeholderMediaWithURL:URL
+    return [SVMediaRecord mediaWithBundledURL:URL
                                        entityName:entityName
                    insertIntoManagedObjectContext:[self managedObjectContext]];
 }

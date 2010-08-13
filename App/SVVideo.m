@@ -65,7 +65,7 @@
     if (![self media])
     {
         SVMediaRecord *media = // [[[page rootPage] master] makePlaceholdImageMediaWithEntityName:];
-		[SVMediaRecord placeholderMediaWithURL:[NSURL fileURLWithPath:@"/System/Library/Compositions/Sunset.mov"]
+		[SVMediaRecord mediaWithBundledURL:[NSURL fileURLWithPath:@"/System/Library/Compositions/Sunset.mov"]
 									entityName:@"GraphicMedia"
 				insertIntoManagedObjectContext:[self managedObjectContext]];
 		
