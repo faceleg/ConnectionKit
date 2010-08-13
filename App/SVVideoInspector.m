@@ -24,7 +24,7 @@
         NSURL *URL = [panel URL];
         
         id video = [[self inspectedObjectsController] selection];
-        [video setPosterFrame:URL];
+        [video setPosterFrameWithContentsOfURL:URL];
     }
 }
 
