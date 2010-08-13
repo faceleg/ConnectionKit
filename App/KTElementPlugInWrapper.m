@@ -186,7 +186,7 @@
 	
     
     // Go through and get the localized names of each bundle, and put into a dict keyed by name
-    NSDictionary *plugins = [KSPlugInWrapper pluginsWithFileExtension:kKTIndexExtension];
+    NSDictionary *plugins = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
     NSEnumerator *enumerator = [plugins objectEnumerator];	// go through each plugin.
     KTHTMLPlugInWrapper *plugin;
     
