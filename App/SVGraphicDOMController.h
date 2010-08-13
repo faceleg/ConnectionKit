@@ -26,12 +26,6 @@
 - (void)loadPlaceholderDOMElementInDocument:(DOMDocument *)document;
 
 
-#pragma mark Resize
-- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
-- (NSSize)minSize;
-- (NSSize)sizeByMovingHandle:(SVGraphicHandle *)handle toPoint:(NSPoint)point;
-
-
 @end
 
 

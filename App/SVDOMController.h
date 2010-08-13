@@ -64,6 +64,12 @@
 @property(nonatomic) BOOL observesDependencies;
 
 
+#pragma mark Resizing
+- (NSSize)minSize;
+- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
+- (NSSize)sizeByMovingHandle:(SVGraphicHandle *)handle toPoint:(NSPoint)point;
+
+
 @end
 
 
