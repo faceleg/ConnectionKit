@@ -1357,11 +1357,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
             // This is true if the clicked child item is either:
             //  A)  selectable
             //  B)  editable text
+            //
+            // Actually, trying out ignoring that! Mike.
             
-            WEKWebEditorItem *item = [[self selectedItem] hitTestDOMNode:nextNode];
+            
+            /*WEKWebEditorItem *item = [[self selectedItem] hitTestDOMNode:nextNode];
             
             if (([item isSelectable] && item != [self selectedItem]) ||
-                [item conformsToProtocol:@protocol(SVWebEditorText)] && [(id)item isEditable])
+                [item conformsToProtocol:@protocol(SVWebEditorText)] && [(id)item isEditable]) */
             {
                 // Repost equivalent events so they go to their correct target. Can't call -sendEvent: as that doesn't update -currentEvent
                 // To stop the events being repeatedly posted back to ourself, have to indicate to -hitTest: that it should target the WebView. This can best be done by switching selected item over to editing
