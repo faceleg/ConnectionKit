@@ -68,21 +68,21 @@
 	[self addObserver:self forKeyPath:@"autoplay"	options:(NSKeyValueObservingOptionNew) context:nil];
 	[self addObserver:self forKeyPath:@"controller"	options:(NSKeyValueObservingOptionNew) context:nil];
 
-    // Placeholder image
-    if (![self media])
-    {
-        SVMediaRecord *media = // [[[page rootPage] master] makePlaceholdImageMediaWithEntityName:];
-		[SVMediaRecord mediaWithBundledURL:[NSURL fileURLWithPath:@"/System/Library/Compositions/Sunset.mov"]
-									entityName:@"GraphicMedia"
-				insertIntoManagedObjectContext:[self managedObjectContext]];
-		
-		
-        [self setMedia:media];
-        [self setCodecType:[media typeOfFile]];
-        
-        [self makeOriginalSize];    // calling super will scale back down if needed
-        [self setConstrainProportions:YES];
-    }
+//    // Placeholder image
+//    if (![self media])
+//    {
+//        SVMediaRecord *media = // [[[page rootPage] master] makePlaceholdImageMediaWithEntityName:];
+//		[SVMediaRecord mediaWithBundledURL:[NSURL fileURLWithPath:@"/System/Library/Compositions/Sunset.mov"]
+//									entityName:@"GraphicMedia"
+//				insertIntoManagedObjectContext:[self managedObjectContext]];
+//		
+//		
+//        [self setMedia:media];
+//        [self setCodecType:[media typeOfFile]];
+//        
+//        [self makeOriginalSize];    // calling super will scale back down if needed
+//        [self setConstrainProportions:YES];
+//    }
     
     [super willInsertIntoPage:page];
     
@@ -396,7 +396,7 @@
 	[context pushElementAttribute:@"height" value:[[self height] description]];
 	[context startElement:@"div"];
 	[context writeElement:@"p" text:NSLocalizedString(@"Unable to show video. Perhaps it is not a recognized video format.", @"Warning shown to user when video can't be embedded")];
-	[context endElement];		// the div	
+	// Poster may be shown next, so don't end....
 }
 
 - (void)writeBody:(SVHTMLContext *)context;
