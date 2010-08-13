@@ -574,26 +574,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.contentWidth</string>
-						<reference key="source" ref="1062760034"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1062760034"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.contentWidth</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.contentWidth</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSRaisesForNotApplicableKeys</string>
-								<boolean value="NO" key="NS.object.0"/>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">152</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: inspectedObjectsController.selection.isConstrainProportionsEditable</string>
 						<reference key="source" ref="592137821"/>
 						<reference key="destination" ref="1001"/>
@@ -617,7 +597,7 @@
 						<string key="label">minValue: inspectedObjectsController.selection.minHeight</string>
 						<reference key="source" ref="449855918"/>
 						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="1069656808">
+						<object class="NSNibBindingConnector" key="connector" id="424190707">
 							<reference key="NSSource" ref="449855918"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">minValue: inspectedObjectsController.selection.minHeight</string>
@@ -643,7 +623,7 @@
 							<string key="NSLabel">value: inspectedObjectsController.selection.contentHeight</string>
 							<string key="NSBinding">value</string>
 							<string key="NSKeyPath">inspectedObjectsController.selection.contentHeight</string>
-							<reference key="NSPreviousConnector" ref="1069656808"/>
+							<reference key="NSPreviousConnector" ref="424190707"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
@@ -718,6 +698,47 @@
 						</object>
 					</object>
 					<int key="connectionID">170</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">minValue: inspectedObjectsController.selection.minWidth</string>
+						<reference key="source" ref="1062760034"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector" id="186992219">
+							<reference key="NSSource" ref="1062760034"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">minValue: inspectedObjectsController.selection.minWidth</string>
+							<string key="NSBinding">minValue</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.minWidth</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSNotApplicablePlaceholder</string>
+								<real value="200" key="NS.object.0"/>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">173</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.contentWidth</string>
+						<reference key="source" ref="1062760034"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1062760034"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.contentWidth</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.contentWidth</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSRaisesForNotApplicableKeys</string>
+								<boolean value="NO" key="NS.object.0"/>
+							</object>
+							<reference key="NSPreviousConnector" ref="186992219"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">174</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1105,7 +1126,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">170</int>
+			<int key="maxID">174</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

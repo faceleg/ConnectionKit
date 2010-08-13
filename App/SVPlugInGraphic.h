@@ -33,6 +33,7 @@
 
 
 #pragma mark Metrics
+- (NSUInteger)minWidth;
 - (NSUInteger)minHeight;
 @property(nonatomic, readonly) BOOL constrainProportions;
 - (BOOL)isConstrainProportionsEditable;

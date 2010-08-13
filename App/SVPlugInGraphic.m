@@ -269,6 +269,17 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [[self plugIn] setWidth:[width unsignedIntegerValue]];
 }
 + (NSSet *)keyPathsForValuesAffectingContentWidth; { return [NSSet setWithObject:@"plugIn.width"]; }
+- (BOOL)validateContentWidth:(NSNumber **)width error:(NSError **)error;
+{
+    BOOL result = YES;
+    
+    if (*width && [*width unsignedIntegerValue] < [self minWidth])
+    {
+        *width = [NSNumber numberWithUnsignedInt:[self minWidth]];
+    }
+    
+    return result;
+}
 
 
 - (NSNumber *)contentHeight;
@@ -305,6 +316,8 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     return result;
 }
 
+
+- (NSUInteger)minWidth; { return [[self plugIn] minWidth]; }
 - (NSUInteger)minHeight; { return [[self plugIn] minHeight]; }
 
 
