@@ -181,6 +181,8 @@
     return [NSSet setWithObject:@"width"];
 }
 
+- (NSUInteger)minHeight; { return 150; }
+
 - (BOOL)constrainProportions; { return YES; }
 + (BOOL)sizeIsExplicit; { return YES; }
 
