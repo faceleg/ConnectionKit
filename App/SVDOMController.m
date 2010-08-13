@@ -277,6 +277,37 @@
 
 #pragma mark Resizing
 
+- (NSSize)minSize; { return NSMakeSize(200.0f, 16.0f); }
+
+- (unsigned int)resizingMask
+{
+    DOMElement *element = [self selectableDOMElement];
+    
+    
+    NSString *className = [[self HTMLElement] className];
+    DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element pseudoElement:@""];
+    
+    unsigned int result = kCALayerRightEdge; // default to adjustment from right-hand edge
+    
+    
+    // Decide the mask by testing the DOM. For inline elements, not hard. But for block-level stuff I haven't figured out the right stuff to test, so fall back to checking class name since we ought to be in control of that.
+    if ([[style getPropertyValue:@"float"] isEqualToString:@"right"] ||
+        [[style textAlign] isEqualToString:@"right"] ||
+        [className rangeOfString:@" right"].location != NSNotFound)
+    {
+        result = kCALayerLeftEdge;
+    }
+    else if ([[style textAlign] isEqualToString:@"center"] ||
+             [className rangeOfString:@" center"].location != NSNotFound)
+    {
+        result = result | kCALayerLeftEdge;
+    }
+    
+    
+    // Finish up
+    return result;
+}
+
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
 {
     // Size calculated – now what to store?
@@ -367,8 +398,6 @@
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
-
-- (NSSize)minSize; { return NSMakeSize(200.0f, 16.0f); }
 
 @end
 

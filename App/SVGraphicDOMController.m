@@ -236,37 +236,12 @@
     }
 }
 
-#pragma mark Resize
-
+#pragma mark Resizing
 
 - (unsigned int)resizingMask
 {
     DOMElement *element = [self graphicDOMElement];
-    if (!element) return [super resizingMask];
-    
-    
-    NSString *className = [[self HTMLElement] className];
-    DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element pseudoElement:@""];
-    
-    unsigned int result = kCALayerRightEdge; // default to adjustment from right-hand edge
-    
-    
-    // Decide the mask by testing the DOM. For inline elements, not hard. But for block-level stuff I haven't figured out the right stuff to test, so fall back to checking class name since we ought to be in control of that.
-    if ([[style getPropertyValue:@"float"] isEqualToString:@"right"] ||
-        [[style textAlign] isEqualToString:@"right"] ||
-        [className rangeOfString:@" right"].location != NSNotFound)
-    {
-        result = kCALayerLeftEdge;
-    }
-    else if ([[style textAlign] isEqualToString:@"center"] ||
-             [className rangeOfString:@" center"].location != NSNotFound)
-    {
-        result = result | kCALayerLeftEdge;
-    }
-    
-    
-    // Finish up
-    return result;
+    return (element ? [super resizingMask] : 0);
 }
 
 @end
