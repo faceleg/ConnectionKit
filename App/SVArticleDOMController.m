@@ -28,6 +28,9 @@
 #import "DOMRange+Karelia.h"
 
 
+@interface DOMNode (KSHTMLWriter)
+- (BOOL)ks_isDescendantOfDOMNode:(DOMNode *)possibleAncestor;
+@end
 @interface DOMElement (SVParagraphedHTMLWriter)
 - (DOMNodeList *)getElementsByClassName:(NSString *)name;
 @end
@@ -75,6 +78,11 @@
             }
         }
     }
+    
+    
+    // Catch mouse downs from #page. It will retain us.
+    [[self mouseDownSelectionFallbackDOMElement]
+     addEventListener:@"mousedown" listener:self useCapture:NO];
 }
 
 #pragma mark Properties
@@ -90,6 +98,30 @@
     
     [graphic willInsertIntoPage:[[self HTMLContext] page]];
     [self addGraphic:graphic placeInline:NO];
+}
+
+#pragma mark Selection fallback
+
+- (DOMElement *)mouseDownSelectionFallbackDOMElement;
+{
+    return [[[self HTMLElement] ownerDocument] getElementById:@"page"];
+}
+
+- (void)handleEvent:(DOMMouseEvent *)event;
+{
+    if ([[self textHTMLElement] ks_isDescendantOfDOMNode:(DOMNode *)[event target]])
+    {
+        WEKWebEditorView *webEditor = [self webEditor];
+        
+        DOMRange *fallbackRange = [[[self HTMLElement] ownerDocument] createRange];
+        [fallbackRange setStartAfter:[[self textHTMLElement] lastChild]];
+        
+        [[webEditor window] makeFirstResponder:webEditor];
+        [webEditor setSelectedDOMRange:fallbackRange affinity:0];
+        
+        [event preventDefault];
+        [event stopPropagation];
+    }
 }
 
 #pragma mark Callouts

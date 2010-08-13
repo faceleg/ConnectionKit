@@ -14,7 +14,7 @@
 @class SVCalloutDOMController;
 
 
-@interface SVArticleDOMController : SVRichTextDOMController
+@interface SVArticleDOMController : SVRichTextDOMController <DOMEventListener>
 {
   @private
     SVCalloutDOMController  *_earlyCalloutController;
@@ -26,6 +26,10 @@
 - (IBAction)insertPagelet:(id)sender;
 
 - (IBAction)moveToBlockLevel:(id)sender;
+
+
+#pragma mark DOM
+@property(nonatomic, readonly) DOMElement *mouseDownSelectionFallbackDOMElement;
 
 
 #pragma mark Callouts
