@@ -115,8 +115,8 @@
 			 movieSourceURL:(NSURL *)movieSourceURL
 			posterSourceURL:(NSURL *)posterSourceURL;
 {
-	NSString *movieSourcePath = [context relativeURLStringOfURL:movieSourceURL];
-	NSString *posterSourcePath = [context relativeURLStringOfURL:posterSourceURL];
+	NSString *movieSourcePath  = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
+	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
 
 	[context pushElementAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
 	[context pushElementAttribute:@"width" value:[[self width] description]];
@@ -148,7 +148,7 @@
 			 movieSourceURL:(NSURL *)movieSourceURL;
 {
 	// I don't think there is any way to use the poster frame for a click to play
-	NSString *movieSourcePath = [context relativeURLStringOfURL:movieSourceURL];
+	NSString *movieSourcePath = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
 	
 	[context pushElementAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
 	[context pushElementAttribute:@"width" value:[[self width] description]];
@@ -169,8 +169,8 @@
 			 movieSourceURL:(NSURL *)movieSourceURL
 			posterSourceURL:(NSURL *)posterSourceURL;
 {
-	NSString *movieSourcePath = [context relativeURLStringOfURL:movieSourceURL];
-	NSString *posterSourcePath = [context relativeURLStringOfURL:posterSourceURL];
+	NSString *movieSourcePath  = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
+	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
 
 	// Actually write the video
 	[context pushElementAttribute:@"id" value:[self idNameForTag:@"video"]];
@@ -228,13 +228,18 @@
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	BOOL videoFlashRequiresFullURL = [defaults boolForKey:@"videoFlashRequiresFullURL"];	// usually not, but YES for flowplayer
-
-	NSString *movieSourcePath  = videoFlashRequiresFullURL
-		? [movieSourceURL absoluteString]
-		: [context relativeURLStringOfURL:movieSourceURL];
-	NSString *posterSourcePath = videoFlashRequiresFullURL
-		? [posterSourceURL absoluteString]
-		: [context relativeURLStringOfURL:posterSourceURL];
+	NSString *movieSourcePath = @"";
+	NSString *posterSourcePath = @"";
+	if (videoFlashRequiresFullURL)
+	{
+		if (movieSourceURL)  movieSourcePath  = [movieSourceURL  absoluteString];
+		if (posterSourceURL) posterSourcePath = [posterSourceURL absoluteString];
+	}
+	else
+	{
+		if (movieSourceURL)  movieSourcePath  = [context relativeURLStringOfURL:movieSourceURL];
+		if (posterSourceURL) posterSourcePath = [context relativeURLStringOfURL:posterSourceURL];
+	}
 
 	NSString *videoFlashPlayer	= [defaults objectForKey:@"videoFlashPlayer"];	// to override player type
 	// Known types: f4player jwplayer flvplayer osflv flowplayer.  Otherwise must specify videoFlashFormat.
@@ -353,7 +358,7 @@
 - (void)writePosterImage:(SVHTMLContext *)context
 	posterSourceURL:(NSURL *)posterSourceURL;
 {
-	NSString *posterSourcePath = [context relativeURLStringOfURL:posterSourceURL];
+	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
 
 	// Get a title to indicate that the movie cannot play inline.  (Suggest downloading, if we provide a link)
 	KTPage *thePage = [context page];
