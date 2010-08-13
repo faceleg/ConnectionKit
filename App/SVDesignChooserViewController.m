@@ -19,6 +19,7 @@
 - (void) collapseGroup:group;
 - (void) expandGroup:group;
 - (id) layoutManager;
+- (id) groups;
 
 @end
 
