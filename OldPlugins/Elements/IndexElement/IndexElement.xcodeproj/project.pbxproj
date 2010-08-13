@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C42E3A80D64F768004F35FD /* CollectionIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E3A70D64F768004F35FD /* CollectionIndex.m */; };
+		3C42E3A80D64F768004F35FD /* CollectionIndexPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E3A70D64F768004F35FD /* CollectionIndexPlugIn.m */; };
 		3C42E3AD0D64F776004F35FD /* IndexTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E3AB0D64F776004F35FD /* IndexTemplate.html */; };
 		3C42E3AE0D64F776004F35FD /* listing.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E3AC0D64F776004F35FD /* listing.icns */; };
 		3C42E3B40D64F780004F35FD /* IndexPagelet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E3AF0D64F780004F35FD /* IndexPagelet.nib */; };
@@ -24,8 +24,8 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* IndexElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndexElement_Prefix.pch; sourceTree = "<group>"; };
-		3C42E3A60D64F768004F35FD /* CollectionIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionIndex.h; sourceTree = "<group>"; };
-		3C42E3A70D64F768004F35FD /* CollectionIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionIndex.m; sourceTree = "<group>"; };
+		3C42E3A60D64F768004F35FD /* CollectionIndexPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionIndexPlugIn.h; sourceTree = "<group>"; };
+		3C42E3A70D64F768004F35FD /* CollectionIndexPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionIndexPlugIn.m; sourceTree = "<group>"; };
 		3C42E3AB0D64F776004F35FD /* IndexTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = IndexTemplate.html; sourceTree = "<group>"; };
 		3C42E3AC0D64F776004F35FD /* listing.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = listing.icns; sourceTree = "<group>"; };
 		3C42E3B00D64F780004F35FD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/IndexPagelet.nib; sourceTree = "<group>"; };
@@ -115,8 +115,8 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3C42E3A60D64F768004F35FD /* CollectionIndex.h */,
-				3C42E3A70D64F768004F35FD /* CollectionIndex.m */,
+				3C42E3A60D64F768004F35FD /* CollectionIndexPlugIn.h */,
+				3C42E3A70D64F768004F35FD /* CollectionIndexPlugIn.m */,
 				3C7930091214E4E100C83139 /* CollectionInspector.h */,
 				3C79300A1214E4E100C83139 /* CollectionInspector.m */,
 			);
@@ -256,7 +256,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C42E3A80D64F768004F35FD /* CollectionIndex.m in Sources */,
+				3C42E3A80D64F768004F35FD /* CollectionIndexPlugIn.m in Sources */,
 				3C79300B1214E4E100C83139 /* CollectionInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

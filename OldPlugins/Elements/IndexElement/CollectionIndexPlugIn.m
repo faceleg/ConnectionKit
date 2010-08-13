@@ -34,13 +34,13 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "CollectionIndex.h"
+#import "CollectionIndexPlugIn.h"
 
 // LocalizedStringInThisBundle(@"Please specify the collection to index using the Pagelet Inspector.", "String_On_Page_Template")
 
 
 
-@implementation CollectionIndex
+@implementation CollectionIndexPlugIn
 
 + (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
 {

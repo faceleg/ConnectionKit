@@ -39,7 +39,7 @@
 
 
 @class KTLinkSourceView;
-@interface CollectionIndex : SVIndexPlugIn
+@interface CollectionIndexPlugIn : SVIndexPlugIn
 {
     
 }
