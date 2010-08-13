@@ -469,12 +469,8 @@
         }
         else
         {
-            [self startElement:@"div"];
-            
-            [graphic writeBody:self];
-            
-            OBASSERT([[self topElement] isEqualToString:@"div"]);
-            [self endElement];
+            [[self writeElement:@"div" contentsInvocationTarget:graphic]
+             writeBody:self];
         }
         
         
