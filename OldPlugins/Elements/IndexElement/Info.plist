@@ -54,7 +54,7 @@
 	<key>KTPluginUntitledName</key>
 	<string>Collection Index</string>
 	<key>KTTemplateName</key>
-	<string>IndexTemplate</string>
+	<string>CollectionIndexTemplate</string>
 	<key>NSPrincipalClass</key>
 	<string>CollectionIndexPlugIn</string>
 </dict>
