@@ -401,24 +401,6 @@
 
 - (void)writeBody:(SVHTMLContext *)context;
 {
-	// Determine tag(s) to use
-	// video || flash (not mutually exclusive) are mutually exclusive with microsoft, quicktime
-	NSString *type = [self codecType];
-	BOOL videoTag = [type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"public.ogg-theora"] || [type conformsToUTI:@"public.webm"];
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if ([defaults boolForKey:@"avoidVideoTag"]) videoTag = NO;
-	
-	BOOL flashTag = [type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"com.adobe.flash.video"];
-	if ([defaults boolForKey:@"avoidFlashVideo"]) flashTag = NO;
-	
-	BOOL microsoftTag = [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-​media-wmv"];
-	
-	// quicktime fallback, but not for mp4.  We may want to be more selective of mpeg-4 types though.
-	BOOL quicktimeTag = ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
-		&& ![type conformsToUTI:@"public.mpeg-4"];
-	
-	BOOL unknownTag = NO;	// will be set below if 
-
 	// Prepare Media
 	
 	SVMediaRecord *media = [self media];
@@ -434,6 +416,25 @@
 	{
 		posterSourceURL = [context addMedia:self.posterFrame width:[self width] height:[self height] type:self.posterFrame.typeOfFile];
 	}
+	
+	// Determine tag(s) to use
+	// video || flash (not mutually exclusive) are mutually exclusive with microsoft, quicktime
+	NSString *type = [self codecType];
+	BOOL videoTag = [type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"public.ogg-theora"] || [type conformsToUTI:@"public.webm"];
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	if ([defaults boolForKey:@"avoidVideoTag"]) videoTag = NO;
+	
+	BOOL flashTag = [type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"com.adobe.flash.video"];
+	if ([defaults boolForKey:@"avoidFlashVideo"]) flashTag = NO;
+	
+	BOOL microsoftTag = [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-​media-wmv"];
+	
+	// quicktime fallback, but not for mp4.  We may want to be more selective of mpeg-4 types though.
+	// Also show quicktime when there is no media at all
+	BOOL quicktimeTag = !media || ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
+	&& ![type conformsToUTI:@"public.mpeg-4"];
+	
+	BOOL unknownTag = NO;	// will be set below if 
 	
 	// START THE TAGS
 	
@@ -557,11 +558,11 @@
 	NSImage *result = nil;
 	NSString *type = self.codecType;
 	
-	if (!type)												// no movie -- don't bother with icon
+	if (!type || ![self media])								// no movie -- don't bother with icon
 	{
 		result = nil;
 	}
-	else if (![type conformsToUTI:(NSString *)kUTTypeMovie])			// BAD
+	else if (![type conformsToUTI:(NSString *)kUTTypeMovie])// BAD
 	{
 		result = [NSImage imageFromOSType:kAlertStopIcon];
 	}
@@ -586,11 +587,11 @@
 	NSString *result = @"";
 	NSString *type = self.codecType;
 	
-	if (!type)												// no movie -- don't bother with icon
+	if (!type || ![self media])								// no movie
 	{
 		result = NSLocalizedString(@"Use MPEG-4 (h.264) video for maximum compatibility.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
-	else if (![type conformsToUTI:(NSString *)kUTTypeMovie])			// BAD
+	else if (![type conformsToUTI:(NSString *)kUTTypeMovie])// BAD
 	{
 		result = NSLocalizedString(@"Video cannot be played in most browsers.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
