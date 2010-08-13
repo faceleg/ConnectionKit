@@ -173,7 +173,8 @@
 	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
 
 	// Actually write the video
-	[context pushElementAttribute:@"id" value:[self idNameForTag:@"video"]];
+	NSString *idName = [self idNameForTag:@"video"];
+	[context pushElementAttribute:@"id" value:idName];
 	if ([self displayInline]) [self buildClassName:context];
 	[context pushElementAttribute:@"width" value:[[self width] description]];
 	[context pushElementAttribute:@"height" value:[[self height] description]];
@@ -183,10 +184,18 @@
 	[context pushElementAttribute:@"preload" value:self.preload.boolValue ? @"auto" : @"none" ];
 	if (self.loop.boolValue)		[context pushElementAttribute:@"loop" value:@"loop"];
 	
-	// POSTER: poster="....." Maybe some sort of iPad sniffing to disallow?
-	// Disallow it on iOS < 4, or Firefox 3.5
-	
+	if (self.posterFrame)	[context pushElementAttribute:@"poster" value:posterSourcePath];	
 	[context startElement:@"video"];
+	
+	// Remove poster on iOS < 4; prevents video from working
+	[context startJavascriptElementWithSrc:nil];
+	[context stopWritingInline];
+	[context writeString:@"// Remove poster from buggy iOS before 4\n"];
+	[context writeString:@"if (navigator.userAgent.match(/CPU( iPhone)*( OS )*([123][_0-9]*)? like Mac OS X/)) {\n"];
+	[context writeString:[NSString stringWithFormat:@"\t$('#%@').removeAttr('poster');\n", idName]];
+	[context writeString:@"}\n"];
+	[context endElement];	
+	
 	
 	// source
 	[context pushElementAttribute:@"src" value:movieSourcePath];
@@ -217,7 +226,7 @@
 	{
 		[context writeString:@"\tif (navigator.userAgent.indexOf(' Safari/') > -1) {\n\t\t// Safari can't play this natively\n\t\tfallback(video);\n\t}\n"];
 	}
-	[context writeString:@"} else {\n\tfallback(video);\n"];
+	[context writeString:@"} else {\n\tfallback(video);\n}\n"];
 	[context endElement];	
 }
 
