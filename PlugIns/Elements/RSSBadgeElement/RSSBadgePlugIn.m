@@ -103,6 +103,7 @@
     [context addDependencyForKeyPath:@"iconStyle" ofObject:self];
     [context addDependencyForKeyPath:@"iconPosition" ofObject:self];
     [context addDependencyForKeyPath:@"label" ofObject:self];
+    [context addDependencyForKeyPath:@"feedURL" ofObject:self.indexedCollection];
 
     // add resources
     NSString *path = [self feedIconResourcePath];
