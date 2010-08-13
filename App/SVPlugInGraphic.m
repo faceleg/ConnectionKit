@@ -156,7 +156,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         SVPlugIn *plugIn = [[plugInClass alloc] init];
         OBASSERTSTRING(plugIn, @"plug-in cannot be nil!");
         
-        [_plugIn setValue:self forKey:@"container"];    // MUST do before deserializing properties
+        [plugIn setValue:self forKey:@"container"];    // MUST do before deserializing properties
         
         // Restore plug-in's properties
         NSDictionary *plugInProperties = [self extensibleProperties];
