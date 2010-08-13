@@ -1,9 +1,9 @@
 <div class="Index-Pagelet">
-[[if indexedPage]]
+[[if indexedCollection]]
 <ul>
-[[foreach indexedPage.navigablePages item maxItems]]
+[[foreach indexedCollection.navigablePages item maxItems]]
 	<li class="[[i]] [[eo]]">
-        <a href="[[path item]]">[[=item.titleText]]</a>
+        <a href="[[path item]]">[[=item.title]]</a>
         [[if includeSummaries]]<br />[[summary item maxSummaryCharacters]][[endif2]]
     </li>
 [[endForEach]]
@@ -12,7 +12,7 @@
 [[else]]
 [[if parser.HTMLGenerationPurpose]]
 [[else2]]
-<p>[['Please specify the collection to index using the Pagelet Inspector.]]</p>
+<p>[['Please specify the collection to index using the PlugIn Inspector.]]</p>
 [[endif2]]
 [[endif]]
 </div>
