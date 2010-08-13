@@ -129,51 +129,40 @@
 
 #pragma mark Metrics
 
-- (NSUInteger)height
+- (NSUInteger)heightForWidth:(NSUInteger)width
 {
-    NSUInteger result = 0;
+    // check for widescreen
+    NSUInteger result = (self.widescreen) ? (width * 9)/16 : (width * 3)/4;
     
-    NSUInteger width = [self width];
-    if ( self.widescreen )
-    {
-        result = (width * 9)/16;
-    }
-    else
-    {
-        result = (width * 3)/4;
-    }
-    
-    if ( self.showBorder )
-    {
-        result += YOUTUBE_BORDER_HEIGHT;
-    }
-    
+    // always leave room for control bar
     result += YOUTUBE_CONTROLBAR_HEIGHT; // always leave room for the control bar
+
+    // leave room for colored border, if applicable
+    if ( self.showBorder ) { result += YOUTUBE_BORDER_HEIGHT; }
     
     return result;
 }
 
-- (void)setHeight:(NSUInteger)height;
+- (NSUInteger)widthForHeight:(NSUInteger)height
 {
-    // account for control bar (always there)
+    // subtract control bar
     NSUInteger videoHeight = height - YOUTUBE_CONTROLBAR_HEIGHT;
     
     // account for YouTube's (colored) border, if showing
     if ( self.showBorder ) videoHeight -= YOUTUBE_BORDER_HEIGHT;
-    
-    //FIXME: we need to constrain height to be not less than YOUTUBE_CONTROLBAR_HEIGHT +/- YOUTUBE_BORDER_HEIGHT + 1
-    
-    NSUInteger videoWidth = 0;
-    if ( self.widescreen )
-    {
-        videoWidth = (videoHeight * 16)/9;
-    }
-    else
-    {
-        videoWidth = (videoHeight * 4)/3;
-    }
-    
-    [self setWidth:videoWidth];
+        
+    NSUInteger result = (self.widescreen) ? (videoHeight * 16)/9 : (videoHeight * 4)/3;
+    return result;
+}
+
+- (NSUInteger)height
+{
+    return [self heightForWidth:[self width]];
+}
+
+- (void)setHeight:(NSUInteger)height;
+{
+    [self setWidth:[self widthForHeight:height]];
 }
 
 + (NSSet *)keyPathsForValuesAffectingHeight;
@@ -181,7 +170,13 @@
     return [NSSet setWithObject:@"width"];
 }
 
-- (NSUInteger)minHeight; { return 150; }
+- (NSUInteger)minWidth { return 200; }
+
+- (NSUInteger)minHeight
+{
+    return [self heightForWidth:[self minWidth]];
+}
+
 
 - (BOOL)constrainProportions; { return YES; }
 + (BOOL)sizeIsExplicit; { return YES; }
