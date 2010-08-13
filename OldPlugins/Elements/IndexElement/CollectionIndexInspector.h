@@ -1,5 +1,5 @@
 //
-//  CollectionInspector.m
+//  CollectionInspector.h
 //  IndexElement
 //
 //  Copyright 2006-2010 Karelia Software. All rights reserved.
@@ -34,59 +34,15 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "CollectionInspector.h"
-#import "CollectionIndexPlugIn.h"
+#import "SandvoxPlugin.h"
 
 
-@implementation CollectionInspector
-
-
-- (void)awakeFromNib
+@interface CollectionIndexInspector : SVInspectorViewController 
 {
-    // enable target icon
-    //FIXME: remove this if KTLinkSourceView is enabled by default #84080
-    [oLinkView setEnabled:YES];
-    
-	// Connect up the target icon if needed
-	NSArray *selectedObjects = [[self inspectedObjectsController] selectedObjects];
-	id<SVPage> collection = (id<SVPage>)[NSNull null];		// placeholder for not known
-	NSCellStateValue state = NSMixedState;
-	for ( CollectionIndexPlugIn *plugIn in selectedObjects )
-	{
-		if ( (collection == (id<SVPage>)[NSNull null]) )
-		{
-			collection = plugIn.indexedCollection;	// first pass through
-			state = (nil != collection) ? NSOnState : NSOffState;
-		}
-		else
-		{
-			if ( collection != plugIn.indexedCollection )
-			{
-				state = NSMixedState;
-				break;		// no point in continuing; it's a mixed state and there's no going back
-			}
-		}
-	}
-	[oLinkView setConnected:(state == NSOnState)];
+	IBOutlet KTLinkSourceView *oLinkView;
 }
 
+- (IBAction)clear:(id)sender;
 
-#pragma mark -
-#pragma mark KTLinkSourceViewDelegate
-
-- (void)linkSourceConnectedTo:(id<SVPage>)aPage
-{
-	if (aPage)
-	{
-		[[[self inspectedObjectsController] selection] setValue:aPage forKey:@"indexedCollection"];
-		[oLinkView setConnected:YES];
-	}
-}
-
-- (IBAction)clear:(id)sender
-{
-    [[[self inspectedObjectsController] selection] setValue:nil forKey:@"indexedCollection"];
-    [oLinkView setConnected:NO];
-}
 
 @end
