@@ -16,6 +16,8 @@
 
 + (SVVideo *)insertNewMovieInManagedObjectContext:(NSManagedObjectContext *)context;
 
+- (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
+
 @property(nonatomic, retain) SVMediaRecord *posterFrame;
 
 @property(nonatomic, copy) NSNumber *autoplay;

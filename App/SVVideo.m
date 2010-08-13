@@ -56,6 +56,13 @@
     return result;
 }
 
+- (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
+{
+	SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"PosterFrame" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];	
+	[self replaceMedia:media forKeyPath:@"posterFrame"];
+}
+
+
 - (void)willInsertIntoPage:(KTPage *)page;
 {
 	[self addObserver:self forKeyPath:@"autoplay"	options:(NSKeyValueObservingOptionNew) context:nil];
