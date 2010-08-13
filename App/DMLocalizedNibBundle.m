@@ -829,28 +829,28 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 {
 	NSString *string = [self debugLocalizedStringForKey:key value:value table:tableName];
 	
-	if (![string isEqualToString:@"I AM THE DEFAULT VALUE"])
+	if ([string isEqualToString:@"I AM THE DEFAULT VALUE"]) return string;
+	if ([string hasPrefix:@"(A Document Being Saved By"]) return string;
+
+	//       NSLog(@"        Can't find translation for string %@", string);
+	//return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
+	// return string;
+	// Simulate all strings being 40% longer
+	float len = [string length];
+	float extra = ceilf(0.40 * len);
+	extra = MIN(extra, 100);		// don't pad more than 100 chars
+	NSString *insert = [@"...................................................................................................." substringToIndex:(int)extra];
+	int halflen = len/2;
+	// NSLog(@"half char = %c", [string characterAtIndex:halflen-1]);
+	if ([string characterAtIndex:halflen] == '%')
 	{
-		//       NSLog(@"        Can't find translation for string %@", string);
-		//return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
-		// return string;
-		// Simulate all strings being 40% longer
-		float len = [string length];
-		float extra = ceilf(0.40 * len);
-		extra = MIN(extra, 100);		// don't pad more than 100 chars
-		NSString *insert = [@"...................................................................................................." substringToIndex:(int)extra];
-		int halflen = len/2;
-		// NSLog(@"half char = %c", [string characterAtIndex:halflen-1]);
-		if ([string characterAtIndex:halflen] == '%')
-		{
-			halflen -= 1;	// don't split up a %@
-		}
-		string = [NSString stringWithFormat:@"%@%@%@",
-				[string substringToIndex:halflen],
-				insert,
-				[string substringFromIndex:halflen]];
-		
+		halflen -= 1;	// don't split up a %@
 	}
+	string = [NSString stringWithFormat:@"%@%@%@",
+			[string substringToIndex:halflen],
+			insert,
+			[string substringFromIndex:halflen]];
+	
 	return string;
 }
 
