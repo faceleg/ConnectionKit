@@ -170,8 +170,6 @@
     return [NSSet setWithObject:@"width"];
 }
 
-- (NSUInteger)minWidth { return 200; }
-
 - (NSUInteger)minHeight
 {
     return [self heightForWidth:[self minWidth]];
