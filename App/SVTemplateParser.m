@@ -507,7 +507,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	NSString *theString = [tag substringFromIndex:1];			// String to localize in TARGET language
 	
 	NSBundle *theBundle = [[self cache] valueForKeyPath:@"plugin.bundle"];
-	NSString *language = [[self cache] valueForKeyPath:@"currentPage.master.language"];
+	NSString *language = [[self cache] valueForKeyPath:@"parser.currentPage.master.language"];
 	if (!language) language = @"en";	// fallback just in case
 	NSString *theNewString = [theBundle localizedStringForString:theString language:language];
 	
