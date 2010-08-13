@@ -164,9 +164,9 @@
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVVideo *result = [SVVideo insertNewMovieInManagedObjectContext:context];
+    SVVideo *result = [SVVideo insertNewVideoInManagedObjectContext:context];
     [result setWidth:[NSNumber numberWithUnsignedInt:200]];
-    [result setHeight:[NSNumber numberWithUnsignedInt:200]];
+    [result setHeight:[NSNumber numberWithUnsignedInt:150]];	// typical TV aspect ratio
     
     return result;
 }
@@ -192,9 +192,9 @@
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVAudio *result = [SVAudio insertNewMovieInManagedObjectContext:context];
+    SVAudio *result = [SVAudio insertNewAudioInManagedObjectContext:context];
     [result setWidth:[NSNumber numberWithUnsignedInt:200]];
-    [result setHeight:[NSNumber numberWithUnsignedInt:200]];
+    [result setHeight:[NSNumber numberWithUnsignedInt:25]];		// height of audio tag
     
     return result;
 }

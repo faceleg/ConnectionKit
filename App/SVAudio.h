@@ -11,12 +11,9 @@
 
 @class SVMediaRecord;
 
-
 @interface SVAudio : SVMediaGraphic
 
-+ (SVAudio *)insertNewMovieInManagedObjectContext:(NSManagedObjectContext *)context;
-
-@property(nonatomic, retain) SVMediaRecord *posterFrame;
++ (SVAudio *)insertNewAudioInManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end
 

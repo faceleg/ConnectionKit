@@ -37,8 +37,6 @@
     return result;
 }
 
-@dynamic posterFrame;
-
 - (void)writeBody:(SVHTMLContext *)context;
 {
     [context writeHTMLString:@"<p>[[MAKE ME WRITE SOME HTML!]]</p>"];

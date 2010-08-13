@@ -14,7 +14,7 @@
 
 @interface SVVideo : SVMediaGraphic
 
-+ (SVVideo *)insertNewMovieInManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVVideo *)insertNewVideoInManagedObjectContext:(NSManagedObjectContext *)context;
 
 - (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
 

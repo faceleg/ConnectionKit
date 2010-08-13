@@ -49,7 +49,7 @@
 	}
 }
 
-+ (SVVideo *)insertNewMovieInManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVVideo *)insertNewVideoInManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVVideo *result = [NSEntityDescription insertNewObjectForEntityForName:@"Movie"
                                                     inManagedObjectContext:context];
@@ -109,7 +109,7 @@
 {
 	// Write the fallback method.  COULD WRITE THIS IN JQUERY TO BE MORE TERSE?
 	
-	NSString *oneTimeScript = @"<script type='text/javascript'>\nfunction fallback(video) {\n while (video.firstChild) {\n  if (video.firstChild.nodeName == 'SOURCE') {\n   video.removeChild(video.firstChild);\n  } else {\n   video.parentNode.insertBefore(video.firstChild, video);\n  }\n }\n video.parentNode.removeChild(video);\n}\n</script>\n";
+	NSString *oneTimeScript = @"<script type='text/javascript'>\nfunction fallback(av) {\n while (av.firstChild) {\n  if (av.firstChild.nodeName == 'SOURCE') {\n   av.removeChild(av.firstChild);\n  } else {\n   av.parentNode.insertBefore(av.firstChild, av);\n  }\n }\n av.parentNode.removeChild(av);\n}\n</script>\n";
 	
 	NSRange whereOneTimeScript = [[context extraHeaderMarkup] rangeOfString:oneTimeScript];
 	if (NSNotFound == whereOneTimeScript.location)
@@ -757,7 +757,7 @@
 //}
 
 
-- (IBAction)chooseMovieFile:(id)sender
+- (IBAction)chooseFile:(id)sender
 {
 	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 	[openPanel setCanChooseDirectories:NO];
