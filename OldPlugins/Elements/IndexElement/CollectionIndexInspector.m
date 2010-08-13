@@ -83,10 +83,4 @@
 	}
 }
 
-- (IBAction)clear:(id)sender
-{
-    [[[self inspectedObjectsController] selection] setValue:nil forKey:@"indexedCollection"];
-    [oLinkView setConnected:NO];
-}
-
 @end

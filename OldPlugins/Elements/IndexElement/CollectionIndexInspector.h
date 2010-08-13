@@ -42,7 +42,4 @@
 	IBOutlet KTLinkSourceView *oLinkView;
 }
 
-- (IBAction)clear:(id)sender;
-
-
 @end
