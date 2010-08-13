@@ -727,7 +727,6 @@
 		3C9BC1F6103DF90C00D2CF47 /* KTTransfer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1F4103DF90C00D2CF47 /* KTTransfer.xib */; };
 		3C9BC1FA103DF92500D2CF47 /* Welcome.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1F8103DF92500D2CF47 /* Welcome.xib */; };
 		3C9BC1FE103DF94300D2CF47 /* Prefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1FC103DF94300D2CF47 /* Prefs.xib */; };
-		3C9BC202103DF95900D2CF47 /* NewDocumentAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC200103DF95900D2CF47 /* NewDocumentAccessoryView.xib */; };
 		3C9BC205103DF97F00D2CF47 /* DocumentMigration.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC204103DF97F00D2CF47 /* DocumentMigration.xib */; };
 		3C9BC208103DF99300D2CF47 /* DebugMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC207103DF99300D2CF47 /* DebugMenu.xib */; };
 		3C9BC20B103DF9A900D2CF47 /* DebugTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC20A103DF9A900D2CF47 /* DebugTable.xib */; };
@@ -2341,7 +2340,6 @@
 		3C9BC1F5103DF90C00D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KTTransfer.xib; sourceTree = "<group>"; };
 		3C9BC1F9103DF92500D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Welcome.xib; sourceTree = "<group>"; };
 		3C9BC1FD103DF94300D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Prefs.xib; sourceTree = "<group>"; };
-		3C9BC201103DF95900D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/NewDocumentAccessoryView.xib; sourceTree = "<group>"; };
 		3C9BC204103DF97F00D2CF47 /* DocumentMigration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentMigration.xib; sourceTree = "<group>"; };
 		3C9BC207103DF99300D2CF47 /* DebugMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugMenu.xib; sourceTree = "<group>"; };
 		3C9BC20A103DF9A900D2CF47 /* DebugTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugTable.xib; sourceTree = "<group>"; };
@@ -4165,7 +4163,6 @@
 				3C9BC1F0103DF8D300D2CF47 /* HostSetup.xib */,
 				3C9BC1F4103DF90C00D2CF47 /* KTTransfer.xib */,
 				3C9BC1F8103DF92500D2CF47 /* Welcome.xib */,
-				3C9BC200103DF95900D2CF47 /* NewDocumentAccessoryView.xib */,
 			);
 			name = Localized;
 			sourceTree = "<group>";
@@ -6268,7 +6265,6 @@
 				3C9BC1F6103DF90C00D2CF47 /* KTTransfer.xib in Resources */,
 				3C9BC1FA103DF92500D2CF47 /* Welcome.xib in Resources */,
 				3C9BC1FE103DF94300D2CF47 /* Prefs.xib in Resources */,
-				3C9BC202103DF95900D2CF47 /* NewDocumentAccessoryView.xib in Resources */,
 				3C9BC205103DF97F00D2CF47 /* DocumentMigration.xib in Resources */,
 				3C9BC208103DF99300D2CF47 /* DebugMenu.xib in Resources */,
 				3C9BC20B103DF9A900D2CF47 /* DebugTable.xib in Resources */,
@@ -7599,14 +7595,6 @@
 				3C9BC1FD103DF94300D2CF47 /* en */,
 			);
 			name = Prefs.xib;
-			sourceTree = "<group>";
-		};
-		3C9BC200103DF95900D2CF47 /* NewDocumentAccessoryView.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3C9BC201103DF95900D2CF47 /* en */,
-			);
-			name = NewDocumentAccessoryView.xib;
 			sourceTree = "<group>";
 		};
 		CE12151D0B5EFF3200C40320 /* LivePagesDisabled.html */ = {
