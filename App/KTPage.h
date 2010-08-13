@@ -171,7 +171,7 @@ typedef enum {
 @property(nonatomic, copy) NSNumber *collectionMaxIndexItems;   // mandatory for collections, nil otherwise
 
 @property(nonatomic, copy) NSString *RSSFileName;
-- (NSURL *)feedURL;
+@property(nonatomic, readonly) NSURL *feedURL;  // KVO-compliant
 
 - (NSString *)RSSFeed;
 - (void)writeRSSFeed:(SVHTMLContext *)context;

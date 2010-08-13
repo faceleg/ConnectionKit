@@ -31,7 +31,7 @@
 #pragma mark Navigation
 
 - (SVLink *)link;
-- (NSURL *)feedURL;
+@property(nonatomic, readonly) NSURL *feedURL;  // KVO-compliant
 
 - (BOOL)shouldIncludeInIndexes;
 - (BOOL)shouldIncludeInSiteMaps;

@@ -234,6 +234,10 @@
 	
 	return result;
 }
++ (NSString *)keyPathsForValuesAffectingFeedURL;
+{
+    return [NSSet setWithObjects:@"collectionSyndicate", @"URL", @"RSSFileName", nil];
+}
 
 /*  The pages that will go into the RSS feed. This is just -pagesInIndex, sorted chronologically
  */
