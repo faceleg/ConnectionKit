@@ -80,10 +80,6 @@
     }
 }
 
-- (void)awakeFromNib
-{
-	[oLinkView setConnected:(nil != [[self delegateOwner] valueForKey:@"indexedPage"])];
-}
 
 - (void)dealloc
 {

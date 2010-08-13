@@ -38,6 +38,13 @@
 
 @implementation CollectionInspector
 
+
+- (void)awakeFromNib
+{
+	[oLinkView setConnected:(nil != [[self delegateOwner] valueForKey:@"indexedPage"])];
+}
+
+
 #pragma mark -
 #pragma mark Link Source Delegate
 
