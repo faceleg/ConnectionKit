@@ -2992,6 +2992,8 @@
 		27196F5D1090A8590096B612 /* 2.0 Plug-in System */ = {
 			isa = PBXGroup;
 			children = (
+				2782914410912B30008D0A64 /* SVInspectorViewController.h */,
+				2782914510912B30008D0A64 /* SVInspectorViewController.m */,
 				3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */,
 				272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */,
 				272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */,
@@ -3808,8 +3810,6 @@
 				27196F611090A9D40096B612 /* SVInspector.h */,
 				27196F621090A9D40096B612 /* SVInspector.m */,
 				27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */,
-				2782914410912B30008D0A64 /* SVInspectorViewController.h */,
-				2782914510912B30008D0A64 /* SVInspectorViewController.m */,
 				27ACACB50D588F64004732D0 /* KTPlaceholderBindingTextField.m */,
 				272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */,
 				272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */,
