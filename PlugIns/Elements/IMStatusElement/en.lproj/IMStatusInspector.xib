@@ -40,7 +40,7 @@
 			</object>
 			<object class="NSCustomView" id="924463587">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">256</int>
+				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSForm" id="944286783">
@@ -124,7 +124,8 @@
 								<reference key="NSSupport" ref="26"/>
 							</object>
 						</object>
-						<reference key="NSSelectedCell" ref="187444725"/>
+						<int key="NSSelectedRow">-1</int>
+						<int key="NSSelectedCol">-1</int>
 						<object class="NSColor" key="NSBackgroundColor" id="864347249">
 							<int key="NSColorSpace">6</int>
 							<string key="NSCatalogName">System</string>
