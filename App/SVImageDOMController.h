@@ -6,14 +6,13 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
+
+#import "SVSizeBindingDOMController.h"
 #import "SVGraphicDOMController.h"
 #import "SVImage.h"
 
 
-@interface SVImageDOMController : SVGraphicDOMController
-{
-}
-
+@interface SVImageDOMController : SVSizeBindingDOMController
 @end
 
 

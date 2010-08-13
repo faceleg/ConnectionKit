@@ -16,18 +16,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
-
-
 @implementation SVImageDOMController
-
-#pragma mark Dealloc
-
-- (void)dealloc
-{
-    [self setRepresentedObject:nil];
-    [super dealloc];
-}
 
 #pragma mark Element
 
@@ -38,21 +27,6 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     return result;
 }
 
-#pragma mark Content
-
-- (void)setRepresentedObject:(id)image
-{
-    [[self representedObject] removeObserver:self forKeyPath:@"width"];
-    [[self representedObject] removeObserver:self forKeyPath:@"height"];
-    //[[self representedObject] removeObserver:self forKeyPath:@"wrap"];
-    
-    [super setRepresentedObject:image];
-    
-    [image addObserver:self forKeyPath:@"width" options:0 context:sImageSizeObservationContext];
-    [image addObserver:self forKeyPath:@"height" options:0 context:sImageSizeObservationContext];
-    //[image addObserver:self forKeyPath:@"wrap" options:0 context:sImageSizeObservationContext];
-}
-
 #pragma mark Selection
 
 - (void)updateToReflectSelection;
@@ -60,70 +34,7 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     // Do nothing!!
 }
 
-- (BOOL)allowsDirectAccessToWebViewWhenSelected;
-{
-    /*
-    if ([[self HTMLElement] isContentEditable])
-    {
-        return YES;
-    }
-    */
-    return YES;//[super allowsDirectAccessToWebViewWhenSelected];
-}
-
-- (BOOL)tryToRemove;
-{
-    // Remove parent controller instead of ourself
-    WEKWebEditorItem *parent = [self parentWebEditorItem];
-    OBASSERT([parent isKindOfClass:[SVImagePageletDOMController class]]);
-    
-    return [parent tryToRemove];
-}
-
-#pragma mark Updating
-
-- (void)update;
-{
-    // mark the current area for drawing
-    DOMHTMLElement *element = [self HTMLElement];
-    SVImage *image = [self representedObject];
-    
-    
-    // Push property change into DOM
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:nil inheritFromContext:[self HTMLContext]];
-    [image buildClassName:context];
-    [element setClassName:[context elementClassName]];
-    [context release];
-    
-    [element setAttribute:@"width" value:[[image width] description]];
-    [element setAttribute:@"height" value:[[image height] description]];
-    
-    
-    // Finish
-    [self didUpdate];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-    if (context == sImageSizeObservationContext)
-    {
-        if ([[self webEditor] inLiveGraphicResize])
-        {
-            [self update];
-        }
-        else
-        {
-            [self setNeedsUpdate];
-        }
-    }
-    else
-    {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
-}
+- (BOOL)allowsDirectAccessToWebViewWhenSelected; { return YES; }
 
 #pragma mark Resizing
 
@@ -198,7 +109,7 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     return result;
 }
 
-- (DOMElement *)graphicDOMElement; { return [self HTMLElement]; }
+- (DOMElement *)selectableDOMElement; { return [self HTMLElement]; }
 
 - (unsigned int)resizingMask
 {
