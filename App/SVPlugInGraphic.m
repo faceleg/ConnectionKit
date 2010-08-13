@@ -293,6 +293,17 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [[self plugIn] setHeight:[height unsignedIntegerValue]];
 }
 + (NSSet *)keyPathsForValuesAffectingContentHeight; { return [NSSet setWithObject:@"plugIn.height"]; }
+- (BOOL)validateContentHeight:(NSNumber **)height error:(NSError **)error;
+{
+    BOOL result = YES;
+    
+    if (*height && [*height unsignedIntegerValue] < [self minHeight])
+    {
+        *height = [NSNumber numberWithUnsignedInt:[self minHeight]];
+    }
+    
+    return result;
+}
 
 - (NSUInteger)minHeight; { return [[self plugIn] minHeight]; }
 
