@@ -120,7 +120,7 @@
             [_output cancelFlushOnNextWrite];
             [_output beginBuffering];
             
-            [super startElement:tagName withDOMElement:element];
+            [super startElement:[tagName lowercaseString] withDOMElement:element];
             [_pendingEndDOMElements removeLastObject];
             
             [_output discardBuffer];
@@ -142,7 +142,7 @@
         
         
         // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
-        if ([self hasOpenElementWithTagName:tagName])
+        if ([self hasOpenElement:[tagName lowercaseString]])
         {
             // Shuffle up following nodes
             DOMElement *parent = (DOMElement *)[element parentNode];
