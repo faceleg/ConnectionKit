@@ -470,7 +470,10 @@
         else
         {
             [self startElement:@"div"];
+            
             [graphic writeBody:self];
+            
+            OBASSERT([[self topElement] isEqualToString:@"div"]);
             [self endElement];
         }
         
