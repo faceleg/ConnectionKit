@@ -163,8 +163,6 @@
 		[context writeParamElementWithName:@"type" value:@"video/quicktime"];
 		[context writeParamElementWithName:@"pluginspage" value:@"http://www.apple.com/quicktime/download/"];
 		
-			
-        [context endElement];
 	}
 	else if (microsoftTag)
 	{
