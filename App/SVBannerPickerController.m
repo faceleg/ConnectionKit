@@ -89,7 +89,8 @@
 {
     KTDocument *document = [oInspectorViewController representedObject];
     NSOpenPanel *panel = [document makeChooseDialog];
-    
+ 	[panel setAllowedFileTypes:[NSArray arrayWithObject:(NSString *)kUTTypeImage]];
+   
     if ([panel runModal] == NSFileHandlingPanelOKButton)
     {
         NSURL *URL = [panel URL];
