@@ -33,7 +33,9 @@
 //  Community Note: This code is distrubuted under a modified BSD License.
 //  We encourage you to share your Sandvox Plugins similarly.
 //
+
 #import "CollectionInspector.h"
+#import "CollectionIndexPlugIn.h"
 
 
 @implementation CollectionInspector
@@ -41,32 +43,50 @@
 
 - (void)awakeFromNib
 {
-	[oLinkView setConnected:(nil != [[self delegateOwner] valueForKey:@"indexedPage"])];
+    // enable target icon
+    //FIXME: remove this if KTLinkSourceView is enabled by default #84080
+    [oLinkView setEnabled:YES];
+    
+	// Connect up the target icon if needed
+	NSArray *selectedObjects = [[self inspectedObjectsController] selectedObjects];
+	id<SVPage> collection = (id<SVPage>)[NSNull null];		// placeholder for not known
+	NSCellStateValue state = NSMixedState;
+	for ( CollectionIndexPlugIn *plugIn in selectedObjects )
+	{
+		if ( (collection == (id<SVPage>)[NSNull null]) )
+		{
+			collection = plugIn.indexedCollection;	// first pass through
+			state = (nil != collection) ? NSOnState : NSOffState;
+		}
+		else
+		{
+			if ( collection != plugIn.indexedCollection )
+			{
+				state = NSMixedState;
+				break;		// no point in continuing; it's a mixed state and there's no going back
+			}
+		}
+	}
+	[oLinkView setConnected:(state == NSOnState)];
 }
 
 
 #pragma mark -
-#pragma mark Link Source Delegate
+#pragma mark KTLinkSourceViewDelegate
+
+- (void)linkSourceConnectedTo:(id<SVPage>)aPage
+{
+	if (aPage)
+	{
+		[[[self inspectedObjectsController] selection] setValue:aPage forKey:@"indexedCollection"];
+		[oLinkView setConnected:YES];
+	}
+}
 
 - (IBAction)clear:(id)sender
 {
-	[[self delegateOwner] setValue:nil forKey:@"indexedPage"];
-}
-
-// This is supposed to return a document so that the connector knows to connect only to its document's site outline object
-
-
-- (id)userInfoForLinkSource:(KTLinkSourceView *)link
-{
-	return [[self page] site];
-}
-
-- (void)linkSourceConnectedTo:(KTPage *)aPage;
-{
-	if ( nil != aPage )
-	{
-		[[self delegateOwner] setValue:aPage forKey:@"indexedPage"];
-	}
+    [[[self inspectedObjectsController] selection] setValue:nil forKey:@"indexedCollection"];
+    [oLinkView setConnected:NO];
 }
 
 @end
