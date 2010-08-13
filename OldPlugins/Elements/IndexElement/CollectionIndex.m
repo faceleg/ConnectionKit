@@ -1,8 +1,8 @@
 //
-//  IndexPageletDelegate.m
-//  IndexPagelet
+//  CollectionIndex.m
+//  IndexElement
 //
-//  Copyright 2006-2009 Karelia Software. All rights reserved.
+//  Copyright 2006-2010 Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -34,13 +34,13 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "IndexPageletDelegate.h"
+#import "CollectionIndex.h"
 
 // LocalizedStringInThisBundle(@"Please specify the collection to index using the Pagelet Inspector.", "String_On_Page_Template")
 
 
 
-@implementation IndexPageletDelegate
+@implementation CollectionIndex
 
 + (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
 {
@@ -141,65 +141,5 @@
     return result;
 }
 
-#pragma mark -
-#pragma mark Link Source Delegate
-
-- (IBAction)clear:(id)sender
-{
-	[[self delegateOwner] setValue:nil forKey:@"indexedPage"];
-}
-
-// This is supposed to return a document so that the connector knows to connect only to its document's site outline object
-
-
-- (id)userInfoForLinkSource:(KTLinkSourceView *)link
-{
-	return [[self page] site];
-}
-
-- (void)linkSourceConnectedTo:(KTPage *)aPage;
-{
-	if ( nil != aPage )
-	{
-		[[self delegateOwner] setValue:aPage forKey:@"indexedPage"];
-	}
-}
-
-@end
-
-#pragma mark -
-#pragma mark Data Migrator
-
-@interface NSObject (IndexPageletDataMigrator)
-- (id)initWithClassName:(NSString *)className entityName:(NSString *)entityName ID:(NSString *)ID;
-@end
-
-
-@implementation IndexPageletDelegate (DataMigration)
-
-/*  We need to manually import collection IDs to the new format. This is a little hacky using (Sandvox's) private API
- */
-- (BOOL)importPluginProperties:(NSDictionary *)oldPluginProperties
-                    fromPlugin:(NSManagedObject *)oldPlugin
-                         error:(NSError **)error
-{
-    [[self delegateOwner] setValuesForKeysWithDictionary:oldPluginProperties];
-    
-    
-    NSString *collectionID = [oldPluginProperties objectForKey:@"collectionID"];
-    id archivedObject = nil;
-    if (collectionID)
-    {
-        Class archiveClass = NSClassFromString(@"KTExtensiblePluginPropertiesArchivedObject");
-        archivedObject = [[archiveClass alloc] initWithClassName:@"KTPage" entityName:@"Page" ID:collectionID];
-    }
-    
-    [[self delegateOwner] setValue:archivedObject forKey:@"indexedPage"];
-    [archivedObject release];
-         
-    
-    if (error) *error = nil;
-    return YES;
-}
 
 @end
