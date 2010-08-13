@@ -3725,6 +3725,7 @@
 		27F365E01160209B003BDA5F /* Plug-In Inspector */ = {
 			isa = PBXGroup;
 			children = (
+				27D7347212119F3100722189 /* FileInfo.xib */,
 				CEDA2DD1120CD676005FE23E /* SVVideo.xib */,
 				CEDA2DBE120CD437005FE23E /* SVVideoInspector.h */,
 				CEDA2DBF120CD437005FE23E /* SVVideoInspector.m */,
@@ -3871,7 +3872,6 @@
 				3C202DF507E00CCC00DE4994 /* Product Dependencies */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 				3C1F511311D5758F0036B375 /* Cocoa.framework */,
-				27D7347212119F3100722189 /* FileInfo.xib */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
