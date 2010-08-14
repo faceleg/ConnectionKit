@@ -17,6 +17,7 @@
 #import "NSImage+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSBundle+Karelia.h"
+#import <QuickLook/QuickLook.h>
 
 @implementation SVVideo 
 
@@ -24,7 +25,28 @@
 {
 	[self removeObserver:self forKeyPath:@"autoplay"];
 	[self removeObserver:self forKeyPath:@"controller"];
+	[self removeObserver:self forKeyPath:@"media"];
 	[super dealloc];
+}
+
+- (void)getPosterFrameFromQuickLook;
+{
+	SVMediaRecord *media = self.media;
+	
+	
+	// TODO: Generate this on a thread, also I need to use the width and height of the actual movie, not the object as rendered.
+	
+	NSDictionary *options = NSDICT(NSBOOL(NO), (NSString *)kQLThumbnailOptionIconModeKey);
+    CGImageRef cg = QLThumbnailImageCreate(kCFAllocatorDefault, 
+                                            (CFURLRef)[media fileURL], 
+                                            CGSizeMake([[self width] floatValue], [[self height]  floatValue]),
+                                            (CFDictionaryRef)options);
+	if (cg)
+	{
+		// NSBitmapImageRep *bitmapImageRep = [[[NSBitmapImageRep alloc] initWithCGImage:cg] autorelease];
+		// NSData *tiff = [bitmapImageRep TIFFRepresentation];
+		// [tiff writeToFile:@"/Volumes/dwood/Desktop/quicklook.tiff" atomically:YES];
+	}
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -47,6 +69,14 @@
 			self.autoplay = NSBOOL(YES);
 		}
 	}
+	else if ([keyPath isEqualToString:@"media"])
+	{
+		NSLog(@"SVVideo Media set.");
+		if (!self.posterFrame)
+		{
+			[self getPosterFrameFromQuickLook];
+		}
+	}
 }
 
 + (SVVideo *)insertNewVideoInManagedObjectContext:(NSManagedObjectContext *)context;
@@ -67,6 +97,7 @@
 {
 	[self addObserver:self forKeyPath:@"autoplay"	options:(NSKeyValueObservingOptionNew) context:nil];
 	[self addObserver:self forKeyPath:@"controller"	options:(NSKeyValueObservingOptionNew) context:nil];
+	[self addObserver:self forKeyPath:@"media"		options:(NSKeyValueObservingOptionNew) context:nil];
 
 //    // Placeholder image
 //    if (![self media])
