@@ -1786,7 +1786,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 if (![view mouse:location inRect:textBox])
                 {
                     // There's no good text to select, so fall back to body
-                    range = [[self delegate] webEditor:self fallbackDOMRangeForNoSelection:proposedRange event:event];
+                    range = nil;
                 }
             }
         }

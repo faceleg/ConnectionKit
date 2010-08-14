@@ -268,10 +268,6 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
                        items:(NSArray *)proposedSelectedItems
               stillSelecting:(BOOL)stillSelecting;
 
-- (DOMRange *)webEditor:(WEKWebEditorView *)sender
-fallbackDOMRangeForNoSelection:(DOMRange *)proposedRange
-                  event:(NSEvent *)selectionEvent;
-
 //  Delegate is automatically subscribed to SVWebEditorViewDidChangeSelectionNotification
 - (void)webEditorDidChangeSelection:(NSNotification *)notification;
 

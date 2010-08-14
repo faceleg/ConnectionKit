@@ -448,16 +448,6 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
         
         [_selectionToRestore release]; _selectionToRestore = nil;
     }
-    
-    // Fallback to end of article if needs be. #75712
-    if (![webEditor selectedItem] && ![webEditor selectedDOMRange])
-    {
-        if ([webEditor ks_followsResponder:[[[self view] window] firstResponder]])
-        {
-            DOMRange *range = [self webEditor:webEditor fallbackDOMRangeForNoSelection:nil event:nil];
-            [webEditor setSelectedDOMRange:range affinity:0];
-        }
-    }
 }
 
 - (void)updateDidTimeout
@@ -1206,45 +1196,6 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     }
     
     return link;
-}
-
-- (DOMRange *)webEditor:(WEKWebEditorView *)sender
-fallbackDOMRangeForNoSelection:(DOMRange *)proposedRange
-                  event:(NSEvent *)selectionEvent;
-{
-    DOMRange *result = nil;
-    
-    
-    // Did they click in the sidebar?
-    if (selectionEvent)
-    {
-        NSPoint location = [sender convertPointFromBase:[selectionEvent locationInWindow]];
-        NSDictionary *element = [[sender webView] elementAtPoint:location];
-        DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
-        
-        DOMElement *mainElement = [[node ownerDocument] getElementById:@"main"];
-        if ([node ks_isDescendantOfElement:mainElement])
-        {
-            // Figure out a good range in the article
-            SVTextDOMController *item = (id)[self articleDOMController];
-            DOMNode *articleNode = [item textHTMLElement];
-            
-            result = [[articleNode ownerDocument] createRange];
-            
-            NSPoint location = [[articleNode documentView] convertPointFromBase:[selectionEvent locationInWindow]];
-            if (selectionEvent && location.y < NSMidY([articleNode boundingBox]))
-            {
-                [result setStartBefore:[articleNode firstChild]];
-            }
-            else
-            {
-                [result setStartAfter:[articleNode lastChild]];
-            }
-        }
-    }
-    
-    
-    return result;
 }
 
 - (BOOL)webEditor:(WEKWebEditorView *)sender createLink:(SVLinkManager *)actionSender;
