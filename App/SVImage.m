@@ -263,6 +263,8 @@
     [context pushElementAttribute:@"id" value:idName];
     if ([self displayInline]) [self buildClassName:context];
     
+    [context buildAttributesForElement:@"img" bindSizeToObject:self];
+    
     SVMediaRecord *media = [self media];
     if (media)
     {

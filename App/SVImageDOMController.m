@@ -140,13 +140,18 @@
 - (void)awakeFromHTMLContext:(SVWebEditorHTMLContext *)context;
 {
     [super awakeFromHTMLContext:context];
-    
+    return;
     
     // Add separate DOM controller for the image itself
     [_imageDOMController release]; _imageDOMController = [[SVImageDOMController alloc] init];
     [_imageDOMController setRepresentedObject:[self representedObject]];
     
     [self addChildWebEditorItem:_imageDOMController];
+}
+
+- (SVSizeBindingDOMController *)newSizeBindingControllerWithRepresentedObject:(id)object;
+{
+    return [[SVImageDOMController alloc] initWithRepresentedObject:object];
 }
 
 - (void)dealloc
