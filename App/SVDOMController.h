@@ -12,7 +12,7 @@
 #import "SVHTMLContext.h"
 
 
-@class SVWebEditorHTMLContext, KSObjectKeyPathPair, SVWebEditorViewController, SVGraphic;
+@class SVWebEditorHTMLContext, KSObjectKeyPathPair, SVWebEditorViewController, SVGraphic, SVSizeBindingDOMController;
 @protocol SVDOMControllerRepresentedObject;
 
 
@@ -36,6 +36,8 @@
 //  1.  Calls -initWithElementIdName: with the result of [content elementIdName]. Subs in a custom ID if the content provides nil
 //  2.  Set content as .representedObject
 - (id)initWithRepresentedObject:(id <SVDOMControllerRepresentedObject>)content;
+
+- (SVSizeBindingDOMController *)newSizeBindingControllerWithRepresentedObject:(id)object;
 
 
 #pragma mark Content

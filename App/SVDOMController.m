@@ -9,6 +9,7 @@
 #import "SVDOMController.h"
 
 #import "SVSidebarDOMController.h"
+#import "SVSizeBindingDOMController.h"
 #import "SVTextDOMController.h"
 #import "SVWebEditorViewController.h"
 
@@ -53,6 +54,11 @@
         [self setRepresentedObject:content];
     }
     return self;
+}
+
+- (SVSizeBindingDOMController *)newSizeBindingControllerWithRepresentedObject:(id)object;
+{
+    return [[SVSizeBindingDOMController alloc] initWithRepresentedObject:object];
 }
 
 - (void)dealloc

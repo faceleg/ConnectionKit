@@ -607,7 +607,7 @@
     [self startElement:elementName];
 }
 
-- (void)buildAttributesForElement:elementName bindSizeToObject:(NSObject *)object;  // support
+- (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object;
 {
     NSNumber *width = [object valueForKey:@"width"];
     NSNumber *height = [object valueForKey:@"height"];

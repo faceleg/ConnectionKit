@@ -209,17 +209,26 @@
 
 #pragma mark Metrics
 
-- (void)startElement:(NSString *)elementName bindSizeToObject:(NSObject *)object;
+- (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object;
 {
-    SVDOMController *controller = [[SVSizeBindingDOMController alloc]
-                                   initWithRepresentedObject:object];
+    SVDOMController *controller = [[self currentDOMController] newSizeBindingControllerWithRepresentedObject:object];
     
     [self startDOMController:controller];
+    _openSizeBindingController = YES;
     [controller release];
     
-    [super startElement:elementName bindSizeToObject:object];
+    [super buildAttributesForElement:elementName bindSizeToObject:object];
+}
+
+- (void)endElement;
+{
+    [super endElement];
     
-    [self endDOMController];
+    if (_openSizeBindingController)
+    {
+        [self endDOMController];
+        _openSizeBindingController = NO;
+    }
 }
 
 #pragma mark Text Blocks
