@@ -25,6 +25,6 @@
     SVImageDOMController    *_imageDOMController;
 }
 
-@property(nonatomic, retain, readonly) SVImageDOMController *imageDOMController;
+@property(nonatomic, retain) SVImageDOMController *imageDOMController;
 
 @end
