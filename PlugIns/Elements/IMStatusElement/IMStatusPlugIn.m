@@ -113,16 +113,6 @@ NSString *IMWantBorderKey = @"wantBorder";
             nil];
 }
 
-- (NSUInteger)width
-{
-    return 175;
-}
-
-- (NSUInteger)height
-{
-    return 75;
-}
-
 
 #pragma mark -
 #pragma mark HTML Generation
