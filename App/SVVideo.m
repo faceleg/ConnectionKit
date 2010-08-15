@@ -39,13 +39,13 @@
 	NSDictionary *options = NSDICT(NSBOOL(NO), (NSString *)kQLThumbnailOptionIconModeKey);
     CGImageRef cg = QLThumbnailImageCreate(kCFAllocatorDefault, 
                                             (CFURLRef)[media fileURL], 
-                                            CGSizeMake([[self width] floatValue], [[self height]  floatValue]),
+                                            CGSizeMake(1920,1440), // Typical size of a very large (3:4) 1080p movie, should be *plenty* for poster
                                             (CFDictionaryRef)options);
 	if (cg)
 	{
-		// NSBitmapImageRep *bitmapImageRep = [[[NSBitmapImageRep alloc] initWithCGImage:cg] autorelease];
-		// NSData *tiff = [bitmapImageRep TIFFRepresentation];
-		// [tiff writeToFile:@"/Volumes/dwood/Desktop/quicklook.tiff" atomically:YES];
+		NSBitmapImageRep *bitmapImageRep = [[[NSBitmapImageRep alloc] initWithCGImage:cg] autorelease];
+		NSData *tiff = [bitmapImageRep TIFFRepresentation];
+//		[tiff writeToFile:@"/Volumes/dwood/Desktop/quicklook.tiff" atomically:YES];
 	}
 }
 
@@ -81,7 +81,7 @@
 
 + (SVVideo *)insertNewVideoInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVVideo *result = [NSEntityDescription insertNewObjectForEntityForName:@"Movie"
+    SVVideo *result = [NSEntityDescription insertNewObjectForEntityForName:@"Video"
                                                     inManagedObjectContext:context];
     return result;
 }

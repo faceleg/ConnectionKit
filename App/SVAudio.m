@@ -30,9 +30,9 @@
 
 @implementation SVAudio
 
-+ (SVAudio *)insertNewMovieInManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVAudio *)insertNewAudioInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVAudio *result = [NSEntityDescription insertNewObjectForEntityForName:@"Movie"
+    SVAudio *result = [NSEntityDescription insertNewObjectForEntityForName:@"Audio"
                                                     inManagedObjectContext:context];
     return result;
 }
