@@ -29,6 +29,9 @@ img.narrow.right { float:right; }
 .wide.left .graphic, img.wide.left { margin-left:0px; margin-right:auto; }
 .wide.center .graphic, img.wide.center { margin-left:auto; margin-right:auto; }
 .wide.right .graphic, img.wide.right { margin-left:auto; margin-right:0px; }
+.graphic-container.left { text-align:left; }
+.graphic-container.center { text-align:center; }
+.graphic-container.right { text-align:right; }
 
 /* Captioned graphics */
 #main .graphic img, #main .graphic object {
