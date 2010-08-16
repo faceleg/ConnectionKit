@@ -35,7 +35,7 @@
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>listStyle</key>
-		<true/>
+		<integer>1</integer>
 		<key>maxEntries</key>
 		<integer>15</integer>
 	</dict>
