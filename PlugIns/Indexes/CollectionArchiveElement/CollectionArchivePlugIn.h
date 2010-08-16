@@ -40,7 +40,7 @@
 #define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 
 
-@interface CollectionArchivePlugIn : SVPlugIn
+@interface CollectionArchivePlugIn : SVIndexPlugIn
 {
 }
 
