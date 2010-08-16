@@ -14,13 +14,13 @@
 
 @interface SVVideo : SVMediaGraphic
 {
-	QTMovie *_movie;
+	QTMovie *_dimensionCalculationMovie;
 }
 + (SVVideo *)insertNewVideoInManagedObjectContext:(NSManagedObjectContext *)context;
 
 - (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
 
-@property (retain) QTMovie *movie;
+@property (retain) QTMovie *dimensionCalculationMovie;
 
 @property(nonatomic, retain) SVMediaRecord *posterFrame;
 
@@ -28,6 +28,8 @@
 @property(nonatomic, copy) NSNumber *controller;	// BOOLs
 @property(nonatomic, copy) NSNumber *loop;
 @property(nonatomic, copy) NSNumber *preload;
+@property(nonatomic, copy) NSNumber *videoWidth;
+@property(nonatomic, copy) NSNumber *videoHeight;
 
 #pragma mark Publishing
 

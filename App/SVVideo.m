@@ -22,6 +22,7 @@
 @interface SVVideo ()
 
 - (void)loadMovie;
+- (void)loadMovieFromAttributes:(NSDictionary *)anAttributes;
 
 @end
 
@@ -33,7 +34,8 @@
 @dynamic preload;
 @dynamic loop;
 @dynamic codecType;	// determined from movie's file UTI, or by further analysis
-
+@dynamic videoWidth;
+@dynamic videoHeight;
 
 //	LocalizedStringInThisBundle(@"This is a placeholder for a video. The full video will appear once you publish this website, but to see the video in Sandvox, please enable live data feeds in the preferences.", "Live data feeds disabled message.")
 
@@ -199,6 +201,10 @@
 		{
 			[self getPosterFrameFromQuickLook];	// Should we only replace if poster was auto-set?
 		}
+		
+		// Video changed - clear out the known width/height so we can recalculate
+		self.videoWidth = nil;
+		self.videoHeight = nil;
 		
 		// Load the movie to figure out the media size
 		[self loadMovie];
@@ -724,19 +730,20 @@
 
 /*	This accessor provides a means for temporarily storing the movie while information about it is asyncronously loaded
  */
-- (QTMovie *)movie { return _movie; }
 
-- (void)setMovie:(QTMovie *)aMovie
+@synthesize dimensionCalculationMovie = _dimensionCalculationMovie;
+
+- (void)setDimensionCalculationMovie:(QTMovie *)aMovie
 {
 	// If we are clearing out an existing movie, we're done, so exit movie on thread.  I hope this is right!
-	if (nil == aMovie && nil != _movie && ![NSThread isMainThread])
+	if (nil == aMovie && nil != _dimensionCalculationMovie && ![NSThread isMainThread])
 	{
-		OSErr err = ExitMoviesOnThread();	// I hope this is 
+		OSErr err = ExitMoviesOnThread();
 		if (err != noErr) NSLog(@"Unable to ExitMoviesOnThread; %d", err);
 	}
 	[aMovie retain];
-	[_movie release];
-	_movie = aMovie;
+	[_dimensionCalculationMovie release];
+	_dimensionCalculationMovie = aMovie;
 }
 
 // Loads or reloads the movie/flash from URL, path, or data.
@@ -768,38 +775,14 @@
 	}
 }
 
-#if 0
-
-
-
-// CALCULATE CONTAINER DIMENSIONS
-
-	if ([[[self delegateOwner] valueForKey:@"controller"] boolValue])
-	{
-		if (![[self delegateOwner] boolForKey:@"isFlash"] && ![[self delegateOwner] boolForKey:@"isWindowsMedia"])
-		{
-			result.height += 16;	// room for controller, 16 pixels with the quicktime controller
-		}
-		else if ([[self delegateOwner] boolForKey:@"isWindowsMedia"])
-		{
-			result.height += 46;	// room for controller, 46 pixels for the windows controller
-		}
-	}
-
-
-
-
-
-// Caches the movie from data.
-
 - (void)loadMovieFromAttributes:(NSDictionary *)anAttributes
 {
 	// Ignore for background threads as there is no need to do this during a doc import
+	// (STILL APPLICABLE FOR SANDVOX 2?
     if (![NSThread isMainThread]) return;
     
     
-    [self setMovie:nil];	// will clear out any old movie, exit movies on thread
-	BOOL isFlash = NO;
+    [self setDimensionCalculationMovie:nil];	// will clear out any old movie, exit movies on thread
 	BOOL isWindowsMedia = NO;
 	NSError *error = nil;
 	QTMovie *movie = nil;
@@ -814,17 +797,11 @@
 										   error:&error] autorelease];
 	if (movie)
 	{
-		// See if this is a Flash movie
-		QTTrack *lastTrack = [[movie tracks] lastObject];
-		QTMedia *media = [lastTrack media];
-		isFlash = (QTMediaTypeFlash == [media attributeForKey:QTMediaTypeAttribute]);
-		
 		long movieLoadState = [[movie attributeForKey:QTMovieLoadStateAttribute] longValue];
 		
 		if (movieLoadState >= kMovieLoadStatePlayable)	// Do we have dimensions now?
 		{
 			[self calculateMovieDimensions:movie];
-			//[self calculatePageDimensions];		// shrink down, add controller bar space, etc.
 			
 			if (![NSThread isMainThread])	// we entered, so exit now that we're done with that
 			{
@@ -834,7 +811,7 @@
 		}
 		else	// not ready yet; wait until loaded if we are publishing
 		{
-			[self setMovie:movie];		// cache and retain for async loading.
+			[self setDimensionCalculationMovie:movie];		// cache and retain for async loading.
 			[movie setDelegate:self];
 			
 			/// Case 18430: we only add observers on main thread
@@ -844,35 +821,9 @@
 														 selector:@selector(loadStateChanged:)
 															 name:QTMovieLoadStateDidChangeNotification object:movie];
 			}
-			
-			// OBASSERT_NOT_REACHED("Took out some old 1.5 code here, which TT and MGA thought unused.");
-			// DJW: I got here by entering an external URL of a .mov file into the inspector.
-			
-			/* This is the code that was taken out. I'lll leave it commented out for now since -documentIsPublishing is gone.
-			 
-			 // I don't know if we will EVER get to this point.  However, when I force it to happen,
-			 // it seems to be OK.  The idea is that if we are getting here for the first time 
-			 // when publishing, wait until we get the information we need.
-			 if ([self documentIsPublishing])
-			 {
-			 BOOL doContinue = YES;	// if we get a zero, I think that means we ran out of events so stop
-			 while (doContinue && (nil == [[self delegateOwner] objectForKey:@"movieSize"]))
-			 {
-			 //NSLog(@"Starting RunLoop waiting for %p size = %@", movie, [[self pluginProperties] objectForKey:@"movieSize"]);
-			 doContinue = [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate: [NSDate dateWithTimeIntervalSinceNow:3.0] ];
-			 //NSLog(@"%d Ended RunLoop waiting for %p size = %@", doContinue, movie, [[self pluginProperties] objectForKey:@"movieSize"]);
-			 }
-			 if (!doContinue)	// I don't think I'll ever get this but just in case.
-			 {
-			 NSLog(@"waiting for movie data to load; gave up.  Please report this to support@karelia.com");
-			 }
-			 }	
-			 */
-			
-			
 		}
 	}
-	else	// No movie?  Maybe it's flash -- get dimensions now.
+	else	// No movie?  Maybe it's a format that QuickTime can't read.  We can try FLV
 	{
 		if (![NSThread isMainThread])	// we entered, so exit now that we're done with that
 		{
@@ -897,15 +848,15 @@
 		if (nil != movieData)
 		{
 			NSSize aSize = NSZeroSize;
-			if ([self attemptToGetSize:&aSize fromSWFData:movieData])
-			{
-				isFlash = YES;
-				[self setMovieSize:aSize];
-				//[self calculatePageDimensions];
-			}	// We're done!  
+//			if ([self attemptToGetSize:&aSize fromSWFData:movieData])
+//			{
+//				isFlash = YES;
+//				[self setMovieSize:aSize];
+//				//[self calculatePageDimensions];
+//			}	// We're done!  
 		}
 	}
-	
+
 	// test if it's WMV or WMA. Do this regardless of whether we created a movie, so that even if there is no flip4mac,
 	// we will still provide something useful.  However, we won't know the dimensions!
 	
@@ -914,25 +865,23 @@
 	
 	
 	
-	if (!isFlash)	// no need to test if it's flash
-	{
-		// Poor man's check for WMV. Check file extension, mime type
-		if (nil != [anAttributes objectForKey:QTMovieDataReferenceAttribute])
-		{
-			NSString *mimeType = [[anAttributes objectForKey:QTMovieDataReferenceAttribute] MIMEType];
-			isWindowsMedia = [mimeType hasSuffix:@"x-ms-wmv"] || [mimeType hasSuffix:@"x-ms-wma"] || [mimeType hasSuffix:@"avi"];
-		}
-		else if (nil != [anAttributes objectForKey:QTMovieFileNameAttribute])
-		{
-			NSString *extension = [[[anAttributes objectForKey:QTMovieFileNameAttribute] pathExtension] lowercaseString];
-			isWindowsMedia = [extension isEqualToString:@"wmv"] || [extension isEqualToString:@"wma"] || [extension isEqualToString:@"avi"];
-		}
-		else if (nil != [anAttributes objectForKey:QTMovieURLAttribute])
-		{
-			NSString *extension = [[[[anAttributes objectForKey:QTMovieURLAttribute] path] pathExtension] lowercaseString];
-			isWindowsMedia = [extension isEqualToString:@"wmv"] || [extension isEqualToString:@"wma"] || [extension isEqualToString:@"avi"];
-		}
-		
+//		// Poor man's check for WMV. Check file extension, mime type
+//		if (nil != [anAttributes objectForKey:QTMovieDataReferenceAttribute])
+//		{
+//			NSString *mimeType = [[anAttributes objectForKey:QTMovieDataReferenceAttribute] MIMEType];
+//			isWindowsMedia = [mimeType hasSuffix:@"x-ms-wmv"] || [mimeType hasSuffix:@"x-ms-wma"] || [mimeType hasSuffix:@"avi"];
+//		}
+//		else if (nil != [anAttributes objectForKey:QTMovieFileNameAttribute])
+//		{
+//			NSString *extension = [[[anAttributes objectForKey:QTMovieFileNameAttribute] pathExtension] lowercaseString];
+//			isWindowsMedia = [extension isEqualToString:@"wmv"] || [extension isEqualToString:@"wma"] || [extension isEqualToString:@"avi"];
+//		}
+//		else if (nil != [anAttributes objectForKey:QTMovieURLAttribute])
+//		{
+//			NSString *extension = [[[[anAttributes objectForKey:QTMovieURLAttribute] path] pathExtension] lowercaseString];
+//			isWindowsMedia = [extension isEqualToString:@"wmv"] || [extension isEqualToString:@"wma"] || [extension isEqualToString:@"avi"];
+//		}
+//		
 		//			// Dig deeper and figure out if this is WMV.  Haven't gotten working yet.
 		//			
 		//			NSEnumerator *enumerator = [[movie tracks] objectEnumerator];
@@ -951,11 +900,36 @@
 		//				}
 		//				// break;
 		//			}
-	}
-	
-	[[self delegateOwner] setValue:[NSNumber numberWithBool:isFlash] forKey:@"isFlash"];
-	[[self delegateOwner] setValue:[NSNumber numberWithBool:isWindowsMedia] forKey:@"isWindowsMedia"];
 }
+	
+//	[[self delegateOwner] setValue:[NSNumber numberWithBool:isWindowsMedia] forKey:@"isWindowsMedia"];
+
+
+
+#if 0
+
+
+
+// CALCULATE CONTAINER DIMENSIONS
+
+	if ([[[self delegateOwner] valueForKey:@"controller"] boolValue])
+	{
+		if (![[self delegateOwner] boolForKey:@"isFlash"] && ![[self delegateOwner] boolForKey:@"isWindowsMedia"])
+		{
+			result.height += 16;	// room for controller, 16 pixels with the quicktime controller
+		}
+		else if ([[self delegateOwner] boolForKey:@"isWindowsMedia"])
+		{
+			result.height += 46;	// room for controller, 46 pixels for the windows controller
+		}
+	}
+
+
+
+
+
+// Caches the movie from data.
+
 
 // check for load state changes
 - (void)loadStateChanged:(NSNotification *)notif
