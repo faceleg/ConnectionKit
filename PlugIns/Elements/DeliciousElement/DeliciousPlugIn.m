@@ -74,7 +74,26 @@
             @"openLinksInNewWindow", 
             @"listStyle", 
             @"maxEntries", 
+            @"containerID",
             nil];
+}
+
+
+#pragma mark Initialization
+
+- (void)dealloc
+{
+    self.deliciousID = nil;
+    self.restrictedTags = nil;
+    self.containerID = nil;
+	[super dealloc]; 
+}
+
+- (void)awakeFromNew;
+{
+    [super awakeFromNew];
+    //FIXME: better way to generate a one-time only unqiueID?
+    self.containerID = [NSString shortUUIDString];
 }
 
 
@@ -105,5 +124,7 @@
 @synthesize openLinksInNewWindow = _openLinksInNewWindow;
 @synthesize listStyle = _listStyle;
 @synthesize maxEntries = _maxEntries;
+
+@synthesize containerID = _containerID;
 
 @end

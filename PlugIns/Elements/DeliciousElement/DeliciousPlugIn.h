@@ -47,6 +47,8 @@
     BOOL _openLinksInNewWindow;
 	NSUInteger _listStyle;
     NSUInteger _maxEntries;
+    
+    NSString *_containerID;
 }
 
 @property (nonatomic, copy) NSString *deliciousID;
@@ -57,5 +59,7 @@
 @property (nonatomic) BOOL openLinksInNewWindow;
 @property (nonatomic) NSUInteger listStyle;
 @property (nonatomic) NSUInteger maxEntries;
+
+@property (nonatomic, copy) NSString *containerID;
 
 @end
