@@ -34,10 +34,10 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "CollectionArchiveDelegate.h"
+#import "CollectionArchivePlugIn.h"
 
 
-@implementation CollectionArchiveDelegate
+@implementation CollectionArchivePlugIn
 
 #pragma mark -
 #pragma mark Init

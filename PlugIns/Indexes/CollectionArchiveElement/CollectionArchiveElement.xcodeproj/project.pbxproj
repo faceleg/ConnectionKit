@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2740553B0D772386001E759E /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = 2740553A0D772386001E759E /* template.html */; };
-		3C42DDCA0D64CA9B004F35FD /* CollectionArchiveDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42DDC90D64CA9B004F35FD /* CollectionArchiveDelegate.m */; };
+		3C42DDCA0D64CA9B004F35FD /* CollectionArchivePlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42DDC90D64CA9B004F35FD /* CollectionArchivePlugIn.m */; };
 		3C42DDE80D64CAFE004F35FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDE40D64CAFE004F35FD /* Localizable.strings */; };
 		3C42DDE90D64CAFE004F35FD /* Inspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDE60D64CAFE004F35FD /* Inspector.nib */; };
 		3C42DE010D64CB6C004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DE000D64CB6C004F35FD /* License.rtf */; };
@@ -23,8 +23,8 @@
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		2740553A0D772386001E759E /* template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = template.html; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* CollectionArchiveElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionArchiveElement_Prefix.pch; sourceTree = "<group>"; };
-		3C42DDC80D64CA9B004F35FD /* CollectionArchiveDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionArchiveDelegate.h; sourceTree = "<group>"; };
-		3C42DDC90D64CA9B004F35FD /* CollectionArchiveDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionArchiveDelegate.m; sourceTree = "<group>"; };
+		3C42DDC80D64CA9B004F35FD /* CollectionArchivePlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionArchivePlugIn.h; sourceTree = "<group>"; };
+		3C42DDC90D64CA9B004F35FD /* CollectionArchivePlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionArchivePlugIn.m; sourceTree = "<group>"; };
 		3C42DDE30D64CAFE004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42DDE50D64CAFE004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C42DDE70D64CAFE004F35FD /* Inspector.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Inspector.nib; path = en.lproj/Inspector.nib; sourceTree = "<group>"; };
@@ -109,8 +109,8 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3C42DDC80D64CA9B004F35FD /* CollectionArchiveDelegate.h */,
-				3C42DDC90D64CA9B004F35FD /* CollectionArchiveDelegate.m */,
+				3C42DDC80D64CA9B004F35FD /* CollectionArchivePlugIn.h */,
+				3C42DDC90D64CA9B004F35FD /* CollectionArchivePlugIn.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -247,7 +247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C42DDCA0D64CA9B004F35FD /* CollectionArchiveDelegate.m in Sources */,
+				3C42DDCA0D64CA9B004F35FD /* CollectionArchivePlugIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
