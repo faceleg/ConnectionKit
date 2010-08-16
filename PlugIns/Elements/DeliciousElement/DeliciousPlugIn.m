@@ -78,6 +78,23 @@
 }
 
 
+#pragma mark HTML Generation
+
+- (void)writeHTML:(id <SVPlugInContext>)context
+{
+    [super writeHTML:context];
+    
+    // add dependencies
+    [context addDependencyForKeyPath:@"deliciousID" ofObject:self];
+    [context addDependencyForKeyPath:@"restrictedTags" ofObject:self];
+    [context addDependencyForKeyPath:@"showExtended" ofObject:self];
+    [context addDependencyForKeyPath:@"showTags" ofObject:self];
+    [context addDependencyForKeyPath:@"sortAlphabetically" ofObject:self];
+    [context addDependencyForKeyPath:@"linkStyle" ofObject:self];
+    [context addDependencyForKeyPath:@"maxEntries" ofObject:self];
+}
+
+
 #pragma mark Properties
 
 @synthesize deliciousID = _deliciousID;
