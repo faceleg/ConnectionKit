@@ -93,5 +93,5 @@ document.getElementById('delicious-container-[[=uniqueID]]').appendChild(dl)
 </ul>
 [[endif2]]
 [[else]]
-[[if parser.HTMLGenerationPurpose]][[else2]]<p style="text-align:center;">[['(Please set your delicious.com ID using the Pagelet Inspector)]]</p>[[endif2]]
+[[if !parser.HTMLGenerationPurpose]]<p style="text-align:center;">[['(Please set your delicious.com ID using the Pagelet Inspector)]]</p>[[endif2]]
 [[endif]]
