@@ -45,22 +45,18 @@
 @implementation RSSBadgePlugIn
 
 
-#pragma mark -
 #pragma mark SVPlugin
 
 + (NSArray *)plugInKeys
 { 
-    NSArray *plugInKeys = [NSArray arrayWithObjects:
+    return [NSArray arrayWithObjects:
             @"iconPosition", 
             @"iconStyle", 
             @"label", 
             nil];
-    
-    return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
 }
 
 
-#pragma mark -
 #pragma mark Initialization
 
 - (void)didAddToPage:(id <SVPage>)page;
@@ -92,7 +88,6 @@
 }
 
 
-#pragma mark -
 #pragma mark HTML Generation
 
 - (void)writeHTML:(id <SVPlugInContext>)context
@@ -124,7 +119,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Resources
 
 - (NSString *)feedIconResourcePath
@@ -165,7 +159,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Properties
 
 @synthesize iconStyle = _iconStyle;
