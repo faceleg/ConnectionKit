@@ -7,16 +7,20 @@
 //
 
 #import "SVMediaGraphic.h"
-
+#import <QTKit/QTKit.h>
 
 @class SVMediaRecord;
 
 
 @interface SVVideo : SVMediaGraphic
-
+{
+	QTMovie *_movie;
+}
 + (SVVideo *)insertNewVideoInManagedObjectContext:(NSManagedObjectContext *)context;
 
 - (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
+
+@property (retain) QTMovie *movie;
 
 @property(nonatomic, retain) SVMediaRecord *posterFrame;
 

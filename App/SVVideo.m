@@ -19,15 +19,109 @@
 #import "NSBundle+Karelia.h"
 #import <QuickLook/QuickLook.h>
 
+@interface SVVideo ()
+
+- (void)loadMovie;
+
+@end
+
 @implementation SVVideo 
+
+@dynamic posterFrame;
+@dynamic autoplay;
+@dynamic controller;
+@dynamic preload;
+@dynamic loop;
+@dynamic codecType;	// determined from movie's file UTI, or by further analysis
+
+
+//	LocalizedStringInThisBundle(@"This is a placeholder for a video. The full video will appear once you publish this website, but to see the video in Sandvox, please enable live data feeds in the preferences.", "Live data feeds disabled message.")
+
+//	LocalizedStringInThisBundle(@"Please use the Inspector to enter the URL of a video.", "URL has not been specified - placeholder message")
+
+#pragma mark -
+#pragma mark Lifetime
+
++ (SVVideo *)insertNewVideoInManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVVideo *result = [NSEntityDescription insertNewObjectForEntityForName:@"Video"
+                                                    inManagedObjectContext:context];
+    return result;
+}
+
+- (void)willInsertIntoPage:(KTPage *)page;
+{
+	[self addObserver:self forKeyPath:@"autoplay"			options:(NSKeyValueObservingOptionNew) context:nil];
+	[self addObserver:self forKeyPath:@"controller"			options:(NSKeyValueObservingOptionNew) context:nil];
+	[self addObserver:self forKeyPath:@"media"				options:(NSKeyValueObservingOptionNew) context:nil];
+	[self addObserver:self forKeyPath:@"externalSourceURL"	options:(NSKeyValueObservingOptionNew) context:nil];
+	
+	//    // Placeholder image
+	//    if (![self media])
+	//    {
+	//        SVMediaRecord *media = // [[[page rootPage] master] makePlaceholdImageMediaWithEntityName:];
+	//		[SVMediaRecord mediaWithBundledURL:[NSURL fileURLWithPath:@"/System/Library/Compositions/Sunset.mov"]
+	//									entityName:@"GraphicMedia"
+	//				insertIntoManagedObjectContext:[self managedObjectContext]];
+	//		
+	//		
+	//        [self setMedia:media];
+	//        [self setCodecType:[media typeOfFile]];
+	//        
+	//        [self makeOriginalSize];    // calling super will scale back down if needed
+	//        [self setConstrainProportions:YES];
+	//    }
+    
+    [super willInsertIntoPage:page];
+    
+    // Show caption
+    if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)
+    {
+        [self setShowsCaption:YES];
+    }
+}
+
 
 - (void)dealloc
 {
 	[self removeObserver:self forKeyPath:@"autoplay"];
 	[self removeObserver:self forKeyPath:@"controller"];
 	[self removeObserver:self forKeyPath:@"media"];
+	[self removeObserver:self forKeyPath:@"externalSourceURL"];
 	[super dealloc];
 }
+
+#pragma mark -
+#pragma mark General
+
+- (NSArray *) allowedFileTypes
+{
+	return [NSArray arrayWithObject:(NSString *)kUTTypeMovie];
+	// If this doesn't work well, try the old method:
+	// 	NSMutableSet *fileTypes = [NSMutableSet setWithArray:[QTMovie movieFileTypes:QTIncludeCommonTypes]];
+	// [fileTypes minusSet:[NSSet setWithArray:[NSImage imageFileTypes]]];
+
+}
+
+- (NSString *)plugInIdentifier; // use standard reverse DNS-style string
+{
+	return @"com.karelia.sandvox.SVVideo";
+}
+
++ (SVInspectorViewController *)makeInspectorViewController;
+{
+    SVInspectorViewController *result = nil;
+    result = [[[SVVideoInspector alloc] initWithNibName:@"SVVideo" bundle:nil] autorelease];
+    return result;
+}
+
+
+
+#pragma mark -
+#pragma mark Poster Frame
+
+- (id <IMBImageItem>)thumbnail { return [self posterFrame]; }
++ (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObject:@"posterFrame"]; }
 
 - (void)getPosterFrameFromQuickLook;
 {
@@ -38,16 +132,45 @@
 	
 	NSDictionary *options = NSDICT(NSBOOL(NO), (NSString *)kQLThumbnailOptionIconModeKey);
     CGImageRef cg = QLThumbnailImageCreate(kCFAllocatorDefault, 
-                                            (CFURLRef)[media fileURL], 
-                                            CGSizeMake(1920,1440), // Typical size of a very large (3:4) 1080p movie, should be *plenty* for poster
-                                            (CFDictionaryRef)options);
+										   (CFURLRef)[media fileURL], 
+										   CGSizeMake(1920,1440), // Typical size of a very large (3:4) 1080p movie, should be *plenty* for poster
+										   (CFDictionaryRef)options);
 	if (cg)
 	{
 		NSBitmapImageRep *bitmapImageRep = [[[NSBitmapImageRep alloc] initWithCGImage:cg] autorelease];
 		NSData *tiff = [bitmapImageRep TIFFRepresentation];
-//		[tiff writeToFile:@"/Volumes/dwood/Desktop/quicklook.tiff" atomically:YES];
+		//		[tiff writeToFile:@"/Volumes/dwood/Desktop/quicklook.tiff" atomically:YES];
 	}
 }
+
+- (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
+{
+	SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"PosterFrame" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];	
+	[self replaceMedia:media forKeyPath:@"posterFrame"];
+}
+
+
+#pragma mark -
+#pragma mark Media
+
+- (void)setMediaWithURL:(NSURL *)URL;
+{
+    [super setMediaWithURL:URL];
+    
+    if ([self constrainProportions])    // generally true
+    {
+        // Resize image to fit in space
+        NSNumber *width = [self width];
+        [self makeOriginalSize];
+        if ([[self width] isGreaterThan:width]) [self setWidth:width];
+    }
+    
+    // Match file type
+    [self setCodecType:[[self media] typeOfFile]];
+}
+
+#pragma mark -
+#pragma mark KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
@@ -69,67 +192,25 @@
 			self.autoplay = NSBOOL(YES);
 		}
 	}
-	else if ([keyPath isEqualToString:@"media"])
+	else if ([keyPath isEqualToString:@"media"] || [keyPath isEqualToString:@"externalSourceURL"])
 	{
 		NSLog(@"SVVideo Media set.");
 		if (!self.posterFrame)
 		{
-			[self getPosterFrameFromQuickLook];
+			[self getPosterFrameFromQuickLook];	// Should we only replace if poster was auto-set?
 		}
+		
+		// Load the movie to figure out the media size
+		[self loadMovie];
 	}
 }
 
-+ (SVVideo *)insertNewVideoInManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    SVVideo *result = [NSEntityDescription insertNewObjectForEntityForName:@"Video"
-                                                    inManagedObjectContext:context];
-    return result;
-}
-
-- (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
-{
-	SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"PosterFrame" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];	
-	[self replaceMedia:media forKeyPath:@"posterFrame"];
-}
 
 
-- (void)willInsertIntoPage:(KTPage *)page;
-{
-	[self addObserver:self forKeyPath:@"autoplay"	options:(NSKeyValueObservingOptionNew) context:nil];
-	[self addObserver:self forKeyPath:@"controller"	options:(NSKeyValueObservingOptionNew) context:nil];
-	[self addObserver:self forKeyPath:@"media"		options:(NSKeyValueObservingOptionNew) context:nil];
 
-//    // Placeholder image
-//    if (![self media])
-//    {
-//        SVMediaRecord *media = // [[[page rootPage] master] makePlaceholdImageMediaWithEntityName:];
-//		[SVMediaRecord mediaWithBundledURL:[NSURL fileURLWithPath:@"/System/Library/Compositions/Sunset.mov"]
-//									entityName:@"GraphicMedia"
-//				insertIntoManagedObjectContext:[self managedObjectContext]];
-//		
-//		
-//        [self setMedia:media];
-//        [self setCodecType:[media typeOfFile]];
-//        
-//        [self makeOriginalSize];    // calling super will scale back down if needed
-//        [self setConstrainProportions:YES];
-//    }
-    
-    [super willInsertIntoPage:page];
-    
-    // Show caption
-    if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)
-    {
-        [self setShowsCaption:YES];
-    }
-}
 
-@dynamic posterFrame;
-@dynamic autoplay;
-@dynamic controller;
-@dynamic preload;
-@dynamic loop;
-@dynamic codecType;	// determined from movie's file UTI, or by further analysis
+#pragma mark -
+#pragma mark Writing Tag
 
 - (NSString *)idNameForTag:(NSString *)tagName
 {
@@ -529,50 +610,7 @@
 }
 
 
-
-
-- (NSString *)plugInIdentifier; // use standard reverse DNS-style string
-{
-	return @"com.karelia.sandvox.SVVideo";
-}
-
-+ (SVInspectorViewController *)makeInspectorViewController;
-{
-    SVInspectorViewController *result = nil;
-    result = [[[SVVideoInspector alloc] initWithNibName:@"SVVideo" bundle:nil] autorelease];
-    return result;
-}
-
-
-
-#pragma mark Thumbnail
-
-- (id <IMBImageItem>)thumbnail { return [self posterFrame]; }
-+ (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObject:@"posterFrame"]; }
-
-
-
-
-- (void)setMediaWithURL:(NSURL *)URL;
-{
-    [super setMediaWithURL:URL];
-    
-    if ([self constrainProportions])    // generally true
-    {
-        // Resize image to fit in space
-        NSNumber *width = [self width];
-        [self makeOriginalSize];
-        if ([[self width] isGreaterThan:width]) [self setWidth:width];
-    }
-    
-    // Match file type
-    [self setCodecType:[[self media] typeOfFile]];
-}
-
-- (NSArray *) allowedFileTypes
-{
-	return [NSArray arrayWithObject:(NSString *)kUTTypeMovie];
-}
+#pragma mark Warnings
 
 + (NSSet *)keyPathsForValuesAffectingIcon
 {
@@ -582,7 +620,6 @@
 {
     return [NSSet setWithObjects:@"codecType", nil];
 }
-
 
 - (NSImage *)icon
 {
@@ -653,20 +690,9 @@
 	return result;
 }
 
-
-@end
-
-
-
 #pragma mark -
-#pragma mark OLDER STUFF
+#pragma mark Loading movie to calculate dimensions
 
-
-
-
-//	LocalizedStringInThisBundle(@"This is a placeholder for a video. The full video will appear once you publish this website, but to see the video in Sandvox, please enable live data feeds in the preferences.", "Live data feeds disabled message.")
-
-//	LocalizedStringInThisBundle(@"Please use the Inspector to enter the URL of a video.", "URL has not been specified - placeholder message")
 
 
 
@@ -695,124 +721,295 @@
 
 
 
-@interface SVVideo (Private)
 
-- (BOOL)attemptToGetSize:(NSSize *)outSize fromSWFData:(NSData *)data;
+/*	This accessor provides a means for temporarily storing the movie while information about it is asyncronously loaded
+ */
+- (QTMovie *)movie { return _movie; }
 
-- (QTMovie *)movie;
-- (void)setMovie:(QTMovie *)aMovie;
-- (void)loadMovie;
-
-- (NSSize)movieSize;
-- (void)setMovieSize:(NSSize)movieSize;
-
-- (void)loadMovieFromAttributes:(NSDictionary *)anAttributes;
-
-- (void)calculateMovieDimensions:(QTMovie *)aMovie;
-- (NSSize)pageDimensions;
-
-@end
-
-
-#pragma mark -
-
-
-@implementation SVVideo (MoreStuff)
-
-#pragma mark awake
-
-//- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
-//{
-//	
-//	// we may not have a movieSize because we only started storing it as of version 1.1.2.
-//	if (nil == [[self delegateOwner] objectForKey:@"movieSize"])		// have we not figured out dimensions yet?
-//	{
-//		[self loadMovie];
-//	}
-//}
-
-
-#pragma mark -
-#pragma mark Dealloc
-
-//- (void)dealloc
-//{
-//	[self setMovie:nil];
-//	[[NSNotificationCenter defaultCenter] removeObserver:self];
-//	[super dealloc];
-//}
-
-
-#pragma mark -
-#pragma mark Plugin
-
-
-
-
-#pragma mark -
-#pragma mark Media Storage
-
-
-//- (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
-//{
-//	// When setting the video load it to get dimensions etc. & update poster image
-//	if ([key isEqualToString:@"video"])
-//	{
-//		[self loadMovie];
-//		[self _updateThumbnail:value];
-//	}
-//    else if ([key isEqualToString:@"remoteURL"])
-//    {
-//		[self setMovieSize:NSZeroSize];	// force recalculation
-//		[self loadMovie];
-//    }
-//    else if ([key isEqualToString:@"movieSource"])
-//    {
-//		[self setMovieSize:NSZeroSize];	// force recalculation
-//		[self loadMovie];
-//    }
-//	
-//    
-//	// Update page thumbnail if appropriate
-//	else if ([key isEqualToString:@"posterImage"])
-//	{
-//		KTAbstractElement *container = [self delegateOwner];
-//		if (container && [container respondsToSelector:@selector(thumbnail)])
-//		{
-//			if ([container valueForKey:@"thumbnail"] == oldValue)
-//			{
-//				[container setValue:value forKey:@"thumbnail"];
-//			}
-//		}
-//	}
-//}
-
-
-- (IBAction)chooseFile:(id)sender
+- (void)setMovie:(QTMovie *)aMovie
 {
-	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-	[openPanel setCanChooseDirectories:NO];
-	[openPanel setAllowsMultipleSelection:NO];
-	[openPanel setPrompt:LocalizedStringInThisBundle(@"Choose", "choose button - open panel")];
-	
-	// We want QT-compatible file types, but not still images
-	NSMutableSet *fileTypes = [NSMutableSet setWithArray:[QTMovie movieFileTypes:QTIncludeCommonTypes]];
-	[fileTypes minusSet:[NSSet setWithArray:[NSImage imageFileTypes]]];
-	[fileTypes addObject:@"swf"];		// flash
-	
-	// TODO: Open the panel at a reasonable location
-	[openPanel runModalForDirectory:nil
-							   file:nil
-							  types:[fileTypes allObjects]];
-	
-	NSArray *selectedPaths = [openPanel filenames];
-	if (!selectedPaths || [selectedPaths count] == 0) {
-		return;
+	// If we are clearing out an existing movie, we're done, so exit movie on thread.  I hope this is right!
+	if (nil == aMovie && nil != _movie && ![NSThread isMainThread])
+	{
+		OSErr err = ExitMoviesOnThread();	// I hope this is 
+		if (err != noErr) NSLog(@"Unable to ExitMoviesOnThread; %d", err);
 	}
-	
-//	KTMediaContainer *video = [[[self delegateOwner] mediaManager] mediaContainerWithPath:[selectedPaths firstObjectKS]];
-//	[[self delegateOwner] setValue:video forKey:@"video"];
+	[aMovie retain];
+	[_movie release];
+	_movie = aMovie;
 }
 
+// Loads or reloads the movie/flash from URL, path, or data.
+- (void)loadMovie;
+{
+	NSDictionary *movieAttributes = nil;
+	NSURL *movieSourceURL = nil;
+	BOOL openAsync = NO;
+	
+	SVMediaRecord *media = [self media];
+	
+    if (media)
+    {
+		movieSourceURL = [[media URLResponse] URL];
+		openAsync = YES;
+	}
+	else
+	{
+		movieSourceURL = [self externalSourceURL];
+	}
+	if (movieSourceURL)
+	{
+		movieAttributes = [NSDictionary dictionaryWithObjectsAndKeys: 
+						   movieSourceURL, QTMovieURLAttribute,
+						   [NSNumber numberWithBool:openAsync], QTMovieOpenAsyncOKAttribute,
+						   nil];
+		[self loadMovieFromAttributes:movieAttributes];
+		
+	}
+}
+
+#if 0
+
+
+
+// CALCULATE CONTAINER DIMENSIONS
+
+	if ([[[self delegateOwner] valueForKey:@"controller"] boolValue])
+	{
+		if (![[self delegateOwner] boolForKey:@"isFlash"] && ![[self delegateOwner] boolForKey:@"isWindowsMedia"])
+		{
+			result.height += 16;	// room for controller, 16 pixels with the quicktime controller
+		}
+		else if ([[self delegateOwner] boolForKey:@"isWindowsMedia"])
+		{
+			result.height += 46;	// room for controller, 46 pixels for the windows controller
+		}
+	}
+
+
+
+
+
+// Caches the movie from data.
+
+- (void)loadMovieFromAttributes:(NSDictionary *)anAttributes
+{
+	// Ignore for background threads as there is no need to do this during a doc import
+    if (![NSThread isMainThread]) return;
+    
+    
+    [self setMovie:nil];	// will clear out any old movie, exit movies on thread
+	BOOL isFlash = NO;
+	BOOL isWindowsMedia = NO;
+	NSError *error = nil;
+	QTMovie *movie = nil;
+	
+	if (![NSThread isMainThread])
+	{
+		OSErr err = EnterMoviesOnThread(0);
+		if (err != noErr) NSLog(@"Unable to EnterMoviesOnThread; %d", err);
+	}
+	
+	movie = [[[QTMovie alloc] initWithAttributes:anAttributes
+										   error:&error] autorelease];
+	if (movie)
+	{
+		// See if this is a Flash movie
+		QTTrack *lastTrack = [[movie tracks] lastObject];
+		QTMedia *media = [lastTrack media];
+		isFlash = (QTMediaTypeFlash == [media attributeForKey:QTMediaTypeAttribute]);
+		
+		long movieLoadState = [[movie attributeForKey:QTMovieLoadStateAttribute] longValue];
+		
+		if (movieLoadState >= kMovieLoadStatePlayable)	// Do we have dimensions now?
+		{
+			[self calculateMovieDimensions:movie];
+			//[self calculatePageDimensions];		// shrink down, add controller bar space, etc.
+			
+			if (![NSThread isMainThread])	// we entered, so exit now that we're done with that
+			{
+				OSErr err = ExitMoviesOnThread();	// I hope this is 
+				if (err != noErr) NSLog(@"Unable to ExitMoviesOnThread; %d", err);
+			}
+		}
+		else	// not ready yet; wait until loaded if we are publishing
+		{
+			[self setMovie:movie];		// cache and retain for async loading.
+			[movie setDelegate:self];
+			
+			/// Case 18430: we only add observers on main thread
+			if ( [NSThread isMainThread] )
+			{
+				[[NSNotificationCenter defaultCenter] addObserver:self
+														 selector:@selector(loadStateChanged:)
+															 name:QTMovieLoadStateDidChangeNotification object:movie];
+			}
+			
+			// OBASSERT_NOT_REACHED("Took out some old 1.5 code here, which TT and MGA thought unused.");
+			// DJW: I got here by entering an external URL of a .mov file into the inspector.
+			
+			/* This is the code that was taken out. I'lll leave it commented out for now since -documentIsPublishing is gone.
+			 
+			 // I don't know if we will EVER get to this point.  However, when I force it to happen,
+			 // it seems to be OK.  The idea is that if we are getting here for the first time 
+			 // when publishing, wait until we get the information we need.
+			 if ([self documentIsPublishing])
+			 {
+			 BOOL doContinue = YES;	// if we get a zero, I think that means we ran out of events so stop
+			 while (doContinue && (nil == [[self delegateOwner] objectForKey:@"movieSize"]))
+			 {
+			 //NSLog(@"Starting RunLoop waiting for %p size = %@", movie, [[self pluginProperties] objectForKey:@"movieSize"]);
+			 doContinue = [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate: [NSDate dateWithTimeIntervalSinceNow:3.0] ];
+			 //NSLog(@"%d Ended RunLoop waiting for %p size = %@", doContinue, movie, [[self pluginProperties] objectForKey:@"movieSize"]);
+			 }
+			 if (!doContinue)	// I don't think I'll ever get this but just in case.
+			 {
+			 NSLog(@"waiting for movie data to load; gave up.  Please report this to support@karelia.com");
+			 }
+			 }	
+			 */
+			
+			
+		}
+	}
+	else	// No movie?  Maybe it's flash -- get dimensions now.
+	{
+		if (![NSThread isMainThread])	// we entered, so exit now that we're done with that
+		{
+			OSErr err = ExitMoviesOnThread();	// I hope this is 
+			if (err != noErr) NSLog(@"Unable to ExitMoviesOnThread; %d", err);
+		}
+		
+		// get the data from what we stored in the quicktime initialization dictionary
+		NSData *movieData = nil;
+		if (nil != [anAttributes objectForKey:QTMovieDataReferenceAttribute])
+		{
+			movieData = [[anAttributes objectForKey:QTMovieDataReferenceAttribute] referenceData];
+		}
+		else if (nil != [anAttributes objectForKey:QTMovieFileNameAttribute])
+		{
+			movieData = [NSData dataWithContentsOfFile:[anAttributes objectForKey:QTMovieFileNameAttribute]];
+		}
+		else if (nil != [anAttributes objectForKey:QTMovieURLAttribute])
+		{
+			movieData = [NSData dataWithContentsOfURL:[anAttributes objectForKey:QTMovieURLAttribute]];		// will block, but this only happens once.
+		}
+		if (nil != movieData)
+		{
+			NSSize aSize = NSZeroSize;
+			if ([self attemptToGetSize:&aSize fromSWFData:movieData])
+			{
+				isFlash = YES;
+				[self setMovieSize:aSize];
+				//[self calculatePageDimensions];
+			}	// We're done!  
+		}
+	}
+	
+	// test if it's WMV or WMA. Do this regardless of whether we created a movie, so that even if there is no flip4mac,
+	// we will still provide something useful.  However, we won't know the dimensions!
+	
+	
+	//  We may want to have other file types/extensions that use the WindowsMedia type, e.g. avi.
+	
+	
+	
+	if (!isFlash)	// no need to test if it's flash
+	{
+		// Poor man's check for WMV. Check file extension, mime type
+		if (nil != [anAttributes objectForKey:QTMovieDataReferenceAttribute])
+		{
+			NSString *mimeType = [[anAttributes objectForKey:QTMovieDataReferenceAttribute] MIMEType];
+			isWindowsMedia = [mimeType hasSuffix:@"x-ms-wmv"] || [mimeType hasSuffix:@"x-ms-wma"] || [mimeType hasSuffix:@"avi"];
+		}
+		else if (nil != [anAttributes objectForKey:QTMovieFileNameAttribute])
+		{
+			NSString *extension = [[[anAttributes objectForKey:QTMovieFileNameAttribute] pathExtension] lowercaseString];
+			isWindowsMedia = [extension isEqualToString:@"wmv"] || [extension isEqualToString:@"wma"] || [extension isEqualToString:@"avi"];
+		}
+		else if (nil != [anAttributes objectForKey:QTMovieURLAttribute])
+		{
+			NSString *extension = [[[[anAttributes objectForKey:QTMovieURLAttribute] path] pathExtension] lowercaseString];
+			isWindowsMedia = [extension isEqualToString:@"wmv"] || [extension isEqualToString:@"wma"] || [extension isEqualToString:@"avi"];
+		}
+		
+		//			// Dig deeper and figure out if this is WMV.  Haven't gotten working yet.
+		//			
+		//			NSEnumerator *enumerator = [[movie tracks] objectEnumerator];
+		//			QTTrack *track;
+		//			
+		//			while ((track = [enumerator nextObject]) != nil)
+		//			{
+		//				QTMedia *media = [track media];
+		//				
+		//				OSType codec = [media sampleDescriptionCodec];
+		//				NSString *codecName = [media sampleDescriptionCodecName];
+		//				
+		//				if (codec >= 'WMV1' && codec <= 'WMV9')
+		//				{
+		//					isWindowsMedia = YES;
+		//				}
+		//				// break;
+		//			}
+	}
+	
+	[[self delegateOwner] setValue:[NSNumber numberWithBool:isFlash] forKey:@"isFlash"];
+	[[self delegateOwner] setValue:[NSNumber numberWithBool:isWindowsMedia] forKey:@"isWindowsMedia"];
+}
+
+// check for load state changes
+- (void)loadStateChanged:(NSNotification *)notif
+{
+	QTMovie *movie = [notif object];
+    if ([[self movie] isEqual:movie])
+	{
+		long loadState = [[movie attributeForKey:QTMovieLoadStateAttribute] longValue];
+		if (loadState >= kMovieLoadStateLoaded && NSEqualSizes([self movieSize], NSZeroSize))
+		{
+			[self calculateMovieDimensions:movie];
+			//[self calculatePageDimensions];		// shrink down, add controller bar space, etc.
+			
+			[[NSNotificationCenter defaultCenter] removeObserver:self];
+			[self setMovie:nil];	// we are done with movie now!
+		}
+	}
+}
+
+
+- (void)calculateMovieDimensions:(QTMovie *)aMovie
+{
+	NSSize movieSize = NSZeroSize;
+	
+	NSArray* vtracks = [aMovie tracksOfMediaType:QTMediaTypeVideo];
+	if ([vtracks count] && [[vtracks objectAtIndex:0] respondsToSelector:@selector(apertureModeDimensionsForMode:)])
+	{
+		QTTrack* track = [vtracks objectAtIndex:0];
+		//get the dimensions 
+		
+		// I'm getting a warning of being both deprecated AND unavailable!  WTF?  Any way to work around this?
+		
+		movieSize = [track apertureModeDimensionsForMode:QTMovieApertureModeClean];		// 10.5 only, but it gives a proper value for anamorphic movies like from case 41222.
+	}
+	if (NSEqualSizes(movieSize, NSZeroSize))
+	{
+		movieSize = [[aMovie attributeForKey:QTMovieNaturalSizeAttribute] sizeValue];
+		if (NSEqualSizes(NSZeroSize, movieSize))
+		{
+			movieSize = [[aMovie attributeForKey:QTMovieCurrentSizeAttribute] sizeValue];
+		}
+	}
+	
+	//	NSLog(@"Calculated size of %@ to %@", aMovie, NSStringFromSize(movieSize));
+	[self setMovieSize:movieSize];
+}
+
+//- (NSArray *)reservedMediaRefNames
+//{
+//	return [NSArray arrayWithObject:@"VideoElement"];
+//}
+
+
+
+#endif
 
 @end
