@@ -1,8 +1,8 @@
 //
-//  DeliciousPageletDelegate.h
-//  DeliciousPagelet
+//  DeliciousPlugIn.h
+//  DeliciousElement
 //
-//  Copyright 2006-2009 Karelia Software. All rights reserved.
+//  Copyright 2006-2010 Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -34,7 +34,6 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import <Cocoa/Cocoa.h>
 #import "SandvoxPlugin.h"
 
 
@@ -42,7 +41,5 @@
 {
 
 }
-
-- (IBAction) openDelicious:(id)sender;
 
 @end
