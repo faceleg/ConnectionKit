@@ -11,18 +11,21 @@
 
 #import "SVHTMLContext.h"
 #import "SVMediaRecord.h"
+#import "KSSimpleURLConnection.h"
 #import "SVVideoInspector.h"
 #import <QTKit/QTKit.h>
 #include <zlib.h>
 #import "NSImage+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSBundle+Karelia.h"
+#import "QTMovie+Karelia.h"
 #import <QuickLook/QuickLook.h>
 
 @interface SVVideo ()
 
 - (void)loadMovie;
 - (void)loadMovieFromAttributes:(NSDictionary *)anAttributes;
+- (void)calculateMovieDimensions:(QTMovie *)aMovie;
 
 @end
 
@@ -57,23 +60,7 @@
 	[self addObserver:self forKeyPath:@"controller"			options:(NSKeyValueObservingOptionNew) context:nil];
 	[self addObserver:self forKeyPath:@"media"				options:(NSKeyValueObservingOptionNew) context:nil];
 	[self addObserver:self forKeyPath:@"externalSourceURL"	options:(NSKeyValueObservingOptionNew) context:nil];
-	
-	//    // Placeholder image
-	//    if (![self media])
-	//    {
-	//        SVMediaRecord *media = // [[[page rootPage] master] makePlaceholdImageMediaWithEntityName:];
-	//		[SVMediaRecord mediaWithBundledURL:[NSURL fileURLWithPath:@"/System/Library/Compositions/Sunset.mov"]
-	//									entityName:@"GraphicMedia"
-	//				insertIntoManagedObjectContext:[self managedObjectContext]];
-	//		
-	//		
-	//        [self setMedia:media];
-	//        [self setCodecType:[media typeOfFile]];
-	//        
-	//        [self makeOriginalSize];    // calling super will scale back down if needed
-	//        [self setConstrainProportions:YES];
-	//    }
-    
+	    
     [super willInsertIntoPage:page];
     
     // Show caption
@@ -86,6 +73,8 @@
 
 - (void)dealloc
 {
+	self.dimensionCalculationMovie = nil;
+	self.dimensionCalculationConnection = nil;	
 	[self removeObserver:self forKeyPath:@"autoplay"];
 	[self removeObserver:self forKeyPath:@"controller"];
 	[self removeObserver:self forKeyPath:@"media"];
@@ -206,7 +195,7 @@
 		self.videoWidth = nil;
 		self.videoHeight = nil;
 		
-		// Load the movie to figure out the media size
+		// Load the movie to figure out the media size and codecType
 		[self loadMovie];
 	}
 }
@@ -243,9 +232,12 @@
 	NSString *movieSourcePath  = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
 	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
 
+	NSUInteger heightWithBar = [[self height] intValue]
+	+ (self.controller.boolValue ? 16 : 0);
+	
 	[context pushElementAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
 	[context pushElementAttribute:@"width" value:[[self width] description]];
-	[context pushElementAttribute:@"height" value:[[self height] description]];
+	[context pushElementAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	[context pushElementAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
 	[context pushElementAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
 	[context startElement:@"object"];
@@ -275,9 +267,12 @@
 	// I don't think there is any way to use the poster frame for a click to play
 	NSString *movieSourcePath = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
 	
+	NSUInteger heightWithBar = [[self height] intValue]
+	+ (self.controller.boolValue ? 46 : 0);		// Windows media controller is 46 pixels (on windows; adjusted on macs)
+
 	[context pushElementAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
 	[context pushElementAttribute:@"width" value:[[self width] description]];
-	[context pushElementAttribute:@"height" value:[[self height] description]];
+	[context pushElementAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	[context pushElementAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
 	[context startElement:@"object"];
 	
@@ -732,6 +727,7 @@
  */
 
 @synthesize dimensionCalculationMovie = _dimensionCalculationMovie;
+@synthesize dimensionCalculationConnection = _dimensionCalculationConnection;
 
 - (void)setDimensionCalculationMovie:(QTMovie *)aMovie
 {
@@ -759,10 +755,12 @@
     {
 		movieSourceURL = [[media URLResponse] URL];
 		openAsync = YES;
+		self.codecType = [NSString UTIForFileAtPath:[movieSourceURL path]];
 	}
 	else
 	{
 		movieSourceURL = [self externalSourceURL];
+		self.codecType = [NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]];
 	}
 	if (movieSourceURL)
 	{
@@ -783,7 +781,6 @@
     
     
     [self setDimensionCalculationMovie:nil];	// will clear out any old movie, exit movies on thread
-	BOOL isWindowsMedia = NO;
 	NSError *error = nil;
 	QTMovie *movie = nil;
 	
@@ -843,89 +840,42 @@
 		}
 		else if (nil != [anAttributes objectForKey:QTMovieURLAttribute])
 		{
-			movieData = [NSData dataWithContentsOfURL:[anAttributes objectForKey:QTMovieURLAttribute]];		// will block, but this only happens once.
+			NSURL *URL = [anAttributes objectForKey:QTMovieURLAttribute];
+			if ([URL isFileURL])
+			{
+				movieData = [NSData dataWithContentsOfURL:URL];
+			}
+			else	// not a file; load asynchronously
+			{
+				self.dimensionCalculationConnection = [[[KSSimpleURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:URL]] autorelease];
+				self.dimensionCalculationConnection.bytesNeeded = 1024;	// Let's just get the first 1K ... should be enough.
+				self.videoWidth = 0;	
+				self.videoHeight = 0;		// set to zero so we don't keep asking.  Hopefully answer comes soon.
+			}
 		}
 		if (nil != movieData)
 		{
-			NSSize aSize = NSZeroSize;
-//			if ([self attemptToGetSize:&aSize fromSWFData:movieData])
-//			{
-//				isFlash = YES;
-//				[self setMovieSize:aSize];
-//				//[self calculatePageDimensions];
-//			}	// We're done!  
+			NSSize dimensions = [QTMovie dimensionsFromUnloadableMovieData:movieData];
+			self.videoWidth  = [NSNumber numberWithFloat:dimensions.width];
+			self.videoHeight = [NSNumber numberWithFloat:dimensions.height];	// even if it can't be figured out, at least it's not nil anymore
 		}
 	}
-
-	// test if it's WMV or WMA. Do this regardless of whether we created a movie, so that even if there is no flip4mac,
-	// we will still provide something useful.  However, we won't know the dimensions!
-	
-	
-	//  We may want to have other file types/extensions that use the WindowsMedia type, e.g. avi.
-	
-	
-	
-//		// Poor man's check for WMV. Check file extension, mime type
-//		if (nil != [anAttributes objectForKey:QTMovieDataReferenceAttribute])
-//		{
-//			NSString *mimeType = [[anAttributes objectForKey:QTMovieDataReferenceAttribute] MIMEType];
-//			isWindowsMedia = [mimeType hasSuffix:@"x-ms-wmv"] || [mimeType hasSuffix:@"x-ms-wma"] || [mimeType hasSuffix:@"avi"];
-//		}
-//		else if (nil != [anAttributes objectForKey:QTMovieFileNameAttribute])
-//		{
-//			NSString *extension = [[[anAttributes objectForKey:QTMovieFileNameAttribute] pathExtension] lowercaseString];
-//			isWindowsMedia = [extension isEqualToString:@"wmv"] || [extension isEqualToString:@"wma"] || [extension isEqualToString:@"avi"];
-//		}
-//		else if (nil != [anAttributes objectForKey:QTMovieURLAttribute])
-//		{
-//			NSString *extension = [[[[anAttributes objectForKey:QTMovieURLAttribute] path] pathExtension] lowercaseString];
-//			isWindowsMedia = [extension isEqualToString:@"wmv"] || [extension isEqualToString:@"wma"] || [extension isEqualToString:@"avi"];
-//		}
-//		
-		//			// Dig deeper and figure out if this is WMV.  Haven't gotten working yet.
-		//			
-		//			NSEnumerator *enumerator = [[movie tracks] objectEnumerator];
-		//			QTTrack *track;
-		//			
-		//			while ((track = [enumerator nextObject]) != nil)
-		//			{
-		//				QTMedia *media = [track media];
-		//				
-		//				OSType codec = [media sampleDescriptionCodec];
-		//				NSString *codecName = [media sampleDescriptionCodecName];
-		//				
-		//				if (codec >= 'WMV1' && codec <= 'WMV9')
-		//				{
-		//					isWindowsMedia = YES;
-		//				}
-		//				// break;
-		//			}
 }
 	
-//	[[self delegateOwner] setValue:[NSNumber numberWithBool:isWindowsMedia] forKey:@"isWindowsMedia"];
+// Asynchronous load returned -- try to set the dimensions.
+- (void)connection:(KSSimpleURLConnection *)connection didFinishLoadingData:(NSData *)data response:(NSURLResponse *)response;
+{
+	NSSize dimensions = [QTMovie dimensionsFromUnloadableMovieData:data];
+	self.videoWidth  = [NSNumber numberWithFloat:dimensions.width];
+	self.videoHeight = [NSNumber numberWithFloat:dimensions.height];	// even if it can't be figured out, at least it's not nil anymore
+	self.dimensionCalculationConnection = nil;
+}
 
-
-
-#if 0
-
-
-
-// CALCULATE CONTAINER DIMENSIONS
-
-	if ([[[self delegateOwner] valueForKey:@"controller"] boolValue])
-	{
-		if (![[self delegateOwner] boolForKey:@"isFlash"] && ![[self delegateOwner] boolForKey:@"isWindowsMedia"])
-		{
-			result.height += 16;	// room for controller, 16 pixels with the quicktime controller
-		}
-		else if ([[self delegateOwner] boolForKey:@"isWindowsMedia"])
-		{
-			result.height += 46;	// room for controller, 46 pixels for the windows controller
-		}
-	}
-
-
-
+- (void)connection:(KSSimpleURLConnection *)connection didFailWithError:(NSError *)error;
+{
+	// do nothing with the error, but clear out the connection.
+	self.dimensionCalculationConnection = nil;
+}
 
 
 // Caches the movie from data.
@@ -935,22 +885,21 @@
 - (void)loadStateChanged:(NSNotification *)notif
 {
 	QTMovie *movie = [notif object];
-    if ([[self movie] isEqual:movie])
+    if ([self.dimensionCalculationMovie isEqual:movie])
 	{
 		long loadState = [[movie attributeForKey:QTMovieLoadStateAttribute] longValue];
-		if (loadState >= kMovieLoadStateLoaded && NSEqualSizes([self movieSize], NSZeroSize))
+		if (loadState >= kMovieLoadStateLoaded)
 		{
 			[self calculateMovieDimensions:movie];
-			//[self calculatePageDimensions];		// shrink down, add controller bar space, etc.
 			
 			[[NSNotificationCenter defaultCenter] removeObserver:self];
-			[self setMovie:nil];	// we are done with movie now!
+			self.dimensionCalculationMovie = nil;	// we are done with movie now!
 		}
 	}
 }
 
 
-- (void)calculateMovieDimensions:(QTMovie *)aMovie
+- (void)calculateMovieDimensions:(QTMovie *)aMovie;
 {
 	NSSize movieSize = NSZeroSize;
 	
@@ -962,28 +911,19 @@
 		
 		// I'm getting a warning of being both deprecated AND unavailable!  WTF?  Any way to work around this?
 		
-		movieSize = [track apertureModeDimensionsForMode:QTMovieApertureModeClean];		// 10.5 only, but it gives a proper value for anamorphic movies like from case 41222.
+		movieSize = [track apertureModeDimensionsForMode:QTMovieApertureModeClean];		// give a proper value for anamorphic movies like from case 41222.
 	}
 	if (NSEqualSizes(movieSize, NSZeroSize))
 	{
 		movieSize = [[aMovie attributeForKey:QTMovieNaturalSizeAttribute] sizeValue];
 		if (NSEqualSizes(NSZeroSize, movieSize))
 		{
-			movieSize = [[aMovie attributeForKey:QTMovieCurrentSizeAttribute] sizeValue];
+			movieSize = [[aMovie attributeForKey:QTMovieCurrentSizeAttribute] sizeValue];	// last resort
 		}
 	}
-	
-	//	NSLog(@"Calculated size of %@ to %@", aMovie, NSStringFromSize(movieSize));
-	[self setMovieSize:movieSize];
+	self.videoWidth  = [NSNumber numberWithFloat:movieSize.width];
+	self.videoHeight = [NSNumber numberWithFloat:movieSize.height];
 }
 
-//- (NSArray *)reservedMediaRefNames
-//{
-//	return [NSArray arrayWithObject:@"VideoElement"];
-//}
-
-
-
-#endif
 
 @end

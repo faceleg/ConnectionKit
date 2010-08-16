@@ -9,18 +9,22 @@
 #import "SVMediaGraphic.h"
 #import <QTKit/QTKit.h>
 
-@class SVMediaRecord;
+@class SVMediaRecord, KSSimpleURLConnection;
 
 
 @interface SVVideo : SVMediaGraphic
 {
 	QTMovie *_dimensionCalculationMovie;
+	
+	KSSimpleURLConnection *_dimensionCalculationConnection;
+	
 }
 + (SVVideo *)insertNewVideoInManagedObjectContext:(NSManagedObjectContext *)context;
 
 - (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
 
 @property (retain) QTMovie *dimensionCalculationMovie;
+@property (retain) KSSimpleURLConnection *dimensionCalculationConnection;
 
 @property(nonatomic, retain) SVMediaRecord *posterFrame;
 

@@ -1128,6 +1128,7 @@
 		CE5B1CB811E54A37005E2C5E /* KTFeedbackReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5B1CB611E54A37005E2C5E /* KTFeedbackReporter.h */; };
 		CE5B1CB911E54A38005E2C5E /* KTFeedbackReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5B1CB711E54A37005E2C5E /* KTFeedbackReporter.m */; };
 		CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5E55FB0EAFE98100A3EDDA /* Macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE65643B1219DAC8006C5B0D /* KSSimpleURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */; };
 		CE66D15E083D305700AD46CD /* imageReplacementEntry.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */; };
 		CE6EDFE311F125A500F00AAC /* KSInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFE211F125A500F00AAC /* KSInspector.xib */; };
 		CE6EDFF211F126FD00F00AAC /* Publishing.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFF111F126FD00F00AAC /* Publishing.xib */; };
@@ -1442,28 +1443,28 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42E4090D64F93E004F35FD /* IndexElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Index.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = IndexElement;
 		};
 		3C7C1E301219B388005D75B1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42E4090D64F93E004F35FD /* IndexElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* IndexElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = IndexElement;
 		};
 		3C7C1E3D1219B5CB005D75B1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* CollectionArchive.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = CollectionArchiveElement;
 		};
 		3C7C1E3F1219B5DA005D75B1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* CollectionArchiveElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = CollectionArchiveElement;
 		};
 		3C8544A512061D22000A19C3 /* PBXContainerItemProxy */ = {
@@ -7242,6 +7243,7 @@
 				27D7340712118E3400722189 /* SVIndexPlugIn.m in Sources */,
 				27D7345612119C6600722189 /* SVMediaGraphicInspector.m in Sources */,
 				2704228212142F710077298A /* SVSizeBindingDOMController.m in Sources */,
+				CE65643B1219DAC8006C5B0D /* KSSimpleURLConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
