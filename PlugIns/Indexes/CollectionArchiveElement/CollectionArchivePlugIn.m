@@ -42,12 +42,6 @@
 #pragma mark -
 #pragma mark Init
 
-- (void)awakeFromNib
-{
-	// Connect up the target icon if needed
-	[collectionLinkSourceView setConnected:([[self propertiesStorage] valueForKey:@"collection"] != nil)];
-}
-
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
 {
 	if (isNewObject)
@@ -66,23 +60,6 @@
 	}
 	
 	[[[self propertiesStorage] valueForKey:@"collection"] setCollectionGenerateArchives:YES];
-}
-
-#pragma mark -
-#pragma mark Link source dragging
-
-- (void)linkSourceConnectedTo:(KTPage *)aPage;
-{
-	if (aPage)
-	{
-		[[self propertiesStorage] setValue:aPage forKey:@"collection"];
-	}
-}
-
-- (IBAction)clearCollectionLink:(id)sender
-{
-	[[self propertiesStorage] setValue:nil forKey:@"collection"];
-	[collectionLinkSourceView setConnected:NO];
 }
 
 #pragma mark -

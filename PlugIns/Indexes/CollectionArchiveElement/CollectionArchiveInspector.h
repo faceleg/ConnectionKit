@@ -6,11 +6,15 @@
 //  Copyright 2010 Terrence Talbot. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "SandvoxPlugin.h"
 
 
-@interface CollectionArchiveInspector : NSObject {
-
+@interface CollectionArchiveInspector : SVInspectorViewController 
+{
+	IBOutlet KTLinkSourceView	*collectionLinkSourceView;
 }
+
+// IB Actions
+- (IBAction)clearCollectionLink:(id)sender;
 
 @end
