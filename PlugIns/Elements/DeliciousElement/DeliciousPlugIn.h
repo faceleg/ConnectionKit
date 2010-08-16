@@ -38,7 +38,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface DeliciousPageletDelegate : SVPlugIn
+@interface DeliciousPlugIn : SVPlugIn
 {
 
 }

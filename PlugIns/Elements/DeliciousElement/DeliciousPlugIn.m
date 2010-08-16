@@ -34,7 +34,7 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "DeliciousPageletDelegate.h"
+#import "DeliciousPlugIn.h"
 
 
 // LocalizedStringInThisBundle(@"My Delicious Links", "String_On_Page_Template")
@@ -44,7 +44,7 @@
 
 
 
-@implementation DeliciousPageletDelegate
+@implementation DeliciousPlugIn
 
 /*
  Plugin Properties we use:
