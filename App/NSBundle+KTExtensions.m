@@ -12,6 +12,7 @@
 #import "NSApplication+Karelia.h"
 #import "KSAppDelegate.h"
 #import "NSImage+Karelia.h"
+#import "NSString+Karelia.h"
 
 #import "Debug.h"
 
@@ -58,7 +59,11 @@
 - (SVTemplate *)HTMLTemplate;
 {
     NSString *templateName = [self objectForInfoDictionaryKey:@"KTTemplateName"];
-    if ( !templateName ) templateName = [NSStringFromClass([self class]) stringByReplacing:@"PlugIn" with:@"Template"];
+    if ( !templateName )
+    {
+        NSString *className = [self objectForInfoDictionaryKey:@"NSPrincipalClass"]; OBASSERT(className);
+        templateName = [className stringByReplacing:@"PlugIn" with:@"Template"];
+    }
     if (!templateName) templateName = @"template";
     
     NSString *path = [self pathForResource:templateName ofType:@"html"];
