@@ -58,6 +58,7 @@
 - (SVTemplate *)HTMLTemplate;
 {
     NSString *templateName = [self objectForInfoDictionaryKey:@"KTTemplateName"];
+    if ( !templateName ) templateName = [NSStringFromClass([self class]) stringByReplacing:@"PlugIn" with:@"Template"];
     if (!templateName) templateName = @"template";
     
     NSString *path = [self pathForResource:templateName ofType:@"html"];
