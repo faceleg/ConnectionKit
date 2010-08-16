@@ -1,0 +1,49 @@
+{
+    IBClasses =     (
+                {
+            ACTIONS =             {
+                "" = id;
+            };
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            ACTIONS =             {
+                clear = id;
+            };
+            CLASS = IndexPageletDelegate;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                oLinkView = KTLinkSourceView;
+            };
+            SUPERCLASS = KTAbstractPluginDelegate;
+        },
+                {
+            CLASS = KSLabel;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSTextField;
+        },
+                {
+            CLASS = KTAbstractPluginDelegate;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                myDelegateOwner = id;
+            };
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KTLinkSourceView;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                delegate = id;
+            };
+            SUPERCLASS = NSView;
+        },
+                {
+            CLASS = NSObject;
+            LANGUAGE = ObjC;
+        }
+    );
+    IBVersion = 1;
+}
