@@ -39,7 +39,23 @@
 
 @interface DeliciousPlugIn : SVPlugIn
 {
-
+	NSString *_deliciousID;
+	NSString *_restrictedTags;
+	BOOL _showExtended;
+	BOOL _showTags;
+	BOOL _sortAlphabetically;
+    BOOL _openLinksInNewWindow;
+	NSUInteger _listStyle;
+    NSUInteger _maxEntries;
 }
+
+@property (nonatomic, copy) NSString *deliciousID;
+@property (nonatomic, copy) NSString *restrictedTags;
+@property (nonatomic) BOOL showExtended;
+@property (nonatomic) BOOL showTags;
+@property (nonatomic) BOOL sortAlphabetically;
+@property (nonatomic) BOOL openLinksInNewWindow;
+@property (nonatomic) NSUInteger listStyle;
+@property (nonatomic) NSUInteger maxEntries;
 
 @end

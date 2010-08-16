@@ -60,4 +60,33 @@
  
  */
 
+
+#pragma mark SVPlugIn
+
++ (NSArray *)plugInKeys
+{ 
+    return [NSArray arrayWithObjects:
+            @"deliciousID", 
+            @"restrictedTags", 
+            @"showExtended", 
+            @"showTags", 
+            @"sortAlphabetically", 
+            @"openLinksInNewWindow", 
+            @"listStyle", 
+            @"maxEntries", 
+            nil];
+}
+
+
+#pragma mark Properties
+
+@synthesize deliciousID = _deliciousID;
+@synthesize restrictedTags = _restrictedTags;
+@synthesize showExtended = _showExtended;
+@synthesize showTags = _showTags;
+@synthesize sortAlphabetically = _sortAlphabetically;
+@synthesize openLinksInNewWindow = _openLinksInNewWindow;
+@synthesize listStyle = _listStyle;
+@synthesize maxEntries = _maxEntries;
+
 @end
