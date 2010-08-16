@@ -39,56 +39,80 @@
 
 @implementation CollectionArchivePlugIn
 
-#pragma mark -
-#pragma mark Init
+#pragma mark SVIndexPlugIn
 
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
+// there are no plugIn-specific keys in the template, or elsewhere!
+
+
+
+
+#pragma mark Initialization
+
+- (void)awakeFromNew;
 {
-	if (isNewObject)
-	{
-		// Try and connect to our parent collection
-		KTPage *parent = (KTPage *)[self page];
-		if ([parent isCollection])
-		{
-			[[self propertiesStorage] setValue:parent forKey:@"collection"];
-			
-			NSString *title = [NSString stringWithFormat:@"%@ %@",
-														 [parent titleText],
-														 LocalizedStringInThisBundle(@"Archive", @"Portion of pagelet title")];
-			//[(KTPagelet *)[self delegateOwner] setTitleHTML:title];
-		}
-	}
-	
-	[[[self propertiesStorage] valueForKey:@"collection"] setCollectionGenerateArchives:YES];
+    //FIXME: verify that superclass attempts to connect indexedCollection to our page's parent
+    [super awakeFromNew];
+    
+    if ( self.indexedCollection )
+    {
+        // attempt to set container's title to localized string
+        NSString *title = [NSString stringWithFormat:@"%@ %@",
+                           [self.indexedCollection title],
+                           LocalizedStringInThisBundle(@"Archive", @"Portion of pagelet title")];
+        self.container.title = title;
+    }
+    
+    // tell our collection we want to generate archives
+    [self.indexedCollection setCollectionGenerateArchives:YES];
 }
 
-#pragma mark -
-#pragma mark Settings
+
+
+#pragma mark Properties
 
 /*	Changing collection means disabling archives on the old collection if necessary
  */
-- (void)plugin:(id)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
+
+
+//- (void)plugin:(id)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
+//{
+//	if ([key isEqualToString:@"collection"])
+//	{
+//		// Turn off the old collection's archives if not needed
+//		BOOL enableArchives = NO;
+//		NSArray *archivePagelets = [[plugin managedObjectContext] pageletsWithPluginIdentifier:[[self bundle] bundleIdentifier]];
+//		NSEnumerator *pageletsEnumerator = [archivePagelets objectEnumerator];
+//		id aPagelet;    // was KTPagelet
+//		while (aPagelet = [pageletsEnumerator nextObject])
+//		{
+//			if ([[aPagelet valueForKey:@"collection"] isEqual:(KTPage *)oldValue])
+//			{
+//				enableArchives = YES;
+//				break;
+//			}
+//		}
+//		[(KTPage *)oldValue setCollectionGenerateArchives:enableArchives];
+//		
+//		// Enable archives on the new page.
+//		[(KTPage *)value setCollectionGenerateArchives:YES];
+//	}
+//}
+
+
+- (void)setIndexedCollection:(id <SVPage>)collection
 {
-	if ([key isEqualToString:@"collection"])
-	{
-		// Turn off the old collection's archives if not needed
-		BOOL enableArchives = NO;
-		NSArray *archivePagelets = [[plugin managedObjectContext] pageletsWithPluginIdentifier:[[self bundle] bundleIdentifier]];
-		NSEnumerator *pageletsEnumerator = [archivePagelets objectEnumerator];
-		id aPagelet;    // was KTPagelet
-		while (aPagelet = [pageletsEnumerator nextObject])
-		{
-			if ([[aPagelet valueForKey:@"collection"] isEqual:(KTPage *)oldValue])
-			{
-				enableArchives = YES;
-				break;
-			}
-		}
-		[(KTPage *)oldValue setCollectionGenerateArchives:enableArchives];
-		
-		// Enable archives on the new page.
-		[(KTPage *)value setCollectionGenerateArchives:YES];
-	}
+    // when we change indexedCollection, turn off generateArchives on old indexedCollection
+    // if no other CollectionArchive pagelets are attached to it, turn it on for new indexedCollection
+    
+    //FIXME: how do we implement testing all other plugins being attached to oldCollection?
+    // see S1 code commented out, above, for old way of doing it
+    id <SVPage> oldCollection = [self indexedCollection];
+    
+    
+    [super setIndexedCollection:collection];
+    
+    // Enable archives on the new page.
+    [collection setCollectionGenerateArchives:YES];
 }
 
 @end
