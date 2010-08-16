@@ -112,7 +112,7 @@
     [super setIndexedCollection:collection];
     
     // Enable archives on the new page.
-    [collection setCollectionGenerateArchives:YES];
+    //[collection setCollectionGenerateArchives:YES];
 }
 
 @end
