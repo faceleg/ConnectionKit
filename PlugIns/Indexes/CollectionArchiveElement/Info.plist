@@ -24,8 +24,6 @@
 	<string>${SVN_VERSION}</string>
 	<key>KSMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KTTemplateName</key>
-	<string>CollectionArchiveTemplate</string>
 	<key>KTCategory</key>
 	<integer>2</integer>
 	<key>KTPageletCanHaveTitle</key>
