@@ -1,6 +1,6 @@
 //
 //  CollectionArchivePlugIn.h
-//  CollectionArchivePlugIn
+//  CollectionArchiveElement
 //
 //  Copyright 2006-2010 Karelia Software. All rights reserved.
 //
