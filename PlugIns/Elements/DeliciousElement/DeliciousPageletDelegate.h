@@ -38,7 +38,8 @@
 #import "SandvoxPlugin.h"
 
 
-@interface DeliciousPageletDelegate : KTAbstractPluginDelegate {
+@interface DeliciousPageletDelegate : SVPlugIn
+{
 
 }
 
