@@ -34,12 +34,11 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import <Cocoa/Cocoa.h>
 #import "SandvoxPlugin.h"
 
 @class WebView;
 
-@interface PageCounterPagelet : KTAbstractPluginDelegate
+@interface PageCounterPlugIn : SVPlugIn
 {
 	IBOutlet NSPopUpButton *oTheme;
 }

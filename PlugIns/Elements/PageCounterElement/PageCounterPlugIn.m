@@ -53,7 +53,7 @@
   */
  
 
-#import "PageCounterPagelet.h"
+#import "PageCounterPlugIn.h"
 
 #import "SandvoxPlugin.h"
 
@@ -68,7 +68,7 @@ NSString *PCSampleImageKey = @"sampleImage";
 
 
 
-@implementation PageCounterPagelet
+@implementation PageCounterPlugIn
 
 #pragma mark -
 #pragma mark Initialization
@@ -92,7 +92,7 @@ NSString *PCSampleImageKey = @"sampleImage";
 		[d setObject:[NSNumber numberWithInt:PC_INVISIBLE] forKey:PCTypeKey];
 		[themes addObject:d];
 		
-		NSString *resourcePath = [[NSBundle bundleForClass:[PageCounterPagelet class]] resourcePath];
+		NSString *resourcePath = [[NSBundle bundleForClass:[PageCounterPlugIn class]] resourcePath];
 		resourcePath = [resourcePath stringByAppendingPathComponent:@"digits"];
 		NSString *fileName;
 		NSDirectoryEnumerator *dirEnum =
