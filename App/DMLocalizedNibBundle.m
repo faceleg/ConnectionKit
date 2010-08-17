@@ -588,12 +588,22 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			// Generically fire a sizeToFit if it has one.  e.g. NSTableColumn, NSProgressIndicator, (NSBox), NSMenuView, NSControl, NSTableView, NSText
 			if ([view respondsToSelector:@selector(sizeToFit)]) {
 				
-				[view performSelector:@selector(sizeToFit)];
-				fitFrame = [view frame];
-				newFrame = fitFrame;
-				
 				if ([view isKindOfClass:[NSMatrix class]]) {
+					
 					NSMatrix *matrix = (NSMatrix *)view;
+					NSSize oldCellSize = [matrix cellSize];
+					
+					[view performSelector:@selector(sizeToFit)];
+					fitFrame = [view frame];
+					newFrame = fitFrame;
+
+					NSSize newCellSize = [matrix cellSize];
+					if (newCellSize.height < oldCellSize.height)
+					{
+						newCellSize.height = oldCellSize.height;
+						[matrix setCellSize:newCellSize];		// restore cell size to previous height
+					}
+					
 					// See note on kWrapperStringSlop for why this is done.
 					for (NSCell *cell in [matrix cells]) {
 						if ([[cell title] rangeOfString:kForcedWrapString].location !=
@@ -602,6 +612,12 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 							break;
 						}
 					}
+				}
+				else		// easy case
+				{
+					[view performSelector:@selector(sizeToFit)];
+					fitFrame = [view frame];
+					newFrame = fitFrame;
 				}
 				
 			}
@@ -647,6 +663,10 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			}
 		}
 		
+		if (NSHeight(newFrame) < NSHeight(oldFrame))		// don't let frame shrink in height
+		{
+			newFrame.size.height = oldFrame.size.height;
+		}
 		// Now after we've tried all of this resizing, let's see if it's gotten narrower AND we wanted
 		// a stretchy view.  If a view is stretchy, it means we didn't really intend on shrinking it.
 		if (stretchyView && (NSWidth(newFrame) < NSWidth(oldFrame)))
@@ -751,7 +771,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
     if (
 		
-		([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
+	([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
 		self == [NSViewController class]) {
 		//NSLog(@"Switching in NSViewController Localizer!");
