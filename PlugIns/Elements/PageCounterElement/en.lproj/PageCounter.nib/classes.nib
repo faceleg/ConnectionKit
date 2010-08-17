@@ -1,0 +1,23 @@
+{
+    IBClasses =     (
+                {
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KTAbstractPluginDelegate;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = PageCounterPagelet;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                oTheme = NSPopUpButton;
+            };
+            SUPERCLASS = KTAbstractPluginDelegate;
+        }
+    );
+    IBVersion = 1;
+}
