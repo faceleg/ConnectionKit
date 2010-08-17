@@ -152,13 +152,6 @@
     [collection setCollectionMaxIndexItems:[NSNumber numberWithInteger:10]];
     
     
-    // Set the index on the page
-    [collection setWrappedValue:identifier forKey:@"collectionIndexBundleIdentifier"];
-    Class indexToAllocate = [indexBundle principalClassIncludingOtherLoadedBundles:YES];
-    KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:collection plugin:indexPlugin] autorelease];
-    [collection setIndex:theIndex];
-    
-    
     // Now re-set title of page to be the appropriate untitled name
     NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetUntitled"];
     if (englishPresetTitle)
