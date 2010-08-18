@@ -374,6 +374,8 @@
     return result;
 }
 
+- (NSArray *)archivePages; { return nil; }
+
 - (SVLink *)link;
 {
     return [SVLink linkWithSiteItem:self

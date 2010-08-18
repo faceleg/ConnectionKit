@@ -27,6 +27,8 @@
 - (id <SVPage>)rootPage;
 - (id <NSFastEnumeration>)automaticRearrangementKeyPaths;
 
+- (NSArray *)archivePages;
+
 
 #pragma mark Navigation
 
