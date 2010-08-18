@@ -933,7 +933,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		&& ![[[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"en.lproj"]
 		)
 	{
-        NSNib *nib = [[NSNib alloc] initWithContentsOfURL:[NSURL fileURLWithPath:fileName]];
+        NSNib *nib = [[NSNib alloc] initWithNibNamed:[fileName lastPathComponent] bundle:aBundle];
         NSMutableArray *topLevelObjectsArray = [context objectForKey:NSNibTopLevelObjects];
         if (!topLevelObjectsArray) {
             topLevelObjectsArray = [NSMutableArray array];
