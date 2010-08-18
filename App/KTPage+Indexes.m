@@ -561,7 +561,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	if (![[self collectionGenerateArchives] boolValue]) return nil;
 	
 	
-	NSArray *archives = [[self archivePages] allObjects];
+	NSArray *archives = [self archivePages];
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"archiveStartDate <= %@ AND archiveEndDate > %@", timestamp, timestamp];
 	KTAbstractPage *result = [[archives filteredArrayUsingPredicate:predicate] firstObjectKS];
 	
@@ -602,8 +602,14 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
     }
     
     
-    NSArray *result = [[[self archivePages] allObjects] sortedArrayUsingDescriptors:sortDescriptors];
+    NSArray *result = [[self archivePages] sortedArrayUsingDescriptors:sortDescriptors];
     return result;
+}
+
+- (NSArray *)archivePages;
+{
+    // Not the right result at all, but good enough for plug-in development
+    return [self childPages];
 }
 
 @end

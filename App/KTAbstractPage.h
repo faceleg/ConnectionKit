@@ -43,9 +43,6 @@ KTCollectionPathStyle;
 
 
 #pragma mark Child Pages
-
-@property(nonatomic, copy, readonly) NSSet *archivePages;
-
 - (BOOL)isRoot;
 
 
