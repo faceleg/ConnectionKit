@@ -104,7 +104,7 @@
 + (SVInspectorViewController *)makeInspectorViewController;
 {
     SVInspectorViewController *result = nil;
-    result = [[[SVVideoInspector alloc] initWithNibName:@"SVVideo" bundle:nil] autorelease];
+    result = [[[SVVideoInspector alloc] initWithNibName:@"SVVideoInspector" bundle:nil] autorelease];
     return result;
 }
 
