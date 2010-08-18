@@ -719,7 +719,7 @@
 	}
 	else if ([type conformsToUTI:@"public.mpeg-4"])			// might not be iOS compatible
 	{
-		result = NSLocalizedString(@"This video may not be compatible with iOS devices; please verify.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+		result = NSLocalizedString(@"You will need to verify if this video will play on iOS devices.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
 	else if ([type conformsToUTI:@"public.ogg-theora"] || [type conformsToUTI:@"public.webm"])
 	{
