@@ -28,7 +28,7 @@
 // and http://openradar.appspot.com/7496255 for more information.
 
 
-#define DEBUG_THIS_USER @"dwo_od"
+#define DEBUG_THIS_USER @"dwood"
 
 #import <Cocoa/Cocoa.h>
 #import <objc/runtime.h>
@@ -183,7 +183,7 @@ static NSDictionary *GroupSubviewsIntoRows(NSView *view)
 		
 		// Now, before we set the rows key, sort the views by X location.
 		NSArray *sortedRowViews = [remainingArray sortedArrayUsingSelector:@selector(compareViewFrameOriginX:)];
-		
+
 		[adjustedRows setObject:sortedRowViews forKey:rowValue];
 	}
 	
@@ -255,12 +255,12 @@ static void ResizeRowsByDelta(NSArray *rowViews, CGFloat delta)
 /*
  Assumes we are looping through these from left to right, and that there aren't any wacky things like
  right-anchored views to the left of left-anchored views.
- 
+
  Left-anchored views increase width, and move over the left edge only as much as needed to to keep relative position constant.
  Views anchored neither left nor right are going be roughly centered, so take any change in width on the left and right sides equally.
  Right-anchored views keep a constant right margin and increase width on the left side.
  HOWEVER (for the center and right views), we want to make sure that the margin between views does not dip below MIN(20,currentDistance)
- (or 10? Is ther some heuristic to apply, e.g. text size, current margins, etc.?
+	(or 10? Is ther some heuristic to apply, e.g. text size, current margins, etc.?
  
  */
 static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
@@ -288,35 +288,35 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 			controlGroupingMargin = GuessControlSizeGroupingMargin(subview);
 		}
 		
-		//		if ([subview isKindOfClass:[NSTextField class]] && [[subview stringValue] hasPrefix:@"Meta Des"])
-		//		{
-		//			NSLog(@"Break here");
-		//		}
+//		if ([subview isKindOfClass:[NSTextField class]] && [[subview stringValue] hasPrefix:@"Meta Des"])
+//		{
+//			NSLog(@"Break here");
+//		}
 		if ([subview isKindOfClass:[NSButton class]] && [[((NSButton *)subview) title] hasPrefix:@"Can___cel"])
 		{
 			NSLog(@"Break here");
 		}
-		//		if ([subview isKindOfClass:[NSBox class]] && [subview frame].origin.y == 62.0)
-		//		{
-		//			NSLog(@"Break here - this is the separator line");
-		//		}
-		//		if ([subview isMemberOfClass:[NSView class]] && [subview frame].size.width == 59.0)
-		//		{
-		//			NSLog(@"Break here - this is the left box");
-		//		}
+//		if ([subview isKindOfClass:[NSBox class]] && [subview frame].origin.y == 62.0)
+//		{
+//			NSLog(@"Break here - this is the separator line");
+//		}
+//		if ([subview isMemberOfClass:[NSView class]] && [subview frame].size.width == 59.0)
+//		{
+//			NSLog(@"Break here - this is the left box");
+//		}
 		
 		// Hmm, what to do about a right-aligned text item that is anchored to the left?
 		
 		
 		NSRect originalRect = [subview frame];				// bounds before resizing
 		
-		//		if (previousOriginalMinX != NSNotFound && NSMinX(originalRect) < previousOriginalMaxX)
-		//		{
-		//			NSLog(@"minX of this is less than maxX of previous; must be overlapping");
-		//		}
+//		if (previousOriginalMinX != NSNotFound && NSMinX(originalRect) < previousOriginalMaxX)
+//		{
+//			NSLog(@"minX of this is less than maxX of previous; must be overlapping");
+//		}
 		
 		CGFloat sizeDelta = ResizeToFit(subview, level+1);	// How much it got increased (to the right)
-		
+
 		// Note: Looking at alignment doesn't really work that well.
 		// When we have to resize some things later in the box, the field other fields doesn't get stretched.
 		// So you really ought to be aligning right when you want right justification.
@@ -327,7 +327,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 		}
 		if (NSLeftTextAlignment != alignment && NSNaturalTextAlignment != alignment)
 		{
-			//			DJW((@"****************************** alignment for %@ = %d", subview, alignment));
+//			DJW((@"****************************** alignment for %@ = %d", subview, alignment));
 		}
 		
 		NSUInteger mask = [subview autoresizingMask];
@@ -350,12 +350,12 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 		}
 		
 		CGFloat originalMargin = (NSNotFound != previousOriginalMaxX)
-		? NSMinX(originalRect) - previousOriginalMaxX
-		: 0;
+			? NSMinX(originalRect) - previousOriginalMaxX
+			: 0;
 		if (originalMargin >= 0)
 		{
 			// move things over an increment delta if we are not overlapping view to the left.
-			
+	
 			CGFloat acceptableMargin = MIN(originalMargin, (NSNotFound == controlGroupingMargin) ? kGroupMarginRegular : controlGroupingMargin);
 			
 			moveLeft = MIN(moveLeft, acceptableMargin);	// move left as much as you can, but maybe only "acceptableMargin" pixels
@@ -392,7 +392,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 {
 	CGFloat maxWidth = 0.0;
 	CGFloat delta = 0.0;
-	
+
 	if ([[view subviews] count])
 	{
 		// TabView:  Just pass this down to the tabviews to handle, and get our largest width.
@@ -432,30 +432,30 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 			NSDictionary *rows = GroupSubviewsIntoRows(view);
 			// LogRows(rows);
 			NSMutableDictionary *deltasForRows = [NSMutableDictionary dictionary];
-			
+		
 			NSArray *sortedRanges = [[rows allKeys] sortedArrayUsingSelector:@selector(compareRangeLocation:)];		// don't care about row order but easier to debug
 			for (NSValue *rowValue in [sortedRanges reverseObjectEnumerator])
 			{
 				NSArray *subviewsOnThisRow = [rows objectForKey:rowValue];
-				
+
 				CGFloat originalMaxX = NSMaxX([[subviewsOnThisRow lastObject] frame]);
 				
 				CGFloat rowDelta = 0;		// don't need to resize if it's before the right margin
-				
+
 				rowDelta = ResizeRowViews(subviewsOnThisRow, level+1);
-				
+
 				NSView *lastView = [subviewsOnThisRow lastObject];
 				NSUInteger mask = [lastView autoresizingMask];
 				BOOL anchorRight = 0 == (mask & NSViewMaxXMargin);	// if anchored right, no matter what the margin was, we want to grow frame to match.
 				// BOOL stretchyView = 0 != (mask & NSViewWidthSizable);
-				
+							
 				CGFloat newMaxX = NSMaxX([lastView frame]);
 				
 				if (anchorRight)		// ?????  && !stretchyView
 				{
 					// use delta given by resize
 					//LogIt(@"%@ Anchored right, so using full delta of %.0f", lastView, rowDelta);
-					
+
 				}
 				else if (originalMaxX == newMaxX)
 				{
@@ -464,7 +464,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 				else if (enclosingMaxX-newMaxX < 10)
 				{
 					//LogIt(@"Delta for this row: %.0f, superMaxX:%.0f origMaxX:%.0f newMaxX:%.0f oldMarg:%.0f NewMarg:%.0f new-orig:%.0f suggested delta:%.0f", rowDelta, enclosingMaxX, originalMaxX, newMaxX, enclosingMaxX - originalMaxX, enclosingMaxX-newMaxX, newMaxX - originalMaxX, 10 - (enclosingMaxX-newMaxX) );
-					
+				
 					// This doesn't work when the superview is a tab view that spills off the window (to avoid the edges)!
 					
 					CGFloat margin = 10.0;
@@ -542,19 +542,19 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		NSRect oldFrame = [view frame];		// keep track of original frame so we know how much it resized
 		NSRect fitFrame = oldFrame;			// only set differently when sizeToFit is called, so we know it was already called
 		NSRect newFrame = oldFrame;			// what we will be setting the frame to (if not already done)
-		
+
 		NSUInteger mask = [view autoresizingMask];
 		BOOL stretchyView = 0 != (mask & NSViewWidthSizable);	// If stretchy view, DO NOT SHRINK.
-		
-		//	// Try to turn on some stuff that will help me see the new bounds
-		//	if ([view respondsToSelector:@selector(setBordered:)]) {
-		//		[((NSTextField *)view) setBordered:YES];
-		//	}
-		//	if ([view respondsToSelector:@selector(setDrawsBackground:)]) {
-		//		[((NSTextField *)view) setDrawsBackground:YES];
-		//	}
-		//	
-		//	
+
+	//	// Try to turn on some stuff that will help me see the new bounds
+	//	if ([view respondsToSelector:@selector(setBordered:)]) {
+	//		[((NSTextField *)view) setBordered:YES];
+	//	}
+	//	if ([view respondsToSelector:@selector(setDrawsBackground:)]) {
+	//		[((NSTextField *)view) setDrawsBackground:YES];
+	//	}
+	//	
+	//	
 		if ([view isKindOfClass:[NSTextField class]] &&
 			[(NSTextField *)view isEditable]) {
 			// Don't try to sizeToFit because edit fields really don't want to be sized
@@ -596,7 +596,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 					[view performSelector:@selector(sizeToFit)];
 					fitFrame = [view frame];
 					newFrame = fitFrame;
-					
+
 					NSSize newCellSize = [matrix cellSize];
 					if (newCellSize.height < oldCellSize.height)
 					{
@@ -626,7 +626,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			
 			if ([view isKindOfClass:[NSButton class]]) {
 				NSButton *button = (NSButton *)view;
-				
+							
 				// -[NSButton sizeToFit] gives much worse results than IB's Size to Fit
 				// option for standard push buttons.
 				if (([button bezelStyle] == NSRoundedBezelStyle) &&
@@ -733,7 +733,6 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 
 @interface NSBundle (DMLocalizedNibBundle)
 + (BOOL)deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone;
-- (BOOL)deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone;
 @end
 
 
@@ -749,7 +748,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 
 
 @interface NSBundle ()
-- (BOOL)_deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone;
++ (BOOL)_deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone bundle:(NSBundle *)aBundle;
 
 + (NSString *)	 _localizedStringForString:(NSString *)string bundle:(NSBundle *)bundle table:(NSString *)table;
 + (void)				  _localizeStringsInObject:(id)object bundle:(NSBundle *)bundle table:(NSString *)table level:(NSUInteger)level;
@@ -772,7 +771,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
     if (
 		
-		([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
+	([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
 		self == [NSViewController class]) {
 		//NSLog(@"Switching in NSViewController Localizer!");
@@ -791,10 +790,10 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	NSDictionary	*context	= [NSDictionary dictionaryWithObjectsAndKeys:self, NSNibOwner, nil];
 	
 	// NSLog(@"loadView %@ going to localize %@ with top objects: %@", [[nibBundle bundlePath] lastPathComponent], [nibPath lastPathComponent], [[context description] condenseWhiteSpace]);
-	BOOL loaded = [nibBundle _deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil];	// call through to support method
+	BOOL loaded = [NSBundle _deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil bundle:nibBundle];	// call through to support method
 	if (!loaded)
 	{
-		[nibBundle deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil];	// use old-fashioned way
+		[NSBundle deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil];	// use old-fashioned way
 	}
 }
 
@@ -811,14 +810,14 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
 		self == [NSBundle class]) {
+		//NSLog(@"Switching in NSBundle localizer. W00T!");
         method_exchangeImplementations(class_getClassMethod(self, @selector(loadNibFile:externalNameTable:withZone:)), class_getClassMethod(self, @selector(deliciousLocalizingLoadNibFile:externalNameTable:withZone:)));
-        method_exchangeImplementations(class_getInstanceMethod(self, @selector(loadNibFile:externalNameTable:withZone:)), class_getInstanceMethod(self, @selector(deliciousLocalizingLoadNibFile:externalNameTable:withZone:)));
 		
 		
 		// DEBUG-ONLY ... localizedStringForKey gets a longer version installed
 		method_exchangeImplementations(class_getInstanceMethod(self, @selector(localizedStringForKey:value:table:)), class_getInstanceMethod(self, @selector(debugLocalizedStringForKey:value:table:)));
-		
-		
+
+
 		
     }
     [autoreleasePool release];
@@ -832,28 +831,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	if ([fileName hasPrefix:[[NSBundle mainBundle] bundlePath]])
 	{
 		// NSLog(@"loadNibFile going to localize %@ with top objects: %@", [fileName lastPathComponent], [[context description] condenseWhiteSpace]);
-		result = [[NSBundle mainBundle] _deliciousLocalizingLoadNibFile:fileName externalNameTable:context withZone:zone];
-	}
-	else
-	{
-		NSLog(@"%s is NOT LOCALIZING non-app loadNibFile:%@",__FUNCTION__, fileName);
-	}
-	if (!result)
-	{
-		// try original version
-		result = [self deliciousLocalizingLoadNibFile:fileName externalNameTable:context withZone:zone];
-	}
-	return result;
-}
-
-- (BOOL)deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone;
-{
-	BOOL result = NO;
-	// Don't allow this to localize any file that is not in the app bundle!
-	if ([fileName hasPrefix:[[NSBundle mainBundle] bundlePath]])
-	{
-		// NSLog(@"loadNibFile going to localize %@ with top objects: %@", [fileName lastPathComponent], [[context description] condenseWhiteSpace]);
-		result = [[NSBundle mainBundle] _deliciousLocalizingLoadNibFile:fileName externalNameTable:context withZone:zone];
+		result = [self _deliciousLocalizingLoadNibFile:fileName externalNameTable:context withZone:zone bundle:[NSBundle mainBundle]];
 	}
 	else
 	{
@@ -873,7 +851,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	
 	if ([string isEqualToString:@"I AM THE DEFAULT VALUE"]) return string;
 	if ([string hasPrefix:@"(A Document Being Saved By"]) return string;
-	
+
 	//       NSLog(@"        Can't find translation for string %@", string);
 	//return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
 	// return string;
@@ -889,9 +867,9 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		halflen -= 1;	// don't split up a %@
 	}
 	string = [NSString stringWithFormat:@"%@%@%@",
-			  [string substringToIndex:halflen],
-			  insert,
-			  [string substringFromIndex:halflen]];
+			[string substringToIndex:halflen],
+			insert,
+			[string substringFromIndex:halflen]];
 	
 	return string;
 }
@@ -904,9 +882,9 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 /*
  
  Aspects of a nib still to do:
- NSTableView
- AXDescription and AXRole
- 
+	NSTableView
+	AXDescription and AXRole
+	
  Others?
  
  Next up: stretching items....
@@ -916,14 +894,14 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 
 
 // Internal method, which gets an extra parameter for bundle
-- (BOOL)_deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone
++ (BOOL)_deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone bundle:(NSBundle *)aBundle;
 {
 	//NSLog(@"%s %@",__FUNCTION__, fileName);
 	
 	// Note: What about loading not from the main bundle? Can I try to load from where the nib file came from?
 	
     NSString *localizedStringsTableName = [[fileName lastPathComponent] stringByDeletingPathExtension];
-    NSString *localizedStringsTablePath = [self pathForResource:localizedStringsTableName ofType:@"strings"];
+    NSString *localizedStringsTablePath = [[NSBundle mainBundle] pathForResource:localizedStringsTableName ofType:@"strings"];
     if (
 		
 		([NSUserName() isEqualToString:DEBUG_THIS_USER]) || 
@@ -946,7 +924,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		// localization happening.
         BOOL success = [nib instantiateNibWithExternalNameTable:context];
 		
-        [NSBundle _localizeStringsInObject:topLevelObjectsArray bundle:self table:localizedStringsTableName level:0];
+        [self _localizeStringsInObject:topLevelObjectsArray bundle:aBundle table:localizedStringsTableName level:0];
 		
 		for (id topLevelObject in topLevelObjectsArray)
 		{
@@ -967,24 +945,24 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 				// Here, I think, I probably want to do some sort of call to the NSWindow delegate to ask
 				// what width it would like to be for various languages, so I can make the inspector window wider for French/German.
 				// That would keep it generic here.
-				
+	
 				NSView *contentView = [window contentView];
 				NSRect windowFrame = [contentView convertRect:[window frame] fromView:nil];
-				
+
 				
 				// HACK for now to make the inspector window wider.
 				if ([fileName hasSuffix:@"KSInspector.nib"])
 				{
-					//					windowFrame.size.width += 200;
+//					windowFrame.size.width += 200;
 				}
-				//				if ([fileName hasSuffix:@"KSCrash.nib"])
-				//				{
-				//					NSLog(@"Gonna check out KSCrash.nib");
-				//				}
+//				if ([fileName hasSuffix:@"KSCrash.nib"])
+//				{
+//					NSLog(@"Gonna check out KSCrash.nib");
+//				}
 				
 				// Regular windows want 20 pixels right margin; utility windows 10 pixels.  I think from the HIG.
 				// CGFloat desiredMargins = ([window styleMask] & NSUtilityWindowMask) ? 10 : 20;
-				
+
 				CGFloat delta = ResizeToFit([window contentView], 0);
 				if (delta > 0)
 				{
@@ -1071,8 +1049,8 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
         
         for (id nibItem in array)
             [self _localizeStringsInObject:nibItem bundle:bundle table:table level:level];
-		
-		// NSCell & subclasses
+	
+	// NSCell & subclasses
 		
     } else if ([object isKindOfClass:[NSCell class]]) {
         NSCell *cell = object;
@@ -1101,7 +1079,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
             }
         }
         
-		// NSToolbar
+	// NSToolbar
 		
     } else if ([object isKindOfClass:[NSToolbar class]]) {
         NSToolbar *toolbar = object;
@@ -1113,32 +1091,32 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			[self _localizeToolTipOfObject:item bundle:bundle table:table level:level];
 		}
 		
-		// NSMenu
+	// NSMenu
 		
     } else if ([object isKindOfClass:[NSMenu class]]) {
         NSMenu *menu = object;
-		
+				
         [self _localizeTitleOfObject:menu bundle:bundle table:table level:level];
         
         [self _localizeStringsInObject:[menu itemArray] bundle:bundle table:table level:level];
         
-		// NSMenuItem
+	// NSMenuItem
 		
     } else if ([object isKindOfClass:[NSMenuItem class]]) {
         NSMenuItem *menuItem = object;
-		
+
 		[self _localizeTitleOfObject:menuItem bundle:bundle table:table level:level];
         
         [self _localizeStringsInObject:[menuItem submenu] bundle:bundle table:table level:level];
         
-		// NSView + subclasses
-		
+	// NSView + subclasses
+				
     } else if ([object isKindOfClass:[NSView class]]) {
         NSView *view = object;        
 		[self _localizeAccessibility:view bundle:bundle table:table level:level];
 		// Do tooltip AFTER AX since AX might just get value from tooltip. 
         [self _localizeToolTipOfObject:view bundle:bundle table:table level:level];
-		
+
 		// Contextual menu?  Anything else besides a popup button
 		// I am NOT going to localize this, because it seems to be automatically generated, and there
 		// tends to be multiple copies instantiated.  Since it's not instantiated in the nib (except perhaps
@@ -1155,19 +1133,19 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 			{
 				[self _localizeStringValueOfObject:[column headerCell] bundle:bundle table:table level:level];
 			}
-			
-			// NSBox
-			
+
+		// NSBox
+		
 		} else if ([view isKindOfClass:[NSBox class]]) {
             NSBox *box = (NSBox *)view;
             [self _localizeTitleOfObject:box bundle:bundle table:table level:level];
-			
-			// NSTabView
+           
+		// NSTabView
 			
         } else if ([view isKindOfClass:[NSTabView class]]) {
             NSTabView *tabView = (NSTabView *)view;
 			NSArray *tabViewItems = [tabView tabViewItems];
-			
+		
 			for (NSTabViewItem *item in tabViewItems)
 			{
 				[self _localizeLabelOfObject:item bundle:bundle table:table level:level];
@@ -1178,14 +1156,14 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 					[self _localizeStringsInObject:viewToLocalize bundle:bundle table:table level:level];
 				}
 			}
-			
-			// NSControl + subclasses
+		
+		// NSControl + subclasses
 			
         } else if ([view isKindOfClass:[NSControl class]]) {
             NSControl *control = (NSControl *)view;
             
 			[self _localizeAccessibility:[control cell] bundle:bundle table:table level:level];
-			
+
 			
 			// NSButton
 			
@@ -1201,8 +1179,8 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
                 } else
                     [self _localizeStringsInObject:[button cell] bundle:bundle table:table level:level];
                 
-				
-				// NSMatrix
+			
+			// NSMatrix
 				
             } else if ([view isKindOfClass:[NSMatrix class]]) {
                 NSMatrix *matrix = (NSMatrix *)control;
@@ -1216,8 +1194,8 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
                     if (localizedCellToolTip)
                         [matrix setToolTip:localizedCellToolTip forCell:cell];
                 }
-				
-				// NSSegmentedControl
+              
+			// NSSegmentedControl
 				
             } else if ([view isKindOfClass:[NSSegmentedControl class]]) {
                 NSSegmentedControl *segmentedControl = (NSSegmentedControl *)control;
@@ -1230,8 +1208,8 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
                     
                     [self _localizeStringsInObject:[segmentedControl menuForSegment:segmentIndex] bundle:bundle table:table level:level];
                 }
-				
-				// OTHER ... e.g. NSTextField NSSlider NSScroller NSImageView 
+             
+			// OTHER ... e.g. NSTextField NSSlider NSScroller NSImageView 
 				
             } else
 			{
@@ -1243,8 +1221,8 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		// Then localize this view's subviews
 		
         [self _localizeStringsInObject:[view subviews] bundle:bundle table:table level:level];
-		
-		// NSWindow
+			       
+	// NSWindow
 		
     } else if ([object isKindOfClass:[NSWindow class]]) {
         NSWindow *window = object;
@@ -1252,7 +1230,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
         
         [self _localizeStringsInObject:[window contentView] bundle:bundle table:table level:level];
 		[self _localizeStringsInObject:[window toolbar] bundle:bundle table:table level:level];
-		
+
     }
 	
 	// Finally, bindings.  Basically lifted from the Google Toolkit.
@@ -1323,9 +1301,9 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
         return [NSString stringWithFormat:@"[_%@_]", localizedString];
     } else { 
 #ifdef DEBUG
-		//       NSLog(@"        Can't find translation for string %@", string);
-		//return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
-		// return string;
+ //       NSLog(@"        Can't find translation for string %@", string);
+       //return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
+       // return string;
 		// Simulate all strings being 40% longer
 		float len = [string length];
 		float extra = ceilf(0.40 * len);
