@@ -20,6 +20,8 @@
 #import "NSBundle+Karelia.h"
 #import "QTMovie+Karelia.h"
 #import <QuickLook/QuickLook.h>
+#import "KSThreadProxy.h"
+#import "NSImage+KTExtensions.h"
 
 @interface SVVideo ()
 
@@ -111,27 +113,74 @@
 #pragma mark -
 #pragma mark Poster Frame
 
++ (NSOperationQueue*) sharedQuickLookQueue;
+{
+	static NSOperationQueue *sSharedQuickLookQueue = nil;
+	@synchronized(self)
+	{
+		if (sSharedQuickLookQueue == nil)
+		{
+			sSharedQuickLookQueue = [[NSOperationQueue alloc] init];
+			sSharedQuickLookQueue.maxConcurrentOperationCount = 1;		// Since this is hitting the disk, let's just only let one at a time.
+		}
+	}
+	return sSharedQuickLookQueue;
+}
+
+
 - (id <IMBImageItem>)thumbnail { return [self posterFrame]; }
 + (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObject:@"posterFrame"]; }
 
-- (void)getPosterFrameFromQuickLook;
+// Called back on main thread 
+- (void)gotQuickLookData:(NSData *)jpegData;
 {
-	SVMediaRecord *media = self.media;
+	OBASSERT([NSThread isMainThread]);
+	NSURLResponse *response = [[NSURLResponse alloc]
+							   initWithURL:[NSURL fileURLWithPath:@"/tmp/video-poster.jpg"]
+							   MIMEType:@"image/jpeg"
+							   expectedContentLength:[jpegData length]
+							   textEncodingName:nil];
 	
-	
-	// TODO: Generate this on a thread, also I need to use the width and height of the actual movie, not the object as rendered.
-	
+	SVMediaRecord *media = [SVMediaRecord mediaWithFileContents:jpegData URLResponse:response entityName:@"PosterFrame" insertIntoManagedObjectContext:[self managedObjectContext]];	
+	[self replaceMedia:media forKeyPath:@"posterFrame"];
+
+}
+
+- (void)getQuickLookForFileURL:(NSURL *)fileURL		// CALLED FROM OPERATION
+{
+	OBASSERT(![NSThread isMainThread]);
+	NSData *jpegData = nil;
 	NSDictionary *options = NSDICT(NSBOOL(NO), (NSString *)kQLThumbnailOptionIconModeKey);
-    CGImageRef cg = QLThumbnailImageCreate(kCFAllocatorDefault, 
-										   (CFURLRef)[media fileURL], 
+	CGImageRef cg = QLThumbnailImageCreate(kCFAllocatorDefault, 
+										   (CFURLRef)fileURL, 
 										   CGSizeMake(1920,1440), // Typical size of a very large (3:4) 1080p movie, should be *plenty* for poster
 										   (CFDictionaryRef)options);
 	if (cg)
 	{
 		NSBitmapImageRep *bitmapImageRep = [[[NSBitmapImageRep alloc] initWithCGImage:cg] autorelease];
-		NSData *tiff = [bitmapImageRep TIFFRepresentation];
-		//		[tiff writeToFile:@"/Volumes/dwood/Desktop/quicklook.tiff" atomically:YES];
+		
+		// Get JPEG data since it will be easiest to keep it a web-happy format
+		NSMutableDictionary *props = NSDICT(
+											[NSNumber numberWithFloat:[NSImage preferredJPEGQuality]], NSImageCompressionFactor,
+											[NSNumber numberWithBool:NO], NSImageProgressive);
+		
+		jpegData = [bitmapImageRep representationUsingType:NSJPEGFileType properties:props];
+		
+		// [jpegData writeToFile:@"/Volumes/dwood/Desktop/quicklook.jpg" atomically:YES];
 	}
+	[[self ks_proxyOnThread:nil waitUntilDone:NO] gotQuickLookData:jpegData];
+}
+
+- (void)getPosterFrameFromQuickLook;
+{
+	SVMediaRecord *media = self.media;
+	NSURL *mediaURL = [media fileURL];
+	
+	NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
+                                                      selector:@selector(getQuickLookForFileURL:)
+                                                        object:mediaURL];
+	
+	[[[self class] sharedQuickLookQueue] addOperation:operation];			
 }
 
 - (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
