@@ -32,6 +32,5 @@ typedef enum {
 - (KTPluginCategory)category;
 
 - (NSString *)CSSClassName;
-- (NSString *)templateHTMLAsString;
 
 @end

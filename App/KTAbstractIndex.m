@@ -74,12 +74,6 @@
 	return [[self plugin] pluginPropertyForKey:@"KTCSSClassName"];
 }
 
-- (NSString *)templateHTML
-{
-	NSString *result = [[self plugin] templateHTMLAsString];
-	return result;
-}
-
 - (NSString *)uniqueWebViewID
 {
 	NSString *result = [NSString stringWithFormat:@"svxindex-%@", [[self page] uniqueID]];

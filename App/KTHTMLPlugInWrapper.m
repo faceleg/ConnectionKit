@@ -101,33 +101,6 @@
 	return [self pluginPropertyForKey:@"KTCSSClassName"];
 }
 
-- (NSString *)templateHTMLAsString
-{
-	if (!_templateHTML)
-	{
-		NSString *templateName = [self pluginPropertyForKey:@"KTTemplateName"];
-		NSString *path = [[self bundle] overridingPathForResource:templateName ofType:@"html"];
-		
-		if (path)	// This actually used to use NSData and then NSString, but no-one recalls why!
-		{
-			_templateHTML = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-		}
-		
-		if (!_templateHTML)	// If the HTML can't be loaded, don't bother trying again
-		{
-			_templateHTML = [[NSNull null] retain];
-		}
-	}
-	
-	NSString *result = _templateHTML;
-	if ([result isEqual:[NSNull null]])
-	{
-		result = nil;
-	}
-	return result;
-}
-
-#pragma mark -
 #pragma mark Properties
 
 - (id)defaultPluginPropertyForKey:(NSString *)key
