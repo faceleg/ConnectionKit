@@ -21,6 +21,9 @@
 #import "DOMNode+Karelia.h"
 
 
+static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
+
+
 @interface SVGraphicPlaceholderDOMController : SVGraphicDOMController
 @end
 
@@ -45,6 +48,8 @@
  
     [_offscreenWebViewController release];  // dealloc-ing mid-update
     
+    [self setRepresentedObject:nil];
+    
     [super dealloc];
 }
 
@@ -54,6 +59,20 @@
 {
     SVGraphicDOMController *result = [[[SVGraphicPlaceholderDOMController alloc] init] autorelease];
     return result;
+}
+
+#pragma mark Content
+
+- (void)setRepresentedObject:(id)object
+{
+    [[self representedObject] removeObserver:self forKeyPath:@"contentWidth"];
+    
+    [super setRepresentedObject:object];
+    
+    [object addObserver:self
+             forKeyPath:@"contentWidth"
+                options:0
+                context:sGraphicSizeObservationContext];
 }
 
 #pragma mark DOM
@@ -199,9 +218,16 @@
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    if ([[self webEditor] inLiveGraphicResize])
+    if (context == sGraphicSizeObservationContext)
     {
-        [self updateSize];
+        if ([[self webEditor] inLiveGraphicResize])
+        {
+            [self updateSize];
+        }
+        else
+        {
+            [self setNeedsUpdate];
+        }
     }
     else
     {
