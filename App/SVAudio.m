@@ -121,19 +121,6 @@
 }
 
 
-/*
- Audio UTIs:
- 
- kUTTypeAudio
- 
- kUTTypeMP3
- kUTTypeMPEG4Audio
- public.ogg-vorbis
- ... check that it's not kUTTypeAppleProtected​MPEG4Audio
- public.aiff-audio
- com.microsoft.waveform-​audio  (.wav)
- 
- */
 
 
 
@@ -160,14 +147,59 @@
 	}
 }
 
-
-- (void)startVideo:(SVHTMLContext *)context
-	movieSourceURL:(NSURL *)movieSourceURL;
+- (void)startQuickTimeObject:(SVHTMLContext *)context
+			  audioSourceURL:(NSURL *)audioSourceURL;
 {
-	NSString *movieSourcePath  = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
+	NSString *audioSourcePath  = audioSourceURL ? [context relativeURLStringOfURL:audioSourceURL] : @"";
 	
-	// Actually write the video
-	NSString *idName = [self idNameForTag:@"video"];
+	NSUInteger heightWithBar = self.controller.boolValue ? 16 : 0;
+	
+	[context pushElementAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
+	[context pushElementAttribute:@"width" value:[[self width] description]];
+	[context pushElementAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
+	[context pushElementAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
+	[context pushElementAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
+	[context startElement:@"object"];
+	
+	[context writeParamElementWithName:@"src" value:audioSourcePath];
+	
+	[context writeParamElementWithName:@"autoplay" value:self.autoplay.boolValue ? @"true" : @"false"];
+	[context writeParamElementWithName:@"controller" value:self.controller.boolValue ? @"true" : @"false"];
+	[context writeParamElementWithName:@"loop" value:self.loop.boolValue ? @"true" : @"false"];
+	[context writeParamElementWithName:@"scale" value:@"tofit"];
+	[context writeParamElementWithName:@"type" value:@"audio/quicktime"];
+	[context writeParamElementWithName:@"pluginspage" value:@"http://www.apple.com/quicktime/download/"];	
+}
+
+- (void)startMicrosoftObject:(SVHTMLContext *)context
+			  audioSourceURL:(NSURL *)audioSourceURL;
+{
+	NSString *audioSourcePath = audioSourceURL ? [context relativeURLStringOfURL:audioSourceURL] : @"";
+	
+	NSUInteger heightWithBar = self.controller.boolValue ? 46 : 0;		// Windows media controller is 46 pixels (on windows; adjusted on macs)
+	
+	[context pushElementAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
+	[context pushElementAttribute:@"width" value:[[self width] description]];
+	[context pushElementAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
+	[context pushElementAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
+	[context startElement:@"object"];
+	
+	[context writeParamElementWithName:@"url" value:audioSourcePath];
+	[context writeParamElementWithName:@"autostart" value:self.autoplay.boolValue ? @"true" : @"false"];
+	[context writeParamElementWithName:@"showcontrols" value:self.controller.boolValue ? @"true" : @"false"];
+	[context writeParamElementWithName:@"playcount" value:self.loop.boolValue ? @"9999" : @"1"];
+	[context writeParamElementWithName:@"type" value:@"application/x-oleobject"];
+	[context writeParamElementWithName:@"uiMode" value:@"mini"];
+	[context writeParamElementWithName:@"pluginspage" value:@"http://microsoft.com/windows/mediaplayer/en/download/"];
+}
+
+- (void)startAudio:(SVHTMLContext *)context
+	audioSourceURL:(NSURL *)audioSourceURL;
+{
+	NSString *audioSourcePath  = audioSourceURL ? [context relativeURLStringOfURL:audioSourceURL] : @"";
+	
+	// Actually write the audio
+	NSString *idName = [self idNameForTag:@"audio"];
 	[context pushElementAttribute:@"id" value:idName];
 	if ([self displayInline]) [self buildClassName:context];
 	[context pushElementAttribute:@"width" value:[[self width] description]];
@@ -178,133 +210,121 @@
 	[context pushElementAttribute:@"preload" value:self.preload.boolValue ? @"auto" : @"none" ];
 	if (self.loop.boolValue)		[context pushElementAttribute:@"loop" value:@"loop"];
 	
-	[context startElement:@"video"];
-	
-	// Remove poster on iOS < 4; prevents video from working
-	[context startJavascriptElementWithSrc:nil];
-	[context stopWritingInline];
-	[context writeString:@"// Remove poster from buggy iOS before 4\n"];
-	[context writeString:@"if (navigator.userAgent.match(/CPU( iPhone)*( OS )*([123][_0-9]*)? like Mac OS X/)) {\n"];
-	[context writeString:[NSString stringWithFormat:@"\t$('#%@').removeAttr('poster');\n", idName]];
-	[context writeString:@"}\n"];
-	[context endElement];	
+	[context startElement:@"audio"];
 	
 	
 	// source
-	[context pushElementAttribute:@"src" value:movieSourcePath];
+	[context pushElementAttribute:@"src" value:audioSourcePath];
 	[context pushElementAttribute:@"type" value:[NSString MIMETypeForUTI:[self codecType]]];
 	[context pushElementAttribute:@"onerror" value:@"fallback(this.parentNode)"];
 	[context startElement:@"source"];
 	[context endElement];
 }
 
-- (void)writePostVideoScript:(SVHTMLContext *)context
+- (void)writePostAudioScript:(SVHTMLContext *)context
 {
-	// Now write the post-video-tag surgery since onerror doesn't really work
-	// This is hackish browser-sniffing!  Maybe later we can do away with this (especially if we can get > 1 video source)
+	// Now write the post-audio-tag surgery since onerror doesn't really work
+	// This is hackish browser-sniffing!  Maybe later we can do away with this (especially if we can get > 1 audio source)
 	
 	[context startJavascriptElementWithSrc:nil];
 	[context stopWritingInline];
-	[context writeString:[NSString stringWithFormat:@"var video = document.getElementById('%@');\n", [self idNameForTag:@"video"]]];
-	[context writeString:[NSString stringWithFormat:@"if (video.canPlayType && video.canPlayType('%@')) {\n",
+	[context writeString:[NSString stringWithFormat:@"var audio = document.getElementById('%@');\n", [self idNameForTag:@"audio"]]];
+	[context writeString:[NSString stringWithFormat:@"if (audio.canPlayType && audio.canPlayType('%@')) {\n",
 						  [NSString MIMETypeForUTI:[self codecType]]]];
 	[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
 	
 	// we have mp4, so no ogv/webm, so force a fallback if NOT webkit-based.
-	if ([[self codecType] conformsToUTI:@"public.mpeg-4"])
+	if ([[self codecType] conformsToUTI:@"public.mpeg-4"] || [[self codecType] conformsToUTI:@"public.aiff-audio"])
 	{
-		[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play this natively\n\t\tfallback(video);\n\t}\n"];
+		[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play this natively\n\t\tfallback(audio);\n\t}\n"];
 	}
 	else	// we have an ogv or webm (or something else?) so fallback if it's Safari, which won't handle it
 	{
-		[context writeString:@"\tif (navigator.userAgent.indexOf(' Safari/') > -1) {\n\t\t// Safari can't play this natively\n\t\tfallback(video);\n\t}\n"];
+		[context writeString:@"\tif (navigator.userAgent.indexOf(' Safari/') > -1) {\n\t\t// Safari can't play this natively\n\t\tfallback(audio);\n\t}\n"];
 	}
-	[context writeString:@"} else {\n\tfallback(video);\n}\n"];
+	[context writeString:@"} else {\n\tfallback(audio);\n}\n"];
 	[context endElement];	
 }
 
-
 - (void)startFlash:(SVHTMLContext *)context
-	movieSourceURL:(NSURL *)movieSourceURL;
+	audioSourceURL:(NSURL *)audioSourceURL;
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	BOOL videoFlashRequiresFullURL = [defaults boolForKey:@"videoFlashRequiresFullURL"];	// usually not, but YES for flowplayer
-	NSString *movieSourcePath = @"";
-	if (videoFlashRequiresFullURL)
+	BOOL audioFlashRequiresFullURL = [defaults boolForKey:@"audioFlashRequiresFullURL"];	// usually not, but YES for flowplayer
+	NSString *audioSourcePath = @"";
+	if (audioFlashRequiresFullURL)
 	{
-		if (movieSourceURL)  movieSourcePath  = [movieSourceURL  absoluteString];
+		if (audioSourceURL)  audioSourcePath  = [audioSourceURL  absoluteString];
 	}
 	else
 	{
-		if (movieSourceURL)  movieSourcePath  = [context relativeURLStringOfURL:movieSourceURL];
+		if (audioSourceURL)  audioSourcePath  = [context relativeURLStringOfURL:audioSourceURL];
 	}
 	
-	NSString *videoFlashPlayer	= [defaults objectForKey:@"videoFlashPlayer"];	// to override player type
-	// Known types: f4player jwplayer flvplayer osflv flowplayer.  Otherwise must specify videoFlashFormat.
-	if (!videoFlashPlayer) videoFlashPlayer = @"flvplayer";
-	NSString *videoFlashPath	= [defaults objectForKey:@"videoFlashPath"];	// override must specify path/URL on server
-	NSString *videoFlashExtras	= [defaults objectForKey:@"videoFlashExtras"];	// extra parameters to override for any player
-	NSString *videoFlashFormat	= [defaults objectForKey:@"videoFlashFormat"];	// format pattern with %{value1}@ and %{value2}@ for movie, poster
-	NSString *videoFlashBarHeight= [defaults objectForKey:@"videoFlashBarHeight"];	// height that the navigation bar adds
+	NSString *audioFlashPlayer	= [defaults objectForKey:@"audioFlashPlayer"];	// to override player type
+	// Known types: flashmp3player dewplayer wpaudioplayer ....  Otherwise must specify audioFlashFormat.
+	if (!audioFlashPlayer) audioFlashPlayer = @"flashmp3player";
 	
-	if ([videoFlashPlayer isEqualToString:@"flowplayer"]) videoFlashRequiresFullURL = YES;
-	
-	NSDictionary *noPosterParamLookup
-	= NSDICT(
-			 @"video=%@",                                  @"f4player",	
-			 @"file=%@",                                   @"jwplayer",	
-			 @"flv=%@&margin=0",                           @"flvplayer",	
-			 @"movie=%@",                                  @"osflv",		
-			 @"config={\"playlist\":[{\"url\":\"%@\"}]}",  @"flowplayer");
-	NSDictionary *barHeightLookup
-	= NSDICT(
-			 [NSNumber numberWithShort:0],  @"f4player",	
-			 [NSNumber numberWithShort:24], @"jwplayer",	
-			 [NSNumber numberWithShort:0],  @"flvplayer",	
-			 [NSNumber numberWithShort:25], @"osflv",		
-			 [NSNumber numberWithShort:0],   @"flowplayer");
-	
-	NSUInteger barHeight = 0;
-	if (videoFlashBarHeight)
-	{
-		barHeight= [videoFlashBarHeight intValue];
-	}
-	else
-	{
-		barHeight = [[barHeightLookup objectForKey:videoFlashPlayer] intValue];
-	}
+	NSString *audioFlashPath	= [defaults objectForKey:@"audioFlashPath"];	// override must specify path/URL on server
+	NSString *audioFlashExtras	= [defaults objectForKey:@"audioFlashExtras"];	// extra parameters to override for any player
+
 	
 	NSString *flashVarFormatString = nil;
-	if (videoFlashFormat)		// override format?
+	NSString *audioFlashFormat	= [defaults objectForKey:@"audioFlashFormat"];	// format pattern with %@ for audio
+	if (audioFlashFormat)		// override format?
 	{
-		flashVarFormatString = videoFlashFormat;
+		flashVarFormatString = audioFlashFormat;
 	}
 	else
 	{
-		flashVarFormatString = [noPosterParamLookup objectForKey:videoFlashPlayer];
+		NSDictionary *paramLookup
+		= NSDICT(
+				 @"mp3=%@",                         @"flashmp3player",	
+				 @"mp3=%@",                         @"dewplayer",	
+				 @"soundfile=%@",					@"wpaudioplayer");
+		flashVarFormatString = [paramLookup objectForKey:audioFlashPlayer];
+	}
+
+	
+	NSUInteger barHeight = 0;
+	NSString *audioFlashBarHeight= [defaults objectForKey:@"audioFlashBarHeight"];	// height that the navigation bar adds
+	if (audioFlashBarHeight)
+	{
+		barHeight= [audioFlashBarHeight intValue];
+	}
+	else
+	{
+		NSDictionary *barHeightLookup
+		= NSDICT(
+				 [NSNumber numberWithShort:20],		@"flashmp3player",	
+				 [NSNumber numberWithShort:20],		@"dewplayer",	
+				 [NSNumber numberWithShort:24],		@"wpaudioplayer");
+		
+		barHeight = [[barHeightLookup objectForKey:audioFlashPlayer] intValue];
 	}
 	
+	
 	// Now instantiate the string from the format
-	NSMutableString *flashVars = [NSMutableString stringWithFormat:flashVarFormatString, movieSourcePath];
+	NSMutableString *flashVars = [NSMutableString stringWithFormat:flashVarFormatString, audioSourcePath];
 	
 	
-	if ([videoFlashPlayer isEqualToString:@"flvplayer"])
+	if ([audioFlashPlayer isEqualToString:@"flvplayer"])
 	{
 		[flashVars appendFormat:@"&showplayer=%@", (self.controller.boolValue) ? @"autohide" : @"never"];
 		if (self.autoplay.boolValue)	[flashVars appendString:@"&autoplay=1"];
 		if (self.preload.boolValue)		[flashVars appendString:@"&autoload=1"];
 		if (self.loop.boolValue)		[flashVars appendString:@"&loop=1"];
 	}
-	if (videoFlashExtras)	// append other parameters (usually like key1=value1&key2=value2)
+	if (audioFlashExtras)	// append other parameters (usually like key1=value1&key2=value2)
 	{
 		[flashVars appendString:@"&"];
-		[flashVars appendString:videoFlashExtras];
+		[flashVars appendString:audioFlashExtras];
 	}
 	
 	NSString *playerPath = nil;
-	if (videoFlashPath)
+	if (audioFlashPath)
 	{
-		playerPath = videoFlashPath;		// specified by defaults
+		playerPath = audioFlashPath;		// specified by defaults
 	}
 	else
 	{
@@ -326,12 +346,12 @@
 	[context writeParamElementWithName:@"movie" value:playerPath];
 	[context writeParamElementWithName:@"flashvars" value:flashVars];
 	
-	NSDictionary *videoFlashExtraParams = [defaults objectForKey:@"videoFlashExtraParams"];
-	if ([videoFlashExtraParams respondsToSelector:@selector(keyEnumerator)])	// sanity check
+	NSDictionary *audioFlashExtraParams = [defaults objectForKey:@"audioFlashExtraParams"];
+	if ([audioFlashExtraParams respondsToSelector:@selector(keyEnumerator)])	// sanity check
 	{
-		for (NSString *key in videoFlashExtraParams)
+		for (NSString *key in audioFlashExtraParams)
 		{
-			[context writeParamElementWithName:key value:[videoFlashExtraParams objectForKey:key]];
+			[context writeParamElementWithName:key value:[audioFlashExtraParams objectForKey:key]];
 		}
 	}
 }
@@ -343,7 +363,7 @@
 	[context pushElementAttribute:@"height" value:[[self height] description]];
 	[context startElement:@"div"];
 	[context writeElement:@"p" text:NSLocalizedString(@"Unable to embed audio. Perhaps it is not a recognized audio format.", @"Warning shown to user when audio can't be embedded")];
-	// Poster may be shown next, so don't end....
+	// don't end....
 }
 
 - (void)writeBody:(SVHTMLContext *)context;
@@ -354,85 +374,109 @@
 	[context addDependencyOnObject:self keyPath:@"media"];
 	[context addDependencyOnObject:self keyPath:@"controller"];		// most boolean properties don't affect display of page
 	
-	NSURL *movieSourceURL = [self externalSourceURL];
+	NSURL *audioSourceURL = [self externalSourceURL];
     if (media)
     {
-	    movieSourceURL = [context addMedia:media width:[self width] height:[self height] type:[self codecType]];
+	    audioSourceURL = [context addMedia:media width:[self width] height:[self height] type:[self codecType]];
 	}
 	
 	
 	// Determine tag(s) to use
-	// video || flash (not mutually exclusive) are mutually exclusive with microsoft, quicktime
+	// audio || flash (not mutually exclusive) are mutually exclusive with microsoft, quicktime
+	// WAV: audio -> microsoft
+	// MP3: audio -> flash
+	// OGG: audio
+	// mov: quicktime
+	// MP4: audio
+	// AIFF: audio
+	
+	/*
+	 Audio (kUTTypeAudio) UTIs:
+	 
+	 kUTTypeMP3
+	 kUTTypeMPEG4Audio but not kUTTypeAppleProtected​MPEG4Audio
+	 public.ogg-vorbis
+	 public.aiff-audio
+	 com.microsoft.waveform-​audio  (.wav)
+	 */
+	
 	NSString *type = [self codecType];
-	BOOL videoTag = [type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"public.ogg-theora"] || [type conformsToUTI:@"public.webm"];
+	BOOL audioTag = !media
+	|| [type conformsToUTI:(NSString *)kUTTypeMP3]
+	|| [type conformsToUTI:@"public.ogg-vorbis"]
+	|| [type conformsToUTI:@"com.microsoft.waveform-​audio"]
+	|| [type conformsToUTI:(NSString *)kUTTypeMPEG4Audio]
+	|| [type conformsToUTI:@"public.aiff-audio"]
+	;
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if ([defaults boolForKey:@"avoidVideoTag"]) videoTag = NO;
+	if ([defaults boolForKey:@"avoidAudioTag"]) audioTag = NO;
 	
-	BOOL flashTag = [type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"com.adobe.flash.video"];
-	if ([defaults boolForKey:@"avoidFlashVideo"]) flashTag = NO;
+	BOOL flashTag = [type conformsToUTI:(NSString *)kUTTypeMP3];
+	if ([defaults boolForKey:@"avoidFlashAudio"]) flashTag = NO;
 	
-	BOOL microsoftTag = [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-​media-wmv"];
+	BOOL microsoftTag = [type conformsToUTI:@"com.microsoft.waveform-​audio"];
 	
 	// quicktime fallback, but not for mp4.  We may want to be more selective of mpeg-4 types though.
 	// Also show quicktime when there is no media at all
-	BOOL quicktimeTag = !media || ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
-	&& ![type conformsToUTI:@"public.mpeg-4"];
+	BOOL quicktimeTag =  [type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie];
 	
-	BOOL unknownTag = NO;	// will be set below if 
+	BOOL unknownTag = !(audioTag || flashTag || microsoftTag || quicktimeTag);
 	
 	// START THE TAGS
 	
+	if (audioTag)	// start the audio tag
+	{
+		[self writeFallbackScriptOnce:context];
+		[self startAudio:context audioSourceURL:audioSourceURL]; 
+	}
 	if (quicktimeTag)
 	{
-		// ??? [self startQuickTimeObject:context movieSourceURL:movieSourceURL];
+		[self startQuickTimeObject:context audioSourceURL:audioSourceURL];
 	}
-	else if (microsoftTag)
+	if (microsoftTag)
 	{
-		// [self startMicrosoftObject:context movieSourceURL:movieSourceURL]; 
+		[self startMicrosoftObject:context audioSourceURL:audioSourceURL]; 
 	}
-	else if (videoTag || flashTag)
+	if (flashTag)
 	{
-		if (videoTag)	// start the video tag
-		{
-			[self writeFallbackScriptOnce:context];
-			
-			[self startVideo:context movieSourceURL:movieSourceURL]; 
-		}
-		
-		if (flashTag)	// inner
-		{
-			[self startFlash:context movieSourceURL:movieSourceURL]; 
-			
-		}
+		[self startFlash:context audioSourceURL:audioSourceURL]; 
 	}
-	else	// completely unknown video type
+	if (unknownTag)
 	{
 		[self startUnknown:context];
 		unknownTag = YES;
 	}
 	
-	
-	// END THE TAGS
-	
-	if (flashTag || quicktimeTag || microsoftTag)
-	{
-		OBASSERT([@"object" isEqualToString:[context topElement]]);
-		[context endElement];	//  </object>
-	}
-	
-	if (videoTag)		// we may have a video nested outside of an object
-	{
-		OBASSERT([@"video" isEqualToString:[context topElement]]);
-		[context endElement];
-		
-		[self writePostVideoScript:context];
-	}
-	
+	// END THE TAGS, in reverse order
+
 	if (unknownTag)
 	{
 		OBASSERT([@"div" isEqualToString:[context topElement]]);
 		[context endElement];
 	}
+	if (flashTag)
+	{
+		OBASSERT([@"object" isEqualToString:[context topElement]]);
+		[context endElement];	//  </object>
+	}
+	if (microsoftTag)
+	{
+		OBASSERT([@"object" isEqualToString:[context topElement]]);
+		[context endElement];	//  </object>
+	}
+	if (quicktimeTag)
+	{
+		OBASSERT([@"object" isEqualToString:[context topElement]]);
+		[context endElement];	//  </object>
+	}
+	if (audioTag)
+	{
+		OBASSERT([@"audio" isEqualToString:[context topElement]]);
+		[context endElement];
+		
+		[self writePostAudioScript:context];
+	}
+	
 }
 
 
@@ -451,30 +495,44 @@
 {
 	NSImage *result = nil;
 	NSString *type = self.codecType;
+
 	
-	if (!type || ![self media])								// no movie -- informational
+	
+	if (!type || ![self media])								// no movie
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
 	}
-	else if (![type conformsToUTI:(NSString *)kUTTypeMovie])// BAD
+	else if ([type conformsToUTI:(NSString *)kUTTypeAppleProtectedMPEG4Audio])
 	{
 		result = [NSImage imageFromOSType:kAlertStopIcon];
 	}
-	else if ([type conformsToUTI:@"public.h264.ios"])		// HAPPY!  everything-compatible
+	else if ([type conformsToUTI:@"com.microsoft.waveform-​audio"])		// I *think* WAV is ok for <audio>, iOS, and Windows controller (windows & Quicktime)
 	{
-		result =[ NSImage imageNamed:@"checkmark"];;
+		result =[NSImage imageNamed:@"checkmark"];
 	}
-	else if ([type conformsToUTI:@"public.mpeg-4"])			// might not be iOS compatible
+	else if ([type conformsToUTI:@"public.mp3.ios"])		// HAPPY!  everything-compatible  (This is only there is we know for sure it's iOS compatible!
+	{
+		result =[NSImage imageNamed:@"checkmark"];
+	}
+	else if ([type conformsToUTI:(NSString *)kUTTypeMP3])			// might not be iOS compatible
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
 	}
-	else													// everything else
+	else if ([type conformsToUTI:@"public.ogg-vorbis"])
 	{
 		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
 	}
-	
+	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:@"public.aiff-audio"]  || [type conformsToUTI:(NSString *)kUTTypeMPEG4Audio])
+	{
+		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
+	}
+	else
+	{
+		result = [NSImage imageFromOSType:kAlertStopIcon];
+	}
 	return result;
 }
+
 
 - (NSString *)info
 {
@@ -483,35 +541,35 @@
 	
 	if (!type || ![self media])								// no movie
 	{
-		result = NSLocalizedString(@"Use MP3 file for maximum compatibility.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
+		result = NSLocalizedString(@"Use .mp3 or .wav file for maximum compatibility.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
 	}
-	else if (![type conformsToUTI:(NSString *)kUTTypeMovie])// BAD
+	else if ([type conformsToUTI:(NSString *)kUTTypeAppleProtectedMPEG4Audio])
+	{
+		result = NSLocalizedString(@"Audio is protected and cannot play on other systems.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
+	}
+	else if ([type conformsToUTI:@"com.microsoft.waveform-​audio"])		// I *think* WAV is ok for <audio>, iOS, and Windows controller (windows & Quicktime)
+	{
+		result = NSLocalizedString(@"Audio is compatible with a wide range of devices.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
+	}
+	else if ([type conformsToUTI:@"public.mp3.ios"])		// HAPPY!  everything-compatible  (This is only there is we know for sure it's iOS compatible!
+	{
+		result = NSLocalizedString(@"Audio is compatible with a wide range of devices.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
+	}
+	else if ([type conformsToUTI:(NSString *)kUTTypeMP3])			// might not be iOS compatible
+	{
+		result = NSLocalizedString(@"You should verify that audio will play on iOS devices.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
+	}
+	else if ([type conformsToUTI:@"public.ogg-vorbis"])
+	{
+		result = NSLocalizedString(@"Audio will only play on certain browsers.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
+	}
+	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:@"public.aiff-audio"]  || [type conformsToUTI:(NSString *)kUTTypeMPEG4Audio])
+	{
+		result = NSLocalizedString(@"Audio will not play on Windows PCs unless QuickTime is installed", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
+	}
+	else		// Other kinds of audio files, or maybe not even an audio file, we don't handle them.
 	{
 		result = NSLocalizedString(@"Audio cannot be played in most browsers.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
-	}
-	else if ([type conformsToUTI:@"public.h264.ios"])		// HAPPY!  everything-compatible
-	{
-		result = NSLocalizedString(@"Video is compatible with a wide range of devices.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
-	}
-	else if ([type conformsToUTI:@"public.mpeg-4"])			// might not be iOS compatible
-	{
-		result = NSLocalizedString(@"You will need to verify if this video will play on iOS devices.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
-	}
-	else if ([type conformsToUTI:@"public.ogg-theora"] || [type conformsToUTI:@"public.webm"])
-	{
-		result = NSLocalizedString(@"Video will only play on certain browsers.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
-	}
-	else if ([type conformsToUTI:@"com.adobe.flash.video"])
-	{
-		result = NSLocalizedString(@"Video will not play on iOS devices", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
-	}
-	else if ([type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-​media-wmv"])
-	{
-		result = NSLocalizedString(@"Video will not play on Macs unless \\U201CFlip4Mac\\U201D is installed", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
-	}
-	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
-	{
-		result = NSLocalizedString(@"Video will not play on Windows PCs unless QuickTime is installed", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
 	}
 	return result;
 }
