@@ -448,7 +448,17 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
   posterSourceURL:(NSURL *)posterSourceURL;
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSString *videoFlashPlayer	= [defaults objectForKey:@"videoFlashPlayer"];	// to override player type
+	// Known types: f4player jwplayer flvplayer osflv flowplayer.  Otherwise must specify videoFlashFormat.
+	if (!videoFlashPlayer) videoFlashPlayer = @"flvplayer";
+	NSString *videoFlashPath	= [defaults objectForKey:@"videoFlashPath"];	// override must specify path/URL on server
+	NSString *videoFlashExtras	= [defaults objectForKey:@"videoFlashExtras"];	// extra parameters to override for any player
+	NSString *videoFlashFormat	= [defaults objectForKey:@"videoFlashFormat"];	// format pattern with %{value1}@ and %{value2}@ for movie, poster
+	NSString *videoFlashBarHeight= [defaults objectForKey:@"videoFlashBarHeight"];	// height that the navigation bar adds
+	
 	BOOL videoFlashRequiresFullURL = [defaults boolForKey:@"videoFlashRequiresFullURL"];	// usually not, but YES for flowplayer
+	if ([videoFlashPlayer isEqualToString:@"flowplayer"]) videoFlashRequiresFullURL = YES;
+	
 	NSString *movieSourcePath = @"";
 	NSString *posterSourcePath = @"";
 	if (videoFlashRequiresFullURL)
@@ -461,16 +471,6 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		if (movieSourceURL)  movieSourcePath  = [context relativeURLStringOfURL:movieSourceURL];
 		if (posterSourceURL) posterSourcePath = [context relativeURLStringOfURL:posterSourceURL];
 	}
-
-	NSString *videoFlashPlayer	= [defaults objectForKey:@"videoFlashPlayer"];	// to override player type
-	// Known types: f4player jwplayer flvplayer osflv flowplayer.  Otherwise must specify videoFlashFormat.
-	if (!videoFlashPlayer) videoFlashPlayer = @"flvplayer";
-	NSString *videoFlashPath	= [defaults objectForKey:@"videoFlashPath"];	// override must specify path/URL on server
-	NSString *videoFlashExtras	= [defaults objectForKey:@"videoFlashExtras"];	// extra parameters to override for any player
-	NSString *videoFlashFormat	= [defaults objectForKey:@"videoFlashFormat"];	// format pattern with %{value1}@ and %{value2}@ for movie, poster
-	NSString *videoFlashBarHeight= [defaults objectForKey:@"videoFlashBarHeight"];	// height that the navigation bar adds
-	
-	if ([videoFlashPlayer isEqualToString:@"flowplayer"]) videoFlashRequiresFullURL = YES;
 	
 	NSDictionary *noPosterParamLookup
 	= NSDICT(
@@ -722,14 +722,10 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 {
 	NSImage *result = nil;
 	NSString *type = self.codecType;
-	
-	if (!type || ![self media])								// no movie -- informational
+
+	if (!type || ![self media])								// no movie
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
-	}
-	else if (![type conformsToUTI:(NSString *)kUTTypeMovie])// BAD
-	{
-		result = [NSImage imageFromOSType:kAlertStopIcon];
 	}
 	else if ([type conformsToUTI:@"public.h264.ios"])		// HAPPY!  everything-compatible
 	{
@@ -739,11 +735,26 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
 	}
-	else													// everything else
+	else if ([type conformsToUTI:@"public.ogg-theora"] || [type conformsToUTI:@"public.webm"])
 	{
 		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
 	}
-
+	else if ([type conformsToUTI:@"com.adobe.flash.video"])
+	{
+		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
+	}
+	else if ([type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-​media-wmv"])
+	{
+		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
+	}
+	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
+	{
+		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
+	}
+	else	// Unknown video format, or not even a video
+	{
+		result = [NSImage imageFromOSType:kAlertStopIcon];
+	}
 	return result;
 }
 
@@ -755,10 +766,6 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	if (!type || ![self media])								// no movie
 	{
 		result = NSLocalizedString(@"Use MPEG-4 (h.264) video for maximum compatibility.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
-	}
-	else if (![type conformsToUTI:(NSString *)kUTTypeMovie])// BAD
-	{
-		result = NSLocalizedString(@"Video cannot be played in most browsers.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
 	else if ([type conformsToUTI:@"public.h264.ios"])		// HAPPY!  everything-compatible
 	{
@@ -783,6 +790,10 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
 	{
 		result = NSLocalizedString(@"Video will not play on Windows PCs unless QuickTime is installed", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+	}
+	else	// Unknown video format, or not even a video
+	{
+		result = NSLocalizedString(@"Video cannot be played in most browsers.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
 	return result;
 }
