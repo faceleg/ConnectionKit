@@ -143,7 +143,7 @@
     SVMediaRecord *media = [self media];
     if (media)
 	{
-		NSNumber *naturalWidth = [self naturalWidth];
+		NSNumber *naturalWidth = self.naturalWidth;
 		NSNumber *naturalHeight = self.naturalHeight;
 		// Try to get cached natural size first
 		if (nil != naturalWidth && nil != naturalHeight)

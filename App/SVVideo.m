@@ -23,12 +23,18 @@
 #import "KSThreadProxy.h"
 #import "NSImage+KTExtensions.h"
 
+@interface QTMovie (ApplePrivate)
+
+- (BOOL) usesFigMedia;	// From Tim Monroe, WWDC2010.  Does this movie use the "modern" quicktime stack - possibly more likely to play on iOS
+
+@end
+
 @interface SVVideo ()
 
 - (void)loadMovie;
 - (void)loadMovieFromAttributes:(NSDictionary *)anAttributes;
 - (void)calculateMovieDimensions:(QTMovie *)aMovie;
-
+- (void)calculateMoviePlayability:(QTMovie *)aMovie;
 @end
 
 @implementation SVVideo 
@@ -715,9 +721,9 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	NSImage *result = nil;
 	NSString *type = self.codecType;
 	
-	if (!type || ![self media])								// no movie -- don't bother with icon
+	if (!type || ![self media])								// no movie -- informational
 	{
-		result = nil;
+		result = [NSImage imageFromOSType:kAlertNoteIcon];
 	}
 	else if (![type conformsToUTI:(NSString *)kUTTypeMovie])// BAD
 	{
@@ -855,6 +861,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		movieAttributes = [NSDictionary dictionaryWithObjectsAndKeys: 
 						   movieSourceURL, QTMovieURLAttribute,
 						   [NSNumber numberWithBool:openAsync], QTMovieOpenAsyncOKAttribute,
+						   // 10.6 only :-( [NSNumber numberWithBool:YES], QTMovieOpenForPlaybackAttribute,	// From Tim Monroe @ WWDC2010, so we can check how movie was loaded
 						   nil];
 		[self loadMovieFromAttributes:movieAttributes];
 		
@@ -887,6 +894,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		if (movieLoadState >= kMovieLoadStatePlayable)	// Do we have dimensions now?
 		{
 			[self calculateMovieDimensions:movie];
+			[self calculateMoviePlayability:movie];
 			
 			if (![NSThread isMainThread])	// we entered, so exit now that we're done with that
 			{
@@ -979,13 +987,25 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		if (loadState >= kMovieLoadStateLoaded)
 		{
 			[self calculateMovieDimensions:movie];
-			
+			[self calculateMoviePlayability:movie];
+		
 			[[NSNotificationCenter defaultCenter] removeObserver:self];
 			self.dimensionCalculationMovie = nil;	// we are done with movie now!
 		}
 	}
 }
 
+- (void)calculateMoviePlayability:(QTMovie *)aMovie;
+{
+	if ([aMovie respondsToSelector:@selector(usesFigMedia)])
+	{
+		if ([aMovie usesFigMedia])	// Modern quicktime stack - From Tim Monroe, sounds like movie must be this to play on iOS
+		{
+			// However, there is more to determine ... I'm going to put this aside for now.
+		}
+	}
+	
+}
 
 - (void)calculateMovieDimensions:(QTMovie *)aMovie;
 {
