@@ -7,11 +7,20 @@
 //
 
 #import "SVVideoInspector.h"
+
 #import "KTDocument.h"
+#import "NSImageView+IMBImageItem.h"
 #import "SVVideo.h"
+
 
 @implementation SVVideoInspector
 
+- (void)loadView;
+{
+    [super loadView];
+    
+    [oPosterImageView bind:IMBImageItemBinding toObject:self withKeyPath:@"inspectedObjectsController.selection.posterFrame" options:nil];
+}
 
 - (IBAction)choosePosterFrame:(id)sender;
 {

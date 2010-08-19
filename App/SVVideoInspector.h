@@ -11,7 +11,7 @@
 
 
 @interface SVVideoInspector : SVMediaGraphicInspector {
-
+    IBOutlet NSImageView    *oPosterImageView;
 }
 
 - (IBAction)choosePosterFrame:(id)sender;
