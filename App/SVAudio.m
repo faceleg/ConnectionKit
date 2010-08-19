@@ -18,6 +18,9 @@
 #import "QTMovie+Karelia.h"
 #import "NSImage+Karelia.h"
 
+@interface SVAudio ()
+- (void)loadAudio;		// after it has changed (URL or media), determine codecType; later we may kick off load to test properties
+@end
 
 @implementation SVAudio
 
@@ -41,7 +44,8 @@
 {
 	[self addObserver:self forKeyPath:@"autoplay"			options:(NSKeyValueObservingOptionNew) context:nil];
 	[self addObserver:self forKeyPath:@"controller"			options:(NSKeyValueObservingOptionNew) context:nil];
-		
+	[self addObserver:self forKeyPath:@"externalSourceURL"	options:(NSKeyValueObservingOptionNew) context:nil];
+	[self addObserver:self forKeyPath:@"media"				options:(NSKeyValueObservingOptionNew) context:nil];
     [super willInsertIntoPage:page];
     
     // Show caption
@@ -56,6 +60,8 @@
 {
 	[self removeObserver:self forKeyPath:@"autoplay"];
 	[self removeObserver:self forKeyPath:@"controller"];
+	[self removeObserver:self forKeyPath:@"externalSourceURL"];
+	[self removeObserver:self forKeyPath:@"media"];
 	[super dealloc];
 }
 
@@ -118,8 +124,42 @@
 			self.autoplay = NSBOOL(YES);
 		}
 	}
+	else if ([keyPath isEqualToString:@"media"] || [keyPath isEqualToString:@"externalSourceURL"])
+	{		
+		// Load the movie to figure out the codecType
+		[self loadAudio];
+	}
 }
 
+- (void)loadAudio;		// after it has changed (URL or media), determine codecType; later we may kick off load to test properties
+{
+	NSURL *movieSourceURL = nil;
+//	BOOL openAsync = NO;
+	
+	SVMediaRecord *media = [self media];
+	
+    if (media)
+    {
+		movieSourceURL = [[media URLResponse] URL];
+//		openAsync = YES;
+		self.codecType = [NSString UTIForFileAtPath:[movieSourceURL path]];
+	}
+	else
+	{
+		movieSourceURL = [self externalSourceURL];
+		self.codecType = [NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]];
+	}
+//	if (movieSourceURL)
+//	{
+//		NSDictionary *movieAttributes = [NSDictionary dictionaryWithObjectsAndKeys: 
+//						   movieSourceURL, QTMovieURLAttribute,
+//						   [NSNumber numberWithBool:openAsync], QTMovieOpenAsyncOKAttribute,
+//						   // 10.6 only :-( [NSNumber numberWithBool:YES], QTMovieOpenForPlaybackAttribute,	// From Tim Monroe @ WWDC2010, so we can check how movie was loaded
+//						   nil];
+//		[self loadMovieFromAttributes:movieAttributes];
+//		
+//	}
+}
 
 
 
@@ -265,27 +305,6 @@
 	// Known types: flashmp3player dewplayer wpaudioplayer ....  Otherwise must specify audioFlashFormat.
 	if (!audioFlashPlayer) audioFlashPlayer = @"flashmp3player";
 	
-	NSString *audioFlashPath	= [defaults objectForKey:@"audioFlashPath"];	// override must specify path/URL on server
-	NSString *audioFlashExtras	= [defaults objectForKey:@"audioFlashExtras"];	// extra parameters to override for any player
-
-	
-	NSString *flashVarFormatString = nil;
-	NSString *audioFlashFormat	= [defaults objectForKey:@"audioFlashFormat"];	// format pattern with %@ for audio
-	if (audioFlashFormat)		// override format?
-	{
-		flashVarFormatString = audioFlashFormat;
-	}
-	else
-	{
-		NSDictionary *paramLookup
-		= NSDICT(
-				 @"mp3=%@",                         @"flashmp3player",	
-				 @"mp3=%@",                         @"dewplayer",	
-				 @"soundfile=%@",					@"wpaudioplayer");
-		flashVarFormatString = [paramLookup objectForKey:audioFlashPlayer];
-	}
-
-	
 	NSUInteger barHeight = 0;
 	NSString *audioFlashBarHeight= [defaults objectForKey:@"audioFlashBarHeight"];	// height that the navigation bar adds
 	if (audioFlashBarHeight)
@@ -303,18 +322,52 @@
 		barHeight = [[barHeightLookup objectForKey:audioFlashPlayer] intValue];
 	}
 	
+	NSString *flashVarFormatString = nil;
+	NSString *audioFlashFormat	= [defaults objectForKey:@"audioFlashFormat"];	// format pattern with %@ for audio
+	if (audioFlashFormat)		// override format?
+	{
+		flashVarFormatString = audioFlashFormat;
+	}
+	else
+	{
+		NSDictionary *paramLookup
+		= NSDICT(
+				 @"mp3=%@",                         @"flashmp3player",	
+				 @"mp3=%@",                         @"dewplayer",	
+				 @"soundfile=%@",					@"wpaudioplayer");
+		flashVarFormatString = [paramLookup objectForKey:audioFlashPlayer];
+	}
 	
 	// Now instantiate the string from the format
 	NSMutableString *flashVars = [NSMutableString stringWithFormat:flashVarFormatString, audioSourcePath];
 	
-	
-	if ([audioFlashPlayer isEqualToString:@"flvplayer"])
+	// Handle other options
+
+	// Known types: flashmp3player dewplayer wpaudioplayer ....  Otherwise must specify audioFlashFormat.
+
+	if ([audioFlashPlayer isEqualToString:@"flashmp3player"])
 	{
-		[flashVars appendFormat:@"&showplayer=%@", (self.controller.boolValue) ? @"autohide" : @"never"];
+		// Can't find way to hide the player; controller must always be showing
 		if (self.autoplay.boolValue)	[flashVars appendString:@"&autoplay=1"];
 		if (self.preload.boolValue)		[flashVars appendString:@"&autoload=1"];
 		if (self.loop.boolValue)		[flashVars appendString:@"&loop=1"];
 	}
+	else if ([audioFlashPlayer isEqualToString:@"dewplayer"])
+	{
+		// Can't find way to hide the player; controller must always be showing
+		if (self.autoplay.boolValue)	[flashVars appendString:@"&autostart=1"];
+		// Can't find a way to preload the audio
+		if (self.loop.boolValue)		[flashVars appendString:@"&autoreplay=1"];
+	}
+	else if ([audioFlashPlayer isEqualToString:@"wpaudioplayer"])
+	{
+		// Can't find way to hide the player; controller must always be showing
+		if (self.autoplay.boolValue)	[flashVars appendString:@"&autostart=1"];
+		// Can't find a way to preload the audio
+		if (self.loop.boolValue)		[flashVars appendString:@"&loop=1"];
+	}
+	
+	NSString *audioFlashExtras	= [defaults objectForKey:@"audioFlashExtras"];	// extra parameters to override for any player
 	if (audioFlashExtras)	// append other parameters (usually like key1=value1&key2=value2)
 	{
 		[flashVars appendString:@"&"];
@@ -322,6 +375,7 @@
 	}
 	
 	NSString *playerPath = nil;
+	NSString *audioFlashPath	= [defaults objectForKey:@"audioFlashPath"];	// override must specify path/URL on server
 	if (audioFlashPath)
 	{
 		playerPath = audioFlashPath;		// specified by defaults

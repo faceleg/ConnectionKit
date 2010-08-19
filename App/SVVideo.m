@@ -274,7 +274,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		}
 	}
 	else if ([keyPath isEqualToString:@"media"] || [keyPath isEqualToString:@"externalSourceURL"])
-	{
+	{	
 		NSLog(@"SVVideo Media set.");
 		if (nil == self.posterFrame || [self.posterFrameType intValue] != kPosterTypeChoose)		// get poster frame image UNLESS we have an override chosen.
 		{
