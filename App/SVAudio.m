@@ -30,6 +30,10 @@
 
 @implementation SVAudio
 
+- (BOOL)canMakeOriginalSize; { return NO; }		// Audio is media, but it doesn't have an original/natural size.
+
+
+
 + (SVAudio *)insertNewAudioInManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVAudio *result = [NSEntityDescription insertNewObjectForEntityForName:@"Audio"
