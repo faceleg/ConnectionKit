@@ -81,6 +81,7 @@
 	{
 		NSToolbarItem *toolbarItem = [[[self window] toolbar] itemWithIdentifier:@"saveToHost:"];
 		[toolbarItem setLabel:([theEvent modifierFlags] & NSAlternateKeyMask ? TOOLBAR_PUBLISH_ALL : TOOLBAR_PUBLISH)];
+		[toolbarItem setImage:[NSImage imageNamed:([theEvent modifierFlags] & NSAlternateKeyMask ? @"toolbar_publish_all" : @"toolbar_publish")]];
 	}
     
     [super flagsChanged:theEvent];

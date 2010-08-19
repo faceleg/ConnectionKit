@@ -696,6 +696,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		{
 			[toolbarItem setLabel:
 			 ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) ? TOOLBAR_PUBLISH_ALL : TOOLBAR_PUBLISH];
+			[toolbarItem setImage:
+			 [NSImage imageNamed:([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask ? @"toolbar_publish_all" : @"toolbar_publish")]];
 		}
 		
     }
