@@ -1198,6 +1198,7 @@
 		CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EA307E0101100DE4994 /* Acknowledgments.rtf */; };
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
 		CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CECCED7C0E646B6800BE9016 /* Symbolication.framework */; };
+		CEE20EEC121DC141006BA09C /* SVAudioInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE20EEB121DC141006BA09C /* SVAudioInspector.xib */; };
 		CEE2C64F120B25E7000E3C0E /* plugin_inspector.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEE2C64E120B25E7000E3C0E /* plugin_inspector.tiff */; };
 		CEEE562B0DAD47AD00B7F6A2 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */; };
 		CEF2889F11CC2D7300122D03 /* JSTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF2889E11CC2D7300122D03 /* JSTalk.framework */; };
@@ -2867,6 +2868,7 @@
 		CEDE18B60A5C69840055352C /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEE09F7009ED94D8004850FB /* fr */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; lineEnding = 0; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEE09F7509ED9559004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEE20EEB121DC141006BA09C /* SVAudioInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SVAudioInspector.xib; sourceTree = "<group>"; };
 		CEE2C64E120B25E7000E3C0E /* plugin_inspector.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = plugin_inspector.tiff; sourceTree = "<group>"; };
 		CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
 		CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YouTubeElement.xcodeproj; path = ../PlugIns/Elements/YouTubeElement/YouTubeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -3728,6 +3730,7 @@
 			children = (
 				27D7347212119F3100722189 /* FileInfo.xib */,
 				CEDA2DD1120CD676005FE23E /* SVVideoInspector.xib */,
+				CEE20EEB121DC141006BA09C /* SVAudioInspector.xib */,
 				CEDA2DBE120CD437005FE23E /* SVVideoInspector.h */,
 				CEDA2DBF120CD437005FE23E /* SVVideoInspector.m */,
 				273D764310EC134F003F5BA8 /* PlugInInspector.xib */,
@@ -6410,6 +6413,7 @@
 				27D7347312119F3100722189 /* FileInfo.xib in Resources */,
 				27D7350F1211CC3C00722189 /* SVImage.xib in Resources */,
 				CE5A77FE12135D770085C5EE /* player_flv_maxi.swf in Resources */,
+				CEE20EEC121DC141006BA09C /* SVAudioInspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

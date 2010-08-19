@@ -297,11 +297,13 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 #pragma mark -
 #pragma mark Writing Tag
 
+// EXACTLY THE SAME IN AUDIO AND VIDEO. CONSIDER REFACTORING.
 - (NSString *)idNameForTag:(NSString *)tagName
 {
 	return [NSString stringWithFormat:@"%@-%@", tagName, [self elementID]];
 }
 
+// EXACTLY THE SAME IN AUDIO AND VIDEO. CONSIDER REFACTORING.
 - (void)writeFallbackScriptOnce:(SVHTMLContext *)context;
 {
 	// Write the fallback method.  COULD WRITE THIS IN JQUERY TO BE MORE TERSE?
