@@ -302,6 +302,8 @@
 		271BFA4F10F00C2D006EA3A2 /* SVPageProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */; settings = {ATTRIBUTES = (); }; };
 		272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */; };
+		2725BA46121DE9990074EAA0 /* NSImageView+IMBImageItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 2725BA44121DE9990074EAA0 /* NSImageView+IMBImageItem.h */; };
+		2725BA47121DE9990074EAA0 /* NSImageView+IMBImageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2725BA45121DE9990074EAA0 /* NSImageView+IMBImageItem.m */; };
 		2726D9CD11E5D3230000257D /* KSSortedMutableArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */; };
 		2726D9CE11E5D3230000257D /* KSSortedMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */; };
 		2726DE8E11E699720000257D /* RawHTMLPlaceholder.html in Resources */ = {isa = PBXBuildFile; fileRef = 2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */; };
@@ -1816,6 +1818,8 @@
 		272321310D48013F0075F31F /* KTDocWebViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDocWebViewController+Private.h"; sourceTree = "<group>"; };
 		272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCollectionIndexFilenameButton.h; sourceTree = "<group>"; };
 		272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCollectionIndexFilenameButton.m; sourceTree = "<group>"; };
+		2725BA44121DE9990074EAA0 /* NSImageView+IMBImageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImageView+IMBImageItem.h"; sourceTree = "<group>"; };
+		2725BA45121DE9990074EAA0 /* NSImageView+IMBImageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImageView+IMBImageItem.m"; sourceTree = "<group>"; };
 		2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSortedMutableArray.h; sourceTree = "<group>"; };
 		2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSortedMutableArray.m; sourceTree = "<group>"; };
 		2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = RawHTMLPlaceholder.html; sourceTree = "<group>"; };
@@ -3815,6 +3819,8 @@
 				27ACACB50D588F64004732D0 /* KTPlaceholderBindingTextField.m */,
 				272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */,
 				272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */,
+				2725BA44121DE9990074EAA0 /* NSImageView+IMBImageItem.h */,
+				2725BA45121DE9990074EAA0 /* NSImageView+IMBImageItem.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -5747,6 +5753,7 @@
 				27D7340612118E3400722189 /* SVIndexPlugIn.h in Headers */,
 				27D7345512119C6600722189 /* SVMediaGraphicInspector.h in Headers */,
 				2704228112142F710077298A /* SVSizeBindingDOMController.h in Headers */,
+				2725BA46121DE9990074EAA0 /* NSImageView+IMBImageItem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7248,6 +7255,7 @@
 				27D7345612119C6600722189 /* SVMediaGraphicInspector.m in Sources */,
 				2704228212142F710077298A /* SVSizeBindingDOMController.m in Sources */,
 				CE65643B1219DAC8006C5B0D /* KSSimpleURLConnection.m in Sources */,
+				2725BA47121DE9990074EAA0 /* NSImageView+IMBImageItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
