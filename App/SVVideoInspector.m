@@ -23,8 +23,14 @@
     {
         NSURL *URL = [panel URL];
         
-        id video = [[self inspectedObjectsController] selection];
-        [video setPosterFrameWithContentsOfURL:URL];
+		for (id inspectedObject in [self inspectedObjects])
+		{
+			if ([inspectedObject respondsToSelector:@selector(setPosterFrameWithContentsOfURL:)])
+			{
+				[inspectedObject setPosterFrameWithContentsOfURL:URL];
+			}
+		}
+        ;
     }
 }
 

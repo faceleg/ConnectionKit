@@ -14,4 +14,6 @@
 
 }
 
+- (IBAction)choosePosterFrame:(id)sender;
+
 @end
