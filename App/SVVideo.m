@@ -63,6 +63,8 @@
 	[self addObserver:self forKeyPath:@"externalSourceURL"	options:(NSKeyValueObservingOptionNew) context:nil];
 	[self addObserver:self forKeyPath:@"posterFrameType"	options:(NSKeyValueObservingOptionNew) context:nil];
 
+	[self setConstrainProportions:YES];		// We will likely want this on
+
     [super willInsertIntoPage:page];
     
     // Show caption
