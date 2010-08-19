@@ -34,7 +34,7 @@ img.narrow.right { float:right; }
 .graphic-container.right { text-align:right; }
 
 /* Captioned graphics */
-#main .graphic img, #main .graphic object {
+#main .graphic img.figure-content, #main .graphic object {
     margin:0;
     border:none;
     padding:0;

@@ -462,6 +462,7 @@
         
         
         // Graphic body
+        [self pushElementClassName:@"figure-content"];  // identifies for #84956
         if ([graphic canDisplayInline])
         {
             [graphic writeBody:self];
