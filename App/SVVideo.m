@@ -34,13 +34,12 @@
 @implementation SVVideo 
 
 @dynamic posterFrame;
+@dynamic posterFrameType;
 @dynamic autoplay;
 @dynamic controller;
 @dynamic preload;
 @dynamic loop;
 @dynamic codecType;	// determined from movie's file UTI, or by further analysis
-@dynamic videoWidth;
-@dynamic videoHeight;
 
 //	LocalizedStringInThisBundle(@"This is a placeholder for a video. The full video will appear once you publish this website, but to see the video in Sandvox, please enable live data feeds in the preferences.", "Live data feeds disabled message.")
 
@@ -62,7 +61,8 @@
 	[self addObserver:self forKeyPath:@"controller"			options:(NSKeyValueObservingOptionNew) context:nil];
 	[self addObserver:self forKeyPath:@"media"				options:(NSKeyValueObservingOptionNew) context:nil];
 	[self addObserver:self forKeyPath:@"externalSourceURL"	options:(NSKeyValueObservingOptionNew) context:nil];
-	    
+	[self addObserver:self forKeyPath:@"posterFrameType"	options:(NSKeyValueObservingOptionNew) context:nil];
+
     [super willInsertIntoPage:page];
     
     // Show caption
@@ -81,6 +81,7 @@
 	[self removeObserver:self forKeyPath:@"controller"];
 	[self removeObserver:self forKeyPath:@"media"];
 	[self removeObserver:self forKeyPath:@"externalSourceURL"];
+	[self removeObserver:self forKeyPath:@"posterFrameType"];
 	[super dealloc];
 }
 
@@ -113,6 +114,22 @@
 #pragma mark -
 #pragma mark Poster Frame
 
+enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
+
+- (id <IMBImageItem>)thumbnail
+{
+	return [self.posterFrameType intValue] != kPosterFrameTypeNone ? [self posterFrame] : nil;
+}
++ (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObjects:@"posterFrame", @"posterFrameType", nil]; }
+
+- (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
+{
+	SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"PosterFrame" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];	
+	[self replaceMedia:media forKeyPath:@"posterFrame"];
+}
+
+#pragma mark Poster Frame - QuickLook
+
 + (NSOperationQueue*) sharedQuickLookQueue;
 {
 	static NSOperationQueue *sSharedQuickLookQueue = nil;
@@ -127,10 +144,6 @@
 	return sSharedQuickLookQueue;
 }
 
-
-- (id <IMBImageItem>)thumbnail { return [self posterFrame]; }
-+ (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObject:@"posterFrame"]; }
-
 // Called back on main thread 
 - (void)gotQuickLookData:(NSData *)jpegData;
 {
@@ -141,7 +154,11 @@
 							   expectedContentLength:[jpegData length]
 							   textEncodingName:nil];
 	
-	SVMediaRecord *media = [SVMediaRecord mediaWithFileContents:jpegData URLResponse:response entityName:@"PosterFrame" insertIntoManagedObjectContext:[self managedObjectContext]];	
+	SVMediaRecord *media = nil;
+	if (jpegData)
+	{
+		[SVMediaRecord mediaWithFileContents:jpegData URLResponse:response entityName:@"PosterFrame" insertIntoManagedObjectContext:[self managedObjectContext]];	
+	}
 	[self replaceMedia:media forKeyPath:@"posterFrame"];
 
 }
@@ -149,6 +166,7 @@
 - (void)getQuickLookForFileURL:(NSURL *)fileURL		// CALLED FROM OPERATION
 {
 	OBASSERT(![NSThread isMainThread]);
+	OBPRECONDITION(fileURL);
 	NSData *jpegData = nil;
 	NSDictionary *options = NSDICT(NSBOOL(NO), (NSString *)kQLThumbnailOptionIconModeKey);
 	CGImageRef cg = QLThumbnailImageCreate(kCFAllocatorDefault, 
@@ -174,19 +192,16 @@
 - (void)getPosterFrameFromQuickLook;
 {
 	SVMediaRecord *media = self.media;
-	NSURL *mediaURL = [media fileURL];
-	
-	NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
-                                                      selector:@selector(getQuickLookForFileURL:)
-                                                        object:mediaURL];
-	
-	[[[self class] sharedQuickLookQueue] addOperation:operation];			
-}
-
-- (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
-{
-	SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"PosterFrame" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];	
-	[self replaceMedia:media forKeyPath:@"posterFrame"];
+	if (media)
+	{
+		NSURL *mediaURL = [media fileURL];
+		
+		NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
+																				selector:@selector(getQuickLookForFileURL:)
+																				  object:mediaURL];
+		
+		[[[self class] sharedQuickLookQueue] addOperation:operation];			
+	}
 }
 
 
@@ -195,7 +210,8 @@
 
 - (void)setMediaWithURL:(NSURL *)URL;
 {
-    [super setMediaWithURL:URL];
+ 	OBPRECONDITION(URL);
+   [super setMediaWithURL:URL];
     
     if ([self constrainProportions])    // generally true
     {
@@ -232,17 +248,34 @@
 			self.autoplay = NSBOOL(YES);
 		}
 	}
+	else if ([keyPath isEqualToString:@"posterFrameType"])
+	{
+		switch([self.posterFrameType intValue])
+		{
+			case kPosterTypeChoose:
+				// Switching to choose from automatic? Clear out the image.
+				[self replaceMedia:nil forKeyPath:@"posterFrame"];
+				break;
+			case kPosterFrameTypeAutomatic:
+				// Switching to automatic? Queue request for quicklook
+				[self getPosterFrameFromQuickLook];
+				break;
+			case kPosterFrameTypeNone:
+				// Do nothing; don't mess with media
+				break;
+		}
+	}
 	else if ([keyPath isEqualToString:@"media"] || [keyPath isEqualToString:@"externalSourceURL"])
 	{
 		NSLog(@"SVVideo Media set.");
-		if (!self.posterFrame)
+		if (nil == self.posterFrame || [self.posterFrameType intValue] != kPosterTypeChoose)		// get poster frame image UNLESS we have an override chosen.
 		{
-			[self getPosterFrameFromQuickLook];	// Should we only replace if poster was auto-set?
+			[self getPosterFrameFromQuickLook];
 		}
 		
 		// Video changed - clear out the known width/height so we can recalculate
-		self.videoWidth = nil;
-		self.videoHeight = nil;
+		self.naturalWidth = nil;
+		self.naturalHeight = nil;
 		
 		// Load the movie to figure out the media size and codecType
 		[self loadMovie];
@@ -567,6 +600,10 @@
 	
 	SVMediaRecord *media = [self media];
 	[context addDependencyOnObject:self keyPath:@"media"];
+	[context addDependencyOnObject:self keyPath:@"posterFrameType"];
+	[context addDependencyOnObject:self keyPath:@"posterFrame"];
+	[context addDependencyOnObject:self keyPath:@"controller"];		// most boolean properties don't affect display of page
+	
 	NSURL *movieSourceURL = [self externalSourceURL];
     if (media)
     {
@@ -898,15 +935,15 @@
 			{
 				self.dimensionCalculationConnection = [[[KSSimpleURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:URL]] autorelease];
 				self.dimensionCalculationConnection.bytesNeeded = 1024;	// Let's just get the first 1K ... should be enough.
-				self.videoWidth = 0;	
-				self.videoHeight = 0;		// set to zero so we don't keep asking.  Hopefully answer comes soon.
+				self.naturalWidth = 0;	
+				self.naturalHeight = 0;		// set to zero so we don't keep asking.  Hopefully answer comes soon.
 			}
 		}
 		if (nil != movieData)
 		{
 			NSSize dimensions = [QTMovie dimensionsFromUnloadableMovieData:movieData];
-			self.videoWidth  = [NSNumber numberWithFloat:dimensions.width];
-			self.videoHeight = [NSNumber numberWithFloat:dimensions.height];	// even if it can't be figured out, at least it's not nil anymore
+			self.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
+			self.naturalHeight = [NSNumber numberWithFloat:dimensions.height];	// even if it can't be figured out, at least it's not nil anymore
 		}
 	}
 }
@@ -915,8 +952,8 @@
 - (void)connection:(KSSimpleURLConnection *)connection didFinishLoadingData:(NSData *)data response:(NSURLResponse *)response;
 {
 	NSSize dimensions = [QTMovie dimensionsFromUnloadableMovieData:data];
-	self.videoWidth  = [NSNumber numberWithFloat:dimensions.width];
-	self.videoHeight = [NSNumber numberWithFloat:dimensions.height];	// even if it can't be figured out, at least it's not nil anymore
+	self.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
+	self.naturalHeight = [NSNumber numberWithFloat:dimensions.height];	// even if it can't be figured out, at least it's not nil anymore
 	self.dimensionCalculationConnection = nil;
 }
 
@@ -970,8 +1007,8 @@
 			movieSize = [[aMovie attributeForKey:QTMovieCurrentSizeAttribute] sizeValue];	// last resort
 		}
 	}
-	self.videoWidth  = [NSNumber numberWithFloat:movieSize.width];
-	self.videoHeight = [NSNumber numberWithFloat:movieSize.height];
+	self.naturalWidth  = [NSNumber numberWithFloat:movieSize.width];
+	self.naturalHeight = [NSNumber numberWithFloat:movieSize.height];
 }
 
 

@@ -32,8 +32,8 @@
 @property(nonatomic, copy) NSNumber *controller;	// BOOLs
 @property(nonatomic, copy) NSNumber *loop;
 @property(nonatomic, copy) NSNumber *preload;
-@property(nonatomic, copy) NSNumber *videoWidth;
-@property(nonatomic, copy) NSNumber *videoHeight;
+
+@property(nonatomic, copy) NSNumber *posterFrameType;
 
 #pragma mark Publishing
 
