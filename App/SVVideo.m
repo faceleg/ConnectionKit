@@ -165,7 +165,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	SVMediaRecord *media = nil;
 	if (jpegData)
 	{
-		[SVMediaRecord mediaWithFileContents:jpegData URLResponse:response entityName:@"PosterFrame" insertIntoManagedObjectContext:[self managedObjectContext]];	
+		media = [SVMediaRecord mediaWithFileContents:jpegData URLResponse:response entityName:@"PosterFrame" insertIntoManagedObjectContext:[self managedObjectContext]];	
 	}
 	[self replaceMedia:media forKeyPath:@"posterFrame"];
 
