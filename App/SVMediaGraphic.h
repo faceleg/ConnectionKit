@@ -26,17 +26,18 @@
 
 #pragma mark Metrics
 
-@property(nonatomic, copy) NSNumber *contentWidth;
-@property(nonatomic, copy) NSNumber *contentHeight;
 
 // If -constrainProportions returns YES, sizing methods will adjust to maintain proportions
 - (void)setSize:(NSSize)size;   // convenience
 
 @property(nonatomic) BOOL constrainProportions;
+@property(nonatomic, copy) NSNumber *contentWidth;
+@property(nonatomic, copy) NSNumber *contentHeight;
+@property(nonatomic, copy) NSNumber *naturalWidth;		// Nil means unknown; 0 means checked but not attainable
+@property(nonatomic, copy) NSNumber *naturalHeight;
 
 - (CGSize)originalSize;
 - (void)makeOriginalSize;
 - (BOOL)canMakeOriginalSize;
-
 
 @end
