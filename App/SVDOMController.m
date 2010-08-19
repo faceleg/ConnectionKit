@@ -128,7 +128,7 @@
     _needsUpdate = NO;
     
     SVWebEditorViewController *controller = [self webEditorViewController];
-    OBASSERT(controller);
+    OBASSERT(controller || ![self webEditor]);
     [controller performSelector:@selector(didUpdate)];
     
     // Force a redraw if affected. #82536
