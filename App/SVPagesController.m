@@ -12,13 +12,14 @@
 #import "SVExternalLink.h"
 #import "SVDownloadSiteItem.h"
 
+#import "SVAttributedHTML.h"
 #import "KTElementPlugInWrapper.h"
-#import "KTAbstractIndex.h"
 #import "SVLink.h"
 #import "SVLinkManager.h"
 #import "SVMediaRecord.h"
 #import "SVRichText.h"
 #import "SVSidebarPageletsController.h"
+#import "SVTextAttachment.h"
 
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
@@ -142,9 +143,9 @@
     
     NSDictionary *presetDict = [self collectionPreset];
 	NSString *identifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
-	KTElementPlugInWrapper *indexPlugin = identifier ? [KTElementPlugInWrapper pluginWithIdentifier:identifier] : nil;
+	KTElementPlugInWrapper *plugInWrapper = identifier ? [KTElementPlugInWrapper pluginWithIdentifier:identifier] : nil;
 	
-    NSBundle *indexBundle = [indexPlugin bundle];
+    NSBundle *indexBundle = [plugInWrapper bundle];
     
     
     // Create the basic collection
@@ -165,10 +166,10 @@
     // Other settings
     NSDictionary *pageSettings = [presetDict objectForKey:@"KTPageSettings"];
     [collection setValuesForKeysWithDictionary:pageSettings];
-        
+    
     
     // Generate a first child page if desired
-    NSString *firstChildIdentifier = [presetDict valueForKeyPath:@"KTFirstChildSettings.pluginIdentifier"];
+    /*NSString *firstChildIdentifier = [presetDict valueForKeyPath:@"KTFirstChildSettings.pluginIdentifier"];
     if (firstChildIdentifier && [firstChildIdentifier isKindOfClass:[NSString class]])
     {
         NSMutableDictionary *firstChildProperties =
@@ -202,7 +203,7 @@
                 [firstChild setValue:aProperty forKeyPath:aKey];
             }
         }
-    }
+    }*/
     
     
     // Any collection with an RSS feed should have an RSS Badge.
@@ -217,6 +218,21 @@
             [[collection article] setString:intro attachments:nil];
         }
     }
+    
+    
+    // Create index and insert
+    SVGraphic *index = [plugInWrapper insertNewGraphicInManagedObjectContext:
+                        [self managedObjectContext]];
+    
+    NSAttributedString *graphicHTML = [NSAttributedString attributedHTMLStringWithGraphic:index];
+    [[index textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementInline]];
+    
+    
+    SVRichText *article = [collection article];
+    NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
+    [html insertAttributedString:graphicHTML atIndex:0];
+    [article setAttributedHTMLString:html];
+    [html release];
 }
 
 - (void)addObject:(KTPage *)page
