@@ -1,6 +1,6 @@
 [[if indexedCollection]]
 <ul>
-[[foreach indexedCollection.sortedArchivePages aPage]]
+[[foreach indexedCollection.archivePages aPage]]
 	<li>
 		[[if parser.HTMLGenerationPurpose]]<a href="[[path aPage]]">[[endif2]][[=&aPage.dateDescription]][[if parser.HTMLGenerationPurpose]]</a>[[endif2]]
 	</li>
