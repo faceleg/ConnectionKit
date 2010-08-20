@@ -2,7 +2,7 @@
 <ul>
 [[foreach indexedCollection.archivePages aPage]]
 	<li>
-		[[if parser.HTMLGenerationPurpose]]<a href="[[path aPage]]">[[endif2]][[=&aPage.dateDescription]][[if parser.HTMLGenerationPurpose]]</a>[[endif2]]
+		[[if parser.HTMLGenerationPurpose]]<a href="[[path aPage]]">[[endif2]][[=&aPage.title]][[if parser.HTMLGenerationPurpose]]</a>[[endif2]]
 	</li>
 [[endforeach]]
 </ul>
