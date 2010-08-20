@@ -276,6 +276,17 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     [webEditor loadHTMLString:pageHTML baseURL:pageURL];
     
     
+    // Load in any subresources
+    WebDataSource *datasource = [[[self webView] mainFrame] dataSource];
+    for (SVMediaRecord *aMediaRecord in [context media])
+    {
+        if ([aMediaRecord areContentsCached])
+        {
+            [datasource addSubresource:[aMediaRecord webResource]];
+        }
+    }
+    
+    
     // Tidy up
     [context release];
 }
