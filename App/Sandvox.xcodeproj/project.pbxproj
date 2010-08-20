@@ -304,6 +304,8 @@
 		272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */; };
 		2725BA46121DE9990074EAA0 /* NSImageView+IMBImageItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 2725BA44121DE9990074EAA0 /* NSImageView+IMBImageItem.h */; };
 		2725BA47121DE9990074EAA0 /* NSImageView+IMBImageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2725BA45121DE9990074EAA0 /* NSImageView+IMBImageItem.m */; };
+		2725BC38121F3F690074EAA0 /* SVArchivePage.h in Headers */ = {isa = PBXBuildFile; fileRef = 2725BC36121F3F690074EAA0 /* SVArchivePage.h */; };
+		2725BC39121F3F690074EAA0 /* SVArchivePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2725BC37121F3F690074EAA0 /* SVArchivePage.m */; };
 		2726D9CD11E5D3230000257D /* KSSortedMutableArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */; };
 		2726D9CE11E5D3230000257D /* KSSortedMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */; };
 		2726DE8E11E699720000257D /* RawHTMLPlaceholder.html in Resources */ = {isa = PBXBuildFile; fileRef = 2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */; };
@@ -1821,6 +1823,8 @@
 		272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCollectionIndexFilenameButton.m; sourceTree = "<group>"; };
 		2725BA44121DE9990074EAA0 /* NSImageView+IMBImageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImageView+IMBImageItem.h"; sourceTree = "<group>"; };
 		2725BA45121DE9990074EAA0 /* NSImageView+IMBImageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImageView+IMBImageItem.m"; sourceTree = "<group>"; };
+		2725BC36121F3F690074EAA0 /* SVArchivePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVArchivePage.h; sourceTree = "<group>"; };
+		2725BC37121F3F690074EAA0 /* SVArchivePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVArchivePage.m; sourceTree = "<group>"; };
 		2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSortedMutableArray.h; sourceTree = "<group>"; };
 		2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSortedMutableArray.m; sourceTree = "<group>"; };
 		2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = RawHTMLPlaceholder.html; sourceTree = "<group>"; };
@@ -3160,6 +3164,8 @@
 				27C58AE7110204EE00F42306 /* KTPage+Serialization.m */,
 				2710C3B8110B358D00A7B997 /* SVPageTitle.h */,
 				2710C3B9110B358D00A7B997 /* SVPageTitle.m */,
+				2725BC36121F3F690074EAA0 /* SVArchivePage.h */,
+				2725BC37121F3F690074EAA0 /* SVArchivePage.m */,
 			);
 			name = Page;
 			sourceTree = "<group>";
@@ -5757,6 +5763,7 @@
 				27D7345512119C6600722189 /* SVMediaGraphicInspector.h in Headers */,
 				2704228112142F710077298A /* SVSizeBindingDOMController.h in Headers */,
 				2725BA46121DE9990074EAA0 /* NSImageView+IMBImageItem.h in Headers */,
+				2725BC38121F3F690074EAA0 /* SVArchivePage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7260,6 +7267,7 @@
 				2704228212142F710077298A /* SVSizeBindingDOMController.m in Sources */,
 				CE65643B1219DAC8006C5B0D /* KSSimpleURLConnection.m in Sources */,
 				2725BA47121DE9990074EAA0 /* NSImageView+IMBImageItem.m in Sources */,
+				2725BC39121F3F690074EAA0 /* SVArchivePage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
