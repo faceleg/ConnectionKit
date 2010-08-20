@@ -156,18 +156,35 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 - (void)gotQuickLookData:(NSData *)jpegData;
 {
 	OBASSERT([NSThread isMainThread]);
+	
+	// Get the media or URL, so we have a good file name for the poster
+	NSString *filename = nil;
+	SVMediaRecord *media = [self media];
+    if (media)
+    {
+		filename = [media preferredFilename];
+	}
+	else
+	{
+		filename = [[[self externalSourceURL] path] lastPathComponent];
+	}
+	NSString *jpegName = [[filename stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"];
+	
 	NSURLResponse *response = [[NSURLResponse alloc]
-							   initWithURL:[NSURL fileURLWithPath:@"/tmp/video-poster.jpg"]
+							   initWithURL:[NSURL fileURLWithPath:[@"/tmp/" stringByAppendingString:jpegName]]
 							   MIMEType:@"image/jpeg"
 							   expectedContentLength:[jpegData length]
 							   textEncodingName:nil];
 	
-	SVMediaRecord *media = nil;
+	SVMediaRecord *posterMedia = nil;
 	if (jpegData)
 	{
-		media = [SVMediaRecord mediaWithFileContents:jpegData URLResponse:response entityName:@"PosterFrame" insertIntoManagedObjectContext:[self managedObjectContext]];	
+		posterMedia = [SVMediaRecord mediaWithFileContents:jpegData
+											   URLResponse:response
+												entityName:@"PosterFrame"
+							insertIntoManagedObjectContext:[self managedObjectContext]];	
 	}
-	[self replaceMedia:media forKeyPath:@"posterFrame"];
+	[self replaceMedia:posterMedia forKeyPath:@"posterFrame"];
 
 }
 
