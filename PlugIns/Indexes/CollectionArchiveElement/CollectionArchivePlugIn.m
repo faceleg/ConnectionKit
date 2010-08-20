@@ -37,13 +37,10 @@
 #import "CollectionArchivePlugIn.h"
 
 
+#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
+
+
 @implementation CollectionArchivePlugIn
-
-#pragma mark SVIndexPlugIn
-
-// there are no plugIn-specific keys in the template, or elsewhere!
-
-
 
 
 #pragma mark Initialization
@@ -65,7 +62,6 @@
     // tell our collection we want to generate archives
     [self.indexedCollection setCollectionGenerateArchives:YES];
 }
-
 
 
 #pragma mark Properties
@@ -98,7 +94,6 @@
 //	}
 //}
 
-
 - (void)setIndexedCollection:(id <SVPage>)collection
 {
     // when we change indexedCollection, turn off generateArchives on old indexedCollection
@@ -106,13 +101,13 @@
     
     //FIXME: how do we implement testing all other plugins being attached to oldCollection?
     // see S1 code commented out, above, for old way of doing it
-    id <SVPage> oldCollection = [self indexedCollection];
+//    id <SVPage> oldCollection = [self indexedCollection];
     
     
     [super setIndexedCollection:collection];
     
     // Enable archives on the new page.
-    //[collection setCollectionGenerateArchives:YES];
+    [collection setCollectionGenerateArchives:YES];
 }
 
 @end
