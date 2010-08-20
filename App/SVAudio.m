@@ -338,7 +338,7 @@
 	{
 		NSDictionary *paramLookup
 		= NSDICT(
-				 @"mp3=%@&margin=0",                @"flashmp3player",	
+				 @"mp3=%@",							@"flashmp3player",	
 				 @"mp3=%@",                         @"dewplayer",	
 				 @"soundfile=%@",					@"wpaudioplayer");
 		flashVarFormatString = [paramLookup objectForKey:audioFlashPlayer];
@@ -388,7 +388,7 @@
 	}
 	else
 	{
-		NSString *localPlayerPath = [[NSBundle mainBundle] pathForResource:@"player_flv_maxi" ofType:@"swf"];
+		NSString *localPlayerPath = [[NSBundle mainBundle] pathForResource:@"player_mp3_maxi" ofType:@"swf"];
 		NSURL *playerURL = [context addResourceWithURL:[NSURL fileURLWithPath:localPlayerPath]];
 		playerPath = [context relativeURLStringOfURL:playerURL];
 	}

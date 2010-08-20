@@ -1104,6 +1104,7 @@
 		CE27F6650D6193B200D211EA /* NSImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6610D6193B200D211EA /* NSImage+KTExtensions.m */; };
 		CE27F6670D6193B200D211EA /* NSTextView+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6630D6193B200D211EA /* NSTextView+KTExtensions.m */; };
 		CE2D42EE1188BD910051E238 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = CE2D42E91188BD910051E238 /* README.rtf */; };
+		CE318CC4121ECDBD003894EC /* player_mp3_maxi.swf in Resources */ = {isa = PBXBuildFile; fileRef = CE318CC3121ECDBD003894EC /* player_mp3_maxi.swf */; };
 		CE35968410F3F0A10009F2CA /* SVWebSourceViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE35968210F3F0A10009F2CA /* SVWebSourceViewController.h */; };
 		CE35968510F3F0A10009F2CA /* SVWebSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */; };
 		CE36E3E411ED5546003EFCA8 /* jquery-1.4.2.js in Resources */ = {isa = PBXBuildFile; fileRef = CE36E3D911ED528E003EFCA8 /* jquery-1.4.2.js */; };
@@ -2750,6 +2751,7 @@
 		CE2D42E91188BD910051E238 /* README.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = README.rtf; sourceTree = "<group>"; };
 		CE2E80E20DB534930034E7B8 /* SVOffscreenWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVOffscreenWebViewController.h; sourceTree = "<group>"; };
 		CE2E80E30DB534930034E7B8 /* SVOffscreenWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVOffscreenWebViewController.m; sourceTree = "<group>"; };
+		CE318CC3121ECDBD003894EC /* player_mp3_maxi.swf */ = {isa = PBXFileReference; lastKnownFileType = file; path = player_mp3_maxi.swf; sourceTree = "<group>"; };
 		CE35968210F3F0A10009F2CA /* SVWebSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebSourceViewController.h; sourceTree = "<group>"; };
 		CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebSourceViewController.m; sourceTree = "<group>"; };
 		CE36E3D911ED528E003EFCA8 /* jquery-1.4.2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.4.2.js"; sourceTree = "<group>"; };
@@ -4111,6 +4113,7 @@
 		3C202E9807E00F8500DE4994 /* Executables */ = {
 			isa = PBXGroup;
 			children = (
+				CE318CC3121ECDBD003894EC /* player_mp3_maxi.swf */,
 				CE5A77FD12135D770085C5EE /* player_flv_maxi.swf */,
 				3C202E9607E00F8000DE4994 /* png2ico */,
 			);
@@ -6421,6 +6424,7 @@
 				27D7350F1211CC3C00722189 /* SVImage.xib in Resources */,
 				CE5A77FE12135D770085C5EE /* player_flv_maxi.swf in Resources */,
 				CEE20EEC121DC141006BA09C /* SVAudioInspector.xib in Resources */,
+				CE318CC4121ECDBD003894EC /* player_mp3_maxi.swf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
