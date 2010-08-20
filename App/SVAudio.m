@@ -300,12 +300,12 @@
 	NSString *audioSourcePath = @"";
 	if (audioFlashRequiresFullURL)
 	{
-		if (audioSourceURL)  audioSourcePath  = [audioSourceURL  absoluteString];
+		if (audioSourceURL)  audioSourcePath  = [audioSourceURL absoluteString];
 	}
 	else
 	{
 		if (audioSourceURL)  audioSourcePath  = [context relativeURLStringOfURL:audioSourceURL];
-	}
+		}
 	
 	NSString *audioFlashPlayer	= [defaults objectForKey:@"audioFlashPlayer"];	// to override player type
 	// Known types: flashmp3player dewplayer wpaudioplayer ....  Otherwise must specify audioFlashFormat.
@@ -338,7 +338,7 @@
 	{
 		NSDictionary *paramLookup
 		= NSDICT(
-				 @"mp3=%@",                         @"flashmp3player",	
+				 @"mp3=%@&margin=0",                @"flashmp3player",	
 				 @"mp3=%@",                         @"dewplayer",	
 				 @"soundfile=%@",					@"wpaudioplayer");
 		flashVarFormatString = [paramLookup objectForKey:audioFlashPlayer];
@@ -399,7 +399,7 @@
 	[context pushElementAttribute:@"data" value:playerPath];
 	[context pushElementAttribute:@"width" value:[[self width] description]];
 	
-	NSUInteger heightWithBar = barHeight + [[self height] intValue];
+	NSUInteger heightWithBar = barHeight;
 	[context pushElementAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	[context startElement:@"object"];
 	
@@ -469,6 +469,10 @@
 	|| [type conformsToUTI:@"public.aiff-audio"]
 	|| [type conformsToUTI:@"public.aifc-audio"]
 	;
+	
+	audioTag = NO;
+	
+	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if ([defaults boolForKey:@"avoidAudioTag"]) audioTag = NO;
 	
