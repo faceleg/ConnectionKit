@@ -255,7 +255,10 @@
 	
 	// source
 	[context pushElementAttribute:@"src" value:audioSourcePath];
-	[context pushElementAttribute:@"type" value:[NSString MIMETypeForUTI:[self codecType]]];
+	if ([self codecType])
+	{
+		[context pushElementAttribute:@"type" value:[NSString MIMETypeForUTI:[self codecType]]];
+	}
 	[context pushElementAttribute:@"onerror" value:@"fallback(this.parentNode)"];
 	[context startElement:@"source"];
 	[context endElement];
@@ -274,7 +277,10 @@
 	[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
 	
 	// we have mp4, so no ogv/webm, so force a fallback if NOT webkit-based.
-	if ([[self codecType] conformsToUTI:@"public.mpeg-4"] || [[self codecType] conformsToUTI:@"public.aiff-audio"])
+	if ([[self codecType] conformsToUTI:@"public.mpeg-4"]
+		|| [[self codecType] conformsToUTI:@"public.aiff-audio"]
+		|| [[self codecType] conformsToUTI:@"public.aiff-audio"]
+		)
 	{
 		[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play this natively\n\t\tfallback(audio);\n\t}\n"];
 	}
@@ -451,16 +457,17 @@
 	 kUTTypeMPEG4Audio but not kUTTypeAppleProtected​MPEG4Audio
 	 public.ogg-vorbis
 	 public.aiff-audio
-	 com.microsoft.waveform-​audio  (.wav)
+	 com.microsoft.waveform-audio  (.wav)
 	 */
 	
 	NSString *type = [self codecType];
 	BOOL audioTag = !media
 	|| [type conformsToUTI:(NSString *)kUTTypeMP3]
 	|| [type conformsToUTI:@"public.ogg-vorbis"]
-	|| [type conformsToUTI:@"com.microsoft.waveform-​audio"]
+	|| [type conformsToUTI:@"com.microsoft.waveform-audio"]
 	|| [type conformsToUTI:(NSString *)kUTTypeMPEG4Audio]
 	|| [type conformsToUTI:@"public.aiff-audio"]
+	|| [type conformsToUTI:@"public.aifc-audio"]
 	;
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if ([defaults boolForKey:@"avoidAudioTag"]) audioTag = NO;
@@ -468,7 +475,7 @@
 	BOOL flashTag = [type conformsToUTI:(NSString *)kUTTypeMP3];
 	if ([defaults boolForKey:@"avoidFlashAudio"]) flashTag = NO;
 	
-	BOOL microsoftTag = [type conformsToUTI:@"com.microsoft.waveform-​audio"];
+	BOOL microsoftTag = [type conformsToUTI:@"com.microsoft.waveform-audio"];
 	
 	// quicktime fallback, but not for mp4.  We may want to be more selective of mpeg-4 types though.
 	// Also show quicktime when there is no media at all
@@ -560,7 +567,7 @@
 	{
 		result = [NSImage imageFromOSType:kAlertStopIcon];
 	}
-	else if ([type conformsToUTI:@"com.microsoft.waveform-​audio"])		// I *think* WAV is ok for <audio>, iOS, and Windows controller (windows & Quicktime)
+	else if ([type conformsToUTI:@"com.microsoft.waveform-audio"])		// I *think* WAV is ok for <audio>, iOS, and Windows controller (windows & Quicktime)
 	{
 		result =[NSImage imageNamed:@"checkmark"];
 	}
@@ -576,7 +583,10 @@
 	{
 		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
 	}
-	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:@"public.aiff-audio"]  || [type conformsToUTI:(NSString *)kUTTypeMPEG4Audio])
+	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie]
+			 || [type conformsToUTI:@"public.aiff-audio"]
+			 || [type conformsToUTI:@"public.aifc-audio"]
+			 || [type conformsToUTI:(NSString *)kUTTypeMPEG4Audio])
 	{
 		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
 	}
@@ -601,7 +611,7 @@
 	{
 		result = NSLocalizedString(@"Audio is protected and cannot play on other systems.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
 	}
-	else if ([type conformsToUTI:@"com.microsoft.waveform-​audio"])		// I *think* WAV is ok for <audio>, iOS, and Windows controller (windows & Quicktime)
+	else if ([type conformsToUTI:@"com.microsoft.waveform-audio"])		// I *think* WAV is ok for <audio>, iOS, and Windows controller (windows & Quicktime)
 	{
 		result = NSLocalizedString(@"Audio is compatible with a wide range of devices.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
 	}
@@ -617,7 +627,10 @@
 	{
 		result = NSLocalizedString(@"Audio will only play on certain browsers.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
 	}
-	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:@"public.aiff-audio"]  || [type conformsToUTI:(NSString *)kUTTypeMPEG4Audio])
+	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie]
+			 || [type conformsToUTI:@"public.aiff-audio"]
+			 || [type conformsToUTI:@"public.aifc-audio"]
+			 || [type conformsToUTI:(NSString *)kUTTypeMPEG4Audio])
 	{
 		result = NSLocalizedString(@"Audio will not play on Windows PCs unless QuickTime is installed", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
 	}
