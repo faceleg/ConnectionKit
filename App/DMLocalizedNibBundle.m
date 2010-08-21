@@ -1,3 +1,60 @@
+/*
+ Purpose: This file hacks into the nib loading mechanism in a couple of ways in order to get the
+ contents translated into other languages *without* having to have separate copies of the nib for
+ each language.  It handles not only string translation, but resizing adjustments.
+ 
+ It is based on Wil Shipley's mechanism http://wilshipley.com/blog/2009/10/pimp-my-code-part-17-lost-in.html
+ for the automatic translation on nib load (via method swizzling), licensed as shown below, and also
+ based on Google Toolbox code at http://google-toolbox-for-mac.googlecode.com (BSD license).
+
+ It is pretty self-contained so you don't need to worry too much about it, except that you will need
+ to run Wil's tool to extract the strings out of the nib files so that they can be sent to your
+ translators.  Then, those translated .strings files (along with any other .strings files) need to
+ be merged back into the project so that runtime system can pick them up.
+ 
+ This has a few limitations (see below), and also introduces some "rules" for setting up the nibs.
+ The main rule is that if you have elements that you wish to keep vertically aligned, you should
+ group them into an enclosing NSView.  For instance, if you have a prompt next to an input field,
+ and then below, another prompt and another input field, you should put the two prompts into their
+ own superview, and the two fields into their own superview.  That way, the view enclosing the
+ prompts will expand to hold the strings, and thus push the view containing the text fields over,
+ keeping everything lined up.
+ 
+ The nib-loading code that we started with works great, though it assumes that the strings file
+ come from the main nib.  In an application with a lot of frameworks or plug-ins, that may be a
+ problem. So the approach we took was to also intercept -[NSViewController loadView], which has
+ a context of a bundle, so that the strings can come from that bundle.
+ 
+ The way that the resizing works is that nibs are scanned and the subviews of each view are all
+ grouped into "rows" of items.  The items don't have to be the same size; they just need to be more
+ or less along the same vertical dimension.  Then, this code walks along each row and resizes the
+ elements as it needs to, pushing adjacent left-aligned items over.  It also deals with right-
+ aligned objects, keeping them right-aligned and moving things over to the left if need be.  It's
+ not really well-defined what happens if you have center-aligned views or items that grow too much
+ from both the right or left end.
+ 
+ There are some heuristics and brute force logic applied to how to resize certain types of views.
+ The code has more details.  Experience of using this has driven the choices here, but it may not
+ be perfect for all situations.  Hopefully it will be more than good enough, though!
+ 
+ After a view has been scanned and the sub-views recursively resized, the outermost view will often
+ need to be a new width to fit the new contents. That new width could be used to resize (usually
+ grow) a window or view, or perhaps the size delta can be logged at development time to point out
+ instances where there needs to be more horizontal room allocated in the first place to avoid
+ needing to grow the window/view.
+ 
+ For pre-localization development, there are some #define "switches" you can try to force your text
+ (as loaded from nibs, and also any other NSLocalizedStrings from your code) to be expanded out to
+ a likely "worst case" length by inserting some ___ or .... in the middle of the (development-
+ language) text.  This is handy to test that the resizing is working, but also challenge any
+ assumptions you have made in your layout that might get you in trouble when translating to a more
+ lengthy language (like French or German).
+
+ Note: this hasn't quite gone the distance yet, as we haven't run this through a full translation
+ cycle, so all of the work we've done so far is using this simulated worst-case localization.
+ 
+*/
+
 //  DMLocalizedNibBundle.m
 //
 //  Created by William Jon Shipley on 2/13/05.
@@ -12,8 +69,6 @@
 // TO DO: Figure out a licensing scheme if we are going to distribute it.
 //
 //
-// Some of this is inspired and modified by GTMUILocalizer from Google Toolbox http://google-toolbox-for-mac.googlecode.com
-// (BSD license)
 
 // KNOWN LIMITATIONS
 //
