@@ -245,7 +245,7 @@
 
 - (void)setSite:(KTSite *)site recursively:(BOOL)recursive;
 {
-    // KTPage adds to this behaviour by recursively calling its descendants too if request
+    // KTPage adds to this behaviour by recursively calling its descendants too, if requested
     [self setSite:site];
 }
 
