@@ -9,6 +9,7 @@
 #import "KTPage.h"
 
 #import "KTAbstractIndex.h"
+#import "SVArchivePage.h"
 #import "SVHTMLContext.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTIndexPluginWrapper.h"
@@ -608,8 +609,16 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 
 - (NSArray *)archivePages;
 {
-    // Not the right result at all, but good enough for plug-in development
-    return [self childPages];
+    NSMutableArray *result = [NSMutableArray array];
+    
+    for (SVSiteItem *anItem in [self childItems])
+    {
+        SVArchivePage *archivePage = [[SVArchivePage alloc] initWithPages:[NSArray arrayWithObject:anItem]];
+        [result addObject:archivePage];
+        [archivePage release];
+    }
+    
+    return result;
 }
 
 @end
