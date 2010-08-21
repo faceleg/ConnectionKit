@@ -13,10 +13,11 @@
 @interface SVArchivePage : NSObject <SVPage>
 {
   @private
+    NSArray *_childPages;
     KTPage  *_collection;
 }
 
-- (id)initWithCollection:(KTPage *)collection;
+- (id)initWithPages:(NSArray *)pages;
 @property(nonatomic, retain, readonly) KTPage *collection;
 
 

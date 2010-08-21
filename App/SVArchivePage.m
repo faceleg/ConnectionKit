@@ -11,11 +11,24 @@
 
 @implementation SVArchivePage
 
-- (id)initWithCollection:(KTPage *)collection;
+- (id)initWithPages:(NSArray *)pages;
 {
+    OBPRECONDITION([pages count]);
+    
     [self init];
-    _collection = [collection retain];
+    
+    _childPages = [pages copy];
+    _collection = [[[pages lastObject] parentPage] retain];
+    
     return self;
+}
+
+- (void)dealloc;
+{
+    [_childPages release];
+    [_collection release];
+    
+    [super dealloc];
 }
 
 @synthesize collection = _collection;
@@ -27,7 +40,7 @@
 - (NSString *)language; { return [[self collection] language]; }
 
 - (BOOL)isCollection; { return NO; }
-- (NSArray *)childPages; { return nil; }    // would be good to return pages in archive
+- (NSArray *)childPages; { return _childPages; }
 - (id <SVPage>)rootPage; { return [[self collection] rootPage]; }
 - (id <NSFastEnumeration>)automaticRearrangementKeyPaths; { return nil; }
 
