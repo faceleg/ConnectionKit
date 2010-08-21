@@ -101,10 +101,10 @@
     
 	// Build a list of the file names already taken
 	NSSet *siblingFileNames = [[[self parentPage] childItems] valueForKey:@"fileName"];
-	NSSet *archiveFileNames = [[self parentPage] valueForKeyPath:@"archivePages.fileName"];
-	NSMutableSet *unavailableFileNames = [NSMutableSet setWithCapacity:([siblingFileNames count] + [archiveFileNames count])];
+	//NSSet *archiveFileNames = [[self parentPage] valueForKeyPath:@"archivePages.fileName"];
+	NSMutableSet *unavailableFileNames = [NSMutableSet set];//WithCapacity:([siblingFileNames count] + [archiveFileNames count])];
 	[unavailableFileNames unionSet:siblingFileNames];
-	[unavailableFileNames unionSet:archiveFileNames];
+	//[unavailableFileNames unionSet:archiveFileNames];
 	[unavailableFileNames removeObjectIgnoringNil:[self fileName]];
 	
     
