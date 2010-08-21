@@ -35,7 +35,22 @@
 
 - (NSString *)identifier; { return nil; }
 
-- (NSString *)title; { return [[[self collection] title] stringByAppendingString:@" archive"]; }
+- (NSString *)title;
+{
+	// set up a formatter since descriptionWithCalendarFormat:timeZone:locale: may not match site locale
+	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+	[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+	[dateFormatter setDateFormat:@"MMMM yyyy"]; // unicode pattern for @"%B %Y"
+    
+	// find our locale from the site itself
+	NSString *language = [self language];
+	NSLocale *locale = [[[NSLocale alloc] initWithLocaleIdentifier:language] autorelease];
+	[dateFormatter setLocale:locale];
+	
+	NSDate *date = [[[self childPages] lastObject] creationDate];
+	NSString *result = [dateFormatter stringFromDate:date];
+	return result;
+}
 
 - (NSString *)language; { return [[self collection] language]; }
 
