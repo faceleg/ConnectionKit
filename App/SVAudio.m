@@ -276,18 +276,19 @@
 						  [NSString MIMETypeForUTI:[self codecType]]]];
 	[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
 	
-	// we have mp4, so no ogv/webm, so force a fallback if NOT webkit-based.
-	if ([[self codecType] conformsToUTI:@"public.mpeg-4"]
-		|| [[self codecType] conformsToUTI:@"public.aiff-audio"]
-		|| [[self codecType] conformsToUTI:@"public.aiff-audio"]
-		)
+	// See: http://www.findmebyip.com/litmus#html5-audio-codecs
+	// We have mp3, so no ogg, so force a fallback if NOT webkit-based.
+	if ([[self codecType] conformsToUTI:(NSString *)kUTTypeMP3])
 	{
-		[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play this natively\n\t\tfallback(audio);\n\t}\n"];
+		[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play mp3 natively\n\t\tfallback(audio);\n\t}\n"];
 	}
-	else	// we have an ogv or webm (or something else?) so fallback if it's Safari, which won't handle it
+	// We have a .wav, which will play on all platforms with <audio> except Chrome, so force a fallback to Windows media object
+	else if ([[self codecType] conformsToUTI:@"com.microsoft.waveform-audio"])
 	{
-		[context writeString:@"\tif (navigator.userAgent.indexOf(' Safari/') > -1) {\n\t\t// Safari can't play this natively\n\t\tfallback(audio);\n\t}\n"];
+		[context writeString:@"\tif (navigator.userAgent.indexOf(' Chrome/') > -1) {\n\t\t// Chrome can't play mp3 natively\n\t\tfallback(audio);\n\t}\n"];
 	}
+	// Note: For other audio types, we're not going to try to fallback.  They are on their own if they use another format!
+	
 	[context writeString:@"} else {\n\tfallback(audio);\n}\n"];
 	[context endElement];	
 }
