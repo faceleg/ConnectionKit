@@ -435,13 +435,6 @@
             
             [anItem recursivelyInvalidateURL:YES];
 		}
-		
-		NSSet *archives = [self archivePages];
-		for (KTAbstractPage *aPage in archives)
-		{
-			OBASSERT(![aPage isKindOfClass:[KTPage class]]);
-            [aPage recursivelyInvalidateURL:YES];
-		}
 	}
     
 	[self didChangeValueForKey:@"URL"];

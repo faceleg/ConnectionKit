@@ -547,65 +547,9 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 
 - (void)setCustomSummaryHTML:(NSString *)HTML { [self setWrappedValue:HTML forKey:@"customSummaryHTML"]; }
 
-#pragma mark -
 #pragma mark Archives
 
 @dynamic collectionGenerateArchives;
-
-/*	Searches through our archive pages for one containing the specified date.
- *	If archives are disabled, always returns nil.
- */
-- (KTAbstractPage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag
-{
-	OBPRECONDITION(timestamp);
-	
-	if (![[self collectionGenerateArchives] boolValue]) return nil;
-	
-	
-	NSArray *archives = [self archivePages];
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"archiveStartDate <= %@ AND archiveEndDate > %@", timestamp, timestamp];
-	KTAbstractPage *result = [[archives filteredArrayUsingPredicate:predicate] firstObjectKS];
-	
-	if (!result && flag)
-	{
-		// Figure out the range of the timestamp
-		NSCalendar *calendar = [NSCalendar currentCalendar];
-		unsigned calendarComponents = (NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit);
-		NSDateComponents *timestampComponents = [calendar components:calendarComponents fromDate:timestamp];
-		NSDate *monthStart = [calendar dateFromComponents:timestampComponents];
-		
-		NSDateComponents *oneMonthDateComponent = [[[NSDateComponents alloc] init] autorelease];
-		[oneMonthDateComponent setMonth:1];
-		NSDate *monthEnd = [calendar dateByAddingComponents:oneMonthDateComponent toDate:monthStart options:0];
-		
-		
-		// Create the archive.
-		result = [/*KTArchivePage*/KTAbstractPage pageWithParent:self entityName:@"ArchivePage"];
-		[result setValue:monthStart forKey:@"archiveStartDate"];
-		[result setValue:monthEnd forKey:@"archiveEndDate"];
-		
-		
-		// Give the archive a decent title
-		//[result updateTitle];
-	}
-	
-	return result;
-}
-
-- (NSArray *)sortedArchivePages
-{
-    static NSArray *sortDescriptors;
-    if (!sortDescriptors)
-    {
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"archiveStartDate" ascending:NO];
-        sortDescriptors = [[NSArray alloc] initWithObject:sortDescriptor];
-        [sortDescriptor release];
-    }
-    
-    
-    NSArray *result = [[self archivePages] sortedArrayUsingDescriptors:sortDescriptors];
-    return result;
-}
 
 - (NSArray *)archivePages;
 {

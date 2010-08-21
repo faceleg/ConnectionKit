@@ -186,8 +186,6 @@ typedef enum {
 
 #pragma mark Archive
 @property(nonatomic, copy) NSNumber *collectionGenerateArchives;    // BOOL, required
-- (KTAbstractPage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag;
-- (NSArray *)sortedArchivePages;
 
 
 @end
