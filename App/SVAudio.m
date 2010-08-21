@@ -5,6 +5,63 @@
 //  Created by Dan Wood on 8/6/10.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
+/*
+ SVAudio is a MediaGraphic, though unlike SVVideo and SVImage, its media is not visual (thus an
+ audio doesn't have a real concept of a natural size.)  It defines a lot of the same methods that
+ a plug-in using the SDK would use, but this is built-in and gets more internal access.
+ 
+ The markup that this generates is based on "Audio For Everybody" (which is in turn based off of
+ "Video For Everybody").  The idea is that we generate an HTML5 <audio> tag, but then within that
+ tag, for browsers that can't handle this (*cough*IE*cough*), the outermost tag is ignored and
+ a familiar <object> tag, ignored when the browser could handle the <audio> tag, is used to present
+ the player.  Thus you get almost 100% coverage of the combination of the tags.
+ 
+ However this approach really only works when you have the right kind of media.  For audio, it turns
+ out that MP3 audio is handled by most browser with the <audio> tag; a Flash-based player handles
+ the remaining browsers. And WAV audio is good too; the fallback in this case is a windows-media
+ <object> tag, which can be handled by both IE and Mac-based browsers with QuickTime.
+ 
+ In order to try to get as best of a "coverage" as possible, there are two methods here -- icon and
+ info -- that give the user an indication that other audio formats might not be such a good idea.
+ 
+ Still, we try to accomodate whatever formats we can.  If the audio format is one that the <audio>
+ tag can handle (at least on some browsers), we will generate that.  If it's MP3, the Flash player
+ code will be generated.  If it is a .wav, the windows media <object> tag is generated. And if it
+ appears to be a QuickTime movie (presumably an audio-only movie), then the QuickTime <object> tag
+ is generated.  The audio tag is always generated on the "outside" and then the others have an
+ opportunity to be nested inside of that.  (If the file format is unknown, then a simple <div> with
+ a note of a problem is generated.)
+ 
+ There are some challenges with the audio tag, in that different browsers support different A/V
+ file formats.  So Firefox & Opera can't handle an MP3; they need Ogg Vorbis.  Other Browsers
+ (the webkit-based ones) do MP3, but not Ogg.  The Audio|Video for Everybody approach is to provide
+ more than one source file; the browser picks the one it wants.  We're not doing that; we only have
+ a mechanism for specifying a single source file, so we are going with another approach of surgical
+ DOM manipulation if the <audio> tag is not going to work for the given browser.
+ 
+ Ideally, we use an onerror() call after the last source to unlink the <audio> tag and expose the
+ embedded <object> tag.  (We define a JavaScript function "fallback" to do this; it is written only
+ one time per page, and works for both <audio> and <video> tags.)  Except that in Safari at least,
+ the onerror() technique didn't work as of the writing of this class.  So we write some JavaScript
+ right after the <audio> tag closes to check if the current browser supports the given audio format.
+ Alas, *that* doesn't really work well either; so as a last-resort, if the browser still thinks it
+ can play the audio, we do some browser user-agent sniffing to force the fallback to happen in two
+ situations: MP3 on a non-WebKit browser, or WAV on Chrome. Maybe we don't need to do those checks
+ but it doesn't hurt.
+ 
+ While the Microsoft (windows media player) tags and the QuickTime tags are straightforward, the
+ Flash tag is a bit tricker.  In trying to get this to work, I tested several MP3 players to make
+ sure that this was a generic solution in case a better player comes along.  I put in a few user-
+ default hooks to extend this if somebody wants to, though this is probably good enough as-is.
+ 
+ A note about the playback options:  I couldn't find a way to have a hidden flash player.  I think
+ that this won't be a big deal, though.  (Also, some Flash MP3 players I had tried don't have an
+ option to preload the audio as soon as the page loads; the one we are bundling can do that though.)  
+ 
+ At some point, I may want do actually do some loading and analysis of the given file to make sure
+ that it will be able to play on iOS devices.
+ 
+ */
 
 #import "SVAudio.h"
 

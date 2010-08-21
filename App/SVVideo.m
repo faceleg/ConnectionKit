@@ -5,7 +5,59 @@
 //  Created by Mike on 05/04/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
-
+/*
+ SVVideo is a MediaGraphic, similar to SVImage in some ways, and SVAudio in others.
+ 
+ The overall technique for writing out the markup for a video tag is based off the handy
+ "Video for Everybody" technique http://camendesign.com/code/video_for_everybody .... 
+ 
+ The logic for this is very similar to the SVAudio class, generating a <video> tag wrapping an
+ Flash-based video player's <object> tags.  This combination covers almost 100% of browsers,
+ but only if you choose the right source media!
+ 
+ The format with the best "coverage" of browsers is an H.264 MP4.  Many browsers can play it with
+ the <video> tag; those that can't, the Flash video player will cover.  However, to work on an iOS
+ device, the file has to conform to some other constraints -- which I currently don't have a way to
+ test yet!
+ 
+ You could also specify an FLV file, and you would get good coverage, but no iOS compatibility.  If
+ you provide a QuickTime, AVI, WMV, etc. the right embedding code will be generated, but the movie
+ won't be visible on all computers.  (This is essentially what we had in Sandvox 1).
+ 
+ As in the SVAudio class, we show some warnings in the inspector when the chosen format won't reach
+ a wide range of browsers.
+ 
+ Also, the technical approach is the same as SVAudio so it won't be repeated here.  To handle buggy
+ browsers that don't know about what formats they can't play, we manually check for MP4 movies
+ trying to play in a non-WebKit browser, or a different format being played in Safari.
+ 
+ Unlike the audio object, a video has a natural size, and it can show a poster frame.  The poster
+ frame can be set automatically; we do this by asking the specified file (if it's a file, not an 
+ external URL) for its QuickLook preview. This is loaded asynchronously.  Or, the user can choose
+ an image file (it should be the same size as the movie).  Later we may offer a way to choose any
+ frame from the movie.  We may also want to get a poster frame from a remotely loaded movie.
+ 
+ We also make use of QuickTime to try and load the movie, so that we can get the natural size
+ (width by height) of the movie.  In many cases this loads right up, but in some cases (e.g. a WMV
+ when you have Perian installed so that you can actually view the movie), it has to load for a
+ moment before it will reach kMovieLoadStatePlayable before we can get the dimensions.
+ 
+ One drawback about the fact that we won't know the dimensions of a movie until we have been able
+ to load it on a page is that it's possible that one could create a bunch of "movie pages" and never
+ load them into Sandvox to give them a chance to calculate their dimensions. I don't think that
+ this is very likely; as soon as the site author has gone to a page to even see what the size is,
+ Sandvox will be fetching the size.
+ 
+ If somebody is trying to add an FLV, but doesn't have Perian or some other set of components, they
+ are not going to be able to get the dimensions of the FLV file.  Fortunately we are able to scan
+ the file and *usually* get the dimensions of the movie.  This doesn't seem to work on all FLV files
+ but it is good enough.  If somebody really needs to use FLV, they could just install Perian on
+ their own system; the flash player will take care of actually displaying the movie.
+ 
+ Later on, we may want do dig into MP4 files and scrutinize them for all of the properties that are
+ needed to ensure iOS compatibility.
+  
+ */
 
 #import "SVVideo.h"
 
