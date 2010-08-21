@@ -610,13 +610,41 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 - (NSArray *)archivePages;
 {
     NSMutableArray *result = [NSMutableArray array];
+    NSMutableArray *currentPages = [NSMutableArray array];
+    NSDateComponents *currentMonth = nil;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
     
-    for (SVSiteItem *anItem in [self childItems])
+    NSArray *pages = [self childrenWithSorting:SVCollectionSortByDateCreated ascending:NO inIndex:YES];
+    for (SVSiteItem *anItem in pages)
     {
-        SVArchivePage *archivePage = [[SVArchivePage alloc] initWithPages:[NSArray arrayWithObject:anItem]];
+        // If this page is into a different archive period, generate an archive for the pages processed so far
+        NSDateComponents *components = [calendar components:(kCFCalendarUnitYear | kCFCalendarUnitMonth)
+                                                   fromDate:[anItem creationDate]];
+        
+        if (![components isEqual:currentMonth] && currentMonth)
+        {
+            SVArchivePage *archivePage = [[SVArchivePage alloc] initWithPages:currentPages];
+            [currentPages removeAllObjects];
+            
+            [result addObject:archivePage];
+            [archivePage release];
+        }
+        
+        [currentPages addObject:anItem];
+        currentMonth = components;
+    }
+    
+    
+    // Create an archive page for the remaining pages
+    if ([currentPages count])
+    {
+        SVArchivePage *archivePage = [[SVArchivePage alloc] initWithPages:currentPages];
+        [currentPages removeAllObjects];
+        
         [result addObject:archivePage];
         [archivePage release];
     }
+    
     
     return result;
 }
