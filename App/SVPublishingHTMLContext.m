@@ -39,7 +39,9 @@
 	if (html)
     {
         NSStringEncoding encoding = [self encoding];
-        NSData *pageData = [html dataUsingEncoding:encoding allowLossyConversion:YES];
+        
+        NSData *pageData = [[html unicodeNormalizedString] dataUsingEncoding:encoding
+                                                        allowLossyConversion:YES];
         OBASSERT(pageData);
         
         
