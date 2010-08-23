@@ -6,7 +6,7 @@
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTPage.h"
+#import "KTPage+Paths.h"
 
 #import "KTAbstractIndex.h"
 #import "SVArchivePage.h"
@@ -27,7 +27,7 @@
 #import "NSXMLElement+Karelia.h"
 
 
-@interface KTAbstractPage (PathsPrivate)
+@interface KTPage (PathsPrivate)
 - (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
 @end
 

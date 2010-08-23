@@ -12,7 +12,6 @@
 
 #import "KTDesign.h"
 #import "KTMaster.h"
-#import "KTAbstractPage+Internal.h"
 #import "SVImageReplacementURLProtocol.h"
 #import "KTPage+Internal.h"
 #import "SVRichText.h"

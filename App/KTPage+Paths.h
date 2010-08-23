@@ -1,5 +1,5 @@
 //
-//  KTAbstractPage.h
+//  KTPage+Paths.h
 //  Sandvox
 //
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
@@ -17,7 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "SVSiteItem.h"
+#import "KTPage.h"
 #import "KTWebPathsProtocol.h"
 
 
@@ -33,35 +33,7 @@ KTCollectionPathStyle;
 @class KTPage, KTSite, KTMaster, SVSidebar, SVTitleBox;
 
 
-@interface KTAbstractPage : SVSiteItem
-
-+ (NSString *)entityName;
-+ (NSArray *)allPagesInManagedObjectContext:(NSManagedObjectContext *)MOC;
-+ (id)pageWithUniqueID:(NSString *)pageID inManagedObjectContext:(NSManagedObjectContext *)MOC;
-
-+ (id)pageWithParent:(KTPage *)aParent entityName:(NSString *)entityName;
-
-
-#pragma mark Child Pages
-
-
-@end
-
-#pragma mark -
-
-
-@interface KTAbstractPage (ForSubclassesToImplement)
-// Meta tags
-@property(nonatomic, copy) NSString *metaDescription;
-@property(nonatomic, copy) NSString *windowTitle;
-@end
-
-
-
-#pragma mark -
-
-
-@interface KTAbstractPage (Paths) <KTWebPaths>
+@interface KTPage (Paths) <KTWebPaths>
 
 // File Name
 @property(nonatomic, copy, readwrite) NSString *fileName;

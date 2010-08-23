@@ -32,7 +32,7 @@
 
 @implementation KTPluginIDPasteboardRepresentation
 
-- (id)initWithPlugin:(KTAbstractPage *)plugin
+- (id)initWithPlugin:(KTPage *)plugin
 {
 	[super init];
 	
@@ -68,91 +68,6 @@
 {
 	[encoder encodeObject:[self pluginID] forKey:@"ID"];
 	[encoder encodeObject:[self pluginEntity] forKey:@"entity"];
-}
-
-@end
-
-
-#pragma mark -
-
-
-@implementation KTAbstractPage (Pasteboard)
-
-+ (NSSet *)keysToIgnoreForPasteboardRepresentation
-{
-	return [NSSet setWithObjects:@"root", [self extensiblePropertiesDataKey], @"uniqueID", nil];
-}
-
-/*	We return a dictionary of our properties. However, media and page objects stored weakly by their
- *  ID must be converted to special NSCoder-compatible types.
- */
-- (id <NSCoding>)pasteboardRepresentation
-{
-	// Start with our extensible properties
-	NSDictionary *extensibleProperties = [self extensibleProperties];
-	NSMutableDictionary *buffer = [NSMutableDictionary dictionaryWithDictionary:extensibleProperties];
-	
-	
-	// Convert any pages into their id-only representation
-	NSEnumerator *keysEnumerator = [extensibleProperties keyEnumerator];
-	id aKey;
-	while (aKey = [keysEnumerator nextObject])
-	{
-		id anObject = [buffer objectForKey:aKey];
-		if (![anObject conformsToProtocol:@protocol(NSCoding)])
-		{
-			id <NSCoding> pasteboardRep = [anObject IDOnlyPasteboardRepresentation];
-			[buffer setValue:pasteboardRep forKey:aKey];    // pasteboardRep may be nil for some media containers
-		}
-	}
-	
-	
-	// Add in all attributes and keys from the model. Ignore transient properties.
-	NSArray *propertyKeys = [[[self entity] propertiesByNameOfClass:[NSPropertyDescription class]
-										 includeTransientProperties:NO] allKeys];
-	NSDictionary *properties = [self dictionaryWithValuesForKeys:propertyKeys];
-	[buffer addEntriesFromDictionary:properties];
-	
-	
-	// Special case: pages need their thumbnails copied
-	if ([self isKindOfClass:[KTPage class]])
-	{
-		[buffer setValue:[(KTPage *)self thumbnail] forKey:@"thumbnail"];
-	}
-	
-	
-	// Ignore keys we don't want archived
-	NSSet *ignoredKeys = [[self class] keysToIgnoreForPasteboardRepresentation];
-	[buffer removeObjectsForKeys:[ignoredKeys allObjects]];
-	
-	
-	// Turn any managed objects into their pasteboard representation
-	keysEnumerator = [[NSDictionary dictionaryWithDictionary:buffer] keyEnumerator];
-	while (aKey = [keysEnumerator nextObject])
-	{
-		id anObject = [buffer objectForKey:aKey];
-		
-		BOOL objectIsNSCodingCompliant = [anObject conformsToProtocol:@protocol(NSCoding)];
-		if ([anObject isKindOfClass:[NSSet class]] && ![[anObject anyObject] conformsToProtocol:@protocol(NSCoding)])
-		{
-			objectIsNSCodingCompliant = NO;
-		}
-		
-		if (!objectIsNSCodingCompliant)
-		{
-			id <NSCoding> pasteboardRepObject = [anObject valueForKey:@"pasteboardRepresentation"];
-            [buffer setValue:pasteboardRepObject forKey:aKey];
-		}
-	}
-	
-	
-	return [NSDictionary dictionaryWithDictionary:buffer];
-}
-
-- (id <NSCoding>)IDOnlyPasteboardRepresentation
-{
-	id <NSCoding> result = [[[KTPluginIDPasteboardRepresentation alloc] initWithPlugin:self] autorelease];
-	return result;
 }
 
 @end
@@ -252,6 +167,78 @@
 	[result setFileName:suggestedFileName];
 	
 	
+	return result;
+}
+
+/*	We return a dictionary of our properties. However, media and page objects stored weakly by their
+ *  ID must be converted to special NSCoder-compatible types.
+ */
+- (id <NSCoding>)pasteboardRepresentation
+{
+	// Start with our extensible properties
+	NSDictionary *extensibleProperties = [self extensibleProperties];
+	NSMutableDictionary *buffer = [NSMutableDictionary dictionaryWithDictionary:extensibleProperties];
+	
+	
+	// Convert any pages into their id-only representation
+	NSEnumerator *keysEnumerator = [extensibleProperties keyEnumerator];
+	id aKey;
+	while (aKey = [keysEnumerator nextObject])
+	{
+		id anObject = [buffer objectForKey:aKey];
+		if (![anObject conformsToProtocol:@protocol(NSCoding)])
+		{
+			id <NSCoding> pasteboardRep = [anObject IDOnlyPasteboardRepresentation];
+			[buffer setValue:pasteboardRep forKey:aKey];    // pasteboardRep may be nil for some media containers
+		}
+	}
+	
+	
+	// Add in all attributes and keys from the model. Ignore transient properties.
+	NSArray *propertyKeys = [[[self entity] propertiesByNameOfClass:[NSPropertyDescription class]
+										 includeTransientProperties:NO] allKeys];
+	NSDictionary *properties = [self dictionaryWithValuesForKeys:propertyKeys];
+	[buffer addEntriesFromDictionary:properties];
+	
+	
+	// Special case: pages need their thumbnails copied
+	if ([self isKindOfClass:[KTPage class]])
+	{
+		[buffer setValue:[(KTPage *)self thumbnail] forKey:@"thumbnail"];
+	}
+	
+	
+	// Ignore keys we don't want archived
+	NSSet *ignoredKeys = [[self class] keysToIgnoreForPasteboardRepresentation];
+	[buffer removeObjectsForKeys:[ignoredKeys allObjects]];
+	
+	
+	// Turn any managed objects into their pasteboard representation
+	keysEnumerator = [[NSDictionary dictionaryWithDictionary:buffer] keyEnumerator];
+	while (aKey = [keysEnumerator nextObject])
+	{
+		id anObject = [buffer objectForKey:aKey];
+		
+		BOOL objectIsNSCodingCompliant = [anObject conformsToProtocol:@protocol(NSCoding)];
+		if ([anObject isKindOfClass:[NSSet class]] && ![[anObject anyObject] conformsToProtocol:@protocol(NSCoding)])
+		{
+			objectIsNSCodingCompliant = NO;
+		}
+		
+		if (!objectIsNSCodingCompliant)
+		{
+			id <NSCoding> pasteboardRepObject = [anObject valueForKey:@"pasteboardRepresentation"];
+            [buffer setValue:pasteboardRepObject forKey:aKey];
+		}
+	}
+	
+	
+	return [NSDictionary dictionaryWithDictionary:buffer];
+}
+
+- (id <NSCoding>)IDOnlyPasteboardRepresentation
+{
+	id <NSCoding> result = [[[KTPluginIDPasteboardRepresentation alloc] initWithPlugin:self] autorelease];
 	return result;
 }
 

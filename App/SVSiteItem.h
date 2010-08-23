@@ -127,6 +127,16 @@
 - (NSString *)baseExampleURLString;
 
 - (BOOL)isRoot;
+
+
+#pragma mark Core Data
+
++ (NSString *)entityName;
+
++ (NSArray *)allPagesInManagedObjectContext:(NSManagedObjectContext *)MOC;
+
++ (id)pageWithUniqueID:(NSString *)pageID inManagedObjectContext:(NSManagedObjectContext *)MOC;
+
 @end
 
 

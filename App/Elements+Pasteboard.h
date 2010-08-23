@@ -11,10 +11,6 @@
 #import "KTPasteboardArchiving.h"
 
 
-@interface KTAbstractPage (Pasteboard) <KTPasteboardArchiving>
-@end
-
-
-@interface KTPage (Pasteboard)
+@interface KTPage (Pasteboard) <KTPasteboardArchiving>
 + (KTPage *)pageWithPasteboardRepresentation:(NSDictionary *)archive parent:(KTPage *)parent;
 @end

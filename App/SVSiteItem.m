@@ -179,8 +179,9 @@
                                webEditorPreviewPath:[self previewPath]] autorelease];
 }
 
-- (NSString *)fileName { return nil; }
-- (BOOL) canPreview { return NO; }
+@dynamic fileName;
+
+- (BOOL)canPreview { return NO; }
 
 - (NSString *)previewPath
 {
@@ -405,5 +406,25 @@
 }
 
 - (NSString *)language { return nil; }
+
+#pragma mark Core Data
+
++ (NSString *)entityName { return @"AbstractPage"; }
+
+/*	Picks out all the pages correspoding to self's entity
+ */
++ (NSArray *)allPagesInManagedObjectContext:(NSManagedObjectContext *)MOC
+{
+	NSArray *result = [MOC fetchAllObjectsForEntityForName:[self entityName] error:NULL];
+	return result;
+}
+
+/*	As above, but uses a predicate to narrow down to a particular ID
+ */
++ (id)pageWithUniqueID:(NSString *)ID inManagedObjectContext:(NSManagedObjectContext *)MOC
+{
+	id result = [MOC objectWithUniqueID:ID entityName:[self entityName]];
+	return result;
+}
 
 @end

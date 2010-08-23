@@ -156,21 +156,6 @@
 	return page;
 }
 
-+ (KTPage *)pageWithParent:(KTPage *)aParent
-				dataSourceDictionary:(NSDictionary *)aDictionary
-	  insertIntoManagedObjectContext:(NSManagedObjectContext *)aContext;
-{
-	OBPRECONDITION(nil != aParent);
-
-	id page = [self insertNewPageWithParent:aParent];
-	
-	// anything else to do with the drag source dictionary other than to get the bundle?
-	// should the delegate be passed the dictionary and have an opportunity to use it?
-	[page awakeFromDragWithDictionary:aDictionary];
-	
-	return page;
-}
-
 #pragma mark Awake
 
 /*!	Early initialization.  Note that we don't know our bundle yet!  Use awakeFromBundle for later init.

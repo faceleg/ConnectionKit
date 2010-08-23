@@ -1,5 +1,5 @@
 //
-//  KTAbstractPage+Paths.m
+//  KTPage+Paths.m
 //  Marvel
 //
 //  Created by Mike on 05/12/2007.
@@ -11,8 +11,8 @@
 //		upload		- When accessing the site for publishing via FTP, SFTP etc.
 //		preview		- For previewing the page within the Sandvox UI
 
-#import "KTAbstractPage.h"
-#import "KTPage.h"
+
+#import "KTPage+Paths.h"
 
 #import "Debug.h"
 #import "KTDesign.h"
@@ -28,7 +28,7 @@
 #import "NSString+KTExtensions.h"
 
 
-@interface KTAbstractPage (PathsPrivate)
+@interface KTPage (PathsPrivate)
 - (NSString *)indexFilename;
 
 - (NSURL *)URL_uncached;
@@ -42,15 +42,14 @@
 #pragma mark -
 
 
-@implementation KTAbstractPage (Paths)
+@implementation KTPage (Paths)
 
 #pragma mark -
 #pragma mark File Name
 
 /*	First we have a simple accessor pair for the file name. This does NOT include the extension.
  */
-- (NSString *)fileName { return [self wrappedValueForKey:@"fileName"]; }
-
+@dynamic fileName;
 - (void)setFileName:(NSString *)fileName
 {
 	[self setWrappedValue:fileName forKey:@"fileName"];
@@ -395,7 +394,7 @@
 }
 
 /*	Does the hard graft for -publishedPathRelativeToSite and -uploadPathRelativeToSite.
- *	Should not generally be called outside of KTAbstractPage methods.
+ *	Should not generally be called outside of KTPage methods.
  */
 - (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle
 {

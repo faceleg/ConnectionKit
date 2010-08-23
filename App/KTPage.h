@@ -19,7 +19,7 @@
 
 #import "KT.h"
 
-#import "KTAbstractPage.h"
+#import "SVSiteItem.h"
 #import "NSManagedObject+KTExtensions.h"
 
 
@@ -32,10 +32,10 @@ typedef enum {
 } SVCollectionSortOrder;
 
 
-@class KTAbstractIndex, KTMaster, SVPageTitle, SVRichText, SVGraphic, SVMediaRecord, KTCodeInjection, SVHTMLContext;
+@class KTAbstractIndex, KTMaster, SVSidebar, SVPageTitle, SVRichText, SVGraphic, SVMediaRecord, KTCodeInjection, SVHTMLContext;
 
 
-@interface KTPage : KTAbstractPage
+@interface KTPage : SVSiteItem
 
 #pragma mark Title
 @property(nonatomic, retain) SVPageTitle *titleBox;  // you can use inherited .title property for ease of use too
@@ -93,6 +93,12 @@ typedef enum {
 #pragma mark Keywords
 @property(nonatomic, copy) NSArray *keywords;
 - (NSString *)keywordsList;
+
+
+#pragma mark Search Engines
+@property(nonatomic, copy) NSString *metaDescription;
+@property(nonatomic, copy) NSString *windowTitle;
+
 
 @end
 

@@ -18,9 +18,6 @@
 // Creation
 + (KTPage *)insertNewPageWithParent:(KTPage *)aParent;
 
-+ (KTPage *)pageWithParent:(KTPage *)aParent
-	  dataSourceDictionary:(NSDictionary *)aDictionary insertIntoManagedObjectContext:(NSManagedObjectContext *)aContext;
-
 
 // Hierarchy
 - (int)proposedOrderingForProposedChild:(id)aProposedChild
