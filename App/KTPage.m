@@ -364,31 +364,6 @@
 
 #pragma mark Paths
 
-/*	If set, returns the custom file extension. Otherwise, takes the value from the defaults
- */
-- (NSString *)pathExtension
-{
-	NSString *result = [self customPathExtension];
-	
-	if (!result) result = [self defaultPathExtension];
-	
-    OBPOSTCONDITION(result);
-    return result;
-}
-
-/*	Implemented just to stop anyone accidentally calling it.
- */
-- (void)setPathExtension:(NSString *)extension
-{
-	[NSException raise:NSInternalInconsistencyException
-			    format:@"-%@ is not supported. Please use -setCustomFileExtension instead.", NSStringFromSelector(_cmd)];
-}
-
-+ (NSSet *)keyPathsForValuesAffectingPathExtension
-{
-    return [NSSet setWithObjects:@"customFileExtension", @"defaultFileExtension", nil];
-}
-
 /*	A custom file extension of nil signifies that the value should be taken from the user defaults.
  */
 - (NSString *)customPathExtension { return [self wrappedValueForKey:@"customFileExtension"]; }
