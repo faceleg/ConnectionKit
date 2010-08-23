@@ -7,7 +7,7 @@
 //
 
 #import "Elements+Pasteboard.h"
-#import "KTPage.h"
+#import "KTPage+Paths.h"
 
 #import "BDAlias.h"
 #import "KTPasteboardArchiving.h"
@@ -91,7 +91,7 @@
 	
 	if (!sIgnoredKeys)
 	{
-		NSMutableSet *result = [NSMutableSet setWithSet:[super keysToIgnoreForPasteboardRepresentation]];
+		NSMutableSet *result = [NSMutableSet setWithSet:[NSSet set]];//[super keysToIgnoreForPasteboardRepresentation]];
 		
 		NSSet *myIgnoredKeys = [NSSet setWithObjects:
                                 @"master",
