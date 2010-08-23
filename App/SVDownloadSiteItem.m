@@ -9,7 +9,7 @@
 #import "SVDownloadSiteItem.h"
 
 #import "SVMediaRecord.h"
-#import "KTPage.h"
+#import "KTPage+Paths.h"
 #import "SVPublisher.h"
 
 #import "NSString+Karelia.h"
