@@ -167,4 +167,9 @@
     return [self wrappedValueForKey:@"codeInjection"];
 }
 
+#pragma mark Search Engines
+
+@dynamic metaDescription;
+@dynamic windowTitle;
+
 @end
