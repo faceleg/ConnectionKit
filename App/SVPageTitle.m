@@ -8,7 +8,7 @@
 
 #import "SVPageTitle.h"
 
-#import "KTPage.h"
+#import "KTPage+Paths.h"
 
 
 @interface KTPage (ChildrenPrivate)
