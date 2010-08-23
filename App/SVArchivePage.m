@@ -85,7 +85,7 @@
     // Get the month formatted like "01_2008"
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-    [formatter setDateFormat:@"MM'_'yyyy'.html'"];
+    [formatter setDateFormat:@"MM'-'yyyy'.html'"];
     
     NSDate *date = [[[self childPages] lastObject] creationDate];
 	NSString *result = [formatter stringFromDate:date];
