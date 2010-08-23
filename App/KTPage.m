@@ -6,7 +6,7 @@
 //  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTPage+Internal.h"
+#import "KTPage+Paths.h"
 
 #import "KSContainsObjectValueTransformer.h"
 #import "Debug.h"
@@ -370,7 +370,7 @@
 {
 	NSString *result = [self customPathExtension];
 	
-	if (!result) result = [super pathExtension];
+	if (!result) result = [self defaultPathExtension];
 	
     OBPOSTCONDITION(result);
     return result;

@@ -118,15 +118,7 @@
 	return result;
 }
 
-#pragma mark -
 #pragma mark File Extension
-
-/*	If set, returns the custom file extension. Otherwise, takes the value from the defaults
- */
-- (NSString *)pathExtension
-{
-	return [self defaultPathExtension];
-}
 
 /*	The value -fileExtension should return if there is no custom extensions set.
  *	Mainly used for bindings.
@@ -151,7 +143,6 @@
 	return result;
 }
 
-#pragma mark -
 #pragma mark Filenames & Extensions
 
 /*	The correct filename for the index.html file, taking into account user defaults and any custom settings
