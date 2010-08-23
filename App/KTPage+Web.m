@@ -6,7 +6,7 @@
 //  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTPage+Internal.h"
+#import "KTPage+Paths.h"
 
 #import "KT.h"
 #import "KTSite.h"
