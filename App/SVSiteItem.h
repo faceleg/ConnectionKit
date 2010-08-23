@@ -126,6 +126,7 @@
 
 - (NSString *)baseExampleURLString;
 
+- (BOOL)isRoot;
 @end
 
 

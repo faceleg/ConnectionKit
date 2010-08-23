@@ -366,6 +366,18 @@
 	[context endElement];
 }
 
++ (NSCharacterSet *)uniqueIDCharacters
+{
+	static NSCharacterSet *result;
+	
+	if (!result)
+	{
+		result = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789ABCDEF"] retain];
+	}
+	
+	return result;
+}
+
 /*!	Given the page text, scan for all page ID references and convert to the proper relative links.
  */
 - (NSString *)fixPageLinksFromString:(NSString *)originalString context:(SVHTMLContext *)context;
@@ -385,7 +397,7 @@
 				{
 					[scanner scanString:kKTPageIDDesignator intoString:nil];
 					NSString *idString = nil;
-					BOOL foundNumber = [scanner scanCharactersFromSet:[KTAbstractPage uniqueIDCharacters]
+					BOOL foundNumber = [scanner scanCharactersFromSet:[[self class] uniqueIDCharacters]
 														   intoString:&idString];
 					if (foundNumber)
 					{

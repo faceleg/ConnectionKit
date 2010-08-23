@@ -43,11 +43,6 @@ KTCollectionPathStyle;
 
 
 #pragma mark Child Pages
-- (BOOL)isRoot;
-
-
-#pragma mark Comments
-- (NSString *)JSKitPath;
 
 
 @end

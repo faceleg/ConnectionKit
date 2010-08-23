@@ -278,6 +278,12 @@
     return result;
 }
 
+- (BOOL)isRoot
+{
+	BOOL result = ((id)self == [[self site] rootPage]);
+	return result;
+}
+
 - (BOOL)isDescendantOfCollection:(KTPage *)aPotentialAncestor;
 {
 	if (aPotentialAncestor == self) return YES;

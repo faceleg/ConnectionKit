@@ -12,7 +12,4 @@
 
 
 @interface KTAbstractPage (Internal) <KTWebViewComponent>
-
-+ (NSCharacterSet *)uniqueIDCharacters;
-
 @end

@@ -78,54 +78,5 @@
 
 #pragma mark Child Pages
 
-@dynamic parentPage;
-
-- (BOOL)isRoot
-{
-	BOOL result = ((id)self == [[self site] rootPage]);
-	return result;
-}
-
-#pragma mark HTML
-
-+ (NSCharacterSet *)uniqueIDCharacters
-{
-	static NSCharacterSet *result;
-	
-	if (!result)
-	{
-		result = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789ABCDEF"] retain];
-	}
-	
-	return result;
-}
-
-- (NSString *)commentsTemplate	// instance method too for key paths to work in tiger
-{
-	static NSString *result;
-	
-	if (!result)
-	{
-		NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"KTCommentsTemplate" ofType:@"html"];
-		result = [[NSString alloc] initWithContentsOfFile:templatePath];
-	}
-	
-	return result;
-}
-
-#pragma mark -
-#pragma mark Comments
-
-/*  http://wiki.js-kit.com/Admin-Guide#Importantattributes
- */
-- (NSString *)JSKitPath
-{
-    NSString *result = [[self URL] path];
-	if ( nil == result )
-	{
-		result = @"/";
-	}
-    return result;
-}
 
 @end
