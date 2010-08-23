@@ -221,18 +221,20 @@
     
     
     // Create index and insert
-    SVGraphic *index = [plugInWrapper insertNewGraphicInManagedObjectContext:
-                        [self managedObjectContext]];
-    
-    NSAttributedString *graphicHTML = [NSAttributedString attributedHTMLStringWithGraphic:index];
-    [[index textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementInline]];
-    
-    
-    SVRichText *article = [collection article];
-    NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
-    [html insertAttributedString:graphicHTML atIndex:0];
-    [article setAttributedHTMLString:html];
-    [html release];
+    if (plugInWrapper)
+    {
+        SVGraphic *index = [plugInWrapper insertNewGraphicInManagedObjectContext:
+                            [self managedObjectContext]];
+        
+        NSAttributedString *graphicHTML = [NSAttributedString attributedHTMLStringWithGraphic:index];
+        [[index textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementInline]];
+        
+        SVRichText *article = [collection article];
+        NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
+        [html insertAttributedString:graphicHTML atIndex:0];
+        [article setAttributedHTMLString:html];
+        [html release];
+    }
 }
 
 - (void)addObject:(KTPage *)page
