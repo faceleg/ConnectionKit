@@ -255,7 +255,6 @@
 		27080FBE113DD9C900E66F92 /* SVLogoImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 27080FBC113DD9C900E66F92 /* SVLogoImage.h */; };
 		27080FBF113DD9C900E66F92 /* SVLogoImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 27080FBD113DD9C900E66F92 /* SVLogoImage.m */; };
 		2709BBE30D7B761D003A1A37 /* KTPageMainContentTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */; };
-		2709BC110D7C1C89003A1A37 /* KTArchivePageTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 2709BC100D7C1C89003A1A37 /* KTArchivePageTemplate.html */; };
 		270ABF9C0D76E85500C80911 /* KTAbstractPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 270ABF9A0D76E85500C80911 /* KTAbstractPage.h */; settings = {ATTRIBUTES = (); }; };
 		270ABF9D0D76E85500C80911 /* KTAbstractPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 270ABF9B0D76E85500C80911 /* KTAbstractPage.m */; };
 		270B67CE0F10E66900F6E076 /* KTPageDetailsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 270B67CC0F10E66900F6E076 /* KTPageDetailsController.h */; };
@@ -1769,7 +1768,6 @@
 		27080FBC113DD9C900E66F92 /* SVLogoImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLogoImage.h; sourceTree = "<group>"; };
 		27080FBD113DD9C900E66F92 /* SVLogoImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLogoImage.m; sourceTree = "<group>"; };
 		2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTPageMainContentTemplate.html; sourceTree = "<group>"; };
-		2709BC100D7C1C89003A1A37 /* KTArchivePageTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTArchivePageTemplate.html; sourceTree = "<group>"; };
 		270ABF9A0D76E85500C80911 /* KTAbstractPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractPage.h; sourceTree = "<group>"; };
 		270ABF9B0D76E85500C80911 /* KTAbstractPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractPage.m; sourceTree = "<group>"; };
 		270B67CC0F10E66900F6E076 /* KTPageDetailsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPageDetailsController.h; sourceTree = "<group>"; };
@@ -1917,8 +1915,6 @@
 		2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorViewController.m; sourceTree = "<group>"; };
 		2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebContentAreaController.h; sourceTree = "<group>"; };
 		2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebContentAreaController.m; sourceTree = "<group>"; };
-		275AA38E0D7844BB009F98AA /* KTArchivePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTArchivePage.h; sourceTree = "<group>"; };
-		275AA38F0D7844BB009F98AA /* KTArchivePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTArchivePage.m; sourceTree = "<group>"; };
 		2764AA1C1188D16C00D8E1BB /* SVArticleDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVArticleDOMController.h; sourceTree = "<group>"; };
 		2764AA1D1188D16C00D8E1BB /* SVArticleDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVArticleDOMController.m; sourceTree = "<group>"; };
 		276503470EAD29D200461A0E /* KTAbstractPage+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTAbstractPage+Internal.h"; sourceTree = "<group>"; };
@@ -3143,7 +3139,6 @@
 			children = (
 				278ECBAE0D247BD60012BA6B /* KTCalloutContainerTemplate.html */,
 				277026730E1E645200407CD1 /* KTCommentsTemplate.html */,
-				2709BC100D7C1C89003A1A37 /* KTArchivePageTemplate.html */,
 				2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */,
 				3CF941F80D623ECF00B1C83D /* KTPageTemplate.html */,
 				27EAA90D0E30979A0068E6C5 /* Page URLs and Paths.graffle */,
@@ -3157,8 +3152,6 @@
 				273864650D50BB1D00A8A209 /* KTPage+Indexes.m */,
 				270ABF9A0D76E85500C80911 /* KTAbstractPage.h */,
 				270ABF9B0D76E85500C80911 /* KTAbstractPage.m */,
-				275AA38E0D7844BB009F98AA /* KTArchivePage.h */,
-				275AA38F0D7844BB009F98AA /* KTArchivePage.m */,
 				276503470EAD29D200461A0E /* KTAbstractPage+Internal.h */,
 				276505990EADF91900461A0E /* KTPage+Internal.h */,
 				27C58AE7110204EE00F42306 /* KTPage+Serialization.m */,
@@ -6272,7 +6265,6 @@
 				3CF948BD0D624A1100B1C83D /* getSafariFrontmostFeed.scpt in Resources */,
 				3CF948BE0D624A1200B1C83D /* getSafariFrontmostPage.scpt in Resources */,
 				2709BBE30D7B761D003A1A37 /* KTPageMainContentTemplate.html in Resources */,
-				2709BC110D7C1C89003A1A37 /* KTArchivePageTemplate.html in Resources */,
 				277026740E1E645200407CD1 /* KTCommentsTemplate.html in Resources */,
 				3C382D610E98170600113137 /* dsa_pub.pem in Resources */,
 				27AE75C80EEEB12D00409D80 /* error.png in Resources */,
