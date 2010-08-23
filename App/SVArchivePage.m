@@ -8,6 +8,7 @@
 
 #import "SVArchivePage.h"
 
+#import "KTPage+Paths.h"
 #import "SVLink.h"
 
 
