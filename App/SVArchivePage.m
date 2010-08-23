@@ -80,6 +80,15 @@
 
 - (NSURL *)feedURL { return nil; }
 
+- (NSString *)uploadPath;
+{
+    NSString *directory = [[[self collection] uploadPath] stringByDeletingLastPathComponent];
+    
+    NSString *result = [directory stringByAppendingPathComponent:
+                        [@"archives/" stringByAppendingString:[self filename]]];
+    return result;
+}
+
 - (NSString *)filename;
 {
     // Get the month formatted like "01_2008"
