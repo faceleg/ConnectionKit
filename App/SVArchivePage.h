@@ -20,5 +20,8 @@
 - (id)initWithPages:(NSArray *)pages;
 @property(nonatomic, retain, readonly) KTPage *collection;
 
+- (NSURL *)URL;
+- (NSString *)uploadPath;
+- (NSString *)filename;
 
 @end

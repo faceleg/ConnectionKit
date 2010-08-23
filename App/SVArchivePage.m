@@ -8,6 +8,8 @@
 
 #import "SVArchivePage.h"
 
+#import "SVLink.h"
+
 
 @implementation SVArchivePage
 
@@ -61,8 +63,36 @@
 
 - (NSArray *)archivePages; { return nil; }
 
-- (SVLink *)link; { return nil; }
+#pragma mark Location
+
+- (NSURL *)URL;
+{
+    NSURL *result = [NSURL URLWithString:[@"archives/" stringByAppendingString:[self filename]]
+                           relativeToURL:[[self collection] URL]];
+    return result;
+}
+
+- (SVLink *)link;
+{
+    return [SVLink linkWithURLString:[[self URL] absoluteString]
+                     openInNewWindow:NO];
+}
+
 - (NSURL *)feedURL { return nil; }
+
+- (NSString *)filename;
+{
+    // Get the month formatted like "01_2008"
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+    [formatter setDateFormat:@"MM'_'yyyy'.html'"];
+    
+    NSDate *date = [[[self childPages] lastObject] creationDate];
+	NSString *result = [formatter stringFromDate:date];
+    [formatter release];
+    
+    return result;
+}
 
 - (BOOL)shouldIncludeInIndexes; { return NO; }
 - (BOOL)shouldIncludeInSiteMaps; { return NO; }
