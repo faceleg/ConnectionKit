@@ -52,6 +52,8 @@
   */
  
 
+//LocalizedStringInThisBundle("page views",@" preceeded by a number to show how many times a page has been viewed over the web");
+
 
 NSString *PCThemeKey = @"theme";
 NSString *PCTypeKey = @"type";		
@@ -178,8 +180,44 @@ NSString *PCSampleImageKey = @"sampleImage";
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
     [super writeHTML:context];
+    
+    // add dependencies
     [context addDependencyForKeyPath:@"selectedThemeIndex" ofObject:self];
-    //FIXME: need to add resources here
+    
+    // add resources
+	if (PC_GRAPHICS == self.themeType)
+	{
+		NSString *theme = self.themeName;
+		NSBundle *b = [self bundle];
+		NSString *imagePath = [self.selectedTheme objectForKey:PCImagesPathKey];	// from default
+		
+		unsigned i;
+		
+		for (i = 0; i < 10; i++)
+		{
+			NSString *format = [NSString stringWithFormat:@"%@-%d.png", theme, i];
+			if (imagePath)
+			{
+                NSURL *imageURL = [NSURL fileURLWithPath:[imagePath stringByAppendingPathComponent:format]];
+                [context addResourceWithURL:imageURL];
+			}
+			else
+			{
+				NSString *resource = [b pathForResource:[format stringByDeletingPathExtension]
+                                                 ofType:[format pathExtension] 
+                                            inDirectory:@"digits"];
+                OBASSERT(resource);
+                NSURL *resourceURL = [NSURL fileURLWithPath:resource];
+                [context addResourceWithURL:resourceURL];
+			}
+		}
+	}
+}
+
+- (NSURL *)previewResourceDirectory
+{
+	NSString *path = [[[self bundle] resourcePath] stringByAppendingPathComponent:@"digits"];
+	return [NSURL fileURLWithPath:path];
 }
 
 
@@ -219,46 +257,5 @@ NSString *PCSampleImageKey = @"sampleImage";
 { 
 	return [[self.selectedTheme objectForKey:PCTypeKey] unsignedIntegerValue];
 }
-
-
-#pragma mark Resources
-
-- (NSURL *)previewResourceDirectory
-{
-	NSString *path = [[[self bundle] resourcePath] stringByAppendingPathComponent:@"digits"];
-	return [NSURL fileURLWithPath:path];
-}
-
-// called via recursiveComponentPerformSelector
-- (void)addResourcesToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage
-{
-	if (PC_GRAPHICS == [self type])
-	{
-		NSString *theme = [self theme];
-		NSBundle *b = [self bundle];
-		NSString *imagePath = [[self currentThemeDict] objectForKey:PCImagesPathKey];	// from default
-		
-		unsigned i;
-		
-		for (i = 0; i < 10; i++)
-		{
-			NSString *format = [NSString stringWithFormat:@"%@-%d.png", theme, i];
-			if (imagePath)
-			{
-				[aSet addObject:[imagePath stringByAppendingPathComponent:format]];
-			}
-			else
-			{
-				NSString *resource = [b pathForResource:[format stringByDeletingPathExtension]
-                                                 ofType:[format pathExtension] 
-                                            inDirectory:@"digits"];
-                OBASSERT(resource);
-                [aSet addObject:resource];
-			}
-		}
-	}
-}
-
-//LocalizedStringInThisBundle("page views",@" preceeded by a number to show how many times a page has been viewed over the web");
 
 @end
