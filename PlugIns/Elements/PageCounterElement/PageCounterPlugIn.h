@@ -36,21 +36,6 @@
 
 #import "SandvoxPlugin.h"
 
-@class WebView;
-
-@interface PageCounterPlugIn : SVPlugIn
-{
-    
-}
-
-@property (nonatomic, readonly) NSString *theme;
-@property (nonatomic, readonly) NSUInteger type;
-@property (nonatomic, readonly) NSNumber *width;
-@property (nonatomic, readonly) NSNumber *height;
-
-@end
-
-
 enum { PC_INVISIBLE = 0, PC_TEXT = 1, PC_GRAPHICS = 2 };
 
 extern NSString *PCTypeKey;
@@ -59,3 +44,19 @@ extern NSString *PCWidthKey;
 extern NSString *PCHeightKey;
 extern NSString *PCImagesPathKey;
 extern NSString *PCSampleImageKey;
+
+
+@interface PageCounterPlugIn : SVPlugIn
+{
+    NSUInteger _selectedTheme;
+}
+
+@property (nonatomic) NSUInteger selectedTheme;
+
+
+@property (nonatomic, readonly) NSString *theme;
+@property (nonatomic, readonly) NSUInteger type;
+@property (nonatomic, readonly) NSNumber *width;
+@property (nonatomic, readonly) NSNumber *height;
+
+@end

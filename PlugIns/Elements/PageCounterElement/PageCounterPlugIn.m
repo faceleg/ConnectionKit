@@ -64,6 +64,17 @@ NSString *PCSampleImageKey = @"sampleImage";
 @implementation PageCounterPlugIn
 
 
+#pragma mark SVPlugIn
+
++ (NSArray *)plugInKeys
+{ 
+    return [NSArray arrayWithObjects:
+            @"selectedTheme", 
+            nil];
+}
+
+
+
 #pragma mark Initialization
 
 + (NSArray *)themes
@@ -162,6 +173,20 @@ NSString *PCSampleImageKey = @"sampleImage";
 	return sThemes;
 }
 
+
+
+#pragma mark -
+#pragma mark HTML Generation
+
+- (void)writeHTML:(id <SVPlugInContext>)context
+{
+    [super writeHTML:context];
+    [context addDependencyForKeyPath:@"selectedTheme" ofObject:self];
+}
+
+#pragma mark Properties
+
+@synthesize selectedTheme = _selectedTheme;
 
 #pragma mark Accessors
 
