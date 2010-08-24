@@ -51,8 +51,8 @@
 	
 	while ((themeDict = [themeEnum nextObject]) != nil)
 	{
-		NSString *theme = [themeDict objectForKey:PCThemeKey];
-        if ( !theme ) continue; // skip separator
+		NSString *themeTitle = [themeDict objectForKey:PCThemeKey];
+        if ( !themeTitle ) continue; // skip separator
         
 		if ([[themeDict objectForKey:PCTypeKey] unsignedIntegerValue] == PC_GRAPHICS)
 		{
@@ -73,10 +73,10 @@
 		}
 		else
 		{
-			[oThemePopUp addItemWithTitle:theme];	// ADD THE MENU
+			[oThemePopUp addItemWithTitle:themeTitle];	// ADD THE MENU
 			[[oThemePopUp lastItem] setAttributedTitle:	// make it small system font since pop-up size is normal
 				[[[NSAttributedString alloc]
-					initWithString:theme
+					initWithString:themeTitle
 						attributes:[NSDictionary dictionaryWithObjectsAndKeys:
 										[NSFont systemFontOfSize:[NSFont smallSystemFontSize]],
 										NSFontAttributeName,
