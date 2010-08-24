@@ -116,11 +116,19 @@
         DOMRange *fallbackRange = [[[self HTMLElement] ownerDocument] createRange];
         [fallbackRange setStartAfter:[[self textHTMLElement] lastChild]];
         
-        [[webEditor window] makeFirstResponder:webEditor];
-        [webEditor setSelectedDOMRange:fallbackRange affinity:0];
-        
-        [event preventDefault];
-        [event stopPropagation];
+        if ([[webEditor delegate] webEditor:webEditor
+               shouldChangeSelectedDOMRange:[webEditor selectedDOMRange]
+                                 toDOMRange:fallbackRange
+                                   affinity:0
+                                      items:nil
+                             stillSelecting:NO])
+        {
+            [[webEditor window] makeFirstResponder:webEditor];
+            [webEditor setSelectedDOMRange:fallbackRange affinity:0];
+            
+            [event preventDefault];
+            [event stopPropagation];
+        }
     }
 }
 
