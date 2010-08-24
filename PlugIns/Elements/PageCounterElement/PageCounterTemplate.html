@@ -8,7 +8,7 @@
 
 [[if themeType==2]]
 	<script type="text/javascript">
-var resourceDir = "[[if parser.HTMLGenerationPurpose]][[path page.documentInfo.hostProperties.resourcesDirectoryURL]][[else2]][[=previewResourceDirectory]][[endif2]]";
+var resourceDir = "[[if parser.HTMLGenerationPurpose]][[path container.documentInfo.hostProperties.resourcesDirectoryURL]][[else2]][[=previewResourceDirectory]][[endif2]]";
 var theme = "[[=&themeTitle]]";
 var countRequest = false;
 var pcWidth = "[[=themeWidth]]";
