@@ -161,7 +161,6 @@ typedef enum {
 - (void)setCollectionSummaryType:(KTCollectionSummaryType)type;
 
 // Index
-- (KTAbstractIndex *)index;
 - (NSArray *)pagesInIndex;
 - (void)invalidatePagesInIndexCache;
 

@@ -48,28 +48,6 @@
 
 #pragma mark Index
 
-- (KTAbstractIndex *)index { return [self wrappedValueForKey:@"index"]; }
-
-- (void)setIndex:(KTAbstractIndex *)anIndex { [self setWrappedValue:anIndex forKey:@"index"]; }
-
-- (void)setIndexFromPlugin:(KTHTMLPlugInWrapper *)plugin
-{
-	if (plugin)
-	{
-		NSBundle *bundle = [plugin bundle];
-		[self setValue:[bundle bundleIdentifier] forKey:@"collectionIndexBundleIdentifier"];
-		
-		Class indexClass = [bundle principalClassIncludingOtherLoadedBundles:YES];
-		KTAbstractIndex *theIndex = [[[indexClass alloc] initWithPage:self plugin:plugin] autorelease];
-		[self setIndex:theIndex];
-	}
-	else
-	{
-		[self setValue:nil forKey:@"collectionIndexBundleIdentifier"];
-		[self setIndex:nil];
-	}
-}
-
 /*	Takes our -sortedChildren property and filters out:
  *		* Pages excluded from the index
  *		* Unpublished draft pages
@@ -104,7 +82,7 @@
 {
 	BOOL result = NO;
 	
-	if ( [self isCollection] && (nil != [self index]) )
+	if ([self isCollection])
 	{
 		NSArray *pages = [self pagesInIndex];
 		for ( KTPage *page in pages )
