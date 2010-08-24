@@ -96,6 +96,9 @@ NSString *PCSampleImageKey = @"sampleImage";
 		[d setObject:LocalizedStringInThisBundle(@"Invisible", @"Invisible style of page counter; outputs no number") forKey:PCThemeKey];
 		[d setObject:[NSNumber numberWithUnsignedInteger:PC_INVISIBLE] forKey:PCTypeKey];
 		[themes addObject:d];
+        
+        d = [NSMutableDictionary dictionary]; // empty dictionary to account for separator item in menu
+		[themes addObject:d];
 		
 		NSString *resourcePath = [[NSBundle bundleForClass:[PageCounterPlugIn class]] resourcePath];
 		resourcePath = [resourcePath stringByAppendingPathComponent:@"digits"];

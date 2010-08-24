@@ -52,6 +52,7 @@
 	while ((themeDict = [themeEnum nextObject]) != nil)
 	{
 		NSString *theme = [themeDict objectForKey:PCThemeKey];
+        if ( !theme ) continue; // skip separator
         
 		if ([[themeDict objectForKey:PCTypeKey] unsignedIntegerValue] == PC_GRAPHICS)
 		{
@@ -59,7 +60,7 @@
 			{
 				hasDoneGraphicsYet = YES;
 				[[oThemePopUp menu] addItem:[NSMenuItem separatorItem]];
-                continue;
+                [[oThemePopUp lastItem] setTag:-1];
 			}
 			[oThemePopUp addItemWithTitle:@""];	// ADD THE MENU
             
