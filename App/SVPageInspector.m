@@ -11,6 +11,7 @@
 #import "KTDocument.h"
 #import "KTElementPlugInWrapper.h"
 #import "SVGraphic.h"
+#import "SVIndexPlugIn.h"
 #import "SVMediaRecord.h"
 #import "SVRichText.h"
 #import "SVSidebar.h"
@@ -318,6 +319,35 @@
 
 #pragma mark Archives
 
+- (void)addArchivePageletForCollectionIfNeeded:(KTPage *)collection
+{
+    SVSidebarPageletsController *sidebarController = [[SVSidebarPageletsController alloc] initWithSidebar:[collection sidebar]];
+    [sidebarController autorelease];
+
+    
+    // Is there already an archive pagelet for this? If so, do nothing
+    for (SVGraphic *aGraphic in [sidebarController arrangedObjects])
+    {
+        id plugIn = [aGraphic plugIn];
+        if ([plugIn isKindOfClass:[SVIndexPlugIn class]] &&
+            [plugIn indexedCollection] == collection)
+        {
+            return;
+        }
+    }
+    
+    
+    // Create the archive
+    id <SVGraphicFactory> factory = [KTElementPlugInWrapper pluginWithIdentifier:@"sandvox.CollectionArchiveElement"];
+    SVGraphic *pagelet = [factory insertNewGraphicInManagedObjectContext:
+                          [collection managedObjectContext]];
+    
+    [pagelet setShowsTitle:YES];
+    [pagelet willInsertIntoPage:collection];
+    
+    [sidebarController addObject:pagelet];
+}
+
 - (IBAction)toggledArchives:(NSButton *)sender;
 {
     if ([sender state] != NSOnState) return;
@@ -326,16 +356,7 @@
     NSArray *pages = [self inspectedObjects];
     for (KTPage *page in pages)
     {
-        id <SVGraphicFactory> factory = [KTElementPlugInWrapper pluginWithIdentifier:@"sandvox.CollectionArchiveElement"];
-        SVGraphic *pagelet = [factory insertNewGraphicInManagedObjectContext:
-                              [page managedObjectContext]];
-        
-        [pagelet setShowsTitle:YES];
-        [pagelet willInsertIntoPage:page];
-        
-        SVSidebarPageletsController *sidebarController = [[SVSidebarPageletsController alloc] initWithSidebar:[page sidebar]];
-        [sidebarController addObject:pagelet];
-        [sidebarController release];
+        [self addArchivePageletForCollectionIfNeeded:page];
     }
 }
 
