@@ -51,6 +51,8 @@ extern NSString *PCSampleImageKey;
     NSUInteger _selectedThemeIndex;
 }
 
++ (NSArray *)themes;
+
 // index into themes array
 @property (nonatomic) NSUInteger selectedThemeIndex;
 
