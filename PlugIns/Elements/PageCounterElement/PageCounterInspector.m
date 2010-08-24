@@ -44,7 +44,7 @@
 {
 	[oTheme removeAllItems];
 	
-	NSEnumerator *themeEnum = [[[self class] themes] objectEnumerator];
+	NSEnumerator *themeEnum = [[[PageCounterPlugIn class] themes] objectEnumerator];
 	NSDictionary *themeDict;
 	BOOL hasDoneGraphicsYet = NO;
 	int tag = 0;
@@ -53,7 +53,7 @@
 	{
 		NSString *theme = [themeDict objectForKey:PCThemeKey];
         
-		if ([[themeDict objectForKey:PCTypeKey] intValue] == PC_GRAPHICS)
+		if ([[themeDict objectForKey:PCTypeKey] unsignedIntegerValue] == PC_GRAPHICS)
 		{
 			if (!hasDoneGraphicsYet)
 			{
@@ -84,33 +84,18 @@
 			[[oTheme lastItem] setTag:tag++];
 		}
 	}
-	int index = [[[self delegateOwner] objectForKey:@"selectedTheme"] unsignedIntValue];
-	[oTheme setBordered:(index < 2)];
+    
+    NSUInteger themeType = [(PageCounterPlugIn *)[[self inspectedObjectsController] selection] themeType];
+    [oTheme setBordered:(themeType == PC_INVISIBLE || themeType == PC_TEXT)];
 }
+
 
 #pragma mark Selected Theme
 
-- (void)setDelegateOwner:(id)newOwner
+- (IBAction)changeTheme:(id)sender
 {
-	// We keep an eye on "selected theme" so we can add or remove the border from the popup button
-	[[self delegateOwner] removeObserver:self forKeyPath:@"selectedTheme"];
-	[super setDelegateOwner:newOwner];
-	[newOwner addObserver:self forKeyPath:@"selectedTheme" options:0 context:NULL];
+    NSInteger index = [sender indexOfSelectedItem];
+    [oTheme setBordered:(index == PC_INVISIBLE || index == PC_TEXT)];
 }
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-	if ([keyPath isEqualToString:@"selectedTheme"])
-	{
-		// Add or remove the popup button's border as appropriate
-		int index = [[[self delegateOwner] objectForKey:@"selectedTheme"] unsignedIntValue];
-		[oTheme setBordered:(index < 2)];
-	}
-	else
-	{
-		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-	}
-}
-
 
 @end

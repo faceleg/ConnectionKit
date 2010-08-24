@@ -43,13 +43,13 @@
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="NSTextField" id="350625384">
+					<object class="NSTextField" id="709934240">
 						<reference key="NSNextResponder" ref="968125511"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{7, 45}, {216, 14}}</string>
 						<reference key="NSSuperview" ref="968125511"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="267176947">
+						<object class="NSTextFieldCell" key="NSCell" id="912533081">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272761856</int>
 							<string key="NSContents">Appearance</string>
@@ -58,7 +58,7 @@
 								<double key="NSSize">11</double>
 								<int key="NSfFlags">16</int>
 							</object>
-							<reference key="NSControlView" ref="350625384"/>
+							<reference key="NSControlView" ref="709934240"/>
 							<object class="NSColor" key="NSBackgroundColor">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
@@ -207,6 +207,14 @@
 					</object>
 					<int key="connectionID">48</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">changeTheme:</string>
+						<reference key="source" ref="213639357"/>
+						<reference key="destination" ref="923522688"/>
+					</object>
+					<int key="connectionID">49</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -240,7 +248,7 @@
 						<reference key="object" ref="968125511"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="350625384"/>
+							<reference ref="709934240"/>
 							<reference ref="923522688"/>
 						</object>
 						<reference key="parent" ref="0"/>
@@ -292,17 +300,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">45</int>
-						<reference key="object" ref="350625384"/>
+						<reference key="object" ref="709934240"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="267176947"/>
+							<reference ref="912533081"/>
 						</object>
 						<reference key="parent" ref="968125511"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">46</int>
-						<reference key="object" ref="267176947"/>
-						<reference key="parent" ref="350625384"/>
+						<reference key="object" ref="912533081"/>
+						<reference key="parent" ref="709934240"/>
 					</object>
 				</object>
 			</object>
@@ -367,7 +375,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">48</int>
+			<int key="maxID">49</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -383,6 +391,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">PageCounterInspector</string>
 					<string key="superclassName">SVInspectorViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">changeTheme:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">changeTheme:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">changeTheme:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">oTheme</string>
 						<string key="NS.object.0">NSPopUpButton</string>
