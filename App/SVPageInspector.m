@@ -9,7 +9,7 @@
 #import "SVPageInspector.h"
 
 #import "KTDocument.h"
-#import "KTPage.h"
+#import "KTElementPlugInWrapper.h"
 #import "SVGraphic.h"
 #import "SVMediaRecord.h"
 #import "SVRichText.h"
@@ -313,6 +313,29 @@
         {
             [oSidebarPageletsController removePagelet:pagelet fromSidebarOfPage:aPage];
         }
+    }
+}
+
+#pragma mark Archives
+
+- (IBAction)toggledArchives:(NSButton *)sender;
+{
+    if ([sender state] != NSOnState) return;
+    
+    
+    NSArray *pages = [self inspectedObjects];
+    for (KTPage *page in pages)
+    {
+        id <SVGraphicFactory> factory = [KTElementPlugInWrapper pluginWithIdentifier:@"sandvox.CollectionArchiveElement"];
+        SVGraphic *pagelet = [factory insertNewGraphicInManagedObjectContext:
+                              [page managedObjectContext]];
+        
+        [pagelet setShowsTitle:YES];
+        [pagelet willInsertIntoPage:page];
+        
+        SVSidebarPageletsController *sidebarController = [[SVSidebarPageletsController alloc] initWithSidebar:[page sidebar]];
+        [sidebarController addObject:pagelet];
+        [sidebarController release];
     }
 }
 

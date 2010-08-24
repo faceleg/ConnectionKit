@@ -8,6 +8,8 @@
 
 #import "KSInspectorViewController.h"
 
+#import "KTPage.h"
+
 
 @class KTPlaceholderBindingTextField, SVSidebarPageletsController;
 
@@ -29,5 +31,7 @@
 - (IBAction)chooseCustomThumbnail:(NSButton *)sender;
 - (IBAction)pickThumbnailFromPage:(NSPopUpButton *)sender;
 - (void)updatePickFromPageThumbnail;
+
+- (IBAction)toggledArchives:(NSButton *)sender;
 
 @end

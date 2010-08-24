@@ -1467,7 +1467,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42E2990D64D253004F35FD /* PageCounterElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* PageCounterElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = PageCounterElement;
 		};
 		3C8544A512061D22000A19C3 /* PBXContainerItemProxy */ = {
