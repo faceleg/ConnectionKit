@@ -60,7 +60,7 @@ extern NSString *PCSampleImageKey;
 @property (nonatomic, readonly) NSArray *themes;
 @property (nonatomic, readonly) NSDictionary *selectedTheme;
 
-@property (nonatomic, readonly) NSString *themeName;
+@property (nonatomic, readonly) NSString *themeTitle;
 @property (nonatomic, readonly) NSNumber *themeWidth;
 @property (nonatomic, readonly) NSNumber *themeHeight;
 @property (nonatomic, readonly) NSUInteger themeType;

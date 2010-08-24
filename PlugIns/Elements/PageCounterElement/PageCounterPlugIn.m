@@ -187,7 +187,7 @@ NSString *PCSampleImageKey = @"sampleImage";
     // add resources
 	if (PC_GRAPHICS == self.themeType)
 	{
-		NSString *theme = self.themeName;
+		NSString *theme = self.themeTitle;
 		NSBundle *b = [self bundle];
 		NSString *imagePath = [self.selectedTheme objectForKey:PCImagesPathKey];	// from default
 		
@@ -238,7 +238,7 @@ NSString *PCSampleImageKey = @"sampleImage";
     return [self.themes objectAtIndex:self.selectedThemeIndex];
 }
 
-- (NSString *)themeName
+- (NSString *)themeTitle
 {
 	return [self.selectedTheme objectForKey:PCThemeKey];
 }
