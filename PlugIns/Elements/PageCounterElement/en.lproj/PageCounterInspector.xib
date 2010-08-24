@@ -43,13 +43,13 @@
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="NSTextField" id="573207908">
+					<object class="NSTextField" id="350669671">
 						<reference key="NSNextResponder" ref="968125511"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{7, 45}, {216, 14}}</string>
 						<reference key="NSSuperview" ref="968125511"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="872424010">
+						<object class="NSTextFieldCell" key="NSCell" id="743287752">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272761856</int>
 							<string key="NSContents">Appearance</string>
@@ -58,7 +58,7 @@
 								<double key="NSSize">11</double>
 								<int key="NSfFlags">16</int>
 							</object>
-							<reference key="NSControlView" ref="573207908"/>
+							<reference key="NSControlView" ref="350669671"/>
 							<object class="NSColor" key="NSBackgroundColor">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
@@ -185,19 +185,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedIndex: inspectedObjectsController.selection.selectedTheme</string>
+						<string key="label">selectedIndex: inspectedObjectsController.selection.selectedThemeIndex</string>
 						<reference key="source" ref="923522688"/>
 						<reference key="destination" ref="213639357"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="923522688"/>
 							<reference key="NSDestination" ref="213639357"/>
-							<string key="NSLabel">selectedIndex: inspectedObjectsController.selection.selectedTheme</string>
+							<string key="NSLabel">selectedIndex: inspectedObjectsController.selection.selectedThemeIndex</string>
 							<string key="NSBinding">selectedIndex</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.selectedTheme</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.selectedThemeIndex</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">44</int>
+					<int key="connectionID">47</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -232,7 +232,7 @@
 						<reference key="object" ref="968125511"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="573207908"/>
+							<reference ref="350669671"/>
 							<reference ref="923522688"/>
 						</object>
 						<reference key="parent" ref="0"/>
@@ -284,17 +284,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">45</int>
-						<reference key="object" ref="573207908"/>
+						<reference key="object" ref="350669671"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="872424010"/>
+							<reference ref="743287752"/>
 						</object>
 						<reference key="parent" ref="968125511"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">46</int>
-						<reference key="object" ref="872424010"/>
-						<reference key="parent" ref="573207908"/>
+						<reference key="object" ref="743287752"/>
+						<reference key="parent" ref="350669671"/>
 					</object>
 				</object>
 			</object>
@@ -359,7 +359,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">46</int>
+			<int key="maxID">47</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

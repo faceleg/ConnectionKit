@@ -48,14 +48,16 @@ extern NSString *PCSampleImageKey;
 
 @interface PageCounterPlugIn : SVPlugIn
 {
-    NSUInteger _selectedTheme;
+    NSUInteger _selectedThemeIndex;
 }
 
-@property (nonatomic) NSUInteger selectedTheme;
+@property (nonatomic) NSUInteger selectedThemeIndex;
+
+@property (nonatomic, readonly) NSDictionary *selectedTheme;
+@property (nonatomic, readonly) NSUInteger type;
 
 
 @property (nonatomic, readonly) NSString *theme;
-@property (nonatomic, readonly) NSUInteger type;
 @property (nonatomic, readonly) NSNumber *width;
 @property (nonatomic, readonly) NSNumber *height;
 

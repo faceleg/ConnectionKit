@@ -34,7 +34,7 @@
 	<string>counter.icns</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
-		<key>selectedTheme</key>
+		<key>selectedThemeIndex</key>
 		<integer>0</integer>
 	</dict>
 	<key>KTPluginName</key>

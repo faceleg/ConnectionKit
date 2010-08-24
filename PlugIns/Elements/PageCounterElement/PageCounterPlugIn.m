@@ -69,7 +69,7 @@ NSString *PCSampleImageKey = @"sampleImage";
 + (NSArray *)plugInKeys
 { 
     return [NSArray arrayWithObjects:
-            @"selectedTheme", 
+            @"selectedThemeIndex", 
             nil];
 }
 
@@ -181,12 +181,17 @@ NSString *PCSampleImageKey = @"sampleImage";
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
     [super writeHTML:context];
-    [context addDependencyForKeyPath:@"selectedTheme" ofObject:self];
+    [context addDependencyForKeyPath:@"selectedThemeIndex" ofObject:self];
 }
 
 #pragma mark Properties
 
-@synthesize selectedTheme = _selectedTheme;
+@synthesize selectedThemeIndex = _selectedThemeIndex;
+
+- (NSUInteger)type
+{ 
+	return [[[self currentThemeDict] objectForKey:PCTypeKey] unsignedIntegerValue];
+}
 
 #pragma mark Accessors
 
@@ -198,10 +203,6 @@ NSString *PCSampleImageKey = @"sampleImage";
 	return result;
 }
 
-- (NSUInteger)type
-{ 
-	return [[[self currentThemeDict] objectForKey:PCTypeKey] unsignedIntegerValue];
-}
 
 - (NSString *)theme
 {
