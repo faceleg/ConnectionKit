@@ -1,8 +1,8 @@
 //
-//  PageCounterPagelet.m
-//  PageCounterPagelet
+//  PageCounterPlugIn.m
+//  PageCounterElement
 //
-//  Copyright 2006-2009 Karelia Software. All rights reserved.
+//  Copyright 2006-2010 Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -35,6 +35,7 @@
 //
 
 
+#import "PageCounterPlugIn.h"
 
  /*
   
@@ -48,16 +49,9 @@
   
   ALTER TABLE PageCounts ADD INDEX(url);
   
-  
-  
   */
  
 
-#import "PageCounterPlugIn.h"
-
-#import "SandvoxPlugin.h"
-
-enum { PC_INVISIBLE = 0, PC_TEXT = 1, PC_GRAPHICS = 2 };
 
 NSString *PCThemeKey = @"theme";
 NSString *PCTypeKey = @"type";		
@@ -67,10 +61,9 @@ NSString *PCImagesPathKey = @"path";
 NSString *PCSampleImageKey = @"sampleImage";
 
 
-
 @implementation PageCounterPlugIn
 
-#pragma mark -
+
 #pragma mark Initialization
 
 + (NSArray *)themes
@@ -84,12 +77,12 @@ NSString *PCSampleImageKey = @"sampleImage";
 		
 		d = [NSMutableDictionary dictionary];
 		[d setObject:LocalizedStringInThisBundle(@"Text", @"Text style of page counter") forKey:PCThemeKey];
-		[d setObject:[NSNumber numberWithInt:PC_TEXT] forKey:PCTypeKey];
+		[d setObject:[NSNumber numberWithUnsignedInteger:PC_TEXT] forKey:PCTypeKey];
 		[themes addObject:d];
 		
 		d = [NSMutableDictionary dictionary];
 		[d setObject:LocalizedStringInThisBundle(@"Invisible", @"Invisible style of page counter; outputs no number") forKey:PCThemeKey];
-		[d setObject:[NSNumber numberWithInt:PC_INVISIBLE] forKey:PCTypeKey];
+		[d setObject:[NSNumber numberWithUnsignedInteger:PC_INVISIBLE] forKey:PCTypeKey];
 		[themes addObject:d];
 		
 		NSString *resourcePath = [[NSBundle bundleForClass:[PageCounterPlugIn class]] resourcePath];
@@ -125,7 +118,7 @@ NSString *PCSampleImageKey = @"sampleImage";
 						// Get the other properties into a dictionary
 						NSString *baseName = [fileName substringToIndex:whereZeroPng];
 						d = [NSMutableDictionary dictionary];
-						[d setObject:[NSNumber numberWithInt:PC_GRAPHICS] forKey:PCTypeKey];
+						[d setObject:[NSNumber numberWithUnsignedInteger:PC_GRAPHICS] forKey:PCTypeKey];
 						[d setObject:baseName forKey:PCThemeKey];	// Used internally not for display
 						[d setObject:[NSNumber numberWithInt:(int)size.width] forKey:PCWidthKey];
 						[d setObject:[NSNumber numberWithInt:(int)size.height] forKey:PCHeightKey];
@@ -169,80 +162,7 @@ NSString *PCSampleImageKey = @"sampleImage";
 	return sThemes;
 }
 
-- (void)awakeFromNib
-{
-	[oTheme removeAllItems];
-	
-	NSEnumerator *themeEnum = [[[self class] themes] objectEnumerator];
-	NSDictionary *themeDict;
-	BOOL hasDoneGraphicsYet = NO;
-	int tag = 0;
-	
-	while ((themeDict = [themeEnum nextObject]) != nil)
-	{
-		NSString *theme = [themeDict objectForKey:PCThemeKey];
 
-		if ([[themeDict objectForKey:PCTypeKey] intValue] == PC_GRAPHICS)
-		{
-			if (!hasDoneGraphicsYet)
-			{
-				hasDoneGraphicsYet = YES;
-				//[[oTheme menu] addItem:[NSMenuItem separatorItem]];		// PROBLEMS WITH TAG BINDING?
-			}
-			[oTheme addItemWithTitle:@""];	// ADD THE MENU
-
-			NSImage *sampleImage = [themeDict objectForKey:PCSampleImageKey];
-			if (sampleImage)
-			{
-				[[oTheme lastItem] setImage:sampleImage];
-			}
-			[[oTheme lastItem] setTag:tag++];
-		}
-		else
-		{
-			[oTheme addItemWithTitle:theme];	// ADD THE MENU
-/// baseline is wonky here!
-//			[[oTheme lastItem] setAttributedTitle:	// make it bold, small system font
-//				[[[NSAttributedString alloc]
-//					initWithString:theme
-//						attributes:[NSDictionary dictionaryWithObjectsAndKeys:
-//										[NSFont boldSystemFontOfSize: [NSFont smallSystemFontSize]],
-//										NSFontAttributeName,
-//										nil]
-//					] autorelease]];
-			[[oTheme lastItem] setTag:tag++];
-		}
-	}
-	int index = [[[self delegateOwner] objectForKey:@"selectedTheme"] unsignedIntValue];
-	[oTheme setBordered:(index < 2)];
-}
-
-#pragma mark -
-#pragma mark Selected Theme
-
-- (void)setDelegateOwner:(id)newOwner
-{
-	// We keep an eye on "selected theme" so we can add or remove the border from the popup button
-	[[self delegateOwner] removeObserver:self forKeyPath:@"selectedTheme"];
-	[super setDelegateOwner:newOwner];
-	[newOwner addObserver:self forKeyPath:@"selectedTheme" options:0 context:NULL];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-	if ([keyPath isEqualToString:@"selectedTheme"])
-	{
-		// Add or remove the popup button's border as appropriate
-		int index = [[[self delegateOwner] objectForKey:@"selectedTheme"] unsignedIntValue];
-		[oTheme setBordered:(index < 2)];
-	}
-	else
-	{
-		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-	}
-}
-
-#pragma mark -
 #pragma mark Accessors
 
 - (NSDictionary *)currentThemeDict
@@ -253,9 +173,9 @@ NSString *PCSampleImageKey = @"sampleImage";
 	return result;
 }
 
-- (int)type
+- (NSUInteger)type
 { 
-	return [[[self currentThemeDict] objectForKey:PCTypeKey] intValue];
+	return [[[self currentThemeDict] objectForKey:PCTypeKey] unsignedIntegerValue];
 }
 
 - (NSString *)theme

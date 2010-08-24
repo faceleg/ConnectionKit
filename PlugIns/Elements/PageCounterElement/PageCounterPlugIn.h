@@ -1,8 +1,8 @@
 //
-//  PageCounterPagelet.h
-//  PageCounterPagelet
+//  PageCounterPlugIn.h
+//  PageCounterElement
 //
-//  Copyright 2006-2009 Karelia Software. All rights reserved.
+//  Copyright 2006-2010 Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -40,12 +40,22 @@
 
 @interface PageCounterPlugIn : SVPlugIn
 {
-	IBOutlet NSPopUpButton *oTheme;
+    
 }
+
+@property (nonatomic, readonly) NSString *theme;
+@property (nonatomic, readonly) NSUInteger type;
+@property (nonatomic, readonly) NSNumber *width;
+@property (nonatomic, readonly) NSNumber *height;
 
 @end
 
+
+enum { PC_INVISIBLE = 0, PC_TEXT = 1, PC_GRAPHICS = 2 };
+
+extern NSString *PCTypeKey;
 extern NSString *PCThemeKey;
 extern NSString *PCWidthKey;
 extern NSString *PCHeightKey;
 extern NSString *PCImagesPathKey;
+extern NSString *PCSampleImageKey;
