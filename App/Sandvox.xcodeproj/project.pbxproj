@@ -133,12 +133,12 @@
 				3C79F2F211F3BF9900B699EE /* PBXTargetDependency */,
 				3CBC728B11F0C6A600716937 /* PBXTargetDependency */,
 				3C9870F111F3D6020053A72C /* PBXTargetDependency */,
-				3C104A24121B017800899C3B /* PBXTargetDependency */,
 				3CD80744120A6C7600E0848F /* PBXTargetDependency */,
 				3C9870A411F3D3AC0053A72C /* PBXTargetDependency */,
 				3C8544AA12061D69000A19C3 /* PBXTargetDependency */,
 				3C0049581210CB9A006BAD9C /* PBXTargetDependency */,
 				3C4CDF2F1207413A002AF966 /* PBXTargetDependency */,
+				3C84BDFD1224345A00EC31A2 /* PBXTargetDependency */,
 				3C7C1E311219B388005D75B1 /* PBXTargetDependency */,
 				3C7C1E401219B5DA005D75B1 /* PBXTargetDependency */,
 				3C9CF9B0121201D8005CFDD4 /* PBXTargetDependency */,
@@ -1281,13 +1281,6 @@
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = PageCounterElement;
 		};
-		3C104A23121B017800899C3B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C42E2990D64D253004F35FD /* PageCounterElement.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = PageCounterElement;
-		};
 		3C15B8690DC7917B00DE9957 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
@@ -1469,6 +1462,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = DeliciousElement;
+		};
+		3C84BDFC1224345A00EC31A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C42E2990D64D253004F35FD /* PageCounterElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* PageCounterElement */;
+			remoteInfo = PageCounterElement;
 		};
 		3C8544A512061D22000A19C3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -7294,11 +7294,6 @@
 			name = PhotoGridIndex;
 			targetProxy = 3C004C5F121251E4006BAD9C /* PBXContainerItemProxy */;
 		};
-		3C104A24121B017800899C3B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PageCounterElement;
-			targetProxy = 3C104A23121B017800899C3B /* PBXContainerItemProxy */;
-		};
 		3C15B86A0DC7917B00DE9957 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3C15B85E0DC790A100DE9957 /* UpdateDesigns */;
@@ -7388,6 +7383,11 @@
 			isa = PBXTargetDependency;
 			name = DeliciousElement;
 			targetProxy = 3C7C2B781219E5C9005D75B1 /* PBXContainerItemProxy */;
+		};
+		3C84BDFD1224345A00EC31A2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PageCounterElement;
+			targetProxy = 3C84BDFC1224345A00EC31A2 /* PBXContainerItemProxy */;
 		};
 		3C8544AA12061D69000A19C3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
