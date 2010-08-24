@@ -85,7 +85,7 @@
 		}
 	}
     
-    NSUInteger themeType = [(PageCounterPlugIn *)[[self inspectedObjectsController] selection] themeType];
+    NSUInteger themeType = [[[[self inspectedObjectsController] selection] valueForKey:@"themeType"] unsignedIntegerValue];
     [oTheme setBordered:(themeType == PC_INVISIBLE || themeType == PC_TEXT)];
 }
 
