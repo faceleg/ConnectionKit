@@ -74,7 +74,6 @@ NSString *PCSampleImageKey = @"sampleImage";
 }
 
 
-
 #pragma mark Initialization
 
 + (NSArray *)themes
@@ -174,57 +173,54 @@ NSString *PCSampleImageKey = @"sampleImage";
 }
 
 
-
-#pragma mark -
 #pragma mark HTML Generation
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
     [super writeHTML:context];
     [context addDependencyForKeyPath:@"selectedThemeIndex" ofObject:self];
+    //FIXME: need to add resources here
 }
+
 
 #pragma mark Properties
 
 @synthesize selectedThemeIndex = _selectedThemeIndex;
-
-- (NSUInteger)type
-{ 
-	return [[[self currentThemeDict] objectForKey:PCTypeKey] unsignedIntegerValue];
-}
-
-#pragma mark Accessors
-
-- (NSDictionary *)currentThemeDict
-{
-	int index = [[[self delegateOwner] objectForKey:@"selectedTheme"] unsignedIntValue];
-	if (index >= [[[self class] themes] count]) index = 0;
-	NSDictionary *result = [[[self class] themes] objectAtIndex:index];
-	return result;
-}
-
-
-- (NSString *)theme
-{
-	return [[self currentThemeDict] objectForKey:PCThemeKey];
-}
-
-- (id)width
-{
-	return [[self currentThemeDict] objectForKey:PCWidthKey];
-}
-
-- (id)height
-{
-	return [[self currentThemeDict] objectForKey:PCHeightKey];
-}
 
 - (NSArray *)themes
 {
 	return [[self class] themes];
 }
 
-#pragma mark -
+- (NSDictionary *)selectedTheme
+{
+    NSUInteger index = self.selectedThemeIndex;
+    //FIXME: is this guard really necessary?
+    if ( index >= self.themes.count ) index = 0;
+    return [self.themes objectAtIndex:self.selectedThemeIndex];
+}
+
+- (NSString *)themeName
+{
+	return [self.selectedTheme objectForKey:PCThemeKey];
+}
+
+- (id)themeWidth
+{
+	return [self.selectedTheme objectForKey:PCWidthKey];
+}
+
+- (id)themeHeight
+{
+	return [self.selectedTheme objectForKey:PCHeightKey];
+}
+
+- (NSUInteger)themeType
+{ 
+	return [[self.selectedTheme objectForKey:PCTypeKey] unsignedIntegerValue];
+}
+
+
 #pragma mark Resources
 
 - (NSURL *)previewResourceDirectory

@@ -51,14 +51,16 @@ extern NSString *PCSampleImageKey;
     NSUInteger _selectedThemeIndex;
 }
 
+// index into themes array
 @property (nonatomic) NSUInteger selectedThemeIndex;
 
+// derived
+@property (nonatomic, readonly) NSArray *themes;
 @property (nonatomic, readonly) NSDictionary *selectedTheme;
-@property (nonatomic, readonly) NSUInteger type;
 
-
-@property (nonatomic, readonly) NSString *theme;
-@property (nonatomic, readonly) NSNumber *width;
-@property (nonatomic, readonly) NSNumber *height;
+@property (nonatomic, readonly) NSString *themeName;
+@property (nonatomic, readonly) NSNumber *themeWidth;
+@property (nonatomic, readonly) NSNumber *themeHeight;
+@property (nonatomic, readonly) NSUInteger themeType;
 
 @end
