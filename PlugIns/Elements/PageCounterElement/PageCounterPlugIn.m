@@ -113,14 +113,13 @@ NSString *PCSampleImageKey = @"sampleImage";
 				NSString *path = [resourcePath stringByAppendingPathComponent:fileName];
 				
 				// Determine image size
-				NSSize size = NSMakeSize(0,0);
 				NSURL *url = [NSURL fileURLWithPath:path];
 				CGImageSourceRef source = CGImageSourceCreateWithURL((CFURLRef)url, NULL);
 				if (source)
 				{
 					NSDictionary *props = (NSDictionary *) CGImageSourceCopyPropertiesAtIndex(source,  0,  NULL );
 					
-					size = NSMakeSize([[props objectForKey:(NSString *)kCGImagePropertyPixelWidth] intValue],
+					NSSize size = NSMakeSize([[props objectForKey:(NSString *)kCGImagePropertyPixelWidth] intValue],
 									  [[props objectForKey:(NSString *)kCGImagePropertyPixelHeight] intValue]);
 					CFRelease(source);
 					[props release];
@@ -233,9 +232,8 @@ NSString *PCSampleImageKey = @"sampleImage";
 - (NSDictionary *)selectedTheme
 {
     NSUInteger index = self.selectedThemeIndex;
-    //FIXME: is this guard really necessary?
-    if ( index >= self.themes.count ) index = 0;
-    return [self.themes objectAtIndex:self.selectedThemeIndex];
+    if ( index >= self.themes.count ) index = 0; //FIXME: is this guard really necessary?
+    return [self.themes objectAtIndex:index];
 }
 
 - (NSString *)themeTitle
