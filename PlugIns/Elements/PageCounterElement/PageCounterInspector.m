@@ -58,7 +58,8 @@
 			if (!hasDoneGraphicsYet)
 			{
 				hasDoneGraphicsYet = YES;
-				//[[oTheme menu] addItem:[NSMenuItem separatorItem]];		// PROBLEMS WITH TAG BINDING?
+				[[oThemePopUp menu] addItem:[NSMenuItem separatorItem]];
+                continue;
 			}
 			[oThemePopUp addItemWithTitle:@""];	// ADD THE MENU
             
@@ -72,21 +73,21 @@
 		else
 		{
 			[oThemePopUp addItemWithTitle:theme];	// ADD THE MENU
-                                                /// baseline is wonky here!
-                                                //			[[oTheme lastItem] setAttributedTitle:	// make it bold, small system font
-                                                //				[[[NSAttributedString alloc]
-                                                //					initWithString:theme
-                                                //						attributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                //										[NSFont boldSystemFontOfSize: [NSFont smallSystemFontSize]],
-                                                //										NSFontAttributeName,
-                                                //										nil]
-                                                //					] autorelease]];
+			[[oThemePopUp lastItem] setAttributedTitle:	// make it small system font since pop-up size is normal
+				[[[NSAttributedString alloc]
+					initWithString:theme
+						attributes:[NSDictionary dictionaryWithObjectsAndKeys:
+										[NSFont systemFontOfSize:[NSFont smallSystemFontSize]],
+										NSFontAttributeName,
+										nil]
+					] autorelease]];
 			[[oThemePopUp lastItem] setTag:tag++];
 		}
 	}
     
-    NSUInteger themeType = [[[[self inspectedObjectsController] selection] valueForKey:@"themeType"] unsignedIntegerValue];
-    [oThemePopUp setBordered:(themeType == PC_INVISIBLE || themeType == PC_TEXT)];
+    //NSUInteger themeType = [[[[self inspectedObjectsController] selection] valueForKey:@"themeType"] unsignedIntegerValue];
+    //[oThemePopUp setBordered:(themeType == PC_INVISIBLE || themeType == PC_TEXT)];
+    [oThemePopUp setBordered:NO];
 }
 
 
@@ -94,8 +95,8 @@
 
 - (IBAction)changeTheme:(id)sender
 {
-    NSInteger index = [sender indexOfSelectedItem];
-    [oThemePopUp setBordered:(index == PC_INVISIBLE || index == PC_TEXT)];
+    //NSInteger index = [sender indexOfSelectedItem];
+    //[oThemePopUp setBordered:(index == PC_INVISIBLE || index == PC_TEXT)];
 }
 
 @end
