@@ -42,7 +42,7 @@
 
 - (void)awakeFromNib
 {
-	[oTheme removeAllItems];
+	[oThemePopUp removeAllItems];
 	
 	NSEnumerator *themeEnum = [[[PageCounterPlugIn class] themes] objectEnumerator];
 	NSDictionary *themeDict;
@@ -60,18 +60,18 @@
 				hasDoneGraphicsYet = YES;
 				//[[oTheme menu] addItem:[NSMenuItem separatorItem]];		// PROBLEMS WITH TAG BINDING?
 			}
-			[oTheme addItemWithTitle:@""];	// ADD THE MENU
+			[oThemePopUp addItemWithTitle:@""];	// ADD THE MENU
             
 			NSImage *sampleImage = [themeDict objectForKey:PCSampleImageKey];
 			if (sampleImage)
 			{
-				[[oTheme lastItem] setImage:sampleImage];
+				[[oThemePopUp lastItem] setImage:sampleImage];
 			}
-			[[oTheme lastItem] setTag:tag++];
+			[[oThemePopUp lastItem] setTag:tag++];
 		}
 		else
 		{
-			[oTheme addItemWithTitle:theme];	// ADD THE MENU
+			[oThemePopUp addItemWithTitle:theme];	// ADD THE MENU
                                                 /// baseline is wonky here!
                                                 //			[[oTheme lastItem] setAttributedTitle:	// make it bold, small system font
                                                 //				[[[NSAttributedString alloc]
@@ -81,12 +81,12 @@
                                                 //										NSFontAttributeName,
                                                 //										nil]
                                                 //					] autorelease]];
-			[[oTheme lastItem] setTag:tag++];
+			[[oThemePopUp lastItem] setTag:tag++];
 		}
 	}
     
     NSUInteger themeType = [[[[self inspectedObjectsController] selection] valueForKey:@"themeType"] unsignedIntegerValue];
-    [oTheme setBordered:(themeType == PC_INVISIBLE || themeType == PC_TEXT)];
+    [oThemePopUp setBordered:(themeType == PC_INVISIBLE || themeType == PC_TEXT)];
 }
 
 
@@ -95,7 +95,7 @@
 - (IBAction)changeTheme:(id)sender
 {
     NSInteger index = [sender indexOfSelectedItem];
-    [oTheme setBordered:(index == PC_INVISIBLE || index == PC_TEXT)];
+    [oThemePopUp setBordered:(index == PC_INVISIBLE || index == PC_TEXT)];
 }
 
 @end

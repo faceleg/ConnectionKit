@@ -39,7 +39,7 @@
 
 @interface PageCounterInspector : SVInspectorViewController 
 {
-	IBOutlet NSPopUpButton *oTheme;
+	IBOutlet NSPopUpButton *oThemePopUp;
 }
 
 - (IBAction)changeTheme:(id)sender;
