@@ -57,7 +57,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [result setValue:[[plugIn class] plugInIdentifier] forKey:@"plugInIdentifier"];
     
     
-    [result setPlugIn:plugIn useSerializedProperties:YES];  // pasing YES to copy the current properties out of the plug-in
+    [result setPlugIn:plugIn useSerializedProperties:YES];  // passing YES to copy the current properties out of the plug-in
     
     
     return result;
@@ -68,6 +68,14 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [super awakeFromInsert];
     
     [self setPrimitiveValue:@"??" forKey:@"plugInVersion"];
+}
+
+- (void)awakeFromFetch
+{
+    [super awakeFromFetch];
+    
+    [self loadPlugIn];
+    [[self plugIn] awakeFromFetch];
 }
 
 - (void)willInsertIntoPage:(KTPage *)page;
@@ -118,15 +126,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (SVPlugIn *)plugIn
 {
-	if (!_plugIn && [self plugInIdentifier])    // during undo/redo, plugInIdentifier may not have been set up yet
-	{
-		[self loadPlugIn];
-        
-		OBASSERT(_plugIn);
-        // Let the plug-in know that it's awoken
-        [_plugIn awakeFromFetch];
-    }
-    
 	return _plugIn;
 }
 
