@@ -161,13 +161,12 @@ NSString *PCSampleImageKey = @"sampleImage";
 			}
 		}
 		
-		// Add any from user defaults  (NOT SURE HOW THIS WOULD REALLY WORK...
+		// Add any from user defaults
 		NSArray *ud = [[NSUserDefaults standardUserDefaults] objectForKey:@"PageCounterThemes"];
 		if (ud)
 		{ 
 			[themes addObjectsFromArray:ud];
 		}
-		
 		
 		// Store the themes
 		sThemes = [[NSArray alloc] initWithArray:themes];
@@ -181,8 +180,6 @@ NSString *PCSampleImageKey = @"sampleImage";
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
-    [super writeHTML:context];
-    
     // add dependencies
     [context addDependencyForKeyPath:@"selectedThemeIndex" ofObject:self];
     
@@ -192,16 +189,15 @@ NSString *PCSampleImageKey = @"sampleImage";
 		NSString *theme = self.themeTitle;
 		NSBundle *b = [self bundle];
 		NSString *imagePath = [self.selectedTheme objectForKey:PCImagesPathKey];	// from default
-		
-		unsigned i;
-		
-		for (i = 0; i < 10; i++)
+        
+        NSURL *contextResourceURL = nil;
+		for (NSUInteger i = 0; i < 10; i++)
 		{
 			NSString *format = [NSString stringWithFormat:@"%@-%d.png", theme, i];
 			if (imagePath)
 			{
                 NSURL *imageURL = [NSURL fileURLWithPath:[imagePath stringByAppendingPathComponent:format]];
-                [context addResourceWithURL:imageURL];
+                contextResourceURL = [context addResourceWithURL:imageURL];
 			}
 			else
 			{
@@ -210,21 +206,29 @@ NSString *PCSampleImageKey = @"sampleImage";
                                             inDirectory:@"digits"];
                 OBASSERT(resource);
                 NSURL *resourceURL = [NSURL fileURLWithPath:resource];
-                [context addResourceWithURL:resourceURL];
+                contextResourceURL = [context addResourceWithURL:resourceURL];
 			}
 		}
+        
+        if ( contextResourceURL )
+        {
+            CFURLRef pathURL = CFURLCreateCopyDeletingLastPathComponent(
+                                                                        kCFAllocatorDefault,
+                                                                        (CFURLRef)contextResourceURL
+                                                                        );
+            self.resourcesURL = (NSURL *)pathURL;
+            CFRelease(pathURL);
+        }        
 	}
-}
-
-- (NSURL *)previewResourceDirectory
-{
-	NSString *path = [[[self bundle] resourcePath] stringByAppendingPathComponent:@"digits"];
-	return [NSURL fileURLWithPath:path];
+    
+    // make it all happen
+    [super writeHTML:context];    
 }
 
 
 #pragma mark Properties
 
+@synthesize resourcesURL = _resourcesURL;
 @synthesize selectedThemeIndex = _selectedThemeIndex;
 
 - (NSArray *)themes
