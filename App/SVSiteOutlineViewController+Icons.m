@@ -52,7 +52,6 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 
 @implementation SVSiteOutlineViewController (Icons)
 
-#pragma mark -
 #pragma mark General
 
 - (NSImage *)iconForItem:(SVSiteItem *)item;
@@ -70,13 +69,16 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
         id <IMBImageItem> thumbnail = [item thumbnail];
         if ([thumbnail imageRepresentation])
         {
-			CIImage *thumb = [CIImage imageWithIMBImageItem:thumbnail];
-			if (![self displaySmallPageIcons])
-			{
-				// If large page icons, process the thumb a bit.  Leave small icons alone
-				//thumb = [thumb processForThumbnailOfSize:[self maximumIconSize]];
-			}
-			result = [thumb toNSImage];
+            CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(thumbnail, NULL);
+            if (imageSource)
+            {
+                result = [[NSImage alloc]
+                          initWithThumbnailFromCGImageSource:imageSource
+                          maxPixelSize:[self maximumIconSize]];
+                
+                [result autorelease];
+                CFRelease(imageSource);
+            }
 		}
 	}
               
