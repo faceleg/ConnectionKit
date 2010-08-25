@@ -397,6 +397,18 @@
     [self startElement:elementName];
 }
 
+- (NSString *)startElement:(NSString *)tagName
+           preferredIdName:(NSString *)preferredID
+                 className:(NSString *)className
+                attributes:(NSDictionary *)attributes;
+{
+    [self pushAttributes:attributes];
+    [self startElement:tagName idName:preferredID className:className];
+    
+    return preferredID;
+#warning Return an actually unique value!
+}
+
 - (void)pushAttributes:(NSDictionary *)attributes;
 {
     NSArray *sortedAttributes = [[attributes allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
