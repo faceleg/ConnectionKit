@@ -484,7 +484,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 {
-    // Draw image with shadow
+    // Apply shadow
     [[NSGraphicsContext currentContext] saveGraphicsState];
     
     NSShadow *shadow = [[NSShadow alloc] init];
@@ -493,7 +493,16 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
     [shadow setShadowOffset:NSMakeSize(0.0f, -1.0f)];
     [shadow set];
     
-    [super drawWithFrame:cellFrame inView:controlView];
+    
+    // Draw image
+    NSImage *image = [self image];
+    NSRect imageRect = NSMakeRect(cellFrame.origin.x + 2,
+                                  cellFrame.origin.y + 1,
+                                  [image size].width,
+                                  [image size].height);
+    
+    cellFrame.origin.y--;   // budge up by one pixel to match shadow offset
+    [self drawInteriorWithFrame:cellFrame inView:controlView];
     
     [[NSGraphicsContext currentContext] restoreGraphicsState];
     [shadow release];
@@ -501,7 +510,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
     
     // Overlay white frame
     [[NSColor whiteColor] set];
-    NSFrameRect([self imageRectForBounds:cellFrame]);
+    //NSFrameRectWithWidth(imageRect, 2.0f);
 }
 
 @end
