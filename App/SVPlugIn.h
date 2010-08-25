@@ -70,6 +70,12 @@
 //  <a href="...." target="..." rel="nofollow">
 - (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
 
+// For when you need to write an element and be sure the ID is unique. Perfect for hooking up a script. Returns the best unique ID available
+- (NSString *)startElement:(NSString *)tagName
+           preferredIdName:(NSString *)preferredID
+                 className:(NSString *)className
+                attributes:(NSDictionary *)attributes;
+
 // The element's size will be taken from plug-in's .width and .height properties. When editing, that will be kept up-to-date, live.
 - (void)startElement:(NSString *)elementName
     bindSizeToPlugIn:(SVPlugIn *)plugIn
