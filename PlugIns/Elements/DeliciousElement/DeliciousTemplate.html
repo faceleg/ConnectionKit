@@ -2,7 +2,7 @@
 
 [[if parser.HTMLGenerationPurpose||parser.liveDataFeeds]]
 
-<div id="delicious-container-[[=containerID]]">
+<div id="delicious-container-[[=elementID]]">
 <script type="text/javascript" src="http://delicious.com/feeds/json/[[=&deliciousID]][[if restrictedTags]]/[[=&%restrictedTags]][[endif3]][[if maxEntries]]?count=[[=maxEntries]][[endif3]]"></script>
 <script type="text/javascript">
 [[if sortAlphabetically]]
@@ -44,7 +44,7 @@ for (var i=0, post; post = Delicious.posts[i]; i++) {
 [[endif4]]
 	ul.appendChild(li)
 }
-document.getElementById('delicious-container-[[=containerID]]').appendChild(ul)
+document.getElementById('delicious-container-[[=elementID]]').appendChild(ul)
 [[else3]]
 var dl = document.createElement('dl')
 for (var i=0, post; post = Delicious.posts[i]; i++) {
@@ -79,7 +79,7 @@ for (var i=0, post; post = Delicious.posts[i]; i++) {
 	dl.appendChild(dt)
 	dl.appendChild(dd)
 }
-document.getElementById('delicious-container-[[=containerID]]').appendChild(dl)
+document.getElementById('delicious-container-[[=elementID]]').appendChild(dl)
 [[endif3]]
 </script>
 <noscript><p><a href="http://delicious.com/[[=&deliciousID]][[if restrictedTags]]/[[=&%restrictedTags]][[endif3]]">[["My Delicious Links]]</a></p></noscript>

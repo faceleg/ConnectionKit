@@ -74,7 +74,6 @@
             @"openLinksInNewWindow", 
             @"listStyle", 
             @"maxEntries", 
-            @"containerID",
             nil];
 }
 
@@ -85,15 +84,7 @@
 {
     self.deliciousID = nil;
     self.restrictedTags = nil;
-    self.containerID = nil;
 	[super dealloc]; 
-}
-
-- (void)awakeFromNew;
-{
-    [super awakeFromNew];
-    //FIXME: better way to generate a one-time only unqiueID?
-    self.containerID = [NSString shortUUIDString];
 }
 
 
@@ -101,8 +92,6 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
-    [super writeHTML:context];
-    
     // add dependencies
     [context addDependencyForKeyPath:@"deliciousID" ofObject:self];
     [context addDependencyForKeyPath:@"restrictedTags" ofObject:self];
@@ -111,6 +100,9 @@
     [context addDependencyForKeyPath:@"sortAlphabetically" ofObject:self];
     [context addDependencyForKeyPath:@"linkStyle" ofObject:self];
     [context addDependencyForKeyPath:@"maxEntries" ofObject:self];
+    
+    // make it happen
+    [super writeHTML:context];
 }
 
 
@@ -124,7 +116,5 @@
 @synthesize openLinksInNewWindow = _openLinksInNewWindow;
 @synthesize listStyle = _listStyle;
 @synthesize maxEntries = _maxEntries;
-
-@synthesize containerID = _containerID;
 
 @end
