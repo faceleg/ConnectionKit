@@ -203,10 +203,6 @@
     {
         [self willDeletePage:aPage];
     }
-    for (KTPage *aPage in [page archivePages])
-    {
-        [self willDeletePage:aPage];
-    }
 }
 
 - (void)deletePage:(KTPage *)page;  // Please ALWAYS call this for pages as it posts a notification first

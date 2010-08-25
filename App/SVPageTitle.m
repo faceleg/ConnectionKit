@@ -41,10 +41,6 @@
 	{
 		[[page parentPage] invalidateSortedChildrenCache];
 	}
-    
-    
-    // Update archive page titles to match
-    [[page archivePages] makeObjectsPerformSelector:@selector(updateTitle)];
 }
 
 @end
