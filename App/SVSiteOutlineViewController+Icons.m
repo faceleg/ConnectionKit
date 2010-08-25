@@ -74,10 +74,11 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
             {
                 result = [[NSImage alloc]
                           initWithThumbnailFromCGImageSource:imageSource
-                          maxPixelSize:([self maximumIconSize] - 2)];   // take off 2 for border
-                
-                [result autorelease];
+                          maxPixelSize:([self maximumIconSize] - 4)];   // shrink to fit shadow
                 CFRelease(imageSource);
+                
+                [result setBackgroundColor:[NSColor whiteColor]];
+                [result autorelease];
             }
 		}
 	}

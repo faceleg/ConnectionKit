@@ -62,7 +62,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
         
 		myImageCell = [[SVSiteOutlineImageCell alloc] initImageCell:nil];
 		[myImageCell setImageAlignment:NSImageAlignCenter];
-		[myImageCell setImageScaling:NSScaleProportionally];
+		[myImageCell setImageScaling:NSImageScaleNone]; // we are supplied correct size images
     }
 
     return self;
@@ -484,11 +484,24 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 {
-    // Overlay white border
-    [[NSColor whiteColor] set];
-    NSRectFill(cellFrame);
+    // Draw image with shadow
+    [[NSGraphicsContext currentContext] saveGraphicsState];
+    
+    NSShadow *shadow = [[NSShadow alloc] init];
+    [shadow setShadowColor:[NSColor blackColor]];
+    [shadow setShadowBlurRadius:2.0f];
+    [shadow setShadowOffset:NSMakeSize(0.0f, -1.0f)];
+    [shadow set];
     
     [super drawWithFrame:cellFrame inView:controlView];
+    
+    [[NSGraphicsContext currentContext] restoreGraphicsState];
+    [shadow release];
+    
+    
+    // Overlay white frame
+    [[NSColor whiteColor] set];
+    NSFrameRect([self imageRectForBounds:cellFrame]);
 }
 
 @end
