@@ -15,6 +15,13 @@
 #define DEFAULT_PADDING 4   // eyeball guess, 4 is a standard Aqua spacing
 
 
+@interface SVSiteOutlineImageCell : NSImageCell
+@end
+
+
+#pragma mark -
+
+
 void InterpolateCurveShadow (void* info, float const* inData, float *outData)
 {
 	static float color1[4] = { 0.00, 0.00, 0.00, 0.0f };
@@ -53,7 +60,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
         [self setPadding:DEFAULT_PADDING];
 //		[self setStaleness:kNotStale]; // enum removed, staleness flag has changed
         
-		myImageCell = [[NSImageCell alloc] initImageCell:nil];
+		myImageCell = [[SVSiteOutlineImageCell alloc] initImageCell:nil];
 		[myImageCell setImageAlignment:NSImageAlignCenter];
 		[myImageCell setImageScaling:NSScaleProportionally];
     }
@@ -278,24 +285,20 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 {
 	// fix for 7294: don't lockFocus in this method, it alters the coords
 
-	// draw image
-	if ( myImage != nil ) 
-	{
-		// Draw image
-        NSRect	imageFrame = [self imageRectForBounds:cellFrame];
-		[myImageCell drawWithFrame:imageFrame inView:controlView];
-		
-		
-		// Draw staleness indicator, if appropriate
-		if ([self staleness])
-		{
-			NSRect markerRect = NSMakeRect(imageFrame.origin.x, NSMaxY(imageFrame) - 3.0, 3.0, 3.0);
-			NSBezierPath *markerPath = [NSBezierPath bezierPathWithOvalInRect:markerRect];
-			[markerPath setLineWidth:0.0];
-			
-			[[NSColor colorWithCalibratedRed:0.094 green:0.301 blue:0.75 alpha:1.0] setFill];
-			[markerPath fill];
-		}
+	// Draw image
+	NSRect	imageFrame = [self imageRectForBounds:cellFrame];
+    [myImageCell drawWithFrame:imageFrame inView:controlView];
+    
+    
+    // Draw staleness indicator, if appropriate
+    if ([self staleness])
+    {
+        NSRect markerRect = NSMakeRect(imageFrame.origin.x, NSMaxY(imageFrame) - 3.0, 3.0, 3.0);
+        NSBezierPath *markerPath = [NSBezierPath bezierPathWithOvalInRect:markerRect];
+        [markerPath setLineWidth:0.0];
+        
+        [[NSColor colorWithCalibratedRed:0.094 green:0.301 blue:0.75 alpha:1.0] setFill];
+        [markerPath fill];
     }
 	
 	
@@ -472,3 +475,21 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVSiteOutlineImageCell
+
+- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
+{
+    // Overlay white border
+    [[NSColor whiteColor] set];
+    NSRectFill(cellFrame);
+    
+    [super drawWithFrame:cellFrame inView:controlView];
+}
+
+@end
+

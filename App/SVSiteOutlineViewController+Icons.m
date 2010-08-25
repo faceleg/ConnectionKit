@@ -74,7 +74,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
             {
                 result = [[NSImage alloc]
                           initWithThumbnailFromCGImageSource:imageSource
-                          maxPixelSize:[self maximumIconSize]];
+                          maxPixelSize:([self maximumIconSize] - 2)];   // take off 2 for border
                 
                 [result autorelease];
                 CFRelease(imageSource);
