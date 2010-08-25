@@ -74,7 +74,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 			if (![self displaySmallPageIcons])
 			{
 				// If large page icons, process the thumb a bit.  Leave small icons alone
-				thumb = [thumb processForThumbnailOfSize:[self maximumIconSize]];
+				//thumb = [thumb processForThumbnailOfSize:[self maximumIconSize]];
 			}
 			result = [thumb toNSImage];
 		}
