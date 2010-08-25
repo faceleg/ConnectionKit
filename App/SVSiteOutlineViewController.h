@@ -89,7 +89,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 
 @interface SVSiteOutlineViewController (Icons)
-- (NSImage *)iconForItem:(SVSiteItem *)page;
+- (NSImage *)iconForItem:(SVSiteItem *)item isThumbnail:(BOOL *)isThumbnail;
 
 - (void)invalidateIconCaches;
 - (void)setCachedFavicon:(NSImage *)icon;

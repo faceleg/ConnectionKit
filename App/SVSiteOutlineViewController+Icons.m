@@ -54,10 +54,11 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 
 #pragma mark General
 
-- (NSImage *)iconForItem:(SVSiteItem *)item;
+- (NSImage *)iconForItem:(SVSiteItem *)item isThumbnail:(BOOL *)isThumbnail;
 {
 	OBPRECONDITION(item);
 	NSImage *result = nil;
+    if (isThumbnail) *isThumbnail = NO;
 	
 	// The home page always appears as some kind of favicon
 	if (item == [self rootPage])
@@ -79,6 +80,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
                 
                 [result setBackgroundColor:[NSColor whiteColor]];
                 [result autorelease];
+                if (isThumbnail) *isThumbnail = YES;
             }
 		}
 	}
@@ -96,6 +98,8 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	
     OBPOSTCONDITION(result);
 	return result;
+}
+
 }
 
 /*	Exactly as it says on the tin. Go through and reset all icon caches.

@@ -8,22 +8,27 @@
 
 #import <AppKit/AppKit.h>
 
+
+@class SVSiteOutlineImageCell;
+
+
 @interface KTImageTextCell : NSTextFieldCell
 {
   @private
-    NSImage		*myImage;
-    NSImageCell	*myImageCell;
-	float		myMaxImageSize;
-    int			myPadding;
-	int			myStaleness;
-	BOOL		myIsDraft;
-	BOOL		myIsPublishable;
-	BOOL		myIsRoot;
-	BOOL		myHasCodeInjection;
+    NSImage                 *myImage;
+    BOOL                    _thumbnail;
+    SVSiteOutlineImageCell	*myImageCell;
+	float                   myMaxImageSize;
+    int                     myPadding;
+	int                     myStaleness;
+	BOOL                    myIsDraft;
+	BOOL                    myIsPublishable;
+	BOOL                    myIsRoot;
+	BOOL                    myHasCodeInjection;
 }
 
-- (void)setImage:(NSImage *)anImage;
-- (NSImage *)image;
+@property(nonatomic, retain) NSImage *image;
+@property(nonatomic) BOOL isImageThumbnail;
 
 - (float)maxImageSize;
 - (void)setMaxImageSize:(float)width;

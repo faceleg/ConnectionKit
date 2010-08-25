@@ -16,6 +16,11 @@
 
 
 @interface SVSiteOutlineImageCell : NSImageCell
+{
+  @private
+    BOOL    _shadow;
+}
+@property(nonatomic) BOOL hasShadow;
 @end
 
 
@@ -397,6 +402,13 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
     }
 }
 
+@synthesize isImageThumbnail = _thumbnail;
+- (void)setIsImageThumbnail:(BOOL)isThumbnail;
+{
+    _thumbnail = isThumbnail;
+    [myImageCell setHasShadow:isThumbnail];
+}
+
 - (float)maxImageSize { return myMaxImageSize; }
 
 - (void)setMaxImageSize:(float)width { myMaxImageSize = width; }
@@ -482,35 +494,33 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 
 @implementation SVSiteOutlineImageCell
 
+@synthesize hasShadow = _shadow;
+
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 {
-    // Apply shadow
-    [[NSGraphicsContext currentContext] saveGraphicsState];
-    
-    NSShadow *shadow = [[NSShadow alloc] init];
-    [shadow setShadowColor:[NSColor blackColor]];
-    [shadow setShadowBlurRadius:2.0f];
-    [shadow setShadowOffset:NSMakeSize(0.0f, -1.0f)];
-    [shadow set];
-    
-    
-    // Draw image
-    NSImage *image = [self image];
-    NSRect imageRect = NSMakeRect(cellFrame.origin.x + 2,
-                                  cellFrame.origin.y + 1,
-                                  [image size].width,
-                                  [image size].height);
-    
-    cellFrame.origin.y--;   // budge up by one pixel to match shadow offset
-    [self drawInteriorWithFrame:cellFrame inView:controlView];
-    
-    [[NSGraphicsContext currentContext] restoreGraphicsState];
-    [shadow release];
-    
-    
-    // Overlay white frame
-    [[NSColor whiteColor] set];
-    //NSFrameRectWithWidth(imageRect, 2.0f);
+    if ([self hasShadow])
+    {
+        // Apply shadow
+        [[NSGraphicsContext currentContext] saveGraphicsState];
+        
+        NSShadow *shadow = [[NSShadow alloc] init];
+        [shadow setShadowColor:[NSColor blackColor]];
+        [shadow setShadowBlurRadius:2.0f];
+        [shadow setShadowOffset:NSMakeSize(0.0f, -1.0f)];
+        [shadow set];
+        
+        
+        // Draw image
+        cellFrame.origin.y--;   // budge up by one pixel to match shadow offset
+        [self drawInteriorWithFrame:cellFrame inView:controlView];
+        
+        [[NSGraphicsContext currentContext] restoreGraphicsState];
+        [shadow release];
+    }
+    else
+    {
+        [super drawWithFrame:cellFrame inView:controlView];
+    }
 }
 
 @end
