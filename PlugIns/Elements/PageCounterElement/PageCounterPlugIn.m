@@ -122,8 +122,8 @@ NSString *PCSampleImageKey = @"sampleImage";
 				{
 					NSDictionary *props = (NSDictionary *) CGImageSourceCopyPropertiesAtIndex(source,  0,  NULL );
 					
-					NSSize size = NSMakeSize([[props objectForKey:(NSString *)kCGImagePropertyPixelWidth] intValue],
-									  [[props objectForKey:(NSString *)kCGImagePropertyPixelHeight] intValue]);
+					NSSize size = NSMakeSize([[props objectForKey:(NSString *)kCGImagePropertyPixelWidth] integerValue],
+									  [[props objectForKey:(NSString *)kCGImagePropertyPixelHeight] integerValue]);
 					CFRelease(source);
 					[props release];
 					
@@ -134,19 +134,18 @@ NSString *PCSampleImageKey = @"sampleImage";
 						d = [NSMutableDictionary dictionary];
 						[d setObject:[NSNumber numberWithUnsignedInteger:PC_GRAPHICS] forKey:PCTypeKey];
 						[d setObject:baseName forKey:PCThemeKey];	// Used internally not for display
-						[d setObject:[NSNumber numberWithInt:(int)size.width] forKey:PCWidthKey];
-						[d setObject:[NSNumber numberWithInt:(int)size.height] forKey:PCHeightKey];
+						[d setObject:[NSNumber numberWithInteger:(NSInteger)size.width] forKey:PCWidthKey];
+						[d setObject:[NSNumber numberWithInteger:(NSInteger)size.height] forKey:PCHeightKey];
 						[themes addObject:d];
 						
-	#define MAX_SAMPLE_WIDTH 148	// best width for a 250 pixel inspector; depends on nib width!
+	#define MAX_SAMPLE_WIDTH 180	// best width for a 230 pixel inspector; depends on nib width!
 						
-						int maxDigits = MAX_SAMPLE_WIDTH / (int) size.width;
+						int maxDigits = MAX_SAMPLE_WIDTH / (NSInteger)size.width;
 						
 						NSRect digitRect = NSMakeRect(0,0,size.width, size.height);
 						NSImage *sampleImage = [[[NSImage alloc] initWithSize:NSMakeSize(size.width * maxDigits, size.height)] autorelease];
 						[sampleImage lockFocus];
-						int i;
-						for (i = 0 ; i < maxDigits ; i++)
+						for (NSUInteger i = 0 ; i < maxDigits ; i++)
 						{
 							NSString *digitFilePath = [resourcePath stringByAppendingPathComponent:
 								[NSString stringWithFormat:@"%@-%d.png", baseName, i]];
