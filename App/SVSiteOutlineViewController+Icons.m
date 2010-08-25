@@ -100,8 +100,6 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	return result;
 }
 
-}
-
 /*	Exactly as it says on the tin. Go through and reset all icon caches.
  */
 - (void)invalidateIconCaches
