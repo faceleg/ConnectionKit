@@ -93,9 +93,7 @@
 			<string>Photo Weblog</string>
 		</dict>
 	</array>
-	<key>KTTemplateName</key>
-	<string>PhotoGridIndexTemplate</string>
 	<key>NSPrincipalClass</key>
-	<string>${PROJECT_NAME}</string>
+	<string>PhotoGridIndex</string>
 </dict>
 </plist>

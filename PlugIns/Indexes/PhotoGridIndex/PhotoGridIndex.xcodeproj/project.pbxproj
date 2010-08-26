@@ -44,7 +44,7 @@
 		3C09515A0D5D0EBF00DE6F62 /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C09515B0D5D0EC500DE6F62 /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C09515C0D5D0EE200DE6F62 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
-		8D5B49B6048680CD000E48DA /* PhotoGrid.svxIndex */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoGrid.svxIndex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B6048680CD000E48DA /* PhotoGrid.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoGrid.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEB4FDA810309DF60054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEB4FDA910309DF60054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -128,7 +128,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* PhotoGrid.svxIndex */,
+				8D5B49B6048680CD000E48DA /* PhotoGrid.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -168,7 +168,7 @@
 			name = PhotoGridIndex;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = PhotoGridIndex;
-			productReference = 8D5B49B6048680CD000E48DA /* PhotoGrid.svxIndex */;
+			productReference = 8D5B49B6048680CD000E48DA /* PhotoGrid.svxElement */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -274,7 +274,7 @@
 					0x50320000,
 				);
 				PRODUCT_NAME = PhotoGrid;
-				WRAPPER_EXTENSION = svxIndex;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Debug;
 		};
@@ -288,7 +288,7 @@
 					0x50320000,
 				);
 				PRODUCT_NAME = PhotoGrid;
-				WRAPPER_EXTENSION = svxIndex;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
 		};

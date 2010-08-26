@@ -6033,7 +6033,7 @@
 		3C004C5E121251D4006BAD9C /* PhotoGrid.svxIndex */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = PhotoGrid.svxIndex;
+			path = PhotoGrid.svxElement;
 			remoteRef = 3C004C5D121251D4006BAD9C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
