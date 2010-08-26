@@ -322,6 +322,10 @@
         }
         else
         {
+            DOMRange *selection = [[self webEditor] selectedDOMRange];
+            DOMNode *selectionNode = [selection commonAncestorContainer];
+            BOOL repairSelection = (selectionNode == result);
+            
             // Create one and insert it
             firstChild = (DOMHTMLElement *)[[result ownerDocument] createElement:@"SPAN"];
             [firstChild setClassName:@"in"];
@@ -336,8 +340,13 @@
                 refNode = [firstChild nextSibling];
             }
             
-            // Finish
+            // Finish, repairing selection if needed
             result = firstChild;
+            if (repairSelection)
+            {
+                [selection selectNodeContents:result];
+                [[self webEditor] setSelectedDOMRange:selection affinity:0];
+            }
         }
     }
     
