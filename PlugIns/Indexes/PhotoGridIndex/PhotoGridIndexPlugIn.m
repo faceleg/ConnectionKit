@@ -1,5 +1,5 @@
 //
-//  PhotoGridIndex.h
+//  PhotoGridIndex.m
 //  PhotoGridIndex
 //
 //  Copyright 2004-2010 Karelia Software. All rights reserved.
@@ -34,12 +34,11 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "SandvoxPlugin.h"
+#import "PhotoGridIndexPlugIn.h"
 
 
-@interface PhotoGridIndex : SVIndexPlugIn
-{
+@implementation PhotoGridIndexPlugIn
 
-}
+- (NSSize)thumbnailImageSize { return NSMakeSize(128.0, 128.0); }
 
 @end
