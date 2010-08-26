@@ -129,7 +129,6 @@
 				3CBC719E11F02FAD00716937 /* PBXTargetDependency */,
 				3C53E3D111EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C7C2B791219E5C9005D75B1 /* PBXTargetDependency */,
-				3C53E3D911EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C79F2F211F3BF9900B699EE /* PBXTargetDependency */,
 				3CBC728B11F0C6A600716937 /* PBXTargetDependency */,
 				3C9870F111F3D6020053A72C /* PBXTargetDependency */,
@@ -1369,13 +1368,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = ContactElement;
-		};
-		3C53E3D811EE6B14005CF7B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = DownloadIndex;
 		};
 		3C53E3E811EE6B14005CF7B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -7335,11 +7327,6 @@
 			isa = PBXTargetDependency;
 			name = ContactElement;
 			targetProxy = 3C53E3D011EE6B14005CF7B2 /* PBXContainerItemProxy */;
-		};
-		3C53E3D911EE6B14005CF7B2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = DownloadIndex;
-			targetProxy = 3C53E3D811EE6B14005CF7B2 /* PBXContainerItemProxy */;
 		};
 		3C53E3E911EE6B14005CF7B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
