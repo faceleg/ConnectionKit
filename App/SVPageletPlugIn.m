@@ -93,21 +93,9 @@ static id <SVPlugInContext> sCurrentContext;
     sCurrentContext = context;
     [self writeInnerHTML:context];
     sCurrentContext = nil;
-    
-    return;
-        
-    [[context HTMLWriter] startElement:@"div" idName:[self elementID] className:nil];
-    [self writeInnerHTML:context];
-    [[context HTMLWriter] endElement];
 }
 
 + (id <SVPlugInContext>)currentContext; { return sCurrentContext; }
-
-- (NSString *)elementID
-{
-    NSString *result = [NSString stringWithFormat:@"%p", self];
-    return result;
-}
 
 - (void)writeInnerHTML:(id <SVPlugInContext>)context;
 {

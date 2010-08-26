@@ -69,8 +69,6 @@
 // For the benefit of methods which don't have direct access to the context. e.g. methods called from an HTML template.
 + (id <SVPlugInContext>)currentContext;
 
-@property(nonatomic, readonly) NSString *elementID;
-
 // Default implementation parses the template specified in Info.plist
 - (void)writeInnerHTML:(id <SVPlugInContext>)context;
 
