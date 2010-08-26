@@ -40,4 +40,45 @@
 
 @implementation PhotoGridIndexInspector
 
+#pragma mark KTLinkSourceViewDelegate
+
+- (void)awakeFromNib
+{
+    // enable target icon
+    //FIXME: remove this if KTLinkSourceView is enabled by default #84080
+    [collectionLinkSourceView setEnabled:YES];
+    
+	// Connect up the target icon if needed
+	NSArray *selectedObjects = [[self inspectedObjectsController] selectedObjects];
+	id<SVPage> collection = (id<SVPage>)[NSNull null];		// placeholder for not known
+	NSCellStateValue state = NSMixedState;
+	for ( PhotoGridIndexPlugIn *plugIn in selectedObjects )
+	{
+		if ( (collection == (id<SVPage>)[NSNull null]) )
+		{
+			collection = plugIn.indexedCollection;	// first pass through
+			state = (nil != collection) ? NSOnState : NSOffState;
+		}
+		else
+		{
+			if ( collection != plugIn.indexedCollection )
+			{
+				state = NSMixedState;
+				break;		// no point in continuing; it's a mixed state and there's no going back
+			}
+		}
+	}
+	[collectionLinkSourceView setConnected:(state == NSOnState)];
+}
+
+- (void)linkSourceConnectedTo:(id<SVPage>)aPage
+{
+	if (aPage)
+	{
+		[[[self inspectedObjectsController] selection] setValue:aPage forKey:@"indexedCollection"];
+		[collectionLinkSourceView setConnected:YES];
+	}
+}
+
+
 @end

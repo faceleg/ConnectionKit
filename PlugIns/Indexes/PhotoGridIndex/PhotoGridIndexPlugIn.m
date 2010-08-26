@@ -39,6 +39,18 @@
 
 @implementation PhotoGridIndexPlugIn
 
+#pragma mark HTML Generation
+
+- (void)writeHTML:(id <SVPlugInContext>)context
+{
+    [super writeHTML:context];
+    
+    // add dependencies
+    [context addDependencyForKeyPath:@"indexedCollection" ofObject:self];
+    [context addDependencyForKeyPath:@"indexedCollection.childPages" ofObject:self];
+}
+
+
 - (NSSize)thumbnailImageSize { return NSMakeSize(128.0, 128.0); }
 
 @end

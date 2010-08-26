@@ -39,7 +39,7 @@
 
 @interface PhotoGridIndexInspector : SVInspectorViewController 
 {
-
+	IBOutlet KTLinkSourceView	*collectionLinkSourceView;
 }
 
 @end
