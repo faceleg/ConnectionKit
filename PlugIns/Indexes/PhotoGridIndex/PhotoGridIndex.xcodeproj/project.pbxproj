@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C0951390D5D0DBE00DE6F62 /* PhotoGridIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0951380D5D0DBE00DE6F62 /* PhotoGridIndex.m */; };
+		3C0951390D5D0DBE00DE6F62 /* PhotoGridIndexPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0951380D5D0DBE00DE6F62 /* PhotoGridIndexPlugIn.m */; };
 		3C0951460D5D0E1700DE6F62 /* photoalbum.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3C0951440D5D0E1700DE6F62 /* photoalbum.icns */; };
 		3C0951470D5D0E1700DE6F62 /* PhotoGridIndexTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C0951450D5D0E1700DE6F62 /* PhotoGridIndexTemplate.html */; };
 		3C0951520D5D0E8100DE6F62 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C0951500D5D0E8100DE6F62 /* Localizable.strings */; };
 		3C09515D0D5D0EE200DE6F62 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C09515C0D5D0EE200DE6F62 /* License.rtf */; };
+		3C524C4D1226E67B008E24AD /* PhotoGridIndexInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C524C4B1226E67B008E24AD /* PhotoGridIndexInspector.xib */; };
+		3C524CA41226E6DC008E24AD /* PhotoGridIndexInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C524CA31226E6DC008E24AD /* PhotoGridIndexInspector.m */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -21,8 +23,8 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* PhotoGridIndex_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoGridIndex_Prefix.pch; sourceTree = "<group>"; };
-		3C0951370D5D0DBE00DE6F62 /* PhotoGridIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoGridIndex.h; sourceTree = "<group>"; };
-		3C0951380D5D0DBE00DE6F62 /* PhotoGridIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoGridIndex.m; sourceTree = "<group>"; };
+		3C0951370D5D0DBE00DE6F62 /* PhotoGridIndexPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoGridIndexPlugIn.h; sourceTree = "<group>"; };
+		3C0951380D5D0DBE00DE6F62 /* PhotoGridIndexPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoGridIndexPlugIn.m; sourceTree = "<group>"; };
 		3C09513D0D5D0DE700DE6F62 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C09513E0D5D0DE700DE6F62 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C0951440D5D0E1700DE6F62 /* photoalbum.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = photoalbum.icns; sourceTree = "<group>"; };
@@ -44,6 +46,9 @@
 		3C09515A0D5D0EBF00DE6F62 /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C09515B0D5D0EC500DE6F62 /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C09515C0D5D0EE200DE6F62 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
+		3C524C4C1226E67B008E24AD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PhotoGridIndexInspector.xib; sourceTree = "<group>"; };
+		3C524CA21226E6DC008E24AD /* PhotoGridIndexInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoGridIndexInspector.h; sourceTree = "<group>"; };
+		3C524CA31226E6DC008E24AD /* PhotoGridIndexInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoGridIndexInspector.m; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* PhotoGrid.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoGrid.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEB4FDA810309DF60054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -92,6 +97,7 @@
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C09515C0D5D0EE200DE6F62 /* License.rtf */,
 				3C0951500D5D0E8100DE6F62 /* Localizable.strings */,
+				3C524C4B1226E67B008E24AD /* PhotoGridIndexInspector.xib */,
 				3C0951450D5D0E1700DE6F62 /* PhotoGridIndexTemplate.html */,
 				3C0951440D5D0E1700DE6F62 /* photoalbum.icns */,
 			);
@@ -101,8 +107,10 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3C0951370D5D0DBE00DE6F62 /* PhotoGridIndex.h */,
-				3C0951380D5D0DBE00DE6F62 /* PhotoGridIndex.m */,
+				3C0951370D5D0DBE00DE6F62 /* PhotoGridIndexPlugIn.h */,
+				3C0951380D5D0DBE00DE6F62 /* PhotoGridIndexPlugIn.m */,
+				3C524CA21226E6DC008E24AD /* PhotoGridIndexInspector.h */,
+				3C524CA31226E6DC008E24AD /* PhotoGridIndexInspector.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -212,6 +220,7 @@
 				3C0951470D5D0E1700DE6F62 /* PhotoGridIndexTemplate.html in Resources */,
 				3C0951520D5D0E8100DE6F62 /* Localizable.strings in Resources */,
 				3C09515D0D5D0EE200DE6F62 /* License.rtf in Resources */,
+				3C524C4D1226E67B008E24AD /* PhotoGridIndexInspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,7 +231,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C0951390D5D0DBE00DE6F62 /* PhotoGridIndex.m in Sources */,
+				3C0951390D5D0DBE00DE6F62 /* PhotoGridIndexPlugIn.m in Sources */,
+				3C524CA41226E6DC008E24AD /* PhotoGridIndexInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +269,14 @@
 				CEB4FDA910309DF60054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		3C524C4B1226E67B008E24AD /* PhotoGridIndexInspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C524C4C1226E67B008E24AD /* en */,
+			);
+			name = PhotoGridIndexInspector.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
