@@ -66,8 +66,6 @@
 			<string>List</string>
 		</dict>
 	</array>
-	<key>KTTemplateName</key>
-	<string>ListingIndexTemplate</string>
 	<key>NSPrincipalClass</key>
 	<string>ListingIndex</string>
 </dict>
