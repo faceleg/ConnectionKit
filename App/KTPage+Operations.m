@@ -9,7 +9,6 @@
 #import "KTPage+Internal.h"
 
 #import "Debug.h"
-#import "KTAbstractIndex.h"
 #import "KTDocument.h"
 
 #import "NSObject+Karelia.h"

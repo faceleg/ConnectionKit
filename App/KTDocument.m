@@ -40,7 +40,6 @@
 
 #import "SVRichText.h"
 #import "KT.h"
-#import "KTAbstractIndex.h"
 #import "KTElementPlugInWrapper.h"
 #import "KTDesign.h"
 #import "SVPagesController.h"

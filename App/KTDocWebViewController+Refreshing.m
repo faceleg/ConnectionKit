@@ -17,7 +17,6 @@
 #import "KTDocWebViewController+Private.h"
 
 #import "Debug.h"
-#import "KTAbstractIndex.h"
 #import "KTDocWindowController.h"
 #import "SVHTMLContext.h"
 #import "SVHTMLTemplateParser.h"

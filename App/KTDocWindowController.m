@@ -9,7 +9,6 @@
 #import "KTDocWindowController.h"
 
 #import "KT.h"
-#import "KTAbstractIndex.h"
 #import "SVApplicationController.h"
 #import "SVArticle.h"
 #import "KTCodeInjectionController.h"

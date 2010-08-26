@@ -10,7 +10,6 @@
 
 #import "KSContainsObjectValueTransformer.h"
 #import "Debug.h"
-#import "KTAbstractIndex.h"
 #import "SVRichText.h"
 #import "KTDesign.h"
 #import "KTDocWindowController.h"

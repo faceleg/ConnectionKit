@@ -27,11 +27,6 @@
 - (int)proposedOrderingForProposedChildWithTitle:(NSString *)aTitle;
 
 
-// Index
-- (void)setIndex:(KTAbstractIndex *)anIndex;
-- (void)setIndexFromPlugin:(KTHTMLPlugInWrapper *)aBundle;
-
-
 @end
 
 

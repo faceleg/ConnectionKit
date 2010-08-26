@@ -40,9 +40,6 @@
 // DataSources (drag-and-drop external sources)
 #import "KTDataSourceProtocol.h"
 
-// Indexes
-#import "KTAbstractIndex.h"
-
 // Publishing
 
 // Foundation/AppKit subclasses
