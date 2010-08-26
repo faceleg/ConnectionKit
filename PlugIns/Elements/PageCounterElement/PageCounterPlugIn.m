@@ -221,12 +221,23 @@ NSString *PCSampleImageKey = @"sampleImage";
 	}
     
     // make it all happen
-    [super writeHTML:context];    
+    //<div class="page_counter" style="text-align: center;" id="pc-[[=elementID]]">
+    NSDictionary *attrs = [NSDictionary dictionaryWithObject:@"text-align: center;" forKey:@"style"];
+    self.divID = [[context HTMLWriter] startElement:@"div"
+                                    preferredIdName:@"pc"
+                                          className:@"page_counter"
+                                         attributes:attrs];
+    // parse template
+    [super writeHTML:context];
+    
+    // </div>
+    [[context HTMLWriter] endElement];
 }
 
 
 #pragma mark Properties
 
+@synthesize divID = _divID;
 @synthesize resourcesURL = _resourcesURL;
 @synthesize selectedThemeIndex = _selectedThemeIndex;
 

@@ -49,10 +49,13 @@ extern NSString *PCSampleImageKey;
 @interface PageCounterPlugIn : SVPlugIn
 {
     NSURL *_resourcesURL;
+    NSString *_divID;
     NSUInteger _selectedThemeIndex;
 }
 
 + (NSArray *)themes;
+
+@property (nonatomic, copy) NSString *divID;
 
 // last "published" resources location
 @property (nonatomic, retain) NSURL *resourcesURL;

@@ -1,5 +1,3 @@
-<div class="page_counter" style="text-align: center;" id="pc-[[=elementID]]">
-
 [[if parser.HTMLGenerationPurpose]]
 	<script type="text/javascript" src="http://service.karelia.com/ctr/count.js?u=[[=%&parser.currentPage.URL]]"></script>
 [[else]]
@@ -16,7 +14,7 @@ var pcHeight = "[[=themeHeight]]";
 
 function showCount(countStr)
 {
-	var pagelet = document.getElementById("pc-[[=elementID]]");
+	var pagelet = document.getElementById("[[=divID]]");
 	var i, c = countStr.length;
 	for (i = 0; i < c; i++)
 	{
@@ -38,14 +36,14 @@ showCount(svxPageCount);
 var paragraph = document.createElement("p");
 var text = document.createTextNode(svxPageCount);
 paragraph.appendChild(text);
-document.getElementById("pc-[[=elementID]]").appendChild(paragraph);
+document.getElementById("[[=divID]]").appendChild(paragraph);
 </script>
 [[endif]]
 
 [[if themeType==0]]
 <script type="text/javascript">
 var commentNode = document.createComment(svxPageCount);
-document.getElementById("pc-[[=elementID]]").appendChild(commentNode);
+document.getElementById("[[=divID]]").appendChild(commentNode);
 </script>
 [[endif]]
 
@@ -56,5 +54,4 @@ document.getElementById("pc-[[=elementID]]").appendChild(commentNode);
 	[[else]]
 	<div><img src="http://service.karelia.com/ctr/1x1.gif?u=[[=%&parser.currentPage.URL]]" alt="" height="1" width="1" /></div>
 	[[endif]]
-	</noscript>
-</div>
+</noscript>
