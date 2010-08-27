@@ -469,19 +469,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     
 	if ([[self typeOfFile] conformsToUTI:(NSString *)kUTTypeImage])
 	{
-		CIImage *image = [CIImage imageWithIMBImageItem:self];
-		if (image)
-		{
-			result = [image extent].size;
-		}
-		else
-		{
-			NSImage *image = [NSImage imageWithIMBImageItem:self];
-			if (image)
-			{
-				result = NSSizeToCGSize([image size]);
-			}
-		}
+		result = IMBImageItemGetSize(self);
 	}
 	else if ([[self typeOfFile] conformsToUTI:(NSString *)kUTTypeMovie])
 	{
