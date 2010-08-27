@@ -46,7 +46,6 @@
 @implementation YouTubePlugIn
 
 
-#pragma mark -
 #pragma mark SVPlugIn
 
 + (NSArray *)plugInKeys
@@ -65,7 +64,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Initialization
 
 - (void)dealloc
@@ -97,6 +95,7 @@
     self.color2 = [YouTubePlugIn defaultPrimaryColor];  
 }
 
+
 #pragma mark HTML Generation
 
 - (void)writeHTML:(id <SVPlugInContext>)context
@@ -126,6 +125,7 @@
 }
 
 - (void)endElement; { [[[SVPlugIn currentContext] HTMLWriter] endElement]; }
+
 
 #pragma mark Metrics
 
@@ -175,9 +175,9 @@
     return [self heightForWidth:[self minWidth]];
 }
 
-
 - (BOOL)constrainProportions; { return YES; }
 + (BOOL)sizeIsExplicit; { return YES; }
+
 
 #pragma mark Colors
 
@@ -193,7 +193,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Summaries
 
 - (NSString *)summaryHTMLKeyPath { return @"captionHTML"; }
@@ -201,27 +200,9 @@
 - (BOOL)summaryHTMLIsEditable { return YES; }
 
 
-#pragma mark -
 #pragma mark Thumbnail
 
 //FIXME: need API for supplying a real thumbail (here, our thumbnail is just the icon)
-
-// - (id <IMBImageItem>)thumbnail;
-// {
-//     return self;
-// }
-// 
-// - (id)imageRepresentation;
-// {
-//     NSString *path = [[self bundle] pathForImageResource:@"YouTube"];
-//     return path;
-// }
-// 
-// - (NSString *)imageRepresentationType;
-// {
-//     return IKImageBrowserPathRepresentationType;
-// }
-
 - (SVMedia *)thumbnail
 {
 	NSString *path = [[self bundle] pathForImageResource:@"YouTube"];
@@ -229,7 +210,7 @@
     return [[[SVMedia alloc] initWithURL:URL] autorelease];
 }
 
-#pragma mark -
+
 #pragma mark SVPlugInPasteboardReading
 
 // returns an array of UTI strings of data types the receiver can read from the pasteboard and be initialized from. (required)
@@ -275,7 +256,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Properties
 
 @synthesize videoID = _videoID;
