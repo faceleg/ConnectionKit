@@ -206,22 +206,28 @@
 
 //FIXME: need API for supplying a real thumbail (here, our thumbnail is just the icon)
 
-- (id <IMBImageItem>)thumbnail;
-{
-    return self;
-}
+// - (id <IMBImageItem>)thumbnail;
+// {
+//     return self;
+// }
+// 
+// - (id)imageRepresentation;
+// {
+//     NSString *path = [[self bundle] pathForImageResource:@"YouTube"];
+//     return path;
+// }
+// 
+// - (NSString *)imageRepresentationType;
+// {
+//     return IKImageBrowserPathRepresentationType;
+// }
 
-- (id)imageRepresentation;
+- (SVMedia *)thumbnail
 {
-    NSString *path = [[self bundle] pathForImageResource:@"YouTube"];
-    return path;
+	NSString *path = [[self bundle] pathForImageResource:@"YouTube"];
+	NSURL *URL = [NSURL fileURLWithPath:path];
+    return [[[SVMedia alloc] initWithURL:URL] autorelease];
 }
-
-- (NSString *)imageRepresentationType;
-{
-    return IKImageBrowserPathRepresentationType;
-}
-
 
 #pragma mark -
 #pragma mark SVPlugInPasteboardReading
