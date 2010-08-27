@@ -385,6 +385,8 @@
 		2759CC9C1039711300E2C046 /* SVWebEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */; };
 		2759CC9F103976D800E2C046 /* SVWebContentAreaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */; };
 		2759CCA0103976D800E2C046 /* SVWebContentAreaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */; };
+		275C5F88122831CE00CD22B8 /* SVMedia.h in Headers */ = {isa = PBXBuildFile; fileRef = 275C5F86122831CE00CD22B8 /* SVMedia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		275C5F89122831CE00CD22B8 /* SVMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 275C5F87122831CE00CD22B8 /* SVMedia.m */; };
 		2764AA1E1188D16C00D8E1BB /* SVArticleDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2764AA1C1188D16C00D8E1BB /* SVArticleDOMController.h */; };
 		2764AA1F1188D16C00D8E1BB /* SVArticleDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2764AA1D1188D16C00D8E1BB /* SVArticleDOMController.m */; };
 		2765059A0EADF91900461A0E /* KTPage+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276505990EADF91900461A0E /* KTPage+Internal.h */; };
@@ -1902,6 +1904,8 @@
 		2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorViewController.m; sourceTree = "<group>"; };
 		2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebContentAreaController.h; sourceTree = "<group>"; };
 		2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebContentAreaController.m; sourceTree = "<group>"; };
+		275C5F86122831CE00CD22B8 /* SVMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMedia.h; sourceTree = "<group>"; };
+		275C5F87122831CE00CD22B8 /* SVMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMedia.m; sourceTree = "<group>"; };
 		2764AA1C1188D16C00D8E1BB /* SVArticleDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVArticleDOMController.h; sourceTree = "<group>"; };
 		2764AA1D1188D16C00D8E1BB /* SVArticleDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVArticleDOMController.m; sourceTree = "<group>"; };
 		276505990EADF91900461A0E /* KTPage+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTPage+Internal.h"; sourceTree = "<group>"; };
@@ -3618,6 +3622,8 @@
 				2774DFAA0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m */,
 				2796DFC511736375000DD6EC /* SVImageScalingOperation.h */,
 				2796DFC611736375000DD6EC /* SVImageScalingOperation.m */,
+				275C5F86122831CE00CD22B8 /* SVMedia.h */,
+				275C5F87122831CE00CD22B8 /* SVMedia.m */,
 			);
 			name = 2.0;
 			sourceTree = "<group>";
@@ -5735,6 +5741,7 @@
 				2704228112142F710077298A /* SVSizeBindingDOMController.h in Headers */,
 				2725BA46121DE9990074EAA0 /* NSImageView+IMBImageItem.h in Headers */,
 				2725BC38121F3F690074EAA0 /* SVArchivePage.h in Headers */,
+				275C5F88122831CE00CD22B8 /* SVMedia.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7236,6 +7243,7 @@
 				CE65643B1219DAC8006C5B0D /* KSSimpleURLConnection.m in Sources */,
 				2725BA47121DE9990074EAA0 /* NSImageView+IMBImageItem.m in Sources */,
 				2725BC39121F3F690074EAA0 /* SVArchivePage.m in Sources */,
+				275C5F89122831CE00CD22B8 /* SVMedia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

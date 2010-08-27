@@ -36,6 +36,7 @@
 #import "SVPageProtocol.h"
 
 //  Media
+#import "SVMedia.h"
 
 // DataSources (drag-and-drop external sources)
 #import "KTDataSourceProtocol.h"

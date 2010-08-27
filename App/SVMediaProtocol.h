@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import <iMedia/IMBImageItem.h>
+#import "SVMedia.h"
 
 
 @protocol SVMedia <NSObject, IMBImageItem>
@@ -20,4 +21,11 @@
 - (NSString *)preferredFilename;    // what the media would like to named given the chance
 - (NSString *)typeOfFile;           // based on preferred filename, what the UTI is
 
+@end
+
+
+#pragma mark -
+
+
+@interface SVMedia (SVMedia) <SVMedia>
 @end
