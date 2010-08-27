@@ -52,11 +52,6 @@
 
 @implementation SVMedia (SVMedia)
 
-- (NSURL *)fileURL
-{
-    return _fileURL;
-}
-
 - (NSData *)fileContents
 {
     return [self data];
