@@ -10,7 +10,7 @@
 #import "SVPageletPlugIn.h"
 
 
-@class SVLink;
+@class SVLink, SVMedia;
 
 
 @protocol SVPage <NSObject>
@@ -18,6 +18,8 @@
 - (NSString *)identifier;
 
 - (NSString *)title;
+
+- (SVMedia *)thumbnail;
 
 - (NSString *)language;
 
