@@ -9,6 +9,7 @@
 #import "SVPlugInGraphic.h"
 
 #import "SVDOMController.h"
+#import "SVMediaProtocol.h"
 #import "SVPlugIn.h"
 #import "KTElementPlugInWrapper.h"
 #import "SVHTMLContext.h"
@@ -334,7 +335,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 #pragma mark Thumbnail
 
-- (id <IMBImageItem>)thumbnail;
+- (id <SVMedia>)thumbnail;
 {
     return [[self plugIn] thumbnail];
 }
