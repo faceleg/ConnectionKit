@@ -7,6 +7,7 @@
 //
 
 #import "SVMedia.h"
+#import "SVMediaProtocol.h"
 
 
 @implementation SVMedia
@@ -42,3 +43,14 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVMedia (SVMedia)
+
+
+
+@end
+
