@@ -194,7 +194,7 @@ static id <SVPlugInContext> sCurrentContext;
 
 #pragma mark Thumbnail
 
-- (id <IMBImageItem>)thumbnail; { return nil; }
+- (SVMedia *)thumbnail; { return nil; }
 
 #pragma mark The Wider World
 

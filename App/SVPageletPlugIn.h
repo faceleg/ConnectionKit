@@ -11,6 +11,7 @@
 
 
 @protocol SVPage, SVPageletPlugInContainer;
+@class SVMedia;
 
 
 @interface SVPlugIn : NSObject
@@ -98,7 +99,7 @@
 
 
 #pragma mark Thumbnail
-- (id <IMBImageItem>)thumbnail;
+- (SVMedia *)thumbnail;
 
 
 #pragma mark UI
