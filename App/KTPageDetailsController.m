@@ -362,7 +362,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 }
 
-- (BOOL) mediaIsEditableText:(id <SVMedia>)aMedia
+- (BOOL) mediaIsEditableText:(SVMediaRecord *)aMedia
 {
 	NSString *UTI = [aMedia typeOfFile];
 	BOOL result = ([UTI conformsToUTI:(NSString *)kUTTypePlainText]
@@ -385,7 +385,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		int combinedType = kUnknownSiteItemType;
 		for (SVSiteItem *item in selObjects)
 		{
-			id <SVMedia> media = nil;
+			SVMediaRecord *media = nil;
 			int type = kUnknownSiteItemType;
 			if (nil != [item externalLinkRepresentation]) { type = kLinkSiteItemType; }
 			else if (nil != (media =[item mediaRepresentation]))

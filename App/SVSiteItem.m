@@ -196,7 +196,7 @@
 // used to determine if it's an external link, for page details.
 - (SVExternalLink *)externalLinkRepresentation { return nil; }
 - (KTPage *)pageRepresentation { return nil; }
-- (id <SVMedia>)mediaRepresentation; { return nil; }
+- (SVMediaRecord *)mediaRepresentation; { return nil; }
 
 
 

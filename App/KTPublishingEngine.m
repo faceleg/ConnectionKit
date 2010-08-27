@@ -13,7 +13,6 @@
 #import "KTSite.h"
 #import "KTMaster.h"
 #import "SVMediaGatheringPublisher.h"
-#import "SVMediaRecord.h"
 #import "SVMediaRepresentation.h"
 #import "KTPage+Internal.h"
 #import "SVPublishingHTMLContext.h"

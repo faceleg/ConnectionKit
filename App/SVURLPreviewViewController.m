@@ -190,7 +190,7 @@ webContentAreaController:(SVWebContentAreaController *)controller;
 - (NSURL *)URLToLoad;
 {
     SVSiteItem *item = [self siteItem];
-    id <SVMedia> media = [item mediaRepresentation];
+    SVMediaRecord *media = [item mediaRepresentation];
     
     if (media)
     {
@@ -224,7 +224,7 @@ webContentAreaController:(SVWebContentAreaController *)controller;
         }
         else
         {
-            id <SVMedia> media = [object mediaRepresentation];
+            SVMediaRecord *media = [object mediaRepresentation];
             NSString *filename = [media preferredFilename];
             NSString *type = [NSString UTIForFilenameExtension:[filename pathExtension]];
                 

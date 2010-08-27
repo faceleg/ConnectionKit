@@ -14,7 +14,7 @@
 @interface SVMediaRepresentation : NSObject <NSCopying>
 {
   @private
-    SVMediaRecord   *_mediaRecord;
+    id <SVMedia>    _mediaRecord;
     NSNumber        *_width;
     NSNumber        *_height;
     NSString        *_type;
@@ -27,7 +27,7 @@
                    height:(NSNumber *)height
                  type:(NSString *)type;
 
-@property(nonatomic, retain, readonly) SVMediaRecord *mediaRecord;
+@property(nonatomic, retain, readonly) id <SVMedia> mediaRecord;
 @property(nonatomic, copy, readonly) NSNumber *width;
 @property(nonatomic, copy, readonly) NSNumber *height;
 @property(nonatomic, copy, readonly) NSString *type;

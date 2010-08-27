@@ -27,7 +27,7 @@
     [self setTitle:[[media preferredFilename] stringByDeletingPathExtension]];
 }
 
-- (id <SVMedia>)mediaRepresentation;
+- (SVMediaRecord *)mediaRepresentation;
 {
     return [self media];
 }
