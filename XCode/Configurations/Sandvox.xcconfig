@@ -11,12 +11,12 @@ SANDVOX_VERSION = 2.0a15
 PRODUCT_VARIANT = ALPHA
 
 // expiry for beta
-EXPIRY_TIMESTAMP = '@\"2010-09-15 11:59:59 -0800\"'
+EXPIRY_TIMESTAMP = '@\"2010-09-30 11:59:59 -0800\"'
 
 // Release builds checkout and use these specific revisions
 
 // iMedia
-IMEDIA_REVISION = 1086
+IMEDIA_REVISION = 1102
 
 // Building -- common settings across all configurations
 
