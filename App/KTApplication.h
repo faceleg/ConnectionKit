@@ -6,6 +6,9 @@
 //  Copyright 2004-2009 Karelia Software. All rights reserved.
 //
 
+//  Supplements -sendEvent: to broadcast modifier key changes to any interested party
+
+
 #import <Cocoa/Cocoa.h>
 #import "KSApplication.h"
 
