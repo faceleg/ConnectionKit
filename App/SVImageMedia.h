@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "SVMediaRecord.h"
+#import "SVMediaProtocol.h"
 
 
 @interface SVImageMedia : NSObject <SVMedia, NSCopying>
@@ -20,12 +20,10 @@
     NSString        *_type;
 }
 
-- (id)initWithMediaRecord:(SVMediaRecord *)mediaRecord;
-
-- (id)initWithMediaRecord:(SVMediaRecord *)mediaRecord
+- (id)initWithSourceMedia:(id <SVMedia>)mediaRecord
                     width:(NSNumber *)width
                    height:(NSNumber *)height
-                 type:(NSString *)type;
+                     type:(NSString *)type;
 
 @property(nonatomic, retain, readonly) id <SVMedia> mediaRecord;
 @property(nonatomic, copy, readonly) NSNumber *width;

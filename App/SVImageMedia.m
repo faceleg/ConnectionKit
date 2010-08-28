@@ -16,22 +16,14 @@
 
 @implementation SVImageMedia
 
-- (id)initWithMediaRecord:(SVMediaRecord *)mediaRecord;
-{
-    [self init];
-    
-    _mediaRecord = [mediaRecord retain];
-    
-    return self;
-}
-
-- (id)initWithMediaRecord:(SVMediaRecord *)mediaRecord
+- (id)initWithSourceMedia:(id <SVMedia>)mediaRecord
                     width:(NSNumber *)width
                    height:(NSNumber *)height
-                 type:(NSString *)type;
+                     type:(NSString *)type;
 {
-    self = [self initWithMediaRecord:mediaRecord];
+    self = [self init];
     
+    _mediaRecord = [mediaRecord retain];
     _width = [width copy];
     _height = [height copy];
     _type = [type copy];

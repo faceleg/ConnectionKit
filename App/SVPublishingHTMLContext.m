@@ -117,7 +117,7 @@
         height = nil;
     }
     
-    id <SVMedia> scaledMedia = [[SVImageMedia alloc] initWithMediaRecord:media
+    id <SVMedia> scaledMedia = [[SVImageMedia alloc] initWithSourceMedia:media
                                                                    width:width
                                                                   height:height
                                                                     type:type];
