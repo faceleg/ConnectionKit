@@ -92,6 +92,8 @@
     }
 }
 
+- (NSURL *)fileURL; { return nil; }
+
 - (BOOL)isEqualToMediaRepresentation:(SVImageMedia *)otherRep;
 {
     BOOL result = ([[self mediaRecord] isEqual:[otherRep mediaRecord]] &&
