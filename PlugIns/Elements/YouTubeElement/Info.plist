@@ -31,13 +31,13 @@
 	<key>KTElementAllowsIntroduction</key>
 	<true/>
 	<key>KTElementSupportsPageUsage</key>
-	<true/>
+	<false/>
 	<key>KTElementSupportsPageletUsage</key>
 	<true/>
 	<key>KSHelpAnchor</key>
 	<string>YouTube</string>
 	<key>KTPageShowSidebar</key>
-	<true/>
+	<false/>
 	<key>KTPluginDescription</key>
 	<string>Play videos from YouTube</string>
 	<key>KTPluginIconName</key>
@@ -53,14 +53,10 @@
 	</dict>
 	<key>KTPluginName</key>
 	<string>YouTube</string>
-	<key>KTPluginNibFile</key>
-	<string>YouTube</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
 	<string>YouTube</string>
-	<key>KTTemplateName</key>
-	<string>YouTubeTemplate</string>
 	<key>NSPrincipalClass</key>
 	<string>YouTubePlugIn</string>
 </dict>

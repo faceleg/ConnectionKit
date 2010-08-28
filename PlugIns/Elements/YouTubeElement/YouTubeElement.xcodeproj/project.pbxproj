@@ -13,7 +13,7 @@
 		27B0BBD011668CE60084BFE0 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B0BBCF11668CE50084BFE0 /* Quartz.framework */; };
 		3C42E5B40D650888004F35FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E5B00D650888004F35FD /* Localizable.strings */; };
 		3C42E5C60D65091C004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E5C50D65091C004F35FD /* License.rtf */; };
-		3C921CAA11F3D9FF0005DADD /* YouTube.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C921CA811F3D9FF0005DADD /* YouTube.xib */; };
+		3CFEEEFC122891EC005A08FC /* YouTubeInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CFEEEFA122891EC005A08FC /* YouTubeInspector.xib */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		CE81C30E113460C200CF4B7F /* YouTubePlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81C30D113460C200CF4B7F /* YouTubePlugIn.m */; };
 		CE81C313113460DD00CF4B7F /* YouTubeInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81C312113460DD00CF4B7F /* YouTubeInspector.m */; };
@@ -45,7 +45,7 @@
 		3C42E5C80D650935004F35FD /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C42E5E30D650A4F004F35FD /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		3C42E5E60D650A64004F35FD /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
-		3C921CA911F3D9FF0005DADD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/YouTube.xib; sourceTree = "<group>"; };
+		3CFEEEFB122891EC005A08FC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/YouTubeInspector.xib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* YouTube.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YouTube.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE81C30C113460C200CF4B7F /* YouTubePlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubePlugIn.h; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				CEF120DE0D90567900FCAC70 /* InfoPlist.strings */,
 				3C42E5B00D650888004F35FD /* Localizable.strings */,
-				3C921CA811F3D9FF0005DADD /* YouTube.xib */,
+				3CFEEEFA122891EC005A08FC /* YouTubeInspector.xib */,
 				CEF120690D9055E600FCAC70 /* YouTubeTemplate.html */,
 				CEF120670D9055B700FCAC70 /* YouTube.icns */,
 				270461D30DAE7FF000D74480 /* youtube-logo.png */,
@@ -238,7 +238,7 @@
 				CEF1206A0D9055E600FCAC70 /* YouTubeTemplate.html in Resources */,
 				CEF120E00D90567900FCAC70 /* InfoPlist.strings in Resources */,
 				270461D40DAE7FF000D74480 /* youtube-logo.png in Resources */,
-				3C921CAA11F3D9FF0005DADD /* YouTube.xib in Resources */,
+				3CFEEEFC122891EC005A08FC /* YouTubeInspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,12 +292,12 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		3C921CA811F3D9FF0005DADD /* YouTube.xib */ = {
+		3CFEEEFA122891EC005A08FC /* YouTubeInspector.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3C921CA911F3D9FF0005DADD /* en */,
+				3CFEEEFB122891EC005A08FC /* en */,
 			);
-			name = YouTube.xib;
+			name = YouTubeInspector.xib;
 			sourceTree = "<group>";
 		};
 		CEF120DE0D90567900FCAC70 /* InfoPlist.strings */ = {
