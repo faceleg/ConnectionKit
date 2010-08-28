@@ -48,9 +48,9 @@
 
 - (NSStringEncoding)encoding { return [_target encoding]; }
 
-- (NSURL *)addMedia:(id <SVMedia>)media width:(NSNumber *)width height:(NSNumber *)height type:(NSString *)type;
+- (NSURL *)addMedia:(id <SVMedia>)media;
 {
-    return [_target addMedia:media width:width height:height type:type];
+    return [_target addMedia:media];
 }
 
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;

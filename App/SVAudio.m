@@ -495,7 +495,7 @@
 	NSURL *audioSourceURL = [self externalSourceURL];
     if (media)
     {
-	    audioSourceURL = [context addMedia:media width:[self width] height:[self height] type:[self codecType]];
+	    audioSourceURL = [context addImageMedia:media width:[self width] height:[self height] type:[self codecType]];
 	}
 	
 	

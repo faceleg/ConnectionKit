@@ -81,7 +81,7 @@
 - (NSURL *)addMedia:(id <SVMedia>)media
               width:(NSNumber *)width
              height:(NSNumber *)height
-           type:(NSString *)type;
+               type:(NSString *)type;
 {
     // When scaling an image, need full suite of parameters
     if (width || height)
@@ -122,6 +122,19 @@
     }
     
     return nil;
+}
+
+- (NSURL *)addMedia:(id <SVMedia>)media;
+{
+    return [self addMedia:media width:nil height:nil type:nil];
+}
+
+- (NSURL *)addImageMedia:(id <SVMedia>)media
+                   width:(NSNumber *)width
+                  height:(NSNumber *)height
+                    type:(NSString *)type;
+{
+    return [self addMedia:media width:width height:height type:type];
 }
 
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;

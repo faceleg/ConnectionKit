@@ -738,14 +738,6 @@
 
 - (NSURL *)addMedia:(id <SVMedia>)media;
 {
-    return [self addMedia:media width:nil height:nil type:nil];
-}
-
-- (NSURL *)addMedia:(id <SVMedia>)media
-              width:(NSNumber *)width
-             height:(NSNumber *)height
-           type:(NSString *)type;
-{
     OBPRECONDITION(media);
     
     NSURL *result = [media fileURL];
@@ -754,13 +746,21 @@
     return result;
 }
 
+- (NSURL *)addImageMedia:(id <SVMedia>)media
+              width:(NSNumber *)width
+             height:(NSNumber *)height
+           type:(NSString *)type;
+{
+    return [self addMedia:media];
+}
+
 - (void)writeImageWithSourceMedia:(SVMediaRecord *)media
                               alt:(NSString *)altText
                             width:(NSNumber *)width
                            height:(NSNumber *)height
                              type:(NSString *)type;
 {
-    NSURL *URL = [self addMedia:media width:width height:height type:type];
+    NSURL *URL = [self addImageMedia:media width:width height:height type:type];
     NSString *src = (URL ? [self relativeURLStringOfURL:URL] : @"");
     
     [self writeImageWithSrc:src

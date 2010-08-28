@@ -686,13 +686,13 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	NSURL *movieSourceURL = [self externalSourceURL];
     if (media)
     {
-	    movieSourceURL = [context addMedia:media width:[self width] height:[self height] type:[self codecType]];
+	    movieSourceURL = [context addImageMedia:media width:[self width] height:[self height] type:[self codecType]];
 	}
 	
 	NSURL *posterSourceURL = nil;
 	if (self.posterFrame)
 	{
-		posterSourceURL = [context addMedia:self.posterFrame width:[self width] height:[self height] type:self.posterFrame.typeOfFile];
+		posterSourceURL = [context addImageMedia:self.posterFrame width:[self width] height:[self height] type:self.posterFrame.typeOfFile];
 	}
 	
 	// Determine tag(s) to use
