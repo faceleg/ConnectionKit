@@ -9,7 +9,8 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class SVHTMLContext, SVMediaRepresentation;
+@class SVHTMLContext;
+@protocol SVMedia;
 
 
 @protocol SVPublishedObject
@@ -29,7 +30,7 @@
 
 
 #pragma mark Media
-- (NSString *)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
+- (NSString *)publishMedia:(id <SVMedia>)mediaRep;
 
 
 #pragma mark Resource Files

@@ -9,7 +9,7 @@
 #import "SVPublishingHTMLContext.h"
 
 #import "KTHostProperties.h"
-#import "SVMediaRepresentation.h"
+#import "SVImageMedia.h"
 #import "KTPage.h"
 #import "SVPublisher.h"
 #import "KTSite.h"
@@ -78,38 +78,9 @@
     [_path release]; _path = nil;
 }
 
-- (NSURL *)addMedia:(id <SVMedia>)media
-              width:(NSNumber *)width
-             height:(NSNumber *)height
-               type:(NSString *)type;
+- (NSURL *)addMedia:(id <SVMedia>)media;
 {
-    // When scaling an image, need full suite of parameters
-    if (width || height)
-    {
-        OBPRECONDITION(width);
-        OBPRECONDITION(height);
-        OBPRECONDITION(type);
-    }
-    
-    
-    // If the width and height match the original size, then keep that way
-    SVMediaRecord *record = (SVMediaRecord *)media;
-    
-    if (CGSizeEqualToSize([record originalSize],
-                          CGSizeMake([width floatValue], [height floatValue])))
-    {
-        width = nil;
-        height = nil;
-    }
-    
-    SVMediaRepresentation *rep = [[SVMediaRepresentation alloc]
-                                  initWithMediaRecord:record
-                                  width:width
-                                  height:height
-                                  type:type];
-    
-    NSString *path = [_publisher publishMediaRepresentation:rep];
-    [rep release];
+    NSString *path = [_publisher publishMedia:media];
     
     NSString *basePath = [_publisher baseRemotePath];
     if (![basePath hasSuffix:@"/"]) basePath = [basePath stringByAppendingString:@"/"];
@@ -124,17 +95,40 @@
     return nil;
 }
 
-- (NSURL *)addMedia:(id <SVMedia>)media;
-{
-    return [self addMedia:media width:nil height:nil type:nil];
-}
-
-- (NSURL *)addImageMedia:(id <SVMedia>)media
+- (NSURL *)addImageMedia:(id <SVMedia>)imageMedia
                    width:(NSNumber *)width
                   height:(NSNumber *)height
                     type:(NSString *)type;
 {
-    return [self addMedia:media width:width height:height type:type];
+    // When scaling an image, need full suite of parameters
+    if (width || height)
+    {
+        OBPRECONDITION(width);
+        OBPRECONDITION(height);
+        OBPRECONDITION(type);
+    }
+    
+    
+    // If the width and height match the original size, then keep that way
+    SVMediaRecord *record = (SVMediaRecord *)imageMedia;
+    
+    if (CGSizeEqualToSize([record originalSize],
+                          CGSizeMake([width floatValue], [height floatValue])))
+    {
+        width = nil;
+        height = nil;
+    }
+    
+    id <SVMedia> media = [[SVImageMedia alloc]
+                          initWithMediaRecord:record
+                          width:width
+                          height:height
+                          type:type];
+    
+    NSURL *result = [self addMedia:media];
+    [media release];
+    
+    return result;
 }
 
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;

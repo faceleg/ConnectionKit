@@ -1,12 +1,12 @@
 //
-//  SVMediaRepresentation.m
+//  SVImageMedia.m
 //  Sandvox
 //
 //  Created by Mike on 12/04/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVMediaRepresentation.h"
+#import "SVImageMedia.h"
 
 #import "SVImageScalingOperation.h"
 #import "KTImageScalingURLProtocol.h"
@@ -14,7 +14,7 @@
 #import "NSString+Karelia.h"
 
 
-@implementation SVMediaRepresentation
+@implementation SVImageMedia
 
 - (id)initWithMediaRecord:(SVMediaRecord *)mediaRecord;
 {
@@ -100,7 +100,7 @@
     }
 }
 
-- (BOOL)isEqualToMediaRepresentation:(SVMediaRepresentation *)otherRep;
+- (BOOL)isEqualToMediaRepresentation:(SVImageMedia *)otherRep;
 {
     BOOL result = ([[self mediaRecord] isEqual:[otherRep mediaRecord]] &&
                    KSISEQUAL([self width], [otherRep width]) &&
@@ -112,7 +112,7 @@
 - (BOOL)isEqual:(id)object;
 {
     return (self == object ||
-            ([object isKindOfClass:[SVMediaRepresentation class]] &&
+            ([object isKindOfClass:[SVImageMedia class]] &&
              [self isEqualToMediaRepresentation:object]));
 }
 

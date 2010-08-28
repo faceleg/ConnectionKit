@@ -65,9 +65,9 @@
     return _context;
 }
 
-- (NSString *)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
+- (NSString *)publishMedia:(id <SVMedia>)mediaRep;
 {
-    return [[self publishingEngine] publishMediaRepresentation:mediaRep];
+    return [[self publishingEngine] publishMedia:mediaRep];
 }
 
 - (void)addCSSString:(NSString *)css; { }

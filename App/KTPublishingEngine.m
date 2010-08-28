@@ -13,7 +13,7 @@
 #import "KTSite.h"
 #import "KTMaster.h"
 #import "SVMediaGatheringPublisher.h"
-#import "SVMediaRepresentation.h"
+#import "SVImageMedia.h"
 #import "KTPage+Internal.h"
 #import "SVPublishingHTMLContext.h"
 #import "SVPublishingRecord.h"
@@ -526,7 +526,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [pubContext release];
 }
 
-- (NSString *)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
+- (NSString *)publishMedia:(id <SVMedia>)mediaRep;
 {
     // Is there already an existing file on the server? If so, use that
     NSData *fileContents = [mediaRep data];
