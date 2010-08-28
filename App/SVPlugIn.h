@@ -52,6 +52,8 @@
 
 @protocol SVHTMLWriter
 
+#pragma mark Basics
+
 - (void)startElement:(NSString *)elementName attributes:(NSDictionary *)attributes;
 - (void)startElement:(NSString *)tagName;
 - (void)startElement:(NSString *)tagName className:(NSString *)className;
@@ -67,8 +69,14 @@
 
 - (void)writeHTMLString:(NSString *)html;   // great for when you have an existing snippet of HTML
 
+
+#pragma mark Convenience/Special
+
 //  <a href="...." target="..." rel="nofollow">
 - (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
+
+// <IMG> tag by scaling the page's thumbnail to desired size
+- (void)writeThumbnailImageOfPage:(id <SVPage>)page className:(NSString *)className maxWidth:(NSNumber *)width maxHeight:(NSNumber *)height;
 
 // For when you need to write an element and be sure the ID is unique. Perfect for hooking up a script. Returns the best unique ID available
 - (NSString *)startElement:(NSString *)tagName
@@ -81,8 +89,11 @@
     bindSizeToPlugIn:(SVPlugIn *)plugIn
           attributes:(NSDictionary *)attributes;
 
+
+#pragma mark Properties
 - (BOOL)isXHTML;
 - (NSStringEncoding)encoding;   // default is UTF-8
+
 
 @end
 

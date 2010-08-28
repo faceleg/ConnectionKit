@@ -769,6 +769,16 @@
                      height:[height description]];
 }
 
+- (void)writeThumbnailImageOfPage:(id <SVPage>)page className:(NSString *)className maxWidth:(NSNumber *)width maxHeight:(NSNumber *)height;
+{
+    [self pushElementClassName:className];
+    
+    [self writeImageWithSrc:@"" 
+                        alt:@""
+                      width:[width description]
+                     height:[height description]];
+}
+
 #pragma mark Resource Files
 
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
