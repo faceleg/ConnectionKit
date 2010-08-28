@@ -95,7 +95,7 @@
     return nil;
 }
 
-- (NSURL *)addImageMedia:(id <SVMedia>)imageMedia
+- (NSURL *)addImageMedia:(id <SVMedia>)media
                    width:(NSNumber *)width
                   height:(NSNumber *)height
                     type:(NSString *)type;
@@ -110,23 +110,20 @@
     
     
     // If the width and height match the original size, then keep that way
-    SVMediaRecord *record = (SVMediaRecord *)imageMedia;
-    
-    if (CGSizeEqualToSize([record originalSize],
+    if (CGSizeEqualToSize(IMBImageItemGetSize(media),
                           CGSizeMake([width floatValue], [height floatValue])))
     {
         width = nil;
         height = nil;
     }
     
-    id <SVMedia> media = [[SVImageMedia alloc]
-                          initWithMediaRecord:record
-                          width:width
-                          height:height
-                          type:type];
+    id <SVMedia> scaledMedia = [[SVImageMedia alloc] initWithMediaRecord:media
+                                                                   width:width
+                                                                  height:height
+                                                                    type:type];
     
-    NSURL *result = [self addMedia:media];
-    [media release];
+    NSURL *result = [self addMedia:scaledMedia];
+    [scaledMedia release];
     
     return result;
 }
