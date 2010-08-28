@@ -681,7 +681,6 @@
 		3C5C20E807E7A49000994477 /* KTApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1B07DFC0AA00DE4994 /* KTApplication.m */; };
 		3C5C20EA07E7A4A400994477 /* KTPrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D2507DFC0AA00DE4994 /* KTPrefsController.m */; };
 		3C5C20FD07E7B09200994477 /* KTHostArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D7907DFC30800DE4994 /* KTHostArrayController.m */; };
-		3C682B0F0D622EC200B4D485 /* KTComponents.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B0E0D622EC200B4D485 /* KTComponents.xcdatamodel */; };
 		3C682B120D622F1D00B4D485 /* KTSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B110D622F1D00B4D485 /* KTSite.m */; };
 		3C682B140D622F2A00B4D485 /* KTPage+Accessors.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B130D622F2A00B4D485 /* KTPage+Accessors.m */; };
 		3C682B160D622F3100B4D485 /* KTPage+Operations.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B150D622F3100B4D485 /* KTPage+Operations.m */; };
@@ -2272,7 +2271,6 @@
 		3C5C0DB10BF820EA003594F8 /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = /usr/lib/libbz2.dylib; sourceTree = "<absolute>"; };
 		3C5C0DB30BF8213E003594F8 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandvoxPlugin.h; sourceTree = "<group>"; };
-		3C682B0E0D622EC200B4D485 /* KTComponents.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = KTComponents.xcdatamodel; sourceTree = "<group>"; };
 		3C682B100D622F1600B4D485 /* KTSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSite.h; sourceTree = "<group>"; };
 		3C682B110D622F1D00B4D485 /* KTSite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSite.m; sourceTree = "<group>"; };
 		3C682B130D622F2A00B4D485 /* KTPage+Accessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Accessors.m"; sourceTree = "<group>"; };
@@ -3171,7 +3169,6 @@
 		27409DFC0DEC685300C2387E /* Data Migration */ = {
 			isa = PBXGroup;
 			children = (
-				3C682B0E0D622EC200B4D485 /* KTComponents.xcdatamodel */,
 				27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */,
 				27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */,
 				3CF941CC0D623BDF00B1C83D /* KTDataMigrator.h */,
@@ -6919,7 +6916,6 @@
 				271575CE0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m in Sources */,
 				CE27F6650D6193B200D211EA /* NSImage+KTExtensions.m in Sources */,
 				CE27F6670D6193B200D211EA /* NSTextView+KTExtensions.m in Sources */,
-				3C682B0F0D622EC200B4D485 /* KTComponents.xcdatamodel in Sources */,
 				3C682B120D622F1D00B4D485 /* KTSite.m in Sources */,
 				3C682B140D622F2A00B4D485 /* KTPage+Accessors.m in Sources */,
 				3C682B160D622F3100B4D485 /* KTPage+Operations.m in Sources */,
