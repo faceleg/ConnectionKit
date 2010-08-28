@@ -88,7 +88,7 @@
     }
     else
     {
-        return [[self mediaRecord] fileContents];
+        return [[self mediaRecord] data];
     }
 }
 
