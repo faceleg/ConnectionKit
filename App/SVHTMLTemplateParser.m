@@ -28,24 +28,6 @@
 
 @implementation SVHTMLTemplateParser
 
-#pragma mark Class Methods
-
-- (NSString *)calloutContainerTemplateHTML
-{
-	static NSString *sCalloutContainerTemplateHTML;
-	
-	if (!sCalloutContainerTemplateHTML)
-	{
-		NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"KTCalloutContainerTemplate" ofType:@"html"];
-		OBASSERT(templatePath);
-		
-		sCalloutContainerTemplateHTML = [[NSString alloc] initWithContentsOfFile:templatePath];
-		OBASSERT(sCalloutContainerTemplateHTML);
-	}
-	
-	return sCalloutContainerTemplateHTML;
-}
-
 #pragma mark Init & Dealloc
 
 - (id)initWithPage:(KTPage *)page

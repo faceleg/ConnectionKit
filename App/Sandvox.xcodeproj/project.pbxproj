@@ -1972,7 +1972,6 @@
 		278ACCC7116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVQuickLookPreviewHTMLContext.m; sourceTree = "<group>"; };
 		278EC6F10C97136500A212EC /* KTHTMLParserCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLParserCache.h; sourceTree = "<group>"; };
 		278EC6F20C97136500A212EC /* KTHTMLParserCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLParserCache.m; sourceTree = "<group>"; };
-		278ECBAE0D247BD60012BA6B /* KTCalloutContainerTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTCalloutContainerTemplate.html; sourceTree = "<group>"; };
 		278ECEA10D25C4F90012BA6B /* KTPasteboardArchiving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPasteboardArchiving.h; sourceTree = "<group>"; };
 		278ECF1D0D25DAF80012BA6B /* KTMediaContainer+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMediaContainer+Pasteboard.m"; sourceTree = "<group>"; };
 		278ED0DC0D2865260012BA6B /* KTMediaContainer+Pasteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaContainer+Pasteboard.h"; sourceTree = "<group>"; };
@@ -3125,7 +3124,6 @@
 		273864300D50A6A000A8A209 /* Page */ = {
 			isa = PBXGroup;
 			children = (
-				278ECBAE0D247BD60012BA6B /* KTCalloutContainerTemplate.html */,
 				277026730E1E645200407CD1 /* KTCommentsTemplate.html */,
 				2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */,
 				3CF941F80D623ECF00B1C83D /* KTPageTemplate.html */,
