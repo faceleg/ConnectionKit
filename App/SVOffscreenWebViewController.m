@@ -9,7 +9,6 @@
 // works in conjunction with KTDocWebViewController+Refreshing.m refreshWebViewComponent:
 
 #import "SVOffscreenWebViewController.h"
-#import "KTDocWebViewController.h"
 #import "NSApplication+Karelia.h"
 
 
