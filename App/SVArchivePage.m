@@ -104,7 +104,11 @@
     return result;
 }
 
+#pragma mark Other
+
 - (BOOL)shouldIncludeInIndexes; { return NO; }
 - (BOOL)shouldIncludeInSiteMaps; { return NO; }
+
+- (id <SVMedia>)thumbnail; { return nil; }
 
 @end
