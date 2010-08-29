@@ -309,7 +309,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 #pragma mark Thumbnail
 
-- (id <IMBImageItem>)thumbnail { return nil; }
+- (id <SVMedia>)thumbnail { return nil; }
 
 #pragma mark Inspector
 

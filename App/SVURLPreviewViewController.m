@@ -8,7 +8,7 @@
 
 #import "SVURLPreviewViewController.h"
 
-#import "SVMediaProtocol.h"
+#import "SVMediaRecord.h"
 #import "SVHTMLContext.h"
 #import "SVSiteItem.h"
 #import "SVTemplate.h"

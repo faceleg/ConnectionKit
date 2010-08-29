@@ -401,9 +401,9 @@
 
 #pragma mark Thumbnail
 
-- (id <IMBImageItem>)thumbnail;
+- (id <SVMedia>)thumbnail;
 {
-    id <IMBImageItem> result;
+    id <SVMedia> result;
     
     if ([[self thumbnailType] integerValue] == 2)
     {

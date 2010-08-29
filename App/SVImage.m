@@ -310,7 +310,7 @@
 
 #pragma mark Thumbnail
 
-- (id <IMBImageItem>)thumbnail { return [self media]; }
+- (id <SVMedia>)thumbnail { return [self media]; }
 + (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObject:@"media"]; }
 
 #pragma mark Serialization

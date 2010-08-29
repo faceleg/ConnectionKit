@@ -176,7 +176,7 @@
 
 enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 
-- (id <IMBImageItem>)thumbnail
+- (id <SVMedia>)thumbnail
 {
 	return [self.posterFrameType intValue] != kPosterFrameTypeNone ? [self posterFrame] : nil;
 }

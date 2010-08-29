@@ -11,6 +11,7 @@
 
 
 @class SVLink, SVMedia;
+@protocol SVMedia;
 
 
 @protocol SVPage <NSObject>
@@ -19,7 +20,7 @@
 
 - (NSString *)title;
 
-- (SVMedia *)thumbnail;
+- (id <SVMedia>)thumbnail;
 
 - (NSString *)language;
 

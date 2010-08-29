@@ -335,9 +335,9 @@
 
 #pragma mark Thumbnail
 
-- (id <IMBImageItem>)thumbnail;
+- (id <SVMedia>)thumbnail;
 {
-    id <IMBImageItem> result = nil;
+    id <SVMedia> result = nil;
     
     if ([[self thumbnailType] integerValue] == 1)
     {

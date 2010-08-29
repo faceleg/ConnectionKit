@@ -8,7 +8,6 @@
 
 #import "SVContentObject.h"
 #import "SVPageletPlugIn.h"
-#import <iMedia/IMBImageItem.h>
 
 #import "NSManagedObject+KTExtensions.h"    // for serialization
 
@@ -62,7 +61,7 @@ extern NSString *kSVGraphicPboardType;
 @class KTPage, SVTitleBox;
 @class SVTextAttachment, SVHTMLContext, SVTemplate;
 @class SVAuxiliaryPageletText;
-@protocol SVPage;
+@protocol SVPage, SVMedia;
 
 
 @interface SVGraphic : KSExtensibleManagedObject <SVGraphic, SVPageletPlugInContainer>
@@ -153,7 +152,7 @@ extern NSString *kSVGraphicPboardType;
    
 
 #pragma mark Thumbnail
-@property(nonatomic, readonly) id <IMBImageItem> thumbnail; // MUST be KVO-compliant
+@property(nonatomic, readonly) id <SVMedia> thumbnail; // MUST be KVO-compliant
 
 
 #pragma mark Inspector
