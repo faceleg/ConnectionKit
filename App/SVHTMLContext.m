@@ -754,7 +754,7 @@
     return [self addMedia:media];
 }
 
-- (void)writeImageWithSourceMedia:(SVMediaRecord *)media
+- (void)writeImageWithSourceMedia:(id <SVMedia>)media
                               alt:(NSString *)altText
                             width:(NSNumber *)width
                            height:(NSNumber *)height
@@ -773,10 +773,11 @@
 {
     [self pushElementClassName:className];
     
-    [self writeImageWithSrc:@"" 
-                        alt:@""
-                      width:[width description]
-                     height:[height description]];
+    [self writeImageWithSourceMedia:[page thumbnail]
+                                alt:@""
+                              width:width
+                             height:height
+                               type:nil];
 }
 
 #pragma mark Resource Files
