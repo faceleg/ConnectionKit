@@ -52,8 +52,6 @@
 
 
 #pragma mark Prebuilt templates
-- (NSString *)calloutContainerTemplateHTML;
-
 - (NSString *)targetStringForPage:(id) aDestPage;
 
 
