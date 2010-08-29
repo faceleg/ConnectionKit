@@ -134,6 +134,7 @@
 				3C9870F111F3D6020053A72C /* PBXTargetDependency */,
 				3CD80744120A6C7600E0848F /* PBXTargetDependency */,
 				3C9870A411F3D3AC0053A72C /* PBXTargetDependency */,
+				3CFEEEB61228897C005A08FC /* PBXTargetDependency */,
 				3C8544AA12061D69000A19C3 /* PBXTargetDependency */,
 				3C0049581210CB9A006BAD9C /* PBXTargetDependency */,
 				3C4CDF2F1207413A002AF966 /* PBXTargetDependency */,
@@ -1636,6 +1637,20 @@
 			remoteGlobalIDString = 3CE2B2B70D7F1DD900E2711E;
 			remoteInfo = "Shared-UpdateToT";
 		};
+		3CFEEEB31228896D005A08FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CFEEEAF1228896D005A08FC /* TweetButtonElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
+			remoteInfo = TweetButtonElement;
+		};
+		3CFEEEB51228897C005A08FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CFEEEAF1228896D005A08FC /* TweetButtonElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
+			remoteInfo = TweetButtonElement;
+		};
 		CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
@@ -2373,6 +2388,7 @@
 		3CF941FF0D623F1900B1C83D /* getSafariFrontmostPage.scpt */ = {isa = PBXFileReference; explicitFileType = image; fileEncoding = 4; path = getSafariFrontmostPage.scpt; sourceTree = "<group>"; };
 		3CF942280D6244BB00B1C83D /* DOMNode+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNode+KTExtensions.h"; sourceTree = "<group>"; };
 		3CF9422A0D6244C000B1C83D /* DOMNode+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMNode+KTExtensions.m"; sourceTree = "<group>"; };
+		3CFEEEAF1228896D005A08FC /* TweetButtonElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TweetButtonElement.xcodeproj; path = ../PlugIns/Elements/TweetButtonElement/TweetButtonElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		7788DA0506752A1600599AAD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		796C9CB609D26DF8003BFA3B /* KTPulsatingOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPulsatingOverlay.h; sourceTree = "<group>"; };
 		796C9CB709D26DF8003BFA3B /* KTPulsatingOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPulsatingOverlay.m; sourceTree = "<group>"; };
@@ -4593,6 +4609,7 @@
 				3C42E2990D64D253004F35FD /* PageCounterElement.xcodeproj */,
 				3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */,
 				3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */,
+				3CFEEEAF1228896D005A08FC /* TweetButtonElement.xcodeproj */,
 				3C53E41811EE783B005CF7B2 /* TwitterElement.xcodeproj */,
 				CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */,
 			);
@@ -4651,6 +4668,14 @@
 				CEB721BB108FCEA500511E74 /* QuickLook.framework */,
 			);
 			name = "Cocoa Frameworks";
+			sourceTree = "<group>";
+		};
+		3CFEEEB01228896D005A08FC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3CFEEEB41228896D005A08FC /* TweetButton.svxElement */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		CE01A6210EAFD63600BDF264 /* AppKit */ = {
@@ -5942,6 +5967,10 @@
 					ProjectRef = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
 				},
 				{
+					ProductGroup = 3CFEEEB01228896D005A08FC /* Products */;
+					ProjectRef = 3CFEEEAF1228896D005A08FC /* TweetButtonElement.xcodeproj */;
+				},
+				{
 					ProductGroup = 3C53E41911EE783B005CF7B2 /* Products */;
 					ProjectRef = 3C53E41811EE783B005CF7B2 /* TwitterElement.xcodeproj */;
 				},
@@ -6138,6 +6167,13 @@
 			fileType = wrapper.cfbundle;
 			path = RSSBadge.svxElement;
 			remoteRef = 3CD80741120A6C5700E0848F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3CFEEEB41228896D005A08FC /* TweetButton.svxElement */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TweetButton.svxElement;
+			remoteRef = 3CFEEEB31228896D005A08FC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CE2556D30D3432AF003A5B5E /* SandvoxQuickLook.qlgenerator */ = {
@@ -7439,6 +7475,11 @@
 			isa = PBXTargetDependency;
 			target = 3CE2B2B70D7F1DD900E2711E /* UpdateShared */;
 			targetProxy = 3CE2B2C10D7F1E8A00E2711E /* PBXContainerItemProxy */;
+		};
+		3CFEEEB61228897C005A08FC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TweetButtonElement;
+			targetProxy = 3CFEEEB51228897C005A08FC /* PBXContainerItemProxy */;
 		};
 		CE2556D60D3432DA003A5B5E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
