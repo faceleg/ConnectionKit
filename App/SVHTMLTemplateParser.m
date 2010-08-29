@@ -107,18 +107,6 @@
 
 #pragma mark Parsing
 
-+ (SVHTMLTemplateParser *)currentTemplateParser;
-{
-    SVHTMLTemplateParser *result = [[[[NSThread currentThread] threadDictionary] objectForKey:@"SVHTMLTemplateParserStack"] lastObject];
-    
-    if (!result)
-    {
-        NSLog(@"+currentTemplateParser returning nil");
-    }
-    
-    return result;
-}
-
 - (BOOL)parseWithOutputWriter:(id <KSWriter>)stream;
 {
     // Double-check have we got a context?
@@ -180,6 +168,20 @@
 	
 	return result;
 }
+
++ (SVHTMLTemplateParser *)currentTemplateParser;
+{
+    SVHTMLTemplateParser *result = [[[[NSThread currentThread] threadDictionary] objectForKey:@"SVHTMLTemplateParserStack"] lastObject];
+    
+    if (!result)
+    {
+        NSLog(@"+currentTemplateParser returning nil");
+    }
+    
+    return result;
+}
+
+@synthesize currentIterationObject = _iterationObject;
 
 /*	We have to implement kCompareNotEmptyOrEditing as superclass (SVTemplateParser) has no concept of editing.
  */
@@ -464,12 +466,19 @@
                                   template:(NSString *)template
                                    keyPath:(NSString *)keyPath;
 {
-    // Increment the iteration after each run
+    // Record the object so plug-ins can access it
+    id oldObject = _iterationObject;
+    _iterationObject = object;
+    
     BOOL result = [super doForeachIterationWithObject:object template:template keyPath:keyPath];
+    
+    _iterationObject = oldObject;
+    
+    // Increment the iteration after each run
     [[self HTMLContext] nextIteration];
     return result;
 }
-    
+
 #pragma mark resources
 
 // Following parameters:  (1) key-value path to media or mediaImage object

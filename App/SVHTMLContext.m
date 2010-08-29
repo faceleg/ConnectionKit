@@ -932,6 +932,12 @@
 
 - (id <SVHTMLWriter>)HTMLWriter; { return self; }
 
+- (id)objectForCurrentTemplateIteration;
+{
+    SVHTMLTemplateParser *parser = [SVHTMLTemplateParser currentTemplateParser];
+    return [parser currentIterationObject];
+}
+
 @end
 
 

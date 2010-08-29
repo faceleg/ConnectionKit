@@ -32,7 +32,8 @@
 @interface SVHTMLTemplateParser : SVTemplateParser
 {
   @private
-    SVHTMLContext   *_context;  // weak, temporary ref
+    SVHTMLContext   *_context;          // weak, temporary ref
+    id              _iterationObject;   // weak, temporary ref
 }
 
 - (id)initWithPage:(KTPage *)page;	// Convenience method that parses the whole page
@@ -41,10 +42,12 @@
 
 
 #pragma mark Parse
-//  Convenience method to do parsing while pushing and popping a context on the stack
+
 - (BOOL)parseIntoHTMLContext:(SVHTMLContext *)context;
 @property(nonatomic, readonly) SVHTMLContext *HTMLContext;
+
 + (SVHTMLTemplateParser *)currentTemplateParser;
+@property(nonatomic, readonly) id currentIterationObject;
 
 
 #pragma mark Functions

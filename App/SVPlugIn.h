@@ -42,7 +42,9 @@
 - (BOOL)liveDataFeeds;
 - (BOOL)shouldWriteServerSideScripts;   // YES when -isForPublishing, but not when validating page
 
+// State
 - (id <SVPage>)page;
+- (id)objectForCurrentTemplateIteration;
 
 @end
 
