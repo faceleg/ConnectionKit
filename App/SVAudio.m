@@ -528,9 +528,6 @@
 	|| [type conformsToUTI:@"public.aifc-audio"]
 	;
 	
-	audioTag = NO;
-	
-	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if ([defaults boolForKey:@"avoidAudioTag"]) audioTag = NO;
 	
