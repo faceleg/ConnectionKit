@@ -58,6 +58,37 @@
             nil];
 }
 
+// no-count button is 55 x 20
+// horizontal button is 110  (at least) x 20
+// vertical button is 55 x 62 (at least)
+
+- (NSUInteger)width
+{
+    if ( STYLE_HORIZONTAL == self.tweetButtonStyle )
+    {
+        return 110;
+    }
+    else 
+    {
+        return [self minWidth];
+    }
+}
+
+- (NSUInteger)height
+{
+    if ( STYLE_VERTICAL == self.tweetButtonStyle )
+    {
+        return 62;
+    }
+    else 
+    {
+        return [self minHeight];
+    }
+}
+
+- (NSUInteger)minWidth { return 55; }
+- (NSUInteger)minHeight { return 20; }
+
 
 #pragma mark Initialization
 
