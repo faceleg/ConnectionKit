@@ -23,9 +23,7 @@
   @private
     IKImageBrowserView  *_browser;
     
-	NSTrackingRectTag   _trackingRect;
 	NSTrackingArea		*_trackingArea;
-	BOOL				_wasAcceptingMouseEvents;
 }
 
 @property(nonatomic, retain) IBOutlet IKImageBrowserView *imageBrowser;
