@@ -35,6 +35,7 @@
 //
 
 #import "PhotoGridIndexPlugIn.h"
+#import "SVPageletPlugIn.h"
 
 
 @implementation PhotoGridIndexPlugIn
@@ -43,13 +44,33 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
+    // parse template
     [super writeHTML:context];
-    
+        
     // add dependencies
     [context addDependencyForKeyPath:@"indexedCollection" ofObject:self];
     [context addDependencyForKeyPath:@"indexedCollection.childPages" ofObject:self];
 }
 
+
+/*
+<img[[idClass entity:Page property:aPage.thumbnail flags:"anchor" id:aPage.identifier]]
+src="[[mediainfo info:path media:aPage.thumbnail sizeToFit:thumbnailImageSize]]"
+alt="[[=&aPage.title]]"
+width="[[mediainfo info:width media:aPage.thumbnail sizeToFit:thumbnailImageSize]]"
+height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSize]]" />
+ */
+
+- (void)writeThumbnailImageOfIteratedPage
+{
+    id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+    
+    [[context HTMLWriter] writeThumbnailImageOfPage:iteratedPage 
+                                          className:@"NOT SURE WHAT THIS SHOULD BE YET" 
+                                           maxWidth:[NSNumber numberWithInt:128] 
+                                          maxHeight:[NSNumber numberWithInt:128]];
+}
 
 - (NSSize)thumbnailImageSize { return NSMakeSize(128.0, 128.0); }
 
