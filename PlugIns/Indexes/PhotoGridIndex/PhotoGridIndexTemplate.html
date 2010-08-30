@@ -1,6 +1,6 @@
 [[foreach indexedCollection.childPages aPage]]
 <div class="gridItem [[i]] [[eo]][[last]]">
-	<a class="imageLink" [[target aPage]]href="[[path aPage]]">[[writeThumbnailImageOfIteratedPage]]</a>
+	<a class="imageLink" [[target aPage]]href="[[path aPage]]">[[=writeThumbnailImageOfIteratedPage]]</a>
     [[textblock tag:h3 property:aPage.title flags:"line" hyperlink:aPage]]
 </div>
 [[endForEach]]
