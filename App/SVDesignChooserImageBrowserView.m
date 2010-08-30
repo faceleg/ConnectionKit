@@ -51,10 +51,6 @@
 			[self.dataSource setContracted:!expanded forRange:range];
 		}
 	}
-	else
-	{
-		NSLog(@"ignoring event %@", event);
-	}
 }
 
 - (void) awakeFromNib
