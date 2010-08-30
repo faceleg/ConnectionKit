@@ -771,7 +771,7 @@
 
 - (void)writeThumbnailImageOfPage:(id <SVPage>)page className:(NSString *)className maxWidth:(NSNumber *)width maxHeight:(NSNumber *)height;
 {
-    [self pushElementClassName:className];
+    if (className) [self pushElementClassName:className];
     
     id <SVMedia> thumbnail = [page thumbnail];
     if (thumbnail)
