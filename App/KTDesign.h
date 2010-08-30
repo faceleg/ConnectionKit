@@ -47,9 +47,6 @@ extern const int kDesignThumbHeight;
 @property  NSUInteger imageVersion;
 @property  NSUInteger variationIndex;
 
-- (id)initWithBundle:(NSBundle *)bundle;
-- (id)initWithBundle:(NSBundle *)bundle variation:(NSUInteger)variationIndex;
-
 + (NSArray *)reorganizeDesigns:(NSArray *)designs familyRanges:(NSArray **)outRanges;
 - (NSString *)parentBundleIdentifier;
 

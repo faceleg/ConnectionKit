@@ -209,20 +209,11 @@ const int kDesignThumbHeight = 65;
 	_fontsLoaded = YES;	// once this is called, no need to check or load again.
 }
 
-- (id)initWithBundle:(NSBundle *)bundle;
-{
-	if ((self = [self initWithBundle:bundle variation:NSNotFound]) != nil)
-	{
-		;
-	}
-	return self;
-}
-
 - (id)initWithBundle:(NSBundle *)bundle variation:(NSUInteger)variationIndex;
 {
 	_variationIndex = variationIndex;
 	_imageVersion = NSNotFound;		// NSNotFound means not scrubbed yet, so use generic "parent" title
-	if ((self = [super initWithBundle:bundle]) != nil)
+	if ((self = [super initWithBundle:bundle variation:variationIndex]) != nil)
 	{
 		;		// do not load local fonts;  we probably won't need them.
 		self.thumbnails = [NSMutableDictionary dictionary];
@@ -814,7 +805,6 @@ const int kDesignThumbHeight = 65;
 			KTDesign *familyPrototype = [self familyPrototype];
 			if (!familyPrototype) familyPrototype = self;	// use self, the first item in the list, as the prototype
 			KTDesign *whichDesign = (safeIndex == NSNotFound) ? familyPrototype : [familyDesigns objectAtIndex:safeIndex];
-			NSLog(@"Using thumbnail of %@", whichDesign);
 			result = [whichDesign thumbnailCG];
 			
 			[self.thumbnails setObject:(id)result forKey:indexNumber];
