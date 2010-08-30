@@ -34,11 +34,10 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import <Cocoa/Cocoa.h>
 #import "SandvoxPlugin.h"
 
 
-@interface TwitterElementDelegate : KTAbstractPluginDelegate <KTDataSource>
+@interface TwitterFeedPlugIn : SVPlugIn
 
 - (IBAction)openTwitter:(id)sender;
 

@@ -34,7 +34,7 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "TwitterElementDelegate.h"
+#import "TwitterFeedPlugIn.h"
 
 #import "NSURL+Twitter.h"
 
@@ -46,7 +46,7 @@
 
 
 
-@implementation TwitterElementDelegate
+@implementation TwitterFeedPlugIn
 
 #pragma mark -
 #pragma mark Class Methods
@@ -69,22 +69,22 @@
 #pragma mark -
 #pragma mark Init
 
-- (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
-{
-	[super awakeFromDragWithDictionary:aDataSourceDictionary];
-	
-	// Look for a YouTube URL
-	NSString *URLString = [aDataSourceDictionary valueForKey:kKTDataSourceURLString];
-	if (URLString)
-	{
-		NSURL *URL = [NSURL URLWithString:URLString];
-		NSString *username = [URL twitterUsername];
-        if (username)
-		{
-			[[self delegateOwner] setValue:username forKey:@"username"];
-		}
-	}
-}
+//- (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
+//{
+//	[super awakeFromDragWithDictionary:aDataSourceDictionary];
+//	
+//	// Look for a YouTube URL
+//	NSString *URLString = [aDataSourceDictionary valueForKey:kKTDataSourceURLString];
+//	if (URLString)
+//	{
+//		NSURL *URL = [NSURL URLWithString:URLString];
+//		NSString *username = [URL twitterUsername];
+//        if (username)
+//		{
+//			[[self delegateOwner] setValue:username forKey:@"username"];
+//		}
+//	}
+//}
 
 #pragma mark -
 #pragma mark Other
@@ -100,77 +100,77 @@
 	return result;
 }
 
-- (void)addLevelTextToEndBody:(NSMutableString *)ioString forPage:(KTPage *)aPage
-{
-	if ([[self delegateOwner] valueForKey:@"username"])
-	{
-		// Append element-specific script
-		NSString *template = [[self class] scriptTemplate];
-		KTHTMLParser *parser = [[KTHTMLParser alloc] initWithTemplate:template component:[self delegateOwner]];
-		[parser setCurrentPage:aPage];
-		
-		NSString *script = [parser parseTemplate];
-		if (script) [ioString appendString:script];
-		
-		[parser release];
-	}
-}
+//- (void)addLevelTextToEndBody:(NSMutableString *)ioString forPage:(KTPage *)aPage
+//{
+//	if ([[self delegateOwner] valueForKey:@"username"])
+//	{
+//		// Append element-specific script
+//		NSString *template = [[self class] scriptTemplate];
+//		KTHTMLParser *parser = [[KTHTMLParser alloc] initWithTemplate:template component:[self delegateOwner]];
+//		[parser setCurrentPage:aPage];
+//		
+//		NSString *script = [parser parseTemplate];
+//		if (script) [ioString appendString:script];
+//		
+//		[parser release];
+//	}
+//}
 
 #pragma mark -
 #pragma mark Data Source
 
-+ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
-{
-	return [KSWebLocation webLocationPasteboardTypes];
-}
-
-+ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pasteboard;
-{
-    return 1;
-}
-
-+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
-{
-	KTSourcePriority result = KTSourcePriorityNone;
-    
-	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pboard readWeblocFiles:YES ignoreFileURLs:YES];
-	
-	if ([webLocations count] > dragIndex)
-	{
-		NSURL *URL = [[webLocations objectAtIndex:dragIndex] URL];
-		if ([URL twitterUsername])
-		{
-			result = KTSourcePrioritySpecialized;
-		}
-	}
-	
-	return result;
-}
-
-+ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
-                      fromPasteboard:(NSPasteboard *)pasteboard
-                             atIndex:(unsigned)dragIndex
-				  forCreatingPagelet:(BOOL)isCreatingPagelet;
-{
-	BOOL result = NO;
-    
-    NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
-	
-	if ([webLocations count] > dragIndex)
-	{
-		NSURL *URL = [[webLocations objectAtIndex:dragIndex] URL];
-		NSString *title = [[webLocations objectAtIndex:dragIndex] title];
-		
-		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
-        if (!KSISNULL(title))
-		{
-			[aDictionary setObject:title forKey:kKTDataSourceTitle];
-		}
-		
-		result = YES;
-	}
-    
-    return result;
-}
+//+ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
+//{
+//	return [KSWebLocation webLocationPasteboardTypes];
+//}
+//
+//+ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pasteboard;
+//{
+//    return 1;
+//}
+//
+//+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
+//{
+//	KTSourcePriority result = KTSourcePriorityNone;
+//    
+//	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pboard readWeblocFiles:YES ignoreFileURLs:YES];
+//	
+//	if ([webLocations count] > dragIndex)
+//	{
+//		NSURL *URL = [[webLocations objectAtIndex:dragIndex] URL];
+//		if ([URL twitterUsername])
+//		{
+//			result = KTSourcePrioritySpecialized;
+//		}
+//	}
+//	
+//	return result;
+//}
+//
+//+ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
+//                      fromPasteboard:(NSPasteboard *)pasteboard
+//                             atIndex:(unsigned)dragIndex
+//				  forCreatingPagelet:(BOOL)isCreatingPagelet;
+//{
+//	BOOL result = NO;
+//    
+//    NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
+//	
+//	if ([webLocations count] > dragIndex)
+//	{
+//		NSURL *URL = [[webLocations objectAtIndex:dragIndex] URL];
+//		NSString *title = [[webLocations objectAtIndex:dragIndex] title];
+//		
+//		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
+//        if (!KSISNULL(title))
+//		{
+//			[aDictionary setObject:title forKey:kKTDataSourceTitle];
+//		}
+//		
+//		result = YES;
+//	}
+//    
+//    return result;
+//}
 
 @end
