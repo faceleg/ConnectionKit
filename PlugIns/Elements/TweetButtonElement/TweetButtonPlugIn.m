@@ -49,7 +49,7 @@
 + (NSArray *)plugInKeys
 { 
     return [NSArray arrayWithObjects:
-            @"tweetCountStyle", 
+            @"tweetButtonStyle", 
             @"tweetText", 
             @"tweetURL", 
             @"tweetVia", 
@@ -108,18 +108,6 @@
 
 - (void)writeInnerHTML:(id <SVPlugInContext>)context
 {
-    // add dependencies
-    [context addDependencyForKeyPath:@"tweetCountStyle" ofObject:self];
-    [context addDependencyForKeyPath:@"tweetText" ofObject:self];
-    [context addDependencyForKeyPath:@"tweetURL" ofObject:self];
-    [context addDependencyForKeyPath:@"tweetVia" ofObject:self];
-    [context addDependencyForKeyPath:@"tweetRelated1" ofObject:self];
-    [context addDependencyForKeyPath:@"tweetRelated2" ofObject:self];
-    
-    /*
-     <a href="http://twitter.com/share" class="twitter-share-button" data-count="vertical" data-via="talbchat" data-related="snailwrangler">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-     */
-    
     NSMutableDictionary *attrs = [NSMutableDictionary dictionaryWithCapacity:5];
     // href
     [attrs setObject:@"http://twitter.com/share" forKey:@"href"];
@@ -160,8 +148,16 @@
     [[context HTMLWriter] endElement]; // </a>
     
     // write <script> to endBody
-    //FIXME: expose endBodyMarkup or better way to add script to context in protocol
+    //FIXME: #86407 expose endBodyMarkup or better way to add script to context in protocol
     [[[context HTMLWriter] endBodyMarkup] appendString:@"<script type=\"text/javascript\" src=\"http://platform.twitter.com/widgets.js\"></script>"];
+    
+    // add dependencies
+    [context addDependencyForKeyPath:@"tweetButtonStyle" ofObject:self];
+    [context addDependencyForKeyPath:@"tweetText" ofObject:self];
+    [context addDependencyForKeyPath:@"tweetURL" ofObject:self];
+    [context addDependencyForKeyPath:@"tweetVia" ofObject:self];
+    [context addDependencyForKeyPath:@"tweetRelated1" ofObject:self];
+    [context addDependencyForKeyPath:@"tweetRelated2" ofObject:self];
 }
 
 #pragma mark Properties
