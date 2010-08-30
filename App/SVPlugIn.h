@@ -35,6 +35,10 @@
 - (void)addCSSString:(NSString *)css;
 - (void)addCSSWithURL:(NSURL *)cssURL;
 
+// Extra markup
+- (NSMutableString *)extraHeaderMarkup;
+- (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
+
 // Purpose
 - (BOOL)isForEditing; // YES if HTML is intended to be edited directly in a Web Editor
 - (BOOL)isForQuickLookPreview;  // yeah, you get the idea
