@@ -193,7 +193,25 @@
 
 - (NSString *)tweetRelated
 {
-    return self.tweetRelated1;
+    BOOL hasRelated1 = self.tweetRelated1.length > 0;
+    BOOL hasRelated2 = self.tweetRelated2.length > 0;
+    
+    if ( hasRelated1 && hasRelated2 )
+    {
+        return [NSString stringWithFormat:@"%@:%@", self.tweetRelated1, self.tweetRelated2];
+    }
+    else if ( hasRelated1 )
+    {
+        return self.tweetRelated1;
+    }
+    else if ( hasRelated2 )
+    {
+        return self.tweetRelated2;
+    }
+    else 
+    {
+        return nil;
+    }
 }
 
 @end
