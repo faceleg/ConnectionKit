@@ -74,7 +74,6 @@
 #import <QuickLook/QuickLook.h>
 #import "KSThreadProxy.h"
 #import "NSImage+KTExtensions.h"
-#import "NSInvocation+Karelia.h"
 
 @interface QTMovie (ApplePrivate)
 
@@ -206,7 +205,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 }
 
 // Called back on main thread 
-- (void)gotQuickLookData:(NSData *)jpegData addToContext:(SVHTMLContext *)context;
+- (void)gotQuickLookData:(NSData *)jpegData;
 {
 	OBASSERT([NSThread isMainThread]);
 	
@@ -234,8 +233,6 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 							   expectedContentLength:[jpegData length]
 							   textEncodingName:nil] autorelease];
 	
-	// B) Register it with the context using -addMedia: or similar
-
 	SVMediaRecord *posterMedia = nil;
 	if (jpegData)
 	{
@@ -245,10 +242,10 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 							insertIntoManagedObjectContext:[self managedObjectContext]];	
 	}
 	[self replaceMedia:posterMedia forKeyPath:@"posterFrame"];
-	[context addMedia:posterMedia];
+
 }
 
-- (void)getQuickLookForFileURL:(NSURL *)fileURL addToContext:(SVHTMLContext *)context;		// CALLED FROM OPERATION
+- (void)getQuickLookForFileURL:(NSURL *)fileURL		// CALLED FROM OPERATION
 {
 	OBASSERT(![NSThread isMainThread]);
 	OBPRECONDITION(fileURL);
@@ -271,21 +268,19 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		
 		// [jpegData writeToFile:@"/Volumes/dwood/Desktop/quicklook.jpg" atomically:YES];
 	}
-	[[self ks_proxyOnThread:nil waitUntilDone:NO] gotQuickLookData:jpegData addToContext:context];
+	[[self ks_proxyOnThread:nil waitUntilDone:NO] gotQuickLookData:jpegData];
 }
 
-- (void)getPosterFrameFromQuickLookAddToContext:(SVHTMLContext *)context;
+- (void)getPosterFrameFromQuickLook;
 {
 	SVMediaRecord *media = self.media;
 	if (media)
 	{
 		NSURL *mediaURL = [media fileURL];
 		
-		NSInvocation *invocation = [NSInvocation invocationWithSelector:@selector(getQuickLookForFileURL:addToContext:)
-																 target:self
-															  arguments:[NSArray arrayWithObjects:mediaURL, context, nil]];
-		
-		NSInvocationOperation *operation = [[[NSInvocationOperation alloc] initWithInvocation:invocation] autorelease];
+		NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
+																				selector:@selector(getQuickLookForFileURL:)
+																				  object:mediaURL];
 		
 		[[[self class] sharedQuickLookQueue] addOperation:operation];			
 	}
@@ -345,7 +340,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 				break;
 			case kPosterFrameTypeAutomatic:
 				// Switching to automatic? Queue request for quicklook
-				[self getPosterFrameFromQuickLookAddToContext:context];
+				[self getPosterFrameFromQuickLook];
 				break;
 			case kPosterFrameTypeNone:
 				// Do nothing; don't mess with media
@@ -357,7 +352,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		NSLog(@"SVVideo Media set.");
 		if (nil == self.posterFrame || [self.posterFrameType intValue] != kPosterTypeChoose)		// get poster frame image UNLESS we have an override chosen.
 		{
-			[self getPosterFrameFromQuickLookAddToContext:context];
+			[self getPosterFrameFromQuickLook];
 		}
 		
 		// Video changed - clear out the known width/height so we can recalculate
