@@ -105,7 +105,7 @@
 			if ([theView respondsToSelector:@selector(collapseGroupAtIndex:)])	// 10.5 headers lie; only in 10.6
 			{
 				[theView collapseGroupAtIndex:groupIndex];
-				LOG((@"Collapsing group index %d - %@", groupIndex, NSStringFromRange(range)));
+				OFF((@"Collapsing group index %d - %@", groupIndex, NSStringFromRange(range)));
 			}
 			else if ([theView respondsToSelector:@selector(collapseGroup:)]
 					 && [theView respondsToSelector:@selector(layoutManager)])	// 10.5 workaround
@@ -114,7 +114,7 @@
 				NSArray *groups = [lm groups];
 				id group = [groups objectAtIndex:groupIndex];
 				[theView collapseGroup:group];
-				LOG((@"Collapsing group index %d - %@", groupIndex, NSStringFromRange(range)));
+				OFF((@"Collapsing group index %d - %@", groupIndex, NSStringFromRange(range)));
 			}
 		}
 		
@@ -283,7 +283,6 @@
 
 - (void) setContracted:(BOOL)contracted forRange:(NSRange)range
 {
-	NSLog(@"setContracted %@, %d", NSStringFromRange(range), contracted);
 	NSArray *objects = [oDesignsArrayController arrangedObjects];
 	
 	// Adjust the *first* item in this range; it will be changing depending on expanded/collapsed state.
