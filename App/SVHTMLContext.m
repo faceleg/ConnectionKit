@@ -773,11 +773,25 @@
 {
     [self pushElementClassName:className];
     
-    [self writeImageWithSourceMedia:[page thumbnail]
-                                alt:@""
-                              width:width
-                             height:height
-                               type:nil];
+    id <SVMedia> thumbnail = [page thumbnail];
+    if (thumbnail)
+    {
+        [self writeImageWithSourceMedia:thumbnail
+                                    alt:@""
+                                  width:width
+                                 height:height
+                                   type:nil];
+#warning Need to figure out how to scale nicely to fit dimensions
+    }
+    else
+    {
+        // Fallback to placeholder <DIV>
+        [self pushElementAttribute:@"style" value:[NSString stringWithFormat:
+                                                   @"width:%@px; height:%@px;",
+                                                   width,
+                                                   height]];
+        [self startElement:@"div"];
+    }
 }
 
 #pragma mark Resource Files
