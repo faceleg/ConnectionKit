@@ -556,7 +556,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     for (SVMediaRecord *aMediaRecord in media)
     {
         // Media needs to be told its location to be useful
-        // Use -fileURL instead of absoluteURL since it accounts for autosave properly
+        // Use [self fileURL] instead of absoluteURL since it accounts for autosave properly
         NSString *path = [aMediaRecord filename];
         
         NSURL *mediaURL = [self URLForMediaRecord:aMediaRecord 
@@ -565,12 +565,15 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         if (mediaURL) [aMediaRecord forceUpdateFromURL:mediaURL];
         
-        // Does this match some media already loaded? 
-        // Can't call -isFilenameReserved: since it will find the file on disk and return YES
-        id <SVDocumentFileWrapper> fileWrapper = [_filenameReservations objectForKey:path]; 
-        if (fileWrapper) [aMediaRecord setNextObject:fileWrapper];
-        
-        [self setDocumentFileWrapper:aMediaRecord forKey:path];
+        if (![path hasPrefix:@"Shared/"] && ![path hasPrefix:@"shared/"])
+        {
+            // Does this match some media already loaded? 
+            // Can't call -isFilenameReserved: since it will find the file on disk and return YES
+            id <SVDocumentFileWrapper> fileWrapper = [_filenameReservations objectForKey:path]; 
+            if (fileWrapper) [aMediaRecord setNextObject:fileWrapper];
+            
+            [self setDocumentFileWrapper:aMediaRecord forKey:path];
+        }
     }
     
     
