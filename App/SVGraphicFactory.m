@@ -135,10 +135,10 @@
     }
     else if ([[NSImage imagePasteboardTypes] containsObject:type])
     {
-        SVMediaRecord *media = [SVMediaRecord mediaWithFileContents:contents
-                                                        URLResponse:nil
-                                                         entityName:@"GraphicMedia"
-                                     insertIntoManagedObjectContext:context];
+        SVMediaRecord *media = [SVMediaRecord mediaWithData:contents
+                                                        URL:nil
+                                                 entityName:@"GraphicMedia"
+                             insertIntoManagedObjectContext:context];
         
         if (media)
         {

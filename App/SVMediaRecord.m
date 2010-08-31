@@ -63,26 +63,28 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
-+ (SVMediaRecord *)mediaWithFileContents:(NSData *)data
-                             URLResponse:(NSURLResponse *)response
-                              entityName:(NSString *)entityName
-          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVMediaRecord *)mediaWithData:(NSData *)data
+                             URL:(NSURL *)url
+                      entityName:(NSString *)entityName
+  insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     OBPRECONDITION(data);
     OBPRECONDITION(context);
 
     
-    SVMediaRecord *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
-                                                    inManagedObjectContext:context];
+    NSString *type = [NSString MIMETypeForUTI:
+                      [NSString UTIForFilenameExtension:[url pathExtension]]];
     
     WebResource *resource = [[WebResource alloc] initWithData:data
-                                                          URL:[response URL]
-                                                     MIMEType:[response MIMEType]
-                                             textEncodingName:[response textEncodingName]
+                                                          URL:url
+                                                     MIMEType:type
+                                             textEncodingName:nil
                                                     frameName:nil];
     
-    result->_webResource = resource;
-    [result setPreferredFilename:[response suggestedFilename]];
+    SVMediaRecord *result = [SVMediaRecord mediaWithWebResource:resource
+                                                     entityName:entityName
+                                 insertIntoManagedObjectContext:context];
+    [resource release];
     
     return result;
 }
@@ -91,20 +93,14 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
                              entityName:(NSString *)entityName
          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    NSData *data = [resource data];
+    OBPRECONDITION(resource);
+    
     NSURL *URL = [resource URL];
     
-    NSURLResponse *response = [[NSURLResponse alloc] initWithURL:URL
-                                                        MIMEType:[resource MIMEType]
-                                           expectedContentLength:[data length]
-                                                textEncodingName:[resource textEncodingName]];
+    SVMediaRecord *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
+                                                          inManagedObjectContext:context];
     
-    SVMediaRecord *result = [self mediaWithFileContents:data
-                                            URLResponse:response
-                                             entityName:entityName
-                         insertIntoManagedObjectContext:context];
-    [response release];
-    
+    result->_webResource = [resource copy];
     [result setPreferredFilename:[URL lastPathComponent]];
     
     return result;

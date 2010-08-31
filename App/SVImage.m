@@ -21,6 +21,8 @@
 #import "NSManagedObject+KTExtensions.h"
 
 #import "NSBitmapImageRep+Karelia.h"
+#import "NSString+Karelia.h"
+#import "NSURL+Karelia.h"
 
 
 @interface SVImage ()
@@ -338,11 +340,15 @@
     NSData *data = [propertyList objectForKey:@"fileContents"];
     if (data)
     {
-        NSString *url = [propertyList objectForKey:@"sourceURL"];
+        NSString *urlString = [propertyList objectForKey:@"sourceURL"];
+        NSURL *url = [NSURL URLWithString:urlString];
+        
+        NSString *type = [NSString MIMETypeForUTI:
+                          [NSString UTIForFilenameExtension:[url pathExtension]]];
         
         WebResource *resource = [[WebResource alloc] initWithData:data
-                                                              URL:[NSURL URLWithString:url]
-                                                         MIMEType:nil
+                                                              URL:url
+                                                         MIMEType:type
                                                  textEncodingName:nil
                                                         frameName:nil];
         

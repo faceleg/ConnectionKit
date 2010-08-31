@@ -43,10 +43,10 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
                           error:(NSError **)outError;
 
 // Must call -setPreferredFilename: after, and ideally -setFileAttributes: too
-+ (SVMediaRecord *)mediaWithFileContents:(NSData *)data
-                             URLResponse:(NSURLResponse *)response
-                              entityName:(NSString *)entityName
-          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVMediaRecord *)mediaWithData:(NSData *)data
+                             URL:(NSURL *)url
+                      entityName:(NSString *)entityName
+  insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (SVMediaRecord *)mediaWithWebResource:(WebResource *)resource
                              entityName:(NSString *)entityName

@@ -228,19 +228,13 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 											   path:[[[videoURL path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"]]
 					  autorelease];
 	
-	NSURLResponse *response = [[[NSURLResponse alloc]
-							   initWithURL:fakeURL
-							   MIMEType:@"image/jpeg"
-							   expectedContentLength:[jpegData length]
-							   textEncodingName:nil] autorelease];
-	
 	SVMediaRecord *posterMedia = nil;
 	if (jpegData)
 	{
-		posterMedia = [SVMediaRecord mediaWithFileContents:jpegData
-											   URLResponse:response
-												entityName:@"PosterFrame"
-							insertIntoManagedObjectContext:[self managedObjectContext]];	
+		posterMedia = [SVMediaRecord mediaWithData:jpegData
+											   URL:fakeURL
+                                        entityName:@"PosterFrame"
+                    insertIntoManagedObjectContext:[self managedObjectContext]];	
 	}
 	[self replaceMedia:posterMedia forKeyPath:@"posterFrame"];
 
