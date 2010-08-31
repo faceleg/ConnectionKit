@@ -526,10 +526,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [pubContext release];
 }
 
-- (NSString *)publishMedia:(id <SVMedia>)mediaRep;
+- (NSString *)publishMedia:(id <SVMedia>)media;
 {
     // Is there already an existing file on the server? If so, use that
-    NSData *fileContents = [mediaRep data];
+    NSData *fileContents = [media mediaData];
+    if (!fileContents) fileContents = [NSData dataWithContentsOfURL:[media mediaURL]];
     NSData *digest = [fileContents SHA1Digest];
     
     NSString *result = [self pathForFileWithSHA1Digest:digest];
@@ -540,7 +541,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         {
             //  The media rep does not already exist on the server, so need to assign it a new path
             NSString *mediaDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:@"_Media"];
-            NSString *preferredFilename = [mediaRep preferredFilename];
+            NSString *preferredFilename = [media preferredFilename];
             NSString *pathExtension = [preferredFilename pathExtension];
             
             NSString *legalizedFileName = [[preferredFilename stringByDeletingPathExtension]

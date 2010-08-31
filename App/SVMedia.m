@@ -10,6 +10,7 @@
 #import "SVMediaProtocol.h"
 
 #import "NSString+Karelia.h"
+#import "NSURL+Karelia.h"
 
 
 @implementation SVMedia
@@ -31,18 +32,7 @@
     [super dealloc];
 }
 
-@synthesize fileURL = _fileURL;
-
-- (NSData *)data;
-{
-    NSData *result = _data;
-    if (!result && [self fileURL])
-    {
-        result = [NSData dataWithContentsOfURL:[self fileURL]];
-    }
-    
-    return result;
-}
+@synthesize mediaURL = _fileURL;
 
 @end
 
@@ -52,39 +42,30 @@
 
 @implementation SVMedia (SVMedia)
 
-- (NSData *)fileContents
+- (NSData *)mediaData;
 {
-    return [self data];
-}
-
-- (NSString *)filename // non-nil value means the media should be inside the doc package (or deleted)
-{
-    return [self preferredFilename];
+    return nil;
+    NSData *result = _data;
+    return result;
 }
 
 - (NSString *)preferredFilename    // what the media would like to named given the chance
 {
-    return [[[self fileURL] absoluteString] lastPathComponent];
-}
-
-- (NSString *)typeOfFile           // based on preferred filename, what the UTI is
-{
-    NSString *path = [[self fileURL] path];
-    return path ? [NSString UTIForFileAtPath:path] : nil;
+    return [[self mediaURL] lastPathComponent];
 }
 
 - (id)imageRepresentation
 {
-    return (nil != [self fileContents]) 
-    ? (id)[self fileContents] 
-    : (id)[self fileURL];
+    return (nil != [self mediaData]
+            ? (id)[self mediaData] 
+            : (id)[self mediaURL]);
 }
 
 - (NSString *)imageRepresentationType
 {
-    return (nil != [self fileContents]) 
-    ? IKImageBrowserNSDataRepresentationType 
-    : IKImageBrowserNSURLRepresentationType;
+    return ([self mediaData] 
+            ? IKImageBrowserNSDataRepresentationType 
+            : IKImageBrowserNSURLRepresentationType);
 }
 
 @end

@@ -67,11 +67,11 @@
     return [[self mediaRecord] preferredFilename];
 }
 
-- (NSData *)data;
+- (NSData *)mediaData;
 {
     if (![self isNativeRepresentation])
     {
-        NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[[self mediaRecord] fileURL]
+        NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[[self mediaRecord] mediaURL]
                                                   size:NSMakeSize([[self width] floatValue], [[self height] floatValue])
                                            scalingMode:KSImageScalingModeAspectFit
                                             sharpening:0.0f
@@ -88,11 +88,11 @@
     }
     else
     {
-        return [[self mediaRecord] data];
+        return [[self mediaRecord] mediaData];
     }
 }
 
-- (NSURL *)fileURL; { return nil; }
+- (NSURL *)mediaURL; { return nil; }
 
 - (BOOL)isEqualToMediaRepresentation:(SVImageMedia *)otherRep;
 {

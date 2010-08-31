@@ -18,7 +18,6 @@
 
 - (id)initWithURL:(NSURL *)fileURL;
 
-@property(nonatomic, copy, readonly) NSURL *fileURL;
-@property(nonatomic, copy, readonly) NSData *data;
+@property(nonatomic, copy, readonly) NSURL *mediaURL;
 
 @end

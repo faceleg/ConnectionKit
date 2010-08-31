@@ -225,6 +225,13 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
+- (NSURL *)mediaURL;
+{
+    NSURL *result = [self fileURL];
+    if (!result) result = [[self URLResponse] URL];
+    return result;
+}
+
 #pragma mark Updating File Wrappers
 
 - (BOOL)readFromURL:(NSURL *)URL options:(NSUInteger)options error:(NSError **)error;
@@ -351,7 +358,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return nil;
 }
 
-- (NSData *)data; { return [self fileContents]; }
+- (NSData *)mediaData; { return [self fileContents]; }
 
 - (WebResource *)webResource;
 {

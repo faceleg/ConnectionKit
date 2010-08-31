@@ -48,7 +48,7 @@
     uploadPath = [uploadPath stringByAppendingPathComponent:
                   [[media preferredFilename] legalizedWebPublishingFilename]];
     
-    [publishingEngine publishContentsOfURL:[media fileURL]
+    [publishingEngine publishContentsOfURL:[media mediaURL]
                                     toPath:uploadPath
                           cachedSHA1Digest:nil
                                     object:self];
