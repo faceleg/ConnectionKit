@@ -633,7 +633,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             // Don't try to access -[dupe filename] as it may be a deleted object, and therefore unable to fulfil the fault
             NSURL *fileURL = [dupe fileURL];
             [aMediaRecord readFromURL:fileURL options:0 error:NULL];
-            [aMediaRecord setFilename:[fileURL lastPathComponent]];
+            [aMediaRecord setFilename:[dupe filename]]; // changed for #86505. but apparently can go wrong with deleted media.
             
             NSString *key = [self keyForDocumentFileWrapper:dupe];
             OBASSERT(key);
