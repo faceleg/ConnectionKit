@@ -904,15 +904,15 @@
     while (location < range.length)
     {
         NSRange effectiveRange;
-        SVGraphic *attachment = [attributedHTML attribute:@"SVAttachment"
-                                                  atIndex:location
-                                    longestEffectiveRange:&effectiveRange
-                                                  inRange:range];
+        SVTextAttachment *attachment = [attributedHTML attribute:@"SVAttachment"
+                                                         atIndex:location
+                                           longestEffectiveRange:&effectiveRange
+                                                         inRange:range];
         
         if (attachment)
         {
             // Write the graphic
-            [self writeGraphic:attachment];
+            [self writeGraphic:[attachment graphic]];
         }
         else
         {

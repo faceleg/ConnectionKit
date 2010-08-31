@@ -185,41 +185,9 @@
  */
 - (void)writeText:(SVHTMLContext *)context range:(NSRange)range;
 {
-    //  Piece together each of our elements to generate the HTML
-    NSArray *attachments = [self orderedAttachments];
-    NSString *archive = [self string];
+    NSAttributedString *html = [[self attributedHTMLString] attributedSubstringFromRange:range];
     
-    SVTextAttachment *lastAttachment = nil;
-    NSUInteger archiveIndex = range.location;
-    
-    
-    for (SVTextAttachment *anAttachment in attachments)
-    {
-        // Ignore attachments outside the range
-        NSRange attachmentRange = [anAttachment range];
-        if (attachmentRange.location < range.location) continue;
-        
-        
-        // Write preceeding text
-        NSRange textRange = NSMakeRange(archiveIndex, attachmentRange.location - archiveIndex);
-        if (textRange.length)
-        {
-            NSString *aString = [archive substringWithRange:textRange];
-            [context writeString:aString];
-        }
-        
-        
-        // Write the attachment/graphic
-        [context writeGraphic:[anAttachment graphic]];
-        lastAttachment = anAttachment;
-        
-        
-        NSRange lastAttachmentRange = [lastAttachment range];
-        archiveIndex = lastAttachmentRange.location + lastAttachmentRange.length;
-    }
-        
-    // Write remaining text
-    [context writeString:[archive substringFromIndex:archiveIndex]];
+    [context writeAttributedHTMLString:html];
 }
 
 - (void)writeText; { [self writeText:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
