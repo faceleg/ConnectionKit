@@ -340,17 +340,16 @@
     {
         NSString *url = [propertyList objectForKey:@"sourceURL"];
         
-        NSURLResponse *response = [[NSURLResponse alloc]
-                                   initWithURL:(url ? [NSURL URLWithString:url] : nil)
-                                   MIMEType:nil
-                                   expectedContentLength:[data length]
-                                   textEncodingName:nil];
+        WebResource *resource = [[WebResource alloc] initWithData:data
+                                                              URL:[NSURL URLWithString:url]
+                                                         MIMEType:nil
+                                                 textEncodingName:nil
+                                                        frameName:nil];
         
-        SVMediaRecord *media = [SVMediaRecord mediaWithFileContents:data
-                                                        URLResponse:response
-                                                         entityName:@"GraphicMedia"
-                                     insertIntoManagedObjectContext:[self managedObjectContext]];
-        [response release];
+        SVMediaRecord *media = [SVMediaRecord mediaWithWebResource:resource
+                                                        entityName:@"GraphicMedia"
+                                    insertIntoManagedObjectContext:[self managedObjectContext]];
+        [resource release];
         
         [self setMedia:media];
     }
