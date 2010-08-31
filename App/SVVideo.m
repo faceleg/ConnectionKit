@@ -178,7 +178,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 
 - (id <SVMedia>)thumbnail
 {
-	return [self.posterFrameType intValue] != kPosterFrameTypeNone ? [self posterFrame] : nil;
+	return [self.posterFrameType intValue] != kPosterFrameTypeNone ? self.posterFrame : nil;
 }
 + (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObjects:@"posterFrame", @"posterFrameType", nil]; }
 
@@ -470,7 +470,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	[context pushElementAttribute:@"preload" value:self.preload.boolValue ? @"auto" : @"none" ];
 	if (self.loop.boolValue)		[context pushElementAttribute:@"loop" value:@"loop"];
 	
-	if (self.posterFrame)	[context pushElementAttribute:@"poster" value:posterSourcePath];	
+	if (self.posterFrame)	[context pushElementAttribute:@"poster" value:posterSourcePath];
 	[context startElement:@"video"];
 	
 	// Remove poster on iOS < 4; prevents video from working
@@ -685,13 +685,13 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	SVMediaRecord *media = [self media];
 	[context addDependencyOnObject:self keyPath:@"media"];
 	[context addDependencyOnObject:self keyPath:@"posterFrameType"];
-	[context addDependencyOnObject:self keyPath:@"posterFrame"];
-	[context addDependencyOnObject:self keyPath:@"controller"];		// most boolean properties don't affect display of page
+	[context addDependencyOnObject:self keyPath:@"posterFrame"];	// force rebuild if poster frame got changed
+	[context addDependencyOnObject:self keyPath:@"controller"];		// Note: other boolean properties don't affect display of page
 	
 	NSURL *movieSourceURL = [self externalSourceURL];
     if (media)
     {
-	    movieSourceURL = [context addImageMedia:media width:[self width] height:[self height] type:[self codecType]];
+	    movieSourceURL = [context addMedia:media];
 	}
 	
 	NSURL *posterSourceURL = nil;
@@ -741,7 +741,6 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		if (flashTag)	// inner
 		{
 			[self startFlash:context movieSourceURL:movieSourceURL posterSourceURL:posterSourceURL]; 
-
 		}
 	}
 	else	// completely unknown video type
@@ -752,8 +751,8 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	
 	// INNERMOST POSTER FRAME
 	
-	if (self.posterFrame)		// image within the video or object tag as a fallback
-	{			
+	if (posterSourceURL)		// image within the video or object tag as a fallback
+	{	
 		[self writePosterImage:context posterSourceURL:posterSourceURL];
 	}
 	
