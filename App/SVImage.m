@@ -343,19 +343,10 @@
         NSString *urlString = [propertyList objectForKey:@"sourceURL"];
         NSURL *url = [NSURL URLWithString:urlString];
         
-        NSString *type = [NSString MIMETypeForUTI:
-                          [NSString UTIForFilenameExtension:[url pathExtension]]];
-        
-        WebResource *resource = [[WebResource alloc] initWithData:data
-                                                              URL:url
-                                                         MIMEType:type
-                                                 textEncodingName:nil
-                                                        frameName:nil];
-        
-        SVMediaRecord *media = [SVMediaRecord mediaWithWebResource:resource
-                                                        entityName:@"GraphicMedia"
-                                    insertIntoManagedObjectContext:[self managedObjectContext]];
-        [resource release];
+        SVMediaRecord *media = [SVMediaRecord mediaWithData:data
+                                                        URL:url
+                                                 entityName:@"GraphicMedia"
+                             insertIntoManagedObjectContext:[self managedObjectContext]];
         
         [self setMedia:media];
     }
