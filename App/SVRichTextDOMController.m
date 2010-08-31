@@ -500,7 +500,15 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     else
     {
         // Match the insertion's placement to the existing graphic. #82329
+        // Need to seek out a suitable parent to insert into. #86448
         WEKWebEditorItem *selection = [webEditor selectedItem];
+        WEKWebEditorItem *parent = [selection parentWebEditorItem];
+        while (![parent allowsPagelets])
+        {
+            selection = parent;
+            parent = [selection parentWebEditorItem];
+        }
+        
         SVGraphic *selectedGraphic = [selection representedObject];
         [[graphic textAttachment] setPlacement:[selectedGraphic placement]];
         
@@ -652,3 +660,14 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation WEKWebEditorItem (SVRichTextDOMController)
+
+- (BOOL)allowsPagelets; { return NO; }
+
+@end
+

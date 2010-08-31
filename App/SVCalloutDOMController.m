@@ -73,6 +73,8 @@
     return self;
 }
 
+- (BOOL)allowsPagelets; { return YES; }
+
 @end
 
 

@@ -180,9 +180,6 @@
     [self writeText:context range:range];
 }
 
-
-/*  WARNING: range length is not respected yet, only the location
- */
 - (void)writeText:(SVHTMLContext *)context range:(NSRange)range;
 {
     NSAttributedString *html = [[self attributedHTMLString] attributedSubstringFromRange:range];

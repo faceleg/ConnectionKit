@@ -22,10 +22,6 @@
     DOMHTMLAnchorElement    *_selectedLink;
 }
 
-#pragma mark Properties
-- (BOOL)allowsPagelets;
-
-
 #pragma mark Content
 - (IBAction)insertFile:(id)sender;
 - (void)addGraphic:(SVGraphic *)graphic placeInline:(BOOL)placeInline;
@@ -49,6 +45,18 @@
 #pragma mark Links
 
 @property(nonatomic, retain, readonly) DOMHTMLAnchorElement *selectedLink;
+
+
+@end
+
+
+#pragma mark -
+
+
+@interface WEKWebEditorItem (SVRichTextDOMController)
+
+#pragma mark Properties
+- (BOOL)allowsPagelets;
 
 
 @end
