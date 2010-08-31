@@ -14,7 +14,7 @@
 extern NSString *kSVDidDeleteMediaRecordNotification;
 
 
-@class BDAlias;
+@class BDAlias, WebResource;
 
 
 @interface SVMediaRecord : NSManagedObject <SVMedia, SVDocumentFileWrapper>
@@ -26,9 +26,8 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
     
     // Accessing Files
     NSURL           *_URL;
-    NSURLResponse   *_URLResponse;
     NSDictionary    *_attributes;
-    NSData          *_data;
+    WebResource     *_webResource;
     
     // Matching Media
     id <SVDocumentFileWrapper>  _nextObject;
@@ -103,10 +102,8 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 @property(nonatomic, copy) NSString *preferredFilename;
 @property(nonatomic, copy) NSDictionary *fileAttributes; // mostly to act as a cache
 
-- (NSData *)fileContents;   // could return nil if the file is too big, or a directory
 - (WebResource *)webResource;
 - (BOOL)areContentsCached;
-- (NSURLResponse *)URLResponse; // for in-memory media
 - (NSString *)typeOfFile;
 
 #pragma mark Comparing Files

@@ -197,7 +197,7 @@
 	
     if (media)
     {
-		movieSourceURL = [[media URLResponse] URL];
+		movieSourceURL = [media mediaURL];
 //		openAsync = YES;
 		self.codecType = [NSString UTIForFileAtPath:[movieSourceURL path]];
 	}

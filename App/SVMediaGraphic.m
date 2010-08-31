@@ -68,7 +68,7 @@
     if (media)
     {
         result = [media fileURL];
-        if (!result) result = [[media URLResponse] URL];
+        if (!result) result = [media mediaURL];
     }
     else
     {

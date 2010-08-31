@@ -741,8 +741,6 @@
     OBPRECONDITION(media);
     
     NSURL *result = [media mediaURL];
-    if (!result) result = [[(SVMediaRecord *)media URLResponse] URL];
-    
     return result;
 }
 

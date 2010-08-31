@@ -322,8 +322,9 @@
     // Write image data
     SVMediaRecord *media = [self media];
     
-    NSData *data = [media fileContents];
+    NSData *data = [NSData newDataWithContentsOfMedia:media];
     [propertyList setValue:data forKey:@"fileContents"];
+    [media release];
     
     NSURL *URL = [self sourceURL];
     [propertyList setValue:[URL absoluteString] forKey:@"sourceURL"];

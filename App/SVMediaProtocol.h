@@ -17,7 +17,7 @@
 - (NSURL *)mediaURL;    // MUST be non-nil when editing, doesn't have to point to real place
 - (NSData *)mediaData;  // If the data is already present in memory, return it. Otherwise nil
 
-- (NSString *)preferredFilename;    // what the media would like to named given the chance
+- (NSString *)preferredFilename;    // what the media would like to be named given the chance
 
 @end
 
@@ -27,3 +27,12 @@
 
 @interface SVMedia (SVMedia) <SVMedia>
 @end
+
+
+#pragma mark -
+
+
+@interface NSData (SVMedia)
++ (NSData *)newDataWithContentsOfMedia:(id <SVMedia>)media;
+@end
+

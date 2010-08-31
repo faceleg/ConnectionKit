@@ -27,8 +27,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 @property(nonatomic, retain, readwrite) BDAlias *alias;
 
-@property(nonatomic, copy) NSURLResponse *URLResponse;
-
 @end
 
 
@@ -77,8 +75,13 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     SVMediaRecord *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
                                                     inManagedObjectContext:context];
     
-    result->_data = [data copy];
-    [result setURLResponse:response];
+    WebResource *resource = [[WebResource alloc] initWithData:data
+                                                          URL:[response URL]
+                                                     MIMEType:[response MIMEType]
+                                             textEncodingName:[response textEncodingName]
+                                                    frameName:nil];
+    
+    result->_webResource = resource;
     [result setPreferredFilename:[response suggestedFilename]];
     
     return result;
@@ -131,7 +134,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 - (void)dealloc
 {
     [_URL release];			_URL = nil;
-    [_URLResponse release];	_URLResponse = nil;
+    [_webResource release];	_webResource = nil;
     [_nextObject release];	_nextObject = nil;
     
     [super dealloc];
@@ -228,7 +231,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 - (NSURL *)mediaURL;
 {
     NSURL *result = [self fileURL];
-    if (!result) result = [[self URLResponse] URL];
+    if (!result) result = [[self webResource] URL];
     return result;
 }
 
@@ -344,35 +347,12 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 #pragma mark Contents Cache
 
-- (NSData *)fileContents;
-{
-    if (_data) return _data;
-    
-    NSURL *URL = [self fileURL];
-    if (URL)
-    {
-        NSData *result = [NSData dataWithContentsOfURL:URL];
-        return result;
-    }
-    
-    return nil;
-}
-
-- (NSData *)mediaData; { return [self fileContents]; }
+- (NSData *)mediaData; { return [[self webResource] data]; }
 
 - (WebResource *)webResource;
 {
-    NSURLResponse *response = [self URLResponse];
-    
-    WebResource *result = [[WebResource alloc] initWithData:[self fileContents]
-                                                        URL:[response URL]
-                                                   MIMEType:[response MIMEType]
-                                           textEncodingName:[response textEncodingName]
-                                                  frameName:nil];
-    return [result autorelease];
+    return _webResource;
 }
-
-@synthesize URLResponse = _URLResponse;
 
 @synthesize fileAttributes = _attributes;
 - (NSDictionary *)fileAttributes
@@ -390,7 +370,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 - (BOOL)areContentsCached;
 {
-    return (_data != nil);
+    return (_webResource != nil);
 }
 
 - (void)willTurnIntoFault
@@ -400,7 +380,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     // Only throw away data if it can be reloaded
     if ([self fileURL])
     {
-        [_data release]; _data = nil;
+        [_webResource release]; _webResource = nil;
     }
 }
 
@@ -413,7 +393,12 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     // If already in-memory might as well use it. If without a file URL, have no choice!
     if (!otherURL || [otherRecord areContentsCached])
     {
-        return [self fileContentsEqualData:[otherRecord fileContents]];
+        NSData *data = [[otherRecord mediaData] retain];
+        if (!data) data = [[NSData alloc] initWithContentsOfURL:[otherRecord mediaURL]];
+        
+        BOOL result = [self fileContentsEqualData:data];
+        [data release];
+        return result;
     }
     else
     {
@@ -434,27 +419,23 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     else
     {
         // Fallback to comparing data. This could be made more efficient by looking at the file size before reading in from disk
-        NSData *data = [self fileContents];
+        NSData *data = [self mediaData];
         result = [[NSFileManager defaultManager] ks_contents:data equalContentsAtURL:otherURL];
     }
     
     return result;
 }
 
-- (BOOL)fileContentsEqualData:(NSData *)data;
+- (BOOL)fileContentsEqualData:(NSData *)otherData;
 {
     BOOL result = NO;
     
-    if ([self areContentsCached])
-    {
-        result = [[self fileContents] isEqualToData:data];
-    }
-    else
-    {
-        // This could be made more efficient by looking at the file size before reading in from disk
-        result = [[self fileContents] isEqualToData:data];
-    }
+    NSData *data = [[self mediaData] retain];
+    if (!data) data = [[NSData alloc] initWithContentsOfURL:[self mediaURL]];
     
+    result = [data isEqualToData:otherData];
+    
+    [data release];
     return result;
 }
 
@@ -462,7 +443,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 - (id)imageRepresentation
 {
-    id result = ([self areContentsCached] ? (id)[self fileContents] : (id)[self fileURL]);
+    id result = ([self areContentsCached] ? (id)[self mediaData] : (id)[self fileURL]);
     return result;
 }
 
@@ -514,7 +495,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 - (BOOL)writeToURL:(NSURL *)URL updateFileURL:(BOOL)updateFileURL error:(NSError **)outError;
 {
     // Try writing out data from memory. It'll fail if there was none
-    NSData *data = [self fileContents];
+    NSData *data = [self mediaData];
     BOOL result = [data writeToURL:URL options:0 error:outError];
     if (result)
     {

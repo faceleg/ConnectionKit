@@ -69,3 +69,18 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation NSData (SVMedia)
+
++ (NSData *)newDataWithContentsOfMedia:(id <SVMedia>)media;
+{
+    NSData *result = [media mediaData];
+    if (!result) result = [[NSData alloc] initWithContentsOfURL:[media mediaURL]];
+    return result;
+}
+
+@end
