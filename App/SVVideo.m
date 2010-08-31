@@ -85,6 +85,7 @@
 
 - (void)loadMovie;
 - (void)loadMovieFromAttributes:(NSDictionary *)anAttributes;
+- (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
 - (void)calculateMovieDimensions:(QTMovie *)aMovie;
 - (void)calculateMoviePlayability:(QTMovie *)aMovie;
 @end
@@ -979,6 +980,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		
 		if (movieLoadState >= kMovieLoadStatePlayable)	// Do we have dimensions now?
 		{
+			[self calculatePosterImageFromPlayableMovie:movie];
 			[self calculateMovieDimensions:movie];
 			[self calculateMoviePlayability:movie];
 			
@@ -1072,6 +1074,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		long loadState = [[movie attributeForKey:QTMovieLoadStateAttribute] longValue];
 		if (loadState >= kMovieLoadStateLoaded)
 		{
+			[self calculatePosterImageFromPlayableMovie:movie];
 			[self calculateMovieDimensions:movie];
 			[self calculateMoviePlayability:movie];
 		
@@ -1093,6 +1096,13 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	
 }
 
+- (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
+{
+	NSImage *posterImage = [aMovie betterPosterImage];
+	
+	// TODO ... finish this ... of course only call this if we need to.
+	
+}
 - (void)calculateMovieDimensions:(QTMovie *)aMovie;
 {
 	NSSize movieSize = NSZeroSize;
