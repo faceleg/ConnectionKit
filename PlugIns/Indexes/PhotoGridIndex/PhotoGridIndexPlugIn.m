@@ -44,6 +44,9 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
+    // Extra CSS to handle caption functionality new to 2.0
+    [context addCSSString:@".photogrid-index .caption { clear:left; }"];
+    
     // parse template
     [super writeHTML:context];
         
