@@ -78,7 +78,7 @@
 
 + (NSData *)newDataWithContentsOfMedia:(id <SVMedia>)media;
 {
-    NSData *result = [media mediaData];
+    NSData *result = [[media mediaData] copy];
     if (!result) result = [[NSData alloc] initWithContentsOfURL:[media mediaURL]];
     return result;
 }

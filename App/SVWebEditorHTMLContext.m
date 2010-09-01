@@ -135,8 +135,7 @@
     
     
     // Handle callouts specially
-    BOOL callout;
-    if (callout = [graphic isCallout])
+    if ([graphic isCallout])
     {
         // Make a controller for the callout, but only if it's not part of an existing callout
         if (![self isWritingCallout])

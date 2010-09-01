@@ -1774,19 +1774,25 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             DOMNode *node = [proposedRange startContainer];
             if (!node || ![node enclosingContentEditableElement])
             {
+                range = nil;
+                
                 if ([node nodeType] != DOM_TEXT_NODE)
                 {
                     node = [[node childNodes] item:[proposedRange startOffset]];
                 }
-                NSRect textBox = [node boundingBox];
-
-                NSView *view = [node documentView];
-                NSPoint location = [view convertPointFromBase:[event locationInWindow]];
                 
-                if (![view mouse:location inRect:textBox])
+                if (node)
                 {
-                    // There's no good text to select, so fall back to body
-                    range = nil;
+                    NSRect textBox = [node boundingBox];
+
+                    NSView *view = [node documentView];
+                    NSPoint location = [view convertPointFromBase:[event locationInWindow]];
+                    
+                    if ([view mouse:location inRect:textBox])
+                    {
+                        // There's no good text to select, so fall back to body
+                        range = proposedRange;
+                    }
                 }
             }
         }
