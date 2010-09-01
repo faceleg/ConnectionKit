@@ -280,6 +280,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     }
 }
 
+- (NSString *)inlineGraphicClassName; { return nil; }
+
 - (void)writeBody:(SVHTMLContext *)context;
 {
     SUBCLASSMUSTIMPLEMENT;

@@ -245,6 +245,22 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [context setCurrentHeaderLevel:level];
 }
 
+- (void)buildClassName:(SVHTMLContext *)context;
+{
+    [super buildClassName:context];
+    
+    if ([[self placement] intValue] == SVGraphicPlacementInline)
+    {
+        NSString *className = [[self plugIn] inlineGraphicClassName];
+        if (className) [context pushElementClassName:className];
+    }
+}
+
+- (NSString *)inlineGraphicClassName;
+{
+    return [[self plugIn] inlineGraphicClassName];
+}
+
 #pragma mark Metrics
 
 - (NSNumber *)contentWidth;

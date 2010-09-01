@@ -115,6 +115,12 @@ static id <SVPlugInContext> sCurrentContext;
     }	
 }
 
+- (NSString *)inlineGraphicClassName;
+{
+    NSString *result = [[self bundle] objectForInfoDictionaryKey:@"KTCSSClassName"];
+    return result;
+}
+
 #pragma mark Identifier
 
 + (NSString *)plugInIdentifier; // use standard reverse DNS-style string

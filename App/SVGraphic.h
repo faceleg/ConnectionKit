@@ -147,6 +147,7 @@ extern NSString *kSVGraphicPboardType;
 
 @property(nonatomic, retain, readonly) NSString *elementID;
 - (void)buildClassName:(SVHTMLContext *)context;
+- (NSString *)inlineGraphicClassName;
 
 + (SVTemplate *)template;
    

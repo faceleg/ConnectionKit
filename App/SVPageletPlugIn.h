@@ -73,6 +73,8 @@
 // Default implementation parses the template specified in Info.plist
 - (void)writeInnerHTML:(id <SVPlugInContext>)context;
 
+- (NSString *)inlineGraphicClassName;
+
 
 #pragma mark Metrics
 
