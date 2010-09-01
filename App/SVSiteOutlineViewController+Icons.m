@@ -188,7 +188,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	OBPRECONDITION(item);
 	
 	NSImage *result = nil;
-	id <SVMedia> media = nil;
+	SVMediaRecord *media = nil;
     
     KTHTMLPlugInWrapper *plugin = nil;
 	if (nil != (media =[item mediaRepresentation]))
