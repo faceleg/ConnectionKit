@@ -326,7 +326,7 @@
     
     NSData *data = [NSData newDataWithContentsOfMedia:media];
     [propertyList setValue:data forKey:@"fileContents"];
-    [media release];
+    [data release];
     
     NSURL *URL = [self sourceURL];
     [propertyList setValue:[URL absoluteString] forKey:@"sourceURL"];
