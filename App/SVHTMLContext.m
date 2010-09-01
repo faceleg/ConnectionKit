@@ -793,6 +793,7 @@
                                                    width,
                                                    height]];
         [self startElement:@"div"];
+        [self endElement];
     }
 }
 
