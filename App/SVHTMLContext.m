@@ -463,6 +463,9 @@
             return;
         }
         
+        NSString *className = [graphic inlineGraphicClassName];
+        if (className) [self pushElementClassName:className];
+        
         NSNumber *width = [graphic containerWidth];
         if (width)
         {
@@ -475,8 +478,6 @@
         
         // Graphic body
         [self pushElementClassName:@"figure-content"];  // identifies for #84956
-                                                        //NSString *className = [graphic inlineGraphicClassName];
-                                                        //if (className) [self pushElementClassName:className];
         
         if ([graphic canDisplayInline])
         {

@@ -245,7 +245,8 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [context setCurrentHeaderLevel:level];
 }
 
-- (void)buildClassName:(SVHTMLContext *)context;
+// This was an experiment with including plug-in's classname up at the highest level, but that ruins sizing
+- (void)XbuildClassName:(SVHTMLContext *)context;
 {
     [super buildClassName:context];
     
