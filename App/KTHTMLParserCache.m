@@ -88,15 +88,17 @@
 #pragma mark -
 #pragma mark Cache
 
+//  IMPORTANT NOTE:
+//  I have disabled the cache for nil values as it interferes with void methods (those that do their own direct writing). Do we even need a cache anyway?
 - (id)cachedValueForKeyPath:(NSString *)keyPath
 {
 	id result = [myCachedValues objectForKey:keyPath];
 	
 	// Convert NSNull back to nil
-	if (result == [NSNull null])
+	/*if (result == [NSNull null])
 	{
 		result = nil;
-	}
+	}*/
 	
 	return result;
 }
@@ -104,10 +106,10 @@
 - (void)cacheValue:(id)value forKeyPath:(NSString *)keyPath
 {
 	// Convert nil to NSNull
-	if (!value)
+	if (!value) return;/*
 	{
 		value = [NSNull null];
-	}
+	}*/
 	
 	[myCachedValues setObject:value forKey:keyPath];
 }
