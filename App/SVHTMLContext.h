@@ -44,10 +44,11 @@ typedef enum {
     KTDocType   _docType;
     KTDocType   _maxDocType;
     
-    BOOL            _includeStyling;
-    NSURL           *_mainCSSURL;
+    BOOL    _includeStyling;
+    NSURL   *_mainCSSURL;
     
-    NSUInteger  _headerLevel;
+    NSMutableSet    *_IDs;
+    NSUInteger      _headerLevel;
 	
     NSString                *_calloutAlignment;
     KSMegaBufferedWriter    *_calloutBuffer;

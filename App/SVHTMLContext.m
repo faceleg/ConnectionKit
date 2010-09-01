@@ -83,6 +83,8 @@
     _maxDocType = NSIntegerMax;
     
     _headerLevel = 1;
+    _IDs = [[NSMutableSet alloc] init];
+    
     _headerMarkup = [[NSMutableString alloc] init];
     _endBodyMarkup = [[NSMutableString alloc] init];
     _iteratorsStack = [[NSMutableArray alloc] init];
@@ -133,6 +135,8 @@
     [_currentPage release];
     
     [_mainCSSURL release];
+    
+    [_IDs release];
     
     [_headerMarkup release];
     [_endBodyMarkup release];
@@ -402,11 +406,19 @@
                  className:(NSString *)className
                 attributes:(NSDictionary *)attributes;
 {
-    [self pushAttributes:attributes];
-    [self startElement:tagName idName:preferredID className:className];
+    NSString *result = preferredID;
+    NSUInteger count = 1;
+    while ([_IDs containsObject:result])
+    {
+        count++;
+        result = [NSString stringWithFormat:@"%@-%u", preferredID, count];
+    }
     
-    return preferredID;
-#warning Return an actually unique value!
+    [self pushAttributes:attributes];
+    [self startElement:tagName idName:result className:className];
+    [_IDs addObject:result];
+    
+    return result;
 }
 
 - (void)pushAttributes:(NSDictionary *)attributes;
