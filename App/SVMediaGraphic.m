@@ -18,7 +18,7 @@
 
 @property(nonatomic, copy) NSString *externalSourceURLString;
 
-@property(nonatomic, copy) NSNumber *constrainedAspectRatio;
+@property(nonatomic, copy, readwrite) NSNumber *constrainedAspectRatio;
 
 @end
 
@@ -86,7 +86,7 @@
 - (void)setContentWidth:(NSNumber *)width; { [self setWidth:width]; }
 
 - (NSNumber *)contentHeight; { return [self height]; }
-- (void)setContentHeight:(NSNumber *)height; { [self setContentHeight:height]; }
+- (void)setContentHeight:(NSNumber *)height; { [self setHeight:height]; }
 
 - (void)setSize:(NSSize)size;
 {
