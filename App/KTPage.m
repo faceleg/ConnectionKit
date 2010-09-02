@@ -418,6 +418,18 @@
     return result;
 }
 
+- (CGFloat)thumbnailAspectRatio;
+{
+    CGFloat result = [super thumbnailAspectRatio];
+    
+    if ([[self thumbnailType] integerValue] == 2)
+    {
+        result = [[self thumbnailSourceGraphic] thumbnailAspectRatio];
+    }
+    
+    return result;
+}
+
 + (NSSet *)keyPathsForValuesAffectingThumbnail;
 {
     return [NSSet setWithObjects:@"thumbnailType", @"customThumbnail", @"thumbnailSourceGraphic.thumbnail", nil];

@@ -315,6 +315,22 @@
 - (id <SVMedia>)thumbnail { return [self media]; }
 + (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObject:@"media"]; }
 
+- (CGFloat)thumbnailAspectRatio;
+{
+    CGFloat result;
+    
+    if ([self constrainedAspectRatio])
+    {
+        result = [[self constrainedAspectRatio] floatValue];
+    }
+    else
+    {
+        result = [[self width] floatValue] / [[self height] floatValue];
+    }
+    
+    return result;
+}
+
 #pragma mark Serialization
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;

@@ -797,7 +797,7 @@
         }
         else if (aspectRatio < 1.0f)
         {
-            width = height / aspectRatio;
+            width = height * aspectRatio;
         }
         
         [self writeImageWithSourceMedia:thumbnail

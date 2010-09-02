@@ -313,6 +313,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (id <SVMedia>)thumbnail { return nil; }
 
+- (CGFloat)thumbnailAspectRatio; { return 1.0f; }
+
 #pragma mark Inspector
 
 + (SVInspectorViewController *)makeInspectorViewController; { return nil; }
