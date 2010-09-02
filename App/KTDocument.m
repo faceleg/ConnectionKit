@@ -79,8 +79,6 @@
 #import "NSWindow+Karelia.h"
 #import "NSURL+Karelia.h"
 
-#import <iMedia/iMedia.h>
-
 #import "Debug.h"                       // Debugging
 
 #import "Registration.h"                // Licensing
