@@ -129,8 +129,6 @@
 			<string>Weblog</string>
 		</dict>
 	</array>
-	<key>KTTemplateName</key>
-	<string>GeneralIndexTemplate</string>
 	<key>NSPrincipalClass</key>
 	<string>${PROJECT_NAME}</string>
 </dict>
