@@ -174,10 +174,9 @@
     for (SVTextAttachment *anAttachment in [[page article] orderedAttachments])
     {
         SVGraphic *graphic = [anAttachment graphic];
-        id <IMBImageItem> thumbnail = [graphic thumbnail];
-        if ([thumbnail imageRepresentation])
+        if ([graphic imageRepresentation])
         {
-            CGImageSourceRef source = IMB_CGImageSourceCreateWithImageItem(thumbnail, NULL);
+            CGImageSourceRef source = IMB_CGImageSourceCreateWithImageItem(graphic, NULL);
             if (source)
             {
                 NSImage *thumnailImage = [[NSImage alloc]
