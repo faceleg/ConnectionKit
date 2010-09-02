@@ -17,10 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "Registration.h"
-#import <Cocoa/Cocoa.h>
 #import "KSLicensedAppDelegate.h"
-#import "KSPluginInstallerController.h"
 
 
 extern BOOL gWantToCatchSystemExceptions;
@@ -36,7 +33,7 @@ extern NSString *kSVPreferredImageCompressionFactorKey;
 enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tags for IB
 
 
-@class KTDocument, KSProgressPanel;
+@class KTDocument, KSProgressPanel, KSPluginInstallerController;
 
 @interface SVApplicationController : KSLicensedAppDelegate
 {

@@ -24,8 +24,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	x
  */
 
+#import "SVApplicationController.h"
+
 #import "BDAlias.h"
-#import "Debug.h"
 #import "KSAbstractBugReporter.h"
 #import "KSEmailAddressComboBox.h"
 #import "KSNetworkNotifier.h"
@@ -36,7 +37,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KSUtilities.h"
 #import "KT.h"
 #import "KTAcknowledgmentsController.h"
-#import "SVApplicationController.h"
 #import "KTApplication.h"
 #import "KTDataSourceProtocol.h"
 #import "KTDesign.h"
@@ -51,37 +51,39 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTPage.h"
 #import "SVGraphicFactory.h"
 #import "KTPrefsController.h"
-#import "KTPrefsController.h"
 #import "KTReleaseNotesController.h"
 #import "KTToolbars.h"
 #import "KTTranscriptController.h"
 #import "SVWelcomeController.h"
 
-#import "NSApplication+Karelia.h"
 #import "NSArray+KTExtensions.h"
+#import "NSString+KTExtensions.h"
+
+#import "NSApplication+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSDate+Karelia.h"
 #import "NSDictionary+Karelia.h"
 #import "NSError+Karelia.h"
 #import "NSException+Karelia.h"
-#import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSToolbar+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSMenuItem+Karelia.h"
 #import "NSWorkspace+Karelia.h"
+
 #import <AmazonSupport/AmazonSupport.h>
 #import <Connection/Connection.h>
 #import <ExceptionHandling/NSExceptionHandler.h>
+#import <iMedia/iMedia.h>
 #import <OpenGL/CGLMacro.h>
 #import <Quartz/Quartz.h>
-#import <QuartzCore/QuartzCore.h>
 #import <ScreenSaver/ScreenSaver.h>
 #import <SystemConfiguration/SystemConfiguration.h>
-#import <iMedia/iMedia.h>
 #import <Sparkle/Sparkle.h>
-#import "SVApplicationController.h"
 #import <JSTalk/JSTalk.h>
+
+#import "Debug.h"
+
 
 // Triggers to localize for the Comment/trackback stuff
 // NSLocalizedString(@"To enable comments, please choose a Weblog Comments provider in the Site Inspector", "Prompt in webview")
