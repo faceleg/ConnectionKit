@@ -1948,7 +1948,6 @@
 		2774DFAA0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageScalingURLProtocol.m; sourceTree = "<group>"; };
 		277560340CA5228B00D8A412 /* KSObjectKeyPathPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSObjectKeyPathPair.h; sourceTree = "<group>"; };
 		277560350CA5228B00D8A412 /* KSObjectKeyPathPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSObjectKeyPathPair.m; sourceTree = "<group>"; };
-		2775612D0CA718C200D8A412 /* KTWebViewComponentProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewComponentProtocol.h; sourceTree = "<group>"; };
 		2775DB6A11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCaseInsensitiveDictionary.h; sourceTree = "<group>"; };
 		2775DB6B11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSCaseInsensitiveDictionary.m; sourceTree = "<group>"; };
 		2778929E10CD5FA3008AA683 /* SVTitleBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTitleBox.h; sourceTree = "<group>"; };
@@ -2079,8 +2078,6 @@
 		27B0BF6B1168B8840084BFE0 /* SVGraphicFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGraphicFactory.m; sourceTree = "<group>"; };
 		27B0C1B011694F250084BFE0 /* SVMediaGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaGraphic.h; sourceTree = "<group>"; };
 		27B0C1B211694F250084BFE0 /* SVMediaGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaGraphic.m; sourceTree = "<group>"; };
-		27B17DA90CA80A9E00187918 /* KTWebViewComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewComponent.h; sourceTree = "<group>"; };
-		27B17DAA0CA80A9E00187918 /* KTWebViewComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebViewComponent.m; sourceTree = "<group>"; };
 		27B306D50D74266F00903807 /* KTDocument+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Saving.m"; sourceTree = "<group>"; };
 		27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = wrapper.xcdatamodel; path = Sandvox.xcdatamodel; sourceTree = "<group>"; };
 		27B5921211AE85C100E10A1E /* WEKWebViewEditing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebViewEditing.h; sourceTree = "<group>"; };
@@ -2151,8 +2148,6 @@
 		27E24AC510FB9591004EFE9F /* SVLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLink.m; sourceTree = "<group>"; };
 		27E24EEB10FCB218004EFE9F /* SVLinkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLinkManager.h; sourceTree = "<group>"; };
 		27E24EEC10FCB218004EFE9F /* SVLinkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLinkManager.m; sourceTree = "<group>"; };
-		27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewUndoManagerProxy.h; sourceTree = "<group>"; };
-		27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebViewUndoManagerProxy.m; sourceTree = "<group>"; };
 		27E31BC30D4B79AE00895DA1 /* KTHTMLPlugInWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLPlugInWrapper.h; sourceTree = "<group>"; };
 		27E31BC40D4B79AE00895DA1 /* KTHTMLPlugInWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLPlugInWrapper.m; sourceTree = "<group>"; };
 		27E31C310D4B7E1600895DA1 /* KTElementPlugInWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTElementPlugInWrapper.h; sourceTree = "<group>"; };
@@ -3129,11 +3124,6 @@
 			isa = PBXGroup;
 			children = (
 				27836C640CAB092E0072CC52 /* Design of WebView loading.graffle */,
-				27B17DA90CA80A9E00187918 /* KTWebViewComponent.h */,
-				27B17DAA0CA80A9E00187918 /* KTWebViewComponent.m */,
-				2775612D0CA718C200D8A412 /* KTWebViewComponentProtocol.h */,
-				27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */,
-				27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */,
 				27A0932F0D1DECDA00F57801 /* WebViewEditingHelperClasses.h */,
 				27A093300D1DECDA00F57801 /* WebViewEditingHelperClasses.m */,
 				27A50F260D19443800149038 /* DOM+KTWebViewController.h */,
