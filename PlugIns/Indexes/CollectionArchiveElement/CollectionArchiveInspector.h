@@ -37,9 +37,9 @@
 #import "SandvoxPlugin.h"
 
 
-@interface CollectionArchiveInspector : SVInspectorViewController 
+@interface CollectionArchiveInspector : SVIndexPlugInInspectorViewController 
 {
-	IBOutlet KTLinkSourceView	*collectionLinkSourceView;
+
 }
 
 @end
