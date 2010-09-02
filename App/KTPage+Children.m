@@ -473,9 +473,9 @@
 
 #pragma mark Navigation Arrows
 
-@dynamic showNavigationArrows;
+@dynamic navigationArrowsStyle;
 
-- (BOOL)validateShowNavigationArrows:(NSNumber **)show error:(NSError **)error;
+- (BOOL)validateNavigationArrowsStyle:(NSNumber **)show error:(NSError **)error;
 {
     // Navigation arrows aren't allowed on home page
     BOOL result = YES;

@@ -146,8 +146,10 @@ typedef enum {
 
 - (NSIndexPath *)indexPath;
 
+
 #pragma mark Navigation Arrows
-@property(nonatomic, copy) NSNumber *showNavigationArrows;
+@property(nonatomic, copy) NSNumber *navigationArrowsStyle;
+
 
 @end
 
