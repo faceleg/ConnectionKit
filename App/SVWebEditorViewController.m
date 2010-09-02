@@ -278,11 +278,11 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     // Load in any subresources
     WebDataSource *datasource = [[[self webView] mainFrame] dataSource];
-    for (SVMediaRecord *aMediaRecord in [context media])
+    for (id <SVMedia> aMediaRecord in [context media])
     {
-        if ([aMediaRecord areContentsCached])
+        if ([aMediaRecord mediaData])
         {
-            [datasource addSubresource:[aMediaRecord webResource]];
+            [datasource addSubresource:[(SVMediaRecord *)aMediaRecord webResource]];
         }
     }
     
