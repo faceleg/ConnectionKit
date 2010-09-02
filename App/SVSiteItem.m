@@ -347,6 +347,19 @@
     return result;
 }
 
+- (CGFloat)thumbnailAspectRatio;
+{
+    CGFloat result = 1.0f;
+    
+    if ([[self thumbnailType] integerValue] == 1)
+    {
+        CGSize size = IMBImageItemGetSize([self customThumbnail]);
+        result = size.width / size.height;
+    }
+    
+    return result;
+}
+
 @dynamic thumbnailType;
 @dynamic customThumbnail;
 

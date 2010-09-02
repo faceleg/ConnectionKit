@@ -82,7 +82,7 @@
 - (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
 
 // <IMG> tag by scaling the page's thumbnail to desired size
-- (void)writeThumbnailImageOfPage:(id <SVPage>)page className:(NSString *)className maxWidth:(NSNumber *)width maxHeight:(NSNumber *)height;
+- (void)writeThumbnailImageOfPage:(id <SVPage>)page className:(NSString *)className maxWidth:(NSUInteger)width maxHeight:(NSUInteger)height;
 
 // For when you need to write an element and be sure the ID is unique. Perfect for hooking up a script. Returns the best unique ID available
 - (NSString *)startElement:(NSString *)tagName

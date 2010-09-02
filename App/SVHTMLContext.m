@@ -783,25 +783,34 @@
                      height:[height description]];
 }
 
-- (void)writeThumbnailImageOfPage:(id <SVPage>)page className:(NSString *)className maxWidth:(NSNumber *)width maxHeight:(NSNumber *)height;
+- (void)writeThumbnailImageOfPage:(id <SVPage>)page className:(NSString *)className maxWidth:(NSUInteger)width maxHeight:(NSUInteger)height;
 {
     if (className) [self pushClassName:className];
     
-    id <SVMedia> thumbnail = [page thumbnail];
+    id <SVMedia> thumbnail = [(SVSiteItem *)page thumbnail];
     if (thumbnail)
     {
+        CGFloat aspectRatio = [(SVSiteItem *)page thumbnailAspectRatio];
+        if (aspectRatio > 1.0f)
+        {
+            height = width / aspectRatio;
+        }
+        else if (aspectRatio < 1.0f)
+        {
+            width = height / aspectRatio;
+        }
+        
         [self writeImageWithSourceMedia:thumbnail
                                     alt:@""
-                                  width:width
-                                 height:height
+                                  width:[NSNumber numberWithUnsignedInteger:width]
+                                 height:[NSNumber numberWithUnsignedInteger:height]
                                    type:nil];
-#warning Need to figure out how to scale nicely to fit dimensions
     }
     else
     {
         // Fallback to placeholder <DIV>
         [self pushAttribute:@"style" value:[NSString stringWithFormat:
-                                                   @"width:%@px; height:%@px;",
+                                                   @"width:%upx; height:%upx;",
                                                    width,
                                                    height]];
         [self startElement:@"div"];

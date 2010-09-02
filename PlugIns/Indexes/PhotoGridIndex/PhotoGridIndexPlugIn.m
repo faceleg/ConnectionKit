@@ -71,8 +71,8 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
     
     [[context HTMLWriter] writeThumbnailImageOfPage:iteratedPage 
                                           className:@"" 
-                                           maxWidth:[NSNumber numberWithInt:128] 
-                                          maxHeight:[NSNumber numberWithInt:128]];
+                                           maxWidth:128 
+                                          maxHeight:128];
 }
 
 - (NSSize)thumbnailImageSize { return NSMakeSize(128.0, 128.0); }
