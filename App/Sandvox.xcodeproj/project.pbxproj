@@ -718,6 +718,7 @@
 		3C72D3C6094A23880061A876 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D3C5094A23880061A876 /* Carbon.framework */; };
 		3C72D483094A23D80061A876 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D482094A23D80061A876 /* Security.framework */; };
 		3C72D4F6094A24390061A876 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D4F5094A24390061A876 /* libz.dylib */; };
+		3C7B015E122F526B0098E147 /* CollectionInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C7B015D122F526B0098E147 /* CollectionInfo.xib */; };
 		3C89AD7308E0BE1400CA0522 /* KTDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */; };
 		3C96FCAE07E7FF5100B418ED /* KTStringRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C96FCAC07E7FF5100B418ED /* KTStringRenderer.m */; };
 		3C96FD6707E7FFFF00B418ED /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C96FD6607E7FFFF00B418ED /* Quartz.framework */; };
@@ -734,6 +735,8 @@
 		3C9BC20E103DF9BA00D2CF47 /* KTTranscript.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC20D103DF9BA00D2CF47 /* KTTranscript.xib */; };
 		3C9BC211103DF9CB00D2CF47 /* MediaInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC210103DF9CB00D2CF47 /* MediaInspector.xib */; };
 		3C9BC214103DF9DF00D2CF47 /* HTMLEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC213103DF9DF00D2CF47 /* HTMLEditor.xib */; };
+		3CA17FC9122DB2C700331125 /* SVIndexPlugInInspectorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CA17FC7122DB2C700331125 /* SVIndexPlugInInspectorViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3CA17FCA122DB2C700331125 /* SVIndexPlugInInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA17FC8122DB2C700331125 /* SVIndexPlugInInspectorViewController.m */; };
 		3CA6B98D11F9130B004A4794 /* YRKSpinningProgressIndicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CA6B98B11F9130B004A4794 /* YRKSpinningProgressIndicator.h */; };
 		3CA6B98E11F9130B004A4794 /* YRKSpinningProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA6B98C11F9130B004A4794 /* YRKSpinningProgressIndicator.m */; };
 		3CA9B30E0804643200C3053B /* KTDocument+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9B30D0804643200C3053B /* KTDocument+Properties.m */; };
@@ -1649,14 +1652,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C53E41811EE783B005CF7B2 /* TwitterElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Twitter.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = TwitterElement;
 		};
 		3CFEF268122C3452005A08FC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C53E41811EE783B005CF7B2 /* TwitterElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* TwitterElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = TwitterElement;
 		};
 		CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */ = {
@@ -2337,6 +2340,7 @@
 		3C72D3C5094A23880061A876 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		3C72D482094A23D80061A876 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		3C72D4F5094A24390061A876 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
+		3C7B015D122F526B0098E147 /* CollectionInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionInfo.xib; sourceTree = "<group>"; };
 		3C89AD7008E0BE1400CA0522 /* KTDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocumentController.h; sourceTree = "<group>"; };
 		3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocumentController.m; sourceTree = "<group>"; };
 		3C96FCAB07E7FF5100B418ED /* KTStringRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStringRenderer.h; sourceTree = "<group>"; };
@@ -2356,6 +2360,8 @@
 		3C9BC20D103DF9BA00D2CF47 /* KTTranscript.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KTTranscript.xib; sourceTree = "<group>"; };
 		3C9BC210103DF9CB00D2CF47 /* MediaInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaInspector.xib; sourceTree = "<group>"; };
 		3C9BC213103DF9DF00D2CF47 /* HTMLEditor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HTMLEditor.xib; sourceTree = "<group>"; };
+		3CA17FC7122DB2C700331125 /* SVIndexPlugInInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndexPlugInInspectorViewController.h; sourceTree = "<group>"; };
+		3CA17FC8122DB2C700331125 /* SVIndexPlugInInspectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndexPlugInInspectorViewController.m; sourceTree = "<group>"; };
 		3CA6B98B11F9130B004A4794 /* YRKSpinningProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YRKSpinningProgressIndicator.h; path = "../../yrk-spinning-progress-indicator/Code/YRKSpinningProgressIndicator.h"; sourceTree = SOURCE_ROOT; };
 		3CA6B98C11F9130B004A4794 /* YRKSpinningProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YRKSpinningProgressIndicator.m; path = "../../yrk-spinning-progress-indicator/Code/YRKSpinningProgressIndicator.m"; sourceTree = SOURCE_ROOT; };
 		3CA6BB480A086E54009DBBA8 /* KTUndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTUndoManager.h; sourceTree = "<group>"; };
@@ -3021,6 +3027,9 @@
 				27DD0B57120329A80083C7C1 /* SVURLFormatter.m */,
 				27D7340412118E3400722189 /* SVIndexPlugIn.h */,
 				27D7340512118E3400722189 /* SVIndexPlugIn.m */,
+				3CA17FC7122DB2C700331125 /* SVIndexPlugInInspectorViewController.h */,
+				3CA17FC8122DB2C700331125 /* SVIndexPlugInInspectorViewController.m */,
+				3C7B015D122F526B0098E147 /* CollectionInfo.xib */,
 			);
 			name = "2.0 Plug-in System";
 			sourceTree = "<group>";
@@ -5760,6 +5769,7 @@
 				2725BA46121DE9990074EAA0 /* NSImageView+IMBImageItem.h in Headers */,
 				2725BC38121F3F690074EAA0 /* SVArchivePage.h in Headers */,
 				275C5F88122831CE00CD22B8 /* SVMedia.h in Headers */,
+				3CA17FC9122DB2C700331125 /* SVIndexPlugInInspectorViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6438,6 +6448,7 @@
 				CE5A77FE12135D770085C5EE /* player_flv_maxi.swf in Resources */,
 				CEE20EEC121DC141006BA09C /* SVAudioInspector.xib in Resources */,
 				CE318CC4121ECDBD003894EC /* player_mp3_maxi.swf in Resources */,
+				3C7B015E122F526B0098E147 /* CollectionInfo.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7272,6 +7283,7 @@
 				2725BA47121DE9990074EAA0 /* NSImageView+IMBImageItem.m in Sources */,
 				2725BC39121F3F690074EAA0 /* SVArchivePage.m in Sources */,
 				275C5F89122831CE00CD22B8 /* SVMedia.m in Sources */,
+				3CA17FCA122DB2C700331125 /* SVIndexPlugInInspectorViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
