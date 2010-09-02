@@ -20,8 +20,6 @@
 
 - (NSString *)title;
 
-- (id <SVMedia>)thumbnail;
-
 - (NSString *)language;
 
 // Most SVPage methods aren't KVO-compliant. Instead, observe all of -automaticRearrangementKeyPaths.
