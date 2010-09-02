@@ -46,7 +46,7 @@
 
 @interface CollectionArchivePlugIn : SVIndexPlugIn
 {
+    
 }
-
 
 @end
