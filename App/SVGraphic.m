@@ -256,22 +256,22 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
             switch ([[textAttachment wrap] integerValue])
             {
                 case SVGraphicWrapNone:
-                    [context pushElementClassName:@"inline"];
+                    [context pushClassName:@"inline"];
                     break;
                 case SVGraphicWrapLeft:
-                    [context pushElementClassName:@"narrow right"];
+                    [context pushClassName:@"narrow right"];
                     break;
                 case SVGraphicWrapRight:
-                    [context pushElementClassName:@"narrow left"];
+                    [context pushClassName:@"narrow left"];
                     break;
                 case SVGraphicWrapLeftSplit:
-                    [context pushElementClassName:@"wide right"];
+                    [context pushClassName:@"wide right"];
                     break;
                 case SVGraphicWrapCenterSplit:
-                    [context pushElementClassName:@"wide center"];
+                    [context pushClassName:@"wide center"];
                     break;
                 case SVGraphicWrapRightSplit:
-                    [context pushElementClassName:@"wide left"];
+                    [context pushClassName:@"wide left"];
                     break;
             }
             [context addDependencyOnObject:self keyPath:@"textAttachment.wrap"];

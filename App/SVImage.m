@@ -262,7 +262,7 @@
     
     
     // Actually write the image
-    [context pushElementAttribute:@"id" value:idName];
+    [context pushAttribute:@"id" value:idName];
     if ([self displayInline]) [self buildClassName:context];
     
     [context buildAttributesForElement:@"img" bindSizeToObject:self];

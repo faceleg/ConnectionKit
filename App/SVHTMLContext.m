@@ -427,7 +427,7 @@
     for (NSString *aName in sortedAttributes)
     {
         NSString *aValue = [attributes objectForKey:aName];
-        [self pushElementAttribute:aName value:aValue];
+        [self pushAttribute:aName value:aValue];
     }
 }
 
@@ -467,7 +467,7 @@
         
         
         // <div class="graphic"> or <img class="graphic">
-        [self pushElementClassName:@"graphic"];
+        [self pushClassName:@"graphic"];
         if (![graphic showsCaption] && [graphic canDisplayInline]) // special case for images
         {
             [graphic writeBody:self];
@@ -476,20 +476,20 @@
         }
         
         NSString *className = [graphic inlineGraphicClassName];
-        if (className) [self pushElementClassName:className];
+        if (className) [self pushClassName:className];
         
         NSNumber *width = [graphic containerWidth];
         if (width)
         {
             NSString *style = [NSString stringWithFormat:@"width:%upx", [width unsignedIntValue]];
-            [self pushElementAttribute:@"style" value:style];
+            [self pushAttribute:@"style" value:style];
         }
         
         [self startElement:@"div"];
         
         
         // Graphic body
-        [self pushElementClassName:@"figure-content"];  // identifies for #84956
+        [self pushClassName:@"figure-content"];  // identifies for #84956
         
         if ([graphic canDisplayInline])
         {
@@ -643,13 +643,13 @@
     // Only some elements support directly sizing. Others have to use CSS
     if ([elementName isEqualToString:@"img"] || [elementName isEqualToString:@"object"] || [elementName isEqualToString:@"embed"] || [elementName isEqualToString:@"iframe"])
     {
-        [self pushElementAttribute:@"width" value:[width description]];
-        [self pushElementAttribute:@"height" value:[height description]];
+        [self pushAttribute:@"width" value:[width description]];
+        [self pushAttribute:@"height" value:[height description]];
     }
     else
     {
         NSString *style = [NSString stringWithFormat:@"width:%@px; height:%@px;", width, height];
-        [self pushElementAttribute:@"style" value:style];
+        [self pushAttribute:@"style" value:style];
     }
 }
 
@@ -785,7 +785,7 @@
 
 - (void)writeThumbnailImageOfPage:(id <SVPage>)page className:(NSString *)className maxWidth:(NSNumber *)width maxHeight:(NSNumber *)height;
 {
-    if (className) [self pushElementClassName:className];
+    if (className) [self pushClassName:className];
     
     id <SVMedia> thumbnail = [page thumbnail];
     if (thumbnail)
@@ -800,7 +800,7 @@
     else
     {
         // Fallback to placeholder <DIV>
-        [self pushElementAttribute:@"style" value:[NSString stringWithFormat:
+        [self pushAttribute:@"style" value:[NSString stringWithFormat:
                                                    @"width:%@px; height:%@px;",
                                                    width,
                                                    height]];

@@ -253,7 +253,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     if ([[self placement] intValue] == SVGraphicPlacementInline)
     {
         NSString *className = [[self plugIn] inlineGraphicClassName];
-        if (className) [context pushElementClassName:className];
+        if (className) [context pushClassName:className];
     }
 }
 

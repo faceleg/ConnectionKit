@@ -251,11 +251,11 @@
 	
 	NSUInteger heightWithBar = self.controller.boolValue ? 16 : 0;
 	
-	[context pushElementAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
-	[context pushElementAttribute:@"width" value:[[self width] description]];
-	[context pushElementAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
-	[context pushElementAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
-	[context pushElementAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
+	[context pushAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
+	[context pushAttribute:@"width" value:[[self width] description]];
+	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
+	[context pushAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
+	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
 	[context startElement:@"object"];
 	
 	[context writeParamElementWithName:@"src" value:audioSourcePath];
@@ -275,10 +275,10 @@
 	
 	NSUInteger heightWithBar = self.controller.boolValue ? 46 : 0;		// Windows media controller is 46 pixels (on windows; adjusted on macs)
 	
-	[context pushElementAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
-	[context pushElementAttribute:@"width" value:[[self width] description]];
-	[context pushElementAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
-	[context pushElementAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
+	[context pushAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
+	[context pushAttribute:@"width" value:[[self width] description]];
+	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
+	[context pushAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
 	[context startElement:@"object"];
 	
 	[context writeParamElementWithName:@"url" value:audioSourcePath];
@@ -297,26 +297,26 @@
 	
 	// Actually write the audio
 	NSString *idName = [self idNameForTag:@"audio"];
-	[context pushElementAttribute:@"id" value:idName];
+	[context pushAttribute:@"id" value:idName];
 	if ([self displayInline]) [self buildClassName:context];
-	[context pushElementAttribute:@"width" value:[[self width] description]];
-	[context pushElementAttribute:@"height" value:[[self height] description]];
+	[context pushAttribute:@"width" value:[[self width] description]];
+	[context pushAttribute:@"height" value:[[self height] description]];
 	
-	if (self.controller.boolValue)	[context pushElementAttribute:@"controls" value:@"controls"];		// boolean attribute
-	if (self.autoplay.boolValue)	[context pushElementAttribute:@"autoplay" value:@"autoplay"];
-	[context pushElementAttribute:@"preload" value:self.preload.boolValue ? @"auto" : @"none" ];
-	if (self.loop.boolValue)		[context pushElementAttribute:@"loop" value:@"loop"];
+	if (self.controller.boolValue)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
+	if (self.autoplay.boolValue)	[context pushAttribute:@"autoplay" value:@"autoplay"];
+	[context pushAttribute:@"preload" value:self.preload.boolValue ? @"auto" : @"none" ];
+	if (self.loop.boolValue)		[context pushAttribute:@"loop" value:@"loop"];
 	
 	[context startElement:@"audio"];
 	
 	
 	// source
-	[context pushElementAttribute:@"src" value:audioSourcePath];
+	[context pushAttribute:@"src" value:audioSourcePath];
 	if ([self codecType])
 	{
-		[context pushElementAttribute:@"type" value:[NSString MIMETypeForUTI:[self codecType]]];
+		[context pushAttribute:@"type" value:[NSString MIMETypeForUTI:[self codecType]]];
 	}
-	[context pushElementAttribute:@"onerror" value:@"fallback(this.parentNode)"];
+	[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
 	[context startElement:@"source"];
 	[context endElement];
 }
@@ -451,14 +451,14 @@
 		playerPath = [context relativeURLStringOfURL:playerURL];
 	}
 	
-	[context pushElementAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
+	[context pushAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
 	if ([self displayInline]) [self buildClassName:context];
-	[context pushElementAttribute:@"type" value:@"application/x-shockwave-flash"];
-	[context pushElementAttribute:@"data" value:playerPath];
-	[context pushElementAttribute:@"width" value:[[self width] description]];
+	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
+	[context pushAttribute:@"data" value:playerPath];
+	[context pushAttribute:@"width" value:[[self width] description]];
 	
 	NSUInteger heightWithBar = barHeight;
-	[context pushElementAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
+	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	[context startElement:@"object"];
 	
 	[context writeParamElementWithName:@"movie" value:playerPath];
@@ -477,8 +477,8 @@
 
 -(void)startUnknown:(SVHTMLContext *)context;
 {
-	[context pushElementAttribute:@"width" value:[[self width] description]];
-	[context pushElementAttribute:@"height" value:[[self height] description]];
+	[context pushAttribute:@"width" value:[[self width] description]];
+	[context pushAttribute:@"height" value:[[self height] description]];
 	[context startElement:@"div"];
 	[context writeElement:@"p" text:NSLocalizedString(@"Unable to embed audio. Perhaps it is not a recognized audio format.", @"Warning shown to user when audio can't be embedded")];
 	// don't end....

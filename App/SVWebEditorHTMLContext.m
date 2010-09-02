@@ -326,9 +326,9 @@
 
 #pragma mark Element Primitives
 
-- (void)pushElementAttribute:(NSString *)attribute value:(NSString *)value;
+- (void)pushAttribute:(NSString *)attribute value:(NSString *)value;
 {
-    [super pushElementAttribute:attribute value:value];
+    [super pushAttribute:attribute value:value];
     
     // Was this an id attribute, removing our need to write one?
     if (_needsToWriteElementID && [attribute isEqualToString:@"id"]) _needsToWriteElementID = NO;
@@ -343,7 +343,7 @@
         NSString *elementID = [[self currentDOMController] elementIdName];
         if (elementID)
         {
-            [self pushElementAttribute:@"id" value:elementID];
+            [self pushAttribute:@"id" value:elementID];
             OBASSERT(!_needsToWriteElementID);
         }
         else

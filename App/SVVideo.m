@@ -396,11 +396,11 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	NSUInteger heightWithBar = [[self height] intValue]
 	+ (self.controller.boolValue ? 16 : 0);
 	
-	[context pushElementAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
-	[context pushElementAttribute:@"width" value:[[self width] description]];
-	[context pushElementAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
-	[context pushElementAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
-	[context pushElementAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
+	[context pushAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
+	[context pushAttribute:@"width" value:[[self width] description]];
+	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
+	[context pushAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
+	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
 	[context startElement:@"object"];
 	
 	if (self.posterFrame && !self.autoplay.boolValue)	// poster and not auto-starting? make it an href
@@ -431,10 +431,10 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	NSUInteger heightWithBar = [[self height] intValue]
 	+ (self.controller.boolValue ? 46 : 0);		// Windows media controller is 46 pixels (on windows; adjusted on macs)
 
-	[context pushElementAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
-	[context pushElementAttribute:@"width" value:[[self width] description]];
-	[context pushElementAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
-	[context pushElementAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
+	[context pushAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
+	[context pushAttribute:@"width" value:[[self width] description]];
+	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
+	[context pushAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
 	[context startElement:@"object"];
 	
 	[context writeParamElementWithName:@"url" value:movieSourcePath];
@@ -455,17 +455,17 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 
 	// Actually write the video
 	NSString *idName = [self idNameForTag:@"video"];
-	[context pushElementAttribute:@"id" value:idName];
+	[context pushAttribute:@"id" value:idName];
 	if ([self displayInline]) [self buildClassName:context];
-	[context pushElementAttribute:@"width" value:[[self width] description]];
-	[context pushElementAttribute:@"height" value:[[self height] description]];
+	[context pushAttribute:@"width" value:[[self width] description]];
+	[context pushAttribute:@"height" value:[[self height] description]];
 	
-	if (self.controller.boolValue)	[context pushElementAttribute:@"controls" value:@"controls"];		// boolean attribute
-	if (self.autoplay.boolValue)	[context pushElementAttribute:@"autoplay" value:@"autoplay"];
-	[context pushElementAttribute:@"preload" value:self.preload.boolValue ? @"auto" : @"none" ];
-	if (self.loop.boolValue)		[context pushElementAttribute:@"loop" value:@"loop"];
+	if (self.controller.boolValue)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
+	if (self.autoplay.boolValue)	[context pushAttribute:@"autoplay" value:@"autoplay"];
+	[context pushAttribute:@"preload" value:self.preload.boolValue ? @"auto" : @"none" ];
+	if (self.loop.boolValue)		[context pushAttribute:@"loop" value:@"loop"];
 	
-	if (self.posterFrame)	[context pushElementAttribute:@"poster" value:posterSourcePath];
+	if (self.posterFrame)	[context pushAttribute:@"poster" value:posterSourcePath];
 	[context startElement:@"video"];
 	
 	// Remove poster on iOS < 4; prevents video from working
@@ -479,9 +479,9 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	
 	
 	// source
-	[context pushElementAttribute:@"src" value:movieSourcePath];
-	[context pushElementAttribute:@"type" value:[NSString MIMETypeForUTI:[self codecType]]];
-	[context pushElementAttribute:@"onerror" value:@"fallback(this.parentNode)"];
+	[context pushAttribute:@"src" value:movieSourcePath];
+	[context pushAttribute:@"type" value:[NSString MIMETypeForUTI:[self codecType]]];
+	[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
 	[context startElement:@"source"];
 	[context endElement];
 }
@@ -622,14 +622,14 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		playerPath = [context relativeURLStringOfURL:playerURL];
 	}
 	
-	[context pushElementAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
+	[context pushAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
 	if ([self displayInline]) [self buildClassName:context];
-	[context pushElementAttribute:@"type" value:@"application/x-shockwave-flash"];
-	[context pushElementAttribute:@"data" value:playerPath];
-	[context pushElementAttribute:@"width" value:[[self width] description]];
+	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
+	[context pushAttribute:@"data" value:playerPath];
+	[context pushAttribute:@"width" value:[[self width] description]];
 	
 	NSUInteger heightWithBar = barHeight + [[self height] intValue];
-	[context pushElementAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
+	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	[context startElement:@"object"];
 	
 	[context writeParamElementWithName:@"movie" value:playerPath];
@@ -660,14 +660,14 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	
 	NSString *altForMovieFallback = [[posterSourcePath lastPathComponent] stringByDeletingPathExtension];// Cheating ... What would be a good alt ?
 	
-	[context pushElementAttribute:@"title" value:cannotViewTitle];
+	[context pushAttribute:@"title" value:cannotViewTitle];
 	[context writeImageWithSrc:posterSourcePath alt:altForMovieFallback width:[[self width] description] height:[[self height] description]];
 }
 
 -(void)startUnknown:(SVHTMLContext *)context;
 {
-	[context pushElementAttribute:@"width" value:[[self width] description]];
-	[context pushElementAttribute:@"height" value:[[self height] description]];
+	[context pushAttribute:@"width" value:[[self width] description]];
+	[context pushAttribute:@"height" value:[[self height] description]];
 	[context startElement:@"div"];
 	[context writeElement:@"p" text:NSLocalizedString(@"Unable to show video. Perhaps it is not a recognized video format.", @"Warning shown to user when video can't be embedded")];
 	// Poster may be shown next, so don't end....

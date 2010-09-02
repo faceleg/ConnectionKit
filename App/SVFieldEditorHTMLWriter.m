@@ -208,11 +208,11 @@
                     [self removeUnsupportedCustomStyling:style fromElementWithTagName:tagName];
                     
                     // Have to write it specially as changes don't show up in [anAttribute value] sadly
-                    [self pushElementAttribute:@"style" value:[style cssText]];
+                    [self pushAttribute:@"style" value:[style cssText]];
                 }
                 else
                 {
-                    [self pushElementAttribute:attributeName value:[anAttribute value]];
+                    [self pushAttribute:attributeName value:[anAttribute value]];
                 }
             }
             else
