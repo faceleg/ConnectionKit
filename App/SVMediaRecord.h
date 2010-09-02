@@ -9,6 +9,7 @@
 #import <CoreData/CoreData.h>
 #import "SVMediaProtocol.h"
 #import "SVDocumentFileWrapper.h"
+#import <iMedia/iMedia.h>
 
 
 extern NSString *kSVDidDeleteMediaRecordNotification;
@@ -17,7 +18,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 @class BDAlias, WebResource;
 
 
-@interface SVMediaRecord : NSManagedObject <SVMedia, SVDocumentFileWrapper>
+@interface SVMediaRecord : NSManagedObject <SVMedia, SVDocumentFileWrapper, IMBImageItem>
 {
   @private
     // Updating Files

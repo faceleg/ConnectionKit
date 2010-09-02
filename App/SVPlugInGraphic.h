@@ -7,13 +7,14 @@
 //
 
 #import "SVGraphic.h"
+#import "SVMediaProtocol.h"
 #import "SVPageletPlugIn.h"
 
 
 @class KTElementPlugInWrapper;
 
 
-@interface SVPlugInGraphic : SVGraphic
+@interface SVPlugInGraphic : SVGraphic <SVMedia>
 {
   @private
     SVPlugIn *_plugIn;

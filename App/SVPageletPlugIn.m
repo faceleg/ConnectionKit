@@ -200,7 +200,7 @@ static id <SVPlugInContext> sCurrentContext;
 
 #pragma mark Thumbnail
 
-- (SVMedia *)thumbnail; { return nil; }
+- (NSURL *)thumbnailURL; { return nil; }
 
 #pragma mark The Wider World
 

@@ -101,7 +101,7 @@
 
 
 #pragma mark Thumbnail
-- (SVMedia *)thumbnail;
+- (NSURL *)thumbnailURL;
 
 
 #pragma mark UI

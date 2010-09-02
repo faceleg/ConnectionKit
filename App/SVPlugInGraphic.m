@@ -17,6 +17,7 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
+#import "NSURL+Karelia.h"
 
 
 static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObservation";
@@ -354,8 +355,24 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (id <SVMedia>)thumbnail;
 {
-    return [[self plugIn] thumbnail];
+    return ([[self plugIn] thumbnailURL] ? self : nil);
 }
+
+- (CGFloat)thumbnailAspectRatio;
+{
+    CIImage *image = [[CIImage alloc] initWithContentsOfURL:[self mediaURL]];
+    CGSize size = [image extent].size;
+    CGFloat result = size.width / size.height;
+    [image release];
+    return result;
+}
+
+- (NSURL *)mediaURL; { return [[self plugIn] thumbnailURL]; }
+- (NSData *)mediaData; { return nil; }
+- (NSString *)preferredFilename; { return [[self mediaURL] lastPathComponent]; }
+
+- (id)imageRepresentation; { return [self mediaURL]; }
+- (NSString *)imageRepresentationType; { return IKImageBrowserNSURLRepresentationType; }
 
 #pragma mark Inspector
 

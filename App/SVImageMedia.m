@@ -119,10 +119,4 @@
     return [self retain];   // immutable
 }
 
-#pragma mark IMBImageItem
-
-// Defer to our source media since that should look the same basically in an image browser
-- (id)imageRepresentation; { return [[self mediaRecord] imageRepresentation]; }
-- (NSString *)imageRepresentationType; { return [[self mediaRecord] imageRepresentationType]; }
-
 @end

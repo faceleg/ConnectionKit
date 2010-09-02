@@ -8,6 +8,7 @@
 
 #import "SVContentObject.h"
 #import "SVPageletPlugIn.h"
+#import <iMedia/iMedia.h>
 
 #import "NSManagedObject+KTExtensions.h"    // for serialization
 
@@ -64,7 +65,7 @@ extern NSString *kSVGraphicPboardType;
 @protocol SVPage, SVMedia;
 
 
-@interface SVGraphic : KSExtensibleManagedObject <SVGraphic, SVPageletPlugInContainer>
+@interface SVGraphic : KSExtensibleManagedObject <SVGraphic, SVPageletPlugInContainer, IMBImageItem>
 
 #pragma mark Initialization
 - (void)willInsertIntoPage:(KTPage *)page; // calls -didAddToPage:

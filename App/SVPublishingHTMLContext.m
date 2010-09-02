@@ -110,7 +110,7 @@
     
     
     // If the width and height match the original size, then keep that way
-    if (CGSizeEqualToSize(IMBImageItemGetSize(media),
+    if (CGSizeEqualToSize(IMBImageItemGetSize((id)media),
                           CGSizeMake([width floatValue], [height floatValue])))
     {
         width = nil;

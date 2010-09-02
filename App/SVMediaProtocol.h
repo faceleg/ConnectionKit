@@ -12,7 +12,7 @@
 #import "SVMedia.h"
 
 
-@protocol SVMedia <NSObject, IMBImageItem>
+@protocol SVMedia <NSObject>
 
 - (NSURL *)mediaURL;    // MUST be non-nil when editing, doesn't have to point to real place
 - (NSData *)mediaData;  // If the data is already present in memory, return it. Otherwise nil

@@ -202,12 +202,11 @@
 
 #pragma mark Thumbnail
 
-//FIXME: need API for supplying a real thumbail (here, our thumbnail is just the icon)
-- (SVMedia *)thumbnail
+- (NSURL *)thumbnailURL
 {
 	NSString *path = [[self bundle] pathForImageResource:@"YouTube"];
 	NSURL *URL = [NSURL fileURLWithPath:path];
-    return [[[SVMedia alloc] initWithURL:URL] autorelease];
+    return URL;
 }
 
 
