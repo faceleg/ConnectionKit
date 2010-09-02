@@ -18,7 +18,6 @@
 //
 
 #import "KTPage.h"
-#import "KTWebPathsProtocol.h"
 
 
 typedef enum	//	Defines the 3 ways of linking to a collection:
@@ -33,7 +32,7 @@ KTCollectionPathStyle;
 @class KTPage, KTSite, KTMaster, SVSidebar, SVTitleBox;
 
 
-@interface KTPage (Paths) <KTWebPaths>
+@interface KTPage (Paths)
 
 // File Name
 @property(nonatomic, copy, readwrite) NSString *fileName;

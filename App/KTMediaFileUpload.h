@@ -18,12 +18,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTWebPathsProtocol.h"
 
 
 @class KTPage;
 
-@interface KTMediaFileUpload : NSManagedObject <KTWebPaths>
+@interface KTMediaFileUpload : NSManagedObject
 
 - (NSString *)pathRelativeToSite;
 

@@ -507,7 +507,6 @@
 		27A617661123005100004FED /* TextBoxBodyTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27A617651123005100004FED /* TextBoxBodyTemplate.html */; };
 		27A6187B1123480C00004FED /* SVParagraphedHTMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A618791123480C00004FED /* SVParagraphedHTMLWriter.h */; };
 		27A6187C1123480C00004FED /* SVParagraphedHTMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A6187A1123480C00004FED /* SVParagraphedHTMLWriter.m */; };
-		27A82FEC0D915AAB005FF13D /* KTWebPathsProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27AA10290CDA065A001D6B9B /* KTMissingMediaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */; settings = {ATTRIBUTES = (); }; };
 		27AA102A0CDA065A001D6B9B /* KTMissingMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */; };
 		27ACACB60D588F64004732D0 /* KTPlaceholderBindingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */; settings = {ATTRIBUTES = (); }; };
@@ -2056,7 +2055,6 @@
 		27A617651123005100004FED /* TextBoxBodyTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = TextBoxBodyTemplate.html; sourceTree = "<group>"; };
 		27A618791123480C00004FED /* SVParagraphedHTMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVParagraphedHTMLWriter.h; sourceTree = "<group>"; };
 		27A6187A1123480C00004FED /* SVParagraphedHTMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVParagraphedHTMLWriter.m; sourceTree = "<group>"; };
-		27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebPathsProtocol.h; sourceTree = "<group>"; };
 		27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaController.h; sourceTree = "<group>"; };
 		27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaController.m; sourceTree = "<group>"; };
 		27ACA30F0D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSummaryWebViewTextBlock.h; sourceTree = "<group>"; };
@@ -3572,7 +3570,6 @@
 			children = (
 				3CBDE9100EBA65D20059C56C /* KTLocalPublishingEngine.h */,
 				3CBDE9110EBA65D20059C56C /* KTLocalPublishingEngine.m */,
-				27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */,
 				279FF2BC0EF27699009F6A16 /* KTPublishingEngine.h */,
 				279FF2BD0EF27699009F6A16 /* KTPublishingEngine.m */,
 				2797B71C0EF91E2B00F91398 /* KTExportEngine.h */,
@@ -5464,7 +5461,6 @@
 				3CE2CA4C0D6D51F500B2D56B /* NSString+KTExtensions.h in Headers */,
 				270ABF9C0D76E85500C80911 /* KTPage+Paths.h in Headers */,
 				CEC11F770D79355700513E70 /* NSImage+KTExtensions.h in Headers */,
-				27A82FEC0D915AAB005FF13D /* KTWebPathsProtocol.h in Headers */,
 				27D6DE9C0DCFA95800C8834F /* KTHostProperties.h in Headers */,
 				2730D66D0DE18ACA004858F5 /* SVTemplateParser.h in Headers */,
 				2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */,
