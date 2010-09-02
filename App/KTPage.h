@@ -175,6 +175,7 @@ typedef enum {
 #pragma mark RSS Feed
 
 @property(nonatomic, copy) NSNumber *collectionSyndicate;  // BOOL, mandatory
+//@property(nonatomic, copy) NSNumber *collectionSyndicateWithParent;  // "the idea is that you would have a blog collection with a blog collection *inside* -- sort of a sub-blog.  If this is checked, it would mean that we want the contents of that sub-blog to also show up in the RSS feed for the enclosing blog. I think it's a cool idea, just never got around to making it work!"
 @property(nonatomic, copy) NSNumber *collectionMaxIndexItems;   // mandatory for collections, nil otherwise
 
 @property(nonatomic, copy) NSString *RSSFileName;
