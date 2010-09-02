@@ -129,11 +129,15 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Copy top-level dependencies across to parent. #79396
+    [context flush];    // you never know!
     for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
     {
         [(SVDOMController *)[self parentWebEditorItem] addDependency:aDependency];
     }
     
+    
+    // Bring end body code into the html
+    [context writeEndBodyString];
     [context release];
     
     
