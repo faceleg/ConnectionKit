@@ -37,9 +37,9 @@
 #import "SandvoxPlugin.h"
 
 
-@interface PhotoGridIndexInspector : SVInspectorViewController 
+@interface PhotoGridIndexInspector : SVIndexPlugInInspectorViewController 
 {
-	IBOutlet KTLinkSourceView	*collectionLinkSourceView;
+
 }
 
 @end
