@@ -667,25 +667,16 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
         WEKWebEditorItem *articleController = [self articleDOMController];
         if (![articleController tryToPerform:_cmd with:sender])
         {
-            [self insertPageletInSidebar:sender];
+            if ([self nextResponder])
+            {
+                [[self nextResponder] ks_doCommandBySelector:_cmd with:sender];
+            }
+            else
+            {
+                NSBeep();
+            }
         }
     }
-}
-
-- (IBAction)insertPageletInSidebar:(id)sender;
-{
-    // Create element
-    KTPage *page = [[self HTMLContext] page];
-    if (!page) return NSBeep(); // pretty rare. #75495
-    
-    
-    SVGraphic *pagelet = [SVGraphicFactory graphicWithActionSender:sender
-                                      insertIntoManagedObjectContext:[page managedObjectContext]];
-    
-    
-    // Insert it
-    [pagelet willInsertIntoPage:page];
-    [self _insertPageletInSidebar:pagelet];
 }
 
 - (IBAction)insertFile:(id)sender;

@@ -101,7 +101,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 #pragma mark Content Objects
 
 - (IBAction)insertPagelet:(id)sender;
-- (IBAction)insertPageletInSidebar:(id)sender;
 - (IBAction)insertFile:(id)sender;
 
 - (IBAction)insertPageletTitle:(id)sender;
