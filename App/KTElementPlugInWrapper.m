@@ -94,12 +94,6 @@
 	}
 }
 
-- (NSString *)pageCSSClassName
-{
-	NSString *result = [[self CSSClassName] stringByAppendingString:@"-page"];
-	return result;
-}
-
 - (NSString *)pageletCSSClassName
 {
 	NSString *result = [[self CSSClassName] stringByAppendingString:@"-pagelet"];
