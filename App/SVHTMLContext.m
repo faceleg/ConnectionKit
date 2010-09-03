@@ -83,7 +83,6 @@
     _maxDocType = NSIntegerMax;
     
     _headerLevel = 1;
-    _IDs = [[NSMutableSet alloc] init];
     
     _headerMarkup = [[NSMutableString alloc] init];
     _endBodyMarkup = [[NSMutableString alloc] init];
@@ -135,9 +134,7 @@
     [_currentPage release];
     
     [_mainCSSURL release];
-    
-    [_IDs release];
-    
+        
     [_headerMarkup release];
     [_endBodyMarkup release];
     [_iteratorsStack release];
@@ -408,7 +405,7 @@
 {
     NSString *result = preferredID;
     NSUInteger count = 1;
-    while ([_IDs containsObject:result])
+    while (![self isIDValid:result])
     {
         count++;
         result = [NSString stringWithFormat:@"%@-%u", preferredID, count];
@@ -416,7 +413,6 @@
     
     [self pushAttributes:attributes];
     [self startElement:tagName idName:result className:className];
-    [_IDs addObject:result];
     
     return result;
 }

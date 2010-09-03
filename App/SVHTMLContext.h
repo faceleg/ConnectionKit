@@ -47,7 +47,6 @@ typedef enum {
     BOOL    _includeStyling;
     NSURL   *_mainCSSURL;
     
-    NSMutableSet    *_IDs;
     NSUInteger      _headerLevel;
 	
     NSString                *_calloutAlignment;
