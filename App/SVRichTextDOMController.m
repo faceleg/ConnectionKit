@@ -502,18 +502,27 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         // Match the insertion's placement to the existing graphic. #82329
         // Need to seek out a suitable parent to insert into. #86448
         WEKWebEditorItem *selection = [webEditor selectedItem];
-        WEKWebEditorItem *parent = [selection parentWebEditorItem];
-        while (![parent allowsPagelets])
+        if ([selection isDescendantOfWebEditorItem:self])
         {
-            selection = parent;
-            parent = [selection parentWebEditorItem];
+            WEKWebEditorItem *parent = [selection parentWebEditorItem];
+            while (![parent allowsPagelets])
+            {
+                selection = parent;
+                parent = [selection parentWebEditorItem];
+            }
+            
+            SVGraphic *selectedGraphic = [selection representedObject];
+            [[graphic textAttachment] setPlacement:[selectedGraphic placement]];
+            
+            result = [[[self HTMLElement] ownerDocument] createRange];
+            [result setStartBefore:[selection HTMLElement]];
         }
-        
-        SVGraphic *selectedGraphic = [selection representedObject];
-        [[graphic textAttachment] setPlacement:[selectedGraphic placement]];
-        
-        result = [[[self HTMLElement] ownerDocument] createRange];
-        [result setStartBefore:[selection HTMLElement]];
+        else
+        {
+            // Fallback to insertion at start of text
+            result = [[webEditor HTMLDocument] createRange];
+            [result setStart:[self textHTMLElement] offset:0];
+        }
     }
     
     return result;
