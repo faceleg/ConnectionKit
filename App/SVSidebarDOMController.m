@@ -187,6 +187,34 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     // Already there, so do nothing. Need to implement this otherwise view controller will have nowhere to send the message, and thus beep.
 }
 
+#pragma mark Insertion Actions
+
+- (IBAction)insertPagelet:(id)sender;
+{
+    // Create element
+    KTPage *page = [[self HTMLContext] page];
+    if (!page) return NSBeep(); // pretty rare. #75495
+    
+    
+    SVGraphic *pagelet = [SVGraphicFactory graphicWithActionSender:sender
+                                    insertIntoManagedObjectContext:[page managedObjectContext]];
+    
+    
+    // Insert it
+    [pagelet willInsertIntoPage:page];
+    
+    // Place at end of the sidebar
+    [[self pageletsController] addObject:pagelet];
+    
+    // Add to main controller too
+    NSArrayController *controller = [[self webEditorViewController] graphicsController];
+    
+    BOOL selectInserted = [controller selectsInsertedObjects];
+    [controller setSelectsInsertedObjects:YES];
+    [controller addObject:pagelet];
+    [controller setSelectsInsertedObjects:selectInserted];
+}
+
 #pragma mark Drop
 
 /*  Similar to NSTableView's concept of dropping above a given row
