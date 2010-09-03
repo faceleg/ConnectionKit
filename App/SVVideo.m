@@ -116,12 +116,6 @@
 
 - (void)willInsertIntoPage:(KTPage *)page;
 {
-	[self addObserver:self forKeyPath:@"autoplay"			options:(NSKeyValueObservingOptionNew) context:nil];
-	[self addObserver:self forKeyPath:@"controller"			options:(NSKeyValueObservingOptionNew) context:nil];
-	[self addObserver:self forKeyPath:@"media"				options:(NSKeyValueObservingOptionNew) context:nil];
-	[self addObserver:self forKeyPath:@"externalSourceURL"	options:(NSKeyValueObservingOptionNew) context:nil];
-	[self addObserver:self forKeyPath:@"posterFrameType"	options:(NSKeyValueObservingOptionNew) context:nil];
-
 	[self setConstrainProportions:YES];		// We will likely want this on
 
     [super willInsertIntoPage:page];
@@ -138,11 +132,6 @@
 {
 	self.dimensionCalculationMovie = nil;
 	self.dimensionCalculationConnection = nil;	
-	[self removeObserver:self forKeyPath:@"autoplay"];
-	[self removeObserver:self forKeyPath:@"controller"];
-	[self removeObserver:self forKeyPath:@"media"];
-	[self removeObserver:self forKeyPath:@"externalSourceURL"];
-	[self removeObserver:self forKeyPath:@"posterFrameType"];
 	[super dealloc];
 }
 
@@ -221,11 +210,12 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	{
 		videoURL = [self externalSourceURL];
 	}
-	// Rebuild URL by substituting in path
+	// Rebuild URL by substituting in path. Create a FAKE URL for a synthesized thumbnail.
+	NSString *newPath = [[[videoURL path] stringByDeletingPathExtension] stringByAppendingPathComponent:@"synthesized.jpg"];
 	
 	NSURL *fakeURL = [[[NSURL alloc] initWithScheme:[videoURL scheme]
 											   host:[videoURL host]
-											   path:[[[videoURL path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"]]
+											   path:newPath]
 					  autorelease];
 	
 	SVMediaRecord *posterMedia = nil;
@@ -303,65 +293,89 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 }
 
 #pragma mark -
-#pragma mark KVO
+#pragma mark Custom setters (instead of KVO)
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
+- (void) setAutoplay:(NSNumber *)anAutoplay
 {
-	if ([keyPath isEqualToString:@"autoplay"])
+	[self willChangeValueForKey:@"autoplay"];
+	[self setPrimitiveValue:anAutoplay forKey:@"autoplay"];
+	
+	if (anAutoplay.boolValue)	// if we turn on autoplay, we also turn on preload
 	{
-		if (self.autoplay.boolValue)	// if we turn on autoplay, we also turn on preload
-		{
-			self.preload = NSBOOL(YES);
-		}
-		
+		self.preload = NSBOOL(YES);
 	}
-	else if ([keyPath isEqualToString:@"controller"])
-	{
-		if (!self.controller.boolValue)	// if we turn off controller, we turn on autoplay so we can play!
-		{
-			self.autoplay = NSBOOL(YES);
-		}
-	}
-	else if ([keyPath isEqualToString:@"posterFrameType"])
-	{
-		switch([self.posterFrameType intValue])
-		{
-			case kPosterTypeChoose:
-				// Switching to choose from automatic? Clear out the image.
-				[self replaceMedia:nil forKeyPath:@"posterFrame"];
-				break;
-			case kPosterFrameTypeAutomatic:
-				// Switching to automatic? Queue request for quicklook
-				[self getPosterFrameFromQuickLook];
-				break;
-			case kPosterFrameTypeNone:
-				// Do nothing; don't mess with media
-				break;
-		}
-	}
-	else if ([keyPath isEqualToString:@"media"] || [keyPath isEqualToString:@"externalSourceURL"])
-	{	
-		NSLog(@"SVVideo Media set.");
-		if (nil == self.posterFrame || [self.posterFrameType intValue] != kPosterTypeChoose)		// get poster frame image UNLESS we have an override chosen.
-		{
-			[self getPosterFrameFromQuickLook];
-		}
-		
-		// Video changed - clear out the known width/height so we can recalculate
-		self.naturalWidth = nil;
-		self.naturalHeight = nil;
-		
-		// Load the movie to figure out the media size and codecType
-		[self loadMovie];
-	}
+	[self didChangeValueForKey:@"autoplay"];
 }
 
+- (void) setController:(NSNumber *)aController
+{
+	[self willChangeValueForKey:@"controller"];
+	[self setPrimitiveValue:aController forKey:@"controller"];
+	
+	if (!aController.boolValue)	// if we turn off controller, we turn on autoplay so we can play!
+	{
+		self.autoplay = NSBOOL(YES);
+	}
+	[self didChangeValueForKey:@"controller"];
+}
 
+- (void) setPosterFrameType:(NSNumber *)aPosterFrameType
+{
+	[self willChangeValueForKey:@"posterFrameType"];
+	[self setPrimitiveValue:aPosterFrameType forKey:@"posterFrameType"];
+	
+	switch(aPosterFrameType.intValue)
+	{
+		case kPosterTypeChoose:
+			// Switching to choose from automatic? Clear out the image.
+			[self replaceMedia:nil forKeyPath:@"posterFrame"];
+			break;
+		case kPosterFrameTypeAutomatic:
+			// Switching to automatic? Queue request for quicklook
+			[self getPosterFrameFromQuickLook];
+			break;
+		case kPosterFrameTypeNone:
+			// Do nothing; don't mess with media
+			break;
+	}
+	[self didChangeValueForKey:@"posterFrameType"];
+}
 
+- (void)_mediaChanged;
+{
+	NSLog(@"SVVideo Media set.");
+	if (nil == self.posterFrame || [self.posterFrameType intValue] != kPosterTypeChoose)		// get poster frame image UNLESS we have an override chosen.
+	{
+		[self getPosterFrameFromQuickLook];
+	}
+	
+	// Video changed - clear out the known width/height so we can recalculate
+	self.naturalWidth = nil;
+	self.naturalHeight = nil;
+	
+	// Load the movie to figure out the media size and codecType
+	[self loadMovie];
+}
 
+- (void) setMedia:(SVMediaRecord *)aMedia
+{
+	[self willChangeValueForKey:@"media"];
+	[self setPrimitiveValue:aMedia forKey:@"media"];
+	
+	[self _mediaChanged];
+	
+	[self didChangeValueForKey:@"media"];
+}
+
+- (void) setExternalSourceURL:(NSURL *)anExternalSourceURL
+{
+	[self willChangeValueForKey:@"externalSourceURL"];
+	[self setPrimitiveValue:anExternalSourceURL forKey:@"externalSourceURL"];
+	
+	[self _mediaChanged];
+
+	[self didChangeValueForKey:@"externalSourceURL"];
+}
 
 #pragma mark -
 #pragma mark Writing Tag
