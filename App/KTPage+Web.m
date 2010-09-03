@@ -231,8 +231,6 @@
 
 #pragma mark CSS
 
-- (NSString *)cssClassName { return @"text-page"; }
-
 /*  Used by KTPageTemplate.html to generate links to the stylesheets needed by this page. Used to be a dedicated [[stylesheet]] parser function
  */
 - (void)writeStylesheetLinks
