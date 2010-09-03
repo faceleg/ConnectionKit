@@ -807,7 +807,29 @@ const int kDesignThumbHeight = 65;
 			KTDesign *whichDesign = (safeIndex == NSNotFound) ? familyPrototype : [familyDesigns objectAtIndex:safeIndex];
 			result = [whichDesign thumbnailCG];
 			
-			[self.thumbnails setObject:(id)result forKey:indexNumber];
+			if (result)
+			{
+				[self.thumbnails setObject:(id)result forKey:indexNumber];
+			}
+		}
+		if (!result)	// missing thumb?
+		{
+			static CGImageRef sMissingImage = nil;
+			if (!sMissingImage)
+			{
+				NSURL *placeholderURL = [NSURL fileURLWithPath:
+										 [[NSBundle mainBundle] pathForImageResource:@"LogoPlaceholder"]];
+				if (nil != placeholderURL)
+				{
+					CGImageSourceRef source = CGImageSourceCreateWithURL((CFURLRef)placeholderURL,nil);
+					if (source)
+					{
+						sMissingImage = CGImageSourceCreateImageAtIndex(source, 0, nil);
+						CFRelease(source);
+					}
+				}
+			}
+			result = sMissingImage;
 		}
 		return (id) result;
 	}
