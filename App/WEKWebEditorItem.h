@@ -33,6 +33,8 @@
 @property(nonatomic, copy) NSArray *childWebEditorItems;
 @property(nonatomic, assign, readonly) WEKWebEditorItem *parentWebEditorItem;
 
+- (BOOL)isDescendantOfWebEditorItem:(WEKWebEditorItem *)anItem;
+
 - (void)addChildWebEditorItem:(WEKWebEditorItem *)controller;
 - (void)replaceChildWebEditorItem:(WEKWebEditorItem *)oldItem with:(WEKWebEditorItem *)newItem;
 - (void)removeFromParentWebEditorItem;

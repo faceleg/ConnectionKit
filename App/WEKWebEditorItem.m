@@ -102,6 +102,18 @@
     [[webEditor delegate] webEditor:webEditor didAddItem:self];
 }
 
+- (BOOL)isDescendantOfWebEditorItem:(WEKWebEditorItem *)anItem;
+{
+    WEKWebEditorItem *testItem = self;
+    while (testItem)
+    {
+        if (testItem == anItem) return YES;
+        testItem = [testItem parentWebEditorItem];
+    }
+    
+    return NO;
+}
+
 - (void)addChildWebEditorItem:(WEKWebEditorItem *)item;
 {
     OBPRECONDITION(item);
