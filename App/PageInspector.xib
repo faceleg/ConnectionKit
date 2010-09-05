@@ -579,13 +579,13 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 										<object class="NSTextField" id="512232710">
 											<reference key="NSNextResponder" ref="776333486"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{14, 146}, {189, 14}}</string>
+											<string key="NSFrame">{{14, 146}, {112, 14}}</string>
 											<reference key="NSSuperview" ref="776333486"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="729013804">
 												<int key="NSCellFlags">68288064</int>
 												<int key="NSCellFlags2">272761856</int>
-												<string key="NSContents">Link to Siblings in Collection</string>
+												<string key="NSContents">Previous/Next Links</string>
 												<object class="NSFont" key="NSSupport" id="408236390">
 													<string key="NSName">LucidaGrande</string>
 													<double key="NSSize">11</double>
@@ -3432,7 +3432,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{593, 338}, {230, 393}}</string>
+					<string>{{569, 353}, {230, 393}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
