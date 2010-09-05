@@ -934,6 +934,44 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			[_progressPanel setInformativeText:nil];
 			[_progressPanel makeKeyAndOrderFront:self];*/
 			
+            
+            // Populate the Insert menu
+            NSMenuItem *item = nil;
+            id <SVGraphicFactory> factory = nil;
+            NSMenu *insertMenu = [oInsertRawHTMLMenuItem menu];
+            NSUInteger index = [insertMenu indexOfItem:oInsertRawHTMLMenuItem];
+            
+            // Indexes
+            item = [SVGraphicFactory menuItemForGraphicFactories:[SVGraphicFactory indexFactories]
+                                                           title:NSLocalizedString(@"Indexes", "menu item")];
+            [item setIconImage:[NSImage imageNamed:@"toolbar_index"]];
+            [insertMenu insertItem:item atIndex:(index + 1)]; 
+            
+            // Audio item
+            factory = [SVGraphicFactory audioFactory];
+            item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
+            [insertMenu insertItem:item atIndex:index]; 
+            
+            // Video item
+            factory = [SVGraphicFactory videoFactory];
+            item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
+            [insertMenu insertItem:item atIndex:index]; 
+            
+            // Image item
+            factory = [SVGraphicFactory imageFactory];
+            item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
+            [insertMenu insertItem:item atIndex:index]; 
+            
+            // Text box item
+            factory = [SVGraphicFactory textBoxFactory];
+            item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
+            [insertMenu insertItem:item atIndex:index];
+            
+            
+            
+            
+            
+            
 			[SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
                                                        inMenu:oMoreGraphicsMenu
                                                       atIndex:0];

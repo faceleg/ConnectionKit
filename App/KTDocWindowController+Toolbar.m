@@ -242,23 +242,6 @@
     return [result autorelease];
 }
 
-- (NSMenuItem *)makeMenuItemForGraphicFactories:(NSArray *)factories title:(NSString *)title;
-{
-    NSMenuItem *result = [[NSMenuItem alloc] initWithTitle:title
-													action:nil
-											 keyEquivalent:@""];
-    
-    NSMenu *submenu = [[NSMenu alloc] initWithTitle:title];
-    
-    [SVGraphicFactory insertItemsWithGraphicFactories:factories
-                                               inMenu:submenu
-                                              atIndex:0];
-	[result setSubmenu:submenu];
-    [submenu release];
-    
-    return [result autorelease];
-}
-
 
 /*	Support method that turns toolbarItem into a "Add Pagelet" button
  */
@@ -305,8 +288,8 @@
 	
     
     // Indexes
-	item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory indexFactories]
-                                           title:NSLocalizedString(@"Indexes", "menu item")];
+	item = [SVGraphicFactory menuItemForGraphicFactories:[SVGraphicFactory indexFactories]
+                                                   title:NSLocalizedString(@"Indexes", "menu item")];
  	[item setIconImage:[NSImage imageNamed:@"toolbar_index"]];
 	[menu addItem:item];
     

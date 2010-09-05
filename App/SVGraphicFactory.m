@@ -458,6 +458,23 @@ static id <SVGraphicFactory> sRawHTMLFactory;
     return result;
 }
 
++ (NSMenuItem *)menuItemForGraphicFactories:(NSArray *)factories title:(NSString *)title;
+{
+    NSMenuItem *result = [[NSMenuItem alloc] initWithTitle:title
+													action:nil
+											 keyEquivalent:@""];
+    
+    NSMenu *submenu = [[NSMenu alloc] initWithTitle:title];
+    
+    [SVGraphicFactory insertItemsWithGraphicFactories:factories
+                                               inMenu:submenu
+                                              atIndex:0];
+	[result setSubmenu:submenu];
+    [submenu release];
+    
+    return [result autorelease];
+}
+
 + (SVGraphic *)graphicWithActionSender:(id <NSValidatedUserInterfaceItem>)sender
         insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
