@@ -73,7 +73,7 @@
     if (!controller) controller = [[self class] noSelectionController];
     
     [_wrapInspector setInspectedObjectsController:controller];
-    [_graphicInspector setInspectedObjectsController:controller];
+    //[_graphicInspector setInspectedObjectsController:controller];
     [_metricsInspector setInspectedObjectsController:controller];
     [_linkInspector setInspectedObjectsController:controller];
     [_plugInInspector setInspectedObjectsController:controller];
@@ -110,10 +110,10 @@
     
     
     // Graphic
-    _graphicInspector = [[KSInspectorViewController alloc] initWithNibName:@"GraphicInspector" bundle:nil];
-    [_graphicInspector setIdentifier:@"com.karelia.Sandvox.GraphicInspector"];
-    [_graphicInspector setTitle:NSLocalizedString(@"Graphic", @"Graphic Inspector")];
-    [_graphicInspector setIcon:[NSImage imageNamed:@"graphic_inspector"]];
+    //_graphicInspector = [[KSInspectorViewController alloc] initWithNibName:@"GraphicInspector" bundle:nil];
+    //[_graphicInspector setIdentifier:@"com.karelia.Sandvox.GraphicInspector"];
+    //[_graphicInspector setTitle:NSLocalizedString(@"Graphic", @"Graphic Inspector")];
+    //[_graphicInspector setIcon:[NSImage imageNamed:@"graphic_inspector"]];
     
     
     // Metrics
@@ -142,7 +142,7 @@
                        _pageInspector,
                        // _collectionInspector,		NOT USING THIS ... THOUGH MIKE MAY CHANGE HIS MIND :-)
                        _wrapInspector,
-                       _graphicInspector,
+                       //_graphicInspector,         NOR THIS
                        _metricsInspector,
                        _linkInspector,
                        _plugInInspector,
