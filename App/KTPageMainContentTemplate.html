@@ -1,8 +1,8 @@
 						<div id="main-content">
 							[[if !titleBox.hidden]][[textblock property:titleBox flags:"line" tag:h2 class:"title"]][[endif]]
 							
-[[if showNavigationArrows]]
-[[if parentPage.index.navigationArrowsStyle==1]]
+[[if navigationArrowsStyle]]
+[[if navigationArrowsStyle==1]]
 							<div class="collection-navigation photo-navigation">
 								<div id="previous-photo" class="previous-page">[[if previousPage]]<a class="imageLink" href="[[path previousPage]]#previous-photo">[[`navigatePreviousHTML]]</a>[[else3]]<span class="disabled-nav">[[`navigatePreviousHTML]]</span>[[endif3]]</div>
 								<div id="next-photo" class="next-page">[[if nextPage]]<a class="imageLink" href="[[path nextPage]]#previous-photo">[[`navigateNextHTML]]</a>[[else3]]<span class="disabled-nav">[[`navigateNextHTML]]</span>[[endif3]]</div>
@@ -10,9 +10,9 @@
 							</div>
 [[else2]]
 							<div class="collection-navigation text-navigation">
-								[[if previousPage]]<div class="previous-page"><a href="[[path previousPage]]"><span>&laquo;</span> [[=&previousPage.titleText]]</a></div>[[endif3]]
+								[[if previousPage]]<div class="previous-page"><a href="[[path previousPage]]"><span>&laquo;</span> [[=&previousPage.title]]</a></div>[[endif3]]
 								<div class="collection-index"><a href="[[path parentPage]]">[[=&parentPage.title]]</a></div>
-								[[if nextPage]]<div class="next-page"><a href="[[path nextPage]]">[[=&nextPage.titleText]] <span>&raquo;</span></a></div>[[endif3]]
+								[[if nextPage]]<div class="next-page"><a href="[[path nextPage]]">[[=&nextPage.title]] <span>&raquo;</span></a></div>[[endif3]]
 							</div>
 [[endif2]]
 [[endif]]
