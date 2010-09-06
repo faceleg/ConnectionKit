@@ -380,6 +380,12 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 #pragma mark Serialization
 
+- (void)awakeFromPropertyList:(id)propertyList;
+{
+    [super awakeFromPropertyList:propertyList];
+    [self loadPlugIn];
+}
+
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
 {
     [super populateSerializedProperties:propertyList];
