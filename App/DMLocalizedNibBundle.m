@@ -83,7 +83,7 @@
 // and http://openradar.appspot.com/7496255 for more information.
 
 
-#define DEBUG_THIS_USER @"dwood"
+#define DEBUG_THIS_USER @"dw___ood"
 
 #import <Cocoa/Cocoa.h>
 #import <objc/runtime.h>
