@@ -276,17 +276,6 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     [webEditor loadHTMLString:pageHTML baseURL:pageURL];
     
     
-    // Load in any subresources
-    WebDataSource *datasource = [[[self webView] mainFrame] dataSource];
-    for (id <SVMedia> aMediaRecord in [context media])
-    {
-        if ([aMediaRecord mediaData])
-        {
-            [datasource addSubresource:[(SVMediaRecord *)aMediaRecord webResource]];
-        }
-    }
-    
-    
     // Tidy up
     [context release];
 }
@@ -1226,6 +1215,21 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
            redirectResponse:(NSURLResponse *)redirectResponse
              fromDataSource:(WebDataSource *)dataSource;
 {
+    
+    // Load in any subresources
+    if ([[request URL] isEqual:[[dataSource request] URL]])
+    {
+        for (id <SVMedia> aMediaRecord in [[self HTMLContext] media])
+        {
+            if ([aMediaRecord mediaData])
+            {
+                [dataSource addSubresource:[(SVMediaRecord *)aMediaRecord webResource]];
+            }
+        }
+    }
+    
+    
+    
     if (_reload)
     {
         NSMutableURLRequest *result = [[request mutableCopy] autorelease];
