@@ -412,6 +412,10 @@
                    ([self datePublished] || ![self isDraftOrHasDraftAncestor]));
     return result;
 }
++ (NSSet *)keyPathsForValuesAffectingShouldIncludeInIndexes;
+{
+    return [NSSet setWithObjects:@"includeInIndex", @"datePublished", @"isDraft", nil];
+}
 
 - (BOOL)shouldIncludeInSiteMaps;
 {
