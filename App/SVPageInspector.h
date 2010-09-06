@@ -26,6 +26,8 @@
     IBOutlet NSTableView                    *oSidebarPageletsTable;
 }
 
+- (IBAction)applyNavigationArrowsStyleToSiblings:(NSButton *)sender;
+
 - (IBAction)selectTimestampType:(NSPopUpButton *)sender;
 
 - (IBAction)chooseCustomThumbnail:(NSButton *)sender;

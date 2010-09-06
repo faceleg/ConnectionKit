@@ -77,6 +77,27 @@
     [self updatePickFromPageThumbnail];
 }
 
+#pragma mark Navigation Arrows
+
+- (IBAction)applyNavigationArrowsStyleToSiblings:(NSButton *)sender;
+{
+    NSNumber *style = [[self inspectedObjectsController] valueForKeyPath:@"selection.navigationArrowsStyle"];
+    
+    for (SVSiteItem *anItem in [self inspectedObjects])
+    {
+        KTPage *collection = [anItem parentPage];
+        for (SVSiteItem *aSibling in [collection childItems])
+        {
+            if ([aSibling isKindOfClass:[KTPage class]])
+            {
+                [(KTPage *)aSibling setNavigationArrowsStyle:style];
+            }
+        }
+    }
+}
+
+#pragma mark Timestamp
+
 - (IBAction)selectTimestampType:(NSPopUpButton *)sender;
 {
     //  When the user selects a timestamp type, want to treat it as if they hit the checkbox too
