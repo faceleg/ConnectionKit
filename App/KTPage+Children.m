@@ -477,15 +477,15 @@
 
 - (BOOL)validateNavigationArrowsStyle:(NSNumber **)show error:(NSError **)error;
 {
-    // Navigation arrows aren't allowed on home page
+    // Navigation arrows aren't allowed for non-collections
     BOOL result = YES;
     
-    if ([*show boolValue] && [self isRootPage])
+    if ([*show boolValue] && [self isCollection])
     {
         result = NO;
         if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
                                                 code:NSValidationNumberTooLargeError
-                                localizedDescription:@"Can't have navigation arrows on the home page"];
+                                localizedDescription:@"navigationArrowsStyle is a collection property"];
     }
     
     return result;

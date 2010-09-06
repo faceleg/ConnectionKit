@@ -125,12 +125,9 @@
         index--;
 		
         KTPage *result = [siblings objectAtIndex:index];
-        [context addDependencyOnObject:result keyPath:@"navigationArrowsStyle"];
+        [context addDependencyOnObject:result keyPath:@"shouldIncludeInIndexes"];
         
-        if ([result isKindOfClass:[KTPage class]] && [[result navigationArrowsStyle] boolValue])
-        {
-            return result;
-        }
+        if ([result shouldIncludeInIndexes]) return result;
 	}
 	
 	return nil;
@@ -147,12 +144,9 @@
 	while (index < [siblings count])
 	{
 		KTPage *result = [siblings objectAtIndex:index];
-        [context addDependencyOnObject:result keyPath:@"navigationArrowsStyle"];
+        [context addDependencyOnObject:result keyPath:@"shouldIncludeInIndexes"];
 
-        if ([result isKindOfClass:[KTPage class]] && [[result navigationArrowsStyle] boolValue])
-        {
-            return result;
-        }
+        if ([result shouldIncludeInIndexes]) return result;
         
         index++;
 	}

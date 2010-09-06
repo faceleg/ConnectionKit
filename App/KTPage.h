@@ -148,7 +148,7 @@ typedef enum {
 
 
 #pragma mark Navigation Arrows
-@property(nonatomic, copy) NSNumber *navigationArrowsStyle;
+@property(nonatomic, copy) NSNumber *navigationArrowsStyle; // collection property
 
 
 @end
