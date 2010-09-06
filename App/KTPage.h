@@ -166,8 +166,11 @@ typedef enum {
 - (NSArray *)pagesInIndex;
 - (void)invalidatePagesInIndexCache;
 
-// Navigation Arrows
+#pragma mark Navigation Arrows
+
 - (NSArray *)navigablePages;
+
+// NOT KVO-compliant, but do register the required dependencies with current context
 - (KTPage *)previousPage;
 - (KTPage *)nextPage;
 

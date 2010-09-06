@@ -112,18 +112,21 @@
 	return result;
 }
 
-/*	Both return nil if there isn't a suitable sibling.
- *	-sortedChildren caching takes care of KVO for these properties.
- */
 - (KTPage *)previousPage
 {
+    SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+    
 	NSArray *siblings = [[self parentPage] childPages];
+    [context addDependencyOnObject:self keyPath:@"parentPage.childPages"];
+    
 	unsigned index = [siblings indexOfObjectIdenticalTo:self];
 	while (index > 0)
 	{
         index--;
 		
-        KTPage *result = [siblings objectAtIndex:index ];
+        KTPage *result = [siblings objectAtIndex:index];
+        [context addDependencyOnObject:result keyPath:@"navigationArrowsStyle"];
+        
         if ([result isKindOfClass:[KTPage class]] && [[result navigationArrowsStyle] boolValue])
         {
             return result;
@@ -135,11 +138,17 @@
 
 - (KTPage *)nextPage
 {
+	SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+    
 	NSArray *siblings = [[self parentPage] childPages];
+	[context addDependencyOnObject:self keyPath:@"parentPage.childPages"];
+    
 	unsigned index = [siblings indexOfObjectIdenticalTo:self] + 1;
 	while (index < [siblings count])
 	{
 		KTPage *result = [siblings objectAtIndex:index];
+        [context addDependencyOnObject:result keyPath:@"navigationArrowsStyle"];
+
         if ([result isKindOfClass:[KTPage class]] && [[result navigationArrowsStyle] boolValue])
         {
             return result;
