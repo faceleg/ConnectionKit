@@ -117,30 +117,38 @@
  */
 - (KTPage *)previousPage
 {
-	KTPage *result = nil;
-	
-	NSArray *siblings = [[self parentPage] navigablePages];
+	NSArray *siblings = [[self parentPage] childPages];
 	unsigned index = [siblings indexOfObjectIdenticalTo:self];
-	if (index > 0 && index < [siblings count])
+	while (index > 0)
 	{
-		result = [siblings objectAtIndex:index - 1];
+        index--;
+		
+        KTPage *result = [siblings objectAtIndex:index ];
+        if ([result isKindOfClass:[KTPage class]] && [[result navigationArrowsStyle] boolValue])
+        {
+            return result;
+        }
 	}
 	
-	return result;
+	return nil;
 }
 
 - (KTPage *)nextPage
 {
-	KTPage *result = nil;
-	
-	NSArray *siblings = [[self parentPage] navigablePages];
-	unsigned index = [siblings indexOfObjectIdenticalTo:self];
-	if (index != NSNotFound && index < ([siblings count] - 1))
+	NSArray *siblings = [[self parentPage] childPages];
+	unsigned index = [siblings indexOfObjectIdenticalTo:self] + 1;
+	while (index < [siblings count])
 	{
-		result = [siblings objectAtIndex:index + 1];
+		KTPage *result = [siblings objectAtIndex:index];
+        if ([result isKindOfClass:[KTPage class]] && [[result navigationArrowsStyle] boolValue])
+        {
+            return result;
+        }
+        
+        index++;
 	}
 	
-	return result;
+	return nil;
 }
 
 #pragma mark RSS Feed
