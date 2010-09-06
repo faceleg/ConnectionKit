@@ -706,7 +706,16 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	NSURL *posterSourceURL = nil;
 	if (self.posterFrame)
 	{
-		posterSourceURL = [context addImageMedia:self.posterFrame width:[self width] height:[self height] type:self.posterFrame.typeOfFile];
+		// Convert to JPEG if the poster image is not already a JPEG or PNG or GIF (i.e. web-compatible images)
+		NSString *convertType = (NSString *)kUTTypeJPEG;
+		NSString *currentType = self.posterFrame.typeOfFile;
+		if ([currentType conformsToUTI:(NSString *)kUTTypePNG]
+			|| [currentType conformsToUTI:(NSString *)kUTTypeGIF]
+			|| [currentType conformsToUTI:(NSString *)kUTTypeJPEG])
+		{
+			convertType = nil;		// already a web-ready image format; don't convert
+		}
+		posterSourceURL = [context addImageMedia:self.posterFrame width:[self width] height:[self height] type:convertType];
 	}
 	
 	// Determine tag(s) to use
