@@ -47,10 +47,7 @@ extern NSString *gInfoWindowAutoSaveName;
    	NSMutableDictionary				*myToolbars;			// dict of document toolbars
 	
 	// WEBVIEW STUFF ....
-	@public
-	BOOL							myHasSavedVisibleRect;
-	NSRect							myDocumentVisibleRect;
-	
+  @public
 	
     NSMutableDictionary				*myContextElementInformation;
 	IBOutlet KSBorderlessWindow		*oLinkPanel;
@@ -140,28 +137,6 @@ extern NSString *gInfoWindowAutoSaveName;
 
 
 extern NSString *KTSelectedDOMRangeKey;
-
-@interface KTDocWindowController ( Accessors )
-
-//- (DOMNode *)selectedDomNode;
-
-- (NSRect)selectionRect;
-- (void)setSelectionRect:(NSRect)aSelectionRect;
-
-- (NSPoint)lastClickedPoint;
-- (void)setLastClickedPoint:(NSPoint)aLastClickedPoint;
-
-//- (id)selectedBlockItem;
-//- (void)setSelectedBlockItem:(id)aSelectedBlockItem;
-
-//- (NSString *)selectedBlockItemProperty;
-//- (void)setSelectedBlockItemProperty:(NSString *)aSelectedBlockItemProperty;
-
-- (NSMutableDictionary *)toolbars;
-- (void)setToolbars:(NSMutableDictionary *)aToolbars;
-
-@end
-
 
 @interface KTDocWindowController (Publishing)
 

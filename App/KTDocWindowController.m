@@ -100,7 +100,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
     // release ivars
-    [self setToolbars:nil];
+    [myToolbars release];
     
     [_contentTitle release];
 	[myMasterCodeInjectionController release];
@@ -133,7 +133,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 	
 	// Toolbar
-	[self setToolbars:[NSMutableDictionary dictionary]];
+	myToolbars = [[NSMutableDictionary alloc] init];
 	[self makeDocumentToolbar];
 	
 	

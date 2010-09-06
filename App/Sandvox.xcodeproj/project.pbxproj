@@ -1112,7 +1112,6 @@
 		CE36E3E511ED5546003EFCA8 /* jquery-1.4.2.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CE36E3DA11ED528E003EFCA8 /* jquery-1.4.2.min.js */; };
 		CE36E59011EF95FF003EFCA8 /* designPlaceholder.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE36E58F11EF95FF003EFCA8 /* designPlaceholder.tiff */; };
 		CE36E5CA11EFA68E003EFCA8 /* plainText.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE36E5C911EFA68E003EFCA8 /* plainText.tiff */; };
-		CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */; };
 		CE42A63111DE506600381E46 /* DTD in Resources */ = {isa = PBXBuildFile; fileRef = CE42A62311DE506600381E46 /* DTD */; };
 		CE44DFBA0BD0019400479A8E /* KTHTMLEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44DFB80BD0019400479A8E /* KTHTMLEditorController.m */; };
 		CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */; };
@@ -2761,7 +2760,6 @@
 		CE36E3DA11ED528E003EFCA8 /* jquery-1.4.2.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.4.2.min.js"; sourceTree = "<group>"; };
 		CE36E58F11EF95FF003EFCA8 /* designPlaceholder.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = designPlaceholder.tiff; sourceTree = "<group>"; };
 		CE36E5C911EFA68E003EFCA8 /* plainText.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = plainText.tiff; sourceTree = "<group>"; };
-		CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Accessors.m"; sourceTree = "<group>"; };
 		CE42A62311DE506600381E46 /* DTD */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DTD; sourceTree = "<group>"; };
 		CE44DFB80BD0019400479A8E /* KTHTMLEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLEditorController.m; sourceTree = "<group>"; };
 		CE44DFB90BD0019400479A8E /* KTHTMLEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLEditorController.h; sourceTree = "<group>"; };
@@ -3682,7 +3680,6 @@
 			children = (
 				3C202E9307E00F5700DE4994 /* document2.toolbar */,
 				3C301619103DE0580036A9D0 /* KTDocument.xib */,
-				CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */,
 				3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */,
 				CEB34A4D08296E720073A7A4 /* KTDocWindowController.h */,
 				CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */,
@@ -6904,7 +6901,6 @@
 				3C4328E207F7DCA600DD0D92 /* KTDocWindowController+Toolbar.m in Sources */,
 				3CA9B30E0804643200C3053B /* KTDocument+Properties.m in Sources */,
 				CEB34A5008296E720073A7A4 /* KTDocWindowController.m in Sources */,
-				CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */,
 				CEAE166A084530C1007025D4 /* KTHostProperties.m in Sources */,
 				CEB53A850899A9AD006B0019 /* KTDesign.m in Sources */,
 				3C89AD7308E0BE1400CA0522 /* KTDocumentController.m in Sources */,

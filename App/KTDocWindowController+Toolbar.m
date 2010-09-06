@@ -107,7 +107,7 @@
 				
                 [toolbarsEntry setObject:toolbar forKey:@"toolbar"];
                 [toolbarsEntry setObject:toolbarInfo forKey:@"info"];
-                [[self toolbars] setObject:toolbarsEntry forKey:toolbarIdentifier];
+                [myToolbars setObject:toolbarsEntry forKey:toolbarIdentifier];
 				
                 return toolbar;
             }
