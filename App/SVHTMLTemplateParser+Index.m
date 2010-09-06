@@ -29,40 +29,6 @@
 
 @implementation SVHTMLTemplateParser (Index)
 
-#pragma mark -
-#pragma mark Index
-
-- (NSString *)indexWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	NSString *result = @"";
-	
-    /*
-	NSArray *parameters = [inRestOfTag componentsSeparatedByWhitespace];
-	if (parameters && [parameters count] == 2)
-	{
-		KTAbstractIndex *index = [[self cache] valueForKeyPath:[parameters objectAtIndex:0]];
-		NSString *indexTemplate = [index templateHTML];
-        
-        if (indexTemplate)
-        {
-            SVHTMLTemplateParser *parser = [self newChildParserWithTemplate:indexTemplate component:index];
-            
-            NSArray *indexPages = [[self cache] valueForKeyPath:[parameters objectAtIndex:1]];
-            [parser overrideKey:@"pages" withValue:indexPages];
-            
-            [parser parse];
-            [parser release];
-        }
-	}
-	else
-	{
-		NSLog(@"target: usage [[index keyPath.to.index pages.to.index]]");
-		
-	}*/
-	
-	return result;
-}
-
 #pragma mark Summary
 
 /*
