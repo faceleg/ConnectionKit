@@ -480,7 +480,7 @@
     // Navigation arrows aren't allowed for non-collections
     BOOL result = YES;
     
-    if ([*show boolValue] && [self isCollection])
+    if ([*show boolValue] && ![self isCollection])
     {
         result = NO;
         if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
