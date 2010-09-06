@@ -92,6 +92,7 @@
         
         if (predecessor)
         {
+            [result setNavigationArrowsStyle:[predecessor navigationArrowsStyle]];
             [result setAllowComments:[predecessor allowComments]];
             [result setIncludeTimestamp:[predecessor includeTimestamp]];
         }
