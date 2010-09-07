@@ -37,7 +37,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface GeneralIndex : SVIndexPlugIn 
+@interface GeneralIndexPlugIn : SVIndexPlugIn 
 {
 
 }

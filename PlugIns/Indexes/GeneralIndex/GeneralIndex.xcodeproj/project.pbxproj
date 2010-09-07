@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C9701050D5CF85C0070D4A1 /* GeneralIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9701040D5CF85C0070D4A1 /* GeneralIndex.m */; };
+		3C9701050D5CF85C0070D4A1 /* GeneralIndexPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9701040D5CF85C0070D4A1 /* GeneralIndexPlugIn.m */; };
 		3C9701190D5CFA2A0070D4A1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C9701170D5CFA2A0070D4A1 /* Localizable.strings */; };
 		3C9701230D5CFA8E0070D4A1 /* GeneralIndexTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C9701210D5CFA8E0070D4A1 /* GeneralIndexTemplate.html */; };
 		3C9701240D5CFA8E0070D4A1 /* index.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3C9701220D5CFA8E0070D4A1 /* index.icns */; };
@@ -21,8 +21,8 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* GeneralIndex_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralIndex_Prefix.pch; sourceTree = "<group>"; };
-		3C9701030D5CF85C0070D4A1 /* GeneralIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralIndex.h; sourceTree = "<group>"; };
-		3C9701040D5CF85C0070D4A1 /* GeneralIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralIndex.m; sourceTree = "<group>"; };
+		3C9701030D5CF85C0070D4A1 /* GeneralIndexPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralIndexPlugIn.h; sourceTree = "<group>"; };
+		3C9701040D5CF85C0070D4A1 /* GeneralIndexPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralIndexPlugIn.m; sourceTree = "<group>"; };
 		3C9701080D5CF8700070D4A1 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C97010E0D5CF8870070D4A1 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C9701110D5CF8950070D4A1 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -101,8 +101,8 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3C9701030D5CF85C0070D4A1 /* GeneralIndex.h */,
-				3C9701040D5CF85C0070D4A1 /* GeneralIndex.m */,
+				3C9701030D5CF85C0070D4A1 /* GeneralIndexPlugIn.h */,
+				3C9701040D5CF85C0070D4A1 /* GeneralIndexPlugIn.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -222,7 +222,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C9701050D5CF85C0070D4A1 /* GeneralIndex.m in Sources */,
+				3C9701050D5CF85C0070D4A1 /* GeneralIndexPlugIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

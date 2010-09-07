@@ -34,10 +34,10 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "GeneralIndex.h"
+#import "GeneralIndexPlugIn.h"
 
 
-@implementation GeneralIndex
+@implementation GeneralIndexPlugIn
 
 - (NSSize)thumbnailImageSize { return NSMakeSize(64.0, 64.0); }
 
