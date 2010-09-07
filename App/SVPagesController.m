@@ -120,10 +120,11 @@
         {
             NSData *data = [@"" dataUsingEncoding:NSUTF8StringEncoding];
             
-            media = [SVMediaRecord mediaWithData:data
-                                             URL:nil
-                                      entityName:@"FileMedia"
-                  insertIntoManagedObjectContext:[self managedObjectContext]];
+            media = [SVMediaRecord
+                     mediaWithData:data
+                     URL:[NSURL URLWithString:@"x-sandvox-fake-url:///emptystring.html"]
+                     entityName:@"FileMedia"
+                     insertIntoManagedObjectContext:[self managedObjectContext]];
             
             [media setPreferredFilename:@"Untitled.html"];
             
