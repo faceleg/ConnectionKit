@@ -1,5 +1,5 @@
 //
-//  ListingIndex.m
+//  ListingIndex.h
 //  ListingIndex
 //
 //  Copyright 2006-2010 Karelia Software. All rights reserved.
@@ -34,9 +34,12 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "ListingIndex.h"
+#import <Cocoa/Cocoa.h>
+#import "SandvoxPlugin.h"
 
+@interface ListingIndexPlugIn : SVIndexPlugIn
+{
 
-@implementation ListingIndex
+}
 
 @end
