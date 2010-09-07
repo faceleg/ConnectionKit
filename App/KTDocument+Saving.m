@@ -105,7 +105,7 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 - (void)startGeneratingQuickLookThumbnail;
 - (BOOL)writeQuickLookThumbnailToDocumentURLIfPossible:(NSURL *)docURL error:(NSError **)error;
 - (NSImage *)_quickLookThumbnail;
-- (NSString *)quickLookPreviewHTML;
+- (NSString *)quickLookPreviewHTMLWithBaseURL:(NSURL *)baseURL;
 
 @end
 
@@ -325,6 +325,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
 	
 	NSString *quickLookPreviewHTML = nil;
+    NSURL *previewURL = nil;
+    
     if (result)
     {
         if (saveOperation == NSAutosaveOperation)
@@ -336,8 +338,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         else
         {
             // Generate Quick Look preview HTML
-            quickLookPreviewHTML = [self quickLookPreviewHTML];
-            
+            previewURL = [KTDocument quickLookPreviewURLForDocumentURL:inURL];
+            quickLookPreviewHTML = [self quickLookPreviewHTMLWithBaseURL:previewURL];
             
             
             // Build a list of all media to copy into the document
@@ -398,9 +400,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 		// Write out Quick Look preview
         if (quickLookPreviewHTML)
         {
-            NSURL *previewURL = [quickLookDirectory URLByAppendingPathComponent:@"Preview.html"
-                                                                    isDirectory:NO];
-            
             // We don't actually care if the preview gets written out successfully or not, since it's not critical to the consistency of the document.
             // It might be nice to warn the user one day though.
             NSError *qlPreviewError;
@@ -1075,11 +1074,12 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 
 /*  Parses the home page to generate a Quick Look preview
  */
-- (NSString *)quickLookPreviewHTML
+- (NSString *)quickLookPreviewHTMLWithBaseURL:(NSURL *)baseURL;
 {
     OBASSERT([NSThread currentThread] == [self thread]);
     
     SVHTMLContext *context = [[SVQuickLookPreviewHTMLContext alloc] init];
+    [context setBaseURL:baseURL];
     [context writeDocumentWithPage:[[self site] rootPage]];
     
     NSString *result = [[context outputStringWriter] string];

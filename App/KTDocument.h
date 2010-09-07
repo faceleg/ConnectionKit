@@ -176,5 +176,6 @@ extern NSString *kKTDocumentWillSaveNotification;
 + (NSURL *)documentURLForDatastoreURL:(NSURL *)datastoreURL;
 
 + (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL;
++ (NSURL *)quickLookPreviewURLForDocumentURL:(NSURL *)inURL;
 @end
 

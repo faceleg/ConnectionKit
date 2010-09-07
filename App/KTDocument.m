@@ -155,6 +155,15 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	return result;
 }
 
++ (NSURL *)quickLookPreviewURLForDocumentURL:(NSURL *)inURL;
+{
+    NSURL *quickLookDirectory = [KTDocument quickLookURLForDocumentURL:inURL];
+    NSURL *result = [quickLookDirectory URLByAppendingPathComponent:@"Preview.html"
+                                                        isDirectory:NO];
+    
+    return result;
+}
+
 @end
 
 
