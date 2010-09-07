@@ -20,6 +20,7 @@
 	
 }
 + (SVVideo *)insertNewVideoInManagedObjectContext:(NSManagedObjectContext *)context;
++ (void)writeFallbackScriptOnce:(SVHTMLContext *)context;
 
 - (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
 

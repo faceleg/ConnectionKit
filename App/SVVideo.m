@@ -381,13 +381,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 #pragma mark Writing Tag
 
 // EXACTLY THE SAME IN AUDIO AND VIDEO. CONSIDER REFACTORING.
-- (NSString *)idNameForTag:(NSString *)tagName
-{
-	return [NSString stringWithFormat:@"%@-%@", tagName, [self elementID]];
-}
-
-// EXACTLY THE SAME IN AUDIO AND VIDEO. CONSIDER REFACTORING.
-- (void)writeFallbackScriptOnce:(SVHTMLContext *)context;
++ (void)writeFallbackScriptOnce:(SVHTMLContext *)context;
 {
 	// Write the fallback method.  COULD WRITE THIS IN JQUERY TO BE MORE TERSE?
 	
@@ -400,9 +394,9 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	}
 }
 
-- (void)startQuickTimeObject:(SVHTMLContext *)context
-			 movieSourceURL:(NSURL *)movieSourceURL
-			posterSourceURL:(NSURL *)posterSourceURL;
+- (NSString *)startQuickTimeObject:(SVHTMLContext *)context
+					movieSourceURL:(NSURL *)movieSourceURL
+				   posterSourceURL:(NSURL *)posterSourceURL;
 {
 	NSString *movieSourcePath  = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
 	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
@@ -410,12 +404,13 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	NSUInteger heightWithBar = [[self height] intValue]
 	+ (self.controller.boolValue ? 16 : 0);
 	
-	[context pushAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	[context pushAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
 	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
-	[context startElement:@"object"];
+	
+	// ID on <object> apparently required for IE8
+	NSString *elementID = [context startElement:@"div" preferredIdName:@"quicktime" className:nil attributes:nil];	// class, attributes already pushed
 	
 	if (self.posterFrame && !self.autoplay.boolValue)	// poster and not auto-starting? make it an href
 	{
@@ -434,10 +429,12 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	[context writeParamElementWithName:@"scale" value:@"tofit"];
 	[context writeParamElementWithName:@"type" value:@"video/quicktime"];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://www.apple.com/quicktime/download/"];	
+
+	return elementID;
 }
 
-- (void)startMicrosoftObject:(SVHTMLContext *)context
-			 movieSourceURL:(NSURL *)movieSourceURL;
+- (NSString *)startMicrosoftObject:(SVHTMLContext *)context
+					movieSourceURL:(NSURL *)movieSourceURL;
 {
 	// I don't think there is any way to use the poster frame for a click to play
 	NSString *movieSourcePath = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
@@ -445,11 +442,12 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	NSUInteger heightWithBar = [[self height] intValue]
 	+ (self.controller.boolValue ? 46 : 0);		// Windows media controller is 46 pixels (on windows; adjusted on macs)
 
-	[context pushAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	[context pushAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
-	[context startElement:@"object"];
+	
+	// ID on <object> apparently required for IE8
+	NSString *elementID = [context startElement:@"object" preferredIdName:@"wmplayer" className:nil attributes:nil];	// class, attributes already pushed
 	
 	[context writeParamElementWithName:@"url" value:movieSourcePath];
 	[context writeParamElementWithName:@"autostart" value:self.autoplay.boolValue ? @"true" : @"false"];
@@ -458,18 +456,18 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	[context writeParamElementWithName:@"type" value:@"application/x-oleobject"];
 	[context writeParamElementWithName:@"uiMode" value:@"mini"];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://microsoft.com/windows/mediaplayer/en/download/"];
+
+	return elementID;
 }
 
-- (void)startVideo:(SVHTMLContext *)context
-			 movieSourceURL:(NSURL *)movieSourceURL
-			posterSourceURL:(NSURL *)posterSourceURL;
+- (NSString *)startVideo:(SVHTMLContext *)context
+		  movieSourceURL:(NSURL *)movieSourceURL
+		 posterSourceURL:(NSURL *)posterSourceURL;
 {
 	NSString *movieSourcePath  = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
 	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
 
 	// Actually write the video
-	NSString *idName = [self idNameForTag:@"video"];
-	[context pushAttribute:@"id" value:idName];
 	if ([self displayInline]) [self buildClassName:context];
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[self height] description]];
@@ -480,14 +478,14 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	if (self.loop.boolValue)		[context pushAttribute:@"loop" value:@"loop"];
 	
 	if (self.posterFrame)	[context pushAttribute:@"poster" value:posterSourcePath];
-	[context startElement:@"video"];
+	NSString *elementID = [context startElement:@"video" preferredIdName:@"video" className:nil attributes:nil];	// class, attributes already pushed
 	
 	// Remove poster on iOS < 4; prevents video from working
 	[context startJavascriptElementWithSrc:nil];
 	[context stopWritingInline];
 	[context writeString:@"// Remove poster from buggy iOS before 4\n"];
 	[context writeString:@"if (navigator.userAgent.match(/CPU( iPhone)*( OS )*([123][_0-9]*)? like Mac OS X/)) {\n"];
-	[context writeString:[NSString stringWithFormat:@"\t$('#%@').removeAttr('poster');\n", idName]];
+	[context writeString:[NSString stringWithFormat:@"\t$('#%@').removeAttr('poster');\n", elementID]];
 	[context writeString:@"}\n"];
 	[context endElement];	
 	
@@ -498,16 +496,18 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
 	[context startElement:@"source"];
 	[context endElement];
+
+	return elementID;
 }
 
-- (void)writePostVideoScript:(SVHTMLContext *)context
+- (void)writePostVideoScript:(SVHTMLContext *)context referringToID:(NSString *)videoID;
 {
 	// Now write the post-video-tag surgery since onerror doesn't really work
 	// This is hackish browser-sniffing!  Maybe later we can do away with this (especially if we can get > 1 video source)
 	
 	[context startJavascriptElementWithSrc:nil];
 	[context stopWritingInline];
-	[context writeString:[NSString stringWithFormat:@"var video = document.getElementById('%@');\n", [self idNameForTag:@"video"]]];
+	[context writeString:[NSString stringWithFormat:@"var video = document.getElementById('%@');\n", videoID]];
 	[context writeString:[NSString stringWithFormat:@"if (video.canPlayType && video.canPlayType('%@')) {\n",
 						  [NSString MIMETypeForUTI:[self codecType]]]];
 	[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
@@ -526,9 +526,9 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 }
 
 
-- (void)startFlash:(SVHTMLContext *)context
-   movieSourceURL:(NSURL *)movieSourceURL
-  posterSourceURL:(NSURL *)posterSourceURL;
+- (NSString *)startFlash:(SVHTMLContext *)context
+		  movieSourceURL:(NSURL *)movieSourceURL
+		 posterSourceURL:(NSURL *)posterSourceURL;
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSString *videoFlashPlayer	= [defaults objectForKey:@"videoFlashPlayer"];	// to override player type
@@ -565,7 +565,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	NSDictionary *posterParamLookup
 	= NSDICT(
 			 @"video=%{value1}@&thumbnail=%{value2}@",         @"f4player",
-			 @"file=%{value1}@&image=%{value2}@",              @"jwplayer",
+			 @"file=%{value1}@&image=%{value2}@&controlbar=over", @"jwplayer",
 			 @"flv=%{value1}@&startimage=%{value2}@&margin=0", @"flvplayer",
 			 @"movie=%{value1}@&previewimage=%{value2}@",      @"osflv",	
 			 @"config={\"playlist\":[{\"url\":\"%{value2}@\"},{\"url\":\"%{value1}@\",\"autoPlay\":false,\"autoBuffering\":true}]}",
@@ -573,7 +573,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	NSDictionary *barHeightLookup
 	= NSDICT(
 			 [NSNumber numberWithShort:0],  @"f4player",	
-			 [NSNumber numberWithShort:24], @"jwplayer",	
+			 [NSNumber numberWithShort:0], @"jwplayer",	
 			 [NSNumber numberWithShort:0],  @"flvplayer",	
 			 [NSNumber numberWithShort:25], @"osflv",		
 			 [NSNumber numberWithShort:0],   @"flowplayer");
@@ -636,7 +636,6 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		playerPath = [context relativeURLStringOfURL:playerURL];
 	}
 	
-	[context pushAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
 	if ([self displayInline]) [self buildClassName:context];
 	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
 	[context pushAttribute:@"data" value:playerPath];
@@ -644,7 +643,9 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	
 	NSUInteger heightWithBar = barHeight + [[self height] intValue];
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
-	[context startElement:@"object"];
+	
+	// ID on <object> apparently required for IE8
+	NSString *elementID = [context startElement:@"object" preferredIdName:videoFlashPlayer className:nil attributes:nil];	// class, attributes already pushed
 	
 	[context writeParamElementWithName:@"movie" value:playerPath];
 	[context writeParamElementWithName:@"flashvars" value:flashVars];
@@ -657,6 +658,8 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 			[context writeParamElementWithName:key value:[videoFlashExtraParams objectForKey:key]];
 		}
 	}
+
+	return elementID;
 }
 
 - (void)writePosterImage:(SVHTMLContext *)context
@@ -678,13 +681,15 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	[context writeImageWithSrc:posterSourcePath alt:altForMovieFallback width:[[self width] description] height:[[self height] description]];
 }
 
--(void)startUnknown:(SVHTMLContext *)context;
+- (NSString *)startUnknown:(SVHTMLContext *)context;
 {
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[self height] description]];
-	[context startElement:@"div"];
+	NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
 	[context writeElement:@"p" text:NSLocalizedString(@"Unable to show video. Perhaps it is not a recognized video format.", @"Warning shown to user when video can't be embedded")];
 	// Poster may be shown next, so don't end....
+
+	return elementID;
 }
 
 - (void)writeBody:(SVHTMLContext *)context;
@@ -735,7 +740,8 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	BOOL quicktimeTag = !media || ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
 	&& ![type conformsToUTI:@"public.mpeg-4"];
 	
-	BOOL unknownTag = NO;	// will be set below if 
+	BOOL unknownTag = NO;	// will be set below if nothing can be generated
+	NSString *videoID = nil;
 	
 	// START THE TAGS
 	
@@ -751,9 +757,8 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	{
 		if (videoTag)	// start the video tag
 		{
-			[self writeFallbackScriptOnce:context];
-			
-			[self startVideo:context movieSourceURL:movieSourceURL posterSourceURL:posterSourceURL]; 
+			[SVVideo writeFallbackScriptOnce:context];
+			videoID = [self startVideo:context movieSourceURL:movieSourceURL posterSourceURL:posterSourceURL]; 
 		}
 		
 		if (flashTag)	// inner
@@ -787,7 +792,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		OBASSERT([@"video" isEqualToString:[context topElement]]);
 		[context endElement];
 		
-		[self writePostVideoScript:context];
+		[self writePostVideoScript:context referringToID:videoID];
 	}
 	
 	if (unknownTag)

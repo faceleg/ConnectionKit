@@ -65,6 +65,7 @@
 
 #import "SVAudio.h"
 
+#import "SVVideo.h"		// for script utility function
 #import "SVHTMLContext.h"
 #import "SVMediaRecord.h"
 #import "SVMediaGraphicInspector.h"
@@ -224,40 +225,21 @@
 #pragma mark -
 #pragma mark Writing Tag
 
-// EXACTLY THE SAME IN AUDIO AND VIDEO. CONSIDER REFACTORING.
-- (NSString *)idNameForTag:(NSString *)tagName
-{
-	return [NSString stringWithFormat:@"%@-%@", tagName, [self elementID]];
-}
-
-// EXACTLY THE SAME IN AUDIO AND VIDEO. CONSIDER REFACTORING.
-- (void)writeFallbackScriptOnce:(SVHTMLContext *)context;
-{
-	// Write the fallback method.  COULD WRITE THIS IN JQUERY TO BE MORE TERSE?
-	
-	NSString *oneTimeScript = @"<script type='text/javascript'>\nfunction fallback(av) {\n while (av.firstChild) {\n  if (av.firstChild.nodeName == 'SOURCE') {\n   av.removeChild(av.firstChild);\n  } else {\n   av.parentNode.insertBefore(av.firstChild, av);\n  }\n }\n av.parentNode.removeChild(av);\n}\n</script>\n";
-	
-	NSRange whereOneTimeScript = [[context extraHeaderMarkup] rangeOfString:oneTimeScript];
-	if (NSNotFound == whereOneTimeScript.location)
-	{
-		[[context extraHeaderMarkup] appendString:oneTimeScript];
-	}
-}
-
-- (void)startQuickTimeObject:(SVHTMLContext *)context
-			  audioSourceURL:(NSURL *)audioSourceURL;
+- (NSString *)startQuickTimeObject:(SVHTMLContext *)context
+					audioSourceURL:(NSURL *)audioSourceURL;
 {
 	NSString *audioSourcePath  = audioSourceURL ? [context relativeURLStringOfURL:audioSourceURL] : @"";
 	
 	NSUInteger heightWithBar = self.controller.boolValue ? 16 : 0;
 	
-	[context pushAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	[context pushAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
 	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
-	[context startElement:@"object"];
-	
+
+	// ID on <object> apparently required for IE8
+	NSString *elementID = [context startElement:@"object" preferredIdName:@"quicktime" className:nil attributes:nil];	// class, attributes already pushed
+
 	[context writeParamElementWithName:@"src" value:audioSourcePath];
 	
 	[context writeParamElementWithName:@"autoplay" value:self.autoplay.boolValue ? @"true" : @"false"];
@@ -266,21 +248,24 @@
 	[context writeParamElementWithName:@"scale" value:@"tofit"];
 	[context writeParamElementWithName:@"type" value:@"audio/quicktime"];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://www.apple.com/quicktime/download/"];	
+
+	return elementID;
 }
 
-- (void)startMicrosoftObject:(SVHTMLContext *)context
-			  audioSourceURL:(NSURL *)audioSourceURL;
+- (NSString *)startMicrosoftObject:(SVHTMLContext *)context
+					audioSourceURL:(NSURL *)audioSourceURL;
 {
 	NSString *audioSourcePath = audioSourceURL ? [context relativeURLStringOfURL:audioSourceURL] : @"";
 	
 	NSUInteger heightWithBar = self.controller.boolValue ? 46 : 0;		// Windows media controller is 46 pixels (on windows; adjusted on macs)
 	
-	[context pushAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	[context pushAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
-	[context startElement:@"object"];
-	
+
+	// ID on <object> apparently required for IE8
+	NSString *elementID = [context startElement:@"object" preferredIdName:@"wmplayer" className:nil attributes:nil];	// class, attributes already pushed
+
 	[context writeParamElementWithName:@"url" value:audioSourcePath];
 	[context writeParamElementWithName:@"autostart" value:self.autoplay.boolValue ? @"true" : @"false"];
 	[context writeParamElementWithName:@"showcontrols" value:self.controller.boolValue ? @"true" : @"false"];
@@ -288,16 +273,16 @@
 	[context writeParamElementWithName:@"type" value:@"application/x-oleobject"];
 	[context writeParamElementWithName:@"uiMode" value:@"mini"];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://microsoft.com/windows/mediaplayer/en/download/"];
+
+	return elementID;
 }
 
-- (void)startAudio:(SVHTMLContext *)context
-	audioSourceURL:(NSURL *)audioSourceURL;
+- (NSString *)startAudio:(SVHTMLContext *)context
+		  audioSourceURL:(NSURL *)audioSourceURL;			// returns element ID
 {
 	NSString *audioSourcePath  = audioSourceURL ? [context relativeURLStringOfURL:audioSourceURL] : @"";
 	
 	// Actually write the audio
-	NSString *idName = [self idNameForTag:@"audio"];
-	[context pushAttribute:@"id" value:idName];
 	if ([self displayInline]) [self buildClassName:context];
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[self height] description]];
@@ -307,7 +292,7 @@
 	[context pushAttribute:@"preload" value:self.preload.boolValue ? @"auto" : @"none" ];
 	if (self.loop.boolValue)		[context pushAttribute:@"loop" value:@"loop"];
 	
-	[context startElement:@"audio"];
+	NSString *elementID = [context startElement:@"audio" preferredIdName:@"audio" className:nil attributes:nil];	// class, attributes already pushed
 	
 	
 	// source
@@ -319,16 +304,20 @@
 	[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
 	[context startElement:@"source"];
 	[context endElement];
+	
+	return elementID;
 }
 
-- (void)writePostAudioScript:(SVHTMLContext *)context
+- (void)writePostAudioScript:(SVHTMLContext *)context referringToID:(NSString *)audioID
 {
+	OBPRECONDITION(context);
+	OBPRECONDITION(audioID);
 	// Now write the post-audio-tag surgery since onerror doesn't really work
 	// This is hackish browser-sniffing!  Maybe later we can do away with this (especially if we can get > 1 audio source)
 	
 	[context startJavascriptElementWithSrc:nil];
 	[context stopWritingInline];
-	[context writeString:[NSString stringWithFormat:@"var audio = document.getElementById('%@');\n", [self idNameForTag:@"audio"]]];
+	[context writeString:[NSString stringWithFormat:@"var audio = document.getElementById('%@');\n", audioID]];
 	[context writeString:[NSString stringWithFormat:@"if (audio.canPlayType && audio.canPlayType('%@')) {\n",
 						  [NSString MIMETypeForUTI:[self codecType]]]];
 	[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
@@ -350,8 +339,8 @@
 	[context endElement];	
 }
 
-- (void)startFlash:(SVHTMLContext *)context
-	audioSourceURL:(NSURL *)audioSourceURL;
+- (NSString *)startFlash:(SVHTMLContext *)context
+		  audioSourceURL:(NSURL *)audioSourceURL;
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	BOOL audioFlashRequiresFullURL = [defaults boolForKey:@"audioFlashRequiresFullURL"];	// usually not, but YES for flowplayer
@@ -451,7 +440,6 @@
 		playerPath = [context relativeURLStringOfURL:playerURL];
 	}
 	
-	[context pushAttribute:@"id" value:[self idNameForTag:@"object"]];	// ID on <object> apparently required for IE8
 	if ([self displayInline]) [self buildClassName:context];
 	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
 	[context pushAttribute:@"data" value:playerPath];
@@ -459,7 +447,9 @@
 	
 	NSUInteger heightWithBar = barHeight;
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
-	[context startElement:@"object"];
+	
+	// ID on <object> apparently required for IE8
+	NSString *elementID = [context startElement:@"object" preferredIdName:audioFlashPlayer className:nil attributes:nil];	// class, attributes already pushed
 	
 	[context writeParamElementWithName:@"movie" value:playerPath];
 	[context writeParamElementWithName:@"flashvars" value:flashVars];
@@ -472,16 +462,19 @@
 			[context writeParamElementWithName:key value:[audioFlashExtraParams objectForKey:key]];
 		}
 	}
+	return elementID;
 }
 
 
--(void)startUnknown:(SVHTMLContext *)context;
+- (NSString *)startUnknown:(SVHTMLContext *)context;
 {
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[self height] description]];
-	[context startElement:@"div"];
+	NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
 	[context writeElement:@"p" text:NSLocalizedString(@"Unable to embed audio. Perhaps it is not a recognized audio format.", @"Warning shown to user when audio can't be embedded")];
 	// don't end....
+
+	return elementID;
 }
 
 - (void)writeBody:(SVHTMLContext *)context;
@@ -544,10 +537,11 @@
 	
 	// START THE TAGS
 	
+	NSString *audioID = nil;
 	if (audioTag)	// start the audio tag
 	{
-		[self writeFallbackScriptOnce:context];
-		[self startAudio:context audioSourceURL:audioSourceURL]; 
+		[SVVideo writeFallbackScriptOnce:context];
+		audioID = [self startAudio:context audioSourceURL:audioSourceURL]; 
 	}
 	if (quicktimeTag)
 	{
@@ -594,7 +588,7 @@
 		OBASSERT([@"audio" isEqualToString:[context topElement]]);
 		[context endElement];
 		
-		[self writePostAudioScript:context];
+		[self writePostAudioScript:context referringToID:audioID];
 	}
 	
 }
