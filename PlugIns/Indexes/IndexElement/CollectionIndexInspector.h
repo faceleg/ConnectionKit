@@ -37,7 +37,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface CollectionIndexInspector : SVIndexPlugInInspectorViewController 
+@interface CollectionIndexInspector : SVIndexInspectorViewController 
 {
 
 }

@@ -735,8 +735,8 @@
 		3C9BC20E103DF9BA00D2CF47 /* KTTranscript.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC20D103DF9BA00D2CF47 /* KTTranscript.xib */; };
 		3C9BC211103DF9CB00D2CF47 /* MediaInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC210103DF9CB00D2CF47 /* MediaInspector.xib */; };
 		3C9BC214103DF9DF00D2CF47 /* HTMLEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC213103DF9DF00D2CF47 /* HTMLEditor.xib */; };
-		3CA17FC9122DB2C700331125 /* SVIndexPlugInInspectorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CA17FC7122DB2C700331125 /* SVIndexPlugInInspectorViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CA17FCA122DB2C700331125 /* SVIndexPlugInInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA17FC8122DB2C700331125 /* SVIndexPlugInInspectorViewController.m */; };
+		3CA17FC9122DB2C700331125 /* SVIndexInspectorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CA17FC7122DB2C700331125 /* SVIndexInspectorViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3CA17FCA122DB2C700331125 /* SVIndexInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA17FC8122DB2C700331125 /* SVIndexInspectorViewController.m */; };
 		3CA6B98D11F9130B004A4794 /* YRKSpinningProgressIndicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CA6B98B11F9130B004A4794 /* YRKSpinningProgressIndicator.h */; };
 		3CA6B98E11F9130B004A4794 /* YRKSpinningProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA6B98C11F9130B004A4794 /* YRKSpinningProgressIndicator.m */; };
 		3CA9B30E0804643200C3053B /* KTDocument+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9B30D0804643200C3053B /* KTDocument+Properties.m */; };
@@ -2354,8 +2354,8 @@
 		3C9BC20D103DF9BA00D2CF47 /* KTTranscript.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KTTranscript.xib; sourceTree = "<group>"; };
 		3C9BC210103DF9CB00D2CF47 /* MediaInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaInspector.xib; sourceTree = "<group>"; };
 		3C9BC213103DF9DF00D2CF47 /* HTMLEditor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HTMLEditor.xib; sourceTree = "<group>"; };
-		3CA17FC7122DB2C700331125 /* SVIndexPlugInInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndexPlugInInspectorViewController.h; sourceTree = "<group>"; };
-		3CA17FC8122DB2C700331125 /* SVIndexPlugInInspectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndexPlugInInspectorViewController.m; sourceTree = "<group>"; };
+		3CA17FC7122DB2C700331125 /* SVIndexInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndexInspectorViewController.h; sourceTree = "<group>"; };
+		3CA17FC8122DB2C700331125 /* SVIndexInspectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndexInspectorViewController.m; sourceTree = "<group>"; };
 		3CA6B98B11F9130B004A4794 /* YRKSpinningProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YRKSpinningProgressIndicator.h; path = "../../yrk-spinning-progress-indicator/Code/YRKSpinningProgressIndicator.h"; sourceTree = SOURCE_ROOT; };
 		3CA6B98C11F9130B004A4794 /* YRKSpinningProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YRKSpinningProgressIndicator.m; path = "../../yrk-spinning-progress-indicator/Code/YRKSpinningProgressIndicator.m"; sourceTree = SOURCE_ROOT; };
 		3CA6BB480A086E54009DBBA8 /* KTUndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTUndoManager.h; sourceTree = "<group>"; };
@@ -3020,8 +3020,8 @@
 				27DD0B57120329A80083C7C1 /* SVURLFormatter.m */,
 				27D7340412118E3400722189 /* SVIndexPlugIn.h */,
 				27D7340512118E3400722189 /* SVIndexPlugIn.m */,
-				3CA17FC7122DB2C700331125 /* SVIndexPlugInInspectorViewController.h */,
-				3CA17FC8122DB2C700331125 /* SVIndexPlugInInspectorViewController.m */,
+				3CA17FC7122DB2C700331125 /* SVIndexInspectorViewController.h */,
+				3CA17FC8122DB2C700331125 /* SVIndexInspectorViewController.m */,
 				3C7B015D122F526B0098E147 /* CollectionInfo.xib */,
 			);
 			name = "2.0 Plug-in System";
@@ -5755,7 +5755,7 @@
 				2725BA46121DE9990074EAA0 /* NSImageView+IMBImageItem.h in Headers */,
 				2725BC38121F3F690074EAA0 /* SVArchivePage.h in Headers */,
 				275C5F88122831CE00CD22B8 /* SVMedia.h in Headers */,
-				3CA17FC9122DB2C700331125 /* SVIndexPlugInInspectorViewController.h in Headers */,
+				3CA17FC9122DB2C700331125 /* SVIndexInspectorViewController.h in Headers */,
 				2782B2DA12367C6E00C5F870 /* SVEnclosure.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7269,7 +7269,7 @@
 				2725BA47121DE9990074EAA0 /* NSImageView+IMBImageItem.m in Sources */,
 				2725BC39121F3F690074EAA0 /* SVArchivePage.m in Sources */,
 				275C5F89122831CE00CD22B8 /* SVMedia.m in Sources */,
-				3CA17FCA122DB2C700331125 /* SVIndexPlugInInspectorViewController.m in Sources */,
+				3CA17FCA122DB2C700331125 /* SVIndexInspectorViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

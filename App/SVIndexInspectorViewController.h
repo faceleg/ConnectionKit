@@ -1,5 +1,5 @@
 //
-//  SVIndexPlugInInspectorViewController.h
+//  SVIndexInspectorViewController.h
 //  Sandvox
 //
 //  Created by Terrence Talbot on 8/31/10.
@@ -9,7 +9,7 @@
 #import "SVInspectorViewController.h"
 @class KTLinkSourceView;
 
-@interface SVIndexPlugInInspectorViewController : SVInspectorViewController 
+@interface SVIndexInspectorViewController : SVInspectorViewController 
 {
 	IBOutlet KTLinkSourceView	*collectionLinkSourceView;
 }

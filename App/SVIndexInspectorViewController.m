@@ -1,19 +1,19 @@
 //
-//  SVIndexPlugInInspectorViewController.m
+//  SVIndexInspectorViewController.m
 //  Sandvox
 //
 //  Created by Terrence Talbot on 8/31/10.
 //  Copyright 2010 Terrence Talbot. All rights reserved.
 //
 
-#import "SVIndexPlugInInspectorViewController.h"
+#import "SVIndexInspectorViewController.h"
 #import "KTLinkSourceView.h"
 #import "NSBundle+Karelia.h"
 #import "SVIndexPlugIn.h"
 #import "SVPageProtocol.h"
 
 
-@implementation SVIndexPlugInInspectorViewController
+@implementation SVIndexInspectorViewController
 
 - (void)loadView;
 {

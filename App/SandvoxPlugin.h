@@ -30,7 +30,7 @@
 #import "SVIndexPlugIn.h"
 #import "SVPlugIn.h"
 
-#import "SVIndexPlugInInspectorViewController.h"
+#import "SVIndexInspectorViewController.h"
 
 // Page composition
 #import "SVPageProtocol.h"

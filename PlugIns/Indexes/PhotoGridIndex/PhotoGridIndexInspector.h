@@ -37,7 +37,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface PhotoGridIndexInspector : SVIndexPlugInInspectorViewController 
+@interface PhotoGridIndexInspector : SVIndexInspectorViewController 
 {
 
 }
