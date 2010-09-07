@@ -16,6 +16,8 @@
 #import "SVGraphic.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVInspectorViewController.h"
+#import "SVIndexInspectorViewController.h"
+#import "SVIndexPlugIn.h"
 #import "KTPage.h"
 #import "SVPlugIn.h"
 #import "SVSidebar.h"
@@ -225,7 +227,16 @@ static id <SVPlugInContext> sCurrentContext;
     Class class = NSClassFromString(className);
     if (!class && nibName)
     {
-        class = [SVInspectorViewController class];
+        // are we an Index?
+        Class PrincipalClass = [bundle principalClass];
+        if ( [PrincipalClass isSubclassOfClass:[SVIndexPlugIn class]] )
+        {
+            class = [SVIndexInspectorViewController class];
+        }
+        else 
+        {
+            class = [SVInspectorViewController class];
+        }
     }
     else if (![class isSubclassOfClass:[SVInspectorViewController class]])
     {
