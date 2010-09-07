@@ -1,7 +1,7 @@
 						<div id="main-content">
 							[[if !titleBox.hidden]][[textblock property:titleBox flags:"line" tag:h2 class:"title"]][[endif]]
 							
-[[if shouldIncludeInIndexes]]
+[[if includeInIndex]]
 [[if parentPage.navigationArrowsStyle==1]]
 							<div class="collection-navigation photo-navigation">
 								<div id="previous-photo" class="previous-page">[[if previousPage]]<a class="imageLink" href="[[path previousPage]]#previous-photo">[[`navigatePreviousHTML]]</a>[[else3]]<span class="disabled-nav">[[`navigatePreviousHTML]]</span>[[endif3]]</div>
