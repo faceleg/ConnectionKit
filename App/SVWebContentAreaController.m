@@ -162,7 +162,7 @@
         
         
         // Only allow the user to select standard and source code view for now.
-        KTPage *page = ([[self selectedPages] count] == 1 ?
+        SVSiteItem *page = ([[self selectedPages] count] == 1 ?
                         [[self selectedPages] objectAtIndex:0] :
                         nil);
         
@@ -170,7 +170,9 @@
                   [menuItem tag] == KTSourceCodeView ||
 				  [menuItem tag] == KTPreviewSourceCodeView ||
  				  [menuItem tag] == KTWithoutStylesView ||
-                ([menuItem tag] == KTRSSSourceView && [[page collectionSyndicate] boolValue]));
+                  ([menuItem tag] == KTRSSSourceView && 
+                   [page isCollection] &&
+                   [[(KTPage *)page collectionSyndicate] boolValue]));
     }
     
     return result;
