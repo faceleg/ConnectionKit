@@ -105,6 +105,8 @@
 // Don't bother setting this manually, get KTPage or controller to do it
 @property(nonatomic) short childIndex;
 
+- (NSIndexPath *)indexPath;
+
 
 #pragma mark Contents
 - (void)publish:(id <SVPublisher>)publishingEngine recursively:(BOOL)recursive;

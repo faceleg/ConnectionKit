@@ -430,47 +430,6 @@
 	return result;
 }
 
-/*	Returns the page's index path relative to root parent. i.e. the Site object.
- *	This means every index starts with 0 to signify root.
- */
-- (NSIndexPath *)indexPath;
-{
-	NSIndexPath *result = nil;
-	
-	KTPage *parent = [self parentPage];
-	if (parent)
-	{
-		unsigned index = [[parent sortedChildren] indexOfObjectIdenticalTo:self];
-		
-        // BUGSID: 30402. NSNotFound really shouldn't happen, but if so we need to track it down.
-        if (index == NSNotFound)
-        {
-            if ([[parent childItems] containsObject:self])
-            {
-                OBASSERT_NOT_REACHED("parent's -sortedChildren must be out of date");
-            }
-            else
-            {
-                NSLog(@"Parent to child relationship is broken.\nChild:\n%@\nDeleted:%d\n",
-                      self,                     // Used to be an assertion. Now, we return nil and expect the
-                      [self isDeleted]);       // original caller to tidy up.
-            }
-        }
-		else
-        {
-            NSIndexPath *parentPath = [parent indexPath];
-            result = [parentPath indexPathByAddingIndex:index];
-        }
-	}
-	else if ([self isRoot])
-	{
-		result = [NSIndexPath indexPathWithIndex:0];
-	}
-	
-    
-	return result;
-}
-
 #pragma mark Navigation Arrows
 
 @dynamic navigationArrowsStyle;

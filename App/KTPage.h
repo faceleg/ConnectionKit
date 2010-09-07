@@ -144,8 +144,6 @@ typedef enum {
 - (KTPage *)parentOrRoot;
 - (BOOL)hasChildren;
 
-- (NSIndexPath *)indexPath;
-
 
 #pragma mark Navigation Arrows
 @property(nonatomic, copy) NSNumber *navigationArrowsStyle; // collection property
