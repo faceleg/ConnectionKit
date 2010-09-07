@@ -243,6 +243,11 @@ static id <SVPlugInContext> sCurrentContext;
         class = nil;
     }
     
+    if ( nil == [bundle pathForResource:nibName ofType:@"nib"] )
+    {
+        nibName = nil;
+    }
+    
     
     // Make Inspector
     if (nibName || class)

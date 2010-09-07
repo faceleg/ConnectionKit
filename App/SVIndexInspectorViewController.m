@@ -50,36 +50,39 @@
 	[collectionLinkSourceView setConnected:(state == NSOnState)];    
     
     // Load proper view
-    [super loadView];
-    
-    // Cobble the two together
-    NSView *otherView = [self view];
-    
-    NSView *view = [[NSView alloc] initWithFrame:
-                    NSMakeRect(0.0f,
-                               0.0f,
-                               230.0f,
-                               [collectionInfoView frame].size.height + [otherView frame].size.height)];
-    
-    [view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-    
-    NSRect collectionInfoFrame = [collectionInfoView frame];
-    NSRect otherViewFrame;
-    NSDivideRect([view bounds],
-                 &collectionInfoFrame,
-                 &otherViewFrame,
-                 collectionInfoFrame.size.height,
-                 NSMaxYEdge);
-    
-    [collectionInfoView setFrame:collectionInfoFrame];
-    [view addSubview:collectionInfoView];
-    
-    [otherView setFrame:otherViewFrame];
-    [view addSubview:otherView];
-    
-    [self setContentHeightForViewInInspector:0];    // reset so -setView: handles it
-    [self setView:view];
-    [view release];
+    if ( nil != [self nibName] )
+    {
+        [super loadView];
+        
+        // Cobble the two together
+        NSView *otherView = [self view];
+        
+        NSView *view = [[NSView alloc] initWithFrame:
+                        NSMakeRect(0.0f,
+                                   0.0f,
+                                   230.0f,
+                                   [collectionInfoView frame].size.height + [otherView frame].size.height)];
+        
+        [view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+        
+        NSRect collectionInfoFrame = [collectionInfoView frame];
+        NSRect otherViewFrame;
+        NSDivideRect([view bounds],
+                     &collectionInfoFrame,
+                     &otherViewFrame,
+                     collectionInfoFrame.size.height,
+                     NSMaxYEdge);
+        
+        [collectionInfoView setFrame:collectionInfoFrame];
+        [view addSubview:collectionInfoView];
+        
+        [otherView setFrame:otherViewFrame];
+        [view addSubview:otherView];
+        
+        [self setContentHeightForViewInInspector:0];    // reset so -setView: handles it
+        [self setView:view];
+        [view release];        
+    }
 }
 
 
