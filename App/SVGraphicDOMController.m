@@ -11,6 +11,7 @@
 
 #import "SVCalloutDOMController.h"
 #import "SVContentDOMController.h"
+#import "SVMediaRecord.h"
 #import "SVRichTextDOMController.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
@@ -133,6 +134,17 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
     {
         [(SVDOMController *)[self parentWebEditorItem] addDependency:aDependency];
+    }
+    
+    
+    // Copy across data resources
+    WebDataSource *dataSource = [[[[self webEditor] webView] mainFrame] dataSource];
+    for (id <SVMedia> aMediaRecord in [context media])
+    {
+        if ([aMediaRecord mediaData])
+        {
+            [dataSource addSubresource:[(SVMediaRecord *)aMediaRecord webResource]];
+        }
     }
     
     
