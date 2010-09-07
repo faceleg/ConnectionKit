@@ -8,6 +8,12 @@
 
 #import "SVQuickLookPreviewHTMLContext.h"
 
+#import "KTDesign.h"
+#import "KTMaster.h"
+#import "SVSiteItem.h"
+
+#import "NSURL+Karelia.h"
+
 
 @implementation SVQuickLookPreviewHTMLContext
 
@@ -20,10 +26,16 @@
 
 #pragma mark CSS
 
-// Additional CSS should be written inline
-
 - (void)addCSSWithURL:(NSURL *)cssURL;
 {
+    // CSS other than design should be written inline
+    // Yes, this check should be done better than just the filename
+    if ([[cssURL lastPathComponent] isEqualToString:@"main.css"])
+    {
+        return [super addCSSWithURL:cssURL];
+    }
+    
+    
     NSString *css = [NSString stringWithContentsOfURL:cssURL
                                              encoding:NSUTF8StringEncoding
                                                 error:NULL];
