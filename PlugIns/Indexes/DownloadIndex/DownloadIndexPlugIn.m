@@ -1,8 +1,8 @@
 //
 //  DownloadIndex.m
-//  Sandvox SDK
+//  DownloadIndex
 //
-//  Copyright 2007-2009 Karelia Software. All rights reserved.
+//  Copyright 2007-2010 Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -38,6 +38,38 @@
 
 
 @implementation DownloadIndexPlugIn
+
+
+#pragma mark HTML Generation
+
+- (void)writeHTML:(id <SVPlugInContext>)context
+{
+    // parse template
+    [super writeHTML:context];
+    
+    // add dependencies
+    [context addDependencyForKeyPath:@"indexedCollection" ofObject:self];
+    [context addDependencyForKeyPath:@"indexedCollection.childPages" ofObject:self];
+}
+
+/*
+ <img[[idClass entity:Page property:item.thumbnail flags:"anchor" id:item.uniqueID]]
+src="[[mediainfo info:path media:item.thumbnail sizeToFit:thumbnailSize]]"
+alt="[[=&item.titleText]]"
+width="[[mediainfo info:width media:item.thumbnail sizeToFit:thumbnailSize]]"
+height="[[mediainfo info:height media:item.thumbnail sizeToFit:thumbnailSize]]" />
+ */
+
+- (void)writeThumbnailImageOfIteratedPage
+{
+    id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+    
+    [[context HTMLWriter] writeThumbnailImageOfPage:iteratedPage 
+                                          className:@"" 
+                                           maxWidth:128 
+                                          maxHeight:128];
+}
 
 - (NSSize)thumbnailSize
 {
