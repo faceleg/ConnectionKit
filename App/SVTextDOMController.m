@@ -74,10 +74,6 @@
     [_textElement release]; _textElement = element;
     
     [self setEditable:[self isEditable]];
-    
-    
-    // Register for events
-    [element addEventListener:@"dragenter" listener:[self eventsListener] useCapture:NO];
 }
 
 #pragma mark Hierarchy
