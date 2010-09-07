@@ -318,6 +318,10 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 - (id)imageRepresentation; { return nil; }
 - (NSString *)imageRepresentationType; { return nil; }
 
+#pragma mark RSS
+
+- (id <SVEnclosure>)enclosure; { return nil; }
+
 #pragma mark Inspector
 
 + (SVInspectorViewController *)makeInspectorViewController; { return nil; }

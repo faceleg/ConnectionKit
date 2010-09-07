@@ -26,7 +26,7 @@ typedef enum {
 
 @class KSStringWriter;
 @class KTPage, SVSiteItem, SVGraphic, SVHTMLTextBlock, SVLink, SVMediaRecord;
-@protocol SVMedia;
+@protocol SVMedia, SVEnclosure;
 
 
 @interface SVHTMLContext : KSHTMLWriter <SVPlugInContext, SVHTMLWriter, KSMegaBufferedWriterDelegate>
@@ -203,6 +203,10 @@ typedef enum {
 
 #pragma mark Raw Writing
 - (void)writeAttributedHTMLString:(NSAttributedString *)attributedHTML;
+
+
+#pragma mark RSS
+- (void)writeEnclosure:(id <SVEnclosure>)enclosure;
 
 
 @end

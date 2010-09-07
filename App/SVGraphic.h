@@ -62,7 +62,7 @@ extern NSString *kSVGraphicPboardType;
 @class KTPage, SVTitleBox;
 @class SVTextAttachment, SVHTMLContext, SVTemplate;
 @class SVAuxiliaryPageletText;
-@protocol SVPage, SVMedia;
+@protocol SVPage, SVMedia, SVEnclosure;
 
 
 @interface SVGraphic : KSExtensibleManagedObject <SVGraphic, SVPageletPlugInContainer, IMBImageItem>
@@ -156,6 +156,10 @@ extern NSString *kSVGraphicPboardType;
 #pragma mark Thumbnail
 @property(nonatomic, readonly) id <SVMedia> thumbnail; // MUST be KVO-compliant
 - (CGFloat)thumbnailAspectRatio;
+
+
+#pragma mark RSS
+- (id <SVEnclosure>)enclosure;  // default is nil
 
 
 #pragma mark Inspector

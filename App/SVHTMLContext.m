@@ -10,6 +10,7 @@
 
 #import "KTDesign.h"
 #import "SVGraphic.h"
+#import "SVEnclosure.h"
 #import "KTHostProperties.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
@@ -962,6 +963,25 @@
 #pragma mark Legacy
 
 @synthesize page = _currentPage;
+
+#pragma mark RSS
+
+- (void)writeEnclosure:(id <SVEnclosure>)enclosure;
+{
+    [self pushAttribute:@"url"
+                  value:[self relativeURLStringOfURL:[enclosure downloadedURL]]];
+    
+    if ([enclosure length])
+    {
+        [self pushAttribute:@"length"
+                      value:[[NSNumber numberWithLongLong:[enclosure length]] description]];
+    }
+    
+    if ([enclosure MIMEType]) [self pushAttribute:@"type" value:[enclosure MIMEType]];
+    
+    [self startElement:@"enclosure"];
+    [self endElement];
+}
 
 #pragma mark SVPlugInContext
 
