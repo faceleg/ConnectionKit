@@ -484,48 +484,6 @@
 	}
 }
 
-/*!	Called from javascript "replaceElement" ... pressing of "+" button ... puts back an element that was empty
-*/
-- (DOMHTMLElement *)replaceWithElementName:(NSString *)anElement elementClass:(NSString *)aClass elementID:(NSString *)anID text:(NSString *)aText innerSpan:(BOOL)aSpan innerParagraph:(BOOL)aParagraph
-{
-	DOMDocument *doc = [self ownerDocument];
-	DOMText *text = [doc createTextNode:aText];
-	
-	DOMHTMLElement *element = (DOMHTMLElement *)[doc createElement:anElement];
-	[element setClassName:aClass];
-	[element setIdName:anID];
-	[element setContentEditable:@"true"];
-	
-	if (aSpan)
-	{
-		DOMHTMLElement *span = (DOMHTMLElement *)[doc createElement:@"SPAN"];
-		[span setAttribute:@"class" value:@"in"];
-	
-		[span appendChild:text];
-		[element appendChild:span];
-	}
-	else if ([anElement isEqualToString:@"SPAN"])
-    {
-        [element appendChild:text];
-    }
-    else
-	{
-// OLD BEHAVIOR -- JUST THE TEXT.  INSTEAD, WE WILL PUT THAT INTO A <P>		[element appendChild:text];
-		
-		DOMHTMLElement *p = (DOMHTMLElement *)[doc createElement:@"P"];
-		[p appendChild:text];
-		[element appendChild:p];
-	}
-		
-    WebView *webView = [[doc webFrame] webView];
-	[webView replaceNode:self withNode:element];
-
-	NSUndoManager *undoManager = [webView undoManager];
-	[undoManager setActionName:NSLocalizedString(@"Insert Text","ActionName: Insert Text")];
-	return element;	// new node
-}
-
-
 - (DOMNode *) removeStylesRecursive
 {
 	if ([self hasChildNodes])

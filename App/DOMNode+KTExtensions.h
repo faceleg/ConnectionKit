@@ -81,8 +81,6 @@
 - (void)makePlainTextWithSingleLine:(BOOL)aSingleLine;
 - (void)makeSingleLine;
 
-- (DOMHTMLElement *)replaceWithElementName:(NSString *)anElement elementClass:(NSString *)aClass elementID:(NSString *)anID text:(NSString *)aText innerSpan:(BOOL)aSpan innerParagraph:(BOOL)aParagraph;
-
 - (DOMNode *)removeStylesRecursive;
 - (void)removeAnyDescendentElementsNamed:(NSString *)elementName;
 
