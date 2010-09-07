@@ -1,5 +1,5 @@
 //
-//  PhotoGridIndex.m
+//  PhotoGridIndexPlugIn.m
 //  PhotoGridIndex
 //
 //  Copyright 2004-2010 Karelia Software. All rights reserved.
