@@ -109,26 +109,33 @@
 
 - (void)handleEvent:(DOMMouseEvent *)event;
 {
-    if ([[self textHTMLElement] ks_isDescendantOfDOMNode:(DOMNode *)[event target]])
+    if ([[event type] isEqualToString:@"mousedown"])
     {
-        WEKWebEditorView *webEditor = [self webEditor];
-        
-        DOMRange *fallbackRange = [[[self HTMLElement] ownerDocument] createRange];
-        [fallbackRange setStartAfter:[[self textHTMLElement] lastChild]];
-        
-        if ([[webEditor delegate] webEditor:webEditor
-               shouldChangeSelectedDOMRange:[webEditor selectedDOMRange]
-                                 toDOMRange:fallbackRange
-                                   affinity:0
-                                      items:nil
-                             stillSelecting:NO])
+        if ([[self textHTMLElement] ks_isDescendantOfDOMNode:(DOMNode *)[event target]])
         {
-            [[webEditor window] makeFirstResponder:webEditor];
-            [webEditor setSelectedDOMRange:fallbackRange affinity:0];
+            WEKWebEditorView *webEditor = [self webEditor];
             
-            [event preventDefault];
-            [event stopPropagation];
+            DOMRange *fallbackRange = [[[self HTMLElement] ownerDocument] createRange];
+            [fallbackRange setStartAfter:[[self textHTMLElement] lastChild]];
+            
+            if ([[webEditor delegate] webEditor:webEditor
+                   shouldChangeSelectedDOMRange:[webEditor selectedDOMRange]
+                                     toDOMRange:fallbackRange
+                                       affinity:0
+                                          items:nil
+                                 stillSelecting:NO])
+            {
+                [[webEditor window] makeFirstResponder:webEditor];
+                [webEditor setSelectedDOMRange:fallbackRange affinity:0];
+                
+                [event preventDefault];
+                [event stopPropagation];
+            }
         }
+    }
+    else
+    {
+        [super handleEvent:event];
     }
 }
 

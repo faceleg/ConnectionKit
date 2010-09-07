@@ -17,7 +17,7 @@
 @class SVHTMLTextBlock;
 
 
-@interface SVTextDOMController : SVDOMController <SVWebEditorText>
+@interface SVTextDOMController : SVDOMController <SVWebEditorText, DOMEventListener>
 {
   @private
     DOMHTMLElement  *_textElement;

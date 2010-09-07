@@ -68,11 +68,16 @@
     // If there's an old element stop it being editable 
     [[self textHTMLElement] removeAttribute:@"contentEditable"];
     
+    
     // Store new
     [element retain];
     [_textElement release]; _textElement = element;
     
     [self setEditable:[self isEditable]];
+    
+    
+    // Register for events
+    [element addEventListener:@"dragenter" listener:[self eventsListener] useCapture:NO];
 }
 
 #pragma mark Hierarchy
@@ -261,6 +266,11 @@
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
 {
     return NSDragOperationNone;
+}
+
+- (void)handleEvent:(DOMEvent *)evt;
+{
+    
 }
 
 #pragma mark Undo
