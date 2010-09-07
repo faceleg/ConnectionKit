@@ -16,4 +16,18 @@
     return kSVHTMLGenerationPurposeQuickLookPreview;
 }
 
+- (BOOL)isForQuickLook; { return YES; }
+
+#pragma mark CSS
+
+// Additional CSS should be written inline
+
+- (void)addCSSWithURL:(NSURL *)cssURL;
+{
+    NSString *css = [NSString stringWithContentsOfURL:cssURL
+                                             encoding:NSUTF8StringEncoding
+                                                error:NULL];
+    if (css) [self addCSSString:css];
+}
+
 @end
