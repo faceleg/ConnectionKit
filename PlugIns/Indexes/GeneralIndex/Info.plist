@@ -33,7 +33,7 @@
 	<key>KTPluginIconName</key>
 	<string>index.icns</string>
 	<key>KTPluginName</key>
-	<string>General Text</string>
+	<string>Tiles &amp; Summaries</string>
 	<key>KTPluginPriority</key>
 	<integer>1</integer>
 	<key>KTPreferredPageBundleIdentifier</key>
