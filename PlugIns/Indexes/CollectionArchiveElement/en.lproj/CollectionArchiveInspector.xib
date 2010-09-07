@@ -19,7 +19,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.Metadata"/>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="811245941">
 			<object class="NSCustomObject" id="962817074">
-				<string key="NSClassName">CollectionArchiveInspector</string>
+				<string key="NSClassName">SVIndexInspectorViewController</string>
 			</object>
 			<object class="NSCustomObject" id="52710862">
 				<string key="NSClassName">FirstResponder</string>
@@ -98,14 +98,6 @@
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
-					<string key="className">CollectionArchiveInspector</string>
-					<string key="superclassName">SVIndexPlugInInspectorViewController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">CollectionArchiveInspector.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">FirstResponder</string>
 					<string key="superclassName">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -145,7 +137,7 @@
 			</array>
 			<array class="NSMutableArray" key="referencedPartialClassDescriptionsV3.1+">
 				<object class="IBPartialClassDescription">
-					<string key="className">SVIndexPlugInInspectorViewController</string>
+					<string key="className">SVIndexInspectorViewController</string>
 					<string key="superclassName">SVInspectorViewController</string>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">collectionLinkSourceView</string>
@@ -160,7 +152,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBDocumentRelativeSource</string>
-						<string key="minorKey">../../../../App/SVIndexPlugInInspectorViewController.h</string>
+						<string key="minorKey">../../../../App/SVIndexInspectorViewController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
