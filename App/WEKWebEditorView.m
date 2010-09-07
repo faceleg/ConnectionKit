@@ -1653,7 +1653,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 if (result > NSDragOperationNone) dropNode = [controller HTMLElement];
             }
         }
-        [self moveDragHighlightToDOMNode:dropNode];
     }
     
     return result;

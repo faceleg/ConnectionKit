@@ -68,7 +68,15 @@
 
 - (void)willUpdateDrag:(id <NSDraggingInfo>)sender result:(NSDragOperation)result;
 {
+    if (_delegateWillHandleDraggingInfo) return;
     
+    // Once we know the drag is supported, draw it. Can't do this from delegate methods as they are called even when an editing drag won't be allowed.
+    if (result)
+    {
+        NSPoint point = [self convertPointFromBase:[sender draggingLocation]];
+        DOMRange *editingRange = [self editableDOMRangeForPoint:point];
+        [[self webEditor] moveDragHighlightToDOMNode:[editingRange commonAncestorContainer]];
+    }
 }
 
 /*  Our aim here is to extend WebView to support some extra drag & drop methods that we'd prefer. Override everything to be sure we don't collide with WebKit in an unexpected manner.
