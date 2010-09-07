@@ -1,5 +1,5 @@
 //
-//  DownloadIndex.h
+//  DownloadIndex.m
 //  Sandvox SDK
 //
 //  Copyright 2007-2009 Karelia Software. All rights reserved.
@@ -34,12 +34,14 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "SandvoxPlugin.h"
+#import "DownloadIndexPlugIn.h"
 
 
-@interface DownloadIndex : KTAbstractIndex
+@implementation DownloadIndexPlugIn
+
+- (NSSize)thumbnailSize
 {
-
+	return NSMakeSize(128.0, 128.0);
 }
 
 @end
