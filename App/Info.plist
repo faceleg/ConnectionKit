@@ -246,7 +246,7 @@
 			<key>UTTypeIconName</key>
 			<string>document.icns</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.karelia.sandvox.site-document</string>
+			<string>com.karelia.Sandvox.svxSite</string>
 			<key>UTTypeReferenceURL</key>
 			<string>http://www.karelia.com/sandvox/</string>
 			<key>UTTypeTagSpecification</key>
@@ -371,8 +371,6 @@
 				<string>video/webm</string>
 			</dict>
 		</dict>
-
-
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
@@ -424,11 +422,6 @@
 				<string>video/mp4</string>
 			</dict>
 		</dict>
-
-
-
-
-
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>

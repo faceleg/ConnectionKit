@@ -2,7 +2,7 @@
 // Document
 NSString *kKTDocumentType = @"Sandvox Document";
 NSString *kKTDocumentExtension = @"svxSite";
-NSString *kKTDocumentUTI = @"com.karelia.sandvox.site-document";
+NSString *kKTDocumentUTI = @"com.karelia.Sandvox.svxSite";
 NSString *kKTDocumentUTI_ORIGINAL = @"com.karelia.sandvox.document";
 
 NSString *kKTPageIDDesignator = @"~PAGEID~";
