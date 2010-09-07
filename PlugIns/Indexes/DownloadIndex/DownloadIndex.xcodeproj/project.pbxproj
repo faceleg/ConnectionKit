@@ -46,7 +46,7 @@
 		3C023E9A0D5CDCDC00E82E4B /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C023E9B0D5CDCDC00E82E4B /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C9700F30D5CF7D70070D4A1 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
-		8D5B49B6048680CD000E48DA /* Download.svxIndex */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Download.svxIndex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B6048680CD000E48DA /* Download.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Download.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -129,7 +129,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* Download.svxIndex */,
+				8D5B49B6048680CD000E48DA /* Download.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,7 +169,7 @@
 			name = DownloadIndex;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = DownloadIndex;
-			productReference = 8D5B49B6048680CD000E48DA /* Download.svxIndex */;
+			productReference = 8D5B49B6048680CD000E48DA /* Download.svxElement */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -271,7 +271,7 @@
 					0x502c0000,
 				);
 				PRODUCT_NAME = Download;
-				WRAPPER_EXTENSION = svxIndex;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Debug;
 		};
@@ -285,7 +285,7 @@
 					0x502c0000,
 				);
 				PRODUCT_NAME = Download;
-				WRAPPER_EXTENSION = svxIndex;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
 		};
