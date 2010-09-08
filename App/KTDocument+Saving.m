@@ -975,7 +975,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             NSString *resourcePath = [path lastPathComponent];
             if ([path isSubpathOfPath:designPath])
             {
-                resourcePath = [path pathRelativeToPath:designPath];
+                resourcePath = [path ks_pathRelativeToDirectory:designPath];
             }
             
             [self addPreviewResourceWithData:[aResource data] relativePath:resourcePath];

@@ -83,8 +83,7 @@
     NSString *path = [_publisher publishMedia:media];
     
     NSString *basePath = [_publisher baseRemotePath];
-    if (![basePath hasSuffix:@"/"]) basePath = [basePath stringByAppendingString:@"/"];
-    NSString *relPath = [path pathRelativeToPath:basePath];
+    NSString *relPath = [path ks_pathRelativeToDirectory:basePath];
     
     if (relPath)
     {
