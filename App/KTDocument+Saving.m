@@ -377,7 +377,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         // Save the context
         NSURL *originalDatastoreURL = (inOriginalContentsURL ? [KTDocument datastoreURLForDocumentURL:inOriginalContentsURL type:nil] : nil);
         
-		result =  [self writeDatastoreToURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
+		result = [self writeDatastoreToURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
                                     ofType:inType
                           forSaveOperation:saveOperation
                        originalContentsURL:originalDatastoreURL
@@ -403,10 +403,18 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             // We don't actually care if the preview gets written out successfully or not, since it's not critical to the consistency of the document.
             // It might be nice to warn the user one day though.
             NSError *qlPreviewError;
-            if (![quickLookPreviewHTML writeToURL:previewURL
+            if ([quickLookPreviewHTML writeToURL:previewURL
                                        atomically:NO
                                          encoding:NSUTF8StringEncoding
                                             error:&qlPreviewError])
+            {
+                // Write resources too
+                NSFileWrapper *qlPreviewResources = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:nil];
+                
+                NSURL *resourcesDirectory = [NSURL URLWithString:@"Resources/" relativeToURL:previewURL];
+                [qlPreviewResources writeToFile:[resourcesDirectory path] atomically:NO updateFilenames:YES];
+            }
+            else
             {
                 NSLog(@"Error saving Quick Look preview: %@",
                       [[qlPreviewError debugDescription] condenseWhiteSpace]);
