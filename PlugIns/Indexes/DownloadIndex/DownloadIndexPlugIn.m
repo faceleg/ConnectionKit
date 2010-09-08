@@ -51,6 +51,13 @@
 }
 
 
+- (void)awakeFromNew;
+{
+    [super awakeFromNew];
+    self.truncateChars = 0;    
+}
+
+
 #pragma mark HTML Generation
 
 - (void)writeHTML:(id <SVPlugInContext>)context
@@ -73,6 +80,7 @@
 {
     id<SVPlugInContext> context = [SVPlugIn currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+    [[context HTMLWriter] writeText:[NSString stringWithFormat:@"SUMMARY of %@", iteratedPage.title]];
     
 }
 
