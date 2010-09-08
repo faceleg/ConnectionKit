@@ -338,12 +338,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         }
         else
         {
-            // Generate Quick Look preview HTML
-            previewContext = [[SVQuickLookPreviewHTMLContext alloc] init];
-            [previewContext setBaseURL:[KTDocument quickLookPreviewURLForDocumentURL:inURL]];
-            [self writePreviewHTML:previewContext];
-                        
-            
             // Build a list of all media to copy into the document
             NSString *requestName = (saveOperation == NSSaveAsOperation) ? @"MediaToCopyIntoDocument" : @"MediaAwaitingCopyIntoDocument";
             NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:requestName];
@@ -353,8 +347,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                               toURL:inURL
                    forSaveOperation:saveOperation
                               error:NULL];
-            
-            
+                        
             
             // Tell deleted media what, if anything, to do. MUST happen after searching for new media. #72736
             NSURL *deletedMediaDirectory = [[self undoManager] deletedMediaDirectory];
@@ -370,6 +363,12 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                     [(SVMediaRecord *)media moveToURLWhenDeleted:deletionURL];
                 }
             }
+            
+            
+            // Generate Quick Look preview HTML. Do this AFTER processing media so their URLs now point to a file inside the doc
+            previewContext = [[SVQuickLookPreviewHTMLContext alloc] init];
+            [previewContext setBaseURL:[KTDocument quickLookPreviewURLForDocumentURL:inURL]];
+            [self writePreviewHTML:previewContext];
         }
     }
     
@@ -646,9 +645,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     // Try write
     NSURL *mediaURL = [docURL URLByAppendingPathComponent:filename isDirectory:NO];
-    if ([aMediaRecord writeToURL:mediaURL updateFileURL:NO error:outError])
-    {    
-        [aMediaRecord setFilename:filename];
+    if ([aMediaRecord writeToURL:mediaURL updateFileURL:YES error:outError])
+    {
+        // I was experimenting with not updating the file URL straight away. I'm not sure why, but I think it was to account for the idea that you might be doing a Save-To op. Unfortunately that breaks Quick Look previews if the home page contains a new image. So I've switched to updating the URL straight off, so it's ready to generate correct preview HTML.
+        //[aMediaRecord setFilename:filename];  // don't need to when updating file URL
     }
     else
     {
