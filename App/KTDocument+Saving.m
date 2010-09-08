@@ -86,6 +86,8 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
         originalContentsURL:(NSURL *)originalContentsURL
                       error:(NSError **)outError;
 
+- (void)writeQuickLookPreview:(NSString *)htmlString toURL:(NSURL *)previewURL resources:(NSFileWrapper *)resources;
+
 - (BOOL)writeMediaRecords:(NSArray *)media
                     toURL:(NSURL *)docURL
          forSaveOperation:(NSSaveOperationType)saveOp
@@ -400,25 +402,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 		// Write out Quick Look preview
         if (quickLookPreviewHTML)
         {
-            // We don't actually care if the preview gets written out successfully or not, since it's not critical to the consistency of the document.
-            // It might be nice to warn the user one day though.
-            NSError *qlPreviewError;
-            if ([quickLookPreviewHTML writeToURL:previewURL
-                                       atomically:NO
-                                         encoding:NSUTF8StringEncoding
-                                            error:&qlPreviewError])
-            {
-                // Write resources too
-                NSFileWrapper *qlPreviewResources = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:nil];
-                
-                NSURL *resourcesDirectory = [NSURL URLWithString:@"Resources/" relativeToURL:previewURL];
-                [qlPreviewResources writeToFile:[resourcesDirectory path] atomically:NO updateFilenames:YES];
-            }
-            else
-            {
-                NSLog(@"Error saving Quick Look preview: %@",
-                      [[qlPreviewError debugDescription] condenseWhiteSpace]);
-            }
+            [self writeQuickLookPreview:quickLookPreviewHTML toURL:previewURL resources:nil];
         }
         
         
@@ -560,6 +544,35 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     OBASSERT( (result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
     
     return result;
+}
+
+- (void)writeQuickLookPreview:(NSString *)htmlString toURL:(NSURL *)previewURL resources:(NSFileWrapper *)resources;
+{
+    OBPRECONDITION(htmlString);
+    
+    // We don't actually care if the preview gets written out successfully or not, since it's not critical to the consistency of the document.
+    // It might be nice to warn the user one day though.
+    NSError *qlPreviewError;
+    if ([htmlString writeToURL:previewURL
+                    atomically:NO
+                      encoding:NSUTF8StringEncoding
+                         error:&qlPreviewError])
+    {
+        // Write resources too
+        NSFileWrapper *qlPreviewResources = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:nil];
+        
+        NSURL *resourcesDirectory = [NSURL URLWithString:@"Resources/" relativeToURL:previewURL];
+        
+        [qlPreviewResources writeToFile:[resourcesDirectory path]
+                             atomically:NO
+                        updateFilenames:YES];
+        [qlPreviewResources release];
+    }
+    else
+    {
+        NSLog(@"Error saving Quick Look preview: %@",
+              [[qlPreviewError debugDescription] condenseWhiteSpace]);
+    }
 }
 
 #pragma mark Media
