@@ -80,8 +80,8 @@
 {
     id<SVPlugInContext> context = [SVPlugIn currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
-    [[context HTMLWriter] writeText:[NSString stringWithFormat:@"SUMMARY of %@", iteratedPage.title]];
-    
+    //[[context HTMLWriter] writeText:[NSString stringWithFormat:@"SUMMARY of %@", iteratedPage.title]];
+    [iteratedPage writeSummary:context];
 }
 
 
