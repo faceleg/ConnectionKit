@@ -40,6 +40,17 @@
 @implementation DownloadIndexPlugIn
 
 
+#pragma mark SVIndexPlugIn
+
++ (NSArray *)plugInKeys
+{ 
+    NSArray *plugInKeys = [NSArray arrayWithObjects:
+                           @"truncateChars", 
+                           nil];    
+    return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
+}
+
+
 #pragma mark HTML Generation
 
 - (void)writeHTML:(id <SVPlugInContext>)context
@@ -50,7 +61,21 @@
     // add dependencies
     [context addDependencyForKeyPath:@"indexedCollection" ofObject:self];
     [context addDependencyForKeyPath:@"indexedCollection.childPages" ofObject:self];
+    [context addDependencyForKeyPath:@"truncateChars" ofObject:self];
 }
+
+
+/* 
+<div class="article-summary">[[summary item page.collectionTruncateCharacters]]</div>
+ */
+
+- (void)writeSummaryOfIteratedPage
+{
+    id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+    
+}
+
 
 /*
  <img[[idClass entity:Page property:item.thumbnail flags:"anchor" id:item.uniqueID]]
@@ -67,13 +92,18 @@ height="[[mediainfo info:height media:item.thumbnail sizeToFit:thumbnailSize]]" 
     
     [[context HTMLWriter] writeThumbnailImageOfPage:iteratedPage 
                                           className:@"" 
-                                           maxWidth:128 
-                                          maxHeight:128];
+                                           maxWidth:[self thumbnailSize].width 
+                                          maxHeight:[self thumbnailSize].height];
 }
 
 - (NSSize)thumbnailSize
 {
 	return NSMakeSize(128.0, 128.0);
 }
+
+
+#pragma mark Properties
+
+@synthesize truncateChars = _truncateChars;
 
 @end

@@ -39,7 +39,12 @@
 
 @interface DownloadIndexPlugIn : SVIndexPlugIn
 {
-
+    NSUInteger _truncateChars;
 }
+
+@property (nonatomic) NSUInteger truncateChars;
+
+//FIXME: should thumbnailSize be a settable property? if not, what's it doing here?
+- (NSSize)thumbnailSize;
 
 @end
