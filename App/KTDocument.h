@@ -67,6 +67,7 @@ extern NSString *kKTDocumentWillSaveNotification;
     WebView             *_quickLookThumbnailWebView;
     NSWindow            *_quickLookThumbnailWebViewWindow;
     NSLock              *_quickLookThumbnailLock;
+    NSFileWrapper       *_previewResourcesFileWrapper;  // weak, temp ref
 	
     // Publishing
 	NSURL *_lastExportDirectory;

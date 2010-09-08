@@ -86,8 +86,6 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
         originalContentsURL:(NSURL *)originalContentsURL
                       error:(NSError **)outError;
 
-- (void)writePreviewHTMLString:(NSString *)htmlString toURL:(NSURL *)previewURL resources:(NSFileWrapper *)resources;
-
 - (BOOL)writeMediaRecords:(NSArray *)media
                     toURL:(NSURL *)docURL
          forSaveOperation:(NSSaveOperationType)saveOp
@@ -108,7 +106,9 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 - (BOOL)tryToWriteThumbnailToDocumentURL:(NSURL *)docURL error:(NSError **)error;
 - (WebView *)thumbnailGeneratorWebView;
 - (NSImage *)makeThumbnail;
+
 - (void)writePreviewHTML:(SVHTMLContext *)context;
+- (void)writePreviewHTMLString:(NSString *)htmlString toURL:(NSURL *)previewURL;
 
 @end
 
@@ -399,17 +399,12 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                                         error:NULL];
         
         
-		// Write out Quick Look preview
-        if (previewContext)
-        {
-            [self writePreviewHTMLString:[[previewContext outputStringWriter] string]
-                                   toURL:[previewContext baseURL]
-                               resources:nil];
-            
-            [previewContext release];
-        }
+        // Prepare file wrapper for preview resources
+        _previewResourcesFileWrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:nil];
+        [_previewResourcesFileWrapper setPreferredFilename:@"Resources"];
         
         
+        // Write Quick Look thumbnail, building up preview resources along the way
         if ([self thumbnailGeneratorWebView])
         {
             NSError *qlThumbnailError;
@@ -419,6 +414,17 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                       [[qlThumbnailError debugDescription] condenseWhiteSpace]);
             }
         }
+        
+        
+		// Write out Quick Look preview
+        if (previewContext)
+        {
+            [self writePreviewHTMLString:[[previewContext outputStringWriter] string]
+                                   toURL:[previewContext baseURL]];
+            
+            [previewContext release];
+        }
+        [_previewResourcesFileWrapper release]; _previewResourcesFileWrapper = nil;
     }
     
 }
@@ -955,6 +961,19 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     }
         
     
+    // Copy subresources across for preview
+    WebView *webView = [self thumbnailGeneratorWebView];
+    for (WebResource *aResource in [[[webView mainFrame] dataSource] subresources])
+    {
+        NSFileWrapper *wrapper = [[NSFileWrapper alloc] initRegularFileWithContents:[aResource data]];
+        [wrapper setPreferredFilename:[[aResource URL] lastPathComponent]];
+        
+        [_previewResourcesFileWrapper addFileWrapper:wrapper];
+        [wrapper release];
+    }
+    
+    
+    
         
     // Save the thumbnail to disk
     NSImage *thumbnail = [[self ks_proxyOnThread:nil] makeThumbnail];
@@ -1079,7 +1098,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     [context writeDocumentWithPage:[[self site] rootPage]];
 }
 
-- (void)writePreviewHTMLString:(NSString *)htmlString toURL:(NSURL *)previewURL resources:(NSFileWrapper *)resources;
+- (void)writePreviewHTMLString:(NSString *)htmlString toURL:(NSURL *)previewURL;
 {
     OBPRECONDITION(htmlString);
     
@@ -1092,14 +1111,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                          error:&qlPreviewError])
     {
         // Write resources too
-        NSFileWrapper *qlPreviewResources = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:nil];
-        
         NSURL *resourcesDirectory = [NSURL URLWithString:@"Resources/" relativeToURL:previewURL];
         
-        [qlPreviewResources writeToFile:[resourcesDirectory path]
-                             atomically:NO
-                        updateFilenames:YES];
-        [qlPreviewResources release];
+        [_previewResourcesFileWrapper writeToFile:[resourcesDirectory path]
+                                       atomically:NO
+                                  updateFilenames:YES];
     }
     else
     {
