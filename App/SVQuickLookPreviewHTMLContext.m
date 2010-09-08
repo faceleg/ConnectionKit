@@ -29,14 +29,15 @@
 {
     if ([URL isFileURL])
     {
-        // Design files should be copied into the doc
-        NSString *path = [URL path];
-        NSString *designPath = [[[[[self page] master] design] bundle] bundlePath];
-        
-        if ([path isSubpathOfPath:designPath])
+        // Files outside the package should be copied in
+        NSURL *docURL = [[[self baseURL]    // perhaps a slightly hacky way to locate it!
+                          URLByDeletingLastPathComponent]
+                         URLByDeletingLastPathComponent];
+                
+        if (![URL isSubpathOfURL:docURL])
         {
             NSString *result = [@"Resources" stringByAppendingPathComponent:
-                                [path lastPathComponent]];
+                                [URL lastPathComponent]];
             
             return result;
         }
