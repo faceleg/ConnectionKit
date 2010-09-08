@@ -104,9 +104,10 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 
 // Quick Look
-- (void)startGeneratingQuickLookThumbnail;
-- (BOOL)writeQuickLookThumbnailToDocumentURLIfPossible:(NSURL *)docURL error:(NSError **)error;
-- (NSImage *)_quickLookThumbnail;
+- (void)startGeneratingThumbnail;
+- (BOOL)tryToWriteThumbnailToDocumentURL:(NSURL *)docURL error:(NSError **)error;
+- (WebView *)thumbnailGeneratorWebView;
+- (NSImage *)makeThumbnail;
 - (void)writePreviewHTML:(SVHTMLContext *)context;
 
 @end
@@ -312,7 +313,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     if (saveOperation != NSAutosaveOperation)
     {
         // Kick off thumbnail generation
-        [self startGeneratingQuickLookThumbnail];
+        [self startGeneratingThumbnail];
     }
     
     
@@ -409,10 +410,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         }
         
         
-        if (_quickLookThumbnailWebView)
+        if ([self thumbnailGeneratorWebView])
         {
             NSError *qlThumbnailError;
-            if (![self writeQuickLookThumbnailToDocumentURLIfPossible:inURL error:&qlThumbnailError])
+            if (![self tryToWriteThumbnailToDocumentURL:inURL error:&qlThumbnailError])
             {
                 NSLog(@"Error saving Quick Look thumbnail: %@",
                       [[qlThumbnailError debugDescription] condenseWhiteSpace]);
@@ -424,7 +425,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 @finally
 {
     // MUST make sure the thumbnail webview has been unloaded, otherwise we'll fail an assertion come the next save. This call does that. #61947
-    [self _quickLookThumbnail];
+    [self makeThumbnail];
 }	
 
 	
@@ -872,7 +873,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 #pragma mark -
 #pragma mark Quick Look Thumbnail
 
-- (void)startGeneratingQuickLookThumbnail
+- (void)startGeneratingThumbnail
 {
 	OBASSERT([NSThread currentThread] == [self thread]);
     
@@ -908,7 +909,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	
     
     // Create the webview
-    OBASSERT(!_quickLookThumbnailWebView);
+    OBASSERT(![self thumbnailGeneratorWebView]);
 	_quickLookThumbnailWebView = [[WebView alloc] initWithFrame:frame];
     
     [_quickLookThumbnailWebView setResourceLoadDelegate:self];
@@ -919,18 +920,18 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     _quickLookThumbnailLock = [[NSLock alloc] init];
     [_quickLookThumbnailLock lock];
     
-    OBASSERT(_quickLookThumbnailWebView);
+    OBASSERT([self thumbnailGeneratorWebView]);
 	[[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(webViewDidFinishLoading:)
                                                  name:WebViewProgressFinishedNotification
-                                               object:_quickLookThumbnailWebView];
+                                               object:[self thumbnailGeneratorWebView]];
 	
 	
 	// Go ahead and begin building the thumbnail
-    [[_quickLookThumbnailWebView mainFrame] loadHTMLString:thumbnailHTML baseURL:nil];
+    [[[self thumbnailGeneratorWebView] mainFrame] loadHTMLString:thumbnailHTML baseURL:nil];
 }
 
-- (BOOL)writeQuickLookThumbnailToDocumentURLIfPossible:(NSURL *)docURL error:(NSError **)error
+- (BOOL)tryToWriteThumbnailToDocumentURL:(NSURL *)docURL error:(NSError **)error
 {
     BOOL result = YES;
     
@@ -956,7 +957,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
         
     // Save the thumbnail to disk
-    NSImage *thumbnail = [[self ks_proxyOnThread:nil] _quickLookThumbnail];
+    NSImage *thumbnail = [[self ks_proxyOnThread:nil] makeThumbnail];
     if (thumbnail)
     {
         NSURL *thumbnailURL = [[KTDocument quickLookURLForDocumentURL:docURL] URLByAppendingPathComponent:@"Thumbnail.png" isDirectory:NO];
@@ -970,24 +971,26 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
+- (WebView *)thumbnailGeneratorWebView; { return _quickLookThumbnailWebView; }
+
 /*  Captures the Quick Look thumbnail from the webview if it's finished loading. MUST happen on the main thread.
  *  Has the side effect of disposing of the webview once done.
  */
-- (NSImage *)_quickLookThumbnail
+- (NSImage *)makeThumbnail
 {
     NSImage *result = nil;
     
-    
-    if (_quickLookThumbnailWebView)
+    WebView *webView = [self thumbnailGeneratorWebView];
+    if (webView)
     {
         OBASSERT([NSThread isMainThread]);
         
         
-        if (![_quickLookThumbnailWebView isLoading])
+        if (![webView isLoading])
         {
             // Draw the view
-            [_quickLookThumbnailWebView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
-            NSImage *snapshot = [[[[_quickLookThumbnailWebView mainFrame] frameView] documentView] snapshot];
+            [webView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
+            NSImage *snapshot = [[[[webView mainFrame] frameView] documentView] snapshot];
             
             result = [snapshot imageWithMaxWidth:512 height:512 
                                                       behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect
@@ -1018,8 +1021,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
         
         // Dump the webview and window
-        [_quickLookThumbnailWebView setResourceLoadDelegate:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:WebViewProgressFinishedNotification object:_quickLookThumbnailWebView];
+        [webView setResourceLoadDelegate:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:WebViewProgressFinishedNotification object:webView];
         
         [_quickLookThumbnailWebView release];   _quickLookThumbnailWebView = nil;
         [_quickLookThumbnailWebViewWindow release]; _quickLookThumbnailWebViewWindow = nil;
