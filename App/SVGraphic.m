@@ -33,10 +33,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [super awakeFromInsert];
     
     
-    // UID
-    [self setPrimitiveValue:[NSString shortUUIDString] forKey:@"elementID"];
-    
-    
     // Text
     [self setTitle:[[self class] placeholderTitleText]];
     [self createDefaultIntroAndCaption];
@@ -302,8 +298,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return result;
 }
 
-@dynamic elementID;
-
 - (void)writeHTML;
 {
     [[[SVHTMLTemplateParser currentTemplateParser] HTMLContext] writeGraphic:self];
@@ -394,15 +388,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (void)awakeFromPropertyList:(id)propertyList;
 {
-    // Don't deserialize element ID as it means we have two of them!
-    NSString *ID = [self elementID];
-    [super awakeFromPropertyList:propertyList];
-    
-    [self willChangeValueForKey:@"elementID"];
-    [self setPrimitiveValue:ID forKey:@"elementID"];
-    [self didChangeValueForKey:@"elementID"];
-    
-    
     // Restore title
     NSDictionary *serializedTitle = [propertyList objectForKey:@"titleBox"];
     if (serializedTitle)
