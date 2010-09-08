@@ -12,6 +12,7 @@
 		3C023E950D5CDCB900E82E4B /* DownloadIndex.css in Resources */ = {isa = PBXBuildFile; fileRef = 3C023E920D5CDCB900E82E4B /* DownloadIndex.css */; };
 		3C023E960D5CDCB900E82E4B /* downloadIndex.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3C023E930D5CDCB900E82E4B /* downloadIndex.icns */; };
 		3C023E970D5CDCB900E82E4B /* DownloadIndexTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C023E940D5CDCB900E82E4B /* DownloadIndexTemplate.html */; };
+		3C4241B012383AD500E1C9C4 /* DownloadIndexInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C4241AE12383AD500E1C9C4 /* DownloadIndexInspector.xib */; };
 		3C9700F40D5CF7D70070D4A1 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C9700F30D5CF7D70070D4A1 /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
@@ -45,6 +46,7 @@
 		3C023E940D5CDCB900E82E4B /* DownloadIndexTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = DownloadIndexTemplate.html; sourceTree = "<group>"; };
 		3C023E9A0D5CDCDC00E82E4B /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C023E9B0D5CDCDC00E82E4B /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C4241AF12383AD500E1C9C4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DownloadIndexInspector.xib; sourceTree = "<group>"; };
 		3C9700F30D5CF7D70070D4A1 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* Download.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Download.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C4241AE12383AD500E1C9C4 /* DownloadIndexInspector.xib */,
 				3C023E940D5CDCB900E82E4B /* DownloadIndexTemplate.html */,
 				3C023E920D5CDCB900E82E4B /* DownloadIndex.css */,
 				3C023E930D5CDCB900E82E4B /* downloadIndex.icns */,
@@ -211,6 +214,7 @@
 				3C023E960D5CDCB900E82E4B /* downloadIndex.icns in Resources */,
 				3C023E970D5CDCB900E82E4B /* DownloadIndexTemplate.html in Resources */,
 				3C9700F40D5CF7D70070D4A1 /* License.rtf in Resources */,
+				3C4241B012383AD500E1C9C4 /* DownloadIndexInspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +260,14 @@
 				3C0235330D5CDB7D00E82E4B /* zh_TW */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		3C4241AE12383AD500E1C9C4 /* DownloadIndexInspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C4241AF12383AD500E1C9C4 /* en */,
+			);
+			name = DownloadIndexInspector.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
