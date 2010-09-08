@@ -18,7 +18,11 @@
 
 - (NSString *)identifier;
 
+
+#pragma mark Content
 - (NSString *)title;
+- (void)writeSummary:(id <SVPlugInContext>)context;
+
 
 - (NSString *)language;
 

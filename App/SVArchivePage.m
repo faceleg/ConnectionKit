@@ -55,6 +55,8 @@
 	return result;
 }
 
+- (void)writeSummary:(id <SVPlugInContext>)context; { }
+
 - (NSString *)language; { return [[self collection] language]; }
 
 - (BOOL)isCollection; { return NO; }

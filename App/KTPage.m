@@ -441,6 +441,13 @@
 
 - (KTPage *)pageRepresentation { return self; }
 
+#pragma mark SVPage
+
+- (void)writeSummary:(SVHTMLContext *)context;
+{
+    [[self article] writeText:context];
+}
+
 #pragma mark Debugging
 
 // More human-readable description

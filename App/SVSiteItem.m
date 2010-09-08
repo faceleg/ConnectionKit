@@ -418,6 +418,8 @@
 
 #pragma mark SVPage
 
+- (void)writeSummary:(id <SVPlugInContext>)context; { }
+
 - (NSArray *)childPages; { return [self sortedChildren]; }
 
 - (id <NSFastEnumeration>)automaticRearrangementKeyPaths;
