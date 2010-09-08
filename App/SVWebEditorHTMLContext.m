@@ -340,10 +340,10 @@
     // DOM Controllers need an ID so they can locate their element in the DOM. If the HTML doesn't normally contain an ID, insert it ourselves
     if (_needsToWriteElementID)
     {
-        NSString *elementID = [[self currentDOMController] elementIdName];
-        if (elementID)
+        NSString *idName = [[self currentDOMController] elementIdName];
+        if (idName)
         {
-            [self pushAttribute:@"id" value:elementID];
+            [self pushAttribute:@"id" value:idName];
             OBASSERT(!_needsToWriteElementID);
         }
         else

@@ -314,6 +314,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 }
 
 - (BOOL)shouldPublishEditingElementID { return NO; }
-- (NSString *)elementIdName { return [self elementID]; }
+- (NSString *)elementIdName { return [NSString stringWithFormat:@"graphic-%p", self]; }
 
 @end

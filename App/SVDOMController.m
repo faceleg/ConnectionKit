@@ -46,10 +46,10 @@
 - (id)initWithRepresentedObject:(id <SVDOMControllerRepresentedObject>)content;
 {
     // Use the object's own ID if it has one. Otherwise make up our own
-    NSString *elementID = [content elementIdName];
-    if (!elementID) elementID = [NSString stringWithFormat:@"%p", content];
+    NSString *idName = [content elementIdName];
+    if (!idName) idName = [NSString stringWithFormat:@"%p", content];
     
-    if (self = [self initWithElementIdName:elementID])
+    if (self = [self initWithElementIdName:idName])
     {
         [self setRepresentedObject:content];
     }
