@@ -109,6 +109,7 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 - (void)writePreviewHTML:(SVHTMLContext *)context;
 - (void)writePreviewHTMLString:(NSString *)htmlString toURL:(NSURL *)previewURL;
+- (void)addPreviewResourceWithData:(NSData *)data relativePath:(NSString *)path;
 
 @end
 
@@ -965,14 +966,21 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     WebView *webView = [self thumbnailGeneratorWebView];
     for (WebResource *aResource in [[[webView mainFrame] dataSource] subresources])
     {
-        NSFileWrapper *wrapper = [[NSFileWrapper alloc] initRegularFileWithContents:[aResource data]];
-        [wrapper setPreferredFilename:[[aResource URL] lastPathComponent]];
-        
-        [_previewResourcesFileWrapper addFileWrapper:wrapper];
-        [wrapper release];
+        NSURL *URL = [aResource URL];
+        if ([URL isFileURL])
+        {
+            NSString *path = [URL path];
+            NSString *designPath = [[[[[[self site] rootPage] master] design] bundle] bundlePath];
+            
+            NSString *resourcePath = [path lastPathComponent];
+            if ([path isSubpathOfPath:designPath])
+            {
+                resourcePath = [path pathRelativeToPath:designPath];
+            }
+            
+            [self addPreviewResourceWithData:[aResource data] relativePath:resourcePath];
+        }
     }
-    
-    
     
         
     // Save the thumbnail to disk
@@ -1122,6 +1130,34 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         NSLog(@"Error saving Quick Look preview: %@",
               [[qlPreviewError debugDescription] condenseWhiteSpace]);
     }
+}
+
+- (void)addPreviewResourceWithData:(NSData *)data relativePath:(NSString *)path;
+{
+    NSArray *components = [path pathComponents];
+    NSFileWrapper *parentWrapper = _previewResourcesFileWrapper;
+    
+    NSUInteger i, count = [components count] - 1;
+    for (i = 0; i < count; i++)
+    {
+        NSString *aComponent = [components objectAtIndex:i];
+        NSFileWrapper *wrapper = [[parentWrapper fileWrappers] objectForKey:aComponent];
+        if (!wrapper)
+        {
+            wrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:nil];
+            [wrapper setPreferredFilename:aComponent];
+            [parentWrapper addFileWrapper:wrapper];
+            [wrapper release];
+        }
+        
+        parentWrapper = wrapper;
+    }
+    
+    NSFileWrapper *wrapper = [[NSFileWrapper alloc] initRegularFileWithContents:data];
+    [wrapper setPreferredFilename:[components lastObject]];
+    
+    [parentWrapper addFileWrapper:wrapper];
+    [wrapper release];
 }
 
 @end
