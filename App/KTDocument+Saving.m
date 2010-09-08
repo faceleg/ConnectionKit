@@ -969,16 +969,19 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         NSURL *URL = [aResource URL];
         if ([URL isFileURL])
         {
-            NSString *path = [URL path];
-            NSString *designPath = [[[[[[self site] rootPage] master] design] bundle] bundlePath];
-            
-            NSString *resourcePath = [path lastPathComponent];
-            if ([path isSubpathOfPath:designPath])
+            if (![URL isSubpathOfURL:docURL])
             {
-                resourcePath = [path ks_pathRelativeToDirectory:designPath];
+                NSString *path = [URL path];
+                NSString *designPath = [[[[[[self site] rootPage] master] design] bundle] bundlePath];
+                
+                NSString *resourcePath = [path lastPathComponent];
+                if ([path isSubpathOfPath:designPath])
+                {
+                    resourcePath = [path ks_pathRelativeToDirectory:designPath];
+                }
+                
+                [self addPreviewResourceWithData:[aResource data] relativePath:resourcePath];
             }
-            
-            [self addPreviewResourceWithData:[aResource data] relativePath:resourcePath];
         }
     }
     
