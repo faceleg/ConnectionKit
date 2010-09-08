@@ -12,6 +12,7 @@
 #import "KTMaster.h"
 #import "SVSiteItem.h"
 
+#import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
 
@@ -23,6 +24,26 @@
 }
 
 - (BOOL)isForQuickLook; { return YES; }
+
+- (NSString *)relativeURLStringOfURL:(NSURL *)URL;
+{
+    if ([URL isFileURL])
+    {
+        // Design files should be copied into the doc
+        NSString *path = [URL path];
+        NSString *designPath = [[[[[self page] master] design] bundle] bundlePath];
+        
+        if ([path isSubpathOfPath:designPath])
+        {
+            NSString *result = [@"Resources" stringByAppendingPathComponent:
+                                [path lastPathComponent]];
+            
+            return result;
+        }
+    }
+    
+    return [super relativeURLStringOfURL:URL];
+}
 
 #pragma mark CSS
 
