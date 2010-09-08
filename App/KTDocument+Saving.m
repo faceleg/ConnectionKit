@@ -1134,6 +1134,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 
 - (void)addPreviewResourceWithData:(NSData *)data relativePath:(NSString *)path;
 {
+    // Create any directories required by the path
     NSArray *components = [path pathComponents];
     NSFileWrapper *parentWrapper = _previewResourcesFileWrapper;
     
@@ -1153,6 +1154,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         parentWrapper = wrapper;
     }
     
+    // Create a wrapper for the file itself
     NSFileWrapper *wrapper = [[NSFileWrapper alloc] initRegularFileWithContents:data];
     [wrapper setPreferredFilename:[components lastObject]];
     
