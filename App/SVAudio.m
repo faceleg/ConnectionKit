@@ -171,7 +171,7 @@
 	{
 		if (self.autoplay.boolValue)	// if we turn on autoplay, we also turn on preload
 		{
-			self.preload = NSBOOL(YES);
+			self.preload = [NSNumber numberWithInt:kPreloadAuto];
 		}
 		
 	}
@@ -289,7 +289,7 @@
 	
 	if (self.controller.boolValue)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
 	if (self.autoplay.boolValue)	[context pushAttribute:@"autoplay" value:@"autoplay"];
-	[context pushAttribute:@"preload" value:self.preload.boolValue ? @"auto" : @"none" ];
+	[context pushAttribute:@"preload" value:[NSARRAY(@"metadata", @"none", @"auto") objectAtIndex:self.preload.intValue + 1]];
 	if (self.loop.boolValue)		[context pushAttribute:@"loop" value:@"loop"];
 	
 	NSString *elementID = [context startElement:@"audio" preferredIdName:@"audio" className:nil attributes:nil];	// class, attributes already pushed
@@ -401,9 +401,9 @@
 	if ([audioFlashPlayer isEqualToString:@"flashmp3player"])
 	{
 		// Can't find way to hide the player; controller must always be showing
-		if (self.autoplay.boolValue)	[flashVars appendString:@"&autoplay=1"];
-		if (self.preload.boolValue)		[flashVars appendString:@"&autoload=1"];
-		if (self.loop.boolValue)		[flashVars appendString:@"&loop=1"];
+		if (self.autoplay.boolValue)				[flashVars appendString:@"&autoplay=1"];
+		if (kPreloadAuto == self.preload.intValue)	[flashVars appendString:@"&autoload=1"];
+		if (self.loop.boolValue)					[flashVars appendString:@"&loop=1"];
 	}
 	else if ([audioFlashPlayer isEqualToString:@"dewplayer"])
 	{

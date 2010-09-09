@@ -302,7 +302,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	
 	if (anAutoplay.boolValue)	// if we turn on autoplay, we also turn on preload
 	{
-		self.preload = NSBOOL(YES);
+		self.preload = [NSNumber numberWithInt:kPreloadAuto];
 	}
 	[self didChangeValueForKey:@"autoplay"];
 }
@@ -474,7 +474,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	
 	if (self.controller.boolValue)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
 	if (self.autoplay.boolValue)	[context pushAttribute:@"autoplay" value:@"autoplay"];
-	[context pushAttribute:@"preload" value:self.preload.boolValue ? @"auto" : @"none" ];
+	[context pushAttribute:@"preload" value:[NSARRAY(@"metadata", @"none", @"auto") objectAtIndex:self.preload.intValue + 1]];
 	if (self.loop.boolValue)		[context pushAttribute:@"loop" value:@"loop"];
 	
 	if (self.posterFrame)	[context pushAttribute:@"poster" value:posterSourcePath];
@@ -614,9 +614,9 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	if ([videoFlashPlayer isEqualToString:@"flvplayer"])
 	{
 		[flashVars appendFormat:@"&showplayer=%@", (self.controller.boolValue) ? @"autohide" : @"never"];
-		if (self.autoplay.boolValue)	[flashVars appendString:@"&autoplay=1"];
-		if (self.preload.boolValue)		[flashVars appendString:@"&autoload=1"];
-		if (self.loop.boolValue)		[flashVars appendString:@"&loop=1"];
+		if (self.autoplay.boolValue)				[flashVars appendString:@"&autoplay=1"];
+		if (kPreloadAuto == self.preload.intValue)	[flashVars appendString:@"&autoload=1"];
+		if (self.loop.boolValue)					[flashVars appendString:@"&loop=1"];
 	}
 	if (videoFlashExtras)	// append other parameters (usually like key1=value1&key2=value2)
 	{
