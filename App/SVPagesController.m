@@ -254,10 +254,10 @@
     OBASSERT(parent);
     
     
-    [self addObject:page asChildOfPage:parent];
+    [self addObject:page toCollection:parent];
 }
 
-- (void)addObject:(id)object asChildOfPage:(KTPage *)parent;
+- (void)addObject:(id)object toCollection:(KTPage *)parent;
 {
     OBPRECONDITION(object);
     OBPRECONDITION(parent);
@@ -301,7 +301,7 @@
         [self setEntityName:@"Page"];
         KTPage *page = [self newObjectDestinedForCollection:collection];
         
-        [self addObject:page asChildOfPage:collection];
+        [self addObject:page toCollection:collection];
     }
 }
 

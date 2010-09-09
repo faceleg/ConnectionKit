@@ -603,7 +603,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         
         
         // Insert copy
-        [[self content] addObject:duplicate asChildOfPage:parent];
+        [[self content] addObject:duplicate toCollection:parent];
         [duplicate release];
     }
     
