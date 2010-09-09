@@ -22,12 +22,13 @@
 // To create a new page/item:
 //  1.  Set .entityName to what you want. Should be Page, ExternalLink, or File.
 //  2.  Optionally, specify any additional info through -setCollectionPreset: or -setFileURL:
-//  3.  Call -add: or -newObject
+//  3.  Call one of: -add: -newObject -newObjectWithPredecessor:
 @property(nonatomic, copy) NSString *entityName;
 @property(nonatomic, copy) NSDictionary *collectionPreset;
 @property(nonatomic, copy) NSURL *fileURL;
 
 - (void)addObject:(id)object asChildOfPage:(KTPage *)parent;
+- (id)newObjectWithPredecessor:(KTPage *)predecessor;
 
 - (NSString *)childrenKeyPath;	// A hangover from NSTreeController
 

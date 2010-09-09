@@ -39,7 +39,7 @@
 
 
 @interface SVPagesController ()
-- (id)newObjectAllowingCollections:(BOOL)allowCollections;
+- (id)newObjectWithPredecessor:(KTPage *)predecessor allowCollections:(BOOL)allowCollections;
 - (void)configurePageAsCollection:(KTPage *)collection;
 @end
 
@@ -58,37 +58,42 @@
 
 - (id)newObject
 {
-    return [self newObjectAllowingCollections:YES];
+    // Figure out the predecessor (which page to inherit properties from)
+    KTPage *parent = [[self selectedObjects] lastObject];
+    if (![parent isCollection]) parent = [parent parentPage];
+    OBASSERT(parent || ![[self content] count]);    // it's acceptable to have no parent when creating first page
+    
+    
+    KTPage *predecessor = parent;
+    NSArray *children = [parent childrenWithSorting:SVCollectionSortByDateCreated
+                                          ascending:NO
+                                            inIndex:NO];
+    
+    for (SVSiteItem *aChild in children)
+    {
+        if ([aChild isKindOfClass:[KTPage class]])
+        {
+            predecessor = (KTPage *)aChild;
+            break;
+        }
+    }
+    
+    return [self newObjectWithPredecessor:predecessor];
 }
 
-- (id)newObjectAllowingCollections:(BOOL)allowCollections
+- (id)newObjectWithPredecessor:(KTPage *)predecessor;
+{
+    return [self newObjectWithPredecessor:predecessor allowCollections:YES];
+}
+
+- (id)newObjectWithPredecessor:(KTPage *)predecessor allowCollections:(BOOL)allowCollections;
 {
     id result = [super newObject];
     
     if ([[self entityName] isEqualToString:@"Page"])
     {
-        // Figure out the predecessor (which page to inherit properties from)
-        KTPage *parent = [[self selectedObjects] lastObject];
-        if (![parent isCollection]) parent = [parent parentPage];
-        OBASSERT(parent || ![[self content] count]);    // it's acceptable to have no parent when creating first page
-    
-        KTPage *predecessor = parent;
-        NSArray *children = [parent childrenWithSorting:SVCollectionSortByDateCreated
-                                              ascending:NO
-                                                inIndex:NO];
-        
-        for (SVSiteItem *aChild in children)
-        {
-            if ([aChild isKindOfClass:[KTPage class]])
-            {
-                predecessor = (KTPage *)aChild;
-                break;
-            }
-        }
-        
-        
         // Match the basic page properties up to the selection
-        [result setMaster:[parent master]];
+        [result setMaster:[predecessor master]];
         
         if (predecessor)
         {
