@@ -252,7 +252,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
             switch ([[textAttachment wrap] integerValue])
             {
                 case SVGraphicWrapNone:
-                    [context pushClassName:@"inline"];
+                    [context pushClassName:@"narrow"];  // fallback for imported images
                     break;
                 case SVGraphicWrapLeft:
                     [context pushClassName:@"narrow right"];

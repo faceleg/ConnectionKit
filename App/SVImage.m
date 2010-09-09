@@ -139,7 +139,7 @@
             SVGraphicWrap wrap = [[attachment wrap] intValue];
             result = (wrap == SVGraphicWrapRight ||
                       wrap == SVGraphicWrapLeft ||
-                      wrap == SVGraphicWrapCenter);
+                      wrap == SVGraphicWrapNone);
         }
     }
     
