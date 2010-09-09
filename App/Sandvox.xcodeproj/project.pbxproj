@@ -351,6 +351,8 @@
 		27422441106A926E0058C8DA /* WEKWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2742243F106A926E0058C8DA /* WEKWebView.h */; };
 		27422442106A926E0058C8DA /* WEKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27422440106A926E0058C8DA /* WEKWebView.m */; };
 		27443266103D8693007E7FF0 /* LoadingPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27443265103D8693007E7FF0 /* LoadingPlaceholder.xib */; };
+		274593E1123925A8005D0640 /* KSFileWrapperExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 274593DF123925A8005D0640 /* KSFileWrapperExtensions.h */; };
+		274593E2123925A8005D0640 /* KSFileWrapperExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 274593E0123925A8005D0640 /* KSFileWrapperExtensions.m */; };
 		2747DA3A10FE8DE6007428BB /* SVSiteItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DA3610FE8DE6007428BB /* SVSiteItem.h */; };
 		2747DA3B10FE8DE6007428BB /* SVSiteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DA3710FE8DE6007428BB /* SVSiteItem.m */; };
 		2747DA3C10FE8DE6007428BB /* SVExternalLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DA3810FE8DE6007428BB /* SVExternalLink.h */; };
@@ -1890,6 +1892,8 @@
 		27422440106A926E0058C8DA /* WEKWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEKWebView.m; sourceTree = "<group>"; };
 		274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CollectionArchiveElement.xcodeproj; path = ../PlugIns/Indexes/CollectionArchiveElement/CollectionArchiveElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		27443265103D8693007E7FF0 /* LoadingPlaceholder.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingPlaceholder.xib; sourceTree = "<group>"; };
+		274593DF123925A8005D0640 /* KSFileWrapperExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSFileWrapperExtensions.h; sourceTree = "<group>"; };
+		274593E0123925A8005D0640 /* KSFileWrapperExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSFileWrapperExtensions.m; sourceTree = "<group>"; };
 		2747DA3610FE8DE6007428BB /* SVSiteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSiteItem.h; sourceTree = "<group>"; };
 		2747DA3710FE8DE6007428BB /* SVSiteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSiteItem.m; sourceTree = "<group>"; };
 		2747DA3810FE8DE6007428BB /* SVExternalLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVExternalLink.h; sourceTree = "<group>"; };
@@ -3833,6 +3837,8 @@
 				27FDA7071238F4C3006E1A0D /* KSURLUtilities.m */,
 				27FDA71F1238F66F006E1A0D /* KSPathUtilities.h */,
 				27FDA7201238F66F006E1A0D /* KSPathUtilities.m */,
+				274593DF123925A8005D0640 /* KSFileWrapperExtensions.h */,
+				274593E0123925A8005D0640 /* KSFileWrapperExtensions.m */,
 			);
 			name = KSFileUtilities;
 			path = ../KSFileUtilities;
@@ -5779,6 +5785,7 @@
 				2782B2DA12367C6E00C5F870 /* SVEnclosure.h in Headers */,
 				27FDA7081238F4C3006E1A0D /* KSURLUtilities.h in Headers */,
 				27FDA7211238F66F006E1A0D /* KSPathUtilities.h in Headers */,
+				274593E1123925A8005D0640 /* KSFileWrapperExtensions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7279,6 +7286,7 @@
 				3CA17FCA122DB2C700331125 /* SVIndexInspectorViewController.m in Sources */,
 				27FDA7091238F4C3006E1A0D /* KSURLUtilities.m in Sources */,
 				27FDA7221238F66F006E1A0D /* KSPathUtilities.m in Sources */,
+				274593E2123925A8005D0640 /* KSFileWrapperExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

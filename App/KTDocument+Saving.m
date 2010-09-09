@@ -40,6 +40,8 @@
 #import "NSSet+Karelia.h"
 #import "NSView+Karelia.h"
 #import "NSWorkspace+Karelia.h"
+
+#import "KSFileWrapperExtensions.h"
 #import "KSURLUtilities.h"
 #import "KSPathUtilities.h"
 
@@ -1139,31 +1141,13 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 
 - (void)addPreviewResourceWithData:(NSData *)data relativePath:(NSString *)path;
 {
-    // Create any directories required by the path
-    NSArray *components = [path pathComponents];
-    NSFileWrapper *parentWrapper = _previewResourcesFileWrapper;
-    
-    NSUInteger i, count = [components count] - 1;
-    for (i = 0; i < count; i++)
-    {
-        NSString *aComponent = [components objectAtIndex:i];
-        NSFileWrapper *wrapper = [[parentWrapper fileWrappers] objectForKey:aComponent];
-        if (!wrapper)
-        {
-            wrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:nil];
-            [wrapper setPreferredFilename:aComponent];
-            [parentWrapper addFileWrapper:wrapper];
-            [wrapper release];
-        }
-        
-        parentWrapper = wrapper;
-    }
-    
     // Create a wrapper for the file itself
     NSFileWrapper *wrapper = [[NSFileWrapper alloc] initRegularFileWithContents:data];
-    [wrapper setPreferredFilename:[components lastObject]];
+    [wrapper setPreferredFilename:[path lastPathComponent]];
     
-    [parentWrapper addFileWrapper:wrapper];
+    [_previewResourcesFileWrapper addFileWrapper:wrapper
+                                    subdirectory:[path stringByDeletingLastPathComponent]];
+    
     [wrapper release];
 }
 
