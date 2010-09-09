@@ -1,47 +1,15 @@
-// 
-//  SVVideo.m
+//
+//  SVFlash.m
 //  Sandvox
 //
-//  Created by Mike on 05/04/2010.
+//  Created by Dan Wood on 9/9/10.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
+
 /*
- SVVideo is a MediaGraphic, similar to SVImage in some ways, and SVAudio in others.
+ SVFlash is a MediaGraphic, similar to SVVideo and SVAudio, but much simpler.
  
- The overall technique for writing out the markup for a video tag is based off the handy
- "Video for Everybody" technique http://camendesign.com/code/video_for_everybody .... 
- 
- The logic for this is very similar to the SVAudio class, generating a <video> tag wrapping an
- Flash-based video player's <object> tags.  This combination covers almost 100% of browsers,
- but only if you choose the right source media!
- 
- The format with the best "coverage" of browsers is an H.264 MP4.  Many browsers can play it with
- the <video> tag; those that can't, the Flash video player will cover.  However, to work on an iOS
- device, the file has to conform to some other constraints -- which I currently don't have a way to
- test yet!
- 
- You could also specify an FLV file, and you would get good coverage, but no iOS compatibility.  If
- you provide a QuickTime, AVI, WMV, etc. the right embedding code will be generated, but the movie
- won't be visible on all computers.  (This is essentially what we had in Sandvox 1).
- 
- As in the SVAudio class, we show some warnings in the inspector when the chosen format won't reach
- a wide range of browsers.
- 
- Also, the technical approach is the same as SVAudio so it won't be repeated here.  To handle buggy
- browsers that don't know about what formats they can't play, we manually check for MP4 movies
- trying to play in a non-WebKit browser, or a different format being played in Safari.
- 
- Unlike the audio object, a video has a natural size, and it can show a poster frame.  The poster
- frame can be set automatically; we do this by asking the specified file (if it's a file, not an 
- external URL) for its QuickLook preview. This is loaded asynchronously.  Or, the user can choose
- an image file (it should be the same size as the movie).  Later we may offer a way to choose any
- frame from the movie.  We may also want to get a poster frame from a remotely loaded movie.
- 
- We also make use of QuickTime to try and load the movie, so that we can get the natural size
- (width by height) of the movie.  In many cases this loads right up, but in some cases (e.g. a WMV
- when you have Perian installed so that you can actually view the movie), it has to load for a
- moment before it will reach kMovieLoadStatePlayable before we can get the dimensions.
- 
+ We try to guess the dimensions of the flash file by parsing the file.
  One drawback about the fact that we won't know the dimensions of a movie until we have been able
  to load it on a page is that it's possible that one could create a bunch of "movie pages" and never
  load them into Sandvox to give them a chance to calculate their dimensions. I don't think that
@@ -56,15 +24,14 @@
  
  Later on, we may want do dig into MP4 files and scrutinize them for all of the properties that are
  needed to ensure iOS compatibility.
-  
+ 
  */
 
-#import "SVVideo.h"
+#import "SVFlash.h"
 
 #import "SVHTMLContext.h"
 #import "SVMediaRecord.h"
 #import "KSSimpleURLConnection.h"
-#import "SVVideoInspector.h"
 #import <QTKit/QTKit.h>
 #include <zlib.h>
 #import "NSImage+Karelia.h"
@@ -74,6 +41,7 @@
 #import <QuickLook/QuickLook.h>
 #import "KSThreadProxy.h"
 #import "NSImage+KTExtensions.h"
+#import "SVMediaGraphicInspector.h"
 
 @interface QTMovie (ApplePrivate)
 
@@ -81,16 +49,15 @@
 
 @end
 
-@interface SVVideo ()
+@interface SVFlash ()
 
 - (void)loadMovie;
 - (void)loadMovieFromAttributes:(NSDictionary *)anAttributes;
-- (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
 - (void)calculateMovieDimensions:(QTMovie *)aMovie;
 - (void)calculateMoviePlayability:(QTMovie *)aMovie;
 @end
 
-@implementation SVVideo 
+@implementation SVFlash 
 
 @dynamic posterFrame;
 @dynamic posterFrameType;
@@ -107,9 +74,9 @@
 #pragma mark -
 #pragma mark Lifetime
 
-+ (SVVideo *)insertNewVideoInManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVFlash *)insertNewVideoInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVVideo *result = [NSEntityDescription insertNewObjectForEntityForName:@"Video"
+    SVFlash *result = [NSEntityDescription insertNewObjectForEntityForName:@"Video"
                                                     inManagedObjectContext:context];
     return result;
 }
@@ -117,7 +84,7 @@
 - (void)willInsertIntoPage:(KTPage *)page;
 {
 	[self setConstrainProportions:YES];		// We will likely want this on
-
+	
     [super willInsertIntoPage:page];
     
     // Show caption
@@ -144,18 +111,18 @@
 	// If this doesn't work well, try the old method:
 	// 	NSMutableSet *fileTypes = [NSMutableSet setWithArray:[QTMovie movieFileTypes:QTIncludeCommonTypes]];
 	// [fileTypes minusSet:[NSSet setWithArray:[NSImage imageFileTypes]]];
-
+	
 }
 
 - (NSString *)plugInIdentifier; // use standard reverse DNS-style string
 {
-	return @"com.karelia.sandvox.SVVideo";
+	return @"com.karelia.sandvox.SVFlash";
 }
 
 + (SVInspectorViewController *)makeInspectorViewController;
 {
     SVInspectorViewController *result = nil;
-    result = [[[SVVideoInspector alloc] initWithNibName:@"SVVideoInspector" bundle:nil] autorelease];
+    result = [[[SVMediaGraphicInspector alloc] initWithNibName:@"SVFlashInspector" bundle:nil] autorelease];
     return result;
 }
 
@@ -227,7 +194,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
                     insertIntoManagedObjectContext:[self managedObjectContext]];	
 	}
 	[self replaceMedia:posterMedia forKeyPath:@"posterFrame"];
-
+	
 }
 
 - (void)getQuickLookForFileURL:(NSURL *)fileURL		// CALLED FROM OPERATION
@@ -278,7 +245,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 - (void)setMediaWithURL:(NSURL *)URL;
 {
  	OBPRECONDITION(URL);
-   [super setMediaWithURL:URL];
+	[super setMediaWithURL:URL];
     
     if ([self constrainProportions])    // generally true
     {
@@ -343,7 +310,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 
 - (void)_mediaChanged;
 {
-	NSLog(@"SVVideo Media set.");
+	NSLog(@"SVFlash Media set.");
 	if (nil == self.posterFrame || [self.posterFrameType intValue] != kPosterTypeChoose)		// get poster frame image UNLESS we have an override chosen.
 	{
 		[self getPosterFrameFromQuickLook];
@@ -373,7 +340,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	[self setPrimitiveValue:anExternalSourceURL forKey:@"externalSourceURL"];
 	
 	[self _mediaChanged];
-
+	
 	[self didChangeValueForKey:@"externalSourceURL"];
 }
 
@@ -400,7 +367,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 {
 	NSString *movieSourcePath  = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
 	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
-
+	
 	NSUInteger heightWithBar = [[self height] intValue]
 	+ (self.controller.boolValue ? 16 : 0);
 	
@@ -410,7 +377,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
 	
 	// ID on <object> apparently required for IE8
-	NSString *elementID = [context startElement:@"object" preferredIdName:@"quicktime" className:nil attributes:nil];	// class, attributes already pushed
+	NSString *elementID = [context startElement:@"div" preferredIdName:@"quicktime" className:nil attributes:nil];	// class, attributes already pushed
 	
 	if (self.posterFrame && !self.autoplay.boolValue)	// poster and not auto-starting? make it an href
 	{
@@ -429,7 +396,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	[context writeParamElementWithName:@"scale" value:@"tofit"];
 	[context writeParamElementWithName:@"type" value:@"video/quicktime"];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://www.apple.com/quicktime/download/"];	
-
+	
 	return elementID;
 }
 
@@ -441,7 +408,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	
 	NSUInteger heightWithBar = [[self height] intValue]
 	+ (self.controller.boolValue ? 46 : 0);		// Windows media controller is 46 pixels (on windows; adjusted on macs)
-
+	
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	[context pushAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
@@ -456,7 +423,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	[context writeParamElementWithName:@"type" value:@"application/x-oleobject"];
 	[context writeParamElementWithName:@"uiMode" value:@"mini"];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://microsoft.com/windows/mediaplayer/en/download/"];
-
+	
 	return elementID;
 }
 
@@ -466,7 +433,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 {
 	NSString *movieSourcePath  = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
 	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
-
+	
 	// Actually write the video
 	if ([self shouldWriteHTMLInline]) [self buildClassName:context];
 	[context pushAttribute:@"width" value:[[self width] description]];
@@ -496,7 +463,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
 	[context startElement:@"source"];
 	[context endElement];
-
+	
 	return elementID;
 }
 
@@ -658,15 +625,15 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 			[context writeParamElementWithName:key value:[videoFlashExtraParams objectForKey:key]];
 		}
 	}
-
+	
 	return elementID;
 }
 
 - (void)writePosterImage:(SVHTMLContext *)context
-	posterSourceURL:(NSURL *)posterSourceURL;
+		 posterSourceURL:(NSURL *)posterSourceURL;
 {
 	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
-
+	
 	// Get a title to indicate that the movie cannot play inline.  (Suggest downloading, if we provide a link)
 	KTPage *thePage = [context page];
 	NSString *language = [thePage language];
@@ -688,7 +655,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
 	[context writeElement:@"p" text:NSLocalizedString(@"Unable to show video. Perhaps it is not a recognized video format.", @"Warning shown to user when video can't be embedded")];
 	// Poster may be shown next, so don't end....
-
+	
 	return elementID;
 }
 
@@ -757,7 +724,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	{
 		if (videoTag)	// start the video tag
 		{
-			[SVVideo writeFallbackScriptOnce:context];
+			[SVFlash writeFallbackScriptOnce:context];
 			videoID = [self startVideo:context movieSourceURL:movieSourceURL posterSourceURL:posterSourceURL]; 
 		}
 		
@@ -780,13 +747,13 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	}
 	
 	// END THE TAGS
-		
+	
 	if (flashTag || quicktimeTag || microsoftTag)
 	{
 		OBASSERT([@"object" isEqualToString:[context topElement]]);
 		[context endElement];	//  </object>
 	}
-		
+	
 	if (videoTag)		// we may have a video nested outside of an object
 	{
 		OBASSERT([@"video" isEqualToString:[context topElement]]);
@@ -818,7 +785,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 {
 	NSImage *result = nil;
 	NSString *type = self.codecType;
-
+	
 	if (!type || ![self media])								// no movie
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
@@ -1067,7 +1034,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		}
 	}
 }
-	
+
 // Asynchronous load returned -- try to set the dimensions.
 - (void)connection:(KSSimpleURLConnection *)connection didFinishLoadingData:(NSData *)data response:(NSURLResponse *)response;
 {
@@ -1099,7 +1066,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 			[self calculatePosterImageFromPlayableMovie:movie];
 			[self calculateMovieDimensions:movie];
 			[self calculateMoviePlayability:movie];
-		
+			
 			[[NSNotificationCenter defaultCenter] removeObserver:self];
 			self.dimensionCalculationMovie = nil;	// we are done with movie now!
 		}
@@ -1118,13 +1085,6 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	
 }
 
-- (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
-{
-	NSImage *posterImage = [aMovie betterPosterImage];
-	
-	// TODO ... finish this ... of course only call this if we need to.
-	
-}
 - (void)calculateMovieDimensions:(QTMovie *)aMovie;
 {
 	NSSize movieSize = NSZeroSize;
