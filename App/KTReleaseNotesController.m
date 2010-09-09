@@ -32,7 +32,7 @@
 	[simpleParameters setObject:@"1" forKey:@"rn"];
 
 	NSURL *baseURL = [NSURL URLWithString:@"changelog.php" relativeToURL:[[NSApp delegate] homeBaseURL]];
-	NSURL *result = [NSURL ks_URLWithBaseURL:baseURL parameters:simpleParameters];
+	NSURL *result = [baseURL ks_URLWithQueryDictionary:simpleParameters];
 	
 	OFF((@"release notes URL = %@", result));
 	return result;

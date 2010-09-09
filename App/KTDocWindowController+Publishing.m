@@ -319,11 +319,11 @@
 - (IBAction)submitSiteToDirectory:(id)sender;
 {
 	NSURL *siteURL = [[[[self document] site] rootPage] URL];
-	NSURL *submissionURL = [NSURL ks_URLWithBaseURL:[NSURL URLWithString:@"http://www.sandvoxsites.com/submit_from_app.php"]
-                                      parameters:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                  [siteURL absoluteString], @"url",
-                                                  gRegistrationString, @"reg",
-                                                  nil]];
+	NSURL *submissionURL = [[NSURL URLWithString:@"http://www.sandvoxsites.com/submit_from_app.php"]
+                            ks_URLWithQueryDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                       [siteURL absoluteString], @"url",
+                                                       gRegistrationString, @"reg",
+                                                       nil]];
 	
 	if (submissionURL)
 	{

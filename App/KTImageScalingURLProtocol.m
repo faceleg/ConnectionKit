@@ -47,7 +47,11 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 	[query setFloat:compression forKey:@"compression"];
 	
 	
-	NSURL *result = [NSURL ks_URLWithBaseURL:baseURL parameters:query];
+	NSURL *result = [NSURL ks_URLWithScheme:KTImageScalingURLProtocolScheme
+                                       host:[fileURL host]
+                                       path:[fileURL path]
+                            queryDictionary:query];
+    
 	[query release];
 	[baseURL release];
 	

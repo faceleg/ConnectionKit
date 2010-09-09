@@ -25,16 +25,15 @@
     OBPRECONDITION([rendererURL isFileURL]);
     OBPRECONDITION(string);
     
-    NSURL *baseURL = [NSURL URLWithScheme:@"x-image-replacement"
-                                     host:[rendererURL host]
-                                     path:[rendererURL path]];
-    
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             string, @"string",
                             size, @"size",
                             nil];
     
-    return [self ks_URLWithBaseURL:baseURL parameters:params];
+    return [NSURL ks_URLWithScheme:@"x-image-replacement"
+                              host:[rendererURL host]
+                              path:[rendererURL path]
+                   queryDictionary:params];
 }
 
 @end
