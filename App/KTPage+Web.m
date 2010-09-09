@@ -27,7 +27,7 @@
 #import "NSBundle+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 #import "NSObject+Karelia.h"
 
 #import <WebKit/WebKit.h>
@@ -310,7 +310,7 @@
 	if (scriptExists)
 	{
 		NSURL *javascriptURL = [NSURL URLWithString:@"javascript.js" relativeToURL:[[self master] designDirectoryURL]];
-		result = [javascriptURL stringRelativeToURL:[self URL]];
+		result = [javascriptURL ks_stringRelativeToURL:[self URL]];
 	}
 	
 	return result;

@@ -13,6 +13,7 @@
 #import "NSImage+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 
 @implementation NSURL (SVImageReplacement)
@@ -33,7 +34,7 @@
                             size, @"size",
                             nil];
     
-    return [self URLWithBaseURL:baseURL parameters:params];
+    return [self ks_URLWithBaseURL:baseURL parameters:params];
 }
 
 @end
@@ -99,7 +100,7 @@ static NSOperationQueue *sQueue;
     
     
     // What text etc. to render?
-    NSDictionary *query = [URL queryDictionary];
+    NSDictionary *query = [URL ks_queryDictionary];
     NSDictionary *inputs = [[NSDictionary alloc] initWithObjectsAndKeys:
                             [query objectForKey:@"string"], @"String",
                             [query objectForKey:@"size"], @"Size",

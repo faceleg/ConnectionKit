@@ -9,7 +9,7 @@
 #import "SVDocumentUndoManager.h"
 
 #import "NSApplication+Karelia.h"       // Karelia Cocoa additions
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 
 @implementation NSUndoManager (SVDeletedMedia)
@@ -51,13 +51,13 @@
         NSURL *sandvoxSupportDirectory = [NSURL fileURLWithPath:[NSApplication applicationSupportPath]
                                                     isDirectory:YES];
         
-        NSURL *allDeletedMediaDirectory = [sandvoxSupportDirectory URLByAppendingPathComponent:@"Deleted Media"
+        NSURL *allDeletedMediaDirectory = [sandvoxSupportDirectory ks_URLByAppendingPathComponent:@"Deleted Media"
                                                                                    isDirectory:YES];
         
         NSString *deletedMediaDirectoryName = [[NSProcessInfo processInfo] globallyUniqueString];
         
         _deletedMediaDirectory = [[allDeletedMediaDirectory
-                                   URLByAppendingPathComponent:deletedMediaDirectoryName
+                                   ks_URLByAppendingPathComponent:deletedMediaDirectoryName
                                    isDirectory:YES] copy];
         
         

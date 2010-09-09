@@ -302,7 +302,7 @@
 		if (error && [[error domain] isEqualToString:NSURLErrorDomain] && [error code] == -1009) { // No internet connection
 			[automaticListTableView setPlaceholderString:LocalizedStringInThisBundle(@"No Internet connection", "table cell")];
 		}
-		else if (URL && [URL hasNetworkLocation]) {	// The user entered an invalid URL
+		else if (URL && [URL ks_hasNetworkLocation]) {	// The user entered an invalid URL
 			[automaticListTableView setPlaceholderString:LocalizedStringInThisBundle(@"The URL entered does not appear to be a public Amazon list URL", "error message in tableview")];
 		}
 		else if (!products || [products count] == 0) {	// Nothing found

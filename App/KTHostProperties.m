@@ -16,7 +16,7 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 #import "NSWorkspace+Karelia.h"
 
 #import "KSURLFormatter.h"
@@ -85,9 +85,9 @@
     if (siteURL)
     {
         // If the user's entered a non-directory URL, trim it down
-        if (![siteURL hasDirectoryPath])
+        if (![siteURL ks_hasDirectoryPath])
         {
-            siteURL = [siteURL URLByDeletingLastPathComponent];
+            siteURL = [siteURL ks_URLByDeletingLastPathComponent];
         }
         
         // We compose the result out of just the host and path
@@ -182,7 +182,7 @@
 	NSString *subFolder = [self valueForKey:@"localSubFolder"];
 	if (nil != subFolder && ![subFolder isEqualToString:@""])
 	{
-		[result appendString:[subFolder stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
+		[result appendString:[subFolder ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
 		if (![result hasSuffix:@"/"])		// make sure it ends with /
 		{
 			[result appendString:@"/"];
@@ -230,7 +230,7 @@
 		NSString *subFolder = [self valueForKey:@"localSubFolder"];
 		if (nil != subFolder && ![subFolder isEqualToString:@""])
 		{
-			[result appendString:[subFolder stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
+			[result appendString:[subFolder ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
 			if (![result hasSuffix:@"/"])		// make sure it ends with /
 			{
 				[result appendString:@"/"];
@@ -446,7 +446,7 @@ to be verified.
 - (NSURL *)resourcesDirectoryURL
 {
 	NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
-	NSURL *result = [NSURL URLWithPath:resourcesDirectoryName relativeToURL:[self siteURL] isDirectory:YES];
+	NSURL *result = [NSURL ks_URLWithPath:resourcesDirectoryName relativeToURL:[self siteURL] isDirectory:YES];
 	
 	OBPOSTCONDITION(result);
 	return result;
@@ -456,7 +456,7 @@ to be verified.
 {
 	OBPRECONDITION(filename);
 	
-	NSURL *result = [NSURL URLWithPath:[filename lastPathComponent] 
+	NSURL *result = [NSURL ks_URLWithPath:[filename lastPathComponent] 
 						 relativeToURL:[self resourcesDirectoryURL]
 						   isDirectory:NO];
 	

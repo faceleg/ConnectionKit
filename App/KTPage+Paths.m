@@ -23,9 +23,11 @@
 #import "SVWebEditingURL.h"
 
 #import "NSManagedObject+KTExtensions.h"
+#import "NSString+KTExtensions.h"
+
 #import "NSSet+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSString+KTExtensions.h"
+#import "KSURLUtilities.h"
 
 
 @interface KTPage (PathsPrivate)
@@ -394,7 +396,7 @@
 		}
 		else if (collectionPathStyle == KTCollectionHTMLDirectoryPath)
 		{
-			result = [result HTMLDirectoryPath];
+			result = [result ks_URLDirectoryPath];
 		}
 	}
 	else
@@ -430,7 +432,7 @@
 		// NSString doesn't handle KTCollectionHTMLDirectoryPath-style strings; we must fix them manually
 		if (collectionPathStyle == KTCollectionHTMLDirectoryPath && [self isCollection])
 		{
-			result = [result HTMLDirectoryPath];
+			result = [result ks_URLDirectoryPath];
 		}
 	}
 	

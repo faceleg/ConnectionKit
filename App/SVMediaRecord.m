@@ -14,7 +14,7 @@
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 #import "QTMovie+Karelia.h"
 
 #import "BDAlias.h"
@@ -57,7 +57,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
                                                inManagedObjectContext:context];
         [result setAlias:alias];
         [result setFileAttributes:attributes];
-        [result setPreferredFilename:[URL lastPathComponent]];
+        [result setPreferredFilename:[URL ks_lastPathComponent]];
     }
     
     return result;
@@ -73,7 +73,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
     
     NSString *type = [NSString MIMETypeForUTI:
-                      [NSString UTIForFilenameExtension:[url pathExtension]]];
+                      [NSString UTIForFilenameExtension:[url ks_pathExtension]]];
     
     WebResource *resource = [[WebResource alloc] initWithData:data
                                                           URL:url
@@ -101,7 +101,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
                                                           inManagedObjectContext:context];
     
     result->_webResource = [resource copy];
-    [result setPreferredFilename:[URL lastPathComponent]];
+    [result setPreferredFilename:[URL ks_lastPathComponent]];
     
     return result;
 }
@@ -114,8 +114,8 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
                                                           inManagedObjectContext:context];
     
     [result readFromURL:URL options:0 error:NULL];
-    [result setFilename:[@"Shared/" stringByAppendingString:[URL lastPathComponent]]];
-    [result setPreferredFilename:[URL lastPathComponent]];
+    [result setFilename:[@"Shared/" stringByAppendingString:[URL ks_lastPathComponent]]];
+    [result setPreferredFilename:[URL ks_lastPathComponent]];
     [result setShouldCopyFileIntoDocument:[NSNumber numberWithBool:NO]];
     
     NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[URL path]

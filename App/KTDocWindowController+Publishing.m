@@ -25,7 +25,7 @@
 #import "KSSilencingConfirmSheet.h"
 
 #import "NSObject+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 #import "NSWorkspace+Karelia.h"
 #import "NSToolbar+Karelia.h"
 
@@ -319,7 +319,7 @@
 - (IBAction)submitSiteToDirectory:(id)sender;
 {
 	NSURL *siteURL = [[[[self document] site] rootPage] URL];
-	NSURL *submissionURL = [NSURL URLWithBaseURL:[NSURL URLWithString:@"http://www.sandvoxsites.com/submit_from_app.php"]
+	NSURL *submissionURL = [NSURL ks_URLWithBaseURL:[NSURL URLWithString:@"http://www.sandvoxsites.com/submit_from_app.php"]
                                       parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                                   [siteURL absoluteString], @"url",
                                                   gRegistrationString, @"reg",

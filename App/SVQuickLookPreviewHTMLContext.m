@@ -13,7 +13,7 @@
 #import "SVSiteItem.h"
 
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 
 @implementation SVQuickLookPreviewHTMLContext
@@ -31,13 +31,13 @@
     {
         // Files outside the package should be copied in
         NSURL *docURL = [[[self baseURL]    // perhaps a slightly hacky way to locate it!
-                          URLByDeletingLastPathComponent]
-                         URLByDeletingLastPathComponent];
+                          ks_URLByDeletingLastPathComponent]
+                         ks_URLByDeletingLastPathComponent];
                 
-        if (![URL isSubpathOfURL:docURL])
+        if (![URL ks_isSubpathOfURL:docURL])
         {
             NSString *result = [@"Resources" stringByAppendingPathComponent:
-                                [URL lastPathComponent]];
+                                [URL ks_lastPathComponent]];
             
             return result;
         }
@@ -52,7 +52,7 @@
 {
     // CSS other than design should be written inline
     // Yes, this check should be done better than just the filename
-    if ([[cssURL lastPathComponent] isEqualToString:@"main.css"])
+    if ([[cssURL ks_lastPathComponent] isEqualToString:@"main.css"])
     {
         return [super addCSSWithURL:cssURL];
     }

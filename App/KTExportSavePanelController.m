@@ -8,7 +8,7 @@
 
 #import "KTExportSavePanelController.h"
 
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 
 @implementation KTExportSavePanelController
@@ -73,7 +73,7 @@
         {
             NSURL *exportURL = [panel URL];
             NSURL *docURL = _documentURL;
-            if ([docURL isSubpathOfURL:exportURL] || [exportURL isSubpathOfURL:docURL])
+            if ([docURL ks_isSubpathOfURL:exportURL] || [exportURL ks_isSubpathOfURL:docURL])
             {
                 result = nil;
                 

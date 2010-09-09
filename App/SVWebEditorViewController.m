@@ -38,7 +38,7 @@
 #import "NSArray+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSResponder+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 #import "NSWorkspace+Karelia.h"
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
@@ -1249,7 +1249,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     
     // A link to another page within the document should open that page. Let the delegate take care of deciding how to open it
     KTPage *myPage = [[self HTMLContext] page];
-    NSURL *relativeURL = [URL URLRelativeToURL:[myPage URL]];
+    NSURL *relativeURL = [URL ks_URLRelativeToURL:[myPage URL]];
     NSString *relativePath = [relativeURL relativePath];
     
     if (([[URL scheme] isEqualToString:@"applewebdata"] || [relativePath hasPrefix:kKTPageIDDesignator]) &&

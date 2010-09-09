@@ -14,7 +14,7 @@
 
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 #import <QuartzCore/CoreImage.h>
 
@@ -63,7 +63,7 @@
     
     
     // Construct image scaling properties dictionary from the URL
-    NSDictionary *URLQuery = [URL queryDictionary];
+    NSDictionary *URLQuery = [URL ks_queryDictionary];
     KSImageScalingMode scalingMode = [URLQuery integerForKey:@"mode"];
     
     
@@ -208,7 +208,7 @@
         
         
         // Construct image scaling properties dictionary from the URL
-        NSDictionary *URLQuery = [URL queryDictionary];
+        NSDictionary *URLQuery = [URL ks_queryDictionary];
         
         NSURL *sourceURL = [[NSURL alloc] initWithScheme:@"file" host:[URL host] path:[URL path]];
         OBASSERT(sourceURL);

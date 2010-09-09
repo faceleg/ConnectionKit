@@ -27,19 +27,21 @@
 #import "KSSilencingConfirmSheet.h"
 #import "KSThreadProxy.h"
 
+#import "NSImage+KTExtensions.h"
+#import "NSManagedObjectContext+KTExtensions.h"
+#import "NSManagedObject+KTExtensions.h"
+
 #import "NSApplication+Karelia.h"
 #import "NSDate+Karelia.h"
 #import "NSError+Karelia.h"
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
-#import "NSImage+KTExtensions.h"
 #import "NSInvocation+Karelia.h"
-#import "NSManagedObjectContext+KTExtensions.h"
-#import "NSManagedObject+KTExtensions.h"
 #import "NSSet+Karelia.h"
 #import "NSView+Karelia.h"
 #import "NSWorkspace+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
+#import "KSPathUtilities.h"
 
 #import "CIImage+Karelia.h"
 
@@ -360,7 +362,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                 id <SVDocumentFileWrapper> media = [wrappers objectForKey:aKey];
                 if ([media shouldRemoveFromDocument])
                 {
-                    NSURL *deletionURL = [deletedMediaDirectory URLByAppendingPathComponent:aKey
+                    NSURL *deletionURL = [deletedMediaDirectory ks_URLByAppendingPathComponent:aKey
                                                                                 isDirectory:NO];
                     [(SVMediaRecord *)media moveToURLWhenDeleted:deletionURL];
                 }
@@ -635,7 +637,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             // Don't try to access -[dupe filename] as it may be a deleted object, and therefore unable to fulfil the fault
             NSURL *fileURL = [dupe fileURL];
             [aMediaRecord readFromURL:fileURL options:0 error:NULL];
-            [aMediaRecord setFilename:[fileURL lastPathComponent]];
+            [aMediaRecord setFilename:[fileURL ks_lastPathComponent]];
             
             NSString *key = [self keyForDocumentFileWrapper:dupe];
             OBASSERT(key);
@@ -652,7 +654,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     // Try write
-    NSURL *mediaURL = [docURL URLByAppendingPathComponent:filename isDirectory:NO];
+    NSURL *mediaURL = [docURL ks_URLByAppendingPathComponent:filename isDirectory:NO];
     if ([aMediaRecord writeToURL:mediaURL updateFileURL:YES error:outError])
     {
         // I was experimenting with not updating the file URL straight away. I'm not sure why, but I think it was to account for the idea that you might be doing a Save-To op. Unfortunately that breaks Quick Look previews if the home page contains a new image. So I've switched to updating the URL straight off, so it's ready to generate correct preview HTML.
@@ -969,13 +971,13 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         NSURL *URL = [aResource URL];
         if ([URL isFileURL])
         {
-            if (![URL isSubpathOfURL:docURL])
+            if (![URL ks_isSubpathOfURL:docURL])
             {
                 NSString *path = [URL path];
                 NSString *designPath = [[[[[[self site] rootPage] master] design] bundle] bundlePath];
                 
                 NSString *resourcePath = [path lastPathComponent];
-                if ([path isSubpathOfPath:designPath])
+                if ([path ks_isSubpathOfPath:designPath])
                 {
                     resourcePath = [path ks_pathRelativeToDirectory:designPath];
                 }
@@ -990,7 +992,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     NSImage *thumbnail = [[self ks_proxyOnThread:nil] makeThumbnail];
     if (thumbnail)
     {
-        NSURL *thumbnailURL = [[KTDocument quickLookURLForDocumentURL:docURL] URLByAppendingPathComponent:@"Thumbnail.png" isDirectory:NO];
+        NSURL *thumbnailURL = [[KTDocument quickLookURLForDocumentURL:docURL] ks_URLByAppendingPathComponent:@"Thumbnail.png" isDirectory:NO];
         OBASSERT(thumbnailURL);	// shouldn't be nil, right?
         
         result = [[thumbnail PNGRepresentation] writeToURL:thumbnailURL options:0 error:error];
@@ -1081,7 +1083,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	NSURLRequest *result = request;
     
     NSURL *requestURL = [request URL];
-	if ([requestURL hasNetworkLocation] && ![[requestURL scheme] isEqualToString:@"svxmedia"])
+	if ([requestURL ks_hasNetworkLocation] && ![[requestURL scheme] isEqualToString:@"svxmedia"])
 	{
 		NSMutableURLRequest *mutableRequest = [[request mutableCopy] autorelease];
 		[mutableRequest setCachePolicy:NSURLRequestReturnCacheDataDontLoad];	// don't load, but return cached value

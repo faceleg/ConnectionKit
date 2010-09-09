@@ -31,12 +31,12 @@
 
 #import "NSDictionary+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
 
 #import "KSOrderedManagedObjectControllers.h"
 #import "KSStringWriter.h"
+#import "KSURLUtilities.h"
 
 
 static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
@@ -359,7 +359,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                                          entityName:@"GraphicMedia"
                      insertIntoManagedObjectContext:context];
         
-        [media setPreferredFilename:[@"pastedImage" stringByAppendingPathExtension:[URL pathExtension]]];
+        [media setPreferredFilename:[@"pastedImage" stringByAppendingPathExtension:[URL ks_pathExtension]]];
     }
     
     SVImage *image = [SVImage insertNewImageInManagedObjectContext:context];

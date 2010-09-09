@@ -14,7 +14,7 @@
 #import "SVRawHTMLGraphic.h"
 
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 #import "KSStringHTMLEntityUnescaping.h"
 #import "KSStringXMLEntityEscaping.h"
@@ -348,8 +348,8 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 				{
 					attachmentMessage = [NSString stringWithFormat:@"%@\n%@", attachmentMessage, attachmentEnglish];
 				}
-				NSString *escapedAttachmentMessage = [[NSString stringWithFormat:@"\n\n\n%@", attachmentMessage] stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
-				NSString *escapedSubject = [@"Problem with HTML Validator" stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
+				NSString *escapedAttachmentMessage = [[NSString stringWithFormat:@"\n\n\n%@", attachmentMessage] ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
+				NSString *escapedSubject = [@"Problem with HTML Validator" ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
 				NSString *linkString = [NSString stringWithFormat:@"<a href='sandvox:r/val=1&s=%@&d=%@'>", escapedSubject, escapedAttachmentMessage];
 				
 				// Hyperlink what's between the [ and the ]

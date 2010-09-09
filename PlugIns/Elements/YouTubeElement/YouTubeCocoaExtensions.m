@@ -129,7 +129,7 @@
 			[pathComponents count] == 2 &&
 			[[pathComponents objectAtIndex:1] isEqualToString:@"watch"])
 		{
-			NSDictionary *query = [self queryDictionary];
+			NSDictionary *query = [self ks_queryDictionary];
 			
 			NSString *videoID = [query objectForKey:@"v"];		// For invalid URLs this will be nil
 			if (videoID && [videoID isYouTubeVideoID])

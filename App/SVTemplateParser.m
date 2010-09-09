@@ -19,8 +19,8 @@
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSScanner+Karelia.h"
-#import "NSURL+Karelia.h"
 
+#import "KSURLUtilities.h"
 #import "KSStringXMLEntityEscaping.h"
 
 #import "Debug.h"
@@ -394,13 +394,13 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 							{
 								if (urlEncodeLocation < htmlEscapeLocation)	// URL Encode first
 								{
-									toAppend = [toAppend stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
+									toAppend = [toAppend ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
 									toAppend = [toAppend stringByEscapingHTMLEntities];
 								}
 								else	// HTML escape first
 								{
 									toAppend = [toAppend stringByEscapingHTMLEntities];
-									toAppend = [toAppend stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
+									toAppend = [toAppend ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
 								}
 								
 							}
@@ -408,11 +408,11 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 							{
 								if (NSNotFound != urlEncodeLocation)
 								{
-									toAppend = [toAppend stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
+									toAppend = [toAppend ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
 								}
 								if (NSNotFound != urlEncodeDashesLocation)
 								{
-									toAppend = [toAppend stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES escape:@"&+%=-"];
+									toAppend = [toAppend ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES escape:@"&+%=-"];
 								}
 								if (NSNotFound != htmlEscapeLocation)
 								{

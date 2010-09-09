@@ -22,7 +22,7 @@
 #import "NSObject+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
 #import "NSString+KTExtensions.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 #import "NSXMLElement+Karelia.h"
 
 
@@ -218,7 +218,7 @@
 	
 	if ([[self collectionSyndicate] boolValue])
 	{
-		result = [NSURL URLWithPath:[self RSSFileName] relativeToURL:[self URL] isDirectory:NO];
+		result = [NSURL ks_URLWithPath:[self RSSFileName] relativeToURL:[self URL] isDirectory:NO];
 	}
 	
 	return result;

@@ -12,6 +12,7 @@
 #import "SVWebEditingURL.h"
 
 #import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 
 @implementation SVExternalLink 
@@ -48,7 +49,7 @@
 
 - (NSString *)fileName
 {
-    return [[[self URL] lastPathComponent] stringByDeletingPathExtension];
+    return [[[self URL] ks_lastPathComponent] stringByDeletingPathExtension];
 }
 
 - (SVExternalLink *)externalLinkRepresentation

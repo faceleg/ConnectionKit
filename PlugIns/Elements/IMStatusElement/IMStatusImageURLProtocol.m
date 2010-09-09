@@ -37,7 +37,7 @@
 - (void)startLoading;
 {
     NSURL *requestURL = [[self request] URL];
-    NSDictionary *query = [requestURL queryDictionary];
+    NSDictionary *query = [requestURL ks_queryDictionary];
     
     NSString *headline = [query objectForKey:@"headline"];
     NSString *status = [query objectForKey:@"status"];

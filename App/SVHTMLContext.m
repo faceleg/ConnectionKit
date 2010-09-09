@@ -29,7 +29,7 @@
 
 #import "NSIndexPath+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 #import "KSStringWriter.h"
 
@@ -675,7 +675,7 @@
             break;
             
         default:
-            result = [URL stringRelativeToURL:[self baseURL]];
+            result = [URL ks_stringRelativeToURL:[self baseURL]];
             break;
     }
     

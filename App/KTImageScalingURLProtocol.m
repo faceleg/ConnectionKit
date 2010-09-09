@@ -17,7 +17,7 @@
 #import "NSError+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 #import <QuartzCore/CoreImage.h>
 
@@ -47,7 +47,7 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 	[query setFloat:compression forKey:@"compression"];
 	
 	
-	NSURL *result = [NSURL URLWithBaseURL:baseURL parameters:query];
+	NSURL *result = [NSURL ks_URLWithBaseURL:baseURL parameters:query];
 	[query release];
 	[baseURL release];
 	
@@ -144,7 +144,7 @@ static NSURLCache *_sharedCache;
 	
 	if ([[[request URL] scheme] isEqualToString:KTImageScalingURLProtocolScheme])
 	{
-		NSDictionary *query = [[request URL] queryDictionary];
+		NSDictionary *query = [[request URL] ks_queryDictionary];
 		if (//[query objectForKey:@"size"] &&   // Allow there to be no size and just convert between data types
 			[query objectForKey:@"mode"] &&
             [query objectForKey:@"filetype"] &&

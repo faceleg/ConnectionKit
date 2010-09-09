@@ -16,7 +16,8 @@
 
 #import "NSData+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
+#import "KSPathUtilities.h"
 
 
 @implementation SVPublishingHTMLContext
@@ -132,7 +133,7 @@
     [super addResourceWithURL:resourceURL];
     [_publisher publishResourceAtURL:resourceURL];
     
-    return [[[[self page] site] hostProperties] URLForResourceFile:[resourceURL lastPathComponent]];
+    return [[[[self page] site] hostProperties] URLForResourceFile:[resourceURL ks_lastPathComponent]];
 }
 
 - (NSURL *)addGraphicalTextData:(NSData *)imageData idName:(NSString *)idName;
@@ -140,7 +141,7 @@
     NSURL *result = [super addGraphicalTextData:imageData idName:idName];
     
     NSString *designPath = [_publisher designDirectoryPath];
-    NSString *uploadPath = [designPath stringByAppendingPathComponent:[result lastPathComponent]];
+    NSString *uploadPath = [designPath stringByAppendingPathComponent:[result ks_lastPathComponent]];
     
     [_publisher publishData:imageData toPath:uploadPath];
     

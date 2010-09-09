@@ -17,7 +17,7 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 
 static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObservation";
@@ -369,7 +369,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (NSURL *)mediaURL; { return [[self plugIn] thumbnailURL]; }
 - (NSData *)mediaData; { return nil; }
-- (NSString *)preferredFilename; { return [[self mediaURL] lastPathComponent]; }
+- (NSString *)preferredFilename; { return [[self mediaURL] ks_lastPathComponent]; }
 
 - (id)imageRepresentation; { return [self mediaURL]; }
 - (NSString *)imageRepresentationType; { return IKImageBrowserNSURLRepresentationType; }

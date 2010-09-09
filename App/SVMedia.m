@@ -10,7 +10,7 @@
 #import "SVMediaProtocol.h"
 
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 
 @implementation SVMedia
@@ -51,7 +51,7 @@
 
 - (NSString *)preferredFilename    // what the media would like to named given the chance
 {
-    return [[self mediaURL] lastPathComponent];
+    return [[self mediaURL] ks_lastPathComponent];
 }
 
 - (id)imageRepresentation

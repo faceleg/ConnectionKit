@@ -9,7 +9,7 @@
 #import "KTReleaseNotesController.h"
 #import <Sparkle/Sparkle.h>
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 #import "NSBundle+Karelia.h"
 #import "Debug.h"
 #import "KSAppDelegate.h"
@@ -32,7 +32,7 @@
 	[simpleParameters setObject:@"1" forKey:@"rn"];
 
 	NSURL *baseURL = [NSURL URLWithString:@"changelog.php" relativeToURL:[[NSApp delegate] homeBaseURL]];
-	NSURL *result = [NSURL URLWithBaseURL:baseURL parameters:simpleParameters];
+	NSURL *result = [NSURL ks_URLWithBaseURL:baseURL parameters:simpleParameters];
 	
 	OFF((@"release notes URL = %@", result));
 	return result;

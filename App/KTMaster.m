@@ -30,7 +30,7 @@
 #import "NSSet+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 #import <AddressBook/AddressBook.h>
 
@@ -235,7 +235,7 @@
     OBASSERT(designDirectoryName);
     
     NSURL *siteURL = [[[[(NSSet *)[self valueForKey:@"pages"] anyObject] site] hostProperties] siteURL];	// May be nil
-    NSURL *result = [NSURL URLWithPath:designDirectoryName relativeToURL:siteURL isDirectory:YES];
+    NSURL *result = [NSURL ks_URLWithPath:designDirectoryName relativeToURL:siteURL isDirectory:YES];
 	
     OBPOSTCONDITION(result);
 	return result;

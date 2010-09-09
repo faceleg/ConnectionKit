@@ -25,7 +25,7 @@
 	{
 		// If a URL was entered, leave it intact
 		NSURL *URL = [SVURLFormatter URLFromString:*anObject];
-		if (!(URL && [URL hasNetworkLocation]))
+		if (!(URL && [URL ks_hasNetworkLocation]))
 		{
 			// Convert to uppercase and remove unwanted characters
 			NSCharacterSet *characters = [NSCharacterSet alphanumericASCIICharacterSet];

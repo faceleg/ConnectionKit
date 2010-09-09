@@ -20,7 +20,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 #import "KSStringXMLEntityEscaping.h"
 
@@ -211,9 +211,9 @@
 - (void)appendGoogleMapOfPage:(KTPage *)aPage toArray:(NSMutableArray *)ioArray siteMenuCounter:(int *)ioSiteMenuCounter level:(int)aLevel
 {
 	NSURL *siteURL = [[self hostProperties] siteURL];
-    if (![siteURL hasDirectoryPath])
+    if (![siteURL ks_hasDirectoryPath])
     {
-        siteURL = [siteURL URLByDeletingLastPathComponent];
+        siteURL = [siteURL ks_URLByDeletingLastPathComponent];
     }
     
     NSString *url = [[aPage URL] absoluteString];

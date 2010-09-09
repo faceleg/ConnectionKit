@@ -30,7 +30,7 @@
 		URL = [NSURL URLWithString:*code];
 	}
 	
-	if (URL && [URL hasNetworkLocation])
+	if (URL && [URL ks_hasNetworkLocation])
 	{
 		// Is it an Amazon URL?
 		AmazonStoreCountry store = [URL amazonStore];

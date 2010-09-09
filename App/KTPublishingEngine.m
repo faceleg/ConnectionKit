@@ -30,7 +30,8 @@
 #import "NSError+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
+#import "KSPathUtilities.h"
 
 #import "KSCSSWriter.h"
 #import "KSPlugInWrapper.h"
@@ -161,7 +162,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 {
     // Setup connection and transfer records
     [self createConnection];
-    [self setRootTransferRecord:[CKTransferRecord rootRecordWithPath:[[self documentRootPath] standardizedPOSIXPath]]];
+    [self setRootTransferRecord:[CKTransferRecord rootRecordWithPath:[[self documentRootPath] ks_standardizedPOSIXPath]]];
     
     
     // Start by publishing the home page if setting up connection was successful
@@ -272,7 +273,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             NSString *aSubPath;
             for (aSubPath in subpaths)
             {
-                NSURL *aURL = [localURL URLByAppendingPathComponent:aSubPath isDirectory:NO];
+                NSURL *aURL = [localURL ks_URLByAppendingPathComponent:aSubPath isDirectory:NO];
                 NSString *aRemotePath = [remotePath stringByAppendingPathComponent:aSubPath];
                 [self publishContentsOfURL:aURL toPath:aRemotePath];
             }
@@ -432,7 +433,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	NSURL *aResource;
 	while (aResource = [resourcesEnumerator nextObject])
 	{
-		NSString *filename = [aResource lastPathComponent];
+		NSString *filename = [aResource ks_lastPathComponent];
         NSString *uploadPath = [remoteDesignDirectoryPath stringByAppendingPathComponent:filename];
         
         if ([filename isEqualToString:@"main.css"])
@@ -506,7 +507,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     // Where will it be published to?
     NSURL *designURL = [[[[self site] rootPage] master] designDirectoryURL];
-    NSURL *result = [designURL URLByAppendingPathComponent:@"banner.jpeg" isDirectory:NO];
+    NSURL *result = [designURL ks_URLByAppendingPathComponent:@"banner.jpeg" isDirectory:NO];
     return result;
 }
 
@@ -584,7 +585,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 {
     NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
     NSString *resourcesDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:resourcesDirectoryName];
-    NSString *resourceRemotePath = [resourcesDirectoryPath stringByAppendingPathComponent:[fileURL lastPathComponent]];
+    NSString *resourceRemotePath = [resourcesDirectoryPath stringByAppendingPathComponent:[fileURL ks_lastPathComponent]];
     
     [self publishContentsOfURL:fileURL toPath:resourceRemotePath];
     
@@ -845,7 +846,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     // Ensure the parent directory is created first
     NSString *parentDirectoryPath = [remotePath stringByDeletingLastPathComponent];
-    OBASSERT(![parentDirectoryPath isEqualToString:[remotePath standardizedPOSIXPath]]);
+    OBASSERT(![parentDirectoryPath isEqualToString:[remotePath ks_standardizedPOSIXPath]]);
     CKTransferRecord *parent = [self createDirectory:parentDirectoryPath];
     
     

@@ -41,7 +41,7 @@ TO DO:
 #import "NSObject+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 #import "NSWorkspace+Karelia.h"
 
 #import "NTSUTaskController.h"
@@ -2268,7 +2268,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			NSString *testURL = [[self globalBaseURLUsingHome:homeDirectory  allowNull:YES] stringByAppendingString:[myTemporaryTestFilePath lastPathComponent]];
 			if (nil != testURL)
 			{
-				NSString *urlString = [NSString stringWithFormat:@"%@reachable.plist?timeout=%d&url=%@", homeBaseURL, [[defaults objectForKey:@"LocalHostVerifyTimeout"] intValue], [testURL stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
+				NSString *urlString = [NSString stringWithFormat:@"%@reachable.plist?timeout=%d&url=%@", homeBaseURL, [[defaults objectForKey:@"LocalHostVerifyTimeout"] intValue], [testURL ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
 
 				NSURLRequest *theRequest
 				=	[NSURLRequest requestWithURL:[KSURLFormatter URLFromString:urlString]

@@ -19,7 +19,7 @@
 #import "CIImage+Karelia.h"
 #import "NSDate+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 #import "Registration.h"
 #import "NSScanner+Karelia.h"
 
@@ -545,7 +545,7 @@
 	NSURL *sourceURL = [[self HTMLContext] baseURL];
 	KTPage *targetPage = [[self cache] valueForKeyPath:inRestOfTag];
 	
-	NSString *result = [[targetPage feedURL] stringRelativeToURL:sourceURL];
+	NSString *result = [[targetPage feedURL] ks_stringRelativeToURL:sourceURL];
 	return result;
 }
 

@@ -77,7 +77,7 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSWindow+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 #import "Debug.h"                       // Debugging
 
@@ -121,7 +121,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	if (!documentUTI || [documentUTI isEqualToString:kKTDocumentUTI])
 	{
-		result = [inURL URLByAppendingPathComponent:SVPersistentStoreFilename isDirectory:NO];
+		result = [inURL ks_URLByAppendingPathComponent:SVPersistentStoreFilename isDirectory:NO];
 	}
 	else if ([documentUTI isEqualToString:kKTDocumentUTI_ORIGINAL])
 	{
@@ -139,9 +139,9 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 + (NSURL *)documentURLForDatastoreURL:(NSURL *)datastoreURL;
 {
     OBPRECONDITION(datastoreURL);
-    OBPRECONDITION([[datastoreURL lastPathComponent] isEqualToString:SVPersistentStoreFilename]);
+    OBPRECONDITION([[datastoreURL ks_lastPathComponent] isEqualToString:SVPersistentStoreFilename]);
     
-    NSURL *result = [datastoreURL URLByDeletingLastPathComponent];
+    NSURL *result = [datastoreURL ks_URLByDeletingLastPathComponent];
     return result;
 }
 
@@ -149,7 +149,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 {
 	OBASSERT(inURL);
 	
-	NSURL *result = [inURL URLByAppendingPathComponent:@"QuickLook" isDirectory:YES];
+	NSURL *result = [inURL ks_URLByAppendingPathComponent:@"QuickLook" isDirectory:YES];
 	
 	OBPOSTCONDITION(result);
 	return result;
@@ -158,7 +158,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 + (NSURL *)quickLookPreviewURLForDocumentURL:(NSURL *)inURL;
 {
     NSURL *quickLookDirectory = [KTDocument quickLookURLForDocumentURL:inURL];
-    NSURL *result = [quickLookDirectory URLByAppendingPathComponent:@"Preview.html"
+    NSURL *result = [quickLookDirectory ks_URLByAppendingPathComponent:@"Preview.html"
                                                         isDirectory:NO];
     
     return result;
@@ -498,7 +498,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         }
         else
         {
-            result = [docURL URLByAppendingPathComponent:path isDirectory:NO];
+            result = [docURL ks_URLByAppendingPathComponent:path isDirectory:NO];
         }
     }
     
@@ -606,7 +606,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
             NSManagedObjectContext *context = [self managedObjectContext];
             
             SVMediaRecord *record = [SVMediaRecord
-                                     mediaWithURL:[URL URLByAppendingPathComponent:aFilename isDirectory:NO]
+                                     mediaWithURL:[URL ks_URLByAppendingPathComponent:aFilename isDirectory:NO]
                                      entityName:@"MediaRecord"
                                      insertIntoManagedObjectContext:context
                                      error:NULL];

@@ -24,7 +24,7 @@
 #import "NSInvocation+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 #import "KSInvocationOperation.h"
 #import "KSThreadProxy.h"
@@ -241,11 +241,11 @@
         if ([[self site] boolForKey:@"generateGoogleSitemap"])
         {
             NSURL *siteURL = [[[self site] hostProperties] siteURL];
-            NSURL *sitemapURL = [siteURL URLByAppendingPathComponent:@"sitemap.xml.gz" isDirectory:NO];
+            NSURL *sitemapURL = [siteURL ks_URLByAppendingPathComponent:@"sitemap.xml.gz" isDirectory:NO];
             
             NSString *pingURLString = [[NSString alloc] initWithFormat:
                                        @"http://www.google.com/webmasters/tools/ping?sitemap=%@",
-                                       [[sitemapURL absoluteString] stringByAddingURLQueryPercentEscapes]];
+                                       [[sitemapURL absoluteString] ks_stringByAddingURLQueryPercentEscapes]];
             
             NSURL *pingURL = [[NSURL alloc] initWithString:pingURLString];
             [pingURLString release];
@@ -265,8 +265,8 @@
                 
                 NSString *pingURLString = [[NSString alloc] initWithFormat:
                                            @"http://js-kit.com/api/isv/site-bind?email=%@&site=%@&confirmviaemail=%@",
-                                           [[master JSKitModeratorEmail] stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES],
-                                           [[siteURL absoluteString] stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES],
+                                           [[master JSKitModeratorEmail] ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES],
+                                           [[siteURL absoluteString] ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES],
 										   ([[NSUserDefaults standardUserDefaults] boolForKey:@"JSKitConfirmModeratorViaEmail"] ? @"YES" : @"NO")];
                 
                 NSURL *pingURL = [[NSURL alloc] initWithString:pingURLString];
