@@ -19,7 +19,7 @@
 @property(nonatomic, copy) NSNumber *autoplay;
 @property(nonatomic, copy) NSNumber *controller;	// BOOLs
 @property(nonatomic, copy) NSNumber *loop;
-@property(nonatomic, copy) NSNumber *preload;		PreloadState
+@property(nonatomic, copy) NSNumber *preload;		// PreloadState
 
 @property(nonatomic, copy) NSString *codecType;	// Like Video, we may be able to distinguish specific compatibility levels
 
