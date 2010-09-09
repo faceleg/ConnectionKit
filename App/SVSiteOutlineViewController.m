@@ -1197,13 +1197,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     }
     else
     {
-        // Match selection to collection so new page gains correct default properties
-        SVPagesController *pagesController = [self content];
-        [pagesController setSelectedObjects:[NSArray arrayWithObject:collection]];
-        
         // Create a page containing the plug-in best suited to the drop type
+        SVPagesController *pagesController = [self content];
         [pagesController setEntityName:@"Page"];
-        KTPage *page = [pagesController newObject];
+        KTPage *page = [pagesController newObjectDestinedForCollection:collection];
+        
         [pagesController addObject:page asChildOfPage:collection];
     }
     

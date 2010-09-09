@@ -28,7 +28,9 @@
 @property(nonatomic, copy) NSURL *fileURL;
 
 - (void)addObject:(id)object asChildOfPage:(KTPage *)parent;
-- (id)newObjectWithPredecessor:(KTPage *)predecessor;
+
+// Doesn't add the result to collection, just uses it to determine property inheritance
+- (id)newObjectDestinedForCollection:(KTPage *)collection;
 
 - (NSString *)childrenKeyPath;	// A hangover from NSTreeController
 

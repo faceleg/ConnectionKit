@@ -60,12 +60,18 @@
 {
     // Figure out the predecessor (which page to inherit properties from)
     KTPage *parent = [[self selectedObjects] lastObject];
-    if (![parent isCollection]) parent = [parent parentPage];
-    OBASSERT(parent || ![[self content] count]);    // it's acceptable to have no parent when creating first page
+    return [self newObjectDestinedForCollection:parent];
+}
+
+- (id)newObjectDestinedForCollection:(KTPage *)collection;
+{
+    // Figure out the predecessor (which page to inherit properties from)
+    if (![collection isCollection]) collection = [collection parentPage];
+    OBASSERT(collection || ![[self content] count]);    // it's acceptable to have no parent when creating first page
     
     
-    KTPage *predecessor = parent;
-    NSArray *children = [parent childrenWithSorting:SVCollectionSortByDateCreated
+    KTPage *predecessor = collection;
+    NSArray *children = [collection childrenWithSorting:SVCollectionSortByDateCreated
                                           ascending:NO
                                             inIndex:NO];
     
@@ -78,11 +84,6 @@
         }
     }
     
-    return [self newObjectWithPredecessor:predecessor];
-}
-
-- (id)newObjectWithPredecessor:(KTPage *)predecessor;
-{
     return [self newObjectWithPredecessor:predecessor allowCollections:YES];
 }
 
