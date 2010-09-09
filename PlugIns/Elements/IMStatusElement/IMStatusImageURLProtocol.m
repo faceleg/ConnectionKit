@@ -8,6 +8,7 @@
 
 #import "IMStatusImageURLProtocol.h"
 #import "SandvoxPlugin.h"
+#import "NSURL+Sandvox.h"
 
 
 @implementation IMStatusImageURLProtocol
@@ -37,7 +38,7 @@
 - (void)startLoading;
 {
     NSURL *requestURL = [[self request] URL];
-    NSDictionary *query = [requestURL ks_queryDictionary];
+    NSDictionary *query = [requestURL svQueryDictionary];
     
     NSString *headline = [query objectForKey:@"headline"];
     NSString *status = [query objectForKey:@"status"];
@@ -125,15 +126,15 @@
 
 + (NSURL *)URLWithBaseImageURL:(NSURL *)baseURL headline:(NSString *)headline status:(NSString *)status;
 {
-    NSURL *result = [[NSURL alloc] initWithScheme:@"x-imstatusimage"
-                                             host:[baseURL host]
-                                             path:[baseURL path]];
-    [result autorelease];
-    
     NSMutableDictionary *query = [[NSMutableDictionary alloc] initWithCapacity:2];
     [query setValue:headline forKey:@"headline"];
     [query setValue:status forKey:@"status"];
-    result = [NSURL URLWithBaseURL:result parameters:query];
+    
+    NSURL *result = [NSURL svURLWithScheme:@"x-imstatusimage"
+                                      host:[baseURL host]
+                                      path:[baseURL path]
+                           queryDictionary:query];
+    
     [query release];
     
     return result;
