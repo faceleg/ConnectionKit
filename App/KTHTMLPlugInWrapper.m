@@ -8,6 +8,7 @@
 
 #import "KTHTMLPlugInWrapper.h"
 
+#import "KTDataSourceProtocol.h"
 #import "SVPlugInGraphic.h"
 
 #import "NSBundle+Karelia.h"
@@ -178,7 +179,7 @@
 
 - (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type;
 {
-    NSUInteger result = 5;
+    NSUInteger result = KTSourcePriorityNone;
     
     @try
     {

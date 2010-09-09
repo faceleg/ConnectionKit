@@ -8,6 +8,7 @@
 
 #import "SVGraphicFactory.h"
 
+#import "KTDataSourceProtocol.h"
 #import "KTElementPlugInWrapper.h"
 #import "SVImage.h"
 #import "SVMediaRecord.h"
@@ -668,7 +669,9 @@ static id <SVGraphicFactory> sRawHTMLFactory;
 }
 
 - (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type;
-{ return 5; }
+{
+    return KTSourcePriorityIdeal;
+}
 
 - (SVGraphic *)graphicWithPasteboardContents:(id)contents
                                       ofType:(NSString *)type
