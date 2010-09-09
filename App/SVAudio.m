@@ -283,7 +283,7 @@
 	NSString *audioSourcePath  = audioSourceURL ? [context relativeURLStringOfURL:audioSourceURL] : @"";
 	
 	// Actually write the audio
-	if ([self displayInline]) [self buildClassName:context];
+	if ([self shouldWriteHTMLInline]) [self buildClassName:context];
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[self height] description]];
 	
@@ -440,7 +440,7 @@
 		playerPath = [context relativeURLStringOfURL:playerURL];
 	}
 	
-	if ([self displayInline]) [self buildClassName:context];
+	if ([self shouldWriteHTMLInline]) [self buildClassName:context];
 	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
 	[context pushAttribute:@"data" value:playerPath];
 	[context pushAttribute:@"width" value:[[self width] description]];

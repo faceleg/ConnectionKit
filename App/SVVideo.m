@@ -468,7 +468,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
 
 	// Actually write the video
-	if ([self displayInline]) [self buildClassName:context];
+	if ([self shouldWriteHTMLInline]) [self buildClassName:context];
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[self height] description]];
 	
@@ -636,7 +636,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		playerPath = [context relativeURLStringOfURL:playerURL];
 	}
 	
-	if ([self displayInline]) [self buildClassName:context];
+	if ([self shouldWriteHTMLInline]) [self buildClassName:context];
 	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
 	[context pushAttribute:@"data" value:playerPath];
 	[context pushAttribute:@"width" value:[[self width] description]];

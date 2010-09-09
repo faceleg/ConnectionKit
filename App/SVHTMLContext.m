@@ -456,7 +456,7 @@
     {
         [self writePagelet:graphic];
     }
-    else if (![graphic displayInline])
+    else if (![graphic shouldWriteHTMLInline])
     {
         // <div class="graphic-container center">
         [graphic buildClassName:self];

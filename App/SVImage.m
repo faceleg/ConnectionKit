@@ -122,9 +122,9 @@
 
 #pragma mark Placement
 
-- (BOOL)displayInline;
+- (BOOL)shouldWriteHTMLInline;
 {
-    BOOL result = [super displayInline];
+    BOOL result = [super shouldWriteHTMLInline];
     
     // Images become inline once you turn off all additional stuff like title & caption
     if (![self isPagelet])
@@ -258,7 +258,7 @@
     
     
     // Actually write the image
-    if ([self displayInline]) [self buildClassName:context];
+    if ([self shouldWriteHTMLInline]) [self buildClassName:context];
     
     [context buildAttributesForElement:@"img" bindSizeToObject:self];
     
