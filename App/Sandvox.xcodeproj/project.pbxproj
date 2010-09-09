@@ -353,6 +353,8 @@
 		27443266103D8693007E7FF0 /* LoadingPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27443265103D8693007E7FF0 /* LoadingPlaceholder.xib */; };
 		274593E1123925A8005D0640 /* KSFileWrapperExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 274593DF123925A8005D0640 /* KSFileWrapperExtensions.h */; };
 		274593E2123925A8005D0640 /* KSFileWrapperExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 274593E0123925A8005D0640 /* KSFileWrapperExtensions.m */; };
+		2745948C123944FE005D0640 /* NSURL+Sandvox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2745948A123944FE005D0640 /* NSURL+Sandvox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2745948D123944FE005D0640 /* NSURL+Sandvox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2745948B123944FE005D0640 /* NSURL+Sandvox.m */; };
 		2747DA3A10FE8DE6007428BB /* SVSiteItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DA3610FE8DE6007428BB /* SVSiteItem.h */; };
 		2747DA3B10FE8DE6007428BB /* SVSiteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DA3710FE8DE6007428BB /* SVSiteItem.m */; };
 		2747DA3C10FE8DE6007428BB /* SVExternalLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DA3810FE8DE6007428BB /* SVExternalLink.h */; };
@@ -966,7 +968,7 @@
 		CE01A7F50EAFD63600BDF264 /* NSString+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6F10EAFD63600BDF264 /* NSString+Karelia.m */; };
 		CE01A7F60EAFD63600BDF264 /* NSString+KareliaPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6F20EAFD63600BDF264 /* NSString+KareliaPrivate.h */; };
 		CE01A7F70EAFD63600BDF264 /* NSString+KareliaPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6F30EAFD63600BDF264 /* NSString+KareliaPrivate.m */; };
-		CE01A7FA0EAFD63600BDF264 /* NSURL+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6F60EAFD63600BDF264 /* NSURL+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7FA0EAFD63600BDF264 /* NSURL+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6F60EAFD63600BDF264 /* NSURL+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A7FB0EAFD63600BDF264 /* NSURL+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6F70EAFD63600BDF264 /* NSURL+Karelia.m */; };
 		CE01A7FC0EAFD63600BDF264 /* NSXMLElement+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6F80EAFD63600BDF264 /* NSXMLElement+Karelia.h */; };
 		CE01A7FD0EAFD63600BDF264 /* NSXMLElement+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6F90EAFD63600BDF264 /* NSXMLElement+Karelia.m */; };
@@ -1894,6 +1896,8 @@
 		27443265103D8693007E7FF0 /* LoadingPlaceholder.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingPlaceholder.xib; sourceTree = "<group>"; };
 		274593DF123925A8005D0640 /* KSFileWrapperExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSFileWrapperExtensions.h; sourceTree = "<group>"; };
 		274593E0123925A8005D0640 /* KSFileWrapperExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSFileWrapperExtensions.m; sourceTree = "<group>"; };
+		2745948A123944FE005D0640 /* NSURL+Sandvox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Sandvox.h"; sourceTree = "<group>"; };
+		2745948B123944FE005D0640 /* NSURL+Sandvox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Sandvox.m"; sourceTree = "<group>"; };
 		2747DA3610FE8DE6007428BB /* SVSiteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSiteItem.h; sourceTree = "<group>"; };
 		2747DA3710FE8DE6007428BB /* SVSiteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSiteItem.m; sourceTree = "<group>"; };
 		2747DA3810FE8DE6007428BB /* SVExternalLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVExternalLink.h; sourceTree = "<group>"; };
@@ -3034,6 +3038,8 @@
 				3CA17FC7122DB2C700331125 /* SVIndexInspectorViewController.h */,
 				3CA17FC8122DB2C700331125 /* SVIndexInspectorViewController.m */,
 				3C7B015D122F526B0098E147 /* CollectionInfo.xib */,
+				2745948A123944FE005D0640 /* NSURL+Sandvox.h */,
+				2745948B123944FE005D0640 /* NSURL+Sandvox.m */,
 			);
 			name = "2.0 Plug-in System";
 			sourceTree = "<group>";
@@ -5786,6 +5792,7 @@
 				27FDA7081238F4C3006E1A0D /* KSURLUtilities.h in Headers */,
 				27FDA7211238F66F006E1A0D /* KSPathUtilities.h in Headers */,
 				274593E1123925A8005D0640 /* KSFileWrapperExtensions.h in Headers */,
+				2745948C123944FE005D0640 /* NSURL+Sandvox.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7287,6 +7294,7 @@
 				27FDA7091238F4C3006E1A0D /* KSURLUtilities.m in Sources */,
 				27FDA7221238F66F006E1A0D /* KSPathUtilities.m in Sources */,
 				274593E2123925A8005D0640 /* KSFileWrapperExtensions.m in Sources */,
+				2745948D123944FE005D0640 /* NSURL+Sandvox.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

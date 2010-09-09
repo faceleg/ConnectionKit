@@ -58,7 +58,7 @@
 #import "NSObject+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "NSURL+Sandvox.h"
 
 // AppKit extensions
 #import "NSColor+Karelia.h"
