@@ -80,6 +80,26 @@
 }
 
 @dynamic wrap;
+- (BOOL)validateWrap:(NSNumber **)wrap error:(NSError **)error;
+{
+    // By default, only certain wraps are supported
+    switch ([*wrap intValue])
+    {
+        case SVGraphicWrapNone:
+            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                    code:NSValidationNumberTooSmallError
+                                    localizedDescription:@"SVGraphicWrapNone is not supported"];
+            return NO;
+    
+        case SVGraphicWrapCenter:
+            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                    code:NSManagedObjectValidationError
+                                    localizedDescription:@"Wrap Center not supported"];
+            return NO;
+    }
+    
+    return YES;
+}
 
 - (NSNumber *)wrapIsFloatOrBlock
 {
@@ -177,24 +197,6 @@
 }
 
 #pragma mark Validation
-
-- (BOOL)validateWrap:(NSNumber **)wrap error:(NSError **)outError;
-{
-    BOOL result = YES;
-    
-    // I've defined a constant for SVGraphicWrapCenter, but have no way to support it at the moment
-    if ([*wrap integerValue] == SVGraphicWrapCenter)
-    {
-        result = NO;
-        if (outError)
-        {
-            *outError = [NSError errorWithDomain:NSCocoaErrorDomain
-                                            code:NSManagedObjectValidationError localizedDescription:@"Wrap Left not supported"];
-        }
-    }
-    
-    return result;
-}
 
 - (BOOL)validateForInsert:(NSError **)error;
 {
