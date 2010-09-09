@@ -12,6 +12,7 @@
 #import "SVExternalLink.h"
 #import "SVDownloadSiteItem.h"
 
+#import "SVArticle.h"
 #import "SVAttributedHTML.h"
 #import "KTElementPlugInWrapper.h"
 #import "SVLink.h"
@@ -301,7 +302,22 @@
         [self setEntityName:@"Page"];
         KTPage *page = [self newObjectDestinedForCollection:collection];
         
+        
+        // Insert graphic into the page
+        SVRichText *article = [page article];
+        NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
+        
+        NSAttributedString *attachment = [NSAttributedString
+                                          attributedHTMLStringWithGraphic:aGraphic];
+        
+        [html insertAttributedString:attachment atIndex:0];
+        [article setAttributedHTMLString:html];
+        [html release];
+        
+        
+        // Insert page into the collection
         [self addObject:page toCollection:collection];
+        [page release];
     }
 }
 
