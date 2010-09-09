@@ -36,6 +36,7 @@
 
 #import "YouTubeCocoaExtensions.h"
 #import "SandvoxPlugin.h"
+#import "NSURL+Sandvox.h"
 
 
 @implementation NSString (YouTubeExtensions)
@@ -129,7 +130,7 @@
 			[pathComponents count] == 2 &&
 			[[pathComponents objectAtIndex:1] isEqualToString:@"watch"])
 		{
-			NSDictionary *query = [self ks_queryDictionary];
+			NSDictionary *query = [self svQueryDictionary];
 			
 			NSString *videoID = [query objectForKey:@"v"];		// For invalid URLs this will be nil
 			if (videoID && [videoID isYouTubeVideoID])
