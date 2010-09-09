@@ -418,11 +418,18 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (DOMNode *)HTMLWriter:(SVParagraphedHTMLWriter *)writer willWriteDOMElement:(DOMElement *)element;
 {
+    // If the element is inside an DOM controller, write that out instead…
     WEKWebEditorItem *item = [self hitTestDOMNode:element];
     if (item != self)
     {
+        // …If there are 2 controllers with the same node (e.g. plain image), hit-testing favours the inner one. We actually want to write the outer.
+        while ([item HTMLElement] == [[item parentWebEditorItem] HTMLElement])
+        {
+            item = [item parentWebEditorItem];
+        }
         return [self write:writer DOMElement:element item:item];
     }
+    
     
     
     // Images need to create a corresponding model object & DOM controller
