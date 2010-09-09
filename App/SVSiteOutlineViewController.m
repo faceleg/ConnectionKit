@@ -1195,6 +1195,17 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         NSArray *draggedItems = [self lastItemsWrittenToPasteboard];
         return [self moveSiteItems:draggedItems intoCollection:collection childIndex:index];
     }
+    else
+    {
+        // Match selection to collection so new page gains correct default properties
+        SVPagesController *pagesController = [self content];
+        [pagesController setSelectedObjects:[NSArray arrayWithObject:collection]];
+        
+        // Create a page containing the plug-in best suited to the drop type
+        [pagesController setEntityName:@"Page"];
+        KTPage *page = [pagesController newObject];
+        [pagesController addObject:page asChildOfPage:collection];
+    }
     
     
     return NO;
