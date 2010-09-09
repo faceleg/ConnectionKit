@@ -1197,16 +1197,14 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     }
     else
     {
-        // Create a page containing the plug-in best suited to the drop type
+        // Create a page for the content
         SVPagesController *pagesController = [self content];
-        [pagesController setEntityName:@"Page"];
-        KTPage *page = [pagesController newObjectDestinedForCollection:collection];
+        [pagesController addObjectsFromPasteboard:[info draggingPasteboard]
+                                     toCollection:collection];
         
-        [pagesController addObject:page asChildOfPage:collection];
+        
+        return YES;
     }
-    
-    
-    return NO;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView

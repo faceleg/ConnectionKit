@@ -244,6 +244,8 @@
     }
 }
 
+#pragma mark Inserting Objects
+
 - (void)addObject:(KTPage *)page
 {
     // Figure out where to insert the page. i.e. from our selection, what collection should it be made a child of?
@@ -284,6 +286,22 @@
     if ([parent isRootPage] && [[parent childItems] count] < 7)
     {
         [object setIncludeInSiteMenu:[NSNumber numberWithBool:YES]];
+    }
+}
+
+- (void)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
+{
+    // Create graphics for the content
+    NSArray *graphics = [SVGraphicFactory graphicsFomPasteboard:pboard
+                                 insertIntoManagedObjectContext:[self managedObjectContext]];
+    
+    for (SVGraphic *aGraphic in graphics)
+    {
+        // Create pages for each graphic
+        [self setEntityName:@"Page"];
+        KTPage *page = [self newObjectDestinedForCollection:collection];
+        
+        [self addObject:page asChildOfPage:collection];
     }
 }
 

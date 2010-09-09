@@ -28,6 +28,7 @@
 @property(nonatomic, copy) NSURL *fileURL;
 
 - (void)addObject:(id)object asChildOfPage:(KTPage *)parent;
+- (void)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
 
 // Doesn't add the result to collection, just uses it to determine property inheritance
 - (id)newObjectDestinedForCollection:(KTPage *)collection;
