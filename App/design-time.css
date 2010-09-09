@@ -32,8 +32,13 @@ img, .article .kBlock[contenteditable=true] > div {
 /*  Flickr (and potentially other code) uses an offscreen invisible image. This can ruin dragging */
 img[width="0"], img[height="0"] { display:none; }
 
+
 /* Give inline graphics a min height so they can be selected and maniuplated */
 .graphic { min-height:16px; }
+
+
+/* While a change is happening in the editor, force floated, editable images not to float so WebKit doesn't insert spurious linebreaks. */
+.webeditor-changing [contenteditable=true] img { float:none; display:inline; !important }
 
 
 div.svx-placeholder

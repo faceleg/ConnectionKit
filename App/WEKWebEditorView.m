@@ -734,7 +734,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [[[self webView] preferences] setInteger:behaviour forKey:@"editableLinkBehavior"];
 }
 
-- (BOOL)shouldChangeTextInDOMRange:(DOMRange *)range;   // calls -willChange when returning YES.
+- (BOOL)shouldChangeTextInDOMRange:(DOMRange *)range;
 {
     OBPRECONDITION(range);
     
@@ -775,11 +775,23 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     _changingTextController = textController;
     
+    
+    // Temporarily mark the DOM as changing. #80643
+    // Yes, this is a rather horrible, kludgy hack. Mike.
+    DOMDocument *doc = [self HTMLDocument];
+    [[doc documentElement] setAttribute:@"class" value:@"webeditor-changing"];
+    
+    
     return YES;
 }
 
 - (void)didChangeText;  // posts kSVWebEditorViewDidChangeNotification
 {
+    // Unmark the DOM as changing. #80643
+    DOMDocument *doc = [self HTMLDocument];
+    [[doc documentElement] removeAttribute:@"class"];
+    
+    
     [_changingTextController webEditorTextDidChange];
     _changingTextController = nil;
     
@@ -1860,8 +1872,10 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     }
     
     
-    // Finish up
+    // Check if the change is generally OK
     if (result) result = [self shouldChangeTextInDOMRange:range];
+    
+    
     return result;
 }
 
