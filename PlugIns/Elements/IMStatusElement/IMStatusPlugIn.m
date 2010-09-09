@@ -158,7 +158,7 @@ NSString *IMWantBorderKey = @"wantBorder";
         NSMutableString *writeableHTMLCode = [NSMutableString stringWithString:serviceHTMLCode];
         
         [writeableHTMLCode replaceOccurrencesOfString:@"#USER#" 
-                                           withString:[self.username stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
+                                           withString:[self.username ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
                                               options:NSLiteralSearch 
                                                 range:NSMakeRange(0, [writeableHTMLCode length])];
         
@@ -205,7 +205,7 @@ NSString *IMWantBorderKey = @"wantBorder";
         if ( self.headlineText )
         {
             [writeableHTMLCode replaceOccurrencesOfString:@"#HEADLINE#" 
-                                               withString:[self.headlineText stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES] 
+                                               withString:[self.headlineText ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES] 
                                                   options:NSLiteralSearch 
                                                     range:NSMakeRange(0, [writeableHTMLCode length])];
         }
