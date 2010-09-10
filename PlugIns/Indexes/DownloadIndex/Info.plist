@@ -43,32 +43,13 @@
 	<key>KTPresets</key>
 	<array>
 		<dict>
-			<key>KTFirstChildSettings</key>
-			<dict>
-				<key>allowComments</key>
-				<false/>
-				<key>includeTimestamp</key>
-				<false/>
-				<key>pluginIdentifier</key>
-				<string>sandvox.DownloadElement</string>
-			</dict>
 			<key>KTPageSettings</key>
 			<dict>
-				<key>collectionHyperlinkPageTitles</key>
-				<false/>
-				<key>collectionMaxIndexItems</key>
-				<integer>0</integer>
-				<key>collectionShowPermanentLink</key>
-				<false/>
 				<key>collectionSortOrder</key>
 				<integer>0</integer>
-				<key>collectionSummaryType</key>
-				<integer>1</integer>
 				<key>collectionSyndicate</key>
 				<false/>
 			</dict>
-			<key>KTPluginPriority</key>
-			<integer>2</integer>
 			<key>KTPresetTitle</key>
 			<string>Download List</string>
 			<key>KTPresetUntitled</key>
