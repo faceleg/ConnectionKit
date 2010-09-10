@@ -175,6 +175,8 @@ typedef enum {
 
 // Mandatory for collections, nil otherwise:
 @property(nonatomic, copy) NSNumber *collectionMaxSyndicatedPagesCount;   
+
+@property(nonatomic, copy) NSNumber *collectionTruncateFeedItems;   // BOOL, mandatory
 @property(nonatomic, copy) NSNumber *collectionMaxFeedItemLength;
 
 @property(nonatomic, copy) NSString *RSSFileName;
