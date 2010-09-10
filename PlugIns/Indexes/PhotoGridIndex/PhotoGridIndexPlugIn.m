@@ -35,7 +35,6 @@
 //
 
 #import "PhotoGridIndexPlugIn.h"
-#import "SVPageletPlugIn.h"
 
 
 @implementation PhotoGridIndexPlugIn
