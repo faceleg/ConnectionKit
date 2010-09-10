@@ -784,15 +784,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	{
         OBASSERT([item isKindOfClass:[SVSiteItem class]]);
         
-		if (item == [self rootPage])
-		{
-			result = [[[[self rootPage] master] siteTitle] text];
-		}
-		else
-		{
-			result = [item title];
-		}
-        
+		result = [item title];
         if (!result) result = @"";
 	}
 	else
