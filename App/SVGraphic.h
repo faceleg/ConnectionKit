@@ -7,7 +7,7 @@
 //
 
 #import "SVContentObject.h"
-#import "SVPageletPlugIn.h"
+#import "SVPlugIn.h"
 #import <iMedia/iMedia.h>
 
 #import "NSManagedObject+KTExtensions.h"    // for serialization

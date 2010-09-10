@@ -9,7 +9,7 @@
 #import "SVSizeBindingDOMController.h"
 
 #import "SVGraphicDOMController.h"
-#import "SVPageletPlugIn.h"
+#import "SVPlugIn.h"
 #import "SVWebEditorHTMLContext.h"
 
 

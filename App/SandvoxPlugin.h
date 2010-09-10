@@ -28,8 +28,10 @@
 // Plugins (abstract superclass of all plugins)
 #import "SVPlugIn.h"
 #import "SVIndexPlugIn.h"
-#import "SVPlugIn.h"
 
+#import "SVPlugInContext.h"
+
+// UI
 #import "SVIndexInspectorViewController.h"
 
 // Page composition

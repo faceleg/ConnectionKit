@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SVPageletPlugIn.h"
+#import "SVPlugIn.h"
 
 
 @class SVLink, SVMedia;

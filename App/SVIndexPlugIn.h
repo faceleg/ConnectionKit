@@ -7,7 +7,7 @@
 //
 
 
-#import "SVPageletPlugIn.h"
+#import "SVPlugIn.h"
 
 
 @interface SVIndexPlugIn : SVPlugIn

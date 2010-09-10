@@ -7,10 +7,12 @@
 //
 
 #import "KSHTMLWriter.h"
+
 #import "SVPlugIn.h"
 #import "KSMegaBufferedWriter.h"
+#import "KT.h"
 
-#import "KT.h"  // for KTDocType. We need to fix this!
+#import <iMedia/iMedia.h>
 
 
 // publishing mode

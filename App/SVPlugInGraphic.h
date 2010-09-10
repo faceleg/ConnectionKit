@@ -8,7 +8,7 @@
 
 #import "SVGraphic.h"
 #import "SVMediaProtocol.h"
-#import "SVPageletPlugIn.h"
+#import "SVPlugIn.h"
 
 
 @class KTElementPlugInWrapper;
