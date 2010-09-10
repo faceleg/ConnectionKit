@@ -40,6 +40,8 @@ NSString *kKTLocalLinkPboardAllowedType = @"kKTLocalLinkPboardAllowedType";
 		_flags.end = NO;
 		_flags.isConnecting = NO;
 		_flags.isConnected = NO;
+        
+        _enabled = YES;
     }
     return self;
 }
