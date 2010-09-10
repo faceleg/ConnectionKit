@@ -42,6 +42,8 @@
 #import "ABPerson+IMStatus.h"
 #import <AddressBook/AddressBook.h>
 
+#import "NSString+IMStatus.h"
+
 
 NSString *IMServiceKey = @"service";
 NSString *IMHTMLKey = @"html"; 
@@ -158,7 +160,7 @@ NSString *IMWantBorderKey = @"wantBorder";
         NSMutableString *writeableHTMLCode = [NSMutableString stringWithString:serviceHTMLCode];
         
         [writeableHTMLCode replaceOccurrencesOfString:@"#USER#" 
-                                           withString:[self.username ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
+                                           withString:[self.username im_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
                                               options:NSLiteralSearch 
                                                 range:NSMakeRange(0, [writeableHTMLCode length])];
         
@@ -205,7 +207,7 @@ NSString *IMWantBorderKey = @"wantBorder";
         if ( self.headlineText )
         {
             [writeableHTMLCode replaceOccurrencesOfString:@"#HEADLINE#" 
-                                               withString:[self.headlineText ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES] 
+                                               withString:[self.headlineText im_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES] 
                                                   options:NSLiteralSearch 
                                                     range:NSMakeRange(0, [writeableHTMLCode length])];
         }

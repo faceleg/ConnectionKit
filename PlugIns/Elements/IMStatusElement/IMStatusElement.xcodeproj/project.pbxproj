@@ -20,6 +20,7 @@
 		3C42E4550D64FBCC004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4540D64FBCC004F35FD /* License.rtf */; };
 		3C42E4780D64FCD1004F35FD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C42E4770D64FCD1004F35FD /* AddressBook.framework */; };
 		3CD67924120680AB0011B194 /* IMStatusInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CD67922120680AB0011B194 /* IMStatusInspector.xib */; };
+		3CFCD655123AF4B1003A635C /* NSString+IMStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFCD654123AF4B1003A635C /* NSString+IMStatus.m */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -63,6 +64,8 @@
 		3C42E4570D64FBE4004F35FD /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C42E4770D64FCD1004F35FD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = /System/Library/Frameworks/AddressBook.framework; sourceTree = "<absolute>"; };
 		3CD67923120680AB0011B194 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IMStatusInspector.xib; sourceTree = "<group>"; };
+		3CFCD653123AF4B1003A635C /* NSString+IMStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IMStatus.h"; sourceTree = "<group>"; };
+		3CFCD654123AF4B1003A635C /* NSString+IMStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IMStatus.m"; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* IMStatus.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IMStatus.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEB4FD9710309DBC0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -133,6 +136,8 @@
 				3C42E4230D64FB4B004F35FD /* IMStatusService.m */,
 				27958D541208B9650006D4FA /* IMStatusImageURLProtocol.h */,
 				27958D551208B9650006D4FA /* IMStatusImageURLProtocol.m */,
+				3CFCD653123AF4B1003A635C /* NSString+IMStatus.h */,
+				3CFCD654123AF4B1003A635C /* NSString+IMStatus.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -280,6 +285,7 @@
 				3C42E4250D64FB4B004F35FD /* IMStatusPlugIn.m in Sources */,
 				3C42E4260D64FB4B004F35FD /* IMStatusService.m in Sources */,
 				27958D561208B9650006D4FA /* IMStatusImageURLProtocol.m in Sources */,
+				3CFCD655123AF4B1003A635C /* NSString+IMStatus.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
