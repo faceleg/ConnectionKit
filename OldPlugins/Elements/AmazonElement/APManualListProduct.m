@@ -152,7 +152,7 @@
 	{
 		// Is the code a URL? 
 		NSURL *URL = [NSURL URLWithString:*code];
-		if (URL && [URL ks_hasNetworkLocation])
+		if ([[URL scheme] length] && [[URL resourceSpecifier] length])
 		{
 			// Set our store from the product code if possible
 			AmazonStoreCountry store = [URL amazonStore];
