@@ -61,9 +61,6 @@
 	{
 		[[self valueForKey:@"site"] invalidatePagesInSiteMenuCache];
 	}
-	
-	// And the index
-	[[self parentPage] invalidatePagesInIndexCache];
 }
 
 #pragma mark -

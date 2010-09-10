@@ -111,14 +111,6 @@
 #pragma mark Drafts and Indexes
 
 @dynamic isDraft;
-- (void)setIsDraft:(NSNumber *)flag;
-{
-	[self setWrappedValue:flag forKey:@"isDraft"];
-	
-	
-	// And the index
-	[[self parentPage] invalidatePagesInIndexCache];
-}
 
 - (BOOL)isDraftOrHasDraftAncestor
 {
@@ -158,14 +150,6 @@
 }
 
 @dynamic includeInIndex;
-- (void)setIncludeInIndex:(NSNumber *)flag
-{
-	[self setWrappedValue:flag forKey:@"includeInIndex"];
-	
-	
-	// We must update the parent's list of pages
-	[[self parentPage] invalidatePagesInIndexCache];
-}
 
 @dynamic isPublishableInDemo;
 
@@ -223,13 +207,6 @@
 #pragma mark Publishing
 
 @dynamic datePublished;
-- (void)setDatePublished:(NSDate *)date
-{
-	[self setWrappedValue:date forKey:@"datePublished"];
-	
-	// Our status in the index could depend on this key
-	[[self parentPage] invalidatePagesInIndexCache];
-}
 
 /*	Sends out a KVO notification that the page's URL has changed. Upon the next request for the URL it will be
  *	regenerated and cached.

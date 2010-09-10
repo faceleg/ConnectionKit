@@ -142,16 +142,6 @@
 }
 
 @dynamic collectionMaxIndexItems;
-- (void)setCollectionMaxIndexItems:(NSNumber *)max
-{
-    [self willChangeValueForKey:@"collectionMaxIndexItems"];
-	[self setPrimitiveValue:max forKey:@"collectionMaxIndexItems"];
-	
-	// Clearly this operation affects the list
-	[self invalidatePagesInIndexCache];
-    
-    [self didChangeValueForKey:@"collectionMaxIndexItems"];
-}
 - (BOOL)validateCollectionMaxIndexItems:(NSNumber **)max error:(NSError **)outError;
 {
     // mandatory for collections, nil otherwise

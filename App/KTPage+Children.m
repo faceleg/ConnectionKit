@@ -249,9 +249,6 @@
 	[self didChangeValueForKey:@"sortedChildren"];
 	
 	
-	// Logically this change must have affected the index
-	[self invalidatePagesInIndexCache];
-	
 	// Also, the site menu may well have been affected
 	[[self valueForKey:@"site"] invalidatePagesInSiteMenuCache];
 }
