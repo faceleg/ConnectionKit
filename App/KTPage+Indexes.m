@@ -170,6 +170,8 @@
     return YES;
 }
 
+@dynamic collectionMaxFeedItemLength;
+
 @dynamic RSSFileName;
 
 - (NSURL *)feedURL
