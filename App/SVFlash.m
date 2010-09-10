@@ -28,7 +28,7 @@
  Icon source: http://sharealogo.com/computer/adobe-flash-8-vector-logo-download/ modified with Opacity
  
  // Example: http://mindymcadams.com/photos/flowers/slideshow.swf
- // Flash ref: http://kb2.adobe.com/cps/127/tn_12701.html
+ // Flash ref: http://kb2.adobe.com/cps/415/tn_4150.html http://kb2.adobe.com/cps/127/tn_12701.html
  
  */
 
@@ -177,25 +177,45 @@
 	
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[self height] description]];
-	[context pushAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
-	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
+	[context pushAttribute:@"classid" value:@"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"];	// Proper value?
+	[context pushAttribute:@"codebase" value:@"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"];
+	// align?  It was in Sandvox 1.x.  Doesn't seem to be officially supported though.
 	
 	// ID on <object> apparently required for IE8
-	NSString *elementID = [context startElement:@"div" preferredIdName:@"flash" className:nil attributes:nil];	// class, attributes already pushed
+	NSString *elementID = [context startElement:@"object" preferredIdName:@"flash" className:nil attributes:nil];	// class, attributes already pushed
 	
-	[context writeParamElementWithName:@"src" value:flashSourcePath];
+	[context writeParamElementWithName:@"movie" value:flashSourcePath];
+	[context writeParamElementWithName:@"quality" value:@"high"];	// or autohigh
+	[context writeParamElementWithName:@"scale" value:@"showall"];
+
 	
-	[context writeParamElementWithName:@"autoplay" value:self.autoplay.boolValue ? @"true" : @"false"];
+	[context writeParamElementWithName:@"play" value:self.autoplay.boolValue ? @"true" : @"false"];
+	[context writeParamElementWithName:@"menu" value:self.showMenu.boolValue ? @"true" : @"false"];
 	[context writeParamElementWithName:@"loop" value:self.loop.boolValue ? @"true" : @"false"];
 	[context writeParamElementWithName:@"scale" value:@"tofit"];
-	[context writeParamElementWithName:@"type" value:@"video/quicktime"];
-	[context writeParamElementWithName:@"pluginspage" value:@"http://www.apple.com/quicktime/download/"];	
+	[context writeParamElementWithName:@"type" value:@"application/x-shockwave-flash"];
+	[context writeParamElementWithName:@"pluginspage" value:@"http://www.macromedia.com/go/getflashplayer"];	
+	
+	// We may as well do nested <embed> tag though are there really any browsers that need it?
+	
+	[context pushAttribute:@"src" value:flashSourcePath];
+	[context pushAttribute:@"width" value:[[self width] description]];
+	[context pushAttribute:@"height" value:[[self height] description]];
+	// Align middle? In 1.x
+	[context pushAttribute:@"quality" value:@"high"];
+	[context pushAttribute:@"scale" value:@"tofit"];
+	[context pushAttribute:@"play" value:self.autoplay.boolValue ? @"true" : @"false"];
+	[context pushAttribute:@"menu" value:self.showMenu.boolValue ? @"true" : @"false"];
+	[context pushAttribute:@"loop" value:self.loop.boolValue ? @"true" : @"false"];
+	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
+	[context pushAttribute:@"pluginspage" value:@"http://www.macromedia.com/go/getflashplayer"];
+	[context startElement:@"embed"];
 	
 	[context endElement];
+	[context endElement];
 	
-	return elementID;
+	return elementID;	// ID of outer object tag
 }
-
 
 
 - (NSString *)writeUnknown:(SVHTMLContext *)context;
@@ -272,6 +292,124 @@
 // Caches the flash from data.
 
 
+#pragma mark -
+#pragma mark Flash
 
+/*
+ A flash 8 file that's 0x65EE4F bytes long
+ 
+ 00000000  46 57 53 08 4f ee 65 00  78 00 06 0e 00 00 12 c0  |FWS.O.e.x.......|
+ 00000010  00 00 1e 22 0c 43 02 00  00 00 84 04 0b 2b df 02  |...".C.......+..|
+ 00000020  3f 03 14 00 00 00 96 09  00 00 57 46 5f 44 4f 4e  |?.........WF_DON|
+ 00000030  45 00 96 03 00 00 30 00  1d 00 0a 0f 01 00 21 0c  |E.....0.......!.|
+ 
+ Nbits     	     nBits = UB[5]     	     Bits used for each subsequent field     
+ Xmin     	     SB[nBits]     	     X minimum position for rectangle in twips     
+ Xmax     	     SB[nBits]     	     X maximum position for rectangle in twips     
+ Ymin     	     SB[nBits]     	     Y minimum position for rectangle in twips     
+ Ymax     	     SB[nBits]     	     Y maximum position for rectangle in twips     
+ };
+ 
+ Here's a CWF -- compressed flash file, file size 0x7A849E
+ 
+ 00000000  43 57 53 06 88 be 7d 00  78 da e4 ba 07 58 13 db  |CWS...}.x....X..|
+ 00000010  b6 00 bc 33 24 90 d0 a4  77 14 29 91 2e 45 82 0a  |...3$...w.)..E..|
+ 00000020  62 04 94 8e 48 2f 4a 4d  42 0b 01 01 11 44 3d 51  |b...H/JMB....D=Q|
+ 00000030  b1 60 05 85 08 44 14 15  50 54 7a 2f 62 6c 08 08  |.`...D..PTz/bl..|
+ 
+ After deflating starting at byte 8, you get:
+ 78 9C 00 07 40 F8 BF 78 DA E4 BA 07 58 13 DB B6 | x...@..x....X...
+ 00 BC 33 24 90 D0 A4 77 14 29 91 2E 45 82 0A 62 | ..3$...w.)..E..b
+ 04 94 8E 48 2F 4A 4D 42 0B 01 01 11 44 3D 51 B1 | ...H/JMB....D=Q.
+ 
+ */ 
+
+// based loosely on swfparse.c from http://www.fontimages.org.uk/
+- (int)getBits:(int)numberOfBits
+{
+	int result = 0;
+	int i, shift;
+	for(i = 0 ; i < numberOfBits ; i += shift)
+	{	
+		if (!myBitOffset)
+		{	
+			myCurrentByte = *myBytePointer++;	// to next byte
+			myBitOffset = 8;
+		}
+		shift = numberOfBits - i;
+		if(shift > myBitOffset)	shift = myBitOffset;
+		result <<= shift;
+		result |= (myCurrentByte >> (myBitOffset -= shift)) & ((1 << shift) - 1);
+	}
+	return result;
+}
+
+- (BOOL)attemptToGetSize:(NSSize *)outSize fromSWFData:(NSData *)data
+{
+	BOOL result = NO;
+	myBytePointer = (char *) [data bytes];
+	
+	@synchronized (self)	// since we store temporary stuff in ivars
+	{
+		BOOL isCompressed = NO;
+		if ( [data length] > 20
+			&& (myBytePointer[0] == 'F' || (isCompressed = myBytePointer[0] == 'C')  ) 
+			&& myBytePointer[1] == 'W'
+			&& myBytePointer[2] == 'S' )	// verify flash format
+		{
+			// Initialize ivars for the scanning
+			myBitOffset = 0;
+			myCurrentByte = 0;
+			myBytePointer += 4;					// point to the 4th byte where the size data are
+			int dataLength = NSSwapLittleIntToHost(*((int*)myBytePointer));
+			
+			myBytePointer += 4;					// point to the 8th byte where the rectangle data are
+			
+			if (isCompressed)
+			{
+				NSMutableData *outputData = [NSMutableData dataWithLength: dataLength - 8];
+				
+				z_stream z = {0};
+				z.next_in = (Bytef*)myBytePointer;
+				z.avail_in = [data length] - 8;
+				z.next_out = (Bytef *)[outputData bytes];
+				z.avail_out = dataLength - 8;
+				
+				(void) inflateInit((z_streamp)&z);
+				(void) inflate(&z, Z_FINISH);
+				(void) inflateEnd((z_streamp)&z);
+				
+				myBytePointer = (char *)[outputData bytes];
+			}
+			
+			int numBits = [self getBits:5];
+			int xx1		= [self getBits:numBits] / 20.0;
+			int xx2		= [self getBits:numBits] / 20.0;
+			int yy1		= [self getBits:numBits] / 20.0;
+			int yy2		= [self getBits:numBits] / 20.0;
+			
+			if (nil != outSize)
+			{
+				*outSize = NSMakeSize(xx2-xx1, yy2-yy1);
+			}
+			result = YES;
+		}
+	}
+	myBytePointer = nil;	// clean up, no sense hanging onto pointer
+	return result;
+}
+
+
+- (void)loadMovieFromAttributes:(NSDictionary *)anAttributes
+{
+	BOOL isFlash = NO;
+	NSData *movieData = nil;
+	NSSize aSize = NSZeroSize;
+	if ([self attemptToGetSize:&aSize fromSWFData:movieData])
+	{
+		isFlash = YES;
+		/// [self setMovieSize:aSize];
+	}	// We're done!  
+}
 
 @end

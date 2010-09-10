@@ -16,6 +16,10 @@
 
 @interface SVFlash : SVMediaGraphic
 {
+	// flash parsing support ... ivars mean that this object can't be parsing more than one flash file at a time, but this shouldn't happen.
+	int myBitOffset;
+	char myCurrentByte;
+	char *myBytePointer;		// an unretained pointer, just stored here so it's not global.
 	
 }
 + (SVFlash *)insertNewFlashInManagedObjectContext:(NSManagedObjectContext *)context;
