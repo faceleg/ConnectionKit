@@ -158,7 +158,7 @@
     
     // Create the basic collection
     [collection setBool:YES forKey:@"isCollection"]; // Duh!
-    [collection setCollectionMaxIndexItems:[NSNumber numberWithInteger:10]];
+    [collection setCollectionMaxSyndicatedPagesCount:[NSNumber numberWithInteger:10]];
     
     
     // Now re-set title of page to be the appropriate untitled name

@@ -434,7 +434,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithBool:YES], @"collectionShowSortingControls",
 		
 		[NSNumber numberWithBool:NO], @"collectionShowSortingControls",
-		[NSNumber numberWithInt:0], @"collectionMaxIndexItems",
+		[NSNumber numberWithInt:0], @"collectionMaxSyndicatedPagesCount",
 								@"", @"headerImageDescription",
 
 		[NSNumber numberWithBool:YES], @"propagateInsertPrelude",

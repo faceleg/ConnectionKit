@@ -74,7 +74,7 @@
 		@"collectionHyperlinkPageTitles",
 		@"collectionIndexBundleIdentifier",
 		@"collectionSyndicate", 
-		@"collectionMaxIndexItems", 
+		@"collectionMaxSyndicatedPagesCount", 
 		@"collectionSortOrder", 
 		nil]
         triggerChangeNotificationsForDependentKey: @"indexPresetDictionary"];

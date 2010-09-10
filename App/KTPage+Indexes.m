@@ -141,7 +141,7 @@
     return result;
 }
 
-@dynamic collectionMaxIndexItems;
+@dynamic collectionMaxSyndicatedPagesCount;
 - (BOOL)validateCollectionMaxIndexItems:(NSNumber **)max error:(NSError **)outError;
 {
     // mandatory for collections, nil otherwise
@@ -151,7 +151,7 @@
         {
             if (outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain
                                                           code:NSValidationMissingMandatoryPropertyError
-                                          localizedDescription:@"collectionMaxIndexItems is non-optional for collections"];
+                                          localizedDescription:@"collectionMaxSyndicatedPagesCount is non-optional for collections"];
             
             return NO;
         }
@@ -194,7 +194,7 @@
 {
 	NSArray *result = [self childrenWithSorting:SVCollectionSortByDateCreated ascending:NO inIndex:YES];
     
-    NSUInteger max = [[self collectionMaxIndexItems] unsignedIntegerValue];
+    NSUInteger max = [[self collectionMaxSyndicatedPagesCount] unsignedIntegerValue];
     if ([result count] > max)
     {
         result = [result subarrayToIndex:max];
