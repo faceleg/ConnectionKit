@@ -947,6 +947,11 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             [item setIconImage:[NSImage imageNamed:@"toolbar_index"]];
             [insertMenu insertItem:item atIndex:(index + 1)]; 
             
+            // Flash item
+            factory = [SVGraphicFactory flashFactory];
+            item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
+            [insertMenu insertItem:item atIndex:index]; 
+            
             // Audio item
             factory = [SVGraphicFactory audioFactory];
             item = [SVGraphicFactory menuItemWithGraphicFactory:factory];

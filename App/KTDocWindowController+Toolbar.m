@@ -279,6 +279,11 @@
 	item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
 	[menu addItem:item]; 
     
+	// Audio item
+	factory = [SVGraphicFactory flashFactory];
+	item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
+	[menu addItem:item]; 
+    
 	
     // Raw HTML
     self.rawHTMLMenuItem = item = [SVGraphicFactory menuItemWithGraphicFactory:

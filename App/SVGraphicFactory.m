@@ -14,6 +14,7 @@
 #import "SVMediaRecord.h"
 #import "SVVideo.h"
 #import "SVAudio.h"
+#import "SVFlash.h"
 #import "SVPlugIn.h"
 #import "SVRawHTMLGraphic.h"
 #import "SVTextBox.h"
@@ -212,6 +213,34 @@
 
 #pragma mark -
 
+@interface SVFlashFactory : SVGraphicFactory
+@end
+
+
+@implementation SVFlashFactory
+
+- (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVFlash *result = [SVFlash insertNewFlashInManagedObjectContext:context];
+    [result setWidth:[NSNumber numberWithUnsignedInt:200]];
+    [result setHeight:[NSNumber numberWithUnsignedInt:150]];	// typical TV aspect ratio
+    
+    return result;
+}
+
+- (NSString *)name { return NSLocalizedString(@"Flash", @"name of object to insert"); }
+
+- (NSImage *)pluginIcon
+{
+    return [NSImage imageNamed:@"toolbar_flash"];
+}
+
+@end
+
+
+#pragma mark -
+
+
 
 @interface SVRawHTMLFactory : SVGraphicFactory
 @end
@@ -285,6 +314,7 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
 static id <SVGraphicFactory> sImageFactory;
 static id <SVGraphicFactory> sVideoFactory;
 static id <SVGraphicFactory> sAudioFactory;
+static id <SVGraphicFactory> sFlashFactory;
 static KSSortedMutableArray *sIndexFactories;
 static KSSortedMutableArray *sBadgeFactories;
 static KSSortedMutableArray *sEmbeddedFactories;
@@ -319,6 +349,11 @@ static id <SVGraphicFactory> sRawHTMLFactory;
     {
         sAudioFactory = [[SVAudioFactory alloc] init];
         [self registerFactory:sAudioFactory];
+    }
+	if (!sFlashFactory)
+    {
+        sFlashFactory = [[SVFlashFactory alloc] init];
+        [self registerFactory:sFlashFactory];
     }
 	
     if (!sRawHTMLFactory)
@@ -394,6 +429,7 @@ static id <SVGraphicFactory> sRawHTMLFactory;
 + (id <SVGraphicFactory>)imageFactory; { return sImageFactory; }
 + (id <SVGraphicFactory>)videoFactory; { return sVideoFactory; }
 + (id <SVGraphicFactory>)audioFactory; { return sAudioFactory; }
++ (id <SVGraphicFactory>)flashFactory; { return sFlashFactory; }
 + (id <SVGraphicFactory>)rawHTMLFactory; { return sRawHTMLFactory; }
 
 #pragma mark Menu

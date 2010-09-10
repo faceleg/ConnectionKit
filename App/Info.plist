@@ -267,7 +267,7 @@
 				<string>public.plain-text</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Cascading Style Sheet SANDVOX</string>
+			<string>Cascading Style Sheet</string>
 			<key>UTTypeIdentifier</key>
 			<string>public.css</string>
 			<key>UTTypeReferenceURL</key>
@@ -290,7 +290,7 @@
 				<string>public.audiovisual-content</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Macromedia Flash SANDVOX</string>
+			<string>Macromedia Flash</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.adobe.shockwave-flash</string>
 			<key>UTTypeReferenceURL</key>
@@ -334,7 +334,7 @@
 				<string>public.movie</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Theora Video File SANDVOX</string>
+			<string>Theora Video File</string>
 			<key>UTTypeIdentifier</key>
 			<string>public.ogg-theora</string>
 			<key>UTTypeReferenceURL</key>
@@ -356,7 +356,7 @@
 				<string>public.movie</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Webm Video SANDVOX</string>
+			<string>Webm Video</string>
 			<key>UTTypeIdentifier</key>
 			<string>public.webm</string>
 			<key>UTTypeReferenceURL</key>
@@ -378,7 +378,7 @@
 				<string>public.movie</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>H.264 Video SANDVOX</string>
+			<string>H.264 Video</string>
 			<key>UTTypeIdentifier</key>
 			<string>public.h264</string>
 			<key>UTTypeReferenceURL</key>
@@ -404,7 +404,7 @@
 				<string>public.movie</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>H.264 Video, iOS compatible SANDVOX</string>
+			<string>H.264 Video, iOS compatible</string>
 			<key>UTTypeIdentifier</key>
 			<string>public.h264.ios</string>
 			<key>UTTypeReferenceURL</key>
@@ -428,7 +428,7 @@
 				<string>public.audio</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Ogg Vorbis Audio SANDVOX</string>
+			<string>Ogg Vorbis Audio</string>
 			<key>UTTypeIdentifier</key>
 			<string>public.ogg-vorbis</string>
 			<key>UTTypeReferenceURL</key>
