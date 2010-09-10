@@ -267,7 +267,8 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 																				selector:@selector(getQuickLookForFileURL:)
 																				  object:mediaURL];
 		
-		[[[self class] sharedQuickLookQueue] addOperation:operation];			
+		[[[self class] sharedQuickLookQueue] addOperation:operation];
+        [operation release];
 	}
 }
 
