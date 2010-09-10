@@ -38,9 +38,6 @@
 #import "SandvoxPlugin.h"
 
 
-@interface RSSBadgeInspector : SVInspectorViewController <KTLinkSourceViewDelegate>
-{
-	IBOutlet KTLinkSourceView	*collectionLinkSourceView;
-}
+@interface RSSBadgeInspector : SVIndexInspectorViewController
 
 @end
