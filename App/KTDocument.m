@@ -784,20 +784,23 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)designDidChange;
 {
-    NSEnumerator *wrappersEnumerator = [[self documentFileWrappers] objectEnumerator];
-    SVMediaRecord *aFileWrapper;
-    while (aFileWrapper = [wrappersEnumerator nextObject])
+    // Placeholder/shared/bundled media
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                              @"filename beginswith[c] 'Shared/'"];
+    
+    NSArray *sharedMedia = [[self managedObjectContext]
+                            fetchAllObjectsForEntityForName:@"GraphicMedia"
+                            predicate:predicate
+                            error:NULL];
+    
+    KTMaster *master = [[[self site] rootPage] master];
+    
+    for (SVMediaRecord *aMediaRecord in sharedMedia)
     {
-        NSString *filename = [aFileWrapper filename];
-        if ([filename hasPrefix:@"Shared/"] || [filename hasPrefix:@"shared/"])
-        {
-            // It's design media, locate in new design
-            NSURL *URL = [self URLForMediaRecord:aFileWrapper
-                                        filename:filename
-                           inDocumentWithFileURL:[self fileURL]];
-            
-            [aFileWrapper readFromURL:URL options:0 error:NULL];
-        }
+        // Replace with a new record
+        SVMediaRecord *media = [master makePlaceholdImageMediaWithEntityName:@"GraphicMedia"];
+        SVGraphic *graphic = [aMediaRecord valueForKey:@"graphic"];
+        [graphic replaceMedia:media forKeyPath:@"media"];
     }
 }
 
