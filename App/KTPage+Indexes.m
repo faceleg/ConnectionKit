@@ -47,36 +47,6 @@
 
 #pragma mark Index
 
-/*	Takes our -sortedChildren property and filters out:
- *		* Pages excluded from the index
- *		* Unpublished draft pages
- *		* Pages outside the maxPages limit
- */
-- (NSArray *)pagesInIndex
-{
-	NSArray *result = [self wrappedValueForKey:@"pagesInIndex"];
-	
-	if (!result)
-	{
-		result = [self navigablePages];
-        
-        NSNumber *maxPages = [self valueForKey:@"collectionMaxIndexItems"];
-        if (maxPages && [maxPages intValue] > 0)
-        {
-            result = [result subarrayToIndex:[maxPages intValue]];
-        }
-        
-		[self setPrimitiveValue:result forKey:@"pagesInIndex"];
-	}
-	
-	return result;
-}
-
-- (void)invalidatePagesInIndexCache
-{
-	[self setValue:nil forKey:@"pagesInIndex"];
-}
-
 - (BOOL)pagesInIndexAllowComments
 {
 	BOOL result = NO;
@@ -228,7 +198,7 @@
     return [NSSet setWithObjects:@"collectionSyndicate", @"URL", @"RSSFileName", nil];
 }
 
-/*  The pages that will go into the RSS feed. This is just -pagesInIndex, sorted chronologically
+/*  The pages that will go into the RSS feed. Sort chronologically and apply the limit
  */
 - (NSArray *)pagesInRSSFeed
 {

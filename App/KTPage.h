@@ -160,10 +160,6 @@ typedef enum {
 - (KTCollectionSummaryType)collectionSummaryType;
 - (void)setCollectionSummaryType:(KTCollectionSummaryType)type;
 
-// Index
-- (NSArray *)pagesInIndex;
-- (void)invalidatePagesInIndexCache;
-
 #pragma mark Navigation Arrows
 
 - (NSArray *)navigablePages;
