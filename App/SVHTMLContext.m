@@ -24,8 +24,6 @@
 
 #import "SVCalloutDOMController.h"  // don't like having to do this
 
-#import "BDAlias+QuickLook.h"
-
 #import "NSIndexPath+Karelia.h"
 #import "NSString+Karelia.h"
 #import "KSURLUtilities.h"
