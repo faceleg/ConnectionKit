@@ -117,32 +117,27 @@
     
     
     // Check host setup
-    result = ([[[[self document] site] hostProperties] siteURL] != nil);
+    KTHostProperties *hostProperties = [[[self document] site] hostProperties];
+    BOOL localHosting = [[hostProperties valueForKey:@"localHosting"] intValue];    // Taken from
+    BOOL remoteHosting = [[hostProperties valueForKey:@"remoteHosting"] intValue];  // KTHostSetupController.m
     
-    if (result)
+    result = ((localHosting || remoteHosting) && [hostProperties siteURL] != nil);
+        
+    if (!result)
     {
-        KTHostProperties *hostProperties = [[[self document] site] hostProperties];
-        BOOL localHosting = [[hostProperties valueForKey:@"localHosting"] intValue];    // Taken from
-        BOOL remoteHosting = [[hostProperties valueForKey:@"remoteHosting"] intValue];  // KTHostSetupController.m
+        // Tell the user why
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:NSLocalizedString(@"This website is not set up to be published on this computer or on another host.", @"Hosting not setup")];
+        [alert setInformativeText:NSLocalizedString(@"Please set up the site for publishing, or export it to a folder instead.", @"Hosting not setup")];
+        [alert addButtonWithTitle:TOOLBAR_SETUP_HOST];
+        [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "Cancel Button")];
+        [alert addButtonWithTitle:NSLocalizedString(@"Export…", @"button title")];
         
-        result = ((localHosting || remoteHosting) && [hostProperties siteURL] != nil);
-        
-        if (!result)
-        {
-            // Tell the user why
-            NSAlert *alert = [[NSAlert alloc] init];
-            [alert setMessageText:NSLocalizedString(@"This website is not set up to be published on this computer or on another host.", @"Hosting not setup")];
-            [alert setInformativeText:NSLocalizedString(@"Please set up the site for publishing, or export it to a folder instead.", @"Hosting not setup")];
-            [alert addButtonWithTitle:TOOLBAR_SETUP_HOST];
-            [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "Cancel Button")];
-            [alert addButtonWithTitle:NSLocalizedString(@"Export…", @"button title")];
-            
-            [alert beginSheetModalForWindow:[self window]
-                              modalDelegate:self
-                             didEndSelector:@selector(setupHostBeforePublishingAlertDidEnd:returnCode:contextInfo:)
-                                contextInfo:NULL];
-			[alert release];	// will be dealloced when alert is dismissed
-        }
+        [alert beginSheetModalForWindow:[self window]
+                          modalDelegate:self
+                         didEndSelector:@selector(setupHostBeforePublishingAlertDidEnd:returnCode:contextInfo:)
+                            contextInfo:NULL];
+        [alert release];	// will be dealloced when alert is dismissed
     }
     
     return result;
