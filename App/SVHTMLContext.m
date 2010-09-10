@@ -25,7 +25,6 @@
 #import "SVCalloutDOMController.h"  // don't like having to do this
 
 #import "BDAlias+QuickLook.h"
-#import "NSBundle+QuickLook.h"
 
 #import "NSIndexPath+Karelia.h"
 #import "NSString+Karelia.h"
@@ -722,11 +721,7 @@
 	NSString *localPath = [[[design bundle] bundlePath] stringByAppendingPathComponent:whichFileName];
 	if ([[NSFileManager defaultManager] fileExistsAtPath:localPath])
 	{
-		if ([self isForQuickLookPreview])
-        {
-            result = [[design bundle] quicklookDataForFile:whichFileName];		// Hmm, this isn't going to pick up the variation or any other CSS
-        }
-        else if ([self isForEditing] && ![self baseURL])
+		if ([self isForEditing] && ![self baseURL])
         {
             result = [[NSURL fileURLWithPath:localPath] absoluteString];
 			

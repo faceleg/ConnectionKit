@@ -603,8 +603,6 @@
 		27E83A3810ABB1D6003B8F2F /* KSCollectionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E83A3710ABB1D6003B8F2F /* KSCollectionController.h */; settings = {ATTRIBUTES = (); }; };
 		27E83E4810D9A9BA00FBEC84 /* CalloutTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */; };
 		27EF1BD00DC1F9BF00976C66 /* SVSiteOutlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF1BCE0DC1F9BF00976C66 /* SVSiteOutlineViewController.m */; };
-		27EF5C9B0D6B974E0024575B /* NSBundle+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */; settings = {ATTRIBUTES = (); }; };
-		27EF5C9C0D6B974E0024575B /* NSBundle+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5C9A0D6B974E0024575B /* NSBundle+QuickLook.m */; };
 		27EF5CE30D6B9D210024575B /* BDAlias+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5CE10D6B9D210024575B /* BDAlias+QuickLook.h */; };
 		27EF5CE40D6B9D210024575B /* BDAlias+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5CE20D6B9D210024575B /* BDAlias+QuickLook.m */; };
 		27EF99C111A4205600FC8424 /* KSXMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF99C011A4205600FC8424 /* KSXMLWriter.h */; settings = {ATTRIBUTES = (); }; };
@@ -2173,8 +2171,6 @@
 		27EAA90D0E30979A0068E6C5 /* Page URLs and Paths.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Page URLs and Paths.graffle"; sourceTree = "<group>"; };
 		27EF1BCD0DC1F9BF00976C66 /* SVSiteOutlineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSiteOutlineViewController.h; sourceTree = "<group>"; };
 		27EF1BCE0DC1F9BF00976C66 /* SVSiteOutlineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSiteOutlineViewController.m; sourceTree = "<group>"; };
-		27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBundle+QuickLook.h"; path = "../Code/QuickLook/NSBundle+QuickLook.h"; sourceTree = SOURCE_ROOT; };
-		27EF5C9A0D6B974E0024575B /* NSBundle+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBundle+QuickLook.m"; path = "../Code/QuickLook/NSBundle+QuickLook.m"; sourceTree = SOURCE_ROOT; };
 		27EF5CE10D6B9D210024575B /* BDAlias+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BDAlias+QuickLook.h"; sourceTree = "<group>"; };
 		27EF5CE20D6B9D210024575B /* BDAlias+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BDAlias+QuickLook.m"; sourceTree = "<group>"; };
 		27EF99C011A4205600FC8424 /* KSXMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSXMLWriter.h; sourceTree = "<group>"; };
@@ -4273,8 +4269,6 @@
 		3C5A72FE0BF7AF0500776464 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */,
-				27EF5C9A0D6B974E0024575B /* NSBundle+QuickLook.m */,
 				27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */,
 				27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */,
 				3CE79D870D6260D000FCEE6D /* NSArray+KTExtensions.h */,
@@ -5499,7 +5493,6 @@
 				274E78080D626A93004F89C2 /* NSManagedObjectContext+KTExtensions.h in Headers */,
 				276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */,
 				27AD53A60D6B40C300883550 /* SVHTMLTemplateParser+Private.h in Headers */,
-				27EF5C9B0D6B974E0024575B /* NSBundle+QuickLook.h in Headers */,
 				27EF5CE30D6B9D210024575B /* BDAlias+QuickLook.h in Headers */,
 				3C1FA3940D6C994C0008AAD9 /* NSPersistentStoreCoordinator+KTExtensions.h in Headers */,
 				3CE2CA4C0D6D51F500B2D56B /* NSString+KTExtensions.h in Headers */,
@@ -7007,7 +7000,6 @@
 				3CE79DBA0D6261B300FCEE6D /* NSOutlineView+KTExtensions.m in Sources */,
 				274E829D0D627328004F89C2 /* NSDocumentController+KTExtensions.m in Sources */,
 				276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */,
-				27EF5C9C0D6B974E0024575B /* NSBundle+QuickLook.m in Sources */,
 				27EF5CE40D6B9D210024575B /* BDAlias+QuickLook.m in Sources */,
 				27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */,
 				27D90AD90D7ED62800C13012 /* SVHTMLTemplateParser+Text.m in Sources */,
