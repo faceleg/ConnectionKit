@@ -1644,27 +1644,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     if (![[self webView] delegateWillHandleDraggingInfo])
     {
-       result = [[self dataSource] webEditor:self dragDestinationActionMaskForDraggingInfo:dragInfo];
-        
-        
-        // Update drag highlight to match
-        DOMNode *dropNode = nil;
-        if (result & WebDragDestinationActionEdit)
-        {
-            // Locate the DOM controller/item for the destination
-            NSPoint point = [sender convertPointFromBase:[dragInfo draggingLocation]];
-            DOMRange *editingRange = [sender editableDOMRangeForPoint:point];
-            
-            if (editingRange)
-            {
-                WEKWebEditorItem <SVWebEditorText> *controller =
-                [self textItemForDOMRange:editingRange];
-                
-                
-                // Controller's HTML element determines where to draw the drop highlight
-                if (result > NSDragOperationNone) dropNode = [controller HTMLElement];
-            }
-        }
+        result = [[self dataSource] webEditor:self dragDestinationActionMaskForDraggingInfo:dragInfo];
     }
     
     return result;
