@@ -208,7 +208,7 @@
 	}
 	
 	// Search the query
-	NSDictionary *query = [self ks_queryDictionary];
+	NSDictionary *query = [self svQueryDictionary];
 	
 	NSString *possibleListID = [query objectForKey: @"id"];
 	NSString *possibleListType = [query objectForKey: @"type"];
