@@ -26,7 +26,6 @@
 
 // URLs
 - (NSString *)relativeURLStringOfURL:(NSURL *)URL;
-- (NSString *)relativeURLStringOfPage:(id <SVPage>)page;
 
 // Resources & Design
 - (NSURL *)addResourceWithURL:(NSURL *)fileURL;
@@ -78,6 +77,9 @@
 
 //  <a href="...." target="..." rel="nofollow">
 - (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
+
+// Like above, but handles subtleties of Sandvox pages
+- (void)startAnchorElementWithPage:(id <SVPage>)page;
 
 // <IMG> tag by scaling the page's thumbnail to desired size
 - (void)writeThumbnailImageOfPage:(id <SVPage>)page className:(NSString *)className maxWidth:(NSUInteger)width maxHeight:(NSUInteger)height;

@@ -404,7 +404,7 @@
 						NSString *newPath = nil;
 						if (thePage)
 						{
-							newPath = [context relativeURLStringOfPage:thePage];
+							newPath = [context relativeURLStringOfSiteItem:thePage];
 						}
 						
 						if (!newPath) newPath = @"#";	// Fallback

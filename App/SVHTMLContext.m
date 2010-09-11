@@ -684,25 +684,21 @@
     
     NSString *result = nil;
     
-    switch ([self generationPurpose])
+    if ([self isForQuickLookPreview])
     {
-        case kSVHTMLGenerationPurposeQuickLookPreview:
-            result= @"javascript:void(0)";
-            break;
-        default:
-        {
-            NSURL *URL = [page URL];
-            if (URL) result = [self relativeURLStringOfURL:URL];
-            break;
-        }
+        result = @"javascript:void(0)";
+    }
+    else if ([self isForEditing])
+    {
+        result = [page previewPath];
+    }
+    else
+    {
+        NSURL *URL = [page URL];
+        if (URL) result = [self relativeURLStringOfURL:URL];
     }
     
     return result;
-}
-
-- (NSString *)relativeURLStringOfPage:(id <SVPage>)page;
-{
-    return [self relativeURLStringOfURL:[(SVSiteItem *)page URL]];
 }
 
 /*	Generates the path to the specified file with the current page's design.
@@ -984,6 +980,20 @@
 {
     SVHTMLTemplateParser *parser = [SVHTMLTemplateParser currentTemplateParser];
     return [parser currentIterationObject];
+}
+
+- (void)startAnchorElementWithPage:(id <SVPage>)page;
+{
+    NSString *href = [self relativeURLStringOfSiteItem:(SVSiteItem *)page];
+    if (!href) href = @"";  // happens for a site with no -siteURL set yet
+    
+    NSString *target = ([[(SVSiteItem *)page openInNewWindow] boolValue] ? @"_blank" : nil);
+    
+    [self startAnchorElementWithHref:href 
+                               title:[page title]
+                              target:target
+                                 rel:nil];
+    
 }
 
 @end

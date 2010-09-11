@@ -100,17 +100,8 @@
     }
     else
     {
-        //FIXME: special case for LinkPage, add target=_BLANK if LinkPage and newWindowLink ???
         // emit href + title
-        NSString *path = [context relativeURLStringOfPage:aPage];
-        if (!path) path = @"";  // Happens for a site with no -siteURL set yet
-        
-        NSString *title = ([aPage title] ? [aPage title] : @"");
-
-        [[context HTMLWriter] startAnchorElementWithHref:path 
-                                                   title:title
-                                                  target:nil
-                                                     rel:nil];
+        [[context HTMLWriter] startAnchorElementWithPage:aPage];
         [context writeTitleOfPage:aPage enclosingElement:@"span" attributes:nil];
         [[context HTMLWriter] endElement];            
     }

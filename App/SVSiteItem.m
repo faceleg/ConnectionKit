@@ -160,9 +160,8 @@
 {
     NSString *filename = [[self fileName] legalizedWebPublishingFilename];
     
-    return [[[SVWebEditingURL alloc] initWithString:filename
-                                      relativeToURL:[[self parentPage] URL]
-                               webEditorPreviewPath:[self previewPath]] autorelease];
+    return [[[NSURL alloc] initWithString:filename
+                                      relativeToURL:[[self parentPage] URL]] autorelease];
 }
 
 @dynamic fileName;

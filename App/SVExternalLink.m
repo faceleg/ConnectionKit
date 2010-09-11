@@ -21,14 +21,7 @@
 
 - (NSURL *)URL
 {
-    NSURL *result = nil;
-    
-    NSString *urlString = [self linkURLString];
-    if (urlString)
-    {
-        result = [[NSURL URLWithString:urlString]
-                  URLWithWebEditorPreviewPath:[self previewPath]];
-    }
+    NSURL *result = [NSURL URLWithString:[self linkURLString]];
     
     return result;
 }
