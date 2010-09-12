@@ -442,12 +442,12 @@ static id <SVGraphicFactory> sRawHTMLFactory;
 {	
     for (id <SVGraphicFactory> factory in factories)
 	{
-		NSMenuItem *menuItem = [self menuItemWithGraphicFactory:factory];
+		NSMenuItem *menuItem = [self menuItemWithGraphicFactory:factory setImage:YES];
 		[menu insertItem:menuItem atIndex:index];   index++;
 	}
 }
 
-+ (NSMenuItem *)menuItemWithGraphicFactory:(id <SVGraphicFactory>)factory;
++ (NSMenuItem *)menuItemWithGraphicFactory:(id <SVGraphicFactory>)factory setImage:(BOOL)image;
 {
     NSMenuItem *result = [[[NSMenuItem alloc] init] autorelease];
     
@@ -467,14 +467,17 @@ static id <SVGraphicFactory> sRawHTMLFactory;
     
     
     // Icon
-    NSImage *image = [[factory pluginIcon] copy];
+    if (image)
+    {
+        NSImage *icon = [[factory pluginIcon] copy];
 #ifdef DEBUG
-    if (!image) NSLog(@"nil pluginIcon for %@", pluginName);
+        if (!icon) NSLog(@"nil pluginIcon for %@", pluginName);
 #endif
-    
-    [image setSize:NSMakeSize(32.0f, 32.0f)];
-    [result setImage:image];
-    [image release];
+        
+        [icon setSize:NSMakeSize(32.0f, 32.0f)];
+        [result setImage:icon];
+        [icon release];
+    }
     
     
     // Pro status
