@@ -46,7 +46,7 @@
 
 
 #pragma mark Attribute Whitelist
-- (BOOL)validateAttribute:(NSString *)attributeName ofElementWithTagName:(NSString *)tagName;
+- (BOOL)validateAttribute:(NSString *)attributeName ofElement:(NSString *)tagName;
 
 
 #pragma mark Styling Whitelist

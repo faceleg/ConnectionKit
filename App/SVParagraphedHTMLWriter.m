@@ -153,7 +153,7 @@
     return result;
 }
 
-- (BOOL)validateAttribute:(NSString *)attributeName ofElementWithTagName:(NSString *)tagName;
+- (BOOL)validateAttribute:(NSString *)attributeName ofElement:(NSString *)tagName;
 {
     // Super doesn't allow links; we do.
     if ([tagName isEqualToString:@"A"])
@@ -172,7 +172,7 @@
     }
     else
     {
-        return [super validateAttribute:attributeName ofElementWithTagName:tagName];
+        return [super validateAttribute:attributeName ofElement:tagName];
     }
 }
 

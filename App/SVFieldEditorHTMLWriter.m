@@ -199,7 +199,7 @@
             NSString *attributeName = [anAttribute name];
             NSString *tagName = elementName;
             
-            if ([self validateAttribute:attributeName ofElementWithTagName:tagName])
+            if ([self validateAttribute:attributeName ofElement:elementName])
             {
                 // Validate individual styling
                 if ([attributeName isEqualToString:@"style"])
@@ -419,7 +419,7 @@
 
 #pragma mark Attribute Whitelist
 
-- (BOOL)validateAttribute:(NSString *)attributeName ofElementWithTagName:(NSString *)tagName;
+- (BOOL)validateAttribute:(NSString *)attributeName ofElement:(NSString *)tagName;
 {
     BOOL result = NO;
     
