@@ -65,9 +65,9 @@
 - (id)valueForDropFromPasteboard:(NSPasteboard *)pasteboard
 {
 	// Retrieve the appropriate URL from the pasteboard
-	NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
-	
-	return [[webLocations firstObjectKS] URL];
+    NSArray *webLocations = [pasteboard readWebLocations];
+    NSURL *result = ([webLocations count] ? [[webLocations objectAtIndex:0] URL] : nil);
+    return result;
 }
 
 - (NSDragOperation)tableView:(NSTableView *)aTableView	

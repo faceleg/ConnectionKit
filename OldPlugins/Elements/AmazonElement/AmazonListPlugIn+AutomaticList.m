@@ -8,6 +8,7 @@
 
 #import "AmazonListPlugIn.h"
 
+#import "AmazonIDFormatter.h"
 #import "NSURL+AmazonPagelet.h"
 
 
@@ -62,7 +63,7 @@
 						[scanner scanUpToString:@"&colid=" intoString:NULL];
 						[scanner scanString:@"&colid=" intoString:NULL];
 						
-						NSCharacterSet *characters = [NSCharacterSet alphanumericASCIICharacterSet];
+						NSCharacterSet *characters = [AmazonIDFormatter legalAmazonIDCharacters];
 						[scanner scanCharactersFromSet:characters intoString:&listID];
 					}
 					

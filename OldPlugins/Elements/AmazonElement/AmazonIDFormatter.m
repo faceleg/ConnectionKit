@@ -28,7 +28,7 @@
 		if (!([[URL scheme] length] && [[URL resourceSpecifier] length]))
 		{
 			// Convert to uppercase and remove unwanted characters
-			NSCharacterSet *characters = [NSCharacterSet alphanumericASCIICharacterSet];
+			NSCharacterSet *characters = [AmazonIDFormatter legalAmazonIDCharacters];
 			*anObject = [[string stringByRemovingCharactersNotInSet:characters] uppercaseString];
 			
 			// The user may have mistakenly entered ISBN, ISBN10 or ISBN13 at the start
@@ -58,6 +58,23 @@
 		}
 	}
 	
+	return result;
+}
+
++ (NSCharacterSet *)legalAmazonIDCharacters;
+{
+    static NSCharacterSet *result;
+	if (nil == result)
+	{
+		NSMutableCharacterSet *set = [[NSMutableCharacterSet alloc] init];
+		
+		[set addCharactersInRange:NSMakeRange('A', 26)];
+		[set addCharactersInRange:NSMakeRange('a', 26)];
+		[set addCharactersInRange:NSMakeRange('0', 10)];
+        
+		result = [set copy];		// retain a non-mutable copy
+        [set release];
+	}
 	return result;
 }
 

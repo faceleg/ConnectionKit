@@ -19,6 +19,8 @@
 {
 }
 
++ (NSCharacterSet *)legalAmazonIDCharacters;
+
 @end
 
 

@@ -236,7 +236,8 @@
 	
 		
 	// Store the resultant Amazon item
-	[self setAmazonItem: [[lookupOp returnedItems] firstObjectKS]];
+    AmazonItem *item = ([[lookupOp returnedItems] count] ? [[lookupOp returnedItems] objectAtIndex:0] : nil);
+	[self setAmazonItem:item];
 	[self setProductDetailsFromAmazonItem];
 	
 	// Download the product thumbnail

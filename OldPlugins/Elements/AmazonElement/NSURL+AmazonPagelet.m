@@ -8,6 +8,8 @@
 
 #import "NSURL+AmazonPagelet.h"
 
+#import "AmazonIDFormatter.h"
+
 #import "SandvoxPlugin.h"
 
 
@@ -239,7 +241,7 @@
 {
 	// Remove all non-alphanumeric characters and make uppercase
 	// If this still matches the original then it is likely to be a valid ID
-	NSCharacterSet *characters = [NSCharacterSet alphanumericASCIICharacterSet];
+	NSCharacterSet *characters = [AmazonIDFormatter legalAmazonIDCharacters];
 	NSString *processedString = [[self stringByRemovingCharactersNotInSet: characters] uppercaseString];
 	
 	BOOL result = [processedString isEqualToString: self];
