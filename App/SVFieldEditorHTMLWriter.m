@@ -424,7 +424,7 @@
     BOOL result = NO;
     
     // Allow class and style on any element except <BR>
-    if (tagName && ![tagName isEqualToString:@"BR"])
+    if (tagName && ![tagName isEqualToString:@"br"])
     {
         result = ([attributeName isEqualToString:@"class"] ||
                   [attributeName isEqualToString:@"style"]);

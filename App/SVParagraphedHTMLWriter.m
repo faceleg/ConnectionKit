@@ -156,7 +156,7 @@
 - (BOOL)validateAttribute:(NSString *)attributeName ofElement:(NSString *)tagName;
 {
     // Super doesn't allow links; we do.
-    if ([tagName isEqualToString:@"A"])
+    if ([tagName isEqualToString:@"a"])
     {
         BOOL result = ([attributeName isEqualToString:@"href"] ||
                        [attributeName isEqualToString:@"target"] ||
