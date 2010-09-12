@@ -52,7 +52,7 @@
 #pragma mark Styling Whitelist
 - (BOOL)validateStyleProperty:(NSString *)propertyName ofElementWithTagName:(NSString *)tagName;
 - (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style
-                fromElementWithTagName:(NSString *)tagName;
+                fromElement:(NSString *)tagName;
 
 
 @end

@@ -205,7 +205,7 @@
                 if ([attributeName isEqualToString:@"style"])
                 {
                     DOMCSSStyleDeclaration *style = [element style];
-                    [self removeUnsupportedCustomStyling:style fromElementWithTagName:tagName];
+                    [self removeUnsupportedCustomStyling:style fromElement:elementName];
                     
                     // Have to write it specially as changes don't show up in [anAttribute value] sadly
                     [self pushAttribute:@"style" value:[style cssText]];
@@ -446,7 +446,7 @@
 }
 
 - (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style
-                fromElementWithTagName:(NSString *)tagName;
+                fromElement:(NSString *)tagName;
 {
     for (int i = [style length]; i > 0;)
     {
