@@ -12,7 +12,7 @@
 		27FF85F40C5A91EA0077CB14 /* ContactElementField.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85ED0C5A91EA0077CB14 /* ContactElementField.m */; };
 		27FF85F50C5A91EA0077CB14 /* ContactElementFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85EF0C5A91EA0077CB14 /* ContactElementFieldCell.m */; };
 		27FF85F60C5A91EA0077CB14 /* ContactElementFieldsArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85F10C5A91EA0077CB14 /* ContactElementFieldsArrayController.m */; };
-		27FF85F70C5A91EA0077CB14 /* ContactElementInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85F30C5A91EA0077CB14 /* ContactElementInspectorController.m */; };
+		27FF85F70C5A91EA0077CB14 /* ContactInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85F30C5A91EA0077CB14 /* ContactInspector.m */; };
 		3C41CC7409B4D7BC0086EF83 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C41CC7309B4D7BC0086EF83 /* License.rtf */; };
 		3CAC4F0809A2AE2C007AB5B6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CAC4F0609A2AE2C007AB5B6 /* Localizable.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
@@ -42,8 +42,8 @@
 		27FF85EF0C5A91EA0077CB14 /* ContactElementFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ContactElementFieldCell.m; sourceTree = "<group>"; };
 		27FF85F00C5A91EA0077CB14 /* ContactElementFieldsArrayController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ContactElementFieldsArrayController.h; sourceTree = "<group>"; };
 		27FF85F10C5A91EA0077CB14 /* ContactElementFieldsArrayController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ContactElementFieldsArrayController.m; sourceTree = "<group>"; };
-		27FF85F20C5A91EA0077CB14 /* ContactElementInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ContactElementInspectorController.h; sourceTree = "<group>"; };
-		27FF85F30C5A91EA0077CB14 /* ContactElementInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ContactElementInspectorController.m; sourceTree = "<group>"; };
+		27FF85F20C5A91EA0077CB14 /* ContactInspector.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ContactInspector.h; sourceTree = "<group>"; };
+		27FF85F30C5A91EA0077CB14 /* ContactInspector.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ContactInspector.m; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* ContactElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactElement_Prefix.pch; sourceTree = "<group>"; };
 		3C41CC7309B4D7BC0086EF83 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
 		3C4C69D60D640E8A00398BDA /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -138,8 +138,8 @@
 				27FF85EF0C5A91EA0077CB14 /* ContactElementFieldCell.m */,
 				27FF85F00C5A91EA0077CB14 /* ContactElementFieldsArrayController.h */,
 				27FF85F10C5A91EA0077CB14 /* ContactElementFieldsArrayController.m */,
-				27FF85F20C5A91EA0077CB14 /* ContactElementInspectorController.h */,
-				27FF85F30C5A91EA0077CB14 /* ContactElementInspectorController.m */,
+				27FF85F20C5A91EA0077CB14 /* ContactInspector.h */,
+				27FF85F30C5A91EA0077CB14 /* ContactInspector.m */,
 				CE98EF3009994D7E00EDCEE7 /* ContactPlugIn.h */,
 				CE98EF3109994D7E00EDCEE7 /* ContactPlugIn.m */,
 			);
@@ -287,7 +287,7 @@
 				27FF85F40C5A91EA0077CB14 /* ContactElementField.m in Sources */,
 				27FF85F50C5A91EA0077CB14 /* ContactElementFieldCell.m in Sources */,
 				27FF85F60C5A91EA0077CB14 /* ContactElementFieldsArrayController.m in Sources */,
-				27FF85F70C5A91EA0077CB14 /* ContactElementInspectorController.m in Sources */,
+				27FF85F70C5A91EA0077CB14 /* ContactInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

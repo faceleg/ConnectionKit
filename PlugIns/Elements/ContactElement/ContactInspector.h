@@ -34,13 +34,13 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <SandvoxPlugin.h>
 
 
 @class NTBoxView;
 
 
-@interface ContactElementInspectorController : NSObject
+@interface ContactInspector : SVInspectorViewController
 {
 	IBOutlet NTBoxView	*oFieldsTableButtonsBox;
 	IBOutlet NSButton	*oAddLinkButton;

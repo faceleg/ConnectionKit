@@ -34,11 +34,11 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "ContactElementInspectorController.h"
+#import "ContactInspector.h"
 #import <SandvoxPlugin.h>
 
 
-@implementation ContactElementInspectorController
+@implementation ContactInspector
 
 + (void)initialize
 {
