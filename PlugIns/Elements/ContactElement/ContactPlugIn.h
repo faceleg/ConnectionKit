@@ -52,15 +52,26 @@
 	
 	ContactElementField *myEmailField;
 	
-	NSManagedObject *myPluginProperties;
-	NSArray	*myFields;
+	NSArray *myFields;
 	BOOL	myIsArchivingFields;
+    
+    NSString    *_sendButtonTitle;
+    NSString    *_subjectLabel;
+    NSString    *_emailLabel;
+    NSString    *_nameLabel;
+    NSString    *_messageLabel;
 }
 
 - (NSString *)encodedRecipient;
 - (NSString *)subjectInputHTML;
 - (NSString *)subjectPrompt;
 - (NSString *)subjectText;
+
+@property(nonatomic, copy) NSString *sendButtonTitle;
+@property(nonatomic, copy) NSString *subjectLabel;
+@property(nonatomic, copy) NSString *emailLabel;
+@property(nonatomic, copy) NSString *nameLabel;
+@property(nonatomic, copy) NSString *messageLabel;
 
 - (int)subjectType;
 - (void)setEncodedRecipient:(NSString *)anEnc;

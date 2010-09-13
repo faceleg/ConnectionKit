@@ -77,8 +77,8 @@
 {
 	// Set up the box under the table
 	[oFieldsTableButtonsBox setDrawsFrame:YES];
-	[oFieldsTableButtonsBox setFill:NTBoxBevel];
-	[oFieldsTableButtonsBox setBorderMask:(NTBoxLeft | NTBoxRight | NTBoxBottom)];
+	//[oFieldsTableButtonsBox setFill:NTBoxBevel];
+	//[oFieldsTableButtonsBox setBorderMask:(NTBoxLeft | NTBoxRight | NTBoxBottom)];
 	[oFieldsTableButtonsBox setFrameColor:[NSColor lightGrayColor]];
 	
 	// Give the buttons their icons

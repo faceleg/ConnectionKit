@@ -121,7 +121,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
 {
-	KTAbstractElement *element = [self delegateOwner];
+	NSObject *element = [self delegateOwner];
 	
 	if (isNewObject)
 	{
@@ -165,16 +165,11 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		
 		[self setFields:fields];
 	}
-	
-	myPluginProperties = [element retain];
-	[myPluginProperties addObserver:self forKeyPath:@"fields" options:0 context:NULL];
 }
 
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[myPluginProperties removeObserver:self forKeyPath:@"fields"];
-	[myPluginProperties release];
 	[myEmailField release];
 	[myFields release];
 	
@@ -220,108 +215,50 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	return result;
 }
 
-#pragma mark -
-#pragma mark KVO
-
-/*	We observe the fields array in case anyone else changes it for us (e.g. undo/redo)
- *	Check to make sure this isn't because we're currently archiving the fields array, and if so
- *	update our in-memory store.
- */
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-	if (object == myPluginProperties && [keyPath isEqualToString:@"fields"] && !myIsArchivingFields)
-	{
-		[self setFields:[self fieldsByFetchingFromPluginProperties] archiveToPluginProperties:NO];
-	}
-}
-
-
 - (void)focusMessageField:(NSNotification *)aNotification	// AddedMessageField notification
 {
 	[[oLabel window] makeFirstResponder:oLabel];
 }
 
-#pragma mark -
 #pragma mark Labels
 
 /*	All of these accessor methods fallback to using the -languageDictionary if no
  *	suitable value is found.
  */
 
-- (NSString *)sendButtonTitle
+- (void)didAddToPage:(id <SVPage>)page;
 {
-	NSString *result = [[self delegateOwner] objectForKey:@"sendButtonTitle"];
-	if (nil == result)
-	{
-		result = [[self languageDictionary] objectForKey:@"Send"];
-	}
-	return result;
+    if (![self sendButtonTitle])
+    {
+        [self setSendButtonTitle:[[self languageDictionary] objectForKey:@"Send"]];
+    }
+    
+    if (![self subjectLabel])
+    {
+        [self setSubjectLabel:[[self languageDictionary] objectForKey:@"Subject:"]];
+    }
+    
+    if (![self emailLabel])
+    {
+        [self setEmailLabel:[[self languageDictionary] objectForKey:@"EMail:"]];
+    }
+    
+    if (![self nameLabel])
+    {
+        [self setNameLabel:[[self languageDictionary] objectForKey:@"Name:"]];
+    }
+    
+    if (![self messageLabel])
+    {
+        [self setMessageLabel:[[self languageDictionary] objectForKey:@"Message:"]];
+    }
 }
 
-- (void)setSendButtonTitle:(NSString *)anAddress
-{
-	[[self delegateOwner] setObject:anAddress forKey:@"sendButtonTitle"];
-}
-
-- (NSString *)subjectLabel
-{
-	NSString *result = [[self delegateOwner] objectForKey:@"subjectLabel"];
-	if (nil == result)
-	{
-		result = [[self languageDictionary] objectForKey:@"Subject:"];
-	}
-	return result;
-}
-
-- (void)setSubjectLabel:(NSString *)anAddress
-{
-	[[self delegateOwner] setObject:anAddress forKey:@"subjectLabel"];
-}
-
-- (NSString *)emailLabel
-{
-	NSString *result = [[self delegateOwner] objectForKey:@"emailLabel"];
-	if (nil == result)
-	{
-		result = [[self languageDictionary] objectForKey:@"EMail:"];
-	}
-	return result;
-}
-
-- (void)setEmailLabel:(NSString *)anAddress
-{
-	[[self delegateOwner] setObject:anAddress forKey:@"emailLabel"];
-}
-
-- (NSString *)nameLabel
-{
-	NSString *result = [[self delegateOwner] objectForKey:@"nameLabel"];
-	if (nil == result)
-	{
-		result = [[self languageDictionary] objectForKey:@"Name:"];
-	}
-	return result;
-}
-
-- (void)setNameLabel:(NSString *)anAddress
-{
-	[[self delegateOwner] setObject:anAddress forKey:@"nameLabel"];
-}
-
-- (NSString *)messageLabel
-{
-	NSString *result = [[self delegateOwner] objectForKey:@"messageLabel"];
-	if (nil == result)
-	{
-		result = [[self languageDictionary] objectForKey:@"Message:"];
-	}
-	return result;
-}
-
-- (void)setMessageLabel:(NSString *)anAddress
-{
-	[[self delegateOwner] setObject:anAddress forKey:@"messageLabel"];
-}
+@synthesize sendButtonTitle = _sendButtonTitle;
+@synthesize subjectLabel = _subjectLabel;
+@synthesize emailLabel = _emailLabel;
+@synthesize nameLabel = _nameLabel;
+@synthesize messageLabel = _messageLabel;
 
 #pragma mark -
 #pragma mark Simple Accessors
@@ -411,7 +348,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	{
 		case kKTContactSubjectField:
 			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"text\" value=\"%@\" />", 
-				[((KTAbstractElement *)[self delegateOwner]) uniqueID], [subjectText stringByEscapingHTMLEntities]];
+				[([self delegateOwner]) uniqueID], [subjectText stringByEscapingHTMLEntities]];
 			break;
 		case kKTContactSubjectSelection:
 		{
@@ -422,7 +359,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 			NSEnumerator *theEnum = [lineArray objectEnumerator];
 			NSString *oneLine;
 
-			[buf appendFormat:@"<select id=\"s%@\" name=\"s\">", [((KTAbstractElement *)[self delegateOwner]) uniqueID]];
+			[buf appendFormat:@"<select id=\"s%@\" name=\"s\">", [[self delegateOwner] uniqueID]];
 			while (nil != (oneLine = [theEnum nextObject]) )
 			{
 				NSArray *commaArray = [oneLine componentsSeparatedByCommas];
@@ -446,7 +383,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		}
 		case kKTContactSubjectHidden:
 			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"hidden\" value=\"%@\" />", 
-				[((KTAbstractElement *)[self delegateOwner]) uniqueID], [subjectText stringByEscapingHTMLEntities]];
+				[[self delegateOwner] uniqueID], [subjectText stringByEscapingHTMLEntities]];
 			break;
 	}
 	
@@ -699,7 +636,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
                     fromPlugin:(NSManagedObject *)oldPlugin
                          error:(NSError **)error
 {
-    KTAbstractElement *element = [self delegateOwner];
+    NSObject *element = [self delegateOwner];
     
     // Import basic properties
     [element setValuesForKeysWithDictionary:oldPluginProperties];
