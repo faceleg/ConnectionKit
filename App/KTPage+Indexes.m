@@ -244,8 +244,13 @@
 	return result;
 }
 
-#pragma mark -
 #pragma mark Standard Summary
+
+- (void)writeSummary:(SVHTMLContext *)context;
+{
+    [[self article] writeText:context];
+}
+
 
 /*!	Here is the main information about how summaryHTML works.
 
