@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		27CFC6C3123E8F3700BF018C /* ContactInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27CFC6C2123E8F3700BF018C /* ContactInspector.xib */; };
+		27CFC6C3123E8F3700BF018C /* ContactElementInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27CFC6C2123E8F3700BF018C /* ContactElementInspector.xib */; };
 		27EF28F90C677862001055D3 /* lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EF28F80C677862001055D3 /* lock.png */; };
 		27F19AD20D4E479D000DB895 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27F19AD00D4E479D000DB895 /* InfoPlist.strings */; };
 		27FF85F40C5A91EA0077CB14 /* ContactElementField.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85ED0C5A91EA0077CB14 /* ContactElementField.m */; };
@@ -27,7 +27,7 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		27CFC6C2123E8F3700BF018C /* ContactInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactInspector.xib; sourceTree = "<group>"; };
+		27CFC6C2123E8F3700BF018C /* ContactElementInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactElementInspector.xib; sourceTree = "<group>"; };
 		27EF28F80C677862001055D3 /* lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock.png; sourceTree = "<group>"; };
 		27F19AD10D4E479D000DB895 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		27F19AD30D4E47E7000DB895 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -108,7 +108,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				27CFC6C2123E8F3700BF018C /* ContactInspector.xib */,
+				27CFC6C2123E8F3700BF018C /* ContactElementInspector.xib */,
 				27F19AD00D4E479D000DB895 /* InfoPlist.strings */,
 				27EF28F80C677862001055D3 /* lock.png */,
 				CE98EF3509994DE400EDCEE7 /* ContactElementTemplate.html */,
@@ -246,7 +246,7 @@
 				3C41CC7409B4D7BC0086EF83 /* License.rtf in Resources */,
 				27EF28F90C677862001055D3 /* lock.png in Resources */,
 				27F19AD20D4E479D000DB895 /* InfoPlist.strings in Resources */,
-				27CFC6C3123E8F3700BF018C /* ContactInspector.xib in Resources */,
+				27CFC6C3123E8F3700BF018C /* ContactElementInspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
