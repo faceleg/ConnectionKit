@@ -71,7 +71,7 @@ function dofocus[[=uniqueID]](anInput) {
 
 [[else4]]
 		<th>
-			[[if aField.label]]<label for="[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.labelWithLocalizedColonSuffix]]</label>[[endif5]]
+			[[if aField.label]]<label for="[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.label]]</label>[[endif5]]
 		</th>
 		<td>
 	
@@ -142,7 +142,7 @@ function dofocus[[=uniqueID]](anInput) {
 	<input type="submit" class="submit" id="[[=uniqueID]]-submit" name="x" value="[[=&aField.label]]" />
 
 	[[else4]]
-	[[if aField.label]]<label for="[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.labelWithLocalizedColonSuffix]]</label><br />[[endif5]]
+	[[if aField.label]]<label for="[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.label]]</label><br />[[endif5]]
 	
 	[[if aField.type==2]]
 	<!-- text area -->
