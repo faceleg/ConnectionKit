@@ -49,8 +49,6 @@
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
 	<string></string>
-	<key>KTTemplateName</key>
-	<string>RSSBadgeTemplate</string>
 	<key>NSPrincipalClass</key>
 	<string>RSSBadgePlugIn</string>
 </dict>
