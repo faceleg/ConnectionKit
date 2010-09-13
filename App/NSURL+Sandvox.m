@@ -12,14 +12,14 @@
 
 @implementation NSURL (Sandvox)
 
-- (NSDictionary *)svQueryDictionary; { return [self ks_queryDictionary]; }
+- (NSDictionary *)svQueryParameters; { return [self ks_queryParameters]; }
 
 + (NSURL *)svURLWithScheme:(NSString *)scheme
                       host:(NSString *)host
                       path:(NSString *)path
-           queryDictionary:(NSDictionary *)parameters;
+           queryParameters:(NSDictionary *)parameters;
 {
-    return [self ks_URLWithScheme:scheme host:host path:path queryDictionary:parameters];
+    return [self ks_URLWithScheme:scheme host:host path:path queryParameters:parameters];
 }
 
 @end

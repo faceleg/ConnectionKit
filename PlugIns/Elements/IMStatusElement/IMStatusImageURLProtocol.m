@@ -38,7 +38,7 @@
 - (void)startLoading;
 {
     NSURL *requestURL = [[self request] URL];
-    NSDictionary *query = [requestURL svQueryDictionary];
+    NSDictionary *query = [requestURL svQueryParameters];
     
     NSString *headline = [query objectForKey:@"headline"];
     NSString *status = [query objectForKey:@"status"];
@@ -133,7 +133,7 @@
     NSURL *result = [NSURL svURLWithScheme:@"x-imstatusimage"
                                       host:[baseURL host]
                                       path:[baseURL path]
-                           queryDictionary:query];
+                           queryParameters:query];
     
     [query release];
     

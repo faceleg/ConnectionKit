@@ -33,7 +33,7 @@
     return [NSURL ks_URLWithScheme:@"x-image-replacement"
                               host:[rendererURL host]
                               path:[rendererURL path]
-                   queryDictionary:params];
+                   queryParameters:params];
 }
 
 @end
@@ -99,7 +99,7 @@ static NSOperationQueue *sQueue;
     
     
     // What text etc. to render?
-    NSDictionary *query = [URL ks_queryDictionary];
+    NSDictionary *query = [URL ks_queryParameters];
     NSDictionary *inputs = [[NSDictionary alloc] initWithObjectsAndKeys:
                             [query objectForKey:@"string"], @"String",
                             [query objectForKey:@"size"], @"Size",

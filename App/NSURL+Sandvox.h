@@ -11,11 +11,11 @@
 
 @interface NSURL (Sandvox)
 
-- (NSDictionary *)svQueryDictionary;
+- (NSDictionary *)svQueryParameters;
 
 + (NSURL *)svURLWithScheme:(NSString *)scheme
                       host:(NSString *)host
                       path:(NSString *)path
-           queryDictionary:(NSDictionary *)parameters;
+           queryParameters:(NSDictionary *)parameters;
 
 @end

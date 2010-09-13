@@ -63,7 +63,7 @@
     
     
     // Construct image scaling properties dictionary from the URL
-    NSDictionary *URLQuery = [URL ks_queryDictionary];
+    NSDictionary *URLQuery = [URL ks_queryParameters];
     KSImageScalingMode scalingMode = [URLQuery integerForKey:@"mode"];
     
     
@@ -208,7 +208,7 @@
         
         
         // Construct image scaling properties dictionary from the URL
-        NSDictionary *URLQuery = [URL ks_queryDictionary];
+        NSDictionary *URLQuery = [URL ks_queryParameters];
         
         NSURL *sourceURL = [[NSURL alloc] initWithScheme:@"file" host:[URL host] path:[URL path]];
         OBASSERT(sourceURL);

@@ -50,7 +50,7 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 	NSURL *result = [NSURL ks_URLWithScheme:KTImageScalingURLProtocolScheme
                                        host:[fileURL host]
                                        path:[fileURL path]
-                            queryDictionary:query];
+                            queryParameters:query];
     
 	[query release];
 	[baseURL release];
@@ -148,7 +148,7 @@ static NSURLCache *_sharedCache;
 	
 	if ([[[request URL] scheme] isEqualToString:KTImageScalingURLProtocolScheme])
 	{
-		NSDictionary *query = [[request URL] ks_queryDictionary];
+		NSDictionary *query = [[request URL] ks_queryParameters];
 		if (//[query objectForKey:@"size"] &&   // Allow there to be no size and just convert between data types
 			[query objectForKey:@"mode"] &&
             [query objectForKey:@"filetype"] &&

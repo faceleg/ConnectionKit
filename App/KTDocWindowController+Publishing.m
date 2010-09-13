@@ -315,7 +315,7 @@
 {
 	NSURL *siteURL = [[[[self document] site] rootPage] URL];
 	NSURL *submissionURL = [[NSURL URLWithString:@"http://www.sandvoxsites.com/submit_from_app.php"]
-                            ks_URLWithQueryDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
+                            ks_URLWithQueryParameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                                        [siteURL absoluteString], @"url",
                                                        gRegistrationString, @"reg",
                                                        nil]];
