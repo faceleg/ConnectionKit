@@ -170,7 +170,7 @@
     if (![self isForEditing])
     {
         NSURL *cssURL = [self URLOfDesignFile:@"main.css"];
-        [_mainCSSURL release]; _mainCSSURL = cssURL;
+        [_mainCSSURL release]; _mainCSSURL = [cssURL copy];
     }
     
     
