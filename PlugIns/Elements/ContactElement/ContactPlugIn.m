@@ -208,12 +208,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 - (NSString *)CSSURLs
 {
-	NSURL *designURL = [[[self page] master] designDirectoryURL];
-    NSURL *mainCSSURL = [designURL URLByAppendingPathComponent:@"main.css" isDirectory:NO];
-	NSURL *masterCSSURL = [designURL URLByAppendingPathComponent:@"master.css" isDirectory:NO];
-	
-    NSString *result = [NSString stringWithFormat:@"%@ %@", [mainCSSURL absoluteString], [masterCSSURL absoluteString]];
-    return result;
+    return [[[SVPlugIn currentContext] mainCSSURL] absoluteString];
 }
 
 - (NSString *)subjectPrompt
