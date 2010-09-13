@@ -12,6 +12,7 @@
 #import "SVArchivePage.h"
 #import "SVHTMLContext.h"
 #import "SVHTMLTemplateParser.h"
+#import "SVTextAttachment.h"
 #import "KTIndexPluginWrapper.h"
 
 #import "NSArray+Karelia.h"
@@ -263,7 +264,7 @@
                                                   atIndex:location
                                            effectiveRange:&effectiveRange];
         
-        if (attachment)
+        if (attachment && ![[attachment graphic] shouldWriteHTMLInline])
         {
             [summary deleteCharactersInRange:effectiveRange];
         }
