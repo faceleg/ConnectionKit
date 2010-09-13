@@ -102,6 +102,18 @@
 	}
 }
 
+- (BOOL)canRemove;
+{
+    BOOL result = [super canRemove];
+    if (result)
+    {
+        NSString *identifier = [self valueForKeyPath:@"selection.identifier"];
+        result = (identifier == nil || [identifier isEqualToString:@"other"]);
+    }
+    
+    return result;
+}
+
 #pragma mark -
 #pragma mark Drawing
 
