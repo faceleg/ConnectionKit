@@ -37,14 +37,6 @@
 #import <SandvoxPlugin.h>
 
 
-@class NTBoxView;
-
-
 @interface ContactInspector : SVInspectorViewController
-{
-	IBOutlet NTBoxView	*oFieldsTableButtonsBox;
-	IBOutlet NSButton	*oAddLinkButton;
-	IBOutlet NSButton	*oRemoveLinkButton;
-}
 
 @end
