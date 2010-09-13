@@ -1,15 +1,15 @@
 [[if address]]
-[[foreach delegate.fields aField]]
+[[foreach fields aField]]
 [[if aField.identifier=="email"]]
 [[if aField.type!=0]]
 <script type="text/javascript"><!--
 
 function verifyAndSubmit[[=uniqueID]](form) {
 
-	var theResults	= document.getElementById("contact[[=uniqueID]]-results");
+	var theResults	= document.getElementById("[[=uniqueID]]-results");
 
 	checkEmail = form.e.value;
-	if (checkEmail=='[[=&delegate.contactField.defaultString]]'
+	if (checkEmail=='[[=&contactField.defaultString]]'
 		|| checkEmail.indexOf('@') < 0
 		|| checkEmail.lastIndexOf('.') < (checkEmail.indexOf('@') + 1)
 		|| checkEmail.lastIndexOf('.') >= (checkEmail.length - 2)
@@ -43,19 +43,19 @@ function dofocus[[=uniqueID]](anInput) {
 [[endif2]]
 [[endforeach]]
 
-<form class="contactElement [[if sideLabels]]labelsOnSide[[else2]]labelsOnTop[[endif2]]" action="[[=delegate.mailmeURL]]" onsubmit="return verifyAndSubmit[[=uniqueID]](this);" method="post">
+<form class="contactElement [[if sideLabels]]labelsOnSide[[else2]]labelsOnTop[[endif2]]" action="[[=mailmeURL]]" onsubmit="return verifyAndSubmit[[=uniqueID]](this);" method="post">
 		[[comment - this is an anti-spam measure; these are honeypot fields that if used, invalidate the form.]]
 		<div class="hidden">
-			<label for="contact[[=uniqueID]]-subject">[["Please leave this field empty:]]</label>
-			<input id="contact[[=uniqueID]]-subject" type="text" name="subject" />
+			<label for="[[=uniqueID]]-subject">[["Please leave this field empty:]]</label>
+			<input id="[[=uniqueID]]-subject" type="text" name="subject" />
 			<br />
-			<label for="contact[[=uniqueID]]-message">[["Please leave this field empty:]]</label>
-			<textarea id="contact[[=uniqueID]]-message" name="message" rows="3" cols="20"></textarea>
+			<label for="[[=uniqueID]]-message">[["Please leave this field empty:]]</label>
+			<textarea id="[[=uniqueID]]-message" name="message" rows="3" cols="20"></textarea>
 		</div>
 	
 [[if sideLabels]]
 <table width="100%">
-[[foreach delegate.fields aField]]
+[[foreach fields aField]]
 
 [[if aField.type==0]]
 	<!-- hidden -->
@@ -66,48 +66,48 @@ function dofocus[[=uniqueID]](anInput) {
 [[if aField.type==6]]
 		<!-- Send Button -->
 		<td colspan="2">
-			<input type="submit" class="submit" id="contact[[=uniqueID]]-submit" name="x" value="[[=&aField.label]]" />
+			<input type="submit" class="submit" id="[[=uniqueID]]-submit" name="x" value="[[=&aField.label]]" />
 		</td>
 
 [[else4]]
 		<th>
-			[[if aField.label]]<label for="contact[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.labelWithLocalizedColonSuffix]]</label>[[endif5]]
+			[[if aField.label]]<label for="[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.labelWithLocalizedColonSuffix]]</label>[[endif5]]
 		</th>
 		<td>
 	
 [[if aField.type==2]]
 			<!-- text area -->
-			<textarea class="fullWidth" id="contact[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]" rows="10" cols="80">[[if aField.defaultString]][[=&aField.defaultString]][[endif6]]</textarea>
+			<textarea class="fullWidth" id="[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]" rows="10" cols="80">[[if aField.defaultString]][[=&aField.defaultString]][[endif6]]</textarea>
 	
 [[else5]]
 [[if aField.type==4]]
 			<!-- popup button -->
-			<select class="fullWidth" id="contact[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]">
+			<select class="fullWidth" id="[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]">
 				[[foreach aField.visitorChoices anOption]]<option>[[=&anOption]]</option>[[endForEach2]]
 			</select>
 	
 [[else6]]
 [[if aField.type==3]]
 			<!-- checkbox -->
-			<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]"
+			<input id="[[=uniqueID]]-[[=_&aField.inputName]]"
 				type="checkbox"
 				name="[[=&aField.inputName]]"
 				value="on"
 				[[if aField.checkBoxIsSelected]]checked="yes"[[endif8]]
 				/>
-			[[if aField.checkBoxLabel]]<label for="contact[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.checkBoxLabel]]</label>[[endif8]]
+			[[if aField.checkBoxLabel]]<label for="[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.checkBoxLabel]]</label>[[endif8]]
 	
 [[else7]]
 [[if aField.type==5]]
 			<!-- radio buttons -->
 			[[foreach aField.visitorChoices anOption]]
-			<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]" type="radio" name="[[=&aField.inputName]]" value="[[=&anOption]]" />
-			<label for="contact[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]">[[=&anOption]]</label>[[endForEach2]]
+			<input id="[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]" type="radio" name="[[=&aField.inputName]]" value="[[=&anOption]]" />
+			<label for="[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]">[[=&anOption]]</label>[[endForEach2]]
 	
 [[else8]]
 [[if aField.type==1]]
 			<!-- text field -->
-			<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]"
+			<input id="[[=uniqueID]]-[[=_&aField.inputName]]"
 				[[if aField.identifier=="email"]]type="email" style="color:#888"[[else10]]type="text"[[endif10]]
 				class="fullWidth"
 				name="[[=&aField.inputName]]"
@@ -130,7 +130,7 @@ function dofocus[[=uniqueID]](anInput) {
 </table>
 [[else2]]
 <p>
-[[foreach delegate.fields aField]]
+[[foreach fields aField]]
 
 	[[if aField.type==0]]
 	<!-- hidden -->
@@ -139,19 +139,19 @@ function dofocus[[=uniqueID]](anInput) {
 
 	[[if aField.type==6]]
 	<!-- Send Button -->
-	<input type="submit" class="submit" id="contact[[=uniqueID]]-submit" name="x" value="[[=&aField.label]]" />
+	<input type="submit" class="submit" id="[[=uniqueID]]-submit" name="x" value="[[=&aField.label]]" />
 
 	[[else4]]
-	[[if aField.label]]<label for="contact[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.labelWithLocalizedColonSuffix]]</label><br />[[endif5]]
+	[[if aField.label]]<label for="[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.labelWithLocalizedColonSuffix]]</label><br />[[endif5]]
 	
 	[[if aField.type==2]]
 	<!-- text area -->
-	<textarea class="fullWidth" id="contact[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]" rows="10" cols="80">[[=&aField.defaultString]]</textarea>
+	<textarea class="fullWidth" id="[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]" rows="10" cols="80">[[=&aField.defaultString]]</textarea>
 	
 	[[else5]]
 	[[if aField.type==4]]
 	<!-- popup button -->
-	<select class="fullWidth" id="contact[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]">
+	<select class="fullWidth" id="[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]">
 		[[foreach aField.visitorChoices anOption]]
 		<option>[[=&anOption]]</option>
 		[[endForEach2]]
@@ -160,26 +160,26 @@ function dofocus[[=uniqueID]](anInput) {
 	[[else6]]
 	[[if aField.type==3]]
 	<!-- checkbox -->
-	<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]"
+	<input id="[[=uniqueID]]-[[=_&aField.inputName]]"
 		type="checkbox"
 		name="[[=&aField.inputName]]"
 		value="on"
 		[[if aField.checkBoxIsSelected]]checked="yes"[[endif8]]
 		/>
-	[[if aField.checkBoxLabel]]<label for="contact[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.checkBoxLabel]]</label>[[endif8]]
+	[[if aField.checkBoxLabel]]<label for="[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.checkBoxLabel]]</label>[[endif8]]
 	
 	[[else7]]
 	[[if aField.type==5]]
 	<!-- radio buttons -->
 	[[foreach aField.visitorChoices anOption]]
-	<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]" type="radio" name="[[=&aField.inputName]]" value="[[=&anOption]]" />
-	<label for="contact[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]">[[=&anOption]]</label>
+	<input id="[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]" type="radio" name="[[=&aField.inputName]]" value="[[=&anOption]]" />
+	<label for="[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]">[[=&anOption]]</label>
 	[[endForEach2]]
 	
 	[[else8]]
 	[[if aField.type==1]]
 	<!-- text field -->
-	<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]"
+	<input id="[[=uniqueID]]-[[=_&aField.inputName]]"
 		class="fullWidth"
 		[[if aField.identifier=="email"]]type="email" style="color:#888"[[else10]]type="text"[[endif10]]
 		name="[[=&aField.inputName]]"
@@ -202,19 +202,19 @@ function dofocus[[=uniqueID]](anInput) {
 [[endif2]]
 	<div class="hidden">
 		<!-- CSS URL -->
-		<input type="hidden" name="a" id="contact[[=uniqueID]]-a" value="[[=&delegate.CSSURLs]]" />
+		<input type="hidden" name="a" id="[[=uniqueID]]-a" value="[[=&CSSURLs]]" />
 		<!-- Site Title -->
-		<input type="hidden" name="t" id="contact[[=uniqueID]]-t" value="[[=&page.master.siteTitleText]]" />
+		<input type="hidden" name="t" id="[[=uniqueID]]-t" value="[[=&page.master.siteTitleText]]" />
 		<!-- Verification Code -->
-		<input type="hidden" name="v" id="contact[[=uniqueID]]-v" value="[[=delegate.encodedRecipient]]" />
+		<input type="hidden" name="v" id="[[=uniqueID]]-v" value="[[=encodedRecipient]]" />
 	
 		[[if copyToSender]]
 		<!-- Copy to sender -->
-		<input type="hidden" name="c" id="contact[[=uniqueID]]-c" value="yes" />
+		<input type="hidden" name="c" id="[[=uniqueID]]-c" value="yes" />
 		[[endif2]]
 	</div>
 </form>
-<div style='text-align:center;' id="contact[[=uniqueID]]-results"></div>
+<div style='text-align:center;' id="[[=uniqueID]]-results"></div>
 
 [[else]]
 <p>[['Please specify an address for the recipient using the Inspector.]]</p>

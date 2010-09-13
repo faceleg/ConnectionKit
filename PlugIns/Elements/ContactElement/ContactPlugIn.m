@@ -204,6 +204,8 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 #pragma mark Derived Accessors
 
+- (NSString *)uniqueID; { return @"contact-form"; }
+
 - (NSString *)CSSURLs
 {
 	NSURL *designURL = [[[self page] master] designDirectoryURL];
