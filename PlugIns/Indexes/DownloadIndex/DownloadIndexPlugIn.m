@@ -69,6 +69,14 @@
     [context addDependencyForKeyPath:@"indexedCollection" ofObject:self];
     [context addDependencyForKeyPath:@"indexedCollection.childPages" ofObject:self];
     [context addDependencyForKeyPath:@"truncateChars" ofObject:self];
+    
+    // add resources
+    NSString *path = [[self bundle] pathForResource:@"DownloadIndex" ofType:@"css"];
+    if (path && ![path isEqualToString:@""]) 
+    {
+        NSURL *cssURL = [NSURL fileURLWithPath:path];
+        [context addResourceWithURL:cssURL];
+    }
 }
 
 
