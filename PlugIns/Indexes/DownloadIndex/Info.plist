@@ -38,6 +38,8 @@
 	<string>Download List</string>
 	<key>KTPluginPriority</key>
 	<integer>2</integer>
+	<key>KTCategory</key>
+	<string>2</string>
 	<key>KTPreferredPageBundleIdentifier</key>
 	<string>sandvox.RichTextElement</string>
 	<key>KTPresets</key>
