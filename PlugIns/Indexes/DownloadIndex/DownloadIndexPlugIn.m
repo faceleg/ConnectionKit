@@ -75,7 +75,7 @@
     if (path && ![path isEqualToString:@""]) 
     {
         NSURL *cssURL = [NSURL fileURLWithPath:path];
-        [context addResourceWithURL:cssURL];
+        [context addCSSWithURL:cssURL];
     }
 }
 
