@@ -251,10 +251,14 @@
 	// design's print.css but not for Quick Look
     if ([context isForPublishing])
 	{
-		path = [context relativeURLStringOfURL:[context URLOfDesignFile:@"print.css"]];
-		if (path)
+        NSURL *printCSSURL = [context URLOfDesignFile:@"print.css"];
+        if ( printCSSURL )
         {
-            [context writeLinkToStylesheet:path title:nil media:@"print"];
+            path = [context relativeURLStringOfURL:printCSSURL];
+            if (path)
+            {
+                [context writeLinkToStylesheet:path title:nil media:@"print"];
+            }
         }
 	}
 }
