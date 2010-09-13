@@ -112,7 +112,7 @@
     
     if ([identifier isEqualToString:@"page"])
     {
-        return 480.0f;
+        return 476.0f;
     }
     else if ([identifier isEqualToString:@"appearance"])
     {

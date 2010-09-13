@@ -127,7 +127,7 @@
 										<object class="NSBox" id="96621735">
 											<reference key="NSNextResponder" ref="776333486"/>
 											<int key="NSvFlags">34</int>
-											<string key="NSFrame">{{17, 87}, {210, 5}}</string>
+											<string key="NSFrame">{{17, 83}, {210, 5}}</string>
 											<reference key="NSSuperview" ref="776333486"/>
 											<string key="NSOffsets">{0, 0}</string>
 											<object class="NSTextFieldCell" key="NSTitleCell">
@@ -158,7 +158,7 @@
 											<int key="NSTitlePosition">0</int>
 											<bool key="NSTransparent">NO</bool>
 										</object>
-										<object class="NSBox" id="634387897">
+										<object class="NSBox" id="556127272">
 											<reference key="NSNextResponder" ref="776333486"/>
 											<int key="NSvFlags">10</int>
 											<string key="NSFrame">{{17, 183}, {210, 5}}</string>
@@ -309,7 +309,7 @@
 										<object class="NSTextField" id="868406140">
 											<reference key="NSNextResponder" ref="776333486"/>
 											<int key="NSvFlags">292</int>
-											<string key="NSFrame">{{14, 67}, {74, 14}}</string>
+											<string key="NSFrame">{{14, 63}, {74, 14}}</string>
 											<reference key="NSSuperview" ref="776333486"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="423858465">
@@ -441,7 +441,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 													</object>
 												</object>
 											</object>
-											<string key="NSFrame">{{68, 8}, {164, 57}}</string>
+											<string key="NSFrame">{{68, 4}, {164, 57}}</string>
 											<reference key="NSSuperview" ref="776333486"/>
 											<string key="NSClassName">NSView</string>
 										</object>
@@ -483,7 +483,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 													</object>
 												</object>
 											</object>
-											<string key="NSFrame">{{8, 8}, {58, 57}}</string>
+											<string key="NSFrame">{{8, 4}, {58, 57}}</string>
 											<reference key="NSSuperview" ref="776333486"/>
 											<string key="NSClassName">NSView</string>
 										</object>
@@ -626,7 +626,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 												<reference key="NSTextColor" ref="422175849"/>
 											</object>
 										</object>
-										<object class="NSTokenField" id="1056708215">
+										<object class="NSTokenField" id="952809946">
 											<reference key="NSNextResponder" ref="776333486"/>
 											<int key="NSvFlags">274</int>
 											<object class="NSMutableSet" key="NSDragTypes">
@@ -636,10 +636,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 													<string>NSStringPboardType</string>
 												</object>
 											</object>
-											<string key="NSFrame">{{17, 100}, {210, 55}}</string>
+											<string key="NSFrame">{{17, 96}, {210, 59}}</string>
 											<reference key="NSSuperview" ref="776333486"/>
 											<bool key="NSEnabled">YES</bool>
-											<object class="NSTokenFieldCell" key="NSCell" id="94955232">
+											<object class="NSTokenFieldCell" key="NSCell" id="947280715">
 												<int key="NSCellFlags">341966336</int>
 												<int key="NSCellFlags2">131072</int>
 												<object class="NSMutableAttributedString" key="NSContents">
@@ -670,12 +670,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																		<string key="NSRepresentedObject">qwerty</string>
 																		<reference key="NSTextColor" ref="422175849"/>
 																	</object>
-																	<reference key="NS.delegate" ref="94955232"/>
+																	<reference key="NS.delegate" ref="947280715"/>
 																</object>
 																<reference ref="422175849"/>
 																<reference ref="26"/>
 																<reference ref="26"/>
-																<object class="NSMutableParagraphStyle" id="590588341">
+																<object class="NSMutableParagraphStyle" id="513140335">
 																	<nil key="NSTabStops"/>
 																</object>
 															</object>
@@ -702,12 +702,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																		<string key="NSRepresentedObject">uiop</string>
 																		<reference key="NSTextColor" ref="422175849"/>
 																	</object>
-																	<reference key="NS.delegate" ref="94955232"/>
+																	<reference key="NS.delegate" ref="947280715"/>
 																</object>
 																<reference ref="422175849"/>
 																<reference ref="26"/>
 																<reference ref="26"/>
-																<reference ref="590588341"/>
+																<reference ref="513140335"/>
 															</object>
 														</object>
 														<object class="NSDictionary">
@@ -732,12 +732,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																		<string key="NSRepresentedObject">asdf</string>
 																		<reference key="NSTextColor" ref="422175849"/>
 																	</object>
-																	<reference key="NS.delegate" ref="94955232"/>
+																	<reference key="NS.delegate" ref="947280715"/>
 																</object>
 																<reference ref="422175849"/>
 																<reference ref="26"/>
 																<reference ref="26"/>
-																<reference ref="590588341"/>
+																<reference ref="513140335"/>
 															</object>
 														</object>
 														<object class="NSDictionary">
@@ -762,12 +762,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																		<string key="NSRepresentedObject">ghjkl</string>
 																		<reference key="NSTextColor" ref="422175849"/>
 																	</object>
-																	<reference key="NS.delegate" ref="94955232"/>
+																	<reference key="NS.delegate" ref="947280715"/>
 																</object>
 																<reference ref="422175849"/>
 																<reference ref="26"/>
 																<reference ref="26"/>
-																<reference ref="590588341"/>
+																<reference ref="513140335"/>
 															</object>
 														</object>
 														<object class="NSDictionary">
@@ -792,12 +792,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																		<string key="NSRepresentedObject">zxcvbnm</string>
 																		<reference key="NSTextColor" ref="422175849"/>
 																	</object>
-																	<reference key="NS.delegate" ref="94955232"/>
+																	<reference key="NS.delegate" ref="947280715"/>
 																</object>
 																<reference ref="422175849"/>
 																<reference ref="26"/>
 																<reference ref="26"/>
-																<reference ref="590588341"/>
+																<reference ref="513140335"/>
 															</object>
 														</object>
 														<object class="NSDictionary">
@@ -822,12 +822,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																		<string key="NSRepresentedObject">1234567890</string>
 																		<reference key="NSTextColor" ref="422175849"/>
 																	</object>
-																	<reference key="NS.delegate" ref="94955232"/>
+																	<reference key="NS.delegate" ref="947280715"/>
 																</object>
 																<reference ref="422175849"/>
 																<reference ref="26"/>
 																<reference ref="26"/>
-																<reference ref="590588341"/>
+																<reference ref="513140335"/>
 															</object>
 														</object>
 														<object class="NSDictionary">
@@ -852,12 +852,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																		<string key="NSRepresentedObject">once upon a time</string>
 																		<reference key="NSTextColor" ref="422175849"/>
 																	</object>
-																	<reference key="NS.delegate" ref="94955232"/>
+																	<reference key="NS.delegate" ref="947280715"/>
 																</object>
 																<reference ref="422175849"/>
 																<reference ref="26"/>
 																<reference ref="26"/>
-																<reference ref="590588341"/>
+																<reference ref="513140335"/>
 															</object>
 														</object>
 														<object class="NSDictionary">
@@ -882,12 +882,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																		<string key="NSRepresentedObject">the end</string>
 																		<reference key="NSTextColor" ref="422175849"/>
 																	</object>
-																	<reference key="NS.delegate" ref="94955232"/>
+																	<reference key="NS.delegate" ref="947280715"/>
 																</object>
 																<reference ref="422175849"/>
 																<reference ref="26"/>
 																<reference ref="26"/>
-																<reference ref="590588341"/>
+																<reference ref="513140335"/>
 															</object>
 														</object>
 														<object class="NSDictionary">
@@ -912,12 +912,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																		<string key="NSRepresentedObject">or is it?</string>
 																		<reference key="NSTextColor" ref="422175849"/>
 																	</object>
-																	<reference key="NS.delegate" ref="94955232"/>
+																	<reference key="NS.delegate" ref="947280715"/>
 																</object>
 																<reference ref="422175849"/>
 																<reference ref="26"/>
 																<reference ref="26"/>
-																<reference ref="590588341"/>
+																<reference ref="513140335"/>
 															</object>
 														</object>
 														<object class="NSDictionary">
@@ -942,12 +942,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																		<string key="NSRepresentedObject">I'll be back</string>
 																		<reference key="NSTextColor" ref="422175849"/>
 																	</object>
-																	<reference key="NS.delegate" ref="94955232"/>
+																	<reference key="NS.delegate" ref="947280715"/>
 																</object>
 																<reference ref="422175849"/>
 																<reference ref="26"/>
 																<reference ref="26"/>
-																<reference ref="590588341"/>
+																<reference ref="513140335"/>
 															</object>
 														</object>
 													</object>
@@ -956,11 +956,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 													</object>
 												</object>
 												<reference key="NSSupport" ref="26"/>
-												<reference key="NSControlView" ref="1056708215"/>
+												<reference key="NSControlView" ref="952809946"/>
 												<bool key="NSDrawsBackground">YES</bool>
 												<reference key="NSBackgroundColor" ref="833147279"/>
 												<reference key="NSTextColor" ref="422175849"/>
-												<reference key="NSDelegate" ref="1056708215"/>
+												<reference key="NSDelegate" ref="952809946"/>
 												<double key="NSCompletionDelay">0.0</double>
 												<int key="NSTokenStyle">0</int>
 												<object class="NSArray" key="NS.representedObjects">
@@ -979,18 +979,18 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 											</object>
 											<int key="NSTokenFieldVersion">2</int>
 										</object>
-										<object class="NSTextField" id="582104919">
+										<object class="NSTextField" id="181848873">
 											<reference key="NSNextResponder" ref="776333486"/>
 											<int key="NSvFlags">268</int>
 											<string key="NSFrame">{{14, 163}, {60, 14}}</string>
 											<reference key="NSSuperview" ref="776333486"/>
 											<bool key="NSEnabled">YES</bool>
-											<object class="NSTextFieldCell" key="NSCell" id="134101888">
+											<object class="NSTextFieldCell" key="NSCell" id="413025245">
 												<int key="NSCellFlags">68288064</int>
 												<int key="NSCellFlags2">272761856</int>
 												<string key="NSContents">Keywords</string>
 												<reference key="NSSupport" ref="331003521"/>
-												<reference key="NSControlView" ref="582104919"/>
+												<reference key="NSControlView" ref="181848873"/>
 												<reference key="NSBackgroundColor" ref="991363190"/>
 												<reference key="NSTextColor" ref="422175849"/>
 											</object>
@@ -2888,10 +2888,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: inspectedObjectsController.selection.keywords</string>
-						<reference key="source" ref="1056708215"/>
+						<reference key="source" ref="952809946"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1056708215"/>
+							<reference key="NSSource" ref="952809946"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">value: inspectedObjectsController.selection.keywords</string>
 							<string key="NSBinding">value</string>
@@ -2981,9 +2981,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<reference ref="150142673"/>
 							<reference ref="220608105"/>
 							<reference ref="764707405"/>
-							<reference ref="634387897"/>
-							<reference ref="1056708215"/>
-							<reference ref="582104919"/>
+							<reference ref="556127272"/>
+							<reference ref="952809946"/>
+							<reference ref="181848873"/>
 						</object>
 						<reference key="parent" ref="33785467"/>
 					</object>
@@ -3867,36 +3867,36 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">383</int>
-						<reference key="object" ref="634387897"/>
+						<reference key="object" ref="556127272"/>
 						<reference key="parent" ref="776333486"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">384</int>
-						<reference key="object" ref="1056708215"/>
+						<reference key="object" ref="952809946"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="94955232"/>
+							<reference ref="947280715"/>
 						</object>
 						<reference key="parent" ref="776333486"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">385</int>
-						<reference key="object" ref="94955232"/>
-						<reference key="parent" ref="1056708215"/>
+						<reference key="object" ref="947280715"/>
+						<reference key="parent" ref="952809946"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">386</int>
-						<reference key="object" ref="582104919"/>
+						<reference key="object" ref="181848873"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="134101888"/>
+							<reference ref="413025245"/>
 						</object>
 						<reference key="parent" ref="776333486"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">387</int>
-						<reference key="object" ref="134101888"/>
-						<reference key="parent" ref="582104919"/>
+						<reference key="object" ref="413025245"/>
+						<reference key="parent" ref="181848873"/>
 					</object>
 				</object>
 			</object>
@@ -4282,7 +4282,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">389</int>
+			<int key="maxID">391</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
