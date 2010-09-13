@@ -55,9 +55,8 @@
 
 enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 
-@interface ContactPlugIn ( Private )
+@interface ContactPlugIn ()
 
-- (void)setFields:(NSArray *)fields archiveToPluginProperties:(BOOL)archive;
 - (NSArray *)fieldsPropertyListRepresentation;
 - (NSArray *)fieldsByFetchingFromPluginProperties;
 
@@ -108,54 +107,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
     return [NSArray arrayWithObjects:@"fields", @"address", @"copyToSender", @"sendButtonTitle", @"subjectLabel", @"emailLabel", @"nameLabel", @"messageLabel", @"sideLabels", @"subjectType", @"subjectText", nil];
 }
 
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
-{
-	NSObject *element = [self delegateOwner];
-	
-	if (isNewObject)
-	{
-		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-		
-		// Set up default bunch of fields
-		NSString *language = [[[self page] master] language];
-		NSMutableArray *fields = [NSMutableArray array];
-		
-		ContactElementField *aField = [[ContactElementField alloc] initWithIdentifier:@"visitorName"];
-		[aField setLabel:[[self bundle] localizedStringForString:@"Name" language:language]];
-		[aField setType:ContactElementTextFieldField];
-		[fields addObject:aField];
-		[aField release];
-		
-		aField = [[ContactElementField alloc] initWithIdentifier:@"email"];
-		[aField setLabel:[[self bundle] localizedStringForString:@"Email" language:language]];
-		[aField setType:ContactElementTextFieldField];
-		
-		[aField setDefaultString:[defaults objectForKey:@"emailPlaceholder"]];
-		[fields addObject:aField];
-		[aField release];
-		
-		aField = [[ContactElementField alloc] initWithIdentifier:@"subject"];
-		[aField setLabel:[[self bundle] localizedStringForString:@"Subject" language:language]];
-		[aField setType:ContactElementTextFieldField];
-		[fields addObject:aField];
-		[aField release];
-		
-		aField = [[ContactElementField alloc] initWithIdentifier:@"message"];
-		[aField setLabel:[[self bundle] localizedStringForString:@"Message" language:language]];
-		[aField setType:ContactElementTextAreaField];
-		[fields addObject:aField];
-		[aField release];
-		
-		aField = [[ContactElementField alloc] initWithIdentifier:@"send"];
-		[aField setLabel:[[self bundle] localizedStringForString:@"Send" language:language]];
-		[aField setType:ContactElementSubmitButton];
-		[fields addObject:aField];
-		[aField release];
-		
-		[self setFields:fields];
-	}
-}
-
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -163,45 +114,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	[_fields release];
 	
 	[super dealloc];
-}
-
-#pragma mark -
-#pragma mark Language
-
-/*!	Figures out the language dictionary based upon the site's language.
-*/
-- (NSDictionary *)languageDictionary
-{
-	static NSDictionary *sLocalizations = nil;
-	if (nil == sLocalizations)
-	{
-		sLocalizations = [[NSDictionary alloc] initWithContentsOfFile:[[self bundle] pathForResource:@"ContactStrings" ofType:@"plist"]];
-	}
-	
-	NSString *languageCode = [[[self delegateOwner] page] valueForKeyPath:@"master.language"];
-	
-	NSDictionary *result = [sLocalizations objectForKey:languageCode];
-	
-	
-	// if not found, try the langauge without a region, e.g. fr-CA -> fr
-	if (nil == result)
-	{
-		unsigned int whereDash = [languageCode rangeOfString:@"-"].location;
-		if (NSNotFound != whereDash)
-		{
-			languageCode = [languageCode substringToIndex:whereDash];
-			result = [sLocalizations objectForKey:languageCode];
-		}
-	}
-	// TO DO ... try the current langauge
-	
-	
-	// Last Resort, try English
-	if (nil == result)
-	{
-		result = [sLocalizations objectForKey:@"en"];
-	}
-	return result;
 }
 
 #pragma mark Labels
@@ -212,30 +124,72 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 - (void)didAddToPage:(id <SVPage>)page;
 {
-    if (![self sendButtonTitle])
-    {
-        [self setSendButtonTitle:[[self languageDictionary] objectForKey:@"Send"]];
-    }
-    
-    if (![self subjectLabel])
-    {
-        [self setSubjectLabel:[[self languageDictionary] objectForKey:@"Subject:"]];
-    }
-    
-    if (![self emailLabel])
-    {
-        [self setEmailLabel:[[self languageDictionary] objectForKey:@"EMail:"]];
-    }
-    
-    if (![self nameLabel])
-    {
-        [self setNameLabel:[[self languageDictionary] objectForKey:@"Name:"]];
-    }
-    
-    if (![self messageLabel])
-    {
-        [self setMessageLabel:[[self languageDictionary] objectForKey:@"Message:"]];
-    }
+    // Create initial fields if needed
+    if (![self fields])
+	{
+        // Want to localize field labels according to the site…
+		NSString *languageCode = [page language];
+        NSDictionary *localizations = [[NSDictionary alloc] initWithContentsOfFile:[[self bundle] pathForResource:@"ContactStrings" ofType:@"plist"]];
+        NSDictionary *localizedStrings = [localizations objectForKey:languageCode];
+        
+		// …if not found, try the langauge without a region, e.g. fr-CA -> fr
+        if (!localizedStrings)
+        {
+            unsigned int whereDash = [languageCode rangeOfString:@"-"].location;
+            if (NSNotFound != whereDash)
+            {
+                languageCode = [languageCode substringToIndex:whereDash];
+                localizedStrings = [localizations objectForKey:languageCode];
+            }
+        }
+        
+        // TO DO ... try the current langauge
+        
+        // …last resort, try English
+        if (!localizedStrings) localizedStrings = [localizations objectForKey:@"en"];
+        
+        
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		
+        // Set up default bunch of fields
+		NSMutableArray *fields = [NSMutableArray array];
+		
+		ContactElementField *aField = [[ContactElementField alloc] initWithIdentifier:@"visitorName"];
+		[aField setLabel:[localizedStrings objectForKey:@"Name:"]];
+		[aField setType:ContactElementTextFieldField];
+		[fields addObject:aField];
+		[aField release];
+		
+		aField = [[ContactElementField alloc] initWithIdentifier:@"email"];
+		[aField setLabel:[localizedStrings objectForKey:@"EMail:"]];
+		[aField setType:ContactElementTextFieldField];
+		
+		[aField setDefaultString:[defaults objectForKey:@"emailPlaceholder"]];
+		[fields addObject:aField];
+		[aField release];
+		
+		aField = [[ContactElementField alloc] initWithIdentifier:@"subject"];
+		[aField setLabel:[localizedStrings objectForKey:@"Subject:"]];
+		[aField setType:ContactElementTextFieldField];
+		[fields addObject:aField];
+		[aField release];
+		
+		aField = [[ContactElementField alloc] initWithIdentifier:@"message"];
+		[aField setLabel:[localizedStrings objectForKey:@"Message:"]];
+		[aField setType:ContactElementTextAreaField];
+		[fields addObject:aField];
+		[aField release];
+		
+		aField = [[ContactElementField alloc] initWithIdentifier:@"send"];
+		[aField setLabel:[localizedStrings objectForKey:@"Send"]];
+		[aField setType:ContactElementSubmitButton];
+		[fields addObject:aField];
+		[aField release];
+		
+		[self setFields:fields];
+        [localizedStrings release];
+	}
 }
 
 @synthesize sendButtonTitle = _sendButtonTitle;
