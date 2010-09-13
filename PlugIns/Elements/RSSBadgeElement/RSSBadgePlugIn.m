@@ -107,6 +107,13 @@
         NSURL *feedIconURL = [NSURL fileURLWithPath:path];
         [context addResourceWithURL:feedIconURL];
     }
+    
+    path = [[self bundle] pathForResource:@"rssbadge" ofType:@"css"];
+    if (path && ![path isEqualToString:@""]) 
+    {
+        NSURL *cssURL = [NSURL fileURLWithPath:path];
+        [context addResourceWithURL:cssURL];
+    }
 }
 
 - (BOOL)useLargeIconLayout
