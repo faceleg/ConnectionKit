@@ -71,6 +71,31 @@
 }
 
 
+#pragma mark HTML Generation
+
+- (void)writeHTML:(id <SVPlugInContext>)context
+{
+    // parse template
+    [super writeHTML:context];
+    
+    // add dependencies
+    [context addDependencyForKeyPath:@"flickrID" ofObject:self];
+    [context addDependencyForKeyPath:@"tag" ofObject:self];
+    [context addDependencyForKeyPath:@"number" ofObject:self];
+    [context addDependencyForKeyPath:@"flashStyle" ofObject:self];
+    [context addDependencyForKeyPath:@"random" ofObject:self];
+    [context addDependencyForKeyPath:@"showInfo" ofObject:self];
+    
+    // add resources
+    NSString *path = [[self bundle] pathForResource:@"FlickrPagelet" ofType:@"css"];
+    if (path && ![path isEqualToString:@""]) 
+    {
+        NSURL *cssURL = [NSURL fileURLWithPath:path];
+        [context addCSSWithURL:cssURL];
+    }
+}
+
+
 #pragma mark -
 #pragma mark Properties
 
