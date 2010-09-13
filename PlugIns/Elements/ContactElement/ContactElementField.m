@@ -36,7 +36,7 @@
 
 #import "ContactElementField.h"
 
-#import "ContactElementDelegate.h"
+#import "ContactPlugIn.h"
 #import <NSString+Karelia.h>
 
 
@@ -111,9 +111,9 @@
 #pragma mark -
 #pragma mark Owner
 
-- (ContactElementDelegate *)owner { return myOwner; }
+- (ContactPlugIn *)owner { return myOwner; }
 
-- (void)setOwner:(ContactElementDelegate *)owner { myOwner = owner; }
+- (void)setOwner:(ContactPlugIn *)owner { myOwner = owner; }
 
 #pragma mark -
 #pragma mark Accessors

@@ -40,7 +40,7 @@
 @class ContactElementFieldsArrayController, ContactElementField;
 
 
-@interface ContactElementDelegate : KTAbstractPluginDelegate
+@interface ContactPlugIn : SVPlugIn
 {
 	IBOutlet NSTextField			*oSubjects;
 	IBOutlet NSTextField			*oLabel;

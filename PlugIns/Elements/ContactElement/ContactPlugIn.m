@@ -34,7 +34,7 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "ContactElementDelegate.h"
+#import "ContactPlugIn.h"
 
 #import "ContactElementField.h"
 
@@ -55,7 +55,7 @@
 
 enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 
-@interface ContactElementDelegate ( Private )
+@interface ContactPlugIn ( Private )
 
 - (void)setFields:(NSArray *)fields archiveToPluginProperties:(BOOL)archive;
 - (NSArray *)fieldsPropertyListRepresentation;
@@ -67,7 +67,7 @@ enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 @end
 
 
-@implementation ContactElementDelegate
+@implementation ContactPlugIn
 
 /*
  Plugin Properties we use:
@@ -90,13 +90,13 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 
-    [ContactElementDelegate setKeys:
+    [ContactPlugIn setKeys:
         [NSArray arrayWithObjects: @"address", nil]
         triggerChangeNotificationsForDependentKey: @"encodedRecipient"];
-	[ContactElementDelegate setKeys:
+	[ContactPlugIn setKeys:
         [NSArray arrayWithObjects: @"subjectType", nil]
         triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
-	[ContactElementDelegate setKeys:
+	[ContactPlugIn setKeys:
         [NSArray arrayWithObjects: @"subjectType", @"subjectText", nil]
         triggerChangeNotificationsForDependentKey: @"subjectInputHTML"];
 	
