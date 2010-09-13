@@ -46,6 +46,7 @@
 // State
 - (id <SVPage>)page;
 - (id)objectForCurrentTemplateIteration;
+- (NSString *)visibleSiteTitle;
 
 @end
 

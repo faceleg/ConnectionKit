@@ -20,6 +20,7 @@
 #import "KTSite.h"
 #import "SVTemplate.h"
 #import "SVTextAttachment.h"
+#import "SVTitleBox.h"
 #import "SVWebEditingURL.h"
 
 #import "SVCalloutDOMController.h"  // don't like having to do this
@@ -980,6 +981,16 @@
 {
     SVHTMLTemplateParser *parser = [SVHTMLTemplateParser currentTemplateParser];
     return [parser currentIterationObject];
+}
+
+- (NSString *)visibleSiteTitle;
+{
+    KTMaster *master = [[self page] master];
+    if (![[[master siteTitle] hidden] boolValue])
+    {
+        return [[master siteTitle] text];
+    }
+    return nil;
 }
 
 - (void)startAnchorElementWithPage:(id <SVPage>)page;

@@ -204,7 +204,7 @@ function dofocus[[=uniqueID]](anInput) {
 		<!-- CSS URL -->
 		<input type="hidden" name="a" id="[[=uniqueID]]-a" value="[[=&CSSURLs]]" />
 		<!-- Site Title -->
-		<input type="hidden" name="t" id="[[=uniqueID]]-t" value="[[=&page.master.siteTitleText]]" />
+		<input type="hidden" name="t" id="[[=uniqueID]]-t" value="[[=&parser.HTMLContext.visibleSiteTitle]]" />
 		<!-- Verification Code -->
 		<input type="hidden" name="v" id="[[=uniqueID]]-v" value="[[=encodedRecipient]]" />
 	
