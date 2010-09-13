@@ -73,4 +73,39 @@
 	
 }
 
+- (void)awakeFromNib
+{
+	[KSEmailAddressComboBox setWillAddAnonymousEntry:NO];
+	[KSEmailAddressComboBox setWillIncludeNames:NO];
+    
+	// Correct the spacing of the custom labels form
+	NSSize spacing = [oCustomLabelsForm intercellSpacing];
+	spacing.height = 4;
+	[oCustomLabelsForm setIntercellSpacing:spacing];
+    
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(focusMessageField:)
+												 name:@"AddedMessageField"
+											   object:oArrayController];
+}
+
+// For the subjects text field, allow return to insert a newline.
+
+- (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
+{
+    BOOL retval = NO;
+    if ( (control == oSubjects)
+		&& (commandSelector == @selector(insertNewline:) ) )
+	{
+        retval = YES;
+        [textView insertNewlineIgnoringFieldEditor:nil];
+    }
+    return retval;
+}
+
+- (void)focusMessageField:(NSNotification *)aNotification	// AddedMessageField notification
+{
+	[[oLabel window] makeFirstResponder:oLabel];
+}
+
 @end

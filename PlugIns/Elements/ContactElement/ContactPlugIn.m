@@ -103,20 +103,9 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	[pool release];
 }
 
-- (void)awakeFromNib
++ (NSArray *)plugInKeys;
 {
-	[KSEmailAddressComboBox setWillAddAnonymousEntry:NO];
-	[KSEmailAddressComboBox setWillIncludeNames:NO];
-
-	// Correct the spacing of the custom labels form
-	NSSize spacing = [oCustomLabelsForm intercellSpacing];
-	spacing.height = 4;
-	[oCustomLabelsForm setIntercellSpacing:spacing];
-
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(focusMessageField:)
-												 name:@"AddedMessageField"
-											   object:oArrayController];
+    return [NSArray arrayWithObjects:@"fields", @"address", @"copyToSender", @"sendButtonTitle", @"subjectLabel", @"emailLabel", @"nameLabel", @"messageLabel", @"sideLabels", @"subjectType", @"subjectText", nil];
 }
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
@@ -170,8 +159,8 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[myEmailField release];
-	[myFields release];
+	[_emailField release];
+	[_fields release];
 	
 	[super dealloc];
 }
@@ -215,11 +204,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	return result;
 }
 
-- (void)focusMessageField:(NSNotification *)aNotification	// AddedMessageField notification
-{
-	[[oLabel window] makeFirstResponder:oLabel];
-}
-
 #pragma mark Labels
 
 /*	All of these accessor methods fallback to using the -languageDictionary if no
@@ -260,44 +244,10 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 @synthesize nameLabel = _nameLabel;
 @synthesize messageLabel = _messageLabel;
 
-#pragma mark -
-#pragma mark Simple Accessors
+@synthesize sideLabels = _sideLabels;
+@synthesize subjectType = _subjectType;
+@synthesize subjectText = _subjectText;
 
-/*!	Should labels go on the side? (if not, then above the fields)
-*/
-- (BOOL)sideLabels
-{
-    return [[self delegateOwner] boolForKey:@"sideLabels"];
-}
-
-- (void)setSideLabels:(BOOL)aSideLabels
-{
-	[[self delegateOwner] setBool:aSideLabels forKey:@"sideLabels"];
-}
-
-- (int) subjectType
-{
-    return [[self delegateOwner] integerForKey:@"subjectType"];
-}
-
-- (void)setSubjectType:(int)aSubjectType
-{
-	[[self delegateOwner] setInteger:aSubjectType forKey:@"subjectType"];
-}
-
-- (NSString *)subjectText
-{
-	return [[self delegateOwner] objectForKey:@"subjectText"];
-}
-
-- (void)setSubjectText:(NSString *)anAddress
-{
-	[[self delegateOwner] setObject:anAddress forKey:@"subjectText"];
-}
-
-
-
-#pragma mark -
 #pragma mark Derived Accessors
 
 - (NSString *)CSSURLs
@@ -395,12 +345,15 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	[self shouldNotImplement:_cmd];
 }
 
+@synthesize address = _address;
+@synthesize copyToSender = _copyToSender;
+
 #define MAX_EMAILS_LENGTH 256
 
 - (NSString *)encodedRecipient
 {
 	
-	NSString *email = [[self delegateOwner] valueForKey:@"address"];
+	NSString *email = [self address];
 	
 	NSData *mailData = [email dataUsingEncoding:NSUTF8StringEncoding];
 	unsigned char outBytes[MAX_EMAILS_LENGTH] = { 0 };
@@ -493,20 +446,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	[self shouldNotImplement:_cmd];
 }
 
-// For the subjects text field, allow return to insert a newline.
-
-- (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
-{
-    BOOL retval = NO;
-    if ( (control == oSubjects)
-		&& (commandSelector == @selector(insertNewline:) ) )
-	{
-        retval = YES;
-        [textView insertNewlineIgnoringFieldEditor:nil];
-    }
-    return retval;
-}
-
 #pragma mark *** NEW STUFF ***
 
 /*! URL - The defaults bit allows users to override it.
@@ -529,70 +468,30 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	return result;
 }
 
-#pragma mark -
 #pragma mark Fields
-
-/*	We will be managing KVO notifications of the fields array ourself
- */
-+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
-{
-	if ([key isEqualToString:@"fields"])
-	{
-		return NO;
-	}
-	else
-	{
-		return [super automaticallyNotifiesObserversForKey:key];
-	}
-}
 
 - (ContactElementField *)contactField
 {
-	(void) [self fields];	// make sure loaded
-	return myEmailField;
+	return _emailField;
 }
 
+@synthesize fields = _fields;
 
-- (NSArray *)fields
-{
-	// If there currently is no array, pull it out of the delegateOwner
-	if (!myFields)
-	{
-		[self setFields:[self fieldsByFetchingFromPluginProperties] archiveToPluginProperties:NO];
-	}
-	
-	return myFields;
-}
-
+/*	Retrieves the fields plist representation from the delegateOwner and converts it to real
+ *	ContactFormField objects.
+ */
 - (void)setFields:(NSArray *)fields;
 {
-	[self setFields:fields archiveToPluginProperties:YES];
-}
-
-- (void)setFields:(NSArray *)fields archiveToPluginProperties:(BOOL)archive
-{
-	[self willChangeValueForKey:@"fields"];
-	
-	// Remove us as the owner of the previous fields array
-	[myFields makeObjectsPerformSelector:@selector(setOwner:) withObject:nil];
-	
-	// Hang on to the real fields array, and store a dictionary representation of it
 	fields = [fields copy];
-	[myFields release];
-	myFields = fields;
-	
-	if (archive)
-	{
-		myIsArchivingFields = YES;
-		[[self delegateOwner] setObject:[self fieldsPropertyListRepresentation]
-									forKey:@"fields"];
-		myIsArchivingFields = NO;
-	}
-	
-	// Set us as the owner of the new fields array
-	[myFields makeObjectsPerformSelector:@selector(setOwner:) withObject:self];
-	
-	[self didChangeValueForKey:@"fields"];
+    [_fields release]; _fields = fields;
+    
+    for (ContactElementField *aField in fields)
+    {
+        if ([[aField identifier] isEqualToString:@"email"])
+		{
+			[_emailField release]; _emailField = [aField retain];
+		}
+    }
 }
 
 /*	Returns the list of fields as property list suitable for archiving
@@ -600,110 +499,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 - (NSArray *)fieldsPropertyListRepresentation
 {
 	return [[self fields] valueForKey:@"dictionaryRepresentation"];
-}
-
-/*	Retrieves the fields plist representation from the delegateOwner and converts it to real
- *	ContactFormField objects.
- */
-- (NSArray *)fieldsByFetchingFromPluginProperties
-{
-	NSArray *dictionaries = [[self delegateOwner] objectForKey:@"fields"];
-	NSMutableArray *result = [NSMutableArray arrayWithCapacity:[dictionaries count]];
-	
-	NSEnumerator *enumerator = [dictionaries objectEnumerator];
-	NSDictionary *dictionary;
-	while (dictionary = [enumerator nextObject])
-	{
-		ContactElementField *field = [[ContactElementField alloc] initWithDictionary:dictionary];
-		[result addObject:field];
-		[field release];
-		
-		// Get the email field
-		if ([[field identifier] isEqualToString:@"email"])
-		{
-			[myEmailField release];
-			myEmailField = [field retain];
-		}
-	}
-	
-	return result;
-}
-
-#pragma mark -
-#pragma mark Data Migrator
-
-- (BOOL)importPluginProperties:(NSDictionary *)oldPluginProperties
-                    fromPlugin:(NSManagedObject *)oldPlugin
-                         error:(NSError **)error
-{
-    NSObject *element = [self delegateOwner];
-    
-    // Import basic properties
-    [element setValuesForKeysWithDictionary:oldPluginProperties];
-    
-    
-    // Setup the subject field
-    ContactElementField *subjectField = [[self fields] objectAtIndex:2];
-    
-    NSString *oldSubjectText = [oldPluginProperties valueForKey:@"subjectText"];
-    switch ([oldPluginProperties integerForKey:@"subjectType"])
-    {
-        case 0:     // kKTContactSubjectHidden
-            [subjectField setType:ContactElementHiddenField];
-            [subjectField setDefaultString:oldSubjectText];
-            break;
-        
-        case 1:     // kKTContactSubjectField
-            [subjectField setType:ContactElementTextFieldField];
-            [subjectField setDefaultString:oldSubjectText];
-            break;
-            
-        case 2:     // kKTContactSubjectSelection
-        {
-            [subjectField setType:ContactElementPopupButtonField];
-            
-            NSMutableArray *options = [NSMutableArray array];
-            NSEnumerator *lines = [[oldSubjectText componentsSeparatedByLineSeparators] objectEnumerator];
-            NSString *aLine;
-            while (aLine = [lines nextObject])
-            {
-                NSEnumerator *components = [[aLine componentsSeparatedByCommas] objectEnumerator];
-                NSString *aComponent;
-                while (aComponent = [components nextObject])
-                {
-                    [options addObject:aComponent];
-                }
-            }
-            [subjectField setVisitorChoices:options];
-            
-            break;
-        }
-    }
-    
-    
-    // Setup labels
-    NSString *aLabel = [oldPluginProperties valueForKey:@"subjectLabel"];
-    if (aLabel) [[[self fields] objectAtIndex:2] setLabel:aLabel];
-    
-    aLabel = [oldPluginProperties valueForKey:@"emailLabel"];
-    if (aLabel) [[[self fields] objectAtIndex:1] setLabel:aLabel];
-    
-    aLabel = [oldPluginProperties valueForKey:@"nameLabel"];
-    if (aLabel) [[[self fields] objectAtIndex:0] setLabel:aLabel];
-    
-    aLabel = [oldPluginProperties valueForKey:@"messageLabel"];
-    if (aLabel) [[[self fields] objectAtIndex:3] setLabel:aLabel];
-    
-    aLabel = [oldPluginProperties valueForKey:@"sendButtonTitle"];
-    if (aLabel) [[[self fields] objectAtIndex:4] setLabel:aLabel];
-    
-    
-    
-    // We have to force the fields to be updated persistently as there's no array controller involved
-    [self setFields:[self fields] archiveToPluginProperties:YES];
-    
-    
-    return YES;
 }
 
 @end

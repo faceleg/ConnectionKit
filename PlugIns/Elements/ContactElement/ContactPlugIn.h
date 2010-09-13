@@ -42,24 +42,27 @@
 
 @interface ContactPlugIn : SVPlugIn
 {
-	IBOutlet NSTextField			*oSubjects;
-	IBOutlet NSTextField			*oLabel;
-	IBOutlet NSForm					*oCustomLabelsForm;
 	
-	IBOutlet ContactElementFieldsArrayController *oArrayController;
 	
-	@private
+  @private
 	
-	ContactElementField *myEmailField;
 	
-	NSArray *myFields;
+	NSArray *_fields;
+	ContactElementField *_emailField;
 	BOOL	myIsArchivingFields;
+    
+    NSString    *_address;
+    BOOL        _copyToSender;
     
     NSString    *_sendButtonTitle;
     NSString    *_subjectLabel;
     NSString    *_emailLabel;
     NSString    *_nameLabel;
     NSString    *_messageLabel;
+    
+    BOOL        _sideLabels;
+    NSInteger   _subjectType;
+    NSString    *_subjectText;
 }
 
 - (NSString *)encodedRecipient;
@@ -67,11 +70,18 @@
 - (NSString *)subjectPrompt;
 - (NSString *)subjectText;
 
+@property(nonatomic, copy) NSString *address;
+@property(nonatomic) BOOL copyToSender;
+
 @property(nonatomic, copy) NSString *sendButtonTitle;
 @property(nonatomic, copy) NSString *subjectLabel;
 @property(nonatomic, copy) NSString *emailLabel;
 @property(nonatomic, copy) NSString *nameLabel;
 @property(nonatomic, copy) NSString *messageLabel;
+
+@property(nonatomic) BOOL sideLabels;
+@property(nonatomic) NSInteger subjectType;
+@property(nonatomic, copy) NSString *subjectText;
 
 - (int)subjectType;
 - (void)setEncodedRecipient:(NSString *)anEnc;
@@ -81,7 +91,7 @@
 - (void)setSubjectType:(int)aSubjectType;
 
 // New stuff
-- (NSArray *)fields;
-- (void)setFields:(NSArray *)fields;
+@property(nonatomic, copy) NSArray *fields;
+
 
 @end

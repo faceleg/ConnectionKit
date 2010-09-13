@@ -38,5 +38,11 @@
 
 
 @interface ContactInspector : SVInspectorViewController
+{
+    IBOutlet NSArrayController      *oArrayController;
+	IBOutlet NSTextField			*oLabel;
+	IBOutlet NSForm					*oCustomLabelsForm;
+	IBOutlet NSTextField			*oSubjects;
+}
 
 @end
