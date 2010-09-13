@@ -37,6 +37,9 @@
 #import "DownloadIndexPlugIn.h"
 
 
+// LocalizedStringInThisBundle(@"You really should add something to the collection so you can see it, ok? Also, feel free to suggest how to phrase this better. Case 87647.", "String_On_Page_Template")
+
+
 @implementation DownloadIndexPlugIn
 
 

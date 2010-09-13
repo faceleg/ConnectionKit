@@ -1,10 +1,11 @@
+[[if indexedCollection.childPages]]
 <table>
 [[foreach indexedCollection.childPages item]]
 	<tr class="[[i]] [[eo]][[last]]">
 		<td class="dli1">
 [[if item.thumbnail]]
 			<a class="imageLink" [[target item]]href="[[path item]]">[[=writeThumbnailImageOfIteratedPage]]</a>
-[[endif]]
+[[endif2]]
 		</td>
 		<td class="dli2">
 			[[textblock property:item.title flags:"line" tag:h3 graphicalTextCode:h3 hyperlink:item]]
@@ -16,7 +17,10 @@
 		<td class="dli4">
 			[[=&item.timestamp]]
 		</td>
-[[endif]]
+[[endif2]]
 	</tr>
 [[endForEach]]
 </table>
+[[else]]
+<p>[['You really should add something to the collection so you can see it, ok? Also, feel free to suggest how to phrase this better. Case 87647.]]</p>
+[[endif]]
