@@ -559,7 +559,6 @@
 		27CE81181137EEB100EE1A6F /* SVImageReplacementURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CE81161137EEB100EE1A6F /* SVImageReplacementURLProtocol.h */; };
 		27CE81191137EEB100EE1A6F /* SVImageReplacementURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CE81171137EEB100EE1A6F /* SVImageReplacementURLProtocol.m */; };
 		27CFC5E0123E280800BF018C /* Sandvox 1.5.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27CFC5DF123E280800BF018C /* Sandvox 1.5.xcdatamodel */; };
-		27CFC5E5123E28A700BF018C /* Sandvox.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 27CFC5E4123E28A700BF018C /* Sandvox.xcmappingmodel */; };
 		27D353B811A9CC7200BC4DB8 /* KSComparisonValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D353B611A9CC7200BC4DB8 /* KSComparisonValueTransformer.h */; };
 		27D353B911A9CC7200BC4DB8 /* KSComparisonValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D353B711A9CC7200BC4DB8 /* KSComparisonValueTransformer.m */; };
 		27D47EBF115A60CB007550F6 /* SVCalloutDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D705810E8ECB4003F5BA8 /* SVCalloutDOMController.h */; };
@@ -7302,7 +7301,6 @@
 				2745948D123944FE005D0640 /* NSURL+Sandvox.m in Sources */,
 				CE89C231123999D70056D74B /* SVFlash.m in Sources */,
 				27CFC5E0123E280800BF018C /* Sandvox 1.5.xcdatamodel in Sources */,
-				27CFC5E5123E28A700BF018C /* Sandvox.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
