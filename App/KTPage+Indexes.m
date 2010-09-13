@@ -264,7 +264,7 @@
                                                   atIndex:location
                                            effectiveRange:&effectiveRange];
         
-        if (attachment && ![[attachment graphic] shouldWriteHTMLInline])
+        if (attachment && [[attachment causesWrap] boolValue])
         {
             [summary deleteCharactersInRange:effectiveRange];
         }
