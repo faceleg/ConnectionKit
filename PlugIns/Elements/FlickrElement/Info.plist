@@ -32,10 +32,6 @@
 	<string></string>
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
-	<key>KTPluginCSSFilesNeeded</key>
-	<array>
-		<string>FlickrPagelet.css</string>
-	</array>
 	<key>KTPluginIconName</key>
 	<string>flickr</string>
 	<key>KTPluginInitialProperties</key>
@@ -49,14 +45,10 @@
 	</dict>
 	<key>KTPluginName</key>
 	<string>Flickr Photos</string>
-	<key>KTPluginNibFile</key>
-	<string>FlickrInspector</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
 	<string>Flickr Photos</string>
-	<key>KTTemplateName</key>
-	<string>FlickrTemplate</string>
 	<key>NSPrincipalClass</key>
 	<string>FlickrPlugIn</string>
 </dict>
