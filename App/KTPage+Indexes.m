@@ -8,6 +8,7 @@
 
 #import "KTPage+Paths.h"
 
+#import "SVArticle.h"
 #import "SVArchivePage.h"
 #import "SVHTMLContext.h"
 #import "SVHTMLTemplateParser.h"
@@ -248,7 +249,32 @@
 
 - (void)writeSummary:(SVHTMLContext *)context;
 {
-    [[self article] writeText:context];
+    NSAttributedString *html = [[self article] attributedHTMLString];
+    NSMutableAttributedString *summary = [html mutableCopy];
+    
+    
+    // Strip out large attachments
+    NSUInteger location = 0;
+    
+    while (location < summary.length)
+    {
+        NSRange effectiveRange;
+        SVTextAttachment *attachment = [summary attribute:@"SVAttachment"
+                                                  atIndex:location
+                                           effectiveRange:&effectiveRange];
+        
+        if (attachment)
+        {
+            [summary deleteCharactersInRange:effectiveRange];
+        }
+        else
+        {
+            location = location + effectiveRange.length;
+        }
+    }
+    
+    [context writeAttributedHTMLString:summary];
+    [summary release];
 }
 
 
