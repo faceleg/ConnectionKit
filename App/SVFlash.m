@@ -39,6 +39,7 @@
 
 @interface SVFlash ()
 - (void)loadMovie;
+- (void)setOriginalSizeFromData:(NSData *)aData;
 @end
 
 
@@ -85,7 +86,7 @@
 
 - (NSArray *) allowedFileTypes
 {
-	return [NSArray arrayWithObject:@"com.adobe.shockwave-flash"];
+	return [NSArray arrayWithObjects:@"com.adobe.shockwave-flash", nil];
 }
 
 - (NSString *)plugInIdentifier; // use standard reverse DNS-style string
@@ -121,8 +122,15 @@
     {
         // Resize image to fit in space
         NSNumber *width = [self width];
+		
+		if ([URL isFileURL])	// Get original size as soon as possible
+		{
+			NSData *contentsData = [NSData dataWithContentsOfURL:URL];
+			[self setOriginalSizeFromData:contentsData];
+		}
+		
         [self makeOriginalSize];
-        if ([[self width] isGreaterThan:width]) [self setWidth:width];
+       // ???? Why were we doing this? if ([[self width] isGreaterThan:width]) [self setWidth:width];
     }
 }
 
@@ -147,20 +155,15 @@
 {
 	[self willChangeValueForKey:@"media"];
 	[self setPrimitiveValue:aMedia forKey:@"media"];
-	
-	[self _mediaChanged];
-	
 	[self didChangeValueForKey:@"media"];
+	[self _mediaChanged];
+
 }
 
 - (void) setExternalSourceURL:(NSURL *)anExternalSourceURL
 {
-	[self willChangeValueForKey:@"externalSourceURL"];
-	[self setPrimitiveValue:anExternalSourceURL forKey:@"externalSourceURL"];
-	
+	[super setExternalSourceURL:anExternalSourceURL];
 	[self _mediaChanged];
-	
-	[self didChangeValueForKey:@"externalSourceURL"];
 }
 
 #pragma mark -
@@ -367,41 +370,45 @@
 	return result;
 }
 
+- (void)setOriginalSizeFromData:(NSData *)aData;
+{
+	NSSize aSize = NSZeroSize;
+	if ([self attemptToGetSize:&aSize fromSWFData:aData])
+	{
+		self.naturalWidth  = [NSNumber numberWithFloat:aSize.width];
+		self.naturalHeight = [NSNumber numberWithFloat:aSize.height];
+	}
+	
+}
 
 - (void)loadMovie;
 {
 	SVMediaRecord *media = [self media];
 	if (media)
 	{
-		NSSize aSize = NSZeroSize;
-		if ([self attemptToGetSize:&aSize fromSWFData:[media mediaData]])
-		{
-			self.naturalWidth  = [NSNumber numberWithFloat:aSize.width];
-			self.naturalHeight = [NSNumber numberWithFloat:aSize.height];
-		}
+		[self setOriginalSizeFromData:[media mediaData]];
 	}
 	else	// Load the data asynchronously and check that way.
 	{
 		NSURL *flashSourceURL = [self externalSourceURL];
-		self.dimensionCalculationConnection = [[[KSSimpleURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:flashSourceURL]] autorelease];
-		self.dimensionCalculationConnection.bytesNeeded = 1024;	// Let's just get the first 1K ... should be enough.
+		if (flashSourceURL)
+		{
+			self.dimensionCalculationConnection = [[[KSSimpleURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:flashSourceURL] delegate:self] autorelease];
+			self.dimensionCalculationConnection.bytesNeeded = 1024;	// Let's just get the first 1K ... should be enough.
+		}
 	}
 }
 
 // Asynchronous load returned -- try to set the dimensions.
 - (void)connection:(KSSimpleURLConnection *)connection didFinishLoadingData:(NSData *)data response:(NSURLResponse *)response;
 {
-	NSSize aSize = NSZeroSize;
-	if ([self attemptToGetSize:&aSize fromSWFData:data])
-	{
-		self.naturalWidth  = [NSNumber numberWithFloat:aSize.width];
-		self.naturalHeight = [NSNumber numberWithFloat:aSize.height];
-	}
+	[self setOriginalSizeFromData:data];
 	self.dimensionCalculationConnection = nil;
 }
 
 - (void)connection:(KSSimpleURLConnection *)connection didFailWithError:(NSError *)error;
 {
+	NSLog(@"SVFlash error:%@ connection:%@", error, connection);
 	// do nothing with the error, but clear out the connection.
 	self.dimensionCalculationConnection = nil;
 }
