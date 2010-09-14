@@ -1132,7 +1132,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 	NSOpenPanel *panel = [[site document] makeChooseDialog];
 	
-	int returnCode = [panel runModal];
+	int returnCode = [panel runModalForTypes:[panel allowedFileTypes]];
 	
 	if (returnCode == NSOKButton && [[panel URLs] count])
 	{

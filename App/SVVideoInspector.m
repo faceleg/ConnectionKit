@@ -28,7 +28,7 @@
     NSOpenPanel *panel = [document makeChooseDialog];
 	[panel setAllowedFileTypes:[NSArray arrayWithObject:(NSString *)kUTTypeImage]];
 
-    if ([panel runModal] == NSFileHandlingPanelOKButton)
+    if ([panel runModalForTypes:[panel allowedFileTypes]] == NSFileHandlingPanelOKButton)
     {
         NSURL *URL = [panel URL];
         

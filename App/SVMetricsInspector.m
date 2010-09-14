@@ -27,7 +27,7 @@
     KTDocument *document = [self representedObject];
     NSOpenPanel *panel = [document makeChooseDialog];
     
-    if ([panel runModal] == NSFileHandlingPanelOKButton)
+    if ([panel runModalForTypes:[panel allowedFileTypes]] == NSFileHandlingPanelOKButton)
     {
         NSURL *URL = [panel URL];
         

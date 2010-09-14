@@ -82,9 +82,9 @@
 {
     KTDocument *document = [self representedObject];
     NSOpenPanel *panel = [document makeChooseDialog];
-	[panel setAllowedFileTypes:[self allowedFileTypes]];
     
-    if ([panel runModal] == NSFileHandlingPanelOKButton)
+	// Use this 10.6 deprecated method, but when we are 10.6 only then use setAllowedFileTypes:
+    if ([panel runModalForTypes:[self allowedFileTypes]] == NSFileHandlingPanelOKButton)
     {
         NSURL *URL = [panel URL];
         
