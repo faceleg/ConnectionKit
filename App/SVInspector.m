@@ -129,10 +129,9 @@
     [_linkInspector setTitle:NSLocalizedString(@"Link", @"Link Inspector")];
     [_linkInspector setIcon:[NSImage imageNamed:@"link_inspector"]];
     
-    // Plug-in
+    // Plug-in, will set its own title
     _plugInInspector = [[SVPlugInInspector alloc] initWithNibName:@"PlugInInspector" bundle:nil];
     [_plugInInspector setIdentifier:@"com.karelia.Sandvox.PlugInInspector"];
-    [_plugInInspector setTitle:NSLocalizedString(@"Plug-in", @"Plug-in Inspector")];
     [_plugInInspector setIcon:[NSImage imageNamed:@"plugin_inspector"]];
     
     

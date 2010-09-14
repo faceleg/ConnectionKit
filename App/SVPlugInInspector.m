@@ -34,6 +34,8 @@ static NSString *sPlugInInspectorInspectedObjectsObservation = @"PlugInInspector
     
     _plugInInspectors = [[NSMutableDictionary alloc] init];
     
+    [self setTitle:nil];    // uses default title
+    
     [self addObserver:self
            forKeyPath:@"inspectedObjectsController.selectedObjects"
               options:NSKeyValueObservingOptionOld
@@ -45,6 +47,7 @@ static NSString *sPlugInInspectorInspectedObjectsObservation = @"PlugInInspector
 - (void)dealloc
 {
     [self removeObserver:self forKeyPath:@"inspectedObjectsController.selectedObjects"];
+    [self unbind:@"title"];
     
     [_plugInInspectors release];
     
@@ -108,6 +111,18 @@ change context:(void *)context
     [_selectedInspector release]; _selectedInspector = [inspector retain];
     
     
+    // Match title to selection
+    if (inspector)
+    {
+        [self bind:@"title" toObject:inspector withKeyPath:@"title" options:nil];
+    }
+    else
+    {
+        [self unbind:@"title"];
+        [self setTitle:nil];
+    }
+    
+    
     // Setup new
     @try
     {
@@ -131,6 +146,13 @@ change context:(void *)context
     {
         // TODO: Log error
     }
+}
+
+- (void)setTitle:(NSString *)title;
+{
+    // Fallback to standard title
+    if (!title) title = NSLocalizedString(@"Plug-in", @"Plug-in Inspector");
+    [super setTitle:title];
 }
 
 @end
