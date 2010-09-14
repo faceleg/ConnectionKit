@@ -962,7 +962,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     NSOpenPanel *result = [NSOpenPanel openPanel];
     
 	[result setCanChooseDirectories:NO];
-	[result setTreatsFilePackagesAsDirectories:YES];
+	[result setTreatsFilePackagesAsDirectories:NO];	// We don't want to descend into packages
 	[result setAllowsMultipleSelection:NO];
     
 	[result setPrompt:NSLocalizedString(@"Insert", "open panel prompt button")];
