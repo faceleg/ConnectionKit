@@ -15,16 +15,7 @@
  load them into Sandvox to give them a chance to calculate their dimensions. I don't think that
  this is very likely; as soon as the site author has gone to a page to even see what the size is,
  Sandvox will be fetching the size.
- 
- If somebody is trying to add an FLV, but doesn't have Perian or some other set of components, they
- are not going to be able to get the dimensions of the FLV file.  Fortunately we are able to scan
- the file and *usually* get the dimensions of the movie.  This doesn't seem to work on all FLV files
- but it is good enough.  If somebody really needs to use FLV, they could just install Perian on
- their own system; the flash player will take care of actually displaying the movie.
- 
- Later on, we may want do dig into MP4 files and scrutinize them for all of the properties that are
- needed to ensure iOS compatibility.
- 
+  
  Icon source: http://sharealogo.com/computer/adobe-flash-8-vector-logo-download/ modified with Opacity
  
  // Example: http://mindymcadams.com/photos/flowers/slideshow.swf
