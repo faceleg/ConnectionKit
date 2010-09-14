@@ -229,7 +229,7 @@
 	
 	return [NSURL svURLWithScheme:@"http"
                              host:@"service.karelia.com"
-                             path:@"amazonList.php"
+                             path:@"/amazonList.php"
                   queryParameters:query];
 }
 
