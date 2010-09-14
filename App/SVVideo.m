@@ -362,20 +362,14 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 {
 	[self willChangeValueForKey:@"media"];
 	[self setPrimitiveValue:aMedia forKey:@"media"];
-	
-	[self _mediaChanged];
-	
 	[self didChangeValueForKey:@"media"];
+	[self _mediaChanged];
 }
 
 - (void) setExternalSourceURL:(NSURL *)anExternalSourceURL
 {
-	[self willChangeValueForKey:@"externalSourceURL"];
-	[self setPrimitiveValue:anExternalSourceURL forKey:@"externalSourceURL"];
-	
+	[super setExternalSourceURL:anExternalSourceURL];
 	[self _mediaChanged];
-
-	[self didChangeValueForKey:@"externalSourceURL"];
 }
 
 #pragma mark -
