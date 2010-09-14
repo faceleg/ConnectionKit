@@ -39,8 +39,7 @@
 	[product setStore:[[pluginController content] integerForKey:@"store"]];
 	
 	// Attempt to get the product ASIN from Safari
-	NSURL *URL = nil;
-	[NSAppleScript getWebBrowserURL: &URL title: NULL source: NULL];
+	NSURL *URL = [[[NSWorkspace sharedWorkspace] fetchBrowserWebLocation] URL];
 	
 	if ([URL amazonProductASIN])
 	{
