@@ -45,6 +45,8 @@
 @dynamic loop;
 @dynamic flashvars;
 
+@synthesize dimensionCalculationConnection = _dimensionCalculationConnection;
+
 //	LocalizedStringInThisBundle(@"This is a placeholder for a Flash file. The full Flash presentation will appear once you publish this website, but to see the Flash in Sandvox, please enable live data feeds in the preferences.", "Live data feeds disabled message.")
 
 //	LocalizedStringInThisBundle(@"Please use the Inspector to enter the URL of a Flash.", "URL has not been specified - placeholder message")
@@ -134,7 +136,7 @@
 	self.naturalHeight = nil;
 	
 	// Load the movie to figure out the media size and codecType
-	// [self loadMovie];
+	[self loadMovie];
 }
 
 - (void) setMedia:(SVMediaRecord *)aMedia
@@ -263,21 +265,20 @@
  */
 
 
-//
-//// Asynchronous load returned -- try to set the dimensions.
-//- (void)connection:(KSSimpleURLConnection *)connection didFinishLoadingData:(NSData *)data response:(NSURLResponse *)response;
-//{
-//	NSSize dimensions; //  = [QTMovie dimensionsFromUnloadableMovieData:data];
-//	self.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
-//	self.naturalHeight = [NSNumber numberWithFloat:dimensions.height];	// even if it can't be figured out, at least it's not nil anymore
-//	self.dimensionCalculationConnection = nil;
-//}
-//
-//- (void)connection:(KSSimpleURLConnection *)connection didFailWithError:(NSError *)error;
-//{
-//	// do nothing with the error, but clear out the connection.
-//	self.dimensionCalculationConnection = nil;
-//}
+// Asynchronous load returned -- try to set the dimensions.
+- (void)connection:(KSSimpleURLConnection *)connection didFinishLoadingData:(NSData *)data response:(NSURLResponse *)response;
+{
+	NSSize dimensions = NSZeroSize;
+	self.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
+	self.naturalHeight = [NSNumber numberWithFloat:dimensions.height];	// even if it can't be figured out, at least it's not nil anymore
+	self.dimensionCalculationConnection = nil;
+}
+
+- (void)connection:(KSSimpleURLConnection *)connection didFailWithError:(NSError *)error;
+{
+	// do nothing with the error, but clear out the connection.
+	self.dimensionCalculationConnection = nil;
+}
 
 
 // Caches the flash from data.
@@ -391,16 +392,34 @@
 }
 
 
-- (void)loadMovieFromAttributes:(NSDictionary *)anAttributes
+- (void)loadMovie
 {
-	BOOL isFlash = NO;
-	NSData *movieData = nil;
-	NSSize aSize = NSZeroSize;
-	if ([self attemptToGetSize:&aSize fromSWFData:movieData])
+	SVMediaRecord *media = [self media];
+	if (media)
 	{
-		isFlash = YES;
-		/// [self setMovieSize:aSize];
-	}	// We're done!  
+		
+	}
+	else
+	{
+		NSURL *flashSourceURL = [self externalSourceURL];
+		self.dimensionCalculationConnection = [[[KSSimpleURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:flashSourceURL]] autorelease];
+		self.dimensionCalculationConnection.bytesNeeded = 1024;	// Let's just get the first 1K ... should be enough.
+		self.naturalWidth = 0;	
+		self.naturalHeight = 0;		// set to zero so we don't keep asking.  Hopefully answer comes soon.
+		
+	}
+
+    if (media)
+	{
+		BOOL isFlash = NO;
+		NSData *movieData = nil;
+		NSSize aSize = NSZeroSize;
+		if ([self attemptToGetSize:&aSize fromSWFData:movieData])
+		{
+			isFlash = YES;
+			/// [self setMovieSize:aSize];
+		}	// We're done!  
+	}
 }
 
 @end

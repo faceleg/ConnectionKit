@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "SVMediaGraphic.h"
+#import "KSSimpleURLConnection.h"
 #import <QTKit/QTKit.h>
 
 @class SVMediaRecord;
@@ -21,10 +22,13 @@
 	char myCurrentByte;
 	char *myBytePointer;		// an unretained pointer, just stored here so it's not global.
 	
+	KSSimpleURLConnection *_dimensionCalculationConnection;
+
 }
 + (SVFlash *)insertNewFlashInManagedObjectContext:(NSManagedObjectContext *)context;
 
 
+@property (retain) KSSimpleURLConnection *dimensionCalculationConnection;
 
 @property(nonatomic, copy) NSNumber *autoplay;
 @property(nonatomic, copy) NSNumber *showMenu;	// BOOLs
