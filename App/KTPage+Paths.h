@@ -29,14 +29,19 @@ typedef enum	//	Defines the 3 ways of linking to a collection:
 KTCollectionPathStyle;
 
 
-@class KTPage, KTSite, KTMaster, SVSidebar, SVTitleBox;
+@class KTSite, KTMaster, SVSidebar, SVTitleBox;
 
 
 @interface KTPage (Paths)
 
-// File Name
+#pragma mark File Name
+
 @property(nonatomic, copy, readwrite) NSString *fileName;
+- (NSString *)preferredFilename;
 - (NSString *)suggestedFilename;
+
+// Ask a collection if a child item can have a given filename. By supplying the item in question, if it's already a child, will be taken into account
+- (BOOL)isFilenameAvailable:(NSString *)filename forItem:(SVSiteItem *)item;
 
 
 #pragma mark Path Extension

@@ -80,6 +80,25 @@
     return YES;
 }
 
+- (NSString *)preferredFilename;
+{
+    // To begin, this is based on the title. But once customised or published, filename should become stuck
+    if ([self datePublished] || ![self shouldUpdateFileNameWhenTitleChanges])
+    {
+        return [[self fileName] stringByAppendingPathExtension:[self pathExtension]];
+    }
+    else
+    {
+        NSString *result = [[self title] suggestedLegalizedWebPublishingFileName];
+        if (!result || [result isEqualToString:@""])
+        {
+            result = [self identifier];
+        }
+        
+        return [result stringByAppendingPathExtension:[self pathExtension]];
+    }
+}
+
 /*	Looks at sibling pages and the page title to determine the best possible filename.
  *	Guaranteed to return something unique.
  */
@@ -117,6 +136,13 @@
 	OBPOSTCONDITION(result);
 	
 	return [result stringByAppendingPathExtension:[self pathExtension]];
+}
+
+- (BOOL)isFilenameAvailable:(NSString *)filename forItem:(SVSiteItem *)item;
+{
+    OBPRECONDITION([self isCollection]);
+    
+    return YES;
 }
 
 #pragma mark Path Extension

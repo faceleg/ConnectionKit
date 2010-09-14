@@ -81,15 +81,11 @@
 	[self invalidateSortedChildrenCache];
 	
 	
-	// As it has a new parent, the page's path must have changed.
-    if ([item isKindOfClass:[KTPage class]])
+	if ([item isKindOfClass:[KTPage class]])
     {
+        // As it has a new parent, the page's path must have changed.
         KTPage *page = (KTPage *)item;
-        
         [page recursivelyInvalidateURL:YES];
-        
-        // Create an archive to contain the page if needed
-        //[self archivePageForTimestamp:[page timestampDate] createIfNotFound:YES];
     }
 }
 

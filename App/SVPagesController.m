@@ -258,21 +258,27 @@
     [self addObject:page toCollection:parent];
 }
 
-- (void)addObject:(id)object toCollection:(KTPage *)parent;
+- (void)addObject:(id)object toCollection:(KTPage *)collection;
 {
     OBPRECONDITION(object);
-    OBPRECONDITION(parent);
+    OBPRECONDITION(collection);
     
     
     // Attach to parent & other relationships
-    [object setSite:[parent site] recursively:YES];
-    [parent addChildItem:object];	// Must use this method to correctly maintain ordering
+    [object setSite:[collection site] recursively:YES];
+    
+    
+    
+    // Make sure filename is unique within the collection
+    [object suggestedFilename];
+    
+    [collection addChildItem:object];	// Must use this method to correctly maintain ordering
 	
 	
     // Inherit standard pagelets
     if ([object isKindOfClass:[KTPage class]])
     {
-        for (SVGraphic *aPagelet in [[parent sidebar] pagelets])
+        for (SVGraphic *aPagelet in [[collection sidebar] pagelets])
         {
             [SVSidebarPageletsController addPagelet:aPagelet toSidebarOfPage:object];
         }
@@ -284,7 +290,7 @@
     
     
     // Include in site menu if appropriate
-    if ([parent isRootPage] && [[parent childItems] count] < 7)
+    if ([collection isRootPage] && [[collection childItems] count] < 7)
     {
         [object setIncludeInSiteMenu:[NSNumber numberWithBool:YES]];
     }
