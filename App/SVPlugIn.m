@@ -253,6 +253,7 @@ static id <SVPlugInContext> sCurrentContext;
     if (nibName || class)
     {
         result = [[class alloc] initWithNibName:nibName bundle:bundle];
+        [result setTitle:[[bundle localizedInfoDictionary] objectForKey:@"KTPluginName"]];
         [result autorelease];
     }
     
