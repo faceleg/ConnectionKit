@@ -168,9 +168,7 @@
 # pragma mark HTML
 
 - (NSURL *)kareliaHTMLURL
-{
-	NSURL *serviceURL = [NSURL URLWithString:@"http://service.karelia.com/amazonList.php"];
-	
+{	
 	NSMutableDictionary *query = [NSMutableDictionary dictionaryWithCapacity: 19];
 	
 	[query setValue:@"on" forKey:@"js"];	// Enable javascript
@@ -229,8 +227,10 @@
 	}
 	
 	
-	
-	return [NSURL URLWithBaseURL:serviceURL parameters:query];
+	return [NSURL svURLWithScheme:@"http"
+                             host:@"service.karelia.com"
+                             path:@"amazonList.php"
+                  queryParameters:query];
 }
 
 + (NSSet *)keyPathsForValuesAffectingKareliaHTMLURL;
