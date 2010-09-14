@@ -336,6 +336,27 @@
     }
 }
 
+- (void)moveObject:(id)object toCollection:(KTPage *)collection index:(NSUInteger)index;
+{
+    [object retain];
+    
+    KTPage *parent = [object parentPage];
+    if (collection != parent)   // no point removing and re-adding a page
+    {
+        [parent removeChildItem:object];
+        [collection addChildItem:object];
+    }
+    
+    // Position item too if requested
+    if (index != NSOutlineViewDropOnItemIndex &&
+        [[collection collectionSortOrder] integerValue] == SVCollectionSortManually)
+    {
+        [collection moveChild:object toIndex:index];
+    }
+    
+    [object release];
+}
+
 #pragma mark Accessors
 
 - (NSString *)childrenKeyPath { return @"sortedChildren"; }

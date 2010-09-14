@@ -27,8 +27,10 @@
 @property(nonatomic, copy) NSDictionary *collectionPreset;
 @property(nonatomic, copy) NSURL *fileURL;
 
-- (void)addObject:(id)object toCollection:(KTPage *)parent;
+- (void)addObject:(id)object toCollection:(KTPage *)collection;
 - (void)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
+
+- (void)moveObject:(id)object toCollection:(KTPage *)collection index:(NSUInteger)index;
 
 // Doesn't add the result to collection, just uses it to determine property inheritance
 - (id)newObjectDestinedForCollection:(KTPage *)collection;

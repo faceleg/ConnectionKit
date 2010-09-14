@@ -1256,25 +1256,10 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
 	
     // Insert each item in turn. By running in reverse we can keep reusing the same index
+    SVPagesController *controller = [self content];
     for (SVSiteItem *anItem in [items reverseObjectEnumerator])
     {
-        [anItem retain];
-        
-        KTPage *parent = [anItem parentPage];
-        if (collection != parent)   // no point removing and re-adding a page
-        {
-            [parent removeChildItem:anItem];
-            [collection addChildItem:anItem];
-        }
-        
-        // Position item too if requested
-        if (index != NSOutlineViewDropOnItemIndex &&
-            [[collection collectionSortOrder] integerValue] == SVCollectionSortManually)
-        {
-            [collection moveChild:anItem toIndex:index];
-        }
-        
-        [anItem release];
+        [controller moveObject:anItem toCollection:collection index:index];
     }
 	
     
