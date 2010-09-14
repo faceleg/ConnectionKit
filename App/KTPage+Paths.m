@@ -101,8 +101,7 @@
     
 	// Build a list of the file names already taken
 	NSSet *siblingFileNames = [[[self parentPage] childItems] valueForKey:@"fileName"];
-	NSMutableSet *unavailableFileNames = [NSMutableSet set];
-	[unavailableFileNames unionSet:siblingFileNames];
+	NSMutableSet *unavailableFileNames = [siblingFileNames mutableCopy];
 	[unavailableFileNames removeObjectIgnoringNil:[self fileName]];
 	
     
@@ -112,6 +111,8 @@
 	{
 		result = [baseFileName stringByAppendingFormat:@"_%d", suffixCount++];
 	}
+    [unavailableFileNames release];
+    
 	
 	OBPOSTCONDITION(result);
 	
