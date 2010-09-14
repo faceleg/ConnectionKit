@@ -879,7 +879,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     //  Note that we need to check there is a valid CGContext to draw into. Otherwise the console will be littered with CG error messages. This situation can sometimes arise on Snowy when switching apps.
 	if (item == [self rootPage] &&
         ![[[self outlineView] selectedItems] containsObject:item] &&
-        [[NSGraphicsContext currentContext] graphicsPort])
+        [NSView focusView] == outlineView)
 	{
 		float width = [tableColumn width]*0.95;
 		float lineX = ([tableColumn width] - width)/2.0;
