@@ -252,6 +252,8 @@
 {
     NSAttributedString *html = [[self article] attributedHTMLString];
     NSMutableAttributedString *summary = [html mutableCopy];
+    NSMutableArray *attachments = [[NSMutableArray alloc] initWithCapacity:
+                                   [[[self article] attachments] count]];
     
     
     // Strip out large attachments
@@ -266,6 +268,7 @@
         
         if (attachment && [[attachment causesWrap] boolValue])
         {
+            [attachments addObject:[attachment graphic]];
             [summary deleteCharactersInRange:effectiveRange];
         }
         else
@@ -274,7 +277,28 @@
         }
     }
     
+    
+    // Are we left with only whitespace? If so, fallback to graphic captions
+    NSString *text = [[summary string] stringByConvertingHTMLToPlainText];
+    if ([text isWhitespace])
+    {
+        [summary release]; summary = nil;
+        
+        for (SVGraphic *aGraphic in attachments)
+        {
+            if ([aGraphic showsCaption])
+            {
+                summary = [[[aGraphic caption] attributedHTMLString] retain];
+                break;
+            }
+        }
+    }
+    
+        
+    // Write it
     [context writeAttributedHTMLString:summary];
+    
+    [attachments release];
     [summary release];
 }
 
