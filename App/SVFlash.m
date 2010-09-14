@@ -37,6 +37,10 @@
 #import "NSImage+KTExtensions.h"
 #import "SVMediaGraphicInspector.h"
 
+@interface SVFlash ()
+- (void)loadMovie;
+@end
+
 
 @implementation SVFlash 
 
@@ -253,34 +257,6 @@
 }
 
 
-
-#pragma mark -
-#pragma mark Loading flash to calculate dimensions
-
-
-
-
-
-/*	This accessor provides a means for temporarily storing the flash while information about it is asyncronously loaded
- */
-
-
-// Asynchronous load returned -- try to set the dimensions.
-- (void)connection:(KSSimpleURLConnection *)connection didFinishLoadingData:(NSData *)data response:(NSURLResponse *)response;
-{
-	NSSize dimensions = NSZeroSize;
-	self.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
-	self.naturalHeight = [NSNumber numberWithFloat:dimensions.height];	// even if it can't be figured out, at least it's not nil anymore
-	self.dimensionCalculationConnection = nil;
-}
-
-- (void)connection:(KSSimpleURLConnection *)connection didFailWithError:(NSError *)error;
-{
-	// do nothing with the error, but clear out the connection.
-	self.dimensionCalculationConnection = nil;
-}
-
-
 // Caches the flash from data.
 
 
@@ -392,34 +368,43 @@
 }
 
 
-- (void)loadMovie
+- (void)loadMovie;
 {
 	SVMediaRecord *media = [self media];
 	if (media)
 	{
-		
+		NSSize aSize = NSZeroSize;
+		if ([self attemptToGetSize:&aSize fromSWFData:[media mediaData]])
+		{
+			self.naturalWidth  = [NSNumber numberWithFloat:aSize.width];
+			self.naturalHeight = [NSNumber numberWithFloat:aSize.height];
+		}
 	}
-	else
+	else	// Load the data asynchronously and check that way.
 	{
 		NSURL *flashSourceURL = [self externalSourceURL];
 		self.dimensionCalculationConnection = [[[KSSimpleURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:flashSourceURL]] autorelease];
 		self.dimensionCalculationConnection.bytesNeeded = 1024;	// Let's just get the first 1K ... should be enough.
-		self.naturalWidth = 0;	
-		self.naturalHeight = 0;		// set to zero so we don't keep asking.  Hopefully answer comes soon.
-		
-	}
-
-    if (media)
-	{
-		BOOL isFlash = NO;
-		NSData *movieData = nil;
-		NSSize aSize = NSZeroSize;
-		if ([self attemptToGetSize:&aSize fromSWFData:movieData])
-		{
-			isFlash = YES;
-			/// [self setMovieSize:aSize];
-		}	// We're done!  
 	}
 }
+
+// Asynchronous load returned -- try to set the dimensions.
+- (void)connection:(KSSimpleURLConnection *)connection didFinishLoadingData:(NSData *)data response:(NSURLResponse *)response;
+{
+	NSSize aSize = NSZeroSize;
+	if ([self attemptToGetSize:&aSize fromSWFData:data])
+	{
+		self.naturalWidth  = [NSNumber numberWithFloat:aSize.width];
+		self.naturalHeight = [NSNumber numberWithFloat:aSize.height];
+	}
+	self.dimensionCalculationConnection = nil;
+}
+
+- (void)connection:(KSSimpleURLConnection *)connection didFailWithError:(NSError *)error;
+{
+	// do nothing with the error, but clear out the connection.
+	self.dimensionCalculationConnection = nil;
+}
+
 
 @end
