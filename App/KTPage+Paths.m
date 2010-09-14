@@ -49,6 +49,17 @@
 #pragma mark -
 #pragma mark File Name
 
+- (NSString *)filename;
+{
+    NSString *result = [self fileName];
+    if (![self isCollection])
+    {
+        result = [result stringByAppendingPathExtension:[self pathExtension]];
+    }
+    
+    return result;
+}
+
 /*	First we have a simple accessor pair for the file name. This does NOT include the extension.
  */
 @dynamic fileName;
@@ -141,6 +152,17 @@
 - (BOOL)isFilenameAvailable:(NSString *)filename forItem:(SVSiteItem *)item;
 {
     OBPRECONDITION([self isCollection]);
+    
+    for (SVSiteItem *anItem in [self childItems])
+    {
+        if (anItem != item) // ignore the item itself if already part of collection
+        {
+            if ([[anItem filename] isEqualToStringCaseInsensitive:filename])
+            {
+                return NO;
+            }
+        }
+    }
     
     return YES;
 }

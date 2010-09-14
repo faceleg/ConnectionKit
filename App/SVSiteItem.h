@@ -65,6 +65,7 @@
 #pragma mark URL
 
 @property(nonatomic, copy, readonly) NSURL *URL;    // nil by default, for subclasses to override
+- (NSString *)filename;                             // the filename within parent collection
 @property(nonatomic, copy, readonly) NSString *fileName;    // nil by default, for subclasses to override
 
 - (NSString *)previewPath;

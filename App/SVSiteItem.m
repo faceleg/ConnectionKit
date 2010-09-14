@@ -164,6 +164,8 @@
                                       relativeToURL:[[self parentPage] URL]] autorelease];
 }
 
+- (NSString *)filename; { return nil; }
+
 @dynamic fileName;
 
 - (BOOL)canPreview { return NO; }

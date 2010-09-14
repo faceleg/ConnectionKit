@@ -40,6 +40,8 @@
     return [NSSet setWithObject:@"linkURLString"];
 }
 
+- (NSString *)filename; { return nil; }
+
 - (NSString *)fileName
 {
     return [[[self URL] ks_lastPathComponent] stringByDeletingPathExtension];

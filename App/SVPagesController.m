@@ -18,6 +18,7 @@
 #import "SVLink.h"
 #import "SVLinkManager.h"
 #import "SVMediaRecord.h"
+#import "KTPage+Paths.h"
 #import "SVRichText.h"
 #import "SVSidebarPageletsController.h"
 #import "SVTextAttachment.h"
@@ -269,12 +270,20 @@
     
     
     
-    // Make sure filename is unique within the collection
-    [object suggestedFilename];
-    
+    // Add
     [collection addChildItem:object];	// Must use this method to correctly maintain ordering
 	
 	
+    // Make sure filename is unique within the collection
+    NSString *preferredFilename = [object preferredFilename];
+    if (![collection isFilenameAvailable:preferredFilename forItem:object])
+    {
+        [object setFileName:nil];   // needed to fool -suggestedFilename
+        NSString *suggestedFilename = [object suggestedFilename];
+        [object setFileName:[suggestedFilename stringByDeletingPathExtension]];
+    }
+    
+    
     // Inherit standard pagelets
     if ([object isKindOfClass:[KTPage class]])
     {
