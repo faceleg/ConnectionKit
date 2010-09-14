@@ -155,18 +155,9 @@
 
 #pragma mark URL
 
-// For display in the placeholder webview
-- (NSURL *)URL
-{
-    NSString *filename = [[self fileName] legalizedWebPublishingFilename];
-    
-    return [[[NSURL alloc] initWithString:filename
-                                      relativeToURL:[[self parentPage] URL]] autorelease];
-}
-
 - (NSString *)filename; { return nil; }
 
-@dynamic fileName;
+//@dynamic fileName;
 
 - (BOOL)canPreview { return NO; }
 

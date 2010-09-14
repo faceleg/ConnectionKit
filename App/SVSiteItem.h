@@ -65,8 +65,9 @@
 #pragma mark URL
 
 @property(nonatomic, copy, readonly) NSURL *URL;    // nil by default, for subclasses to override
-- (NSString *)filename;                             // the filename within parent collection
-@property(nonatomic, copy, readonly) NSString *fileName;    // nil by default, for subclasses to override
+
+// Will publishing result in a file or directory being created that corresponds to this item? If so, return its filename (so for collections, this ignores the index.html file). Otherwise, nil
+- (NSString *)filename;
 
 - (NSString *)previewPath;
 

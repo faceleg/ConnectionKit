@@ -54,8 +54,16 @@
                                     object:self];
 }
 
+// For display in the placeholder webview
+- (NSURL *)URL
+{
+    NSString *filename = [[self filename] legalizedWebPublishingFilename];
+    
+    return [[[NSURL alloc] initWithString:filename
+                            relativeToURL:[[self parentPage] URL]] autorelease];
+}
+
 - (NSString *)filename { return [self.media preferredFilename]; }
-- (NSString *)fileName { return [[self filename] stringByDeletingPathExtension]; }
 
 - (KTMaster *)master; { return [[self parentPage] master]; }
 
