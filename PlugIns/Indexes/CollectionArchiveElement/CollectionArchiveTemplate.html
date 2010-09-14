@@ -1,9 +1,15 @@
-[[if indexedCollection]]
+[[if indexedCollection.childPages]]
+[[if indexedCollection.archivePages]]
 <ul>
 [[foreach indexedCollection.archivePages aPage]]
 	<li>
-		[[if parser.HTMLGenerationPurpose]]<a href="[[path aPage]]">[[endif2]][[=&aPage.title]][[if parser.HTMLGenerationPurpose]]</a>[[endif2]]
+		[[if parser.HTMLGenerationPurpose]]<a href="[[path aPage]]">[[endif3]][[=&aPage.title]][[if parser.HTMLGenerationPurpose]]</a>[[endif3]]
 	</li>
 [[endforeach]]
 </ul>
+[[else2]]
+<p>[['You need to turn on archive pages, ok? Also, feel free to suggest how to phrase this better. Case 87647.]]</p>
+[[endif2]]
+[[else]]
+<p>[['You really should add something to the collection so you can see it, ok? Also, feel free to suggest how to phrase this better. Case 87647.]]</p>
 [[endif]]
