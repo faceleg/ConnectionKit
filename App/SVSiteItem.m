@@ -155,9 +155,9 @@
 
 #pragma mark URL
 
-- (NSString *)filename; { return nil; }
+@dynamic URL;
 
-//@dynamic fileName;
+- (NSString *)filename; { return nil; }
 
 - (BOOL)canPreview { return NO; }
 
