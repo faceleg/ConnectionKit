@@ -36,7 +36,7 @@ KTCollectionPathStyle;
 
 // File Name
 @property(nonatomic, copy, readwrite) NSString *fileName;
-- (NSString *)suggestedFileName;
+- (NSString *)suggestedFilename;
 
 
 #pragma mark Path Extension

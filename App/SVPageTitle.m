@@ -31,7 +31,7 @@
 	KTPage *page = [self page];
 	if ([page shouldUpdateFileNameWhenTitleChanges] && ![page datePublished])
 	{
-		[page setFileName:[page suggestedFileName]];
+		[page setFileName:[[page suggestedFilename] stringByDeletingPathExtension]];
 	}
 	
 	

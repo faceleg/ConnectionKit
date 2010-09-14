@@ -83,7 +83,7 @@
 /*	Looks at sibling pages and the page title to determine the best possible filename.
  *	Guaranteed to return something unique.
  */
-- (NSString *)suggestedFileName
+- (NSString *)suggestedFilename
 {
 	// The home page's title isn't settable, so keep it constant
 	if ([self isRoot]) return nil;
@@ -97,19 +97,17 @@
     }
     
 	NSString *baseFileName = result;
-	int suffixCount = 2;
 	
     
 	// Build a list of the file names already taken
 	NSSet *siblingFileNames = [[[self parentPage] childItems] valueForKey:@"fileName"];
-	//NSSet *archiveFileNames = [[self parentPage] valueForKeyPath:@"archivePages.fileName"];
-	NSMutableSet *unavailableFileNames = [NSMutableSet set];//WithCapacity:([siblingFileNames count] + [archiveFileNames count])];
+	NSMutableSet *unavailableFileNames = [NSMutableSet set];
 	[unavailableFileNames unionSet:siblingFileNames];
-	//[unavailableFileNames unionSet:archiveFileNames];
 	[unavailableFileNames removeObjectIgnoringNil:[self fileName]];
 	
     
 	// Now munge it to make it unique.  Keep adding a number until we find an open slot.
+	int suffixCount = 2;
 	while ([unavailableFileNames containsObject:result])
 	{
 		result = [baseFileName stringByAppendingFormat:@"_%d", suffixCount++];
@@ -117,7 +115,7 @@
 	
 	OBPOSTCONDITION(result);
 	
-	return result;
+	return [result stringByAppendingPathExtension:[self pathExtension]];
 }
 
 #pragma mark Path Extension
