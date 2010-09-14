@@ -381,7 +381,7 @@
 
 - (void)insertTabViewItemIfNotAlreadyPresent:(NSTabViewItem *)tabViewItem atIndex:(unsigned)index;
 {
-	if ([[self tabViewItems] indexOfObjectIdenticalTo:tabViewItem] != NSNotFound)
+	if ([[self tabViewItems] indexOfObjectIdenticalTo:tabViewItem] == NSNotFound)
     {
 		[self insertTabViewItem:tabViewItem atIndex:index];
 	}
