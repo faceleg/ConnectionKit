@@ -43,6 +43,7 @@
 @interface SVPagesController ()
 - (id)newObjectWithPredecessor:(KTPage *)predecessor allowCollections:(BOOL)allowCollections;
 - (void)configurePageAsCollection:(KTPage *)collection;
+- (void)didInsertObject:(id)object intoCollection:(KTPage *)collection;
 @end
 
 
@@ -274,14 +275,8 @@
     [collection addChildItem:object];	// Must use this method to correctly maintain ordering
 	
 	
-    // Make sure filename is unique within the collection
-    NSString *preferredFilename = [object preferredFilename];
-    if (![collection isFilenameAvailable:preferredFilename forItem:object])
-    {
-        [object setFileName:nil];   // needed to fool -suggestedFilename
-        NSString *suggestedFilename = [object suggestedFilename];
-        [object setFileName:[suggestedFilename stringByDeletingPathExtension]];
-    }
+    [self didInsertObject: object intoCollection: collection];
+
     
     
     // Inherit standard pagelets
@@ -338,13 +333,15 @@
 
 - (void)moveObject:(id)object toCollection:(KTPage *)collection index:(NSUInteger)index;
 {
-    [object retain];
+    [object retain];    // since we're potentially removing it from relationships etc.
     
     KTPage *parent = [object parentPage];
     if (collection != parent)   // no point removing and re-adding a page
     {
         [parent removeChildItem:object];
         [collection addChildItem:object];
+        
+        [self didInsertObject:object intoCollection:collection];
     }
     
     // Position item too if requested
@@ -355,6 +352,18 @@
     }
     
     [object release];
+}
+
+- (void)didInsertObject:(id)object intoCollection:(KTPage *)collection;
+{
+    // Make sure filename is unique within the collection
+    NSString *preferredFilename = [object preferredFilename];
+    if (![collection isFilenameAvailable:preferredFilename forItem:object])
+    {
+        [object setFileName:nil];   // needed to fool -suggestedFilename
+        NSString *suggestedFilename = [object suggestedFilename];
+        [object setFileName:[suggestedFilename stringByDeletingPathExtension]];
+    }
 }
 
 #pragma mark Accessors
