@@ -392,8 +392,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
 		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
     }
-        
-     
+    
+    
     if (saveOperation != NSAutosaveOperation && result)
     {
         // Make sure there's a directory to save Quick Look data into
