@@ -420,7 +420,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 #pragma mark Product Previews
 
 /*	If the user has requested it, add the product preview popups javascript to the end of the page */
-- (void)addLevelTextToEndBody:(NSMutableString *)ioString forPage:(KTPage *)aPage	// level, since we don't want this on all pages on the site!
+- (void)addLevelTextToEndBody:(NSMutableString *)ioString forPage:(id<SVPage>)aPage	// level, since we don't want this on all pages on the site!
 {
 	if ([self showProductPreviews])
 	{
