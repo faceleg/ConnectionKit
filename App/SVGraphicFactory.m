@@ -393,7 +393,7 @@ static SVGraphicFactory *sRawHTMLFactory;
         sMoreFactories = [[KSSortedMutableArray alloc] initWithSortDescriptors:sortDescriptors];
         
         
-        for (KTHTMLPlugInWrapper *aWrapper in [KTElementPlugInWrapper pageletPlugins])
+        for (KTElementPlugInWrapper *aWrapper in [KTElementPlugInWrapper pageletPlugins])
         {
             switch ([aWrapper category])
             {

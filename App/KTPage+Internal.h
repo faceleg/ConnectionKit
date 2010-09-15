@@ -10,7 +10,7 @@
 #import "KTPage.h"
 
 
-@class KTHTMLPlugInWrapper;
+@class KTElementPlugInWrapper;
 
 
 @interface KTPage (Internal)

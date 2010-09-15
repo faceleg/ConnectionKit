@@ -162,7 +162,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 #pragma mark -
 #pragma mark Bundle Icons
 
-- (NSImage *)iconForPlugin:(KTHTMLPlugInWrapper *)plugin
+- (NSImage *)iconForPlugin:(KTElementPlugInWrapper *)plugin
 {
 	OBPRECONDITION(plugin);
 	
@@ -190,7 +190,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	NSImage *result = nil;
 	SVMediaRecord *media = nil;
     
-    KTHTMLPlugInWrapper *plugin = nil;
+    KTElementPlugInWrapper *plugin = nil;
 	if (nil != (media =[item mediaRepresentation]))
     {
 		NSString *UTI = [media typeOfFile];

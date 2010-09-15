@@ -9,7 +9,7 @@
 #import "SVPlugInGraphicFactory.h"
 
 #import "KTDataSourceProtocol.h"
-#import "KTHTMLPlugInWrapper.h"
+#import "KTElementPlugInWrapper.h"
 #import "SVPlugInGraphic.h"
 
 #import "NSImage+Karelia.h"

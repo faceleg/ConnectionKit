@@ -10,7 +10,7 @@
 #import "SVPageProtocol.h"
 
 #import "KTDataSourceProtocol.h"
-#import "KTHTMLPlugInWrapper.h"
+#import "KTElementPlugInWrapper.h"
 #import "SVRichText.h"
 #import "SVDOMController.h"
 #import "SVGraphic.h"

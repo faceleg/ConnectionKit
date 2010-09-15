@@ -7,20 +7,63 @@
 //
 
 #import "KTElementPlugInWrapper.h"
+
+#import "SVPlugInGraphicFactory.h"
 #import "KT.h"
+
 #import "NSBundle+Karelia.h"
+#import "NSString+Karelia.h"
 
 #import "Registration.h"
 
 @implementation KTElementPlugInWrapper
+
+#pragma mark Init & Dealloc
 
 + (void)load
 {
 	[self registerPluginClass:[self class] forFileExtension:kKTElementExtension];
 }
 
-#pragma mark -
+/*	We only want to load 1.5 and later plugins
+ */
++ (BOOL)validateBundle:(NSBundle *)aCandidateBundle
+{
+	BOOL result = NO;
+	
+	NSString *minVersion = [aCandidateBundle minimumAppVersion];
+	if (minVersion)
+	{
+		float floatMinVersion = [minVersion floatVersion];
+		if (floatMinVersion >= 1.5)
+		{
+			result = YES;
+		}
+	}
+	
+	return result;
+}
+
+- (void)dealloc
+{
+    [_factory release];
+	[_templateHTML release];
+	
+	[super dealloc];
+}
+
 #pragma mark Properties
+
+- (SVGraphicFactory *)graphicFactory;
+{
+    if (!_factory)
+    {
+        _factory = [[SVPlugInGraphicFactory alloc] initWithBundle:[self bundle]];
+    }
+    return _factory;
+}
+
+- (KTPluginCategory)category { return [[self pluginPropertyForKey:@"KTCategory"] intValue]; }
 
 - (id)defaultPluginPropertyForKey:(NSString *)key;
 {
@@ -87,6 +130,14 @@
 	else if ([key isEqualToString:@"KTPageNibFile"])
 	{
 		return [self pluginPropertyForKey:@"KTPluginNibFile"];
+	}
+	else if ([key isEqualToString:@"KTPluginPriority"])
+	{
+		return [NSNumber numberWithUnsignedInt:5];
+	}
+	else if ([key isEqualToString:@"KTTemplateName"])
+	{
+		return @"template";
 	}
 	else
 	{
@@ -176,7 +227,7 @@
     // Go through and get the localized names of each bundle, and put into a dict keyed by name
     NSDictionary *plugins = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
     NSEnumerator *enumerator = [plugins objectEnumerator];	// go through each plugin.
-    KTHTMLPlugInWrapper *plugin;
+    KTElementPlugInWrapper *plugin;
     
 	while (plugin = [enumerator nextObject])
 	{

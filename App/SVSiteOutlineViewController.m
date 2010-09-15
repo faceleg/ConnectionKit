@@ -18,7 +18,7 @@
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "SVPagesController.h"
-#import "KTHTMLPlugInWrapper.h"
+#import "KTElementPlugInWrapper.h"
 
 #import "NSArray+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
