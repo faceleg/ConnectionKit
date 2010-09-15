@@ -32,7 +32,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 
 @interface SVPlugIn ()
-@property(nonatomic, assign, readwrite) id <SVPageletPlugInContainer> container;
+@property(nonatomic, assign, readwrite) id container;
 @end
 
 

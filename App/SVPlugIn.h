@@ -10,7 +10,7 @@
 #import "SVPlugInContext.h"
 
 
-@protocol SVPage, SVPageletPlugInContainer;
+@protocol SVPage;
 @class SVMedia;
 
 
@@ -107,7 +107,6 @@
 
 
 #pragma mark The Wider World
-@property(nonatomic, assign, readonly) id <SVPageletPlugInContainer> container;
 @property(nonatomic, readonly) NSBundle *bundle;    // the object representing the plug-in's bundle
 
 

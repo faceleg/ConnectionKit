@@ -10,7 +10,7 @@
 
 
 @class SVPlugIn, SVInspectorViewController;
-@protocol SVHTMLWriter, SVPage, SVPageletPlugInContainer;
+@protocol SVHTMLWriter, SVPage;
 
 #pragma mark -
 
@@ -101,14 +101,6 @@
 - (BOOL)isXHTML;
 - (NSStringEncoding)encoding;   // default is UTF-8
 
-
-@end
-
-
-#pragma mark -
-
-
-@protocol SVPageletPlugInContainer <NSObject>
 
 @end
 

@@ -55,7 +55,7 @@ extern NSString *kSVGraphicPboardType;
 @protocol SVPage, SVMedia, SVEnclosure;
 
 
-@interface SVGraphic : KSExtensibleManagedObject <SVPageletPlugInContainer, IMBImageItem>
+@interface SVGraphic : KSExtensibleManagedObject <IMBImageItem>
 
 #pragma mark Initialization
 - (void)willInsertIntoPage:(KTPage *)page; // calls -didAddToPage:
