@@ -51,7 +51,6 @@
 #import "KTElementPlugInWrapper.h"
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
-#import "KTIndexPluginWrapper.h"
 #import "SVInspector.h"
 #import "KTMaster.h"
 #import "SVMediaRecord.h"

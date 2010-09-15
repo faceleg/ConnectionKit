@@ -47,7 +47,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTElementPlugInWrapper.h"
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
-#import "KTIndexPluginWrapper.h"
 #import "KTPage.h"
 #import "SVGraphicFactory.h"
 #import "KTPrefsController.h"

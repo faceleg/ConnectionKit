@@ -14,7 +14,6 @@
 #import "KTDocument.h"
 #import "KTSite.h"
 #import "KTElementPlugInWrapper.h"
-#import "KTIndexPluginWrapper.h"
 #import "SVInspector.h"
 #import "KTMaster.h"
 #import "KTPage+Internal.h"
