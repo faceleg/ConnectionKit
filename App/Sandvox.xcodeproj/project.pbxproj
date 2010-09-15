@@ -714,7 +714,7 @@
 		3C682BCB0D62350800B4D485 /* SVHTMLTemplateParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B420D62308300B4D485 /* SVHTMLTemplateParser.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BD20D62352800B4D485 /* KTImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B640D62325F00B4D485 /* KTImageView.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BD40D62352D00B4D485 /* KTLinkConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B6A0D62327900B4D485 /* KTLinkConnector.h */; settings = {ATTRIBUTES = (); }; };
-		3C682BD50D62353300B4D485 /* KTLinkSourceView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B6D0D62328600B4D485 /* KTLinkSourceView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C682BD50D62353300B4D485 /* KTLinkSourceView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B6D0D62328600B4D485 /* KTLinkSourceView.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BD60D62353500B4D485 /* KTMagnifyButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B700D62329500B4D485 /* KTMagnifyButton.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BDC0D62354700B4D485 /* KTView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B820D6232EA00B4D485 /* KTView.h */; settings = {ATTRIBUTES = (); }; };
 		3C6EA9491048E4E700B0763D /* SVDesignChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */; };

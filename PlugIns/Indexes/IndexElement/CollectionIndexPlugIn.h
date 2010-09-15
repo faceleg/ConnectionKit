@@ -38,7 +38,6 @@
 #import "SandvoxPlugin.h"
 
 
-@class KTLinkSourceView;
 @interface CollectionIndexPlugIn : SVIndexPlugIn
 {
     NSUInteger _maxItems;
