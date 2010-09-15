@@ -13,7 +13,6 @@
 #import "SVHTMLContext.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVTextAttachment.h"
-#import "KTIndexPluginWrapper.h"
 
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"

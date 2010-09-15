@@ -15,7 +15,6 @@
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
 #import "SVGraphic.h"
-#import "KTIndexPluginWrapper.h"
 #import "KTMaster.h"
 #import "SVMediaRecord.h"
 #import "SVPageTitle.h"
