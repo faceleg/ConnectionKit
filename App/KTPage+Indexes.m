@@ -172,6 +172,7 @@
     return YES;
 }
 
+@dynamic collectionTruncateFeedItems;
 @dynamic collectionMaxFeedItemLength;
 
 @dynamic RSSFileName;
