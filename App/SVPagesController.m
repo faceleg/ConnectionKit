@@ -233,8 +233,8 @@
     // Create index and insert
     if (plugInWrapper)
     {
-        SVGraphic *index = [plugInWrapper insertNewGraphicInManagedObjectContext:
-                            [self managedObjectContext]];
+        SVGraphic *index = [[plugInWrapper graphicFactory]
+                            insertNewGraphicInManagedObjectContext:[self managedObjectContext]];
         
         NSAttributedString *graphicHTML = [NSAttributedString attributedHTMLStringWithGraphic:index];
         [[index textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementInline]];
