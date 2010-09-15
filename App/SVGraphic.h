@@ -121,6 +121,9 @@ extern NSString *kSVGraphicPboardType;
 @property(nonatomic, copy) NSNumber *width;
 @property(nonatomic, copy) NSNumber *height;
 
+- (void)makeOriginalSize;
+- (BOOL)canMakeOriginalSize;
+
 @property(nonatomic, copy) NSNumber *contentWidth;
 
 - (NSNumber *)containerWidth;

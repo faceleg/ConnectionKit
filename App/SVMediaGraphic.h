@@ -40,7 +40,5 @@
 @property(nonatomic, copy) NSNumber *naturalHeight;
 
 - (CGSize)originalSize;
-- (void)makeOriginalSize;
-- (BOOL)canMakeOriginalSize;
 
 @end

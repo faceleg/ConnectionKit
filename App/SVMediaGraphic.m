@@ -177,8 +177,6 @@
     [self setConstrainProportions:constrainProportions];
 }
 
-- (BOOL)canMakeOriginalSize; { return YES; }
-
 #pragma mark Size, inherited
 
 - (void)setWidth:(NSNumber *)width;
