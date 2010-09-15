@@ -636,7 +636,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 													<string>NSStringPboardType</string>
 												</object>
 											</object>
-											<string key="NSFrame">{{17, 96}, {210, 59}}</string>
+											<string key="NSFrame">{{17, 94}, {210, 61}}</string>
 											<reference key="NSSuperview" ref="776333486"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTokenFieldCell" key="NSCell" id="947280715">
