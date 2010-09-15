@@ -388,6 +388,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (void)awakeFromPropertyList:(id)propertyList;
 {
+    [super awakeFromPropertyList:propertyList];
+    
     // Restore title
     NSDictionary *serializedTitle = [propertyList objectForKey:@"titleBox"];
     if (serializedTitle)
