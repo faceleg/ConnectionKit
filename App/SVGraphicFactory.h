@@ -15,7 +15,23 @@
 #import "SVPlugIn.h"
 
 
-@protocol SVGraphicFactory <NSObject>
+@interface SVGraphicFactory : NSObject
+
+#pragma mark Shared Objects
++ (SVGraphicFactory *)textBoxFactory;
++ (SVGraphicFactory *)imageFactory;
++ (SVGraphicFactory *)videoFactory;
++ (SVGraphicFactory *)audioFactory;
++ (SVGraphicFactory *)flashFactory;
++ (NSArray *)indexFactories;
++ (NSArray *)badgeFactories;
++ (NSArray *)embeddedFactories;
++ (NSArray *)socialFactories;
++ (NSArray *)moreGraphicFactories;
++ (SVGraphicFactory *)rawHTMLFactory;
+
+
+#pragma mark General
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 
@@ -40,35 +56,13 @@
               insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
-@end
-
-
-#pragma mark -
-
-
-@interface SVGraphicFactory : NSObject <SVGraphicFactory>
-
-#pragma mark Shared Objects
-+ (id <SVGraphicFactory>)textBoxFactory;
-+ (id <SVGraphicFactory>)imageFactory;
-+ (id <SVGraphicFactory>)videoFactory;
-+ (id <SVGraphicFactory>)audioFactory;
-+ (id <SVGraphicFactory>)flashFactory;
-+ (NSArray *)indexFactories;
-+ (NSArray *)badgeFactories;
-+ (NSArray *)embeddedFactories;
-+ (NSArray *)socialFactories;
-+ (NSArray *)moreGraphicFactories;
-+ (id <SVGraphicFactory>)rawHTMLFactory;
-
-
 #pragma mark Menus
 
 + (void)insertItemsWithGraphicFactories:(NSArray *)factories
                                  inMenu:(NSMenu *)menu
                                 atIndex:(NSUInteger)index;
 
-+ (NSMenuItem *)menuItemWithGraphicFactory:(id <SVGraphicFactory>)factory setImage:(BOOL)image;
++ (NSMenuItem *)menuItemWithGraphicFactory:(SVGraphicFactory *)factory setImage:(BOOL)image;
 + (NSMenuItem *)menuItemForGraphicFactories:(NSArray *)factories title:(NSString *)title;
 
 // Convenience method that uses the factory if non-nil. Otherwise, fall back to text box

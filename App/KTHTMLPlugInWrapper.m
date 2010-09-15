@@ -8,8 +8,8 @@
 
 #import "KTHTMLPlugInWrapper.h"
 
-#import "KTDataSourceProtocol.h"
 #import "SVPlugInGraphic.h"
+#import "SVPlugInGraphicFactory.h"
 
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
@@ -44,6 +44,7 @@
 
 - (void)dealloc
 {
+    [_factory release];
 	[_icon release];
 	[_templateHTML release];
 	
@@ -52,6 +53,15 @@
 
 #pragma mark -
 #pragma mark Accessors
+
+- (SVGraphicFactory *)graphicFactory;
+{
+    if (!_factory)
+    {
+        _factory = [[SVPlugInGraphicFactory alloc] initWithBundle:[self bundle]];
+    }
+    return _factory;
+}
 
 /*	Implemented for the sake of bindings
  */
@@ -118,97 +128,6 @@
 	{
 		return [super defaultPluginPropertyForKey:key];
 	}
-}
-
-#pragma mark Factory
-
-- (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    NSString *identifier = [[self bundle] bundleIdentifier];
-    
-    SVGraphic *result = [SVPlugInGraphic insertNewGraphicWithPlugInIdentifier:identifier
-                                                       inManagedObjectContext:context];
-    
-    // Guess title
-    [result setTitle:[self name]];
-    
-    return result;
-}
-
-- (NSArray *)readablePasteboardTypes;
-{
-    NSArray *result = nil;
-    
-    Class anElementClass = [[self bundle] principalClass];
-    if ([anElementClass conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
-    {
-        @try
-        {
-            result = [anElementClass readableTypesForPasteboard:nil];
-        }
-        @catch (NSException *exception)
-        {
-            // TODO: log
-        }
-    }
-    
-    return result;
-}
-
-- (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type
-                                               pasteboard:(NSPasteboard *)pasteboard;
-{
-    SVPlugInPasteboardReadingOptions result = SVPlugInPasteboardReadingAsData;
-    
-    @try
-    {
-        Class plugInClass = [[self bundle] principalClass];
-        if ([plugInClass respondsToSelector:_cmd])
-        {
-            result = [plugInClass readingOptionsForType:type
-                                             pasteboard:pasteboard];
-        }
-    }
-    @catch (NSException *exception)
-    {
-        // TODO: log
-    }
-    
-    return result;
-}
-
-- (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type;
-{
-    NSUInteger result = KTSourcePriorityNone;
-    
-    @try
-    {
-        result = [[[self bundle] principalClass] readingPriorityForPasteboardContents:contents
-                                                                               ofType:type];
-    }
-    @catch (NSException *exception)
-    {
-        // TODO: log
-    }
-    
-    return result;
-}
-
-- (SVGraphic *)graphicWithPasteboardContents:(id)contents
-                                      ofType:(NSString *)type
-              insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    SVPlugInGraphic *result = nil;
-    
-    Class plugInClass = [[self bundle] principalClass];
-    if ([plugInClass conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
-    {
-        result = (id)[self insertNewGraphicInManagedObjectContext:context];
-        [(id <SVPlugInPasteboardReading>)[result plugIn] awakeFromPasteboardContents:contents
-                                                                              ofType:type];
-    }
-    
-    return result;
 }
 
 @end

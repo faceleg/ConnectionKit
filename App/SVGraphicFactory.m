@@ -281,16 +281,16 @@ static NSPointerArray   *sFactories;
     return [sFactories allObjects];
 }
 
-+ (id <SVGraphicFactory>)graphicFactoryForTag:(NSInteger)tag;
++ (SVGraphicFactory *)graphicFactoryForTag:(NSInteger)tag;
 {
     return [sFactories pointerAtIndex:tag];
 }
 
-+ (NSInteger)tagForFactory:(id <SVGraphicFactory>)factory;
++ (NSInteger)tagForFactory:(SVGraphicFactory *)factory;
 {
     // Have to hunt through for index/tag of factory
     NSInteger result = 0;
-    for (id <SVGraphicFactory> aFactory in sFactories)
+    for (SVGraphicFactory *aFactory in sFactories)
     {
         if (aFactory == factory) break;
         result++;
@@ -302,7 +302,7 @@ static NSPointerArray   *sFactories;
     return result;
 }
 
-+ (void)registerFactory:(id <SVGraphicFactory>)factory;
++ (void)registerFactory:(SVGraphicFactory *)factory;
 {
     OBPRECONDITION(factory);
     [sFactories addPointer:factory];
@@ -310,17 +310,17 @@ static NSPointerArray   *sFactories;
 
 #pragma mark Shared Objects
 
-static id <SVGraphicFactory> sSharedTextBoxFactory;
-static id <SVGraphicFactory> sImageFactory;
-static id <SVGraphicFactory> sVideoFactory;
-static id <SVGraphicFactory> sAudioFactory;
-static id <SVGraphicFactory> sFlashFactory;
+static SVGraphicFactory *sSharedTextBoxFactory;
+static SVGraphicFactory *sImageFactory;
+static SVGraphicFactory *sVideoFactory;
+static SVGraphicFactory *sAudioFactory;
+static SVGraphicFactory *sFlashFactory;
 static KSSortedMutableArray *sIndexFactories;
 static KSSortedMutableArray *sBadgeFactories;
 static KSSortedMutableArray *sEmbeddedFactories;
 static KSSortedMutableArray *sSocialFactories;
 static KSSortedMutableArray *sMoreFactories;
-static id <SVGraphicFactory> sRawHTMLFactory;
+static SVGraphicFactory *sRawHTMLFactory;
 
 + (void)initialize
 {
@@ -393,28 +393,28 @@ static id <SVGraphicFactory> sRawHTMLFactory;
         sMoreFactories = [[KSSortedMutableArray alloc] initWithSortDescriptors:sortDescriptors];
         
         
-        for (KTHTMLPlugInWrapper *aFactory in [KTElementPlugInWrapper pageletPlugins])
+        for (KTHTMLPlugInWrapper *aWrapper in [KTElementPlugInWrapper pageletPlugins])
         {
-            switch ([aFactory category])
+            switch ([aWrapper category])
             {
                 case KTPluginCategoryIndex:
-                    [sIndexFactories addObject:aFactory];
+                    [sIndexFactories addObject:[aWrapper graphicFactory]];
                     break;
                 /*case KTPluginCategoryBadge:
-                    [sBadgeFactories addObject:aFactory];
+                    [sBadgeFactories addObject:[aWrapper graphicFactory]];
                     break;
                 case KTPluginCategoryEmbedded:
-                    [sEmbeddedFactories addObject:aFactory];
+                    [sEmbeddedFactories addObject:[aWrapper graphicFactory]];
                     break;
                 case KTPluginCategorySocial:
-                    [sSocialFactories addObject:aFactory];
+                    [sSocialFactories addObject:[aWrapper graphicFactory]];
                     break;*/
                 default:
-                    [sMoreFactories addObject:aFactory];
+                    [sMoreFactories addObject:[aWrapper graphicFactory]];
                     break;
             }
             
-            [self registerFactory:aFactory];
+            [self registerFactory:[aWrapper graphicFactory]];
         }
     }
 }
@@ -425,12 +425,12 @@ static id <SVGraphicFactory> sRawHTMLFactory;
 + (NSArray *)socialFactories; { return [[sSocialFactories copy] autorelease]; }
 + (NSArray *)moreGraphicFactories; { return [[sMoreFactories copy] autorelease]; }
 
-+ (id <SVGraphicFactory>)textBoxFactory; { return sSharedTextBoxFactory; }
-+ (id <SVGraphicFactory>)imageFactory; { return sImageFactory; }
-+ (id <SVGraphicFactory>)videoFactory; { return sVideoFactory; }
-+ (id <SVGraphicFactory>)audioFactory; { return sAudioFactory; }
-+ (id <SVGraphicFactory>)flashFactory; { return sFlashFactory; }
-+ (id <SVGraphicFactory>)rawHTMLFactory; { return sRawHTMLFactory; }
++ (SVGraphicFactory *)textBoxFactory; { return sSharedTextBoxFactory; }
++ (SVGraphicFactory *)imageFactory; { return sImageFactory; }
++ (SVGraphicFactory *)videoFactory; { return sVideoFactory; }
++ (SVGraphicFactory *)audioFactory; { return sAudioFactory; }
++ (SVGraphicFactory *)flashFactory; { return sFlashFactory; }
++ (SVGraphicFactory *)rawHTMLFactory; { return sRawHTMLFactory; }
 
 #pragma mark Menu
 
@@ -440,14 +440,14 @@ static id <SVGraphicFactory> sRawHTMLFactory;
                                  inMenu:(NSMenu *)menu
                                 atIndex:(NSUInteger)index;
 {	
-    for (id <SVGraphicFactory> factory in factories)
+    for (SVGraphicFactory *factory in factories)
 	{
 		NSMenuItem *menuItem = [self menuItemWithGraphicFactory:factory setImage:YES];
 		[menu insertItem:menuItem atIndex:index];   index++;
 	}
 }
 
-+ (NSMenuItem *)menuItemWithGraphicFactory:(id <SVGraphicFactory>)factory setImage:(BOOL)image;
++ (NSMenuItem *)menuItemWithGraphicFactory:(SVGraphicFactory *)factory setImage:(BOOL)image;
 {
     NSMenuItem *result = [[[NSMenuItem alloc] init] autorelease];
     
@@ -518,7 +518,7 @@ static id <SVGraphicFactory> sRawHTMLFactory;
 + (SVGraphic *)graphicWithActionSender:(id <NSValidatedUserInterfaceItem>)sender
         insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    id <SVGraphicFactory> factory = [self graphicFactoryForTag:[sender tag]];
+    SVGraphicFactory *factory = [self graphicFactoryForTag:[sender tag]];
     SVGraphic *result = [factory insertNewGraphicInManagedObjectContext:context];
     
     [result setShowsTitle:YES]; // default is NO in the mom to account for inline images
@@ -537,7 +537,7 @@ static id <SVGraphicFactory> sRawHTMLFactory;
     return result;
 }
 
-+ (NSUInteger)priorityForFactory:(id <SVGraphicFactory>)aFactory
++ (NSUInteger)priorityForFactory:(SVGraphicFactory *)aFactory
                       pasteboard:(NSPasteboard *)pasteboard
                             type:(NSString **)outType
                         contents:(id *)outPboardContents;
@@ -602,14 +602,14 @@ static id <SVGraphicFactory> sRawHTMLFactory;
 + (SVGraphic *)graphicFromPasteboard:(NSPasteboard *)pasteboard
       insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    id <SVGraphicFactory> factory = nil;
+    SVGraphicFactory *factory = nil;
     id pasteboardContents;
     NSString *pasteboardType;
     NSUInteger readingPriority = 0;
     
     
     // Test plug-ins
-    for (id <SVGraphicFactory> aFactory in [self registeredFactories])
+    for (SVGraphicFactory *aFactory in [self registeredFactories])
     {
         NSString *type;
         id propertyList;
@@ -673,7 +673,7 @@ static id <SVGraphicFactory> sRawHTMLFactory;
     {
         result = [[NSMutableArray alloc] init];
         
-        for (id <SVGraphicFactory> aFactory in [self registeredFactories])
+        for (SVGraphicFactory *aFactory in [self registeredFactories])
         {
             NSArray *acceptedTypes = [aFactory readablePasteboardTypes];
             for (NSString *aType in acceptedTypes)

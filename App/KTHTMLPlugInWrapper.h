@@ -20,11 +20,16 @@ typedef enum {
 } KTPluginCategory;
 
 
-@interface KTHTMLPlugInWrapper : KSPlugInWrapper <SVGraphicFactory>
+@interface KTHTMLPlugInWrapper : KSPlugInWrapper
 {
+  @private
+    SVGraphicFactory    *_factory;
+    
 	NSImage     *_icon;
 	NSString    *_templateHTML;
 }
+
+- (SVGraphicFactory *)graphicFactory;
 
 - (NSString *)name;
 - (NSImage *)pluginIcon;            // derived from pluginIconName
