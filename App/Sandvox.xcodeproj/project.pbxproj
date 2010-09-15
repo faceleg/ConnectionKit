@@ -309,6 +309,8 @@
 		2726DE8E11E699720000257D /* RawHTMLPlaceholder.html in Resources */ = {isa = PBXBuildFile; fileRef = 2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */; };
 		2726DEAA11E69CA80000257D /* SVRawHTMLDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2726DEA811E69CA80000257D /* SVRawHTMLDOMController.h */; };
 		2726DEAB11E69CA80000257D /* SVRawHTMLDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2726DEA911E69CA80000257D /* SVRawHTMLDOMController.m */; };
+		2727551212410C010043C223 /* SVPlugInGraphicFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 2727551012410C010043C223 /* SVPlugInGraphicFactory.h */; };
+		2727551312410C010043C223 /* SVPlugInGraphicFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 2727551112410C010043C223 /* SVPlugInGraphicFactory.m */; };
 		272B38CD10B18FB60056B4CA /* SVPlugInGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */; };
 		272B38CE10B18FB60056B4CA /* SVPlugInGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */; };
 		272B3B2910B20B240056B4CA /* SVInspectorButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */; };
@@ -1848,6 +1850,8 @@
 		2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = RawHTMLPlaceholder.html; sourceTree = "<group>"; };
 		2726DEA811E69CA80000257D /* SVRawHTMLDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRawHTMLDOMController.h; sourceTree = "<group>"; };
 		2726DEA911E69CA80000257D /* SVRawHTMLDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRawHTMLDOMController.m; sourceTree = "<group>"; };
+		2727551012410C010043C223 /* SVPlugInGraphicFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInGraphicFactory.h; sourceTree = "<group>"; };
+		2727551112410C010043C223 /* SVPlugInGraphicFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInGraphicFactory.m; sourceTree = "<group>"; };
 		272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInGraphic.h; sourceTree = "<group>"; };
 		272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInGraphic.m; sourceTree = "<group>"; };
 		272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInspectorButtonCell.h; sourceTree = "<group>"; };
@@ -3609,6 +3613,8 @@
 			children = (
 				27B0BF6A1168B8840084BFE0 /* SVGraphicFactory.h */,
 				27B0BF6B1168B8840084BFE0 /* SVGraphicFactory.m */,
+				2727551012410C010043C223 /* SVPlugInGraphicFactory.h */,
+				2727551112410C010043C223 /* SVPlugInGraphicFactory.m */,
 			);
 			name = Registration;
 			sourceTree = "<group>";
@@ -5769,6 +5775,7 @@
 				274593E1123925A8005D0640 /* KSFileWrapperExtensions.h in Headers */,
 				2745948C123944FE005D0640 /* NSURL+Sandvox.h in Headers */,
 				CE89C230123999D70056D74B /* SVFlash.h in Headers */,
+				2727551212410C010043C223 /* SVPlugInGraphicFactory.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7273,6 +7280,7 @@
 				2745948D123944FE005D0640 /* NSURL+Sandvox.m in Sources */,
 				CE89C231123999D70056D74B /* SVFlash.m in Sources */,
 				27CFC5E0123E280800BF018C /* Sandvox 1.5.xcdatamodel in Sources */,
+				2727551312410C010043C223 /* SVPlugInGraphicFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
