@@ -13,14 +13,6 @@
 
 @implementation SVIndexPlugIn
 
-- (void)awakeFromNew;
-{
-    [super awakeFromNew];
-    
-    // Indexes should generally fill full width
-    [self setWidth:0];
-}
-
 - (void)didAddToPage:(id <SVPage>)page;
 {
     if (![self indexedCollection])
@@ -30,6 +22,14 @@
 }
 
 @synthesize indexedCollection = _collection;
+
+#pragma mark Metrics
+
+- (void)makeOriginalSize;
+{
+    [self setWidth:0];
+    [self setHeight:0];
+}
 
 #pragma mark Serialization
 

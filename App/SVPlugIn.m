@@ -71,6 +71,10 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     
     // Legacy
     [self awakeFromBundleAsNewlyCreatedObject:YES];
+    
+    
+    // Size
+    [self makeOriginalSize];
 }
 
 #pragma mark HTML
@@ -210,6 +214,12 @@ static id <SVPlugInContext> sCurrentContext;
 - (NSUInteger)minHeight; { return 1; }
 
 - (BOOL)constrainProportions; { return NO; }
+
+- (void)makeOriginalSize;
+{
+    [self setWidth:200];
+    [self setHeight:0];
+}
 
 + (BOOL)sizeIsExplicit; { return NO; }
 

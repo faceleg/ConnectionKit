@@ -98,6 +98,9 @@
 
 - (BOOL)constrainProportions;   // default is NO
 
+// Called when plug-in is first inserted, and whenever 'Original Size' button in the Inspector is clicked. Override if you're not happy with the default size used (200 x 0 for now).
+- (void)makeOriginalSize;
+
 // Default is NO. If your plug-in is based around a sizeable object (e.g. YouTube) return YES to get proper behaviour. This makes width editable in the Inspector when not placed inline (and perhaps more, but you get the idea)
 + (BOOL)sizeIsExplicit;
 
