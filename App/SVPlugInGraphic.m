@@ -265,6 +265,8 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 #pragma mark Metrics
 
+- (void)makeOriginalSize; { [[self plugIn] makeOriginalSize]; }
+
 - (NSNumber *)contentWidth;
 {
     SVPlugIn *plugIn = [self plugIn];
