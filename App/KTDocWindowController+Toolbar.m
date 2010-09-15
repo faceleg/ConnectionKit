@@ -258,37 +258,35 @@
 	
     // Text box item
 	factory = [SVGraphicFactory textBoxFactory];
-	item = [SVGraphicFactory menuItemWithGraphicFactory:factory setImage:YES];
+	item = [factory makeMenuItem];
 	[menu addItem:item];
 	
     
     // Image item
 	factory = [SVGraphicFactory imageFactory];
-	item = [SVGraphicFactory menuItemWithGraphicFactory:factory setImage:YES];
+	item = [factory makeMenuItem];
 	[menu addItem:item]; 
     
     
 	// Video item
 	factory = [SVGraphicFactory videoFactory];
-	item = [SVGraphicFactory menuItemWithGraphicFactory:factory setImage:YES];
+	item = [factory makeMenuItem];
 	[menu addItem:item]; 
     
     
  	// Audio item
 	factory = [SVGraphicFactory audioFactory];
-	item = [SVGraphicFactory menuItemWithGraphicFactory:factory setImage:YES];
+	item = [factory makeMenuItem];
 	[menu addItem:item]; 
     
 	// Audio item
 	factory = [SVGraphicFactory flashFactory];
-	item = [SVGraphicFactory menuItemWithGraphicFactory:factory setImage:YES];
+	item = [factory makeMenuItem];
 	[menu addItem:item]; 
     
 	
     // Raw HTML
-    self.rawHTMLMenuItem = item = [SVGraphicFactory menuItemWithGraphicFactory:
-                                   [SVGraphicFactory rawHTMLFactory]
-                                                                      setImage:YES];
+    self.rawHTMLMenuItem = item = [[SVGraphicFactory rawHTMLFactory] makeMenuItem];
     
 	[menu addItem:item];
 	

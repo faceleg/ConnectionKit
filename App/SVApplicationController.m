@@ -947,27 +947,32 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             
             // Flash item
             factory = [SVGraphicFactory flashFactory];
-            item = [SVGraphicFactory menuItemWithGraphicFactory:factory setImage:NO];
+            item = [factory makeMenuItem];
+            [item setImage:nil];
             [insertMenu insertItem:item atIndex:index];
             
             // Audio item
             factory = [SVGraphicFactory audioFactory];
-            item = [SVGraphicFactory menuItemWithGraphicFactory:factory setImage:NO];
+            item = [factory makeMenuItem];
+            [item setImage:nil];
             [insertMenu insertItem:item atIndex:index];
             
             // Video item
             factory = [SVGraphicFactory videoFactory];
-            item = [SVGraphicFactory menuItemWithGraphicFactory:factory setImage:NO];
+            item = [factory makeMenuItem];
+            [item setImage:nil];
             [insertMenu insertItem:item atIndex:index];
             
             // Image item
             factory = [SVGraphicFactory imageFactory];
-            item = [SVGraphicFactory menuItemWithGraphicFactory:factory setImage:NO];
+            item = [factory makeMenuItem];
+            [item setImage:nil];
             [insertMenu insertItem:item atIndex:index];
             
             // Text box item
             factory = [SVGraphicFactory textBoxFactory];
-            item = [SVGraphicFactory menuItemWithGraphicFactory:factory setImage:NO];
+            item = [factory makeMenuItem];
+            [item setImage:nil];
             [insertMenu insertItem:item atIndex:index];
             
             

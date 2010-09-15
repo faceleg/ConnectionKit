@@ -446,34 +446,34 @@ static SVGraphicFactory *sRawHTMLFactory;
 {	
     for (SVGraphicFactory *factory in factories)
 	{
-		NSMenuItem *menuItem = [self menuItemWithGraphicFactory:factory setImage:YES];
+		NSMenuItem *menuItem = [factory makeMenuItem];
 		[menu insertItem:menuItem atIndex:index];   index++;
 	}
 }
 
-+ (NSMenuItem *)menuItemWithGraphicFactory:(SVGraphicFactory *)factory setImage:(BOOL)image;
+- (NSMenuItem *)makeMenuItem;
 {
     NSMenuItem *result = [[[NSMenuItem alloc] init] autorelease];
     
     
     // Tag
-    [result setTag:[self tagForFactory:factory]];
+    [result setTag:[SVGraphicFactory tagForFactory:self]];
     
     
     // Name
-    NSString *pluginName = [factory name];
+    NSString *pluginName = [self name];
     if (![pluginName length])
     {
-        NSLog(@"empty plugin name for %@", factory);
+        NSLog(@"empty plugin name for %@", self);
         pluginName = @"";
     }
     [result setTitle:pluginName];
     
     
     // Icon
-    if (image)
+    //if (image)
     {
-        NSImage *icon = [[factory icon] copy];
+        NSImage *icon = [[self icon] copy];
 #ifdef DEBUG
         if (!icon) NSLog(@"nil pluginIcon for %@", pluginName);
 #endif
@@ -485,14 +485,14 @@ static SVGraphicFactory *sRawHTMLFactory;
     
     
     // Pro status
-    if (9 == [factory priority] && nil == gRegistrationString)
+    if (9 == [self priority] && nil == gRegistrationString)
     {
         [result setPro:YES];
     }
     
     
     
-    [result setRepresentedObject:factory];
+    [result setRepresentedObject:self];
     
     
     // set target/action

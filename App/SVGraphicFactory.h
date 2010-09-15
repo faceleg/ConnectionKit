@@ -62,7 +62,7 @@
                                  inMenu:(NSMenu *)menu
                                 atIndex:(NSUInteger)index;
 
-+ (NSMenuItem *)menuItemWithGraphicFactory:(SVGraphicFactory *)factory setImage:(BOOL)image;
+- (NSMenuItem *)makeMenuItem;
 + (NSMenuItem *)menuItemWithGraphicFactories:(NSArray *)factories title:(NSString *)title;
 
 // Convenience method that uses the factory if non-nil. Otherwise, fall back to text box
