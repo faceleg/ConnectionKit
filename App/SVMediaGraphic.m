@@ -31,6 +31,7 @@
 #pragma mark Media
 
 @dynamic media;
+@dynamic isMediaPlaceholder;
 
 - (void)setMediaWithURL:(NSURL *)URL;
 {

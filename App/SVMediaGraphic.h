@@ -16,6 +16,7 @@
 #pragma mark Media
 
 @property(nonatomic, retain) SVMediaRecord *media;
+@property(nonatomic, copy) NSNumber *isMediaPlaceholder; // BOOL, mandatory
 - (void)setMediaWithURL:(NSURL *)URL;
 
 @property(nonatomic, copy) NSURL *externalSourceURL;
