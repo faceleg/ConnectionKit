@@ -254,7 +254,7 @@
     NSMenu *menu = [pulldownButton menu];
     
     NSMenuItem *item = nil;
-	id <SVGraphicFactory> factory = nil;
+	SVGraphicFactory *factory = nil;
 	
     // Text box item
 	factory = [SVGraphicFactory textBoxFactory];

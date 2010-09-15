@@ -45,6 +45,8 @@
 
 @synthesize plugInBundle = _bundle;
 
+- (NSString *)name; { return [[self plugInBundle] objectForInfoDictionaryKey:@"KTPluginName"]; }
+
 #pragma mark Factory
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;

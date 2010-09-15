@@ -693,7 +693,7 @@ static SVGraphicFactory *sRawHTMLFactory;
     return nil;
 }
 
-- (NSString *)name { return nil; }
+- (NSString *)name { SUBCLASSMUSTIMPLEMENT; return nil; }
 - (NSImage *)pluginIcon { return nil; }
 - (NSUInteger)priority; { return 5; }
 

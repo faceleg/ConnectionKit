@@ -311,7 +311,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Create a starter pagelet
-        id <SVGraphicFactory> factory = [KTElementPlugInWrapper pluginWithIdentifier:@"sandvox.BadgeElement"];
+        SVGraphicFactory *factory = [KTElementPlugInWrapper pluginWithIdentifier:@"sandvox.BadgeElement"];
 		if (factory)
 		{
 			SVGraphic *badge = [factory insertNewGraphicInManagedObjectContext:[self managedObjectContext]];

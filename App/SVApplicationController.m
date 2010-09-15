@@ -936,7 +936,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             
             // Populate the Insert menu
             NSMenuItem *item = nil;
-            id <SVGraphicFactory> factory = nil;
+            SVGraphicFactory *factory = nil;
             NSMenu *insertMenu = [oInsertRawHTMLMenuItem menu];
             NSUInteger index = [insertMenu indexOfItem:oInsertRawHTMLMenuItem];
             
