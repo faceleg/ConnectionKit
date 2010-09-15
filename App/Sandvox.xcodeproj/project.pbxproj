@@ -1945,8 +1945,6 @@
 		2765061D0EAE417200461A0E /* NSDocument+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocument+KTExtensions.m"; sourceTree = "<group>"; };
 		276688F40D63625F0019686C /* CIImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CIImage+KTExtensions.h"; sourceTree = "<group>"; };
 		276688F50D63625F0019686C /* CIImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CIImage+KTExtensions.m"; sourceTree = "<group>"; };
-		27668FC20D63D3070019686C /* KTIndexPlugInWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTIndexPlugInWrapper.h; sourceTree = "<group>"; };
-		27668FC30D63D3070019686C /* KTIndexPlugInWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTIndexPlugInWrapper.m; sourceTree = "<group>"; };
 		276A6E8D110B4312006FD9F7 /* SVMediaRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaRecord.h; sourceTree = "<group>"; };
 		276A6E8E110B4312006FD9F7 /* SVMediaRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaRecord.m; sourceTree = "<group>"; };
 		276A6F72110B5B7B006FD9F7 /* SVDownloadSiteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDownloadSiteItem.h; sourceTree = "<group>"; };
@@ -3531,8 +3529,6 @@
 				27E31BC40D4B79AE00895DA1 /* KTHTMLPlugInWrapper.m */,
 				27E31C310D4B7E1600895DA1 /* KTElementPlugInWrapper.h */,
 				27E31C320D4B7E1600895DA1 /* KTElementPlugInWrapper.m */,
-				27668FC20D63D3070019686C /* KTIndexPlugInWrapper.h */,
-				27668FC30D63D3070019686C /* KTIndexPlugInWrapper.m */,
 			);
 			name = "1.5 Plug-in System";
 			sourceTree = "<group>";
