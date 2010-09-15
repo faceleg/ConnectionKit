@@ -30,7 +30,6 @@ typedef enum {
 
 - (SVGraphicFactory *)graphicFactory;
 
-- (NSUInteger)priority;
 - (KTPluginCategory)category;
 
 - (NSString *)CSSClassName;

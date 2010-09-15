@@ -64,14 +64,6 @@
 
 - (KTPluginCategory)category { return [[self pluginPropertyForKey:@"KTCategory"] intValue]; }
 
-- (NSUInteger)priority;
-{
-    NSUInteger result = 5;  // default priority
-    NSNumber *priority = [self pluginPropertyForKey:@"KTPluginPriority"];
-    if (priority) result = [priority unsignedIntegerValue];
-    return result;
-}
-
 - (NSString *)CSSClassName
 {
 	// TODO: If nothing is specified, try to assemble a good guess from the plugin properties
