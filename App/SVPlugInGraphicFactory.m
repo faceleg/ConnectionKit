@@ -12,6 +12,8 @@
 #import "KTHTMLPlugInWrapper.h"
 #import "SVPlugInGraphic.h"
 
+#import "NSImage+Karelia.h"
+
 
 @implementation SVPlugInGraphicFactory
 
@@ -26,6 +28,7 @@
 {
     [_bundle release];
     [_class release];
+    [_icon release];
     
     [super dealloc];
 }
@@ -46,6 +49,32 @@
 @synthesize plugInBundle = _bundle;
 
 - (NSString *)name; { return [[self plugInBundle] objectForInfoDictionaryKey:@"KTPluginName"]; }
+
+- (NSImage *)icon;
+{
+	// The icon is cached; load it if not cached yet
+	if (!_icon)
+	{
+		// It could be a relative (to the bundle) or absolute path
+		NSString *filename = [[self plugInBundle] objectForInfoDictionaryKey:@"KTPluginIconName"];
+		if (![filename isAbsolutePath])
+		{
+			filename = [[self plugInBundle] pathForImageResource:filename];
+		}
+		
+        // TODO: We should not be referencing absolute paths.  Instead, we should check for 'XXXX' pattern and convert that to an OSType.
+		
+		//	Create the icon, falling back to the broken image if necessary
+		/// BUGSID:34635	Used to use -initByReferencingFile: but seems to upset Tiger and the Pages/Pagelets popups
+		_icon = [[NSImage alloc] initWithContentsOfFile:filename];
+		if (!_icon)
+		{
+			_icon = [[NSImage brokenImage] retain];
+		}
+	}
+	
+	return _icon;
+}
 
 #pragma mark Factory
 

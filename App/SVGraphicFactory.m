@@ -62,7 +62,7 @@
 
 - (NSString *)name { return TOOLBAR_INSERT_TEXT_BOX; }	// from a localized string macro
 
-- (NSImage *)pluginIcon
+- (NSImage *)icon
 {
     return [NSImage imageNamed:@"toolbar_text"];
 }
@@ -91,7 +91,7 @@
 
 - (NSString *)name { return NSLocalizedString(@"Photo", @"name of object to insert"); }
 
-- (NSImage *)pluginIcon
+- (NSImage *)icon
 {
     return [NSImage imageNamed:@"toolbar_image"];
 }
@@ -175,7 +175,7 @@
 
 - (NSString *)name { return NSLocalizedString(@"Video", @"name of object to insert"); }
 
-- (NSImage *)pluginIcon
+- (NSImage *)icon
 {
     return [NSImage imageNamed:@"toolbar_video"];
 }
@@ -203,7 +203,7 @@
 
 - (NSString *)name { return NSLocalizedString(@"Audio", @"name of object to insert"); }
 
-- (NSImage *)pluginIcon
+- (NSImage *)icon
 {
     return [NSImage imageNamed:@"toolbar_audio"];
 }
@@ -230,7 +230,7 @@
 
 - (NSString *)name { return NSLocalizedString(@"Flash", @"name of object to insert"); }
 
-- (NSImage *)pluginIcon
+- (NSImage *)icon
 {
     return [NSImage imageNamed:@"toolbar_flash"];
 }
@@ -259,7 +259,7 @@
 
 - (NSString *)name { return NSLocalizedString(@"Raw HTML", @"name of object to insert"); }
 
-- (NSImage *)pluginIcon
+- (NSImage *)icon
 {
     return [NSImage imageNamed:@"toolbar_html_element"];
 }
@@ -469,7 +469,7 @@ static SVGraphicFactory *sRawHTMLFactory;
     // Icon
     if (image)
     {
-        NSImage *icon = [[factory pluginIcon] copy];
+        NSImage *icon = [[factory icon] copy];
 #ifdef DEBUG
         if (!icon) NSLog(@"nil pluginIcon for %@", pluginName);
 #endif
@@ -694,7 +694,7 @@ static SVGraphicFactory *sRawHTMLFactory;
 }
 
 - (NSString *)name { SUBCLASSMUSTIMPLEMENT; return nil; }
-- (NSImage *)pluginIcon { return nil; }
+- (NSImage *)icon { return nil; }
 - (NSUInteger)priority; { return 5; }
 
 - (BOOL)isIndex; { return NO; }

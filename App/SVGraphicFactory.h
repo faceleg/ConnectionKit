@@ -36,7 +36,7 @@
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 
 - (NSString *)name;
-- (NSImage *)pluginIcon;
+- (NSImage *)icon;
 - (NSUInteger)priority; // 0-9, where 9 is Pro status
 
 - (BOOL)isIndex;

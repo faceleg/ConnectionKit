@@ -14,6 +14,7 @@
   @private
     Class       _class;
     NSBundle    *_bundle;
+    NSImage     *_icon;
 }
 
 - (id)initWithBundle:(NSBundle *)bundle;    // assume -principalClass is the plug-in
