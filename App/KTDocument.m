@@ -49,6 +49,7 @@
 #import "SVDocumentUndoManager.h"
 #import "KTSite.h"
 #import "KTElementPlugInWrapper.h"
+#import "SVGraphicFactory.h"
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
 #import "SVInspector.h"
@@ -311,7 +312,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Create a starter pagelet
-        SVGraphicFactory *factory = [KTElementPlugInWrapper pluginWithIdentifier:@"sandvox.BadgeElement"];
+        SVGraphicFactory *factory = [[KTElementPlugInWrapper pluginWithIdentifier:@"sandvox.BadgeElement"] graphicFactory];
 		if (factory)
 		{
 			SVGraphic *badge = [factory insertNewGraphicInManagedObjectContext:[self managedObjectContext]];
