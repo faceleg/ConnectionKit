@@ -17,7 +17,7 @@
 @interface SVPlugIn : NSObject
 {
   @private
-    id <SVPageletPlugInContainer>   _container;
+    id  _container;
 }
 
 + (NSString *)plugInIdentifier; // use standard reverse DNS-style string
@@ -74,6 +74,17 @@
 - (void)writeInnerHTML:(id <SVPlugInContext>)context;
 
 - (NSString *)inlineGraphicClassName;
+
+
+#pragma mark Layout
+
+@property(nonatomic, copy) NSString *title;
+@property(nonatomic) BOOL showsTitle;
+
+@property(nonatomic) BOOL showsIntroduction;
+@property(nonatomic) BOOL showsCaption;
+
+@property(nonatomic, getter=isBordered) BOOL bordered;
 
 
 #pragma mark Metrics

@@ -110,15 +110,6 @@
 
 @protocol SVPageletPlugInContainer <NSObject>
 
-@property(nonatomic, copy) NSString *title;
-@property(nonatomic) BOOL showsTitle;
-
-@property(nonatomic) BOOL showsIntroduction;
-@property(nonatomic) BOOL showsCaption;
-
-@property(nonatomic, getter=isBordered) BOOL bordered;
-
-
 #pragma mark Undo Management
 // Don't have direct access to undo manager
 - (void)disableUndoRegistration;

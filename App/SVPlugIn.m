@@ -165,6 +165,23 @@ static id <SVPlugInContext> sCurrentContext;
     [self setValue:[NSNumber numberWithInteger:0] forKey:key];
 }
 
+#pragma mark Layout
+
+- (NSString *)title { return [_container title]; }
+- (void)setTitle:(NSString *)title { [_container setTitle:title]; }
+
+- (BOOL)showsTitle { return [_container showsTitle]; }
+- (void)setShowsTitle:(BOOL)show { [_container setShowsTitle:show]; }
+
+- (BOOL)showsIntroduction { return [_container showsIntroduction]; }
+- (void)setShowsIntroduction:(BOOL)show { [_container setShowsIntroduction:show]; }
+
+- (BOOL)showsCaption { return [_container showsCaption]; }
+- (void)setShowsCaption:(BOOL)show { [_container setShowsCaption:show]; }
+
+- (BOOL)isBordered { return [_container isBordered]; }
+- (void)setBordered:(BOOL)show { [_container setBordered:show]; }
+
 #pragma mark Metrics
 
 - (NSUInteger)width; { return [[(SVGraphic *)[self container] width] unsignedIntegerValue]; }
