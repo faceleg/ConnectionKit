@@ -70,8 +70,5 @@
 #import "KSContainsObjectValueTransformer.h"
 #import "KSIsEqualValueTransformer.h"
 
-//  Drag-and-Drop
-#import "KTLinkSourceView.h"
-
 // Third Party
 #import "DNDArrayController.h"
