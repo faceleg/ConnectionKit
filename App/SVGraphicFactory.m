@@ -502,7 +502,7 @@ static SVGraphicFactory *sRawHTMLFactory;
     return result;
 }
 
-+ (NSMenuItem *)menuItemForGraphicFactories:(NSArray *)factories title:(NSString *)title;
++ (NSMenuItem *)menuItemWithGraphicFactories:(NSArray *)factories title:(NSString *)title;
 {
     NSMenuItem *result = [[NSMenuItem alloc] initWithTitle:title
 													action:nil

@@ -941,7 +941,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             NSUInteger index = [insertMenu indexOfItem:oInsertRawHTMLMenuItem];
             
             // Indexes
-            item = [SVGraphicFactory menuItemForGraphicFactories:[SVGraphicFactory indexFactories]
+            item = [SVGraphicFactory menuItemWithGraphicFactories:[SVGraphicFactory indexFactories]
                                                            title:NSLocalizedString(@"Indexes", "menu item")];
             [insertMenu insertItem:item atIndex:(index + 1)]; 
             

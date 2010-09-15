@@ -294,7 +294,7 @@
 	
     
     // Indexes
-	item = [SVGraphicFactory menuItemForGraphicFactories:[SVGraphicFactory indexFactories]
+	item = [SVGraphicFactory menuItemWithGraphicFactories:[SVGraphicFactory indexFactories]
                                                    title:NSLocalizedString(@"Indexes", "menu item")];
  	[item setIconImage:[NSImage imageNamed:@"toolbar_index"]];
 	[menu addItem:item];
