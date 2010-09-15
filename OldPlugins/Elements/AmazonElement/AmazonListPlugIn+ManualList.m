@@ -161,12 +161,12 @@
 	
 	manualListIsBeingArchivedOrUnarchived = YES;
 	
-	if (!registerUndo) [[self container] disableUndoRegistration];
+	if (!registerUndo) [self disableUndoRegistration];
 	
 	[self willChangeValueForKey:@"products"];
 	[self didChangeValueForKey:@"products"];
     
-	if (!registerUndo) [[self container] enableUndoRegistration];
+	if (!registerUndo) [self enableUndoRegistration];
 	
 	manualListIsBeingArchivedOrUnarchived = NO;
 }

@@ -497,26 +497,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [self setWidth:width];
 }
 
-- (void)disableUndoRegistration;
-{
-    NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
-                                                        object:undoManager];
-    
-    [undoManager disableUndoRegistration];
-}
-
-- (void)enableUndoRegistration;
-{
-    NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
-                                                        object:undoManager];
-    
-    [undoManager enableUndoRegistration];
-}
-
 @end
 
 

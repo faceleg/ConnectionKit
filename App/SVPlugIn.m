@@ -277,6 +277,28 @@ static id <SVPlugInContext> sCurrentContext;
     return result;
 }
 
+#pragma mark Undo
+
+- (void)disableUndoRegistration;
+{
+    NSUndoManager *undoManager = [[_container managedObjectContext] undoManager];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
+                                                        object:undoManager];
+    
+    [undoManager disableUndoRegistration];
+}
+
+- (void)enableUndoRegistration;
+{
+    NSUndoManager *undoManager = [[_container managedObjectContext] undoManager];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
+                                                        object:undoManager];
+    
+    [undoManager enableUndoRegistration];
+}
+
 #pragma mark Other
 
 @synthesize container = _container;

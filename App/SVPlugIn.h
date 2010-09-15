@@ -131,6 +131,12 @@
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
 
 
+#pragma mark Undo Management
+// Don't have direct access to undo manager
+- (void)disableUndoRegistration;
+- (void)enableUndoRegistration;
+
+
 #pragma mark Legacy
 
 // Called by -awakeFromNew:... and -awakeFromFetch: for backward compatibility
