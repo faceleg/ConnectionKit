@@ -197,7 +197,6 @@
             // Check each attribute should be written
             DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
             NSString *attributeName = [anAttribute name];
-            NSString *tagName = elementName;
             
             if ([self validateAttribute:attributeName ofElement:elementName])
             {
