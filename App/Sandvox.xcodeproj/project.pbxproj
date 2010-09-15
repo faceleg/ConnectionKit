@@ -3883,9 +3883,6 @@
 				27196F5F1090A9710096B612 /* Inspector */,
 				3C5A73950BF7BA6800776464 /* HTML Generation */,
 				3C5A73800BF7B8DB00776464 /* DataSource */,
-				3C5A73830BF7B8F200776464 /* Index */,
-				3C5A73860BF7B90900776464 /* Plugin Delegate */,
-				3C5A738F0BF7B96800776464 /* PseudoElements */,
 				CEF9D0BE0D862C2000BD9895 /* WebKit Plug-ins */,
 				CEB34AC8082972820073A7A4 /* Other Window Controllers */,
 				27A832830D92D8CC005FF13D /* Code Injection */,
@@ -4417,20 +4414,6 @@
 			name = DataSource;
 			sourceTree = "<group>";
 		};
-		3C5A73830BF7B8F200776464 /* Index */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Index;
-			sourceTree = "<group>";
-		};
-		3C5A73860BF7B90900776464 /* Plugin Delegate */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Plugin Delegate";
-			sourceTree = "<group>";
-		};
 		3C5A73890BF7B91E00776464 /* RTFD -> HTML Conversion */ = {
 			isa = PBXGroup;
 			children = (
@@ -4460,13 +4443,6 @@
 				3C682B830D6232EF00B4D485 /* KTView.m */,
 			);
 			name = UI;
-			sourceTree = "<group>";
-		};
-		3C5A738F0BF7B96800776464 /* PseudoElements */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = PseudoElements;
 			sourceTree = "<group>";
 		};
 		3C5A73950BF7BA6800776464 /* HTML Generation */ = {
