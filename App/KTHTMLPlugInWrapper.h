@@ -25,13 +25,11 @@ typedef enum {
   @private
     SVGraphicFactory    *_factory;
     
-	NSImage     *_icon;
 	NSString    *_templateHTML;
 }
 
 - (SVGraphicFactory *)graphicFactory;
 
-- (NSImage *)pluginIcon;            // derived from pluginIconName
 - (NSUInteger)priority;
 - (KTPluginCategory)category;
 

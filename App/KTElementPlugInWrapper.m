@@ -251,7 +251,7 @@
 		
 		if (plugin)
 		{
-			image = [plugin pluginIcon];
+			image = [[plugin graphicFactory] icon];
 #ifdef DEBUG
 			if (nil == image)
 			{

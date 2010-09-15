@@ -45,7 +45,6 @@
 - (void)dealloc
 {
     [_factory release];
-	[_icon release];
 	[_templateHTML release];
 	
 	[super dealloc];
@@ -65,32 +64,6 @@
 
 - (KTPluginCategory)category { return [[self pluginPropertyForKey:@"KTCategory"] intValue]; }
 
-- (NSImage *)pluginIcon
-{
-	// The icon is cached; load it if not cached yet
-	if (!_icon)
-	{
-		// It could be a relative (to the bundle) or absolute path
-		NSString *filename = [self pluginPropertyForKey:@"KTPluginIconName"];
-		if (![filename hasPrefix:@"/"])
-		{
-			filename = [[self bundle] pathForImageResource:filename];
-		}
-		
-// TODO: We should not be referencing absolute paths.  Instead, we should check for 'XXXX' pattern and convert that to an OSType.
-		
-		//	Create the icon, falling back to the broken image if necessary
-		/// BUGSID:34635	Used to use -initByReferencingFile: but seems to upset Tiger and the Pages/Pagelets popups
-		_icon = [[NSImage alloc] initWithContentsOfFile:filename];
-		if (!_icon)
-		{
-			_icon = [[NSImage brokenImage] retain];
-		}
-	}
-	
-	return _icon;
-}
-
 - (NSUInteger)priority;
 {
     NSUInteger result = 5;  // default priority
@@ -98,8 +71,6 @@
     if (priority) result = [priority unsignedIntegerValue];
     return result;
 }
-
-- (BOOL)isIndex; { return [[self name] rangeOfString:@"Index"].location != NSNotFound; }
 
 - (NSString *)CSSClassName
 {
