@@ -1488,7 +1488,7 @@ aXN0bWFuaWEuA</string>
 										<object class="NSBox" id="490728015">
 											<reference key="NSNextResponder" ref="922510970"/>
 											<int key="NSvFlags">290</int>
-											<string key="NSFrame">{{10, 29}, {196, 5}}</string>
+											<string key="NSFrame">{{10, 29}, {210, 5}}</string>
 											<reference key="NSSuperview" ref="922510970"/>
 											<string key="NSOffsets">{0, 0}</string>
 											<object class="NSTextFieldCell" key="NSTitleCell">
@@ -5938,7 +5938,7 @@ cm9kdWN0A</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{10, 10}</string>
+				<string>{15, 15}</string>
 				<string>{8, 8}</string>
 				<string>{9, 8}</string>
 				<string>{7, 2}</string>
