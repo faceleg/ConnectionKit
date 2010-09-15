@@ -94,12 +94,6 @@
 	}
 }
 
-- (NSString *)pageletCSSClassName
-{
-	NSString *result = [[self CSSClassName] stringByAppendingString:@"-pagelet"];
-	return result;
-}
-
 /*
  
  Maybe if I override this, I can easily get a list sorted by priority

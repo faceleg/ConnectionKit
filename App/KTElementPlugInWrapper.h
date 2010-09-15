@@ -12,8 +12,6 @@
 
 @interface KTElementPlugInWrapper : KTHTMLPlugInWrapper
 
-- (NSString *)pageletCSSClassName;
-
 + (NSSet *)pageletPlugins;
 + (NSSet *)pagePlugins;
 

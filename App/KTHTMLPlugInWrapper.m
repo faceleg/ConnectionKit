@@ -64,12 +64,6 @@
 
 - (KTPluginCategory)category { return [[self pluginPropertyForKey:@"KTCategory"] intValue]; }
 
-- (NSString *)CSSClassName
-{
-	// TODO: If nothing is specified, try to assemble a good guess from the plugin properties
-	return [self pluginPropertyForKey:@"KTCSSClassName"];
-}
-
 #pragma mark Properties
 
 - (id)defaultPluginPropertyForKey:(NSString *)key
