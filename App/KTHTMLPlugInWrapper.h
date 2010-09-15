@@ -31,7 +31,6 @@ typedef enum {
 
 - (SVGraphicFactory *)graphicFactory;
 
-- (NSString *)name;
 - (NSImage *)pluginIcon;            // derived from pluginIconName
 - (NSUInteger)priority;
 - (KTPluginCategory)category;
