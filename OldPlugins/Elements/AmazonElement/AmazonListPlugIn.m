@@ -419,15 +419,18 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 #pragma mark -
 #pragma mark Product Previews
 
-/*	If the user has requested it, add the product preview popups javascript to the end of the page */
-- (void)addLevelTextToEndBody:(NSMutableString *)ioString forPage:(id<SVPage>)aPage	// level, since we don't want this on all pages on the site!
+- (void)writeHTML:(id <SVPlugInContext>)context;
 {
-	if ([self showProductPreviews])
+    [super writeHTML:context];
+    
+	// If the user has requested it, add the product preview popups javascript to the end of the page
+    if ([self showProductPreviews])
 	{
 		NSString *script = [AmazonECSOperation productPreviewsScriptForStore:[self store]];
 		if (script)
 		{
 			// Only append the script if it's not already there (e.g. if there's > 1 element)
+            NSMutableString *ioString = [context endBodyMarkup];
 			if ([ioString rangeOfString:script].location == NSNotFound) {
 				[ioString appendString:script];
 			}
