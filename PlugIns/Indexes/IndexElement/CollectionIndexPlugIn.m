@@ -82,12 +82,12 @@
     [super setIndexedCollection:collection];
     if ( collection )
     {
-        [self.container setTitle:[collection title]];
+        [self setTitle:[collection title]];
     }
     else
     {
         NSString *defaultTitle = [[self bundle] objectForInfoDictionaryKey:@"KTPluginUntitledName"];
-        [self.container setTitle:defaultTitle];
+        [self setTitle:defaultTitle];
     }
 }
 

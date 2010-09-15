@@ -53,7 +53,7 @@ static NSArray *sAltStrings = nil;
 - (void)awakeFromNew;
 {
     [super awakeFromNew];
-    [[self container] setShowsTitle:NO];
+    [self setShowsTitle:NO];
 }
 
 

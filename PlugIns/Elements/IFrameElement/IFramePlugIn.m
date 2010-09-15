@@ -67,7 +67,7 @@
     if ( location )
     {
         self.linkURL = [location URL];
-        [[self container] setTitle:[location title]];
+        [self setTitle:[location title]];
     }
     
     // Set our "show border" checkbox from the defaults

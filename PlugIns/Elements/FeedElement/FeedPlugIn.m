@@ -79,7 +79,7 @@
         self.feedURL = [location URL];
         if ( [location title] )
         {
-            [[self container] setTitle:[location title]];
+            [self setTitle:[location title]];
         }
     }
 }
@@ -227,7 +227,7 @@
             NSString *title = [location title];
             if ( title )
             {
-                [[self container] setTitle:title];
+                [self setTitle:title];
             }
         }
     }

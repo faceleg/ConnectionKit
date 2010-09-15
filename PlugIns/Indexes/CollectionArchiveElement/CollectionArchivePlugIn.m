@@ -59,7 +59,7 @@
         NSString *title = [NSString stringWithFormat:@"%@ %@",
                            [self.indexedCollection title],
                            LocalizedStringInThisBundle(@"Archive", @"Portion of pagelet title")];
-        self.container.title = title;
+        self.title = title;
     }
 }
 
