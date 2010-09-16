@@ -114,6 +114,8 @@ extern NSString *gInfoWindowAutoSaveName;
 
 @property(retain) SVDesignChooserWindowController *designChooserWindowController;
 - (IBAction)chooseDesign:(id)sender;
+- (IBAction)nextDesign:(id)sender;
+- (IBAction)previousDesign:(id)sender;
 - (IBAction)showChooseDesignSheet:(id)sender;
 
 - (IBAction)reload:(id)sender;

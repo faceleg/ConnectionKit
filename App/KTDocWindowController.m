@@ -55,6 +55,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 @interface KTDocWindowController ()
 @property(nonatomic, retain, readwrite) SVWebContentAreaController *webContentAreaController;
+- (void)changeDesignTo:(KTDesign *)aDesign;
 @end
 
 
@@ -93,6 +94,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// Get rid of view controllers
 	[self setSiteOutlineViewController:nil];
 	[self setWebContentAreaController:nil];
+	[self setDesignChooserWindowController:nil];
 	self.rawHTMLMenuItem = nil;
 	self.HTMLTextPageMenuItem = nil;
 	
@@ -344,22 +346,79 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 @synthesize designChooserWindowController = _designChooserWindowController;
 
+- (SVDesignChooserWindowController *)designChooserWindowController
+{
+	if ( !_designChooserWindowController )
+    {
+        _designChooserWindowController = [[SVDesignChooserWindowController alloc] initWithWindowNibName:@"SVDesignChooser"];
+		[_designChooserWindowController window];  // make sure nib is loaded
+
+	}
+	return _designChooserWindowController;
+}
+
 - (IBAction)chooseDesign:(id)sender
 {
     [self showChooseDesignSheet:sender];
 }
 
+- (IBAction)nextDesign:(id)sender;
+{
+	NSArrayController *designsController = [self.designChooserWindowController designsController];
+	NSArray *arrangedObjects = [designsController arrangedObjects];
+
+    KTDesign *design = [[self pagesController] valueForKeyPath:@"selection.master.design"];
+	NSUInteger index = [arrangedObjects indexOfObject:design];
+	if (NSNotFound == index || !arrangedObjects)
+	{
+		NSBeep();
+	}
+	else
+	{
+		index++;
+		if (index >= [arrangedObjects count])
+		{
+			index = 0;	// overflow -- loop back to the beginning
+		}
+		KTDesign *newDesign = [arrangedObjects objectAtIndex:index];
+		[self changeDesignTo:newDesign];
+	}
+}
+
+- (IBAction)previousDesign:(id)sender;
+{
+	NSArrayController *designsController = [self.designChooserWindowController designsController];
+	NSArray *arrangedObjects = [designsController arrangedObjects];
+	
+    KTDesign *design = [[self pagesController] valueForKeyPath:@"selection.master.design"];
+	NSUInteger index = [arrangedObjects indexOfObject:design];
+	if (NSNotFound == index || !arrangedObjects)
+	{
+		NSBeep();
+	}
+	else
+	{
+		if (index > 0)
+		{
+			index--;
+		}
+		else	// loop to end
+		{
+			index = [arrangedObjects count] - 1;
+		}
+		KTDesign *newDesign = [arrangedObjects objectAtIndex:index];
+		[self changeDesignTo:newDesign];
+	}
+}
+
+
 - (IBAction)showChooseDesignSheet:(id)sender
 {
-    if ( !_designChooserWindowController )
-    {
-        _designChooserWindowController = [[SVDesignChooserWindowController alloc] initWithWindowNibName:@"SVDesignChooser"];
-	}
     
     KTDesign *design = [[self pagesController] valueForKeyPath:@"selection.master.design"];
     if (NSIsControllerMarker(design)) design = nil;
     
-    [_designChooserWindowController setDesign:design];
+    [self.designChooserWindowController setDesign:design];
     
     
     [self performSelector:@selector(showDesignSheet) withObject:nil afterDelay:0.0];
@@ -368,11 +427,39 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (void)showDesignSheet;
 {
     // Private support method that only handles getting the sheet onscreen
-    [_designChooserWindowController beginDesignChooserForWindow:[self window]
+    [self.designChooserWindowController beginDesignChooserForWindow:[self window]
 													   delegate:self
 												 didEndSelector:@selector(designChooserDidEnd:)];
 }
 
+- (void)changeDesignTo:(KTDesign *)aDesign;
+{
+	[[self pagesController] setValue:aDesign forKeyPath:@"selection.master.design"];
+	
+	
+	// Update in-design media
+	[[self document] designDidChange];
+	
+	
+	// Let all graphics know of the change.
+	NSArray *graphics = [[[self pagesController] managedObjectContext]
+						 fetchAllObjectsForEntityForName:@"Graphic" error:NULL];
+	for (SVGraphic *aGraphic in graphics)
+	{
+		for (SVSidebar *aSidebar in [aGraphic sidebars])
+		{
+			KTPage *page = [aSidebar page];
+			if (page) [aGraphic didAddToPage:page];
+		}
+		
+		SVRichText *text = [[aGraphic textAttachment] body];
+		if ([text isKindOfClass:[SVArticle class]])
+		{
+			KTPage *page = [(SVArticle *)text page];
+			if (page) [aGraphic didAddToPage:page];
+		}
+	}
+}
 - (void)designChooserDidEnd:(SVDesignChooserWindowController *)designChooser
 {
     KTDesign *aDesign = [designChooser design];
@@ -380,31 +467,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	OFF((@"%s %p",__FUNCTION__, aDesign));
     if (aDesign)
     {
-        [[self pagesController] setValue:aDesign forKeyPath:@"selection.master.design"];
-        
-        
-        // Update in-design media
-        [[self document] designDidChange];
-        
-        
-        // Let all graphics know of the change.
-        NSArray *graphics = [[[self pagesController] managedObjectContext]
-                             fetchAllObjectsForEntityForName:@"Graphic" error:NULL];
-        for (SVGraphic *aGraphic in graphics)
-        {
-            for (SVSidebar *aSidebar in [aGraphic sidebars])
-            {
-                KTPage *page = [aSidebar page];
-                if (page) [aGraphic didAddToPage:page];
-            }
-            
-            SVRichText *text = [[aGraphic textAttachment] body];
-            if ([text isKindOfClass:[SVArticle class]])
-            {
-                KTPage *page = [(SVArticle *)text page];
-                if (page) [aGraphic didAddToPage:page];
-            }
-        }
+		[self changeDesignTo:aDesign];
     }
 }
 
