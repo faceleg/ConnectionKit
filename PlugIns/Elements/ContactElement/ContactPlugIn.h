@@ -93,5 +93,6 @@
 // New stuff
 @property(nonatomic, copy) NSArray *fields;
 
+- (NSString *)uniqueID;
 
 @end
