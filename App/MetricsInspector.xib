@@ -1056,6 +1056,7 @@
 					<string>20.IBPluginDependency</string>
 					<string>21.IBPluginDependency</string>
 					<string>22.IBPluginDependency</string>
+					<string>37.CustomClassName</string>
 					<string>37.IBNumberFormatterBehaviorMetadataKey</string>
 					<string>37.IBNumberFormatterLocalizesFormatMetadataKey</string>
 					<string>37.IBNumberFormatterSampleNumberKey</string>
@@ -1096,6 +1097,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>SVSizeFormatter</string>
 					<integer value="1040"/>
 					<boolean value="YES"/>
 					<real value="45"/>
@@ -1494,6 +1496,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVMetricsInspector.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVSizeFormatter</string>
+					<string key="superclassName">NSNumberFormatter</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVSizeFormatter.h</string>
 					</object>
 				</object>
 			</object>

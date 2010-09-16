@@ -408,6 +408,8 @@
 		276C151D114A6C0300D30CFE /* GraphicInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 276C151C114A6C0300D30CFE /* GraphicInspector.xib */; };
 		276F8AB210D572780094AA73 /* SVDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 276F8AB010D572780094AA73 /* SVDOMController.h */; };
 		276F8AB310D572780094AA73 /* SVDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276F8AB110D572780094AA73 /* SVDOMController.m */; };
+		276FE0AB12424D1D00EE2C14 /* SVSizeFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 276FE0A912424D1D00EE2C14 /* SVSizeFormatter.h */; };
+		276FE0AC12424D1D00EE2C14 /* SVSizeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 276FE0AA12424D1D00EE2C14 /* SVSizeFormatter.m */; };
 		277026740E1E645200407CD1 /* KTCommentsTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 277026730E1E645200407CD1 /* KTCommentsTemplate.html */; };
 		2774DFAB0F16D87C0085A4D8 /* KTImageScalingURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2774DFA90F16D87C0085A4D8 /* KTImageScalingURLProtocol.h */; };
 		2774DFAC0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2774DFAA0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m */; };
@@ -1225,14 +1227,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C4C6AA90D64136C00398BDA /* AmazonElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Amazon.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = AmazonElement;
 		};
 		27275735124146B20043C223 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C4C6AA90D64136C00398BDA /* AmazonElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* AmazonElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = AmazonElement;
 		};
 		274E827F0D627180004F89C2 /* PBXContainerItemProxy */ = {
@@ -1954,6 +1956,8 @@
 		276C151C114A6C0300D30CFE /* GraphicInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GraphicInspector.xib; sourceTree = "<group>"; };
 		276F8AB010D572780094AA73 /* SVDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMController.h; sourceTree = "<group>"; };
 		276F8AB110D572780094AA73 /* SVDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMController.m; sourceTree = "<group>"; };
+		276FE0A912424D1D00EE2C14 /* SVSizeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSizeFormatter.h; sourceTree = "<group>"; };
+		276FE0AA12424D1D00EE2C14 /* SVSizeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSizeFormatter.m; sourceTree = "<group>"; };
 		277026730E1E645200407CD1 /* KTCommentsTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTCommentsTemplate.html; sourceTree = "<group>"; };
 		2774DFA90F16D87C0085A4D8 /* KTImageScalingURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTImageScalingURLProtocol.h; sourceTree = "<group>"; };
 		2774DFAA0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageScalingURLProtocol.m; sourceTree = "<group>"; };
@@ -3790,6 +3794,8 @@
 				277E4F7911108847005AF346 /* MetricsInspector.xib */,
 				27F365EB11602161003BDA5F /* SVMetricsInspector.h */,
 				27F365EC11602161003BDA5F /* SVMetricsInspector.m */,
+				276FE0A912424D1D00EE2C14 /* SVSizeFormatter.h */,
+				276FE0AA12424D1D00EE2C14 /* SVSizeFormatter.m */,
 			);
 			name = "Metrics Inspector";
 			sourceTree = "<group>";
@@ -5769,6 +5775,7 @@
 				2745948C123944FE005D0640 /* NSURL+Sandvox.h in Headers */,
 				CE89C230123999D70056D74B /* SVFlash.h in Headers */,
 				2727551212410C010043C223 /* SVPlugInGraphicFactory.h in Headers */,
+				276FE0AB12424D1D00EE2C14 /* SVSizeFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7273,6 +7280,7 @@
 				CE89C231123999D70056D74B /* SVFlash.m in Sources */,
 				27CFC5E0123E280800BF018C /* Sandvox 1.5.xcdatamodel in Sources */,
 				2727551312410C010043C223 /* SVPlugInGraphicFactory.m in Sources */,
+				276FE0AC12424D1D00EE2C14 /* SVSizeFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
