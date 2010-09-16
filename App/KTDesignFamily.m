@@ -58,7 +58,14 @@
 
 - (void) addDesign:(KTDesign *)aDesign;
 {
-	[self.designs addObject:aDesign];
+	if ([aDesign isFamilyPrototype])
+	{
+		[self.designs insertObject:aDesign atIndex:0];	// family prototype goes first
+	}
+	else
+	{
+		[self.designs addObject:aDesign];
+	}
 }
 
 
