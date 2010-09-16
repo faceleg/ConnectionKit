@@ -19,9 +19,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class KTPage;
 
 @protocol KTLinkSourceViewDelegate;
+@protocol SVPage;
 
 
 @interface KTLinkSourceView : NSView
@@ -31,7 +31,7 @@
 	BOOL _enabled;
 	NSWindow *_targetWindow;	// NSWindow that we are allowed to drag into.
 
-	KTPage *_connectedPage;	// set when done connecting, use bindings or delegate method to find out
+	id<SVPage> _connectedPage;	// set when done connecting, use bindings or delegate method to find out
 	
 	
 	
@@ -50,7 +50,7 @@
 @property(nonatomic, assign) BOOL enabled;
 @property(nonatomic, assign) BOOL collectionsOnly;
 @property(nonatomic, retain) NSWindow *targetWindow;
-@property(nonatomic, retain) KTPage *connectedPage;
+@property(nonatomic, retain) id<SVPage> connectedPage;
 @property(nonatomic, assign) IBOutlet id <KTLinkSourceViewDelegate> delegate;
 
 - (void)setConnected:(BOOL)isConnected;
@@ -59,7 +59,7 @@
 
 
 @protocol KTLinkSourceViewDelegate <NSObject>
-- (void)linkSourceConnectedTo:(KTPage *)aPage;
+- (void)linkSourceConnectedTo:(id<SVPage>)aPage;
 @end
 
 
