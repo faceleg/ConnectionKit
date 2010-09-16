@@ -452,4 +452,13 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	return [[self fields] valueForKey:@"dictionaryRepresentation"];
 }
 
+#pragma mark Metrics
+
+- (void)makeOriginalSize;
+{
+    // Contact forms generally want to be full-width
+    [self setWidth:0];
+    [self setHeight:0];
+}
+
 @end
