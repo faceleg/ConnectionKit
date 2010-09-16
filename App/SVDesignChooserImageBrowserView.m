@@ -64,7 +64,12 @@
 	
 	[self setAllowsEmptySelection:NO];	// doesn't seem to stick when set in IB
 	
-	//	[self setValue:attributes forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];	
+	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObject:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]] forKey:NSFontAttributeName];
+	NSMutableDictionary *attributes2 = [NSMutableDictionary dictionaryWithDictionary:attributes];
+	[attributes2 setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
+	[self setValue:attributes  forKey:IKImageBrowserCellsTitleAttributesKey];
+	[self setValue:attributes2 forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];
+	
 	//	[self setCellSize:NSMakeSize(44.0,22.0)];
 	if ([self respondsToSelector:@selector(setIntercellSpacing:)])
 	{

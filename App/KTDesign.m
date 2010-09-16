@@ -168,13 +168,8 @@ const int kDesignThumbHeight = 65;
 
 			KTDesignFamily *family = (KTDesignFamily *)designOrFamily;
 			NSArray *subDesigns = [family designs];
-			KTDesign *firstDesignInGroup = [subDesigns firstObjectKS];
 			KTDesign *familyPrototype = [family familyPrototype];
-			if (familyPrototype != firstDesignInGroup)
-			{
-				firstDesignInGroup.familyPrototype = familyPrototype;	// save so we can access its thumbnail.
-			}
-			firstDesignInGroup.family = family;		// put reference to family (which has weak references to other designs) in first design in group so we can scrub
+			familyPrototype.family = family;		// put reference to family (which has weak references to other designs) in first design in group so we can scrub
 			
 			NSRange newRange = NSMakeRange(index,[subDesigns count]);
 			[ranges addObject:[NSValue valueWithRange:newRange]];
@@ -299,17 +294,20 @@ const int kDesignThumbHeight = 65;
 // For a variation, append the filename to the CFBundleIdentifier
 - (NSString *)identifier;
 {
-	NSDictionary *variationDict = [self variationDict];
-	if (variationDict)
+	if (!self.isFamilyPrototype)		// don't mess with identifier if it's the family prototype.
 	{
-		NSString *file = [variationDict objectForKey:@"file"];
-		if (file)
+		NSDictionary *variationDict = [self variationDict];
+		if (variationDict)
 		{
-			return [NSString stringWithFormat:@"%@.%@", [super identifier], file];
-		}
-		else
-		{
-			NSLog(@"Cannot find 'file' key for variation %d in %@", _variationIndex, self);
+			NSString *file = [variationDict objectForKey:@"file"];
+			if (file)
+			{
+				return [NSString stringWithFormat:@"%@.%@", [super identifier], file];
+			}
+			else
+			{
+				NSLog(@"Cannot find 'file' key for variation %d in %@", _variationIndex, self);
+			}
 		}
 	}
 	return [super identifier];	
