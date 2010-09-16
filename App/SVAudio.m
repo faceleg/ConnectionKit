@@ -160,6 +160,51 @@
 }
 
 #pragma mark -
+#pragma mark RSS Enclosures
+
+// THIS CODE IS DUPLICATED BETWEEN AUDIO AND VIDEO
+
+- (id <SVEnclosure>)enclosure;
+{
+	return self;
+}
+
+- (NSURL *)downloadedURL;   // where it currently resides on disk
+{
+	NSURL *movieSourceURL = nil;
+	SVMediaRecord *media = [self media];
+	
+    if (media)
+    {
+		movieSourceURL = [media mediaURL];
+	}
+	else
+	{
+		movieSourceURL = [self externalSourceURL];
+	}
+	return movieSourceURL;
+}
+
+- (long long)length;
+{
+	long long result = 0;
+	SVMediaRecord *media = [self media];
+	
+    if (media)
+    {
+		NSData *mediaData = [media mediaData];
+		result = [mediaData length];
+	}
+	return result;
+}
+
+- (NSString *)MIMEType;
+{
+	NSString *result = [NSString MIMETypeForUTI:self.codecType];
+	return result;
+}
+
+#pragma mark -
 #pragma mark KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath

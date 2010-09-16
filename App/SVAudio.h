@@ -9,10 +9,11 @@
 #import "SVMediaGraphic.h"
 
 #import "SVVideo.h"		// for PreloadState
+#import "SVEnclosure.h"
 
 @class SVMediaRecord;
 
-@interface SVAudio : SVMediaGraphic
+@interface SVAudio : SVMediaGraphic <SVEnclosure>
 
 + (SVAudio *)insertNewAudioInManagedObjectContext:(NSManagedObjectContext *)context;
 

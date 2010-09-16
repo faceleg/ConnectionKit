@@ -7,6 +7,7 @@
 //
 
 #import "SVMediaGraphic.h"
+#import "SVEnclosure.h"
 #import <QTKit/QTKit.h>
 
 typedef enum {
@@ -19,7 +20,7 @@ typedef enum {
 
 
 
-@interface SVVideo : SVMediaGraphic
+@interface SVVideo : SVMediaGraphic <SVEnclosure>
 {
 	QTMovie *_dimensionCalculationMovie;
 	
