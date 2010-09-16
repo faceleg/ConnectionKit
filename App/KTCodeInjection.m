@@ -19,7 +19,8 @@
                    @"bodyTagEnd",
                    @"bodyTagStart",
                    @"earlyHead",
-                   @"headArea", nil]
+                   @"headArea", 
+				   @"additionalCSS", nil]
         triggerChangeNotificationsForDependentKey:@"hasCodeInjection"];
 }
 
@@ -46,6 +47,12 @@
 	
 	aCodeInjection = [self valueForKey:@"headArea"];
 	if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
+	
+	if ([self respondsToSelector:@selector(additionalCSS)])	// May be N/A for page code injection.
+	{
+		aCodeInjection = [self valueForKey:@"additionalCSS"];
+		if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
+	}
 	
 	return NO;
 }

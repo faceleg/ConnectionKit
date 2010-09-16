@@ -292,6 +292,18 @@
     [context addDependencyOnObject:self keyPath:@"bannerType"];
 }
 
+- (void)writeCodeInjectionCSS:(SVHTMLContext *)context;
+{	
+	NSString *codeInjection = [self.codeInjection valueForKey:@"additionalCSS"];
+	
+	// If the user has specified a custom banner and the design supports it, load it in
+	if (codeInjection && ![codeInjection isEqualToString:@""])
+	{
+		[context addCSSString:codeInjection];
+	}
+}
+
+
 #pragma mark Logo
 
 @dynamic logo;

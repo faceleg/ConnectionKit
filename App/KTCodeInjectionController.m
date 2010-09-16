@@ -62,6 +62,7 @@
 	[oBodyStartTextView setFont:font];
 	[oBodyEndTextView setFont:font];
 	[oBodyTagTextField setFont:font];
+	[oCSSTextView setFont:font];
 	
 	
 	// Bind our text fields to the right controller.	
@@ -69,6 +70,22 @@
 	if ([self isMaster])
 	{
 		baseKeyPath = [baseKeyPath stringByAppendingString:@".master"];
+
+		// Only CSS for master (whole site)
+		[oCSSTextView bind:NSValueBinding
+				  toObject:_pagesController
+			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.additionalCSS"]
+				   options:nil];
+	}
+	else
+	{
+		// Not the master (the document) so take out this tab
+		NSInteger cssIndex = [oTabView indexOfTabViewItemWithIdentifier:@"css"];
+		if (NSNotFound != cssIndex)
+		{
+			NSTabViewItem *item = [oTabView tabViewItemAtIndex:cssIndex];
+			[oTabView removeTabViewItem:item];
+		}
 	}
 	
 	[oPreludeTextView bind:NSValueBinding
@@ -100,6 +117,8 @@
 				  toObject:_pagesController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.bodyTag"]
 				   options:nil];
+	
+	
 }
 
 - (void)windowDidLoad
@@ -108,7 +127,7 @@
 	
 	
 	// Editing notifications
-	NSSet *textViews = [NSSet setWithObjects:oPreludeTextView, oHeadTextView, oEarlyHeadTextView, oBodyStartTextView, oBodyEndTextView, nil];
+	NSSet *textViews = [NSSet setWithObjects:oPreludeTextView, oHeadTextView, oEarlyHeadTextView, oBodyStartTextView, oBodyEndTextView, oCSSTextView, nil];
 	NSTextView *aTextView;
 	for (aTextView in textViews)
 	{
@@ -166,6 +185,11 @@
 	[oBodyEndTextView setPlaceholderString:NSLocalizedString(
 		@"Use this field to insert code at the end of the page, right before the </body> tag. This is generally used to include JavaScript that processes the preceding page contents.",
 		"Code Injection placeholder text")];
+
+	[oCSSTextView setPlaceholderString:NSLocalizedString(
+		@"Use this field to insert CSS styles on every page, to override the styles provided by the current design.",
+		"Code Injection placeholder text")];
+	
 }
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
@@ -217,6 +241,14 @@
 					(stringValue3 && ![stringValue3 isEqualToString:@""]))
 				{
 					[oTabView selectTabViewItemWithIdentifier:@"body"];
+				}
+				else
+				{
+					stringValue = [[oCSSTextView textStorage] string];
+					if ([self isMaster] && stringValue && ![stringValue isEqualToString:@""])
+					{					
+						[oTabView selectTabViewItemWithIdentifier:@"css"];
+					}
 				}
 			}
 		}

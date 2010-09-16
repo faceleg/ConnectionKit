@@ -54,6 +54,7 @@
 @property(nonatomic, copy) NSNumber *bannerType;    // treat like BOOL for now
 
 - (void)writeBannerCSS:(SVHTMLContext *)context;
+- (void)writeCodeInjectionCSS:(SVHTMLContext *)context;
 
 
 #pragma mark Logo

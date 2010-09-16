@@ -224,7 +224,10 @@
         
         // For preview/quicklook mode, the banner CSS (after the design's main.css)
         [[page master] writeBannerCSS:self];
-    }
+ 
+		// Finally, the stuff that is code-injected.
+		[[page master] writeCodeInjectionCSS:self];
+}
 	
     
 	// If we're for editing, include additional editing CSS

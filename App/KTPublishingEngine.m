@@ -424,7 +424,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     KTDesign *design = [master design];
     [design writeCSS:(id)self];
     [master writeBannerCSS:(id)self];
-    
+	[master writeCodeInjectionCSS:self];
+
     
     NSString *remoteDesignDirectoryPath = [self designDirectoryPath];    
     

@@ -19,7 +19,7 @@
 	IBOutlet NSTextField	*oCodeInjectionDescriptionLabel;
 	IBOutlet NSTabView		*oTabView;
 	
-	IBOutlet KSPlaceholderTextView	*oPreludeTextView;
+	IBOutlet KSPlaceholderTextView		*oPreludeTextView;
 	
 	IBOutlet BWSplitView				*oHeadSplitView;
 	IBOutlet KSPlaceholderTextView		*oEarlyHeadTextView;
@@ -29,7 +29,9 @@
 	IBOutlet KSPlaceholderTextView		*oBodyStartTextView;
 	IBOutlet KSPlaceholderTextView		*oBodyEndTextView;
 	IBOutlet NSTextField				*oBodyTagTextField;
-	
+
+	IBOutlet KSPlaceholderTextView		*oCSSTextView;
+
 @private
 	id <KSCollectionController> _pagesController;	// weak ref
 	BOOL                        _isMaster;
