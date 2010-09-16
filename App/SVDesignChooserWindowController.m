@@ -55,7 +55,7 @@
         
     [imageBrowser reloadData];  // so that -setSelectedObjects: succeeds
     [[self designsController] setSelectedObjects:[NSArray arrayWithObject:design]];
-	NSLog(@"Set design to %p ... now selected objects is %@", design, [[self designsController] selectedObjects]);
+	// NSLog(@"Set design to %p ... now selected objects is %@", design, [[self designsController] selectedObjects]);
 }
 
 @synthesize selectorWhenChosen = _selectorWhenChosen;
