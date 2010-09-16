@@ -64,11 +64,33 @@
 	
 	[self setAllowsEmptySelection:NO];	// doesn't seem to stick when set in IB
 	
-	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObject:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]] forKey:NSFontAttributeName];
-	NSMutableDictionary *attributes2 = [NSMutableDictionary dictionaryWithDictionary:attributes];
-	[attributes2 setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
+	NSMutableParagraphStyle *pStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+    [pStyle setParagraphStyle:[NSParagraphStyle defaultParagraphStyle]];
+	[pStyle setTighteningFactorForTruncation:0.15];
+	[pStyle setLineBreakMode:NSLineBreakByTruncatingMiddle];
+	[pStyle setAlignment:NSCenterTextAlignment];
+	
+	NSDictionary *attributes
+	= [NSDictionary dictionaryWithObjectsAndKeys:
+	   [NSFont systemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
+	   pStyle, NSParagraphStyleAttributeName,
+	   nil];
+	NSDictionary *attributes2
+	= [NSDictionary dictionaryWithObjectsAndKeys:
+	   [NSFont systemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
+	   [NSColor whiteColor], NSForegroundColorAttributeName,
+	   pStyle, NSParagraphStyleAttributeName,
+	   nil];
+	NSDictionary *attributes3
+	= [NSDictionary dictionaryWithObjectsAndKeys:
+	   [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSMiniControlSize]], NSFontAttributeName,
+	   [NSColor grayColor], NSForegroundColorAttributeName,
+	   pStyle, NSParagraphStyleAttributeName,
+	   nil];
+	
 	[self setValue:attributes  forKey:IKImageBrowserCellsTitleAttributesKey];
 	[self setValue:attributes2 forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];
+	[self setValue:attributes3 forKey:IKImageBrowserCellsSubtitleAttributesKey];
 	
 	//	[self setCellSize:NSMakeSize(44.0,22.0)];
 	if ([self respondsToSelector:@selector(setIntercellSpacing:)])
