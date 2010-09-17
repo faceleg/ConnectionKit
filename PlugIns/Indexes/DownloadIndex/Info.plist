@@ -33,7 +33,7 @@
 		<string>DownloadIndex.css</string>
 	</array>
 	<key>KTPluginIconName</key>
-	<string>downloadIndex.icns</string>
+	<string>toolbar_download_index.tiff</string>
 	<key>KTPluginName</key>
 	<string>Download List</string>
 	<key>KTPluginPriority</key>

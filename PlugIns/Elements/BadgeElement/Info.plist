@@ -31,7 +31,7 @@
 	<key>KTPageletCanHaveTitle</key>
 	<false/>
 	<key>KTPluginIconName</key>
-	<string>document.icns</string>
+	<string>toolbar_badge.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>badgeTypeTag</key>

@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		3CFEEDDB1228766A005A08FC /* TweetButtonPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFEEDDA1228766A005A08FC /* TweetButtonPlugIn.m */; };
 		3CFEEDE2122877BE005A08FC /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3CFEEDE1122877BE005A08FC /* License.rtf */; };
-		3CFEEDE4122877D1005A08FC /* TweetButton.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3CFEEDE3122877D1005A08FC /* TweetButton.icns */; };
 		3CFEEEC712288ACE005A08FC /* TweetButtonInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CFEEEC512288ACE005A08FC /* TweetButtonInspector.xib */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CE2802FB12432CD400B00F3D /* toolbar_twitter.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE2802FA12432CD400B00F3D /* toolbar_twitter.tiff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,10 +26,10 @@
 		3CFEEDD91228766A005A08FC /* TweetButtonPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetButtonPlugIn.h; sourceTree = "<group>"; };
 		3CFEEDDA1228766A005A08FC /* TweetButtonPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetButtonPlugIn.m; sourceTree = "<group>"; };
 		3CFEEDE1122877BE005A08FC /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
-		3CFEEDE3122877D1005A08FC /* TweetButton.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TweetButton.icns; sourceTree = "<group>"; };
 		3CFEEEC612288ACE005A08FC /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TweetButtonInspector.xib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* TweetButton.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TweetButton.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE2802FA12432CD400B00F3D /* toolbar_twitter.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_twitter.tiff; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -70,10 +70,10 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE2802FA12432CD400B00F3D /* toolbar_twitter.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3CFEEEC512288ACE005A08FC /* TweetButtonInspector.xib */,
-				3CFEEDE3122877D1005A08FC /* TweetButton.icns */,
 				3CFEEDE1122877BE005A08FC /* License.rtf */,
 			);
 			name = Resources;
@@ -176,8 +176,8 @@
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				3CFEEDE2122877BE005A08FC /* License.rtf in Resources */,
-				3CFEEDE4122877D1005A08FC /* TweetButton.icns in Resources */,
 				3CFEEEC712288ACE005A08FC /* TweetButtonInspector.xib in Resources */,
+				CE2802FB12432CD400B00F3D /* toolbar_twitter.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

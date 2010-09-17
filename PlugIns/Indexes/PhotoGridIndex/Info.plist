@@ -31,7 +31,7 @@
 	<key>KTIndexNavigationArrowsStyle</key>
 	<integer>1</integer>
 	<key>KTPluginIconName</key>
-	<string>photoalbum.icns</string>
+	<string>toolbar_photogrid.tiff</string>
 	<key>KTPluginName</key>
 	<string>Photo Grid</string>
 	<key>KTPluginPriority</key>

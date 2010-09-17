@@ -33,7 +33,7 @@
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
 	<key>KTPluginIconName</key>
-	<string>flickr</string>
+	<string>toolbar_flickr.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>number</key>

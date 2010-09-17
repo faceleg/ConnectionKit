@@ -35,7 +35,7 @@
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
 	<key>KTPluginIconName</key>
-	<string>listing.icns</string>
+	<string>toolbar_listing_index.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>maxItems</key>

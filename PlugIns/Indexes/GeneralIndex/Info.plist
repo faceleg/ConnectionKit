@@ -31,7 +31,7 @@
 	<key>KTIndexNavigationArrowsStyle</key>
 	<integer>2</integer>
 	<key>KTPluginIconName</key>
-	<string>index.icns</string>
+	<string>toolbar_general_index.tiff</string>
 	<key>KTPluginName</key>
 	<string>Tiles &amp; Summaries</string>
 	<key>KTPluginPriority</key>

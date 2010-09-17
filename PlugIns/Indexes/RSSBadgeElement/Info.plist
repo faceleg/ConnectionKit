@@ -35,7 +35,7 @@
 	<key>KTPluginDescription</key>
 	<string>Links to the RSS feed for a collection</string>
 	<key>KTPluginIconName</key>
-	<string>bundleIcon.icns</string>
+	<string>toolbar_rss.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>iconPosition</key>

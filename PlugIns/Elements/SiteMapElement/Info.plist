@@ -41,7 +41,7 @@
 	<key>KTPageType</key>
 	<string>site-map</string>
 	<key>KTPluginIconName</key>
-	<string>sitemap.icns</string>
+	<string>toolbar_sitemap.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>compact</key>

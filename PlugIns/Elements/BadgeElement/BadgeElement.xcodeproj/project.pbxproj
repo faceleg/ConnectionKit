@@ -18,10 +18,10 @@
 		3CA9FEF60D63BFE600815310 /* sandvox_castle.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEF30D63BFE600815310 /* sandvox_castle.png */; };
 		3CA9FEF80D63BFE600815310 /* sandvox_castle_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEF50D63BFE600815310 /* sandvox_castle_white.png */; };
 		3CA9FEFB0D63BFFE00815310 /* BadgeTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEF90D63BFFE00815310 /* BadgeTemplate.html */; };
-		3CA9FEFC0D63BFFE00815310 /* document.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEFA0D63BFFE00815310 /* document.icns */; };
 		3CA9FEFE0D63C00F00815310 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEFD0D63C00F00815310 /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CE28033112432DCF00B00F3D /* toolbar_badge.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE28033012432DCF00B00F3D /* toolbar_badge.tiff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,12 +92,12 @@
 		3CA9FEF40D63BFE600815310 /* sandvox_castle_white.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = sandvox_castle_white.gif; sourceTree = "<group>"; };
 		3CA9FEF50D63BFE600815310 /* sandvox_castle_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sandvox_castle_white.png; sourceTree = "<group>"; };
 		3CA9FEF90D63BFFE00815310 /* BadgeTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = BadgeTemplate.html; sourceTree = "<group>"; };
-		3CA9FEFA0D63BFFE00815310 /* document.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = document.icns; sourceTree = "<group>"; };
 		3CA9FEFD0D63C00F00815310 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
 		3CA9FF090D63C0A800815310 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3CA9FF0A0D63C0A800815310 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* Badge.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Badge.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE28033012432DCF00B00F3D /* toolbar_badge.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_badge.tiff; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -138,10 +138,10 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE28033012432DCF00B00F3D /* toolbar_badge.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C2AB73F1191F7FE00CDC944 /* BadgeInspector.xib */,
 				3CA9FEF90D63BFFE00815310 /* BadgeTemplate.html */,
-				3CA9FEFA0D63BFFE00815310 /* document.icns */,
 				3CA9FEEF0D63BF8500815310 /* Badges */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3CA9FEA50D63BE8800815310 /* Localizable.strings */,
@@ -282,9 +282,9 @@
 				3CA9FEF60D63BFE600815310 /* sandvox_castle.png in Resources */,
 				3CA9FEF80D63BFE600815310 /* sandvox_castle_white.png in Resources */,
 				3CA9FEFB0D63BFFE00815310 /* BadgeTemplate.html in Resources */,
-				3CA9FEFC0D63BFFE00815310 /* document.icns in Resources */,
 				3CA9FEFE0D63C00F00815310 /* License.rtf in Resources */,
 				3C2AB7411191F7FE00CDC944 /* BadgeInspector.xib in Resources */,
+				CE28033112432DCF00B00F3D /* toolbar_badge.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

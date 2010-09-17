@@ -16,7 +16,7 @@
 		3C5ACDC711922B8A00A644AB /* FlickrInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5ACDC511922B8A00A644AB /* FlickrInspector.xib */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
-		CE7230140D85D25800E9C592 /* flickr.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE7230130D85D25800E9C592 /* flickr.icns */; };
+		CE28032012432D5C00B00F3D /* toolbar_flickr.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE28031F12432D5C00B00F3D /* toolbar_flickr.tiff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,7 +52,7 @@
 		3C5ACDC611922B8A00A644AB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FlickrInspector.xib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Flickr.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Flickr.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CE7230130D85D25800E9C592 /* flickr.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = flickr.icns; sourceTree = "<group>"; };
+		CE28031F12432D5C00B00F3D /* toolbar_flickr.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_flickr.tiff; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -93,7 +93,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CE7230130D85D25800E9C592 /* flickr.icns */,
+				CE28031F12432D5C00B00F3D /* toolbar_flickr.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C5ACDC511922B8A00A644AB /* FlickrInspector.xib */,
 				3C42E49E0D6502CD004F35FD /* FlickrTemplate.html */,
@@ -219,8 +219,8 @@
 				3C42E4A10D6502CD004F35FD /* FlickrTemplate.html in Resources */,
 				3C42E4A80D6502D7004F35FD /* Localizable.strings in Resources */,
 				3C42E4C20D65033F004F35FD /* License.rtf in Resources */,
-				CE7230140D85D25800E9C592 /* flickr.icns in Resources */,
 				3C5ACDC711922B8A00A644AB /* FlickrInspector.xib in Resources */,
+				CE28032012432D5C00B00F3D /* toolbar_flickr.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

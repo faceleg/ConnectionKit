@@ -33,7 +33,7 @@
 	<key>KTPluginDescription</key>
 	<string>Tweet a shortened URL to your page</string>
 	<key>KTPluginIconName</key>
-	<string>Tweet.icns</string>
+	<string>toolbar_twitter.tiff</string>
 	<key>KTPluginName</key>
 	<string>TweetButton</string>
 	<key>KTPluginUntitledName</key>
