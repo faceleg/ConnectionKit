@@ -357,6 +357,11 @@
     return result;
 }
 
+- (BOOL)hasThumbnail;
+{
+    return ([self thumbnail] != nil);
+}
+
 - (CGFloat)thumbnailAspectRatio;
 {
     CGFloat result = 1.0f;
