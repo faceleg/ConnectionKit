@@ -40,6 +40,8 @@
     Add this button to your website to let people share content on Twitter without having to leave the page. 
     Promote strategic Twitter accounts at the same time while driving traffic to your website.
     <http://twitter.com/goodies/tweetbutton>
+ 
+    Additional dev options: <http://dev.twitter.com/pages/tweet_button>
  */
  
 enum TweetButtonStyles { STYLE_VERTICAL, STYLE_HORIZONTAL, STYLE_NONE };
