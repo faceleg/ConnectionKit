@@ -18,6 +18,7 @@
 {
   @private
     id  _container;
+    id  _template;
 }
 
 + (NSString *)plugInIdentifier; // use standard reverse DNS-style string

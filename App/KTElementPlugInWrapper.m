@@ -47,7 +47,6 @@
 - (void)dealloc
 {
     [_factory release];
-	[_templateHTML release];
 	
 	[super dealloc];
 }

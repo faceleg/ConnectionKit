@@ -56,26 +56,6 @@
     return result;
 }
 
-- (SVTemplate *)HTMLTemplate;
-{
-    NSString *templateName = [self objectForInfoDictionaryKey:@"KTTemplateName"];
-    if ( !templateName )
-    {
-        NSString *className = [self objectForInfoDictionaryKey:@"NSPrincipalClass"]; OBASSERT(className);
-        templateName = [className stringByReplacing:@"PlugIn" with:@"Template"];
-    }
-    if (!templateName) templateName = @"template";
-    
-    NSString *path = [self pathForResource:templateName ofType:@"html"];
-    if (path)
-    {
-        SVTemplate *result = [[SVTemplate alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]];
-        return [result autorelease];
-    }
-    
-    return nil;
-}
-
 - (NSString *)templateRSSAsString
 {
 	static NSMutableDictionary *sXMLTemplates = nil;

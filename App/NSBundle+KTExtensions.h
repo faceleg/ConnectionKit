@@ -29,7 +29,6 @@
 
 - (void)loadLocalFonts;
 
-- (SVTemplate *)HTMLTemplate;
 - (NSString *)templateRSSAsString;
 
 - (NSString *)overridingPathForResource:(NSString *)name ofType:(NSString *)ext;

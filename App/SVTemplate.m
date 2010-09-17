@@ -11,20 +11,11 @@
 
 @implementation SVTemplate
 
-+ (SVTemplate *)templateNamed:(NSString *)name;
+#pragma mark Init & Dealloc
+static NSMapTable *sNamedImages;
++ (void)initialize
 {
-    NSString *path = [[NSBundle mainBundle] pathForResource:[name stringByDeletingPathExtension]
-                                                     ofType:[name pathExtension]];
-    
-    SVTemplate *result = nil;
-    if (path)
-    {
-        result = [[self alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path
-                                                                isDirectory:NO]];
-        [result autorelease];
-    }
-    
-    return result;
+    if (!sNamedImages) sNamedImages = [[NSMapTable mapTableWithStrongToWeakObjects] retain];
 }
 
 - (id)initWithContentsOfURL:(NSURL *)url;
@@ -42,6 +33,67 @@
     return self;
 }
 
+- (void)dealloc;
+{
+    // Make sure we're removed from the cache to keep the zombie apocalypse at bay
+    [self setName:nil];
+    OBASSERT(!_name);
+    
+    [super dealloc];
+}
+
+#pragma mark Cache
+
++ (SVTemplate *)templateNamed:(NSString *)name;
+{
+    SVTemplate *result = [sNamedImages objectForKey:name];
+    if (!result)
+    {
+        NSString *path = [[NSBundle mainBundle] pathForResource:[name stringByDeletingPathExtension]
+                                                         ofType:[name pathExtension]];
+        
+        if (path)
+        {
+            result = [[self alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path
+                                                                    isDirectory:NO]];
+            [result setName:name];
+            [result autorelease];
+        }
+    }
+    
+    return result;
+}
+
+@synthesize name = _name;
+
+- (BOOL)setName:(NSString *)name;
+{
+    BOOL result = YES;
+    
+    
+    // Store under the new name if possible, or remove from cache
+    if (name)
+    {
+        result = ([sNamedImages objectForKey:name] == nil);
+        if (result)
+        {
+            [self setName:nil]; // remove from cache under old name
+            
+            name = [name copy]; // store (under) new
+            [sNamedImages setObject:self forKey:name];
+            [_name release]; _name = name;
+        }
+    }
+    else if ([self name])
+    {
+        [sNamedImages removeObjectForKey:[self name]];
+        [_name release]; _name = nil;
+    }
+    
+    return result;
+}
+
+#pragma mark Properties
 @synthesize templateString = _templateString;
 
 @end

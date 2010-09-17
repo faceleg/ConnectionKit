@@ -13,13 +13,20 @@
 {
   @private
     NSString    *_templateString;
+    NSString    *_name;
 }
+
+// Returns nil if not a valid string
+- (id)initWithContentsOfURL:(NSURL *)url;
+
+
+#pragma mark Cache
 
 // Inefficient for now, in that it always creates a new template, so retain the result yourself. Include the filename extension please.
 + (SVTemplate *)templateNamed:(NSString *)name;
 
-// Returns nil if not a valid string
-- (id)initWithContentsOfURL:(NSURL *)url;
+@property(nonatomic, readonly, copy) NSString *name;
+- (BOOL)setName:(NSString *)name;   // like NSImage
 
 @property(nonatomic, copy, readonly) NSString *templateString;
 

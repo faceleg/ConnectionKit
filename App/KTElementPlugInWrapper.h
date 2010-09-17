@@ -28,8 +28,6 @@ typedef enum {
 {
 @private
     SVGraphicFactory    *_factory;
-    
-	NSString    *_templateHTML;
 }
 
 + (NSSet *)pageletPlugins;
