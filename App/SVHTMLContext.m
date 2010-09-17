@@ -494,8 +494,16 @@
         }
         else
         {
-            [[self writeElement:@"div" contentsInvocationTarget:graphic]
-             writeBody:self];
+            @try
+            {
+                [[self writeElement:@"div" contentsInvocationTarget:graphic]
+                 writeBody:self];
+            }
+            @catch (NSException *exception)
+            {
+                // Was probably caused by a plug-in. Log and soldier on. #88083
+                NSLog(@"Writing graphic body raised exception, probably due to incorrect use of HTML Writer");
+            }
         }
         
         
