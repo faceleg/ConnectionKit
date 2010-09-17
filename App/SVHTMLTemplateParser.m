@@ -128,11 +128,16 @@
     
     
     // Do the parsing
-    BOOL result = [super parseWithOutputWriter:stream];
-    
-    
-    // Pop
-    [stack removeLastObject];
+    BOOL result = NO;
+    @try
+    {
+        result = [super parseWithOutputWriter:stream];
+    }
+    @finally
+    {
+        // Pop. Need to be sure of it, otherwise an exception can screw up all future parsing. #88083
+        [stack removeLastObject];
+    }
     
     
     return result;
