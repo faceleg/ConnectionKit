@@ -227,6 +227,8 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 {
     NSString *identifier = [self plugInIdentifier];
     
+    NSUInteger openElements = [context openElementsCount];
+    
     NSUInteger level = [context currentHeaderLevel];
     [context setCurrentHeaderLevel:4];
     
@@ -239,6 +241,12 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     @catch (NSException *exception)
     {
         // TODO: Log or report exception
+        
+        // Correct open elements count if plug-in managed to break this. #88083
+        while ([context openElementsCount] > openElements)
+        {
+            [context endElement];
+        }
     }
     
     [context writeComment:[NSString stringWithFormat:@" /%@ ", identifier]];
