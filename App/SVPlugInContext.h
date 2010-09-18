@@ -22,7 +22,7 @@
 // Call so Web Editor knows when to update
 - (void)addDependencyForKeyPath:(NSString *)keyPath ofObject:(NSObject *)object;
 
-- (void)writeTitleOfPage:(id <SVPage>)page enclosingElement:(NSString *)element attributes:(NSDictionary *)attributes;
+- (void)writeTitleOfPage:(id <SVPage>)page asPlainText:(BOOL)plainText enclosingElement:(NSString *)element attributes:(NSDictionary *)attributes;
 
 // URLs
 - (NSString *)relativeURLStringOfURL:(NSURL *)URL;

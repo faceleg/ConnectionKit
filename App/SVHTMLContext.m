@@ -906,10 +906,19 @@
     [self addDependencyOnObject:object keyPath:keyPath];
 }
 
-- (void)writeTitleOfPage:(id <SVPage>)page enclosingElement:(NSString *)element attributes:(NSDictionary *)attributes;
+- (void)writeTitleOfPage:(id <SVPage>)page asPlainText:(BOOL)plainText enclosingElement:(NSString *)element attributes:(NSDictionary *)attributes;
 {
     [self startElement:element attributes:attributes];
-    [self writeText:[page title]];
+    
+    if (plainText)
+    {
+        [self writeText:[page title]];
+    }
+    else
+    {
+        [self writeHTMLString:[[(KTPage *)page titleBox] textHTMLString]];
+    }
+    
     [self endElement];
 }
 
