@@ -108,48 +108,57 @@
 
 - (void)writeInnerHTML:(id <SVPlugInContext>)context
 {
-    NSMutableDictionary *attrs = [NSMutableDictionary dictionaryWithCapacity:5];
-    // href
-    [attrs setObject:@"http://twitter.com/share" forKey:@"href"];
-    // class
-    [attrs setObject:@"twitter-share-button" forKey:@"class"];
-    // data-url (if no url, twitter uses url of page button is on)
-    if ( self.tweetURL )
+    if ( [context liveDataFeeds] )
     {
-        [attrs setObject:self.tweetURL forKey:@"data-url"];
+        NSMutableDictionary *attrs = [NSMutableDictionary dictionaryWithCapacity:5];
+        // href
+        [attrs setObject:@"http://twitter.com/share" forKey:@"href"];
+        // class
+        [attrs setObject:@"twitter-share-button" forKey:@"class"];
+        // data-url (if no url, twitter uses url of page button is on)
+        if ( self.tweetURL )
+        {
+            [attrs setObject:self.tweetURL forKey:@"data-url"];
+        }
+        // data-text (if no text, twitter uses title of page button is on)
+        if ( self.tweetText )
+        {
+            [attrs setObject:self.tweetURL forKey:@"data-text"];
+        }
+        // data-count
+        [attrs setObject:self.tweetButton forKey:@"data-count"];
+        // data-via
+        if ( self.tweetVia )
+        {
+            [attrs setObject:self.tweetVia forKey:@"data-via"];
+        }
+        // data-related
+        if ( self.tweetRelated )
+        {
+            [attrs setObject:self.tweetRelated forKey:@"data-related"];
+        }
+        // data-lang (if no lang, en is assumed)
+        NSString *language = [(id<SVPage>)[context page] language];
+        if ( language && ![language isEqualToString:@"en"] )
+        {
+            [attrs setObject:language forKey:@"data-lang"];
+        }
+        
+        // write anchor
+        [[context HTMLWriter] startElement:@"a" attributes:attrs]; // <a>
+        [[context HTMLWriter] writeText:@"Tweet"];
+        [[context HTMLWriter] endElement]; // </a>
+        
+        // write <script> to endBody
+        //FIXME: #86407 expose endBodyMarkup or better way to add script to context in protocol
+        [[context endBodyMarkup] appendString:@"<script type=\"text/javascript\" src=\"http://platform.twitter.com/widgets.js\"></script>"];
     }
-    // data-text (if no text, twitter uses title of page button is on)
-    if ( self.tweetText )
+    else 
     {
-        [attrs setObject:self.tweetURL forKey:@"data-text"];
+        //FIXME: phrase this better for user
+        NSString *noLiveFeeds = LocalizedStringInThisBundle(@"Tweet Button visible only when loading data from the Internet", "");
+        [[context HTMLWriter] writeText:noLiveFeeds];
     }
-    // data-count
-    [attrs setObject:self.tweetButton forKey:@"data-count"];
-    // data-via
-    if ( self.tweetVia )
-    {
-        [attrs setObject:self.tweetVia forKey:@"data-via"];
-    }
-    // data-related
-    if ( self.tweetRelated )
-    {
-        [attrs setObject:self.tweetRelated forKey:@"data-related"];
-    }
-    // data-lang (if no lang, en is assumed)
-    NSString *language = [(id<SVPage>)[context page] language];
-    if ( language && ![language isEqualToString:@"en"] )
-    {
-        [attrs setObject:language forKey:@"data-lang"];
-    }
-    
-    // write anchor
-    [[context HTMLWriter] startElement:@"a" attributes:attrs]; // <a>
-    [[context HTMLWriter] writeText:@"Tweet"];
-    [[context HTMLWriter] endElement]; // </a>
-    
-    // write <script> to endBody
-    //FIXME: #86407 expose endBodyMarkup or better way to add script to context in protocol
-    [[context endBodyMarkup] appendString:@"<script type=\"text/javascript\" src=\"http://platform.twitter.com/widgets.js\"></script>"];
     
     // add dependencies
     [context addDependencyForKeyPath:@"tweetButtonStyle" ofObject:self];
