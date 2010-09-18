@@ -27,6 +27,7 @@
 #pragma mark Properties
 - (BOOL)hasThumbnail;
 - (NSString *)language;
+- (NSString *)timestampDescription;    // nil if page does't have/want timestamp
 
 
 // Most SVPage methods aren't KVO-compliant. Instead, observe all of -automaticRearrangementKeyPaths.

@@ -132,6 +132,18 @@
 	return result;
 }
 
+- (NSString *)timestampDescription;    // nil if page does't have/want timestamp
+{
+    NSString *result = nil;
+    
+    if ([[self includeTimestamp] boolValue])
+    {
+        result = [self timestamp];
+    }
+    
+    return result;
+}
+
 #pragma mark -
 #pragma mark Keywords
 

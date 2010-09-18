@@ -442,6 +442,7 @@
 }
 
 - (NSString *)language { return nil; }
+- (NSString *)timestampDescription; { return nil; }
 
 #pragma mark Core Data
 
