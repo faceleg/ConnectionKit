@@ -430,10 +430,21 @@ static SVGraphicFactory *sRawHTMLFactory;
 + (NSArray *)moreGraphicFactories; { return [[sMoreFactories copy] autorelease]; }
 
 + (SVGraphicFactory *)textBoxFactory; { return sSharedTextBoxFactory; }
+
 + (SVGraphicFactory *)imageFactory; { return sImageFactory; }
 + (SVGraphicFactory *)videoFactory; { return sVideoFactory; }
 + (SVGraphicFactory *)audioFactory; { return sAudioFactory; }
 + (SVGraphicFactory *)flashFactory; { return sFlashFactory; }
+
++ (NSArray *)mediaFactories;
+{
+    return [NSArray arrayWithObjects:
+            [self imageFactory],
+            [self videoFactory],
+            [self audioFactory],
+            [self flashFactory], nil];
+}
+
 + (SVGraphicFactory *)rawHTMLFactory; { return sRawHTMLFactory; }
 
 #pragma mark Menu

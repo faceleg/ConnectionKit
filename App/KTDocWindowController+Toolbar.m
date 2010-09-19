@@ -263,25 +263,9 @@
 	
     
     // Image item
-	factory = [SVGraphicFactory imageFactory];
-	item = [factory makeMenuItem];
-	[menu addItem:item]; 
-    
-    
-	// Video item
-	factory = [SVGraphicFactory videoFactory];
-	item = [factory makeMenuItem];
-	[menu addItem:item]; 
-    
-    
- 	// Audio item
-	factory = [SVGraphicFactory audioFactory];
-	item = [factory makeMenuItem];
-	[menu addItem:item]; 
-    
-	// Audio item
-	factory = [SVGraphicFactory flashFactory];
-	item = [factory makeMenuItem];
+	item = [SVGraphicFactory menuItemWithGraphicFactories:[SVGraphicFactory mediaFactories]
+                                                    title:NSLocalizedString(@"Media", "menu item")];
+ 	[item setIconImage:[NSImage imageNamed:@"toolbar_index"]];
 	[menu addItem:item]; 
     
 	
