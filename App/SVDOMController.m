@@ -332,28 +332,21 @@
 
 - (SVGraphicHandle)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point;
 {
-    NSSize size = [self sizeByMovingHandle:&handle toPoint:point];
-    [self resizeToSize:size byMovingHandle:handle];
-    return handle;
-}
-
-- (NSSize)sizeByMovingHandle:(SVGraphicHandle *)handle toPoint:(NSPoint)point;
-{    
     // Start with the original bounds.
     NSRect bounds = [[self selectableDOMElement] boundingBox];
     
     // Is the user changing the width of the graphic?
-    if (*handle == kSVGraphicUpperLeftHandle ||
-        *handle == kSVGraphicMiddleLeftHandle ||
-        *handle == kSVGraphicLowerLeftHandle)
+    if (handle == kSVGraphicUpperLeftHandle ||
+        handle == kSVGraphicMiddleLeftHandle ||
+        handle == kSVGraphicLowerLeftHandle)
     {
         // Change the left edge of the graphic.
         bounds.size.width = NSMaxX(bounds) - point.x;
         bounds.origin.x = point.x;
     }
-    else if (*handle == kSVGraphicUpperRightHandle ||
-             *handle == kSVGraphicMiddleRightHandle ||
-             *handle == kSVGraphicLowerRightHandle)
+    else if (handle == kSVGraphicUpperRightHandle ||
+             handle == kSVGraphicMiddleRightHandle ||
+             handle == kSVGraphicLowerRightHandle)
     {
         // Change the right edge of the graphic.
         bounds.size.width = point.x - bounds.origin.x;
@@ -366,17 +359,17 @@
     
     
     // Is the user changing the height of the graphic?
-    if (*handle == kSVGraphicUpperLeftHandle ||
-        *handle == kSVGraphicUpperMiddleHandle ||
-        *handle == kSVGraphicUpperRightHandle) 
+    if (handle == kSVGraphicUpperLeftHandle ||
+        handle == kSVGraphicUpperMiddleHandle ||
+        handle == kSVGraphicUpperRightHandle) 
     {
         // Change the top edge of the graphic.
         bounds.size.height = NSMaxY(bounds) - point.y;
         bounds.origin.y = point.y;
     }
-    else if (*handle == kSVGraphicLowerLeftHandle ||
-             *handle == kSVGraphicLowerMiddleHandle ||
-             *handle == kSVGraphicLowerRightHandle)
+    else if (handle == kSVGraphicLowerLeftHandle ||
+             handle == kSVGraphicLowerMiddleHandle ||
+             handle == kSVGraphicLowerRightHandle)
     {
         // Change the bottom edge of the graphic.
         bounds.size.height = point.y - bounds.origin.y;
@@ -385,7 +378,22 @@
     // Did the user actually flip the graphic upside down?   OR RESIZE TO TOO SMALL?
     if (bounds.size.height<=minSize.height) bounds.size.height = minSize.height;
     
-    return bounds.size;
+    
+    // Whew, what a lot of questions! Now, should this drag be disallowed on account of making the DOM element bigger than its container? #84958
+    DOMNode *parent = [[self HTMLElement] parentNode];
+    DOMCSSStyleDeclaration *style = [[[self HTMLElement] ownerDocument] 
+                                     getComputedStyle:(DOMElement *)parent
+                                     pseudoElement:@""];
+    
+    CGFloat maxWidth = [[style width] floatValue];
+    if (bounds.size.width > maxWidth) bounds.size.width = maxWidth;
+    
+    
+    // Finally, we can go ahead and resize
+    [self resizeToSize:bounds.size byMovingHandle:handle];
+    
+    
+    return handle;
 }
 
 #pragma mark KVO
