@@ -458,6 +458,9 @@
     }
     else if (![graphic shouldWriteHTMLInline])
     {
+        // Register dependencies that come into play regardless of the route writing takes
+        [self addDependencyOnObject:graphic keyPath:@"showsCaption"];
+        
         // <div class="graphic-container center">
         [graphic buildClassName:self];
         [self startElement:@"div" className:@"graphic-container"];
@@ -508,7 +511,7 @@
         
         
         // Caption if requested
-        if ([graphic showsCaption])
+        if ([graphic showsCaption]) // was registered as dependecy at start of if block
         {
             SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
             [textBlock setHTMLSourceObject:graphic];
@@ -520,7 +523,6 @@
             [textBlock writeHTML:self];
             [textBlock release];
         }
-        [self addDependencyOnObject:graphic keyPath:@"showsCaption"];
         
         
         // Finish up
