@@ -177,6 +177,8 @@
     [self setConstrainProportions:constrainProportions];
 }
 
+- (BOOL)isExplicitlySized; { return YES; }
+
 #pragma mark Size, inherited
 
 - (void)setWidth:(NSNumber *)width;
