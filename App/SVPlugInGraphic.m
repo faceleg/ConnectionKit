@@ -282,7 +282,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     SVPlugIn *plugIn = [self plugIn];
     
     NSNumber *result = nil;
-    if ([[plugIn class] isExplicitlySized] || [[self placement] intValue] == SVGraphicPlacementInline)
+    if ([self isExplicitlySized] || [[self placement] intValue] == SVGraphicPlacementInline)
     {
         NSUInteger width = [plugIn width];
         if (width) result = [NSNumber numberWithUnsignedInteger:width];
@@ -317,7 +317,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     SVPlugIn *plugIn = [self plugIn];
     
     NSNumber *result = nil;
-    if ([[plugIn class] isExplicitlySized])
+    if ([self isExplicitlySized])
     {
         NSUInteger height = [plugIn height];
         if (height) result = [NSNumber numberWithUnsignedInteger:height];
