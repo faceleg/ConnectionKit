@@ -62,30 +62,14 @@
     
     // add dependencies
     [context addDependencyForKeyPath:@"hyperlinkTitles" ofObject:self];
-    [context addDependencyForKeyPath:@"showPermanentLink" ofObject:self];
+    [context addDependencyForKeyPath:@"showPermaLink" ofObject:self];
     [context addDependencyForKeyPath:@"truncateChars" ofObject:self];
 }
 
 
 /*
  [[textblock property:item.titleHTML flags:"line" tag:h3 graphicalTextCode:h3 hyperlink:item]]
-*/
-
-- (void)writeTitleAndLinkOfIteratedPage
-{
-    id<SVPlugInContext> context = [SVPlugIn currentContext]; 
-    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
-    
-    [[context HTMLWriter] startAnchorElementWithPage:iteratedPage];
-    [context writeTitleOfPage:iteratedPage
-                  asPlainText:NO
-             enclosingElement:@"span"
-                   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
-    [[context HTMLWriter] endElement]; // </a>
-}
-
-
-/*
+ or
  [[textblock property:item.titleHTML flags:"line" tag:h3 graphicalTextCode:h3]]
 */
 
@@ -94,10 +78,14 @@
     id<SVPlugInContext> context = [SVPlugIn currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
+    if ( self.hyperlinkTitles) { [[context HTMLWriter] startAnchorElementWithPage:iteratedPage]; } // <a>
+    
     [context writeTitleOfPage:iteratedPage
                   asPlainText:NO
              enclosingElement:@"span"
                    attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
+    
+    if ( self.hyperlinkTitles ) { [[context HTMLWriter] endElement]; } // </a> 
 }
 
 

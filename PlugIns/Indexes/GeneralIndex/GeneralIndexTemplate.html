@@ -1,14 +1,10 @@
 [[foreach indexedCollection.childPages item]]
 	<div class="article [[i]] [[eo]][[last]]">
-[[if hyperlinkTitles]]
-    <h3>[[=writeTitleAndLinkOfIteratedPage]]</h3>
-[[else]]
-    <h3>[[=writeTitleOfIteratedPage]]</h3>
-[[endif]]
+        <h3>[[=writeTitleOfIteratedPage]]</h3>
 [[if item.hasThumbnail]]
- <div class="article-thumbnail">
- <a class="imageLink" [[target item]]href="[[path item]]">[[=writeThumbnailOfIteratedPage]]</a>
- </div>
+        <div class="article-thumbnail">
+        <a class="imageLink" [[target item]]href="[[path item]]">[[=writeThumbnailOfIteratedPage]]</a>
+        </div>
 [[endif]]
 		<div class="article-summary">[[=writeSummaryOfIteratedPage]]</div>
 		<div class="article-info">
