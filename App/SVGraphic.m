@@ -193,6 +193,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (BOOL)canMakeOriginalSize; { return YES; }
 
+- (BOOL)isExplicitlySized; { return NO; }
+
 - (NSNumber *)contentWidth;
 {
     return ([[self placement] intValue] == SVGraphicPlacementInline ?
