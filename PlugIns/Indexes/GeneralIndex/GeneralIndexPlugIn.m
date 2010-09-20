@@ -79,8 +79,8 @@
     [[context HTMLWriter] startAnchorElementWithPage:iteratedPage];
     [context writeTitleOfPage:iteratedPage
                   asPlainText:NO
-             enclosingElement:nil
-                   attributes:nil];
+             enclosingElement:@"span"
+                   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
     [[context HTMLWriter] endElement]; // </a>
 }
 
@@ -96,8 +96,8 @@
     
     [context writeTitleOfPage:iteratedPage
                   asPlainText:NO
-             enclosingElement:nil
-                   attributes:nil];
+             enclosingElement:@"span"
+                   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
 }
 
 
