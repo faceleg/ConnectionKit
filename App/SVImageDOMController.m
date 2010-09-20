@@ -100,6 +100,12 @@
     }
 }
 
+- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle;
+{
+    // Image lives inside a graphic DOM controller, so use the size limit from that instead
+    return [(SVImagePageletDOMController *)[self parentWebEditorItem] constrainSize:size handle:handle];
+}
+
 - (NSSize)minSize;
 {
     // Remove the 200px width restriction
