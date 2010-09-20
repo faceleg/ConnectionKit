@@ -986,7 +986,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	float fieldWidth = fieldRect.size.width;
 	int width = ceilf(MIN(textWidth, fieldWidth));
 	width = MAX(width, 7);		// make sure it's at least 7 pixels wide
-	NSLog(@"'%@' widths: text = %.2f, field = %.2f => %d", [textField stringValue], textWidth, fieldWidth, width);
+	// NSLog(@"'%@' widths: text = %.2f, field = %.2f => %d", [textField stringValue], textWidth, fieldWidth, width);
 	fieldRect.size.width = width;
 	[view setShadowRect:fieldRect];
 	
