@@ -48,9 +48,9 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 	IBOutlet KTDocWindowController	*oDocWindowController;	// to communicate with web view
 	
 @private
-	NSNumber	*_metaDescriptionCountdown;
-	NSNumber	*_windowTitleCountdown;
-	NSNumber	*_fileNameCountdown;
+	NSNumber	*_metaDescriptionCount;
+	NSNumber	*_windowTitleCount;
+	NSNumber	*_fileNameCount;
 	
 	NSTextField	*_activeTextField;
 	MAAttachedWindow *_attachedWindow;
@@ -70,9 +70,9 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 - (IBAction) chooseFile:(id)sender;
 
 // Meta description
-- (NSNumber *)metaDescriptionCountdown;
-- (NSNumber *)windowTitleCountdown;
-- (NSNumber *)fileNameCountdown;
+- (NSNumber *)metaDescriptionCount;
+- (NSNumber *)windowTitleCount;
+- (NSNumber *)fileNameCount;
 
 @property (retain) 	NSDictionary *initialWindowTitleBindingOptions;
 @property (retain) 	NSDictionary *initialMetaDescriptionBindingOptions;

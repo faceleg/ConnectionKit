@@ -37,6 +37,9 @@ static NSString *sBaseExampleURLStringObservationContext = @"-baseExampleURLStri
 static NSString *sTitleObservationContext = @"-titleText observation context";
 static NSString *sSelectedObjectsObservationContext = @"-selectedObjects observation context";
 static NSString *sSelectedViewControllerObservationContext = @"-selectedViewController observation context";
+static NSString *sCharacterDescription0Count = nil;
+static NSString *sCharacterDescription1Count = nil;
+static NSString *sCharacterDescriptionPluralCountFormat = nil;
 
 #define ATTACHED_WINDOW_TRANSP 0.6
 
@@ -64,6 +67,17 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 @implementation KTPageDetailsController
 
++ (void)initialize
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	sCharacterDescription0Count = NSLocalizedString(@"0 characters", @"format string for showing that ZERO characters have been typed");
+	sCharacterDescription1Count = NSLocalizedString(@"1 character", @"format string for showing that ONE character has been typed");
+	sCharacterDescriptionPluralCountFormat = NSLocalizedString(@"%d characters", @"format string for showing how many characters have been typed");
+
+	[pool release];
+}
+
 @synthesize activeTextField = _activeTextField;
 @synthesize attachedWindow = _attachedWindow;
 @synthesize whatKindOfItemsAreSelected = _whatKindOfItemsAreSelected;
@@ -82,9 +96,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	self.view = nil;		// stop observing early.
 	
 	self.activeTextField = nil;
-	[_metaDescriptionCountdown release];
-	[_windowTitleCountdown release];
-	[_fileNameCountdown release];
+	[_metaDescriptionCount release];
+	[_windowTitleCount release];
+	[_fileNameCount release];
 	self.initialWindowTitleBindingOptions = nil;
 	self.initialMetaDescriptionBindingOptions = nil;
 	
@@ -199,7 +213,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 }
 
 #pragma mark -
-#pragma mark Countdown fields
+#pragma mark Count fields
 
 /*  This code manages the meta description field in the Page Details panel. It's a tad complicated,
  *  so here's how it works:
@@ -208,12 +222,12 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
  *  Site Outline selection. i.e. The meta description field is bound this way. Its contents are
  *  saved back to the model ater the user ends editing
  *
- *  To complicate matters, we have a countdown label. This is derived from whatever is currently
+ *  To complicate matters, we have a count label. This is derived from whatever is currently
  *  entered into the description field. It does NOT map directly to what is in the model. The
- *  countdown label is bound directly to the -metaDescriptionCountdown property of
- *  KTPageDetailsController. To update the GUI, you need to call -setMetaDescriptionCountdown:
+ *  count label is bound directly to the -metaDescriptionCount property of
+ *  KTPageDetailsController. To update the GUI, you need to call -setMetaDescriptionCount:
  *  This property is an NSNumber as it needs to return NSMultipleValuesMarker sometimes. We update
- *  the countdown in response to either:
+ *  the count in response to either:
  *
  *      A)  The selection/model changing. This is detected by observing the Site Outline controller's
  *          selection.metaDescription property
@@ -221,40 +235,98 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
  *          delegate methods. We do NOT store these changes into the model immediately as this would
  *          conflict with the user's expectations of how undo/redo should work.
  *
- * This countdown behavior is reflected similarly with the windowTitle property.
+ * This count behavior is reflected similarly with the windowTitle property.
  */
 
-- (NSNumber *)metaDescriptionCountdown { return _metaDescriptionCountdown; }
+- (NSNumber *)metaDescriptionCount { return _metaDescriptionCount; }
 
-- (void)setMetaDescriptionCountdown:(NSNumber *)countdown
+- (void)setMetaDescriptionCount:(NSNumber *)count
 {
-	[countdown retain];
-	[_metaDescriptionCountdown release];
-	_metaDescriptionCountdown = countdown;
+	[count retain];
+	[_metaDescriptionCount release];
+	_metaDescriptionCount = count;
 }
 
-- (NSNumber *)windowTitleCountdown { return _windowTitleCountdown; }
+- (NSNumber *)windowTitleCount { return _windowTitleCount; }
 
-- (void)setWindowTitleCountdown:(NSNumber *)countdown
+- (void)setWindowTitleCount:(NSNumber *)count
 {
-	[countdown retain];
-	[_windowTitleCountdown release];
-	_windowTitleCountdown = countdown;
+	[count retain];
+	[_windowTitleCount release];
+	_windowTitleCount = count;
 }
 
-- (NSNumber *)fileNameCountdown { return _fileNameCountdown; }
+- (NSNumber *)fileNameCount { return _fileNameCount; }
 
-- (void)setFileNameCountdown:(NSNumber *)countdown
+- (void)setFileNameCount:(NSNumber *)count
 {
-	[countdown retain];
-	[_fileNameCountdown release];
-	_fileNameCountdown = countdown;
+	[count retain];
+	[_fileNameCount release];
+	_fileNameCount = count;
 }
 
+// Properly pluralizing character count strings
+
+- (NSString *)metaDescriptionCountString
+{
+	int intValue = [self.metaDescriptionCount intValue];
+	switch(intValue)
+	{
+		case 0:
+			return sCharacterDescription0Count;
+		case 1:
+			return sCharacterDescription1Count;
+		default:
+			return [NSString stringWithFormat:sCharacterDescriptionPluralCountFormat, intValue];
+	}
+}
+
+- (NSString *)fileNameCountString
+{
+	int intValue = [self.fileNameCount intValue];
+	switch(intValue)
+	{
+		case 0:
+			return sCharacterDescription0Count;
+		case 1:
+			return sCharacterDescription1Count;
+		default:
+			return [NSString stringWithFormat:sCharacterDescriptionPluralCountFormat, intValue];
+	}
+}
+
+- (NSString *)windowTitleCountString
+{
+	int intValue = [self.windowTitleCount intValue];
+	switch(intValue)
+	{
+		case 0:
+			return sCharacterDescription0Count;
+		case 1:
+			return sCharacterDescription1Count;
+		default:
+			return [NSString stringWithFormat:sCharacterDescriptionPluralCountFormat, intValue];
+	}
+}
+
++ (NSSet *)keyPathsForValuesAffectingMetaDescriptionCountString
+{
+    return [NSSet setWithObject:@"metaDescriptionCount"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingFileNameCountString
+{
+    return [NSSet setWithObject:@"fileNameCount"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingWindowTitleCountString
+{
+    return [NSSet setWithObject:@"windowTitleCount"];
+}
 
 
 /*	Called in response to a change of selection.metaDescription or the user typing
- *	We update our own countdown property in response
+ *	We update our own count property in response
  */
 - (void)metaDescriptionDidChangeToValue:(id)value
 {
@@ -275,7 +347,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		value = [NSNumber numberWithInt:0];
 	}
 
-	[self setMetaDescriptionCountdown:value];
+	[self setMetaDescriptionCount:value];
 
 	NSColor *windowColor = [self metaDescriptionCharCountColor];
 	[self.attachedWindow setBackgroundColor:windowColor];
@@ -283,7 +355,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 }
 
 /*	Called in response to a change of selection.windowTitle or the user typing
- *	We update our own countdown property in response
+ *	We update our own count property in response
  */
 - (void)windowTitleDidChangeToValue:(id)value
 {
@@ -304,7 +376,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		value = [NSNumber numberWithInt:0];
 	}
 	
-	[self setWindowTitleCountdown:value];
+	[self setWindowTitleCount:value];
 
 	NSColor *windowColor = [self windowTitleCharCountColor];
 	[self.attachedWindow setBackgroundColor:windowColor];
@@ -329,7 +401,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		value = [NSNumber numberWithInt:0];
 	}
 	
-	[self setFileNameCountdown:value];
+	[self setFileNameCount:value];
 
 	NSColor *windowColor = [self fileNameCharCountColor];
 	[self.attachedWindow setBackgroundColor:windowColor];
@@ -450,14 +522,14 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 }
 
 #pragma mark -
-#pragma mark Countdown colors
+#pragma mark Count colors
 
 #define META_DESCRIPTION_WARNING_ZONE 10
 #define MAX_META_DESCRIPTION_LENGTH 156
 
 - (NSColor *)metaDescriptionCharCountColor;
 {
-	int charCount = [[self metaDescriptionCountdown] intValue];
+	int charCount = [[self metaDescriptionCount] intValue];
 	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:ATTACHED_WINDOW_TRANSP];
 	int remaining = MAX_META_DESCRIPTION_LENGTH - charCount;
 	
@@ -482,7 +554,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 #define WINDOW_TITLE_WARNING_ZONE 8
 - (NSColor *)windowTitleCharCountColor
 {
-	int charCount = [[self windowTitleCountdown] intValue];
+	int charCount = [[self windowTitleCount] intValue];
 	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:ATTACHED_WINDOW_TRANSP];
 	int remaining = MAX_WINDOW_TITLE_LENGTH - charCount;
 	
@@ -505,7 +577,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 #define FILE_NAME_WARNING_ZONE 5
 - (NSColor *)fileNameCharCountColor
 {
-	int charCount = [[self fileNameCountdown] intValue];
+	int charCount = [[self fileNameCount] intValue];
 	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:ATTACHED_WINDOW_TRANSP];
 	int remaining = MAX_FILE_NAME_LENGTH - charCount;
 	
@@ -528,17 +600,17 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 + (NSSet *)keyPathsForValuesAffectingWindowTitleCharCountColor
 {
-    return [NSSet setWithObject:@"windowTitleCountdown"];
+    return [NSSet setWithObject:@"windowTitleCount"];
 }
 
 + (NSSet *)keyPathsForValuesAffectingFileNameCharCountColor
 {
-    return [NSSet setWithObject:@"fileNameCountdown"];
+    return [NSSet setWithObject:@"fileNameCount"];
 }
 
 + (NSSet *)keyPathsForValuesAffectingMetaDescriptionCharCountColor
 {
-    return [NSSet setWithObject:@"metaDescriptionCountdown"];
+    return [NSSet setWithObject:@"metaDescriptionCount"];
 }
 
 
@@ -975,19 +1047,19 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	if (field == oFileNameField)
 	{
 		tagForHelp = kFileNamePageDetailsContext;
-		bindingName = @"fileNameCountdown";
+		bindingName = @"fileNameCountString";
 		explanation = NSLocalizedString(@"Maximum 27 characters",@"brief indication of maximum length of file name");
 	}
 	else if (field == oMetaDescriptionField)
 	{	
 		tagForHelp = kMetaDescriptionPageDetailsContext;
-		bindingName = @"metaDescriptionCountdown";
+		bindingName = @"metaDescriptionCountString";
 		explanation = NSLocalizedString(@"More than 156 characters will be truncated",@"brief indication of maximum length of text");
 	}
 	else if (field == oWindowTitleField)
 	{
 		tagForHelp = kWindowTitlePageDetailsContext;
-		bindingName = @"windowTitleCountdown";
+		bindingName = @"windowTitleCountString";
 		explanation = NSLocalizedString(@"More than 65 characters will be truncated",@"brief indication of maximum length of text");
 	}
 	
@@ -1001,16 +1073,13 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			// We are cheating here .. there is only ONE active text field, help button, etc. ... 
 			// We fade out the window when we leave the field, but we immediately put these fields
 			// into a new attached window.  I think nobody is going to notice that though.
-			NSString *bindingPattern = [NSString stringWithFormat:@"%@1", NSDisplayPatternValueBinding];  
-			[oAttachedWindowTextField unbind:bindingPattern];
+			[oAttachedWindowTextField unbind:NSValueBinding];
 			
-            NSString *placeholder = NSLocalizedString(@"%{value1}@ characters", @"pattern for showing characters used");
-			[oAttachedWindowTextField setStringValue:placeholder];
-			const int widthExtra = 4;	// NSTextField uses a few more pixels than the string width
+			[oAttachedWindowTextField setStringValue:sCharacterDescriptionPluralCountFormat];
+			const int widthExtra = 25;	// Fudge a little bit for longer numbers bigger than the width of the placeholder string
 			float rightSide = ceilf([[oAttachedWindowTextField attributedStringValue] size].width) + widthExtra;
 
-			NSDictionary *bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:placeholder, NSDisplayPatternBindingOption, nil];
-			[oAttachedWindowTextField bind:bindingPattern toObject:self withKeyPath:bindingName options:bindingOptions];
+			[oAttachedWindowTextField bind:NSValueBinding toObject:self withKeyPath:bindingName options:nil];
             
 			[oAttachedWindowExplanation setStringValue:explanation];
 			
