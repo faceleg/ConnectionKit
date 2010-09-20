@@ -1077,8 +1077,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
                 SVTextDOMController *controller = [self textAreaForDOMRange:range];
                 
                 // Dropping an inline, wrap-causing image should be denied as it's the article controller's responsibility. #88523
-                if (controller == [[[sender draggedItems] lastObject] textDOMController] ||
-                    ![[controller textBlock] importsGraphics])
+                if (![[controller textBlock] importsGraphics] ||
+                    (controller == [[sender selectedItem] textDOMController]))
                 {
                     result = result - WebDragDestinationActionEdit;
                 }
