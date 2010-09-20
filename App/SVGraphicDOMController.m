@@ -306,8 +306,11 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
                                      pseudoElement:@""];
     
     CGFloat maxWidth = [[style width] floatValue];
-    if (size.width > maxWidth) size.width = 0.0f;
-    
+    if (size.width > maxWidth)
+    {
+        SVGraphic *graphic = [self representedObject];
+        size.width = ([graphic isExplicitlySized] ? maxWidth : 0.0f);
+    }
     
     return size;
 }
