@@ -100,7 +100,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [super didAddToPage:page];
     
     // Start off at a decent size
-    if ([[[self plugIn] class] sizeIsExplicit])
+    if ([[[self plugIn] class] isExplicitlySized])
     {
         NSUInteger maxWidth = 490;
         if ([self isPagelet]) maxWidth = 200;
@@ -275,12 +275,14 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (void)makeOriginalSize; { [[self plugIn] makeOriginalSize]; }
 
+- (BOOL)isExplicitlySized; { return [[[self plugIn] class] isExplicitlySized]; }
+
 - (NSNumber *)contentWidth;
 {
     SVPlugIn *plugIn = [self plugIn];
     
     NSNumber *result = nil;
-    if ([[plugIn class] sizeIsExplicit] || [[self placement] intValue] == SVGraphicPlacementInline)
+    if ([[plugIn class] isExplicitlySized] || [[self placement] intValue] == SVGraphicPlacementInline)
     {
         NSUInteger width = [plugIn width];
         if (width) result = [NSNumber numberWithUnsignedInteger:width];
@@ -315,7 +317,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     SVPlugIn *plugIn = [self plugIn];
     
     NSNumber *result = nil;
-    if ([[plugIn class] sizeIsExplicit])
+    if ([[plugIn class] isExplicitlySized])
     {
         NSUInteger height = [plugIn height];
         if (height) result = [NSNumber numberWithUnsignedInteger:height];

@@ -264,7 +264,7 @@ static id <SVPlugInContext> sCurrentContext;
     [self setHeight:0];
 }
 
-+ (BOOL)sizeIsExplicit; { return NO; }
++ (BOOL)isExplicitlySized; { return NO; }
 
 #pragma mark Pages
 

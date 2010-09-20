@@ -117,7 +117,7 @@
 
 #pragma mark Metrics
 
-+ (BOOL)sizeIsExplicit { return YES; }
++ (BOOL)isExplicitlySized { return YES; }
 
 
 #pragma mark Properties
