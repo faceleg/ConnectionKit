@@ -373,6 +373,16 @@
     if (bounds.size.height<=minSize.height) bounds.size.height = minSize.height;
     
     
+    // Finally, we can go ahead and resize
+    NSSize size = [self constrainSize:bounds.size handle:handle];
+    [self resizeToSize:size byMovingHandle:handle];
+    
+    
+    return handle;
+}
+
+- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle;
+{
     // Whew, what a lot of questions! Now, should this drag be disallowed on account of making the DOM element bigger than its container? #84958
     DOMNode *parent = [[self HTMLElement] parentNode];
     DOMCSSStyleDeclaration *style = [[[self HTMLElement] ownerDocument] 
@@ -380,14 +390,10 @@
                                      pseudoElement:@""];
     
     CGFloat maxWidth = [[style width] floatValue];
-    if (bounds.size.width > maxWidth) bounds.size.width = maxWidth;
+    if (size.width > maxWidth) size.width = maxWidth;
     
     
-    // Finally, we can go ahead and resize
-    [self resizeToSize:bounds.size byMovingHandle:handle];
-    
-    
-    return handle;
+    return size;
 }
 
 #pragma mark KVO
