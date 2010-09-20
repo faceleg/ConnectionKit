@@ -191,7 +191,13 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [self setHeight:nil];
 }
 
-- (BOOL)canMakeOriginalSize; { return YES; }
+- (BOOL)canMakeOriginalSize;
+{
+    // Graphics can return to their original size if explicitly sized, or placed outside sidebar
+    BOOL result = ([self isExplicitlySized] ||
+                   [[self placement] intValue] == SVGraphicPlacementInline);
+    return result;
+}
 
 - (BOOL)isExplicitlySized; { return NO; }
 
