@@ -120,7 +120,9 @@
     {
         NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
                                                                forKey:@"class"];
-        [[context HTMLWriter] startElement:@"div" bindSizeToPlugIn:self attributes:attributes];
+        [[context HTMLWriter] startElement:@"div" 
+                          bindSizeToPlugIn:self 
+                                attributes:attributes];
     }
 }
 
