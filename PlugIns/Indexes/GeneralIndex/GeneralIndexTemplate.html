@@ -1,45 +1,32 @@
 [[foreach indexedCollection.childPages item]]
 	<div class="article [[i]] [[eo]][[last]]">
-[[if indexedCollection.collectionHyperlinkPageTitles]]
-		[[textblock property:item.titleHTML flags:"line" tag:h3 graphicalTextCode:h3 hyperlink:item]]
+[[if hyperlinkPageTitles]]
+    <h3>[[=writeTitleAndLinkOfIteratedPage]]</h3>
 [[else]]
-		[[textblock property:item.titleHTML flags:"line" tag:h3 graphicalTextCode:h3]]
+    <h3>[[=writeTitleOfIteratedPage]]</h3>
 [[endif]]
-[[if item.thumbnail]]
-		<div class="article-thumbnail">
-			<a class="imageLink" [[target item]]href="[[path item]]"><img[[idClass entity:Page property:item.thumbnail flags:"anchor" id:item.uniqueID]]
-				src="[[mediainfo info:path media:item.thumbnail sizeToFit:thumbnailImageSize]]"
-				alt="[[=&item.titleText]]"
-				width="[[mediainfo info:width media:item.thumbnail sizeToFit:thumbnailImageSize]]"
-				height="[[mediainfo info:height media:item.thumbnail sizeToFit:thumbnailImageSize]]" /></a>
-		</div>
+[[if item.hasThumbnail]]
+ <div class="article-thumbnail">
+ <a class="imageLink" [[target item]]href="[[path item]]">[[=writeThumbnailOfIteratedPage]]</a>
+ </div>
 [[endif]]
-[[if item.customSummaryHTML]]
-[[else]]
-[[if userDefaults.allowCalloutsInIndex]][[COMMENT -- A HACK THAT WE SHOULD EXPOSE BETTER ]]
-[[parseComponent item parser.calloutContainerTemplateHTML]]
-[[endif2]]
-[[endif]]
-		<div class="article-summary">[[summary item indexedCollection.collectionTruncateCharacters]]</div>
+		<div class="article-summary">[[=writeSummaryOfIteratedPage]]</div>
 		<div class="article-info">
-[[if page.collectionTruncateCharacters>0]]
+[[if truncateChars>0]]
 			<div class="continue-reading-link">
 				[[if parser.HTMLGenerationPurpose]]<a href="[[path item]]">[[endif2]][[continueReadingLink item]][[if parser.HTMLGenerationPurpose]]</a>[[endif2]]
 			</div>
 [[endif]]
-
 [[if item.includeTimestamp]]
 			<div class="timestamp">
-[[if page.collectionShowPermanentLink]]
+[[if showPermanentLink]]
 				<a [[target item]]href="[[path item]]">[[=&item.timestamp]]</a>
 [[else2]]
 				[[=&item.timestamp]]
 [[endif2]]
 			</div>
 [[endif]]
-
-[[parsecomponent item item.commentsTemplate]]
-
+[['TURN OFF until works in reg pages..parsecomponent item item.commentsTemplate]]
 		</div> <!-- article-info -->
 	</div> <!-- article -->
 	<div class="clear"></div>

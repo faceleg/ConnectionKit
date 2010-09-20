@@ -39,6 +39,106 @@
 
 @implementation GeneralIndexPlugIn
 
+
+#pragma mark SVIndexPlugIn
+
++ (NSArray *)plugInKeys
+{ 
+    NSArray *plugInKeys = [NSArray arrayWithObjects:
+                           @"hyperlinkPageTitles", 
+                           @"showPermanentLink", 
+                           @"truncateChars", 
+                           nil];    
+    return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
+}
+
+
+#pragma mark HTML Generation
+
+- (void)writeHTML:(id <SVPlugInContext>)context
+{
+    // parse template
+    [super writeHTML:context];
+    
+    // add dependencies
+    [context addDependencyForKeyPath:@"hyperlinkPageTitles" ofObject:self];
+    [context addDependencyForKeyPath:@"showPermanentLink" ofObject:self];
+    [context addDependencyForKeyPath:@"truncateChars" ofObject:self];
+}
+
+
+/*
+ [[textblock property:item.titleHTML flags:"line" tag:h3 graphicalTextCode:h3 hyperlink:item]]
+*/
+
+- (void)writeTitleAndLinkOfIteratedPage
+{
+    id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+    
+    [[context HTMLWriter] startAnchorElementWithPage:iteratedPage];
+    [context writeTitleOfPage:iteratedPage
+                  asPlainText:NO
+             enclosingElement:nil
+                   attributes:nil];
+    [[context HTMLWriter] endElement]; // </a>
+}
+
+
+/*
+ [[textblock property:item.titleHTML flags:"line" tag:h3 graphicalTextCode:h3]]
+*/
+
+- (void)writeTitleOfIteratedPage
+{
+    id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+    
+    [context writeTitleOfPage:iteratedPage
+                  asPlainText:NO
+             enclosingElement:nil
+                   attributes:nil];
+}
+
+
+/*
+ [[summary item indexedCollection.collectionTruncateCharacters]]
+ */
+
+- (void)writeSummaryOfIteratedPage
+{
+    id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+    //FIXME: summary needs to be truncated at truncateChars
+    [iteratedPage writeSummary:context];
+}
+
+
+/*
+<img[[idClass entity:Page property:item.thumbnail flags:"anchor" id:item.uniqueID]]
+ src="[[mediainfo info:path media:item.thumbnail sizeToFit:thumbnailImageSize]]"
+ alt="[[=&item.titleText]]"
+ width="[[mediainfo info:width media:item.thumbnail sizeToFit:thumbnailImageSize]]"
+ height="[[mediainfo info:height media:item.thumbnail sizeToFit:thumbnailImageSize]]" />*/
+
+- (void)writeThumbnailImageOfIteratedPage
+{
+    id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+    
+    [[context HTMLWriter] writeThumbnailImageOfPage:iteratedPage 
+                                          className:@"" 
+                                           maxWidth:[self thumbnailImageSize].width 
+                                          maxHeight:[self thumbnailImageSize].height];
+}
+
 - (NSSize)thumbnailImageSize { return NSMakeSize(64.0, 64.0); }
+
+
+#pragma mark Properties
+
+@synthesize hyperlinkPageTitles = _hyperlinkPageTitles;
+@synthesize showPermanentLink = _showPermanentLink;
+@synthesize truncateChars = _truncateChars;
 
 @end

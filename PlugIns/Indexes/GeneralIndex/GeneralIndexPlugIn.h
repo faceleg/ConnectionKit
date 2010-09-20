@@ -39,7 +39,15 @@
 
 @interface GeneralIndexPlugIn : SVIndexPlugIn 
 {
-
+    BOOL _hyperlinkPageTitles;
+    BOOL _showPermanentLink;
+    NSUInteger _truncateChars;
 }
+
+- (NSSize)thumbnailImageSize;
+
+@property (nonatomic, assign) BOOL hyperlinkPageTitles;
+@property (nonatomic, assign) BOOL showPermanentLink;
+@property (nonatomic, assign) NSUInteger truncateChars;
 
 @end
