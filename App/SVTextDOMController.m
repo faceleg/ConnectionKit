@@ -254,6 +254,8 @@
 
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification; { }
 
+- (BOOL)webEditorTextValidateDrop:(id <NSDraggingInfo>)dragInfo; { return YES; }
+
 #pragma mark Pasteboard / Drag
 
 // Up to subclasses to add custom types

@@ -237,9 +237,6 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 #pragma mark Controlling Drag Behavior
 
-// Same as WebUIDelegate method, except it only gets called if .draggingDestinationDelegate rejected the drag
-- (NSUInteger)webEditor:(WEKWebEditorView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)draggingInfo;
-
 /*!
  @method webEditorView:writeItems:toPasteboard:
  @param sender

@@ -38,5 +38,6 @@
                                    stillSelecting:(BOOL)flag;
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification;
 
+- (BOOL)webEditorTextValidateDrop:(id <NSDraggingInfo>)dragInfo;
 
 @end

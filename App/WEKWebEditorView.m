@@ -1644,7 +1644,25 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     if (![[self webView] delegateWillHandleDraggingInfo])
     {
-        result = [[self dataSource] webEditor:self dragDestinationActionMaskForDraggingInfo:dragInfo];
+        result = WebDragDestinationActionDHTML | WebDragDestinationActionEdit;
+                
+        // Don't drop graphics into text areas which don't support it
+        id source = [dragInfo draggingSource];
+        if ([source isKindOfClass:[NSResponder class]] &&
+            [self ks_followsResponder:source] &&
+            [self selectedItem])
+        {
+            NSPoint location = [sender convertPointFromBase:[dragInfo draggingLocation]];
+            DOMRange *range = [sender editableDOMRangeForPoint:location];
+            if (range)
+            {
+                id <SVWebEditorText> controller = [self textItemForDOMRange:range];
+                if (![controller webEditorTextValidateDrop:dragInfo])
+                {
+                    result = result - WebDragDestinationActionEdit;
+                }
+            }
+        }
     }
     
     return result;
