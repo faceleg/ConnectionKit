@@ -1,6 +1,6 @@
 [[foreach indexedCollection.childPages item]]
 	<div class="article [[i]] [[eo]][[last]]">
-[[if hyperlinkPageTitles]]
+[[if hyperlinkTitles]]
     <h3>[[=writeTitleAndLinkOfIteratedPage]]</h3>
 [[else]]
     <h3>[[=writeTitleOfIteratedPage]]</h3>
@@ -19,7 +19,7 @@
 [[endif]]
 [[if item.includeTimestamp]]
 			<div class="timestamp">
-[[if showPermanentLink]]
+[[if showPermaLink]]
 				<a [[target item]]href="[[path item]]">[[=&item.timestamp]]</a>
 [[else2]]
 				[[=&item.timestamp]]

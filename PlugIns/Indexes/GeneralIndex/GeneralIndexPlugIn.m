@@ -45,8 +45,8 @@
 + (NSArray *)plugInKeys
 { 
     NSArray *plugInKeys = [NSArray arrayWithObjects:
-                           @"hyperlinkPageTitles", 
-                           @"showPermanentLink", 
+                           @"hyperlinkTitles", 
+                           @"showPermaLink", 
                            @"truncateChars", 
                            nil];    
     return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
@@ -61,7 +61,7 @@
     [super writeHTML:context];
     
     // add dependencies
-    [context addDependencyForKeyPath:@"hyperlinkPageTitles" ofObject:self];
+    [context addDependencyForKeyPath:@"hyperlinkTitles" ofObject:self];
     [context addDependencyForKeyPath:@"showPermanentLink" ofObject:self];
     [context addDependencyForKeyPath:@"truncateChars" ofObject:self];
 }
@@ -137,8 +137,8 @@
 
 #pragma mark Properties
 
-@synthesize hyperlinkPageTitles = _hyperlinkPageTitles;
-@synthesize showPermanentLink = _showPermanentLink;
+@synthesize hyperlinkTitles = _hyperlinkTitles;
+@synthesize showPermaLink = _showPermaLink;
 @synthesize truncateChars = _truncateChars;
 
 @end
