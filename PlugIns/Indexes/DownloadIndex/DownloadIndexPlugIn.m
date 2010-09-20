@@ -112,8 +112,8 @@
     
     [context writeTitleOfPage:iteratedPage
                   asPlainText:YES
-             enclosingElement:nil
-                   attributes:nil];
+             enclosingElement:@"span"
+                   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
 }
 
 
