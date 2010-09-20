@@ -316,12 +316,6 @@
 
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
 {
-    // Size calculated – now what to store?
-    SVGraphic *graphic = [self representedObject];
-	[graphic setWidth:[NSNumber numberWithFloat:size.width]];
-    
-    
-    
     // The DOM has been updated, which may have caused layout. So position the mouse cursor to match
     /*point = [self locationOfHandle:handle];
      NSView *view = [[self HTMLElement] documentView];

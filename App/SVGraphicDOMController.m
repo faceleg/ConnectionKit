@@ -286,6 +286,16 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return (element ? [super resizingMask] : 0);
 }
 
+- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
+{
+    // Size calculated – now what to store?
+    SVGraphic *graphic = [self representedObject];
+	[graphic setWidth:[NSNumber numberWithFloat:size.width]];
+    
+    
+    [super resizeToSize:size byMovingHandle:handle];
+}
+
 @end
 
 
