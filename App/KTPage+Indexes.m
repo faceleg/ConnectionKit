@@ -242,7 +242,15 @@
 
 - (NSArray *)feedEnclosures
 {
-	NSArray *result = nil;
+    NSSet *attachments = [[self article] attachments];
+	NSMutableArray *result = [NSMutableArray arrayWithCapacity:[attachments count]];
+    
+    for (SVTextAttachment *anAttachment in attachments)
+    {
+        id <SVEnclosure> enclosure = [[anAttachment graphic] enclosure];
+        if (enclosure) [result addObject:enclosure];
+    }
+    
 	return result;
 }
 
