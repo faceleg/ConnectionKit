@@ -1001,13 +1001,15 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			// We are cheating here .. there is only ONE active text field, help button, etc. ... 
 			// We fade out the window when we leave the field, but we immediately put these fields
 			// into a new attached window.  I think nobody is going to notice that though.
-			[oAttachedWindowTextField unbind:@"displayPatternValue1"];
+			NSString *displayPatternValue1Binding 
+			= [NSString stringWithFormat:@"%@1", NSDisplayPatternValueBinding];  
+			[oAttachedWindowTextField unbind:displayPatternValue1Binding];
 			NSString *placeholder = NSLocalizedString(@"%{value1}@ characters", @"pattern for showing characters used");
 			NSDictionary *bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:placeholder, NSDisplayPatternBindingOption, nil];
-			[oAttachedWindowTextField bind:@"displayPatternValue1" toObject:self withKeyPath:bindingName options:bindingOptions];
+			[oAttachedWindowTextField bind:displayPatternValue1Binding toObject:self withKeyPath:bindingName options:bindingOptions];
 
-			[oAttachedWindowTextField setStringValue:placeholder];		// SHOULD NOT SEE.  RESERVES ENOUGH WIDTH THOUGH....
-			[oAttachedWindowExplanation setStringValue:explanation];
+//			[oAttachedWindowTextField setStringValue:placeholder];		// SHOULD NOT SEE.  RESERVES ENOUGH WIDTH THOUGH....
+//			[oAttachedWindowExplanation setStringValue:explanation];
 
 			const int widthExtra = 4;	// NSTextField uses a few more pixels than the string width
 			float rightSide = ceilf([[oAttachedWindowTextField attributedStringValue] size].width) + widthExtra;
