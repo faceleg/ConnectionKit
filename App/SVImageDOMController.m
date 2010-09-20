@@ -67,23 +67,9 @@
                            handle == kSVGraphicLowerRightHandle);
     
     
-    // Snap to original size if you are very close to it
-	SVImage *image = [self representedObject];
-	CGSize originalSize = [image originalSize];
-	
-#define SNAP 4
-	if (resizingWidth && ( abs(size.width - originalSize.width) < SNAP) )
-	{
-		size.width = originalSize.width;
-	}
-	if (resizingHeight && ( abs(size.height - originalSize.height) < SNAP) )
-	{
-		size.height = originalSize.height;
-	}
-    
-    
     // Apply the change
-    if (resizingWidth)
+    SVImage *image = [self representedObject];
+	if (resizingWidth)
     {
         if (resizingHeight)
         {
@@ -208,6 +194,45 @@
     {
         [self setHTMLElement:[imageController HTMLElement]];
     }
+}
+
+#pragma mark Resizing
+
+- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle;
+{
+    size = [super constrainSize:size handle:handle];
+    
+    
+    // Snap to original size if you are very close to it
+	BOOL resizingWidth = (handle == kSVGraphicUpperLeftHandle ||
+                          handle == kSVGraphicMiddleLeftHandle ||
+                          handle == kSVGraphicLowerLeftHandle ||
+                          handle == kSVGraphicUpperRightHandle ||
+                          handle == kSVGraphicMiddleRightHandle ||
+                          handle == kSVGraphicLowerRightHandle);
+    
+    BOOL resizingHeight = (handle == kSVGraphicUpperLeftHandle ||
+                           handle == kSVGraphicUpperMiddleHandle ||
+                           handle == kSVGraphicUpperRightHandle ||
+                           handle == kSVGraphicLowerLeftHandle ||
+                           handle == kSVGraphicLowerMiddleHandle ||
+                           handle == kSVGraphicLowerRightHandle);
+    
+    SVImage *image = [self representedObject];
+	CGSize originalSize = [image originalSize];
+	
+#define SNAP 4
+	if (resizingWidth && ( abs(size.width - originalSize.width) < SNAP) )
+	{
+		size.width = originalSize.width;
+	}
+	if (resizingHeight && ( abs(size.height - originalSize.height) < SNAP) )
+	{
+		size.height = originalSize.height;
+	}
+    
+    
+    return size;
 }
 
 @end
