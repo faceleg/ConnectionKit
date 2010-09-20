@@ -3,15 +3,15 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">788</string>
+		<string key="IBDocument.InterfaceBuilderVersion">762</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<dictionary class="NSMutableDictionary" key="IBDocument.PluginVersions">
-			<string key="com.apple.InterfaceBuilder.CocoaPlugin">788</string>
+			<string key="com.apple.InterfaceBuilder.CocoaPlugin">762</string>
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="2045"/>
+			<integer value="1649"/>
 			<integer value="1793"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -628,7 +628,7 @@
 													</array>
 													<string key="NSFrame">{{113, 5}, {699, 58}}</string>
 													<reference key="NSSuperview" ref="641495171"/>
-													<string key="NSClassName">NSView</string>
+													<string key="NSClassName">KSShadowedRectView</string>
 												</object>
 												<object class="NSCustomView" id="607898317">
 													<reference key="NSNextResponder" ref="641495171"/>
@@ -2195,28 +2195,6 @@
 						<string key="showNewsWindow:">id</string>
 						<string key="showRegistrationWindow:">id</string>
 					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key=":">
-							<string key="name">:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="getUpdatedApplication:">
-							<string key="name">getUpdatedApplication:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="myAction:">
-							<string key="name">myAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showNewsWindow:">
-							<string key="name">showNewsWindow:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showRegistrationWindow:">
-							<string key="name">showRegistrationWindow:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
@@ -2244,13 +2222,6 @@
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">mySelectedObject</string>
 						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">mySelectedObject</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">mySelectedObject</string>
-							<string key="candidateClassName">id</string>
-						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -2309,6 +2280,8 @@
 						<string key="chooseDesign:">id</string>
 						<string key="exportSite:">id</string>
 						<string key="exportSiteAgain:">id</string>
+						<string key="nextDesign:">id</string>
+						<string key="previousDesign:">id</string>
 						<string key="publishSiteAll:">id</string>
 						<string key="publishSiteChanges:">id</string>
 						<string key="publishSiteFromToolbar:">NSToolbarItem</string>
@@ -2319,80 +2292,6 @@
 						<string key="visitPublishedPage:">id</string>
 						<string key="visitPublishedSite:">id</string>
 						<string key="windowHelp:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="addCollection:">
-							<string key="name">addCollection:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="addExternalLinkPage:">
-							<string key="name">addExternalLinkPage:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="addFilePage:">
-							<string key="name">addFilePage:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="addPage:">
-							<string key="name">addPage:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="addRawTextPage:">
-							<string key="name">addRawTextPage:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="chooseDesign:">
-							<string key="name">chooseDesign:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="exportSite:">
-							<string key="name">exportSite:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="exportSiteAgain:">
-							<string key="name">exportSiteAgain:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="publishSiteAll:">
-							<string key="name">publishSiteAll:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="publishSiteChanges:">
-							<string key="name">publishSiteChanges:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="publishSiteFromToolbar:">
-							<string key="name">publishSiteFromToolbar:</string>
-							<string key="candidateClassName">NSToolbarItem</string>
-						</object>
-						<object class="IBActionInfo" key="reload:">
-							<string key="name">reload:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showChooseDesignSheet:">
-							<string key="name">showChooseDesignSheet:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="submitSiteToDirectory:">
-							<string key="name">submitSiteToDirectory:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="toggleSmallPageIcons:">
-							<string key="name">toggleSmallPageIcons:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="visitPublishedPage:">
-							<string key="name">visitPublishedPage:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="visitPublishedSite:">
-							<string key="name">visitPublishedSite:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="windowHelp:">
-							<string key="name">windowHelp:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="oActionPopup">BWAnchoredPopUpButton</string>
@@ -2407,56 +2306,6 @@
 						<string key="pagesController">SVPagesController</string>
 						<string key="siteOutlineViewController">SVSiteOutlineViewController</string>
 						<string key="webContentAreaController">SVWebContentAreaController</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="oActionPopup">
-							<string key="name">oActionPopup</string>
-							<string key="candidateClassName">BWAnchoredPopUpButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oLinkControlsBox">
-							<string key="name">oLinkControlsBox</string>
-							<string key="candidateClassName">RoundedBox</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oLinkDestinationField">
-							<string key="name">oLinkDestinationField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oLinkLocalPageField">
-							<string key="name">oLinkLocalPageField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oLinkOpenInNewWindowSwitch">
-							<string key="name">oLinkOpenInNewWindowSwitch</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oLinkPanel">
-							<string key="name">oLinkPanel</string>
-							<string key="candidateClassName">KSBorderlessWindow</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oLinkView">
-							<string key="name">oLinkView</string>
-							<string key="candidateClassName">KTLinkSourceView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oMessageTextField">
-							<string key="name">oMessageTextField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oMessageWindow">
-							<string key="name">oMessageWindow</string>
-							<string key="candidateClassName">KSBorderlessWindow</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="pagesController">
-							<string key="name">pagesController</string>
-							<string key="candidateClassName">SVPagesController</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="siteOutlineViewController">
-							<string key="name">siteOutlineViewController</string>
-							<string key="candidateClassName">SVSiteOutlineViewController</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="webContentAreaController">
-							<string key="name">webContentAreaController</string>
-							<string key="candidateClassName">SVWebContentAreaController</string>
-						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -2478,13 +2327,6 @@
 						<string key="NS.key.0">delegate</string>
 						<string key="NS.object.0">id</string>
 					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">delegate</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">delegate</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">KTLinkSourceView.h</string>
@@ -2496,13 +2338,6 @@
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">myDelegate</string>
 						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">myDelegate</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">myDelegate</string>
-							<string key="candidateClassName">id</string>
-						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
@@ -2516,20 +2351,6 @@
 						<string key="chooseFile:">id</string>
 						<string key="pageDetailsHelp:">id</string>
 						<string key="preview:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="chooseFile:">
-							<string key="name">chooseFile:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="pageDetailsHelp:">
-							<string key="name">pageDetailsHelp:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="preview:">
-							<string key="name">preview:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="oAttachedWindowExplanation">NSTextField</string>
@@ -2553,92 +2374,6 @@
 						<string key="oSlashSeparator">NSTextField</string>
 						<string key="oWindowTitleField">NSTextField</string>
 						<string key="oWindowTitlePrompt">NSTextField</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="oAttachedWindowExplanation">
-							<string key="name">oAttachedWindowExplanation</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oAttachedWindowHelpButton">
-							<string key="name">oAttachedWindowHelpButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oAttachedWindowTextField">
-							<string key="name">oAttachedWindowTextField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oAttachedWindowView">
-							<string key="name">oAttachedWindowView</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oBaseURLField">
-							<string key="name">oBaseURLField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oChooseFileButton">
-							<string key="name">oChooseFileButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oDocWindowController">
-							<string key="name">oDocWindowController</string>
-							<string key="candidateClassName">KTDocWindowController</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oDotSeparator">
-							<string key="name">oDotSeparator</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oExtensionPopup">
-							<string key="name">oExtensionPopup</string>
-							<string key="candidateClassName">KSFancySchmancyBindingsPopUpButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oExternalURLField">
-							<string key="name">oExternalURLField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oFileNameField">
-							<string key="name">oFileNameField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oFilePrompt">
-							<string key="name">oFilePrompt</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oFollowButton">
-							<string key="name">oFollowButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oIndexDotSeparator">
-							<string key="name">oIndexDotSeparator</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oMetaDescriptionField">
-							<string key="name">oMetaDescriptionField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oMetaDescriptionPrompt">
-							<string key="name">oMetaDescriptionPrompt</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oMultiplePagesField">
-							<string key="name">oMultiplePagesField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oPagesController">
-							<string key="name">oPagesController</string>
-							<string key="candidateClassName">SVPagesController</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oSlashSeparator">
-							<string key="name">oSlashSeparator</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oWindowTitleField">
-							<string key="name">oWindowTitleField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oWindowTitlePrompt">
-							<string key="name">oWindowTitlePrompt</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -2790,16 +2525,6 @@
 						<string key="imagePickerCancelled:">id</string>
 						<string key="imagePickerSet:">id</string>
 					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="imagePickerCancelled:">
-							<string key="name">imagePickerCancelled:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="imagePickerSet:">
-							<string key="name">imagePickerSet:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">ImageCropperController.h</string>
@@ -2838,16 +2563,6 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="createLink:">SVLinkManager</string>
 						<string key="unlink:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="createLink:">
-							<string key="name">createLink:</string>
-							<string key="candidateClassName">SVLinkManager</string>
-						</object>
-						<object class="IBActionInfo" key="unlink:">
-							<string key="name">unlink:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="1051338742">
 						<string key="majorKey">IBProjectSource</string>
@@ -2999,13 +2714,6 @@
 						<string key="NS.key.0">hideWindow:</string>
 						<string key="NS.object.0">id</string>
 					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">hideWindow:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">hideWindow:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/NSWindowController+Karelia.h</string>
@@ -3057,13 +2765,6 @@
 						<string key="NS.key.0">orderFrontLinkPanel:</string>
 						<string key="NS.object.0">id</string>
 					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">orderFrontLinkPanel:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">orderFrontLinkPanel:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
 					<reference key="sourceIdentifier" ref="1051338742"/>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3084,41 +2785,9 @@
 						<string key="duplicate:">id</string>
 						<string key="rename:">id</string>
 					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="copy:">
-							<string key="name">copy:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="cut:">
-							<string key="name">cut:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="delete:">
-							<string key="name">delete:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="duplicate:">
-							<string key="name">duplicate:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="rename:">
-							<string key="name">rename:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="oSplitView">BWSplitView</string>
 						<string key="outlineView">NSOutlineView</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="oSplitView">
-							<string key="name">oSplitView</string>
-							<string key="candidateClassName">BWSplitView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="outlineView">
-							<string key="name">outlineView</string>
-							<string key="candidateClassName">NSOutlineView</string>
-						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -3131,13 +2800,6 @@
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">selectWebViewViewType:</string>
 						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">selectWebViewViewType:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">selectWebViewViewType:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 					</object>
 					<reference key="sourceIdentifier" ref="788347081"/>
 				</object>
@@ -3189,13 +2851,6 @@
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">toggleCollapse:</string>
 						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">toggleCollapse:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">toggleCollapse:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
@@ -4104,13 +3759,6 @@
 						<string key="NS.key.0">view</string>
 						<string key="NS.object.0">NSView</string>
 					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">view</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">view</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSViewController.h</string>
@@ -4158,13 +3806,6 @@
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">showWindow:</string>
 						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">showWindow:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">showWindow:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>

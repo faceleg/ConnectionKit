@@ -132,84 +132,89 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void)awakeFromNib
 {
+	if (!_awokenFromNib)
+	{
 		// Save these so we can restore them quickly when we are re-binding
-	self.initialWindowTitleBindingOptions = [[oWindowTitleField infoForBinding:NSValueBinding] valueForKey:NSOptionsKey];
-	self.initialMetaDescriptionBindingOptions = [[oMetaDescriptionField infoForBinding:NSValueBinding] valueForKey:NSOptionsKey];
-	
-	[oExternalURLField setFormatter:[[[KSURLFormatter alloc] init] autorelease]];
-	
-	// Detail panel needs the right appearance
-	
-	[[self view] setPostsFrameChangedNotifications:YES];
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(backgroundFrameChanged:)
-												 name:NSViewFrameDidChangeNotification
-											   object:[self view]];
-
-	[self layoutPageURLComponents];
-
-	// Observe changes to the meta description and fake an initial observation
-	[oPagesController addObserver:self
-					   forKeyPath:@"selection.metaDescription"
-						  options:NSKeyValueObservingOptionNew
-						  context:sMetaDescriptionObservationContext];
-	[self metaDescriptionDidChangeToValue:[oPagesController valueForKeyPath:@"selection.metaDescription"]];
-	[self resetDescriptionPlaceholder:[oPagesController valueForKeyPath:@"selection.metaDescription"]];
-	
-	[oPagesController addObserver:self
-					   forKeyPath:@"selection.windowTitle"
-						  options:NSKeyValueObservingOptionNew
-						  context:sWindowTitleObservationContext];
-	[self windowTitleDidChangeToValue:[oPagesController valueForKeyPath:@"selection.windowTitle"]];
-	[oPagesController addObserver:self
-					   forKeyPath:@"selection.fileName"
-						  options:NSKeyValueObservingOptionNew
-						  context:sFileNameObservationContext];
-	[self fileNameDidChangeToValue:[oPagesController valueForKeyPath:@"selection.fileName"]];
-
-	[oPagesController addObserver:self
-					   forKeyPath:@"selection.baseExampleURLString"
-						  options:NSKeyValueObservingOptionNew
-						  context:sBaseExampleURLStringObservationContext];
-	
-	
-	[oPagesController addObserver:self
-					   forKeyPath:@"selection.title"
-						  options:NSKeyValueObservingOptionNew
-						  context:sTitleObservationContext];
-	[self resetTitlePlaceholderToComboTitleText:[oPagesController valueForKeyPath:@"selection.comboTitleText"]];
+		self.initialWindowTitleBindingOptions = [[oWindowTitleField infoForBinding:NSValueBinding] valueForKey:NSOptionsKey];
+		self.initialMetaDescriptionBindingOptions = [[oMetaDescriptionField infoForBinding:NSValueBinding] valueForKey:NSOptionsKey];
 		
-	[oPagesController addObserver:self
-					   forKeyPath:@"selectedObjects"
-						  options:NSKeyValueObservingOptionNew
-						  context:sSelectedObjectsObservationContext];
-	[self updateFieldsBasedOnSelectedSiteOutlineObjects:[oPagesController selectedObjects]];
-	
-	[[oDocWindowController webContentAreaController]
-						addObserver:self
-						 forKeyPath:@"selectedViewController"
-							options:NSKeyValueObservingOptionNew
-							context:sSelectedViewControllerObservationContext];
-	[self rebindWindowTitleAndMetaDescriptionFields];
-
-	
-	/// turn off undo within the cell to avoid exception
-	/// -[NSBigMutableString substringWithRange:] called with out-of-bounds range
-	/// this still leaves the setting of keywords for the page undo'able, it's
-	/// just now that typing inside the field is now not undoable
-	//[[oKeywordsField cell] setAllowsUndo:NO];
-	
-	
-	// Limit entry in file name fields
-	NSCharacterSet *illegalCharSetForPageTitles = [[NSCharacterSet legalPageTitleCharacterSet] invertedSet];
-	NSFormatter *formatter = [[[KSValidateCharFormatter alloc]
-							   initWithIllegalCharacterSet:illegalCharSetForPageTitles] autorelease];
-	[oFileNameField setFormatter:formatter];
-	
-	[oExtensionPopup bind:@"defaultValue"
+		[oExternalURLField setFormatter:[[[KSURLFormatter alloc] init] autorelease]];
+		
+		// Detail panel needs the right appearance
+		
+		[[self view] setPostsFrameChangedNotifications:YES];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(backgroundFrameChanged:)
+													 name:NSViewFrameDidChangeNotification
+												   object:[self view]];
+		
+		[self layoutPageURLComponents];
+		
+		// Observe changes to the meta description and fake an initial observation
+		[oPagesController addObserver:self
+						   forKeyPath:@"selection.metaDescription"
+							  options:NSKeyValueObservingOptionNew
+							  context:sMetaDescriptionObservationContext];
+		[self metaDescriptionDidChangeToValue:[oPagesController valueForKeyPath:@"selection.metaDescription"]];
+		[self resetDescriptionPlaceholder:[oPagesController valueForKeyPath:@"selection.metaDescription"]];
+		
+		[oPagesController addObserver:self
+						   forKeyPath:@"selection.windowTitle"
+							  options:NSKeyValueObservingOptionNew
+							  context:sWindowTitleObservationContext];
+		[self windowTitleDidChangeToValue:[oPagesController valueForKeyPath:@"selection.windowTitle"]];
+		[oPagesController addObserver:self
+						   forKeyPath:@"selection.fileName"
+							  options:NSKeyValueObservingOptionNew
+							  context:sFileNameObservationContext];
+		[self fileNameDidChangeToValue:[oPagesController valueForKeyPath:@"selection.fileName"]];
+		
+		[oPagesController addObserver:self
+						   forKeyPath:@"selection.baseExampleURLString"
+							  options:NSKeyValueObservingOptionNew
+							  context:sBaseExampleURLStringObservationContext];
+		
+		
+		[oPagesController addObserver:self
+						   forKeyPath:@"selection.title"
+							  options:NSKeyValueObservingOptionNew
+							  context:sTitleObservationContext];
+		[self resetTitlePlaceholderToComboTitleText:[oPagesController valueForKeyPath:@"selection.comboTitleText"]];
+		
+		[oPagesController addObserver:self
+						   forKeyPath:@"selectedObjects"
+							  options:NSKeyValueObservingOptionNew
+							  context:sSelectedObjectsObservationContext];
+		[self updateFieldsBasedOnSelectedSiteOutlineObjects:[oPagesController selectedObjects]];
+		
+		[[oDocWindowController webContentAreaController]
+		 addObserver:self
+		 forKeyPath:@"selectedViewController"
+		 options:NSKeyValueObservingOptionNew
+		 context:sSelectedViewControllerObservationContext];
+		[self rebindWindowTitleAndMetaDescriptionFields];
+		
+		
+		/// turn off undo within the cell to avoid exception
+		/// -[NSBigMutableString substringWithRange:] called with out-of-bounds range
+		/// this still leaves the setting of keywords for the page undo'able, it's
+		/// just now that typing inside the field is now not undoable
+		//[[oKeywordsField cell] setAllowsUndo:NO];
+		
+		
+		// Limit entry in file name fields
+		NSCharacterSet *illegalCharSetForPageTitles = [[NSCharacterSet legalPageTitleCharacterSet] invertedSet];
+		NSFormatter *formatter = [[[KSValidateCharFormatter alloc]
+								   initWithIllegalCharacterSet:illegalCharSetForPageTitles] autorelease];
+		[oFileNameField setFormatter:formatter];
+		
+		[oExtensionPopup bind:@"defaultValue"
 					 toObject:oPagesController
 				  withKeyPath:@"selection.defaultFileExtension"
 					  options:nil];
+		
+		_awokenFromNib = YES;
+	}
 }
 
 #pragma mark -
@@ -968,7 +973,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 {
 	if (!textField) return;	// we may have no active text field
 	
-	KSShadowedRectView *view = (KSShadowedRectView *)[self view];
+	KSShadowedRectView *view = (KSShadowedRectView *)[textField superview];
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
 	
 	NSTextView *fieldEditor = (NSTextView *)[textField currentEditor];
@@ -981,7 +986,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	float fieldWidth = fieldRect.size.width;
 	int width = ceilf(MIN(textWidth, fieldWidth));
 	width = MAX(width, 7);		// make sure it's at least 7 pixels wide
-	//NSLog(@"'%@' widths: text = %.2f, field = %.2f => %d", [textField stringValue], textWidth, fieldWidth, width);
+	NSLog(@"'%@' widths: text = %.2f, field = %.2f => %d", [textField stringValue], textWidth, fieldWidth, width);
 	fieldRect.size.width = width;
 	[view setShadowRect:fieldRect];
 	
@@ -1032,7 +1037,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void)controlTextDidBecomeFirstResponder:(NSNotification *)notification;
 {
-	KSShadowedRectView *view = (KSShadowedRectView *)[self view];
+	KSShadowedRectView *view = (KSShadowedRectView *)[[notification object] superview];
 	NSTextField *field = [notification object];
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
 
@@ -1144,7 +1149,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void)controlTextDidResignFirstResponder:(NSNotification *)notification;
 {
-	KSShadowedRectView *view = (KSShadowedRectView *)[self view];
+	KSShadowedRectView *view = (KSShadowedRectView *)[[notification object] superview];
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
 	[view setShadowRect:NSZeroRect];
 	self.activeTextField = nil;

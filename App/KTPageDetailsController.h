@@ -62,6 +62,7 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 	NSDictionary *_initialWindowTitleBindingOptions;
 	NSDictionary *_initialMetaDescriptionBindingOptions;
 
+	BOOL _awokenFromNib;
 	
 }
 
