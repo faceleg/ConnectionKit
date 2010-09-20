@@ -76,11 +76,12 @@
 
 #pragma mark Convenience/Special
 
-//  <a href="...." target="..." rel="nofollow">
-- (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
-
-// Like above, but handles subtleties of Sandvox pages
+// Handles subtleties of Sandvox pages
 - (void)startAnchorElementWithPage:(id <SVPage>)page;
+
+//  <a href="...." target="..." rel="nofollow">
+//  Raw version of the above for if you need to link to something over than an SVPage
+- (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
 
 // <IMG> tag by scaling the page's thumbnail to desired size
 - (void)writeThumbnailImageOfPage:(id <SVPage>)page className:(NSString *)className maxWidth:(NSUInteger)width maxHeight:(NSUInteger)height;
