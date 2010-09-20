@@ -66,6 +66,8 @@
 
 - (NSArray *)archivePages; { return nil; }
 
+- (NSString *)timestampDescription; { return nil; }
+
 #pragma mark Location
 
 - (NSURL *)URL;
@@ -111,6 +113,6 @@
 - (BOOL)shouldIncludeInIndexes; { return NO; }
 - (BOOL)shouldIncludeInSiteMaps; { return NO; }
 
-- (id <SVMedia>)thumbnail; { return nil; }
+- (BOOL) hasThumbnail; { return NO; }
 
 @end
