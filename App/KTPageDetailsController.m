@@ -1001,19 +1001,18 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			// We are cheating here .. there is only ONE active text field, help button, etc. ... 
 			// We fade out the window when we leave the field, but we immediately put these fields
 			// into a new attached window.  I think nobody is going to notice that though.
-			NSString *bindingName = [NSString stringWithFormat:@"%@1", NSDisplayPatternValueBinding];  
-			[oAttachedWindowTextField unbind:bindingName];
+			NSString *bindingPattern = [NSString stringWithFormat:@"%@1", NSDisplayPatternValueBinding];  
+			[oAttachedWindowTextField unbind:bindingPattern];
 			
             NSString *placeholder = NSLocalizedString(@"%{value1}@ characters", @"pattern for showing characters used");
-			NSDictionary *bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:placeholder, NSDisplayPatternBindingOption, nil];
-			[oAttachedWindowTextField bind:bindingName toObject:self withKeyPath:bindingName options:bindingOptions];
-
-            
-//			[oAttachedWindowTextField setStringValue:placeholder];		// SHOULD NOT SEE.  RESERVES ENOUGH WIDTH THOUGH....
-//			[oAttachedWindowExplanation setStringValue:explanation];
-
+			[oAttachedWindowTextField setStringValue:placeholder];
 			const int widthExtra = 4;	// NSTextField uses a few more pixels than the string width
 			float rightSide = ceilf([[oAttachedWindowTextField attributedStringValue] size].width) + widthExtra;
+
+			NSDictionary *bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:placeholder, NSDisplayPatternBindingOption, nil];
+			[oAttachedWindowTextField bind:bindingPattern toObject:self withKeyPath:bindingName options:bindingOptions];
+            
+			[oAttachedWindowExplanation setStringValue:explanation];
 			
 			int height = [oAttachedWindowView frame].size.height;	// also size of question mark
 			const int buttonSize = 14;
