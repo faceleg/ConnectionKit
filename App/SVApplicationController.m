@@ -964,7 +964,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             [insertMenu insertItem:item atIndex:index];
             
             // Image item
-            factory = [SVGraphicFactory imageFactory];
+            factory = [SVGraphicFactory mediaPlaceholderFactory];
             item = [factory makeMenuItem];
             [item setImage:nil];
             [insertMenu insertItem:item atIndex:index];
