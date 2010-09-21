@@ -1733,6 +1733,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     // Bulk up the pasteboard with any extra data
     [[self dataSource] webEditor:self writeItems:[self selectedItems] toPasteboard:pboard];
     
+    
     if ([[self selectedItems] count] == 1 &&
         [[self selectedDOMRange] ks_selectsNode:[selectedItem HTMLElement]])
     {
@@ -1743,13 +1744,23 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     }
     else
     {
-        [view dragImage:anImage
-                     at:viewLocation
-                 offset:initialOffset
-                  event:event 
-             pasteboard:pboard 
-                 source:sourceObj
-              slideBack:slideFlag];
+        // Call to get _draggedItems populated
+        [self draggedImage:anImage beganAt:viewLocation];
+        
+        @try
+        {
+            [view dragImage:anImage
+                         at:viewLocation
+                     offset:initialOffset
+                      event:event 
+                 pasteboard:pboard 
+                     source:sourceObj
+                  slideBack:slideFlag];
+        }
+        @finally
+        {
+            [self forgetDraggedItems];
+        }
     }
 }
 
