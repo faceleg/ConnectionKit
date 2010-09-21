@@ -498,7 +498,7 @@
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
 {
-    // Ignore drags originating in our own WebView
+    // Ignore drags of inline images & text originating in our own WebView
     NSDragOperation result = NSDragOperationNone;
     
     id source = [sender draggingSource];

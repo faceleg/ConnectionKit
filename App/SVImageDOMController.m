@@ -45,7 +45,22 @@
     // Do nothing!!
 }
 
-- (BOOL)allowsDirectAccessToWebViewWhenSelected; { return YES; }
+- (BOOL)allowsDirectAccessToWebViewWhenSelected;
+{
+    // Generally, yes. EXCEPT for inline, block-level, chromeless images
+    BOOL result = YES;
+    
+    if (![[self parentWebEditorItem] isSelectable])
+    {
+        SVImage *image = [self representedObject];
+        if (![image shouldWriteHTMLInline])
+        {
+            result = NO;
+        }
+    }
+    
+    return result;
+}
 
 #pragma mark Resizing
 
