@@ -467,16 +467,19 @@
             {
                 for (WEKWebEditorItem *anItem in [webEditor draggedItems])
                 {
-                    while ([anItem parentWebEditorItem] != self)    // dragging image doesn't drag root
+                    if ([anItem isDescendantOfWebEditorItem:self])
                     {
-                        anItem = [anItem parentWebEditorItem];
-                    }
-                    
-                    DOMHTMLElement *anItemElement = [anItem HTMLElement];
-                    if (aNode == anItemElement || [treeWalker previousSibling] == anItemElement)
-                    {
-                        aNode = (id)[NSNull null];  // ugly, I know
-                        break;
+                        while ([anItem parentWebEditorItem] != self)    // dragging image doesn't drag root
+                        {
+                            anItem = [anItem parentWebEditorItem];
+                        }
+                        
+                        DOMHTMLElement *anItemElement = [anItem HTMLElement];
+                        if (aNode == anItemElement || [treeWalker previousSibling] == anItemElement)
+                        {
+                            aNode = (id)[NSNull null];  // ugly, I know
+                            break;
+                        }
                     }
                 }
             }
