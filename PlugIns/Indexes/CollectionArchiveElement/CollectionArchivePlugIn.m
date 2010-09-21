@@ -59,6 +59,7 @@
         NSString *title = [NSString stringWithFormat:@"%@ %@",
                            [self.indexedCollection title],
                            LocalizedStringInThisBundle(@"Archive", @"Portion of pagelet title")];
+        //FIXME: is this really setting the page's title?
         self.title = title;
     }
 }
