@@ -103,6 +103,7 @@
 
 /*
  [[textblock property:item.title flags:"line" tag:h3 graphicalTextCode:h3 hyperlink:item]]
+ graphicalTextCode is only supported for Site Title in Sandvox 2
  */
 
 - (void)writeTitleAndLinkOfIteratedPage
@@ -115,7 +116,6 @@
                   asPlainText:YES
              enclosingElement:@"span"
                    attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
-    //FIXME: what do we do with graphicalTextCode:h3? Case: 88569
     [[context HTMLWriter] endElement]; // </a>
 }
 
