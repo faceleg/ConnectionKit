@@ -1730,6 +1730,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     WEKWebEditorItem *selectedItem = [self selectedItem];
     
+    // Bulk up the pasteboard with any extra data
+    [[self dataSource] webEditor:self writeItems:[self selectedItems] toPasteboard:pboard];
+    
     if ([[self selectedItems] count] == 1 &&
         [[self selectedDOMRange] ks_selectsNode:[selectedItem HTMLElement]])
     {
