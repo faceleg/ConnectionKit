@@ -105,15 +105,17 @@
  [[textblock property:item.title flags:"line" tag:h3 graphicalTextCode:h3 hyperlink:item]]
  */
 
-- (void)writeTitleOfIteratedPage
+- (void)writeTitleAndLinkOfIteratedPage
 {
     id<SVPlugInContext> context = [SVPlugIn currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
+    [[context HTMLWriter] startAnchorElementWithPage:iteratedPage]; // <a>
     [context writeTitleOfPage:iteratedPage
                   asPlainText:YES
              enclosingElement:@"span"
                    attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
+    [[context HTMLWriter] endElement]; // </a>
 }
 
 
