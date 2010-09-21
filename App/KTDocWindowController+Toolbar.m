@@ -256,22 +256,10 @@
     NSMenuItem *item = nil;
 	SVGraphicFactory *factory = nil;
 	
+    
     // Text box item
 	factory = [SVGraphicFactory textBoxFactory];
 	item = [factory makeMenuItem];
-	[menu addItem:item];
-	
-    
-    // Image item
-	item = [SVGraphicFactory menuItemWithGraphicFactories:[SVGraphicFactory mediaFactories]
-                                                    title:NSLocalizedString(@"Media", "menu item")];
- 	[item setIconImage:[NSImage imageNamed:@"toolbar_index"]];
-	[menu addItem:item]; 
-    
-	
-    // Raw HTML
-    self.rawHTMLMenuItem = item = [[SVGraphicFactory rawHTMLFactory] makeMenuItem];
-    
 	[menu addItem:item];
 	
     
@@ -281,6 +269,18 @@
  	[item setIconImage:[NSImage imageNamed:@"toolbar_index"]];
 	[menu addItem:item];
     
+    
+    // Media Placeholder
+	factory = [SVGraphicFactory mediaPlaceholderFactory];
+	item = [factory makeMenuItem];
+	[menu addItem:item];
+	
+	
+    // Raw HTML
+    self.rawHTMLMenuItem = item = [[SVGraphicFactory rawHTMLFactory] makeMenuItem];
+    
+	[menu addItem:item];
+	
     
     // ---
     item = [NSMenuItem separatorItem];

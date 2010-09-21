@@ -20,7 +20,7 @@
 #pragma mark Shared Objects
 + (SVGraphicFactory *)textBoxFactory;
 + (NSArray *)mediaFactories;
-+ (SVGraphicFactory *)imageFactory;
++ (SVGraphicFactory *)mediaPlaceholderFactory;
 + (SVGraphicFactory *)videoFactory;
 + (SVGraphicFactory *)audioFactory;
 + (SVGraphicFactory *)flashFactory;

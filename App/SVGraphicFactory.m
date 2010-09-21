@@ -90,7 +90,7 @@
     return result;
 }
 
-- (NSString *)name { return NSLocalizedString(@"Photo", @"name of object to insert"); }
+- (NSString *)name { return NSLocalizedString(@"Media Placeholder", @"name of object to insert"); }
 
 - (NSImage *)icon
 {
@@ -431,7 +431,7 @@ static SVGraphicFactory *sRawHTMLFactory;
 
 + (SVGraphicFactory *)textBoxFactory; { return sSharedTextBoxFactory; }
 
-+ (SVGraphicFactory *)imageFactory; { return sImageFactory; }
++ (SVGraphicFactory *)mediaPlaceholderFactory; { return sImageFactory; }
 + (SVGraphicFactory *)videoFactory; { return sVideoFactory; }
 + (SVGraphicFactory *)audioFactory; { return sAudioFactory; }
 + (SVGraphicFactory *)flashFactory; { return sFlashFactory; }
@@ -439,7 +439,7 @@ static SVGraphicFactory *sRawHTMLFactory;
 + (NSArray *)mediaFactories;
 {
     return [NSArray arrayWithObjects:
-            [self imageFactory],
+            [self mediaPlaceholderFactory],
             [self videoFactory],
             [self audioFactory],
             [self flashFactory], nil];
@@ -647,14 +647,14 @@ static SVGraphicFactory *sRawHTMLFactory;
     // Test image
     NSString *type;
     id propertyList;
-    NSUInteger priority = [self priorityForFactory:[self imageFactory]
+    NSUInteger priority = [self priorityForFactory:[self mediaPlaceholderFactory]
                                         pasteboard:pasteboard
                                               type:&type
                                           contents:&propertyList];
     
     if (priority > readingPriority)
     {
-        factory = [self imageFactory];
+        factory = [self mediaPlaceholderFactory];
         pasteboardContents = propertyList;
         pasteboardType = type;
         readingPriority = priority;
