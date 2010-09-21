@@ -254,7 +254,15 @@
 
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification; { }
 
-- (BOOL)webEditorTextValidateDrop:(id <NSDraggingInfo>)dragInfo; { return YES; }
+- (BOOL)webEditorTextValidateDrop:(id <NSDraggingInfo>)dragInfo;
+{
+    // Don't allow dragged graphics
+    NSArray *types = [[dragInfo draggingPasteboard] types];
+    BOOL result = (![types containsObject:kSVGraphicPboardType] &&
+                   ![types containsObject:@"com.karelia.html+graphics"]);
+    
+    return result;
+}
 
 #pragma mark Pasteboard / Drag
 
