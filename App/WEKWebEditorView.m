@@ -1728,13 +1728,17 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (void)webView:(WebView *)sender dragImage:(NSImage *)anImage at:(NSPoint)viewLocation offset:(NSSize)initialOffset event:(NSEvent *)event pasteboard:(NSPasteboard *)pboard source:(id)sourceObj slideBack:(BOOL)slideFlag forView:(NSView *)view;
 {
-    WEKWebEditorItem *selectedItem = [self selectedItem];
     
     // Bulk up the pasteboard with any extra data
-    [[self dataSource] webEditor:self writeItems:[self selectedItems] toPasteboard:pboard];
+    NSArray *items = [self selectedItems];
+    if ([items count])
+    {
+        [[self dataSource] webEditor:self writeItems:items toPasteboard:pboard];
+    }
     
     
-    if ([[self selectedItems] count] == 1 &&
+    WEKWebEditorItem *selectedItem = [self selectedItem];
+    if ([items count] == 1 &&
         [[self selectedDOMRange] ks_selectsNode:[selectedItem HTMLElement]])
     {
         [view dragImageForItem:selectedItem
