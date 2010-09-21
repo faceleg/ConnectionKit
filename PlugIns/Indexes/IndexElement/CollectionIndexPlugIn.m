@@ -71,6 +71,19 @@
 }
 
 
+/*
+ [[summary item maxSummaryCharacters]]
+ */
+
+- (void)writeSummaryOfIteratedPage
+{
+    id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+    //FIXME: summary needs to be truncated at maxSummaryCharacters
+    [iteratedPage writeSummary:context];
+}
+
+
 #pragma mark Properties
 
 // hoping this overrides SVIndexPlugIn accessor properly

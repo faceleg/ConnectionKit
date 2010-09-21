@@ -4,11 +4,10 @@
 [[foreach indexedCollection.navigablePages item maxItems]]
 	<li class="[[i]] [[eo]]">
         <a href="[[path item]]">[[=item.title]]</a>
-        [[if includeSummaries]]<br />[[summary item maxSummaryCharacters]][[endif2]]
+        [[if includeSummaries]]<br />[[=writeSummaryOfIteratedPage]][[endif2]]
     </li>
 [[endForEach]]
 </ul>
-
 [[else]]
 [[if parser.HTMLGenerationPurpose]]
 [[else2]]
