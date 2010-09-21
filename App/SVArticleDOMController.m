@@ -467,6 +467,11 @@
             {
                 for (WEKWebEditorItem *anItem in [webEditor draggedItems])
                 {
+                    while ([anItem parentWebEditorItem] != self)    // dragging image doesn't drag root
+                    {
+                        anItem = [anItem parentWebEditorItem];
+                    }
+                    
                     DOMHTMLElement *anItemElement = [anItem HTMLElement];
                     if (aNode == anItemElement || [treeWalker previousSibling] == anItemElement)
                     {
