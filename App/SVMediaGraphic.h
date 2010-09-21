@@ -24,6 +24,8 @@
 - (BOOL)hasFile;    // for bindings
 - (NSURL *)sourceURL;
 
++ (NSArray *)allowedFileTypes;
+
 
 #pragma mark Metrics
 

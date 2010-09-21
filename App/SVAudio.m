@@ -128,7 +128,7 @@
 
 - (BOOL)canMakeOriginalSize; { return NO; }		// Audio is media, but it doesn't have an original/natural size.
 
-- (NSArray *) allowedFileTypes
++ (NSArray *)allowedFileTypes;
 {
 	return [NSArray arrayWithObject:(NSString *)kUTTypeAudio];
 }

@@ -81,6 +81,8 @@
 
 - (BOOL)hasFile; { return YES; }
 
++ (NSArray *)allowedFileTypes; { return nil; }
+
 #pragma mark Size
 
 - (NSNumber *)contentWidth; { return [self width]; }

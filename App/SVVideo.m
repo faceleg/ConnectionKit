@@ -138,7 +138,7 @@
 #pragma mark -
 #pragma mark General
 
-- (NSArray *) allowedFileTypes
++ (NSArray *) allowedFileTypes
 {
 	return [NSArray arrayWithObject:(NSString *)kUTTypeMovie];
 	// If this doesn't work well, try the old method:

@@ -111,7 +111,7 @@
     [self setTypeToPublish:[[self media] typeOfFile]];
 }
 
-- (NSArray *) allowedFileTypes
++ (NSArray *) allowedFileTypes
 {
 	return [NSArray arrayWithObject:(NSString *)kUTTypeImage];
 }

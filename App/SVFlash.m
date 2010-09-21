@@ -84,7 +84,7 @@
 #pragma mark -
 #pragma mark General
 
-- (NSArray *) allowedFileTypes
++ (NSArray *) allowedFileTypes
 {
 	return [NSArray arrayWithObjects:@"com.adobe.shockwave-flash", nil];
 }

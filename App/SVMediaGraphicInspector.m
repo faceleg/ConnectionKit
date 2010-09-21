@@ -8,7 +8,11 @@
 
 #import "SVMediaGraphicInspector.h"
 
+#import "SVAudio.h"
 #import "KTDocument.h"
+#import "SVFlash.h"
+#import "SVImage.h"
+#import "SVVideo.h"
 
 #import "NSBundle+Karelia.h"
 #import "NSString+Karelia.h"
@@ -67,15 +71,13 @@
 
 - (NSArray *)allowedFileTypes;		// try to figure out allowed file types for all selections
 {
-	NSMutableSet *types = [NSMutableSet set];
-	for (id inspectedObject in [self inspectedObjects])
-	{
-		if ([inspectedObject respondsToSelector:@selector(allowedFileTypes)])
-		{
-			[types addObjectsFromArray:[inspectedObject allowedFileTypes]];
-		}
-	}
-	return [types allObjects];
+	NSMutableSet *result = [NSMutableSet set];
+    [result addObjectsFromArray:[SVImage allowedFileTypes]];
+    [result addObjectsFromArray:[SVVideo allowedFileTypes]];
+    [result addObjectsFromArray:[SVAudio allowedFileTypes]];
+    [result addObjectsFromArray:[SVFlash allowedFileTypes]];
+    
+	return [result allObjects];
 }
 
 - (IBAction)chooseFile:(id)sender;
