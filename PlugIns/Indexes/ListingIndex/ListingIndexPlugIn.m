@@ -39,4 +39,22 @@
 
 @implementation ListingIndexPlugIn
 
+/*
+ [[textblock property:item.title flags:"line" tag:h3 hyperlink:item]]
+ */
+
+- (void)writeTitleAndLinkOfIteratedPage
+{
+    id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+    
+    [[context HTMLWriter] startAnchorElementWithPage:iteratedPage]; // <a>
+    [context writeTitleOfPage:iteratedPage
+                  asPlainText:NO
+             enclosingElement:@"span"
+                   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
+    [[context HTMLWriter] endElement]; // </a>
+}
+
+
 @end
