@@ -115,6 +115,7 @@
                   asPlainText:YES
              enclosingElement:@"span"
                    attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
+    //FIXME: what do we do with graphicalTextCode:h3? Case: 88569
     [[context HTMLWriter] endElement]; // </a>
 }
 
