@@ -13,6 +13,10 @@
 
 @interface SVMediaGraphic : SVGraphic
 
+#pragma mark Init
++ (id)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+
+
 #pragma mark Media
 
 @property(nonatomic, retain) SVMediaRecord *media;
@@ -24,6 +28,7 @@
 - (BOOL)hasFile;    // for bindings
 - (NSURL *)sourceURL;
 
++ (BOOL)acceptsType:(NSString *)uti;
 + (NSArray *)allowedFileTypes;
 
 

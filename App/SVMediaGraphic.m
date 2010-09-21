@@ -28,6 +28,14 @@
 
 @implementation SVMediaGraphic
 
+#pragma mark Init
+
++ (id)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SUBCLASSMUSTIMPLEMENT;
+    return nil;
+}
+
 #pragma mark Media
 
 @dynamic media;
@@ -80,6 +88,8 @@
 }
 
 - (BOOL)hasFile; { return YES; }
+
++ (BOOL)acceptsType:(NSString *)uti; { return NO; }
 
 + (NSArray *)allowedFileTypes; { return nil; }
 

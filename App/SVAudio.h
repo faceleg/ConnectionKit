@@ -15,8 +15,6 @@
 
 @interface SVAudio : SVMediaGraphic <SVEnclosure>
 
-+ (SVAudio *)insertNewAudioInManagedObjectContext:(NSManagedObjectContext *)context;
-
 @property(nonatomic, copy) NSNumber *autoplay;
 @property(nonatomic, copy) NSNumber *controller;	// BOOLs
 @property(nonatomic, copy) NSNumber *loop;

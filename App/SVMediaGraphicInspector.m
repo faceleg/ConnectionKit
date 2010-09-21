@@ -89,9 +89,27 @@
     if ([panel runModalForTypes:[self allowedFileTypes]] == NSFileHandlingPanelOKButton)
     {
         NSURL *URL = [panel URL];
+        NSString *type = [NSString UTIForFileAtPath:[URL path]];
         
-        [[self inspectedObjects] makeObjectsPerformSelector:@selector(setMediaWithURL:)
-                                                 withObject:URL];
+        for (SVMediaGraphic *aGraphic in [self inspectedObjects])
+        {
+            // Does this require a change of media type?
+            if (![[aGraphic class] acceptsType:type])
+            {
+                if ([SVVideo acceptsType:type])
+                {
+                    NSManagedObjectContext *context = [aGraphic managedObjectContext];
+                    SVVideo *video = [SVVideo insertNewGraphicInManagedObjectContext:context];
+                    [video setTextAttachment:[aGraphic textAttachment]];
+                    [video setValue:[aGraphic sidebars] forKey:@"sidebars"];
+                    
+                    [context deleteObject:aGraphic];
+                    aGraphic = video;
+                }
+            }
+            
+            [aGraphic setMediaWithURL:URL];
+        }
     }
 }
 

@@ -25,8 +25,6 @@
 	KSSimpleURLConnection *_dimensionCalculationConnection;
 
 }
-+ (SVFlash *)insertNewFlashInManagedObjectContext:(NSManagedObjectContext *)context;
-
 
 @property (retain) KSSimpleURLConnection *dimensionCalculationConnection;
 

@@ -91,7 +91,7 @@
 #pragma mark -
 #pragma mark Lifetime
 
-+ (SVAudio *)insertNewAudioInManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVAudio *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVAudio *result = [NSEntityDescription insertNewObjectForEntityForName:@"Audio"
                                                     inManagedObjectContext:context];

@@ -39,7 +39,7 @@
 {
     OBPRECONDITION(media);
     
-    SVImage *result = [self insertNewImageInManagedObjectContext:[media managedObjectContext]];
+    SVImage *result = [self insertNewGraphicInManagedObjectContext:[media managedObjectContext]];
     [result setMedia:media];
     [result setTypeToPublish:[media typeOfFile]];
     
@@ -49,7 +49,7 @@
     return result;
 }
 
-+ (SVImage *)insertNewImageInManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVImage *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVImage *result = [NSEntityDescription insertNewObjectForEntityForName:@"Image"
                                                     inManagedObjectContext:context];

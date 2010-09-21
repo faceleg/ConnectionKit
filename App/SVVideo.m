@@ -107,7 +107,7 @@
 #pragma mark -
 #pragma mark Lifetime
 
-+ (SVVideo *)insertNewVideoInManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVVideo *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVVideo *result = [NSEntityDescription insertNewObjectForEntityForName:@"Video"
                                                     inManagedObjectContext:context];
@@ -291,6 +291,11 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
     
     // Match file type
     [self setCodecType:[[self media] typeOfFile]];
+}
+
++ (BOOL)acceptsType:(NSString *)uti;
+{
+    return [uti conformsToUTI:(NSString *)kUTTypeVideo] || [uti conformsToUTI:(NSString *)kUTTypeMovie];
 }
 
 #pragma mark -

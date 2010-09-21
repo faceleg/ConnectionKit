@@ -362,7 +362,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         [media setPreferredFilename:[@"pastedImage" stringByAppendingPathExtension:[URL ks_pathExtension]]];
     }
     
-    SVImage *image = [SVImage insertNewImageInManagedObjectContext:context];
+    SVImage *image = [SVImage insertNewGraphicInManagedObjectContext:context];
     [image setMedia:media];
     
     

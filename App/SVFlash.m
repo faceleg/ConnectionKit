@@ -59,7 +59,7 @@
 #pragma mark -
 #pragma mark Lifetime
 
-+ (SVFlash *)insertNewFlashInManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVFlash *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVFlash *result = [NSEntityDescription insertNewObjectForEntityForName:@"Flash"
                                                     inManagedObjectContext:context];

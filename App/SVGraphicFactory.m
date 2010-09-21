@@ -83,7 +83,7 @@
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVImage *result = [SVImage insertNewImageInManagedObjectContext:context];
+    SVImage *result = [SVImage insertNewGraphicInManagedObjectContext:context];
     [result setTitle:NSLocalizedString(@"Photo", "pagelet title")];
     [result setIsMediaPlaceholder:[NSNumber numberWithBool:YES]];
     
@@ -167,7 +167,7 @@
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVVideo *result = [SVVideo insertNewVideoInManagedObjectContext:context];
+    SVVideo *result = [SVVideo insertNewGraphicInManagedObjectContext:context];
     [result setWidth:[NSNumber numberWithUnsignedInt:200]];
     [result setHeight:[NSNumber numberWithUnsignedInt:150]];	// typical TV aspect ratio
     [result setIsMediaPlaceholder:[NSNumber numberWithBool:YES]];
@@ -196,7 +196,7 @@
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVAudio *result = [SVAudio insertNewAudioInManagedObjectContext:context];
+    SVAudio *result = [SVAudio insertNewGraphicInManagedObjectContext:context];
     [result setWidth:[NSNumber numberWithUnsignedInt:200]];
     [result setHeight:[NSNumber numberWithUnsignedInt:25]];		// height of audio tag
     [result setIsMediaPlaceholder:[NSNumber numberWithBool:YES]];
@@ -224,7 +224,7 @@
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVFlash *result = [SVFlash insertNewFlashInManagedObjectContext:context];
+    SVFlash *result = [SVFlash insertNewGraphicInManagedObjectContext:context];
     [result setWidth:[NSNumber numberWithUnsignedInt:200]];
     [result setHeight:[NSNumber numberWithUnsignedInt:150]];	// typical TV aspect ratio
     [result setIsMediaPlaceholder:[NSNumber numberWithBool:YES]];
