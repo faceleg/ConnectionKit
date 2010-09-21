@@ -1,28 +1,28 @@
-[[foreach indexedCollection.childPages item]]
+[[foreach indexedCollection.childPages iteratedPage]]
 	<div class="article [[i]] [[eo]][[last]]">
         <h3>[[=writeTitleOfIteratedPage]]</h3>
-[[if item.hasThumbnail]]
+[[if iteratedPage.hasThumbnail]]
         <div class="article-thumbnail">
-        <a class="imageLink" [[target item]]href="[[path item]]">[[=writeThumbnailOfIteratedPage]]</a>
+        <a class="imageLink" [[target iteratedPage]]href="[[path iteratedPage]]">[[=writeThumbnailOfIteratedPage]]</a>
         </div>
 [[endif]]
 		<div class="article-summary">[[=writeSummaryOfIteratedPage]]</div>
 		<div class="article-info">
 [[if truncateChars>0]]
 			<div class="continue-reading-link">
-				[[if parser.HTMLGenerationPurpose]]<a href="[[path item]]">[[endif2]][[continueReadingLink item]][[if parser.HTMLGenerationPurpose]]</a>[[endif2]]
+				[[if parser.HTMLGenerationPurpose]]<a href="[[path iteratedPage]]">[[endif2]][[continueReadingLink iteratedPage]][[if parser.HTMLGenerationPurpose]]</a>[[endif2]]
 			</div>
 [[endif]]
-[[if item.includeTimestamp]]
+[[if iteratedPage.includeTimestamp]]
 			<div class="timestamp">
 [[if showPermaLink]]
-				<a [[target item]]href="[[path item]]">[[=&item.timestamp]]</a>
+				<a [[target iteratedPage]]href="[[path iteratedPage]]">[[=&iteratedPage.timestamp]]</a>
 [[else2]]
-				[[=&item.timestamp]]
+				[[=&iteratedPage.timestamp]]
 [[endif2]]
 			</div>
 [[endif]]
-[[COMMENT parsecomponent item item.commentsTemplate]]
+[[COMMENT parsecomponent iteratedPage iteratedPage.commentsTemplate]]
 		</div> <!-- article-info -->
 	</div> <!-- article -->
 	<div class="clear"></div>
