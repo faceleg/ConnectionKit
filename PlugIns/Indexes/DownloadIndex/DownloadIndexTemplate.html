@@ -1,10 +1,10 @@
 [[if indexedCollection.childPages]]
 <table>
-[[foreach indexedCollection.childPages item]]
+[[foreach indexedCollection.childPages iteratedPage]]
 	<tr class="[[i]] [[eo]][[last]]">
 		<td class="dli1">
-[[if item.thumbnail]]
-			<a class="imageLink" [[target item]]href="[[path item]]">[[=writeThumbnailImageOfIteratedPage]]</a>
+[[if iteratedPage.hasThumbnail]]
+			<a class="imageLink" [[target iteratedPage]]href="[[path iteratedPage]]">[[=writeThumbnailImageOfIteratedPage]]</a>
 [[endif2]]
 		</td>
 		<td class="dli2">
@@ -13,9 +13,9 @@
 		<td class="dli3">
 			<div class="article-summary">[[=writeSummaryOfIteratedPage]]</div>
 		</td>
-[[if item.includeTimestamp]]
+[[if iteratedPage.includeTimestamp]]
 		<td class="dli4">
-			[[=&item.timestamp]]
+			[[=&iteratedPage.timestamp]]
 		</td>
 [[endif2]]
 	</tr>
