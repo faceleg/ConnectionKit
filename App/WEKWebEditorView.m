@@ -468,14 +468,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     
-    //  Remove items, including marking them for display. Could almost certainly be more efficient
-    if (itemsToDeselect)
-    {
-        for (WEKWebEditorItem *anItem in itemsToDeselect)
-        {
-            [anItem setSelected:NO];
-        }
-    }
+    //  Remove items, which will mark them for display
+    [itemsToDeselect setBool:NO forKey:@"selected"];
     
     
     
@@ -484,14 +478,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     
-    //  Add new items to the selection.
-    if (itemsToSelect)
+    // Draw new selection
+    for (WEKWebEditorItem *anItem in itemsToSelect)
     {
-        // Draw new selection
-        for (WEKWebEditorItem *anItem in itemsToSelect)
-        {
-            [anItem setSelected:YES];
-        }
+        [anItem setSelected:YES];
     }
     
     
