@@ -1045,42 +1045,6 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     return result;
 }
 
-// Same as WebUIDelegate method, except it only gets called if .draggingDestinationDelegate rejected the drag
-- (NSUInteger)webEditor:(WEKWebEditorView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)draggingInfo;
-{
-    NSUInteger result = WebDragDestinationActionDHTML;
-    
-    NSArray *types = [[draggingInfo draggingPasteboard] types];
-    if (![types containsObject:kSVGraphicPboardType] &&
-        ![types containsObject:@"com.karelia.html+graphics"])
-    {
-        result = result | WebDragDestinationActionEdit;
-        
-        // Don't drop graphics into text areas which don't support it
-        id source = [draggingInfo draggingSource];
-        if ([source isKindOfClass:[NSResponder class]] &&
-            [sender ks_followsResponder:source] &&
-            [sender selectedItem])
-        {
-            NSPoint location = [sender convertPointFromBase:[draggingInfo draggingLocation]];
-            DOMRange *range = [[sender webView] editableDOMRangeForPoint:location];
-            if (range)
-            {
-                SVTextDOMController *controller = [self textAreaForDOMRange:range];
-                
-                // Dropping an inline, wrap-causing image should be denied as it's the article controller's responsibility. #88523
-                if (![[controller textBlock] importsGraphics] ||
-                    (controller == [[sender selectedItem] textDOMController]))
-                {
-                    result = result - WebDragDestinationActionEdit;
-                }
-            }
-        }
-    }
-    
-    return result;
-}
-
 #pragma mark SVWebEditorViewDelegate
 
 - (void)webEditorViewDidFirstLayout:(WEKWebEditorView *)sender;
