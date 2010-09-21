@@ -633,7 +633,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Pasteboard
 
-- (void)addSelectionTypesToPasteboard:(NSPasteboard *)pasteboard;
+- (void)webEditorTextDidSetSelectionTypesForPasteboard:(NSPasteboard *)pasteboard;
 {
     [pasteboard addTypes:[NSArray arrayWithObject:@"com.karelia.html+graphics"] owner:self];
     

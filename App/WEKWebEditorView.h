@@ -244,7 +244,9 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
  @param pasteboard
  @result YES if the items could be written to the pasteboard
  */
-- (BOOL)webEditor:(WEKWebEditorView *)sender addSelectionToPasteboard:(NSPasteboard *)pasteboard;
+- (BOOL)webEditor:(WEKWebEditorView *)sender
+       writeItems:(NSArray *)items
+     toPasteboard:(NSPasteboard *)pasteboard;
 
 
 @end

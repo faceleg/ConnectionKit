@@ -1225,7 +1225,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [[self webView] writeSelectionWithPasteboardTypes:types toPasteboard:pboard];
     
     
-    if ([[self dataSource] webEditor:self addSelectionToPasteboard:pboard])
+    NSArray *items = [self selectedItems];
+    if ([[self dataSource] webEditor:self writeItems:items toPasteboard:pboard])
     {
         // Now let's start a-dragging!
         WEKWebEditorItem *item = [self selectedItem]; // FIXME: use the item actually being dragged
@@ -1991,7 +1992,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (void)webView:(WebView *)webView didSetSelectionTypesForPasteboard:(NSPasteboard *)pasteboard;
 {
-    [[self dataSource] webEditor:self addSelectionToPasteboard:pasteboard];
+    [[self focusedText] webEditorTextDidSetSelectionTypesForPasteboard:pasteboard];
 }
 
 @end

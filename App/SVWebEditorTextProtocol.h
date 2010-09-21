@@ -38,6 +38,13 @@
                                    stillSelecting:(BOOL)flag;
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification;
 
+
+#pragma mark Pasteboard
+- (void)webEditorTextDidSetSelectionTypesForPasteboard:(NSPasteboard *)pasteboard;
+
+
+#pragma mark Drag & Drop
 - (BOOL)webEditorTextValidateDrop:(id <NSDraggingInfo>)dragInfo;
+
 
 @end

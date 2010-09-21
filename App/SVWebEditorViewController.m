@@ -1019,35 +1019,27 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     return YES;
 }
 
-- (BOOL)webEditor:(WEKWebEditorView *)sender addSelectionToPasteboard:(NSPasteboard *)pasteboard;
+- (BOOL)webEditor:(WEKWebEditorView *)sender
+       writeItems:(NSArray *)items
+     toPasteboard:(NSPasteboard *)pasteboard;
 {
     BOOL result = NO;
     
     
-    if ([sender selectedDOMRange])
+    // Want serialized pagelets on pboard
+    SVGraphic *graphic = [[items lastObject] representedObject];
+    if ([graphic isKindOfClass:[SVGraphic class]])
     {
-        SVTextDOMController *textController = [[self firstResponderItem] textDOMController];
-        [textController addSelectionTypesToPasteboard:pasteboard];
-        return YES;
-    }
-    else
-    {
-        // Want serialized pagelets on pboard
-        SVGraphic *graphic = [[sender selectedItem] representedObject];
-        if ([graphic isKindOfClass:[SVGraphic class]])
-        {
-            result = YES;
-            
-            [pasteboard addTypes:[NSArray arrayWithObject:kSVGraphicPboardType] owner:self];
-            [graphic writeToPasteboard:pasteboard];
-        }
+        result = YES;
         
-        // Place HTML on pasteboard
-        //[pasteboard setString:html forType:NSHTMLPboardType];
-        //[html release];
-        //[pasteboard addTypes:[NSArray arrayWithObject:NSHTMLPboardType] owner:self];
+        [pasteboard addTypes:[NSArray arrayWithObject:kSVGraphicPboardType] owner:self];
+        [graphic writeToPasteboard:pasteboard];
     }
     
+    // Place HTML on pasteboard
+    //[pasteboard setString:html forType:NSHTMLPboardType];
+    //[html release];
+    //[pasteboard addTypes:[NSArray arrayWithObject:NSHTMLPboardType] owner:self];
     
     
     return result;

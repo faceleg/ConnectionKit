@@ -254,6 +254,19 @@
 
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification; { }
 
+#pragma mark Pasteboard / Drag
+
+// Up to subclasses to add custom types
+- (void)webEditorTextDidSetSelectionTypesForPasteboard:(NSPasteboard *)pasteboard;
+{
+    
+}
+
+- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
+{
+    return NSDragOperationNone;
+}
+
 - (BOOL)webEditorTextValidateDrop:(id <NSDraggingInfo>)dragInfo;
 {
     // Don't allow dragged graphics
@@ -262,16 +275,6 @@
                    ![types containsObject:@"com.karelia.html+graphics"]);
     
     return result;
-}
-
-#pragma mark Pasteboard / Drag
-
-// Up to subclasses to add custom types
-- (void)addSelectionTypesToPasteboard:(NSPasteboard *)pasteboard; { }
-
-- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
-{
-    return NSDragOperationNone;
 }
 
 - (void)handleEvent:(DOMEvent *)evt;
