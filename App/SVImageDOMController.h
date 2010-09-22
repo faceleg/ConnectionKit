@@ -13,6 +13,13 @@
 
 
 @interface SVImageDOMController : SVSizeBindingDOMController
+{
+  @private
+    BOOL    _drawAsDropTarget;
+}
+
+- (BOOL)isMediaPlaceholder;
+
 @end
 
 
