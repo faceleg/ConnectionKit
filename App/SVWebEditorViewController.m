@@ -362,14 +362,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
          postNotificationName:sSVWebEditorViewControllerWillUpdateNotification
          object:self];
     
-		float delay = 0.1f;
-#ifdef DEBUG
-		if ([NSUserName() isEqualToString:@"dwood"])
-		{
-			NSLog(@"Dan Testing longer delay");
-			delay = 1.0f;
-		}
-#endif
+		float delay = 1.0f;		// was 0.1f; Dan liked longer delay
         // If the update takes too long, switch over to placeholder
         [self performSelector:@selector(updateDidTimeout) withObject:nil afterDelay:delay];
     }
