@@ -109,7 +109,7 @@
     
     // Tagline
     box = [NSEntityDescription insertNewObjectForEntityForName:@"SiteSubtitle" inManagedObjectContext:[self managedObjectContext]];
-    [box setText:NSLocalizedString(@"Double-click to edit", "placeholder")];
+    [box setText:NSLocalizedString(@"A website thoughtfully crafted using Sandvox", "placeholder")];
     [self setSiteSubtitle:box];
 
     
