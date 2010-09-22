@@ -178,6 +178,10 @@ extern NSString *kSVGraphicPboardType;
 + (id)graphicWithSerializedProperties:(id)properties
        insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
+// e.g. for dragging in an image
+- (void)awakeFromPasteboardContents:(id)pasteboardContents ofType:(NSString *)type;
+
+
 @end
 
 
