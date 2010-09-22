@@ -123,34 +123,9 @@
                                       ofType:(NSString *)type
               insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    if ([[KSWebLocation webLocationPasteboardTypes] containsObject:type])
-    {
-        SVMediaRecord *media = [SVMediaRecord mediaWithURL:[contents URL]
-                                                entityName:@"GraphicMedia"
-                            insertIntoManagedObjectContext:context
-                                                     error:NULL];
-        
-        if (media)
-        {
-            SVImage *result = [SVImage insertNewImageWithMedia:media];
-            return result;
-        }
-    }
-    else if ([[NSImage imagePasteboardTypes] containsObject:type])
-    {
-        SVMediaRecord *media = [SVMediaRecord mediaWithData:contents
-                                                        URL:nil
-                                                 entityName:@"GraphicMedia"
-                             insertIntoManagedObjectContext:context];
-        
-        if (media)
-        {
-            SVImage *result = [SVImage insertNewImageWithMedia:media];
-            return result;
-        }
-    }
-    
-    return nil;
+    SVImage *result = [SVImage insertNewGraphicInManagedObjectContext:context];
+    [result awakeFromPasteboardContents:contents ofType:type];
+    return result;
 }
 
 @end
