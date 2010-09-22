@@ -9,6 +9,7 @@
 #import "SVImageDOMController.h"
 
 #import "WebEditingKit.h"
+#import "SVGraphicFactory.h"
 #import "SVWebEditorHTMLContext.h"
 
 #import "DOMNode+Karelia.h"
@@ -145,6 +146,18 @@
     SVSelectionBorder *result = [super newSelectionBorder];
     [result setBorderColor:nil];
     return result;
+}
+
+#pragma mark Drag & Drop
+
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
+{
+    return NSDragOperationCopy;
+}
+
+- (NSArray *)registeredDraggedTypes;
+{
+    return [[SVGraphicFactory mediaPlaceholderFactory] readablePasteboardTypes];
 }
 
 @end
