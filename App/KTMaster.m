@@ -38,6 +38,7 @@
 @interface KTMaster ()
 @property(nonatomic, copy) NSString *designIdentifier;
 @property(nonatomic, retain, readwrite) SVLogoImage *logo;
+- (NSString *)copyrightStatementWithAuthor:(NSString *)author;
 @end
 
 
@@ -115,7 +116,7 @@
     
     // Footer
     box = [NSEntityDescription insertNewObjectForEntityForName:@"Footer" inManagedObjectContext:[self managedObjectContext]];
-    [box setTextHTMLString:[NSString stringWithFormat:@"© %@ 2010", title]];
+    [box setTextHTMLString:[self copyrightStatementWithAuthor:title]];
     [self setFooter:box];
     
     
@@ -146,6 +147,20 @@
 #pragma mark Footer
 
 @dynamic footer;
+
+- (NSString *)copyrightStatementWithAuthor:(NSString *)author;
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"y"];
+    
+    NSString *result = [NSString stringWithFormat:
+                            @"© %@ %@",
+                            author,
+                            [formatter stringFromDate:[NSDate date]]];
+    [formatter release];
+    
+    return result;
+}
 
 #pragma mark Design
 
