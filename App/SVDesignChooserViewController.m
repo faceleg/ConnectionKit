@@ -256,8 +256,9 @@
 	NSRange range = [rangeValue rangeValue];
 	
 	NSString *countString = (range.length < 2)
-		? NSLocalizedString(@"1 design", @"1 designs in a 'family' group")
-		: [NSString stringWithFormat:NSLocalizedString(@"%d designs", @"count of designs in a 'family' group"), range.length];
+		? NSLocalizedString(@"1 variation", @"1 designs in a 'family' group")
+		: [NSString stringWithFormat:NSLocalizedString(@"%d variations", @"count of designs in a 'family' group."), range.length];
+				// Should be plenty of room e.g. ... 3 Varianten, 3 variantes, 3 variações, 3 varianti
 	
 	return [NSDictionary dictionaryWithObjectsAndKeys:
 			[NSNumber numberWithInt:IKGroupBezelStyle], IKImageBrowserGroupStyleKey,

@@ -5805,7 +5805,7 @@
 				8D15AC300486D014006FF6A4 /* Sources */,
 				8D15AC330486D014006FF6A4 /* Frameworks */,
 				3C99107209298C4400ED5CBF /* Generate Localizable.strings */,
-				CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings */,
+				CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings (UNUSED) */,
 				3C202F4D07E0140100DE4994 /* Copy Frameworks */,
 				CEC10DFF0D7793AE00513E70 /* Copy Frameworks ALWAYS */,
 				CEC65E5D0E1AFD170065C3D0 /* Copy Sparkle - Strip Localizations */,
@@ -6693,7 +6693,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/Tools/pbxcp\"\n\nDESIGNS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Designs\"\nmkdir -p ${DESIGNS_FOLDER_PATH}\n\npushd ../../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        ${PBXCP} \\\n            -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n\t\t/usr/bin/gcc -E -P -x c -Wno-trigraphs \\\n\t\t\t-D SANDVOX_VERSION=${SANDVOX_VERSION} \\\n\t\t\t-D SVN_VERSION=${SVN_VERSION} \\\n\t\t\t-C \"${PWD}/${i}/Info.plist\" \\\n\t\t\t-o \"${DESIGNS_FOLDER_PATH}/${i}/Info.plist\"\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
+			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/Tools/pbxcp\"\n\nDESIGNS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Designs\"\nmkdir -p ${DESIGNS_FOLDER_PATH}\n\npushd ../../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        ${PBXCP} \\\n            -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -exclude .psd -exclude sources -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n\t\t/usr/bin/gcc -E -P -x c -Wno-trigraphs \\\n\t\t\t-D SANDVOX_VERSION=${SANDVOX_VERSION} \\\n\t\t\t-D SVN_VERSION=${SVN_VERSION} \\\n\t\t\t-C \"${PWD}/${i}/Info.plist\" \\\n\t\t\t-o \"${DESIGNS_FOLDER_PATH}/${i}/Info.plist\"\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */ = {
@@ -6853,14 +6853,14 @@
 			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n# our original list from 1.2\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\.|/fr\\.|/it\\.|/ja\\.|/zh_CN\\.|/zh_TW\\.' | xargs rm -rf\n\n# our current list for 1.5\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\.|/fr\\.|/zh_CN\\.|/zh_TW\\.' | xargs rm -rf\n\n# for ALPHA, we remove everything but en\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.' | xargs rm -rf\n";
 			showEnvVarsInLog = 0;
 		};
-		CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings */ = {
+		CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings (UNUSED) */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Smarter Localizable.strings";
+			name = "Smarter Localizable.strings (UNUSED)";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
