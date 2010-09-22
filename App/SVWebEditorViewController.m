@@ -1364,8 +1364,15 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
 {
+    NSDragOperation result = NSDragOperationNone;
+    
     _draggingDestination = [self destinationForDraggingInfo:sender];
-    return [_draggingDestination draggingEntered:sender];
+    if ([_draggingDestination respondsToSelector:@selector(draggingEntered:)])
+    {
+        result = [_draggingDestination draggingEntered:sender];
+    }
+    
+    return result;
 }
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
@@ -1385,7 +1392,13 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         }
         
         _draggingDestination = destination;
-        return [_draggingDestination draggingEntered:sender];
+        
+        NSDragOperation result = NSDragOperationNone;
+        if ([_draggingDestination respondsToSelector:@selector(draggingEntered:)])
+        {
+            result = [_draggingDestination draggingEntered:sender];
+        }
+        return result;
     }
 }
 
