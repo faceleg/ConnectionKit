@@ -744,17 +744,20 @@ const int kDesignThumbHeight = 65;
  */
 - (void)writeCSS:(SVHTMLContext *)context;
 {
-	NSString *basePath = [[self bundle] resourcePath];
-	NSString *fullPath = [basePath stringByAppendingPathComponent:@"main.css"];
-    [context addCSSWithURL:[NSURL fileURLWithPath:fullPath]];
-
-	NSDictionary *variationDict = [self variationDict];
-	id file = [variationDict objectForKey:@"file"];
-	if (file)
+	if ([self bundle])
 	{
-		NSString *fileCSS = [NSString stringWithFormat:@"%@.css", file];
-		fullPath = [basePath stringByAppendingPathComponent:fileCSS];
+		NSString *basePath = [[self bundle] resourcePath];
+		NSString *fullPath = [basePath stringByAppendingPathComponent:@"main.css"];
 		[context addCSSWithURL:[NSURL fileURLWithPath:fullPath]];
+		
+		NSDictionary *variationDict = [self variationDict];
+		id file = [variationDict objectForKey:@"file"];
+		if (file)
+		{
+			NSString *fileCSS = [NSString stringWithFormat:@"%@.css", file];
+			fullPath = [basePath stringByAppendingPathComponent:fileCSS];
+			[context addCSSWithURL:[NSURL fileURLWithPath:fullPath]];
+		}		
 	}
 }
 
