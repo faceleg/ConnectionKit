@@ -35,7 +35,6 @@
 @property(nonatomic, retain) SVTitleBox *siteSubtitle;
 
 @property(nonatomic, retain) SVTitleBox *footer;
-- (NSString *)defaultCopyrightHTML;
 
 
 #pragma mark Other

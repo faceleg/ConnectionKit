@@ -115,7 +115,7 @@
     
     // Footer
     box = [NSEntityDescription insertNewObjectForEntityForName:@"Footer" inManagedObjectContext:[self managedObjectContext]];
-    [box setTextHTMLString:[self defaultCopyrightHTML]];
+    [box setTextHTMLString:[NSString stringWithFormat:@"© %@ 2010", title]];
     [self setFooter:box];
     
     
@@ -146,13 +146,6 @@
 #pragma mark Footer
 
 @dynamic footer;
-
-- (NSString *)defaultCopyrightHTML
-{
-	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"copyrightHTML" language:[self valueForKey:@"language"]
-		fallback:NSLocalizedStringWithDefaultValue(@"copyrightHTML", nil, [NSBundle mainBundle], @"Parting Words (copyright, contact information, etc.)", @"Default text for page bottom")];
-	return result;
-}
 
 #pragma mark Design
 
