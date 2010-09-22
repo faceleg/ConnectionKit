@@ -40,7 +40,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     // Controllers
     SVContentDOMController  *_contentItem;
     WEKWebEditorItem        *_firstResponderItem;
-    NSObject                *_draggingDestination;  // weak ref
 	KTHTMLEditorController  *_HTMLEditorController;
     
     // Updating
@@ -52,6 +51,10 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     // Loading
     KTPage  *_loadedPage;
     BOOL    _articleShouldBecomeFocusedAfterNextLoad;
+    
+    // Drag/drop
+    NSObject        *_draggingDestination;  // weak ref
+    NSDragOperation _dropOp;
         
     // Delegate
     id <SVWebEditorViewControllerDelegate>  _delegate;  // weak ref

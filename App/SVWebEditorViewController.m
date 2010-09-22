@@ -1355,17 +1355,21 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     return result;
 }
 
-- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
+- (NSDragOperation)dragging:(id <NSDraggingInfo>)sender enteredDestination:(NSObject *)destination;
 {
-    NSDragOperation result = NSDragOperationNone;
+    _draggingDestination = destination;
     
-    _draggingDestination = [self destinationForDraggingInfo:sender];
+    _dropOp = NSDragOperationNone;
     if ([_draggingDestination respondsToSelector:@selector(draggingEntered:)])
     {
-        result = [_draggingDestination draggingEntered:sender];
+        _dropOp = [_draggingDestination draggingEntered:sender];
     }
-    
-    return result;
+    return _dropOp;
+}
+
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
+{
+    return [self dragging:sender enteredDestination:[self destinationForDraggingInfo:sender]];
 }
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
@@ -1377,9 +1381,9 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     {
         if ([_draggingDestination respondsToSelector:@selector(draggingUpdated:)])
         {
-            return [_draggingDestination draggingUpdated:sender];
+            _dropOp = [_draggingDestination draggingUpdated:sender];
         }
-        return NSDragOperationNone; // should really return previous result if poss
+        return _dropOp;
     }
     else
     {
@@ -1388,14 +1392,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
             [_draggingDestination draggingExited:sender];
         }
         
-        _draggingDestination = destination;
-        
-        NSDragOperation result = NSDragOperationNone;
-        if ([_draggingDestination respondsToSelector:@selector(draggingEntered:)])
-        {
-            result = [_draggingDestination draggingEntered:sender];
-        }
-        return result;
+        return [self dragging:sender enteredDestination:destination];
     }
 }
 
