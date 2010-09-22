@@ -1382,7 +1382,11 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     // Switching to a new drag target, so tell the old one drag exited
     if (destination == _draggingDestination)
     {
-        return [_draggingDestination draggingUpdated:sender];
+        if ([_draggingDestination respondsToSelector:@selector(draggingUpdated:)])
+        {
+            return [_draggingDestination draggingUpdated:sender];
+        }
+        return NSDragOperationNone; // should really return previous result if poss
     }
     else
     {
