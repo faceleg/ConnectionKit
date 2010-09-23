@@ -40,7 +40,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
                                    inManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVPlugInGraphic *result =
-    [NSEntityDescription insertNewObjectForEntityForName:@"PlugInPagelet"    
+    [NSEntityDescription insertNewObjectForEntityForName:@"PlugInGraphic"    
                                   inManagedObjectContext:context];
     
     [result setValue:identifier forKey:@"plugInIdentifier"];
@@ -53,7 +53,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
                          inManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVPlugInGraphic *result =
-    [NSEntityDescription insertNewObjectForEntityForName:@"PlugInPagelet"    
+    [NSEntityDescription insertNewObjectForEntityForName:@"PlugInGraphic"    
                                   inManagedObjectContext:context];
     
     [result setValue:[[plugIn class] plugInIdentifier] forKey:@"plugInIdentifier"];
