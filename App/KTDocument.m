@@ -350,6 +350,15 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (id)initForURL:(NSURL *)absoluteDocumentURL withContentsOfURL:(NSURL *)absoluteDocumentContentsURL ofType:(NSString *)typeName error:(NSError **)outError
 {
+	// This is our first chance to notice that an autosaved document is being reopened.  Abort if option key is held down.
+	if (NSNotFound != [[absoluteDocumentContentsURL path] rangeOfString:@"Autosave Information"].location)
+	{
+		if (GetCurrentEventKeyModifiers() & optionKey)	// Option key -- prevent opening of autosaved document.
+		{
+			[self release];
+			return nil;
+		}
+	}
     if (self = [super initForURL:absoluteDocumentURL withContentsOfURL:absoluteDocumentContentsURL ofType:typeName error:outError])
     {
         // Correct persistent store URL now that it's finished reading
