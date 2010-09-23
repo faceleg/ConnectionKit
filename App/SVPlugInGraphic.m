@@ -11,7 +11,7 @@
 #import "SVDOMController.h"
 #import "SVMediaProtocol.h"
 #import "SVPlugIn.h"
-#import "KTElementPlugInWrapper.h"
+#import "SVGraphicFactory.h"
 #import "SVHTMLContext.h"
 
 #import "NSManagedObject+KTExtensions.h"
@@ -151,7 +151,9 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (void)loadPlugIn;
 {
-    Class plugInClass = [[[self plugInWrapper] bundle] principalClass];
+    SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:[self plugInIdentifier]];
+    Class plugInClass = [factory plugInClass];
+    
     if (plugInClass)
     {                
         OBASSERT(!_plugIn);
@@ -180,23 +182,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         [self setPlugIn:plugIn useSerializedProperties:NO];
         [plugIn release];
     }
-}
-
-- (KTElementPlugInWrapper *)plugInWrapper
-{
-	KTElementPlugInWrapper *result = [self wrappedValueForKey:@"plugin"];
-	
-	if (!result)
-	{
-		NSString *identifier = [self valueForKey:@"plugInIdentifier"];
-        if (identifier)
-        {
-            result = [KTElementPlugInWrapper pluginWithIdentifier:identifier];
-            [self setPrimitiveValue:result forKey:@"plugin"];
-        }
-	}
-	
-	return result;
 }
 
 @dynamic plugInIdentifier;

@@ -42,6 +42,10 @@
 
 - (BOOL)isIndex;
 
+// Plug-ins
+@property(nonatomic, retain, readonly) NSString *identifier;
+@property(nonatomic, retain, readonly) Class plugInClass;
+
 
 #pragma mark Pasteboard
 
@@ -69,6 +73,8 @@
 // Convenience method that uses the factory if non-nil. Otherwise, fall back to text box
 + (SVGraphic *)graphicWithActionSender:(id <NSValidatedUserInterfaceItem>)sender
         insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+
++ (SVGraphicFactory *)factoryWithIdentifier:(NSString *)identifier;
 
 
 #pragma mark Pasteboard

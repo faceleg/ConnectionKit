@@ -35,7 +35,7 @@
 
 #pragma mark Properties
 
-- (NSString *)plugInIdentifier; { return [[self plugInBundle] bundleIdentifier]; }
+- (NSString *)identifier; { return [[self plugInBundle] bundleIdentifier]; }
 
 - (Class)plugInClass;
 {
@@ -81,7 +81,7 @@
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVGraphic *result = [SVPlugInGraphic
-                         insertNewGraphicWithPlugInIdentifier:[self plugInIdentifier]
+                         insertNewGraphicWithPlugInIdentifier:[self identifier]
                          inManagedObjectContext:context];
     
     // Guess title

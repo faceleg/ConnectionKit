@@ -36,6 +36,10 @@
     return nil;
 }
 
+#pragma mark Plug-in
+
+- (NSString *)plugInIdentifier; { return @"com.karelia.Sandvox.Image"; }
+
 #pragma mark Media
 
 @dynamic media;

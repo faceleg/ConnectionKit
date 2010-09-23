@@ -19,8 +19,6 @@
 
 - (id)initWithBundle:(NSBundle *)bundle;    // assume -principalClass is the plug-in
 
-@property(nonatomic, retain, readonly) NSString *plugInIdentifier;
-@property(nonatomic, retain, readonly) Class plugInClass;
 @property(nonatomic, retain, readonly) NSBundle *plugInBundle;
 
 @end

@@ -30,7 +30,6 @@
 
 
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
-- (KTElementPlugInWrapper *)plugInWrapper;
 
 
 #pragma mark Metrics

@@ -97,6 +97,10 @@
     return [NSImage imageNamed:@"toolbar_image"];
 }
 
+- (NSString *)identifier { return @"com.karelia.Sandvox.Image"; }
+
+- (Class)plugInClass { return nil; }
+
 - (NSUInteger)priority; { return 1; }
 
 - (NSArray *)readablePasteboardTypes;
@@ -253,11 +257,18 @@
 
 #pragma mark Factory Registration
 
-static NSPointerArray   *sFactories;
+static NSPointerArray       *sFactories;
+static NSMutableDictionary  *sFactoriesByIdentifier;
 
 + (NSArray *)registeredFactories;
 {
     return [sFactories allObjects];
+}
+
++ (SVGraphicFactory *)factoryWithIdentifier:(NSString *)identifier;
+{
+    SVGraphicFactory *result = [sFactoriesByIdentifier objectForKey:identifier];
+    return result;
 }
 
 + (SVGraphicFactory *)graphicFactoryForTag:(NSInteger)tag;
@@ -285,6 +296,7 @@ static NSPointerArray   *sFactories;
 {
     OBPRECONDITION(factory);
     [sFactories addPointer:factory];
+    if ([factory identifier]) [sFactoriesByIdentifier setObject:factory forKey:[factory identifier]];
 }
 
 #pragma mark Shared Objects
@@ -304,6 +316,7 @@ static SVGraphicFactory *sRawHTMLFactory;
 + (void)initialize
 {
     if (!sFactories) sFactories = [[NSPointerArray pointerArrayWithStrongObjects] retain];
+    if (!sFactoriesByIdentifier) sFactoriesByIdentifier = [[NSMutableDictionary alloc] init];
     
     
     // Special factories!
@@ -688,6 +701,11 @@ static SVGraphicFactory *sRawHTMLFactory;
 - (NSUInteger)priority; { return 5; }
 
 - (BOOL)isIndex; { return NO; }
+
+- (NSString *)identifier { return nil; }
+- (Class)plugInClass; { return nil; }
+
+#pragma mark Pasteboard
 
 - (NSArray *)readablePasteboardTypes; { return nil; }
 
