@@ -16,6 +16,7 @@
 #import "KSAppDelegate.h"
 
 #import "Registration.h"
+#import "NSTextView+KTExtensions.h"
 
 @interface KTCodeInjectionController ()
 @end
@@ -55,15 +56,31 @@
 
 - (void)awakeFromNib
 {
-	NSFont *font = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]];
+	NSDictionary *attr = [oPreludeTextView defaultTextAttributes];
+	NSFont *font = [attr objectForKey:NSFontAttributeName];
+	NSSize inset = NSMakeSize(0.0, 4.0);
+	
 	[oPreludeTextView setFont:font];
 	[oEarlyHeadTextView setFont:font];
 	[oHeadTextView setFont:font];
 	[oBodyStartTextView setFont:font];
 	[oBodyEndTextView setFont:font];
-	[oBodyTagTextField setFont:font];
 	[oCSSTextView setFont:font];
 	
+	[oPreludeTextView setUsesFontPanel:NO];
+	[oEarlyHeadTextView setUsesFontPanel:NO];
+	[oHeadTextView setUsesFontPanel:NO];
+	[oBodyStartTextView setUsesFontPanel:NO];
+	[oBodyEndTextView setUsesFontPanel:NO];
+	[oCSSTextView setUsesFontPanel:NO];
+
+	[oPreludeTextView setTextContainerInset:inset];
+	[oEarlyHeadTextView setTextContainerInset:inset];
+	[oHeadTextView setTextContainerInset:inset];
+	[oBodyStartTextView setTextContainerInset:inset];
+	[oBodyEndTextView setTextContainerInset:inset];
+	[oCSSTextView setTextContainerInset:inset];
+
 	
 	// Bind our text fields to the right controller.	
 	NSString *baseKeyPath = @"selection";

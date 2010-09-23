@@ -18,7 +18,7 @@
 -(void) turnOffWrapping;
 
 - (void) setDesiredAttributes:(NSDictionary *)attr;
-
+-(NSDictionary *) defaultTextAttributes;
 + (void) startRecordingFontChanges;
 
 @end

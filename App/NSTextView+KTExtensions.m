@@ -20,7 +20,6 @@
 @interface NSTextView ()
 
 -(NSDictionary*)	syntaxDefinitionDictionary;
--(NSDictionary*)	defaultTextAttributes;
 
 
 -(void)	recolorSyntaxTimer: (NSTimer*) sender;
