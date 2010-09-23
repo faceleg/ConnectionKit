@@ -37,15 +37,16 @@
 {
     // If the window has not been loaded yet, this will return nil. But that's fine, because setting the design loads the nib
     
-	KTDesign *result = [[[self designsController] selectedObjects] lastObject];
+	KTDesign *design = [[[self designsController] selectedObjects] lastObject];
+	KTDesignFamily *family = design.family;
 	
-	if ([result isKindOfClass:[KTDesignFamily class]])
+	if (design.isContracted && [family.designs count])
 	{
-		KTDesignFamily *family = (KTDesignFamily *)result;
-		result = [family.designs objectAtIndex:family.imageVersion];
+		int imageVersion = design.imageVersion;
+		design = [family.designs objectAtIndex:imageVersion];
 	}
     
-	return result;
+	return design;
 }
 
 - (void)setDesign:(KTDesign *)design;
