@@ -291,16 +291,15 @@
         }
     }
     
-    
-    // Do the actual controller-level insertion
-    [super addObject:object];
-    
-    
-    // Include in site menu if appropriate
+ 
+	// Include in site menu if appropriate
     if ([collection isRootPage] && [[collection childItems] count] < 7)
     {
         [object setIncludeInSiteMenu:[NSNumber numberWithBool:YES]];
     }
+	
+    // Do the actual controller-level insertion
+    [super addObject:object];
 }
 
 - (void)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
