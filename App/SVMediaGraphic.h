@@ -6,12 +6,12 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVGraphic.h"
+#import "SVPlugInGraphic.h"
 
 
 @class SVMediaRecord;
 
-@interface SVMediaGraphic : SVGraphic
+@interface SVMediaGraphic : SVPlugInGraphic
 
 #pragma mark Init
 + (id)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
