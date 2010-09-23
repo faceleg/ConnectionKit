@@ -306,14 +306,18 @@
     SVImage *image = [self representedObject];
 	CGSize originalSize = [image originalSize];
 	
-#define SNAP 4
-	if (resizingWidth && ( abs(size.width - originalSize.width) < SNAP) )
+	// Snap if we are near the original size, UNLESS the command key is held down.
+	if ((GetCurrentKeyModifiers() & cmdKey) == 0)
 	{
-		size.width = originalSize.width;
-	}
-	if (resizingHeight && ( abs(size.height - originalSize.height) < SNAP) )
-	{
-		size.height = originalSize.height;
+		int snap = MIN(originalSize.width/4, 10);	// snap to smaller of 25% image width or 10 pixels
+		if (resizingWidth && ( abs(size.width - originalSize.width) < snap) )
+		{
+			size.width = originalSize.width;
+		}
+		if (resizingHeight && ( abs(size.height - originalSize.height) < snap) )
+		{
+			size.height = originalSize.height;
+		}
 	}
     
     
