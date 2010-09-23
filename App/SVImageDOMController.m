@@ -303,7 +303,7 @@
                            handle == kSVGraphicLowerMiddleHandle ||
                            handle == kSVGraphicLowerRightHandle);
     
-    SVImage *image = [self representedObject];
+    SVMediaGraphic *image = [self representedObject];
 	CGSize originalSize = [image originalSize];
 	
 	// Snap if we are near the original size, UNLESS the command key is held down.

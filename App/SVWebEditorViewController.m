@@ -13,6 +13,7 @@
 #import "SVAttributedHTML.h"
 #import "SVContentDOMController.h"
 #import "KTDocument.h"
+#import "SVImage.h"
 #import "SVLogoImage.h"
 #import "KTMaster.h"
 #import "KTPage.h"

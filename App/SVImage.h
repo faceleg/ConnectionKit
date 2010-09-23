@@ -7,12 +7,12 @@
 //
 
 
-#import "SVMediaGraphic.h"
+#import "SVPlugIn.h"
 
 
-@class SVLink, SVTextAttachment;
+@class SVLink, SVTextAttachment, SVMediaRecord;
 
-@interface SVImage : SVMediaGraphic
+@interface SVImage : SVPlugIn
 
 + (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;
 

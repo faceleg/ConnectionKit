@@ -10,6 +10,7 @@
 #import "SVSizeBindingDOMController.h"
 #import "SVGraphicDOMController.h"
 #import "SVImage.h"
+#import "SVMediaGraphic.h"
 
 
 @interface SVImageDOMController : SVSizeBindingDOMController

@@ -6,10 +6,10 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVImage.h"
+#import "SVMediaGraphic.h"
 
 
-@interface SVLogoImage : SVImage
+@interface SVLogoImage : SVMediaGraphic
 
 @property(nonatomic, copy) NSNumber *hidden;    // BOOL, mandatory
 
