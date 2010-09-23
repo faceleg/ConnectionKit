@@ -180,6 +180,8 @@
 	[context pushAttribute:@"codebase" value:@"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"];
 	// align?  It was in Sandvox 1.x.  Doesn't seem to be officially supported though.
 	
+	[context buildAttributesForElement:@"object" bindSizeToObject:self];
+
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context startElement:@"object" preferredIdName:@"flash" className:nil attributes:nil];	// class, attributes already pushed
 	
@@ -208,6 +210,8 @@
 	[context pushAttribute:@"loop" value:self.loop.boolValue ? @"true" : @"false"];
 	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
 	[context pushAttribute:@"pluginspage" value:@"http://www.macromedia.com/go/getflashplayer"];
+	
+	// Not going to use buildAttributesForElement:bindSizeToObject: for this element since it's hidden from Sandvox anyhow, just a fallback.
 	[context startElement:@"embed"];
 	
 	[context endElement];
