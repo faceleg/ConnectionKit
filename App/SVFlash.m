@@ -32,7 +32,6 @@
 #import "NSImage+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSBundle+Karelia.h"
-#import <QuickLook/QuickLook.h>
 #import "KSThreadProxy.h"
 #import "NSImage+KTExtensions.h"
 #import "SVMediaGraphicInspector.h"

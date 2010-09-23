@@ -706,10 +706,10 @@ const int kDesignThumbHeight = 65;
 		{
 			// Ignore any special files
 			if ([aFilename hasPrefix:@"."]) continue;
-			if ([[[aFilename pathExtension] lowercaseString] isEqualToString:@"psd"]) continue;
+			if ([[aFilename pathExtension] isEqualToStringCaseInsensitive:@"psd"]) continue;
 			if ([aFilename isEqualToStringCaseInsensitive:@"Info.plist"]) continue;
 			if ([[aFilename stringByDeletingPathExtension] hasSuffix:@"thumbnail"]) continue;
-			if ([aFilename isEqualToString:@"sources"]) continue;
+			if ([aFilename isEqualToStringCaseInsensitive:@"sources"]) continue;
 			if ([variationNamesToIgnore containsObject:aFilename])	continue;
 			if (extraIgnoredFiles && [extraIgnoredFiles containsObject:aFilename])	continue;
 			if ([[aFilename stringByDeletingPathExtension] isEqualToString:@"placeholder"])	continue;
@@ -757,7 +757,7 @@ const int kDesignThumbHeight = 65;
 			NSString *fileCSS = [NSString stringWithFormat:@"%@.css", file];
 			fullPath = [basePath stringByAppendingPathComponent:fileCSS];
 			[context addCSSWithURL:[NSURL fileURLWithPath:fullPath]];
-		}		
+		}	
 	}
 }
 
