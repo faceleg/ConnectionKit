@@ -69,7 +69,10 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 {
     [super awakeFromInsert];
     
-    [self setPrimitiveValue:@"??" forKey:@"plugInVersion"];
+    if ([[[self entity] attributesByName] objectForKey:@"plugInVersion"])
+    {
+        [self setPrimitiveValue:@"??" forKey:@"plugInVersion"];
+    }
 }
 
 - (void)awakeFromFetch
