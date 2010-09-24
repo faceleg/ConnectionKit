@@ -34,27 +34,6 @@
 
 @implementation SVImage 
 
-+ (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;
-{
-    OBPRECONDITION(media);
-    
-    SVImage *result = [self insertNewGraphicInManagedObjectContext:[media managedObjectContext]];
-    [result setMedia:media];
-    [result setTypeToPublish:[media typeOfFile]];
-    
-    [result makeOriginalSize];
-    [result setConstrainProportions:YES];
-    
-    return result;
-}
-
-+ (SVImage *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    SVImage *result = [NSEntityDescription insertNewObjectForEntityForName:@"Image"
-                                                    inManagedObjectContext:context];
-    return result;
-}
-
 - (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
 {
     // Can we read a media oject from the pboard?

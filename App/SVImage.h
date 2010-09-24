@@ -19,8 +19,6 @@
     NSString    *_altText;
 }
 
-+ (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;
-
 
 #pragma mark Special
 @property(nonatomic, copy) NSString *alternateText;
