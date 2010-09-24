@@ -540,6 +540,37 @@ static SVGraphicFactory *sRawHTMLFactory;
     return result;
 }
 
++ (id)contentsOfPasteboard:(NSPasteboard *)pasteboard forType:(NSString *)type forFactory:(SVGraphicFactory *)aFactory;
+{
+    // What should I read off the pasteboard?
+    id result;
+    
+    SVPlugInPasteboardReadingOptions readingOptions = SVPlugInPasteboardReadingAsData;
+    if ([aFactory respondsToSelector:@selector(readingOptionsForType:pasteboard:)])
+    {
+        readingOptions = [aFactory readingOptionsForType:type pasteboard:pasteboard];
+    }
+    
+    if (readingOptions & SVPlugInPasteboardReadingAsPropertyList)
+    {
+        result = [pasteboard propertyListForType:type];
+    }
+    else if (readingOptions & SVPlugInPasteboardReadingAsString)
+    {
+        result = [pasteboard stringForType:type];
+    }
+    else if (readingOptions & SVPlugInPasteboardReadingAsWebLocation)
+    {
+        result = [[pasteboard readWebLocations] firstObjectKS];
+    }
+    else
+    {
+        result = [pasteboard dataForType:type];
+    }
+    
+    return result;
+}
+
 + (NSUInteger)priorityForFactory:(SVGraphicFactory *)aFactory
                       pasteboard:(NSPasteboard *)pasteboard
                             type:(NSString **)outType
@@ -553,31 +584,9 @@ static SVGraphicFactory *sRawHTMLFactory;
     {
         @try    // talking to a plug-in so might fail
         {
-            // What should I read off the pasteboard?
-            id propertyList;
-            SVPlugInPasteboardReadingOptions readingOptions = SVPlugInPasteboardReadingAsData;
-            if ([aFactory respondsToSelector:@selector(readingOptionsForType:pasteboard:)])
-            {
-                readingOptions = [aFactory readingOptionsForType:type pasteboard:pasteboard];
-            }
-            
-            if (readingOptions & SVPlugInPasteboardReadingAsPropertyList)
-            {
-                propertyList = [pasteboard propertyListForType:type];
-            }
-            else if (readingOptions & SVPlugInPasteboardReadingAsString)
-            {
-                propertyList = [pasteboard stringForType:type];
-            }
-            else if (readingOptions & SVPlugInPasteboardReadingAsWebLocation)
-            {
-                propertyList = [[pasteboard readWebLocations] firstObjectKS];
-            }
-            else
-            {
-                propertyList = [pasteboard dataForType:type];
-            }
-            
+            id propertyList = [self contentsOfPasteboard:pasteboard
+                                                 forType:type
+                                              forFactory:aFactory];
             
             if (propertyList)
             {

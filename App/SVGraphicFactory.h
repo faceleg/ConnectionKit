@@ -86,6 +86,9 @@
 + (SVGraphic *)graphicFromPasteboard:(NSPasteboard *)pasteboard
       insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
+// Convenience for extracting data from pboard
++ (id)contentsOfPasteboard:(NSPasteboard *)pasteboard forType:(NSString *)type forFactory:(SVGraphicFactory *)aFactory;
+
 + (NSArray *)graphicPasteboardTypes;
 
 
