@@ -42,7 +42,7 @@
     {
         media = [SVMediaRecord mediaWithURL:[contents URL]
                                  entityName:@"GraphicMedia"
-             insertIntoManagedObjectContext:[self managedObjectContext]
+             insertIntoManagedObjectContext:[[self container] managedObjectContext]
                                       error:NULL];
     }
     else if ([[NSImage imagePasteboardTypes] containsObject:type])
@@ -50,7 +50,7 @@
         media = [SVMediaRecord mediaWithData:contents
                                          URL:nil
                                   entityName:@"GraphicMedia"
-              insertIntoManagedObjectContext:[self managedObjectContext]];
+              insertIntoManagedObjectContext:[[self container] managedObjectContext]];
     }
     
     
@@ -61,7 +61,7 @@
         [self setTypeToPublish:[media typeOfFile]];
         
         [self makeOriginalSize];
-        [self setConstrainProportions:YES];
+        [[self container] setConstrainProportions:YES];
     }
 }
 
