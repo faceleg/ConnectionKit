@@ -258,7 +258,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 
 - (void)getPosterFrameFromQuickLook;
 {
-	SVMediaRecord *media = self.media;
+	SVMediaRecord *media = self.container.media;
 	if (media)
 	{
 		NSURL *mediaURL = [media fileURL];
@@ -401,8 +401,8 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	}
 	
 	// Video changed - clear out the known width/height so we can recalculate
-	self.naturalWidth = nil;
-	self.naturalHeight = nil;
+	self.container.naturalWidth = nil;
+	self.container.naturalHeight = nil;
 	
 	// Load the movie to figure out the media size and codecType
 	[self loadMovie];
@@ -1109,15 +1109,15 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 			{
 				self.dimensionCalculationConnection = [[[KSSimpleURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:URL]] autorelease];
 				self.dimensionCalculationConnection.bytesNeeded = 1024;	// Let's just get the first 1K ... should be enough.
-				self.naturalWidth = 0;	
-				self.naturalHeight = 0;		// set to zero so we don't keep asking.  Hopefully answer comes soon.
+				self.container.naturalWidth = 0;	
+				self.container.naturalHeight = 0;		// set to zero so we don't keep asking.  Hopefully answer comes soon.
 			}
 		}
 		if (nil != movieData)
 		{
 			NSSize dimensions = [QTMovie dimensionsFromUnloadableMovieData:movieData];
-			self.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
-			self.naturalHeight = [NSNumber numberWithFloat:dimensions.height];	// even if it can't be figured out, at least it's not nil anymore
+			self.container.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
+			self.container.naturalHeight = [NSNumber numberWithFloat:dimensions.height];	// even if it can't be figured out, at least it's not nil anymore
 		}
 	}
 }
@@ -1126,8 +1126,8 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 - (void)connection:(KSSimpleURLConnection *)connection didFinishLoadingData:(NSData *)data response:(NSURLResponse *)response;
 {
 	NSSize dimensions = [QTMovie dimensionsFromUnloadableMovieData:data];
-	self.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
-	self.naturalHeight = [NSNumber numberWithFloat:dimensions.height];	// even if it can't be figured out, at least it's not nil anymore
+	self.container.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
+	self.container.naturalHeight = [NSNumber numberWithFloat:dimensions.height];	// even if it can't be figured out, at least it's not nil anymore
 	self.dimensionCalculationConnection = nil;
 }
 
@@ -1201,8 +1201,8 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 			movieSize = [[aMovie attributeForKey:QTMovieCurrentSizeAttribute] sizeValue];	// last resort
 		}
 	}
-	self.naturalWidth  = [NSNumber numberWithFloat:movieSize.width];
-	self.naturalHeight = [NSNumber numberWithFloat:movieSize.height];
+	self.container.naturalWidth  = [NSNumber numberWithFloat:movieSize.width];
+	self.container.naturalHeight = [NSNumber numberWithFloat:movieSize.height];
 }
 
 

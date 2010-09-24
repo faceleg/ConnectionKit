@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SVMediaGraphic.h"
+#import "SVMediaPlugIn.h"
 #import "KSSimpleURLConnection.h"
 #import <QTKit/QTKit.h>
 
@@ -15,7 +15,7 @@
 
 
 
-@interface SVFlash : SVMediaGraphic
+@interface SVFlash : SVMediaPlugIn
 {
 	// flash parsing support ... ivars mean that this object can't be parsing more than one flash file at a time, but this shouldn't happen.
 	int myBitOffset;

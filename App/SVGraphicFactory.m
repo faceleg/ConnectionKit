@@ -161,7 +161,7 @@
     return [NSImage imageNamed:@"toolbar_video"];
 }
 
-- (NSString *)identifier { return @"com.karelia.sandvox.Video"; }
+- (NSString *)identifier { return @"com.karelia.sandvox.SVVideo"; }
 
 - (Class)plugInClass { return [SVVideo class]; }
 
@@ -194,7 +194,7 @@
     return [NSImage imageNamed:@"toolbar_audio"];
 }
 
-- (NSString *)identifier { return @"com.karelia.sandvox.Audio"; }
+- (NSString *)identifier { return @"com.karelia.sandvox.SVAudio"; }
 
 - (Class)plugInClass { return [SVAudio class]; }
 

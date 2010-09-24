@@ -6,7 +6,7 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVMediaGraphic.h"
+#import "SVMediaPlugIn.h"
 #import "SVEnclosure.h"
 #import <QTKit/QTKit.h>
 
@@ -20,7 +20,7 @@ typedef enum {
 
 
 
-@interface SVVideo : SVMediaGraphic <SVEnclosure>
+@interface SVVideo : SVMediaPlugIn <SVEnclosure>
 {
 	QTMovie *_dimensionCalculationMovie;
 	

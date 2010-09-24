@@ -25,7 +25,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 @interface SVPlugInGraphic ()
 - (void)setPlugIn:(SVPlugIn *)plugIn useSerializedProperties:(BOOL)serialize;
-- (void)loadPlugIn;
 @end
 
 
