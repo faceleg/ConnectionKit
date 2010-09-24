@@ -20,6 +20,8 @@
 - (BOOL)shouldWriteHTMLInline;
 - (BOOL)canWriteHTMLInline;   // NO for most graphics. Images and Raw HTML return YES
 
+- (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
+
 @end
 
 

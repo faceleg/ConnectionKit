@@ -206,7 +206,10 @@
     NSString *type = [pboard availableTypeFromArray:[factory readablePasteboardTypes]];
     if (type)
     {
+        id contents = [SVGraphicFactory contentsOfPasteboard:pboard forType:type forFactory:factory];
         
+        [[self representedObject] awakeFromPasteboardContents:contents ofType:type];
+        return YES;
     }
     
     return NO;

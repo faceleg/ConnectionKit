@@ -349,4 +349,11 @@
     }
 }
 
+#pragma mark Pasteboard
+
+- (void)awakeFromPasteboardContents:(id)pasteboardContents ofType:(NSString *)type;
+{
+    [[self plugIn] awakeFromPasteboardContents:pasteboardContents ofType:type];
+}
+
 @end
