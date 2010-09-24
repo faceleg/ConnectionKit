@@ -534,6 +534,8 @@
 		27B0BF6D1168B8840084BFE0 /* SVGraphicFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B0BF6B1168B8840084BFE0 /* SVGraphicFactory.m */; };
 		27B0C1B111694F250084BFE0 /* SVMediaGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B0C1B011694F250084BFE0 /* SVMediaGraphic.h */; };
 		27B0C1B311694F250084BFE0 /* SVMediaGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B0C1B211694F250084BFE0 /* SVMediaGraphic.m */; };
+		27B1D5D1124CC87D00851A18 /* SVMediaPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B1D5CF124CC87D00851A18 /* SVMediaPlugIn.h */; };
+		27B1D5D2124CC87D00851A18 /* SVMediaPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B1D5D0124CC87D00851A18 /* SVMediaPlugIn.m */; };
 		27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B306D50D74266F00903807 /* KTDocument+Saving.m */; };
 		27B48D750C3D94AA00F37B9A /* Sandvox.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */; };
 		27B5921411AE85C100E10A1E /* WEKWebViewEditing.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B5921211AE85C100E10A1E /* WEKWebViewEditing.h */; };
@@ -2093,6 +2095,8 @@
 		27B0BF6B1168B8840084BFE0 /* SVGraphicFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGraphicFactory.m; sourceTree = "<group>"; };
 		27B0C1B011694F250084BFE0 /* SVMediaGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaGraphic.h; sourceTree = "<group>"; };
 		27B0C1B211694F250084BFE0 /* SVMediaGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaGraphic.m; sourceTree = "<group>"; };
+		27B1D5CF124CC87D00851A18 /* SVMediaPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaPlugIn.h; sourceTree = "<group>"; };
+		27B1D5D0124CC87D00851A18 /* SVMediaPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaPlugIn.m; sourceTree = "<group>"; };
 		27B306D50D74266F00903807 /* KTDocument+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Saving.m"; sourceTree = "<group>"; };
 		27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = wrapper.xcdatamodel; path = Sandvox.xcdatamodel; sourceTree = "<group>"; };
 		27B5921211AE85C100E10A1E /* WEKWebViewEditing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebViewEditing.h; sourceTree = "<group>"; };
@@ -4397,6 +4401,8 @@
 				27B0C1B211694F250084BFE0 /* SVMediaGraphic.m */,
 				27FA98951194BF06003B8308 /* SidebarTemplate.html */,
 				2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */,
+				27B1D5CF124CC87D00851A18 /* SVMediaPlugIn.h */,
+				27B1D5D0124CC87D00851A18 /* SVMediaPlugIn.m */,
 			);
 			name = Graphics;
 			sourceTree = "<group>";
@@ -5776,6 +5782,7 @@
 				CE89C230123999D70056D74B /* SVFlash.h in Headers */,
 				2727551212410C010043C223 /* SVPlugInGraphicFactory.h in Headers */,
 				276FE0AB12424D1D00EE2C14 /* SVSizeFormatter.h in Headers */,
+				27B1D5D1124CC87D00851A18 /* SVMediaPlugIn.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7281,6 +7288,7 @@
 				27CFC5E0123E280800BF018C /* Sandvox 1.5.xcdatamodel in Sources */,
 				2727551312410C010043C223 /* SVPlugInGraphicFactory.m in Sources */,
 				276FE0AC12424D1D00EE2C14 /* SVSizeFormatter.m in Sources */,
+				27B1D5D2124CC87D00851A18 /* SVMediaPlugIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
