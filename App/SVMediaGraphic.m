@@ -16,6 +16,7 @@
 #import "SVWebEditorHTMLContext.h"
 
 #import "NSError+Karelia.h"
+#import "NSString+Karelia.h"
 
 
 @interface SVMediaGraphic ()
@@ -83,7 +84,27 @@
 
 - (SVMediaPlugIn *)plugIn; { return (id)[super plugIn]; }
 
-- (NSString *)plugInIdentifier; { return @"com.karelia.Sandvox.Image"; }
+- (NSString *)plugInIdentifier;
+{
+    NSString *type = [[self media] typeOfFile];
+    
+    if ([type conformsToUTI:(NSString *)kUTTypeMovie] || [type conformsToUTI:(NSString *)kUTTypeVideo])
+    {
+        return @"com.karelia.sandvox.SVVideo";
+    }
+    else if ([type conformsToUTI:(NSString *)kUTTypeAudio])
+    {
+        return @"com.karelia.sandvox.SVAudio";
+    }
+    else if ([type conformsToUTI:@"com.adobe.shockwave-flash"])
+    {
+        return @"com.karelia.sandvox.SVFlash";
+    }
+    else
+    {
+        return @"com.karelia.sandvox.Image";
+    }
+}
 
 #pragma mark Placement
 

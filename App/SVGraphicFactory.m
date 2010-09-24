@@ -97,7 +97,7 @@
     return [NSImage imageNamed:@"toolbar_image"];
 }
 
-- (NSString *)identifier { return @"com.karelia.Sandvox.Image"; }
+- (NSString *)identifier { return @"com.karelia.sandvox.Image"; }
 
 - (Class)plugInClass { return [SVImage class]; }
 
@@ -161,6 +161,10 @@
     return [NSImage imageNamed:@"toolbar_video"];
 }
 
+- (NSString *)identifier { return @"com.karelia.sandvox.Video"; }
+
+- (Class)plugInClass { return [SVVideo class]; }
+
 @end
 
 
@@ -190,6 +194,10 @@
     return [NSImage imageNamed:@"toolbar_audio"];
 }
 
+- (NSString *)identifier { return @"com.karelia.sandvox.Audio"; }
+
+- (Class)plugInClass { return [SVAudio class]; }
+
 @end
 
 
@@ -217,6 +225,10 @@
 {
     return [NSImage imageNamed:@"toolbar_flash"];
 }
+
+- (NSString *)identifier { return @"com.karelia.sandvox.SVFlash"; }
+
+- (Class)plugInClass { return [SVFlash class]; }
 
 @end
 
