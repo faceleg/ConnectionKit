@@ -82,7 +82,7 @@
 }
 
 #pragma mark Media
-
+/*
 - (void)setMediaWithURL:(NSURL *)URL;
 {
     [super setMediaWithURL:URL];
@@ -97,7 +97,7 @@
     
     // Match file type
     [[self container] setTypeToPublish:[[self media] typeOfFile]];
-}
+}*/
 
 + (NSArray *) allowedFileTypes
 {
