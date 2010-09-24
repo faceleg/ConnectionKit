@@ -99,7 +99,7 @@
 
 - (NSString *)identifier { return @"com.karelia.Sandvox.Image"; }
 
-- (Class)plugInClass { return nil; }
+- (Class)plugInClass { return [SVImage class]; }
 
 - (NSUInteger)priority; { return 1; }
 

@@ -34,6 +34,7 @@
 {
     SVMediaGraphic *result = [NSEntityDescription insertNewObjectForEntityForName:@"MediaGraphic"
                                                            inManagedObjectContext:context];
+    [result loadPlugIn];
     return result;
 }
 
