@@ -30,6 +30,7 @@
 
 
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
+- (void)loadPlugIn;
 
 
 #pragma mark Metrics
