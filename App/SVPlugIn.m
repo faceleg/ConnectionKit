@@ -278,6 +278,10 @@ static id <SVPlugInContext> sCurrentContext;
 
 - (NSBundle *)bundle { return [NSBundle bundleForClass:[self class]]; }
 
+#if DEBUG
+- (id)link; { return NSNotApplicableMarker; }   // dirty hack to stop Inspector throwing exceptions
+#endif
+
 #pragma mark UI
 
 + (SVInspectorViewController *)makeInspectorViewController;
