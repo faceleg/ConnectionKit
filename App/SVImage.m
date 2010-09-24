@@ -26,7 +26,6 @@
 
 
 @interface SVImage ()
-@property(nonatomic, copy) NSData *linkData;
 @end
 
 
