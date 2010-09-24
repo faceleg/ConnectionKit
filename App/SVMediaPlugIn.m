@@ -51,6 +51,8 @@
     [container makeOriginalSize];
 }
 
-#pragma mark Inspector
+#pragma mark HTML
+
+- (BOOL)shouldWriteHTMLInline; { return NO; }
 
 @end

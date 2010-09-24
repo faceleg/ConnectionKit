@@ -15,6 +15,8 @@
 
 - (CGSize)originalSize;
 
+- (BOOL)shouldWriteHTMLInline;
+
 @end
 
 

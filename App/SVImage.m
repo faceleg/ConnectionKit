@@ -103,7 +103,7 @@
 
 - (BOOL)shouldWriteHTMLInline;
 {
-    BOOL result = [[self container] shouldWriteHTMLInline];
+    BOOL result = [super shouldWriteHTMLInline];
     
     // Images become inline once you turn off all additional stuff like title & caption
     if (![[self container] isPagelet])
@@ -208,10 +208,6 @@
 
 - (void)writeHTML:(SVHTMLContext *)context
 {
-    // alt=
-    NSString *alt = [self alternateText];
-    if (!alt) alt = @"";
-    
     // Link
     BOOL isPagelet = [[self container] isPagelet];
     if (isPagelet && [self link])
@@ -221,6 +217,9 @@
     
     
     // Actually write the image
+    NSString *alt = [self alternateText];
+    if (!alt) alt = @"";
+    
     if ([self shouldWriteHTMLInline]) [self buildClassName:context];
     
     [context buildAttributesForElement:@"img" bindSizeToObject:self DOMControllerClass:[SVImageDOMController class]];
