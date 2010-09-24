@@ -29,9 +29,9 @@
 
 - (NSString *)identifier { return [self uniqueID]; }
 
-+ (KTPage *)siteItemForPreviewPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVSiteItem *)siteItemForPreviewPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)context;
 {
-	KTPage *result = nil;
+	SVSiteItem *result = nil;
 	
 	// skip media objects ... starting or containing Media if it's not a request in the main frame
 	if ( NSNotFound == [path rangeOfString:[[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"]].location )

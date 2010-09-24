@@ -26,7 +26,7 @@
 
 #pragma mark Identifier
 @property(nonatomic, copy, readonly) NSString *uniqueID;
-+ (KTPage *)siteItemForPreviewPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVSiteItem *)siteItemForPreviewPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)context;
 
 
 #pragma mark Title
