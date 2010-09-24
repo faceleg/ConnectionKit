@@ -51,4 +51,6 @@
     [container makeOriginalSize];
 }
 
+#pragma mark Inspector
+
 @end

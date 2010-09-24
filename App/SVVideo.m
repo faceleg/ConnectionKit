@@ -454,7 +454,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	[context pushAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
 	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
 	
-	[context buildAttributesForElement:@"object" bindSizeToObject:self];
+	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil];
 
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context startElement:@"object" preferredIdName:@"quicktime" className:nil attributes:nil];	// class, attributes already pushed
@@ -493,7 +493,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	[context pushAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
 	
-	[context buildAttributesForElement:@"object" bindSizeToObject:self];
+	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil];
 
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context startElement:@"object" preferredIdName:@"wmplayer" className:nil attributes:nil];	// class, attributes already pushed
@@ -528,7 +528,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	
 	if (self.posterFrame)	[context pushAttribute:@"poster" value:posterSourcePath];
 
-	[context buildAttributesForElement:@"object" bindSizeToObject:self];
+	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil];
 
 	NSString *elementID = [context startElement:@"video" preferredIdName:@"video" className:nil attributes:nil];	// class, attributes already pushed
 	
@@ -696,7 +696,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	NSUInteger heightWithBar = barHeight + [[self height] intValue];
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	
-	[context buildAttributesForElement:@"object" bindSizeToObject:self];
+	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil];
 
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context startElement:@"object" preferredIdName:videoFlashPlayer className:nil attributes:nil];	// class, attributes already pushed

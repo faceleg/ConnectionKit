@@ -63,7 +63,9 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:nil
                                                       inheritFromContext:[self HTMLContext]];
     
-    [context buildAttributesForElement:[[element tagName] lowercaseString] bindSizeToObject:object];
+    [context buildAttributesForElement:[[element tagName] lowercaseString]
+                      bindSizeToObject:object
+                    DOMControllerClass:[self class]];
     
     NSDictionary *attributes = [context elementAttributes];
     [element setAttribute:@"width" value:[attributes objectForKey:@"width"]];

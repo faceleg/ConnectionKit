@@ -247,7 +247,7 @@
     // Actually write the image
     if ([self shouldWriteHTMLInline]) [self buildClassName:context];
     
-    [context buildAttributesForElement:@"img" bindSizeToObject:[self container]];
+    [context buildAttributesForElement:@"img" bindSizeToObject:self DOMControllerClass:[SVImageDOMController class]];
     
     SVMediaRecord *media = [[self container] media];
     if (media)

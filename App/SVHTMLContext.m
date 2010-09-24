@@ -638,11 +638,11 @@
 
 - (void)startElement:(NSString *)elementName bindSizeToObject:(NSObject *)object;
 {
-    [self buildAttributesForElement:elementName bindSizeToObject:object];
+    [self buildAttributesForElement:elementName bindSizeToObject:object DOMControllerClass:nil];
     [self startElement:elementName];
 }
 
-- (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object;
+- (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object DOMControllerClass:(Class)controllerClass;
 {
     NSNumber *width = [object valueForKey:@"width"];
     NSNumber *height = [object valueForKey:@"height"];

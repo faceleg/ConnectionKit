@@ -208,15 +208,17 @@
 
 #pragma mark Metrics
 
-- (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object;
+- (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object DOMControllerClass:(Class)controllerClass;
 {
-    SVDOMController *controller = [[self currentDOMController] newSizeBindingControllerWithRepresentedObject:object];
+    if (!controllerClass) controllerClass = [SVSizeBindingDOMController class];
+    SVDOMController *controller = [[controllerClass alloc] initWithRepresentedObject:
+                                   [[self currentDOMController] representedObject]];
     
     [self startDOMController:controller];
     _openSizeBindingController = YES;
     [controller release];
     
-    [super buildAttributesForElement:elementName bindSizeToObject:object];
+    [super buildAttributesForElement:elementName bindSizeToObject:object DOMControllerClass:controllerClass];
 }
 
 - (void)endElement;
