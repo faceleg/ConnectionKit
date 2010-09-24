@@ -573,7 +573,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 {
     if (!range)
     {
-        SVLink *link = [[self graphicsController] ks_valueForKeyPath:@"selection.link"
+        SVLink *link = [[self graphicsController] ks_valueForKeyPath:@"selection.plugIn.link"
                                           raisesForNotApplicableKeys:NO];
         
         if (NSIsControllerMarker(link))
@@ -1150,7 +1150,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     if (![sender selectedDOMRange])
     {
         SVLink *link = [actionSender selectedLink];
-        [[self graphicsController] setValue:link forKeyPath:@"selection.link"];
+        [[self graphicsController] setValue:link forKeyPath:@"selection.plugIn.link"];
         return YES;
     }
     
