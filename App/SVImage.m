@@ -264,8 +264,8 @@
         
         [context writeImageWithSrc:(URL ? [context relativeURLStringOfURL:URL] : @"")
                                alt:alt
-                             width:[[self width] description]
-                            height:[[self height] description]];
+                             width:[[NSNumber numberWithInt:[self width]] description]
+                            height:[[NSNumber numberWithInt:[self height]] description]];
     }
     
     [context addDependencyOnObject:self keyPath:@"media"];
