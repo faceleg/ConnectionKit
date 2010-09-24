@@ -207,6 +207,10 @@
             @"showsCaption", nil];
 }
 
+#pragma mark Metrics
+
+- (BOOL)isExplicitlySized; { return YES; }
+
 #pragma mark Link
 
 - (SVLink *)link;

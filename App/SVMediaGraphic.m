@@ -100,12 +100,6 @@
 
 #pragma mark Size
 
-- (NSNumber *)contentWidth; { return [self width]; }
-- (void)setContentWidth:(NSNumber *)width; { [self setWidth:width]; }
-
-- (NSNumber *)contentHeight; { return [self height]; }
-- (void)setContentHeight:(NSNumber *)height; { [self setHeight:height]; }
-
 - (void)setSize:(NSSize)size;
 {
     if ([self constrainProportions])
@@ -193,8 +187,6 @@
     
     [self setConstrainProportions:constrainProportions];
 }
-
-- (BOOL)isExplicitlySized; { return YES; }
 
 #pragma mark Size, inherited
 
