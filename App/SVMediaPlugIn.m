@@ -13,7 +13,7 @@
 
 #pragma mark Metrics
 
-- (BOOL)isExplicitlySized; { return YES; }
++ (BOOL)isExplicitlySized; { return YES; }
 
 - (CGSize)originalSize;
 {
