@@ -34,6 +34,13 @@
 
 @implementation SVImage 
 
++ (NSArray *)plugInKeys;
+{
+    return [[super plugInKeys] arrayByAddingObjectsFromArray:[NSArray arrayWithObjects:
+                                                              @"alternateText",
+                                                              nil]];
+}
+
 - (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
 {
     // Can we read a media oject from the pboard?
