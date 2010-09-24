@@ -167,7 +167,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         NSDictionary *plugInProperties = [self extensibleProperties];
         @try
         {
-            for (NSString *aKey in plugInProperties)
+            for (NSString *aKey in [[plugIn class] plugInKeys])
             {
                 id serializedValue = [plugInProperties objectForKey:aKey];
                 [plugIn setSerializedValue:serializedValue forKey:aKey];
