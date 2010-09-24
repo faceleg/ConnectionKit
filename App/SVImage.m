@@ -66,7 +66,7 @@
     // Make an image from that media
     if (media)
     {
-        [self replaceMedia:media forKeyPath:@"media"];
+        [self replaceMedia:media forKeyPath:@"container.media"];
         [[self container] setTypeToPublish:[media typeOfFile]];
         
         [self makeOriginalSize];
