@@ -83,7 +83,7 @@
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVImage *result = [SVImage insertNewGraphicInManagedObjectContext:context];
+    SVMediaGraphic *result = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
     [result setTitle:NSLocalizedString(@"Photo", "pagelet title")];
     [result setIsMediaPlaceholder:[NSNumber numberWithBool:YES]];
     

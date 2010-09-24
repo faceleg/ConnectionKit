@@ -32,8 +32,9 @@
 
 + (id)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SUBCLASSMUSTIMPLEMENT;
-    return nil;
+    SVMediaGraphic *result = [NSEntityDescription insertNewObjectForEntityForName:@"MediaGraphic"
+                                                           inManagedObjectContext:context];
+    return result;
 }
 
 #pragma mark Plug-in
