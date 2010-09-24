@@ -30,6 +30,7 @@
 
 
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
+@property(nonatomic, retain, readonly) SVPlugIn *plugIn;
 - (void)loadPlugIn;
 
 

@@ -8,6 +8,7 @@
 
 #import "SVMediaGraphic.h"
 
+#import "SVMediaGraphicInspector.h"
 #import "SVMediaRecord.h"
 #import "SVWebEditorHTMLContext.h"
 
@@ -38,9 +39,42 @@
     return result;
 }
 
+- (void)didAddToPage:(id <SVPage>)page;
+{
+    [super didAddToPage:page];
+    
+    
+    // Start off at a decent size.
+    NSNumber *maxWidth = [NSNumber numberWithUnsignedInteger:490];
+    if ([self isPagelet]) maxWidth = [NSNumber numberWithUnsignedInteger:200];
+    
+    if ([[self width] isGreaterThan:maxWidth])
+    {
+        [self setWidth:maxWidth];
+    }
+}
+
 #pragma mark Plug-in
 
 - (NSString *)plugInIdentifier; { return @"com.karelia.Sandvox.Image"; }
+
+#pragma mark Placement
+
+- (BOOL)isPagelet;
+{
+    // Images are no longer pagelets once you turn off all additional stuff like title & caption
+    if ([[self placement] intValue] == SVGraphicPlacementInline &&
+        ![self showsTitle] &&
+        ![self showsIntroduction] &&
+        ![self showsCaption])
+    {
+        return NO;
+    }
+    else
+    {
+        return [super isPagelet];
+    }
+}
 
 #pragma mark Media
 
@@ -250,5 +284,20 @@
     
     return result;
 }
+
+#pragma mark Inspector
+
++ (SVInspectorViewController *)makeInspectorViewController;
+{
+    SVInspectorViewController *result = [[[SVMediaGraphicInspector alloc]
+                                          initWithNibName:@"SVImage" bundle:nil]
+                                         autorelease];
+    
+    return result;
+}
+
+- (Class)inspectorFactoryClass; { return [self class]; }
+
+- (id)objectToInspect; { return self; }
 
 @end

@@ -165,7 +165,7 @@ extern NSString *kSVGraphicPboardType;
 //  1.  Implement -plugInIdentifier to return a unique value like a plug-in would
 //  2.  Override +makeInspectorViewController to create and return a controller
 + (SVInspectorViewController *)makeInspectorViewController;
-@property(nonatomic, retain, readonly) SVPlugIn *plugIn;
+- (id)objectToInspect;
 
 
 #pragma mark Serialization

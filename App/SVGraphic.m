@@ -338,7 +338,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (Class)inspectorFactoryClass; { return [self class]; }
 
-- (SVPlugIn *)plugIn; { return (SVPlugIn *)self; }
+- (id)objectToInspect; { return self; }
 
 - (id)valueForUndefinedKey:(NSString *)key
 {

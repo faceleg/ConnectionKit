@@ -81,7 +81,7 @@ change context:(void *)context
             
             // Give it the right content/selection
             NSArrayController *controller = [inspector inspectedObjectsController];
-            NSArray *plugIns = [[self inspectedObjects] valueForKey:@"plugIn"];
+            NSArray *plugIns = [[self inspectedObjects] valueForKey:@"objectToInspect"];
             [controller setContent:plugIns];
             [controller selectAll];
         }
@@ -144,7 +144,7 @@ change context:(void *)context
     }
     @catch (NSException *exception)
     {
-        // TODO: Log error
+        NSLog(@"%@", [exception description]);
     }
 }
 

@@ -79,21 +79,6 @@
     }
 }
 
-- (void)didAddToPage:(id <SVPage>)page;
-{
-    [super didAddToPage:page];
-    
-    
-    // Start off at a decent size.
-    NSNumber *maxWidth = [NSNumber numberWithUnsignedInteger:490];
-    if ([self isPagelet]) maxWidth = [NSNumber numberWithUnsignedInteger:200];
-    
-    if ([[self width] isGreaterThan:maxWidth])
-    {
-        [self setWidth:maxWidth];
-    }
-}
-
 - (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
 {
     // Can we read a media oject from the pboard?
@@ -176,22 +161,6 @@
     }
     
     return result;
-}
-
-- (BOOL)isPagelet;
-{
-    // Images are no longer pagelets once you turn off all additional stuff like title & caption
-    if ([[self placement] intValue] == SVGraphicPlacementInline &&
-        ![self showsTitle] &&
-        ![self showsIntroduction] &&
-        ![self showsCaption])
-    {
-        return NO;
-    }
-    else
-    {
-        return [super isPagelet];
-    }
 }
 
 - (BOOL)canDisplayInline; { return YES; }
@@ -320,22 +289,6 @@
 }
 
 - (BOOL)shouldPublishEditingElementID; { return NO; }
-
-#pragma mark Inspector
-
-- (NSString *)plugInIdentifier; // use standard reverse DNS-style string
-{
-	return @"com.karelia.sandvox.SVImage";
-}
-
-+ (SVInspectorViewController *)makeInspectorViewController;
-{
-    SVInspectorViewController *result = [[[SVMediaGraphicInspector alloc]
-                                          initWithNibName:@"SVImage" bundle:nil]
-                                         autorelease];
-    
-    return result;
-}
 
 #pragma mark Thumbnail
 

@@ -378,6 +378,8 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (Class)inspectorFactoryClass; { return [[self plugIn] class]; }
 
+- (id)objectToInspect; { return [self plugIn]; }
+
 #pragma mark Serialization
 
 - (void)awakeFromPropertyList:(id)propertyList;
