@@ -13,6 +13,8 @@
 
 @interface SVMediaPlugIn : SVPlugIn
 
+- (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)errror;
+
 - (CGSize)originalSize;
 
 - (BOOL)shouldWriteHTMLInline;

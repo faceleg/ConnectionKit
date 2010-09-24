@@ -11,6 +11,13 @@
 
 @implementation SVMediaPlugIn
 
+#pragma mark Properties
+
+- (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)errror;
+{
+    return YES;
+}
+
 #pragma mark Metrics
 
 + (BOOL)isExplicitlySized; { return YES; }

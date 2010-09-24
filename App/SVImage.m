@@ -95,6 +95,17 @@
 	return [NSArray arrayWithObject:(NSString *)kUTTypeImage];
 }
 
+- (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)error;
+{
+    BOOL result = *type != nil;
+    if (!result && error)
+    {
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationMissingMandatoryPropertyError localizedDescription:@"typeToPublish is non-optional for images"];
+    }
+    
+    return result;
+}
+
 #pragma mark Alt Text
 
 @synthesize alternateText = _altText;

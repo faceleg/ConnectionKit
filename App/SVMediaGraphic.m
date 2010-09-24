@@ -163,6 +163,10 @@
 #pragma mark Media Conversion
 
 @dynamic typeToPublish;
+- (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)error;
+{
+    return [[self plugIn] validateTypeToPublish:type error:error];
+}
 
 #pragma mark Size
 
