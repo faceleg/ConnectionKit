@@ -147,8 +147,6 @@
 
 - (BOOL)canDisplayInline; { return YES; }
 
-- (BOOL)mustBePagelet; { return NO; }
-
 + (NSSet *)keyPathsForValuesAffectingIsPagelet;
 {
     return [NSSet setWithObjects:
