@@ -16,6 +16,7 @@
 {
   @private
     NSString    *_typeToPublish;
+    NSString    *_altText;
 }
 
 + (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;

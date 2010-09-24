@@ -89,6 +89,7 @@
 - (void)dealloc;
 {
     [_typeToPublish release];
+    [_altText release];
     
     [super dealloc];
 }
@@ -118,18 +119,18 @@
 
 #pragma mark Alt Text
 
-@dynamic alternateText;
+@synthesize alternateText = _altText;
 
 #pragma mark Placement
 
 - (BOOL)shouldWriteHTMLInline;
 {
-    BOOL result = [super shouldWriteHTMLInline];
+    BOOL result = [[self container] shouldWriteHTMLInline];
     
     // Images become inline once you turn off all additional stuff like title & caption
-    if (![self isPagelet])
+    if (![[self container] isPagelet])
     {
-        SVTextAttachment *attachment = [self textAttachment];
+        SVTextAttachment *attachment = [[self container] textAttachment];
         if (![[attachment causesWrap] boolValue])
         {
             result = YES;
@@ -163,6 +164,8 @@
 
 - (SVLink *)link;
 {
+    return nil;
+    
     [self willAccessValueForKey:@"link"];
     SVLink *result = [self primitiveValueForKey:@"link"];
     [self didAccessValueForKey:@"link"];
@@ -227,14 +230,14 @@
 
 #pragma mark HTML
 
-- (void)writeBody:(SVHTMLContext *)context
+- (void)writeHTML:(SVHTMLContext *)context
 {
     // alt=
     NSString *alt = [self alternateText];
     if (!alt) alt = @"";
     
     // Link
-    BOOL isPagelet = [self isPagelet];
+    BOOL isPagelet = [[self container] isPagelet];
     if (isPagelet && [self link])
     {
         [context startAnchorElementWithHref:[[self link] URLString] title:nil target:nil rel:nil];
@@ -246,13 +249,13 @@
     
     [context buildAttributesForElement:@"img" bindSizeToObject:self];
     
-    SVMediaRecord *media = [self media];
+    SVMediaRecord *media = [[self container] media];
     if (media)
     {
         [context writeImageWithSourceMedia:media
                                        alt:alt
-                                     width:[self width]
-                                    height:[self height]
+                                     width:[NSNumber numberWithInt:[self width]]
+                                    height:[NSNumber numberWithInt:[self height]]
                                       type:[self typeToPublish]];
     }
     else
@@ -268,7 +271,7 @@
     [context addDependencyOnObject:self keyPath:@"media"];
     
     
-    if ([self isPagelet] && [self link]) [context endElement];
+    if ([[self container] isPagelet] && [self link]) [context endElement];
 }
 
 - (BOOL)shouldPublishEditingElementID; { return NO; }
