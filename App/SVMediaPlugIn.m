@@ -61,5 +61,6 @@
 #pragma mark HTML
 
 - (BOOL)shouldWriteHTMLInline; { return NO; }
+- (BOOL)canWriteHTMLInline; { return NO; }
 
 @end
