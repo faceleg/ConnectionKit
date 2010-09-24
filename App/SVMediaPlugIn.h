@@ -16,3 +16,8 @@
 - (CGSize)originalSize;
 
 @end
+
+
+@interface SVMediaPlugIn (Inherited)
+@property(nonatomic, readonly) SVMediaGraphic *container;
+@end
