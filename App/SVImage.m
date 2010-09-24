@@ -220,7 +220,7 @@
     NSString *alt = [self alternateText];
     if (!alt) alt = @"";
     
-    if ([self shouldWriteHTMLInline]) [self buildClassName:context];
+    if ([self shouldWriteHTMLInline]) [[self container] buildClassName:context];
     
     [context buildAttributesForElement:@"img" bindSizeToObject:self DOMControllerClass:[SVImageDOMController class]];
     
@@ -235,7 +235,7 @@
     }
     else
     {
-        NSURL *URL = [self externalSourceURL];
+        NSURL *URL = [[self container] externalSourceURL];
         
         [context writeImageWithSrc:(URL ? [context relativeURLStringOfURL:URL] : @"")
                                alt:alt
