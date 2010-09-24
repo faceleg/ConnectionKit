@@ -215,6 +215,12 @@
     return NO;
 }
 
+- (void)concludeDragOperation:(id <NSDraggingInfo>)sender;
+{
+    [self setNeedsDisplay];
+    _drawAsDropTarget = NO;
+}
+
 - (NSArray *)registeredDraggedTypes;
 {
     return [[SVGraphicFactory mediaPlaceholderFactory] readablePasteboardTypes];
