@@ -8,7 +8,11 @@
 
 #import "SVPlugIn.h"
 
+#import "SVMediaGraphic.h"
+
 
 @interface SVMediaPlugIn : SVPlugIn
+
+- (CGSize)originalSize;
 
 @end

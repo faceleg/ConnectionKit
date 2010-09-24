@@ -209,41 +209,12 @@
 @dynamic naturalWidth;
 @dynamic naturalHeight;
 
-
-- (CGSize)originalSize;
-{
-    CGSize result = CGSizeMake(0.0,0.0);
-    
-    SVMediaRecord *media = [self media];
-    if (media)
-	{
-		NSNumber *naturalWidth = self.naturalWidth;
-		NSNumber *naturalHeight = self.naturalHeight;
-		// Try to get cached natural size first
-		if (nil != naturalWidth && nil != naturalHeight)
-		{
-			result = CGSizeMake([naturalWidth floatValue], [naturalHeight floatValue]);
-		}
-		else	// ask the media for it, and cache it.
-		{
-			result = [media originalSize];
-			self.naturalWidth = [NSNumber numberWithFloat:result.width];
-			self.naturalHeight = [NSNumber numberWithFloat:result.height];
-		}
-	}
-	if (CGSizeEqualToSize(result, CGSizeMake(0.0,0.0)))
-	{
-		result = CGSizeMake(200.0f, 128.0f);
-	}
-    return result;
-}
-
 - (void)makeOriginalSize;
 {
     BOOL constrainProportions = [self constrainProportions];
     [self setConstrainProportions:NO];  // temporarily turn off so we get desired size.
     
-    CGSize size = [self originalSize];
+    CGSize size = [[self plugIn] originalSize];
     [self setWidth:[NSNumber numberWithFloat:size.width]];
     [self setHeight:[NSNumber numberWithFloat:size.height]];
     

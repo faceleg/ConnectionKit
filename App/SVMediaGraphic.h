@@ -49,6 +49,4 @@
 @property(nonatomic, copy) NSNumber *naturalWidth;		// Nil means unknown; 0 means checked but not attainable
 @property(nonatomic, copy) NSNumber *naturalHeight;
 
-- (CGSize)originalSize;
-
 @end

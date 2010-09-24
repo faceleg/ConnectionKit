@@ -304,7 +304,7 @@
                            handle == kSVGraphicLowerRightHandle);
     
     SVMediaGraphic *image = [self representedObject];
-	CGSize originalSize = [image originalSize];
+	CGSize originalSize = [[image plugIn] originalSize];
 	
 	// Snap if we are near the original size, UNLESS the command key is held down.
 	if ((GetCurrentKeyModifiers() & cmdKey) == 0)
