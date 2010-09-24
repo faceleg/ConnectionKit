@@ -21,6 +21,7 @@
 #import "NSManagedObject+KTExtensions.h"
 
 #import "NSBitmapImageRep+Karelia.h"
+#import "NSError+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
