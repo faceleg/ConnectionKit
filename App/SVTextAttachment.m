@@ -86,7 +86,7 @@
     switch ([*wrap intValue])
     {
         case SVGraphicWrapNone:
-            if ([[self graphic] canDisplayInline]) break;   // only images are allowed this
+            if ([[self graphic] canWriteHTMLInline]) break;   // only images are allowed this
             if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
                                                     code:NSValidationNumberTooSmallError
                                     localizedDescription:@"SVGraphicWrapNone is not supported"];

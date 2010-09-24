@@ -468,7 +468,7 @@
         
         // <div class="graphic"> or <img class="graphic">
         [self pushClassName:@"graphic"];
-        if (![graphic showsCaption] && [graphic canDisplayInline]) // special case for images
+        if (![graphic showsCaption] && [graphic canWriteHTMLInline]) // special case for images
         {
             [graphic writeBody:self];
             [self endElement];
@@ -491,7 +491,7 @@
         // Graphic body
         [self pushClassName:@"figure-content"];  // identifies for #84956
         
-        if ([graphic canDisplayInline])
+        if ([graphic canWriteHTMLInline])
         {
             [graphic writeBody:self];
         }

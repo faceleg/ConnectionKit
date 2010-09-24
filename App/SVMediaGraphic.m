@@ -295,6 +295,8 @@
 
 - (BOOL)shouldWriteHTMLInline; { return [[self plugIn] shouldWriteHTMLInline]; }
 
+- (BOOL)canWriteHTMLInline; { return [[self plugIn] canWriteHTMLInline]; }
+
 #pragma mark Inspector
 
 + (SVInspectorViewController *)makeInspectorViewController;

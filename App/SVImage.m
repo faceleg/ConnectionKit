@@ -145,7 +145,7 @@
     return result;
 }
 
-- (BOOL)canDisplayInline; { return YES; }
+- (BOOL)canWriteHTMLInline; { return YES; }
 
 + (NSSet *)keyPathsForValuesAffectingIsPagelet;
 {

@@ -18,6 +18,7 @@
 - (CGSize)originalSize;
 
 - (BOOL)shouldWriteHTMLInline;
+- (BOOL)canWriteHTMLInline;   // NO for most graphics. Images and Raw HTML return YES
 
 @end
 

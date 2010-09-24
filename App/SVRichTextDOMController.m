@@ -295,7 +295,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     DOMNode *parentNode = [element parentNode];
     
     if ([writer openElementsCount] &&
-        ![graphic canDisplayInline])
+        ![graphic canWriteHTMLInline])
     {
         // Push the element off up the tree; it will be written next time round
         [[parentNode parentNode] insertBefore:element refChild:[parentNode nextSibling]];
