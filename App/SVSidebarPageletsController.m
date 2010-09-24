@@ -123,6 +123,8 @@
 
 - (void)insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
 {
+    OBPRECONDITION(object);
+    
     // Position right
     [self moveObject:object toIndex:index];
     
