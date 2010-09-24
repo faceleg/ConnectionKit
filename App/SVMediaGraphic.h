@@ -9,12 +9,17 @@
 #import "SVPlugInGraphic.h"
 
 
-@class SVMediaRecord;
+@class SVMediaRecord, SVMediaPlugIn;
+
 
 @interface SVMediaGraphic : SVPlugInGraphic
 
 #pragma mark Init
 + (id)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+
+
+#pragma mark Plug-In
+- (SVMediaPlugIn *)plugIn;
 
 
 #pragma mark Media
@@ -41,8 +46,6 @@
 @property(nonatomic) BOOL constrainProportions;
 @property(nonatomic, copy, readonly) NSNumber *constrainedAspectRatio;
 
-@property(nonatomic, copy) NSNumber *contentWidth;
-@property(nonatomic, copy) NSNumber *contentHeight;
 @property(nonatomic, copy) NSNumber *naturalWidth;		// Nil means unknown; 0 means checked but not attainable
 @property(nonatomic, copy) NSNumber *naturalHeight;
 

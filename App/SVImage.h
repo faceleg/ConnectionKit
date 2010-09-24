@@ -13,6 +13,10 @@
 @class SVLink, SVTextAttachment, SVMediaRecord;
 
 @interface SVImage : SVMediaPlugIn
+{
+  @private
+    NSString    *_typeToPublish;
+}
 
 + (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;
 

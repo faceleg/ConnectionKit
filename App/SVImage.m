@@ -11,10 +11,8 @@
 #import "SVApplicationController.h"
 #import "SVImageDOMController.h"
 #import "SVLink.h"
-#import "KTMaster.h"
 #import "SVMediaGraphicInspector.h"
 #import "SVMediaRecord.h"
-#import "KTPage.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
 #import "KSWebLocation.h"
@@ -57,28 +55,6 @@
     return result;
 }
 
-- (void)willInsertIntoPage:(KTPage *)page;
-{
-    // Placeholder image
-    if (![self media])
-    {
-        SVMediaRecord *media = [[[page rootPage] master] makePlaceholdImageMediaWithEntityName:@"GraphicMedia"];
-        [self setMedia:media];
-        [self setTypeToPublish:[media typeOfFile]];
-        
-        [self makeOriginalSize];    // calling super will scale back down if needed
-        [self setConstrainProportions:YES];
-    }
-    
-    [super willInsertIntoPage:page];
-    
-    // Show caption
-    if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)
-    {
-        [self setShowsCaption:YES];
-    }
-}
-
 - (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
 {
     // Can we read a media oject from the pboard?
@@ -110,6 +86,13 @@
     }
 }
 
+- (void)dealloc;
+{
+    [_typeToPublish release];
+    
+    [super dealloc];
+}
+
 #pragma mark Media
 
 - (void)setMediaWithURL:(NSURL *)URL;
@@ -133,7 +116,7 @@
 	return [NSArray arrayWithObject:(NSString *)kUTTypeImage];
 }
 
-#pragma mark Metrics
+#pragma mark Alt Text
 
 @dynamic alternateText;
 
@@ -238,7 +221,7 @@
     return [NSSet setWithObject:@"typeToPublish"];
 }
 
-@dynamic typeToPublish;
+@synthesize typeToPublish = _typeToPublish;
 
 @dynamic compressionFactor;
 
@@ -309,43 +292,6 @@
     }
     
     return result;
-}
-
-#pragma mark Serialization
-
-- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
-{
-    [super populateSerializedProperties:propertyList];
-    
-    // Write image data
-    SVMediaRecord *media = [self media];
-    
-    NSData *data = [NSData newDataWithContentsOfMedia:media];
-    [propertyList setValue:data forKey:@"fileContents"];
-    [data release];
-    
-    NSURL *URL = [self sourceURL];
-    [propertyList setValue:[URL absoluteString] forKey:@"sourceURL"];
-}
-
-- (void)awakeFromPropertyList:(id)propertyList;
-{
-    [super awakeFromPropertyList:propertyList];
-    
-    // Pull out image data
-    NSData *data = [propertyList objectForKey:@"fileContents"];
-    if (data)
-    {
-        NSString *urlString = [propertyList objectForKey:@"sourceURL"];
-        NSURL *url = [NSURL URLWithString:urlString];
-        
-        SVMediaRecord *media = [SVMediaRecord mediaWithData:data
-                                                        URL:url
-                                                 entityName:@"GraphicMedia"
-                             insertIntoManagedObjectContext:[self managedObjectContext]];
-        
-        [self setMedia:media];
-    }
 }
 
 @end
