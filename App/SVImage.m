@@ -58,7 +58,7 @@
     if (media)
     {
         [self replaceMedia:media forKeyPath:@"media"];
-        [self setTypeToPublish:[media typeOfFile]];
+        [[self container] setTypeToPublish:[media typeOfFile]];
         
         [self makeOriginalSize];
         [[self container] setConstrainProportions:YES];
@@ -67,7 +67,6 @@
 
 - (void)dealloc;
 {
-    [_typeToPublish release];
     [_altText release];
     
     [super dealloc];
@@ -88,7 +87,7 @@
     }
     
     // Match file type
-    [self setTypeToPublish:[[self media] typeOfFile]];
+    [[self container] setTypeToPublish:[[self media] typeOfFile]];
 }
 
 + (NSArray *) allowedFileTypes
@@ -191,19 +190,17 @@
 
 - (NSBitmapImageFileType)storageType;
 {
-    NSBitmapImageFileType result = [NSBitmapImageRep typeForUTI:[self typeToPublish]];
+    NSBitmapImageFileType result = [NSBitmapImageRep typeForUTI:[[self container] typeToPublish]];
     return result;
 }
 - (void) setStorageType:(NSBitmapImageFileType)storageType;
 {
-    [self setTypeToPublish:[NSBitmapImageRep ks_typeForBitmapImageFileType:storageType]];
+    [[self container] setTypeToPublish:[NSBitmapImageRep ks_typeForBitmapImageFileType:storageType]];
 }
 + (NSSet *)keyPathsForValuesAffectingStorageType;
 {
     return [NSSet setWithObject:@"typeToPublish"];
 }
-
-@synthesize typeToPublish = _typeToPublish;
 
 @dynamic compressionFactor;
 
@@ -235,7 +232,7 @@
                                        alt:alt
                                      width:[NSNumber numberWithInt:[self width]]
                                     height:[NSNumber numberWithInt:[self height]]
-                                      type:[self typeToPublish]];
+                                      type:[[self container] typeToPublish]];
     }
     else
     {

@@ -15,7 +15,6 @@
 @interface SVImage : SVMediaPlugIn
 {
   @private
-    NSString    *_typeToPublish;
     NSString    *_altText;
 }
 
@@ -31,7 +30,6 @@
 #pragma mark Publishing
 
 @property(nonatomic) NSBitmapImageFileType storageType;
-@property(nonatomic, copy) NSString *typeToPublish;
 
 @property(nonatomic, copy) NSNumber *compressionFactor; // float, 0-1
 

@@ -49,7 +49,7 @@
     {
         SVMediaRecord *media = [[page master] makePlaceholdImageMediaWithEntityName:@"GraphicMedia"];
         [self setMedia:media];
-        [(SVImage *)[self plugIn] setTypeToPublish:[media typeOfFile]];
+        [self setTypeToPublish:[media typeOfFile]];
         
         [self makeOriginalSize];    // calling super will scale back down if needed
         [self setConstrainProportions:YES];
@@ -159,6 +159,10 @@
 + (BOOL)acceptsType:(NSString *)uti; { return NO; }
 
 + (NSArray *)allowedFileTypes; { return nil; }
+
+#pragma mark Media Conversion
+
+@dynamic typeToPublish;
 
 #pragma mark Size
 

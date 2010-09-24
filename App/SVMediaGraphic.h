@@ -37,6 +37,10 @@
 + (NSArray *)allowedFileTypes;
 
 
+#pragma mark Media Conversion
+@property(nonatomic, copy) NSString *typeToPublish;
+
+
 #pragma mark Metrics
 
 
