@@ -13,6 +13,7 @@
 #import "SVLink.h"
 #import "SVMediaGraphicInspector.h"
 #import "SVMediaRecord.h"
+#import "SVSiteItem.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
 #import "KSWebLocation.h"
@@ -38,6 +39,7 @@
 {
     return [[super plugInKeys] arrayByAddingObjectsFromArray:[NSArray arrayWithObjects:
                                                               @"alternateText",
+                                                              @"link",
                                                               nil]];
 }
 
@@ -158,51 +160,50 @@
 
 #pragma mark Link
 
-- (SVLink *)link;
+@synthesize link = _link;
+
+- (id)serializedValueForKey:(NSString *)key;
 {
-    return nil;
-    
-    [self willAccessValueForKey:@"link"];
-    SVLink *result = [self primitiveValueForKey:@"link"];
-    [self didAccessValueForKey:@"link"];
-    
-    if (!result)
+    if ([key isEqualToString:@"link"])
     {
-        NSData *data = [self linkData];
-        if (data)
+        SVLink *link = [self link];
+        // If the link is to a page, actually archive a different link that references the ID-only
+        if ([link page])
         {
-            result = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            link = [SVLink linkWithURLString:[link URLString] openInNewWindow:[link openInNewWindow]];
+        }
+        
+        NSData *data = (link ? [NSKeyedArchiver archivedDataWithRootObject:link] : nil);
+        return data;
+    }
+    else
+    {
+        return [super serializedValueForKey:key];
+    }
+}
+
+- (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key;
+{
+    if ([key isEqualToString:@"link"])
+    {
+        SVLink *result = nil;
+        if (serializedValue)
+        {
+            result = [NSKeyedUnarchiver unarchiveObjectWithData:serializedValue];
             
             SVSiteItem *page = [SVSiteItem siteItemForPreviewPath:[result URLString]
-                                       inManagedObjectContext:[self managedObjectContext]];
+                                           inManagedObjectContext:[[self container] managedObjectContext]];
             
             if (page) result = [SVLink linkWithSiteItem:page openInNewWindow:[result openInNewWindow]];
-
-            [self setPrimitiveValue:result forKey:@"link"];
         }
+        
+        [self setLink:result];
     }
-    
-    return result;
-}
-
-- (void)setLink:(SVLink *)link;
-{
-    [self willChangeValueForKey:@"link"];
-    [self setPrimitiveValue:link forKey:@"link"];
-    [self didChangeValueForKey:@"link"];
-    
-    
-    // If the link is to a page, actually archive a different link that references the ID-only
-    if ([link page])
+    else
     {
-        link = [SVLink linkWithURLString:[link URLString] openInNewWindow:[link openInNewWindow]];
+        [super setSerializedValue:serializedValue forKey:key];
     }
-    
-    NSData *data = (link ? [NSKeyedArchiver archivedDataWithRootObject:link] : nil);
-    [self setLinkData:data];
 }
-
-@dynamic linkData;
 
 #pragma mark Publishing
 

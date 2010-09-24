@@ -16,6 +16,7 @@
 {
   @private
     NSString    *_altText;
+    SVLink      *_link;
 }
 
 
