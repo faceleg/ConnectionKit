@@ -330,7 +330,7 @@
 #pragma mark -
 
 
-@implementation SVImage (SVDOMController)
+@implementation SVMediaGraphic (SVDOMController)
 
 - (SVDOMController *)newDOMController;
 {
