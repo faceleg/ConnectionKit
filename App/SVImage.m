@@ -45,33 +45,7 @@
 
 - (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
 {
-    // Can we read a media oject from the pboard?
-    SVMediaRecord *media = nil;
-    if ([[KSWebLocation webLocationPasteboardTypes] containsObject:type])
-    {
-        media = [SVMediaRecord mediaWithURL:[contents URL]
-                                 entityName:@"GraphicMedia"
-             insertIntoManagedObjectContext:[[self container] managedObjectContext]
-                                      error:NULL];
-    }
-    else if ([[NSImage imagePasteboardTypes] containsObject:type])
-    {
-        media = [SVMediaRecord mediaWithData:contents
-                                         URL:nil
-                                  entityName:@"GraphicMedia"
-              insertIntoManagedObjectContext:[[self container] managedObjectContext]];
-    }
     
-    
-    // Make an image from that media
-    if (media)
-    {
-        [self replaceMedia:media forKeyPath:@"container.media"];
-        [[self container] setTypeToPublish:[media typeOfFile]];
-        
-        [self makeOriginalSize];
-        [[self container] setConstrainProportions:YES];
-    }
 }
 
 - (void)dealloc;

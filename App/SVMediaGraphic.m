@@ -14,6 +14,7 @@
 #import "SVImage.h"
 #import "KTPage.h"
 #import "SVWebEditorHTMLContext.h"
+#import "KSWebLocation.h"
 
 #import "NSError+Karelia.h"
 #import "NSString+Karelia.h"
@@ -370,9 +371,38 @@
 
 #pragma mark Pasteboard
 
-- (void)awakeFromPasteboardContents:(id)pasteboardContents ofType:(NSString *)type;
+- (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
 {
-    [[self plugIn] awakeFromPasteboardContents:pasteboardContents ofType:type];
+    // Can we read a media oject from the pboard?
+    SVMediaRecord *media = nil;
+    if ([[KSWebLocation webLocationPasteboardTypes] containsObject:type])
+    {
+        media = [SVMediaRecord mediaWithURL:[contents URL]
+                                 entityName:@"GraphicMedia"
+             insertIntoManagedObjectContext:[self managedObjectContext]
+                                      error:NULL];
+    }
+    else if ([[NSImage imagePasteboardTypes] containsObject:type])
+    {
+        media = [SVMediaRecord mediaWithData:contents
+                                         URL:nil
+                                  entityName:@"GraphicMedia"
+              insertIntoManagedObjectContext:[self managedObjectContext]];
+    }
+    
+    
+    // Swap in the new media
+    if (media)
+    {
+        [self replaceMedia:media forKeyPath:@"media"];
+        [self setTypeToPublish:[media typeOfFile]];
+        
+        [self makeOriginalSize];
+        [self setConstrainProportions:YES];
+    }
+    
+    
+    [[self plugIn] awakeFromPasteboardContents:contents ofType:type];
 }
 
 @end
