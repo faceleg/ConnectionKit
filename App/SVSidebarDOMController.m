@@ -439,6 +439,8 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 - (void)draggingExited:(id <NSDraggingInfo>)sender;
 {
     [self removeDragCaret];
+    [[self webEditor] moveDragHighlightToDOMNode:nil];
+    [[self webEditor] removeDragCaret];
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)dragInfo;
