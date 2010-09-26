@@ -13,14 +13,22 @@
 
 @interface SVMediaPlugIn : SVPlugIn
 
-- (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)errror;
+#pragma mark Source
+- (SVMediaRecord *)media;
+- (NSURL *)externalSourceURL;
+
+
+- (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)error;
 
 - (CGSize)originalSize;
 
 - (BOOL)shouldWriteHTMLInline;
 - (BOOL)canWriteHTMLInline;   // NO for most graphics. Images and Raw HTML return YES
 
+
+#pragma mark Pasteboard
 - (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
+
 
 @end
 
