@@ -82,8 +82,6 @@
 
 #pragma mark Plug-in
 
-- (SVMediaPlugIn *)plugIn; { return (id)[super plugIn]; }
-
 - (NSString *)plugInIdentifier;
 {
     NSString *type = [[self media] typeOfFile];

@@ -18,10 +18,6 @@
 + (id)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 
 
-#pragma mark Plug-In
-- (SVMediaPlugIn *)plugIn;
-
-
 #pragma mark Media
 
 @property(nonatomic, retain) SVMediaRecord *media;
@@ -54,3 +50,9 @@
 @property(nonatomic, copy) NSNumber *naturalHeight;
 
 @end
+
+
+@interface SVMediaGraphic (PlugIn)
+- (SVMediaPlugIn *)plugIn;
+@end
+

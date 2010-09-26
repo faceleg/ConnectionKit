@@ -24,6 +24,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 
 @interface SVPlugInGraphic ()
+@property(nonatomic, retain) SVPlugIn *primitivePlugIn;
 - (void)setPlugIn:(SVPlugIn *)plugIn useSerializedProperties:(BOOL)serialize;
 @end
 
@@ -122,24 +123,29 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 - (void)willTurnIntoFault
 {
     [_plugIn removeObserver:self forKeyPaths:[[_plugIn class] plugInKeys]];
-    [_plugIn setValue:nil forKey:@"container"];
-	[_plugIn release];	_plugIn = nil;
+    [self setPlugIn:nil useSerializedProperties:NO];
 }
 
 #pragma mark Plug-in
 
-- (SVPlugIn *)plugIn
+@dynamic plugIn;
+@synthesize primitivePlugIn = _plugIn;
+- (void)setPrimitivePlugIn:(SVPlugIn *)plugIn;
 {
-	return _plugIn;
+    [_plugIn setValue:nil forKey:@"container"];
+    
+    [plugIn retain];
+    [_plugIn release]; _plugIn = plugIn;
+    
+    [_plugIn setValue:self forKey:@"container"];
 }
 
 - (void)setPlugIn:(SVPlugIn *)plugIn useSerializedProperties:(BOOL)serialize;
 {
-    OBASSERT(!_plugIn);
-    _plugIn = [plugIn retain];
-               
+    [self willChangeValueForKey:@"plugIn"];
+    [self setPrimitivePlugIn:plugIn];      
+    [self didChangeValueForKey:@"plugIn"];
     
-    [_plugIn setValue:self forKey:@"container"];
     
     // Observe the plug-in's properties so they can be synced back to the MOC
     [plugIn addObserver:self
