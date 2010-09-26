@@ -124,6 +124,10 @@ typedef enum {
 - (void)writeEndTagWithComment:(NSString *)comment;
 
 
+#pragma mark Preferred ID
+- (NSString *)pushPreferredIdName:(NSString *)preferredID;
+
+
 #pragma mark Header Tags
 @property (nonatomic) NSUInteger currentHeaderLevel;    // if you need to write a header tag, use this level
 - (NSString *)currentHeaderLevelTagName;                // takes, .currentHeaderLevel and produces h3 etc.

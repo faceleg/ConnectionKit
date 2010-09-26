@@ -399,10 +399,19 @@
     [self startElement:elementName];
 }
 
-- (NSString *)startElement:(NSString *)tagName
-           preferredIdName:(NSString *)preferredID
-                 className:(NSString *)className
-                attributes:(NSDictionary *)attributes;
+- (void)pushAttributes:(NSDictionary *)attributes;
+{
+    NSArray *sortedAttributes = [[attributes allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    for (NSString *aName in sortedAttributes)
+    {
+        NSString *aValue = [attributes objectForKey:aName];
+        [self pushAttribute:aName value:aValue];
+    }
+}
+
+#pragma mark Preferred ID
+
+- (NSString *)pushPreferredIdName:(NSString *)preferredID;
 {
     NSString *result = preferredID;
     NSUInteger count = 1;
@@ -412,20 +421,21 @@
         result = [NSString stringWithFormat:@"%@-%u", preferredID, count];
     }
     
-    [self pushAttributes:attributes];
-    [self startElement:tagName idName:result className:className];
+    [self pushAttribute:@"id" value:result];
     
     return result;
 }
 
-- (void)pushAttributes:(NSDictionary *)attributes;
+- (NSString *)startElement:(NSString *)tagName
+           preferredIdName:(NSString *)preferredID
+                 className:(NSString *)className
+                attributes:(NSDictionary *)attributes;
 {
-    NSArray *sortedAttributes = [[attributes allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-    for (NSString *aName in sortedAttributes)
-    {
-        NSString *aValue = [attributes objectForKey:aName];
-        [self pushAttribute:aName value:aValue];
-    }
+    NSString *result = [self pushPreferredIdName:preferredID];
+    [self pushAttributes:attributes];
+    [self startElement:tagName idName:result className:className];
+    
+    return result;
 }
 
 #pragma mark Graphics
