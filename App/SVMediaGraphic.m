@@ -373,6 +373,9 @@
 
 - (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
 {
+    NSString *identifier = [self plugInIdentifier];
+    
+    
     // Can we read a media oject from the pboard?
     SVMediaRecord *media = nil;
     if ([[KSWebLocation webLocationPasteboardTypes] containsObject:type])
@@ -399,6 +402,13 @@
         
         [self makeOriginalSize];
         [self setConstrainProportions:YES];
+    }
+    
+    
+    // Does this change the type?
+    if (![[self plugInIdentifier] isEqualToString:identifier])
+    {
+        [self loadPlugIn];
     }
     
     

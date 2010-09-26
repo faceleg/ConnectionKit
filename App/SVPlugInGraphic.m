@@ -161,8 +161,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     
     if (plugInClass)
     {                
-        OBASSERT(!_plugIn);
-        
         // Create plug-in object
         SVPlugIn *plugIn = [[plugInClass alloc] init];
         OBASSERTSTRING(plugIn, @"plug-in cannot be nil!");

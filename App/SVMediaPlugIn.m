@@ -11,6 +11,11 @@
 
 @implementation SVMediaPlugIn
 
+- (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
+{
+    
+}
+
 #pragma mark Properties
 
 - (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)errror;

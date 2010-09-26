@@ -43,11 +43,6 @@
                                                               nil]];
 }
 
-- (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
-{
-    
-}
-
 - (void)dealloc;
 {
     [_altText release];
