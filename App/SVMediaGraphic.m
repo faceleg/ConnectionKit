@@ -400,6 +400,9 @@
         [self replaceMedia:media forKeyPath:@"media"];
         [self setTypeToPublish:[media typeOfFile]];
         
+        // Reset size
+        self.naturalWidth = nil;
+        self.naturalHeight = nil;
         [self makeOriginalSize];
         [self setConstrainProportions:YES];
     }

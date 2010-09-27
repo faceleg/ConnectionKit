@@ -13,9 +13,6 @@
 
 - (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
 {
-    // Reset natural width/height
-    self.container.naturalWidth = nil;
-    self.container.naturalHeight = nil;
 }
 
 #pragma mark Properties
