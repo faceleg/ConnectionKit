@@ -13,7 +13,9 @@
 
 - (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
 {
-    
+    // Reset natural width/height
+    self.container.naturalWidth = nil;
+    self.container.naturalHeight = nil;
 }
 
 #pragma mark Properties
@@ -34,12 +36,12 @@
 {
     CGSize result = CGSizeZero;
     
-    SVMediaGraphic *container = [self container];
-    
-    SVMediaRecord *media = [container media];
+    SVMediaRecord *media = [self media];
     if (media)
 	{
-		NSNumber *naturalWidth = container.naturalWidth;
+		SVMediaGraphic *container = [self container];
+        
+        NSNumber *naturalWidth = container.naturalWidth;
 		NSNumber *naturalHeight = container.naturalHeight;
 		// Try to get cached natural size first
 		if (nil != naturalWidth && nil != naturalHeight)
