@@ -137,7 +137,6 @@
 				3CFEEEB61228897C005A08FC /* PBXTargetDependency */,
 				3CFEF269122C3452005A08FC /* PBXTargetDependency */,
 				3C8544AA12061D69000A19C3 /* PBXTargetDependency */,
-				3C7C1E311219B388005D75B1 /* PBXTargetDependency */,
 				3C7C1E401219B5DA005D75B1 /* PBXTargetDependency */,
 				3C4240C61236E7EE00E1C9C4 /* PBXTargetDependency */,
 				3C9CF9B0121201D8005CFDD4 /* PBXTargetDependency */,
@@ -1428,20 +1427,6 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = FeedElement;
 		};
-		3C7C1E2E1219B37F005D75B1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C42E4090D64F93E004F35FD /* IndexElement.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = IndexElement;
-		};
-		3C7C1E301219B388005D75B1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C42E4090D64F93E004F35FD /* IndexElement.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = IndexElement;
-		};
 		3C7C1E3D1219B5CB005D75B1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
@@ -2284,7 +2269,6 @@
 		3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SiteMapElement.xcodeproj; path = ../PlugIns/Elements/SiteMapElement/SiteMapElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RSSBadgeElement.xcodeproj; path = ../PlugIns/Indexes/RSSBadgeElement/RSSBadgeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E2990D64D253004F35FD /* PageCounterElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PageCounterElement.xcodeproj; path = ../PlugIns/Elements/PageCounterElement/PageCounterElement.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C42E4090D64F93E004F35FD /* IndexElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IndexElement.xcodeproj; path = ../PlugIns/Indexes/IndexElement/IndexElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E4830D64FCE3004F35FD /* IMStatusElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IMStatusElement.xcodeproj; path = ../PlugIns/Elements/IMStatusElement/IMStatusElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E4F10D650429004F35FD /* FlickrElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FlickrElement.xcodeproj; path = ../PlugIns/Elements/FlickrElement/FlickrElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4C6A750D64122700398BDA /* DeliciousElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DeliciousElement.xcodeproj; path = ../PlugIns/Elements/DeliciousElement/DeliciousElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -4493,14 +4477,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3C7C1E2B1219B37F005D75B1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C7C1E2F1219B37F005D75B1 /* Index.svxElement */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3C7C1E3A1219B5CB005D75B1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -4602,7 +4578,6 @@
 				274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */,
 				3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */,
 				3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */,
-				3C42E4090D64F93E004F35FD /* IndexElement.xcodeproj */,
 				3C095BEB0D5D280500DE6F62 /* ListingIndex.xcodeproj */,
 				3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */,
 				3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */,
@@ -5958,10 +5933,6 @@
 					ProjectRef = 3C42E4830D64FCE3004F35FD /* IMStatusElement.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C7C1E2B1219B37F005D75B1 /* Products */;
-					ProjectRef = 3C42E4090D64F93E004F35FD /* IndexElement.xcodeproj */;
-				},
-				{
 					ProductGroup = 3C9870EB11F3D5F60053A72C /* Products */;
 					ProjectRef = 3CA901A20D63D45B00815310 /* LinkListElement.xcodeproj */;
 				},
@@ -6107,13 +6078,6 @@
 			fileType = wrapper.cfbundle;
 			path = Feed.svxElement;
 			remoteRef = 3C79F2EA11F3AEDF00B699EE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C7C1E2F1219B37F005D75B1 /* Index.svxElement */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Index.svxElement;
-			remoteRef = 3C7C1E2E1219B37F005D75B1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3C7C1E3E1219B5CB005D75B1 /* CollectionArchive.svxElement */ = {
@@ -7405,11 +7369,6 @@
 			isa = PBXTargetDependency;
 			name = FeedElement;
 			targetProxy = 3C79F2F111F3BF9900B699EE /* PBXContainerItemProxy */;
-		};
-		3C7C1E311219B388005D75B1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IndexElement;
-			targetProxy = 3C7C1E301219B388005D75B1 /* PBXContainerItemProxy */;
 		};
 		3C7C1E401219B5DA005D75B1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
