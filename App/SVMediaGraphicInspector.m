@@ -15,6 +15,8 @@
 #import "SVImage.h"
 #import "SVVideo.h"
 
+#import "KSWebLocation.h"
+
 #import "NSBundle+Karelia.h"
 #import "NSString+Karelia.h"
 
@@ -78,27 +80,12 @@
 	// Use this 10.6 deprecated method, but when we are 10.6 only then use setAllowedFileTypes:
     if ([panel runModalForTypes:[SVMediaGraphic allowedFileTypes]] == NSFileHandlingPanelOKButton)
     {
-        NSURL *URL = [panel URL];
-        NSString *type = [NSString UTIForFileAtPath:[URL path]];
+        KSWebLocation *file = [KSWebLocation webLocationWithURL:[panel URL]];
         
         for (SVMediaGraphic *aGraphic in [self inspectedObjects])
         {
-            // Does this require a change of media type?
-            if (![[aGraphic class] acceptsType:type])
-            {
-                if ([SVVideo acceptsType:type])
-                {
-                    NSManagedObjectContext *context = [aGraphic managedObjectContext];
-                    SVVideo *video = [SVVideo insertNewGraphicInManagedObjectContext:context];
-                    [video setTextAttachment:[aGraphic textAttachment]];
-                    [video setValue:[aGraphic sidebars] forKey:@"sidebars"];
-                    
-                    [context deleteObject:aGraphic];
-                    aGraphic = video;
-                }
-            }
-            
-            [aGraphic setMediaWithURL:URL];
+            [aGraphic awakeFromPasteboardContents:file
+                                           ofType:NSURLPboardType];
         }
     }
 }
