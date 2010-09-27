@@ -601,7 +601,13 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     NSWindow *window = [[[self HTMLElement] documentView] window];
     NSOpenPanel *panel = [[[window windowController] document] makeChooseDialog];
     
-    [panel beginSheetForDirectory:nil file:nil modalForWindow:window modalDelegate:self didEndSelector:@selector(chooseDialogDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+    [panel beginSheetForDirectory:nil
+                             file:nil
+                            types:[SVMediaGraphic allowedFileTypes]
+                   modalForWindow:window
+                    modalDelegate:self
+                   didEndSelector:@selector(chooseDialogDidEnd:returnCode:contextInfo:)
+                      contextInfo:NULL];
 }
 
 - (void)chooseDialogDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;

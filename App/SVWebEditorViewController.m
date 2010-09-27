@@ -669,7 +669,13 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
         NSWindow *window = [[self view] window];
         NSOpenPanel *panel = [[[window windowController] document] makeChooseDialog];
         
-        [panel beginSheetForDirectory:nil file:nil modalForWindow:window modalDelegate:self didEndSelector:@selector(chooseDialogDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+        [panel beginSheetForDirectory:nil
+                                 file:nil
+                                types:[SVMediaGraphic allowedFileTypes]
+                       modalForWindow:window
+                        modalDelegate:self
+                       didEndSelector:@selector(chooseDialogDidEnd:returnCode:contextInfo:)
+                          contextInfo:NULL];
     }
 }
 
