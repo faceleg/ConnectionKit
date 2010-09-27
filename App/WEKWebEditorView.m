@@ -69,6 +69,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
                              isUIAction:(BOOL)consultDelegateFirst;
 
 - (void)changeFirstResponderAndWebViewSelectionToSelectItem:(WEKWebEditorItem *)item;
+- (NSArray *)editingItemsForDOMRange:(DOMRange *)range selectedItem:(WEKWebEditorItem *)item;
 
 @property(nonatomic, copy, readwrite) NSArray *editingItems;
 
@@ -507,25 +508,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     
     
-    // Update parentItems list
-    NSArray *parentItems = nil;
-    if (selectedItem)
-    {
-        parentItems = [self selectableAncestorsForItem:selectedItem includeItem:NO];
-    }
-    else
-    {
-        DOMNode *selectionNode = [domRange commonAncestorContainer];
-        if (selectionNode)
-        {
-            WEKWebEditorItem *parent = [self selectableItemForDOMNode:selectionNode];
-            if (parent)
-            {
-                parentItems = [self selectableAncestorsForItem:parent includeItem:YES];
-            }
-        }
-    }
-    
+    // Update editingItems list
+    NSArray *parentItems = [self editingItemsForDOMRange:domRange selectedItem:selectedItem];
     [self setEditingItems:parentItems];
     
     
@@ -607,6 +591,30 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Store items
     [_selectionParentItems release]; _selectionParentItems = [items copy];
+}
+
+- (NSArray *)editingItemsForDOMRange:(DOMRange *)range selectedItem:(WEKWebEditorItem *)item;
+{
+    NSArray *result = nil;
+    
+    if (item)
+    {
+        result = [self selectableAncestorsForItem:item includeItem:NO];
+    }
+    else
+    {
+        DOMNode *selectionNode = [range commonAncestorContainer];
+        if (selectionNode)
+        {
+            WEKWebEditorItem *parent = [self selectableItemForDOMNode:selectionNode];
+            if (parent)
+            {
+                result = [self selectableAncestorsForItem:parent includeItem:YES];
+            }
+        }
+    }
+    
+    return result;
 }
 
 #pragma mark Keyboard-Induced selection
