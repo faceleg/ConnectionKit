@@ -536,6 +536,13 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 #pragma mark Matching Media
 
 @synthesize nextObject = _nextObject;
+- (void)setNextObject:(id <SVDocumentFileWrapper>)object;
+{
+    OBPRECONDITION(object != self);
+    
+    [object retain];
+    [_nextObject release]; _nextObject = object;
+}
 
 #pragma mark SVDocumentFileWrapper
 
