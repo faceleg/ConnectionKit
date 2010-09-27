@@ -603,13 +603,21 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     else
     {
-        DOMNode *selectionNode = [range commonAncestorContainer];
-        if (selectionNode)
+        // When selecting nothing significant while editing, it's probably because we want to continue editing
+        if (!range || [range collapsed])
         {
-            WEKWebEditorItem *parent = [self selectableItemForDOMNode:selectionNode];
-            if (parent)
+            result = [self editingItems];
+        }
+        else
+        {
+            DOMNode *selectionNode = [range commonAncestorContainer];
+            if (selectionNode)
             {
-                result = [self selectableAncestorsForItem:parent includeItem:YES];
+                WEKWebEditorItem *parent = [self selectableItemForDOMNode:selectionNode];
+                if (parent)
+                {
+                    result = [self selectableAncestorsForItem:parent includeItem:YES];
+                }
             }
         }
     }
