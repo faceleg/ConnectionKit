@@ -70,7 +70,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)changeFirstResponderAndWebViewSelectionToSelectItem:(WEKWebEditorItem *)item;
 
-@property(nonatomic, copy, readwrite) NSArray *selectionParentItems;
+@property(nonatomic, copy, readwrite) NSArray *editingItems;
 
 
 // Getting Item Information
@@ -526,7 +526,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         }
     }
     
-    [self setSelectionParentItems:parentItems];
+    [self setEditingItems:parentItems];
     
     
 }
@@ -596,13 +596,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
-@synthesize selectionParentItems = _selectionParentItems;
-- (void)setSelectionParentItems:(NSArray *)items
+@synthesize editingItems = _selectionParentItems;
+- (void)setEditingItems:(NSArray *)items
 {
-    if ([items isEqualToArray:[self selectionParentItems]]) return;
+    if ([items isEqualToArray:[self editingItems]]) return;
     
     // Let them know
-    [[self selectionParentItems] setBool:NO forKey:@"editing"];
+    [[self editingItems] setBool:NO forKey:@"editing"];
     [items setBool:YES forKey:@"editing"];
     
     // Store items
@@ -871,7 +871,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     while (parent)
     {
         // Give up searching if we've hit the selection's parent items
-        if ([[self selectionParentItems] containsObjectIdenticalTo:parent]) break;
+        if ([[self editingItems] containsObjectIdenticalTo:parent]) break;
         
         if ([parent isSelectable]) result = parent;
         parent = [parent parentWebEditorItem];
@@ -1071,12 +1071,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
         
         if (item)
         {
-            if (![[self selectionParentItems] containsObject:item])
+            if (![[self editingItems] containsObject:item])
             {
                 result = self;
             }
         }
-        else if ([[self selectionParentItems] count] > 0)
+        else if ([[self editingItems] count] > 0)
         {
             result = self;
         }
@@ -1318,9 +1318,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
     else
     {
         // If editing inside an item, the click needs to go straight through to the WebView; we were just claiming ownership of that area in order to gain control of the cursor
-        if ([[self selectionParentItems] count] > 0)
+        if ([[self editingItems] count] > 0)
         {
-            [self setSelectionParentItems:nil];
+            [self setEditingItems:nil];
             [_mouseDownEvent release]; _mouseDownEvent = nil;
             [NSApp sendEvent:event];    // this time round it'll go through to the WebView
             return;
@@ -1377,7 +1377,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 // To stop the events being repeatedly posted back to ourself, have to indicate to -hitTest: that it should target the WebView. This can best be done by switching selected item over to editing
                 NSArray *items = [[self selectedItems] copy];
                 [self selectItems:nil byExtendingSelection:NO];
-                [self setSelectionParentItems:items];    // should only be 1
+                [self setEditingItems:items];    // should only be 1
                 [items release];
                 
                 // Post in reverse order since I'm placing onto the front of the queue.

@@ -97,7 +97,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 - (void)deselectItem:(WEKWebEditorItem *)item;
 - (IBAction)deselectAll:(id)sender; // Action method, so asks the delegate if selection should change first
 
-@property(nonatomic, copy, readonly) NSArray *selectionParentItems;
+@property(nonatomic, copy, readonly) NSArray *editingItems;
 
 - (BOOL)shouldTrySelectingDOMElementInline:(DOMElement *)element;
 
