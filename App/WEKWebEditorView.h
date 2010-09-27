@@ -101,6 +101,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 - (BOOL)shouldTrySelectingDOMElementInline:(DOMElement *)element;
 
+
 #pragma mark Editing
 
 // We don't want to allow any sort of change unless the WebView is First Responder
