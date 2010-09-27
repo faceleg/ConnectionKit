@@ -70,7 +70,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)changeFirstResponderAndWebViewSelectionToSelectItem:(WEKWebEditorItem *)item;
 
-@property(nonatomic, copy) NSArray *selectionParentItems;
+@property(nonatomic, copy, readwrite) NSArray *selectionParentItems;
 
 
 // Getting Item Information

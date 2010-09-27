@@ -85,23 +85,19 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 @property(nonatomic, retain) WEKWebEditorItem *contentItem;   // add your items here after loading finishes
 
 
-#pragma mark Text Selection
+#pragma mark Selection
 
 @property(nonatomic, readonly) DOMRange *selectedDOMRange;
 - (void)setSelectedDOMRange:(DOMRange *)range affinity:(NSSelectionAffinity)selectionAffinity;
-
 @property(nonatomic, retain, readonly) id <SVWebEditorText> focusedText;    // KVO-compliant
-
-
-#pragma mark Item Selection
 
 @property(nonatomic, copy, readonly) NSArray *selectedItems;
 @property(nonatomic, retain, readonly) WEKWebEditorItem *selectedItem;
-
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
 - (void)deselectItem:(WEKWebEditorItem *)item;
-
 - (IBAction)deselectAll:(id)sender; // Action method, so asks the delegate if selection should change first
+
+@property(nonatomic, copy, readonly) NSArray *selectionParentItems;
 
 - (BOOL)shouldTrySelectingDOMElementInline:(DOMElement *)element;
 
