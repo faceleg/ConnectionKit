@@ -22,6 +22,7 @@
 }
 
 @synthesize indexedCollection = _collection;
+@synthesize maxItems = _maxItems;
 
 #pragma mark Metrics
 
@@ -31,11 +32,34 @@
     [self setHeight:0];
 }
 
+#pragma mark Child Pages
+
+- (NSArray *)iteratablePagesOfCollection
+{
+    NSArray *result = nil;
+    if ( self.maxItems > 0 )
+    {
+        NSMutableArray *array = [NSMutableArray arrayWithCapacity:self.maxItems];
+        for ( NSUInteger i=0; i<self.maxItems; i++ )
+        {
+            id<SVPage> childPage = [self.indexedCollection.childPages objectAtIndex:i];
+            [array addObject:childPage];
+        }
+        result = [NSArray arrayWithArray:array];
+    }
+    else
+    {
+        result = self.indexedCollection.childPages;
+    }
+    return result;
+}
+
 #pragma mark Serialization
 
 + (NSArray *)plugInKeys;
 {
-    NSArray *result = [[super plugInKeys] arrayByAddingObject:@"indexedCollection"];
+    NSArray *plugInKeys = [NSArray arrayWithObjects:@"indexedCollection", @"maxItems", nil];
+    NSArray *result = [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
     OBPOSTCONDITION(result);
     return result;
 }
