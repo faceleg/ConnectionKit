@@ -124,7 +124,7 @@
 	{
 		OK = YES;		// be permissive; no allowed file types defined
 	}
-	return OK ? dragMask & NSDragOperationCopy : NSDragOperationNone;
+	return OK ? (dragMask & NSDragOperationCopy) : NSDragOperationNone;
 }
 
 - (BOOL)pathInfoField:(KSURLInfoField *)field
