@@ -940,34 +940,22 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             NSMenu *insertMenu = [oInsertRawHTMLMenuItem menu];
             NSUInteger index = [insertMenu indexOfItem:oInsertRawHTMLMenuItem];
             
-            // Indexes
-            item = [SVGraphicFactory menuItemWithGraphicFactories:[SVGraphicFactory indexFactories]
-                                                           title:NSLocalizedString(@"Indexes", "menu item")];
-            [insertMenu insertItem:item atIndex:(index + 1)]; 
+            // More
+            item = [SVGraphicFactory
+                    menuItemWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
+                    title:NSLocalizedString(@"More", @"menu item")];
+            [insertMenu insertItem:item atIndex:(index+1)];
             
-            // Flash item
-            factory = [SVGraphicFactory flashFactory];
-            item = [factory makeMenuItem];
-            [item setImage:nil];
-            [insertMenu insertItem:item atIndex:index];
-            
-            // Audio item
-            factory = [SVGraphicFactory audioFactory];
-            item = [factory makeMenuItem];
-            [item setImage:nil];
-            [insertMenu insertItem:item atIndex:index];
-            
-            // Video item
-            factory = [SVGraphicFactory videoFactory];
-            item = [factory makeMenuItem];
-            [item setImage:nil];
-            [insertMenu insertItem:item atIndex:index];
-            
-            // Image item
+            // Media Placeholder
             factory = [SVGraphicFactory mediaPlaceholderFactory];
             item = [factory makeMenuItem];
             [item setImage:nil];
             [insertMenu insertItem:item atIndex:index];
+            
+            // Indexes
+            item = [SVGraphicFactory menuItemWithGraphicFactories:[SVGraphicFactory indexFactories]
+                                                           title:NSLocalizedString(@"Indexes", "menu item")];
+            [insertMenu insertItem:item atIndex:index]; 
             
             // Text box item
             factory = [SVGraphicFactory textBoxFactory];
