@@ -210,7 +210,7 @@
     
     [context buildAttributesForElement:@"img" bindSizeToObject:self DOMControllerClass:[SVImageDOMController class]];
     
-    SVMediaRecord *media = [[self container] media];
+    SVMediaRecord *media = [self media];
     if (media)
     {
         [context writeImageWithSourceMedia:media
@@ -221,7 +221,7 @@
     }
     else
     {
-        NSURL *URL = [[self container] externalSourceURL];
+        NSURL *URL = [self externalSourceURL];
         
         [context writeImageWithSrc:(URL ? [context relativeURLStringOfURL:URL] : @"")
                                alt:alt
@@ -239,7 +239,7 @@
 
 #pragma mark Thumbnail
 
-- (id <SVMedia>)thumbnail { return [[self container] media]; }
+- (id <SVMedia>)thumbnail { return [self media]; }
 + (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObject:@"media"]; }
 
 - (CGFloat)thumbnailAspectRatio;
