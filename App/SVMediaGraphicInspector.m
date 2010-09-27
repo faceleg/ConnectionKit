@@ -11,6 +11,7 @@
 #import "SVAudio.h"
 #import "KTDocument.h"
 #import "SVFlash.h"
+#import "SVGraphicFactory.h"
 #import "SVImage.h"
 #import "SVVideo.h"
 
@@ -107,7 +108,7 @@
 				   operationMask:(NSDragOperation)dragMask;
 {
 	// Check that the path looks like it is compatible with one of the allowed file types
-	NSArray *allowedFileTypes = [self allowedFileTypes];
+	NSArray *allowedFileTypes = [SVMediaGraphic allowedFileTypes];
 	BOOL OK = NO;
 	if (allowedFileTypes && [allowedFileTypes count])
 	{
@@ -131,25 +132,25 @@
  performDragOperation:(id <NSDraggingInfo>)sender
 	 expectedDropType:(NSDragOperation)dragOp;
 {
-	BOOL result = NO;
-	NSPasteboard *pasteboard = [sender draggingPasteboard];
-
-	// Only allow through suitable file drags
-	if ([pasteboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]])
-	{
-		NSArray *files = [pasteboard propertyListForType:NSFilenamesPboardType];
-		if (files && [files count] == 1)
-		{
-			NSString *path = [files objectAtIndex:0];
-			NSURL *URL = [NSURL fileURLWithPath:path];
-
-			[[self inspectedObjects] makeObjectsPerformSelector:@selector(setMediaWithURL:)
-													 withObject:URL];
-			result = YES;
-		
-		}
-	}
-	return result;
+    BOOL result = NO;
+    
+	for (SVMediaGraphic *aGraphic in [self inspectedObjects])
+    {
+        // This code is very similar to SVImageDOMController. Perhaps can bring together
+        NSPasteboard *pboard = [sender draggingPasteboard];
+        
+        SVGraphicFactory *factory = [SVGraphicFactory mediaPlaceholderFactory];
+        NSString *type = [pboard availableTypeFromArray:[factory readablePasteboardTypes]];
+        if (type)
+        {
+            id contents = [SVGraphicFactory contentsOfPasteboard:pboard forType:type forFactory:factory];
+            
+            [aGraphic awakeFromPasteboardContents:contents ofType:type];
+            result = YES;
+        }
+    }
+    
+    return result;
 }
 
 @end
