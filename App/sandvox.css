@@ -29,9 +29,9 @@ img.narrow.right { float:right!important; }
 .wide.left .graphic, img.wide.left { margin-left:0px; margin-right:auto; }
 .wide.center .graphic, img.wide.center { margin-left:auto; margin-right:auto; }
 .wide.right .graphic, img.wide.right { margin-left:auto; margin-right:0px; }
-.graphic-container.left { text-align:left; }
-.graphic-container.center { text-align:center; }
-.graphic-container.right { text-align:right; }
+.graphic-container.left .caption { text-align:left; }
+.graphic-container.center .caption { text-align:center; }
+.graphic-container.right .caption { text-align:right; }
 
 /* Captioned graphics */
 #main .graphic img.figure-content, #main .graphic object {
