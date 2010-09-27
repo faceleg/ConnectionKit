@@ -25,6 +25,8 @@
     return YES;
 }
 
++ (NSArray *)allowedFileTypes; { return nil; }
+
 #pragma mark Metrics
 
 + (BOOL)isExplicitlySized; { return YES; }

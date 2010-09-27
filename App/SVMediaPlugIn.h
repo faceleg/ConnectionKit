@@ -16,6 +16,7 @@
 #pragma mark Source
 - (SVMediaRecord *)media;
 - (NSURL *)externalSourceURL;
++ (NSArray *)allowedFileTypes;
 
 
 - (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)error;

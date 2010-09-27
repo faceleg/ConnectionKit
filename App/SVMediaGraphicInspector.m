@@ -69,24 +69,13 @@
     [window makeFirstResponder:oURLField];
 }
 
-- (NSArray *)allowedFileTypes;		// try to figure out allowed file types for all selections
-{
-	NSMutableSet *result = [NSMutableSet set];
-    [result addObjectsFromArray:[SVImage allowedFileTypes]];
-    [result addObjectsFromArray:[SVVideo allowedFileTypes]];
-    [result addObjectsFromArray:[SVAudio allowedFileTypes]];
-    [result addObjectsFromArray:[SVFlash allowedFileTypes]];
-    
-	return [result allObjects];
-}
-
 - (IBAction)chooseFile:(id)sender;
 {
     KTDocument *document = [self representedObject];
     NSOpenPanel *panel = [document makeChooseDialog];
     
 	// Use this 10.6 deprecated method, but when we are 10.6 only then use setAllowedFileTypes:
-    if ([panel runModalForTypes:[self allowedFileTypes]] == NSFileHandlingPanelOKButton)
+    if ([panel runModalForTypes:[SVMediaGraphic allowedFileTypes]] == NSFileHandlingPanelOKButton)
     {
         NSURL *URL = [panel URL];
         NSString *type = [NSString UTIForFileAtPath:[URL path]];

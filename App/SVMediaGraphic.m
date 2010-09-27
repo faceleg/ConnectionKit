@@ -8,6 +8,8 @@
 
 #import "SVMediaGraphic.h"
 
+#import "SVAudio.h"
+#import "SVFlash.h"
 #import "KTMaster.h"
 #import "SVMediaGraphicInspector.h"
 #import "SVMediaRecord.h"
@@ -15,6 +17,7 @@
 #import "KTPage.h"
 #import "SVWebEditorHTMLContext.h"
 #import "KSWebLocation.h"
+#import "SVVideo.h"
 
 #import "NSError+Karelia.h"
 #import "NSString+Karelia.h"
@@ -178,7 +181,16 @@
 
 + (BOOL)acceptsType:(NSString *)uti; { return NO; }
 
-+ (NSArray *)allowedFileTypes; { return nil; }
++ (NSArray *)allowedFileTypes;
+{
+    NSMutableSet *result = [NSMutableSet set];
+    [result addObjectsFromArray:[SVImage allowedFileTypes]];
+    [result addObjectsFromArray:[SVVideo allowedFileTypes]];
+    [result addObjectsFromArray:[SVAudio allowedFileTypes]];
+    [result addObjectsFromArray:[SVFlash allowedFileTypes]];
+    
+	return [result allObjects];
+}
 
 #pragma mark Media Conversion
 
