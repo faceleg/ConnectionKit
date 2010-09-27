@@ -944,6 +944,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             item = [SVGraphicFactory
                     menuItemWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
                     title:NSLocalizedString(@"More", @"menu item")];
+            [[[item submenu] itemArray] makeObjectsPerformSelector:@selector(setImage:)
+                                                        withObject:nil];
             [insertMenu insertItem:item atIndex:(index+1)];
             
             // Media Placeholder
@@ -955,6 +957,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             // Indexes
             item = [SVGraphicFactory menuItemWithGraphicFactories:[SVGraphicFactory indexFactories]
                                                            title:NSLocalizedString(@"Indexes", "menu item")];
+            [[[item submenu] itemArray] makeObjectsPerformSelector:@selector(setImage:)
+                                                        withObject:nil];
             [insertMenu insertItem:item atIndex:index]; 
             
             // Text box item
