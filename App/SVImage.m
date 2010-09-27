@@ -68,9 +68,9 @@
     [[self container] setTypeToPublish:[[self media] typeOfFile]];
 }*/
 
-+ (NSArray *) allowedFileTypes
++ (NSArray *)allowedFileTypes
 {
-	return [NSArray arrayWithObject:(NSString *)kUTTypeImage];
+	return [NSImage imageTypes];
 }
 
 - (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)error;
