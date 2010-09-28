@@ -908,7 +908,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	return result;
 }
 
-- (NSString *)info
+- (NSAttributedString *)info
 {
 	NSString *result = @"";
 	NSString *type = self.codecType;
@@ -945,7 +945,12 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	{
 		result = NSLocalizedString(@"Video cannot be played in most browsers.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
-	return result;
+	
+	NSDictionary *attribs = [[NSDictionary alloc] initWithObjectsAndKeys:
+							 [NSFont systemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
+							 nil];
+	NSAttributedString *info = [[[NSAttributedString alloc] initWithString:result attributes:attribs] autorelease];								 
+	return info;
 }
 
 #pragma mark -

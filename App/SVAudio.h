@@ -6,14 +6,14 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVMediaPlugIn.h"
+#import "SVAudioVisualPlugIn.h"
 
 #import "SVVideo.h"		// for PreloadState
 #import "SVEnclosure.h"
 
 @class SVMediaRecord;
 
-@interface SVAudio : SVMediaPlugIn <SVEnclosure>
+@interface SVAudio : SVAudioVisualPlugIn <SVEnclosure>
 
 @property(nonatomic, copy) NSNumber *autoplay;
 @property(nonatomic, copy) NSNumber *controller;	// BOOLs
