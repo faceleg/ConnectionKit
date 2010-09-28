@@ -40,9 +40,6 @@
 //  Media
 #import "SVMedia.h"
 
-// DataSources (drag-and-drop external sources)
-#import "KTDataSourceProtocol.h"
-
 // Publishing
 
 // Foundation/AppKit subclasses

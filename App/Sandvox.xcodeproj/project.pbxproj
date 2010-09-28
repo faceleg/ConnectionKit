@@ -713,7 +713,7 @@
 		3C682BBA0D6234D200B4D485 /* SandvoxPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BBD0D6234DB00B4D485 /* KTSite.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B100D622F1600B4D485 /* KTSite.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BBE0D6234E200B4D485 /* KTPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B1B0D622F5F00B4D485 /* KTPage.h */; settings = {ATTRIBUTES = (); }; };
-		3C682BC40D6234F500B4D485 /* KTDataSourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B2D0D62300B00B4D485 /* KTDataSourceProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C682BC40D6234F500B4D485 /* KTDataSourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B2D0D62300B00B4D485 /* KTDataSourceProtocol.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BCB0D62350800B4D485 /* SVHTMLTemplateParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B420D62308300B4D485 /* SVHTMLTemplateParser.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BD20D62352800B4D485 /* KTImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B640D62325F00B4D485 /* KTImageView.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BD40D62352D00B4D485 /* KTLinkConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B6A0D62327900B4D485 /* KTLinkConnector.h */; settings = {ATTRIBUTES = (); }; };
