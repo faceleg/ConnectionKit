@@ -1361,28 +1361,30 @@ typedef enum {  // this copied from WebPreferences+Private.h
             // Actually, trying out ignoring that! Mike. #84932
             
             
-            NSDictionary *element = [[self webView] elementAtPoint:location];
-            DOMNode *nextNode = [element objectForKey:WebElementDOMNodeKey];
-            WEKWebEditorItem *item = [[self selectedItem] hitTestDOMNode:nextNode];
+            NSDictionary *elementInfo = [[self webView] elementAtPoint:location];
+            
+            /*DOMNode *node = [elementInfo objectForKey:WebElementDOMNodeKey];
+            WEKWebEditorItem *item = [[self selectedItem] hitTestDOMNode:node];
             
             if (([item isSelectable] && item != [self selectedItem]) ||
                 ([item conformsToProtocol:@protocol(SVWebEditorText)] && [(id)item isEditable]) ||
-                [nextNode isKindOfClass:[DOMHTMLObjectElement class]])
+                [node isKindOfClass:[DOMHTMLObjectElement class]])*/
             
             
             // It doesn't ever make sense to start editing "inside" an element which has no content
-            //if ([[[self selectedItem] HTMLElement] hasChildNodes])
+            if ([[[self selectedItem] HTMLElement] hasChildNodes])
             {
-                // Repost equivalent events so they go to their correct target. Can't call -sendEvent: as that doesn't update -currentEvent
-                // To stop the events being repeatedly posted back to ourself, have to indicate to -hitTest: that it should target the WebView. This can best be done by switching selected item over to editing
                 NSArray *items = [[self selectedItems] copy];
                 [self selectItems:nil byExtendingSelection:NO];
                 [self setEditingItems:items];    // should only be 1
                 [items release];
                 
-                // Post in reverse order since I'm placing onto the front of the queue.
-                [NSApp postEvent:[mouseUpEvent eventWithClickCount:1] atStart:YES];
-                [NSApp postEvent:[mouseDownEvent eventWithClickCount:1] atStart:YES];
+                // Repost equivalent events (unless a link) so they go to their correct target. Can't call -sendEvent: as that doesn't update -currentEvent. Post in reverse order since I'm placing onto the front of the queue
+                if (![elementInfo objectForKey:WebElementLinkURLKey])
+                {
+                    [NSApp postEvent:[mouseUpEvent eventWithClickCount:1] atStart:YES];
+                    [NSApp postEvent:[mouseDownEvent eventWithClickCount:1] atStart:YES];
+                }
             }
         }
         
