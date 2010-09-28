@@ -1,7 +1,14 @@
+[[if indexedCollection]]
 <ul>
-[[foreach indexedCollection.childPages item]]
+[[foreach indexedCollection.navigablePages item maxItems]]
 	<li class="[[i]] [[eo]][[last]]">
         <h3>[[=writeTitleAndLinkOfIteratedPage]]</h3>
-	</li>
+    </li>
 [[endForEach]]
 </ul>
+[[else]]
+[[if parser.HTMLGenerationPurpose]]
+[[else2]]
+<p>[['Please specify the collection to index using the PlugIn Inspector.]]</p>
+[[endif2]]
+[[endif]]
