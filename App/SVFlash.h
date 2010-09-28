@@ -17,6 +17,9 @@
 
 @interface SVFlash : SVAudioVisualPlugIn
 {
+	BOOL _showMenu;
+	NSString *_flashvars;
+	
 	// flash parsing support ... ivars mean that this object can't be parsing more than one flash file at a time, but this shouldn't happen.
 	int myBitOffset;
 	char myCurrentByte;
@@ -28,10 +31,9 @@
 
 @property (retain) KSSimpleURLConnection *dimensionCalculationConnection;
 
-@property(nonatomic, copy) NSNumber *autoplay;
-@property(nonatomic, copy) NSNumber *showMenu;	// BOOLs
-@property(nonatomic, copy) NSNumber *loop;
+
 @property(nonatomic, copy) NSString *flashvars;	// http://kb2.adobe.com/cps/164/tn_16417.html
+@property  BOOL showMenu;
 
 @end
 

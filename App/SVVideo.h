@@ -10,14 +10,9 @@
 #import "SVEnclosure.h"
 #import <QTKit/QTKit.h>
 
-typedef enum {
-	kPreloadMeta = -1,	// we don't really support this in the UI, but let's provide for it in the data model.
-	kPreloadNone = 0,
-	kPreloadAuto = 1
-} PreloadState;
-
 @class SVMediaRecord, KSSimpleURLConnection;
 
+typedef enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose } PosterFrameType;
 
 
 @interface SVVideo : SVAudioVisualPlugIn <SVEnclosure>
@@ -26,6 +21,7 @@ typedef enum {
 	
 	KSSimpleURLConnection *_dimensionCalculationConnection;
 	
+	PosterFrameType _posterFrameType;
 }
 
 + (void)writeFallbackScriptOnce:(SVHTMLContext *)context;
@@ -35,18 +31,11 @@ typedef enum {
 @property (retain) QTMovie *dimensionCalculationMovie;
 @property (retain) KSSimpleURLConnection *dimensionCalculationConnection;
 
-@property(nonatomic, retain) SVMediaRecord *posterFrame;
-
-@property(nonatomic, copy) NSNumber *autoplay;
-@property(nonatomic, copy) NSNumber *controller;	// BOOLs
-@property(nonatomic, copy) NSNumber *loop;
-@property(nonatomic, copy) NSNumber *preload;		// PreloadState
-
-@property(nonatomic, copy) NSNumber *posterFrameType;
+@property  PosterFrameType posterFrameType;
 
 #pragma mark Publishing
 
-@property(nonatomic, copy) NSString *codecType;	// Note: We don't have integer storageType; just use UTI
+
 
 @end
 

@@ -92,13 +92,8 @@
 
 @implementation SVVideo 
 
-@dynamic posterFrame;
-@dynamic posterFrameType;
-@dynamic autoplay;
-@dynamic controller;
-@dynamic preload;
-@dynamic loop;
-@dynamic codecType;	// determined from movie's file UTI, or by further analysis
+@synthesize posterFrameType = _posterFrameType;
+
 
 //	LocalizedStringInThisBundle(@"This is a placeholder for a video. The full video will appear once you publish this website, but to see the video in Sandvox, please enable live data feeds in the preferences.", "Live data feeds disabled message.")
 
@@ -164,11 +159,9 @@
 #pragma mark -
 #pragma mark Poster Frame
 
-enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
-
 - (id <SVMedia>)thumbnail
 {
-	return [self.posterFrameType intValue] != kPosterFrameTypeNone ? self.posterFrame : nil;
+	return self.posterFrameType != kPosterFrameTypeNone ? self.posterFrame : nil;
 }
 + (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObjects:@"posterFrame", @"posterFrameType", nil]; }
 
@@ -346,36 +339,12 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 #pragma mark -
 #pragma mark Custom setters (instead of KVO)
 
-- (void) setAutoplay:(NSNumber *)anAutoplay
-{
-	[self willChangeValueForKey:@"autoplay"];
-	[self setPrimitiveValue:anAutoplay forKey:@"autoplay"];
-	
-	if (anAutoplay.boolValue)	// if we turn on autoplay, we also turn on preload
-	{
-		self.preload = [NSNumber numberWithInt:kPreloadAuto];
-	}
-	[self didChangeValueForKey:@"autoplay"];
-}
 
-- (void) setController:(NSNumber *)aController
-{
-	[self willChangeValueForKey:@"controller"];
-	[self setPrimitiveValue:aController forKey:@"controller"];
-	
-	if (!aController.boolValue)	// if we turn off controller, we turn on autoplay so we can play!
-	{
-		self.autoplay = NSBOOL(YES);
-	}
-	[self didChangeValueForKey:@"controller"];
-}
 
-- (void) setPosterFrameType:(NSNumber *)aPosterFrameType
+- (void) setPosterFrameType:(PosterFrameType)aPosterFrameType
 {
-	[self willChangeValueForKey:@"posterFrameType"];
-	[self setPrimitiveValue:aPosterFrameType forKey:@"posterFrameType"];
-	
-	switch(aPosterFrameType.intValue)
+	_posterFrameType = aPosterFrameType;
+	switch(aPosterFrameType)
 	{
 		case kPosterTypeChoose:
 			// Switching to choose from automatic? Clear out the image.
@@ -389,13 +358,12 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 			// Do nothing; don't mess with media
 			break;
 	}
-	[self didChangeValueForKey:@"posterFrameType"];
 }
 
 - (void)_mediaChanged;
 {
 	NSLog(@"SVVideo Media set.");
-	if (nil == self.posterFrame || [self.posterFrameType intValue] != kPosterTypeChoose)		// get poster frame image UNLESS we have an override chosen.
+	if (nil == self.posterFrame || self.posterFrameType != kPosterTypeChoose)		// get poster frame image UNLESS we have an override chosen.
 	{
 		[self getPosterFrameFromQuickLook];
 	}
@@ -447,7 +415,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
 
 	NSUInteger heightWithBar = [[self height] intValue]
-	+ (self.controller.boolValue ? 16 : 0);
+	+ (self.controller ? 16 : 0);
 	
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
@@ -459,7 +427,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context startElement:@"object" preferredIdName:@"quicktime" className:nil attributes:nil];	// class, attributes already pushed
 	
-	if (self.posterFrame && !self.autoplay.boolValue)	// poster and not auto-starting? make it an href
+	if (self.posterFrame && !self.autoplay)	// poster and not auto-starting? make it an href
 	{
 		[context writeParamElementWithName:@"src" value:posterSourcePath];
 		[context writeParamElementWithName:@"href" value:movieSourcePath];
@@ -470,9 +438,9 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 		[context writeParamElementWithName:@"src" value:movieSourcePath];
 	}
 	
-	[context writeParamElementWithName:@"autoplay" value:self.autoplay.boolValue ? @"true" : @"false"];
-	[context writeParamElementWithName:@"controller" value:self.controller.boolValue ? @"true" : @"false"];
-	[context writeParamElementWithName:@"loop" value:self.loop.boolValue ? @"true" : @"false"];
+	[context writeParamElementWithName:@"autoplay" value:self.autoplay ? @"true" : @"false"];
+	[context writeParamElementWithName:@"controller" value:self.controller ? @"true" : @"false"];
+	[context writeParamElementWithName:@"loop" value:self.loop ? @"true" : @"false"];
 	[context writeParamElementWithName:@"scale" value:@"tofit"];
 	[context writeParamElementWithName:@"type" value:@"video/quicktime"];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://www.apple.com/quicktime/download/"];	
@@ -487,7 +455,7 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	NSString *movieSourcePath = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
 	
 	NSUInteger heightWithBar = [[self height] intValue]
-	+ (self.controller.boolValue ? 46 : 0);		// Windows media controller is 46 pixels (on windows; adjusted on macs)
+	+ (self.controller ? 46 : 0);		// Windows media controller is 46 pixels (on windows; adjusted on macs)
 
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
@@ -499,9 +467,9 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	NSString *elementID = [context startElement:@"object" preferredIdName:@"wmplayer" className:nil attributes:nil];	// class, attributes already pushed
 	
 	[context writeParamElementWithName:@"url" value:movieSourcePath];
-	[context writeParamElementWithName:@"autostart" value:self.autoplay.boolValue ? @"true" : @"false"];
-	[context writeParamElementWithName:@"showcontrols" value:self.controller.boolValue ? @"true" : @"false"];
-	[context writeParamElementWithName:@"playcount" value:self.loop.boolValue ? @"9999" : @"1"];
+	[context writeParamElementWithName:@"autostart" value:self.autoplay ? @"true" : @"false"];
+	[context writeParamElementWithName:@"showcontrols" value:self.controller ? @"true" : @"false"];
+	[context writeParamElementWithName:@"playcount" value:self.loop ? @"9999" : @"1"];
 	[context writeParamElementWithName:@"type" value:@"application/x-oleobject"];
 	[context writeParamElementWithName:@"uiMode" value:@"mini"];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://microsoft.com/windows/mediaplayer/en/download/"];
@@ -521,10 +489,10 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[self height] description]];
 	
-	if (self.controller.boolValue)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
-	if (self.autoplay.boolValue)	[context pushAttribute:@"autoplay" value:@"autoplay"];
-	[context pushAttribute:@"preload" value:[NSARRAY(@"metadata", @"none", @"auto") objectAtIndex:self.preload.intValue + 1]];
-	if (self.loop.boolValue)		[context pushAttribute:@"loop" value:@"loop"];
+	if (self.controller)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
+	if (self.autoplay)	[context pushAttribute:@"autoplay" value:@"autoplay"];
+	[context pushAttribute:@"preload" value:[NSARRAY(@"metadata", @"none", @"auto") objectAtIndex:self.preload + 1]];
+	if (self.loop)		[context pushAttribute:@"loop" value:@"loop"];
 	
 	if (self.posterFrame)	[context pushAttribute:@"poster" value:posterSourcePath];
 
@@ -665,10 +633,10 @@ enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose };
 	
 	if ([videoFlashPlayer isEqualToString:@"flvplayer"])
 	{
-		[flashVars appendFormat:@"&showplayer=%@", (self.controller.boolValue) ? @"autohide" : @"never"];
-		if (self.autoplay.boolValue)				[flashVars appendString:@"&autoplay=1"];
-		if (kPreloadAuto == self.preload.intValue)	[flashVars appendString:@"&autoload=1"];
-		if (self.loop.boolValue)					[flashVars appendString:@"&loop=1"];
+		[flashVars appendFormat:@"&showplayer=%@", (self.controller) ? @"autohide" : @"never"];
+		if (self.autoplay)				[flashVars appendString:@"&autoplay=1"];
+		if (kPreloadAuto == self.preload)	[flashVars appendString:@"&autoload=1"];
+		if (self.loop)					[flashVars appendString:@"&loop=1"];
 	}
 	if (videoFlashExtras)	// append other parameters (usually like key1=value1&key2=value2)
 	{

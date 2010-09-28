@@ -44,10 +44,10 @@
 
 @implementation SVFlash 
 
-@dynamic autoplay;
-@dynamic showMenu;
-@dynamic loop;
-@dynamic flashvars;
+@synthesize showMenu = _showMenu;
+@synthesize flashvars = _flashvars;
+
+
 
 @synthesize dimensionCalculationConnection = _dimensionCalculationConnection;
 
@@ -190,9 +190,9 @@
 	[context writeParamElementWithName:@"scale" value:@"showall"];
 
 	
-	[context writeParamElementWithName:@"play" value:self.autoplay.boolValue ? @"true" : @"false"];
-	[context writeParamElementWithName:@"menu" value:self.showMenu.boolValue ? @"true" : @"false"];
-	[context writeParamElementWithName:@"loop" value:self.loop.boolValue ? @"true" : @"false"];
+	[context writeParamElementWithName:@"play" value:self.autoplay ? @"true" : @"false"];
+	[context writeParamElementWithName:@"menu" value:self.showMenu ? @"true" : @"false"];
+	[context writeParamElementWithName:@"loop" value:self.loop ? @"true" : @"false"];
 	[context writeParamElementWithName:@"scale" value:@"tofit"];
 	[context writeParamElementWithName:@"type" value:@"application/x-shockwave-flash"];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://www.macromedia.com/go/getflashplayer"];	
@@ -205,9 +205,9 @@
 	// Align middle? In 1.x
 	[context pushAttribute:@"quality" value:@"high"];
 	[context pushAttribute:@"scale" value:@"tofit"];
-	[context pushAttribute:@"play" value:self.autoplay.boolValue ? @"true" : @"false"];
-	[context pushAttribute:@"menu" value:self.showMenu.boolValue ? @"true" : @"false"];
-	[context pushAttribute:@"loop" value:self.loop.boolValue ? @"true" : @"false"];
+	[context pushAttribute:@"play" value:self.autoplay ? @"true" : @"false"];
+	[context pushAttribute:@"menu" value:self.showMenu ? @"true" : @"false"];
+	[context pushAttribute:@"loop" value:self.loop ? @"true" : @"false"];
 	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
 	[context pushAttribute:@"pluginspage" value:@"http://www.macromedia.com/go/getflashplayer"];
 	

@@ -82,12 +82,6 @@
 
 @implementation SVAudio
 
-@dynamic autoplay;
-@dynamic controller;
-@dynamic preload;
-@dynamic loop;
-@dynamic codecType;	// determined from file's UTI, or by further analysis
-
 #pragma mark -
 #pragma mark Lifetime
 
@@ -100,8 +94,6 @@
 
 - (void)willInsertIntoPage:(KTPage *)page;
 {
-	[self addObserver:self forKeyPath:@"autoplay"			options:(NSKeyValueObservingOptionNew) context:nil];
-	[self addObserver:self forKeyPath:@"controller"			options:(NSKeyValueObservingOptionNew) context:nil];
 	[self addObserver:self forKeyPath:@"externalSourceURL"	options:(NSKeyValueObservingOptionNew) context:nil];
 	[self addObserver:self forKeyPath:@"media"				options:(NSKeyValueObservingOptionNew) context:nil];
     [super willInsertIntoPage:page];
@@ -116,8 +108,6 @@
 
 - (void)dealloc
 {
-	[self removeObserver:self forKeyPath:@"autoplay"];
-	[self removeObserver:self forKeyPath:@"controller"];
 	[self removeObserver:self forKeyPath:@"externalSourceURL"];
 	[self removeObserver:self forKeyPath:@"media"];
 	[super dealloc];
@@ -212,22 +202,7 @@
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-	if ([keyPath isEqualToString:@"autoplay"])
-	{
-		if (self.autoplay.boolValue)	// if we turn on autoplay, we also turn on preload
-		{
-			self.preload = [NSNumber numberWithInt:kPreloadAuto];
-		}
-		
-	}
-	else if ([keyPath isEqualToString:@"controller"])
-	{
-		if (!self.controller.boolValue)	// if we turn off controller, we turn on autoplay so we can play!
-		{
-			self.autoplay = NSBOOL(YES);
-		}
-	}
-	else if ([keyPath isEqualToString:@"media"] || [keyPath isEqualToString:@"externalSourceURL"])
+	if ([keyPath isEqualToString:@"media"] || [keyPath isEqualToString:@"externalSourceURL"])
 	{		
 		// Load the movie to figure out the codecType
 		[self loadAudio];
@@ -275,7 +250,7 @@
 {
 	NSString *audioSourcePath  = audioSourceURL ? [context relativeURLStringOfURL:audioSourceURL] : @"";
 	
-	NSUInteger heightWithBar = self.controller.boolValue ? 16 : 0;
+	NSUInteger heightWithBar = self.controller ? 16 : 0;
 	
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
@@ -287,9 +262,9 @@
 
 	[context writeParamElementWithName:@"src" value:audioSourcePath];
 	
-	[context writeParamElementWithName:@"autoplay" value:self.autoplay.boolValue ? @"true" : @"false"];
-	[context writeParamElementWithName:@"controller" value:self.controller.boolValue ? @"true" : @"false"];
-	[context writeParamElementWithName:@"loop" value:self.loop.boolValue ? @"true" : @"false"];
+	[context writeParamElementWithName:@"autoplay" value:self.autoplay ? @"true" : @"false"];
+	[context writeParamElementWithName:@"controller" value:self.controller ? @"true" : @"false"];
+	[context writeParamElementWithName:@"loop" value:self.loop ? @"true" : @"false"];
 	[context writeParamElementWithName:@"scale" value:@"tofit"];
 	[context writeParamElementWithName:@"type" value:@"audio/quicktime"];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://www.apple.com/quicktime/download/"];	
@@ -302,7 +277,7 @@
 {
 	NSString *audioSourcePath = audioSourceURL ? [context relativeURLStringOfURL:audioSourceURL] : @"";
 	
-	NSUInteger heightWithBar = self.controller.boolValue ? 46 : 0;		// Windows media controller is 46 pixels (on windows; adjusted on macs)
+	NSUInteger heightWithBar = self.controller ? 46 : 0;		// Windows media controller is 46 pixels (on windows; adjusted on macs)
 	
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
@@ -312,9 +287,9 @@
 	NSString *elementID = [context startElement:@"object" preferredIdName:@"wmplayer" className:nil attributes:nil];	// class, attributes already pushed
 
 	[context writeParamElementWithName:@"url" value:audioSourcePath];
-	[context writeParamElementWithName:@"autostart" value:self.autoplay.boolValue ? @"true" : @"false"];
-	[context writeParamElementWithName:@"showcontrols" value:self.controller.boolValue ? @"true" : @"false"];
-	[context writeParamElementWithName:@"playcount" value:self.loop.boolValue ? @"9999" : @"1"];
+	[context writeParamElementWithName:@"autostart" value:self.autoplay ? @"true" : @"false"];
+	[context writeParamElementWithName:@"showcontrols" value:self.controller ? @"true" : @"false"];
+	[context writeParamElementWithName:@"playcount" value:self.loop ? @"9999" : @"1"];
 	[context writeParamElementWithName:@"type" value:@"application/x-oleobject"];
 	[context writeParamElementWithName:@"uiMode" value:@"mini"];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://microsoft.com/windows/mediaplayer/en/download/"];
@@ -332,10 +307,10 @@
 	[context pushAttribute:@"width" value:[[self width] description]];
 	[context pushAttribute:@"height" value:[[self height] description]];
 	
-	if (self.controller.boolValue)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
-	if (self.autoplay.boolValue)	[context pushAttribute:@"autoplay" value:@"autoplay"];
-	[context pushAttribute:@"preload" value:[NSARRAY(@"metadata", @"none", @"auto") objectAtIndex:self.preload.intValue + 1]];
-	if (self.loop.boolValue)		[context pushAttribute:@"loop" value:@"loop"];
+	if (self.controller)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
+	if (self.autoplay)	[context pushAttribute:@"autoplay" value:@"autoplay"];
+	[context pushAttribute:@"preload" value:[NSARRAY(@"metadata", @"none", @"auto") objectAtIndex:self.preload + 1]];
+	if (self.loop)		[context pushAttribute:@"loop" value:@"loop"];
 	
 	NSString *elementID = [context startElement:@"audio" preferredIdName:@"audio" className:nil attributes:nil];	// class, attributes already pushed
 	
@@ -446,23 +421,23 @@
 	if ([audioFlashPlayer isEqualToString:@"flashmp3player"])
 	{
 		// Can't find way to hide the player; controller must always be showing
-		if (self.autoplay.boolValue)				[flashVars appendString:@"&autoplay=1"];
-		if (kPreloadAuto == self.preload.intValue)	[flashVars appendString:@"&autoload=1"];
-		if (self.loop.boolValue)					[flashVars appendString:@"&loop=1"];
+		if (self.autoplay)				[flashVars appendString:@"&autoplay=1"];
+		if (kPreloadAuto == self.preload)	[flashVars appendString:@"&autoload=1"];
+		if (self.loop)					[flashVars appendString:@"&loop=1"];
 	}
 	else if ([audioFlashPlayer isEqualToString:@"dewplayer"])
 	{
 		// Can't find way to hide the player; controller must always be showing
-		if (self.autoplay.boolValue)	[flashVars appendString:@"&autostart=1"];
+		if (self.autoplay)	[flashVars appendString:@"&autostart=1"];
 		// Can't find a way to preload the audio
-		if (self.loop.boolValue)		[flashVars appendString:@"&autoreplay=1"];
+		if (self.loop)		[flashVars appendString:@"&autoreplay=1"];
 	}
 	else if ([audioFlashPlayer isEqualToString:@"wpaudioplayer"])
 	{
 		// Can't find way to hide the player; controller must always be showing
-		if (self.autoplay.boolValue)	[flashVars appendString:@"&autostart=1"];
+		if (self.autoplay)	[flashVars appendString:@"&autostart=1"];
 		// Can't find a way to preload the audio
-		if (self.loop.boolValue)		[flashVars appendString:@"&loop=1"];
+		if (self.loop)		[flashVars appendString:@"&loop=1"];
 	}
 	
 	NSString *audioFlashExtras	= [defaults objectForKey:@"audioFlashExtras"];	// extra parameters to override for any player
