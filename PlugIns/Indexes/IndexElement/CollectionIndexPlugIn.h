@@ -40,14 +40,10 @@
 
 @interface CollectionIndexPlugIn : SVIndexPlugIn
 {
-    NSUInteger _maxItems;
-    BOOL _enableMaxItems;
     BOOL _includeSummaries;
     NSUInteger _maxSummaryCharacters;
 }
 
-@property (nonatomic) NSUInteger maxItems;
-@property (nonatomic) BOOL enableMaxItems;
 @property (nonatomic) BOOL includeSummaries;
 @property (nonatomic) NSUInteger maxSummaryCharacters;
 

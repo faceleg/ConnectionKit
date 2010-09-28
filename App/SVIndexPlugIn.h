@@ -14,12 +14,14 @@
 {
   @private
     id <SVPage> _collection;
+    BOOL _enableMaxItems;
     NSUInteger _maxItems;
 }
 
 - (void)makeOriginalSize;   // indexes use this to set their width to nil
 
 @property(nonatomic, retain) id <SVPage> indexedCollection;
+@property(nonatomic) BOOL enableMaxItems;
 @property(nonatomic) NSUInteger maxItems;
 
 @end

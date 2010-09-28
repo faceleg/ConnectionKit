@@ -21,8 +21,6 @@
     }
 }
 
-@synthesize indexedCollection = _collection;
-@synthesize maxItems = _maxItems;
 
 #pragma mark Metrics
 
@@ -31,6 +29,7 @@
     [self setWidth:0];
     [self setHeight:0];
 }
+
 
 #pragma mark Child Pages
 
@@ -54,11 +53,16 @@
     return result;
 }
 
+
 #pragma mark Serialization
 
 + (NSArray *)plugInKeys;
 {
-    NSArray *plugInKeys = [NSArray arrayWithObjects:@"indexedCollection", @"maxItems", nil];
+    NSArray *plugInKeys = [NSArray arrayWithObjects:
+                           @"indexedCollection", 
+                           @"maxItems", 
+                           @"enableMaxItems", 
+                           nil];
     NSArray *result = [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
     OBPOSTCONDITION(result);
     return result;
@@ -88,6 +92,51 @@
     {
         [super setSerializedValue:serializedValue forKey:key];
     }
+}
+
+
+#pragma mark HTML Generation
+
+- (void)writeHTML:(id <SVPlugInContext>)context
+{
+    [super writeHTML:context];
+    
+    // add dependencies
+    [context addDependencyForKeyPath:@"maxItems" ofObject:self];
+    [context addDependencyForKeyPath:@"enableMaxItems" ofObject:self];
+    [context addDependencyForKeyPath:@"indexedCollection" ofObject:self];
+    [context addDependencyForKeyPath:@"indexedCollection.childPages" ofObject:self];
+}
+
+
+#pragma mark Properties
+
+@synthesize indexedCollection = _collection;
+- (void)setIndexedCollection:(id <SVPage>)collection
+{
+    // when we change indexedCollection, set the containers title to the title of the collection, or to
+    // KTPluginUntitledName if collection is nil
+    [super setValue:collection forKey:@"indexedCollection"];
+    
+    if ( collection )
+    {
+        [self setTitle:[collection title]];
+    }
+    else
+    {
+        NSString *defaultTitle = [[self bundle] objectForInfoDictionaryKey:@"KTPluginUntitledName"];
+        [self setTitle:defaultTitle];
+    }
+}
+
+
+@synthesize enableMaxItems = _enableMaxItems;
+
+@synthesize maxItems = _maxItems;
+- (NSUInteger)maxItems
+{
+    // return 0 if user has disabled maximum
+    return (self.enableMaxItems) ? _maxItems : 0;
 }
 
 @end
