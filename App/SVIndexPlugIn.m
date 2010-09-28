@@ -119,22 +119,22 @@
 #pragma mark Properties
 
 @synthesize indexedCollection = _collection;
-- (void)setIndexedCollection:(id <SVPage>)collection
-{
-    // when we change indexedCollection, set the containers title to the title of the collection, or to
-    // KTPluginUntitledName if collection is nil
-    [super setValue:collection forKey:@"indexedCollection"];
-    
-    if ( collection )
-    {
-        [self setTitle:[collection title]];
-    }
-    else
-    {
-        NSString *defaultTitle = [[self bundle] objectForInfoDictionaryKey:@"KTPluginUntitledName"];
-        [self setTitle:defaultTitle];
-    }
-}
+//- (void)setIndexedCollection:(id <SVPage>)collection
+//{
+//    // when we change indexedCollection, set the containers title to the title of the collection, or to
+//    // KTPluginUntitledName if collection is nil
+//    //[super setValue:collection forKey:@"indexedCollection"];
+//    
+//    if ( collection )
+//    {
+//        [self setTitle:[collection title]];
+//    }
+//    else
+//    {
+//        NSString *defaultTitle = [[self bundle] objectForInfoDictionaryKey:@"KTPluginUntitledName"];
+//        [self setTitle:defaultTitle];
+//    }
+//}
 
 
 @synthesize enableMaxItems = _enableMaxItems;
