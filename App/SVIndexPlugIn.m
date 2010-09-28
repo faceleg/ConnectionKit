@@ -13,6 +13,13 @@
 
 @implementation SVIndexPlugIn
 
+- (void)awakeFromNew
+{
+    [super awakeFromNew];
+    self.enableMaxItems = YES;
+    self.maxItems = 10;
+}
+
 - (void)didAddToPage:(id <SVPage>)page;
 {
     if (![self indexedCollection])
