@@ -165,6 +165,18 @@ enum {
 typedef NSUInteger SVPlugInPasteboardReadingOptions;
 
 
+// Priority
+typedef enum { 
+	KTSourcePriorityNone = 0,				// Can't handle drag clipboard
+	KTSourcePriorityMinimum = 1,			// Bare minimum, for a generic file handler
+	KTSourcePriorityFallback = 10,			// Could handle it, but there are probably better handlers
+	KTSourcePriorityReasonable = 20,		// Reasonable handler, unless there's a better one
+	KTSourcePriorityTypical = 30,			// Relatively specialized handler
+	KTSourcePriorityIdeal = 40,				// More specialized, better equipped than lessers.
+	KTSourcePrioritySpecialized = 50		// Specialized for these data, e.g. Amazon Books URL
+} KTSourcePriority;
+
+
 @protocol SVPlugInPasteboardReading <NSObject>
 // See SVPlugInPasteboardReading for full details. Sandvox doesn't support +readingOptionsForType:pasteboard: yet
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
