@@ -127,7 +127,7 @@
                                       ofType:(NSString *)type
               insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVImage *result = [SVImage insertNewGraphicInManagedObjectContext:context];
+    SVMediaGraphic *result = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
     [result awakeFromPasteboardContents:contents ofType:type];
     return result;
 }
