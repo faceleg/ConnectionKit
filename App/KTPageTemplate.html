@@ -30,13 +30,13 @@
 		<link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
 [[endif2]][[endif]]
 [[if parser.HTMLGenerationPurpose]][[if feedURL]]
-		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&title]]" href="[[=&feedURL]]" />
+		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&title]]" href="[[=&feedURL]]" charset="UTF-8" />
 [[endif2]][[endif]]
 		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
 		[[=site.writeJQueryImport]]
 [[=writeHierMenuLoader]]
 [[if javascriptURLPath]]
-		<script src="[[=&javascriptURLPath]]" type="text/javascript"></script>
+		<script src="[[=&javascriptURLPath]]" type="text/javascript" charset="UTF-8"></script>
 [[endif]]
 [[if parser.includeStyling]][[=writeStylesheetLinks]][[endif]]
 [[comment ESCAPE THE URL SO THAT ANY DOUBLE-DASH FROM AN IDN DOESNT PRODUCE ILLEGAL MARKUP]]
@@ -47,7 +47,7 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 [[if parser.isPublishing]]
 [[if master.wantsHaloscan]]
 [[if master.haloscanUserName]]
-<script type="text/javascript" src="http://www.haloscan.com/load/[[=&%master.haloscanUserName]]"> </script>
+<script type="text/javascript" src="http://www.haloscan.com/load/[[=&%master.haloscanUserName]]" charset="UTF-8"></script>
 [[endif3]]
 [[endif2]]
 [[endif]]
@@ -113,10 +113,10 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 [[if !disableComments]]
 [[if master.wantsJSKit]]
 [[if pagesInIndexAllowComments]]
-        <div style="display:none;"><script type="text/javascript" src="http://js-kit.com/comments-count.js"></script></div>
+        <div style="display:none;"><script type="text/javascript" src="http://js-kit.com/comments-count.js" charset="UTF-8"></script></div>
 [[endif4]]
 [[if allowComments]]
-		<script type="text/javascript" src="http://js-kit.com/comments.js"></script>
+		<script type="text/javascript" src="http://js-kit.com/comments.js" charset="UTF-8"></script>
 [[endif4]]
 [[endif3]]
 [[if master.wantsDisqus]]
@@ -131,7 +131,7 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 						query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
 					}
 				}
-				document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/[[=&%master.disqusShortName]]/get_num_replies.js' + query + '"></' + 'script>');
+				document.write('<script charset="UTF-8" type="text/javascript" src="http://disqus.com/forums/[[=&%master.disqusShortName]]/get_num_replies.js' + query + '"></' + 'script>');
 			})();
 		//]]>
 		</script>
