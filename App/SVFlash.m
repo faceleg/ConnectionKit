@@ -152,9 +152,7 @@
 
 - (void) setMedia:(SVMediaRecord *)aMedia
 {
-	[self willChangeValueForKey:@"media"];
-	[self setPrimitiveValue:aMedia forKey:@"media"];
-	[self didChangeValueForKey:@"media"];
+	[super setMedia:aMedia];
 	[self _mediaChanged];
 
 }
