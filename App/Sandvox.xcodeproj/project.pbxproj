@@ -3849,6 +3849,8 @@
 		27FDA7051238F483006E1A0D /* KSFileUtilities */ = {
 			isa = PBXGroup;
 			children = (
+				CE01A6860EAFD63600BDF264 /* KSWebLocation.h */,
+				CE01A6870EAFD63600BDF264 /* KSWebLocation.m */,
 				27FDA7061238F4C3006E1A0D /* KSURLUtilities.h */,
 				27FDA7071238F4C3006E1A0D /* KSURLUtilities.m */,
 				27FDA71F1238F66F006E1A0D /* KSPathUtilities.h */,
@@ -4774,8 +4776,6 @@
 				CE01A6820EAFD63600BDF264 /* KSVerticallyAlignedTextCell.m */,
 				CE01A6830EAFD63600BDF264 /* KSViewController.h */,
 				CE01A6840EAFD63600BDF264 /* KSViewController.m */,
-				CE01A6860EAFD63600BDF264 /* KSWebLocation.h */,
-				CE01A6870EAFD63600BDF264 /* KSWebLocation.m */,
 				CE01A68A0EAFD63600BDF264 /* NSApplication+Karelia.h */,
 				CE01A68B0EAFD63600BDF264 /* NSApplication+Karelia.m */,
 				CE01A68E0EAFD63600BDF264 /* NSArrayController+Karelia.h */,
