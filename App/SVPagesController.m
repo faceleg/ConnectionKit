@@ -302,8 +302,10 @@
     [super addObject:object];
 }
 
-- (void)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
+- (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
 {
+    BOOL result = NO;
+    
     // Create graphics for the content
     NSArray *graphics = [SVGraphicFactory graphicsFomPasteboard:pboard
                                  insertIntoManagedObjectContext:[self managedObjectContext]];
@@ -330,7 +332,11 @@
         // Insert page into the collection
         [self addObject:page toCollection:collection];
         [page release];
+        
+        result = YES;
     }
+    
+    return result;
 }
 
 - (void)moveObject:(id)object toCollection:(KTPage *)collection index:(NSUInteger)index;

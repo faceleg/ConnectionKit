@@ -36,7 +36,7 @@
 @property(nonatomic, copy) NSURL *fileURL;
 
 - (void)addObject:(id)object toCollection:(KTPage *)collection;
-- (void)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
+- (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
 
 - (void)moveObject:(id)object toCollection:(KTPage *)collection index:(NSUInteger)index;
 

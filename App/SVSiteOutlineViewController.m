@@ -1191,11 +1191,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     {
         // Create a page for the content
         SVPagesController *pagesController = [self content];
-        [pagesController addObjectsFromPasteboard:[info draggingPasteboard]
-                                     toCollection:collection];
-        
-        
-        return YES;
+        return [pagesController addObjectsFromPasteboard:[info draggingPasteboard]
+                                            toCollection:collection];
     }
 }
 
