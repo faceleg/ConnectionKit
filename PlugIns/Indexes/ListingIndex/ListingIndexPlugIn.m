@@ -37,6 +37,9 @@
 #import "ListingIndexPlugIn.h"
 
 
+// LocalizedStringInThisBundle(@"Please specify the collection to index using the PlugIn Inspector.", "String_On_Page_Template")
+
+
 @implementation ListingIndexPlugIn
 
 /*
