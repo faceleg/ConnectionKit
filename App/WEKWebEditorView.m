@@ -1361,16 +1361,17 @@ typedef enum {  // this copied from WebPreferences+Private.h
             // Actually, trying out ignoring that! Mike. #84932
             
             
-            /*NSDictionary *element = [[self webView] elementAtPoint:location];
+            NSDictionary *element = [[self webView] elementAtPoint:location];
             DOMNode *nextNode = [element objectForKey:WebElementDOMNodeKey];
             WEKWebEditorItem *item = [[self selectedItem] hitTestDOMNode:nextNode];
             
             if (([item isSelectable] && item != [self selectedItem]) ||
-                [item conformsToProtocol:@protocol(SVWebEditorText)] && [(id)item isEditable]) */
+                ([item conformsToProtocol:@protocol(SVWebEditorText)] && [(id)item isEditable]) ||
+                [nextNode isKindOfClass:[DOMHTMLObjectElement class]])
             
             
             // It doesn't ever make sense to start editing "inside" an element which has no content
-            if ([[[self selectedItem] HTMLElement] hasChildNodes])
+            //if ([[[self selectedItem] HTMLElement] hasChildNodes])
             {
                 // Repost equivalent events so they go to their correct target. Can't call -sendEvent: as that doesn't update -currentEvent
                 // To stop the events being repeatedly posted back to ourself, have to indicate to -hitTest: that it should target the WebView. This can best be done by switching selected item over to editing
