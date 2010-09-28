@@ -74,10 +74,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
 @property(nonatomic, copy, readwrite) NSArray *editingItems;
 
 
-// Getting Item Information
-- (NSArray *)selectableAncestorsForItem:(WEKWebEditorItem *)item includeItem:(BOOL)includeItem;
-
-
 // Event handling
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector;
 
@@ -599,7 +595,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     if (item)
     {
-        result = [self selectableAncestorsForItem:item includeItem:NO];
+        result = [item selectableAncestors];
     }
     else
     {
@@ -616,7 +612,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 WEKWebEditorItem *parent = [self selectableItemForDOMNode:selectionNode];
                 if (parent)
                 {
-                    result = [self selectableAncestorsForItem:parent includeItem:YES];
+                    result = [[item selectableAncestors] arrayByAddingObject:parent];
                 }
             }
         }
@@ -941,20 +937,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     
     return nil;
-}
-
-- (NSArray *)selectableAncestorsForItem:(WEKWebEditorItem *)item includeItem:(BOOL)includeItem;
-{
-    OBPRECONDITION(item);
-    
-    NSArray *result = [item selectableAncestors];
-    if (includeItem)
-    {
-        OBASSERT(result);
-        result = [result arrayByAddingObject:item];
-    }
-    
-    return result;
 }
 
 - (WEKWebEditorItem *)selectedItemAtPoint:(NSPoint)point handle:(SVGraphicHandle *)outHandle;
