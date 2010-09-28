@@ -1095,6 +1095,10 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
                     proposedSelectedItems = nil;
             }
         }
+        else if ([proposedSelectedItems count] == 0)
+        {
+            proposedSelectedItems = [[self webEditor] editingItems];
+        }
         
                                                             
         // Match the controller's selection to the view
