@@ -612,7 +612,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 WEKWebEditorItem *parent = [self selectableItemForDOMNode:selectionNode];
                 if (parent)
                 {
-                    result = [[item selectableAncestors] arrayByAddingObject:parent];
+                    result = [item selectableAncestors];
+                    result = (result ? [result arrayByAddingObject:parent] : [NSArray arrayWithObject:parent]);
                 }
             }
         }
