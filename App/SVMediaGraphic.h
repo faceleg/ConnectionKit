@@ -21,6 +21,7 @@
 #pragma mark Media
 
 @property(nonatomic, retain) SVMediaRecord *media;
+@property(nonatomic, retain) SVMediaRecord *posterFrame;
 @property(nonatomic, copy) NSNumber *isMediaPlaceholder; // BOOL, mandatory
 - (void)setMediaWithURL:(NSURL *)URL;
 

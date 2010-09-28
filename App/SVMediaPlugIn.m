@@ -18,6 +18,7 @@
 #pragma mark Properties
 
 - (SVMediaRecord *)media; { return [[self container] media]; }
+- (SVMediaRecord *)posterFrame; { return [[self container] posterFrame]; }
 - (NSURL *)externalSourceURL; { return [[self container] externalSourceURL]; }
 
 - (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)errror;

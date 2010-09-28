@@ -129,6 +129,7 @@
 #pragma mark Media
 
 @dynamic media;
+@dynamic posterFrame;
 @dynamic isMediaPlaceholder;
 
 - (void)setMediaWithURL:(NSURL *)URL;

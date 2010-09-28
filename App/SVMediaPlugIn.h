@@ -15,6 +15,7 @@
 
 #pragma mark Source
 - (SVMediaRecord *)media;
+- (SVMediaRecord *)posterFrame;
 - (NSURL *)externalSourceURL;
 + (NSArray *)allowedFileTypes;
 
