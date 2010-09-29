@@ -43,12 +43,14 @@
 - (NSArray *)iteratablePagesOfCollection
 {
     NSArray *result = nil;
-    if ( self.maxItems > 0 )
+    if ( self.enableMaxItems && self.maxItems > 0 )
     {
         NSMutableArray *array = [NSMutableArray arrayWithCapacity:self.maxItems];
-        for ( NSUInteger i=0; i<self.maxItems; i++ )
+        NSUInteger numberOfChildPages = [[self.indexedCollection childPages] count];
+        NSUInteger arrayMax = (numberOfChildPages < self.maxItems) ? numberOfChildPages : self.maxItems;
+        for ( NSUInteger i=0; i<arrayMax; i++ )
         {
-            id<SVPage> childPage = [self.indexedCollection.childPages objectAtIndex:i];
+            id<SVPage> childPage = [[self.indexedCollection childPages] objectAtIndex:i];
             [array addObject:childPage];
         }
         result = [NSArray arrayWithArray:array];
