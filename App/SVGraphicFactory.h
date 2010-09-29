@@ -27,6 +27,9 @@ enum {
 typedef NSUInteger SVPlugInPasteboardReadingOptions;
 
 
+@class KSWebLocation;
+
+
 @interface SVGraphicFactory : NSObject
 
 #pragma mark Registration
@@ -66,16 +69,14 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 
 #pragma mark Pasteboard
 
-- (NSArray *)readablePasteboardTypes;
-
-- (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type
-                                               pasteboard:(NSPasteboard *)pasteboard;
-
-- (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type;
+- (NSUInteger)priorityForAwakingFromWebLocation:(KSWebLocation *)locations;
 
 - (SVGraphic *)graphicWithPasteboardContents:(id)contents
                                       ofType:(NSString *)type
               insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+
+// Convenience for extracting data from pboard
++ (id)contentsOfPasteboard:(NSPasteboard *)pasteboard forType:(NSString *)type forFactory:(SVGraphicFactory *)aFactory;
 
 
 #pragma mark Menus
@@ -98,13 +99,6 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 
 + (NSArray *)graphicsFomPasteboard:(NSPasteboard *)pasteboard
     insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-
-// Looks at just first item on pboard
-+ (SVGraphic *)graphicFromPasteboard:(NSPasteboard *)pasteboard
-      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-
-// Convenience for extracting data from pboard
-+ (id)contentsOfPasteboard:(NSPasteboard *)pasteboard forType:(NSString *)type forFactory:(SVGraphicFactory *)aFactory;
 
 + (NSArray *)graphicPasteboardTypes;
 

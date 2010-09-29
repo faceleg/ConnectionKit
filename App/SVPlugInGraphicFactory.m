@@ -12,7 +12,7 @@
 #import "KTElementPlugInWrapper.h"
 #import "SVPlugInGraphic.h"
 
-#import "KSWebLocation.h"
+#import "KSWebLocation+SVWebLocation.h"
 
 #import "NSImage+Karelia.h"
 
@@ -105,13 +105,13 @@
     return result;
 }
 
-- (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type;
+- (NSUInteger)priorityForAwakingFromWebLocation:(KSWebLocation *)location;
 {
-    NSUInteger result = KTSourcePriorityNone;
+    NSUInteger result = [super priorityForAwakingFromWebLocation:location];
     
     @try
     {
-        result = [[self plugInClass] readingPriorityForWebLocation:contents];
+        result = [[self plugInClass] readingPriorityForWebLocation:location];
     }
     @catch (NSException *exception)
     {
