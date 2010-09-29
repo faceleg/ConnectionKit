@@ -277,9 +277,9 @@
     if ([self constrainProportions])    // generally true
     {
         // Resize image to fit in space
-        NSNumber *width = [self width];
+        NSNumber *width = self.width;
         [self makeOriginalSize];
-        if ([[self width] isGreaterThan:width]) [self setWidth:width];
+        if (self.width > width) self.width = width;
     }
     
     // Match file type
@@ -378,9 +378,7 @@
 
 - (void) setMedia:(SVMediaRecord *)aMedia
 {
-	[self willChangeValueForKey:@"media"];
-	[self setPrimitiveValue:aMedia forKey:@"media"];
-	[self didChangeValueForKey:@"media"];
+	[super setMedia:aMedia];
 	[self _mediaChanged];
 }
 
@@ -414,10 +412,10 @@
 	NSString *movieSourcePath  = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
 	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
 
-	NSUInteger heightWithBar = [[self height] intValue]
+	NSUInteger heightWithBar = self.height
 	+ (self.controller ? 16 : 0);
 	
-	[context pushAttribute:@"width" value:[[self width] description]];
+	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	[context pushAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
 	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
@@ -454,10 +452,10 @@
 	// I don't think there is any way to use the poster frame for a click to play
 	NSString *movieSourcePath = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
 	
-	NSUInteger heightWithBar = [[self height] intValue]
+	NSUInteger heightWithBar = self.height
 	+ (self.controller ? 46 : 0);		// Windows media controller is 46 pixels (on windows; adjusted on macs)
 
-	[context pushAttribute:@"width" value:[[self width] description]];
+	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	[context pushAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
 	
@@ -486,8 +484,8 @@
 
 	// Actually write the video
 	if ([self shouldWriteHTMLInline]) [self buildClassName:context];
-	[context pushAttribute:@"width" value:[[self width] description]];
-	[context pushAttribute:@"height" value:[[self height] description]];
+	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
+	[context pushAttribute:@"height" value:[NSNumber numberWithInt:self.height]];
 	
 	if (self.controller)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
 	if (self.autoplay)	[context pushAttribute:@"autoplay" value:@"autoplay"];
@@ -659,9 +657,9 @@
 	if ([self shouldWriteHTMLInline]) [self buildClassName:context];
 	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
 	[context pushAttribute:@"data" value:playerPath];
-	[context pushAttribute:@"width" value:[[self width] description]];
+	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
 	
-	NSUInteger heightWithBar = barHeight + [[self height] intValue];
+	NSUInteger heightWithBar = barHeight + self.height;
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	
 	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil];
@@ -700,13 +698,13 @@
 	NSString *altForMovieFallback = [[posterSourcePath lastPathComponent] stringByDeletingPathExtension];// Cheating ... What would be a good alt ?
 	
 	[context pushAttribute:@"title" value:cannotViewTitle];
-	[context writeImageWithSrc:posterSourcePath alt:altForMovieFallback width:[[self width] description] height:[[self height] description]];
+	[context writeImageWithSrc:posterSourcePath alt:altForMovieFallback width:self.width height:self.height];
 }
 
 - (NSString *)startUnknown:(SVHTMLContext *)context;
 {
-	[context pushAttribute:@"width" value:[[self width] description]];
-	[context pushAttribute:@"height" value:[[self height] description]];
+	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
+	[context pushAttribute:@"height" value:[NSNumber numberWithInt:self.height]];
 	NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
 	[context writeElement:@"p" text:NSLocalizedString(@"Unable to show video. Perhaps it is not a recognized video format.", @"Warning shown to user when video can't be embedded")];
 	// Poster may be shown next, so don't end....
@@ -742,7 +740,7 @@
 		{
 			convertType = nil;		// already a web-ready image format; don't convert
 		}
-		posterSourceURL = [context addImageMedia:self.posterFrame width:[self width] height:[self height] type:convertType];
+		posterSourceURL = [context addImageMedia:self.posterFrame width:self.width height:self.height type:convertType];
 	}
 	
 	// Determine tag(s) to use

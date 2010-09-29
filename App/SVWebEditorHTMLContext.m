@@ -328,7 +328,7 @@
 
 #pragma mark Element Primitives
 
-- (void)pushAttribute:(NSString *)attribute value:(NSString *)value;
+- (void)pushAttribute:(NSString *)attribute value:(id)value;
 {
     [super pushAttribute:attribute value:value];
     

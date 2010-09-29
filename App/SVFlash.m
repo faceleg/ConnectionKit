@@ -120,7 +120,6 @@
     if ([self constrainProportions])    // generally true
     {
         // Resize image to fit in space
-        NSNumber *width = [self width];
 		
 		if ([URL isFileURL])	// Get original size as soon as possible
 		{
@@ -129,7 +128,7 @@
 		}
 		
         [self makeOriginalSize];
-       // ???? Why were we doing this? if ([[self width] isGreaterThan:width]) [self setWidth:width];
+       // ???? Why were we doing this? if ([self.width isGreaterThan:width]) [self setWidth:width];
     }
 }
 
@@ -172,8 +171,8 @@
 {
 	NSString *flashSourcePath  = flashSourceURL ? [context relativeURLStringOfURL:flashSourceURL] : @"";
 	
-	[context pushAttribute:@"width" value:[[self width] description]];
-	[context pushAttribute:@"height" value:[[self height] description]];
+	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
+	[context pushAttribute:@"height" value:[NSNumber numberWithInt:self.height]];
 	[context pushAttribute:@"classid" value:@"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"];	// Proper value?
 	[context pushAttribute:@"codebase" value:@"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"];
 	// align?  It was in Sandvox 1.x.  Doesn't seem to be officially supported though.
@@ -198,8 +197,8 @@
 	// We may as well do nested <embed> tag though are there really any browsers that need it?
 	
 	[context pushAttribute:@"src" value:flashSourcePath];
-	[context pushAttribute:@"width" value:[[self width] description]];
-	[context pushAttribute:@"height" value:[[self height] description]];
+	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
+	[context pushAttribute:@"height" value:[NSNumber numberWithInt:self.height]];
 	// Align middle? In 1.x
 	[context pushAttribute:@"quality" value:@"high"];
 	[context pushAttribute:@"scale" value:@"tofit"];
@@ -221,8 +220,8 @@
 
 - (NSString *)writeUnknown:(SVHTMLContext *)context;
 {
-	[context pushAttribute:@"width" value:[[self width] description]];
-	[context pushAttribute:@"height" value:[[self height] description]];
+	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
+	[context pushAttribute:@"height" value:[NSNumber numberWithInt:self.height]];
 	NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
 	[context writeElement:@"p" text:NSLocalizedString(@"Unable to show Flash. Perhaps it is not a recognized file format.", @"Warning shown to user when Flash can't be embedded")];
 	// Poster may be shown next, so don't end....

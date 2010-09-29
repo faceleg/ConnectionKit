@@ -789,8 +789,8 @@
     
     [self writeImageWithSrc:src
                         alt:altText
-                      width:[width description]
-                     height:[height description]];
+                      width:width
+                     height:height];
 }
 
 - (void)writeThumbnailImageOfPage:(id <SVPage>)page className:(NSString *)className maxWidth:(NSUInteger)width maxHeight:(NSUInteger)height;
