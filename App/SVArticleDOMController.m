@@ -96,7 +96,9 @@
     SVGraphic *graphic = [SVGraphicFactory graphicWithActionSender:sender
                                            insertIntoManagedObjectContext:context];
     
-    [graphic willInsertIntoPage:[[self HTMLContext] page]];
+    KTPage *page = [[self HTMLContext] page];
+    [graphic willInsertIntoPage:page];
+    [graphic didAddToPage:page];
     [self addGraphic:graphic placeInline:NO];
 }
 
