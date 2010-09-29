@@ -167,7 +167,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         SVPlugIn *plugIn = [[plugInClass alloc] init];
         OBASSERTSTRING(plugIn, @"plug-in cannot be nil!");
         
-        [plugIn setValue:self forKey:@"container"];    // MUST do before deserializing properties
+        //[plugIn setValue:self forKey:@"container"];    // MUST do before deserializing properties. Why? Mike.
         
         // Restore plug-in's properties
         NSDictionary *plugInProperties = [self extensibleProperties];
@@ -184,7 +184,8 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
             // TODO: Log warning
         }
         
-        [self setPlugIn:plugIn useSerializedProperties:NO];
+        //[self setPlugIn:plugIn useSerializedProperties:NO];
+        [self setPrimitivePlugIn:plugIn];   // so as not to fire a KVO change notification
         [plugIn release];
     }
 }
