@@ -1,4 +1,3 @@
-[[if indexedCollection]]
 <ul>
 [[foreach iteratablePagesOfCollection item]]
 	<li class="[[i]] [[eo]][[last]]">
@@ -6,9 +5,3 @@
     </li>
 [[endForEach]]
 </ul>
-[[else]]
-[[if parser.HTMLGenerationPurpose]]
-[[else2]]
-<p>[['Please specify the collection to index using the PlugIn Inspector.]]</p>
-[[endif2]]
-[[endif]]
