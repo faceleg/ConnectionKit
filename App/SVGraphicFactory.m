@@ -280,51 +280,10 @@
 
 @implementation SVGraphicFactory
 
-#pragma mark Factory Registration
+#pragma mark Init 
 
 static NSPointerArray       *sFactories;
 static NSMutableDictionary  *sFactoriesByIdentifier;
-
-+ (NSArray *)registeredFactories;
-{
-    return [sFactories allObjects];
-}
-
-+ (SVGraphicFactory *)factoryWithIdentifier:(NSString *)identifier;
-{
-    SVGraphicFactory *result = [sFactoriesByIdentifier objectForKey:identifier];
-    return result;
-}
-
-+ (SVGraphicFactory *)graphicFactoryForTag:(NSInteger)tag;
-{
-    return [sFactories pointerAtIndex:tag];
-}
-
-+ (NSInteger)tagForFactory:(SVGraphicFactory *)factory;
-{
-    // Have to hunt through for index/tag of factory
-    NSInteger result = 0;
-    for (SVGraphicFactory *aFactory in sFactories)
-    {
-        if (aFactory == factory) break;
-        result++;
-    }
-    
-    // This would happen if factory wasn't found
-    if (result >= [sFactories count]) result = 0;
-    
-    return result;
-}
-
-+ (void)registerFactory:(SVGraphicFactory *)factory;
-{
-    OBPRECONDITION(factory);
-    [sFactories addPointer:factory];
-    if ([factory identifier]) [sFactoriesByIdentifier setObject:factory forKey:[factory identifier]];
-}
-
-#pragma mark Shared Objects
 
 static SVGraphicFactory *sSharedTextBoxFactory;
 static SVGraphicFactory *sImageFactory;
@@ -417,15 +376,15 @@ static SVGraphicFactory *sRawHTMLFactory;
                 case KTPluginCategoryIndex:
                     [sIndexFactories addObject:[aWrapper graphicFactory]];
                     break;
-                /*case KTPluginCategoryBadge:
-                    [sBadgeFactories addObject:[aWrapper graphicFactory]];
-                    break;
-                case KTPluginCategoryEmbedded:
-                    [sEmbeddedFactories addObject:[aWrapper graphicFactory]];
-                    break;
-                case KTPluginCategorySocial:
-                    [sSocialFactories addObject:[aWrapper graphicFactory]];
-                    break;*/
+                    /*case KTPluginCategoryBadge:
+                     [sBadgeFactories addObject:[aWrapper graphicFactory]];
+                     break;
+                     case KTPluginCategoryEmbedded:
+                     [sEmbeddedFactories addObject:[aWrapper graphicFactory]];
+                     break;
+                     case KTPluginCategorySocial:
+                     [sSocialFactories addObject:[aWrapper graphicFactory]];
+                     break;*/
                 default:
                     [sMoreFactories addObject:[aWrapper graphicFactory]];
                     break;
@@ -435,6 +394,49 @@ static SVGraphicFactory *sRawHTMLFactory;
         }
     }
 }
+
+#pragma mark Factory Registration
+
++ (NSArray *)registeredFactories;
+{
+    return [sFactories allObjects];
+}
+
++ (SVGraphicFactory *)factoryWithIdentifier:(NSString *)identifier;
+{
+    SVGraphicFactory *result = [sFactoriesByIdentifier objectForKey:identifier];
+    return result;
+}
+
++ (SVGraphicFactory *)graphicFactoryForTag:(NSInteger)tag;
+{
+    return [sFactories pointerAtIndex:tag];
+}
+
++ (NSInteger)tagForFactory:(SVGraphicFactory *)factory;
+{
+    // Have to hunt through for index/tag of factory
+    NSInteger result = 0;
+    for (SVGraphicFactory *aFactory in sFactories)
+    {
+        if (aFactory == factory) break;
+        result++;
+    }
+    
+    // This would happen if factory wasn't found
+    if (result >= [sFactories count]) result = 0;
+    
+    return result;
+}
+
++ (void)registerFactory:(SVGraphicFactory *)factory;
+{
+    OBPRECONDITION(factory);
+    [sFactories addPointer:factory];
+    if ([factory identifier]) [sFactoriesByIdentifier setObject:factory forKey:[factory identifier]];
+}
+
+#pragma mark Shared Objects
 
 + (NSArray *)indexFactories; { return [[sIndexFactories copy] autorelease]; }
 + (NSArray *)badgeFactories; { return [[sBadgeFactories copy] autorelease]; }
