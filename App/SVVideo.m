@@ -111,12 +111,12 @@
 
 - (void)willInsertIntoPage:(KTPage *)page;
 {
-	[self setConstrainProportions:YES];		// We will likely want this on
+	[self.container setConstrainProportions:YES];		// We will likely want this on
 
-    [super willInsertIntoPage:page];
+	[super willInsertIntoPage:page];
     
     // Show caption
-    if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)
+    if ([[[self.container textAttachment] placement] intValue] != SVGraphicPlacementInline)
     {
         [self setShowsCaption:YES];
     }
@@ -167,7 +167,7 @@
 
 - (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
 {
-	SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"PosterFrame" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];	
+	SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"PosterFrame" insertIntoManagedObjectContext:[self.container managedObjectContext] error:NULL];	
 	[self replaceMedia:media forKeyPath:@"posterFrame"];
 }
 
@@ -217,7 +217,7 @@
 		posterMedia = [SVMediaRecord mediaWithData:jpegData
 											   URL:fakeURL
                                         entityName:@"PosterFrame"
-                    insertIntoManagedObjectContext:[self managedObjectContext]];	
+                    insertIntoManagedObjectContext:[self.container managedObjectContext]];	
 	}
 	[self replaceMedia:posterMedia forKeyPath:@"posterFrame"];
 
@@ -277,7 +277,7 @@
     if ([self constrainProportions])    // generally true
     {
         // Resize image to fit in space
-        NSNumber *width = self.width;
+        NSUInteger width = self.width;
         [self makeOriginalSize];
         if (self.width > width) self.width = width;
     }
@@ -483,7 +483,7 @@
 	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
 
 	// Actually write the video
-	if ([self shouldWriteHTMLInline]) [self buildClassName:context];
+	if ([self shouldWriteHTMLInline]) [self.container buildClassName:context];
 	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
 	[context pushAttribute:@"height" value:[NSNumber numberWithInt:self.height]];
 	
@@ -654,7 +654,7 @@
 		playerPath = [context relativeURLStringOfURL:playerURL];
 	}
 	
-	if ([self shouldWriteHTMLInline]) [self buildClassName:context];
+	if ([self shouldWriteHTMLInline]) [self.container buildClassName:context];
 	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
 	[context pushAttribute:@"data" value:playerPath];
 	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
@@ -698,7 +698,7 @@
 	NSString *altForMovieFallback = [[posterSourcePath lastPathComponent] stringByDeletingPathExtension];// Cheating ... What would be a good alt ?
 	
 	[context pushAttribute:@"title" value:cannotViewTitle];
-	[context writeImageWithSrc:posterSourcePath alt:altForMovieFallback width:self.width height:self.height];
+	[context writeImageWithSrc:posterSourcePath alt:altForMovieFallback width:[NSNumber numberWithUnsignedInt:self.width] height:[NSNumber numberWithUnsignedInt:self.height]];
 }
 
 - (NSString *)startUnknown:(SVHTMLContext *)context;
@@ -740,7 +740,10 @@
 		{
 			convertType = nil;		// already a web-ready image format; don't convert
 		}
-		posterSourceURL = [context addImageMedia:self.posterFrame width:self.width height:self.height type:convertType];
+		posterSourceURL = [context addImageMedia:self.posterFrame
+										   width:[NSNumber numberWithUnsignedInt:self.width]
+										  height:[NSNumber numberWithUnsignedInt:self.height]
+											type:convertType];
 	}
 	
 	// Determine tag(s) to use

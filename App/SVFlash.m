@@ -72,7 +72,7 @@
     [super willInsertIntoPage:page];
     
     // Show caption
-    if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)
+    if ([[[self.container textAttachment] placement] intValue] != SVGraphicPlacementInline)
     {
         [self setShowsCaption:YES];
     }
