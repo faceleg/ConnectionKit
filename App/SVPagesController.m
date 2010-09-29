@@ -321,6 +321,8 @@
         
         
         // Insert graphic into the page
+        [aGraphic willInsertIntoPage:page];
+        
         SVRichText *article = [page article];
         NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
         
@@ -336,6 +338,7 @@
         [self addObject:page toCollection:collection];
         [page release];
         
+        [aGraphic didAddToPage:page];
         result = YES;
     }
     
