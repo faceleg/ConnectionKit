@@ -151,7 +151,7 @@ extern NSString *kSVGraphicPboardType;
    
 
 #pragma mark Thumbnail
-@property(nonatomic, readonly) id <SVMedia> thumbnail; // MUST be KVO-compliant
+@property(nonatomic, readonly) id <SVMedia> thumbnailMedia; // MUST be KVO-compliant
 - (CGFloat)thumbnailAspectRatio;
 
 

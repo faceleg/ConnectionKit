@@ -358,7 +358,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 #pragma mark Thumbnail
 
-- (id <SVMedia>)thumbnail;
+- (id <SVMedia>)thumbnailMedia;
 {
     return ([[self plugIn] thumbnailURL] ? self : nil);
 }

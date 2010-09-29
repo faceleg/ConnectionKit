@@ -319,7 +319,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 #pragma mark Thumbnail
 
-- (id <SVMedia>)thumbnail { return nil; }
+- (id <SVMedia>)thumbnailMedia { return nil; }
 
 - (CGFloat)thumbnailAspectRatio; { return 1.0f; }
 

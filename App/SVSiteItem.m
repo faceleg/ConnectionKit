@@ -345,6 +345,18 @@
 
 #pragma mark Thumbnail
 
+- (id <SVMedia>)thumbnailMedia;
+{
+    id <SVMedia> result = nil;
+    
+    if ([[self thumbnailType] integerValue] == 1)
+    {
+        result = [self customThumbnail];
+    }
+    
+    return result;
+}
+
 - (BOOL)hasThumbnail;
 {
     return ([self imageRepresentation] != nil);

@@ -400,6 +400,21 @@
 
 #pragma mark Thumbnail
 
+- (id <SVMedia>)thumbnailMedia;
+{
+    id <SVMedia> result;
+    if ([[self thumbnailType] integerValue] == 2)
+    {
+        result = [[self thumbnailSourceGraphic] thumbnailMedia];
+    }
+    else
+    {
+        result = [super thumbnailMedia];
+    }
+    
+    return result;
+}
+
 - (CGFloat)thumbnailAspectRatio;
 {
     CGFloat result = [super thumbnailAspectRatio];

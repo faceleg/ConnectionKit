@@ -797,7 +797,7 @@
 {
     if (className) [self pushClassName:className];
     
-    id <SVMedia> thumbnail = [(SVSiteItem *)page thumbnail];
+    id <SVMedia> thumbnail = [(SVSiteItem *)page thumbnailMedia];
     if (thumbnail)
     {
         CGFloat aspectRatio = [(SVSiteItem *)page thumbnailAspectRatio];

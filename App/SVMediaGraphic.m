@@ -347,6 +347,11 @@
 
 #pragma mark Thumbnail
 
+- (id <SVMedia>)thumbnailMedia;
+{
+    return [self media];
+}
+
 - (id)imageRepresentation; { return [[self media] imageRepresentation]; }
 - (NSString *)imageRepresentationType { return [[self media] imageRepresentationType]; }
 
