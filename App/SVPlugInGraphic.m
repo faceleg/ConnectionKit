@@ -377,7 +377,10 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 - (NSString *)preferredFilename; { return [[self mediaURL] ks_lastPathComponent]; }
 
 - (id)imageRepresentation; { return [self mediaURL]; }
-- (NSString *)imageRepresentationType; { return IKImageBrowserNSURLRepresentationType; }
+- (NSString *)imageRepresentationType;
+{ 
+    return ([self mediaURL] ? IKImageBrowserNSURLRepresentationType : nil);
+}
 
 #pragma mark Inspector
 

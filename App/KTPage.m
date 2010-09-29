@@ -446,6 +446,12 @@
         result = [super imageRepresentation];
     }
     
+    // Fallback to regular icon
+    if (!result)
+    {
+        result = [NSImage imageNamed:@"toolbar_new_page.tiff"];
+    }
+    
     return result;
 }
 
@@ -459,6 +465,12 @@
     else
     {
         result = [super imageRepresentationType];
+    }
+    
+    // Fallback to regular icon
+    if (!result)
+    {
+        result = IKImageBrowserNSImageRepresentationType;
     }
     
     return result;
