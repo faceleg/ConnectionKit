@@ -314,6 +314,9 @@
     {
         // Create pages for each graphic
         [self setEntityName:@"Page"];
+        [self setCollectionPreset:nil];
+        [self setFileURL:nil];
+        
         KTPage *page = [self newObjectDestinedForCollection:collection];
         
         
