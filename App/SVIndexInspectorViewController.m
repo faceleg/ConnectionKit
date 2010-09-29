@@ -11,6 +11,7 @@
 #import "NSBundle+Karelia.h"
 #import "SVIndexPlugIn.h"
 #import "SVPageProtocol.h"
+#import "KTDocument.h"
 
 
 @implementation SVIndexInspectorViewController
@@ -22,11 +23,7 @@
     NSView *collectionInfoView = [self view];
     
     // set up CollectionInfo
-    
-    // enable target icon
-    //FIXME: remove this if KTLinkSourceView is enabled by default #84080
-    [collectionLinkSourceView setEnabled:YES];
-    [collectionLinkSourceView setCollectionsOnly:YES];
+    [collectionLinkSourceView setCollectionsOnly:YES];     
     
 	// Connect up the target icon if needed
 	NSArray *selectedObjects = [[self inspectedObjectsController] selectedObjects];
@@ -86,6 +83,11 @@
     }
 }
 
+- (void)setRepresentedObject:(id)representedObject
+{
+    [super setRepresentedObject:representedObject];
+    [collectionLinkSourceView setTargetWindow:[(KTDocument *)representedObject windowForSheet]]; // hack for testing purposes
+}
 
 - (void)linkSourceConnectedTo:(id<SVPage>)aPage
 {
