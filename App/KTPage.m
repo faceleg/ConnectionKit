@@ -406,8 +406,7 @@
     
     if ([[self thumbnailType] integerValue] == 2)
     {
-        SVGraphic *graphic = [self thumbnailSourceGraphic];
-        result = [graphic thumbnail];
+        result = [self thumbnailSourceGraphic];
     }
     else
     {
