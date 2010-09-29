@@ -26,6 +26,7 @@
 #import "NSArray+Karelia.h"
 #import "NSMenuItem+Karelia.h"
 #import "NSSet+Karelia.h"
+#import "NSString+Karelia.h"
 #import "NSImage+Karelia.h"
 
 #import "Registration.h"
@@ -123,9 +124,23 @@
     return result;
 }
 
-- (NSUInteger)priorityForAwakingFromWebLocation:(KSWebLocation *)locations;
+- (NSUInteger)priorityForAwakingFromWebLocation:(KSWebLocation *)location;
 {
-    return KTSourcePriorityTypical;
+    NSString *path = [[location URL] path];
+    NSString *type = [[NSWorkspace sharedWorkspace] typeOfFile:path error:NULL];
+    if (!type) type = [NSString UTIForFilenameExtension:[path pathExtension]];
+    
+    if (type)
+    {
+        for (NSString *aType in [SVMediaGraphic allowedFileTypes])
+        {
+            if ([[NSWorkspace sharedWorkspace] type:type conformsToType:aType])
+            {
+                return KTSourcePriorityTypical;
+            }
+        }
+    }
+    return KTSourcePriorityNone;
 }
 
 - (SVGraphic *)graphicWithPasteboardContents:(id)contents
