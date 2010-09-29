@@ -43,7 +43,7 @@
 {
     SVMediaGraphic *result = [NSEntityDescription insertNewObjectForEntityForName:@"MediaGraphic"
                                                            inManagedObjectContext:context];
-    [result loadPlugIn];
+    [result loadPlugInAsNew:YES];
     return result;
 }
 
@@ -437,7 +437,7 @@
     // Does this change the type?
     if (![[self plugInIdentifier] isEqualToString:identifier])
     {
-        [self loadPlugIn];
+        [self loadPlugInAsNew:NO];
     }
     
     

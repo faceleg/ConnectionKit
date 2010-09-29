@@ -123,7 +123,7 @@
     // Logo
     SVLogoImage *logo = [NSEntityDescription insertNewObjectForEntityForName:@"Logo"
                                                       inManagedObjectContext:[self managedObjectContext]];
-    [logo loadPlugIn];
+    [logo loadPlugInAsNew:YES];
     [logo makeOriginalSize];
     [logo setConstrainProportions:YES];
     [self setLogo:logo];

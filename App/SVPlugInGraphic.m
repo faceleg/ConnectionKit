@@ -44,7 +44,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
                                   inManagedObjectContext:context];
     
     [result setValue:identifier forKey:@"plugInIdentifier"];
-    [result loadPlugIn];
+    [result loadPlugInAsNew:YES];
     
     return result;
 }
@@ -79,7 +79,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 {
     [super awakeFromFetch];
     
-    [self loadPlugIn];
+    [self loadPlugInAsNew:NO];
     [[self plugIn] awakeFromFetch];
 }
 
@@ -156,7 +156,25 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [self didChangeValueForKey:@"plugIn"];
 }
 
-- (void)loadPlugIn;
+- (void)populatePlugInValues:(SVPlugIn *)plugIn
+{
+    NSDictionary *plugInProperties = [self extensibleProperties];
+    @try
+    {
+        for (NSString *aKey in [[plugIn class] plugInKeys])
+        {
+            id serializedValue = [plugInProperties objectForKey:aKey];
+            [plugIn setSerializedValue:serializedValue forKey:aKey];
+        }
+    }
+    @catch (NSException *exception)
+    {
+        // TODO: Log warning
+    }
+    
+}
+
+- (void)loadPlugInAsNew:(BOOL)inserted;
 {
     SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:[self plugInIdentifier]];
     Class plugInClass = [factory plugInClass];
@@ -167,25 +185,20 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         SVPlugIn *plugIn = [[plugInClass alloc] init];
         OBASSERTSTRING(plugIn, @"plug-in cannot be nil!");
         
-        //[plugIn setValue:self forKey:@"container"];    // MUST do before deserializing properties. Why? Mike.
         
-        // Restore plug-in's properties
-        NSDictionary *plugInProperties = [self extensibleProperties];
-        @try
+        // When we want to start observing the plug-in depends on whether it's just been inserted, or is being de-serialized
+        if (inserted)
         {
-            for (NSString *aKey in [[plugIn class] plugInKeys])
-            {
-                id serializedValue = [plugInProperties objectForKey:aKey];
-                [plugIn setSerializedValue:serializedValue forKey:aKey];
-            }
+            [self setPrimitivePlugIn:plugIn];   // so as not to fire a KVO change notification
+            [self populatePlugInValues:plugIn];
         }
-        @catch (NSException *exception)
+        else
         {
-            // TODO: Log warning
+            [plugIn setValue:self forKey:@"container"]; // cheat and call early so plug-in can locate pages
+            [self populatePlugInValues:plugIn];
+            [self setPrimitivePlugIn:plugIn];   // so as not to fire a KVO change notification
         }
         
-        //[self setPlugIn:plugIn useSerializedProperties:NO];
-        [self setPrimitivePlugIn:plugIn];   // so as not to fire a KVO change notification
         [plugIn release];
     }
 }
@@ -394,7 +407,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 - (void)awakeFromPropertyList:(id)propertyList;
 {
     [super awakeFromPropertyList:propertyList];
-    [self loadPlugIn];
+    [self loadPlugInAsNew:NO];
 }
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
