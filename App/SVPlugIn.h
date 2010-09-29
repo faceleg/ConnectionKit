@@ -124,11 +124,6 @@
 + (SVInspectorViewController *)makeInspectorViewController;
 
 
-#pragma mark Registration
-// Plug-ins normally get registered automatically from searching the bundles, but you could perhaps register additional classes manually
-//+ (void)registerClass:(Class)plugInClass;
-
-
 #pragma mark Pasteboard
 // Default is to refuse all locations. You should study the location and return a KTSourcePriority to match
 + (NSUInteger)readingPriorityForWebLocation:(id <SVWebLocation>)location;
