@@ -400,22 +400,6 @@
 
 #pragma mark Thumbnail
 
-- (id <SVMedia>)thumbnail;
-{
-    id <SVMedia> result;
-    
-    if ([[self thumbnailType] integerValue] == 2)
-    {
-        result = [self thumbnailSourceGraphic];
-    }
-    else
-    {
-        result = [super thumbnail];
-    }
-    
-    return result;
-}
-
 - (CGFloat)thumbnailAspectRatio;
 {
     CGFloat result = [super thumbnailAspectRatio];
@@ -434,6 +418,36 @@
 }
 
 @dynamic thumbnailSourceGraphic;
+
+- (id)imageRepresentation;
+{
+    id result;
+    if ([[self thumbnailType] integerValue] == 2)
+    {
+        result = [[self thumbnailSourceGraphic] imageRepresentation];
+    }
+    else
+    {
+        result = [super imageRepresentation];
+    }
+    
+    return result;
+}
+
+- (NSString *)imageRepresentationType;
+{
+    id result;
+    if ([[self thumbnailType] integerValue] == 2)
+    {
+        result = [[self thumbnailSourceGraphic] imageRepresentationType];
+    }
+    else
+    {
+        result = [super imageRepresentationType];
+    }
+    
+    return result;
+}
 
 #pragma mark Editing
 

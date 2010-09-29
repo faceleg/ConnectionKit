@@ -67,10 +67,9 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	}
 	else
 	{
-        id <IMBImageItem> thumbnail = [item thumbnail];
-        if ([thumbnail imageRepresentation])
+        if ([item imageRepresentation])
         {
-            CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(thumbnail, NULL);
+            CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(item, NULL);
             if (imageSource)
             {
                 result = [[NSImage alloc]

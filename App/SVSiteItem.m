@@ -345,21 +345,9 @@
 
 #pragma mark Thumbnail
 
-- (id <SVMedia>)thumbnail;
-{
-    id <SVMedia> result = nil;
-    
-    if ([[self thumbnailType] integerValue] == 1)
-    {
-        result = [self customThumbnail];
-    }
-    
-    return result;
-}
-
 - (BOOL)hasThumbnail;
 {
-    return ([self thumbnail] != nil);
+    return ([self imageRepresentation] != nil);
 }
 
 - (CGFloat)thumbnailAspectRatio;
@@ -377,6 +365,30 @@
 
 @dynamic thumbnailType;
 @dynamic customThumbnail;
+
+- (id)imageRepresentation;
+{
+    id result = nil;
+    
+    if ([[self thumbnailType] integerValue] == 1)
+    {
+        result = [[self customThumbnail] imageRepresentation];
+    }
+    
+    return result;
+}
+
+- (NSString *)imageRepresentationType;
+{
+    id result = nil;
+    
+    if ([[self thumbnailType] integerValue] == 1)
+    {
+        result = [[self customThumbnail] imageRepresentationType];
+    }
+    
+    return result;
+}
 
 #pragma mark UI
 

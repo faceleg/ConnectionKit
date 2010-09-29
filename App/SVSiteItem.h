@@ -22,7 +22,7 @@
 @protocol SVWebContentViewController, SVMedia;
 
 
-@interface SVSiteItem : KSExtensibleManagedObject <SVPage, SVPublishedObject>
+@interface SVSiteItem : KSExtensibleManagedObject <SVPage, SVPublishedObject, IMBImageItem>
 
 #pragma mark Identifier
 @property(nonatomic, copy, readonly) NSString *uniqueID;
@@ -117,7 +117,6 @@
 
 
 #pragma mark Thumbnail
-@property(nonatomic, readonly) id <SVMedia> thumbnail;
 - (CGFloat)thumbnailAspectRatio;
 @property(nonatomic, copy) NSNumber *thumbnailType; // 0 for automatic, 1 for custom, 2 to Pick from Page
 @property(nonatomic, retain) SVMediaRecord *customThumbnail;
