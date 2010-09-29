@@ -214,46 +214,24 @@
 
 #pragma mark SVPlugInPasteboardReading
 
-// returns an array of UTI strings of data types the receiver can read from the pasteboard and be initialized from. (required)
-+ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
++ (NSUInteger)readingPriorityForWebLocation:(id <SVWebLocation>)location;
 {
-    return SVWebLocationGetReadablePasteboardTypes(pasteboard);
-}
-
-// returns options for reading data of a specified type from a given pasteboard. (required)
-+ (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type 
-                                               pasteboard:(NSPasteboard *)pasteboard
-{
-    return SVPlugInPasteboardReadingAsWebLocation;
-}
-
-+ (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type
-{
-    id <SVWebLocation> location = contents;
-    if ( [location conformsToProtocol:@protocol(SVWebLocation)] )
+    NSURL *URL = [location URL];
+    if ( [URL youTubeVideoID] )
     {
-        NSURL *URL = [location URL];
-        if ( [URL youTubeVideoID] )
-        {
-            return KTSourcePrioritySpecialized;
-        }
+        return KTSourcePrioritySpecialized;
     }
-    
-	return KTSourcePriorityNone;
+    return [super readingPriorityForWebLocation:location];
 }
 
 // returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
-- (void)awakeFromPasteboardContents:(id)propertyList ofType:(NSString *)type
+- (void)awakeFromWebLocation:(id <SVWebLocation>)location;
 {
-    id <SVWebLocation> location = propertyList;
-    if ( [location conformsToProtocol:@protocol(SVWebLocation)] )
-    {
         NSString *videoID = [[location URL] youTubeVideoID];
         if (videoID)
         {
             self.userVideoCode = [[location URL] absoluteString];
         }
-    }
 }
 
 

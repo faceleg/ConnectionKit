@@ -356,13 +356,17 @@ static id <SVPlugInContext> sCurrentContext;
     [undoManager enableUndoRegistration];
 }
 
+#pragma mark Pasteboard
+
++ (NSUInteger)readingPriorityForWebLocation:(id <SVWebLocation>)location; { return KTSourcePriorityNone; }
+
+- (void)awakeFromWebLocation:(id <SVWebLocation>)location; { }
+
 #pragma mark Other
 
 @synthesize container = _container;
 
 #pragma mark Legacy
-
-+ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard; { return nil; }
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject { }
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary { }		// we may want to do something different.

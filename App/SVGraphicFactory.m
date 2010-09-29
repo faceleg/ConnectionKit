@@ -31,6 +31,19 @@
 #import "Registration.h"
 
 
+@interface  SVGraphicFactory ()
+
++ (NSUInteger)priorityForFactory:(SVGraphicFactory *)aFactory
+                      pasteboard:(NSPasteboard *)pasteboard
+                            type:(NSString *)type
+                        contents:(id *)outPboardContents;
+
+@end
+
+
+#pragma mark -
+
+
 @interface SVTextBoxFactory : SVGraphicFactory
 @end
 
@@ -542,14 +555,154 @@ static SVGraphicFactory *sRawHTMLFactory;
 
 #pragma mark Pasteboard
 
-+ (NSArray *)graphicsFomPasteboard:(NSPasteboard *)pasteboard
++ (NSArray *)graphicsFomPasteboard:(NSPasteboard *)pboard
     insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVGraphic *graphic = [self graphicFromPasteboard:pasteboard
-                      insertIntoManagedObjectContext:context];
+    // Since we're targetting 10.5, pasteboard only officially supports single items. We fake it for special types though
+    if ([[pboard types] containsObject:NSFilenamesPboardType])
+    {
+        PasteboardRef pasteboard;
+        if (PasteboardCreate((CFStringRef)[pboard name], &pasteboard) == 0);
+        {
+            // Iterate through pasteboard items
+            ItemCount count;
+            if (PasteboardGetItemCount(pasteboard, &count) == 0)
+            {
+                for (CFIndex i = 0; i < count; i++)
+                {
+                    PasteboardItemID item;
+                    if (PasteboardGetItemIdentifier(pasteboard, i, &item) == 0)
+                    {
+                        // Find the factory that best suits type
+                        CFArrayRef flavourTypes;
+                        if (PasteboardCopyItemFlavors(pasteboard, item, &flavourTypes) == 0)
+                        {
+                            NSArray *types = (NSArray *)flavourTypes;
+                            for (SVGraphicFactory *aFactory in [self registeredFactories])
+                            {
+                                NSString *type = [types firstObjectCommonWithArray:[aFactory readablePasteboardTypes]];
+                                if (!type)
+                                {
+                                    type = @"com.apple.pasteboard.promised-file-url";
+                                    PasteboardSetPasteLocation(pasteboard, (CFURLRef)[NSURL fileURLWithPath:@"/Users/Mike/Desktop/"]);
+                                }
+                                
+                                id contents;
+                                [self priorityForFactory:aFactory pasteboard:pboard type:type contents:&contents];
+                                
+                                CFDataRef data;
+                                if (PasteboardCopyItemFlavorData(pasteboard, item, (CFStringRef)type, &data) == 0)
+                                {
+                                    CFRelease(data);
+                                }
+                            }
+                            
+                            CFRelease(flavourTypes);
+                        }
+                    }
+                }
+            }
+            
+            CFRelease(pasteboard);
+        }
+        
+        
+        
+        NSArray *filenames = [pboard propertyListForType:NSFilenamesPboardType];
+        for (NSString *aPath in filenames)
+        {
+            
+            for (SVGraphicFactory *aFactory in [self registeredFactories])
+            {
+                NSString *type;
+                id propertyList;
+                NSUInteger priority = [self priorityForFactory:aFactory
+                                                    pasteboard:pboard
+                                                          type:&type
+                                                      contents:&propertyList];
+            }
+            
+        }
+        return nil;
+    }
+    else
+    {
+        SVGraphic *graphic = [self graphicFromPasteboard:pboard
+                          insertIntoManagedObjectContext:context];
+        
+        NSArray *result = (graphic) ? [NSArray arrayWithObject:graphic] : nil;
+        return result;
+    }
+}
+
++ (SVGraphic *)graphicFromPasteboard:(NSPasteboard *)pasteboard
+      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVGraphicFactory *factory = nil;
+    id pasteboardContents;
+    NSString *pasteboardType;
+    NSUInteger readingPriority = 0;
     
-    NSArray *result = (graphic) ? [NSArray arrayWithObject:graphic] : nil;
-    return result;
+    
+    // Test plug-ins
+    SVGraphicFactory *aFactory;
+    for (aFactory in [self registeredFactories])
+    {
+        NSString *type = [pasteboard availableTypeFromArray:[aFactory readablePasteboardTypes]];
+        
+        id propertyList;
+        NSUInteger priority = [self priorityForFactory:aFactory
+                                            pasteboard:pasteboard
+                                                  type:type
+                                              contents:&propertyList];
+        
+        if (priority > readingPriority)
+        {
+            factory = aFactory;
+            pasteboardContents = propertyList;
+            pasteboardType = type;
+            readingPriority = priority;
+        }
+    }
+    
+    
+    
+    // Test image
+    aFactory = [self mediaPlaceholderFactory];
+    NSString *type = [pasteboard availableTypeFromArray:[aFactory readablePasteboardTypes]];
+    if (type)
+    {
+        id propertyList;
+        NSUInteger priority = [self priorityForFactory:aFactory
+                                            pasteboard:pasteboard
+                                                  type:type
+                                              contents:&propertyList];
+        
+        if (priority > readingPriority)
+        {
+            factory = [self mediaPlaceholderFactory];
+            pasteboardContents = propertyList;
+            pasteboardType = type;
+            readingPriority = priority;
+        }
+    }
+    
+    
+    
+    
+    // Try to create plug-in from pasteboard contents
+    if (factory)
+    {        
+        SVGraphic *result = [factory graphicWithPasteboardContents:pasteboardContents
+                                                            ofType:pasteboardType
+                                    insertIntoManagedObjectContext:context];
+        
+        return result;
+    }
+    
+    
+    
+    return nil;
 }
 
 + (id)contentsOfPasteboard:(NSPasteboard *)pasteboard forType:(NSString *)type forFactory:(SVGraphicFactory *)aFactory;
@@ -585,107 +738,37 @@ static SVGraphicFactory *sRawHTMLFactory;
 
 + (NSUInteger)priorityForFactory:(SVGraphicFactory *)aFactory
                       pasteboard:(NSPasteboard *)pasteboard
-                            type:(NSString **)outType
+                            type:(NSString *)type
                         contents:(id *)outPboardContents;
 {
     NSUInteger result = 0;
     
     
-    NSString *type = [pasteboard availableTypeFromArray:[aFactory readablePasteboardTypes]];
-    if (type)
+    @try    // talking to a plug-in so might fail
     {
-        @try    // talking to a plug-in so might fail
+        id propertyList = [self contentsOfPasteboard:pasteboard
+                                             forType:type
+                                          forFactory:aFactory];
+        
+        if (propertyList)
         {
-            id propertyList = [self contentsOfPasteboard:pasteboard
-                                                 forType:type
-                                              forFactory:aFactory];
+            result = [aFactory readingPriorityForPasteboardContents:propertyList
+                                                             ofType:type];
             
-            if (propertyList)
+            if (result)
             {
-                result = [aFactory readingPriorityForPasteboardContents:propertyList
-                                                                 ofType:type];
-                
-                if (result)
-                {
-                    // Pass back out results
-                    if (outType) *outType = type;
-                    if (outPboardContents) *outPboardContents = propertyList;
-                }
+                // Pass back out results
+                if (outPboardContents) *outPboardContents = propertyList;
             }
         }
-        @catch (NSException *exception)
-        {
-            // TODO: Log warning
-        }
+    }
+    @catch (NSException *exception)
+    {
+        // TODO: Log warning
     }
     
     
     return result;
-}
-
-+ (SVGraphic *)graphicFromPasteboard:(NSPasteboard *)pasteboard
-      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    SVGraphicFactory *factory = nil;
-    id pasteboardContents;
-    NSString *pasteboardType;
-    NSUInteger readingPriority = 0;
-    
-    
-    // Test plug-ins
-    for (SVGraphicFactory *aFactory in [self registeredFactories])
-    {
-        NSString *type;
-        id propertyList;
-        NSUInteger priority = [self priorityForFactory:aFactory
-                                            pasteboard:pasteboard
-                                                  type:&type
-                                              contents:&propertyList];
-        
-        if (priority > readingPriority)
-        {
-            factory = aFactory;
-            pasteboardContents = propertyList;
-            pasteboardType = type;
-            readingPriority = priority;
-        }
-    }
-    
-    
-    
-    // Test image
-    NSString *type;
-    id propertyList;
-    NSUInteger priority = [self priorityForFactory:[self mediaPlaceholderFactory]
-                                        pasteboard:pasteboard
-                                              type:&type
-                                          contents:&propertyList];
-    
-    if (priority > readingPriority)
-    {
-        factory = [self mediaPlaceholderFactory];
-        pasteboardContents = propertyList;
-        pasteboardType = type;
-        readingPriority = priority;
-    }
-    
-    
-    
-    
-    
-    // Try to create plug-in from pasteboard contents
-    if (factory)
-    {        
-        SVGraphic *result = [factory graphicWithPasteboardContents:pasteboardContents
-                                                            ofType:pasteboardType
-                                    insertIntoManagedObjectContext:context];
-        
-        return result;
-    }
-    
-    
-    
-    return nil;
 }
 
 /*! returns unionSet of acceptedDragTypes from all known KTDataSources */

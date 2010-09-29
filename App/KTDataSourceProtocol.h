@@ -20,7 +20,7 @@
 #import "SVPlugIn.h"
 
 
-@protocol KTDataSource <SVPlugInPasteboardReading>
+@protocol KTDataSource
 @end
 
 

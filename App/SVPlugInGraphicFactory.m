@@ -12,6 +12,8 @@
 #import "KTElementPlugInWrapper.h"
 #import "SVPlugInGraphic.h"
 
+#import "KSWebLocation.h"
+
 #import "NSImage+Karelia.h"
 
 
@@ -92,43 +94,14 @@
 
 - (NSArray *)readablePasteboardTypes;
 {
-    NSArray *result = nil;
-    
-    Class anElementClass = [self plugInClass];
-    if ([anElementClass conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
-    {
-        @try
-        {
-            result = [anElementClass readableTypesForPasteboard:nil];
-        }
-        @catch (NSException *exception)
-        {
-            // TODO: log
-        }
-    }
-    
+    NSArray *result = [KSWebLocation readableTypesForPasteboard:nil];
     return result;
 }
 
 - (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type
                                                pasteboard:(NSPasteboard *)pasteboard;
 {
-    SVPlugInPasteboardReadingOptions result = SVPlugInPasteboardReadingAsData;
-    
-    @try
-    {
-        Class plugInClass = [self plugInClass];
-        if ([plugInClass respondsToSelector:_cmd])
-        {
-            result = [plugInClass readingOptionsForType:type
-                                             pasteboard:pasteboard];
-        }
-    }
-    @catch (NSException *exception)
-    {
-        // TODO: log
-    }
-    
+    SVPlugInPasteboardReadingOptions result = SVPlugInPasteboardReadingAsWebLocation;
     return result;
 }
 
@@ -138,8 +111,7 @@
     
     @try
     {
-        result = [[self plugInClass] readingPriorityForPasteboardContents:contents
-                                                                               ofType:type];
+        result = [[self plugInClass] readingPriorityForWebLocation:contents];
     }
     @catch (NSException *exception)
     {
@@ -155,13 +127,8 @@
 {
     SVPlugInGraphic *result = nil;
     
-    Class plugInClass = [self plugInClass];
-    if ([plugInClass conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
-    {
-        result = (id)[self insertNewGraphicInManagedObjectContext:context];
-        [(id <SVPlugInPasteboardReading>)[result plugIn] awakeFromPasteboardContents:contents
-                                                                              ofType:type];
-    }
+    result = (id)[self insertNewGraphicInManagedObjectContext:context];
+    [[result plugIn] awakeFromWebLocation:contents];
     
     return result;
 }
