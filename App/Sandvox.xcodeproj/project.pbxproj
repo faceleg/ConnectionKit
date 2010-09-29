@@ -543,7 +543,6 @@
 		27B82D9711D4A9A00086CB6E /* SVRawHTMLGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B82D9511D4A9A00086CB6E /* SVRawHTMLGraphic.m */; };
 		27B82F1B11D50F260086CB6E /* SVDOMToHTMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B82F1A11D50F260086CB6E /* SVDOMToHTMLWriter.h */; };
 		27B82F1D11D50F260086CB6E /* SVDOMToHTMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B82F1C11D50F260086CB6E /* SVDOMToHTMLWriter.m */; };
-		27B833ED11D7F6D90086CB6E /* HTML.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27B833EC11D7F6D90086CB6E /* HTML.icns */; };
 		27BA06C81125A46900B9D8F4 /* SVWebEditorTextRange.h in Headers */ = {isa = PBXBuildFile; fileRef = 27BA06C61125A46900B9D8F4 /* SVWebEditorTextRange.h */; };
 		27BA06C91125A46900B9D8F4 /* SVWebEditorTextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BA06C71125A46900B9D8F4 /* SVWebEditorTextRange.m */; };
 		27BCCCA20F09609E00B06B35 /* KTRemotePublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 27BCCCA00F09609E00B06B35 /* KTRemotePublishingEngine.h */; };
@@ -1139,6 +1138,8 @@
 		CE5B1CB811E54A37005E2C5E /* KTFeedbackReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5B1CB611E54A37005E2C5E /* KTFeedbackReporter.h */; };
 		CE5B1CB911E54A38005E2C5E /* KTFeedbackReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5B1CB711E54A37005E2C5E /* KTFeedbackReporter.m */; };
 		CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5E55FB0EAFE98100A3EDDA /* Macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE6532591253B5C8003A9AA0 /* down.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE6532571253B5C8003A9AA0 /* down.gif */; };
+		CE65325A1253B5C8003A9AA0 /* right.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE6532581253B5C8003A9AA0 /* right.gif */; };
 		CE65643B1219DAC8006C5B0D /* KSSimpleURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */; };
 		CE66D15E083D305700AD46CD /* imageReplacementEntry.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */; };
 		CE6EDFE311F125A500F00AAC /* KSInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFE211F125A500F00AAC /* KSInspector.xib */; };
@@ -1169,8 +1170,6 @@
 		CE89C231123999D70056D74B /* SVFlash.m in Sources */ = {isa = PBXBuildFile; fileRef = CE89C22F123999D70056D74B /* SVFlash.m */; };
 		CE89C23912399A560056D74B /* SVFlashInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE89C23812399A560056D74B /* SVFlashInspector.xib */; };
 		CE89C2721239AB1A0056D74B /* toolbar_flash.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE89C2711239AB1A0056D74B /* toolbar_flash.tiff */; };
-		CE89F96611F6149600B180EB /* right.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE89F96111F6149500B180EB /* right.gif */; };
-		CE89F96711F6149600B180EB /* down.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE89F96211F6149500B180EB /* down.gif */; };
 		CE89F96A11F6149600B180EB /* ddsmoothmenu.css in Resources */ = {isa = PBXBuildFile; fileRef = CE89F96511F6149500B180EB /* ddsmoothmenu.css */; };
 		CE89F9C611F6152D00B180EB /* ddsmoothmenu.js in Resources */ = {isa = PBXBuildFile; fileRef = CE89F96411F6149500B180EB /* ddsmoothmenu.js */; };
 		CE8D547C112AFDBD007AC2F0 /* SVValidatorWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8D547A112AFDBD007AC2F0 /* SVValidatorWindowController.h */; };
@@ -2092,7 +2091,6 @@
 		27B82D9511D4A9A00086CB6E /* SVRawHTMLGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRawHTMLGraphic.m; sourceTree = "<group>"; };
 		27B82F1A11D50F260086CB6E /* SVDOMToHTMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMToHTMLWriter.h; sourceTree = "<group>"; };
 		27B82F1C11D50F260086CB6E /* SVDOMToHTMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMToHTMLWriter.m; sourceTree = "<group>"; };
-		27B833EC11D7F6D90086CB6E /* HTML.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = HTML.icns; sourceTree = "<group>"; };
 		27BA06C61125A46900B9D8F4 /* SVWebEditorTextRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorTextRange.h; sourceTree = "<group>"; };
 		27BA06C71125A46900B9D8F4 /* SVWebEditorTextRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorTextRange.m; sourceTree = "<group>"; };
 		27BCCCA00F09609E00B06B35 /* KTRemotePublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTRemotePublishingEngine.h; sourceTree = "<group>"; };
@@ -2794,6 +2792,8 @@
 		CE5B1CB611E54A37005E2C5E /* KTFeedbackReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTFeedbackReporter.h; sourceTree = "<group>"; };
 		CE5B1CB711E54A37005E2C5E /* KTFeedbackReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTFeedbackReporter.m; sourceTree = "<group>"; };
 		CE5E55FB0EAFE98100A3EDDA /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
+		CE6532571253B5C8003A9AA0 /* down.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = down.gif; sourceTree = "<group>"; };
+		CE6532581253B5C8003A9AA0 /* right.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = right.gif; sourceTree = "<group>"; };
 		CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementEntry.txt; sourceTree = "<group>"; };
 		CE6EDFE211F125A500F00AAC /* KSInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KSInspector.xib; sourceTree = "<group>"; };
 		CE6EDFF111F126FD00F00AAC /* Publishing.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Publishing.xib; sourceTree = "<group>"; };
@@ -2825,8 +2825,6 @@
 		CE89C22F123999D70056D74B /* SVFlash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFlash.m; sourceTree = "<group>"; };
 		CE89C23812399A560056D74B /* SVFlashInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SVFlashInspector.xib; sourceTree = "<group>"; };
 		CE89C2711239AB1A0056D74B /* toolbar_flash.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_flash.tiff; sourceTree = "<group>"; };
-		CE89F96111F6149500B180EB /* right.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = right.gif; sourceTree = "<group>"; };
-		CE89F96211F6149500B180EB /* down.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = down.gif; sourceTree = "<group>"; };
 		CE89F96411F6149500B180EB /* ddsmoothmenu.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ddsmoothmenu.js; sourceTree = "<group>"; };
 		CE89F96511F6149500B180EB /* ddsmoothmenu.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = ddsmoothmenu.css; sourceTree = "<group>"; };
 		CE8D547A112AFDBD007AC2F0 /* SVValidatorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVValidatorWindowController.h; sourceTree = "<group>"; };
@@ -4177,8 +4175,6 @@
 		3C202F0107E0122F00DE4994 /* HTML,text,js */ = {
 			isa = PBXGroup;
 			children = (
-				CE89F96111F6149500B180EB /* right.gif */,
-				CE89F96211F6149500B180EB /* down.gif */,
 				CE89F96411F6149500B180EB /* ddsmoothmenu.js */,
 				CE89F96511F6149500B180EB /* ddsmoothmenu.css */,
 				CE36E3D911ED528E003EFCA8 /* jquery-1.4.2.js */,
@@ -4365,7 +4361,6 @@
 		3C5A73710BF7B69300776464 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				27B833EC11D7F6D90086CB6E /* HTML.icns */,
 				27B82D9411D4A9A00086CB6E /* SVRawHTMLGraphic.h */,
 				27B82D9511D4A9A00086CB6E /* SVRawHTMLGraphic.m */,
 				27990F46119D956800D07FDF /* loremipsum1.html */,
@@ -5016,6 +5011,7 @@
 				CE1BE7ED11D2AD1E00D875AE /* Preferences */,
 				CE1BE7F111D2AD1E00D875AE /* Publishing */,
 				CE1BE7F311D2AD1E00D875AE /* SiteOutline */,
+				CE6532561253B5C8003A9AA0 /* Resources */,
 				CE1BE80511D2AD1E00D875AE /* Toolbar */,
 				CE1BE81011D2AD1E00D875AE /* WebView */,
 				CE1BE81411D2AD1E00D875AE /* WelcomeWindow */,
@@ -5276,6 +5272,15 @@
 				CE58139011DEA45D008478AF /* NSStatusUnavailable.tiff */,
 			);
 			path = HTMLEditor;
+			sourceTree = "<group>";
+		};
+		CE6532561253B5C8003A9AA0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CE6532571253B5C8003A9AA0 /* down.gif */,
+				CE6532581253B5C8003A9AA0 /* right.gif */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		CE75EA90111A550600474753 /* ESCursors */ = {
@@ -6365,7 +6370,6 @@
 				CE1BF33511D2B61F00D875AE /* caution.tiff in Resources */,
 				CE1BF76111D2B83500D875AE /* error.pdf in Resources */,
 				CE1BF76311D2B83500D875AE /* UKDockProgressIndicator_progress.png in Resources */,
-				27B833ED11D7F6D90086CB6E /* HTML.icns in Resources */,
 				CE42A63111DE506600381E46 /* DTD in Resources */,
 				CE58139111DEA45D008478AF /* NSStatusAvailable.tiff in Resources */,
 				CE58139211DEA45D008478AF /* NSStatusPartiallyAvailable.tiff in Resources */,
@@ -6390,8 +6394,6 @@
 				CE6EE01611F129F100F00AAC /* KSKeepInTouch.xib in Resources */,
 				CE6EE01711F129F100F00AAC /* KSPluginInstaller.xib in Resources */,
 				CE6EE01811F129F100F00AAC /* KSRegistration.xib in Resources */,
-				CE89F96611F6149600B180EB /* right.gif in Resources */,
-				CE89F96711F6149600B180EB /* down.gif in Resources */,
 				CE89F96A11F6149600B180EB /* ddsmoothmenu.css in Resources */,
 				27A1882D11F78323004BEFC2 /* MultipleSelectionPlaceholder.xib in Resources */,
 				CE01E6F71208A7F10093565F /* target_set.tiff in Resources */,
@@ -6435,6 +6437,8 @@
 				3C7B015E122F526B0098E147 /* CollectionInfo.xib in Resources */,
 				CE89C23912399A560056D74B /* SVFlashInspector.xib in Resources */,
 				CE89C2721239AB1A0056D74B /* toolbar_flash.tiff in Resources */,
+				CE6532591253B5C8003A9AA0 /* down.gif in Resources */,
+				CE65325A1253B5C8003A9AA0 /* right.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
