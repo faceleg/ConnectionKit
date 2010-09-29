@@ -562,13 +562,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     DOMCSSStyleDeclaration *style = [[self webView] computedStyleForElement:element
                                                               pseudoElement:nil];
     
-    // Inline/float images are always selectable
-    if ([[element tagName] isEqualToString:@"IMG"])
-    {
-        return YES;
-    }
-    
-    
     BOOL result = ([[style display] isEqualToString:@"inline"] &&
                    [element isKindOfClass:[DOMHTMLElement class]] &&
                    [(DOMHTMLElement *)element isContentEditable]);
