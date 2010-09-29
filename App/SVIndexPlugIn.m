@@ -108,13 +108,31 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
-    [super writeHTML:context];
-    
     // add dependencies
     [context addDependencyForKeyPath:@"maxItems" ofObject:self];
     [context addDependencyForKeyPath:@"enableMaxItems" ofObject:self];
     [context addDependencyForKeyPath:@"indexedCollection" ofObject:self];
     [context addDependencyForKeyPath:@"indexedCollection.childPages" ofObject:self];
+    
+    if ( self.indexedCollection )
+    {
+        if ( [[self iteratablePagesOfCollection] count] )
+        {
+            [super writeHTML:context];
+        }
+        else if ( [context isForEditing] )
+        {
+            [[context HTMLWriter] startElement:@"p"];
+            [[context HTMLWriter] writeText:NSLocalizedString(@"To see the Index, please add pages to the collection.","add pages to collection")];
+            [[context HTMLWriter] endElement];
+        }
+    }
+    else if ( [context isForEditing] )
+    {
+        [[context HTMLWriter] startElement:@"p"];
+        [[context HTMLWriter] writeText:NSLocalizedString(@"Please specify the collection to index using the PlugIn Inspector.","set index collectionb")];
+        [[context HTMLWriter] endElement];
+    }
 }
 
 
