@@ -26,6 +26,7 @@
     // enable target icon
     //FIXME: remove this if KTLinkSourceView is enabled by default #84080
     [collectionLinkSourceView setEnabled:YES];
+    [collectionLinkSourceView setCollectionsOnly:YES];
     
 	// Connect up the target icon if needed
 	NSArray *selectedObjects = [[self inspectedObjectsController] selectedObjects];
