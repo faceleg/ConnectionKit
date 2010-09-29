@@ -1281,7 +1281,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 //	[oInsertExternalLinkMenuItem setIconImage:[NSImage imageFromOSType:kGenericURLIcon]];
 //	[oInsertRawHTMLMenuItem setIconImage:[NSImage imageNamed:@"HTML"]];
 //	[oInsertHTMLTextMenuItem setIconImage:[NSImage imageNamed:@"html_element"]];	// different?
-//	[oInsertBlankPageMenuItem setIconImage:[NSImage imageNamed:@"toolbar_new_page"]];
+//	[oInsertBlankPageMenuItem setIconImage:[NSImage imageNamed:@"toolbar_new_page.tiff"]];
 	
 	[super awakeFromNib];
 }
