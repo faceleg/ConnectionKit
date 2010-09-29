@@ -239,23 +239,4 @@
 
 #pragma mark Thumbnail
 
-- (id <SVMedia>)thumbnail { return [self media]; }
-+ (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObject:@"media"]; }
-
-- (CGFloat)thumbnailAspectRatio;
-{
-    CGFloat result;
-    
-    if ([[self container] constrainedAspectRatio])
-    {
-        result = [[[self container] constrainedAspectRatio] floatValue];
-    }
-    else
-    {
-        result = [self width] / [self height];
-    }
-    
-    return result;
-}
-
 @end

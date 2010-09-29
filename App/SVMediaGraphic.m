@@ -345,6 +345,29 @@
 
 - (id)objectToInspect; { return self; }
 
+#pragma mark Thumbnail
+
+- (id)imageRepresentation; { return [[self media] imageRepresentation]; }
+- (NSString *)imageRepresentationType { return [[self media] imageRepresentationType]; }
+
+- (CGFloat)thumbnailAspectRatio;
+{
+    CGFloat result;
+    
+    if ([self constrainedAspectRatio])
+    {
+        result = [[self constrainedAspectRatio] floatValue];
+    }
+    else
+    {
+        result = [[self width] floatValue] / [[self height] floatValue];
+    }
+    
+    return result;
+}
+
++ (NSSet *)keyPathsForValuesAffectingImageRepresentation { return [NSSet setWithObject:@"media"]; }
+
 #pragma mark Serialization
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;

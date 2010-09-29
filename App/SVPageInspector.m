@@ -173,12 +173,11 @@
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:@"inspectedObjectsController.selection.thumbnail.imageRepresentation"])
+    if ([keyPath isEqualToString:@"inspectedObjectsController.selection.thumbnailSourceGraphic.imageRepresentation"])
     {
         [self updatePickFromPageThumbnail];
     }
     else
-    
     {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
