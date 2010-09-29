@@ -67,14 +67,24 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	}
 	else
 	{
-        if ([item imageRepresentation])
+        id rep = [item imageRepresentation];
+        NSString *type = [item imageRepresentationType];
+        NSUInteger maxSize = [self maximumIconSize];
+        
+        if ([type isEqualToString:IKImageBrowserNSImageRepresentationType])
+        {
+            result = [[rep copy] autorelease];
+            [result setSize:NSMakeSize(maxSize, maxSize)];
+            if (isThumbnail) *isThumbnail = NO;
+        }
+        else if (rep)
         {
             CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(item, NULL);
             if (imageSource)
             {
                 result = [[NSImage alloc]
                           initWithThumbnailFromCGImageSource:imageSource
-                          maxPixelSize:([self maximumIconSize] - 4)];   // shrink to fit shadow
+                          maxPixelSize:(maxSize - 4)];   // shrink to fit shadow
                 CFRelease(imageSource);
                 
                 [result setBackgroundColor:[NSColor whiteColor]];
