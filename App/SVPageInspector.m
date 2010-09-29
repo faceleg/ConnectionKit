@@ -48,7 +48,7 @@
                                                object:nil];
     
     [self addObserver:self
-           forKeyPath:@"inspectedObjectsController.selection.thumbnailSourceGraphic.thumbnail.imageRepresentation"
+           forKeyPath:@"inspectedObjectsController.selection.thumbnailSourceGraphic.imageRepresentation"
               options:0
               context:NULL];
     
@@ -58,7 +58,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self removeObserver:self forKeyPath:@"inspectedObjectsController.selection.thumbnailSourceGraphic.thumbnail.imageRepresentation"];
+    [self removeObserver:self forKeyPath:@"inspectedObjectsController.selection.thumbnailSourceGraphic.imageRepresentation"];
     
     [super dealloc];
 }
@@ -153,8 +153,8 @@
     NSImage *result = nil;
     
     id <IMBImageItem> thumbnail = [(NSObject *)[self inspectedObjectsController]
-                                   valueForKeyPath:@"selection.thumbnailSourceGraphic.thumbnail"];
-    if (thumbnail && !NSIsControllerMarker(thumbnail))
+                                   valueForKeyPath:@"selection.thumbnailSourceGraphic"];
+    if (thumbnail && !NSIsControllerMarker(thumbnail) && [thumbnail imageRepresentation])
     {
         CGImageSourceRef source = IMB_CGImageSourceCreateWithImageItem(thumbnail, NULL);
         if (source)
@@ -173,7 +173,7 @@
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:@"inspectedObjectsController.selection.thumbnailSourceGraphic.thumbnail.imageRepresentation"])
+    if ([keyPath isEqualToString:@"inspectedObjectsController.selection.thumbnail.imageRepresentation"])
     {
         [self updatePickFromPageThumbnail];
     }
