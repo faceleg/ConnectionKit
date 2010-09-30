@@ -114,6 +114,15 @@
 #pragma mark Media
 
 @dynamic media;
+- (void)setMedia:(SVMediaRecord *)media;
+{
+    [self willChangeValueForKey:@"media"];
+    [self setPrimitiveValue:media forKey:@"media"];
+    [self didChangeValueForKey:@"media"];
+    
+    [[self plugIn] didSetSource];
+}
+
 @dynamic posterFrame;
 @dynamic isMediaPlaceholder;
 
@@ -132,6 +141,14 @@
 }
 
 @dynamic externalSourceURLString;
+- (void) setExternalSourceURLString:(NSString *)source;
+{
+    [self willChangeValueForKey:@"externalSourceURLString"];
+    [self setPrimitiveValue:source forKey:@"externalSourceURLString"];
+    [self didChangeValueForKey:@"externalSourceURLString"];
+    
+    [[self plugIn] didSetSource];
+}
 
 - (NSURL *)externalSourceURL
 {

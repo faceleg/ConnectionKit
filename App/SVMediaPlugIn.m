@@ -21,6 +21,8 @@
 - (SVMediaRecord *)posterFrame; { return [[self container] posterFrame]; }
 - (NSURL *)externalSourceURL; { return [[self container] externalSourceURL]; }
 
+- (void)didSetSource; { }
+
 - (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)errror;
 {
     return YES;

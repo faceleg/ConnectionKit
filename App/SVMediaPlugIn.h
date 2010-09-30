@@ -17,6 +17,7 @@
 - (SVMediaRecord *)media;
 - (SVMediaRecord *)posterFrame;
 - (NSURL *)externalSourceURL;
+- (void)didSetSource;
 + (NSArray *)allowedFileTypes;
 
 

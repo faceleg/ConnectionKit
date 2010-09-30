@@ -376,16 +376,10 @@
 	[self loadMovie];
 }
 
-- (void) setMedia:(SVMediaRecord *)aMedia
+- (void)didSetSource;
 {
-	[super setMedia:aMedia];
-	[self _mediaChanged];
-}
-
-- (void) setExternalSourceURL:(NSURL *)anExternalSourceURL
-{
-	[super setExternalSourceURL:anExternalSourceURL];
-	[self _mediaChanged];
+    [super didSetSource];
+    [self _mediaChanged];
 }
 
 #pragma mark -
