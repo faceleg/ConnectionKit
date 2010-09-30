@@ -148,6 +148,14 @@ change context:(void *)context
     }
 }
 
+- (void)setRepresentedObject:(id)representedObject;
+{
+    [super setRepresentedObject:representedObject];
+    
+    // Pass down to selection too
+    [_selectedInspector setRepresentedObject:[self representedObject]];
+}
+
 - (void)setTitle:(NSString *)title;
 {
     // Fallback to standard title
