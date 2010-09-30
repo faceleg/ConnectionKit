@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="143"/>
+			<integer value="211"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1271,9 +1271,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 												<string key="NSKeyEquivalent"/>
 												<int key="NSPeriodicDelay">400</int>
 												<int key="NSPeriodicInterval">75</int>
-												<object class="NSMenuItem" key="NSMenuItem" id="524583137">
+												<object class="NSMenuItem" key="NSMenuItem" id="703219033">
 													<reference key="NSMenu" ref="590242635"/>
-													<string key="NSTitle">Pick from Page</string>
+													<string key="NSTitle">First Child Page</string>
 													<string key="NSKeyEquiv"/>
 													<int key="NSKeyEquivModMask">1048576</int>
 													<int key="NSMnemonicLoc">2147483647</int>
@@ -1281,7 +1281,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 													<reference key="NSOnImage" ref="278434799"/>
 													<reference key="NSMixedImage" ref="382678261"/>
 													<string key="NSAction">_popUpItemAction:</string>
-													<int key="NSTag">2</int>
+													<int key="NSTag">3</int>
 													<reference key="NSTarget" ref="514398236"/>
 												</object>
 												<bool key="NSMenuItemRespectAlignment">YES</bool>
@@ -1312,8 +1312,19 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 															<int key="NSTag">1</int>
 															<reference key="NSTarget" ref="514398236"/>
 														</object>
-														<reference ref="524583137"/>
-														<object class="NSMenuItem" id="741439531">
+														<object class="NSMenuItem" id="524583137">
+															<reference key="NSMenu" ref="590242635"/>
+															<string key="NSTitle">Pick from Page</string>
+															<string key="NSKeyEquiv"/>
+															<int key="NSKeyEquivModMask">1048576</int>
+															<int key="NSMnemonicLoc">2147483647</int>
+															<reference key="NSOnImage" ref="278434799"/>
+															<reference key="NSMixedImage" ref="382678261"/>
+															<string key="NSAction">_popUpItemAction:</string>
+															<int key="NSTag">2</int>
+															<reference key="NSTarget" ref="514398236"/>
+														</object>
+														<object class="NSMenuItem" id="536139869">
 															<reference key="NSMenu" ref="590242635"/>
 															<bool key="NSIsDisabled">YES</bool>
 															<bool key="NSIsSeparator">YES</bool>
@@ -1325,7 +1336,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 															<string key="NSAction">_popUpItemAction:</string>
 															<reference key="NSTarget" ref="514398236"/>
 														</object>
-														<object class="NSMenuItem" id="610832089">
+														<object class="NSMenuItem" id="815746112">
 															<reference key="NSMenu" ref="590242635"/>
 															<string key="NSTitle">Most Recent Child Page</string>
 															<string key="NSKeyEquiv"/>
@@ -1337,22 +1348,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 															<int key="NSTag">4</int>
 															<reference key="NSTarget" ref="514398236"/>
 														</object>
-														<object class="NSMenuItem" id="687068422">
-															<reference key="NSMenu" ref="590242635"/>
-															<string key="NSTitle">First Child Page</string>
-															<string key="NSKeyEquiv"/>
-															<int key="NSKeyEquivModMask">1048576</int>
-															<int key="NSMnemonicLoc">2147483647</int>
-															<reference key="NSOnImage" ref="278434799"/>
-															<reference key="NSMixedImage" ref="382678261"/>
-															<string key="NSAction">_popUpItemAction:</string>
-															<int key="NSTag">3</int>
-															<reference key="NSTarget" ref="514398236"/>
-														</object>
+														<reference ref="703219033"/>
 													</object>
 													<reference key="NSMenuFont" ref="511600138"/>
 												</object>
-												<int key="NSSelectedIndex">2</int>
+												<int key="NSSelectedIndex">5</int>
 												<int key="NSPreferredEdge">1</int>
 												<bool key="NSUsesItemFromMenu">YES</bool>
 												<bool key="NSAltersState">YES</bool>
@@ -2937,6 +2937,38 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					</object>
 					<int key="connectionID">389</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.isCollection</string>
+						<reference key="source" ref="815746112"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="815746112"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.isCollection</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.isCollection</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">404</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.isCollection</string>
+						<reference key="source" ref="703219033"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="703219033"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.isCollection</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.isCollection</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">405</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -3592,9 +3624,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<reference ref="148038555"/>
 							<reference ref="524583137"/>
 							<reference ref="17239910"/>
-							<reference ref="610832089"/>
-							<reference ref="687068422"/>
-							<reference ref="741439531"/>
+							<reference ref="815746112"/>
+							<reference ref="703219033"/>
+							<reference ref="536139869"/>
 						</object>
 						<reference key="parent" ref="514398236"/>
 					</object>
@@ -3939,17 +3971,17 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">392</int>
-						<reference key="object" ref="610832089"/>
+						<reference key="object" ref="815746112"/>
 						<reference key="parent" ref="590242635"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">393</int>
-						<reference key="object" ref="687068422"/>
+						<reference key="object" ref="703219033"/>
 						<reference key="parent" ref="590242635"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">394</int>
-						<reference key="object" ref="741439531"/>
+						<reference key="object" ref="536139869"/>
 						<reference key="parent" ref="590242635"/>
 					</object>
 				</object>
@@ -4342,7 +4374,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">403</int>
+			<int key="maxID">405</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
