@@ -403,13 +403,24 @@
 - (id <SVMedia>)thumbnailMedia;
 {
     id <SVMedia> result;
-    if ([[self thumbnailType] integerValue] == SVThumbnailTypePickFromPage)
+    switch ([[self thumbnailType] integerValue])
     {
-        result = [[self thumbnailSourceGraphic] thumbnailMedia];
-    }
-    else
-    {
-        result = [super thumbnailMedia];
+        case SVThumbnailTypePickFromPage:
+            result = [[self thumbnailSourceGraphic] thumbnailMedia];
+            break;
+            
+        case SVThumbnailTypeMostRecentItem:
+            result = [[[self childrenWithSorting:SVCollectionSortByDateCreated
+                                       ascending:YES
+                                         inIndex:NO] lastObject] thumbnailMedia];
+            break;
+            
+        case SVThumbnailTypeFirstItem:
+            result = [[[self childPages] firstObjectKS] thumbnailMedia];
+            break;
+            
+        default:
+            result = [super thumbnailMedia];
     }
     
     return result;
