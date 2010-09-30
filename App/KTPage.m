@@ -434,6 +434,21 @@
 
 @dynamic thumbnailSourceGraphic;
 
+- (BOOL)validateThumbnailType:(NSNumber **)outType error:(NSError **)error;
+{
+    SVThumbnailType maxType = ([self isCollection] ? 
+                               SVThumbnailTypeMostRecentItem : 
+                               SVThumbnailTypePickFromPage);
+    
+    BOOL result = ([*outType intValue] <= maxType);
+    if (!result && error)
+    {
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationNumberTooLargeError localizedDescription:@"thumbnailType is too large for this type of page"];
+    }
+    
+    return result;
+}
+
 - (id)imageRepresentation;
 {
     id result;
