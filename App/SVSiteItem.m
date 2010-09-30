@@ -349,7 +349,7 @@
 {
     id <SVMedia> result = nil;
     
-    if ([[self thumbnailType] integerValue] == 1)
+    if ([[self thumbnailType] integerValue] == SVThumbnailTypeCustom)
     {
         result = [self customThumbnail];
     }
@@ -366,7 +366,7 @@
 {
     CGFloat result = 1.0f;
     
-    if ([[self thumbnailType] integerValue] == 1)
+    if ([[self thumbnailType] integerValue] == SVThumbnailTypeCustom)
     {
         CGSize size = IMBImageItemGetSize([self customThumbnail]);
         result = size.width / size.height;
@@ -382,7 +382,7 @@
 {
     id result = nil;
     
-    if ([[self thumbnailType] integerValue] == 1)
+    if ([[self thumbnailType] integerValue] == SVThumbnailTypeCustom)
     {
         result = [[self customThumbnail] imageRepresentation];
     }
@@ -394,7 +394,7 @@
 {
     id result = nil;
     
-    if ([[self thumbnailType] integerValue] == 1)
+    if ([[self thumbnailType] integerValue] == SVThumbnailTypeCustom)
     {
         result = [[self customThumbnail] imageRepresentationType];
     }

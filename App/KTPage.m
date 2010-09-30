@@ -403,7 +403,7 @@
 - (id <SVMedia>)thumbnailMedia;
 {
     id <SVMedia> result;
-    if ([[self thumbnailType] integerValue] == 2)
+    if ([[self thumbnailType] integerValue] == SVThumbnailTypePickFromPage)
     {
         result = [[self thumbnailSourceGraphic] thumbnailMedia];
     }
@@ -419,7 +419,7 @@
 {
     CGFloat result = [super thumbnailAspectRatio];
     
-    if ([[self thumbnailType] integerValue] == 2)
+    if ([[self thumbnailType] integerValue] == SVThumbnailTypePickFromPage)
     {
         result = [[self thumbnailSourceGraphic] thumbnailAspectRatio];
     }
@@ -437,7 +437,7 @@
 - (id)imageRepresentation;
 {
     id result;
-    if ([[self thumbnailType] integerValue] == 2)
+    if ([[self thumbnailType] integerValue] == SVThumbnailTypePickFromPage)
     {
         result = [[self thumbnailSourceGraphic] imageRepresentation];
     }
@@ -458,7 +458,7 @@
 - (NSString *)imageRepresentationType;
 {
     id result;
-    if ([[self thumbnailType] integerValue] == 2)
+    if ([[self thumbnailType] integerValue] == SVThumbnailTypePickFromPage)
     {
         result = [[self thumbnailSourceGraphic] imageRepresentationType];
     }

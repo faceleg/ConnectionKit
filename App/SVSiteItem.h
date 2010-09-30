@@ -18,6 +18,15 @@
 #import <iMedia/IMBImageItem.h>
 
 
+typedef enum {
+    SVThumbnailTypeNone,
+    SVThumbnailTypeCustom,
+    SVThumbnailTypePickFromPage,
+    SVThumbnailTypeFirstItem,
+    SVThumbnailTypeMostRecentItem,
+} SVThumbnailType;
+
+
 @class KTSite, KTMaster, KTPage, KTCodeInjection, SVExternalLink, SVMediaRecord, SVHTMLContext;
 @protocol SVWebContentViewController, SVMedia;
 
@@ -119,7 +128,7 @@
 #pragma mark Thumbnail
 - (id <SVMedia>)thumbnailMedia;
 - (CGFloat)thumbnailAspectRatio;
-@property(nonatomic, copy) NSNumber *thumbnailType; // 0 for automatic, 1 for custom, 2 to Pick from Page
+@property(nonatomic, copy) NSNumber *thumbnailType; // SVThumbnailType, mandatory
 @property(nonatomic, retain) SVMediaRecord *customThumbnail;
 
 
