@@ -623,13 +623,14 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     if (media)
     {
-        SVImage *image = [SVImage insertNewImageWithMedia:media];
-        [image setShowsTitle:NO];
-        [image setShowsCaption:NO];
-        [image setShowsIntroduction:NO];
+        SVMediaGraphic *graphic = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
+        [graphic setMedia:media];
+        [graphic setShowsTitle:NO];
+        [graphic setShowsCaption:NO];
+        [graphic setShowsIntroduction:NO];
         
-        [image willInsertIntoPage:[[self HTMLContext] page]];
-        [self addGraphic:image placeInline:YES];
+        [graphic willInsertIntoPage:[[self HTMLContext] page]];
+        [self addGraphic:graphic placeInline:YES];
     }
     else
     {
