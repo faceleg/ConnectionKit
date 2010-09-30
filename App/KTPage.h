@@ -133,6 +133,8 @@ typedef enum {
                        ascending:(BOOL)ascending
                          inIndex:(BOOL)ignoreDrafts;
 
+- (NSArray *)sortDescriptorsForCollectionSortType:(SVCollectionSortOrder)sortType ascending:(BOOL)ascending;
+
 + (NSArray *)unsortedPagesSortDescriptors;
 + (NSArray *)alphabeticalTitleTextSortDescriptorsAscending:(BOOL)ascending;
 + (NSArray *)dateCreatedSortDescriptorsAscending:(BOOL)ascending;

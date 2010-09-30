@@ -274,6 +274,8 @@
 		2710C255110A110D00A7B997 /* SVMediaProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2710C254110A110D00A7B997 /* SVMediaProtocol.h */; };
 		2710C3BA110B358D00A7B997 /* SVPageTitle.h in Headers */ = {isa = PBXBuildFile; fileRef = 2710C3B8110B358D00A7B997 /* SVPageTitle.h */; };
 		2710C3BB110B358D00A7B997 /* SVPageTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710C3B9110B358D00A7B997 /* SVPageTitle.m */; };
+		2711E1D61255359000A8BB46 /* SVCollectionPagesController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2711E1D41255359000A8BB46 /* SVCollectionPagesController.h */; };
+		2711E1D71255359000A8BB46 /* SVCollectionPagesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2711E1D51255359000A8BB46 /* SVCollectionPagesController.m */; };
 		2713726511542AFF003AB050 /* SVAttributedHTMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713726311542AFF003AB050 /* SVAttributedHTMLWriter.h */; };
 		2713726611542AFF003AB050 /* SVAttributedHTMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713726411542AFF003AB050 /* SVAttributedHTMLWriter.m */; };
 		2713756911551296003AB050 /* SVAttributedHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713756711551296003AB050 /* SVAttributedHTML.h */; };
@@ -1800,6 +1802,8 @@
 		2710C254110A110D00A7B997 /* SVMediaProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaProtocol.h; sourceTree = "<group>"; };
 		2710C3B8110B358D00A7B997 /* SVPageTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageTitle.h; sourceTree = "<group>"; };
 		2710C3B9110B358D00A7B997 /* SVPageTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageTitle.m; sourceTree = "<group>"; };
+		2711E1D41255359000A8BB46 /* SVCollectionPagesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVCollectionPagesController.h; sourceTree = "<group>"; };
+		2711E1D51255359000A8BB46 /* SVCollectionPagesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVCollectionPagesController.m; sourceTree = "<group>"; };
 		2713726311542AFF003AB050 /* SVAttributedHTMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVAttributedHTMLWriter.h; sourceTree = "<group>"; };
 		2713726411542AFF003AB050 /* SVAttributedHTMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAttributedHTMLWriter.m; sourceTree = "<group>"; };
 		2713756711551296003AB050 /* SVAttributedHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVAttributedHTML.h; sourceTree = "<group>"; };
@@ -3005,6 +3009,8 @@
 				3C39822B0D2C3EC800432A0C /* SVPagesController.m */,
 				270E44B910F77D8B00EF1FA0 /* SVSidebarPageletsController.h */,
 				270E44BA10F77D8B00EF1FA0 /* SVSidebarPageletsController.m */,
+				2711E1D41255359000A8BB46 /* SVCollectionPagesController.h */,
+				2711E1D51255359000A8BB46 /* SVCollectionPagesController.m */,
 			);
 			name = "Model Controllers";
 			sourceTree = "<group>";
@@ -5770,6 +5776,7 @@
 				276FE0AB12424D1D00EE2C14 /* SVSizeFormatter.h in Headers */,
 				27B1D5D1124CC87D00851A18 /* SVMediaPlugIn.h in Headers */,
 				CEE77B8012528930001F74FC /* SVAudioVisualPlugIn.h in Headers */,
+				2711E1D61255359000A8BB46 /* SVCollectionPagesController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7265,6 +7272,7 @@
 				276FE0AC12424D1D00EE2C14 /* SVSizeFormatter.m in Sources */,
 				27B1D5D2124CC87D00851A18 /* SVMediaPlugIn.m in Sources */,
 				CEE77B8112528930001F74FC /* SVAudioVisualPlugIn.m in Sources */,
+				2711E1D71255359000A8BB46 /* SVCollectionPagesController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
