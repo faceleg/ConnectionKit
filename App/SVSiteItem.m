@@ -378,6 +378,45 @@
 @dynamic thumbnailType;
 @dynamic customThumbnail;
 
+- (void)writeThumbnailImage:(id <SVPlugInContext>)context
+                  className:(NSString *)className
+                   maxWidth:(NSUInteger)width
+                  maxHeight:(NSUInteger)height;
+{
+    if (className) [(SVHTMLContext *)context pushClassName:className];
+    
+    id <SVMedia> thumbnail = [self thumbnailMedia];
+    if (thumbnail)
+    {
+        CGFloat aspectRatio = [(SVSiteItem *)self thumbnailAspectRatio];
+        if (aspectRatio > 1.0f)
+        {
+            height = width / aspectRatio;
+        }
+        else if (aspectRatio < 1.0f)
+        {
+            width = height * aspectRatio;
+        }
+        
+        [(SVHTMLContext *)context
+         writeImageWithSourceMedia:thumbnail
+         alt:@""
+         width:[NSNumber numberWithUnsignedInteger:width]
+         height:[NSNumber numberWithUnsignedInteger:height]
+         type:nil];
+    }
+    else
+    {
+        // Fallback to placeholder <DIV>
+        [(SVHTMLContext *)context pushAttribute:@"style" value:[NSString stringWithFormat:
+                                                                @"width:%upx; height:%upx;",
+                                                                width,
+                                                                height]];
+        [[context HTMLWriter] startElement:@"div"];
+        [[context HTMLWriter] endElement];
+    }
+}
+
 - (id)imageRepresentation;
 {
     id result = nil;

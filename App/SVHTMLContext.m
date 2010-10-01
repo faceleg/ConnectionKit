@@ -795,37 +795,7 @@
 
 - (void)writeThumbnailImageOfPage:(id <SVPage>)page className:(NSString *)className maxWidth:(NSUInteger)width maxHeight:(NSUInteger)height;
 {
-    if (className) [self pushClassName:className];
-    
-    id <SVMedia> thumbnail = [(SVSiteItem *)page thumbnailMedia];
-    if (thumbnail)
-    {
-        CGFloat aspectRatio = [(SVSiteItem *)page thumbnailAspectRatio];
-        if (aspectRatio > 1.0f)
-        {
-            height = width / aspectRatio;
-        }
-        else if (aspectRatio < 1.0f)
-        {
-            width = height * aspectRatio;
-        }
-        
-        [self writeImageWithSourceMedia:thumbnail
-                                    alt:@""
-                                  width:[NSNumber numberWithUnsignedInteger:width]
-                                 height:[NSNumber numberWithUnsignedInteger:height]
-                                   type:nil];
-    }
-    else
-    {
-        // Fallback to placeholder <DIV>
-        [self pushAttribute:@"style" value:[NSString stringWithFormat:
-                                                   @"width:%upx; height:%upx;",
-                                                   width,
-                                                   height]];
-        [self startElement:@"div"];
-        [self endElement];
-    }
+    [page writeThumbnailImage:self className:className maxWidth:width maxHeight:height];
 }
 
 #pragma mark Resource Files

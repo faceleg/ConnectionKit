@@ -25,10 +25,19 @@
 
 
 #pragma mark Properties
-- (BOOL)hasThumbnail;
 - (NSString *)language;
 - (NSString *)timestampDescription;    // nil if page does't have/want timestamp
 
+
+#pragma mark Thumbnail
+- (void)writeThumbnailImage:(id <SVPlugInContext>)context
+                  className:(NSString *)className
+                   maxWidth:(NSUInteger)width
+                  maxHeight:(NSUInteger)height;
+- (BOOL)hasThumbnail;
+
+
+#pragma mark Children
 
 // Most SVPage methods aren't KVO-compliant. Instead, observe all of -automaticRearrangementKeyPaths.
 @property(nonatomic, readonly) BOOL isCollection;   // or is it enough to test if childPages is non-nil?
