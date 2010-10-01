@@ -94,11 +94,6 @@
 	[pool release];
 }
 
-+ (NSSet *)keyPathsForValuesAffectingIsRoot
-{
-    return [NSSet setWithObject:@"root"];
-}
-
 + (NSSet *)keyPathsForValuesAffectingSummaryHTML
 {
     return [NSSet setWithObject:@"collectionSummaryType"];
