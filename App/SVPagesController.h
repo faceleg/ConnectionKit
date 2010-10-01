@@ -28,7 +28,7 @@
 }
 
 #pragma mark Creating a Pages Controller
-+ (NSArrayController *)pagesControllerWithCollection:(KTPage *)collection;
++ (NSArrayController *)controllerWithPagesInCollection:(KTPage *)collection;
 + (NSArrayController *)controllerWithPagesToIndexInCollection:(KTPage *)collection;
 
 

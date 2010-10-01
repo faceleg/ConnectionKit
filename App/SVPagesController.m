@@ -54,7 +54,7 @@
 
 #pragma mark Creating a Pages Controller
 
-+ (NSArrayController *)pagesControllerWithCollection:(KTPage *)collection;
++ (NSArrayController *)controllerWithPagesInCollection:(KTPage *)collection;
 {
     NSArrayController *result = [[self alloc] init];
     
@@ -72,7 +72,7 @@
 
 + (NSArrayController *)controllerWithPagesToIndexInCollection:(KTPage *)collection;
 {
-    NSArrayController *result = [self pagesControllerWithCollection:collection];
+    NSArrayController *result = [self controllerWithPagesInCollection:collection];
     
     // Filter out pages not in index
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shouldIncludeInIndexes == YES"];
