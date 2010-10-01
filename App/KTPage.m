@@ -11,7 +11,6 @@
 #import "KSContainsObjectValueTransformer.h"
 #import "Debug.h"
 #import "SVRichText.h"
-#import "SVCollectionPagesController.h"
 #import "KTDesign.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
@@ -19,6 +18,7 @@
 #import "KTMaster.h"
 #import "SVMediaRecord.h"
 #import "SVPageTitle.h"
+#import "SVPagesController.h"
 #import "SVTextAttachment.h"
 
 #import "NSBundle+KTExtensions.h"
@@ -418,8 +418,7 @@
             
         case SVThumbnailTypeFirstItem:
         {
-            SVCollectionPagesController *controller = [SVCollectionPagesController pagesControllerWithCollection:self];
-            
+            NSArrayController *controller = [SVPagesController pagesControllerWithCollection:self];
             result = [[[controller arrangedObjects] firstObjectKS] thumbnailMedia];
             
             [[[SVHTMLTemplateParser currentTemplateParser] HTMLContext] addDependencyOnObject:controller keyPath:@"arrangedObjects"];

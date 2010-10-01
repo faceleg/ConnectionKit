@@ -52,6 +52,24 @@
 
 @implementation SVPagesController
 
+#pragma mark Creating a Pages Controller
+
++ (NSArrayController *)pagesControllerWithCollection:(KTPage *)collection;
+{
+    NSArrayController *result = [[self alloc] init];
+    
+    [result setSortDescriptors:
+     [collection
+      sortDescriptorsForCollectionSortType:[[collection collectionSortOrder] intValue]
+      ascending:[[collection collectionSortAscending] boolValue]]];
+    
+    [result setAutomaticallyRearrangesObjects:YES];
+    
+    [result bind:NSContentSetBinding toObject:collection withKeyPath:@"childItems" options:nil];
+    
+    return [result autorelease];
+}
+
 #pragma mark Managing Objects
 
 @dynamic entityName;
