@@ -22,8 +22,8 @@ typedef enum {
     SVThumbnailTypeNone,
     SVThumbnailTypeCustom,
     SVThumbnailTypePickFromPage,
-    SVThumbnailTypeFirstItem,
-    SVThumbnailTypeMostRecentItem,
+    SVThumbnailTypeFirstChildItem,
+    SVThumbnailTypeLastChildItem,
 } SVThumbnailType;
 
 

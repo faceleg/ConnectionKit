@@ -431,22 +431,25 @@
             break;
         }
             
-        case SVThumbnailTypeMostRecentItem:
-        {
-            // Just ask the page in question to write its thumbnail
-            SVSiteItem *anItem = [[self childrenWithSorting:SVCollectionSortByDateCreated
-                                                  ascending:YES
-                                                    inIndex:NO] lastObject];
-            [anItem writeThumbnailImage:context maxWidth:width maxHeight:height];
-            break;
-        }
-            
-        case SVThumbnailTypeFirstItem:
+        case SVThumbnailTypeFirstChildItem:
         {
             // Just ask the page in question to write its thumbnail
             NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:self];
             
             SVSiteItem *page = [[controller arrangedObjects] firstObjectKS];
+            [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
+            
+            [page writeThumbnailImage:context maxWidth:width maxHeight:height];
+            
+            break;
+        }
+            
+        case SVThumbnailTypeLastChildItem:
+        {
+            // Just ask the page in question to write its thumbnail
+            NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:self];
+            
+            SVSiteItem *page = [[controller arrangedObjects] lastObject];
             [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
             
             [page writeThumbnailImage:context maxWidth:width maxHeight:height];
@@ -465,7 +468,7 @@
 - (BOOL)validateThumbnailType:(NSNumber **)outType error:(NSError **)error;
 {
     SVThumbnailType maxType = ([self isCollection] ? 
-                               SVThumbnailTypeMostRecentItem : 
+                               SVThumbnailTypeLastChildItem : 
                                SVThumbnailTypePickFromPage);
     
     BOOL result = ([*outType intValue] <= maxType);
