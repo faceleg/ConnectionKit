@@ -6,7 +6,7 @@
 GCC_VERSION = 4.0
 
 // the "marketing" version is baked into CFBundleShortVersionString
-SANDVOX_VERSION = 1.6.8b2
+SANDVOX_VERSION = 1.6.8b3
 
 // the SLA variant to wrap around the .dmg [BETA,RELEASE]
 // Also determines if VARIANT_BETA or VARIANT_RELEASE is defined.
@@ -16,12 +16,12 @@ IBC_FLATTEN_NIBS = YES
 // NOTE: WE NEED TO MANUALLY SET 'NO' IN CONNECTION AND IMEDIA PROJECTS for localizers
 
 // expiry for beta
-EXPIRY_TIMESTAMP = '@\"2010-09-30 11:59:59 -0800\"'
+EXPIRY_TIMESTAMP = '@\"2010-11-15 11:59:59 -0800\"'
 
 // Release builds checkout and use these specific revisions
 
 // iMedia
-IMEDIA_REVISION = 1091
+IMEDIA_REVISION = 1322
 
 // Debugging -- should be OMNI_FORCE_ASSERTIONS for beta, DONT_FORCE_ASSERTIONS (an ad-hoc replacement) for release
 
