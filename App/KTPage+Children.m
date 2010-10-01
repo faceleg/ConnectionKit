@@ -26,6 +26,7 @@
 
 + (NSPredicate *)includeInIndexAndPublishPredicate;
 + (NSSet *)sortedChildrenDependentChildrenKeys;
+- (NSArray *)sortDescriptorsForCollectionSortType:(SVCollectionSortOrder)sortType ascending:(BOOL)ascending;
 
 @end
 
@@ -291,6 +292,17 @@
 	}
 	
 	return result;
+}
+
+- (NSArray *)childItemsSortDescriptors;
+{
+    return [self
+            sortDescriptorsForCollectionSortType:[[self collectionSortOrder] intValue]
+            ascending:[[self collectionSortAscending] boolValue]];
+}
++ (NSSet *)keyPathsForValuesAffectingChildItemsSortDescriptors;
+{
+    return [NSSet setWithObjects:@"collectionSortOrder", @"collectionSortAscending", nil];
 }
 
 /*	Translates between KTCollectionSortType & the right sort descriptor objects

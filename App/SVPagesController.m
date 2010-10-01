@@ -58,10 +58,10 @@
 {
     NSArrayController *result = [[self alloc] init];
     
-    [result setSortDescriptors:
-     [collection
-      sortDescriptorsForCollectionSortType:[[collection collectionSortOrder] intValue]
-      ascending:[[collection collectionSortAscending] boolValue]]];
+    [result bind:NSSortDescriptorsBinding
+        toObject:collection
+     withKeyPath:@"childItemsSortDescriptors"
+         options:nil];
     
     [result setAutomaticallyRearrangesObjects:YES];
     
