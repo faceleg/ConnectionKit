@@ -133,7 +133,7 @@ height="[[mediainfo info:height media:item.thumbnail sizeToFit:thumbnailSize]]" 
     id<SVPlugInContext> context = [SVPlugIn currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
-    [[context HTMLWriter] writeThumbnailImageOfPage:iteratedPage 
+    [iteratedPage writeThumbnailImage:context 
                                           className:@"" 
                                            maxWidth:[self thumbnailSize].width 
                                           maxHeight:[self thumbnailSize].height];

@@ -84,9 +84,6 @@
 //  Raw version of the above for if you need to link to something over than an SVPage
 - (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
 
-// <IMG> tag by scaling the page's thumbnail to desired size
-- (void)writeThumbnailImageOfPage:(id <SVPage>)page className:(NSString *)className maxWidth:(NSUInteger)width maxHeight:(NSUInteger)height;
-
 // For when you need to write an element and be sure the ID is unique. Perfect for hooking up a script. Returns the best unique ID available
 - (NSString *)startElement:(NSString *)tagName
            preferredIdName:(NSString *)preferredID
