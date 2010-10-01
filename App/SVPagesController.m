@@ -70,6 +70,17 @@
     return [result autorelease];
 }
 
++ (NSArrayController *)controllerWithPagesToIndexInCollection:(KTPage *)collection;
+{
+    NSArrayController *result = [self pagesControllerWithCollection:collection];
+    
+    // Filter out pages not in index
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shouldIncludeInIndexes == YES"];
+    [result setFilterPredicate:predicate];
+    
+    return result;
+}
+
 #pragma mark Managing Objects
 
 @dynamic entityName;

@@ -418,7 +418,8 @@
             
         case SVThumbnailTypeFirstItem:
         {
-            NSArrayController *controller = [SVPagesController pagesControllerWithCollection:self];
+            NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:self];
+            
             result = [[[controller arrangedObjects] firstObjectKS] thumbnailMedia];
             
             [[[SVHTMLTemplateParser currentTemplateParser] HTMLContext] addDependencyOnObject:controller keyPath:@"arrangedObjects"];

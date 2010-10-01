@@ -27,7 +27,10 @@
     NSURL           *_fileURL;
 }
 
-+ (NSArrayController *)pagesControllerWithCollection:(KTPage *)page;
+#pragma mark Creating a Pages Controller
++ (NSArrayController *)pagesControllerWithCollection:(KTPage *)collection;
++ (NSArrayController *)controllerWithPagesToIndexInCollection:(KTPage *)collection;
+
 
 // To create a new page/item:
 //  1.  Set .entityName to what you want. Should be Page, ExternalLink, or File.
