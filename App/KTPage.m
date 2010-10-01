@@ -401,49 +401,63 @@
 
 #pragma mark Thumbnail
 
-- (id <SVMedia>)thumbnailMedia;
+- (void)writeThumbnailImage:(SVHTMLContext *)context
+                   maxWidth:(NSUInteger)width
+                  maxHeight:(NSUInteger)height;
 {
-    id <SVMedia> result;
     switch ([[self thumbnailType] integerValue])
     {
         case SVThumbnailTypePickFromPage:
-            result = [[self thumbnailSourceGraphic] thumbnailMedia];
+        {
+            // Grab thumbnail from appropriate graphic and write that
+            SVGraphic *source = [self thumbnailSourceGraphic];
+            
+            CGFloat aspectRatio = [source thumbnailAspectRatio];
+            if (aspectRatio > 1.0f)
+            {
+                height = width / aspectRatio;
+            }
+            else if (aspectRatio < 1.0f)
+            {
+                width = height * aspectRatio;
+            }
+            
+            [context writeImageWithSourceMedia:[source thumbnailMedia]
+                                           alt:@""
+                                         width:[NSNumber numberWithUnsignedInteger:width]
+                                        height:[NSNumber numberWithUnsignedInteger:height]
+                                          type:nil];
+            
             break;
+        }
             
         case SVThumbnailTypeMostRecentItem:
-            result = [[[self childrenWithSorting:SVCollectionSortByDateCreated
-                                       ascending:YES
-                                         inIndex:NO] lastObject] thumbnailMedia];
+        {
+            // Just ask the page in question to write its thumbnail
+            SVSiteItem *anItem = [[self childrenWithSorting:SVCollectionSortByDateCreated
+                                                  ascending:YES
+                                                    inIndex:NO] lastObject];
+            [anItem writeThumbnailImage:context maxWidth:width maxHeight:height];
             break;
+        }
             
         case SVThumbnailTypeFirstItem:
         {
+            // Just ask the page in question to write its thumbnail
             NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:self];
             
-            result = [[[controller arrangedObjects] firstObjectKS] thumbnailMedia];
+            SVSiteItem *page = [[controller arrangedObjects] firstObjectKS];
+            [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
             
-            [[[SVHTMLTemplateParser currentTemplateParser] HTMLContext] addDependencyOnObject:controller keyPath:@"arrangedObjects"];
+            [page writeThumbnailImage:context maxWidth:width maxHeight:height];
             
             break;
         }
             
         default:
-            result = [super thumbnailMedia];
+            // Hand off to super for custom/no thumbnail
+            [super writeThumbnailImage:context maxWidth:width maxHeight:height];
     }
-    
-    return result;
-}
-
-- (CGFloat)thumbnailAspectRatio;
-{
-    CGFloat result = [super thumbnailAspectRatio];
-    
-    if ([[self thumbnailType] integerValue] == SVThumbnailTypePickFromPage)
-    {
-        result = [[self thumbnailSourceGraphic] thumbnailAspectRatio];
-    }
-    
-    return result;
 }
 
 @dynamic thumbnailSourceGraphic;
