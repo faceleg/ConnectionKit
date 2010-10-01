@@ -57,6 +57,7 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 [[if site.googleAnalyticsCode]]
 [[=site.googleAnalyticsCode]]
 [[endif2]]
+[[endif]]
 	</head>
 	<body class="sandvox [[if !titleBox.hidden]]has-page-title[[else]]no-page-title[[endif]] [[if showSidebar]]allow-sidebar[[else]]no-sidebar[[endif]] [[if master.bannerType]]has-custom-banner[[else]]no-custom-banner[[endif]][[if isRootPage]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[=writeCodeInjectionBodyTag]]>
 [[=writeCodeInjectionBodyTagStart]]
@@ -110,6 +111,7 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 			<div id="extraDiv1"><span></span></div><div id="extraDiv2"><span></span></div><div id="extraDiv3"><span></span></div><div id="extraDiv4"><span></span></div><div id="extraDiv5"><span></span></div><div id="extraDiv6"><span></span></div>
 		</div> <!-- specific body type -->
 [[=parser.outputWriter.writeEndBodyString]]
+[[if parser.isPublishing]]
 [[if !disableComments]]
 [[if master.wantsJSKit]]
 [[if pagesInIndexAllowComments]]
