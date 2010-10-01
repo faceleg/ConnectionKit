@@ -126,7 +126,7 @@ typedef enum {
 
 
 #pragma mark Thumbnail
-- (id <SVMedia>)thumbnailMedia;
+- (id <SVMedia>)thumbnailMedia; // NOT KVO-compliant
 - (CGFloat)thumbnailAspectRatio;
 @property(nonatomic, copy) NSNumber *thumbnailType; // SVThumbnailType, mandatory
 @property(nonatomic, retain) SVMediaRecord *customThumbnail;

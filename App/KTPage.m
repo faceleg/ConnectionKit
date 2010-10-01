@@ -446,11 +446,6 @@
     return result;
 }
 
-+ (NSSet *)keyPathsForValuesAffectingThumbnail;
-{
-    return [NSSet setWithObjects:@"thumbnailType", @"customThumbnail", @"thumbnailSourceGraphic.thumbnail", nil];
-}
-
 @dynamic thumbnailSourceGraphic;
 
 - (BOOL)validateThumbnailType:(NSNumber **)outType error:(NSError **)error;
