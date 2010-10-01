@@ -259,6 +259,8 @@
 
 - (void)writeSummary:(SVHTMLContext *)context;
 {
+    [context startElement:@"div" className:@"article-summary"];
+    
     NSAttributedString *html = [[self article] attributedHTMLString];
     NSMutableAttributedString *summary = [html mutableCopy];
     NSMutableArray *attachments = [[NSMutableArray alloc] initWithCapacity:
@@ -309,6 +311,9 @@
     
     [attachments release];
     [summary release];
+    
+    
+    [context endElement];
 }
 
 
