@@ -1623,6 +1623,20 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 #pragma mark WebUIDelegate
 
+- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
+{
+    NSArray *result = defaultMenuItems;
+    
+    // Ask editing item if it wants to do anything about this
+    NSArray *editingItems = [self editingItems];
+    if ([editingItems count])
+    {
+        result = [[editingItems objectAtIndex:0] contextMenuItemsForElement:element defaultMenuItems:result];
+    }
+    
+    return result;
+}
+
 /*  Generally the only drop action we support is for text editing. BUT, for an area of the WebView which our datasource has claimed for its own, need to disallow all actions
  */
 - (NSUInteger)webView:(WebView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)dragInfo

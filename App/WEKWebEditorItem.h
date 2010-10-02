@@ -71,6 +71,11 @@
 - (BOOL)tryToRemove;
 
 
+#pragma mark UI
+- (NSArray *)contextMenuItemsForElement:(NSDictionary *)element
+                       defaultMenuItems:(NSArray *)defaultMenuItems;
+
+
 #pragma mark Drag Source
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)flag;
 

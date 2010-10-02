@@ -365,6 +365,14 @@
     return result;
 }
 
+#pragma mark UI
+
+- (NSArray *)contextMenuItemsForElement:(NSDictionary *)element
+                       defaultMenuItems:(NSArray *)defaultMenuItems;
+{
+    return defaultMenuItems;
+}
+
 #pragma mark Dragging Source
 
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
