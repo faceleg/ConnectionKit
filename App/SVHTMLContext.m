@@ -666,6 +666,10 @@
     [self startElement:elementName bindSizeToObject:plugIn];
 }
 
+#pragma mark Summaries
+
+- (void)willWriteSummaryOfPage:(KTPage *)page; { }
+
 #pragma mark URLs/Paths
 
 - (NSString *)relativeURLStringOfURL:(NSURL *)URL;

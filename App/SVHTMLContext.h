@@ -149,6 +149,10 @@ typedef enum {
 @property(nonatomic, retain, readonly) KSMegaBufferedWriter *calloutBuffer;
 
 
+#pragma mark Summaries
+- (void)willWriteSummaryOfPage:(KTPage *)page;
+
+
 #pragma mark Iterations
 
 // It's pretty common to loop through a series of items when generating HTML. e.g. Pagelets in the Sidebar. When doing so, it's nice to generate a CSS class name that corresponds so special styling can be applied based on that. The Template Parser provides nice functions for generating these class names, but the stack of such iterations is maintained here.

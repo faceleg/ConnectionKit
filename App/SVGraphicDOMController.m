@@ -315,6 +315,19 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return size;
 }
 
+#pragma mark Summaries
+
+- (NSArray *)contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems;
+{
+    NSArray *result = [super contextMenuItemsForElement:element defaultMenuItems:defaultMenuItems];
+    
+    // If context for a page summary, add in control over custom summary
+    DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
+    
+    
+    return result;
+}
+
 @end
 
 

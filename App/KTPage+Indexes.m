@@ -259,6 +259,7 @@
 
 - (void)writeSummary:(SVHTMLContext *)context;
 {
+    [context willWriteSummaryOfPage:self];
     [context startElement:@"div" className:@"article-summary"];
     
     NSAttributedString *html = [[self article] attributedHTMLString];
@@ -314,6 +315,7 @@
     
     
     [context endElement];
+    if ([context respondsToSelector:@selector(endDOMController)]) [context endDOMController];
 }
 
 

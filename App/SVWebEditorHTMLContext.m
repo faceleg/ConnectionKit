@@ -16,6 +16,7 @@
 #import "SVRichText.h"
 #import "SVSidebarDOMController.h"
 #import "SVSizeBindingDOMController.h"
+#import "SVSummaryDOMController.h"
 #import "SVTemplateParser.h"
 #import "SVTextFieldDOMController.h"
 #import "SVTitleBox.h"
@@ -268,6 +269,15 @@
 
     
     [self didEndWritingHTMLTextBlock];
+}
+
+- (void)willWriteSummaryOfPage:(KTPage *)page;
+{
+    // Generate DOM controller for it
+    SVSummaryDOMController *controller = [[SVSummaryDOMController alloc] init];
+    [self startDOMController:controller];
+    
+    [super willWriteSummaryOfPage:page];
 }
 
 #pragma mark Dependencies
