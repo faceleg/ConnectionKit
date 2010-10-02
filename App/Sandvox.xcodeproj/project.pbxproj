@@ -449,6 +449,8 @@
 		2782918F10912D5D008D0A64 /* DocumentInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2782918E10912D5D008D0A64 /* DocumentInspector.xib */; };
 		2782919110912E14008D0A64 /* PageInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2782919010912E14008D0A64 /* PageInspector.xib */; };
 		2782B2DA12367C6E00C5F870 /* SVEnclosure.h in Headers */ = {isa = PBXBuildFile; fileRef = 2782B2D912367C6E00C5F870 /* SVEnclosure.h */; };
+		2782D1D91257483F00B7CF1A /* SVSummaryDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2782D1D71257483F00B7CF1A /* SVSummaryDOMController.h */; };
+		2782D1DA1257483F00B7CF1A /* SVSummaryDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2782D1D81257483F00B7CF1A /* SVSummaryDOMController.m */; };
 		2785197F104FD34A009C8558 /* KSWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2785197D104FD34A009C8558 /* KSWebViewController.h */; };
 		27851980104FD34A009C8558 /* KSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2785197E104FD34A009C8558 /* KSWebViewController.m */; };
 		278ACCC8116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 278ACCC6116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h */; };
@@ -1987,6 +1989,8 @@
 		2782918E10912D5D008D0A64 /* DocumentInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentInspector.xib; sourceTree = "<group>"; };
 		2782919010912E14008D0A64 /* PageInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageInspector.xib; sourceTree = "<group>"; };
 		2782B2D912367C6E00C5F870 /* SVEnclosure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVEnclosure.h; sourceTree = "<group>"; };
+		2782D1D71257483F00B7CF1A /* SVSummaryDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSummaryDOMController.h; sourceTree = "<group>"; };
+		2782D1D81257483F00B7CF1A /* SVSummaryDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSummaryDOMController.m; sourceTree = "<group>"; };
 		27836C640CAB092E0072CC52 /* Design of WebView loading.graffle */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "Design of WebView loading.graffle"; sourceTree = "<group>"; };
 		2785197D104FD34A009C8558 /* KSWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWebViewController.h; sourceTree = "<group>"; };
 		2785197E104FD34A009C8558 /* KSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebViewController.m; sourceTree = "<group>"; };
@@ -3418,6 +3422,8 @@
 				27D9A258117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m */,
 				2764AA1C1188D16C00D8E1BB /* SVArticleDOMController.h */,
 				2764AA1D1188D16C00D8E1BB /* SVArticleDOMController.m */,
+				2782D1D71257483F00B7CF1A /* SVSummaryDOMController.h */,
+				2782D1D81257483F00B7CF1A /* SVSummaryDOMController.m */,
 			);
 			name = "Text DOM Controllers";
 			sourceTree = "<group>";
@@ -5770,6 +5776,7 @@
 				276FE0AB12424D1D00EE2C14 /* SVSizeFormatter.h in Headers */,
 				27B1D5D1124CC87D00851A18 /* SVMediaPlugIn.h in Headers */,
 				CEE77B8012528930001F74FC /* SVAudioVisualPlugIn.h in Headers */,
+				2782D1D91257483F00B7CF1A /* SVSummaryDOMController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7265,6 +7272,7 @@
 				276FE0AC12424D1D00EE2C14 /* SVSizeFormatter.m in Sources */,
 				27B1D5D2124CC87D00851A18 /* SVMediaPlugIn.m in Sources */,
 				CEE77B8112528930001F74FC /* SVAudioVisualPlugIn.m in Sources */,
+				2782D1DA1257483F00B7CF1A /* SVSummaryDOMController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
