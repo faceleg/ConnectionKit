@@ -5,6 +5,10 @@
 //  Created by Mike on 19/10/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
+//  An HTML Context provides rich set of methods and properties for building up HTML for use in Sandvox. Takes KSHTMLWriter and builds on it.
+//  Different parts of the system subclass SVHTMLContext to tailor their behaviour to what the HTML is intended for. For example, publishing requires a context that uploads all media/resources referenced. The Web Editor has its own context that references local files where possible, and leaves much work to be performed dynamically by the app.
+//  Bear in mind that a subset of SVHTMLContext's functionality is exposed to plug-ins throught the SVPlugInContext protocol, and much of the API is defined there instead.
+
 
 #import "KSHTMLWriter.h"
 
@@ -118,12 +122,6 @@ typedef enum {
 @property(nonatomic, copy, readonly) NSURL *mainCSSURL;
 
 
-#pragma mark Elements/Comments
-//  For when you have just closed an element and want to end up with this:
-//  </div> <!-- comment -->
-- (void)writeEndTagWithComment:(NSString *)comment;
-
-
 #pragma mark Preferred ID
 - (NSString *)pushPreferredIdName:(NSString *)preferredID;
 
@@ -216,6 +214,19 @@ typedef enum {
 
 
 @end
+
+
+#pragma mark -
+
+
+@interface KSHTMLWriter (SVHTMLContext)
+
+//  For when you have just closed an element and want to end up with this:
+//  </div> <!-- comment -->
+- (void)writeEndTagWithComment:(NSString *)comment;
+
+@end
+
 
 
 /*  VERY IMPORTANT:

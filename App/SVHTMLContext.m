@@ -379,19 +379,6 @@
 
 #pragma mark Elements/Comments
 
-- (void)writeEndTagWithComment:(NSString *)comment;
-{
-    [self endElement];
-    
-    [self writeString:@" "];
-    
-    [self openComment];
-    [self writeString:@" "];
-    [self writeText:comment];
-    [self writeString:@" "];
-    [self closeComment];
-}
-
 // Override to sort the keys so that they are always consistently written.
 - (void)startElement:(NSString *)elementName attributes:(NSDictionary *)attributes;
 {
@@ -1032,4 +1019,26 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation KSHTMLWriter (SVHTMLContext)
+
+- (void)writeEndTagWithComment:(NSString *)comment;
+{
+    [self endElement];
+    
+    [self writeString:@" "];
+    
+    [self openComment];
+    [self writeString:@" "];
+    [self writeText:comment];
+    [self writeString:@" "];
+    [self closeComment];
+}
+
+@end
+
 
