@@ -131,6 +131,8 @@ typedef enum {
                    maxWidth:(NSUInteger)width
                   maxHeight:(NSUInteger)height;
 
+- (void)writePlaceholderThumbnail:(SVHTMLContext *)context width:(NSUInteger)width height:(NSUInteger) height;
+
 @property(nonatomic, copy) NSNumber *thumbnailType; // SVThumbnailType, mandatory
 @property(nonatomic, retain) SVMediaRecord *customThumbnail;
 

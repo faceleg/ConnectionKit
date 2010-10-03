@@ -366,6 +366,18 @@
 @dynamic thumbnailType;
 @dynamic customThumbnail;
 
+- (void)writePlaceholderThumbnail:(SVHTMLContext *)context width:(NSUInteger)width height:(NSUInteger) height;
+{
+    // Fallback to placeholder <DIV>
+    [(SVHTMLContext *)context pushAttribute:@"style" value:[NSString stringWithFormat:
+                                                            @"width:%upx; height:%upx;",
+                                                            width,
+                                                            height]];
+    [[context HTMLWriter] startElement:@"div"];
+    [[context HTMLWriter] endElement];
+    
+}
+
 - (void)writeThumbnailImage:(SVHTMLContext *)context
                    maxWidth:(NSUInteger)width
                   maxHeight:(NSUInteger)height;
@@ -381,13 +393,8 @@
     }
     else
     {
-        // Fallback to placeholder <DIV>
-        [(SVHTMLContext *)context pushAttribute:@"style" value:[NSString stringWithFormat:
-                                                                @"width:%upx; height:%upx;",
-                                                                width,
-                                                                height]];
-        [[context HTMLWriter] startElement:@"div"];
-        [[context HTMLWriter] endElement];
+        [self writePlaceholderThumbnail:context width:width height:height];
+        
     }
 }
 

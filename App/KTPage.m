@@ -406,22 +406,28 @@
         {
             // Grab thumbnail from appropriate graphic and write that
             SVGraphic *source = [self thumbnailSourceGraphic];
-            
-            CGFloat aspectRatio = [source thumbnailAspectRatio];
-            if (aspectRatio > 1.0f)
+            if (source)
             {
-                height = width / aspectRatio;
+                CGFloat aspectRatio = [source thumbnailAspectRatio];
+                if (aspectRatio > 1.0f)
+                {
+                    height = width / aspectRatio;
+                }
+                else if (aspectRatio < 1.0f)
+                {
+                    width = height * aspectRatio;
+                }
+                
+                [context writeImageWithSourceMedia:[source thumbnailMedia]
+                                               alt:@""
+                                             width:[NSNumber numberWithUnsignedInteger:width]
+                                            height:[NSNumber numberWithUnsignedInteger:height]
+                                              type:nil];
             }
-            else if (aspectRatio < 1.0f)
+            else
             {
-                width = height * aspectRatio;
+                [self writePlaceholderThumbnail:context width:width height:height];
             }
-            
-            [context writeImageWithSourceMedia:[source thumbnailMedia]
-                                           alt:@""
-                                         width:[NSNumber numberWithUnsignedInteger:width]
-                                        height:[NSNumber numberWithUnsignedInteger:height]
-                                          type:nil];
             
             break;
         }
