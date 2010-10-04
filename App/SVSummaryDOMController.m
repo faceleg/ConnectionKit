@@ -19,7 +19,25 @@
 
 - (NSArray *)contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems;
 {
-    return defaultMenuItems;
+    // Tack on control over custom summary
+    NSMutableArray *result = [[defaultMenuItems mutableCopy] autorelease];
+    
+    [result addObject:[NSMenuItem separatorItem]];
+    
+    NSMenuItem *command = [[NSMenuItem alloc] initWithTitle:@"Remove Custom Summary"
+                                                     action:@selector(toggleCustomSummary:)
+                                              keyEquivalent:@""];
+    [command setTarget:self];
+    
+    [result addObject:command];
+    [command release];
+    
+    return result;
+}
+
+- (void)toggleCustomSummary:(NSMenuItem *)sender;
+{
+    
 }
 
 @end
