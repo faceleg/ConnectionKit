@@ -13,23 +13,6 @@
 
 @implementation NSArray (KTExtensions)
 
-- (NSArray *)parentObjects
-{
-	NSMutableArray *array = [NSMutableArray array];
-	
-	NSEnumerator *e = [self objectEnumerator];
-	KTPage *page;
-	while ( page = [e nextObject] )
-	{
-		if (![array containsParentOfPage:page])
-		{
-			[array addObject:page];
-		}
-	}
-	
-	return [NSArray arrayWithArray:array];
-}
-
 - (BOOL)containsParentOfPage:(KTPage *)aPage
 {
     NSEnumerator *e = [self objectEnumerator];

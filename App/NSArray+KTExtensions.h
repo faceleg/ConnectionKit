@@ -25,9 +25,6 @@
 
 // operations that assume all objects in array are KTPages
 
-/*! returns only those pages that are not children of other pages in the array */
-- (NSArray *)parentObjects;
-
 /*! returns whether any object in the array is parent to aPage
  NB: this is not a sophisticated search, assumes parents
  and children are essentially in order */
