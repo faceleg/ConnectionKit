@@ -42,6 +42,4 @@
 
 }
 
-@property (nonatomic, readonly) NSSize thumbnailImageSize;
-
 @end

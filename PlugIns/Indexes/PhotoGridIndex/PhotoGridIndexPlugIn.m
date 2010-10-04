@@ -65,11 +65,9 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
     [iteratedPage writeThumbnailImage:context 
-                                          className:@"" 
-                                           maxWidth:self.thumbnailImageSize.width 
-                                          maxHeight:self.thumbnailImageSize.height];
+                            className:@"" 
+                             maxWidth:128 
+                            maxHeight:128];
 }
-
-- (NSSize)thumbnailImageSize { return NSMakeSize(128.0, 128.0); }
 
 @end
