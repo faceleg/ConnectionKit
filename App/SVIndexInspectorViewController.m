@@ -96,6 +96,10 @@
 		[[[self inspectedObjectsController] selection] setValue:aPage forKey:@"indexedCollection"];
 		[collectionLinkSourceView setConnected:YES];
 	}
+    else
+    {
+        [collectionLinkSourceView setConnected:NO]; // is this branch ever taken?
+    }
 }
 
 @end
