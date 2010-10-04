@@ -9,6 +9,8 @@
 #import "SVIndexPlugIn.h"
 
 #import "SVPageProtocol.h"
+#import "SVPagesController.h"
+#import "SVHTMLContext.h"
 
 
 @implementation SVIndexPlugIn
@@ -38,27 +40,49 @@
 }
 
 
-#pragma mark Child Pages
+#pragma mark Indexed Pages
 
-- (NSArray *)iteratablePagesOfCollection
+// this needs to be adjusted to return only those pages marked as indexable by parent
+// but we need to be KVO-compliant and so need a controller to vend this array?
+- (NSArray *)indexablePagesOfCollection
 {
+//    NSArray *result = nil;
+//    if ( self.enableMaxItems && self.maxItems > 0 )
+//    {
+//        NSMutableArray *array = [NSMutableArray arrayWithCapacity:self.maxItems];
+//        NSUInteger numberOfChildPages = [[self.indexedCollection childPages] count];
+//        NSUInteger arrayMax = (numberOfChildPages < self.maxItems) ? numberOfChildPages : self.maxItems;
+//        for ( NSUInteger i=0; i<arrayMax; i++ )
+//        {
+//            id<SVPage> childPage = [[self.indexedCollection childPages] objectAtIndex:i];
+//            [array addObject:childPage];
+//        }
+//        result = [NSArray arrayWithArray:array];
+//    }
+//    else
+//    {
+//        result = self.indexedCollection.childPages;
+//    }
+//    return result;
+    
     NSArray *result = nil;
-    if ( self.enableMaxItems && self.maxItems > 0 )
+    
+    if ( self.indexablePagesController )
     {
-        NSMutableArray *array = [NSMutableArray arrayWithCapacity:self.maxItems];
-        NSUInteger numberOfChildPages = [[self.indexedCollection childPages] count];
-        NSUInteger arrayMax = (numberOfChildPages < self.maxItems) ? numberOfChildPages : self.maxItems;
-        for ( NSUInteger i=0; i<arrayMax; i++ )
+        NSArray *arrangedObjects = [self.indexablePagesController arrangedObjects];
+        if ( self.enableMaxItems && self.maxItems > 0 )
         {
-            id<SVPage> childPage = [[self.indexedCollection childPages] objectAtIndex:i];
-            [array addObject:childPage];
+            NSUInteger arrayMax = ([arrangedObjects count] < self.maxItems) ? [arrangedObjects count] : self.maxItems;
+            NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, arrayMax)];
+            result = [arrangedObjects objectsAtIndexes:indexes];
         }
-        result = [NSArray arrayWithArray:array];
+        else
+        {
+            result = arrangedObjects;
+        }
+
     }
-    else
-    {
-        result = self.indexedCollection.childPages;
-    }
+    
     return result;
 }
 
@@ -108,30 +132,38 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
+    // set up indexable pages controller
+    if ( self.indexedCollection )
+    {
+        //FIXME: should we really be hanging on to the controller in an ivar? if not, how do we reference it outside this method?
+        //FIXME: remove reference to KTPage someday
+        self.indexablePagesController = [SVPagesController controllerWithPagesToIndexInCollection:(KTPage *)self.indexedCollection];
+        [context addDependencyForKeyPath:@"arrangedObjects" ofObject:self.indexablePagesController];
+    }
+    
     // add dependencies
     [context addDependencyForKeyPath:@"maxItems" ofObject:self];
     [context addDependencyForKeyPath:@"enableMaxItems" ofObject:self];
-    [context addDependencyForKeyPath:@"indexedCollection" ofObject:self];
-    [context addDependencyForKeyPath:@"indexedCollection.childPages" ofObject:self];
     
-    if ( self.indexedCollection )
+    [super writeHTML:context];
+        
+    if ( [context isForEditing] )
     {
-        if ( [[self iteratablePagesOfCollection] count] )
+        if ( self.indexedCollection )
         {
-            [super writeHTML:context];
+            if ( ![self.indexablePagesOfCollection count] )
+            {
+                [[context HTMLWriter] startElement:@"p"];
+                [[context HTMLWriter] writeText:NSLocalizedString(@"To see the Index, please add indexable pages to the collection.","add pages to collection")];
+                [[context HTMLWriter] endElement];
+            }
         }
-        else if ( [context isForEditing] )
+        else
         {
             [[context HTMLWriter] startElement:@"p"];
-            [[context HTMLWriter] writeText:NSLocalizedString(@"To see the Index, please add indexable pages to the collection.","add pages to collection")];
+            [[context HTMLWriter] writeText:NSLocalizedString(@"Please specify the collection to index using the PlugIn Inspector.","set index collectionb")];
             [[context HTMLWriter] endElement];
         }
-    }
-    else if ( [context isForEditing] )
-    {
-        [[context HTMLWriter] startElement:@"p"];
-        [[context HTMLWriter] writeText:NSLocalizedString(@"Please specify the collection to index using the PlugIn Inspector.","set index collectionb")];
-        [[context HTMLWriter] endElement];
     }
 }
 
@@ -165,6 +197,15 @@
 {
     // return 0 if user has disabled maximum
     return (self.enableMaxItems) ? _maxItems : 0;
+}
+
+@synthesize indexablePagesController = _indexablePagesController;
+
+- (void)dealloc
+{
+    self.indexablePagesController = nil;
+    self.indexedCollection = nil;
+    [super dealloc];
 }
 
 @end

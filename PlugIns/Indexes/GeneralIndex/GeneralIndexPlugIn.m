@@ -115,9 +115,9 @@
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
     [iteratedPage writeThumbnailImage:context
-                                          className:@"" 
-                                           maxWidth:[self thumbnailImageSize].width 
-                                          maxHeight:[self thumbnailImageSize].height];
+                            className:@"" 
+                             maxWidth:[self thumbnailImageSize].width 
+                            maxHeight:[self thumbnailImageSize].height];
 }
 
 - (NSSize)thumbnailImageSize { return NSMakeSize(64.0, 64.0); }
