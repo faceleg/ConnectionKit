@@ -34,7 +34,7 @@
     
     [result addObject:[NSMenuItem separatorItem]];
     
-    NSMenuItem *command = [[NSMenuItem alloc] initWithTitle:@"Remove Custom Summary"
+    NSMenuItem *command = [[NSMenuItem alloc] initWithTitle:@""
                                                      action:@selector(toggleCustomSummary:)
                                               keyEquivalent:@""];
     [command setTarget:self];
@@ -43,6 +43,25 @@
     [command release];
     
     return result;
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem;
+{
+    if ([menuItem action] == @selector(toggleCustomSummary:))
+    {
+        NSString *title;
+        if ([[self itemToSummarize] customSummaryHTML])
+        {
+            title = NSLocalizedString(@"Remove Custom Summary", "context menu item");
+        }
+        else
+        {
+            title = NSLocalizedString(@"Add Custom Summary", "context menu item");
+        }
+        [menuItem setTitle:title];
+    }
+    
+    return YES;
 }
 
 - (void)toggleCustomSummary:(NSMenuItem *)sender;
