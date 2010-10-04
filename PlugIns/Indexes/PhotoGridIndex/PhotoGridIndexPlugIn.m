@@ -48,10 +48,6 @@
     
     // parse template
     [super writeHTML:context];
-        
-    // add dependencies
-    [context addDependencyForKeyPath:@"indexedCollection" ofObject:self];
-    [context addDependencyForKeyPath:@"indexedCollection.childPages" ofObject:self];
 }
 
 
