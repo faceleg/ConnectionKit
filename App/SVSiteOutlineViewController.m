@@ -622,8 +622,22 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     }
 }
 
-/*  DON'T IMPLEMENT -paste: HERE. We want those messages to go straight to the Window Controller so it can handle pasting pagelets while Site Outline has focus
- */
+- (void)paste:(id)sender;
+{
+    // Only paste if there's pages on the pboard. Otherwise send up to window controller
+    NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+    if ([[pboard types] containsObject:kKTPagesPboardType])
+    {
+        // Create a page for the content
+        SVPagesController *controller = [self content];
+        [controller addObjectsFromPasteboard:pboard
+                                toCollection:[self collectionForPagesControllerToInsertInto:controller]];
+    }
+    else
+    {
+        if (![[self nextResponder] tryToPerform:_cmd with:sender]) NSBeep();
+    }
+}
 
 - (IBAction)rename:(id)sender;
 {
