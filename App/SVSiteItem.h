@@ -137,6 +137,10 @@ typedef enum {
 @property(nonatomic, retain) SVMediaRecord *customThumbnail;
 
 
+#pragma mark Summary
+@property(nonatomic, copy) NSString *customSummaryHTML;
+
+
 #pragma mark UI
 
 @property(nonatomic, readonly) BOOL isCollection;

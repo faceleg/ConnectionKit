@@ -193,9 +193,6 @@ typedef enum {
 #pragma mark Summary
 - (NSString *)summaryHTMLWithTruncation:(unsigned)truncation;
 
-- (NSString *)customSummaryHTML;
-- (void)setCustomSummaryHTML:(NSString *)HTML;
-
 
 #pragma mark Archive
 @property(nonatomic, copy) NSNumber *collectionGenerateArchives;    // BOOL, required
