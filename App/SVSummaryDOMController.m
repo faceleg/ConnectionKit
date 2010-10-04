@@ -11,4 +11,15 @@
 
 @implementation SVSummaryDOMController
 
+- (NSString *)elementIdName;
+{
+    // We probably shouldn't have to implement this! Instead context should generate IDs automatically of something like that
+    return [NSString stringWithFormat:@"%p", self];
+}
+
+- (NSArray *)contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems;
+{
+    return defaultMenuItems;
+}
+
 @end
