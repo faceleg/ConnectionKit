@@ -369,25 +369,34 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 - (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
 {
-    BOOL result = NO;
-    
+    OBPRECONDITION(collection);
     
     if ([[pboard types] containsObject:kKTPagesPboardType])
     {
         NSArray *plists = [pboard propertyListForType:kKTPagesPboardType];
+        NSMutableArray *graphics = [NSMutableArray arrayWithCapacity:[plists count]];
         
         for (id aPlist in plists)
         {
-            SVSiteItem *item;
-            item = [self newObjectFromPropertyList: aPlist destinedForCollection: collection];
+            SVSiteItem *item = [self newObjectFromPropertyList:aPlist
+                                         destinedForCollection:collection];
             
-            [self addObject:item toCollection:collection];
-            [item release];
-            result = YES;
+            if (item)   // might be nil due to invalid plist
+            {
+                [graphics addObject:item];
+                [item release];
+            }
         }
         
-        if (!result) return result;
+        if ([graphics count])
+        {
+            [self addObjects:graphics];
+            return YES;
+        }
     }
+    
+    
+    BOOL result = NO;
     
     
     // Create graphics for the content
