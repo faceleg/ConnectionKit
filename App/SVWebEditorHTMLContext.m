@@ -346,7 +346,11 @@
     [super pushAttribute:attribute value:value];
     
     // Was this an id attribute, removing our need to write one?
-    if (_needsToWriteElementID && [attribute isEqualToString:@"id"]) _needsToWriteElementID = NO;
+    if (_needsToWriteElementID && [attribute isEqualToString:@"id"])
+    {
+        _needsToWriteElementID = NO;
+        [[self currentDOMController] setElementIdName:value];
+    }
 }
 
 - (void)startElement:(NSString *)elementName writeInline:(BOOL)writeInline; // for more control
@@ -355,16 +359,17 @@
     // DOM Controllers need an ID so they can locate their element in the DOM. If the HTML doesn't normally contain an ID, insert it ourselves
     if (_needsToWriteElementID)
     {
-        NSString *idName = [[self currentDOMController] elementIdName];
-        if (idName)
+        // Invent an ID for the controller if needed
+        SVDOMController *controller = [self currentDOMController];
+        NSString *idName = [controller elementIdName];
+        if (!idName)
         {
-            [self pushAttribute:@"id" value:idName];
-            OBASSERT(!_needsToWriteElementID);
+            idName = [NSString stringWithFormat:@"%p", controller];
+            [controller setElementIdName:idName];
         }
-        else
-        {
-            _needsToWriteElementID = NO;
-        }
+        
+        [self pushAttribute:@"id" value:idName];
+        OBASSERT(!_needsToWriteElementID);
     }
     
     [super startElement:elementName writeInline:writeInline];

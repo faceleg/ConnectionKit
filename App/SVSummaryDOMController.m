@@ -19,12 +19,6 @@
     [super dealloc];
 }
 
-- (NSString *)elementIdName;
-{
-    // We probably shouldn't have to implement this! Instead context should generate IDs automatically of something like that
-    return [NSString stringWithFormat:@"%p", self];
-}
-
 @synthesize itemToSummarize = _page;
 
 - (NSArray *)contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems;
