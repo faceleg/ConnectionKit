@@ -11,7 +11,10 @@
 
 @interface SVSummaryDOMController : SVDOMController
 {
-    
+  @private
+    SVSiteItem  *_page;
 }
+
+@property(nonatomic, retain) SVSiteItem *itemToSummarize;
 
 @end

@@ -668,7 +668,7 @@
 
 #pragma mark Summaries
 
-- (void)willWriteSummaryOfPage:(KTPage *)page; { }
+- (void)willWriteSummaryOfPage:(SVSiteItem *)page; { }
 
 #pragma mark URLs/Paths
 

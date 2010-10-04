@@ -7,15 +7,25 @@
 //
 
 #import "SVSummaryDOMController.h"
+#import "SVSiteItem.h"
 
 
 @implementation SVSummaryDOMController
+
+- (void)dealloc;
+{
+    [_page release];
+    
+    [super dealloc];
+}
 
 - (NSString *)elementIdName;
 {
     // We probably shouldn't have to implement this! Instead context should generate IDs automatically of something like that
     return [NSString stringWithFormat:@"%p", self];
 }
+
+@synthesize itemToSummarize = _page;
 
 - (NSArray *)contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems;
 {
@@ -37,7 +47,7 @@
 
 - (void)toggleCustomSummary:(NSMenuItem *)sender;
 {
-    
+    [[self itemToSummarize] setCustomSummaryHTML:nil];
 }
 
 @end

@@ -271,10 +271,12 @@
     [self didEndWritingHTMLTextBlock];
 }
 
-- (void)willWriteSummaryOfPage:(KTPage *)page;
+- (void)willWriteSummaryOfPage:(SVSiteItem *)page;
 {
     // Generate DOM controller for it
     SVSummaryDOMController *controller = [[SVSummaryDOMController alloc] init];
+    [controller setItemToSummarize:page];
+    
     [self startDOMController:controller];
     [controller release];
     
