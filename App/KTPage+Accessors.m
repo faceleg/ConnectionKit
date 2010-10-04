@@ -53,7 +53,10 @@
 
 - (void)setIsDraft:(NSNumber *)flag;
 {
-	[super setIsDraft:flag];
+    // To my annoyance, calling super doesn't work because it's @dynamic
+    [self willChangeValueForKey:@"isDraft"];
+	[self setPrimitiveValue:flag forKey:@"isDraft"];
+    [self didChangeValueForKey:@"isDraft"];
 	
 	
 	// This may also affect the site menu
