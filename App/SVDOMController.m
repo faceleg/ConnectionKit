@@ -97,7 +97,12 @@
 {
     DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:[self elementIdName]];
     
-    if (![[self representedObject] shouldPublishEditingElementID]) [element setIdName:nil];
+    if (![[self representedObject] shouldPublishEditingElementID])
+    {
+        // Ideally, as we're clearing out value from the DOM, should also stop referencing it ourselves. If an update occurs, the id should be regenerated. This isn't quite working yet though.
+        //[self setElementIdName:nil];
+        [element setIdName:nil];
+    }
     
     [self setHTMLElement:element];
 }
