@@ -184,7 +184,7 @@
         for (SVGraphic *aGraphic in graphics)
         {
             // Give pagelet a chance to resize etc.
-            [aGraphic willInsertIntoPage:[[self HTMLContext] page]];
+            [aGraphic didAddToPage:[[self HTMLContext] page]];
             
             
             [self insertGraphic:aGraphic range:range];
