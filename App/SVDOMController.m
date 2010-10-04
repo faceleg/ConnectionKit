@@ -33,25 +33,15 @@
     return self;
 }
 
-- (id)initWithElementIdName:(NSString *)elementID;
-{
-    if (self = [self init])
-    {
-        _elementID = [elementID copy];
-    }
-    
-    return self;
-}
-
 - (id)initWithRepresentedObject:(id <SVDOMControllerRepresentedObject>)content;
 {
     // Use the object's own ID if it has one. Otherwise make up our own
-    NSString *idName = [content elementIdName];
-    if (!idName) idName = [NSString stringWithFormat:@"%p", content];
-    
-    if (self = [self initWithElementIdName:idName])
+    if (self = [self init])
     {
-        [self setRepresentedObject:content];
+        NSString *idName = [content elementIdName];
+		if (idName) [self setElementIdName:idName];
+		
+    	[self setRepresentedObject:content];
     }
     return self;
 }
