@@ -359,9 +359,36 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     [super addObject:object];
 }
 
+- (SVSiteItem *)newObjectFromPropertyList:(id)aPlist destinedForCollection:(KTPage *)collection
+{
+    [self setEntityName:[aPlist valueForKey:@"entity"]];
+    SVSiteItem *result = [self newObjectDestinedForCollection:collection];
+    [result awakeFromPropertyList:aPlist];
+    return result;
+}
+
 - (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
 {
     BOOL result = NO;
+    
+    
+    if ([[pboard types] containsObject:kKTPagesPboardType])
+    {
+        NSArray *plists = [pboard propertyListForType:kKTPagesPboardType];
+        
+        for (id aPlist in plists)
+        {
+            SVSiteItem *item;
+            item = [self newObjectFromPropertyList: aPlist destinedForCollection: collection];
+            
+            [self addObject:item toCollection:collection];
+            [item release];
+            result = YES;
+        }
+        
+        if (!result) return result;
+    }
+    
     
     // Create graphics for the content
     NSArray *graphics = [SVGraphicFactory graphicsFomPasteboard:pboard

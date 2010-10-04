@@ -522,4 +522,13 @@
 	return result;
 }
 
+#pragma mark Serialization
+
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
+{
+    [super populateSerializedProperties:propertyList];
+    
+    [propertyList setObject:[[self entity] name] forKey:@"entity"];
+}
+
 @end
