@@ -504,10 +504,14 @@
 
 - (NSString *)imageRepresentationType;
 {
-    id result;
+    id result = nil;
     if ([[self thumbnailType] integerValue] == SVThumbnailTypePickFromPage)
     {
-        result = [[self thumbnailSourceGraphic] imageRepresentationType];
+        SVGraphic *graphic = [self thumbnailSourceGraphic];
+        if ([graphic imageRepresentation])
+        {
+            result = [graphic imageRepresentationType];
+        }
     }
     else
     {
