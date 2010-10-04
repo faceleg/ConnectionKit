@@ -529,7 +529,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     [[self content] setCollectionPreset:nil];
     [[self content] add:self];
     
-    [self willAddPage]; // -add: delays it's result, so I'm not lying!
+    [self willAddPage]; // -add: delays its result, so I'm not lying!
 }
 
 - (IBAction)addCollection:(id)sender;       // a collection. Uses [sender representedObject] for preset info
@@ -538,7 +538,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     [[self content] setCollectionPreset:[sender representedObject]];
     [[self content] add:self];
     
-    [self willAddPage]; // -add: delays it's result, so I'm not lying!
+    [self willAddPage]; // -add: delays its result, so I'm not lying!
 }
 
 - (IBAction)addExternalLinkPage:(id)sender; // external link
@@ -581,7 +581,16 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (KTPage *)collectionForPagesControllerToInsertInto:(SVPagesController *)sender;
 {
-    return [[sender selectedObjects] lastObject];
+    // Want to insert inside of collections only if they're expanded
+    KTPage *result = [[sender selectedObjects] lastObject];
+    
+    if (!([result isCollection] && [[self outlineView] isItemExpanded:result]) &&
+        ![result isRootPage])
+    {
+        result = [result parentPage];
+    }
+    
+    return result;
 }
 
 #pragma mark Other Actions
