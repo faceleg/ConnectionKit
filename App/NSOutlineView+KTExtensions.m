@@ -139,7 +139,7 @@
     id item;
     for (item in theItems)
     {
-        int row = [self rowForItem:item];
+        NSInteger row = [self rowForItem:item];
 		
 		// If the item doesn't have a row, it is presumably hidden inside a collapsed parent.
 		// We must work up the hierarchy expanding items until it becomes visible.
