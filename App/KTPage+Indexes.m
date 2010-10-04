@@ -561,14 +561,6 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	return result;
 }
 
-#pragma mark custom summary
-
-/*	Returns nil if there is no custom summary
- */
-- (NSString *)customSummaryHTML { return [self wrappedValueForKey:@"customSummaryHTML"]; }
-
-- (void)setCustomSummaryHTML:(NSString *)HTML { [self setWrappedValue:HTML forKey:@"customSummaryHTML"]; }
-
 #pragma mark Archives
 
 @dynamic collectionGenerateArchives;
