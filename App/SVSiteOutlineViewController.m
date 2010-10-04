@@ -518,18 +518,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 #pragma mark Adding a Page
 
-- (void)willAddPage;
-{
-    //[[self delegate] siteOutlineViewControllerWillAddPage:self];
-}
-
 - (IBAction)addPage:(id)sender;             // your basic page
 {
     [[self content] setEntityName:@"Page"];
     [[self content] setCollectionPreset:nil];
     [[self content] add:self];
-    
-    [self willAddPage]; // -add: delays its result, so I'm not lying!
 }
 
 - (IBAction)addCollection:(id)sender;       // a collection. Uses [sender representedObject] for preset info
@@ -537,8 +530,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     [[self content] setEntityName:@"Page"];
     [[self content] setCollectionPreset:[sender representedObject]];
     [[self content] add:self];
-    
-    [self willAddPage]; // -add: delays its result, so I'm not lying!
 }
 
 - (IBAction)addExternalLinkPage:(id)sender; // external link

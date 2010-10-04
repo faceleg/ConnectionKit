@@ -30,6 +30,9 @@
 #import "Debug.h"
 
 
+NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidInsertObject";
+
+
 /*	These strings are localizations for case https://karelia.fogbugz.com/default.asp?4736
  *	Not sure when we're going to have time to implement it, so strings are placed here to ensure they are localized.
  *
@@ -79,6 +82,14 @@
     [result setFilterPredicate:predicate];
     
     return result;
+}
+
+#pragma mark Dealloc
+
+- (void) dealloc;
+{
+    [self setDelegate:nil];
+    [super dealloc];
 }
 
 #pragma mark Managing Objects
@@ -281,6 +292,13 @@
 
 #pragma mark Inserting Objects
 
+- (void) insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
+{
+    [super insertObject:object atArrangedObjectIndex:index];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:SVPagesControllerDidInsertObjectNotification object:self];
+}
+
 - (void)addObject:(KTPage *)page
 {
     // Figure out where to insert the page. i.e. from our selection, what collection should it be made a child of?
@@ -440,6 +458,20 @@
 #pragma mark Delegate
 
 @synthesize delegate = _delegate;
+- (void)setDelegate:(id <SVPagesControllerDelegate>)delegate
+{
+    if ([_delegate respondsToSelector:@selector(pagesControllerDidInsertObject:)])
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:_delegate name:SVPagesControllerDidInsertObjectNotification object:self];
+    }
+    
+    _delegate = delegate;
+    
+    if ([delegate respondsToSelector:@selector(pagesControllerDidInsertObject:)])
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:delegate selector:@selector(pagesControllerDidInsertObject:) name:SVPagesControllerDidInsertObjectNotification object:self];
+    }
+}
 
 @end
 

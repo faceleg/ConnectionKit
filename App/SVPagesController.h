@@ -17,6 +17,9 @@
 #import <Cocoa/Cocoa.h>
 
 
+extern NSString *SVPagesControllerDidInsertObjectNotification;
+
+
 @class KTPage;
 @protocol SVPagesControllerDelegate;
 
@@ -68,7 +71,9 @@
 #pragma mark -
 
 
-@protocol SVPagesControllerDelegate
+@protocol SVPagesControllerDelegate <NSObject>
 - (KTPage *)collectionForPagesControllerToInsertInto:(SVPagesController *)sender;
+@optional
+- (void)pagesControllerDidInsertObject:(NSNotification *)notification;
 @end
 

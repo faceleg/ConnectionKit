@@ -206,6 +206,21 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 }
 
 @synthesize pagesController = _pagesController;
+- (void) setPagesController:(SVPagesController *)controller;
+{
+    if (_pagesController)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:SVPagesControllerDidInsertObjectNotification object:_pagesController];
+    }
+    
+    [controller retain];
+    [_pagesController release]; _pagesController = controller;
+    
+    if (controller)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pagesControllerDidInsertObject:) name:SVPagesControllerDidInsertObjectNotification object:controller];
+    }
+}
 
 #pragma mark Window Title
 
@@ -508,7 +523,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark Page Actions
 
-- (void)willAddPage;
+- (void)pagesControllerDidInsertObject:(NSNotification *)notification;
 {
     // As we're making a new page, give its article the focus
     [[self webContentAreaController] setViewType:KTStandardWebView];
