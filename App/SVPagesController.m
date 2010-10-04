@@ -287,7 +287,7 @@
     KTPage *parent;
     if ([self delegate])
     {
-        parent = [[self delegate] collectionForPagesControllerToAddObjectsTo:self];
+        parent = [[self delegate] collectionForPagesControllerToInsertInto:self];
     }
     else
     {

@@ -579,7 +579,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     [[self content] add:self];
 }
 
-- (KTPage *)collectionForPagesControllerToAddObjectsTo:(SVPagesController *)sender;
+- (KTPage *)collectionForPagesControllerToInsertInto:(SVPagesController *)sender;
 {
     return [[sender selectedObjects] lastObject];
 }

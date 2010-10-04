@@ -69,6 +69,6 @@
 
 
 @protocol SVPagesControllerDelegate
-- (KTPage *)collectionForPagesControllerToAddObjectsTo:(SVPagesController *)sender;
+- (KTPage *)collectionForPagesControllerToInsertInto:(SVPagesController *)sender;
 @end
 
