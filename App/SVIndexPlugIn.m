@@ -123,7 +123,7 @@
         else if ( [context isForEditing] )
         {
             [[context HTMLWriter] startElement:@"p"];
-            [[context HTMLWriter] writeText:NSLocalizedString(@"To see the Index, please add pages to the collection.","add pages to collection")];
+            [[context HTMLWriter] writeText:NSLocalizedString(@"To see the Index, please add indexable pages to the collection.","add pages to collection")];
             [[context HTMLWriter] endElement];
         }
     }
