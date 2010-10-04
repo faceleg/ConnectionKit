@@ -91,14 +91,23 @@
 
 - (void)linkSourceConnectedTo:(id<SVPage>)aPage
 {
+    // when we change indexedCollection, set the containers title to the title of the collection, or to
+    // KTPluginUntitledName if collection is nil
+
 	if (aPage)
 	{
+        [collectionLinkSourceView setConnected:YES];
+
 		[[[self inspectedObjectsController] selection] setValue:aPage forKey:@"indexedCollection"];
-		[collectionLinkSourceView setConnected:YES];
+		[[[self inspectedObjectsController] selection] setValue:[aPage title] forKey:@"title"];
 	}
     else
     {
-        [collectionLinkSourceView setConnected:NO]; // is this branch ever taken?
+        // is this branch ever taken?
+        [collectionLinkSourceView setConnected:NO];
+        
+        NSString *defaultTitle = [[self bundle] objectForInfoDictionaryKey:@"KTPluginUntitledName"];
+        [[[self inspectedObjectsController] selection] setValue:defaultTitle forKey:@"title"];
     }
 }
 
