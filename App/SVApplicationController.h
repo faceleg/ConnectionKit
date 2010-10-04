@@ -18,7 +18,7 @@
 //
 
 #import "KSLicensedAppDelegate.h"
-
+#import <iMedia/iMedia.h>
 
 extern BOOL gWantToCatchSystemExceptions;
 
@@ -35,7 +35,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 @class KTDocument, KSProgressPanel, KSPluginInstallerController;
 
-@interface SVApplicationController : KSLicensedAppDelegate
+@interface SVApplicationController : KSLicensedAppDelegate <IMBParserControllerDelegate>
 {
     // IBOutlets
     IBOutlet NSMenuItem     *oToggleInfoMenuItem; // DOESN'T APPEAR TO BE HOOKED UP, OR NEEDED.

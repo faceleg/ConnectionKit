@@ -1086,7 +1086,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 }
 
 
-- (void) controller:(IMBParserController*)inController didLoadParser:(IMBParser*)inParser forMediaType:(NSString*)inMediaType
+- (BOOL) parserController:(IMBParserController*)inController didLoadParser:(IMBParser*)inParser forMediaType:(NSString*)inMediaType
 {
 	NSLog(@"%s inParser=%@ inMediaType=%@",__FUNCTION__,NSStringFromClass(inParser.class),inMediaType);
 	
@@ -1101,40 +1101,24 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		flickrParser.flickrSharedSecret = @"e91e1638196e3c3d";					// Karelia's shared secret
 		
 	}		// end IMBFlickrParser code
+	return YES;
 }
 
-
-
-/*
-- (BOOL)iMediaBrowser:(iMediaBrowser *)browser willUseMediaParser:(NSString *)parserClassname forMediaType:(NSString *)media;
+- (BOOL) parserController:(IMBParserController*)inController shouldLoadParser:(NSString*)inParserClassName forMediaType:(NSString*)inMediaType;
 {
 	BOOL result = YES;
 	
-	if ([parserClassname isEqualToString:@"iMBGarageBandParser"]) result = NO;		// can't process garage band files
-	if ([parserClassname isEqualToString:@"LHDeliciosParser"]) result = NO;	// old code; causes crashes!
+	if ([inParserClassName isEqualToString:@"iMBGarageBandParser"]) result = NO;		// can't process garage band files
 	
-	LOG((@"iMediaBrowser: willUseMediaParser:%@ forMediaType:%@ -> %d", parserClassname, media, result));
+	LOG((@"iMediaBrowser: willUseMediaParser:%@ forMediaType:%@ -> %d", inParserClassName, inMediaType, result));
 	return result;
 }
 
-- (BOOL)iMediaBrowser:(iMediaBrowser *)browser willLoadBrowser:(NSString *)browserClassname;
+- (void) parserController:(IMBParserController*)inController willUnloadParser:(IMBParser*)inParser forMediaType:(NSString*)inMediaType;
 {
-	// TODO: we can take this out after the imedia update
-	BOOL result = (	[browserClassname isEqualToString:@"iMBPhotosController"]
-				   || 	[browserClassname isEqualToString:@"iMBMusicController"]
-				   || 	[browserClassname isEqualToString:@"iMBMoviesController"]
-				   || 	[browserClassname isEqualToString:@"iMBLinksController"] );
-	
-	// compatibility with the new cmeyer branch
-	result |= (	[browserClassname isEqualToString:@"iMBPhotosView"]
-			   || 	[browserClassname isEqualToString:@"iMBMusicView"]
-			   || 	[browserClassname isEqualToString:@"iMBMoviesView"]
-			   || 	[browserClassname isEqualToString:@"iMBLinksView"] );
-	
-	LOG((@"iMediaBrowser: willLoadBrowser:%@ ==> %d", browserClassname, result));
-	return result;
+	LOG((@"iMediaBrowser: willUnloadParser:%@ forMediaType:%@", inParser, inMediaType));
 }
-*/
+
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification
 {
