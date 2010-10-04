@@ -52,9 +52,7 @@
 
 + (NSArray *)plugInKeys
 { 
-    NSArray *plugInKeys = [NSArray arrayWithObjects:
-                           @"truncateChars", 
-                           nil];    
+    NSArray *plugInKeys = [NSArray arrayWithObjects:@"truncateChars", nil];    
     return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
 }
 
@@ -74,8 +72,6 @@
     [super writeHTML:context];
     
     // add dependencies
-    [context addDependencyForKeyPath:@"indexedCollection" ofObject:self];
-    [context addDependencyForKeyPath:@"indexedCollection.childPages" ofObject:self];
     [context addDependencyForKeyPath:@"truncateChars" ofObject:self];
     
     // add resources
