@@ -610,12 +610,10 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     if ([self canCopy])
     {
         // Package up the selected page(s) (children included)
+        NSOutlineView *outline = [self outlineView];
         NSPasteboard *pboard = [NSPasteboard generalPasteboard];
-        [pboard declareTypes:[NSArray arrayWithObjects:kKTPagesPboardType, nil] owner:self];
         
-        NSArray *topLevelPages = [[[self content] selectedObjects] parentObjects];
-        NSArray *pasteboardReps = [topLevelPages valueForKey:@"pasteboardRepresentation"];
-        [pboard setData:[NSKeyedArchiver archivedDataWithRootObject:pasteboardReps] forType:kKTPagesPboardType];
+        [self outlineView:outline writeItems:[outline selectedItems] toPasteboard:pboard];
     }
     else
     {
