@@ -62,7 +62,15 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 - (void)loadPersistentProperties;
 
 
-#pragma mark Actions
+#pragma mark Adding a Page
+- (IBAction)addPage:(id)sender;             // your basic page
+- (IBAction)addCollection:(id)sender;       // a collection. Uses [sender representedObject] for preset info
+- (IBAction)addExternalLinkPage:(id)sender; // external link
+- (IBAction)addRawTextPage:(id)sender;      // Raw HTML page
+- (IBAction)addFilePage:(id)sender;         // uses open panel to select a file, then inserts
+
+
+#pragma mark Other Actions
 // All act using the selected page(s) as context
 
 - (IBAction)cut:(id)sender;

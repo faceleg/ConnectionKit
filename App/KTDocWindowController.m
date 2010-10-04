@@ -517,57 +517,27 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)addPage:(id)sender;             // your basic page
 {
-    [[self pagesController] setEntityName:@"Page"];
-    [[self pagesController] setCollectionPreset:nil];
-    [[self pagesController] add:self];
-    
-    [self willAddPage]; // -add: delays it's result, so I'm not lying!
+    [[self siteOutlineViewController] addPage:sender];
 }
 
 - (IBAction)addCollection:(id)sender;       // a collection. Uses [sender representedObject] for preset info
 {
-    [[self pagesController] setEntityName:@"Page"];
-    [[self pagesController] setCollectionPreset:[sender representedObject]];
-    [[self pagesController] add:self];
-    
-    [self willAddPage]; // -add: delays it's result, so I'm not lying!
+    [[self siteOutlineViewController] addCollection:sender];
 }
 
 - (IBAction)addExternalLinkPage:(id)sender; // external link
 {
-    [[self pagesController] setEntityName:@"ExternalLink"];
-    [[self pagesController] add:self];
+    [[self siteOutlineViewController] addExternalLinkPage:sender];
 }
 
 - (IBAction)addRawTextPage:(id)sender;      // Raw HTML page
 {
-    [[self pagesController] setEntityName:@"File"];
-    [[self pagesController] setFileURL:nil];    // will make its own file
-    [[self pagesController] add:self];
+    [[self siteOutlineViewController] addRawTextPage:sender];
 }
 
 - (IBAction)addFilePage:(id)sender;         // uses open panel to select a file, then inserts
 {
-    // Throw up an open panel
-    NSOpenPanel *openPanel = [[self document] makeChooseDialog];
-    
-    [openPanel beginSheetForDirectory:nil
-                                 file:nil
-                       modalForWindow:[self window]
-                        modalDelegate:self
-                       didEndSelector:@selector(chooseFilePanelDidEnd:returnCode:contextInfo:) contextInfo:NULL];
-}
-
-- (void)chooseFilePanelDidEnd:(NSSavePanel *)sheet
-                   returnCode:(int)returnCode
-                  contextInfo:(void *)contextInfo;
-{
-    if (returnCode == NSCancelButton) return;
-    
-    
-    [[self pagesController] setEntityName:@"File"];
-    [[self pagesController] setFileURL:[sheet URL]];
-    [[self pagesController] add:self];
+    [[self siteOutlineViewController] addFilePage:sender];
 }
 
 #pragma mark Action Validation

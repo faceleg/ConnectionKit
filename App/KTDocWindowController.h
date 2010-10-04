@@ -106,12 +106,6 @@ extern NSString *gInfoWindowAutoSaveName;
 
 - (IBAction)windowHelp:(id)sender;
 
-- (IBAction)addPage:(id)sender;             // your basic page
-- (IBAction)addCollection:(id)sender;       // a collection. Uses [sender representedObject] for preset info
-- (IBAction)addExternalLinkPage:(id)sender; // external link
-- (IBAction)addRawTextPage:(id)sender;      // Raw HTML page
-- (IBAction)addFilePage:(id)sender;         // uses open panel to select a file, then inserts
-
 @property(retain) SVDesignChooserWindowController *designChooserWindowController;
 - (IBAction)chooseDesign:(id)sender;
 - (IBAction)nextDesign:(id)sender;
