@@ -99,14 +99,17 @@
         [collectionLinkSourceView setConnected:YES];
 
 		[[[self inspectedObjectsController] selection] setValue:aPage forKey:@"indexedCollection"];
-		[[[self inspectedObjectsController] selection] setValue:[aPage title] forKey:@"title"];
+        if ( [aPage title] )
+        {
+            [[[self inspectedObjectsController] selection] setValue:[aPage title] forKey:@"title"];
+        }
 	}
     else
     {
         // is this branch ever taken?
         [collectionLinkSourceView setConnected:NO];
         
-        NSString *defaultTitle = [[self bundle] objectForInfoDictionaryKey:@"KTPluginUntitledName"];
+        NSString *defaultTitle = [[self nibBundle] objectForInfoDictionaryKey:@"KTPluginUntitledName"];
         [[[self inspectedObjectsController] selection] setValue:defaultTitle forKey:@"title"];
     }
 }
