@@ -276,6 +276,7 @@
     // Generate DOM controller for it
     SVSummaryDOMController *controller = [[SVSummaryDOMController alloc] init];
     [self startDOMController:controller];
+    [controller release];
     
     [super willWriteSummaryOfPage:page];
 }
