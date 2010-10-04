@@ -284,9 +284,19 @@
 - (void)addObject:(KTPage *)page
 {
     // Figure out where to insert the page. i.e. from our selection, what collection should it be made a child of?
-    KTPage *parent = [[self selectedObjects] lastObject];
-    if (![parent isCollection]) parent = [parent parentPage];
+    KTPage *parent;
+    if ([self delegate])
+    {
+        parent = [[self delegate] collectionForPagesControllerToAddObjectsTo:self];
+    }
+    else
+    {
+        parent = [[self selectedObjects] lastObject];
+        if (![parent isCollection]) parent = [parent parentPage];
+    }
+    
     OBASSERT(parent);
+    OBASSERT([parent isCollection]);
     
     
     [self addObject:page toCollection:parent];
@@ -426,6 +436,10 @@
 		[self setValue:[NSNumber numberWithBool:NO] forKeyPath:@"selection.shouldUpdateFileNameWhenTitleChanges"];
 	}
 }
+
+#pragma mark Delegate
+
+@synthesize delegate = _delegate;
 
 @end
 

@@ -212,6 +212,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 - (void)setContent:(SVPagesController *)controller
 {
     [_pagesController removeObserver:self forKeyPath:@"selectedObjects"];
+    [_pagesController setDelegate:nil];
     
     // Store
     [controller retain];
@@ -227,6 +228,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
                     options:NSKeyValueObservingOptionInitial
                     context:sContentSelectionObservationContext];
     
+    [controller setDelegate:self];
     
     // Restore selection
     NSArray *selection = [self persistentSelectedItems];
@@ -575,6 +577,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     [[self content] setEntityName:@"File"];
     [[self content] setFileURL:[sheet URL]];
     [[self content] add:self];
+}
+
+- (KTPage *)collectionForPagesControllerToAddObjectsTo:(SVPagesController *)sender;
+{
+    return [[sender selectedObjects] lastObject];
 }
 
 #pragma mark Other Actions

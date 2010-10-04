@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "KTPage.h"
+#import "SVPagesController.h"
 #import "KSViewController.h"
 
 
@@ -18,7 +19,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 @class SVPagesController, SVSiteItem, BWSplitView;
 
 
-@interface SVSiteOutlineViewController : NSViewController <NSUserInterfaceValidations>
+@interface SVSiteOutlineViewController : NSViewController <SVPagesControllerDelegate, NSUserInterfaceValidations>
 {
 	IBOutlet BWSplitView *oSplitView;
 	

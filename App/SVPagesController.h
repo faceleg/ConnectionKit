@@ -18,6 +18,7 @@
 
 
 @class KTPage;
+@protocol SVPagesControllerDelegate;
 
 
 @interface SVPagesController : NSArrayController
@@ -25,12 +26,16 @@
   @private
     NSDictionary    *_presetDict;
     NSURL           *_fileURL;
+    
+    id <SVPagesControllerDelegate>  _delegate;  // weak ref
 }
 
 #pragma mark Creating a Pages Controller
 + (NSArrayController *)controllerWithPagesInCollection:(KTPage *)collection;
 + (NSArrayController *)controllerWithPagesToIndexInCollection:(KTPage *)collection;
 
+
+#pragma mark Managing Objects
 
 // To create a new page/item:
 //  1.  Set .entityName to what you want. Should be Page, ExternalLink, or File.
@@ -48,6 +53,22 @@
 // Doesn't add the result to collection, just uses it to determine property inheritance
 - (id)newObjectDestinedForCollection:(KTPage *)collection;
 
+
+#pragma mark Tree
 - (NSString *)childrenKeyPath;	// A hangover from NSTreeController
 
+
+#pragma mark Delegate
+@property(nonatomic, assign) id <SVPagesControllerDelegate> delegate;
+
+
 @end
+
+
+#pragma mark -
+
+
+@protocol SVPagesControllerDelegate
+- (KTPage *)collectionForPagesControllerToAddObjectsTo:(SVPagesController *)sender;
+@end
+
