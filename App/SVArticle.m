@@ -32,7 +32,7 @@
     [super setString:string attachments:attachments];
     
     
-    // Make sure out page's thumbnail source graphic matches up
+    // Make sure our page's thumbnail source graphic matches up
     KTPage *page = [self page];
     SVGraphic *thumbnailGraphic = [page thumbnailSourceGraphic];
     if (!thumbnailGraphic || ![attachments containsObject:[thumbnailGraphic textAttachment]])
