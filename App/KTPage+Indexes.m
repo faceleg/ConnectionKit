@@ -244,11 +244,14 @@
 - (NSArray *)feedEnclosures
 {
     NSSet *attachments = [[self article] attachments];
+    
+    NSSet *graphics = [[attachments valueForKey:@"graphic"] filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"includeAsRSSEnclosure == 1"]];
+    
 	NSMutableArray *result = [NSMutableArray arrayWithCapacity:[attachments count]];
     
-    for (SVTextAttachment *anAttachment in attachments)
+    for (SVGraphic *anAttachment in graphics)
     {
-        id <SVEnclosure> enclosure = [[anAttachment graphic] enclosure];
+        id <SVEnclosure> enclosure = [anAttachment enclosure];
         if (enclosure) [result addObject:enclosure];
     }
     
