@@ -71,7 +71,7 @@
 				<integer>2</integer>
 				<key>collectionSortAscending</key>
 				<false/>
-				<key>collectionSyndicate</key>
+				<key>collectionSyndicationType</key>
 				<true/>
 			</dict>
 			<key>KTPresetTitle</key>

@@ -47,8 +47,8 @@
 				<integer>1</integer>
 				<key>collectionSortOrder</key>
 				<integer>0</integer>
-				<key>collectionSyndicate</key>
-				<true/>
+				<key>collectionSyndicationType</key>
+				<integer>2</integer>
 			</dict>
 			<key>KTIncludeRSSBadge</key>
 			<false/>
@@ -66,8 +66,8 @@
 				<integer>1</integer>
 				<key>collectionSortOrder</key>
 				<integer>2</integer>
-				<key>collectionSyndicate</key>
-				<true/>
+				<key>collectionSyndicationType</key>
+				<integer>2</integer>
 			</dict>
 			<key>KTPresetTitle</key>
 			<string>Photo Blog</string>

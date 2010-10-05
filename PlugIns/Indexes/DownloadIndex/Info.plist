@@ -49,8 +49,6 @@
 			<dict>
 				<key>collectionSortOrder</key>
 				<integer>0</integer>
-				<key>collectionSyndicate</key>
-				<false/>
 			</dict>
 			<key>KTPresetTitle</key>
 			<string>Download List</string>
