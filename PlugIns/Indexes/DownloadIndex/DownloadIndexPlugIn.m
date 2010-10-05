@@ -37,14 +37,6 @@
 #import "DownloadIndexPlugIn.h"
 
 
-// LocalizedStringInThisBundle(@"You really should add something to the collection so you can see it, ok? Also, feel free to suggest how to phrase this better. Case 87647.", "String_On_Page_Template")
-
-
-@interface DownloadIndexPlugIn ()
-- (NSSize)thumbnailSize;
-@end
-
-
 @implementation DownloadIndexPlugIn
 
 
@@ -130,14 +122,9 @@ height="[[mediainfo info:height media:item.thumbnail sizeToFit:thumbnailSize]]" 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
     [iteratedPage writeThumbnailImage:context 
-                                          className:@"" 
-                                           maxWidth:[self thumbnailSize].width 
-                                          maxHeight:[self thumbnailSize].height];
-}
-
-- (NSSize)thumbnailSize
-{
-	return NSMakeSize(128.0, 128.0);
+                            className:@"" 
+                             maxWidth:128 
+                            maxHeight:128];
 }
 
 
