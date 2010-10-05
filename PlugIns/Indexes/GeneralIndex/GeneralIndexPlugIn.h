@@ -44,8 +44,6 @@
     NSUInteger _truncateChars;
 }
 
-- (NSSize)thumbnailImageSize;
-
 @property (nonatomic, assign) BOOL hyperlinkTitles;
 @property (nonatomic, assign) BOOL showPermaLink;
 @property (nonatomic, assign) NSUInteger truncateChars;

@@ -116,11 +116,9 @@
     
     [iteratedPage writeThumbnailImage:context
                             className:@"" 
-                             maxWidth:[self thumbnailImageSize].width 
-                            maxHeight:[self thumbnailImageSize].height];
+                             maxWidth:64 
+                            maxHeight:64];
 }
-
-- (NSSize)thumbnailImageSize { return NSMakeSize(64.0, 64.0); }
 
 
 #pragma mark Properties
