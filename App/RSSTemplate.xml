@@ -23,10 +23,6 @@
 			[[if item.URL]]<guid>[[=&item.URL]]</guid>[[endif]]
 [[foreach item.feedEnclosures anEnclosure]]
 			<enclosure url="[[=&anEnclosure.downloadedURL]]"[[if anEnclosure.length]] length="[[=&anEnclosure.length]]"[[endif]] type="[[=&anEnclosure.MIMEType]]" />
-[[if item.thumbnail]]
-        	<media:thumbnail url="[[mediainfo info:path media:item.thumbnail sizeToFit:master.thumbnailImageSize]]" />
-        	<media:content url="[[mediainfo media:anEnclosure info:path]]" type="[[mediainfo media:anEnclosure info:MIMEType]]" />
-[[endif]]
 [[endForEach2]]
 			[[forEach item.keywords aCategory]]<category>[[=&aCategory]]</category>[[endForEach2]]
 		</item>
