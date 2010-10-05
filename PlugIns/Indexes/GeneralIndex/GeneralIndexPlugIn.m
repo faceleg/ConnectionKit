@@ -114,11 +114,23 @@
     id<SVPlugInContext> context = [SVPlugIn currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
-    [iteratedPage writeThumbnail:context
-                        maxWidth:64
-                       maxHeight:64
-                  imageClassName:nil
-                allowPlaceholder:NO];
+    // Do a dry-run to see if there's actuall a thumbnail
+    if ([iteratedPage writeThumbnail:context
+                            maxWidth:64
+                           maxHeight:64
+                      imageClassName:nil
+                              dryRun:YES])
+    {
+        [[context HTMLWriter] startElement:@"div" className:@"article-thumbnail"];
+        
+        [iteratedPage writeThumbnail:context
+                            maxWidth:64
+                           maxHeight:64
+                      imageClassName:nil
+                              dryRun:NO];
+        
+        [[context HTMLWriter] endElement];
+    }
 }
 
 

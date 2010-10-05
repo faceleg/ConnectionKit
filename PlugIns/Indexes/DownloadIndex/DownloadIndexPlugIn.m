@@ -125,7 +125,7 @@ height="[[mediainfo info:height media:item.thumbnail sizeToFit:thumbnailSize]]" 
                         maxWidth:128 
                        maxHeight:128
                   imageClassName:@""
-                allowPlaceholder:NO];
+                          dryRun:NO];
 }
 
 

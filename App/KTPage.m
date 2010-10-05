@@ -400,7 +400,7 @@
               maxWidth:(NSUInteger)width
              maxHeight:(NSUInteger)height
         imageClassName:(NSString *)className
-      allowPlaceholder:(BOOL)allowPlaceholder;
+                dryRun:(BOOL)dryRun;
 {
     switch ([[self thumbnailType] integerValue])
     {
@@ -410,35 +410,38 @@
             SVGraphic *source = [self thumbnailSourceGraphic];
             if ([source thumbnailMedia])
             {
-                // Start anchor
-                [context pushClassName:@"imageLink"];
-                [context startAnchorElementWithPage:self];
-                
-                // Write image itself
-                CGFloat aspectRatio = [source thumbnailAspectRatio];
-                if (aspectRatio > 1.0f)
+                if (!dryRun)
                 {
-                    height = width / aspectRatio;
+                    // Start anchor
+                    [context pushClassName:@"imageLink"];
+                    [context startAnchorElementWithPage:self];
+                    
+                    // Write image itself
+                    CGFloat aspectRatio = [source thumbnailAspectRatio];
+                    if (aspectRatio > 1.0f)
+                    {
+                        height = width / aspectRatio;
+                    }
+                    else if (aspectRatio < 1.0f)
+                    {
+                        width = height * aspectRatio;
+                    }
+                    
+                    [context writeImageWithSourceMedia:[source thumbnailMedia]
+                                                   alt:@""
+                                                 width:[NSNumber numberWithUnsignedInteger:width]
+                                                height:[NSNumber numberWithUnsignedInteger:height]
+                                                  type:nil];
+                    
+                    // Finish up
+                    [context endElement];
                 }
-                else if (aspectRatio < 1.0f)
-                {
-                    width = height * aspectRatio;
-                }
-                
-                [context writeImageWithSourceMedia:[source thumbnailMedia]
-                                               alt:@""
-                                             width:[NSNumber numberWithUnsignedInteger:width]
-                                            height:[NSNumber numberWithUnsignedInteger:height]
-                                              type:nil];
-                
-                // Finish up
-                [context endElement];
                 return YES;
             }
             else
             {
                 // Write placeholder if desired
-                return [super writeThumbnail:context maxWidth:width maxHeight:height imageClassName:className allowPlaceholder:allowPlaceholder];
+                return [super writeThumbnail:context maxWidth:width maxHeight:height imageClassName:className dryRun:dryRun];
             }
         }
             
@@ -454,7 +457,7 @@
                                maxWidth:width
                               maxHeight:height
                          imageClassName:className
-                       allowPlaceholder:allowPlaceholder];
+                                 dryRun:dryRun];
         }
             
         case SVThumbnailTypeLastChildItem:
@@ -469,7 +472,7 @@
                                maxWidth:width
                               maxHeight:height
                          imageClassName:className
-                       allowPlaceholder:allowPlaceholder];
+                                 dryRun:dryRun];
         }
             
         default:
@@ -478,7 +481,7 @@
                                 maxWidth:width
                                maxHeight:height
                           imageClassName:className
-                        allowPlaceholder:allowPlaceholder];
+                                  dryRun:dryRun];
     }
 }
 

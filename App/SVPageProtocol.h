@@ -30,12 +30,13 @@
 
 
 #pragma mark Thumbnail
-// If page had no thumbnail and you passed NO for allowPlaceholder, returns NO
+// Return value is whether page had thumbnail to write
+// Passing in dryRun as YES will inform you of presence of thumbnail without writing anything
 - (BOOL)writeThumbnail:(id <SVPlugInContext>)context
               maxWidth:(NSUInteger)width
              maxHeight:(NSUInteger)height
         imageClassName:(NSString *)className
-      allowPlaceholder:(BOOL)allowPlaceholder;
+                dryRun:(BOOL)dryRun;
 
 
 #pragma mark Children
