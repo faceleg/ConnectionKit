@@ -179,7 +179,7 @@
 	id maxTitles = [[NSUserDefaults standardUserDefaults] objectForKey:@"MaximumTitlesInCollectionSummary"];
     if ([maxTitles isKindOfClass:[NSNumber class]])
     {
-        [self setPrimitiveValue:maxTitles forKey:@"collectionSummaryMaxPages"];
+        [self setPrimitiveValue:maxTitles forKey:@"collectionMaxSyndicatedPagesCount"];
     }
     
     [self setPrimitiveValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"RSSFileName"]
