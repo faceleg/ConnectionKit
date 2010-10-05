@@ -97,7 +97,7 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 
 #pragma mark Pasteboard
 
-+ (NSArray *)graphicsFomPasteboard:(NSPasteboard *)pasteboard
++ (NSArray *)graphicsFromPasteboard:(NSPasteboard *)pasteboard
     insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (NSArray *)graphicPasteboardTypes;

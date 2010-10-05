@@ -364,7 +364,7 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     // Fallback to generic pasteboard support
     if ([pagelets count] < 1)
     {
-        pagelets = [SVGraphicFactory graphicsFomPasteboard:pasteboard
+        pagelets = [SVGraphicFactory graphicsFromPasteboard:pasteboard
                             insertIntoManagedObjectContext:context];
     }
     

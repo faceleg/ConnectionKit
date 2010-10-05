@@ -400,7 +400,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     
     // Create graphics for the content
-    NSArray *graphics = [SVGraphicFactory graphicsFomPasteboard:pboard
+    NSArray *graphics = [SVGraphicFactory graphicsFromPasteboard:pboard
                                  insertIntoManagedObjectContext:[self managedObjectContext]];
     
     for (SVGraphic *aGraphic in graphics)

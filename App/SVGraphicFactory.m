@@ -564,7 +564,7 @@ static SVGraphicFactory *sRawHTMLFactory;
 
 #pragma mark Pasteboard
 
-+ (NSArray *)graphicsFomPasteboard:(NSPasteboard *)pboard
++ (NSArray *)graphicsFromPasteboard:(NSPasteboard *)pboard
     insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     // Try to read in Web Locations
