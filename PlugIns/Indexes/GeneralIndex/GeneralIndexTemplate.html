@@ -1,11 +1,9 @@
 [[foreach indexablePagesOfCollection iteratedPage]]
 	<div class="article [[i]] [[eo]][[last]]">
         <h3>[[=writeTitleOfIteratedPage]]</h3>
-[[if iteratedPage.hasThumbnail]]
         <div class="article-thumbnail">
-        <a class="imageLink" [[target iteratedPage]]href="[[path iteratedPage]]">[[=writeThumbnailImageOfIteratedPage]]</a>
+            [[=writeThumbnailImageOfIteratedPage]]
         </div>
-[[endif]]
 		[[=writeSummaryOfIteratedPage]]
 		<div class="article-info">
 [[if truncateChars>0]]

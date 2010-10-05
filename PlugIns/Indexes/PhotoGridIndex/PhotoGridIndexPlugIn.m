@@ -64,10 +64,11 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
     id<SVPlugInContext> context = [SVPlugIn currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
-    [iteratedPage writeThumbnailImage:context 
-                            className:@"" 
-                             maxWidth:128 
-                            maxHeight:128];
+    [iteratedPage writeThumbnail:context 
+                        maxWidth:128 
+                       maxHeight:128 
+                  imageClassName:nil
+                allowPlaceholder:YES];
 }
 
 @end

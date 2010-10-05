@@ -396,9 +396,11 @@
 
 #pragma mark Thumbnail
 
-- (void)writeThumbnailImage:(SVHTMLContext *)context
-                   maxWidth:(NSUInteger)width
-                  maxHeight:(NSUInteger)height;
+- (BOOL)writeThumbnail:(SVHTMLContext *)context
+              maxWidth:(NSUInteger)width
+             maxHeight:(NSUInteger)height
+        imageClassName:(NSString *)className
+      allowPlaceholder:(BOOL)allowPlaceholder;
 {
     switch ([[self thumbnailType] integerValue])
     {
@@ -408,6 +410,11 @@
             SVGraphic *source = [self thumbnailSourceGraphic];
             if (source)
             {
+                // Start anchor
+                [context pushClassName:@"imageLink"];
+                [context startAnchorElementWithPage:self];
+                
+                // Write image itself
                 CGFloat aspectRatio = [source thumbnailAspectRatio];
                 if (aspectRatio > 1.0f)
                 {
@@ -423,13 +430,16 @@
                                              width:[NSNumber numberWithUnsignedInteger:width]
                                             height:[NSNumber numberWithUnsignedInteger:height]
                                               type:nil];
+                
+                // Finish up
+                [context endElement];
+                return YES;
             }
             else
             {
-                [self writePlaceholderThumbnail:context width:width height:height];
+                // Write placeholder if desired
+                return [super writeThumbnail:context maxWidth:width maxHeight:height imageClassName:className allowPlaceholder:allowPlaceholder];
             }
-            
-            break;
         }
             
         case SVThumbnailTypeFirstChildItem:
@@ -440,9 +450,11 @@
             SVSiteItem *page = [[controller arrangedObjects] firstObjectKS];
             [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
             
-            [page writeThumbnailImage:context maxWidth:width maxHeight:height];
-            
-            break;
+            return [page writeThumbnail:context
+                               maxWidth:width
+                              maxHeight:height
+                         imageClassName:className
+                       allowPlaceholder:allowPlaceholder];
         }
             
         case SVThumbnailTypeLastChildItem:
@@ -453,14 +465,20 @@
             SVSiteItem *page = [[controller arrangedObjects] lastObject];
             [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
             
-            [page writeThumbnailImage:context maxWidth:width maxHeight:height];
-            
-            break;
+            return [page writeThumbnail:context
+                               maxWidth:width
+                              maxHeight:height
+                         imageClassName:className
+                       allowPlaceholder:allowPlaceholder];
         }
             
         default:
             // Hand off to super for custom/no thumbnail
-            [super writeThumbnailImage:context maxWidth:width maxHeight:height];
+            return [super writeThumbnail:context
+                                maxWidth:width
+                               maxHeight:height
+                          imageClassName:className
+                        allowPlaceholder:allowPlaceholder];
     }
 }
 

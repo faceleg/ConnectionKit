@@ -378,34 +378,40 @@
     
 }
 
-- (void)writeThumbnailImage:(SVHTMLContext *)context
-                   maxWidth:(NSUInteger)width
-                  maxHeight:(NSUInteger)height;
+- (BOOL)writeThumbnail:(SVHTMLContext *)context
+              maxWidth:(NSUInteger)width
+             maxHeight:(NSUInteger)height
+        imageClassName:(NSString *)className
+      allowPlaceholder:(BOOL)allowPlaceholder;
 {
     if ([[self thumbnailType] integerValue] == SVThumbnailTypeCustom)
     {
-        [(SVHTMLContext *)context
-         writeImageWithSourceMedia:[self customThumbnail]
-         alt:@""
-         width:[NSNumber numberWithUnsignedInteger:width]
-         height:[NSNumber numberWithUnsignedInteger:height]
-         type:nil];
+        [context pushClassName:@"imageLink"];
+        [context startAnchorElementWithPage:self];
+        
+        if (className) [(SVHTMLContext *)context pushClassName:className];
+        [context writeImageWithSourceMedia:[self customThumbnail]
+                                       alt:@""
+                                     width:[NSNumber numberWithUnsignedInteger:width]
+                                    height:[NSNumber numberWithUnsignedInteger:height]
+                                      type:nil];
+        
+        [context endElement];
+        return YES;
     }
-    else
+    else if (allowPlaceholder)
     {
+        [context pushClassName:@"imageLink"];
+        [context startAnchorElementWithPage:self];
+        
+        if (className) [(SVHTMLContext *)context pushClassName:className];
         [self writePlaceholderThumbnail:context width:width height:height];
         
+        [context endElement];
+        return YES;
     }
-}
-
-- (void)writeThumbnailImage:(id <SVPlugInContext>)context
-                  className:(NSString *)className
-                   maxWidth:(NSUInteger)width
-                  maxHeight:(NSUInteger)height;
-{
-    if (className) [(SVHTMLContext *)context pushClassName:className];
     
-    [self writeThumbnailImage:(SVHTMLContext *)context maxWidth:width maxHeight:height];
+    return NO;
 }
 
 - (id)imageRepresentation;

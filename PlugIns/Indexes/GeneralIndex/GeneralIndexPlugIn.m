@@ -114,10 +114,11 @@
     id<SVPlugInContext> context = [SVPlugIn currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
-    [iteratedPage writeThumbnailImage:context
-                            className:@"" 
-                             maxWidth:64 
-                            maxHeight:64];
+    [iteratedPage writeThumbnail:context
+                        maxWidth:64
+                       maxHeight:64
+                  imageClassName:nil
+                allowPlaceholder:NO];
 }
 
 

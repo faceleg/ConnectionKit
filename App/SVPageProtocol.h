@@ -30,11 +30,12 @@
 
 
 #pragma mark Thumbnail
-- (void)writeThumbnailImage:(id <SVPlugInContext>)context
-                  className:(NSString *)className
-                   maxWidth:(NSUInteger)width
-                  maxHeight:(NSUInteger)height;
-- (BOOL)hasThumbnail;
+// If page had no thumbnail and you passed NO for allowPlaceholder, returns NO
+- (BOOL)writeThumbnail:(id <SVPlugInContext>)context
+              maxWidth:(NSUInteger)width
+             maxHeight:(NSUInteger)height
+        imageClassName:(NSString *)className
+      allowPlaceholder:(BOOL)allowPlaceholder;
 
 
 #pragma mark Children

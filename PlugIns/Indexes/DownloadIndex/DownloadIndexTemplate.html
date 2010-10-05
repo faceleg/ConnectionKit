@@ -2,9 +2,7 @@
 [[foreach indexablePagesOfCollection iteratedPage]]
 	<tr class="[[i]] [[eo]][[last]]">
 		<td class="dli1">
-[[if iteratedPage.hasThumbnail]]
-			<a class="imageLink" [[target iteratedPage]]href="[[path iteratedPage]]">[[=writeThumbnailImageOfIteratedPage]]</a>
-[[endif2]]
+            [[=writeThumbnailImageOfIteratedPage]]
 		</td>
 		<td class="dli2">
             <h3>[[=writeTitleAndLinkOfIteratedPage]]</h3>

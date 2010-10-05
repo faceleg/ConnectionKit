@@ -127,9 +127,10 @@ typedef enum {
 
 #pragma mark Thumbnail
 
-- (void)writeThumbnailImage:(SVHTMLContext *)context
+- (BOOL)writeThumbnailImage:(SVHTMLContext *)context
                    maxWidth:(NSUInteger)width
-                  maxHeight:(NSUInteger)height;
+                  maxHeight:(NSUInteger)height
+           allowPlaceholder:(BOOL)allowPlaceholder;
 
 - (void)writePlaceholderThumbnail:(SVHTMLContext *)context width:(NSUInteger)width height:(NSUInteger) height;
 
