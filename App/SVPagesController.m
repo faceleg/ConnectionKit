@@ -411,6 +411,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         [self setFileURL:nil];
         
         KTPage *page = [self newObjectDestinedForCollection:collection];
+        [page setTitle:[aGraphic title]];
         
         
         // Insert graphic into the page
