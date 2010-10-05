@@ -408,7 +408,7 @@
         {
             // Grab thumbnail from appropriate graphic and write that
             SVGraphic *source = [self thumbnailSourceGraphic];
-            if (source)
+            if ([source thumbnailMedia])
             {
                 // Start anchor
                 [context pushClassName:@"imageLink"];
