@@ -128,7 +128,7 @@
 
 #pragma mark RSS Feed
 
-@dynamic collectionSyndicate;
+@dynamic collectionSyndicationType;
 - (BOOL)validateCollectionSyndicate:(NSNumber **)syndicate error:(NSError **)outError;
 {
     // Only collections are allowed to syndicate
@@ -181,7 +181,7 @@
 {
 	NSURL *result = nil;
 	
-	if ([[self collectionSyndicate] boolValue])
+	if ([[self collectionSyndicationType] boolValue])
 	{
 		result = [NSURL ks_URLWithPath:[self RSSFileName] relativeToURL:[self URL] isDirectory:NO];
 	}
@@ -190,7 +190,7 @@
 }
 + (NSString *)keyPathsForValuesAffectingFeedURL;
 {
-    return [NSSet setWithObjects:@"collectionSyndicate", @"URL", @"RSSFileName", nil];
+    return [NSSet setWithObjects:@"collectionSyndicationType", @"URL", @"RSSFileName", nil];
 }
 
 /*  The pages that will go into the RSS feed. Sort chronologically and apply the limit

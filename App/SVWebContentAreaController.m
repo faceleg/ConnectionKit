@@ -172,7 +172,7 @@
  				  [menuItem tag] == KTWithoutStylesView ||
                   ([menuItem tag] == KTRSSSourceView && 
                    [page isCollection] &&
-                   [[(KTPage *)page collectionSyndicate] boolValue]));
+                   [[(KTPage *)page collectionSyndicationType] boolValue]));
     }
     
     return result;

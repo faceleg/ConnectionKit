@@ -173,7 +173,7 @@ typedef enum {
 
 #pragma mark RSS Feed
 
-@property(nonatomic, copy) NSNumber *collectionSyndicate;  // BOOL, mandatory
+@property(nonatomic, copy) NSNumber *collectionSyndicationType;  // SVSyndicationType, mandatory
 
 // Mandatory for collections, nil otherwise:
 @property(nonatomic, copy) NSNumber *collectionMaxSyndicatedPagesCount;   

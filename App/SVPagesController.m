@@ -257,7 +257,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     
     // Any collection with an RSS feed should have an RSS Badge.
-    if ([pageSettings boolForKey:@"collectionSyndicate"])
+    if ([pageSettings boolForKey:@"collectionSyndicationType"])
     {
         // Give weblogs special introductory text
         if ([[presetDict objectForKey:@"KTPresetIndexBundleIdentifier"] isEqualToString:@"sandvox.GeneralIndex"])

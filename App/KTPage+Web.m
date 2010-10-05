@@ -274,7 +274,7 @@
     
     
 	// Generate and publish RSS feed if needed
-	if ([[self collectionSyndicate] boolValue])
+	if ([[self collectionSyndicationType] boolValue])
 	{
 		NSString *RSSFilename = [self RSSFileName];
         NSString *RSSUploadPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];

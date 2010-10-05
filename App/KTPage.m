@@ -73,7 +73,7 @@
 		@"collectionShowPermanentLink",
 		@"collectionHyperlinkPageTitles",
 		@"collectionIndexBundleIdentifier",
-		@"collectionSyndicate", 
+		@"collectionSyndicationType", 
 		@"collectionMaxSyndicatedPagesCount", 
 		@"collectionSortOrder", 
 		nil]
