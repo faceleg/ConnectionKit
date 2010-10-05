@@ -17,6 +17,9 @@
 #import "SVTextAttachment.h"
 #import "SVTitleBox.h"
 
+#import "KSWebLocation.h"
+#import "KSURLUtilities.h"
+
 #import "NSError+Karelia.h"
 #import "NSString+Karelia.h"
 
@@ -419,7 +422,15 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     if (![self showBorder]) [self setBordered:NO];
 }
 
-- (void)awakeFromPasteboardContents:(id)pasteboardContents ofType:(NSString *)type; { }
+- (void)awakeFromPasteboardContents:(id)pasteboardContents ofType:(NSString *)type;
+{
+    KSWebLocation *location = pasteboardContents;
+    
+    NSString *title = [location title];
+    if (!title) title = [[location URL] ks_lastPathComponent];
+    
+    [self setTitle:title];
+}
 
 #pragma mark SVPlugInContainer
 

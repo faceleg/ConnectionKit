@@ -423,6 +423,9 @@
 
 - (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
 {
+    [super awakeFromPasteboardContents:contents ofType:type];
+    
+    
     NSString *identifier = [self plugInIdentifier];
     
     
