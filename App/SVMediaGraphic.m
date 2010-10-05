@@ -375,6 +375,13 @@
 
 + (NSSet *)keyPathsForValuesAffectingImageRepresentation { return [NSSet setWithObject:@"media"]; }
 
+#pragma mark RSS Enclosure
+
+- (id <SVEnclosure>)enclosure;
+{
+	return [self plugIn];
+}
+
 #pragma mark Serialization
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;

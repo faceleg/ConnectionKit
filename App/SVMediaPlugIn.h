@@ -7,11 +7,12 @@
 //
 
 #import "SVPlugIn.h"
+#import "SVEnclosure.h"
 
 #import "SVMediaGraphic.h"
 
 
-@interface SVMediaPlugIn : SVPlugIn
+@interface SVMediaPlugIn : SVPlugIn <SVEnclosure>
 
 #pragma mark Source
 - (SVMediaRecord *)media;

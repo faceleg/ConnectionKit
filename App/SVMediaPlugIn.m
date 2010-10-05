@@ -8,6 +8,11 @@
 
 #import "SVMediaPlugIn.h"
 
+#import "SVMediaRecord.h"
+
+#import "NSString+Karelia.h"
+#import "KSURLUtilities.h"
+
 
 @implementation SVMediaPlugIn
 
@@ -68,6 +73,51 @@
 {
     SVMediaGraphic *container = [self container];
     [container makeOriginalSize];
+}
+
+#pragma mark RSS Enclosures
+
+// THIS CODE IS DUPLICATED BETWEEN AUDIO AND VIDEO
+
+- (NSURL *)downloadedURL;   // where it currently resides on disk
+{
+	NSURL *mediaURL = nil;
+	SVMediaRecord *media = [self media];
+	
+    if (media)
+    {
+		mediaURL = [media mediaURL];
+	}
+	else
+	{
+		mediaURL = [self externalSourceURL];
+	}
+	return mediaURL;
+}
+
+- (long long)length;
+{
+	long long result = 0;
+	SVMediaRecord *media = [self media];
+	
+    if (media)
+    {
+		NSData *mediaData = [media mediaData];
+		result = [mediaData length];
+	}
+	return result;
+}
+
+- (NSString *)MIMEType;
+{
+	NSString *type = [[self media] typeOfFile];
+    if (!type)
+    {
+        type = [NSString UTIForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
+    }
+    
+    NSString *result = (type ? [NSString MIMETypeForUTI:type] : nil);
+	return result;
 }
 
 #pragma mark HTML
