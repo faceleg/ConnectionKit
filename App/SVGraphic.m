@@ -325,6 +325,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 #pragma mark RSS
 
+@dynamic includeAsRSSEnclosure;
+
 - (id <SVEnclosure>)enclosure; { return nil; }
 
 #pragma mark Inspector

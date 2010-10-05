@@ -184,6 +184,8 @@ typedef enum {
 @property(nonatomic, copy) NSString *RSSFileName;
 @property(nonatomic, readonly) NSURL *feedURL;  // KVO-compliant
 
+- (NSArray *)feedEnclosures;
+
 - (NSString *)RSSFeed;
 - (void)writeRSSFeed:(SVHTMLContext *)context;
 

@@ -156,6 +156,7 @@ extern NSString *kSVGraphicPboardType;
 
 
 #pragma mark RSS
+@property(nonatomic, copy) NSNumber *includeAsRSSEnclosure; // BOOL, mandatory
 - (id <SVEnclosure>)enclosure;  // default is nil
 
 
