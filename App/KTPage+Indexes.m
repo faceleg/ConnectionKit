@@ -12,6 +12,7 @@
 #import "SVArchivePage.h"
 #import "SVHTMLContext.h"
 #import "SVHTMLTemplateParser.h"
+#import "SVMediaGraphic.h"
 #import "SVTextAttachment.h"
 
 #import "NSArray+Karelia.h"
@@ -126,9 +127,17 @@
 	return nil;
 }
 
-#pragma mark RSS Feed
+#pragma mark Syndication
 
 @dynamic collectionSyndicationType;
+- (void)setCollectionSyndicationType:(NSNumber *)type;
+{
+    [self willChangeValueForKey:@"collectionSyndicationType"];
+    [self setPrimitiveValue:type forKey:@"collectionSyndicationType"];
+    [self didChangeValueForKey:@"collectionSyndicationType"];
+    
+    [[self childItems] makeObjectsPerformSelector:@selector(guessEnclosures)];
+}
 - (BOOL)validateCollectionSyndicate:(NSNumber **)syndicate error:(NSError **)outError;
 {
     // Only collections are allowed to syndicate
@@ -241,6 +250,8 @@
 
 - (NSSize)RSSFeedThumbnailsSize { return NSMakeSize(128.0, 128.0); }
 
+#pragma mark RSS Enclosures
+
 - (NSArray *)feedEnclosures
 {
     NSSet *attachments = [[self article] attachments];
@@ -256,6 +267,26 @@
     }
     
 	return result;
+}
+
+- (void)guessEnclosures;    // searches for enclosures if feed expects them
+{
+    if ([[[self parentPage] collectionSyndicationType] intValue] > 1)
+    {
+        NSArray *enclosures = [self feedEnclosures];
+        if ([enclosures count] == 0)
+        {
+            for (SVTextAttachment *anAttachment in [[self article] attachments])
+            {
+                SVGraphic *graphic = [anAttachment graphic];
+                if ([graphic isKindOfClass:[SVMediaGraphic class]])
+                {
+                    [graphic setIncludeAsRSSEnclosure:[NSNumber numberWithBool:YES]];
+                    break;
+                }
+            }
+        }
+    }
 }
 
 #pragma mark Standard Summary

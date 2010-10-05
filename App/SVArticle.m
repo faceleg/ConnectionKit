@@ -12,7 +12,6 @@
 #import "SVWebEditorHTMLContext.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
-#import "SVMediaGraphic.h"
 #import "KTPage.h"
 #import "SVProxyHTMLContext.h"
 #import "SVTextAttachment.h"
@@ -44,22 +43,7 @@
     
     
     // Similarly, photocasts & podcasts want a graphic for their enclosure
-    if ([[[page parentPage] collectionSyndicationType] intValue] > 1)
-    {
-        NSArray *enclosures = [page feedEnclosures];
-        if ([enclosures count] == 0)
-        {
-            for (SVTextAttachment *anAttachment in attachments)
-            {
-                SVGraphic *graphic = [anAttachment graphic];
-                if ([graphic isKindOfClass:[SVMediaGraphic class]])
-                {
-                    [graphic setIncludeAsRSSEnclosure:[NSNumber numberWithBool:YES]];
-                    break;
-                }
-            }
-        }
-    }
+    [page guessEnclosures];
 }
 
 #pragma mark HTML
