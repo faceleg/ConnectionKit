@@ -10,7 +10,7 @@
 #import "KTPage.h"
 
 
-@interface SVArchivePage : NSObject <SVPage>
+@interface SVArchivePage : NSObject <SVPageInternal>
 {
   @private
     NSArray *_childPages;

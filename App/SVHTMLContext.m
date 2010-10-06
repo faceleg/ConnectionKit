@@ -153,7 +153,7 @@
 
 #pragma mark Document
 
-- (void)startDocumentWithPage:(KTPage *)page
+- (void)startDocumentWithPage:(id <SVPageInternal>)page
 {
     OBPRECONDITION(page);
     
@@ -164,7 +164,7 @@
     
     
 	// Prepare global properties
-    [self setLanguage:[[page master] language]];
+    [self setLanguage:[page language]];
     
     
     // For publishing, want to know the URL of main.css *on the server*
@@ -191,7 +191,7 @@
     if (path) [self addCSSWithURL:[NSURL fileURLWithPath:path]];
 }
 
-- (void)writeDocumentWithPage:(KTPage *)page;
+- (void)writeDocumentWithPage:(id <SVPageInternal>)page;
 {
     [self startDocumentWithPage:page];
 
@@ -218,7 +218,7 @@
     if (![self isForPublishing])    // during publishing, pub engine will take care of design CSS
     {
         // Load up DESIGN CSS, which might override the generic stuff
-        KTDesign *design = [[page master] design];
+        KTDesign *design = [page design];
         [design writeCSS:self];
         
         
@@ -725,7 +725,7 @@
 	
 	// Return nil if the file doesn't actually exist
 	
-	KTDesign *design = [[[self page] master] design];
+	KTDesign *design = [[self page] design];
 	NSString *localPath = [[[design bundle] bundlePath] stringByAppendingPathComponent:whichFileName];
 	if ([[NSFileManager defaultManager] fileExistsAtPath:localPath])
 	{

@@ -330,6 +330,8 @@
 
 - (NSString *)language { return [[self master] language]; }
 
+- (KTDesign *)design { return [[self master] design]; }
+
 #pragma mark Dates
 
 /*  When updating one of the plug-in's properties, also update the modification date

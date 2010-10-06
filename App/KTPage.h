@@ -23,6 +23,17 @@
 #import "NSManagedObject+KTExtensions.h"
 
 
+// An extension to SVPage for extra, internal methods
+@class KTDesign, KTMaster;
+@protocol SVPageInternal <SVPage>
+- (KTDesign *)design;
+- (KTMaster *)master;
+@end
+
+
+#pragma mark -
+
+
 typedef enum {
 	SVCollectionSortManually,   // default as of 2.0
     SVCollectionSortAlphabetically,
@@ -32,10 +43,10 @@ typedef enum {
 } SVCollectionSortOrder;
 
 
-@class KTMaster, SVSidebar, SVPageTitle, SVRichText, SVGraphic, SVMediaRecord, KTCodeInjection, SVHTMLContext;
+@class SVSidebar, SVPageTitle, SVRichText, SVGraphic, SVMediaRecord, KTCodeInjection, SVHTMLContext;
 
 
-@interface KTPage : SVSiteItem
+@interface KTPage : SVSiteItem <SVPageInternal>
 
 #pragma mark Title
 @property(nonatomic, retain) SVPageTitle *titleBox;  // you can use inherited .title property for ease of use too
