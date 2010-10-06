@@ -7,7 +7,6 @@
 //
 
 #import "SVSiteOutlineViewController.h"
-#import "Elements+Pasteboard.h"
 
 #import "KTDocument.h"
 #import "KTSite.h"
@@ -1345,6 +1344,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	return YES;
 }
 
+/*
 - (BOOL)acceptArchivedPagesDrop:(NSArray *)archivedPages ontoPage:(KTPage *)page childIndex:(int)anIndex
 {
 	BOOL result = NO;
@@ -1424,7 +1424,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	
 	
 	return result;
-}
+}*/
 
 - (void)setDropSiteItem:(id)item dropChildIndex:(NSInteger)index;
 {

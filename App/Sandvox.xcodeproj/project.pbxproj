@@ -456,7 +456,6 @@
 		278ACCC9116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 278ACCC7116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m */; };
 		278EC6F30C97136500A212EC /* KTHTMLParserCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EC6F10C97136500A212EC /* KTHTMLParserCache.h */; settings = {ATTRIBUTES = (); }; };
 		278EC6F40C97136500A212EC /* KTHTMLParserCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EC6F20C97136500A212EC /* KTHTMLParserCache.m */; };
-		278ECEA20D25C4F90012BA6B /* KTPasteboardArchiving.h in Headers */ = {isa = PBXBuildFile; fileRef = 278ECEA10D25C4F90012BA6B /* KTPasteboardArchiving.h */; settings = {ATTRIBUTES = (); }; };
 		278F799E10B44A1B00BDBAF7 /* SVRichText.h in Headers */ = {isa = PBXBuildFile; fileRef = 278F799810B44A1B00BDBAF7 /* SVRichText.h */; };
 		278F799F10B44A1B00BDBAF7 /* SVRichText.m in Sources */ = {isa = PBXBuildFile; fileRef = 278F799910B44A1B00BDBAF7 /* SVRichText.m */; };
 		278FCE931079F2AD0091A239 /* NSEvent+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 278FCE911079F2AD0091A239 /* NSEvent+Karelia.h */; };
@@ -548,8 +547,6 @@
 		27BA06C91125A46900B9D8F4 /* SVWebEditorTextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BA06C71125A46900B9D8F4 /* SVWebEditorTextRange.m */; };
 		27BCCCA20F09609E00B06B35 /* KTRemotePublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 27BCCCA00F09609E00B06B35 /* KTRemotePublishingEngine.h */; };
 		27BCCCA30F09609E00B06B35 /* KTRemotePublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BCCCA10F09609E00B06B35 /* KTRemotePublishingEngine.m */; };
-		27C059B60E7299850033A715 /* Elements+Pasteboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C059B40E7299850033A715 /* Elements+Pasteboard.h */; };
-		27C059B70E7299850033A715 /* Elements+Pasteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C059B50E7299850033A715 /* Elements+Pasteboard.m */; };
 		27C064C310825F4800795D66 /* SVGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C064BF10825F4800795D66 /* SVGraphic.h */; };
 		27C064C410825F4800795D66 /* SVGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C064C010825F4800795D66 /* SVGraphic.m */; };
 		27C20F0F11405105006D455E /* SVAuxiliaryPageletText.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C20F0B11405105006D455E /* SVAuxiliaryPageletText.h */; };
@@ -2001,7 +1998,6 @@
 		278ACCC7116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVQuickLookPreviewHTMLContext.m; sourceTree = "<group>"; };
 		278EC6F10C97136500A212EC /* KTHTMLParserCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLParserCache.h; sourceTree = "<group>"; };
 		278EC6F20C97136500A212EC /* KTHTMLParserCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLParserCache.m; sourceTree = "<group>"; };
-		278ECEA10D25C4F90012BA6B /* KTPasteboardArchiving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPasteboardArchiving.h; sourceTree = "<group>"; };
 		278ECF1D0D25DAF80012BA6B /* KTMediaContainer+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMediaContainer+Pasteboard.m"; sourceTree = "<group>"; };
 		278ED0DC0D2865260012BA6B /* KTMediaContainer+Pasteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaContainer+Pasteboard.h"; sourceTree = "<group>"; };
 		278F799810B44A1B00BDBAF7 /* SVRichText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRichText.h; sourceTree = "<group>"; };
@@ -2100,8 +2096,6 @@
 		27BA06C71125A46900B9D8F4 /* SVWebEditorTextRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorTextRange.m; sourceTree = "<group>"; };
 		27BCCCA00F09609E00B06B35 /* KTRemotePublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTRemotePublishingEngine.h; sourceTree = "<group>"; };
 		27BCCCA10F09609E00B06B35 /* KTRemotePublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTRemotePublishingEngine.m; sourceTree = "<group>"; };
-		27C059B40E7299850033A715 /* Elements+Pasteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Elements+Pasteboard.h"; sourceTree = "<group>"; };
-		27C059B50E7299850033A715 /* Elements+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Elements+Pasteboard.m"; sourceTree = "<group>"; };
 		27C064BF10825F4800795D66 /* SVGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGraphic.h; sourceTree = "<group>"; };
 		27C064C010825F4800795D66 /* SVGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGraphic.m; sourceTree = "<group>"; };
 		27C20F0B11405105006D455E /* SVAuxiliaryPageletText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVAuxiliaryPageletText.h; sourceTree = "<group>"; };
@@ -3473,11 +3467,8 @@
 		278ECE560D259F400012BA6B /* Pasteboard */ = {
 			isa = PBXGroup;
 			children = (
-				278ECEA10D25C4F90012BA6B /* KTPasteboardArchiving.h */,
 				278ECF1D0D25DAF80012BA6B /* KTMediaContainer+Pasteboard.m */,
 				278ED0DC0D2865260012BA6B /* KTMediaContainer+Pasteboard.h */,
-				27C059B40E7299850033A715 /* Elements+Pasteboard.h */,
-				27C059B50E7299850033A715 /* Elements+Pasteboard.m */,
 			);
 			name = Pasteboard;
 			sourceTree = "<group>";
@@ -5430,7 +5421,6 @@
 				27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */,
 				277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */,
 				27A50E8A0D19282B00149038 /* SVHTMLTextBlock.h in Headers */,
-				278ECEA20D25C4F90012BA6B /* KTPasteboardArchiving.h in Headers */,
 				3C39822C0D2C3EC800432A0C /* SVPagesController.h in Headers */,
 				27F0341A0D34E55B005CD5B7 /* KTImageScalingSettings.h in Headers */,
 				27F63BD40D463F7800FAEB48 /* KTMaster.h in Headers */,
@@ -5465,7 +5455,6 @@
 				27D6DE9C0DCFA95800C8834F /* KTHostProperties.h in Headers */,
 				2730D66D0DE18ACA004858F5 /* SVTemplateParser.h in Headers */,
 				2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */,
-				27C059B60E7299850033A715 /* Elements+Pasteboard.h in Headers */,
 				2765059A0EADF91900461A0E /* KTPage+Internal.h in Headers */,
 				2765061E0EAE417200461A0E /* NSDocument+KTExtensions.h in Headers */,
 				CE01A7270EAFD63600BDF264 /* CIImage+Karelia.h in Headers */,
@@ -6962,7 +6951,6 @@
 				27EF1BD00DC1F9BF00976C66 /* SVSiteOutlineViewController.m in Sources */,
 				2730D66E0DE18ACA004858F5 /* SVTemplateParser.m in Sources */,
 				2799832D0DF01BE8003C84B9 /* KTDesignPlaceholder.m in Sources */,
-				27C059B70E7299850033A715 /* Elements+Pasteboard.m in Sources */,
 				2765061F0EAE417200461A0E /* NSDocument+KTExtensions.m in Sources */,
 				CE01A7280EAFD63600BDF264 /* CIImage+Karelia.m in Sources */,
 				CE01A72A0EAFD63600BDF264 /* KSAbstractBugReporter.m in Sources */,
