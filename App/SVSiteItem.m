@@ -384,7 +384,7 @@
         imageClassName:(NSString *)className
                 dryRun:(BOOL)dryRun;
 {
-    if ([[self thumbnailType] integerValue] == SVThumbnailTypeCustom)
+    if ([[self thumbnailType] integerValue] == SVThumbnailTypeCustom && [self customThumbnail])
     {
         if (!dryRun)
         {
