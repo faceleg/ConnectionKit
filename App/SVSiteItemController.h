@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "SVSiteItem.h"
 
 #import "SVPagesController.h"
 #import "SVMediaProtocol.h"

@@ -32,10 +32,22 @@
     // Match thumbnail up to custom image for now
     if (content)
     {
-        [self bind:@"thumbnailMedia"
-          toObject:content
-       withKeyPath:@"customThumbnail"
-           options:nil];
+        switch ([[content thumbnailType] intValue])
+        {
+            case SVThumbnailTypeCustom:
+                [self bind:@"thumbnailMedia"
+                  toObject:content
+               withKeyPath:@"customThumbnail"
+                   options:nil];
+                break;
+                
+            case SVThumbnailTypePickFromPage:
+                [self bind:@"thumbnailMedia"
+                  toObject:content
+               withKeyPath:@"thumbnailSourceGraphic.thumbnailMedia"
+                   options:nil];
+                break;
+        }
     }
 }
 
