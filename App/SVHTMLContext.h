@@ -31,7 +31,7 @@ typedef enum {
 
 
 @class KSStringWriter;
-@class KTPage, SVSiteItem, SVGraphic, SVHTMLTextBlock, SVLink, SVMediaRecord;
+@class KTPage, SVSiteItem, SVArchivePage, SVGraphic, SVHTMLTextBlock, SVLink, SVMediaRecord;
 @protocol SVMedia, SVEnclosure;
 
 
@@ -42,7 +42,9 @@ typedef enum {
     NSUInteger      _charactersWritten;
     
     NSURL   *_baseURL;
+    
     KTPage	*_currentPage;
+    id      _article;
     
 	BOOL                _liveDataFeeds;
     NSString            *_language;
@@ -86,6 +88,7 @@ typedef enum {
 #pragma mark Document
 // Sets various context properties to match the page too
 - (void)writeDocumentWithPage:(KTPage *)page;
+- (void)writeDocumentWithArchivePage:(SVArchivePage *)archive;
 
 
 #pragma mark Properties

@@ -292,7 +292,7 @@
         SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:
                                   [anArchivePage uploadPath]];
         
-        [context writeDocumentWithPage:anArchivePage];
+        [context writeDocumentWithArchivePage:anArchivePage];
         [context close];
     }
     

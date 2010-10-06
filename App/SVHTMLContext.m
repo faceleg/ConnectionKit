@@ -162,6 +162,9 @@
     [page retain];
     [_currentPage release]; _currentPage = page;
     
+    id article = [[page article] retain];
+    [_article release]; _article = article;
+    
     
 	// Prepare global properties
     [self setLanguage:[[page master] language]];
@@ -191,11 +194,8 @@
     if (path) [self addCSSWithURL:[NSURL fileURLWithPath:path]];
 }
 
-- (void)writeDocumentWithPage:(KTPage *)page;
+- (void)writeDocumentContentsWithPage:(KTPage *)page;
 {
-    [self startDocumentWithPage:page];
-
-    
     // It's template time!
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:page];
     [parser parseIntoHTMLContext:self];
@@ -224,10 +224,10 @@
         
         // For preview/quicklook mode, the banner CSS (after the design's main.css)
         [[page master] writeBannerCSS:self];
- 
+        
 		// Finally, the stuff that is code-injected.
 		[[page master] writeCodeInjectionCSS:self];
-}
+    }
 	
     
 	// If we're for editing, include additional editing CSS
@@ -236,9 +236,27 @@
 		NSString *editingCSSPath = [[NSBundle mainBundle] pathForResource:@"design-time"
                                                                    ofType:@"css"];
         if (editingCSSPath) [self addCSSWithURL:[NSURL fileURLWithPath:editingCSSPath]];
-	}
+	}    
 }
 
+- (void)writeDocumentWithPage:(KTPage *)page;
+{
+    [self startDocumentWithPage:page];
+    [self writeDocumentContentsWithPage:page];
+}
+
+- (void)writeDocumentWithArchivePage:(SVArchivePage *)archive;
+{
+    KTPage *collection = [archive collection];
+    [self startDocumentWithPage:collection];
+    
+    [self setBaseURL:[archive URL]];
+    
+    [_article release];
+    _article = [archive retain];
+    
+    [self writeDocumentContentsWithPage:collection];
+}
 
 #pragma mark Properties
 
