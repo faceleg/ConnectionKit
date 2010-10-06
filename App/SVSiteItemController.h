@@ -18,11 +18,13 @@
   @private
     id <SVMedia>    _thumbnail;
     
-    NSArrayController   *_pagesController;
+    NSArrayController       *_pagesController;
+    NSArray                 *_pagesToIndex;
+    SVSiteItemController    *_thumbnailSourceItemController;
 }
 
-@property(nonatomic, retain) id <SVMedia> thumbnailMedia;
+@property(nonatomic, retain, readonly) id <SVMedia> thumbnailMedia;
 
-@property(nonatomic, readonly) NSArrayController *childPagesController;
+@property(nonatomic, readonly) NSArrayController *childPagesToIndexController;
 
 @end
