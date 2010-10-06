@@ -427,11 +427,14 @@
                         width = height * aspectRatio;
                     }
                     
-                    [context writeImageWithSourceMedia:[source thumbnailMedia]
+                    id <SVMedia> media = [source thumbnailMedia];
+                    NSString *type = [(SVMediaRecord *)media typeOfFile];
+                    
+                    [context writeImageWithSourceMedia:media
                                                    alt:@""
                                                  width:[NSNumber numberWithUnsignedInteger:width]
                                                 height:[NSNumber numberWithUnsignedInteger:height]
-                                                  type:nil];
+                                                  type:type];
                     
                     // Finish up
                     [context endElement];
