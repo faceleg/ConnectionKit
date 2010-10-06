@@ -11,6 +11,7 @@
 #import "KT.h"
 #import "KTSite.h"
 #import "SVApplicationController.h"
+#import "SVArchivePage.h"
 #import "KTDesign.h"
 #import "KTDocument.h"
 #import "KTElementPlugInWrapper.h"
@@ -285,7 +286,18 @@
 	}
     
     
-    // Want the page itself to be placed on the queue after RSS feed, so if publishing fails between the two, both will be republished next time round
+    // Publish archives
+    for (SVArchivePage *anArchivePage in [self archivePages])
+    {
+        SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:
+                                  [anArchivePage uploadPath]];
+        
+        [context writeDocumentWithPage:anArchivePage];
+        [context close];
+    }
+    
+    
+    // Want the page itself to be placed on the queue last, so if publishing fails between the two, both will be republished next time round
     [context close];
     
     
