@@ -10,7 +10,7 @@
 #import "KSSingletonWindowController.h"
 
 
-@class SVPagesController, BWSplitView, KSPlaceholderTextView;
+@class SVPagesTreeController, BWSplitView, KSPlaceholderTextView;
 @protocol KSCollectionController;
 
 

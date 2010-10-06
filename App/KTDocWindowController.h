@@ -30,7 +30,7 @@
 @class KSTextField, KSFancySchmancyBindingsPopUpButton;
 @class RoundedBox;
 @class KTLinkSourceView;
-@class SVPagesController;
+@class SVPagesTreeController;
 @class SVSiteOutlineViewController;
 @class KTPage;
 @class KTCodeInjectionController;
@@ -71,7 +71,7 @@ extern NSString *gInfoWindowAutoSaveName;
     
 	SVWebContentAreaController  *_webContentAreaController;     // Weak ref — why?
 	SVSiteOutlineViewController *_siteOutlineViewController;
-    SVPagesController           *_pagesController;
+    SVPagesTreeController           *_pagesController;
 		
 	// Code Injection
 	KTCodeInjectionController	*myMasterCodeInjectionController;
@@ -92,7 +92,7 @@ extern NSString *gInfoWindowAutoSaveName;
 #pragma mark View Controllers
 @property(nonatomic, retain) IBOutlet SVSiteOutlineViewController *siteOutlineViewController;
 @property(nonatomic, retain, readonly) IBOutlet SVWebContentAreaController *webContentAreaController;
-@property(nonatomic, retain) IBOutlet SVPagesController *pagesController;
+@property(nonatomic, retain) IBOutlet SVPagesTreeController *pagesController;
 @property(nonatomic, retain) NSMenuItem *rawHTMLMenuItem;
 @property(nonatomic, retain) NSMenuItem *HTMLTextPageMenuItem;
 

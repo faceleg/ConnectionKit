@@ -206,7 +206,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 }
 
 @synthesize pagesController = _pagesController;
-- (void) setPagesController:(SVPagesController *)controller;
+- (void) setPagesController:(SVPagesTreeController *)controller;
 {
     if (_pagesController)
     {

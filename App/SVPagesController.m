@@ -43,7 +43,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
  */
 
 
-@interface SVPagesController ()
+@interface SVPagesTreeController ()
 - (id)newObjectWithPredecessor:(KTPage *)predecessor allowCollections:(BOOL)allowCollections;
 - (void)configurePageAsCollection:(KTPage *)collection;
 - (void)didInsertObject:(id)object intoCollection:(KTPage *)collection;
@@ -53,7 +53,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 #pragma mark -
 
 
-@implementation SVPagesController
+@implementation SVPagesTreeController
 
 #pragma mark Creating a Pages Controller
 

@@ -24,7 +24,7 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 @protocol SVPagesControllerDelegate;
 
 
-@interface SVPagesController : NSArrayController
+@interface SVPagesTreeController : NSArrayController
 {
   @private
     NSDictionary    *_presetDict;
@@ -72,7 +72,7 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 
 
 @protocol SVPagesControllerDelegate <NSObject>
-- (KTPage *)collectionForPagesControllerToInsertInto:(SVPagesController *)sender;
+- (KTPage *)collectionForPagesControllerToInsertInto:(SVPagesTreeController *)sender;
 @optional
 - (void)pagesControllerDidInsertObject:(NSNotification *)notification;
 @end
