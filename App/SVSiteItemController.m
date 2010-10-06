@@ -98,11 +98,23 @@
 @synthesize thumbnailMedia = _thumbnail;
 
 @synthesize thumbnailType = _thumbnailType;
-- (void) setThumbnailType:(SVThumbnailType)type;
+- (void)setThumbnailType:(SVThumbnailType)type;
 {
+    [self willChangeValueForKey:@"picksThumbnailFromPage"]; // dependent key paths don't seem to work on controllers
+    
     _thumbnailType = type;
     [self prepareThumbnail];
+    
+    [self didChangeValueForKey:@"picksThumbnailFromPage"];
 }
+
+- (BOOL)picksThumbnailFromPage;
+{
+    BOOL result = ([self thumbnailType] == SVThumbnailTypePickFromPage);
+    return result;
+}
+
+#pragma mark Sub-Controllers
 
 - (NSArrayController *)childPagesToIndexController;
 {

@@ -2181,7 +2181,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 			<object class="NSCustomObject" id="334372537">
 				<string key="NSClassName">KSTrimFirstLineFormatter</string>
 			</object>
-			<object class="NSObjectController" id="223605596">
+			<object class="NSObjectController" id="643660233">
 				<object class="NSMutableArray" key="NSDeclaredKeys">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSMutableString">
@@ -2542,41 +2542,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						</object>
 					</object>
 					<int key="connectionID">247</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">hidden: inspectedObjectsController.selection.thumbnailType</string>
-						<reference key="source" ref="924718106"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="924718106"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">hidden: inspectedObjectsController.selection.thumbnailType</string>
-							<string key="NSBinding">hidden</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.thumbnailType</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSValueTransformerName</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<integer value="1"/>
-									<integer value="1"/>
-									<integer value="1"/>
-									<integer value="1"/>
-									<string>SVIsCustomThumbnail</string>
-								</object>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">251</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2992,10 +2957,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">contentObject: inspectedObjectsController.selection.self</string>
-						<reference key="source" ref="223605596"/>
+						<reference key="source" ref="643660233"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="223605596"/>
+							<reference key="NSSource" ref="643660233"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">contentObject: inspectedObjectsController.selection.self</string>
 							<string key="NSBinding">contentObject</string>
@@ -3009,10 +2974,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: thumbnailMedia</string>
 						<reference key="source" ref="924718106"/>
-						<reference key="destination" ref="223605596"/>
+						<reference key="destination" ref="643660233"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="924718106"/>
-							<reference key="NSDestination" ref="223605596"/>
+							<reference key="NSDestination" ref="643660233"/>
 							<string key="NSLabel">value: thumbnailMedia</string>
 							<string key="NSBinding">value</string>
 							<string key="NSKeyPath">thumbnailMedia</string>
@@ -3020,6 +2985,58 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						</object>
 					</object>
 					<int key="connectionID">432</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: picksThumbnailFromPage</string>
+						<reference key="source" ref="924718106"/>
+						<reference key="destination" ref="643660233"/>
+						<object class="NSNibBindingConnector" key="connector" id="177970910">
+							<reference key="NSSource" ref="924718106"/>
+							<reference key="NSDestination" ref="643660233"/>
+							<string key="NSLabel">hidden: picksThumbnailFromPage</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">picksThumbnailFromPage</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">434</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden2: thumbnailType</string>
+						<reference key="source" ref="924718106"/>
+						<reference key="destination" ref="643660233"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="924718106"/>
+							<reference key="NSDestination" ref="643660233"/>
+							<string key="NSLabel">hidden2: thumbnailType</string>
+							<string key="NSBinding">hidden2</string>
+							<string key="NSKeyPath">thumbnailType</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<string>NSNegateBoolean</string>
+								</object>
+							</object>
+							<reference key="NSPreviousConnector" ref="177970910"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">436</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4098,7 +4115,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">426</int>
-						<reference key="object" ref="223605596"/>
+						<reference key="object" ref="643660233"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Site Item Controller</string>
 					</object>
@@ -4512,7 +4529,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">432</int>
+			<int key="maxID">436</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
