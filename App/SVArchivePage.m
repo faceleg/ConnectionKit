@@ -113,6 +113,13 @@
 - (BOOL)shouldIncludeInIndexes; { return NO; }
 - (BOOL)shouldIncludeInSiteMaps; { return NO; }
 
-- (BOOL) hasThumbnail; { return NO; }
+- (BOOL)writeThumbnail:(id <SVPlugInContext>)context
+              maxWidth:(NSUInteger)width
+             maxHeight:(NSUInteger)height
+        imageClassName:(NSString *)className
+                dryRun:(BOOL)dryRun;
+{
+    return NO;
+}
 
 @end
