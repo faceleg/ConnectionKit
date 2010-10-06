@@ -8,6 +8,7 @@
 
 #import "SVArchivePage.h"
 
+#import "SVHTMLTemplateParser.h"
 #import "KTPage+Paths.h"
 #import "SVLink.h"
 
@@ -120,6 +121,16 @@
                 dryRun:(BOOL)dryRun;
 {
     return NO;
+}
+
+#pragma mark Article
+
+- (void)writeHTML;
+{
+    SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+    
+    // Write out custom index
+    [context writeHTMLString:@"<div>Oy, there should be an archive here!</div>"];
 }
 
 @end
