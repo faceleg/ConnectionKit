@@ -13,6 +13,7 @@
 #import "SVHTMLContext.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVMediaGraphic.h"
+#import "SVPagesController.h"
 #import "SVTextAttachment.h"
 
 #import "NSArray+Karelia.h"
@@ -56,7 +57,7 @@
 	
 	if ([self isCollection])
 	{
-		NSArray *pages = [self pagesInIndex];
+		NSArray *pages = [[SVPagesController controllerWithPagesToIndexInCollection:self] arrangedObjects];
 		for ( KTPage *page in pages )
 		{
 			if ( [page wrappedBoolForKey:@"allowComments"] )
