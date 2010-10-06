@@ -357,7 +357,7 @@
     
     
     // Create the archive
-    SVGraphicFactory *factory = [KTElementPlugInWrapper pluginWithIdentifier:@"sandvox.CollectionArchiveElement"];
+    SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:@"sandvox.CollectionArchiveElement"];
     SVGraphic *pagelet = [factory insertNewGraphicInManagedObjectContext:
                           [collection managedObjectContext]];
     
