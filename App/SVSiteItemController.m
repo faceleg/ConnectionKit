@@ -13,7 +13,11 @@
 
 - (void)dealloc;
 {
+    [self unbind:@"thumbnailMedia"];
+    
+    [_thumbnail release];
     [_pagesController release];
+    
     [super dealloc];
 }
 
