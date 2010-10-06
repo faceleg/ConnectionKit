@@ -35,6 +35,47 @@
 
 #pragma mark Content
 
+- (void)prepareThumbnail;
+{
+    switch ([self thumbnailType])
+    {
+        case SVThumbnailTypeNone:
+            [self setThumbnailMedia:nil];
+            break;
+            
+        case SVThumbnailTypeCustom:
+            [self bind:@"thumbnailMedia"
+              toObject:[self content]
+           withKeyPath:@"customThumbnail"
+               options:nil];
+            break;
+            
+        case SVThumbnailTypePickFromPage:
+            [self bind:@"thumbnailMedia"
+              toObject:[self content]
+           withKeyPath:@"thumbnailSourceGraphic.thumbnailMedia"
+               options:nil];
+            break;
+            
+        case SVThumbnailTypeFirstChildItem:
+        case SVThumbnailTypeLastChildItem:
+        {
+            // This is it boys, this is war. Need a controller for the pages...
+            NSArrayController *pagesController = [self childPagesToIndexController];
+            [self bind:@"childPagesToIndex"
+              toObject:pagesController
+           withKeyPath:@"arrangedObjects"
+               options:nil];
+            
+            // ...and from there take the thumbnail media
+            [self bind:@"thumbnailMedia"
+              toObject:_thumbnailSourceItemController
+           withKeyPath:@"thumbnailMedia"
+               options:nil];
+        }
+    }
+}
+
 - (void)setContent:(id)content;
 {
     [self unbind:@"thumbnailMedia"];
@@ -42,50 +83,27 @@
     
     [super setContent:content];
     
-    // Match thumbnail up to custom image for now
     if (content)
     {
-        switch ([[content thumbnailType] intValue])
-        {
-            case SVThumbnailTypeNone:
-                [self setThumbnailMedia:nil];
-                break;
-                
-            case SVThumbnailTypeCustom:
-                [self bind:@"thumbnailMedia"
-                  toObject:content
-               withKeyPath:@"customThumbnail"
-                   options:nil];
-                break;
-                
-            case SVThumbnailTypePickFromPage:
-                [self bind:@"thumbnailMedia"
-                  toObject:content
-               withKeyPath:@"thumbnailSourceGraphic.thumbnailMedia"
-                   options:nil];
-                break;
-                
-            case SVThumbnailTypeFirstChildItem:
-            case SVThumbnailTypeLastChildItem:
-            {
-                // This is it boys, this is war. Need a controller for the pages...
-                NSArrayController *pagesController = [self childPagesToIndexController];
-                [self bind:@"childPagesToIndex"
-                  toObject:pagesController
-               withKeyPath:@"arrangedObjects"
-                   options:nil];
-                
-                // ...and from there take the thumbnail media
-                [self bind:@"thumbnailMedia"
-                  toObject:_thumbnailSourceItemController
-               withKeyPath:@"thumbnailMedia"
-                   options:nil];
-            }
-        }
+        [self bind:@"thumbnailType" toObject:content withKeyPath:@"thumbnailType" options:nil];
     }
+    else
+    {
+        [self setThumbnailType:SVThumbnailTypeNone];
+    }
+    
+    // Match thumbnail up to custom image for now
+    [self prepareThumbnail];
 }
 
 @synthesize thumbnailMedia = _thumbnail;
+
+@synthesize thumbnailType = _thumbnailType;
+- (void) setThumbnailType:(SVThumbnailType)type;
+{
+    _thumbnailType = type;
+    [self prepareThumbnail];
+}
 
 @synthesize childPagesToIndexController = _pagesController;
 - (NSArrayController *)childPagesToIndexController;

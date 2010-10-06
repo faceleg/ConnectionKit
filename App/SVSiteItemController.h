@@ -17,6 +17,7 @@
 {
   @private
     id <SVMedia>    _thumbnail;
+    SVThumbnailType _thumbnailType;
     
     NSArrayController       *_pagesController;
     NSArray                 *_pagesToIndex;
@@ -24,6 +25,7 @@
 }
 
 @property(nonatomic, retain, readonly) id <SVMedia> thumbnailMedia;
+@property(nonatomic) SVThumbnailType thumbnailType;
 
 @property(nonatomic, readonly) NSArrayController *childPagesToIndexController;
 
