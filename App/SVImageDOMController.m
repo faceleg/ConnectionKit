@@ -315,19 +315,16 @@
     SVMediaGraphic *image = [self representedObject];
 	CGSize originalSize = [[image plugIn] originalSize];
 	
-	// Snap if we are near the original size, UNLESS the command key is held down.
-	if ((GetCurrentKeyModifiers() & cmdKey) == 0)
-	{
-		int snap = MIN(originalSize.width/4, 10);	// snap to smaller of 25% image width or 10 pixels
-		if (resizingWidth && ( abs(size.width - originalSize.width) < snap) )
-		{
-			size.width = originalSize.width;
-		}
-		if (resizingHeight && ( abs(size.height - originalSize.height) < snap) )
-		{
-			size.height = originalSize.height;
-		}
-	}
+	// Snap if we are near the original size.
+    int snap = MIN(originalSize.width/4, 10);	// snap to smaller of 25% image width or 10 pixels
+    if (resizingWidth && ( abs(size.width - originalSize.width) < snap) )
+    {
+        size.width = originalSize.width;
+    }
+    if (resizingHeight && ( abs(size.height - originalSize.height) < snap) )
+    {
+        size.height = originalSize.height;
+    }
     
     
     return size;

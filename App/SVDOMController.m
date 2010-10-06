@@ -383,8 +383,15 @@
     if (bounds.size.height<=minSize.height) bounds.size.height = minSize.height;
     
     
+    // Apply constraints, UNLESS the command key is held down. Why not use current NSEvent? - Mike
+    NSSize size = bounds.size;
+    if ((GetCurrentKeyModifiers() & cmdKey) == 0)
+	{
+        size = [self constrainSize:size handle:handle];
+    }
+    
+    
     // Finally, we can go ahead and resize
-    NSSize size = [self constrainSize:bounds.size handle:handle];
     [self resizeToSize:size byMovingHandle:handle];
     
     
