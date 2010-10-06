@@ -26,6 +26,7 @@
 - (void)dealloc;
 {
     [self setContent:nil];  // make sure bindings etc. are torn down
+    [self unbind:@"childPagesToIndex"];
     
     [_thumbnail release];
     [_pagesController release];
@@ -63,11 +64,7 @@
         case SVThumbnailTypeLastChildItem:
         {
             // This is it boys, this is war. Need a controller for the pages...
-            NSArrayController *pagesController = [self childPagesToIndexController];
-            [self bind:@"childPagesToIndex"
-              toObject:pagesController
-           withKeyPath:@"arrangedObjects"
-               options:nil];
+            [self childPagesToIndexController]; // makes sure it's loaded/bound
             
             // ...and from there take the thumbnail media
             [self bind:@"thumbnailMedia"
@@ -107,7 +104,6 @@
     [self prepareThumbnail];
 }
 
-@synthesize childPagesToIndexController = _pagesController;
 - (NSArrayController *)childPagesToIndexController;
 {
     // Create lazily
@@ -116,6 +112,12 @@
         _pagesController = [SVPagesController controllerWithPagesToIndexInCollection:
                             [self content]];
         [_pagesController retain];
+        
+        [self bind:@"childPagesToIndex"
+          toObject:_pagesController
+       withKeyPath:@"arrangedObjects"
+           options:nil];
+        
     }
     
     return _pagesController;
