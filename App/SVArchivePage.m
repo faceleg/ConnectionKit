@@ -68,11 +68,6 @@
 
 - (NSString *)timestampDescription; { return nil; }
 
-#pragma mark Master
-
-- (KTMaster *)master; { return [[self collection] master]; }
-- (KTDesign *)design; { return [[self collection] design]; }
-
 #pragma mark Location
 
 - (NSURL *)URL;

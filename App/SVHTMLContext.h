@@ -12,11 +12,9 @@
 
 #import "KSHTMLWriter.h"
 
-#import "KTPage.h"
 #import "SVPlugIn.h"
-#import "KT.h"
-
 #import "KSMegaBufferedWriter.h"
+#import "KT.h"
 
 #import <iMedia/iMedia.h>
 
@@ -43,8 +41,8 @@ typedef enum {
     KSStringWriter  *_output;
     NSUInteger      _charactersWritten;
     
-    NSURL               *_baseURL;
-    id <SVPageInternal> _currentPage;
+    NSURL   *_baseURL;
+    KTPage	*_currentPage;
     
 	BOOL                _liveDataFeeds;
     NSString            *_language;
@@ -87,7 +85,7 @@ typedef enum {
 
 #pragma mark Document
 // Sets various context properties to match the page too
-- (void)writeDocumentWithPage:(id <SVPageInternal>)page;
+- (void)writeDocumentWithPage:(KTPage *)page;
 
 
 #pragma mark Properties
@@ -96,7 +94,7 @@ typedef enum {
 @property(nonatomic, retain, readonly) KSStringWriter *outputStringWriter;
 @property(nonatomic, readonly) NSUInteger totalCharactersWritten;
 
-@property(nonatomic, retain, readonly) id <SVPageInternal> page;    // does NOT affect .baseURL
+@property(nonatomic, retain, readonly) KTPage *page;    // does NOT affect .baseURL
 @property(nonatomic, copy) NSURL *baseURL;
 @property(nonatomic) BOOL liveDataFeeds;
 @property(nonatomic, copy) NSString *language;
