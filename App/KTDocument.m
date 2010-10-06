@@ -379,7 +379,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 - (KTPage *)makeRootPage
 {
     // Create page
-    SVPagesTreeController *controller = [[SVPagesTreeController alloc] init];
+    SVPagesController *controller = [[SVPagesController alloc] init];
     [controller setManagedObjectContext:[self managedObjectContext]];
     [controller setEntityName:@"Page"];
     [controller setCollectionPreset:[NSDictionary dictionary]];

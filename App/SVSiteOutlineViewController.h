@@ -16,7 +16,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 
 
-@class SVPagesTreeController, SVSiteItem, BWSplitView;
+@class SVPagesController, SVSiteItem, BWSplitView;
 
 
 @interface SVSiteOutlineViewController : NSViewController <SVPagesControllerDelegate, NSUserInterfaceValidations>
@@ -25,7 +25,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 	
   @private
     NSOutlineView       *_outlineView;
-    SVPagesTreeController	*_pagesController;
+    SVPagesController	*_pagesController;
     BOOL                _isChangingSelection;
 	    
     // Content
@@ -49,7 +49,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 @property(nonatomic, retain) IBOutlet NSOutlineView *outlineView;
 
-@property(nonatomic, retain) SVPagesTreeController *content;
+@property(nonatomic, retain) SVPagesController *content;
 
 
 @property(nonatomic, retain) KTPage *rootPage;

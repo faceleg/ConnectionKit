@@ -137,7 +137,7 @@
     {
         //FIXME: should we really be hanging on to the controller in an ivar? if not, how do we reference it outside this method?
         //FIXME: remove reference to KTPage someday
-        self.indexablePagesController = [SVPagesTreeController controllerWithPagesToIndexInCollection:(KTPage *)self.indexedCollection];
+        self.indexablePagesController = [SVPagesController controllerWithPagesToIndexInCollection:(KTPage *)self.indexedCollection];
         [context addDependencyForKeyPath:@"arrangedObjects" ofObject:self.indexablePagesController];
     }
     

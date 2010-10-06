@@ -209,7 +209,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 #pragma mark Other Accessors
 
 @synthesize content = _pagesController;
-- (void)setContent:(SVPagesTreeController *)controller
+- (void)setContent:(SVPagesController *)controller
 {
     [_pagesController removeObserver:self forKeyPath:@"selectedObjects"];
     [_pagesController setDelegate:nil];
@@ -570,7 +570,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     [[self content] add:self];
 }
 
-- (KTPage *)collectionForPagesControllerToInsertInto:(SVPagesTreeController *)sender;
+- (KTPage *)collectionForPagesControllerToInsertInto:(SVPagesController *)sender;
 {
     // Want to insert inside of collections only if they're expanded
     KTPage *result = [[sender selectedObjects] lastObject];
@@ -629,7 +629,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     if ([[pboard types] containsObject:kKTPagesPboardType])
     {
         // Create a page for the content
-        SVPagesTreeController *controller = [self content];
+        SVPagesController *controller = [self content];
         [controller addObjectsFromPasteboard:pboard
                                 toCollection:[self collectionForPagesControllerToInsertInto:controller]];
     }
@@ -1272,7 +1272,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     else
     {
         // Create a page for the content
-        SVPagesTreeController *pagesController = [self content];
+        SVPagesController *pagesController = [self content];
         return [pagesController addObjectsFromPasteboard:[info draggingPasteboard]
                                             toCollection:collection];
     }
@@ -1335,7 +1335,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
 	
     // Insert each item in turn. By running in reverse we can keep reusing the same index
-    SVPagesTreeController *controller = [self content];
+    SVPagesController *controller = [self content];
     for (SVSiteItem *anItem in [items reverseObjectEnumerator])
     {
         [controller moveObject:anItem toCollection:collection index:index];
