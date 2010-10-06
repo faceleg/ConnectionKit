@@ -171,24 +171,6 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 #pragma mark -
 #pragma mark Bundle Icons
 
-- (NSImage *)iconForPlugin:(KTElementPlugInWrapper *)plugin
-{
-	OBPRECONDITION(plugin);
-	
-	NSString *bundleIdentifier = [plugin identifier];
-	OBASSERT(bundleIdentifier);
-	NSImage *result = [_cachedPluginIcons objectForKey:bundleIdentifier];
-	
-	if (!result)
-	{
-		result = [plugin pluginIcon];
-		[_cachedPluginIcons setObject:result forKey:bundleIdentifier];
-	}
-	
-    OBPOSTCONDITION(result);
-	return result;
-}
-
 /*	Support method for displaying the default bundle's icon for a page.
  *	If the page has an index, returns the index icon. Otherwise, the page plugin's icon.
  */
@@ -228,11 +210,6 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 		//plugin = [page plugin];
 	}
 	
-	
-	if (plugin)
-	{
-		result = [self iconForPlugin:plugin];
-	}
 	
 	return result;	// Can be nil if no plugin is found
 }
