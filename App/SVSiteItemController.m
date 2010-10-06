@@ -29,6 +29,8 @@
     
     [_thumbnail release];
     [_pagesController release];
+    OBPOSTCONDITION(!_pagesToIndex);
+    OBPOSTCONDITION(!_thumbnailSourceItemController);
     
     [super dealloc];
 }
@@ -45,7 +47,7 @@
             
         case SVThumbnailTypeCustom:
             [self bind:@"thumbnailMedia"
-              toObject:[self content]
+              toObject:([self content] ? [self content] : nil)
            withKeyPath:@"customThumbnail"
                options:nil];
             break;
