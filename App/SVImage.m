@@ -237,6 +237,15 @@
 
 - (BOOL)shouldPublishEditingElementID; { return NO; }
 
-#pragma mark Thumbnail
+#pragma mark Inspector
+
++ (SVInspectorViewController *)makeInspectorViewController;
+{
+    SVInspectorViewController *result = [[[SVMediaGraphicInspector alloc]
+                                          initWithNibName:@"SVImage" bundle:nil]
+                                         autorelease];
+    
+    return result;
+}
 
 @end

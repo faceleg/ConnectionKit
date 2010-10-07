@@ -345,16 +345,7 @@
 
 #pragma mark Inspector
 
-+ (SVInspectorViewController *)makeInspectorViewController;
-{
-    SVInspectorViewController *result = [[[SVMediaGraphicInspector alloc]
-                                          initWithNibName:@"SVImage" bundle:nil]
-                                         autorelease];
-    
-    return result;
-}
-
-- (Class)inspectorFactoryClass; { return [self class]; }
+- (Class)inspectorFactoryClass; { return [[self plugIn] class]; }
 
 - (id)objectToInspect; { return self; }
 
