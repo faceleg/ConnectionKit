@@ -63,7 +63,10 @@
 		// HTML tag
 		NSString *tag = [parameters objectForKey:@"tag"];
 		if (tag && ![tag isKindOfClass:[NSString class]]) tag = nil;	// not sure why we have this
-		
+		if ([tag isEqualToString:@"h"])	// indicator that it is a H1, H2, H3 etc.
+		{
+			tag = [[self HTMLContext] currentHeaderLevelTagName];
+		}
 		// class for the tag generated
 		NSString *className = [parameters objectForKey:@"class"];
 		
