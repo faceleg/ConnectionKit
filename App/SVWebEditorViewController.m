@@ -693,9 +693,14 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     if (media)
     {
-        SVImage *image = [SVImage insertNewImageWithMedia:media];
-        [image willInsertIntoPage:page];
-        [self _insertPageletInSidebar:image];
+        SVMediaGraphic *graphic = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
+        [graphic setMedia:media];
+        [graphic setShowsTitle:NO];
+        [graphic setShowsCaption:NO];
+        [graphic setShowsIntroduction:NO];
+        
+        [graphic willInsertIntoPage:[[self HTMLContext] page]];
+        [self _insertPageletInSidebar:graphic];
     }
     else
     {
