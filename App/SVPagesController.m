@@ -465,12 +465,15 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 - (void)didInsertObject:(id)object intoCollection:(KTPage *)collection;
 {
     // Make sure filename is unique within the collection
-    NSString *preferredFilename = [object preferredFilename];
-    if (![collection isFilenameAvailable:preferredFilename forItem:object])
+    if ([object respondsToSelector:@selector(preferredFilename)])
     {
-        [object setFileName:nil];   // needed to fool -suggestedFilename
-        NSString *suggestedFilename = [object suggestedFilename];
-        [object setFileName:[suggestedFilename stringByDeletingPathExtension]];
+        NSString *preferredFilename = [object preferredFilename];
+        if (![collection isFilenameAvailable:preferredFilename forItem:object])
+        {
+            [object setFileName:nil];   // needed to fool -suggestedFilename
+            NSString *suggestedFilename = [object suggestedFilename];
+            [object setFileName:[suggestedFilename stringByDeletingPathExtension]];
+        }
     }
 }
 
