@@ -196,7 +196,10 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         {
             [plugIn setValue:self forKey:@"container"]; // cheat and call early so plug-in can locate pages
             [self populatePlugInValues:plugIn];
-            [self setPrimitivePlugIn:plugIn];   // so as not to fire a KVO change notification
+            
+            [self setPlugIn:plugIn useSerializedProperties:NO];
+            //[self setPrimitivePlugIn:plugIn];   // so as not to fire a KVO change notification
+            // But wy didn't I want to fire a notification? Certainly want to for #90487
         }
         
         [plugIn release];
