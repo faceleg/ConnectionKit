@@ -424,12 +424,15 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (void)awakeFromPasteboardContents:(id)pasteboardContents ofType:(NSString *)type;
 {
-    KSWebLocation *location = pasteboardContents;
-    
-    NSString *title = [location title];
-    if (!title) title = [[location URL] ks_lastPathComponent];
-    
-    [self setTitle:title];
+    if ([pasteboardContents isKindOfClass:[KSWebLocation class]])
+    {
+        KSWebLocation *location = pasteboardContents;
+        
+        NSString *title = [location title];
+        if (!title) title = [[location URL] ks_lastPathComponent];
+        
+        [self setTitle:title];
+    }
 }
 
 #pragma mark SVPlugInContainer
