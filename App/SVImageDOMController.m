@@ -90,7 +90,7 @@
     
     
     // Apply the change
-    SVImage *image = [self representedObject];
+    SVMediaGraphic *image = [self representedObject];
 	if (resizingWidth)
     {
         if (resizingHeight)
