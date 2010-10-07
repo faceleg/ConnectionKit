@@ -123,11 +123,16 @@
 
 - (BOOL)endsOnAttachment;
 {
-    NSAttributedString *attributedHTML = [self attributedHTMLString];
+    BOOL result = NO;
     
-    BOOL result = ([attributedHTML attribute:@"SVAttachment"
-                                     atIndex:([attributedHTML length] - 1)
-                              effectiveRange:NULL] != nil);
+    NSAttributedString *attributedHTML = [self attributedHTMLString];
+    if ([attributedHTML length])
+    {
+        result = ([attributedHTML attribute:@"SVAttachment"
+                                        atIndex:([attributedHTML length] - 1)
+                                effectiveRange:NULL] != nil);
+    }
+    
     return result;
 }
 
