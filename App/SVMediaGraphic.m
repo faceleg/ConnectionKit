@@ -455,8 +455,11 @@
         // Reset size
         self.naturalWidth = nil;
         self.naturalHeight = nil;
+        
+        NSNumber *oldWidth = [self width];
         [self makeOriginalSize];
         [self setConstrainProportions:YES];
+        [self setWidth:oldWidth];
     }
     
     
