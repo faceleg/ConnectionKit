@@ -13,8 +13,7 @@
 
 @class SVMediaRecord;
 
-@interface SVAudio : SVAudioVisualPlugIn <SVEnclosure>
-{
+@interface SVAudio : SVAudioVisualPlugIn{
 
 }
 

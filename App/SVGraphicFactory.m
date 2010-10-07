@@ -169,7 +169,6 @@
     SVVideo *result = [SVVideo insertNewGraphicInManagedObjectContext:context];
     [result setWidth:200];
     [result setHeight:150];	// typical TV aspect ratio
-    [result setIsMediaPlaceholder:[NSNumber numberWithBool:YES]];
     
     return result;
 }

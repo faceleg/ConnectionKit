@@ -92,11 +92,10 @@
     return result;
 }
 
-- (void)willInsertIntoPage:(KTPage *)page;
+- (void)didAddToPage:(id <SVPage>)page;
 {
 	[self addObserver:self forKeyPath:@"externalSourceURL"	options:(NSKeyValueObservingOptionNew) context:nil];
 	[self addObserver:self forKeyPath:@"media"				options:(NSKeyValueObservingOptionNew) context:nil];
-    [super willInsertIntoPage:page];
     
     // Show caption
     if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)
@@ -140,11 +139,11 @@
 #pragma mark -
 #pragma mark Media
 
-- (void)setMediaWithURL:(NSURL *)URL;
+- (void)didSetSource;
 {
- 	OBPRECONDITION(URL);
-	[super setMediaWithURL:URL];
-        
+    [super didSetSource];
+
+	
     // Match file type
     [self setCodecType:[[self media] typeOfFile]];
 }

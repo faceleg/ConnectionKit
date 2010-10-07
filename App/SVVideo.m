@@ -109,11 +109,9 @@
     return result;
 }
 
-- (void)willInsertIntoPage:(KTPage *)page;
+- (void)didAddToPage:(id <SVPage>)page;
 {
 	[self.container setConstrainProportions:YES];		// We will likely want this on
-
-	[super willInsertIntoPage:page];
     
     // Show caption
     if ([[[self.container textAttachment] placement] intValue] != SVGraphicPlacementInline)
@@ -269,11 +267,11 @@
 #pragma mark -
 #pragma mark Media
 
-- (void)setMediaWithURL:(NSURL *)URL;
+- (void)didSetSource;
 {
- 	OBPRECONDITION(URL);
-   [super setMediaWithURL:URL];
-    
+    [super didSetSource];
+    [self _mediaChanged];
+
     if ([self constrainProportions])    // generally true
     {
         // Resize image to fit in space
@@ -329,12 +327,6 @@
 	
 	// Load the movie to figure out the media size and codecType
 	[self loadMovie];
-}
-
-- (void)didSetSource;
-{
-    [super didSetSource];
-    [self _mediaChanged];
 }
 
 #pragma mark -

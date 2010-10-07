@@ -15,7 +15,7 @@
 typedef enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose } PosterFrameType;
 
 
-@interface SVVideo : SVAudioVisualPlugIn <SVEnclosure>
+@interface SVVideo : SVAudioVisualPlugIn
 {
 	QTMovie *_dimensionCalculationMovie;
 	

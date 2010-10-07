@@ -65,12 +65,10 @@
     return result;
 }
 
-- (void)willInsertIntoPage:(KTPage *)page;
+- (void)didAddToPage:(id <SVPage>)page;
 {
 	[self setConstrainProportions:YES];		// We will likely want this on
-	
-    [super willInsertIntoPage:page];
-    
+	    
     // Show caption
     if ([[[self.container textAttachment] placement] intValue] != SVGraphicPlacementInline)
     {
@@ -112,14 +110,18 @@
 #pragma mark -
 #pragma mark Media
 
-- (void)setMediaWithURL:(NSURL *)URL;
+- (void)didSetSource;
 {
- 	OBPRECONDITION(URL);
-	[super setMediaWithURL:URL];
-    
+    [super didSetSource];
+
     if ([self constrainProportions])    // generally true
     {
         // Resize image to fit in space
+		
+#warning Where do we get the URL of the newly set source?
+		NSURL *URL = nil;
+		
+		
 		
 		if ([URL isFileURL])	// Get original size as soon as possible
 		{
