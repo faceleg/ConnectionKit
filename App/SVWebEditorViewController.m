@@ -831,7 +831,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     SVWebEditorTextRange *result = nil;
     
     SVTextDOMController *item = [self textAreaForDOMRange:domRange];
-    if (item)
+    if ([item representedObject])
     {
         result = [SVWebEditorTextRange rangeWithDOMRange:domRange
                                          containerObject:[item representedObject]
