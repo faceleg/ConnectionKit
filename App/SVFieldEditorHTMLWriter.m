@@ -114,7 +114,9 @@
         
         // Are we about to open an inline element which matches the one just written? If so, merge them into one. This is made possible by not yet having written the end tag of the element.
         DOMElement *elementToMergeInto = [_pendingEndDOMElements lastObject];
-        if ([elementToMergeInto isEqualNode:element compareChildNodes:NO])
+        
+        if ([elementToMergeInto parentNode] == [element parentNode] &&  // must be siblings or bad stuff happens
+            [elementToMergeInto isEqualNode:element compareChildNodes:NO])
         {
             // Dispose of markup: previous end tag, and this start tag
             [_output cancelFlushOnNextWrite];
