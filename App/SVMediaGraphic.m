@@ -116,9 +116,20 @@
 @dynamic media;
 - (void)setMedia:(SVMediaRecord *)media;
 {
+    NSString *identifier = [self plugInIdentifier];
+    
+    
     [self willChangeValueForKey:@"media"];
     [self setPrimitiveValue:media forKey:@"media"];
     [self didChangeValueForKey:@"media"];
+    
+    
+    // Does this change the type?
+    if (![[self plugInIdentifier] isEqualToString:identifier])
+    {
+        [self loadPlugInAsNew:NO];
+    }
+    
     
     [[self plugIn] didSetSource];
 }
@@ -426,9 +437,6 @@
     [super awakeFromPasteboardContents:contents ofType:type];
     
     
-    NSString *identifier = [self plugInIdentifier];
-    
-    
     // Can we read a media oject from the pboard?
     SVMediaRecord *media = nil;
     if ([[KSWebLocation webLocationPasteboardTypes] containsObject:type])
@@ -458,13 +466,6 @@
         self.naturalHeight = nil;
         [self makeOriginalSize];
         [self setConstrainProportions:YES];
-    }
-    
-    
-    // Does this change the type?
-    if (![[self plugInIdentifier] isEqualToString:identifier])
-    {
-        [self loadPlugInAsNew:NO];
     }
     
     
