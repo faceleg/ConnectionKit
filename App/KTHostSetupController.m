@@ -3033,7 +3033,6 @@ valueForKey tries the accessor methods.
 	{
 //		NSLog(@"Nothing found in %@ for key %@", [self class], aKey);
 	}
-	DJW((@"valueForUndefinedKey:%@ -> %@", aKey, result));
 	return result;
 }
 

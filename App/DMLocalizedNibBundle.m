@@ -1112,13 +1112,26 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
         
         if ([cell isKindOfClass:[NSActionCell class]]) {
             NSActionCell *actionCell = (NSActionCell *)cell;
-            
-            if ([actionCell isKindOfClass:[NSButtonCell class]]) {
+			
+           if ([actionCell isKindOfClass:[NSButtonCell class]]) {
                 NSButtonCell *buttonCell = (NSButtonCell *)actionCell;
                 if ([buttonCell imagePosition] != NSImageOnly) {
                     [self _localizeTitleOfObject:buttonCell bundle:bundle table:table level:level];
-                    [self _localizeStringValueOfObject:buttonCell bundle:bundle table:table level:level];
-                    [self _localizeAlternateTitleOfObject:buttonCell bundle:bundle table:table level:level];
+
+					// Before we try and localize the stringValue of the button, make sure it is not numeric.
+					NSScanner *numberScanner = [NSScanner scannerWithString:[buttonCell stringValue]];
+					BOOL foundDecimal = [numberScanner scanDecimal:nil];
+					if (foundDecimal && [numberScanner isAtEnd])
+					{
+						; // NSLog(@"NOT trying to localize button %@", [buttonCell stringValue]);
+					}
+					else
+					{
+						LOG((@"Should we be Localizing (non-numeric) stringValue of button cell????? %@", [buttonCell stringValue]));
+						[self _localizeStringValueOfObject:buttonCell bundle:bundle table:table level:level];
+					}
+                    
+					[self _localizeAlternateTitleOfObject:buttonCell bundle:bundle table:table level:level];
                 }
                 
             } else if ([actionCell isKindOfClass:[NSTextFieldCell class]]) {
