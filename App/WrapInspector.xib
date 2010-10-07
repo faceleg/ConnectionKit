@@ -312,7 +312,7 @@
 						<object class="NSMutableArray" key="NSCells">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="NSButtonCell" id="126046436">
-								<int key="NSCellFlags">-1543373312</int>
+								<int key="NSCellFlags">604110336</int>
 								<int key="NSCellFlags2">131072</int>
 								<string key="NSContents">Inline (moves with text)</string>
 								<object class="NSFont" key="NSSupport" id="26">
