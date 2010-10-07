@@ -666,7 +666,7 @@
     if ([elementName isEqualToString:@"img"] || [elementName isEqualToString:@"object"] || [elementName isEqualToString:@"embed"] || [elementName isEqualToString:@"iframe"])
     {
         [self pushAttribute:@"width" value:[width description]];
-        [self pushAttribute:@"height" value:[height description]];
+        if (height) [self pushAttribute:@"height" value:[height description]];
     }
     else
     {
