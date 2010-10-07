@@ -217,7 +217,7 @@
                                         entityName:@"PosterFrame"
                     insertIntoManagedObjectContext:[self.container managedObjectContext]];	
 	}
-	[self replaceMedia:posterMedia forKeyPath:@"posterFrame"];
+	[self replaceMedia:posterMedia forKeyPath:@"container.posterFrame"];
 
 }
 
