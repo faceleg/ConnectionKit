@@ -125,4 +125,8 @@
 - (BOOL)shouldWriteHTMLInline; { return NO; }
 - (BOOL)canWriteHTMLInline; { return NO; }
 
+#pragma mark Inspector
+
+- (id)valueForUndefinedKey:(NSString *)key; { return NSNotApplicableMarker; }
+
 @end
