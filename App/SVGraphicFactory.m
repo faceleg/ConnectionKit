@@ -106,8 +106,8 @@
 
 - (NSArray *)readablePasteboardTypes;
 {
-    NSArray *result = [KSWebLocation webLocationPasteboardTypes];
-    result = [result arrayByAddingObjectsFromArray:[NSImage imagePasteboardTypes]];
+    NSArray *result = [NSImage imageTypes]; // want to read by UTI ideally
+    result = [result arrayByAddingObjectsFromArray:[KSWebLocation webLocationPasteboardTypes]];
     return result;
 }
 

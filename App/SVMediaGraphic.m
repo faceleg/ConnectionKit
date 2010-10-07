@@ -21,6 +21,9 @@
 
 #import "NSError+Karelia.h"
 #import "NSString+Karelia.h"
+#import "NSURL+Karelia.h"
+
+#import "KSURLUtilities.h"
 
 
 @interface SVMediaGraphic ()
@@ -437,10 +440,20 @@
              insertIntoManagedObjectContext:[self managedObjectContext]
                                       error:NULL];
     }
-    else if ([[NSImage imagePasteboardTypes] containsObject:type])
+    else if ([[NSImage imageTypes] containsObject:type])
     {
+        // Invent a URL
+        NSString *extension = [NSString filenameExtensionForUTI:type];
+        
+        NSString *path = [[@"/" stringByAppendingPathComponent:@"pasted-file"]
+                          stringByAppendingPathExtension:extension];
+        
+        NSURL *url = [NSURL URLWithScheme:@"sandvox-fake-url"
+                                     host:[NSString UUIDString]
+                                     path:path];        
+        
         media = [SVMediaRecord mediaWithData:contents
-                                         URL:nil
+                                         URL:url
                                   entityName:@"GraphicMedia"
               insertIntoManagedObjectContext:[self managedObjectContext]];
     }
