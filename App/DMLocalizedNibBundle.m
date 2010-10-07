@@ -1363,7 +1363,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		float len = [string length];
 		float extra = ceilf(0.40 * len);
 		extra = MIN(extra, 100);		// don't pad more than 100 chars
-		NSString *insert = [@"____________________________________________________________________________________________________" substringToIndex:(int)extra];
+		NSString *insert = [@"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _" substringToIndex:(int)extra];
 		int halflen = len/2;
 		return [NSString stringWithFormat:@"%@%@%@",
 				[string substringToIndex:halflen],

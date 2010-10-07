@@ -326,7 +326,6 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		@"Publishing_to_your_Computer", @"localError",
 		@"Publishing_to_.Mac", @"mac",
 		@"Entering_Your_Host_Settings", @"host",
-		@"Entering_Your_Account_Details", @"account",
 		@"Testing_Your_Connection", @"test",
 		@"Host_Summary", @"summary",
 		nil];
@@ -725,52 +724,6 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		// make sure docRoot isn't null and make it empty if it is.
 		if (![[self properties] valueForKey:@"docRoot"]) {
 			[self setValue:@"" forKey:@"docRoot"];
-		}
-	}
-	else if ([stateWeAreComingFrom isEqualToString:@"account"])
-	{
-		if ([[self valueForKey:@"selectNewHost"] boolValue])
-		{
-			nextState = @"host";
-			[self setValue:[NSNumber numberWithBool:NO] forKey:@"selectNewHost"]; //turn it off for when we come back to this screen
-		}
-		else if (nil == [[self properties] valueForKey:@"userName"]
-			|| nil ==  [[self properties] valueForKey:@"hostName"]
-			|| ![self remoteSiteURLIsValid]) //we can have an empty password for sftp as it uses authorized_keys2 mechanism
-		{
-			nextState = @"summary";	// done, can't do the test
-		}
-		else
-		{
-			// see if we can substitute the account name in the stemURL
-			NSMutableString *urlString = [NSMutableString stringWithString:[[self properties] valueForKey:@"stemURL"]];
-			NSString *account = [[self properties] valueForKey:@"userName"];
-			
-			if ([urlString rangeOfString:account].location != NSNotFound) {
-				NSURL *url = [KSURLFormatter URLFromString:urlString];
-				NSString *urlHost = [url host];
-				NSArray *hostComponents = [urlHost componentsSeparatedByString:@"."];
-				NSMutableArray *newHostComponents = [NSMutableArray array];
-				NSString *cur;
-				
-				for (cur in hostComponents)
-				{
-//					if ([cur isEqualToString:account])
-//					{
-//						[newHostComponents addObject:@"?"];
-//					}
-//					else
-//					{
-						[newHostComponents addObject:cur];
-//					}
-				}
-				NSString *newHost = [newHostComponents componentsJoinedByString:@"."];
-				[urlString replaceOccurrencesOfString:urlHost withString:newHost options:NSLiteralSearch range:NSMakeRange(0, [urlString length])];
-				// [urlString replaceOccurrencesOfString:account withString:@"?" options:NSLiteralSearch range:NSMakeRange([newHost length], [urlString length] - [newHost length])];
-				LOG((@"setting stemURL to %@ after subbing username", urlString));
-				[self setValue:urlString forKey:@"stemURL"]; 
-			}
-			nextState = @"test";	// do the test to see if we can connect
 		}
 	}
 	else if ([stateWeAreComingFrom isEqualToString:@"test"])
@@ -3080,6 +3033,7 @@ valueForKey tries the accessor methods.
 	{
 //		NSLog(@"Nothing found in %@ for key %@", [self class], aKey);
 	}
+	DJW((@"valueForUndefinedKey:%@ -> %@", aKey, result));
 	return result;
 }
 
