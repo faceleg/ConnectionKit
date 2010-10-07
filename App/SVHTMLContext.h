@@ -107,6 +107,7 @@ typedef enum {
 - (BOOL)isForQuickLookPreview;
 - (BOOL)isForPublishing;
 - (BOOL)isForPublishingProOnly;
+- (BOOL)canWriteProMarkup;
 
 
 #pragma mark Doctype

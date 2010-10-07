@@ -159,22 +159,11 @@
 
 #pragma mark Code injection
 
-- (BOOL)canWriteCodeInjection:(SVHTMLContext *)aContext;
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	return ([aContext isForPublishingProOnly]
-		
-		// Show the code injection in the webview as well, as long as this default is set.
-		|| ([defaults boolForKey:@"ShowCodeInjectionInPreview"]) && [aContext isForEditing]
-		
-			);
-}
-
 - (void)write:(SVHTMLContext *)context codeInjectionSection:(NSString *)aKey masterFirst:(BOOL)aMasterFirst;
 {
     OBPRECONDITION(context);
     
-    if ([self canWriteCodeInjection:context])
+    if ([context canWriteProMarkup])
 	{
         NSString *masterCode = [[[self master] codeInjection] valueForKey:aKey];
 		NSString *pageCode = [[self codeInjection] valueForKey:aKey];
@@ -204,7 +193,7 @@
 - (void)writeCodeInjectionBodyTag
 {
 	SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
-    if ([self canWriteCodeInjection:context])
+    if ([context canWriteProMarkup])
     {
         NSString *masterCode = [[[self master] codeInjection] valueForKey:@"bodyTag"];
 		NSString *pageCode = [[self codeInjection] valueForKey:@"bodyTag"];

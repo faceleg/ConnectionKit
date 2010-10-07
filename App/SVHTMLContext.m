@@ -361,6 +361,13 @@
 // Similar to above, but might be overridden by subclass to prevent sending to HTML validator
 - (BOOL)shouldWriteServerSideScripts; { return [self isForPublishing]; }
 
+- (BOOL)canWriteProMarkup;
+{
+	return [self isForPublishingProOnly]
+			// Show the code injection in the webview as well, as long as this default is set.
+			|| ([[NSUserDefaults standardUserDefaults] boolForKey:@"ShowCodeInjectionInPreview"] && [self isForEditing]);
+}
+
 #pragma mark CSS
 
 @synthesize includeStyling = _includeStyling;
