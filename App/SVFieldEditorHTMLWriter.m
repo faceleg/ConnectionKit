@@ -284,17 +284,20 @@
     NSString *tagName = [element tagName];
     
     
-    // Convert a bold or italic tag to <strong> or <em>
+    // Convert a bold or heading tag to <STRONG>
     if ([tagName isEqualToString:@"B"] ||
         [element isKindOfClass:[DOMHTMLHeadingElement class]])
     {
         result = [self changeDOMElement:element toTagName:@"STRONG"];
     }
+    
+    // Convert italics to <EM>
     else if ([tagName isEqualToString:@"I"])
     {
         result = [self changeDOMElement:element toTagName:@"EM"];
     }
-    // Convert a <font> tag to <span> with appropriate styling
+    
+    // Convert a <FONT> tag to <SPAN> with appropriate styling
     else if ([tagName isEqualToString:@"FONT"])
     {
         result = [self changeDOMElement:element toTagName:@"SPAN"];
@@ -457,7 +460,7 @@
 
 #pragma mark Buffering
 
-- (void)outputWillFlush:(KSStringWriter *)bufferedWriter;
+- (void)outputWillFlush:(NSNotification *)notification;
 {
     // Before actually writing the string, push through any pending Elements.
     [_pendingStartTagDOMElements removeAllObjects];
