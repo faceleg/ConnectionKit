@@ -251,7 +251,7 @@
     [super didEndWritingHTMLTextBlock];
 }
 
-- (void)writeTitleOfPage:(id <SVPage>)page enclosingElement:(NSString *)element attributes:(NSDictionary *)attributes;
+- (void)writeTitleOfPage:(id <SVPage>)page asPlainText:(BOOL)plainText enclosingElement:(NSString *)element attributes:(NSDictionary *)attributes;
 {
     // Create text-block
     SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
@@ -265,7 +265,7 @@
     [self willBeginWritingHTMLTextBlock:textBlock];
     [textBlock release];
     
-    [super writeTitleOfPage:page enclosingElement:element attributes:attributes];
+    [super writeTitleOfPage:page asPlainText:plainText enclosingElement:element attributes:attributes];
 
     
     [self didEndWritingHTMLTextBlock];
