@@ -40,6 +40,7 @@ typedef enum {
 
 #pragma mark Title
 @property(nonatomic, copy) NSString *title; // implemented as @dynamic
+- (void)writeTitle:(id <SVPlugInContext>)context;   // uses rich txt/html when available
 
 
 #pragma mark Dates

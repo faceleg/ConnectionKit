@@ -265,9 +265,9 @@
     return [[self titleBox] textHTMLString];
 }
 
-- (NSString *)titleString;
+- (void)writeTitle:(id <SVPlugInContext>)context;   // uses rich txt/html when available
 {
-	return [[self titleBox] text];
+    [[context HTMLWriter] writeHTMLString:[self titleHTMLString]];
 }
 
 #pragma mark Body

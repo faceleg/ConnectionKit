@@ -902,7 +902,7 @@
     }
     else
     {
-        [self writeHTMLString:[[(KTPage *)page titleBox] textHTMLString]];
+        [(SVSiteItem *)page writeTitle:self];
     }
     
     [self endElement];

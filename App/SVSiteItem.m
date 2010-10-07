@@ -57,6 +57,11 @@
 
 @dynamic title;
 
+- (void)writeTitle:(id <SVPlugInContext>)context;   // uses rich txt/html when available
+{
+    [[context HTMLWriter] writeText:[self title]];
+}
+
 #pragma mark Dates
 
 - (void)awakeFromInsert
