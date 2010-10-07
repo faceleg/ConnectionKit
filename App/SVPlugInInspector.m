@@ -37,7 +37,7 @@ static NSString *sPlugInInspectorInspectedObjectsObservation = @"PlugInInspector
     [self setTitle:nil];    // uses default title
     
     [self addObserver:self
-           forKeyPath:@"inspectedObjectsController.selectedObjects"
+           forKeyPath:@"inspectedObjectsController.selectedObjects.plugIn"
               options:NSKeyValueObservingOptionOld
               context:sPlugInInspectorInspectedObjectsObservation];
     
@@ -46,7 +46,7 @@ static NSString *sPlugInInspectorInspectedObjectsObservation = @"PlugInInspector
      
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:@"inspectedObjectsController.selectedObjects"];
+    [self removeObserver:self forKeyPath:@"inspectedObjectsController.selectedObjects.plugIn"];
     [self unbind:@"title"];
     
     [_plugInInspectors release];
