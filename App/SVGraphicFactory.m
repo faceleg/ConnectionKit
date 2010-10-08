@@ -104,13 +104,6 @@
 
 - (NSUInteger)priority; { return 1; }
 
-- (NSArray *)readablePasteboardTypes;
-{
-    NSArray *result = [NSImage imageTypes]; // want to read by UTI ideally
-    result = [result arrayByAddingObjectsFromArray:[KSWebLocation webLocationPasteboardTypes]];
-    return result;
-}
-
 - (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type
                                                pasteboard:(NSPasteboard *)pasteboard;
 {
@@ -685,14 +678,7 @@ static SVGraphicFactory *sRawHTMLFactory;
     {
         result = [[NSMutableArray alloc] init];
         
-        for (SVGraphicFactory *aFactory in [self registeredFactories])
-        {
-            NSArray *acceptedTypes = [aFactory readablePasteboardTypes];
-            for (NSString *aType in acceptedTypes)
-            {
-                if (![result containsObject:aType]) [result addObject:aType];
-            }
-        }
+        return [SVMediaGraphic readableTypesForPasteboard:nil];
 	}
     
     return result;

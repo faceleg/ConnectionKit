@@ -202,11 +202,12 @@
 {
     NSPasteboard *pboard = [sender draggingPasteboard];
     
-    SVGraphicFactory *factory = [SVGraphicFactory mediaPlaceholderFactory];
-    NSString *type = [pboard availableTypeFromArray:[factory readablePasteboardTypes]];
+    NSString *type = [pboard availableTypeFromArray:[SVMediaGraphic readableTypesForPasteboard:pboard]];
     if (type)
     {
-        id contents = [SVGraphicFactory contentsOfPasteboard:pboard forType:type forFactory:factory];
+        id contents = [SVGraphicFactory contentsOfPasteboard:pboard
+                                                     forType:type
+                                                  forFactory:[SVGraphicFactory mediaPlaceholderFactory]];
         
         [[self representedObject] awakeFromPasteboardContents:contents ofType:type];
         return YES;
@@ -223,7 +224,7 @@
 
 - (NSArray *)registeredDraggedTypes;
 {
-    return [[SVGraphicFactory mediaPlaceholderFactory] readablePasteboardTypes];
+    return [SVMediaGraphic readableTypesForPasteboard:nil];
 }
 
 @end

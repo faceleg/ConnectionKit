@@ -32,6 +32,7 @@
 
 + (BOOL)acceptsType:(NSString *)uti;
 + (NSArray *)allowedTypes;
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
 
 
 #pragma mark Media Conversion

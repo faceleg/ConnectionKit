@@ -209,6 +209,13 @@
 	return [result allObjects];
 }
 
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+    NSArray *result = [NSImage imageTypes]; // want to read by UTI ideally
+    result = [result arrayByAddingObjectsFromArray:[KSWebLocation webLocationPasteboardTypes]];
+    return result;
+}
+
 #pragma mark Media Conversion
 
 @dynamic typeToPublish;
