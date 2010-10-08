@@ -575,7 +575,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     KTPage *result = [[sender selectedObjects] lastObject];
     
     if (!([result isCollection] && [[self outlineView] isItemExpanded:result]) &&
-        ![result isRootPage])
+        [result parentPage])
     {
         result = [result parentPage];
     }
