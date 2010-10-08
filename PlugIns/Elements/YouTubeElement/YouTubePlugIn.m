@@ -214,23 +214,23 @@
 
 #pragma mark SVPlugInPasteboardReading
 
-+ (NSUInteger)readingPriorityForWebLocation:(id <SVWebLocation>)location;
++ (NSUInteger)priorityForPasteboardItem:(id <SVWebLocation>)item;
 {
-    NSURL *URL = [location URL];
+    NSURL *URL = [item URL];
     if ( [URL youTubeVideoID] )
     {
         return KTSourcePrioritySpecialized;
     }
-    return [super readingPriorityForWebLocation:location];
+    return [super priorityForPasteboardItem:item];
 }
 
 // returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
-- (void)awakeFromWebLocation:(id <SVWebLocation>)location;
+- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
 {
-        NSString *videoID = [[location URL] youTubeVideoID];
+        NSString *videoID = [[item URL] youTubeVideoID];
         if (videoID)
         {
-            self.userVideoCode = [[location URL] absoluteString];
+            self.userVideoCode = [[item URL] absoluteString];
         }
 }
 

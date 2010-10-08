@@ -111,7 +111,7 @@
     
     @try
     {
-        result = [[self plugInClass] readingPriorityForWebLocation:location];
+        result = [[self plugInClass] priorityForPasteboardItem:location];
     }
     @catch (NSException *exception)
     {
@@ -128,7 +128,14 @@
     SVPlugInGraphic *result = nil;
     
     result = (id)[self insertNewGraphicInManagedObjectContext:context];
-    [[result plugIn] awakeFromWebLocation:contents];
+    @try
+    {
+        [[result plugIn] awakeFromPasteboardItem:contents];
+    }
+    @catch (NSException *exception)
+    {
+        // TODO: log
+    }
     
     return result;
 }

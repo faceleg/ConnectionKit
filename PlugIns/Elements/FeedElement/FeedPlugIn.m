@@ -167,9 +167,9 @@
 #pragma mark -
 #pragma mark SVPlugInPasteboardReading
 
-+ (NSUInteger)readingPriorityForWebLocation:(id <SVWebLocation>)location;
++ (NSUInteger)priorityForPasteboardItem:(id <SVWebLocation>)item;
 {
-    NSURL *URL = [location URL];
+    NSURL *URL = [item URL];
     if ( URL )
     {
         //FIXME: what about kNetNewsWireString pboard types? still needed?
@@ -198,13 +198,13 @@
 }
 
 // returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
-- (void)awakeFromWebLocation:(id <SVWebLocation>)location;
+- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
 {
-    NSURL *URL = [location URL];
+    NSURL *URL = [item URL];
     if ( URL )
     {
         self.feedURL = URL;
-        NSString *title = [location title];
+        NSString *title = [item title];
         if ( title )
         {
             [self setTitle:title];

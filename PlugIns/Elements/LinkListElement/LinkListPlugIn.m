@@ -104,21 +104,21 @@
 #pragma mark -
 #pragma mark SVPlugInPasteboardReading
 
-+ (NSUInteger)readingPriorityForWebLocation:(id <SVWebLocation>)location;
++ (NSUInteger)priorityForPasteboardItem:(id <SVWebLocation>)item;
 {
-    NSURL *URL = [location URL];
+    NSURL *URL = [item URL];
     if ( URL )
     {
         return KTSourcePriorityReasonable;
     }
-    return [super readingPriorityForWebLocation:location];
+    return [super priorityForPasteboardItem:item];
 }
 
 // returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
-- (void)awakeFromWebLocation:(id <SVWebLocation>)location;
+- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
 {
-        NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:location];
-        if ( link ) [self.linkList addObject:link];
+    NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:(id <SVWebLocation>)item];  //lie for now
+    if ( link ) [self.linkList addObject:link];
 }
 
 

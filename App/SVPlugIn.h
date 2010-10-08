@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "SVPlugInContext.h"
+#import "SVPasteboardItem.h"
 
 
 @protocol SVPage, SVWebLocation;
@@ -126,8 +127,8 @@
 
 #pragma mark Pasteboard
 // Default is to refuse all locations. You should study the location and return a KTSourcePriority to match
-+ (NSUInteger)readingPriorityForWebLocation:(id <SVWebLocation>)location;
-- (void)awakeFromWebLocation:(id <SVWebLocation>)location;
++ (NSUInteger)priorityForPasteboardItem:(id <SVWebLocation>)item;
+- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
 
 
 #pragma mark Undo Management

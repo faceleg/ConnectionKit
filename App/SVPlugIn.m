@@ -358,9 +358,9 @@ static id <SVPlugInContext> sCurrentContext;
 
 #pragma mark Pasteboard
 
-+ (NSUInteger)readingPriorityForWebLocation:(id <SVWebLocation>)location; { return KTSourcePriorityNone; }
++ (NSUInteger)priorityForPasteboardItem:(id <SVWebLocation>)item; { return KTSourcePriorityNone; }
 
-- (void)awakeFromWebLocation:(id <SVWebLocation>)location; { }
+- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item; { }
 
 #pragma mark Other
 
