@@ -54,10 +54,10 @@
 {
     if ([[NSWorkspace sharedWorkspace] type:type conformsToType:(NSString *)kUTTypeURL])
     {
-        return NSMakeCollectable(CFURLCreateData(NULL,
+        return [NSMakeCollectable(CFURLCreateData(NULL,
                                                  (CFURLRef)[self URL],
                                                  kCFStringEncodingUTF8,
-                                                 NO));
+                                                 NO)) autorelease];
     }
     
     return nil;
