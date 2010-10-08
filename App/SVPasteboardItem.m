@@ -6,7 +6,7 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVPasteboardItem.h"
+#import "SVPasteboardItemInternal.h"
 
 
 @implementation SVPasteboardItem

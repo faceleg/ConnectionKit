@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KSWebLocation.h"
 
 
 @protocol SVPasteboardItem <NSObject>
@@ -29,29 +28,5 @@
 - (NSData *)dataForType:(NSString *)type;
 - (NSString *)stringForType:(NSString *)type;
 - (id)propertyListForType:(NSString *)type;
-
-@end
-
-
-@interface NSPasteboard (SVPasteboardItem) <SVPasteboardItem>
-@end
-
-
-#if (defined MAC_OS_X_VERSION_10_6) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6
-@interface NSPasteboardItem (SVPasteboardItem) <SVPasteboardItem>
-@end
-#endif
-
-
-@interface KSWebLocation (SVPasteboardItem) <SVPasteboardItem>
-@end
-
-
-@interface SVPasteboardItem : NSObject
-{
-  @private
-    NSString    *_title;
-    NSURL       *_URL;
-}
 
 @end

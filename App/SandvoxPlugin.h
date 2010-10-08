@@ -48,6 +48,7 @@
 #import "KSPlaceholderTableView.h"
 #import "KSTrimFirstLineFormatter.h"
 #import "KSVerticallyAlignedTextCell.h"
+#import "SVPasteboardItem.h"
 #import "SVWebLocation.h"
 #import "SVURLFormatter.h"
 

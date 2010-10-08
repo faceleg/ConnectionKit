@@ -403,8 +403,9 @@
 		276A6E90110B4312006FD9F7 /* SVMediaRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A6E8E110B4312006FD9F7 /* SVMediaRecord.m */; };
 		276A6F74110B5B7B006FD9F7 /* SVDownloadSiteItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 276A6F72110B5B7B006FD9F7 /* SVDownloadSiteItem.h */; };
 		276A6F75110B5B7B006FD9F7 /* SVDownloadSiteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A6F73110B5B7B006FD9F7 /* SVDownloadSiteItem.m */; };
-		276AB40A125F444C006FED25 /* SVPasteboardItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 276AB408125F444C006FED25 /* SVPasteboardItem.h */; };
+		276AB40A125F444C006FED25 /* SVPasteboardItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 276AB408125F444C006FED25 /* SVPasteboardItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		276AB40B125F444C006FED25 /* SVPasteboardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 276AB409125F444C006FED25 /* SVPasteboardItem.m */; };
+		276AB462125F4B43006FED25 /* SVPasteboardItemInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276AB461125F4B43006FED25 /* SVPasteboardItemInternal.h */; };
 		276C151D114A6C0300D30CFE /* GraphicInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 276C151C114A6C0300D30CFE /* GraphicInspector.xib */; };
 		276F8AB210D572780094AA73 /* SVDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 276F8AB010D572780094AA73 /* SVDOMController.h */; };
 		276F8AB310D572780094AA73 /* SVDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276F8AB110D572780094AA73 /* SVDOMController.m */; };
@@ -1945,6 +1946,7 @@
 		276A6F73110B5B7B006FD9F7 /* SVDownloadSiteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDownloadSiteItem.m; sourceTree = "<group>"; };
 		276AB408125F444C006FED25 /* SVPasteboardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPasteboardItem.h; sourceTree = "<group>"; };
 		276AB409125F444C006FED25 /* SVPasteboardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPasteboardItem.m; sourceTree = "<group>"; };
+		276AB461125F4B43006FED25 /* SVPasteboardItemInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPasteboardItemInternal.h; sourceTree = "<group>"; };
 		276C151C114A6C0300D30CFE /* GraphicInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GraphicInspector.xib; sourceTree = "<group>"; };
 		276F8AB010D572780094AA73 /* SVDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMController.h; sourceTree = "<group>"; };
 		276F8AB110D572780094AA73 /* SVDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMController.m; sourceTree = "<group>"; };
@@ -3009,6 +3011,7 @@
 		27196F5D1090A8590096B612 /* 2.0 Plug-in System */ = {
 			isa = PBXGroup;
 			children = (
+				276AB408125F444C006FED25 /* SVPasteboardItem.h */,
 				2782914410912B30008D0A64 /* SVInspectorViewController.h */,
 				2782914510912B30008D0A64 /* SVInspectorViewController.m */,
 				3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */,
@@ -4396,8 +4399,8 @@
 		3C5A73800BF7B8DB00776464 /* Pasteboard & Dragging */ = {
 			isa = PBXGroup;
 			children = (
+				276AB461125F4B43006FED25 /* SVPasteboardItemInternal.h */,
 				3C682B2D0D62300B00B4D485 /* KTDataSourceProtocol.h */,
-				276AB408125F444C006FED25 /* SVPasteboardItem.h */,
 				276AB409125F444C006FED25 /* SVPasteboardItem.m */,
 			);
 			name = "Pasteboard & Dragging";
@@ -5761,6 +5764,7 @@
 				2782D1D91257483F00B7CF1A /* SVSummaryDOMController.h in Headers */,
 				275D9C6D125C80DE004A3A53 /* SVSiteItemController.h in Headers */,
 				276AB40A125F444C006FED25 /* SVPasteboardItem.h in Headers */,
+				276AB462125F4B43006FED25 /* SVPasteboardItemInternal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
