@@ -338,7 +338,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		//		[NSNumber numberWithBool:YES],			@"OutlineTooltipShowIsDraft",
 		[NSNumber numberWithBool:YES],			@"OutlineTooltipShowNeedsUploading",
 		
-		[NSNumber numberWithInt:5],				@"MaximumTitlesInCollectionSummary",
+		[NSNumber numberWithInt:20],				@"MaximumTitlesInCollectionSummary",
 		[NSNumber numberWithBool:NO],			@"CreateBackupFileWhenSaving",
 		[NSNumber numberWithBool:YES],			@"UseGradientSiteOutlineHilite",
 		[NSNumber numberWithBool:NO],			@"PathsWithIndexPages",	// should paths end in index.html ?

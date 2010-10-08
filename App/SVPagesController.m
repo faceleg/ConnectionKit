@@ -200,9 +200,8 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     NSBundle *indexBundle = [plugInWrapper bundle];
     
     
-    // Create the basic collection
+    // Create the basic collection. collectionMaxSyndicatedPagesCount should have already been set
     [collection setBool:YES forKey:@"isCollection"]; // Duh!
-    [collection setCollectionMaxSyndicatedPagesCount:[NSNumber numberWithInteger:10]];
     
     
     // Now re-set title of page to be the appropriate untitled name
