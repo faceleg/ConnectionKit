@@ -27,6 +27,8 @@
 #import "NSBundle+Karelia.h"
 #import "NSObject+Karelia.h"
 
+#import "KSWebLocation.h"
+
 #import "Debug.h"
 
 
@@ -400,11 +402,13 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     
     // Create graphics for the content
-    NSArray *graphics = [SVGraphicFactory graphicsFromPasteboard:pboard
-                                  insertIntoManagedObjectContext:[self managedObjectContext]];
-    
-    for (SVGraphic *aGraphic in graphics)
+    NSArray *locations = [pboard readWebLocations];
+    for (KSWebLocation *aLocation in locations)
     {
+        SVGraphic *aGraphic = [SVGraphicFactory
+                               graphicFromWebLocation:aLocation
+                               insertIntoManagedObjectContext:[self managedObjectContext]];
+    
         // Create pages for each graphic
         [self setEntityName:@"Page"];
         [self setCollectionPreset:nil];
