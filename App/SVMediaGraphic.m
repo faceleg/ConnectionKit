@@ -276,6 +276,8 @@
 
 @dynamic constrainedAspectRatio;
 
+- (BOOL)isConstrainProportionsEditable; { return YES; }
+
 @dynamic naturalWidth;
 @dynamic naturalHeight;
 
