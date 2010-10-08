@@ -172,3 +172,36 @@
 
 @end
 
+
+@implementation NSAttributedString (KTExtensions)
+
++ (NSAttributedString *)attributedMenuTitle:(NSString *)aTitle subtitle:(NSString *)aSubtitle;
+{
+	static NSDictionary *sTitleAttributes = nil;
+	static NSDictionary *sSubtitleAttributes = nil;
+	if (!sTitleAttributes || !sSubtitleAttributes)
+	{
+		sTitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+							[NSFont systemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
+							nil];
+		sSubtitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+							   [NSFont systemFontOfSize:[NSFont labelFontSize]], NSFontAttributeName,
+							   [NSColor colorWithCalibratedWhite:0.0 alpha:0.4], NSForegroundColorAttributeName, 
+							   nil];
+	}
+	NSMutableAttributedString *nameAndDescription
+	= [[[NSMutableAttributedString alloc]
+		initWithString:aTitle
+		attributes:sTitleAttributes] autorelease];
+	if (aSubtitle && ![aSubtitle isEqualToString:@""])
+	{
+		[nameAndDescription appendAttributedString:
+		 [[[NSAttributedString alloc]
+		   initWithString:[NSString stringWithFormat:@"\n%@", aSubtitle]
+		   attributes:sSubtitleAttributes] autorelease]];
+	}
+	return nameAndDescription;
+}
+
+@end
+

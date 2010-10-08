@@ -63,6 +63,8 @@
 
 - (NSString *)name { return TOOLBAR_INSERT_TEXT_BOX; }	// from a localized string macro
 
+- (NSString *)graphicDescription { return NSLocalizedString(@"An extra block of text", @"name of object to insert"); }
+
 - (NSImage *)icon
 {
     return [NSImage imageNamed:@"toolbar_text"];
@@ -92,6 +94,8 @@
 }
 
 - (NSString *)name { return NSLocalizedString(@"Media Placeholder", @"name of object to insert"); }
+
+- (NSString *)graphicDescription { return NSLocalizedString(@"Replace with your own image, movie, sound", @"name of object to insert"); }
 
 - (NSImage *)icon
 {
@@ -263,6 +267,8 @@
 }
 
 - (NSString *)name { return NSLocalizedString(@"Raw HTML", @"name of object to insert"); }
+
+- (NSString *)graphicDescription { return NSLocalizedString(@"HTML Codes, what else can we say?", @"name of object to insert"); }
 
 - (NSImage *)icon
 {
@@ -490,8 +496,9 @@ static SVGraphicFactory *sRawHTMLFactory;
         NSLog(@"empty plugin name for %@", self);
         pluginName = @"";
     }
-    [result setTitle:pluginName];
-    
+
+	NSAttributedString *attributedTitle = [NSAttributedString attributedMenuTitle:pluginName subtitle:[self graphicDescription]];
+    [result setAttributedTitle:attributedTitle];
     
     // Icon
     //if (image)
@@ -692,6 +699,7 @@ static SVGraphicFactory *sRawHTMLFactory;
 }
 
 - (NSString *)name { SUBCLASSMUSTIMPLEMENT; return nil; }
+- (NSString *)graphicDescription { SUBCLASSMUSTIMPLEMENT; return nil; }
 - (NSImage *)icon { return nil; }
 - (NSUInteger)priority; { return 5; }
 

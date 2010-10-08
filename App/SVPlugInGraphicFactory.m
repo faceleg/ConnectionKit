@@ -52,6 +52,8 @@
 
 - (NSString *)name; { return [[self plugInBundle] objectForInfoDictionaryKey:@"KTPluginName"]; }
 
+- (NSString *)graphicDescription; { return [[self plugInBundle] objectForInfoDictionaryKey:@"KTPluginDescription"]; }
+
 - (NSImage *)icon;
 {
 	// The icon is cached; load it if not cached yet

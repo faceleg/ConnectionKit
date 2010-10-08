@@ -57,6 +57,7 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 
 - (NSString *)name;
+- (NSString *)graphicDescription;
 - (NSImage *)icon;
 - (NSUInteger)priority; // 0-9, where 9 is Pro status
 

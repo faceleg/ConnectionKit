@@ -33,3 +33,8 @@
 
 @end
 
+@interface NSAttributedString (KTExtensions)
+
++ (NSAttributedString *)attributedMenuTitle:(NSString *)aTitle subtitle:(NSString *)aSubtitle;
+
+@end
