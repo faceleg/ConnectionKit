@@ -493,7 +493,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     WEKWebEditorView *webEditor = [self webEditor];
     
     // Figure out where to insert
-    DOMRange *result = [webEditor selectedDOMRange];
+    DOMRange *result = [self selectedDOMRange];
     if (result)
     {
         // Tweak a little when at the start of a paragraph. #81909
