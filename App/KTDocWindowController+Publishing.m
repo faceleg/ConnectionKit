@@ -25,6 +25,7 @@
 #import "KSSilencingConfirmSheet.h"
 
 #import "NSObject+Karelia.h"
+#import "NSManagedObjectContext+Karelia.h"
 #import "KSURLUtilities.h"
 #import "NSWorkspace+Karelia.h"
 #import "NSToolbar+Karelia.h"
@@ -101,13 +102,23 @@
  */
 - (BOOL)shouldPublish
 {
-    // Check registration
-    if (nil == gRegistrationString)
+	if (nil == gRegistrationString)	// check registration
 	{
-		[KSSilencingConfirmSheet alertWithWindow:[self window]
-                                    silencingKey:@"shutUpDemoUploadWarning"
-                                           title:NSLocalizedString(@"Restricted Publishing", @"title of alert")
-                                          format:NSLocalizedString(@"You are running the free edition of Sandvox. Only the first %d pages will be exported or uploaded. To publish additional pages, you will need to purchase a license. To publish Raw HTML, you will need to get the Pro edition.",@""), kMaxNumberOfFreePublishedPages];
+		// Further check... see if we have too many pages to publish
+		NSArray *pages = [[[self document] managedObjectContext] fetchAllObjectsForEntityForName:@"Page" error:NULL];
+		unsigned int pageCount = 0;
+		if ( nil != pages )
+		{
+			pageCount = [pages count]; // according to mmalc, this is the only way to get this kind of count
+		}
+		
+		if (pageCount > kMaxNumberOfFreePublishedPages)
+		{
+			[KSSilencingConfirmSheet alertWithWindow:[self window]
+										silencingKey:@"shutUpDemoUploadWarning"
+											   title:NSLocalizedString(@"Restricted Publishing", @"title of alert")
+											  format:NSLocalizedString(@"You are running the free edition of Sandvox. Only the first %d pages will be exported or uploaded. To publish additional pages, you will need to purchase a license. To publish Raw HTML, you will need to get the Pro edition.",@""), kMaxNumberOfFreePublishedPages];
+		}
 	}
 	
     
