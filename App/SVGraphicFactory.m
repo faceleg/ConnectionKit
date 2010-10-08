@@ -572,7 +572,10 @@ static SVGraphicFactory *sRawHTMLFactory;
     
     for (KSWebLocation *aLocation in locations)
     {
-        SVGraphic *graphic = [self graphicFromWebLocation:aLocation insertIntoManagedObjectContext:context];
+        SVGraphic *graphic = [self graphicFromWebLocation:aLocation
+                                              minPriority:KTSourcePriorityNone
+                           insertIntoManagedObjectContext:context];
+        
         if (graphic) [result addObject:graphic];
     }
     
@@ -580,20 +583,20 @@ static SVGraphicFactory *sRawHTMLFactory;
 }
 
 + (SVGraphic *)graphicFromWebLocation:(KSWebLocation *)location
+                          minPriority:(NSUInteger)minPriority
        insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVGraphicFactory *factory = nil;
-    NSUInteger readingPriority = 0;
     
     
     // Test plug-ins
     for (SVGraphicFactory *aFactory in [self registeredFactories])
     {
         NSUInteger priority = [aFactory priorityForAwakingFromWebLocation:location];
-        if (priority > readingPriority)
+        if (priority > minPriority)
         {
             factory = aFactory;
-            readingPriority = priority;
+            minPriority = priority;
         }
     }
     

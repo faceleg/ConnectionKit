@@ -101,6 +101,7 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
     insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (SVGraphic *)graphicFromWebLocation:(KSWebLocation *)location
+                          minPriority:(NSUInteger)minPriority
        insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (NSArray *)graphicPasteboardTypes;

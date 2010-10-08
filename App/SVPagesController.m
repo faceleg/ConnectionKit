@@ -407,6 +407,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     {
         SVGraphic *aGraphic = [SVGraphicFactory
                                graphicFromWebLocation:aLocation
+                               minPriority:KTSourcePriorityReasonable   // don't want stuff like list of links
                                insertIntoManagedObjectContext:[self managedObjectContext]];
     
         // Create pages for each graphic
