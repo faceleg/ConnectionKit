@@ -44,11 +44,11 @@
 		<string>clouds</string>
 	</dict>
 	<key>KTPluginName</key>
-	<string>Flickr Photos</string>
+	<string>Flickr Thumbnails</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
-	<string>Flickr Photos</string>
+	<string>Flickr Thumbnails</string>
 	<key>NSPrincipalClass</key>
 	<string>FlickrPlugIn</string>
 </dict>

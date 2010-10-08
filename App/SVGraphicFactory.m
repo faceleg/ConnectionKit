@@ -63,7 +63,7 @@
 
 - (NSString *)name { return TOOLBAR_INSERT_TEXT_BOX; }	// from a localized string macro
 
-- (NSString *)graphicDescription { return NSLocalizedString(@"An extra block of text", @"name of object to insert"); }
+- (NSString *)graphicDescription { return NSLocalizedString(@"Write text in a separate box", @"name of object to insert"); }
 
 - (NSImage *)icon
 {
@@ -268,7 +268,7 @@
 
 - (NSString *)name { return NSLocalizedString(@"Raw HTML", @"name of object to insert"); }
 
-- (NSString *)graphicDescription { return NSLocalizedString(@"HTML Codes, what else can we say?", @"name of object to insert"); }
+- (NSString *)graphicDescription { return NSLocalizedString(@"Paste or edit your own HTML code", @"name of object to insert"); }
 
 - (NSImage *)icon
 {
