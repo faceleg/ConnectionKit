@@ -410,35 +410,38 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
                                minPriority:KTSourcePriorityReasonable   // don't want stuff like list of links
                                insertIntoManagedObjectContext:[self managedObjectContext]];
     
-        // Create pages for each graphic
-        [self setEntityName:@"Page"];
-        [self setCollectionPreset:nil];
-        [self setFileURL:nil];
-        
-        KTPage *page = [self newObjectDestinedForCollection:collection];
-        [page setTitle:[aGraphic title]];
-        
-        
-        // Insert graphic into the page
-        [aGraphic willInsertIntoPage:page];
-        
-        SVRichText *article = [page article];
-        NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
-        
-        NSAttributedString *attachment = [NSAttributedString
-                                          attributedHTMLStringWithGraphic:aGraphic];
-        
-        [html insertAttributedString:attachment atIndex:0];
-        [article setAttributedHTMLString:html];
-        [html release];
-        
-        
-        // Insert page into the collection
-        [self addObject:page toCollection:collection];
-        [page release];
-        
-        [aGraphic didAddToPage:page];
-        result = YES;
+        if (aGraphic)
+        {
+            // Create pages for each graphic
+            [self setEntityName:@"Page"];
+            [self setCollectionPreset:nil];
+            [self setFileURL:nil];
+            
+            KTPage *page = [self newObjectDestinedForCollection:collection];
+            [page setTitle:[aGraphic title]];
+            
+            
+            // Insert graphic into the page
+            [aGraphic willInsertIntoPage:page];
+            
+            SVRichText *article = [page article];
+            NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
+            
+            NSAttributedString *attachment = [NSAttributedString
+                                              attributedHTMLStringWithGraphic:aGraphic];
+            
+            [html insertAttributedString:attachment atIndex:0];
+            [article setAttributedHTMLString:html];
+            [html release];
+            
+            
+            // Insert page into the collection
+            [self addObject:page toCollection:collection];
+            [page release];
+            
+            [aGraphic didAddToPage:page];
+            result = YES;
+        }
     }
     
     return result;
