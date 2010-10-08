@@ -65,13 +65,11 @@
 	return [NSBitmapImageRep imageTypes];
 }
 
-- (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)error;
+- (BOOL)validateTypeToPublish:(NSString *)type;
 {
-    BOOL result = *type != nil;
-    if (!result && error)
-    {
-        *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationMissingMandatoryPropertyError localizedDescription:@"typeToPublish is non-optional for images"];
-    }
+    BOOL result = ([type isEqualToString:(NSString *)kUTTypeJPEG] ||
+                   [type isEqualToString:(NSString *)kUTTypePNG] ||
+                   [type isEqualToString:(NSString *)kUTTypeGIF]);
     
     return result;
 }

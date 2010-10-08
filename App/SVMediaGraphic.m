@@ -221,7 +221,13 @@
 @dynamic typeToPublish;
 - (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)error;
 {
-    return [[self plugIn] validateTypeToPublish:type error:error];
+    BOOL result = [[self plugIn] validateTypeToPublish:*type];
+    if (!result && error)
+    {
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationMissingMandatoryPropertyError localizedDescription:@"typeToPublish is non-optional for images"];
+    }
+    
+    return result;
 }
 
 #pragma mark Size

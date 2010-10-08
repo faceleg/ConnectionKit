@@ -28,10 +28,7 @@
 
 - (void)didSetSource; { }
 
-- (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)errror;
-{
-    return YES;
-}
+- (BOOL)validateTypeToPublish:(NSString *)type; { return YES; }
 
 + (NSArray *)allowedFileTypes; { return nil; }
 

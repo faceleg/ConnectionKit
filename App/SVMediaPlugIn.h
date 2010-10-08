@@ -22,7 +22,7 @@
 + (NSArray *)allowedFileTypes;
 
 
-- (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)error;
+- (BOOL)validateTypeToPublish:(NSString *)type;
 
 - (CGSize)originalSize;
 
