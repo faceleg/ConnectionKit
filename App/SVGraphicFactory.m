@@ -566,18 +566,50 @@ static SVGraphicFactory *sRawHTMLFactory;
 {
     // Try to read in Web Locations
     NSArray *locations = [pboard readWebLocations];
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[locations count]];
-    
-    for (KSWebLocation *aLocation in locations)
+    if ([locations count])
     {
-        SVGraphic *graphic = [self graphicFromWebLocation:aLocation
-                                              minPriority:KTSourcePriorityNone
-                           insertIntoManagedObjectContext:context];
+        NSMutableArray *result = [NSMutableArray arrayWithCapacity:[locations count]];
         
-        if (graphic) [result addObject:graphic];
+        for (KSWebLocation *aLocation in locations)
+        {
+            SVGraphic *graphic = [self graphicFromWebLocation:aLocation
+                                                  minPriority:KTSourcePriorityNone
+                               insertIntoManagedObjectContext:context];
+            
+            if (graphic) [result addObject:graphic];
+        }
+        
+        return result;
     }
-    
-    return result;
+    else
+    {
+        // Fall back to reading the pasteboard itself
+        SVGraphicFactory *factory = nil;
+        NSUInteger minPriority = 0;
+        
+        // Test plug-ins
+        for (SVGraphicFactory *aFactory in [self registeredFactories])
+        {
+            NSUInteger priority = [aFactory priorityForAwakingFromWebLocation:pboard];
+            if (priority > minPriority)
+            {
+                factory = aFactory;
+                minPriority = priority;
+            }
+        }
+        
+        
+        // Create graphic
+        SVGraphic *result = nil;
+        if (factory)
+        {        
+            result = [factory graphicWithPasteboardContents:pboard
+                                                     ofType:NSURLPboardType
+                             insertIntoManagedObjectContext:context];
+        }
+        
+        return [NSArray arrayWithObject:result];
+    }
 }
 
 + (SVGraphic *)graphicFromWebLocation:(KSWebLocation *)location
