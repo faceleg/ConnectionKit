@@ -19,6 +19,9 @@
 #import <BWToolkitFramework/BWToolkitFramework.h>
 
 #import "NSString+Karelia.h"
+#import "NSWorkspace+Karelia.h"
+
+#import "KSURLUtilities.h"
 
 
 static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewViewControllerURLObservation";
@@ -47,15 +50,7 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 {
     [super setWebView:webView];
     [webView setFrameLoadDelegate:self];
-}
-
-- (void)webView:(WebView *)sender didCommitLoadForFrame:(WebFrame *)frame;
-{
-    SVWebContentAreaController *tabController = (id)[self parentViewController];    // yes, hack
-    if ([tabController selectedViewControllerWhenReady] == self)
-    {
-        [tabController setSelectedViewController:self];
-    }
+    [webView setPolicyDelegate:self];
 }
 
 - (NSString *)HTMLTemplateAndURL:(NSURL **)outURL
@@ -71,6 +66,17 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     
     if (outURL) *outURL = URL;
     return [template templateString];
+}
+
+#pragma mark WebFrameLoadDelegate
+
+- (void)webView:(WebView *)sender didCommitLoadForFrame:(WebFrame *)frame;
+{
+    SVWebContentAreaController *tabController = (id)[self parentViewController];    // yes, hack
+    if ([tabController selectedViewControllerWhenReady] == self)
+    {
+        [tabController setSelectedViewController:self];
+    }
 }
 
 - (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
@@ -95,7 +101,6 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
         [context release];
     }
 }
-
 
 - (void)webView:(WebView *)sender didReceiveTitle:(NSString *)title forFrame:(WebFrame *)frame
 {
@@ -245,6 +250,46 @@ webContentAreaController:(SVWebContentAreaController *)controller;
 - (IBAction)reload:(id)sender
 {
     [[self webView] reload:sender];
+}
+
+#pragma mark WebPolicyDelegate
+
+- (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener;
+{
+    BOOL result = YES;
+    
+    if (frame == [webView mainFrame])
+    {
+        if (![[request URL] ks_isEqualToURL:[self URLToLoad]])
+        {
+            result = NO;
+        }
+    }
+    
+    if (result)
+    {
+        [listener use];
+    }
+    else
+    {
+        [listener ignore];
+        NSURL *URL = [request URL];
+        [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
+    }
+}
+
+/*	We don't want to allow navigation within Sandvox! Open in web browser instead
+ */
+- (void)webView:(WebView *)sender decidePolicyForNewWindowAction:(NSDictionary *)actionInformation
+        request:(NSURLRequest *)request
+   newFrameName:(NSString *)frameName
+decisionListener:(id <WebPolicyDecisionListener>)listener
+{
+	// Open the URL in the user's web browser
+	[listener ignore];
+	
+	NSURL *URL = [request URL];
+	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
 }
 
 @end
