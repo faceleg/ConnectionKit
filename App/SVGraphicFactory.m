@@ -572,31 +572,39 @@ static SVGraphicFactory *sRawHTMLFactory;
     
     for (KSWebLocation *aLocation in locations)
     {
-        SVGraphicFactory *factory = nil;
-        NSUInteger readingPriority = 0;
-        
-        
-        // Test plug-ins
-        for (SVGraphicFactory *aFactory in [self registeredFactories])
+        SVGraphic *graphic = [self graphicFromWebLocation:aLocation insertIntoManagedObjectContext:context];
+        if (graphic) [result addObject:graphic];
+    }
+    
+    return result;
+}
+
++ (SVGraphic *)graphicFromWebLocation:(KSWebLocation *)location
+       insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVGraphicFactory *factory = nil;
+    NSUInteger readingPriority = 0;
+    
+    
+    // Test plug-ins
+    for (SVGraphicFactory *aFactory in [self registeredFactories])
+    {
+        NSUInteger priority = [aFactory priorityForAwakingFromWebLocation:location];
+        if (priority > readingPriority)
         {
-            NSUInteger priority = [aFactory priorityForAwakingFromWebLocation:aLocation];
-            if (priority > readingPriority)
-            {
-                factory = aFactory;
-                readingPriority = priority;
-            }
+            factory = aFactory;
+            readingPriority = priority;
         }
-        
-        
-        // Create graphic
-        if (factory)
-        {        
-            SVGraphic *graphic = [factory graphicWithPasteboardContents:aLocation
-                                                                ofType:NSURLPboardType
-                                        insertIntoManagedObjectContext:context];
-            
-            [result addObject:graphic];
-        }
+    }
+    
+    
+    // Create graphic
+    SVGraphic *result = nil;
+    if (factory)
+    {        
+        result = [factory graphicWithPasteboardContents:location
+                                                 ofType:NSURLPboardType
+                         insertIntoManagedObjectContext:context];
     }
     
     return result;
