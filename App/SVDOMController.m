@@ -297,26 +297,41 @@
 
 - (unsigned int)resizingMask
 {
-    DOMElement *element = [self selectableDOMElement];
-    
-    
-    NSString *className = [[self HTMLElement] className];
-    DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element pseudoElement:@""];
-    
     unsigned int result = kCALayerRightEdge; // default to adjustment from right-hand edge
     
     
-    // Decide the mask by testing the DOM. For inline elements, not hard. But for block-level stuff I haven't figured out the right stuff to test, so fall back to checking class name since we ought to be in control of that.
+    DOMElement *element = [self selectableDOMElement];
+    DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element pseudoElement:@""];
+    
+    
+    // Is the aligned/floated left/center/right?
     if ([[style getPropertyValue:@"float"] isEqualToString:@"right"] ||
-        [[style textAlign] isEqualToString:@"right"] ||
-        [className rangeOfString:@" right"].location != NSNotFound)
+        [[style textAlign] isEqualToString:@"right"])
     {
         result = kCALayerLeftEdge;
+        return result;
     }
-    else if ([[style textAlign] isEqualToString:@"center"] ||
-             [className rangeOfString:@" center"].location != NSNotFound)
+    else if ([[style textAlign] isEqualToString:@"center"])
     {
         result = result | kCALayerLeftEdge;
+        return result;
+    }
+    
+    
+    // Couldn't tell from float/alignment, so fall back to guessing from block margins
+    DOMCSSRuleList *rules = [[element ownerDocument] getMatchedCSSRules:element pseudoElement:@""];
+    
+    for (int i = 0; i < [rules length]; i++)
+    {
+        DOMCSSRule *aRule = [rules item:i];
+        style = [(DOMElement *)aRule style];  // not published in our version of WebKit
+        
+        if ([[style marginLeft] isEqualToString:@"auto"])
+        {
+            result = kCALayerLeftEdge;
+            if ([[style marginRight] isEqualToString:@"auto"]) result = result | kCALayerRightEdge;
+            return result;
+        }
     }
     
     
