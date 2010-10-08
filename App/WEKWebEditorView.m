@@ -1202,10 +1202,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
     NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
     
     
-    NSArray *types = [[self webView] pasteboardTypesForSelection];
-    [pboard declareTypes:types owner:self];
-    [[self webView] writeSelectionWithPasteboardTypes:types toPasteboard:pboard];
-    
+    if ([self selectedDOMRange])
+    {
+        WebView *webView = [self webView];
+        NSArray *types = [webView pasteboardTypesForSelection];
+        [pboard declareTypes:types owner:self];
+        [webView writeSelectionWithPasteboardTypes:types toPasteboard:pboard];
+    }
     
     NSArray *items = [self selectedItems];
     if ([[self dataSource] webEditor:self writeItems:items toPasteboard:pboard])
