@@ -118,11 +118,7 @@
     {
         // Resize image to fit in space
 		
-#warning Where do we get the URL of the newly set source?
-		NSURL *URL = nil;
-		
-		
-		
+		NSURL *URL = [[self media] fileURL];
 		if ([URL isFileURL])	// Get original size as soon as possible
 		{
 			NSData *contentsData = [NSData dataWithContentsOfURL:URL];
