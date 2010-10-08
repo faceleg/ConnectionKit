@@ -84,10 +84,13 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 
 + (void)insertItemsWithGraphicFactories:(NSArray *)factories
                                  inMenu:(NSMenu *)menu
-                                atIndex:(NSUInteger)index;
+                                atIndex:(NSUInteger)index
+						withDescription:(BOOL)aWantDescription;
 
-- (NSMenuItem *)makeMenuItem;
-+ (NSMenuItem *)menuItemWithGraphicFactories:(NSArray *)factories title:(NSString *)title;
+- (NSMenuItem *)makeMenuItemWithDescription:(BOOL)aWantDescription;
++ (NSMenuItem *)menuItemWithGraphicFactories:(NSArray *)factories
+									   title:(NSString *)title
+							 withDescription:(BOOL)aWantDescription;
 
 // Convenience method that uses the factory if non-nil. Otherwise, fall back to text box
 + (SVGraphic *)graphicWithActionSender:(id <NSValidatedUserInterfaceItem>)sender

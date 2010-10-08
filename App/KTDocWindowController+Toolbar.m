@@ -236,7 +236,8 @@
     NSMenu *menu = [pulldownButton menu];
     [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory indexFactories]
                                                inMenu:menu
-                                              atIndex:1];
+                                              atIndex:1
+									  withDescription:YES];
     
     
     return [result autorelease];
@@ -259,25 +260,26 @@
     
     // Text box item
 	factory = [SVGraphicFactory textBoxFactory];
-	item = [factory makeMenuItem];
+	item = [factory makeMenuItemWithDescription:YES];
 	[menu addItem:item];
 	
     
     // Indexes
 	item = [SVGraphicFactory menuItemWithGraphicFactories:[SVGraphicFactory indexFactories]
-                                                   title:NSLocalizedString(@"Indexes", "menu item")];
+                                                   title:NSLocalizedString(@"Indexes", "menu item")
+										  withDescription:YES];
  	[item setIconImage:[NSImage imageNamed:@"toolbar_index"]];
 	[menu addItem:item];
     
     
     // Media Placeholder
 	factory = [SVGraphicFactory mediaPlaceholderFactory];
-	item = [factory makeMenuItem];
+	item = [factory makeMenuItemWithDescription:YES];
 	[menu addItem:item];
 	
 	
     // Raw HTML
-    self.rawHTMLMenuItem = item = [[SVGraphicFactory rawHTMLFactory] makeMenuItem];
+    self.rawHTMLMenuItem = item = [[SVGraphicFactory rawHTMLFactory] makeMenuItemWithDescription:YES];
     
 	[menu addItem:item];
 	
@@ -311,7 +313,8 @@
 	// More
     [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
                                                inMenu:menu
-                                              atIndex:[[menu itemArray] count]];
+                                              atIndex:[[menu itemArray] count]
+									  withDescription:YES];
 	
 	
     return [result autorelease];

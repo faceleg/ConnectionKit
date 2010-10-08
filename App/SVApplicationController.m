@@ -941,29 +941,30 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             NSUInteger index = [insertMenu indexOfItem:oInsertRawHTMLMenuItem];
             
             // More
-            item = [SVGraphicFactory
-                    menuItemWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
-                    title:NSLocalizedString(@"More", @"menu item")];
+            item = [SVGraphicFactory menuItemWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
+															title:NSLocalizedString(@"More", @"menu item")
+												  withDescription:NO];
             [[[item submenu] itemArray] makeObjectsPerformSelector:@selector(setImage:)
                                                         withObject:nil];
             [insertMenu insertItem:item atIndex:(index+1)];
             
             // Media Placeholder
             factory = [SVGraphicFactory mediaPlaceholderFactory];
-            item = [factory makeMenuItem];
+            item = [factory makeMenuItemWithDescription:NO];
             [item setImage:nil];
             [insertMenu insertItem:item atIndex:index];
             
             // Indexes
             item = [SVGraphicFactory menuItemWithGraphicFactories:[SVGraphicFactory indexFactories]
-                                                           title:NSLocalizedString(@"Indexes", "menu item")];
+															title:NSLocalizedString(@"Indexes", "menu item")
+												  withDescription:NO];
             [[[item submenu] itemArray] makeObjectsPerformSelector:@selector(setImage:)
                                                         withObject:nil];
             [insertMenu insertItem:item atIndex:index]; 
             
             // Text box item
             factory = [SVGraphicFactory textBoxFactory];
-            item = [factory makeMenuItem];
+            item = [factory makeMenuItemWithDescription:NO];
             [item setImage:nil];
             [insertMenu insertItem:item atIndex:index];
             
@@ -974,10 +975,12 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             
 			[SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
                                                        inMenu:oMoreGraphicsMenu
-                                                      atIndex:0];
+                                                      atIndex:0
+											  withDescription:NO];
             [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory indexFactories]
                                                  inMenu:oIndexesMenu
-                                                      atIndex:0];
+                                                      atIndex:0
+											  withDescription:NO];
 				
             
 			BOOL firstRun = [defaults boolForKey:@"FirstRun"];

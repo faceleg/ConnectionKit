@@ -19,6 +19,7 @@
 #import "SVRawHTMLGraphic.h"
 #import "SVTextBox.h"
 #import "KTToolbars.h"
+#import "NSString+KTExtensions.h"
 
 #import "KSSortedMutableArray.h"
 #import "KSWebLocation.h"
@@ -471,16 +472,17 @@ static SVGraphicFactory *sRawHTMLFactory;
 // representedObject is the factory
 + (void)insertItemsWithGraphicFactories:(NSArray *)factories
                                  inMenu:(NSMenu *)menu
-                                atIndex:(NSUInteger)index;
+                                atIndex:(NSUInteger)index
+						withDescription:(BOOL)aWantDescription;
 {	
     for (SVGraphicFactory *factory in factories)
 	{
-		NSMenuItem *menuItem = [factory makeMenuItem];
+		NSMenuItem *menuItem = [factory makeMenuItemWithDescription:aWantDescription];
 		[menu insertItem:menuItem atIndex:index];   index++;
 	}
 }
 
-- (NSMenuItem *)makeMenuItem;
+- (NSMenuItem *)makeMenuItemWithDescription:(BOOL)aWantDescription;
 {
     NSMenuItem *result = [[[NSMenuItem alloc] init] autorelease];
     
@@ -497,8 +499,15 @@ static SVGraphicFactory *sRawHTMLFactory;
         pluginName = @"";
     }
 
-	NSAttributedString *attributedTitle = [NSAttributedString attributedMenuTitle:pluginName subtitle:[self graphicDescription]];
-    [result setAttributedTitle:attributedTitle];
+	if (aWantDescription)
+	{
+		NSAttributedString *attributedTitle = [NSAttributedString attributedMenuTitle:pluginName subtitle:[self graphicDescription]];
+		[result setAttributedTitle:attributedTitle];
+	}
+	else
+	{
+		[result setTitle:pluginName];
+	}
     
     // Icon
     //if (image)
@@ -532,7 +541,9 @@ static SVGraphicFactory *sRawHTMLFactory;
     return result;
 }
 
-+ (NSMenuItem *)menuItemWithGraphicFactories:(NSArray *)factories title:(NSString *)title;
++ (NSMenuItem *)menuItemWithGraphicFactories:(NSArray *)factories
+									   title:(NSString *)title
+							 withDescription:(BOOL)aWantDescription;
 {
     NSMenuItem *result = [[NSMenuItem alloc] initWithTitle:title
 													action:nil
@@ -542,7 +553,8 @@ static SVGraphicFactory *sRawHTMLFactory;
     
     [SVGraphicFactory insertItemsWithGraphicFactories:factories
                                                inMenu:submenu
-                                              atIndex:0];
+                                              atIndex:0
+									  withDescription:aWantDescription];
 	[result setSubmenu:submenu];
     [submenu release];
     
