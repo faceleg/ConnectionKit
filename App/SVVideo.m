@@ -860,6 +860,7 @@
 							 [NSFont systemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
 							 nil];
 	NSAttributedString *info = [[[NSAttributedString alloc] initWithString:result attributes:attribs] autorelease];								 
+    [attribs release];
 	return info;
 }
 
