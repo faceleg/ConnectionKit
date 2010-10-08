@@ -476,7 +476,6 @@
     if (media)
     {
         [self replaceMedia:media forKeyPath:@"media"];
-        [self setTypeToPublish:[media typeOfFile]];
         
         // Reset size
         self.naturalWidth = nil;

@@ -26,7 +26,10 @@
 - (SVMediaRecord *)posterFrame; { return [[self container] posterFrame]; }
 - (NSURL *)externalSourceURL; { return [[self container] externalSourceURL]; }
 
-- (void)didSetSource; { }
+- (void)didSetSource;
+{
+    [[self container] setTypeToPublish:[[self media] typeOfFile]];
+}
 
 - (BOOL)validateTypeToPublish:(NSString *)type; { return YES; }
 

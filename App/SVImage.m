@@ -56,8 +56,11 @@
 {
     [super didSetSource];
     
-    // Match file type
-    [[self container] setTypeToPublish:[[self media] typeOfFile]];
+    // Adjust file type if not valid
+    if (![self validateTypeToPublish:[[self container] typeToPublish]])
+    {
+        [[self container] setTypeToPublish:(NSString *)kUTTypeJPEG];
+    }
 }
 
 + (NSArray *)allowedFileTypes
