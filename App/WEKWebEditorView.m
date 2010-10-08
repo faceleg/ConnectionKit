@@ -1988,6 +1988,16 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             {   // don't want these to go to self
             }
             
+            else if (command == @selector(cancelOperation:))
+            {
+                // End editing
+                if ([[self editingItems] count])
+                {
+                    [self setEditingItems:nil];
+                    //result = YES; // still let webkit do its default action too
+                }
+            }
+            
             else if (command == @selector(clearStyles:))
             {
                 // Get no other delegate method warning of impending change, so fake one here
