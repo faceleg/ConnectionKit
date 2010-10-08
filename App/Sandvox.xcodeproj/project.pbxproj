@@ -2297,8 +2297,6 @@
 		3C682B1B0D622F5F00B4D485 /* KTPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPage.h; sourceTree = "<group>"; };
 		3C682B1C0D622F6400B4D485 /* KTPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPage.m; sourceTree = "<group>"; };
 		3C682B2D0D62300B00B4D485 /* KTDataSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDataSourceProtocol.h; sourceTree = "<group>"; };
-		3C682B300D62301900B4D485 /* KTDraggingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDraggingInfo.h; sourceTree = "<group>"; };
-		3C682B310D62301E00B4D485 /* KTDraggingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDraggingInfo.m; sourceTree = "<group>"; };
 		3C682B420D62308300B4D485 /* SVHTMLTemplateParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVHTMLTemplateParser.h; sourceTree = "<group>"; };
 		3C682B430D62308D00B4D485 /* SVHTMLTemplateParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLTemplateParser.m; sourceTree = "<group>"; };
 		3C682B450D62317600B4D485 /* KTRTFDImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTRTFDImporter.h; sourceTree = "<group>"; };
@@ -4395,8 +4393,6 @@
 			isa = PBXGroup;
 			children = (
 				3C682B2D0D62300B00B4D485 /* KTDataSourceProtocol.h */,
-				3C682B300D62301900B4D485 /* KTDraggingInfo.h */,
-				3C682B310D62301E00B4D485 /* KTDraggingInfo.m */,
 			);
 			name = DataSource;
 			sourceTree = "<group>";
