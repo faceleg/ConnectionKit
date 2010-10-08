@@ -158,7 +158,7 @@
 #pragma mark -
 
 
-@interface SVVideoFactory : SVGraphicFactory
+@interface SVVideoFactory : SVImageFactory
 @end
 
 
@@ -166,9 +166,9 @@
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVVideo *result = [SVVideo insertNewGraphicInManagedObjectContext:context];
-    [result setWidth:200];
-    [result setHeight:150];	// typical TV aspect ratio
+    SVGraphic *result = [super insertNewGraphicInManagedObjectContext:context];
+    [result setWidth:[NSNumber numberWithInt:200]];
+    [result setHeight:[NSNumber numberWithInt:150]];	// typical TV aspect ratio
     
     return result;
 }
@@ -190,7 +190,7 @@
 #pragma mark -
 
 
-@interface SVAudioFactory : SVGraphicFactory
+@interface SVAudioFactory : SVImageFactory
 @end
 
 
@@ -198,10 +198,9 @@
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVAudio *result = [SVAudio insertNewGraphicInManagedObjectContext:context];
-    [result setWidth:200];
-    [result setHeight:25];		// height of audio tag
-    [result setIsMediaPlaceholder:[NSNumber numberWithBool:YES]];
+    SVGraphic *result = [super insertNewGraphicInManagedObjectContext:context];
+    [result setWidth:[NSNumber numberWithInt:200]];
+    [result setHeight:[NSNumber numberWithInt:25]];		// height of audio tag
     
     return result;
 }
@@ -222,7 +221,7 @@
 
 #pragma mark -
 
-@interface SVFlashFactory : SVGraphicFactory
+@interface SVFlashFactory : SVImageFactory
 @end
 
 
@@ -230,10 +229,9 @@
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVFlash *result = [SVFlash insertNewGraphicInManagedObjectContext:context];
-    [result setWidth:200];
-    [result setHeight:200];
-    [result setIsMediaPlaceholder:[NSNumber numberWithBool:YES]];
+    SVGraphic *result = [super insertNewGraphicInManagedObjectContext:context];
+    [result setWidth:[NSNumber numberWithInt:200]];
+    [result setHeight:[NSNumber numberWithInt:200]];
     
     return result;
 }
