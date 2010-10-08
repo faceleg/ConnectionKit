@@ -78,7 +78,7 @@
     NSOpenPanel *panel = [document makeChooseDialog];
     
 	// Use this 10.6 deprecated method, but when we are 10.6 only then use setAllowedFileTypes:
-    if ([panel runModalForTypes:[SVMediaGraphic allowedFileTypes]] == NSFileHandlingPanelOKButton)
+    if ([panel runModalForTypes:[SVMediaGraphic allowedTypes]] == NSFileHandlingPanelOKButton)
     {
         KSWebLocation *file = [KSWebLocation webLocationWithURL:[panel URL]];
         
@@ -95,7 +95,7 @@
 				   operationMask:(NSDragOperation)dragMask;
 {
 	// Check that the path looks like it is compatible with one of the allowed file types
-	NSArray *allowedFileTypes = [SVMediaGraphic allowedFileTypes];
+	NSArray *allowedFileTypes = [SVMediaGraphic allowedTypes];
 	BOOL OK = NO;
 	if (allowedFileTypes && [allowedFileTypes count])
 	{

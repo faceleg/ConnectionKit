@@ -671,7 +671,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
         
         [panel beginSheetForDirectory:nil
                                  file:nil
-                                types:[SVMediaGraphic allowedFileTypes]
+                                types:[SVMediaGraphic allowedTypes]
                        modalForWindow:window
                         modalDelegate:self
                        didEndSelector:@selector(chooseDialogDidEnd:returnCode:contextInfo:)

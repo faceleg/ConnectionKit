@@ -198,7 +198,7 @@
 
 + (BOOL)acceptsType:(NSString *)uti; { return NO; }
 
-+ (NSArray *)allowedFileTypes;
++ (NSArray *)allowedTypes;
 {
     NSMutableSet *result = [NSMutableSet set];
     [result addObjectsFromArray:[SVImage allowedFileTypes]];

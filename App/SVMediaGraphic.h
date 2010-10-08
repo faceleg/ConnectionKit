@@ -31,7 +31,7 @@
 - (NSURL *)sourceURL;
 
 + (BOOL)acceptsType:(NSString *)uti;
-+ (NSArray *)allowedFileTypes;
++ (NSArray *)allowedTypes;
 
 
 #pragma mark Media Conversion

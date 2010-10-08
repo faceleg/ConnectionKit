@@ -132,7 +132,7 @@
     
     if (type)
     {
-        for (NSString *aType in [SVMediaGraphic allowedFileTypes])
+        for (NSString *aType in [SVMediaGraphic allowedTypes])
         {
             if ([[NSWorkspace sharedWorkspace] type:type conformsToType:aType])
             {
