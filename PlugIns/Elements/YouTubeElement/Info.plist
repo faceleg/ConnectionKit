@@ -38,8 +38,6 @@
 	<string>YouTube</string>
 	<key>KTPageShowSidebar</key>
 	<false/>
-	<key>KTPluginDescription</key>
-	<string>Play videos from YouTube</string>
 	<key>KTPluginIconName</key>
 	<string>YouTube.icns</string>
 	<key>KTPluginInitialProperties</key>

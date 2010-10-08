@@ -30,8 +30,6 @@
 	<integer>4</integer>
 	<key>KSHelpAnchor</key>
 	<string>TweetButton</string>
-	<key>KTPluginDescription</key>
-	<string>Tweet a shortened URL to your page</string>
 	<key>KTPluginIconName</key>
 	<string>toolbar_tweet.tiff</string>
 	<key>KTPluginName</key>

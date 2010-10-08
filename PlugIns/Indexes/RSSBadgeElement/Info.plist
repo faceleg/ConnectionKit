@@ -32,8 +32,6 @@
 	<array>
 		<string>rssbadge.css</string>
 	</array>
-	<key>KTPluginDescription</key>
-	<string>Links to the RSS feed for a collection</string>
 	<key>KTPluginIconName</key>
 	<string>toolbar_rss.tiff</string>
 	<key>KTPluginInitialProperties</key>
