@@ -11,7 +11,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "SVGraphic.h"
-
+#import "SVPasteboardItemInternal.h"
 #import "SVPlugIn.h"
 
 
@@ -69,7 +69,7 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 
 #pragma mark Pasteboard
 
-- (NSUInteger)priorityForAwakingFromWebLocation:(KSWebLocation *)locations;
+- (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 
 - (SVGraphic *)graphicWithPasteboardContents:(id)contents
                                       ofType:(NSString *)type

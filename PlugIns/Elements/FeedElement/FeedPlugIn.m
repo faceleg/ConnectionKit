@@ -167,7 +167,7 @@
 #pragma mark -
 #pragma mark SVPlugInPasteboardReading
 
-+ (NSUInteger)priorityForPasteboardItem:(id <SVWebLocation>)item;
++ (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 {
     NSURL *URL = [item URL];
     if ( URL )

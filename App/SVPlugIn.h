@@ -127,7 +127,7 @@
 
 #pragma mark Pasteboard
 // Default is to refuse all locations. You should study the location and return a KTSourcePriority to match
-+ (NSUInteger)priorityForPasteboardItem:(id <SVWebLocation>)item;
++ (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 - (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
 
 

@@ -105,13 +105,13 @@
     return result;
 }
 
-- (NSUInteger)priorityForAwakingFromWebLocation:(KSWebLocation *)location;
+- (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 {
-    NSUInteger result = [super priorityForAwakingFromWebLocation:location];
+    NSUInteger result = [super priorityForPasteboardItem:item];
     
     @try
     {
-        result = [[self plugInClass] priorityForPasteboardItem:location];
+        result = [[self plugInClass] priorityForPasteboardItem:item];
     }
     @catch (NSException *exception)
     {

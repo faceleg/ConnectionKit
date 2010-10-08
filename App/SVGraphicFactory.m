@@ -124,9 +124,9 @@
     return result;
 }
 
-- (NSUInteger)priorityForAwakingFromWebLocation:(KSWebLocation *)location;
+- (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 {
-    NSString *path = [[location URL] path];
+    NSString *path = [[item URL] path];
     NSString *type = [[NSWorkspace sharedWorkspace] typeOfFile:path error:NULL];
     if (!type) type = [NSString UTIForFilenameExtension:[path pathExtension]];
     
@@ -590,7 +590,7 @@ static SVGraphicFactory *sRawHTMLFactory;
         // Test plug-ins
         for (SVGraphicFactory *aFactory in [self registeredFactories])
         {
-            NSUInteger priority = [aFactory priorityForAwakingFromWebLocation:pboard];
+            NSUInteger priority = [aFactory priorityForPasteboardItem:pboard];
             if (priority > minPriority)
             {
                 factory = aFactory;
@@ -622,7 +622,7 @@ static SVGraphicFactory *sRawHTMLFactory;
     // Test plug-ins
     for (SVGraphicFactory *aFactory in [self registeredFactories])
     {
-        NSUInteger priority = [aFactory priorityForAwakingFromWebLocation:location];
+        NSUInteger priority = [aFactory priorityForPasteboardItem:location];
         if (priority > minPriority)
         {
             factory = aFactory;
@@ -643,7 +643,7 @@ static SVGraphicFactory *sRawHTMLFactory;
     return result;
 }
 
-- (NSUInteger)priorityForAwakingFromWebLocation:(KSWebLocation *)locations; { return KTSourcePriorityNone; }
+- (NSUInteger)priorityForPasteboardItem:(KSWebLocation *)locations; { return KTSourcePriorityNone; }
 
 + (id)contentsOfPasteboard:(NSPasteboard *)pasteboard forType:(NSString *)type forFactory:(SVGraphicFactory *)aFactory;
 {
