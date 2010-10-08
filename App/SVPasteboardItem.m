@@ -22,6 +22,20 @@
 @end
 
 
+#pragma mark -
+
+
+// Irritatingly, trying to implement the real category gives build warnings claiming methods like -type aren't implemented
+@implementation NSPasteboard (SVPasteboardItem_)
+
+- (NSString *)title; { return nil; }
+
+- (NSURL *)URL { return nil; }
+
+@end
+
+
+
 
 @implementation KSWebLocation (SVPasteboardItem)
 
