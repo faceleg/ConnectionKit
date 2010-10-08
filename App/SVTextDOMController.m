@@ -116,6 +116,22 @@
     [self setEditable:[textBlock isEditable]];
 }
 
+#pragma mark Selection
+
+- (DOMRange *)selectedDOMRange;
+{
+    DOMRange *result = [[self webEditor] selectedDOMRange];
+    if (result)
+    {
+        if (![[result commonAncestorContainer] ks_isDescendantOfElement:[self textHTMLElement]])
+        {
+            result = nil;
+        }
+    }
+    
+    return result;
+}
+
 #pragma mark Editing
 
 - (void)webEditorTextDidChange;

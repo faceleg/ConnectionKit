@@ -50,6 +50,11 @@
 @property(nonatomic, retain) SVHTMLTextBlock *textBlock;
 
 
+#pragma mark Selection
+// Like the Web Editor method, but returns nil if selection is outside receiver's text
+- (DOMRange *)selectedDOMRange;
+
+
 #pragma mark Editing
 
 // e.g. Movement might be NSReturnTextMovement. Nil if we don't know
