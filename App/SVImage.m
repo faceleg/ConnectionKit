@@ -62,7 +62,7 @@
 
 + (NSArray *)allowedFileTypes
 {
-	return [NSImage imageTypes];
+	return [NSBitmapImageRep imageTypes];
 }
 
 - (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)error;
