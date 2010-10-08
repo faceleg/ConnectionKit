@@ -440,8 +440,19 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
             [page release];
             
             [aGraphic didAddToPage:page];
-            result = YES;
         }
+        else
+        {
+            // Fallback to adding download with location
+            [self setEntityName:@"File"];
+            [self setFileURL:[aLocation URL]];
+            
+            SVSiteItem *item = [self newObjectDestinedForCollection:collection];
+            [self addObject:item toCollection:collection];
+            [item release];
+        }
+        
+        result = YES;
     }
     
     return result;
