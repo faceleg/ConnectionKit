@@ -36,6 +36,28 @@
     return [NSSet setWithObject:@"media"];
 }
 
+#pragma mark Thumbnail
+
+- (id)imageRepresentation;
+{
+    id result = [super imageRepresentation];
+    if (!result) 
+    {
+        result = [[NSWorkspace sharedWorkspace] iconForFileType:
+                  [[[self media] preferredFilename] pathExtension]];
+    }
+    return result;
+}
+
+- (NSString *) imageRepresentationType
+{
+    NSString *result = ([super imageRepresentation] ?
+                     [super imageRepresentationType] :
+                     IKImageBrowserNSImageRepresentationType);
+    
+    return result;
+}
+
 #pragma mark Publishing
 
 - (void)publish:(id <SVPublisher>)publishingEngine recursively:(BOOL)recursive;
