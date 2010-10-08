@@ -58,16 +58,9 @@
 #pragma mark -
 #pragma mark Lifetime
 
-+ (SVFlash *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    SVFlash *result = [NSEntityDescription insertNewObjectForEntityForName:@"Flash"
-                                                    inManagedObjectContext:context];
-    return result;
-}
-
 - (void)didAddToPage:(id <SVPage>)page;
 {
-	[self setConstrainProportions:YES];		// We will likely want this on
+	[self.container setConstrainProportions:YES];		// We will likely want this on
 	    
     // Show caption
     if ([[[self.container textAttachment] placement] intValue] != SVGraphicPlacementInline)

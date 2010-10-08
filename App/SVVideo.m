@@ -102,13 +102,6 @@
 #pragma mark -
 #pragma mark Lifetime
 
-+ (SVVideo *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    SVVideo *result = [NSEntityDescription insertNewObjectForEntityForName:@"Video"
-                                                    inManagedObjectContext:context];
-    return result;
-}
-
 - (void)didAddToPage:(id <SVPage>)page;
 {
 	[self.container setConstrainProportions:YES];		// We will likely want this on

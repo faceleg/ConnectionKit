@@ -85,13 +85,6 @@
 #pragma mark -
 #pragma mark Lifetime
 
-+ (SVAudio *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    SVAudio *result = [NSEntityDescription insertNewObjectForEntityForName:@"Audio"
-                                                    inManagedObjectContext:context];
-    return result;
-}
-
 - (void)didAddToPage:(id <SVPage>)page;
 {
 	[self addObserver:self forKeyPath:@"externalSourceURL"	options:(NSKeyValueObservingOptionNew) context:nil];
