@@ -32,6 +32,7 @@
 - (NSURL *)addResourceWithURL:(NSURL *)fileURL;
 - (void)addCSSString:(NSString *)css;
 - (void)addCSSWithURL:(NSURL *)cssURL;
+- (NSURL *)mainCSSURL;
 
 // Extra markup
 - (NSMutableString *)extraHeaderMarkup;
