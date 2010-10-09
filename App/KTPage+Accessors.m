@@ -105,7 +105,7 @@
 
 - (NSDate *)timestampDate;
 {
-    NSDate *result = (KTTimestampModificationDate == [self timestampType])
+    NSDate *result = (KTTimestampModificationDate == [[self timestampType] intValue])
     ? [self modificationDate]
     : [self creationDate];
 	
@@ -118,18 +118,11 @@
 }
 
 @dynamic includeTimestamp;
-
-- (KTTimestampType)timestampType { return [self wrappedIntegerForKey:@"timestampType"]; }
-
-- (void)setTimestampType:(KTTimestampType)timestampType
-{
-	OBPRECONDITION(timestampType == KTTimestampCreationDate || timestampType == KTTimestampModificationDate);
-	[self setWrappedInteger:timestampType forKey:@"timestampType"];
-}
+@dynamic timestampType;
 
 - (NSString *)timestampTypeLabel
 {
-	NSString *result = (KTTimestampModificationDate == [self timestampType])
+	NSString *result = (KTTimestampModificationDate == [[self timestampType] intValue])
 		? NSLocalizedString(@"(Modification Date)",@"Label to indicate that date shown is modification date")
 		: NSLocalizedString(@"(Creation Date)",@"Label to indicate that date shown is creation date");
 	return result;

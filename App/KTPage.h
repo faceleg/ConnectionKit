@@ -86,7 +86,7 @@ typedef enum {
 
 @property(nonatomic, copy) NSNumber *includeTimestamp;
 
-@property(nonatomic) KTTimestampType timestampType;
+@property(nonatomic, copy) NSNumber *timestampType; // KTTimestampType
 - (NSString *)timestampTypeLabel;   // not KVO-compliant yet, but could easily be
 
 
