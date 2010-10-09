@@ -94,7 +94,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         
         // Caches
         _cachedPluginIcons = [[NSMutableDictionary alloc] init];
-        _cachedCustomPageIcons = [[NSMutableDictionary alloc] init];
+        _cachedImagesByRepresentation = [[NSMutableDictionary alloc] init];
         
         // Icon queue
         _customIconGenerationQueue = [[NSMutableArray alloc] init];
@@ -122,7 +122,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
 	[_cachedFavicon release];
 	[_cachedPluginIcons release];
-	[_cachedCustomPageIcons release];
+	[_cachedImagesByRepresentation release];
 	[_customIconGenerationQueue release];
     
     
@@ -293,12 +293,12 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         
 		// Cache the icon ready for display later. Include child pages (but only 1 layer deep)
 		[self iconForItem:page isThumbnail:NULL];
-		NSEnumerator *pagesEnumerator = [[page childItems] objectEnumerator];
-		KTPage *aPage;
+		/*NSEnumerator *pagesEnumerator = [[page childItems] objectEnumerator];
+		SVSiteItem *aPage;
 		while (aPage = [pagesEnumerator nextObject])
 		{
 			[self iconForItem:aPage isThumbnail:NULL];
-		}
+		}*/
         
         
         // KVO
@@ -322,7 +322,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		[aPage removeObserver:self forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]];
 		
 		// Uncache custom icon to free memory
-		[_cachedCustomPageIcons removeObjectForKey:aPage];
+		[_cachedImagesByRepresentation removeObjectForKey:aPage];
 		
 		// Remove from the set
 		[_pages removeObject:aPage];
@@ -465,7 +465,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	}
 	else if ([keyPath isEqualToString:@"customSiteOutlineIcon"])
 	{
-		[_cachedCustomPageIcons removeObjectForKey:page];
+		[_cachedImagesByRepresentation removeObjectForKey:page];
 	}
 	
 	

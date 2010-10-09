@@ -79,18 +79,26 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
         }
         else if (rep)
         {
-            CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(item, NULL);
-            if (imageSource)
+            // Hopefully there's a cached copy
+            result = [_cachedImagesByRepresentation objectForKey:rep];
+            if (!result)
             {
-                result = [[NSImage alloc]
-                          initWithThumbnailFromCGImageSource:imageSource
-                          maxPixelSize:(maxSize - 4)];   // shrink to fit shadow
-                CFRelease(imageSource);
-                
-                [result setBackgroundColor:[NSColor whiteColor]];
-                [result autorelease];
-                if (isThumbnail) *isThumbnail = YES;
+                CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(item, NULL);
+                if (imageSource)
+                {
+                    result = [[NSImage alloc]
+                              initWithThumbnailFromCGImageSource:imageSource
+                              maxPixelSize:(maxSize - 4)];   // shrink to fit shadow
+                    CFRelease(imageSource);
+                    
+                    [result setBackgroundColor:[NSColor whiteColor]];
+                    [result autorelease];
+                    
+                    [_cachedImagesByRepresentation setObject:result forKey:rep];
+                }
             }
+            
+            if (isThumbnail) *isThumbnail = YES;
 		}
 	}
               
@@ -115,7 +123,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 {
 	[self setCachedFavicon:nil];
 	[_cachedPluginIcons removeAllObjects];
-	[_cachedCustomPageIcons removeAllObjects];
+	[_cachedImagesByRepresentation removeAllObjects];
 }
 
 #pragma mark -
@@ -219,7 +227,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 
 - (NSImage *)customIconForPage:(KTPage *)page
 {
-	NSImage *result = [_cachedCustomPageIcons objectForKey:page];
+	NSImage *result = [_cachedImagesByRepresentation objectForKey:page];
 	
 	if (!result)
 	{
@@ -295,11 +303,11 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
     // Update the cache. We want to retain, not copy the key
     if (icon)
     {
-        [_cachedCustomPageIcons setObject:icon forKey:page copyKeyFirst:NO];
+        [_cachedImagesByRepresentation setObject:icon forKey:page copyKeyFirst:NO];
     }
     else
     {
-        [_cachedCustomPageIcons removeObjectForKey:page];
+        [_cachedImagesByRepresentation removeObjectForKey:page];
     }
 	
     
