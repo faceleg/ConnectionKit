@@ -75,9 +75,7 @@
     [container makeOriginalSize];
 }
 
-#pragma mark RSS Enclosures
-
-// THIS CODE IS DUPLICATED BETWEEN AUDIO AND VIDEO
+#pragma mark SVEnclosure
 
 - (NSURL *)downloadedURL;   // where it currently resides on disk
 {
@@ -119,6 +117,8 @@
     NSString *result = (type ? [NSString MIMETypeForUTI:type] : nil);
 	return result;
 }
+
+- (NSURL *)URL; { return [self externalSourceURL]; }
 
 #pragma mark HTML
 

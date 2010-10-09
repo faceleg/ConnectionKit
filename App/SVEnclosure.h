@@ -13,4 +13,5 @@
 - (NSURL *)downloadedURL;   // where it currently resides on disk
 - (long long)length;
 - (NSString *)MIMEType;
+- (NSURL *)URL;
 @end
