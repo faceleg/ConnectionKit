@@ -971,19 +971,36 @@
 
 - (void)writeEnclosure:(id <SVEnclosure>)enclosure;
 {
-    [self pushAttribute:@"url"
-                  value:[self relativeURLStringOfURL:[enclosure downloadedURL]]];
+    // Figure out the URL when published. Ideally this is from some media, but if not the published URL
+    NSURL *URL = nil;
     
-    if ([enclosure length])
+    SVMedia *media = [enclosure media];
+    if (media)
     {
-        [self pushAttribute:@"length"
-                      value:[[NSNumber numberWithLongLong:[enclosure length]] description]];
+        URL = [self addMedia:media];
+    }
+    else
+    {
+        URL = [enclosure URL];
     }
     
-    if ([enclosure MIMEType]) [self pushAttribute:@"type" value:[enclosure MIMEType]];
     
-    [self startElement:@"enclosure"];
-    [self endElement];
+    // Write
+    if (URL)
+    {
+        [self pushAttribute:@"url" value:[self relativeURLStringOfURL:URL]];
+        
+        if ([enclosure length])
+        {
+            [self pushAttribute:@"length"
+                          value:[[NSNumber numberWithLongLong:[enclosure length]] description]];
+        }
+        
+        if ([enclosure MIMEType]) [self pushAttribute:@"type" value:[enclosure MIMEType]];
+        
+        [self startElement:@"enclosure"];
+        [self endElement];
+    }
 }
 
 #pragma mark SVPlugInContext

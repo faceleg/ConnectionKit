@@ -284,6 +284,17 @@
     }
 }
 
+- (void)writeEnclosures;
+{
+    NSArray *enclosures = [self feedEnclosures];
+    
+    for (id <SVEnclosure> anEnclosure in enclosures)
+    {
+        SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+        [context writeEnclosure:anEnclosure];
+    }
+}
+
 #pragma mark Standard Summary
 
 - (void)writeSummary:(SVHTMLContext *)context;

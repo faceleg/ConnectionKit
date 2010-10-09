@@ -21,9 +21,7 @@
 			</description>
 			<pubDate>[[=item.creationDate.descriptionRFC822]]</pubDate>
 			[[if item.URL]]<guid>[[=&item.URL]]</guid>[[endif]]
-[[foreach item.feedEnclosures anEnclosure]]
-			<enclosure url="[[=&anEnclosure.downloadedURL]]"[[if anEnclosure.length]] length="[[=&anEnclosure.length]]"[[endif]] type="[[=&anEnclosure.MIMEType]]" />
-[[endForEach2]]
+            [[=item.writeEnclosures]]
 			[[forEach item.keywords aCategory]]<category>[[=&aCategory]]</category>[[endForEach2]]
 		</item>
 [[endForEach]]
