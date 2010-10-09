@@ -424,7 +424,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     KTDesign *design = [master design];
     [design writeCSS:(id)self];
     [master writeBannerCSS:(id)self];
-	[master writeCodeInjectionCSS:(id)self];	// WILL THESE WORK?  SELF IS KTPublishingEngine  ... AN NSOPERATION !!!!
+	[master writeCodeInjectionCSS:(id)self];	// WILL THIS WORK?  SELF IS KTPublishingEngine  ... AN NSOPERATION !!!! IT'S AN UGLY HACK FOR NOW TO GET OUT THE DATA WE NEED.
 
     NSString *remoteDesignDirectoryPath = [self designDirectoryPath];    
     
