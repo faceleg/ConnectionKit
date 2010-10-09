@@ -84,8 +84,10 @@
     
     
     // Ensure we have a graphics context big enough to render into
-    static CGContextRef graphicsContext;
-    static CIContext *coreImageContext;
+    // Cache contexts per thread
+    CGContextRef graphicsContext = (CGContextRef)[[[NSThread currentThread] threadDictionary]
+                                    objectForKey:@"SVImageScalingOperationBitmapContext"];
+    
     if (!graphicsContext)
     {
         CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
@@ -96,12 +98,11 @@
                                                 640 * 4,
                                                 colorSpace,
                                                 kCGImageAlphaPremultipliedLast);
-        OBASSERT(graphicsContext);
         CGColorSpaceRelease(colorSpace);
         
-        coreImageContext = [CIContext contextWithCGContext:graphicsContext // Need to cache a CI context from this too
-                                                   options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:kCIContextUseSoftwareRenderer]];
-        [coreImageContext retain];
+        [[[NSThread currentThread] threadDictionary]
+         setObject:(id)graphicsContext forKey:@"SVImageScalingOperationBitmapContext"];
+        CFRelease(graphicsContext);
     }
     
     CGRect neededContextRect = [scaledImage extent];    // Clang, we assert scaledImage is non-nil above
@@ -109,9 +110,7 @@
     size_t currentContextHeight = CGBitmapContextGetHeight(graphicsContext);
     
     if (currentContextWidth < neededContextRect.size.width || currentContextHeight < neededContextRect.size.height)
-    {
-        CGContextRelease(graphicsContext);
-        
+    {        
         size_t newContextWidth = MAX(currentContextWidth, (size_t)ceilf(neededContextRect.size.width));
         size_t newContextHeight = MAX(currentContextHeight, (size_t)ceilf(neededContextRect.size.height));
         CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
@@ -122,14 +121,17 @@
                                                 newContextWidth * 4,
                                                 colorSpace,
                                                 kCGImageAlphaPremultipliedLast);
-        OBASSERT(graphicsContext);
         CGColorSpaceRelease(colorSpace);
         
-        [coreImageContext release]; // Need to cache a CI context from this too
-        coreImageContext = [CIContext contextWithCGContext:graphicsContext
-                                                   options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:kCIContextUseSoftwareRenderer]];
-        [coreImageContext retain];
+        [[[NSThread currentThread] threadDictionary]
+         setObject:(id)graphicsContext forKey:@"SVImageScalingOperationBitmapContext"];
+        CFRelease(graphicsContext);
     }
+    
+    
+    // Create CIIContext to match
+    CIContext *coreImageContext = [CIContext contextWithCGContext:graphicsContext
+                                                          options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:kCIContextUseSoftwareRenderer]];
     
     
     // Render a CGImage
