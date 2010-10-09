@@ -420,6 +420,11 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
             [page setTitle:[aGraphic title]];
             
             
+            // Insert page into the collection. Do before inserting graphic so behaviour dependant on containing collection works. #90905
+            [self addObject:page toCollection:collection];
+            [page release];
+            
+            
             // Insert graphic into the page
             [aGraphic willInsertIntoPage:page];
             
@@ -432,11 +437,6 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
             [html insertAttributedString:attachment atIndex:0];
             [article setAttributedHTMLString:html];
             [html release];
-            
-            
-            // Insert page into the collection
-            [self addObject:page toCollection:collection];
-            [page release];
             
             [aGraphic didAddToPage:page];
         }
