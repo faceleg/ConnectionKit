@@ -511,11 +511,11 @@
     // Ignore drags of inline images & text originating in our own WebView
     NSDragOperation result = NSDragOperationNone;
     
+    WEKWebEditorView *webEditor = [self webEditor];
+    
     id source = [sender draggingSource];
     if ([source isKindOfClass:[NSResponder class]])
     {
-        WEKWebEditorView *webEditor = [self webEditor];
-        
         if (source != webEditor && [webEditor ks_followsResponder:source]) 
         {
             return result;
@@ -540,7 +540,7 @@
     
     if (result) 
     {
-        [self moveDragCaretToBeforeDOMNode:aNode draggingInfo:sender];
+        if (source == webEditor) [self moveDragCaretToBeforeDOMNode:aNode draggingInfo:sender];
         //[[self webEditor] moveDragHighlightToDOMNode:[self dropOutlineDOMElement]];
         
         if (!_displayDropOutline)
