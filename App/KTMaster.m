@@ -304,16 +304,13 @@
 
 - (void)writeCodeInjectionCSS:(SVHTMLContext *)context;
 {
-	if ([context canWriteProMarkup])
-	{
-		NSString *codeInjection = [self.codeInjection valueForKey:@"additionalCSS"];
-		
-		// If the user has specified a custom banner and the design supports it, load it in
-		if (codeInjection && ![codeInjection isEqualToString:@""])
-		{
-			[context addCSSString:codeInjection];
-		}
-	}
+	NSString *codeInjection = [self.codeInjection valueForKey:@"additionalCSS"];
+    
+    // If the user has specified a custom banner and the design supports it, load it in
+    if ([codeInjection length] && [context canWriteProMarkup])
+    {
+        [context addCSSString:codeInjection];
+    }
 }
 
 
