@@ -158,9 +158,8 @@ typedef enum {
 
 
 @interface KTPage (Indexes)
-// Simple Accessors
-- (KTCollectionSummaryType)collectionSummaryType;
-- (void)setCollectionSummaryType:(KTCollectionSummaryType)type;
+
+@property(nonatomic, copy) NSNumber *collectionSummaryType;  // KTCollectionSummaryType
 
 #pragma mark Navigation Arrows
 

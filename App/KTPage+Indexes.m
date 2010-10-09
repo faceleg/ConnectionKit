@@ -41,13 +41,7 @@
 
 #pragma mark Basic Properties
 
-// what becomes of these? Case: 89588
-- (KTCollectionSummaryType)collectionSummaryType { return [self wrappedIntegerForKey:@"collectionSummaryType"]; }
-
-- (void)setCollectionSummaryType:(KTCollectionSummaryType)type
-{
-	[self setWrappedInteger:type forKey:@"collectionSummaryType"];
-}
+@dynamic collectionSummaryType;
 
 #pragma mark Index
 
