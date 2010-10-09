@@ -3222,6 +3222,7 @@
 		274DF473114E487E00AC8C03 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				279AB3B611147C18001C830A /* Download.html */,
 				276A6F72110B5B7B006FD9F7 /* SVDownloadSiteItem.h */,
 				276A6F73110B5B7B006FD9F7 /* SVDownloadSiteItem.m */,
 				2747DA3810FE8DE6007428BB /* SVExternalLink.h */,
@@ -3529,7 +3530,6 @@
 		279AB3C211147E1A001C830A /* URL Preview */ = {
 			isa = PBXGroup;
 			children = (
-				279AB3B611147C18001C830A /* Download.html */,
 				2747DF8011009B59007428BB /* SVURLPreviewViewController.h */,
 				2747DF8111009B59007428BB /* SVURLPreviewViewController.m */,
 			);
