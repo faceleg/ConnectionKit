@@ -108,6 +108,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         _documentRootPath = [docRoot copy];
         _subfolderPath = [subfolder copy];
+        
+        // As I understand it, Core Image already uses multiple cores (including the GPU!) so trying to render multiple images with it is a waste (and tends to make GCD spawn crazy number of threads)
+        // I guess really we could make this queue global
+        _coreImageQueue = [[NSOperationQueue alloc] init];
+        [_coreImageQueue setMaxConcurrentOperationCount:1];
 	}
 	
 	return self;
@@ -128,6 +133,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [_pathsByDigest release];
     
     [_plugInCSS release];
+    
+    [_coreImageQueue release];
 	
 	[super dealloc];
 }
@@ -529,11 +536,21 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (NSString *)publishMedia:(id <SVMedia>)media;
 {
-    // Is there already an existing file on the server? If so, use that
-    NSData *fileContents = [media mediaData];
-    if (!fileContents) fileContents = [NSData dataWithContentsOfURL:[media mediaURL]];
-    NSData *digest = [fileContents SHA1Digest];
+    // Calculating where to publish media is actually quite time-consuming, so do on a background thread
+    NSOperation *op = [[NSInvocationOperation alloc]
+                       initWithTarget:self
+                       selector:@selector(threadedPublishMedia:)
+                       object:media];
     
+    [_coreImageQueue addOperation:op];
+    [op release];
+    
+    return nil;
+}
+
+- (void)publishMedia:(id <SVMedia>)media data:(NSData *)fileContents SHA1Digest:(NSData *)digest
+{
+    // Is there already an existing file on the server? If so, use that
     NSString *result = [self pathForFileWithSHA1Digest:digest];
     if (!result)
     {
@@ -549,7 +566,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                            legalizedWebPublishingFileName];
             
             result = [mediaDirectoryPath stringByAppendingPathComponent:
-                              [legalizedFileName stringByAppendingPathExtension:pathExtension]];
+                      [legalizedFileName stringByAppendingPathExtension:pathExtension]];
             
             NSUInteger count = 1;
             while (![self shouldPublishToPath:result])
@@ -558,7 +575,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                 NSString *fileName = [legalizedFileName stringByAppendingFormat:@"-%u", count];
                 
                 result = [mediaDirectoryPath stringByAppendingPathComponent:
-                        [fileName stringByAppendingPathExtension:pathExtension]];
+                          [fileName stringByAppendingPathExtension:pathExtension]];
             }
             
             OBASSERT(result);
@@ -576,7 +593,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                    object:nil];
     }
     
-    return result;
+    //return result;
+}
+
+- (void)threadedPublishMedia:(id <SVMedia>)media;
+{
+    // Calculate hash of media so can decide where to place it
+    NSData *fileContents = [media mediaData];
+    if (!fileContents) fileContents = [NSData dataWithContentsOfURL:[media mediaURL]];
+    NSData *digest = [fileContents SHA1Digest];
+    
+    [[self ks_proxyOnThread:nil waitUntilDone:NO]
+     publishMedia:media data:fileContents SHA1Digest:digest];
 }
 
 #pragma mark Resource Files

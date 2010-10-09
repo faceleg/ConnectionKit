@@ -67,6 +67,8 @@ typedef enum {
     NSMutableDictionary *_pathsByDigest;
     
     NSMutableArray      *_plugInCSS;    // mixture of string CSS snippets, and CSS URLs
+    
+    NSOperationQueue    *_coreImageQueue;
 }
 
 - (id)initWithSite:(KTSite *)site
