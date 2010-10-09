@@ -44,7 +44,7 @@
 		<integer>0</integer>
 	</dict>
 	<key>KTPluginName</key>
-	<string>RSS Feed</string>
+	<string>External RSS Feed</string>
 	<key>KTPluginNibFile</key>
 	<string>FeedInspector</string>
 	<key>KTPluginUntitledName</key>
