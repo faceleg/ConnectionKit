@@ -57,6 +57,10 @@
 	return (nil != [self URL]);		// Maybe be even smarter about having a real URL?
 }
 
+#pragma mark Other properties
+
 - (KTMaster *)master; { return [[self parentPage] master]; }
+
+- (NSArray *)keywords; { return nil; }
 
 @end

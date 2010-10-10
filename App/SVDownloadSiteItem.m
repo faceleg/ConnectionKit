@@ -36,6 +36,10 @@
     return [NSSet setWithObject:@"media"];
 }
 
+#pragma mark Other Properties
+
+- (NSArray *)keywords; { return nil; }
+
 #pragma mark Thumbnail
 
 - (id)imageRepresentation;
