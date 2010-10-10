@@ -472,8 +472,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	}
 }
 
-@class KTMediaFile;
-
 /*  KTRemotePublishingEngine uses digest to only upload this if it's changed
  */
 - (void)publishMainCSSToPath:(NSString *)cssUploadPath;
@@ -604,6 +602,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (NSString *)publishMedia:(id <SVMedia>)media;
 {
+    // During media gathering phase we want to:
+    //  A)  Collect digests of all media (e.g. for dupe identification)
+    //  B)  As a head start, queue for upload any media that has previously been published, thus reserving path
+    
     NSData *digest = [_publishedMediaDigests objectForKey:media];
     if (digest)
     {
