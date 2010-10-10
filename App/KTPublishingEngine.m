@@ -595,8 +595,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     {
         if ([self shouldPublishToPath:result])
         {
-            if (!data) data = [media mediaData];
-            if (data)   // evaluating can potentially fail. Would be good to report error somehow
+            if (data)
             {
                 [self publishData:data
                            toPath:result
@@ -604,6 +603,21 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                       contentHash:nil
                            object:nil];
             }
+            else
+            {
+                // Fetching the data is potentially expensive, so do on worker thread again
+                // TODO: If digest is already known, save time by not recalculating
+                // TODO: This code clones -publishMedia:. Split out -startPublishingMedia: method
+                NSOperation *op = [[NSInvocationOperation alloc]
+                                   initWithTarget:self
+                                   selector:@selector(threadedPublishMedia:)
+                                   object:media];
+                
+                [_coreImageQueue addOperation:op];
+                [op release];
+                
+                return nil;
+            }    
         }
     }
     
