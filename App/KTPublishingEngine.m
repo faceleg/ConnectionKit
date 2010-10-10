@@ -626,6 +626,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (NSString *)publishMedia:(id <SVMedia>)media;
 {
+    NSString *result = nil;
+    
     // During media gathering phase we want to:
     //  A)  Collect digests of all media (e.g. for dupe identification)
     //  B)  As a head start, queue for upload any media that has previously been published, thus reserving path
@@ -633,7 +635,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSData *digest = [_publishedMediaDigests objectForKey:media];
     if (digest)
     {
-        return [self publishMedia:media cachedData:nil SHA1Digest:digest];
+        result = [self publishMedia:media cachedData:nil SHA1Digest:digest];
+        NSLog(@"media will be published to: %@", result);
     }
     else
     {
@@ -645,9 +648,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         [_coreImageQueue addOperation:op];
         [op release];
-        
-        return nil;
     }
+    
+    return result;
 }
 
 - (void)threadedPublishMedia:(id <SVMedia>)media;
