@@ -178,17 +178,34 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if ([self status] <= KTPublishingEngineStatusUploading)
     {
         [self gatherMedia];
-    
         
-        // Publish pages properly
-        _status = KTPublishingEngineStatusParsing;
-        KTPage *home = [[self site] rootPage];
-        [home publish:self recursively:YES];
+        NSInvocationOperation *nextOp = [[NSInvocationOperation alloc]
+                                         initWithTarget:self
+                                         selector:@selector(mainPublishing)
+                                         object:nil];
         
+        // FIXME: nextOp shouldn't run until all media has had digests taken
         
-        // Finish up
-        [self publishNonPageContent];
+        [_coreImageQueue addOperation:nextOp];
+        [nextOp release];
     }
+}
+
+- (void)mainPublishing
+{
+    if (![NSThread isMainThread])
+    {
+        return [[self ks_proxyOnThread:nil waitUntilDone:NO] mainPublishing];
+    }
+    
+    // Publish pages properly
+    _status = KTPublishingEngineStatusParsing;
+    KTPage *home = [[self site] rootPage];
+    [home publish:self recursively:YES];
+    
+    
+    // Finish up
+    [self publishNonPageContent];
 }
 
 - (void)cancel
@@ -617,7 +634,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     if (media && digest)    // TODO: would be nice if we could report an error
     {
-        [[self ks_proxyOnThread:nil waitUntilDone:NO]
+        [[self ks_proxyOnThread:nil waitUntilDone:YES]  // wait before reporting op as finished
          publishMedia:media data:fileContents SHA1Digest:digest];
     }
 }
