@@ -615,8 +615,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                 
                 [_coreImageQueue addOperation:op];
                 [op release];
-                
-                return nil;
             }    
         }
     }
