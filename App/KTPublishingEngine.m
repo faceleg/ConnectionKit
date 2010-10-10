@@ -885,19 +885,19 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)publishNonPageContent
 {
-    /*
-     KTMaster *master = [[[self site] rootPage] master];
-     NSDictionary *scalingProps = [[master design] imageScalingPropertiesForUse:@"bannerImage"];
-     KTMediaFileUpload *bannerImage = [[[master bannerImage] file] uploadForScalingProperties:scalingProps];
-     if (bannerImage)
-     {
-     [self uploadMediaIfNeeded:bannerImage];
-     }*/
-    
     [self publishDesign];
     
     
-    [self finishPublishing];
+    
+    NSInvocationOperation *nextOp = [[NSInvocationOperation alloc]
+                                     initWithTarget:self
+                                     selector:@selector(finishPublishing)
+                                     object:nil];
+    
+    // FIXME: nextOp shouldn't run until all media has had digests taken
+    
+    [_coreImageQueue addOperation:nextOp];
+    [nextOp release];
 }
 
 - (void)finishPublishing;
