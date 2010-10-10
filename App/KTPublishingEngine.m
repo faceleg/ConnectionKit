@@ -54,7 +54,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
 - (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
 
-- (BOOL)shouldPublishToPath:(NSString *)path;
 - (void)didEnqueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
 
 @end
