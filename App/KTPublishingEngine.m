@@ -577,6 +577,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)publishMedia:(id <SVMedia>)media data:(NSData *)fileContents SHA1Digest:(NSData *)digest
 {
+    [_publishedMediaDigests setObject:digest forKey:media copyKeyFirst:NO];
+    
     // Is there already an existing file on the server? If so, use that
     NSString *result = [self pathForFileWithSHA1Digest:digest];
     if (!result)
@@ -618,8 +620,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
          cachedSHA1Digest:digest
               contentHash:nil
                    object:nil];
-        
-        [_publishedMediaDigests setObject:digest forKey:media copyKeyFirst:NO];
     }
     
     //return result;
