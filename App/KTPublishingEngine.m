@@ -593,14 +593,17 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Publish!
     if (result)
     {
-        if (!data) data = [media mediaData];
-        if (data)   // evaluating can potentially fail. Would be good to report error somehow
+        if ([self shouldPublishToPath:result])
         {
-            [self publishData:data
-                       toPath:result
-             cachedSHA1Digest:digest
-                  contentHash:nil
-                       object:nil];
+            if (!data) data = [media mediaData];
+            if (data)   // evaluating can potentially fail. Would be good to report error somehow
+            {
+                [self publishData:data
+                           toPath:result
+                 cachedSHA1Digest:digest
+                      contentHash:nil
+                           object:nil];
+            }
         }
     }
     
