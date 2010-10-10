@@ -552,29 +552,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [pubContext release];
 }
 
-- (NSString *)publishMedia:(id <SVMedia>)media;
-{
-    NSData *digest = [_publishedMediaDigests objectForKey:media];
-    if (digest)
-    {
-        return [self pathForFileWithSHA1Digest:digest];
-    }
-    else
-    {
-        // Calculating where to publish media is actually quite time-consuming, so do on a background thread
-        NSOperation *op = [[NSInvocationOperation alloc]
-                           initWithTarget:self
-                           selector:@selector(threadedPublishMedia:)
-                           object:media];
-        
-        [_coreImageQueue addOperation:op];
-        [op release];
-        
-        return nil;
-    }
-}
-
-- (void)publishMedia:(id <SVMedia>)media data:(NSData *)fileContents SHA1Digest:(NSData *)digest
+- (NSString *)publishMedia:(id <SVMedia>)media data:(NSData *)fileContents SHA1Digest:(NSData *)digest
 {
     [_publishedMediaDigests setObject:digest forKey:media copyKeyFirst:NO];
     
@@ -621,7 +599,29 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                    object:nil];
     }
     
-    //return result;
+    return result;
+}
+
+- (NSString *)publishMedia:(id <SVMedia>)media;
+{
+    NSData *digest = [_publishedMediaDigests objectForKey:media];
+    if (digest)
+    {
+        return [self publishMedia:media data:[media mediaData] SHA1Digest:digest];
+    }
+    else
+    {
+        // Calculating where to publish media is actually quite time-consuming, so do on a background thread
+        NSOperation *op = [[NSInvocationOperation alloc]
+                           initWithTarget:self
+                           selector:@selector(threadedPublishMedia:)
+                           object:media];
+        
+        [_coreImageQueue addOperation:op];
+        [op release];
+        
+        return nil;
+    }
 }
 
 - (void)threadedPublishMedia:(id <SVMedia>)media;
