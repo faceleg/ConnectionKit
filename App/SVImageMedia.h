@@ -31,6 +31,4 @@
 @property(nonatomic, copy, readonly) NSString *type;
 - (BOOL)isNativeRepresentation;
 
-- (BOOL)isEqualToMediaRepresentation:(SVImageMedia *)otherRep;
-
 @end

@@ -19,6 +19,7 @@
 
 - (NSString *)preferredFilename;    // what the media would like to be named given the chance
 
+- (BOOL)isEqualToMedia:(id <SVMedia>)otherMedia;    // return YES if you can be sure the two objects evaluate to equal data. Implement -isEqual: to call this too please!
 @end
 
 

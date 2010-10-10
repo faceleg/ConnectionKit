@@ -103,13 +103,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         _paths = [[NSMutableSet alloc] init];
         _pathsByDigest = [[NSMutableDictionary alloc] init];
+        _publishedMediaDigests = [[NSMutableDictionary alloc] init];
         
         _plugInCSS = [[NSMutableArray alloc] init];
         
         _documentRootPath = [docRoot copy];
         _subfolderPath = [subfolder copy];
         
-        // As I understand it, Core Image already uses multiple cores (including the GPU!) so trying to render multiple images with it is a waste (and tends to make GCD spawn crazy number of threads)
+        // As I understand it, Core Image already uses multiple cores (including the GPU!) so trying to render images in parallel with it is a waste (and tends to make GCD spawn crazy number of threads)
         // I guess really we could make this queue global
         _coreImageQueue = [[NSOperationQueue alloc] init];
         [_coreImageQueue setMaxConcurrentOperationCount:1];
@@ -131,6 +132,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     [_paths release];
     [_pathsByDigest release];
+    [_publishedMediaDigests release];
     
     [_plugInCSS release];
     
@@ -536,16 +538,24 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (NSString *)publishMedia:(id <SVMedia>)media;
 {
-    // Calculating where to publish media is actually quite time-consuming, so do on a background thread
-    NSOperation *op = [[NSInvocationOperation alloc]
-                       initWithTarget:self
-                       selector:@selector(threadedPublishMedia:)
-                       object:media];
-    
-    [_coreImageQueue addOperation:op];
-    [op release];
-    
-    return nil;
+    NSData *digest = [_publishedMediaDigests objectForKey:media];
+    if (digest)
+    {
+        return [self pathForFileWithSHA1Digest:digest];
+    }
+    else
+    {
+        // Calculating where to publish media is actually quite time-consuming, so do on a background thread
+        NSOperation *op = [[NSInvocationOperation alloc]
+                           initWithTarget:self
+                           selector:@selector(threadedPublishMedia:)
+                           object:media];
+        
+        [_coreImageQueue addOperation:op];
+        [op release];
+        
+        return nil;
+    }
 }
 
 - (void)publishMedia:(id <SVMedia>)media data:(NSData *)fileContents SHA1Digest:(NSData *)digest
@@ -591,6 +601,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
          cachedSHA1Digest:digest
               contentHash:nil
                    object:nil];
+        
+        [_publishedMediaDigests setObject:digest forKey:media copyKeyFirst:NO];
     }
     
     //return result;
@@ -603,8 +615,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (!fileContents) fileContents = [NSData dataWithContentsOfURL:[media mediaURL]];
     NSData *digest = [fileContents SHA1Digest];
     
-    [[self ks_proxyOnThread:nil waitUntilDone:NO]
-     publishMedia:media data:fileContents SHA1Digest:digest];
+    if (media && digest)    // TODO: would be nice if we could report an error
+    {
+        [[self ks_proxyOnThread:nil waitUntilDone:NO]
+         publishMedia:media data:fileContents SHA1Digest:digest];
+    }
 }
 
 #pragma mark Resource Files

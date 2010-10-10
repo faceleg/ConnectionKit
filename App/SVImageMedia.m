@@ -13,6 +13,8 @@
 
 #import "NSString+Karelia.h"
 
+#import "KSURLUtilities.h"
+
 
 @implementation SVImageMedia
 
@@ -71,43 +73,61 @@
 {
     if (![self isNativeRepresentation])
     {
-        NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[[self mediaRecord] mediaURL]
-                                                  size:NSMakeSize([[self width] floatValue], [[self height] floatValue])
-                                           scalingMode:KSImageScalingModeAspectFit
-                                            sharpening:0.0f
-                                     compressionFactor:1.0f
-                                              fileType:[self type]];
-        
-        SVImageScalingOperation *op = [[SVImageScalingOperation alloc] initWithURL:URL];
-        [op start];
-        
-        NSData *result = [[[op result] copy] autorelease];
-        [op release];
-        
-        return result;
+        if ([[self mediaRecord] mediaURL])
+        {
+            NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[[self mediaRecord] mediaURL]
+                                                      size:NSMakeSize([[self width] floatValue], [[self height] floatValue])
+                                               scalingMode:KSImageScalingModeAspectFit
+                                                sharpening:0.0f
+                                         compressionFactor:1.0f
+                                                  fileType:[self type]];
+            
+            SVImageScalingOperation *op = [[SVImageScalingOperation alloc] initWithURL:URL];
+            [op start];
+            
+            NSData *result = [[[op result] copy] autorelease];
+            [op release];
+            
+            return result;
+        }
     }
     else
     {
         return [[self mediaRecord] mediaData];
     }
+    
+    return nil;
 }
 
 - (NSURL *)mediaURL; { return nil; }
 
-- (BOOL)isEqualToMediaRepresentation:(SVImageMedia *)otherRep;
-{
-    BOOL result = ([[self mediaRecord] isEqual:[otherRep mediaRecord]] &&
-                   KSISEQUAL([self width], [otherRep width]) &&
-                   KSISEQUAL([self height], [otherRep height]) &&
-                   KSISEQUAL([self type], [otherRep type]));
-    return result;
-}
-
 - (BOOL)isEqual:(id)object;
 {
-    return (self == object ||
-            ([object isKindOfClass:[SVImageMedia class]] &&
-             [self isEqualToMediaRepresentation:object]));
+    if ([object conformsToProtocol:@protocol(SVMedia)])
+    {
+        return [self isEqualToMedia:object];
+    }   
+    
+    return NO;
+}
+
+- (BOOL)isEqualToMedia:(id <SVMedia>)otherMedia;
+{
+    if ([[self mediaURL] ks_isEqualToURL:[otherMedia mediaURL]])
+    {
+        return YES;
+    }
+    else if ([otherMedia isKindOfClass:[SVImageMedia class]])
+    {
+        // Evalutating -mediaData is expensive, so compare "recipes"
+        SVImageMedia *otherImage = (SVImageMedia *)otherMedia;
+        return ([otherImage.mediaRecord isEqualToMedia:self.mediaRecord] &&
+                [otherImage.width isEqualToNumber:self.width] &&
+                [otherImage.height isEqualToNumber:self.height] &&
+                [otherImage.type isEqualToString:self.type]);
+    }
+    
+    return NO;
 }
 
 - (NSUInteger)hash { return [[self mediaRecord] hash]; }

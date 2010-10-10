@@ -435,6 +435,12 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
+- (BOOL)isEqualToMedia:(id <SVMedia>)otherMedia;
+{
+    return ([[self mediaURL] ks_isEqualToURL:[otherMedia mediaURL]] ||
+            [[self mediaData] isEqualToData:[otherMedia mediaData]]);
+}
+
 #pragma mark Thumbnail
 
 - (id)imageRepresentation

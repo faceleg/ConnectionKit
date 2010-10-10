@@ -68,6 +68,24 @@
             : IKImageBrowserNSURLRepresentationType);
 }
 
+- (BOOL)isEqual:(id)object;
+{
+    if ([object conformsToProtocol:@protocol(SVMedia)])
+    {
+        return [self isEqualToMedia:object];
+    }
+    
+    return NO;
+}
+
+- (BOOL)isEqualToMedia:(id <SVMedia>)otherMedia;
+{
+    return ([[self mediaURL] ks_isEqualToURL:[otherMedia mediaURL]] ||
+            [[self mediaData] isEqualToData:[otherMedia mediaData]]);
+}
+
+- (NSUInteger)hash; { return 0; }
+
 @end
 
 
