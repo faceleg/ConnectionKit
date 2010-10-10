@@ -550,8 +550,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [pubContext release];
 }
 
-- (NSString *)publishMedia:(id <SVMedia>)media data:(NSData *)fileContents SHA1Digest:(NSData *)digest
+- (NSString *)publishMedia:(id <SVMedia>)media cachedData:(NSData *)data SHA1Digest:(NSData *)digest
 {
+    OBPRECONDITION(media);
+    OBPRECONDITION(digest);
+    
     [_publishedMediaDigests setObject:digest forKey:media copyKeyFirst:NO];
     
     // Is there already an existing file on the server? If so, use that
@@ -590,11 +593,15 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Publish!
     if (result)
     {
-        [self publishData:fileContents
-                   toPath:result
-         cachedSHA1Digest:digest
-              contentHash:nil
-                   object:nil];
+        if (!data) data = [media mediaData];
+        if (data)   // evaluating can potentially fail. Would be good to report error somehow
+        {
+            [self publishData:data
+                       toPath:result
+             cachedSHA1Digest:digest
+                  contentHash:nil
+                       object:nil];
+        }
     }
     
     return result;
@@ -609,7 +616,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSData *digest = [_publishedMediaDigests objectForKey:media];
     if (digest)
     {
-        return [self publishMedia:media data:[media mediaData] SHA1Digest:digest];
+        return [self publishMedia:media cachedData:nil SHA1Digest:digest];
     }
     else
     {
@@ -636,7 +643,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (media && digest)    // TODO: would be nice if we could report an error
     {
         [[self ks_proxyOnThread:nil waitUntilDone:YES]  // wait before reporting op as finished
-         publishMedia:media data:fileContents SHA1Digest:digest];
+         publishMedia:media cachedData:fileContents SHA1Digest:digest];
     }
 }
 
