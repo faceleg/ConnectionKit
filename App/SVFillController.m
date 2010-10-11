@@ -37,7 +37,7 @@
     
     
     // Push down to model
-    NSDictionary *info = [self infoForBinding:@"bannerType"];
+    NSDictionary *info = [self infoForBinding:@"fillType"];
     [[info objectForKey:NSObservedObjectKey] setValue:[self fillType]
                                            forKeyPath:[info objectForKey:NSObservedKeyPathKey]];
 }
