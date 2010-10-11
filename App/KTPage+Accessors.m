@@ -143,8 +143,6 @@
 #pragma mark -
 #pragma mark Keywords
 
-@dynamic keywords;
-
 - (NSString *)keywordsList;		// comma separated for meta
 {
 	NSString *result = [[self keywords] componentsJoinedByString:@", "];

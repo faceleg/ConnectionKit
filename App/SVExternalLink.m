@@ -61,6 +61,4 @@
 
 - (KTMaster *)master; { return [[self parentPage] master]; }
 
-- (NSArray *)keywords; { return nil; }
-
 @end

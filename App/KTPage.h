@@ -91,7 +91,6 @@ typedef enum {
 
 
 #pragma mark Keywords
-@property(nonatomic, copy) NSArray *keywords;
 - (NSString *)keywordsList;
 
 

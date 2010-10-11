@@ -79,6 +79,10 @@
 @dynamic creationDate;
 @dynamic modificationDate;
 
+#pragma mark Keywords
+
+@dynamic keywords;
+
 #pragma mark Navigation
 
 /*	In addition to a standard setter, we must also invalidate old site menu

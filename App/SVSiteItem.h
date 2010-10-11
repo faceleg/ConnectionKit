@@ -48,6 +48,10 @@ typedef enum {
 @property(nonatomic, copy) NSDate *modificationDate;
 
 
+#pragma mark Keywords
+@property(nonatomic, copy) NSArray *keywords;
+
+
 #pragma mark Navigation
 
 @property(nonatomic, copy) NSNumber *includeInSiteMenu; // setting in GUI
