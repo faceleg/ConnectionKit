@@ -28,6 +28,9 @@
 
 - (BOOL)shouldWriteHTMLInline;
 - (BOOL)canWriteHTMLInline;   // NO for most graphics. Images and Raw HTML return YES
+- (id <SVMedia>)thumbnailMedia;			// usually just media; might be poster frame of movie
+- (id)imageRepresentation;
+- (NSString *)imageRepresentationType;
 
 
 #pragma mark Pasteboard

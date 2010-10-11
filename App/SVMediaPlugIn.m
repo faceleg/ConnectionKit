@@ -124,6 +124,10 @@
 
 - (BOOL)shouldWriteHTMLInline; { return NO; }
 - (BOOL)canWriteHTMLInline; { return NO; }
+- (id <SVMedia>)thumbnailMedia; { return [self media]; }
+- (id)imageRepresentation; { return [[self media] imageRepresentation]; }
+- (NSString *)imageRepresentationType; { return [[self media] imageRepresentationType]; }
+
 
 #pragma mark Inspector
 

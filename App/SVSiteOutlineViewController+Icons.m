@@ -91,13 +91,13 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
                               maxPixelSize:(maxSize - 4)];   // shrink to fit shadow
                     CFRelease(imageSource);
                     
-                    if (result)
-                    {
-                        [result setBackgroundColor:[NSColor whiteColor]];
-                        [result autorelease];
+					if (result)	// Some files may not be able to provide a thumbnail, e.g. a .wmv movie
+					{
+						[result setBackgroundColor:[NSColor whiteColor]];
+						[result autorelease];
                         
-                        [_cachedImagesByRepresentation setObject:result forKey:rep];
-                    }
+						[_cachedImagesByRepresentation setObject:result forKey:rep];
+					}
                 }
             }
             

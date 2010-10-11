@@ -282,6 +282,14 @@
     return [uti conformsToUTI:(NSString *)kUTTypeVideo] || [uti conformsToUTI:(NSString *)kUTTypeMovie];
 }
 
+- (id <SVMedia>)thumbnailMedia; { return [self posterFrame]; }
+- (id)imageRepresentation; { return [[self posterFrame] imageRepresentation]; }
+- (NSString *)imageRepresentationType
+{
+	return [[self posterFrame] imageRepresentationType];
+}
+
+
 #pragma mark -
 #pragma mark Custom setters (instead of KVO)
 

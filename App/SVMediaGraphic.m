@@ -371,11 +371,18 @@
 
 - (id <SVMedia>)thumbnailMedia;
 {
-    return [self media];
+    return [[self plugIn] thumbnailMedia];	// video may want to return poster frame
 }
 
-- (id)imageRepresentation; { return [[self media] imageRepresentation]; }
-- (NSString *)imageRepresentationType { return [[self media] imageRepresentationType]; }
+- (id)imageRepresentation;
+{
+	return [[self plugIn] imageRepresentation];
+}
+
+- (NSString *)imageRepresentationType
+{
+	return [[self plugIn] imageRepresentationType];
+}
 
 - (CGFloat)thumbnailAspectRatio;
 {
