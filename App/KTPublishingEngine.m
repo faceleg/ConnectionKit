@@ -946,6 +946,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)finishPublishing;
 {
+    if (![NSThread isMainThread])
+    {
+        return [[self ks_proxyOnThread:nil] finishPublishing];
+    }
+    
     // Upload sitemap if the site has one
     [self uploadGoogleSiteMapIfNeeded];
     

@@ -135,7 +135,8 @@
         [invocation setArgument:&remotePath atIndex:3];
         [invocation setArgument:&object atIndex:4];
         
-        NSInvocationOperation *operation = [[KSInvocationOperation alloc] initWithInvocation:invocation];
+        NSOperation *operation = [[KSInvocationOperation alloc] initWithInvocation:invocation];
+        [self addDependencyForNextPhase:operation];
         [_diskAccessQueue addOperation:operation];
         [operation release];
         
@@ -203,33 +204,6 @@
 }
 
 #pragma mark Status
-
-- (void)finishPublishing;
-{
-    // It's quite likely there's still hashing operations running. We can't disconnect till all of those those have been published.
-    NSInvocationOperation *finishOp = [[NSInvocationOperation alloc]
-                                       initWithTarget:self
-                                       selector:@selector(reallyFinishPublishing)
-                                       object:nil];
-        
-    for (NSOperation *anOperation in [_diskAccessQueue operations])
-    {
-        [finishOp addDependency:anOperation];
-    }
-    
-    [_diskAccessQueue addOperation:finishOp];   // could go on any queue really, ideally +mainQueue
-    [finishOp release];
-}
-
-- (void)reallyFinishPublishing;
-{
-    if (![NSThread isMainThread])
-    {
-        return [[self ks_proxyOnThread:nil waitUntilDone:NO] reallyFinishPublishing];
-    }
-    
-    [super finishPublishing];
-}
 
 /*  Once publishing is fully complete, without any errors, ping google if there is a sitemap
  */
