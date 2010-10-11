@@ -676,7 +676,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (digest)
     {
         result = [self publishMedia:media cachedData:nil SHA1Digest:digest];
-        NSLog(@"media will be published to: %@", result);
     }
     else
     {
