@@ -47,6 +47,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 @interface KTPublishingEngine ()
 
+@property(retain) NSOperation *startNextPhaseOperation;
+
+- (void)publishDesign;
 - (void)publishMainCSSToPath:(NSString *)cssUploadPath;
 
 - (void)setRootTransferRecord:(CKTransferRecord *)rootRecord;
@@ -60,8 +63,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 
 @interface KTPublishingEngine (SubclassSupportPrivate)
-
-- (void)publishNonPageContent;
 
 // Media
 - (void)gatherMedia;
@@ -140,6 +141,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     [_coreImageQueue release];
     [_operationQueue release];
+    [_nextOp release];
 	
 	[super dealloc];
 }
@@ -177,18 +179,22 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [self setRootTransferRecord:[CKTransferRecord rootRecordWithPath:[[self documentRootPath] ks_standardizedPOSIXPath]]];
     
     
-    // Start by publishing the home page if setting up connection was successful
+    // Successful?
     if ([self status] <= KTPublishingEngineStatusUploading)
     {
-        [self gatherMedia];
-        
-        NSInvocationOperation *nextOp = [[NSInvocationOperation alloc]
+        // Store next operation so it can receive dependencies
+        NSOperation *nextOp = [[NSInvocationOperation alloc]
                                          initWithTarget:self
                                          selector:@selector(mainPublishing)
                                          object:nil];
+        [self setStartNextPhaseOperation:nextOp];
         
-        // FIXME: nextOp shouldn't run until all media has had digests taken
         
+        // Gather media
+        [self gatherMedia];
+        
+        
+        // Now have most dependencies in place, so can publish for real after that
         [_coreImageQueue addOperation:nextOp];
         [nextOp release];
     }
@@ -201,14 +207,29 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         return [[self ks_proxyOnThread:nil waitUntilDone:NO] mainPublishing];
     }
     
+    
+    // Store the op ready for dependencies to be added
+    NSOperation *nextOp = [[NSInvocationOperation alloc]
+                                     initWithTarget:self
+                                     selector:@selector(finishPublishing)
+                                     object:nil];
+    
+    [self setStartNextPhaseOperation:nextOp];
+    
+    
     // Publish pages properly
     _status = KTPublishingEngineStatusParsing;
     KTPage *home = [[self site] rootPage];
     [home publish:self recursively:YES];
     
     
-    // Finish up
-    [self publishNonPageContent];
+    // Publish design
+    [self publishDesign];
+    
+    
+    // Once all is done (the op should now have most dependencies it needs), finish up
+    [_coreImageQueue addOperation:nextOp];
+    [nextOp release];
 }
 
 - (void)cancel
@@ -221,6 +242,13 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 }
 
 - (KTPublishingEngineStatus)status { return _status; }
+
+@synthesize startNextPhaseOperation = _nextOp;
+
+- (void)addDependencyForNextPhase:(NSOperation *)op;    // can't finish publishing until the op runs
+{
+    [[self startNextPhaseOperation] addDependency:op];
+}
 
 #pragma mark Transfer Records
 
@@ -446,7 +474,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-- (void)publishDesign
+- (void)publishDesign;
 {
     KTPage *rootPage = [[self site] rootPage];
     KTMaster *master = [rootPage master];
@@ -566,6 +594,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                        selector:@selector(threadedPublishMedia:)
                        object:media];
     
+    [self addDependencyForNextPhase:op];
     [_coreImageQueue addOperation:op];
     [op release];
 }
@@ -678,6 +707,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                     arguments:[NSArray arrayWithObjects:fileContents, media, nil]];
         
         NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+        [self addDependencyForNextPhase:op];
         [[self defaultQueue] addOperation:op];
         [op release];
     }
@@ -913,23 +943,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSString *siteMapPath = [[self baseRemotePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
         [self publishData:gzipped toPath:siteMapPath];
     }
-}
-
-- (void)publishNonPageContent
-{
-    [self publishDesign];
-    
-    
-    
-    NSInvocationOperation *nextOp = [[NSInvocationOperation alloc]
-                                     initWithTarget:self
-                                     selector:@selector(finishPublishing)
-                                     object:nil];
-    
-    // FIXME: nextOp shouldn't run until all media has had digests taken
-    
-    [_coreImageQueue addOperation:nextOp];
-    [nextOp release];
 }
 
 - (void)finishPublishing;

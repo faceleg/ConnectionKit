@@ -57,6 +57,7 @@ typedef enum {
     NSString    *_subfolderPath;    // nil if there is no subfolder
     
     KTPublishingEngineStatus            _status;
+    NSOperation                         *_nextOp;
     id <KTPublishingEngineDelegate>     _delegate;
     
 	id <CKConnection>	_connection;
@@ -89,6 +90,7 @@ typedef enum {
 
 // Control
 - (KTPublishingEngineStatus)status;
+- (void)addDependencyForNextPhase:(NSOperation *)op;    // can't finish publishing until the op runs. threadsafe
 
 // Tranfer records
 - (CKTransferRecord *)rootTransferRecord;
