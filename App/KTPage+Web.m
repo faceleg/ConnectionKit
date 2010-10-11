@@ -257,37 +257,54 @@
 
 - (void)publish:(id <SVPublisher>)publishingEngine recursively:(BOOL)recursive;
 {
-    NSString *path = [self uploadPath];
+    /*  HTML writing tends to create a lot of temporary objects, so wrap in pools
+     */
+    
+    
+    NSAutoreleasePool *pool1 = [[NSAutoreleasePool alloc] init];
+    
+    NSString *path = [self uploadPath]; // needs to be in the outer pool
     SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:path];
 	
+    NSAutoreleasePool *pool2 = [[NSAutoreleasePool alloc] init];
     [context writeDocumentWithPage:self];
+    [pool2 release];
     
     
 	// Generate and publish RSS feed if needed
 	if ([[self collectionSyndicationType] boolValue])
 	{
+        pool2 = [[NSAutoreleasePool alloc] init];
+        
 		NSString *RSSFilename = [self RSSFileName];
         NSString *RSSUploadPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
         
         SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:RSSUploadPath];
         [self writeRSSFeed:context];
         [context close];
+        
+        [pool2 release];
 	}
     
     
     // Publish archives
     for (SVArchivePage *anArchivePage in [self archivePages])
     {
+        pool2 = [[NSAutoreleasePool alloc] init];
+        
         SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:
                                   [anArchivePage uploadPath]];
         
         [context writeDocumentWithArchivePage:anArchivePage];
         [context close];
+        
+        [pool2 release];
     }
     
     
     // Want the page itself to be placed on the queue last, so if publishing fails between the two, both will be republished next time round
     [context close];
+    [pool1 release];
     
     
     // Continue onto the next page if the app is licensed
