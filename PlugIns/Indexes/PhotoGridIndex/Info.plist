@@ -47,6 +47,8 @@
 				<integer>1</integer>
 				<key>collectionSortOrder</key>
 				<integer>0</integer>
+				<key>thumbnailType</key>
+				<integer>3</integer>
 				<key>collectionSyndicationType</key>
 				<integer>2</integer>
 			</dict>
@@ -68,6 +70,8 @@
 				<integer>2</integer>
 				<key>collectionSyndicationType</key>
 				<integer>2</integer>
+				<key>thumbnailType</key>
+				<integer>3</integer>
 			</dict>
 			<key>KTPresetTitle</key>
 			<string>Photo Blog</string>
