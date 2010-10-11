@@ -69,6 +69,7 @@ typedef enum {
     
     NSMutableArray      *_plugInCSS;    // mixture of string CSS snippets, and CSS URLs
     
+    NSOperationQueue    *_operationQueue;
     NSOperationQueue    *_coreImageQueue;
 }
 
@@ -110,6 +111,10 @@ typedef enum {
 
 // Given a file's digest, where should it be placed? This is likely to be because the file has already been queued for upload; test with -shouldPublishToPath:
 - (NSString *)pathForFileWithSHA1Digest:(NSData *)digest;
+
+
+#pragma mark 
+@property(retain, readonly) NSOperationQueue *defaultQueue; // want this to be threadsafe
 
 
 @end

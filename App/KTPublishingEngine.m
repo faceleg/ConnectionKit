@@ -109,10 +109,13 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         _documentRootPath = [docRoot copy];
         _subfolderPath = [subfolder copy];
         
+        
         // As I understand it, Core Image already uses multiple cores (including the GPU!) so trying to render images in parallel with it is a waste (and tends to make GCD spawn crazy number of threads)
         // I guess really we could make this queue global
         _coreImageQueue = [[NSOperationQueue alloc] init];
         [_coreImageQueue setMaxConcurrentOperationCount:1];
+        
+        _operationQueue = [[NSOperationQueue alloc] init];
 	}
 	
 	return self;
@@ -136,6 +139,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [_plugInCSS release];
     
     [_coreImageQueue release];
+    [_operationQueue release];
 	
 	[super dealloc];
 }
@@ -656,16 +660,37 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)threadedPublishMedia:(id <SVMedia>)media;
 {
+    OBPRECONDITION(media);
+    
     // Calculate hash of media so can decide where to place it
     NSData *fileContents = [media mediaData];
-    if (!fileContents) fileContents = [NSData dataWithContentsOfURL:[media mediaURL]];
-    NSData *digest = [fileContents SHA1Digest];
     
-    if (media && digest)    // TODO: would be nice if we could report an error
+    // TODO: grab data from file and hash on a different worker thread, since this is expected to be the Core Image queue (presently)
+    if (!fileContents) fileContents = [NSData dataWithContentsOfURL:[media mediaURL]];
+    
+    
+    // Hash on a different worker thread, since this is expected to be the Core Image queue (presently)
+    if (fileContents)    // TODO: would be nice if we could report an error
     {
-        [[self ks_proxyOnThread:nil waitUntilDone:YES]  // wait before reporting op as finished
-         publishMedia:media cachedData:fileContents SHA1Digest:digest];
+        NSInvocation *invocation = [NSInvocation
+                                    invocationWithSelector:@selector(threadedPublishData:forMedia:)
+                                    target:self
+                                    arguments:[NSArray arrayWithObjects:fileContents, media, nil]];
+        
+        NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+        [[self defaultQueue] addOperation:op];
+        [op release];
     }
+}
+
+- (void)threadedPublishData:(NSData *)data forMedia:(id <SVMedia>)media;
+{
+    OBPRECONDITION(data);
+    OBPRECONDITION(media);
+    
+    NSData *digest = [data SHA1Digest];
+    [[self ks_proxyOnThread:nil waitUntilDone:YES]  // wait before reporting op as finished
+     publishMedia:media cachedData:data SHA1Digest:digest];
 }
 
 #pragma mark Resource Files
@@ -699,6 +724,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     return result;
 }
+
+#pragma mark Util
+
+@synthesize defaultQueue = _operationQueue;
 
 #pragma mark Delegate
 
