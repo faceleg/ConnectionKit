@@ -550,6 +550,17 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [pubContext release];
 }
 
+- (void)startPublishingMedia:(id <SVMedia>)media;
+{
+    NSOperation *op = [[NSInvocationOperation alloc]
+                       initWithTarget:self
+                       selector:@selector(threadedPublishMedia:)
+                       object:media];
+    
+    [_coreImageQueue addOperation:op];
+    [op release];
+}
+
 - (NSString *)publishMedia:(id <SVMedia>)media cachedData:(NSData *)data SHA1Digest:(NSData *)digest
 {
     OBPRECONDITION(media);
@@ -607,14 +618,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             {
                 // Fetching the data is potentially expensive, so do on worker thread again
                 // TODO: If digest is already known, save time by not recalculating
-                // TODO: This code clones -publishMedia:. Split out -startPublishingMedia: method
-                NSOperation *op = [[NSInvocationOperation alloc]
-                                   initWithTarget:self
-                                   selector:@selector(threadedPublishMedia:)
-                                   object:media];
-                
-                [_coreImageQueue addOperation:op];
-                [op release];
+                [self startPublishingMedia:media];
             }    
         }
     }
@@ -639,13 +643,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     else
     {
         // Calculating where to publish media is actually quite time-consuming, so do on a background thread
-        NSOperation *op = [[NSInvocationOperation alloc]
-                           initWithTarget:self
-                           selector:@selector(threadedPublishMedia:)
-                           object:media];
-        
-        [_coreImageQueue addOperation:op];
-        [op release];
+        [self startPublishingMedia:media];
     }
     
     return result;
