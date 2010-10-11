@@ -88,6 +88,8 @@
 - (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
 - (void)calculateMovieDimensions:(QTMovie *)aMovie;
 - (void)calculateMoviePlayability:(QTMovie *)aMovie;
+- (void)_mediaChanged;
+
 @end
 
 @implementation SVVideo 
@@ -246,7 +248,7 @@
 	if (media)
 	{
 		NSURL *mediaURL = [media fileURL];
-		
+		OBASSERT(mediaURL);
 		NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
 																				selector:@selector(getQuickLookForFileURL:)
 																				  object:mediaURL];
@@ -263,7 +265,7 @@
 - (void)didSetSource;
 {
     [super didSetSource];
-    [self _mediaChanged];
+	[self _mediaChanged];
 
     if ([self constrainProportions])    // generally true
     {
