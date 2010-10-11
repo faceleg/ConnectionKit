@@ -23,6 +23,7 @@
 
 @property(nonatomic, copy) NSNumber *fillType;    // bindable
 - (IBAction)fillTypeChosen:(NSPopUpButton *)sender;
+- (BOOL)shouldShowFileChooser;  // Subclasses override to return YES when a file-based fill is chosen
 
 - (IBAction)chooseFile:(id)sender;
 - (BOOL)chooseFile;

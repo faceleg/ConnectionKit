@@ -47,6 +47,20 @@
     }
 }
 
+- (BOOL)shouldShowFileChooser;
+{
+    BOOL result = [super shouldShowFileChooser];
+    
+    if ([[self fillType] boolValue])
+    {
+        id banner = [[oInspectorViewController inspectedObjectsController]
+                     valueForKeyPath:@"selection.master.banner"];
+        result = (banner != nil);
+    }
+        
+    return result;
+}
+
 - (BOOL)setFileWithURL:(NSURL *)URL;
 {
     KTMaster *master = [[oInspectorViewController inspectedObjectsController]

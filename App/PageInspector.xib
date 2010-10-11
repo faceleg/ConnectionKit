@@ -1921,7 +1921,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 															</object>
 															<object class="NSAttributedString" key="NS.nan">
 																<string key="NSString">NaN</string>
-																<object class="NSDictionary" key="NSAttributes" id="524419048">
+																<object class="NSDictionary" key="NSAttributes" id="855204875">
 																	<bool key="EncodedWithXMLCoder">YES</bool>
 																	<object class="NSArray" key="dict.sortedKeys" id="0">
 																		<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2011,7 +2011,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 															</object>
 															<object class="NSAttributedString" key="NS.nan">
 																<string key="NSString">NaN</string>
-																<reference key="NSAttributes" ref="524419048"/>
+																<reference key="NSAttributes" ref="855204875"/>
 															</object>
 															<real value="1" key="NS.min"/>
 															<reference key="NS.max" ref="616763165"/>
@@ -2189,7 +2189,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
 				<bool key="_NSIsUsingManagedProxy">YES</bool>
 			</object>
-			<object class="NSCustomObject" id="611405062">
+			<object class="NSCustomObject" id="305880100">
 				<string key="NSClassName">SVPageThumbnailController</string>
 			</object>
 		</object>
@@ -2483,22 +2483,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						</object>
 					</object>
 					<int key="connectionID">195</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: inspectedObjectsController.selection.thumbnailType</string>
-						<reference key="source" ref="549251230"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="549251230"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">selectedTag: inspectedObjectsController.selection.thumbnailType</string>
-							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.thumbnailType</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">239</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -3033,7 +3017,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oPopUpButton</string>
-						<reference key="source" ref="611405062"/>
+						<reference key="source" ref="305880100"/>
 						<reference key="destination" ref="549251230"/>
 					</object>
 					<int key="connectionID">438</int>
@@ -3041,7 +3025,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oInspectorViewController</string>
-						<reference key="source" ref="611405062"/>
+						<reference key="source" ref="305880100"/>
 						<reference key="destination" ref="1001"/>
 					</object>
 					<int key="connectionID">439</int>
@@ -3049,7 +3033,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">chooseFile:</string>
-						<reference key="source" ref="611405062"/>
+						<reference key="source" ref="305880100"/>
 						<reference key="destination" ref="1064008068"/>
 					</object>
 					<int key="connectionID">440</int>
@@ -3057,10 +3041,34 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">fillTypeChosen:</string>
-						<reference key="source" ref="611405062"/>
+						<reference key="source" ref="305880100"/>
 						<reference key="destination" ref="549251230"/>
 					</object>
 					<int key="connectionID">441</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedTag: fillType</string>
+						<reference key="source" ref="549251230"/>
+						<reference key="destination" ref="305880100"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="549251230"/>
+							<reference key="NSDestination" ref="305880100"/>
+							<string key="NSLabel">selectedTag: fillType</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">fillType</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">443</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oThumbnailController</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="305880100"/>
+					</object>
+					<int key="connectionID">444</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4145,7 +4153,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">437</int>
-						<reference key="object" ref="611405062"/>
+						<reference key="object" ref="305880100"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</object>
@@ -4560,7 +4568,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">441</int>
+			<int key="maxID">444</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5017,14 +5025,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>applyNavigationArrowsStyleToSiblings:</string>
-							<string>chooseCustomThumbnail:</string>
 							<string>pickThumbnailFromPage:</string>
 							<string>selectTimestampType:</string>
 							<string>toggledArchives:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSPopUpButton</string>
 							<string>NSPopUpButton</string>
@@ -5036,7 +5042,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>applyNavigationArrowsStyleToSiblings:</string>
-							<string>chooseCustomThumbnail:</string>
 							<string>pickThumbnailFromPage:</string>
 							<string>selectTimestampType:</string>
 							<string>toggledArchives:</string>
@@ -5045,10 +5050,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">applyNavigationArrowsStyleToSiblings:</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">chooseCustomThumbnail:</string>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBActionInfo">
@@ -5072,6 +5073,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<string>oMenuTitleField</string>
 							<string>oSidebarPageletsController</string>
 							<string>oSidebarPageletsTable</string>
+							<string>oThumbnailController</string>
 							<string>oThumbnailPicker</string>
 							<string>showTimestampCheckbox</string>
 						</object>
@@ -5080,6 +5082,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<string>KTPlaceholderBindingTextField</string>
 							<string>SVSidebarPageletsController</string>
 							<string>NSTableView</string>
+							<string>SVPageThumbnailController</string>
 							<string>NSPopUpButton</string>
 							<string>NSButton</string>
 						</object>
@@ -5091,6 +5094,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<string>oMenuTitleField</string>
 							<string>oSidebarPageletsController</string>
 							<string>oSidebarPageletsTable</string>
+							<string>oThumbnailController</string>
 							<string>oThumbnailPicker</string>
 							<string>showTimestampCheckbox</string>
 						</object>
@@ -5107,6 +5111,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<object class="IBToOneOutletInfo">
 								<string key="name">oSidebarPageletsTable</string>
 								<string key="candidateClassName">NSTableView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">oThumbnailController</string>
+								<string key="candidateClassName">SVPageThumbnailController</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oThumbnailPicker</string>

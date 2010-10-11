@@ -11,14 +11,15 @@
 #import "KTPage.h"
 
 
-@class KTPlaceholderBindingTextField, SVSidebarPageletsController;
+@class KTPlaceholderBindingTextField, SVSidebarPageletsController, SVPageThumbnailController;
 
 
 @interface SVPageInspector : KSInspectorViewController
 {
     IBOutlet KTPlaceholderBindingTextField  *oMenuTitleField;
     
-    IBOutlet NSPopUpButton  *oThumbnailPicker;
+    IBOutlet SVPageThumbnailController  *oThumbnailController;
+    IBOutlet NSPopUpButton              *oThumbnailPicker;
     
     IBOutlet NSButton *showTimestampCheckbox;
     

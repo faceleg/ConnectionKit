@@ -15,6 +15,18 @@
 
 @implementation SVPageThumbnailController
 
+- (BOOL)shouldShowFileChooser;
+{
+    BOOL result = [super shouldShowFileChooser];
+    
+    if ([[self fillType] intValue] == 1)    // custom thumbnail
+    {
+        result = YES;
+    }
+    
+    return result;
+}
+
 - (BOOL)setFileWithURL:(NSURL *)URL;
 {
     NSManagedObjectContext *context = [[oInspectorViewController representedObject] managedObjectContext];

@@ -74,6 +74,10 @@
               withKeyPath:@"inspectedObjectsController.selection.menuTitle"
                   options:nil];
     
+    
+    // Setup thumbnail picker
+    [oThumbnailController bind:@"fillType" toObject:self withKeyPath:@"inspectedObjectsController.selection.thumbnailType" options:nil];
+    
     [self updatePickFromPageThumbnail];
 }
 

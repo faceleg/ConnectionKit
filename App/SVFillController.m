@@ -25,13 +25,11 @@
 - (IBAction)fillTypeChosen:(NSPopUpButton *)sender;
 {
     // Make sure an image is chosen
-    if ([[self fillType] boolValue])
+    if ([self shouldShowFileChooser])
     {
-        id banner = [[oInspectorViewController inspectedObjectsController]
-                     valueForKeyPath:@"selection.master.banner"];
-        
-        if (!banner && ![self chooseFile])
+        if (![self chooseFile])
         {
+            // Reset fill type
             [self setFillType:[NSNumber numberWithBool:NO]];
             return;
         }
@@ -43,6 +41,8 @@
     [[info objectForKey:NSObservedObjectKey] setValue:[self fillType]
                                            forKeyPath:[info objectForKey:NSObservedKeyPathKey]];
 }
+
+- (BOOL)shouldShowFileChooser; { return NO; }
 
 #pragma mark Custom Banner
 

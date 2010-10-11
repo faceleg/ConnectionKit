@@ -85,7 +85,7 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
     
     
     // Bind banner type
-    [oBannerPickerController bind:@"bannerType" toObject:self withKeyPath:@"inspectedObjectsController.selection.master.bannerType" options:nil];
+    [oBannerPickerController bind:@"fillType" toObject:self withKeyPath:@"inspectedObjectsController.selection.master.bannerType" options:nil];
     [oBannerPickerController bind:@"canChooseBannerType" toObject:self withKeyPath:@"inspectedObjectsController.selection.master.design.allowsBannerSubstitution" options:nil];
     
     
