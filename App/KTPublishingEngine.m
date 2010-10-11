@@ -552,6 +552,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)startPublishingMedia:(id <SVMedia>)media;
 {
+    // Put placeholder in dictionary so we don't start calculating digest/data twice while equivalent operation is already queued
+    [_publishedMediaDigests setObject:[NSNull null] forKey:media copyKeyFirst:NO];
+    
+    
+    // Do the calculation on a background thread
     NSOperation *op = [[NSInvocationOperation alloc]
                        initWithTarget:self
                        selector:@selector(threadedPublishMedia:)
