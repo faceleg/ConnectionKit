@@ -164,6 +164,20 @@
     [_publisher addCSSWithURL:cssURL];
 }
 
+#pragma mark Raw Writing
+
+- (void)writeString:(NSString *)string;
+{
+    [super writeString:string];
+    
+    // Run event loop to avoid stalling the GUI too long
+    NSEvent *event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantPast] inMode:NSDefaultRunLoopMode dequeue:YES];
+    if (event)
+    {
+        [NSApp sendEvent:event];
+    }
+}
+
 #pragma mark Page
 
 - (void)writeDocumentWithPage:(KTPage *)page;

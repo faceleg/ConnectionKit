@@ -29,7 +29,7 @@
     // Ignore
 }
 
-- (void)writeString:(NSString *)string;
+- (void)XwriteString:(NSString *)string;
 {
     // Ignore
 }
