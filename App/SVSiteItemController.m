@@ -67,10 +67,13 @@
             [self childPagesToIndexController]; // makes sure it's loaded/bound
             
             // ...and from there take the thumbnail media
-            [self bind:@"thumbnailMedia"
-              toObject:_thumbnailSourceItemController
-           withKeyPath:@"thumbnailMedia"
-               options:nil];
+            if (_thumbnailSourceItemController)
+            {
+                [self bind:@"thumbnailMedia"
+                  toObject:_thumbnailSourceItemController
+               withKeyPath:@"thumbnailMedia"
+                   options:nil];
+            }
         }
     }
 }
