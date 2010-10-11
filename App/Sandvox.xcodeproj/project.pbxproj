@@ -523,6 +523,8 @@
 		27ACACB70D588F64004732D0 /* KTPlaceholderBindingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ACACB50D588F64004732D0 /* KTPlaceholderBindingTextField.m */; };
 		27ACC6EF126317CE00EA521E /* SVFillController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACC6ED126317CE00EA521E /* SVFillController.h */; };
 		27ACC6F0126317CE00EA521E /* SVFillController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ACC6EE126317CE00EA521E /* SVFillController.m */; };
+		27ACC73912631ADC00EA521E /* SVPageThumbnailController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACC73712631ADC00EA521E /* SVPageThumbnailController.h */; };
+		27ACC73A12631ADC00EA521E /* SVPageThumbnailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ACC73812631ADC00EA521E /* SVPageThumbnailController.m */; };
 		27AD53A60D6B40C300883550 /* SVHTMLTemplateParser+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AD53A40D6B40C300883550 /* SVHTMLTemplateParser+Private.h */; };
 		27AE74750EEDE6CC00409D80 /* KTPublishingWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */; };
 		27AE74760EEDE6CC00409D80 /* KTPublishingWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */; };
@@ -2077,6 +2079,8 @@
 		27ACACB50D588F64004732D0 /* KTPlaceholderBindingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPlaceholderBindingTextField.m; sourceTree = "<group>"; };
 		27ACC6ED126317CE00EA521E /* SVFillController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVFillController.h; sourceTree = "<group>"; };
 		27ACC6EE126317CE00EA521E /* SVFillController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFillController.m; sourceTree = "<group>"; };
+		27ACC73712631ADC00EA521E /* SVPageThumbnailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageThumbnailController.h; sourceTree = "<group>"; };
+		27ACC73812631ADC00EA521E /* SVPageThumbnailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageThumbnailController.m; sourceTree = "<group>"; };
 		27AD53A40D6B40C300883550 /* SVHTMLTemplateParser+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVHTMLTemplateParser+Private.h"; sourceTree = "<group>"; };
 		27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPublishingWindowController.h; sourceTree = "<group>"; };
 		27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPublishingWindowController.m; sourceTree = "<group>"; };
@@ -3812,6 +3816,8 @@
 				273DD20710CC74AA003CCE97 /* CollectionInspector.xib */,
 				27AF0E2610F40B42000A6B15 /* SVPageInspector.h */,
 				27AF0E2710F40B42000A6B15 /* SVPageInspector.m */,
+				27ACC73712631ADC00EA521E /* SVPageThumbnailController.h */,
+				27ACC73812631ADC00EA521E /* SVPageThumbnailController.m */,
 			);
 			name = "Page Inspector";
 			sourceTree = "<group>";
@@ -5772,6 +5778,7 @@
 				276AB40A125F444C006FED25 /* SVPasteboardItem.h in Headers */,
 				276AB462125F4B43006FED25 /* SVPasteboardItemInternal.h in Headers */,
 				27ACC6EF126317CE00EA521E /* SVFillController.h in Headers */,
+				27ACC73912631ADC00EA521E /* SVPageThumbnailController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7267,6 +7274,7 @@
 				275D9C6E125C80DE004A3A53 /* SVSiteItemController.m in Sources */,
 				276AB40B125F444C006FED25 /* SVPasteboardItem.m in Sources */,
 				27ACC6F0126317CE00EA521E /* SVFillController.m in Sources */,
+				27ACC73A12631ADC00EA521E /* SVPageThumbnailController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

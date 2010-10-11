@@ -130,24 +130,6 @@
 
 #pragma mark Thumbnail
 
-- (IBAction)chooseCustomThumbnail:(NSButton *)sender;
-{
-    KTDocument *document = [self representedObject];
-    NSOpenPanel *panel = [document makeChooseDialog];
- 	[panel setAllowedFileTypes:[NSArray arrayWithObject:(NSString *)kUTTypeImage]];
-   
-    if ([panel runModalForTypes:[panel allowedFileTypes]] == NSFileHandlingPanelOKButton)
-    {
-        SVMediaRecord *media = [SVMediaRecord mediaWithURL:[panel URL]
-                                                entityName:@"Thumbnail"
-                            insertIntoManagedObjectContext:[document managedObjectContext]
-                                                     error:NULL];
-        
-        [(NSObject *)[self inspectedObjectsController] replaceMedia:media
-                                                         forKeyPath:@"selection.customThumbnail"];
-    }
-}
-
 - (void)updatePickFromPageThumbnail
 {
     NSImage *result = nil;
