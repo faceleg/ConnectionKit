@@ -521,6 +521,8 @@
 		27AA102A0CDA065A001D6B9B /* KTMissingMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */; };
 		27ACACB60D588F64004732D0 /* KTPlaceholderBindingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */; settings = {ATTRIBUTES = (); }; };
 		27ACACB70D588F64004732D0 /* KTPlaceholderBindingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ACACB50D588F64004732D0 /* KTPlaceholderBindingTextField.m */; };
+		27ACC6EF126317CE00EA521E /* SVFillController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACC6ED126317CE00EA521E /* SVFillController.h */; };
+		27ACC6F0126317CE00EA521E /* SVFillController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ACC6EE126317CE00EA521E /* SVFillController.m */; };
 		27AD53A60D6B40C300883550 /* SVHTMLTemplateParser+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AD53A40D6B40C300883550 /* SVHTMLTemplateParser+Private.h */; };
 		27AE74750EEDE6CC00409D80 /* KTPublishingWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */; };
 		27AE74760EEDE6CC00409D80 /* KTPublishingWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */; };
@@ -2073,6 +2075,8 @@
 		27ACA3100D57A8E0004732D0 /* KTSummaryWebViewTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSummaryWebViewTextBlock.m; sourceTree = "<group>"; };
 		27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPlaceholderBindingTextField.h; sourceTree = "<group>"; };
 		27ACACB50D588F64004732D0 /* KTPlaceholderBindingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPlaceholderBindingTextField.m; sourceTree = "<group>"; };
+		27ACC6ED126317CE00EA521E /* SVFillController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVFillController.h; sourceTree = "<group>"; };
+		27ACC6EE126317CE00EA521E /* SVFillController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFillController.m; sourceTree = "<group>"; };
 		27AD53A40D6B40C300883550 /* SVHTMLTemplateParser+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVHTMLTemplateParser+Private.h"; sourceTree = "<group>"; };
 		27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPublishingWindowController.h; sourceTree = "<group>"; };
 		27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPublishingWindowController.m; sourceTree = "<group>"; };
@@ -3837,6 +3841,8 @@
 				272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */,
 				2725BA44121DE9990074EAA0 /* NSImageView+IMBImageItem.h */,
 				2725BA45121DE9990074EAA0 /* NSImageView+IMBImageItem.m */,
+				27ACC6ED126317CE00EA521E /* SVFillController.h */,
+				27ACC6EE126317CE00EA521E /* SVFillController.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -5765,6 +5771,7 @@
 				275D9C6D125C80DE004A3A53 /* SVSiteItemController.h in Headers */,
 				276AB40A125F444C006FED25 /* SVPasteboardItem.h in Headers */,
 				276AB462125F4B43006FED25 /* SVPasteboardItemInternal.h in Headers */,
+				27ACC6EF126317CE00EA521E /* SVFillController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7259,6 +7266,7 @@
 				2782D1DA1257483F00B7CF1A /* SVSummaryDOMController.m in Sources */,
 				275D9C6E125C80DE004A3A53 /* SVSiteItemController.m in Sources */,
 				276AB40B125F444C006FED25 /* SVPasteboardItem.m in Sources */,
+				27ACC6F0126317CE00EA521E /* SVFillController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

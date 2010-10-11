@@ -6,27 +6,15 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "SVFillController.h"
 
 
-@class KSInspectorViewController;
-
-
-@interface SVBannerPickerController : NSObject
+@interface SVBannerPickerController : SVFillController
 {
-    IBOutlet KSInspectorViewController  *oInspectorViewController;
-    IBOutlet NSPopUpButton              *oPopUpButton;
-    
   @private
-    NSNumber    *_bannerType;
     BOOL        _canChooseBannerType;
 }
 
-@property(nonatomic, copy) NSNumber *bannerType;    // bindable
 @property(nonatomic) BOOL canChooseBannerType;      // bindable
-- (IBAction)bannerTypeChosen:(NSPopUpButton *)sender;
-
-- (IBAction)chooseBanner:(id)sender;
-- (BOOL)chooseBanner;
 
 @end

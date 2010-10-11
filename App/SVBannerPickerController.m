@@ -8,7 +8,6 @@
 
 #import "SVBannerPickerController.h"
 
-#import "KTDocument.h"
 #import "KTMaster.h"
 
 #import "KSInspectorViewController.h"
@@ -16,19 +15,11 @@
 
 @implementation SVBannerPickerController
 
-- (void)dealloc
-{
-    [_bannerType release];
-    
-    [super dealloc];
-}
-
 #pragma mark Banner Type
 
-@synthesize bannerType = _bannerType;
-- (NSNumber *)bannerType;
+- (NSNumber *)fillType;
 {
-    NSNumber *result = _bannerType;
+    NSNumber *result = [super fillType];
     
     // Ugly hack, but it works. Pretend design-supplied is selected when design doesn't support it
     if (![self canChooseBannerType])
@@ -38,7 +29,7 @@
     
     return result;
 }
-+ (NSSet *)keyPathsForValuesAffectingBannerType;
++ (NSSet *)keyPathsForValuesAffectingFillType;
 {
     return [NSSet setWithObject:@"canChooseBannerType"];
 }
@@ -56,54 +47,14 @@
     }
 }
 
-- (IBAction)bannerTypeChosen:(NSPopUpButton *)sender;
+- (BOOL)setFileWithURL:(NSURL *)URL;
 {
-    // Make sure an image is chosen
-    if ([[self bannerType] boolValue])
-    {
-        id banner = [[oInspectorViewController inspectedObjectsController]
-                     valueForKeyPath:@"selection.master.banner"];
-        
-        if (!banner && ![self chooseBanner])
-        {
-            [self setBannerType:[NSNumber numberWithBool:NO]];
-            return;
-        }
-    }
+    KTMaster *master = [[oInspectorViewController inspectedObjectsController]
+                        valueForKeyPath:@"selection.master"];
     
+    [master setBannerWithContentsOfURL:URL];
     
-    // Push down to model
-    NSDictionary *info = [self infoForBinding:@"bannerType"];
-    [[info objectForKey:NSObservedObjectKey] setValue:[self bannerType]
-                                           forKeyPath:[info objectForKey:NSObservedKeyPathKey]];
-}
-
-#pragma mark Custom Banner
-
-- (IBAction)chooseBanner:(id)sender;
-{
-    [self chooseBanner];
-}
-
-- (BOOL)chooseBanner;
-{
-    KTDocument *document = [oInspectorViewController representedObject];
-    NSOpenPanel *panel = [document makeChooseDialog];
- 	[panel setAllowedFileTypes:[NSArray arrayWithObject:(NSString *)kUTTypeImage]];
-   
-    if ([panel runModalForTypes:[panel allowedFileTypes]] == NSFileHandlingPanelOKButton)
-    {
-        NSURL *URL = [panel URL];
-        
-        KTMaster *master = [[oInspectorViewController inspectedObjectsController]
-                            valueForKeyPath:@"selection.master"];
-        
-        [master setBannerWithContentsOfURL:URL];
-        
-        return YES;
-    }
-    
-    return NO;
+    return YES;
 }
 
 @end
