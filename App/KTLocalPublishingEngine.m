@@ -97,7 +97,10 @@
              object:(id <SVPublishedObject>)object;
 {
     // Record digest of the data for after publishing
-    if (!digest) digest = [data SHA1Digest];
+    if (!digest)
+    {
+        digest = [data SHA1Digest]; // could do this on -defaultQueue, but may only be worth it for larger data
+    }
     
     
     // Don't upload if the page isn't stale and we've been requested to only publish changes

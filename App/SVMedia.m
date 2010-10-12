@@ -54,6 +54,13 @@
     return [[self mediaURL] ks_lastPathComponent];
 }
 
+- (NSString *)preferredUploadPath;
+{
+    // FIXME: Convert .jpg to .jpeg
+    return [@"_Media" stringByAppendingPathComponent:
+            [[self preferredFilename] legalizedWebPublishingFilename]];
+}
+
 - (id)imageRepresentation
 {
     return (nil != [self mediaData]

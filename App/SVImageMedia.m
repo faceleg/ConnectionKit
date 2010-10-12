@@ -54,11 +54,11 @@
     return result;
 }
 
-- (NSString *)preferredFilename;    // what the media would like to named given the chance
+- (NSString *)preferredUploadPath;
 {
     if ([self type])
     {
-        NSString *name = [[[self mediaRecord] preferredFilename] stringByDeletingPathExtension];
+        NSString *name = [[[self mediaRecord] preferredUploadPath] stringByDeletingPathExtension];
         
         NSString *result = [name stringByAppendingPathExtension:
                             [NSString filenameExtensionForUTI:[self type]]];
@@ -66,7 +66,7 @@
         return result;
     }
     
-    return [[self mediaRecord] preferredFilename];
+    return [[self mediaRecord] preferredUploadPath];
 }
 
 - (NSData *)mediaData;

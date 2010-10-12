@@ -585,6 +585,15 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
+#pragma mark Publishing
+
+- (NSString *)preferredUploadPath;
+{
+    // FIXME: Convert .jpg to .jpeg
+    return [@"_Media" stringByAppendingPathComponent:
+            [[self preferredFilename] legalizedWebPublishingFilename]];
+}
+
 @end
 
 

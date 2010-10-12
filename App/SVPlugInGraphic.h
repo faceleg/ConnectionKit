@@ -14,7 +14,7 @@
 @class KTElementPlugInWrapper;
 
 
-@interface SVPlugInGraphic : SVGraphic <SVMedia>
+@interface SVPlugInGraphic : SVGraphic
 {
   @private
     SVPlugIn *_plugIn;

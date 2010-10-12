@@ -68,7 +68,7 @@
     uploadPath = [uploadPath stringByAppendingPathComponent:[[self parentPage] uploadPath]];
     uploadPath = [uploadPath stringByDeletingLastPathComponent];
     uploadPath = [uploadPath stringByAppendingPathComponent:
-                  [[media preferredFilename] legalizedWebPublishingFilename]];
+                  [[media preferredUploadPath] lastPathComponent]];
     
     [publishingEngine publishContentsOfURL:[media mediaURL]
                                     toPath:uploadPath

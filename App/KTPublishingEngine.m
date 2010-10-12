@@ -614,24 +614,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         if ([self status] > KTPublishingEngineStatusGatheringMedia)
         {
             //  The media rep does not already exist on the server, so need to assign it a new path
-            NSString *mediaDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:@"_Media"];
-            NSString *preferredFilename = [media preferredFilename];
-            NSString *pathExtension = [preferredFilename pathExtension];
-            
-            NSString *legalizedFileName = [[preferredFilename stringByDeletingPathExtension]
-                                           legalizedWebPublishingFileName];
-            
-            result = [mediaDirectoryPath stringByAppendingPathComponent:
-                      [legalizedFileName stringByAppendingPathExtension:pathExtension]];
-            
+            NSString *result = [[self baseRemotePath]
+                                stringByAppendingPathComponent:[media preferredUploadPath]];
+                       
             NSUInteger count = 1;
             while (![self shouldPublishToPath:result])
             {
                 count++;
-                NSString *fileName = [legalizedFileName stringByAppendingFormat:@"-%u", count];
+                NSString *extension = [result pathExtension];
                 
-                result = [mediaDirectoryPath stringByAppendingPathComponent:
-                          [fileName stringByAppendingPathExtension:pathExtension]];
+                result = [[[result stringByDeletingPathExtension]
+                           stringByAppendingFormat:@"-%u", count]
+                          stringByAppendingPathExtension:extension];
             }
             
             OBASSERT(result);
