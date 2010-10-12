@@ -87,6 +87,7 @@
 
 - (void)didAddToPage:(id <SVPage>)page;
 {
+#warning I think I don't want to do KVO here.  Custom setters I think....
 	[self addObserver:self forKeyPath:@"externalSourceURL"	options:(NSKeyValueObservingOptionNew) context:nil];
 	[self addObserver:self forKeyPath:@"media"				options:(NSKeyValueObservingOptionNew) context:nil];
     

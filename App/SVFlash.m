@@ -69,6 +69,14 @@
     }
 }
 
++ (NSArray *)plugInKeys;
+{
+    return [[super plugInKeys] arrayByAddingObjectsFromArray:
+			[NSArray arrayWithObjects:
+			 @"flashvars",
+			 @"showmenu",
+			 nil]];
+}
 
 
 #pragma mark -

@@ -3,20 +3,23 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">762</string>
+		<string key="IBDocument.InterfaceBuilderVersion">804</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">762</string>
+			<string key="NS.object.0">804</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="7"/>
+			<integer value="9"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 		</array>
-		<dictionary class="NSMutableDictionary" key="IBDocument.Metadata"/>
+		<object class="NSMutableDictionary" key="IBDocument.Metadata">
+			<string key="NS.key.0">PluginDependencyRecalculationVersion</string>
+			<integer value="1" key="NS.object.0"/>
+		</object>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="118471246">
 			<object class="NSCustomObject" id="36281372">
 				<string key="NSClassName">SVMediaGraphicInspector</string>
@@ -314,95 +317,111 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.info</string>
-						<reference key="source" ref="413958448"/>
-						<reference key="destination" ref="36281372"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="413958448"/>
-							<reference key="NSDestination" ref="36281372"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.info</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.info</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">171</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.icon</string>
+						<string key="label">value: inspectedObjectsController.selection.plugin.icon</string>
 						<reference key="source" ref="324963362"/>
 						<reference key="destination" ref="36281372"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="324963362"/>
 							<reference key="NSDestination" ref="36281372"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.icon</string>
+							<string key="NSLabel">value: inspectedObjectsController.selection.plugin.icon</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.icon</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.plugin.icon</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">172</int>
+					<int key="connectionID">213</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.loop</string>
-						<reference key="source" ref="653184270"/>
+						<string key="label">value: inspectedObjectsController.selection.plugin.info</string>
+						<reference key="source" ref="413958448"/>
 						<reference key="destination" ref="36281372"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="653184270"/>
+							<reference key="NSSource" ref="413958448"/>
 							<reference key="NSDestination" ref="36281372"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.loop</string>
+							<string key="NSLabel">value: inspectedObjectsController.selection.plugin.info</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.loop</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.plugin.info</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">177</int>
+					<int key="connectionID">214</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.autoplay</string>
-						<reference key="source" ref="751711492"/>
-						<reference key="destination" ref="36281372"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="751711492"/>
-							<reference key="NSDestination" ref="36281372"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.autoplay</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.autoplay</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">179</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.controller</string>
+						<string key="label">value: inspectedObjectsController.selection.plugin.controller</string>
 						<reference key="source" ref="918964117"/>
 						<reference key="destination" ref="36281372"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="918964117"/>
 							<reference key="NSDestination" ref="36281372"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.controller</string>
+							<string key="NSLabel">value: inspectedObjectsController.selection.plugin.controller</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.controller</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.plugin.controller</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">185</int>
+					<int key="connectionID">215</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: inspectedObjectsController.selection.autoplay</string>
+						<string key="label">value: inspectedObjectsController.selection.plugin.autoplay</string>
+						<reference key="source" ref="751711492"/>
+						<reference key="destination" ref="36281372"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="751711492"/>
+							<reference key="NSDestination" ref="36281372"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.plugin.autoplay</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.plugin.autoplay</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">216</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.plugin.preload</string>
 						<reference key="source" ref="864557290"/>
 						<reference key="destination" ref="36281372"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="864557290"/>
 							<reference key="NSDestination" ref="36281372"/>
-							<string key="NSLabel">enabled: inspectedObjectsController.selection.autoplay</string>
+							<string key="NSLabel">value: inspectedObjectsController.selection.plugin.preload</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.plugin.preload</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">217</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.plugin.loop</string>
+						<reference key="source" ref="653184270"/>
+						<reference key="destination" ref="36281372"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="653184270"/>
+							<reference key="NSDestination" ref="36281372"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.plugin.loop</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.plugin.loop</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">218</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.plugin.autoplay</string>
+						<reference key="source" ref="864557290"/>
+						<reference key="destination" ref="36281372"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="864557290"/>
+							<reference key="NSDestination" ref="36281372"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.plugin.autoplay</string>
 							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.autoplay</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.plugin.autoplay</string>
 							<object class="NSDictionary" key="NSOptions">
 								<string key="NS.key.0">NSValueTransformerName</string>
 								<string key="NS.object.0">NSNegateBoolean</string>
@@ -410,39 +429,23 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">187</int>
+					<int key="connectionID">219</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.preload</string>
-						<reference key="source" ref="864557290"/>
-						<reference key="destination" ref="36281372"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="864557290"/>
-							<reference key="NSDestination" ref="36281372"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.preload</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.preload</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">188</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: inspectedObjectsController.selection.controller</string>
+						<string key="label">enabled: inspectedObjectsController.selection.plugin.controller</string>
 						<reference key="source" ref="751711492"/>
 						<reference key="destination" ref="36281372"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="751711492"/>
 							<reference key="NSDestination" ref="36281372"/>
-							<string key="NSLabel">enabled: inspectedObjectsController.selection.controller</string>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.plugin.controller</string>
 							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.controller</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.plugin.controller</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">189</int>
+					<int key="connectionID">220</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -603,7 +606,7 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">212</int>
+			<int key="maxID">220</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -635,6 +638,13 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="752400344">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/NSView+Karelia.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSImageView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">NSImageView+IMBImageItem.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -682,6 +692,16 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 						<string key="imagePickerCancelled:">id</string>
 						<string key="imagePickerSet:">id</string>
 					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="imagePickerCancelled:">
+							<string key="name">imagePickerCancelled:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="imagePickerSet:">
+							<string key="name">imagePickerSet:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">ImageCropperController.h</string>
@@ -720,6 +740,16 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="createLink:">SVLinkManager</string>
 						<string key="unlink:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="createLink:">
+							<string key="name">createLink:</string>
+							<string key="candidateClassName">SVLinkManager</string>
+						</object>
+						<object class="IBActionInfo" key="unlink:">
+							<string key="name">unlink:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="48626872">
 						<string key="majorKey">IBProjectSource</string>
@@ -823,6 +853,13 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 						<string key="NS.key.0">orderFrontLinkPanel:</string>
 						<string key="NS.object.0">id</string>
 					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">orderFrontLinkPanel:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">orderFrontLinkPanel:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<reference key="sourceIdentifier" ref="48626872"/>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -832,9 +869,29 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 						<string key="chooseFile:">id</string>
 						<string key="enterExternalURL:">id</string>
 					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="chooseFile:">
+							<string key="name">chooseFile:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="enterExternalURL:">
+							<string key="name">enterExternalURL:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="oFileInfoField">KSURLInfoField</string>
 						<string key="oURLField">NSTextField</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="oFileInfoField">
+							<string key="name">oFileInfoField</string>
+							<string key="candidateClassName">KSURLInfoField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="oURLField">
+							<string key="name">oURLField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -1653,6 +1710,13 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">view</string>
 						<string key="NS.object.0">NSView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">view</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">view</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>

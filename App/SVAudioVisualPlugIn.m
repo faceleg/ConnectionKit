@@ -47,6 +47,16 @@
 	
 }
 
++ (NSArray *)plugInKeys;
+{
+    return [[super plugInKeys] arrayByAddingObjectsFromArray:
+			[NSArray arrayWithObjects:
+			 @"autoplay",
+			 @"loop",
+			 @"preload",
+			 @"controller",
+			 nil]];
+}
 
 
 

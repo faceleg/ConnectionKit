@@ -123,6 +123,14 @@
 	[super dealloc];
 }
 
++ (NSArray *)plugInKeys;
+{
+    return [[super plugInKeys] arrayByAddingObjectsFromArray:
+			[NSArray arrayWithObjects:
+			 @"posterFrameType",
+			 nil]];
+}
+
 #pragma mark -
 #pragma mark General
 
