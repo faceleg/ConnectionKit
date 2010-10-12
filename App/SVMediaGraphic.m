@@ -137,7 +137,6 @@
     [[self plugIn] didSetSource];
 }
 
-@dynamic posterFrame;
 @dynamic isMediaPlaceholder;
 
 - (void)setMediaWithURL:(NSURL *)URL;
@@ -213,6 +212,18 @@
 {
     NSArray *result = [NSImage imageTypes]; // want to read by UTI ideally
     result = [result arrayByAddingObjectsFromArray:[KSWebLocation webLocationPasteboardTypes]];
+    return result;
+}
+
+@dynamic posterFrame;
+- (BOOL)validatePosterFrame:(SVMediaRecord **)media error:(NSError **)error;
+{
+    BOOL result = [[self plugIn] validatePosterFrame:*media];
+    if (!result && error)
+    {
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationMissingMandatoryPropertyError localizedDescription:@"Plug-in doesn't want a poster image"];
+    }
+    
     return result;
 }
 

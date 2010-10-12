@@ -11,12 +11,21 @@
 
 @implementation SVAudioVisualPlugIn
 
+#pragma mark Source
+
+- (BOOL)validatePosterFrame:(SVMediaRecord *)posterFrame;
+{
+    // Ideally have a poster frame, but can live without
+    return YES;
+}
+
 @synthesize autoplay	= _autoplay;
 @synthesize loop		= _loop;
 @synthesize controller	= _controller;
 @synthesize preload		= _preload;
 @synthesize codecType	= _codecType;
 
+#pragma mark Properties
 
 - (void) setAutoplay: (BOOL) flag
 {

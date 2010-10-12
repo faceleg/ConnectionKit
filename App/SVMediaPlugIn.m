@@ -31,9 +31,16 @@
     [[self container] setTypeToPublish:[[self media] typeOfFile]];
 }
 
-- (BOOL)validateTypeToPublish:(NSString *)type; { return YES; }
-
 + (NSArray *)allowedFileTypes; { return nil; }
+
+- (BOOL)validatePosterFrame:(SVMediaRecord *)posterFrame;
+{
+    return (posterFrame == nil);
+}
+
+#pragma mark Media Conversion
+
+- (BOOL)validateTypeToPublish:(NSString *)type; { return YES; }
 
 #pragma mark Metrics
 

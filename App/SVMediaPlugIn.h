@@ -16,12 +16,15 @@
 
 #pragma mark Source
 - (SVMediaRecord *)media;
-- (SVMediaRecord *)posterFrame;
 - (NSURL *)externalSourceURL;
 - (void)didSetSource;
 + (NSArray *)allowedFileTypes;
 
+- (SVMediaRecord *)posterFrame;
+- (BOOL)validatePosterFrame:(SVMediaRecord *)posterFrame;
 
+
+#pragma mark Publishing
 - (BOOL)validateTypeToPublish:(NSString *)type;
 
 - (CGSize)originalSize;
