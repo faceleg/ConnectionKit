@@ -58,10 +58,15 @@
 #pragma mark -
 #pragma mark Lifetime
 
-- (void)didAddToPage:(id <SVPage>)page;
+- (void)awakeFromNew;
 {
 	[self.container setConstrainProportions:YES];		// We will likely want this on
-	    
+
+	self.autoplay = NO;
+	self.loop = NO;
+	self.showMenu = YES;
+	self.flashvars = @"";
+	
     // Show caption
     if ([[[self.container textAttachment] placement] intValue] != SVGraphicPlacementInline)
     {

@@ -104,10 +104,16 @@
 #pragma mark -
 #pragma mark Lifetime
 
-- (void)didAddToPage:(id <SVPage>)page;
+- (void)awakeFromNew;
 {
 	[self.container setConstrainProportions:YES];		// We will likely want this on
-    
+	
+	self.controller = YES;
+	self.preload = kPreloadAuto;
+	self.autoplay = NO;
+	self.loop = NO;
+	self.posterFrameType = kPosterFrameTypeAutomatic;
+	
     // Show caption
     if ([[[self.container textAttachment] placement] intValue] != SVGraphicPlacementInline)
     {
@@ -929,7 +935,6 @@
 // Loads or reloads the movie/flash from URL, path, or data.
 - (void)loadMovie;
 {
-	NSDictionary *movieAttributes = nil;
 	NSURL *movieSourceURL = nil;
 	BOOL openAsync = NO;
 	
@@ -948,11 +953,14 @@
 	}
 	if (movieSourceURL)
 	{
-		movieAttributes = [NSDictionary dictionaryWithObjectsAndKeys: 
+		NSMutableDictionary *movieAttributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
 						   movieSourceURL, QTMovieURLAttribute,
 						   [NSNumber numberWithBool:openAsync], QTMovieOpenAsyncOKAttribute,
-						   // 10.6 only :-( [NSNumber numberWithBool:YES], QTMovieOpenForPlaybackAttribute,	// From Tim Monroe @ WWDC2010, so we can check how movie was loaded
 						   nil];
+		if (IMBRunningOnSnowLeopardOrNewer())
+		{
+			[movieAttributes setValue:[NSNumber numberWithBool:YES] forKey:QTMovieOpenForPlaybackAttribute];	// From Tim Monroe @ WWDC2010, so we can check how movie was loaded
+		}
 		[self loadMovieFromAttributes:movieAttributes];
 		
 	}

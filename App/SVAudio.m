@@ -85,12 +85,17 @@
 #pragma mark -
 #pragma mark Lifetime
 
-- (void)didAddToPage:(id <SVPage>)page;
+- (void)awakeFromNew;
 {
 #warning I think I don't want to do KVO here.  Custom setters I think....
 	[self addObserver:self forKeyPath:@"externalSourceURL"	options:(NSKeyValueObservingOptionNew) context:nil];
 	[self addObserver:self forKeyPath:@"media"				options:(NSKeyValueObservingOptionNew) context:nil];
     
+	self.controller = YES;
+	self.preload = kPreloadAuto;
+	self.autoplay = NO;
+	self.loop = NO;
+	
     // Show caption
     if ([[[self.container textAttachment] placement] intValue] != SVGraphicPlacementInline)
     {
