@@ -959,7 +959,12 @@
 						   nil];
 		if (IMBRunningOnSnowLeopardOrNewer())
 		{
-			[movieAttributes setValue:[NSNumber numberWithBool:YES] forKey:QTMovieOpenForPlaybackAttribute];	// From Tim Monroe @ WWDC2010, so we can check how movie was loaded
+			// Wait, DON'T do this necessarily ... Problem is that when we try to do betterPosterImage
+			// (to determine poster image for remote URL) it won't allow us if we opened the movie
+			// for playback only.
+			// *** Canceling drag because exception 'QTDisallowedForInitializationPurposeException' (reason 'Tried to use QTMovie method quickTimeMovie, which is not allowed when QTMovieOpenForPlaybackAttribute is YES.') was raised during a dragging session
+
+			// [movieAttributes setValue:[NSNumber numberWithBool:YES] forKey:@"QTMovieOpenForPlaybackAttribute"];	// From Tim Monroe @ WWDC2010, so we can check how movie was loaded
 		}
 		[self loadMovieFromAttributes:movieAttributes];
 		
