@@ -131,6 +131,7 @@
     if (![[self plugInIdentifier] isEqualToString:identifier])
     {
         [self loadPlugInAsNew:NO];
+        [[self plugIn] awakeFromNew];
     }
     
     
