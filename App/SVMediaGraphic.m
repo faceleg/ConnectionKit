@@ -468,36 +468,42 @@
 
 #pragma mark Pasteboard
 
-- (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
+- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
 {
-    [super awakeFromPasteboardContents:contents ofType:type];
+    [super awakeFromPasteboardContents:item ofType:nil];
     
     
     // Can we read a media oject from the pboard?
     SVMediaRecord *media = nil;
-    if ([[KSWebLocation webLocationPasteboardTypes] containsObject:type])
+    
+    NSURL *URL = [item URL];
+    if (URL)
     {
-        media = [SVMediaRecord mediaWithURL:[contents URL]
+        media = [SVMediaRecord mediaWithURL:URL
                                  entityName:@"GraphicMedia"
              insertIntoManagedObjectContext:[self managedObjectContext]
                                       error:NULL];
     }
-    else if ([[NSImage imageTypes] containsObject:type])
+    else
     {
-        // Invent a URL
-        NSString *extension = [NSString filenameExtensionForUTI:type];
-        
-        NSString *path = [[@"/" stringByAppendingPathComponent:@"pasted-file"]
-                          stringByAppendingPathExtension:extension];
-        
-        NSURL *url = [NSURL URLWithScheme:@"sandvox-fake-url"
-                                     host:[NSString UUIDString]
-                                     path:path];        
-        
-        media = [SVMediaRecord mediaWithData:contents
-                                         URL:url
-                                  entityName:@"GraphicMedia"
-              insertIntoManagedObjectContext:[self managedObjectContext]];
+        NSString *type = [item availableTypeFromArray:[NSImage imageTypes]];
+        if (type)
+        {
+            // Invent a URL
+            NSString *extension = [NSString filenameExtensionForUTI:type];
+            
+            NSString *path = [[@"/" stringByAppendingPathComponent:@"pasted-file"]
+                              stringByAppendingPathExtension:extension];
+            
+            NSURL *url = [NSURL URLWithScheme:@"sandvox-fake-url"
+                                         host:[NSString UUIDString]
+                                         path:path];        
+            
+            media = [SVMediaRecord mediaWithData:[item dataForType:type]
+                                             URL:url
+                                      entityName:@"GraphicMedia"
+                  insertIntoManagedObjectContext:[self managedObjectContext]];
+        }
     }
     
     
@@ -517,7 +523,12 @@
     }
     
     
-    [[self plugIn] awakeFromPasteboardContents:contents ofType:type];
+    [[self plugIn] awakeFromPasteboardContents:item ofType:nil];
+}
+
+- (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
+{
+    return [self awakeFromPasteboardItem:contents];
 }
 
 @end
