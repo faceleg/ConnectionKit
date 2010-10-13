@@ -6,6 +6,9 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
+//  Takes the public SVPlugIn API and extends for our private use for media-specific handling. Like a regular plug-in, still hosted by a Graphic object (Core Data modelled), but have full access to it via the -container method. Several convenience methods are provided so you don't have to call -container so much (-media, -externalSourceURL, etc.).
+
+
 #import "SVPlugIn.h"
 #import "SVEnclosure.h"
 
