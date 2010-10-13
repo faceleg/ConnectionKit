@@ -142,4 +142,9 @@
     return result;
 }
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ %@", [super description], [self plugInClass]];
+}
+
 @end
