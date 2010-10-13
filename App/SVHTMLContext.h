@@ -176,9 +176,13 @@ typedef enum {
 
 #pragma mark Media
 
-// These method return the URL to find the media at. It can be passed on to -relativeURLStringOfURL: etc.
-// For most use cases -addMedia: is good enough. The longer method exists so as to get the URL of the image after scaling/converting. For example during editing, we load full-size images and get WebKit to scale them, but during publishing want to point to a separate scaled version of the image. Potentially one day this method could support movies etc.
+// Returns the URL to find the media at. It can be passed on to -relativeURLStringOfURL: etc.
 - (NSURL *)addMedia:(id <SVMedia>)media;
+
+// When dealing with images specifically, you probably want this method. Rules:
+//  - media is mandatory (obviously!)
+//  - If width is non-nil, so must be height, and visa versa (for now anyway)
+//  - If specifying size, MUST also specify type for resulting image
 - (NSURL *)addImageMedia:(id <SVMedia, IMBImageItem>)media
                    width:(NSNumber *)width
                   height:(NSNumber *)height
