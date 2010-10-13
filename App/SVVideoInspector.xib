@@ -637,23 +637,35 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">hidden: inspectedObjectsController.selection.plugIn.posterFrameType</string>
-						<reference key="source" ref="562366246"/>
+						<string key="label">enabled: inspectedObjectsController.selection.plugIn.enablePoster</string>
+						<reference key="source" ref="1050563424"/>
 						<reference key="destination" ref="36281372"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="562366246"/>
+							<reference key="NSSource" ref="1050563424"/>
 							<reference key="NSDestination" ref="36281372"/>
-							<string key="NSLabel">hidden: inspectedObjectsController.selection.plugIn.posterFrameType</string>
-							<string key="NSBinding">hidden</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.plugIn.posterFrameType</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">ValueIs0Transformer</string>
-							</object>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.plugIn.enablePoster</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.plugIn.enablePoster</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">256</int>
+					<int key="connectionID">260</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.plugIn.enablePoster</string>
+						<reference key="source" ref="142723611"/>
+						<reference key="destination" ref="36281372"/>
+						<object class="NSNibBindingConnector" key="connector" id="1012848435">
+							<reference key="NSSource" ref="142723611"/>
+							<reference key="NSDestination" ref="36281372"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.plugIn.enablePoster</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.plugIn.enablePoster</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">261</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -670,10 +682,48 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 								<string key="NS.key.0">NSValueTransformerName</string>
 								<string key="NS.object.0">ValueIsNot2Transformer</string>
 							</object>
+							<reference key="NSPreviousConnector" ref="1012848435"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">257</int>
+					<int key="connectionID">262</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.plugIn.enablePoster</string>
+						<reference key="source" ref="562366246"/>
+						<reference key="destination" ref="36281372"/>
+						<object class="NSNibBindingConnector" key="connector" id="693803376">
+							<reference key="NSSource" ref="562366246"/>
+							<reference key="NSDestination" ref="36281372"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.plugIn.enablePoster</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.plugIn.enablePoster</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">265</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: inspectedObjectsController.selection.plugIn.posterFrameType</string>
+						<reference key="source" ref="562366246"/>
+						<reference key="destination" ref="36281372"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="562366246"/>
+							<reference key="NSDestination" ref="36281372"/>
+							<string key="NSLabel">hidden: inspectedObjectsController.selection.plugIn.posterFrameType</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.plugIn.posterFrameType</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">ValueIs0Transformer</string>
+							</object>
+							<reference key="NSPreviousConnector" ref="693803376"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">266</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -938,7 +988,7 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">257</int>
+			<int key="maxID">266</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

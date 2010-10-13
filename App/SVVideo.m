@@ -693,25 +693,7 @@
     {
 	    movieSourceURL = [context addMedia:media];
 	}
-	
-	NSURL *posterSourceURL = nil;
-	if (self.posterFrame)
-	{
-		// Convert to JPEG if the poster image is not already a JPEG or PNG or GIF (i.e. web-compatible images)
-		NSString *convertType = (NSString *)kUTTypeJPEG;
-		NSString *currentType = self.posterFrame.typeOfFile;
-		if ([currentType conformsToUTI:(NSString *)kUTTypePNG]
-			|| [currentType conformsToUTI:(NSString *)kUTTypeGIF]
-			|| [currentType conformsToUTI:(NSString *)kUTTypeJPEG])
-		{
-			convertType = nil;		// already a web-ready image format; don't convert
-		}
-		posterSourceURL = [context addImageMedia:self.posterFrame
-										   width:[NSNumber numberWithUnsignedInt:self.width]
-										  height:[NSNumber numberWithUnsignedInt:self.height]
-											type:convertType];
-	}
-	
+
 	// Determine tag(s) to use
 	// video || flash (not mutually exclusive) are mutually exclusive with microsoft, quicktime
 	NSString *type = [self codecType];
@@ -728,7 +710,29 @@
 	// Also show quicktime when there is no media at all
 	BOOL quicktimeTag = !media || ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
 	&& ![type conformsToUTI:@"public.mpeg-4"];
+
 	
+	NSURL *posterSourceURL = nil;
+	if (self.posterFrame
+		&& !(quicktimeTag && [self externalSourceURL])		// don't do this if this is quicktime, with an external URL
+															// since click on poster image doesn't take you to movie!
+		&& !microsoftTag)									// Also ignore poster frame for microsoft
+	{
+		// Convert to JPEG if the poster image is not already a JPEG or PNG or GIF (i.e. web-compatible images)
+		NSString *convertType = (NSString *)kUTTypeJPEG;
+		NSString *currentType = self.posterFrame.typeOfFile;
+		if ([currentType conformsToUTI:(NSString *)kUTTypePNG]
+			|| [currentType conformsToUTI:(NSString *)kUTTypeGIF]
+			|| [currentType conformsToUTI:(NSString *)kUTTypeJPEG])
+		{
+			convertType = nil;		// already a web-ready image format; don't convert
+		}
+		posterSourceURL = [context addImageMedia:self.posterFrame
+										   width:[NSNumber numberWithUnsignedInt:self.width]
+										  height:[NSNumber numberWithUnsignedInt:self.height]
+											type:convertType];
+	}
+		
 	BOOL unknownTag = NO;	// will be set below if nothing can be generated
 	NSString *videoID = nil;
 	
@@ -740,7 +744,7 @@
 	}
 	else if (microsoftTag)
 	{
-		[self startMicrosoftObject:context movieSourceURL:movieSourceURL]; 
+		[self startMicrosoftObject:context movieSourceURL:movieSourceURL];	// poster not used
 	}
 	else if (videoTag || flashTag)
 	{
@@ -794,6 +798,8 @@
 
 #pragma mark Warnings
 
+
+
 + (NSSet *)keyPathsForValuesAffectingIcon
 {
     return [NSSet setWithObjects:@"codecType", nil];
@@ -801,6 +807,20 @@
 + (NSSet *)keyPathsForValuesAffectingInfo
 {
     return [NSSet setWithObjects:@"codecType", nil];
+}
++ (NSSet *)keyPathsForValuesAffectingEnablePoster
+{
+    return [NSSet setWithObjects:@"codecType", @"externalSourceURL", nil];
+}
+
+- (BOOL) enablePoster	// poster is not enabled in certain situations: Remote URL QuickTime, Microsoft tags.
+{
+	NSString *type = self.codecType;
+	BOOL disable = (nil == type)
+	|| [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"]
+	|| ( (([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
+		  && ![type conformsToUTI:@"public.mpeg-4"]) && [self externalSourceURL] );
+	return !disable;
 }
 
 - (NSImage *)icon
@@ -1058,7 +1078,7 @@
 			}
 			else	// not a file; load asynchronously
 			{
-				self.dimensionCalculationConnection = [[[KSSimpleURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:URL]] autorelease];
+				self.dimensionCalculationConnection = [[[KSSimpleURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:URL] delegate:self] autorelease];
 				self.dimensionCalculationConnection.bytesNeeded = 1024;	// Let's just get the first 1K ... should be enough.
 				self.container.naturalWidth = 0;	
 				self.container.naturalHeight = 0;		// set to zero so we don't keep asking.  Hopefully answer comes soon.
