@@ -88,7 +88,6 @@
 - (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
 - (void)calculateMovieDimensions:(QTMovie *)aMovie;
 - (void)calculateMoviePlayability:(QTMovie *)aMovie;
-- (void)_mediaChanged;
 
 @end
 

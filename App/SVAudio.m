@@ -87,10 +87,6 @@
 
 - (void)awakeFromNew;
 {
-#warning I think I don't want to do KVO here.  Custom setters I think....
-	[self addObserver:self forKeyPath:@"externalSourceURL"	options:(NSKeyValueObservingOptionNew) context:nil];
-	[self addObserver:self forKeyPath:@"media"				options:(NSKeyValueObservingOptionNew) context:nil];
-    
 	self.controller = YES;
 	self.preload = kPreloadAuto;
 	self.autoplay = NO;
@@ -103,13 +99,6 @@
     }
 }
 
-
-- (void)dealloc
-{
-	[self removeObserver:self forKeyPath:@"externalSourceURL"];
-	[self removeObserver:self forKeyPath:@"media"];
-	[super dealloc];
-}
 
 #pragma mark -
 #pragma mark General
@@ -138,41 +127,17 @@
 #pragma mark -
 #pragma mark Media
 
-- (void)didSetSource;
-{
-    [super didSetSource];
-
-	
-    // Match file type
-    [self setCodecType:[[self media] typeOfFile]];
-}
-
-#pragma mark -
-#pragma mark KVO
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-	if ([keyPath isEqualToString:@"media"] || [keyPath isEqualToString:@"externalSourceURL"])
-	{		
-		// Load the movie to figure out the codecType
-		[self loadAudio];
-	}
-}
-
 - (void)loadAudio;		// after it has changed (URL or media), determine codecType; later we may kick off load to test properties
 {
 	NSURL *movieSourceURL = nil;
-//	BOOL openAsync = NO;
+	//	BOOL openAsync = NO;
 	
 	SVMediaRecord *media = [self media];
 	
     if (media)
     {
 		movieSourceURL = [media mediaURL];
-//		openAsync = YES;
+		//		openAsync = YES;
 		self.codecType = [NSString UTIForFileAtPath:[movieSourceURL path]];
 	}
 	else
@@ -180,20 +145,34 @@
 		movieSourceURL = [self externalSourceURL];
 		self.codecType = [NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]];
 	}
-//	if (movieSourceURL)
-//	{
-//		NSDictionary *movieAttributes = [NSDictionary dictionaryWithObjectsAndKeys: 
-//						   movieSourceURL, QTMovieURLAttribute,
-//						   [NSNumber numberWithBool:openAsync], QTMovieOpenAsyncOKAttribute,
-//						   // 10.6 only :-( [NSNumber numberWithBool:YES], QTMovieOpenForPlaybackAttribute,	// From Tim Monroe @ WWDC2010, so we can check how movie was loaded
-//						   nil];
-//		[self loadMovieFromAttributes:movieAttributes];
-//		
-//	}
+	//	if (movieSourceURL)
+	//	{
+	//		NSDictionary *movieAttributes = [NSDictionary dictionaryWithObjectsAndKeys: 
+	//						   movieSourceURL, QTMovieURLAttribute,
+	//						   [NSNumber numberWithBool:openAsync], QTMovieOpenAsyncOKAttribute,
+	//						   // 10.6 only :-( [NSNumber numberWithBool:YES], QTMovieOpenForPlaybackAttribute,	// From Tim Monroe @ WWDC2010, so we can check how movie was loaded
+	//						   nil];
+	//		[self loadMovieFromAttributes:movieAttributes];
+	//		
+	//	}
 }
 
 
+- (void)_mediaChanged;
+{
+	NSLog(@"SVAudio Media set.");
+	
+	[self loadAudio];
+}
 
+- (void)didSetSource;
+{
+    [super didSetSource];
+	[self _mediaChanged];
+	
+    // Match file type
+    [self setCodecType:[[self media] typeOfFile]];
+}
 
 #pragma mark -
 #pragma mark Writing Tag

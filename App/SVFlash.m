@@ -116,9 +116,22 @@
 #pragma mark -
 #pragma mark Media
 
+- (void)_mediaChanged;
+{
+	NSLog(@"SVFlash Media set.");
+	
+	// Flash changed - clear out the known width/height so we can recalculate
+	self.container.naturalWidth = nil;
+	self.container.naturalHeight = nil;
+	
+	// Load the movie to figure out the media size and codecType
+	[self loadMovie];
+}
+
 - (void)didSetSource;
 {
     [super didSetSource];
+	[self _mediaChanged];
 
     if ([self constrainProportions])    // generally true
     {
@@ -134,36 +147,6 @@
         [self makeOriginalSize];
        // ???? Why were we doing this? if ([self.width isGreaterThan:width]) [self setWidth:width];
     }
-}
-
-#pragma mark -
-#pragma mark Custom setters (instead of KVO)
-
-
-
-- (void)_mediaChanged;
-{
-	NSLog(@"SVFlash Media set.");
-	
-	// Flash changed - clear out the known width/height so we can recalculate
-	self.container.naturalWidth = nil;
-	self.container.naturalHeight = nil;
-	
-	// Load the movie to figure out the media size and codecType
-	[self loadMovie];
-}
-
-- (void) setMedia:(SVMediaRecord *)aMedia
-{
-	[super setMedia:aMedia];
-	[self _mediaChanged];
-
-}
-
-- (void) setExternalSourceURL:(NSURL *)anExternalSourceURL
-{
-	[super setExternalSourceURL:anExternalSourceURL];
-	[self _mediaChanged];
 }
 
 #pragma mark -
