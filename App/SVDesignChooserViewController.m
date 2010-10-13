@@ -64,6 +64,8 @@
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
 	[oDesignsArrayController removeObserver:self forKeyPath:@"arrangedObjects"];
 	[oDesignsArrayController removeObserver:self forKeyPath:@"selection"];
 
