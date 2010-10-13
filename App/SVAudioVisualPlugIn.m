@@ -55,6 +55,7 @@
 			 @"loop",
 			 @"preload",
 			 @"controller",
+			 @"codecType",
 			 nil]];
 }
 
