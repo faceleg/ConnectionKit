@@ -527,7 +527,7 @@
     }
     
     
-    [[self plugIn] awakeFromPasteboardContents:item ofType:nil];
+    [[self plugIn] awakeFromPasteboardItem:item];
 }
 
 - (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;

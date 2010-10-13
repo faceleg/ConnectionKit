@@ -16,10 +16,6 @@
 
 @implementation SVMediaPlugIn
 
-- (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
-{
-}
-
 #pragma mark Properties
 
 - (SVMediaRecord *)media; { return [[self container] media]; }

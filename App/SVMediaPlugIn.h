@@ -36,10 +36,6 @@
 - (NSString *)imageRepresentationType;
 
 
-#pragma mark Pasteboard
-- (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
-
-
 @end
 
 
