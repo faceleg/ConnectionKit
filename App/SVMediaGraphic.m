@@ -477,12 +477,16 @@
     SVMediaRecord *media = nil;
     
     NSURL *URL = [item URL];
-    if (URL)
+    if ([URL isFileURL])
     {
         media = [SVMediaRecord mediaWithURL:URL
                                  entityName:@"GraphicMedia"
              insertIntoManagedObjectContext:[self managedObjectContext]
                                       error:NULL];
+    }
+    else if (URL)
+    {
+        [self setExternalSourceURL:URL];
     }
     else
     {
@@ -508,9 +512,9 @@
     
     
     // Swap in the new media
-    if (media)
+    if (media || URL)
     {
-        [self replaceMedia:media forKeyPath:@"media"];
+        if (media) [self replaceMedia:media forKeyPath:@"media"];
         
         // Reset size
         self.naturalWidth = nil;
