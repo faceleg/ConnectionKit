@@ -718,19 +718,12 @@
 															// since click on poster image doesn't take you to movie!
 		&& !microsoftTag)									// Also ignore poster frame for microsoft
 	{
-		// Convert to JPEG if the poster image is not already a JPEG or PNG or GIF (i.e. web-compatible images)
-		NSString *convertType = (NSString *)kUTTypeJPEG;
-		NSString *currentType = self.posterFrame.typeOfFile;
-		if ([currentType conformsToUTI:(NSString *)kUTTypePNG]
-			|| [currentType conformsToUTI:(NSString *)kUTTypeGIF]
-			|| [currentType conformsToUTI:(NSString *)kUTTypeJPEG])
-		{
-			convertType = nil;		// already a web-ready image format; don't convert
-		}
+		// Convert to JPEG if the poster image needs scaling or converting.  
+		// (Hard-wired here, sorry dudes)
 		posterSourceURL = [context addImageMedia:self.posterFrame
 										   width:[NSNumber numberWithUnsignedInt:self.width]
 										  height:[NSNumber numberWithUnsignedInt:self.height]
-											type:convertType];
+											type:(NSString *)kUTTypeJPEG];
 	}
 		
 	BOOL unknownTag = NO;	// will be set below if nothing can be generated
