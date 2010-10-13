@@ -78,6 +78,8 @@
 - (NSString *)plugInIdentifier;
 {
     NSString *type = [[self media] typeOfFile];
+    if (!type) type = [NSString UTIForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
+    
     
     if ([type conformsToUTI:(NSString *)kUTTypeMovie] || [type conformsToUTI:(NSString *)kUTTypeVideo])
     {
