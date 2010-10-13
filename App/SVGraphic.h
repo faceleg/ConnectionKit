@@ -6,6 +6,11 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
+//  We use the term "graphic" in the same way that Pages does through its scripting API (and probably in its class hierarchy). That is, a graphic is basically anything on the page that can be selected. From there, e.g. images are a type of graphic.
+//  All graphics are persisted in the model using SVGraphic or one of its subclasses.
+
+
+
 #import "SVContentObject.h"
 #import "SVPlugIn.h"
 #import <iMedia/iMedia.h>
@@ -44,9 +49,6 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 
 extern NSString *kSVGraphicPboardType;
-
-
-//  Have decided to use the term "graphic" in the same way that Pages does through its scripting API (and probably in its class hierarchy). That is, a graphic is anything on the page that can be selected and isn't text. e.g. pagelets, images, plug-ins.
 
 
 @class KTPage, SVTitleBox;

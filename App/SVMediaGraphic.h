@@ -6,6 +6,9 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
+//  For displaying media in the WebView an SVMediaGraphic is used. It takes SVPlugInGraphic but extends further by dynamically figuring the best .plugInIdentifier to match the current source and therefore create correct plug-in instance to match (from SVImage etc.). When changing source, a new plug-in is aytomatically swapped in if changing to a different media type.
+
+
 #import "SVPlugInGraphic.h"
 
 
