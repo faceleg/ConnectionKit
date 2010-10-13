@@ -195,7 +195,7 @@
 }
 
 // Called back on main thread 
-- (void)gotQuickLookData:(NSData *)jpegData;
+- (void)gotPosterJPEGData:(NSData *)jpegData;
 {
 	OBASSERT([NSThread isMainThread]);
 	
@@ -253,7 +253,7 @@
 		
 		// [jpegData writeToFile:@"/Volumes/dwood/Desktop/quicklook.jpg" atomically:YES];
 	}
-	[[self ks_proxyOnThread:nil waitUntilDone:NO] gotQuickLookData:jpegData];
+	[[self ks_proxyOnThread:nil waitUntilDone:NO] gotPosterJPEGData:jpegData];
 }
 
 - (void)getPosterFrameFromQuickLook;
@@ -275,6 +275,21 @@
 
 #pragma mark -
 #pragma mark Media
+
+- (void)_mediaChanged;
+{
+	if (nil == self.posterFrame || self.posterFrameType != kPosterTypeChoose)		// get poster frame image UNLESS we have an override chosen.
+	{
+		[self getPosterFrameFromQuickLook];
+	}
+	
+	// Video changed - clear out the known width/height so we can recalculate
+	self.container.naturalWidth = nil;
+	self.container.naturalHeight = nil;
+	
+	// Load the movie to figure out the media size and codecType and poster frame
+	[self loadMovie];
+}
 
 - (void)didSetSource;
 {
@@ -298,18 +313,13 @@
     return [uti conformsToUTI:(NSString *)kUTTypeVideo] || [uti conformsToUTI:(NSString *)kUTTypeMovie];
 }
 
+// Overrides to allow us to get our thumbnail (for index, or site outline) from poster frame.
 - (id <SVMedia>)thumbnailMedia; { return [self posterFrame]; }
 - (id)imageRepresentation; { return [[self posterFrame] imageRepresentation]; }
-- (NSString *)imageRepresentationType
-{
-	return [[self posterFrame] imageRepresentationType];
-}
-
+- (NSString *)imageRepresentationType { return [[self posterFrame] imageRepresentationType]; }
 
 #pragma mark -
 #pragma mark Custom setters (instead of KVO)
-
-
 
 - (void) setPosterFrameType:(PosterFrameType)aPosterFrameType
 {
@@ -322,7 +332,21 @@
 			break;
 		case kPosterFrameTypeAutomatic:
 			// Switching to automatic? Queue request for quicklook
-			[self getPosterFrameFromQuickLook];
+			if ([self media])
+			{
+				[self getPosterFrameFromQuickLook];
+			}
+			else
+			{
+				if (self.dimensionCalculationMovie)
+				{
+					[self calculatePosterImageFromPlayableMovie:self.dimensionCalculationMovie];
+				}
+				else
+				{
+					NSLog(@"Don't have movie to calculate poster frame from");
+				}
+			}
 			break;
 		case kPosterFrameTypeNone:
 			// Do nothing; don't mess with media
@@ -330,26 +354,11 @@
 	}
 }
 
-- (void)_mediaChanged;
-{
-	NSLog(@"SVVideo Media set.");
-	if (nil == self.posterFrame || self.posterFrameType != kPosterTypeChoose)		// get poster frame image UNLESS we have an override chosen.
-	{
-		[self getPosterFrameFromQuickLook];
-	}
-	
-	// Video changed - clear out the known width/height so we can recalculate
-	self.container.naturalWidth = nil;
-	self.container.naturalHeight = nil;
-	
-	// Load the movie to figure out the media size and codecType
-	[self loadMovie];
-}
 
 #pragma mark -
 #pragma mark Writing Tag
 
-// EXACTLY THE SAME IN AUDIO AND VIDEO. CONSIDER REFACTORING.
+// Called from Audio as well as video since it's the same.
 + (void)writeFallbackScriptOnce:(SVHTMLContext *)context;
 {
 	// Write the fallback method.  COULD WRITE THIS IN JQUERY TO BE MORE TERSE?
@@ -804,7 +813,7 @@
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
 	}
-	else if ([type conformsToUTI:@"public.h264.ios"])		// HAPPY!  everything-compatible
+	else if ([type conformsToUTI:@"public.h264.ios"])		// HAPPY!  everything-compatible.  NOT YET IMPLEMENTED, AS QUICKTIME API CAN'T TELL US.
 	{
 		result =[ NSImage imageNamed:@"checkmark"];;
 	}
@@ -882,7 +891,7 @@
 }
 
 #pragma mark -
-#pragma mark Loading movie to calculate dimensions
+#pragma mark Loading movie to calculate dimensions or remote poster frame
 
 
 
@@ -996,7 +1005,10 @@
 		
 		if (movieLoadState >= kMovieLoadStatePlayable)	// Do we have dimensions now?
 		{
-			[self calculatePosterImageFromPlayableMovie:movie];
+			if (![self media] && self.posterFrameType == kPosterFrameTypeAutomatic)	// ONLY try to get poster image for a *remote* URL
+			{
+				[self calculatePosterImageFromPlayableMovie:movie];
+			}
 			[self calculateMovieDimensions:movie];
 			[self calculateMoviePlayability:movie];
 			
@@ -1090,7 +1102,10 @@
 		long loadState = [[movie attributeForKey:QTMovieLoadStateAttribute] longValue];
 		if (loadState >= kMovieLoadStateLoaded)
 		{
-			[self calculatePosterImageFromPlayableMovie:movie];
+			if (![self media] && self.posterFrameType == kPosterFrameTypeAutomatic)	// ONLY try to get poster image for a *remote* URL
+			{
+				[self calculatePosterImageFromPlayableMovie:movie];
+			}
 			[self calculateMovieDimensions:movie];
 			[self calculateMoviePlayability:movie];
 		
@@ -1115,8 +1130,8 @@
 - (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
 {
 	NSImage *posterImage = [aMovie betterPosterImage];
-	
-	// TODO ... finish this ... of course only call this if we need to.
+	NSData *JPEGData = [posterImage JPEGRepresentationWithCompressionFactor:0.9];
+	[self gotPosterJPEGData:JPEGData];
 	
 }
 - (void)calculateMovieDimensions:(QTMovie *)aMovie;
