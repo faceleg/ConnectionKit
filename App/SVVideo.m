@@ -169,6 +169,7 @@
 {
 	return self.posterFrameType != kPosterFrameTypeNone ? self.posterFrame : nil;
 }
+
 + (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObjects:@"posterFrame", @"posterFrameType", nil]; }
 
 - (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
@@ -199,7 +200,7 @@
 	OBASSERT([NSThread isMainThread]);
 	
 	// Get the media or URL, so we have a good file name for the poster
-	SVMediaRecord *media = [self media];
+	SVMediaRecord *media = self.media;
 	NSURL *videoURL = nil;
     if (media)
     {
@@ -207,7 +208,7 @@
 	}
 	else
 	{
-		videoURL = [self externalSourceURL];
+		videoURL = self.externalSourceURL;
 	}
 	// Rebuild URL by substituting in path. Create a FAKE URL for a synthesized thumbnail.
 	NSString *newPath = [[[videoURL path] stringByDeletingPathExtension] stringByAppendingString:@"_poster.jpg"];
@@ -295,7 +296,7 @@
     [super didSetSource];
 	[self _mediaChanged];
 
-    if ([self constrainProportions])    // generally true
+    if (self.constrainProportions)    // generally true
     {
         // Resize image to fit in space
         NSUInteger width = self.width;
@@ -304,7 +305,7 @@
     }
     
     // Match file type
-    [self setCodecType:[[self media] typeOfFile]];
+    [self setCodecType:[self.media typeOfFile]];
 }
 
 + (BOOL)acceptsType:(NSString *)uti;
@@ -313,9 +314,9 @@
 }
 
 // Overrides to allow us to get our thumbnail (for index, or site outline) from poster frame.
-- (id <SVMedia>)thumbnailMedia; { return [self posterFrame]; }
-- (id)imageRepresentation; { return [[self posterFrame] imageRepresentation]; }
-- (NSString *)imageRepresentationType { return [[self posterFrame] imageRepresentationType]; }
+- (id <SVMedia>)thumbnailMedia; { return self.posterFrame; }
+- (id)imageRepresentation; { return [self.posterFrame imageRepresentation]; }
+- (NSString *)imageRepresentationType { return [self.posterFrame imageRepresentationType]; }
 
 #pragma mark -
 #pragma mark Custom setters (instead of KVO)
@@ -335,11 +336,11 @@
 													// This is so that initial population does nothing.
 			{
 				// Switching to automatic? Queue request for quicklook
-				if ([self media])
+				if (self.media)
 				{
 					[self getPosterFrameFromQuickLook];
 				}
-				else if ([self externalSourceURL])
+				else if (self.externalSourceURL)
 				{
 					if (self.dimensionCalculationMovie)
 					{
@@ -396,7 +397,8 @@
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context startElement:@"object" preferredIdName:@"quicktime" className:nil attributes:nil];	// class, attributes already pushed
 	
-	if (self.posterFrame && !self.autoplay)	// poster and not auto-starting? make it an href
+	if (posterSourceURL
+		&& !self.autoplay)	// poster and not auto-starting? make it an href
 	{
 		[context writeParamElementWithName:@"src" value:posterSourcePath];
 		[context writeParamElementWithName:@"href" value:movieSourcePath];
@@ -481,7 +483,7 @@
 	
 	// source
 	[context pushAttribute:@"src" value:movieSourcePath];
-	[context pushAttribute:@"type" value:[NSString MIMETypeForUTI:[self codecType]]];
+	[context pushAttribute:@"type" value:[NSString MIMETypeForUTI:self.codecType]];
 	[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
 	[context startElement:@"source"];
 	[context endElement];
@@ -498,11 +500,11 @@
 	[context stopWritingInline];
 	[context writeString:[NSString stringWithFormat:@"var video = document.getElementById('%@');\n", videoID]];
 	[context writeString:[NSString stringWithFormat:@"if (video.canPlayType && video.canPlayType('%@')) {\n",
-						  [NSString MIMETypeForUTI:[self codecType]]]];
+						  [NSString MIMETypeForUTI:self.codecType]]];
 	[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
 	
 	// we have mp4, so no ogv/webm, so force a fallback if NOT webkit-based.
-	if ([[self codecType] conformsToUTI:@"public.mpeg-4"])
+	if ([self.codecType conformsToUTI:@"public.mpeg-4"])
 	{
 		[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play this natively\n\t\tfallback(video);\n\t}\n"];
 	}
@@ -687,13 +689,13 @@
 {
 	// Prepare Media
 	
-	SVMediaRecord *media = [self media];
+	SVMediaRecord *media = self.media;
 	[context addDependencyOnObject:self keyPath:@"media"];
 	[context addDependencyOnObject:self keyPath:@"posterFrameType"];
 	[context addDependencyOnObject:self keyPath:@"posterFrame"];	// force rebuild if poster frame got changed
 	[context addDependencyOnObject:self keyPath:@"controller"];		// Note: other boolean properties don't affect display of page
 	
-	NSURL *movieSourceURL = [self externalSourceURL];
+	NSURL *movieSourceURL = self.externalSourceURL;
     if (media)
     {
 	    movieSourceURL = [context addMedia:media];
@@ -701,7 +703,7 @@
 
 	// Determine tag(s) to use
 	// video || flash (not mutually exclusive) are mutually exclusive with microsoft, quicktime
-	NSString *type = [self codecType];
+	NSString *type = self.codecType;
 	BOOL videoTag = [type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"public.ogg-theora"] || [type conformsToUTI:@"public.webm"];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if ([defaults boolForKey:@"avoidVideoTag"]) videoTag = NO;
@@ -719,9 +721,10 @@
 	
 	NSURL *posterSourceURL = nil;
 	if (self.posterFrame
-		&& !(quicktimeTag && [self externalSourceURL])		// don't do this if this is quicktime, with an external URL
+		&& !(quicktimeTag && self.externalSourceURL)		// don't do this if this is quicktime, with an external URL
 															// since click on poster image doesn't take you to movie!
-		&& !microsoftTag)									// Also ignore poster frame for microsoft
+		&& !microsoftTag									// Also ignore poster frame for microsoft
+		&& (self.posterFrameType > kPosterFrameTypeNone) )	// and of course don't do poster if we don't want it
 	{
 		// Convert to JPEG if the poster image needs scaling or converting.  
 		// (Hard-wired here, sorry dudes)
@@ -817,7 +820,7 @@
 	BOOL disable = (nil == type)
 	|| [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"]
 	|| ( (([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
-		  && ![type conformsToUTI:@"public.mpeg-4"]) && [self externalSourceURL] );
+		  && ![type conformsToUTI:@"public.mpeg-4"]) && self.externalSourceURL );
 	return !disable;
 }
 
@@ -826,7 +829,7 @@
 	NSImage *result = nil;
 	NSString *type = self.codecType;
 
-	if (!type || ![self media])								// no movie
+	if (!type || !self.media)								// no movie
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
 	}
@@ -866,7 +869,7 @@
 	NSString *result = @"";
 	NSString *type = self.codecType;
 	
-	if (!type || ![self media])								// no movie
+	if (!type || !self.media)								// no movie
 	{
 		result = NSLocalizedString(@"Use MPEG-4 (h.264) video for maximum compatibility.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
@@ -964,7 +967,7 @@
 	NSURL *movieSourceURL = nil;
 	BOOL openAsync = NO;
 	
-	SVMediaRecord *media = [self media];
+	SVMediaRecord *media = self.media;
 	
     if (media)
     {
@@ -974,7 +977,7 @@
 	}
 	else
 	{
-		movieSourceURL = [self externalSourceURL];
+		movieSourceURL = self.externalSourceURL;
 		self.codecType = [NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]];
 	}
 	if (movieSourceURL)
@@ -1022,7 +1025,7 @@
 		
 		if (movieLoadState >= kMovieLoadStatePlayable)	// Do we have dimensions now?
 		{
-			if (![self media] && self.posterFrameType == kPosterFrameTypeAutomatic)	// ONLY try to get poster image for a *remote* URL
+			if (!self.media && self.posterFrameType == kPosterFrameTypeAutomatic)	// ONLY try to get poster image for a *remote* URL
 			{
 				[self calculatePosterImageFromPlayableMovie:movie];
 			}
@@ -1119,7 +1122,7 @@
 		long loadState = [[movie attributeForKey:QTMovieLoadStateAttribute] longValue];
 		if (loadState >= kMovieLoadStateLoaded)
 		{
-			if (![self media] && self.posterFrameType == kPosterFrameTypeAutomatic)	// ONLY try to get poster image for a *remote* URL
+			if (!self.media && self.posterFrameType == kPosterFrameTypeAutomatic)	// ONLY try to get poster image for a *remote* URL
 			{
 				[self calculatePosterImageFromPlayableMovie:movie];
 			}
