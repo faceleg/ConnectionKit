@@ -322,6 +322,7 @@
 
 - (void) setPosterFrameType:(PosterFrameType)aPosterFrameType
 {
+	PosterFrameType old = _posterFrameType;
 	_posterFrameType = aPosterFrameType;
 	switch(aPosterFrameType)
 	{
@@ -330,24 +331,28 @@
 			[self replaceMedia:nil forKeyPath:@"posterFrame"];
 			break;
 		case kPosterFrameTypeAutomatic:
-			// Switching to automatic? Queue request for quicklook
-			if ([self media])
+			if (kPosterFrameTypeUndefined != old)	// possibly get new frame only if we already had some other value.
+													// This is so that initial population does nothing.
 			{
-				[self getPosterFrameFromQuickLook];
-			}
-			else
-			{
-				if (self.dimensionCalculationMovie)
+				// Switching to automatic? Queue request for quicklook
+				if ([self media])
 				{
-					[self calculatePosterImageFromPlayableMovie:self.dimensionCalculationMovie];
+					[self getPosterFrameFromQuickLook];
 				}
-				else
+				else if ([self externalSourceURL])
 				{
-					NSLog(@"Don't have movie to calculate poster frame from");
+					if (self.dimensionCalculationMovie)
+					{
+						[self calculatePosterImageFromPlayableMovie:self.dimensionCalculationMovie];
+					}
+					else
+					{
+						NSLog(@"Don't have movie to calculate poster frame from");
+					}
 				}
 			}
 			break;
-		case kPosterFrameTypeNone:
+		default:
 			// Do nothing; don't mess with media
 			break;
 	}

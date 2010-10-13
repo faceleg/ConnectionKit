@@ -12,7 +12,7 @@
 
 @class SVMediaRecord, KSSimpleURLConnection;
 
-typedef enum { kPosterFrameTypeNone = 0, kPosterFrameTypeAutomatic, kPosterTypeChoose } PosterFrameType;
+typedef enum { kPosterFrameTypeUndefined = 0, kPosterFrameTypeNone, kPosterFrameTypeAutomatic, kPosterTypeChoose } PosterFrameType;
 
 
 @interface SVVideo : SVAudioVisualPlugIn
