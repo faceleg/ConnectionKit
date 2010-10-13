@@ -10,6 +10,7 @@
 
 #import "SVAudio.h"
 #import "SVFlash.h"
+#import "SVGraphicFactory.h"
 #import "KTMaster.h"
 #import "SVMediaGraphicInspector.h"
 #import "SVMediaRecord.h"
@@ -114,21 +115,15 @@
     }
 }
 
-#pragma mark Media
+#pragma mark Source
 
-@dynamic media;
-- (void)setMedia:(SVMediaRecord *)media;
+- (void)didSetSource;
 {
-    NSString *identifier = [self plugInIdentifier];
-    
-    
-    [self willChangeValueForKey:@"media"];
-    [self setPrimitiveValue:media forKey:@"media"];
-    [self didChangeValueForKey:@"media"];
-    
-    
     // Does this change the type?
-    if (![[self plugInIdentifier] isEqualToString:identifier])
+    NSString *identifier = [self plugInIdentifier];
+    SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
+    
+    if (![[self plugIn] isKindOfClass:[factory plugInClass]])
     {
         [self loadPlugInAsNew:NO];
         [[self plugIn] awakeFromNew];
@@ -136,6 +131,17 @@
     
     
     [[self plugIn] didSetSource];
+}
+
+@dynamic media;
+- (void)setMedia:(SVMediaRecord *)media;
+{
+    [self willChangeValueForKey:@"media"];
+    [self setPrimitiveValue:media forKey:@"media"];
+    [self didChangeValueForKey:@"media"];
+    
+    
+    [self didSetSource];
 }
 
 @dynamic isMediaPlaceholder;
@@ -161,7 +167,7 @@
     [self setPrimitiveValue:source forKey:@"externalSourceURLString"];
     [self didChangeValueForKey:@"externalSourceURLString"];
     
-    [[self plugIn] didSetSource];
+    [self didSetSource];
 }
 
 - (NSURL *)externalSourceURL
