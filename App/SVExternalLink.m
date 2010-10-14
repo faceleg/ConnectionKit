@@ -21,7 +21,9 @@
 
 - (NSURL *)URL
 {
-    NSURL *result = [NSURL URLWithString:[self linkURLString]];
+    NSURL *result = nil;
+    
+    if ([self linkURLString]) result = [NSURL URLWithString:[self linkURLString]];
     
     return result;
 }
