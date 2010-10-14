@@ -28,7 +28,7 @@ div.text-navigation div { display:inline; margin:0px 0.5em; }
 .callout-container.right { xfloat:right; }
 
 /* 2.0 wrap compatibility. 2.0-compatible designs can further adjust these if they need */
-img.wide, img.graphic { display:block; }
+.wide, .graphic { display:block; }
 img.narrow.left { float:left!important; }   /* Some designs won't respect without !important */
 img.narrow.right { float:right!important; }
 .wide.left .graphic, img.wide.left { margin-left:0px; margin-right:auto; }
