@@ -56,9 +56,15 @@
 
 - (NSString *)preferredUploadPath;
 {
-    // FIXME: Convert .jpg to .jpeg
-    return [@"_Media" stringByAppendingPathComponent:
-            [[self preferredFilename] legalizedWebPublishingFilename]];
+    NSString *result = [@"_Media" stringByAppendingPathComponent:
+                        [[self preferredFilename] legalizedWebPublishingFilename]];
+    
+    if ([[result pathExtension] isEqualToString:@"jpg"])
+    {
+        result = [[result stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpeg"];
+    }
+    
+    return result;
 }
 
 - (id)imageRepresentation
