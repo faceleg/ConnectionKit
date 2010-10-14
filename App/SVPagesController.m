@@ -442,13 +442,27 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         }
         else
         {
-            // Fallback to adding download with location
-            [self setEntityName:@"File"];
-            [self setFileURL:[aLocation URL]];
-            
-            SVSiteItem *item = [self newObjectDestinedForCollection:collection];
-            [self addObject:item toCollection:collection];
-            [item release];
+            // Fallback to adding download or external URL with location
+            NSURL *URL = [aLocation URL];
+            if ([URL isFileURL])
+            {
+                [self setEntityName:@"File"];
+                [self setFileURL:URL];
+                
+                SVSiteItem *item = [self newObjectDestinedForCollection:collection];
+                [self addObject:item toCollection:collection];
+                [item release];
+            }
+            else
+            {
+                [self setEntityName:@"ExternalLink"];
+                
+                SVSiteItem *item = [self newObjectDestinedForCollection:collection];
+                [(SVExternalLink *)item setURL:URL];
+                
+                [self addObject:item toCollection:collection];
+                [item release];
+            }
         }
         
         result = YES;
