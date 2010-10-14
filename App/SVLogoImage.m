@@ -28,6 +28,7 @@
                                                entityName:@"LogoMedia"
                            insertIntoManagedObjectContext:[self managedObjectContext]]];
     
+    [self setSize:NSMakeSize(200.0f, 180.0f)];    // fallback
     [self makeOriginalSize];
     [self setTypeToPublish:[[self media] typeOfFile]];
 }
