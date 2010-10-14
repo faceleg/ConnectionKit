@@ -65,17 +65,19 @@
 			container.naturalHeight = [NSNumber numberWithFloat:result.height];
 		}
 	}
-	if (CGSizeEqualToSize(result, CGSizeMake(0.0,0.0)))
-	{
-		result = CGSizeMake(200.0f, 128.0f);
-	}
+	
+    
     return result;
 }
 
 - (void)makeOriginalSize;
 {
-    SVMediaGraphic *container = [self container];
-    [container makeOriginalSize];
+    CGSize size = [self originalSize];
+    if (!CGSizeEqualToSize(size, CGSizeZero))
+    {
+        [self setWidth:size.width];
+        [self setHeight:size.height];
+    }
 }
 
 #pragma mark SVEnclosure
