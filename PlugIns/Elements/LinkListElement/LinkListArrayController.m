@@ -87,6 +87,31 @@
 	return [[super dragTypesToRegister] arrayByAddingObjectsFromArray:[self urlTypes]];
 }
 
+- (NSDragOperation)tableView:(NSTableView *)tv 
+                validateDrop:(id < NSDraggingInfo >)info 
+                 proposedRow:(NSInteger)row 
+       proposedDropOperation:(NSTableViewDropOperation)operation
+{
+    BOOL result = NSDragOperationNone;
+    
+    // Get the URLs and titles from the pasteboard
+	NSPasteboard *pasteboard = [info draggingPasteboard];
+	NSArray *webLocations = [pasteboard readWebLocations];
+	
+	// Run through the URLs looking for something we can use
+    for ( id<SVWebLocation> location in webLocations )
+	{
+        NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:location];
+        if ( link )
+        {
+            result = NSDragOperationPrivate;
+            break;
+        }
+	}
+    
+    return result;
+}
+
 - (BOOL)tableView:(NSTableView*)tv
 	   acceptDrop:(id <NSDraggingInfo>)info
 			  row:(int)row

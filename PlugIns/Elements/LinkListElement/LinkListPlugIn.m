@@ -47,6 +47,7 @@
 {
     NSURL *URL = [location URL];
     if ( !URL ) return nil;
+    if ( [URL isFileURL] ) return nil;
     
     // If passed NSNull as a title it means none could be found. We want to use the hostname in such cases
     NSString *title = [location title];
@@ -109,7 +110,15 @@
     NSURL *URL = [item URL];
     if ( URL )
     {
-        return KTSourcePriorityReasonable;
+        if ( [URL isFileURL ] )
+        {
+            return KTSourcePriorityNone;
+        }
+        else
+        {
+            return KTSourcePriorityReasonable;
+        }
+
     }
     return [super priorityForPasteboardItem:item];
 }
