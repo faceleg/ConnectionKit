@@ -28,9 +28,9 @@
 // Irritatingly, trying to implement the real category gives build warnings claiming methods like -type aren't implemented
 @implementation NSPasteboard (SVPasteboardItem_)
 
-- (NSString *)title; { return nil; }
+- (NSString *)title; { return [WebView URLTitleFromPasteboard:self]; }
 
-- (NSURL *)URL { return nil; }
+- (NSURL *)URL { return [WebView URLFromPasteboard:self]; }
 
 - (NSArray *)sv_pasteboardItems;
 {
