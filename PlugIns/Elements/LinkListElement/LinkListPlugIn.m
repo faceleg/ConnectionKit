@@ -39,7 +39,7 @@
 
 #define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 
-// LocalizedStringInThisBundle(@"(Add links via Details Inspector)", "String_On_Page_Template")
+// LocalizedStringInThisBundle(@"(Add links via Inspector)", "String_On_Page_Template")
 
 @implementation LinkListPlugIn
 
