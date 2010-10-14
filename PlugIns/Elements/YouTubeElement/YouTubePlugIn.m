@@ -87,6 +87,11 @@
         self.userVideoCode = [location.URL absoluteString];
     }
     
+    if ( location.title )
+    {
+        self.title = location.title;
+    }
+    
     // hint to user: prefer widescreen
     self.widescreen = YES;
     
