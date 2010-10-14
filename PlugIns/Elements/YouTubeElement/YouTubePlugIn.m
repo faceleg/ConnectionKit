@@ -232,11 +232,17 @@
 // returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
 - (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
 {
-        NSString *videoID = [[item URL] youTubeVideoID];
-        if (videoID)
-        {
-            self.userVideoCode = [[item URL] absoluteString];
-        }
+    NSString *videoID = [[item URL] youTubeVideoID];
+    if (videoID)
+    {
+        self.userVideoCode = [[item URL] absoluteString];
+    }
+    
+    NSString *title = [item title];
+    if ( title )
+    {
+        self.title = title;
+    }
 }
 
 
