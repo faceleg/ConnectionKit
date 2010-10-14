@@ -46,11 +46,11 @@
 		<false/>
 	</dict>
 	<key>KTPluginName</key>
-	<string>List of Links</string>
+	<string>List of External Links</string>
 	<key>KTPluginNibFile</key>
 	<string>LinkListInspector</string>
 	<key>KTPluginUntitledName</key>
-	<string>Link List</string>
+	<string>External Links</string>
 	<key>KTTemplateName</key>
 	<string>LinkListTemplate</string>
 	<key>NSPrincipalClass</key>
