@@ -79,10 +79,16 @@
 // For display in the placeholder webview
 - (NSURL *)URL
 {
-    NSString *filename = [[self filename] legalizedWebPublishingFilename];
+    NSURL *result = nil;
     
-    return [[[NSURL alloc] initWithString:filename
-                            relativeToURL:[[self parentPage] URL]] autorelease];
+    NSString *filename = [[self filename] legalizedWebPublishingFilename];
+    if (filename)
+    {
+        result = [[NSURL alloc] initWithString:filename
+                                 relativeToURL:[[self parentPage] URL]];
+    }
+    
+    return [result autorelease];
 }
 
 - (NSString *)filename { return [self.media preferredFilename]; }
