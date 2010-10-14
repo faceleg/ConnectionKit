@@ -72,9 +72,8 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 
 - (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 
-- (SVGraphic *)graphicWithPasteboardContents:(id)contents
-                                      ofType:(NSString *)type
-              insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+- (SVGraphic *)graphicWithPasteboardItem:(id <SVPasteboardItem>)item
+          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 // Convenience for extracting data from pboard
 + (id)contentsOfPasteboard:(NSPasteboard *)pasteboard forType:(NSString *)type forFactory:(SVGraphicFactory *)aFactory;

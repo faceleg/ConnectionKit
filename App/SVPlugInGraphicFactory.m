@@ -123,16 +123,15 @@
     return result;
 }
 
-- (SVGraphic *)graphicWithPasteboardContents:(id)contents
-                                      ofType:(NSString *)type
-              insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+- (SVGraphic *)graphicWithPasteboardItem:(id <SVPasteboardItem>)item
+          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVPlugInGraphic *result = nil;
     
     result = (id)[self insertNewGraphicInManagedObjectContext:context];
     @try
     {
-        [[result plugIn] awakeFromPasteboardItem:contents];
+        [[result plugIn] awakeFromPasteboardItem:item];
     }
     @catch (NSException *exception)
     {

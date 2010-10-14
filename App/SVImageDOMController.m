@@ -205,11 +205,7 @@
     NSString *type = [pboard availableTypeFromArray:[SVMediaGraphic readableTypesForPasteboard:pboard]];
     if (type)
     {
-        id contents = [SVGraphicFactory contentsOfPasteboard:pboard
-                                                     forType:type
-                                                  forFactory:[SVGraphicFactory mediaPlaceholderFactory]];
-        
-        [[self representedObject] awakeFromPasteboardContents:contents ofType:type];
+        [[self representedObject] awakeFromPasteboardItem:pboard];
         return YES;
     }
     

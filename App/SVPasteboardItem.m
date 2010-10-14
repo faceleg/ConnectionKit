@@ -32,6 +32,19 @@
 
 - (NSURL *)URL { return nil; }
 
+- (NSArray *)sv_pasteboardItems;
+{
+    // Try to read in Web Locations
+    NSArray *result = [self readWebLocations];
+    if ([result count] == 0)
+    {
+        // Fall back to reading the pasteboard itself
+        result = [NSArray arrayWithObject:self];
+    }
+    
+    return result;
+}
+
 @end
 
 

@@ -141,12 +141,11 @@
     return KTSourcePriorityNone;
 }
 
-- (SVGraphic *)graphicWithPasteboardContents:(id)contents
-                                      ofType:(NSString *)type
-              insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+- (SVGraphic *)graphicWithPasteboardItem:(id <SVPasteboardItem>)item
+          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVMediaGraphic *result = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
-    [result awakeFromPasteboardContents:contents ofType:type];
+    [result awakeFromPasteboardItem:item];
     return result;
 }
 
@@ -577,32 +576,18 @@ static SVGraphicFactory *sRawHTMLFactory;
     insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     // Try to read in Web Locations
-    NSArray *locations = [pboard readWebLocations];
-    if ([locations count])
-    {
-        NSMutableArray *result = [NSMutableArray arrayWithCapacity:[locations count]];
+    NSArray *items = [pboard sv_pasteboardItems];
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[items count]];
         
-        for (KSWebLocation *aLocation in locations)
-        {
-            SVGraphic *graphic = [self graphicFromWebLocation:aLocation
-                                                  minPriority:KTSourcePriorityNone
-                               insertIntoManagedObjectContext:context];
-            
-            if (graphic) [result addObject:graphic];
-        }
-        
-        return result;
-    }
-    else
+    for (id <SVPasteboardItem> anItem in items)
     {
-        // Fall back to reading the pasteboard itself
+        // Test plug-ins
         SVGraphicFactory *factory = nil;
         NSUInteger minPriority = 0;
         
-        // Test plug-ins
         for (SVGraphicFactory *aFactory in [self registeredFactories])
         {
-            NSUInteger priority = [aFactory priorityForPasteboardItem:pboard];
+            NSUInteger priority = [aFactory priorityForPasteboardItem:anItem];
             if (priority > minPriority)
             {
                 factory = aFactory;
@@ -612,16 +597,15 @@ static SVGraphicFactory *sRawHTMLFactory;
         
         
         // Create graphic
-        SVGraphic *result = nil;
         if (factory)
         {        
-            result = [factory graphicWithPasteboardContents:pboard
-                                                     ofType:NSURLPboardType
-                             insertIntoManagedObjectContext:context];
+            SVGraphic *graphic = [factory graphicWithPasteboardItem:anItem
+                                     insertIntoManagedObjectContext:context];
+            if (graphic) [result addObject:graphic];
         }
-        
-        return [NSArray arrayWithObject:result];
     }
+    
+    return result;
 }
 
 + (SVGraphic *)graphicFromWebLocation:(KSWebLocation *)location
@@ -647,15 +631,14 @@ static SVGraphicFactory *sRawHTMLFactory;
     SVGraphic *result = nil;
     if (factory)
     {        
-        result = [factory graphicWithPasteboardContents:location
-                                                 ofType:NSURLPboardType
-                         insertIntoManagedObjectContext:context];
+        result = [factory graphicWithPasteboardItem:location
+                     insertIntoManagedObjectContext:context];
     }
     
     return result;
 }
 
-- (NSUInteger)priorityForPasteboardItem:(KSWebLocation *)locations; { return KTSourcePriorityNone; }
+- (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item; { return KTSourcePriorityNone; }
 
 + (id)contentsOfPasteboard:(NSPasteboard *)pasteboard forType:(NSString *)type forFactory:(SVGraphicFactory *)aFactory;
 {
@@ -735,9 +718,8 @@ static SVGraphicFactory *sRawHTMLFactory;
     return KTSourcePriorityIdeal;
 }
 
-- (SVGraphic *)graphicWithPasteboardContents:(id)contents
-                                      ofType:(NSString *)type
-              insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+- (SVGraphic *)graphicWithPasteboardItem:(id <SVPasteboardItem>)item
+          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     return nil;
 }

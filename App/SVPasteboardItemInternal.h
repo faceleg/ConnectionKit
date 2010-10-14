@@ -11,6 +11,7 @@
 
 
 @interface NSPasteboard (SVPasteboardItem) <SVPasteboardItem>
+- (NSArray *)sv_pasteboardItems;
 @end
 
 

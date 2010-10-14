@@ -470,7 +470,7 @@
 
 - (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
 {
-    [super awakeFromPasteboardContents:item ofType:nil];
+    [super awakeFromPasteboardItem:item];
     
     
     // Can we read a media oject from the pboard?
@@ -528,11 +528,6 @@
     
     
     [[self plugIn] awakeFromPasteboardItem:item];
-}
-
-- (void)awakeFromPasteboardContents:(id)contents ofType:(NSString *)type;
-{
-    return [self awakeFromPasteboardItem:contents];
 }
 
 @end

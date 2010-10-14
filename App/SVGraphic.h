@@ -162,6 +162,10 @@ extern NSString *kSVGraphicPboardType;
 - (id <SVEnclosure>)enclosure;  // default is nil
 
 
+#pragma mark Pasteboard
+- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
+
+
 #pragma mark Inspector
 // To get yourself in the plug-in Inspector, need to:
 //  1.  Implement -plugInIdentifier to return a unique value like a plug-in would
@@ -179,9 +183,6 @@ extern NSString *kSVGraphicPboardType;
 
 + (id)graphicWithSerializedProperties:(id)properties
        insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-
-// e.g. for dragging in an image
-- (void)awakeFromPasteboardContents:(id)pasteboardContents ofType:(NSString *)type;
 
 
 @end

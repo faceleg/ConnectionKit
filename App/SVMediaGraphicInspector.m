@@ -77,15 +77,14 @@
     KTDocument *document = [self representedObject];
     NSOpenPanel *panel = [document makeChooseDialog];
     
-	// Use this 10.6 deprecated method, but when we are 10.6 only then use setAllowedFileTypes:
+	// Use this 10.6 deprecated method, but when we are 10.6-only then use setAllowedFileTypes:
     if ([panel runModalForTypes:[SVMediaGraphic allowedTypes]] == NSFileHandlingPanelOKButton)
     {
         KSWebLocation *file = [KSWebLocation webLocationWithURL:[panel URL]];
         
         for (SVMediaGraphic *aGraphic in [self inspectedObjects])
         {
-            [aGraphic awakeFromPasteboardContents:file
-                                           ofType:NSURLPboardType];
+            [aGraphic awakeFromPasteboardItem:file];
         }
     }
 }
@@ -129,11 +128,7 @@
         NSString *type = [pboard availableTypeFromArray:[SVMediaGraphic readableTypesForPasteboard:pboard]];
         if (type)
         {
-            id contents = [SVGraphicFactory contentsOfPasteboard:pboard
-                                                         forType:type
-                                                      forFactory:[SVGraphicFactory mediaPlaceholderFactory]];
-            
-            [aGraphic awakeFromPasteboardContents:contents ofType:type];
+            [aGraphic awakeFromPasteboardItem:pboard];
             result = YES;
         }
     }
