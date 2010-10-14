@@ -297,6 +297,33 @@
 
 #pragma mark Standard Summary
 
+- (void)writeSummary:(SVHTMLContext *)context truncation:(NSUInteger)maxChars
+{
+    // do we have a custom summary? if so just write it
+    if ( nil != [self customSummaryHTML] )
+    {
+        [context writeHTMLString:[self customSummaryHTML]];
+    }
+    else if ( maxChars > 0 )
+    {
+        // take the normally generated HTML for the summary  
+        
+        // complete page markup would be:
+        NSString *markup = [self markupString];
+        
+        // just the main body article would be:
+        NSAttributedString *article = [[self article] attributedHTMLString];
+        
+        
+
+    }
+    else
+    {
+        // no truncation, just process the complete, normal summary
+        [self writeSummary:context];
+    }
+}
+
 - (void)writeSummary:(SVHTMLContext *)context;
 {
     [context willWriteSummaryOfPage:self];
@@ -304,6 +331,7 @@
     
     NSAttributedString *html = [[self article] attributedHTMLString];
     NSMutableAttributedString *summary = [html mutableCopy];
+    
     NSMutableArray *attachments = [[NSMutableArray alloc] initWithCapacity:
                                    [[[self article] attachments] count]];
     
