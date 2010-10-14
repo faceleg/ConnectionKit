@@ -484,10 +484,6 @@
              insertIntoManagedObjectContext:[self managedObjectContext]
                                       error:NULL];
     }
-    else if (URL)
-    {
-        [self setExternalSourceURL:URL];
-    }
     else
     {
         NSString *type = [item availableTypeFromArray:[NSImage imageTypes]];
@@ -507,6 +503,10 @@
                                              URL:url
                                       entityName:@"GraphicMedia"
                   insertIntoManagedObjectContext:[self managedObjectContext]];
+        }
+        else if (URL)
+        {
+            [self setExternalSourceURL:URL];
         }
     }
     
