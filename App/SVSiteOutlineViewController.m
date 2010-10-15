@@ -838,7 +838,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     {
         if (item != [self rootPage])    // the root *page* shows up as a single item right at the top of the outline
         {
-            result = [[item sortedChildren] count];
+            NSSet *pages = [[NSSet alloc] initWithArray:[item sortedChildren]];
+            
+            result = [pages count];
+            [self addPages:pages];  // quicker for big collections than calling -addPage: repeatedly
+            [pages release];
         }
 	}
     else
