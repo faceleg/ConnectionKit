@@ -89,6 +89,8 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
             result = [self cachedIconForImageRepresentation:rep];
             if (!result)
             {
+                [_cachedImagesByRepresentation setObject:[NSNull null] forKey:rep];
+                
                 NSInvocation *invocation =
                 [NSInvocation invocationWithSelector:@selector(threaded_loadIconForItem:imageRepresentation:)
                                               target:self
@@ -98,8 +100,12 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
                 [_queue addOperation:op];
                 [op release];
             }
+            else if ((id)result == [NSNull null])   // it hasn't loaded yet
+            {
+                result = nil;
+            }
             
-            if (isThumbnail) *isThumbnail = YES;
+            if (result && isThumbnail) *isThumbnail = YES;
 		}
 	}
               
