@@ -265,9 +265,58 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     [[self rootPage] addObserver:self forKeyPath:@"master.codeInjection.hasCodeInjection" options:0 context:NULL];
 }
 
-- (void)addPagesObject:(KTPage *)page
+- (void)addPages:(NSSet *)pages;
 {
-	if (![_pages containsObject:page] )
+    NSMutableSet *newPages = [pages mutableCopy];
+    [newPages minusSet:_pages];
+    
+    if ([newPages count])
+    {
+        // KVO
+        [self willChangeValueForKey:@"pages"
+                    withSetMutation:NSKeyValueUnionSetMutation
+                       usingObjects:newPages];
+        
+        
+        [_pages unionSet:newPages];
+        
+        for (SVSiteItem *page in newPages)
+        {
+            //	Begin observing the page
+            [page addObserver:self
+                   forKeyPath:@"sortedChildren"
+                      options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)
+                      context:nil];
+            
+            [page addObserver:self
+                  forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]
+                      options:(NSKeyValueObservingOptionNew)
+                      context:nil];
+            
+            
+            // Cache the icon ready for display later. Include child pages (but only 1 layer deep)
+            [self iconForItem:page isThumbnail:NULL];
+            /*NSEnumerator *pagesEnumerator = [[page childItems] objectEnumerator];
+             SVSiteItem *aPage;
+             while (aPage = [pagesEnumerator nextObject])
+             {
+             [self iconForItem:aPage isThumbnail:NULL];
+             }*/
+        }
+        
+        
+        // KVO
+        [self didChangeValueForKey:@"pages"
+                   withSetMutation:NSKeyValueUnionSetMutation
+                      usingObjects:newPages];
+    }
+    
+    [newPages release];
+}
+
+- (void)addPagesObject:(KTPage *)page;
+{
+	if (![_pages containsObject:page])
 	{
 		// KVO
         NSSet *pages = [NSSet setWithObject:page];
