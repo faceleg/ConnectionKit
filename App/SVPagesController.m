@@ -438,7 +438,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
             
             
             // Insert graphic into the page
-            [aGraphic willInsertIntoPage:page];
+            //[aGraphic willInsertIntoPage:page];
             
             SVRichText *article = [page article];
             NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
