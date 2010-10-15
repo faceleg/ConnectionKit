@@ -55,31 +55,6 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 
 #pragma mark General
 
-- (void)setIcon:(NSImage *)icon forImageRepresentation:(id)rep;
-{
-    [_cachedImagesByRepresentation setObject:icon forKey:rep];
-}
-
-- (void)threaded_loadIconForItem:(SVSiteItem *)item imageRepresentation:(id)rep;
-{
-    CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(item, NULL);
-    if (imageSource)
-    {
-        NSImage *result = [[NSImage alloc]
-                           initWithThumbnailFromCGImageSource:imageSource
-                           maxPixelSize:([self maximumIconSize] - 4)];   // shrink to fit shadow
-        CFRelease(imageSource);
-        
-        if (result)	// Some files may not be able to provide a thumbnail, e.g. a .wmv movie
-        {
-            [result setBackgroundColor:[NSColor whiteColor]];
-            
-            [[self ks_proxyOnThread:nil waitUntilDone:NO] setIcon:result forImageRepresentation:rep];
-            [result release];
-        }
-    }
-}
-
 - (NSImage *)cachedIconForImageRepresentation:(id)rep;
 {
     return [_cachedImagesByRepresentation objectForKey:rep];
@@ -141,6 +116,32 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	
     OBPOSTCONDITION(result);
 	return result;
+}
+
+- (void)didLoadIcon:(NSImage *)icon forItem:(SVSiteItem *)item imageRepresentation:(id)rep;
+{
+    [_cachedImagesByRepresentation setObject:icon forKey:rep];
+    [[self outlineView] setItemNeedsDisplay:item childrenNeedDisplay:NO];
+}
+
+- (void)threaded_loadIconForItem:(SVSiteItem *)item imageRepresentation:(id)rep;
+{
+    CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(item, NULL);
+    if (imageSource)
+    {
+        NSImage *result = [[NSImage alloc]
+                           initWithThumbnailFromCGImageSource:imageSource
+                           maxPixelSize:([self maximumIconSize] - 4)];   // shrink to fit shadow
+        CFRelease(imageSource);
+        
+        if (result)	// Some files may not be able to provide a thumbnail, e.g. a .wmv movie
+        {
+            [result setBackgroundColor:[NSColor whiteColor]];
+            
+            [[self ks_proxyOnThread:nil waitUntilDone:NO] didLoadIcon:result forItem:item imageRepresentation:rep];
+            [result release];
+        }
+    }
 }
 
 /*	Exactly as it says on the tin. Go through and reset all icon caches.
