@@ -297,9 +297,14 @@
 
 #pragma mark Standard Summary
 
-- (void)writeSummary:(SVHTMLContext *)context truncation:(NSUInteger)maxChars
+- (void)writeSummary:(SVHTMLContext *)context truncation:(NSUInteger)maxChars;
 {
-    // do we have a custom summary? if so just write it
+	[context willWriteSummaryOfPage:self];
+    [context startElement:@"div" className:@"article-summary"];
+
+	
+	
+	// do we have a custom summary? if so just write it
     if ( nil != [self customSummaryHTML] )
     {
         [context writeHTMLString:[self customSummaryHTML]];
@@ -309,10 +314,8 @@
         // take the normally generated HTML for the summary  
         
         // complete page markup would be:
-        NSString *markup = [self markupString];
+        NSString *markup = [[self article] string];
         
-        // just the main body article would be:
-        NSAttributedString *article = [[self article] attributedHTMLString];
         
         
 
@@ -320,76 +323,68 @@
     else
     {
         // no truncation, just process the complete, normal summary
-        [self writeSummary:context];
-    }
-}
 
-- (void)writeSummary:(SVHTMLContext *)context;
-{
-    [context willWriteSummaryOfPage:self];
-    [context startElement:@"div" className:@"article-summary"];
-    
-    NSAttributedString *html = [[self article] attributedHTMLString];
-    NSMutableAttributedString *summary = [html mutableCopy];
-    
-    NSMutableArray *attachments = [[NSMutableArray alloc] initWithCapacity:
-                                   [[[self article] attachments] count]];
-    
-    
-    // Strip out large attachments
-    NSUInteger location = 0;
-    
-    while (location < summary.length)
-    {
-        NSRange effectiveRange;
-        SVTextAttachment *attachment = [summary attribute:@"SVAttachment"
-                                                  atIndex:location
-                                           effectiveRange:&effectiveRange];
+        NSAttributedString *html = [[self article] attributedHTMLString];
+		NSMutableAttributedString *summary = [html mutableCopy];
+		
+		NSMutableArray *attachments = [[NSMutableArray alloc] initWithCapacity:
+									   [[[self article] attachments] count]];
+		
+		
+		// Strip out large attachments .... WHY?
+		NSUInteger location = 0;
+		
+		while (location < summary.length)
+		{
+			NSRange effectiveRange;
+			SVTextAttachment *attachment = [summary attribute:@"SVAttachment"
+													  atIndex:location
+											   effectiveRange:&effectiveRange];
+			
+			if (attachment && [[attachment causesWrap] boolValue])
+			{
+				[attachments addObject:[attachment graphic]];
+				[summary deleteCharactersInRange:effectiveRange];
+			}
+			else
+			{
+				location = location + effectiveRange.length;
+			}
+		}
+		
+		
+		// Are we left with only whitespace? If so, fallback to graphic captions
+		NSString *text = [[summary string] stringByConvertingHTMLToPlainText];
+		if ([text isWhitespace])
+		{
+			[summary release]; summary = nil;
+			
+			for (SVGraphic *aGraphic in attachments)
+			{
+				if ([aGraphic showsCaption])
+				{
+					summary = [[[aGraphic caption] attributedHTMLString] retain];
+					break;
+				}
+			}
+		}
+		
         
-        if (attachment && [[attachment causesWrap] boolValue])
-        {
-            [attachments addObject:[attachment graphic]];
-            [summary deleteCharactersInRange:effectiveRange];
-        }
-        else
-        {
-            location = location + effectiveRange.length;
-        }
-    }
-    
-    
-    // Are we left with only whitespace? If so, fallback to graphic captions
-    NSString *text = [[summary string] stringByConvertingHTMLToPlainText];
-    if ([text isWhitespace])
-    {
-        [summary release]; summary = nil;
-        
-        for (SVGraphic *aGraphic in attachments)
-        {
-            if ([aGraphic showsCaption])
-            {
-                summary = [[[aGraphic caption] attributedHTMLString] retain];
-                break;
-            }
-        }
-    }
-    
-        
-    // Write it
-    [context writeAttributedHTMLString:summary];
-    
-    [attachments release];
-    [summary release];
-    
-    
+		// Write it
+		[context writeAttributedHTMLString:summary];
+		
+		[attachments release];
+		[summary release];
+	}
+
+
     [context endElement];
     if ([context respondsToSelector:@selector(endDOMController)]) [context endDOMController];
 }
 
-
 /*!	Here is the main information about how summaryHTML works.
 
-A page is asked for its summaryHTML to populate its parent's general index page, if it exists.
+A page is asked for ds summaryHTML to populate its parent's general index page, if it exists.
 Exactly how that summary is generated is a bit complex.
 
 First off -- if this is a collection (with some children), there is a behavior flag which is

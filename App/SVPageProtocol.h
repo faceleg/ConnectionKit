@@ -21,7 +21,7 @@
 
 #pragma mark Content
 - (NSString *)title;
-- (void)writeSummary:(id <SVPlugInContext>)context;
+- (void)writeSummary:(id <SVPlugInContext>)context truncation:(NSUInteger)maxChars;
 
 
 #pragma mark Properties

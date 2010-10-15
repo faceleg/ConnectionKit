@@ -84,8 +84,7 @@
 {
     id<SVPlugInContext> context = [SVPlugIn currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
-    //FIXME: summary needs to be truncated at truncateChars
-    [iteratedPage writeSummary:context];
+    [iteratedPage writeSummary:context truncation:self.truncateChars];
 }
 
 
