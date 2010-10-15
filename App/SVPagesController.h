@@ -28,7 +28,7 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 {
   @private
     NSDictionary    *_presetDict;
-    NSURL           *_fileURL;
+    NSURL           *_URL;
     
     id <SVPagesControllerDelegate>  _delegate;  // weak ref
 }
@@ -46,7 +46,7 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 //  3.  Call one of: -add: -newObject -newObjectWithPredecessor:
 @property(nonatomic, copy) NSString *entityName;
 @property(nonatomic, copy) NSDictionary *collectionPreset;
-@property(nonatomic, copy) NSURL *fileURL;  // maybe this should be -objectURL instead and handle external links too
+@property(nonatomic, copy) NSURL *objectURL;
 
 - (void)addObject:(id)object toCollection:(KTPage *)collection;
 - (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;

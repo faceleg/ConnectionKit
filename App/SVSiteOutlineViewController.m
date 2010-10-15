@@ -540,7 +540,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 - (IBAction)addRawTextPage:(id)sender;      // Raw HTML page
 {
     [[self content] setEntityName:@"File"];
-    [[self content] setFileURL:nil];    // will make its own file
+    [[self content] setObjectURL:nil];    // will make its own file
     [[self content] add:self];
 }
 
@@ -565,7 +565,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
     
     [[self content] setEntityName:@"File"];
-    [[self content] setFileURL:[sheet URL]];
+    [[self content] setObjectURL:[sheet URL]];
     [[self content] add:self];
 }
 

@@ -99,7 +99,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 @dynamic entityName;
 
 @synthesize collectionPreset = _presetDict;
-@synthesize fileURL = _fileURL;
+@synthesize objectURL = _URL;
 
 - (id)newObject
 {
@@ -163,9 +163,9 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     {
         // Import specified file if possible
         SVMediaRecord *media = nil;
-        if ([self fileURL])
+        if ([self objectURL])
         {
-            media = [SVMediaRecord mediaWithURL:[self fileURL] entityName:@"FileMedia" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
+            media = [SVMediaRecord mediaWithURL:[self objectURL] entityName:@"FileMedia" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
         }
         if (!media)
         {
@@ -414,7 +414,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
             // Create pages for each graphic
             [self setEntityName:@"Page"];
             [self setCollectionPreset:nil];
-            [self setFileURL:nil];
+            [self setObjectURL:nil];
             
             KTPage *page = [self newObjectDestinedForCollection:collection];
             [page setTitle:[aGraphic title]];
@@ -447,7 +447,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
             if ([URL isFileURL])
             {
                 [self setEntityName:@"File"];
-                [self setFileURL:URL];
+                [self setObjectURL:URL];
                 
                 SVSiteItem *item = [self newObjectDestinedForCollection:collection];
                 [self addObject:item toCollection:collection];
