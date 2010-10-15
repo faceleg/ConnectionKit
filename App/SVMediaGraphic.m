@@ -56,7 +56,7 @@
     // Placeholder image
     if (![self media])
     {
-        SVMediaRecord *media = [[page master] makePlaceholdImageMediaWithEntityName:@"GraphicMedia"];
+        SVMediaRecord *media = [[page master] makePlaceholdImageMediaWithEntityName:[[self class] meditEntityName]];
         [self setMedia:media];
         [self setTypeToPublish:[media typeOfFile]];
         
@@ -154,13 +154,15 @@
     if (URL)
     {
         media = [SVMediaRecord mediaWithURL:URL
-                                 entityName:@"GraphicMedia"
+                                 entityName:[[self class] meditEntityName]
              insertIntoManagedObjectContext:[self managedObjectContext]
                                       error:NULL];
     }
     
     [self replaceMedia:media forKeyPath:@"media"];
 }
+
++ (NSString *)meditEntityName; { return @"GraphicMedia"; }
 
 @dynamic externalSourceURLString;
 - (void) setExternalSourceURLString:(NSString *)source;
@@ -457,7 +459,7 @@
         
         SVMediaRecord *media = [SVMediaRecord mediaWithData:data
                                                         URL:url
-                                                 entityName:@"GraphicMedia"
+                                                 entityName:[[self class] meditEntityName]
                              insertIntoManagedObjectContext:[self managedObjectContext]];
         
         [self setMedia:media];
@@ -478,7 +480,7 @@
     if ([URL isFileURL])
     {
         media = [SVMediaRecord mediaWithURL:URL
-                                 entityName:@"GraphicMedia"
+                                 entityName:[[self class] meditEntityName]
              insertIntoManagedObjectContext:[self managedObjectContext]
                                       error:NULL];
     }
@@ -499,7 +501,7 @@
             
             media = [SVMediaRecord mediaWithData:[item dataForType:type]
                                              URL:url
-                                      entityName:@"GraphicMedia"
+                                      entityName:[[self class] meditEntityName]
                   insertIntoManagedObjectContext:[self managedObjectContext]];
         }
         else if (URL)
