@@ -54,6 +54,31 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 
 #pragma mark General
 
+- (void)threaded_loadIconForItem:(SVSiteItem *)item imageRepresentation:(id)rep;
+{
+    CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(item, NULL);
+    if (imageSource)
+    {
+        NSImage *result = [[NSImage alloc]
+                           initWithThumbnailFromCGImageSource:imageSource
+                           maxPixelSize:([self maximumIconSize] - 4)];   // shrink to fit shadow
+        CFRelease(imageSource);
+        
+        if (result)	// Some files may not be able to provide a thumbnail, e.g. a .wmv movie
+        {
+            [result setBackgroundColor:[NSColor whiteColor]];
+            [result autorelease];
+            
+            [_cachedImagesByRepresentation setObject:result forKey:rep];
+        }
+    }
+}
+
+- (NSImage *)cachedIconForImageRepresentation:(id)rep;
+{
+    return [_cachedImagesByRepresentation objectForKey:rep];
+}
+
 - (NSImage *)iconForItem:(SVSiteItem *)item isThumbnail:(BOOL *)isThumbnail;
 {
 	OBPRECONDITION(item);
@@ -80,25 +105,11 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
         else if (rep)
         {
             // Hopefully there's a cached copy
-            result = [_cachedImagesByRepresentation objectForKey:rep];
+            result = [self cachedIconForImageRepresentation:rep];
             if (!result)
             {
-                CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(item, NULL);
-                if (imageSource)
-                {
-                    result = [[NSImage alloc]
-                              initWithThumbnailFromCGImageSource:imageSource
-                              maxPixelSize:(maxSize - 4)];   // shrink to fit shadow
-                    CFRelease(imageSource);
-                    
-					if (result)	// Some files may not be able to provide a thumbnail, e.g. a .wmv movie
-					{
-						[result setBackgroundColor:[NSColor whiteColor]];
-						[result autorelease];
-                        
-						[_cachedImagesByRepresentation setObject:result forKey:rep];
-					}
-                }
+                [self threaded_loadIconForItem:item imageRepresentation:rep];
+                result = [self cachedIconForImageRepresentation:rep];
             }
             
             if (isThumbnail) *isThumbnail = YES;
