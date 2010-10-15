@@ -132,11 +132,6 @@ typedef enum {
 
 #pragma mark Thumbnail
 
-- (BOOL)writeThumbnailImage:(SVHTMLContext *)context
-                   maxWidth:(NSUInteger)width
-                  maxHeight:(NSUInteger)height
-           allowPlaceholder:(BOOL)allowPlaceholder;
-
 - (void)writePlaceholderThumbnail:(SVHTMLContext *)context width:(NSUInteger)width height:(NSUInteger) height;
 
 @property(nonatomic, copy) NSNumber *thumbnailType; // SVThumbnailType, mandatory
