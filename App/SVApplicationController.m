@@ -1327,7 +1327,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	NSArray* mediaTypes = [NSArray arrayWithObjects:kIMBMediaTypeImage,kIMBMediaTypeAudio,kIMBMediaTypeMovie,kIMBMediaTypeLink,nil];
 	IMBPanelController* panelController = [IMBPanelController sharedPanelControllerWithDelegate:self mediaTypes:mediaTypes];
 
-	if ( [panelController infoWindowIsVisible] )
+	if ([panelController respondsToSelector:@selector(infoWindowIsVisible)] &&
+        [panelController infoWindowIsVisible])
 	{
 		[panelController flipBack:nil];
 	}
