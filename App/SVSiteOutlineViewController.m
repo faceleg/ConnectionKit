@@ -534,6 +534,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 - (IBAction)addExternalLinkPage:(id)sender; // external link
 {
     [[self content] setEntityName:@"ExternalLink"];
+    [[self content] setObjectURL:nil];
     [[self content] add:self];
 }
 

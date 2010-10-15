@@ -155,9 +155,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     }
     else if ([[self entityName] isEqualToString:@"ExternalLink"])
     {
-        // Guess the link URL
-        SVLink *link = [[SVLinkManager sharedLinkManager] guessLink];
-        if (link) [result setURL:[NSURL URLWithString:[link URLString]]];
+        [result setURL:[self objectURL]];
     }
     else if ([[self entityName] isEqualToString:@"File"])
     {
