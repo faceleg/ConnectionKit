@@ -1221,6 +1221,7 @@
 		CEE2C64F120B25E7000E3C0E /* plugin_inspector.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEE2C64E120B25E7000E3C0E /* plugin_inspector.tiff */; };
 		CEE77B8012528930001F74FC /* SVAudioVisualPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = CEE77B7E12528930001F74FC /* SVAudioVisualPlugIn.h */; };
 		CEE77B8112528930001F74FC /* SVAudioVisualPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE77B7F12528930001F74FC /* SVAudioVisualPlugIn.m */; };
+		CEED943012691AD1004ACB0E /* sound_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = CEED942F12691AD1004ACB0E /* sound_placeholder.png */; };
 		CEEE562B0DAD47AD00B7F6A2 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */; };
 		CEF2889F11CC2D7300122D03 /* JSTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF2889E11CC2D7300122D03 /* JSTalk.framework */; };
 		CEF288EE11CC2DA100122D03 /* JSTalk.framework in Copy Frameworks ALWAYS */ = {isa = PBXBuildFile; fileRef = CEF2889E11CC2D7300122D03 /* JSTalk.framework */; };
@@ -2894,6 +2895,7 @@
 		CEE2C64E120B25E7000E3C0E /* plugin_inspector.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = plugin_inspector.tiff; sourceTree = "<group>"; };
 		CEE77B7E12528930001F74FC /* SVAudioVisualPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVAudioVisualPlugIn.h; sourceTree = "<group>"; };
 		CEE77B7F12528930001F74FC /* SVAudioVisualPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAudioVisualPlugIn.m; sourceTree = "<group>"; };
+		CEED942F12691AD1004ACB0E /* sound_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound_placeholder.png; sourceTree = "<group>"; };
 		CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
 		CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YouTubeElement.xcodeproj; path = ../PlugIns/Elements/YouTubeElement/YouTubeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CEF2889E11CC2D7300122D03 /* JSTalk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSTalk.framework; path = ../../Shared/ThirdParty/JSTalk/JSTalk.framework; sourceTree = "<group>"; };
@@ -5133,6 +5135,7 @@
 		CE1BE7E511D2AD1E00D875AE /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				CEED942F12691AD1004ACB0E /* sound_placeholder.png */,
 				CE7B67C911EE784600F56D8B /* MissingMediaQMark.png */,
 				CE1BE7E611D2AD1E00D875AE /* BadgeAdd.png */,
 				CE1BE7E711D2AD1E00D875AE /* mag.png */,
@@ -6448,6 +6451,7 @@
 				CE89C2721239AB1A0056D74B /* toolbar_flash.tiff in Resources */,
 				CE6532591253B5C8003A9AA0 /* down.gif in Resources */,
 				CE65325A1253B5C8003A9AA0 /* right.gif in Resources */,
+				CEED943012691AD1004ACB0E /* sound_placeholder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

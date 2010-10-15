@@ -487,6 +487,16 @@
 	
 	BOOL unknownTag = !(audioTag || flashTag || microsoftTag || quicktimeTag);
 	
+	// WHEN EDITING, AND NO CONTROLLER, PUT IN SOMETHING VISIBLE SO WE CAN SELECT THE GRAPHIC.
+	if (!self.controller && [context isForEditing])
+	{
+		[context pushAttribute:@"width" value:[NSNumber numberWithInt:16]];
+		[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:16] stringValue]];
+		[context pushAttribute:@"src" value:[[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"sound_placeholder"]] absoluteString]];
+		[context startElement:@"img"];
+		[context endElement];
+	}
+	
 	// START THE TAGS
 	
 	NSString *audioID = nil;
