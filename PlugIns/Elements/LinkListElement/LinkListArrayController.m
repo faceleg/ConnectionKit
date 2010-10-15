@@ -55,7 +55,7 @@
 - (id)newObject	// must return object with a retain count of one
 {
     id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
-    NSMutableDictionary *result = [LinkListPlugIn displayableLinkFromLocation:location];
+    NSMutableDictionary *result = [[LinkListPlugIn displayableLinkFromLocation:location] retain];
     
     if ( !result )
     {
