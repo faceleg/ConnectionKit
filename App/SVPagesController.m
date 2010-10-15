@@ -456,10 +456,11 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         {
             // Fallback to adding download or external URL with location
             NSURL *URL = [aLocation URL];
+            [self setObjectURL:URL];
+            
             if ([URL isFileURL])
             {
                 [self setEntityName:@"File"];
-                [self setObjectURL:URL];
                 
                 SVSiteItem *item = [self newObjectDestinedForCollection:collection];
                 [self addObject:item toCollection:collection];
@@ -470,7 +471,6 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
                 [self setEntityName:@"ExternalLink"];
                 
                 SVSiteItem *item = [self newObjectDestinedForCollection:collection];
-                [(SVExternalLink *)item setURL:URL];
                 
                 [self addObject:item toCollection:collection];
                 [item release];
