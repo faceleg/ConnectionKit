@@ -4,7 +4,7 @@
 <dl>
 	[[foreach linkList oneItem]]
 	<dt>
-		[[if oneItem.url]]<a href="[[=&oneItem.url]]"[[if openLinksInNewWindow]] target="_blank"[[endif4]]>[[endif3]][[=&oneItem.title]][[if oneItem.url]]</a>[[endif3]]
+		[[if oneItem.url]]<a href="[[=&oneItem.url]]"[[if openLinksInNewWindow]] target="_blank"[[endif4]]>[[endif3]][[if oneItem.title]][[=&oneItem.title]][[endif3]][[if oneItem.url]]</a>[[endif3]]
 	</dt>
 	[[if oneItem.comment]]<dd><span style="font-size:75%;">[[=&oneItem.comment]]</span></dd>[[endif3]]
 	[[endForEach]]
@@ -15,7 +15,7 @@
 	[[foreach linkList oneItem]]
 	<li>
 		[[if oneItem.url]]<a href="[[=&oneItem.url]]"[[if openLinksInNewWindow]] target="_blank"[[endif4]]>[[endif3]]
-			[[=&oneItem.title]]
+			[[if oneItem.title]][[=&oneItem.title]][[endif3]]
 		[[if oneItem.url]]</a>[[endif3]]
 		[[if oneItem.comment]]<br />[[=&oneItem.comment]][[endif3]]
 	</li>

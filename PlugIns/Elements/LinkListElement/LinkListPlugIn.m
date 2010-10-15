@@ -51,7 +51,7 @@
     
     // If passed NSNull as a title it means none could be found. We want to use the hostname in such cases
     NSString *title = [location title];
-    if (!title) title = [URL host];
+    if ( !title || (title == (id)[NSNull null]) ) title = [URL host];
         
     NSMutableDictionary *result = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    [URL absoluteString], @"url",
