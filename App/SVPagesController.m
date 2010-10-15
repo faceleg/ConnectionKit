@@ -94,6 +94,20 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     [super dealloc];
 }
 
+#pragma mark Managing Content
+
+- (void)add:(id)sender;
+{
+    if ([[self entityName] isEqualToString:@"ExternalLink"] && ![self objectURL])
+    {
+        // Guess URL before continuing
+        SVLink *link = [[SVLinkManager sharedLinkManager] guessLink];
+        if ([link URLString]) [self setObjectURL:[NSURL URLWithString:[link URLString]]];
+    }
+    
+    [super add:sender];
+}
+
 #pragma mark Managing Objects
 
 @dynamic entityName;
