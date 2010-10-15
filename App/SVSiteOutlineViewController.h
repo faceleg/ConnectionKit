@@ -39,6 +39,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 	NSImage				*_cachedFavicon;
 	NSMutableDictionary	*_cachedPluginIcons;
 	NSMutableDictionary	*_cachedImagesByRepresentation;
+    NSOperationQueue    *_queue;
 	
 	NSMutableArray		*_customIconGenerationQueue;
 	KTPage				*_generatingCustomIcon;			// Used in KTSiteOutlineDataSource+Icons.m

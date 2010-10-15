@@ -97,6 +97,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         _cachedImagesByRepresentation = [[NSMutableDictionary alloc] init];
         
         // Icon queue
+        _queue = [[NSOperationQueue alloc] init];
         _customIconGenerationQueue = [[NSMutableArray alloc] init];
     }
         
@@ -123,6 +124,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	[_cachedFavicon release];
 	[_cachedPluginIcons release];
 	[_cachedImagesByRepresentation release];
+    [_queue release];
 	[_customIconGenerationQueue release];
     
     

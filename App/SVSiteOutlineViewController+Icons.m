@@ -18,6 +18,7 @@
 #import "NSArray+Karelia.h"
 #import "NSDictionary+Karelia.h"
 #import "NSImage+Karelia.h"
+#import "NSInvocation+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
@@ -54,6 +55,11 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 
 #pragma mark General
 
+- (void)setIcon:(NSImage *)icon forImageRepresentation:(id)rep;
+{
+    [_cachedImagesByRepresentation setObject:icon forKey:rep];
+}
+
 - (void)threaded_loadIconForItem:(SVSiteItem *)item imageRepresentation:(id)rep;
 {
     CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(item, NULL);
@@ -67,9 +73,9 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
         if (result)	// Some files may not be able to provide a thumbnail, e.g. a .wmv movie
         {
             [result setBackgroundColor:[NSColor whiteColor]];
-            [result autorelease];
             
-            [_cachedImagesByRepresentation setObject:result forKey:rep];
+            [[self ks_proxyOnThread:nil waitUntilDone:NO] setIcon:result forImageRepresentation:rep];
+            [result release];
         }
     }
 }
@@ -108,8 +114,14 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
             result = [self cachedIconForImageRepresentation:rep];
             if (!result)
             {
-                [self threaded_loadIconForItem:item imageRepresentation:rep];
-                result = [self cachedIconForImageRepresentation:rep];
+                NSInvocation *invocation =
+                [NSInvocation invocationWithSelector:@selector(threaded_loadIconForItem:imageRepresentation:)
+                                              target:self
+                                           arguments:[NSArray arrayWithObjects:item, rep, nil]];
+                
+                NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+                [_queue addOperation:op];
+                [op release];
             }
             
             if (isThumbnail) *isThumbnail = YES;
