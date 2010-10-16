@@ -100,11 +100,17 @@
 }
 
 
-#pragma mark -
-#pragma mark General
+#pragma mark Metrics
+
+- (BOOL) validateHeight:(NSNumber **)height error:(NSError **)error;
+{
+    // Audio is unique among media, having auto height.
+    return (*height == nil || [super validateHeight:height error:error]);
+}
 
 - (BOOL)canMakeOriginalSize; { return NO; }		// Audio is media, but it doesn't have an original/natural size.
 
+#pragma mark General
 + (NSArray *)allowedFileTypes;
 {
 	return [NSArray arrayWithObject:(NSString *)kUTTypeAudio];

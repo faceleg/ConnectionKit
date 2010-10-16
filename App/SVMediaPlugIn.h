@@ -30,6 +30,9 @@
 #pragma mark Publishing
 - (BOOL)validateTypeToPublish:(NSString *)type;
 
+
+#pragma mark Metrics
+- (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 - (CGSize)originalSize;
 
 - (BOOL)shouldWriteHTMLInline;

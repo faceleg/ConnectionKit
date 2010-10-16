@@ -12,6 +12,7 @@
 
 #import "NSString+Karelia.h"
 #import "KSURLUtilities.h"
+#import "NSError+Karelia.h"
 
 
 @implementation SVMediaPlugIn
@@ -41,6 +42,20 @@
 #pragma mark Metrics
 
 + (BOOL)isExplicitlySized; { return YES; }
+
+- (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
+{
+    // SVGraphic.width is optional. For media graphics it becomes compulsary
+    BOOL result = (*height != nil);
+    if (!result && error)
+    {
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                     code:NSValidationMissingMandatoryPropertyError
+                     localizedDescription:@"height is a mandatory property"];
+    }
+    
+    return result;
+}
 
 - (CGSize)originalSize;
 {
