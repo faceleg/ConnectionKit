@@ -1120,8 +1120,6 @@
 		CE318CC4121ECDBD003894EC /* player_mp3_maxi.swf in Resources */ = {isa = PBXBuildFile; fileRef = CE318CC3121ECDBD003894EC /* player_mp3_maxi.swf */; };
 		CE35968410F3F0A10009F2CA /* SVWebSourceViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE35968210F3F0A10009F2CA /* SVWebSourceViewController.h */; };
 		CE35968510F3F0A10009F2CA /* SVWebSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */; };
-		CE36E3E411ED5546003EFCA8 /* jquery-1.4.2.js in Resources */ = {isa = PBXBuildFile; fileRef = CE36E3D911ED528E003EFCA8 /* jquery-1.4.2.js */; };
-		CE36E3E511ED5546003EFCA8 /* jquery-1.4.2.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CE36E3DA11ED528E003EFCA8 /* jquery-1.4.2.min.js */; };
 		CE36E59011EF95FF003EFCA8 /* designPlaceholder.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE36E58F11EF95FF003EFCA8 /* designPlaceholder.tiff */; };
 		CE36E5CA11EFA68E003EFCA8 /* plainText.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE36E5C911EFA68E003EFCA8 /* plainText.tiff */; };
 		CE42A63111DE506600381E46 /* DTD in Resources */ = {isa = PBXBuildFile; fileRef = CE42A62311DE506600381E46 /* DTD */; };
@@ -1202,6 +1200,8 @@
 		CEC4D2BC0934333800D75C23 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */; };
 		CEC69B06108E6FC4000E6E84 /* MAAttachedWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC69B04108E6FC4000E6E84 /* MAAttachedWindow.h */; };
 		CEC69B07108E6FC4000E6E84 /* MAAttachedWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC69B05108E6FC4000E6E84 /* MAAttachedWindow.m */; };
+		CEC85A0F1269FB0C0062666A /* jquery-1.4.3.min.js in Sources */ = {isa = PBXBuildFile; fileRef = CEC85A0E1269FB0C0062666A /* jquery-1.4.3.min.js */; };
+		CEC85A121269FB180062666A /* jquery-1.4.3.js in Sources */ = {isa = PBXBuildFile; fileRef = CEC85A111269FB180062666A /* jquery-1.4.3.js */; };
 		CED05D25116E5105003228C5 /* SVPublishingHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = CED05D23116E5105003228C5 /* SVPublishingHTMLContext.h */; };
 		CED05D26116E5105003228C5 /* SVPublishingHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = CED05D24116E5105003228C5 /* SVPublishingHTMLContext.m */; };
 		CED196C50AC33F90002E8A4A /* Sandvox Help in Resources */ = {isa = PBXBuildFile; fileRef = CED194330AC33F8F002E8A4A /* Sandvox Help */; };
@@ -2768,8 +2768,6 @@
 		CE318CC3121ECDBD003894EC /* player_mp3_maxi.swf */ = {isa = PBXFileReference; lastKnownFileType = file; path = player_mp3_maxi.swf; sourceTree = "<group>"; };
 		CE35968210F3F0A10009F2CA /* SVWebSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebSourceViewController.h; sourceTree = "<group>"; };
 		CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebSourceViewController.m; sourceTree = "<group>"; };
-		CE36E3D911ED528E003EFCA8 /* jquery-1.4.2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.4.2.js"; sourceTree = "<group>"; };
-		CE36E3DA11ED528E003EFCA8 /* jquery-1.4.2.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.4.2.min.js"; sourceTree = "<group>"; };
 		CE36E58F11EF95FF003EFCA8 /* designPlaceholder.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = designPlaceholder.tiff; sourceTree = "<group>"; };
 		CE36E5C911EFA68E003EFCA8 /* plainText.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = plainText.tiff; sourceTree = "<group>"; };
 		CE42A62311DE506600381E46 /* DTD */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DTD; sourceTree = "<group>"; };
@@ -2871,6 +2869,8 @@
 		CEC4DB2F0935179500D75C23 /* NonStandardURL.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NonStandardURL.html; sourceTree = "<group>"; };
 		CEC69B04108E6FC4000E6E84 /* MAAttachedWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAAttachedWindow.h; sourceTree = "<group>"; };
 		CEC69B05108E6FC4000E6E84 /* MAAttachedWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAttachedWindow.m; sourceTree = "<group>"; };
+		CEC85A0E1269FB0C0062666A /* jquery-1.4.3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.4.3.min.js"; sourceTree = "<group>"; };
+		CEC85A111269FB180062666A /* jquery-1.4.3.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.4.3.js"; sourceTree = "<group>"; };
 		CECCED7C0E646B6800BE9016 /* Symbolication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Symbolication.framework; path = /System/Library/PrivateFrameworks/Symbolication.framework; sourceTree = "<absolute>"; };
 		CED05D23116E5105003228C5 /* SVPublishingHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPublishingHTMLContext.h; sourceTree = "<group>"; };
 		CED05D24116E5105003228C5 /* SVPublishingHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPublishingHTMLContext.m; sourceTree = "<group>"; };
@@ -4184,8 +4184,8 @@
 			children = (
 				CE89F96411F6149500B180EB /* ddsmoothmenu.js */,
 				CE89F96511F6149500B180EB /* ddsmoothmenu.css */,
-				CE36E3D911ED528E003EFCA8 /* jquery-1.4.2.js */,
-				CE36E3DA11ED528E003EFCA8 /* jquery-1.4.2.min.js */,
+				CEC85A0E1269FB0C0062666A /* jquery-1.4.3.min.js */,
+				CEC85A111269FB180062666A /* jquery-1.4.3.js */,
 				CE8D5A7B112B339A007AC2F0 /* validator.css */,
 				CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */,
 				CE214BF9098060CD006DD2B1 /* Languages.plist */,
@@ -6259,8 +6259,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE89F9C611F6152D00B180EB /* ddsmoothmenu.js in Resources */,
-				CE36E3E411ED5546003EFCA8 /* jquery-1.4.2.js in Resources */,
-				CE36E3E511ED5546003EFCA8 /* jquery-1.4.2.min.js in Resources */,
 				3C202E9507E00F5700DE4994 /* document2.toolbar in Resources */,
 				CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */,
 				3C202EAD07E0101100DE4994 /* Credits.html in Resources */,
@@ -7279,6 +7277,8 @@
 				276AB40B125F444C006FED25 /* SVPasteboardItem.m in Sources */,
 				27ACC6F0126317CE00EA521E /* SVFillController.m in Sources */,
 				27ACC73A12631ADC00EA521E /* SVPageThumbnailController.m in Sources */,
+				CEC85A0F1269FB0C0062666A /* jquery-1.4.3.min.js in Sources */,
+				CEC85A121269FB180062666A /* jquery-1.4.3.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

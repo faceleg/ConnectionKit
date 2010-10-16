@@ -298,7 +298,7 @@
 - (void)writeJQueryImport
 {
 	// We might want to update this if a major new stable update comes along. We'd put fresh copies in the app resources.
-#define JQUERY_VERSION @"1.4.2"
+#define JQUERY_VERSION @"1.4.3"
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
