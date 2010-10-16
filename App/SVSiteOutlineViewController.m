@@ -98,6 +98,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         
         // Icon queue
         _queue = [[NSOperationQueue alloc] init];
+        [_queue setMaxConcurrentOperationCount:2];  // empirical. Left to its own devices, GCD will often spawn 1 thread per image as the op becomes disk-bound. On most Macs 2 is definitely faster than 1
+        
         _customIconGenerationQueue = [[NSMutableArray alloc] init];
     }
         
