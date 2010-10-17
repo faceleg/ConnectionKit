@@ -315,6 +315,22 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return size;
 }
 
+#pragma mark Selection Border
+
+- (SVSelectionBorder *)newSelectionBorder;
+{
+    SVSelectionBorder *result = [super newSelectionBorder];
+    
+    // Hide border on <OBJECT> tags etc.
+    DOMHTMLElement *selectionElement = [self selectableDOMElement];
+    NSString *tagName = [selectionElement tagName];
+    if ([tagName isEqualToString:@"AUDIO"] || [tagName isEqualToString:@"VIDEO"])
+    {
+        [result setBorderColor:nil];
+    }
+    return result;
+}
+
 @end
 
 
