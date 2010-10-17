@@ -108,6 +108,8 @@
     return (*height == nil || [super validateHeight:height error:error]);
 }
 
+- (CGSize)originalSize; { return CGSizeMake(200.0f, 0.0f); }
+
 - (BOOL)canMakeOriginalSize; { return NO; }		// Audio is media, but it doesn't have an original/natural size.
 
 #pragma mark General
