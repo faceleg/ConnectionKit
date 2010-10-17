@@ -426,9 +426,11 @@
 
 - (NSString *)startUnknown:(SVHTMLContext *)context;
 {
-	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
-	[context pushAttribute:@"height" value:[NSNumber numberWithInt:self.height]];
-	NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
+	[context pushAttribute:@"style"
+					 value:[NSString stringWithFormat:
+							@"width:%dpx; height:%dpx;",
+							self.width, self.height]];
+	 NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
 	[context writeElement:@"p" text:NSLocalizedString(@"Unable to embed audio. Perhaps it is not a recognized audio format.", @"Warning shown to user when audio can't be embedded")];
 	// don't end....
 
@@ -496,9 +498,10 @@
 	// WHEN EDITING, AND NO CONTROLLER, PUT IN SOMETHING VISIBLE SO WE CAN SELECT THE GRAPHIC.
 	if (!self.controller && [context isForEditing])
 	{
-		[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
-		[context pushAttribute:@"height" value:[NSNumber numberWithInt:self.height]];
-		[context pushAttribute:@"style" value:@"padding:1px 1px 1px 6px; color:#888; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;"];
+		[context pushAttribute:@"style"
+						 value:[NSString stringWithFormat:
+							 @"padding:1px 1px 1px 6px; color:#888; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; width:%dpx; height:%dpx;",
+								self.width, self.height]];
 		[context startElement:@"div"];
 			
 		[context pushAttribute:@"width" value:[NSNumber numberWithInt:16]];
