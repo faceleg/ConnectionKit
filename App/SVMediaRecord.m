@@ -224,6 +224,11 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
+- (BOOL)isPlaceholder;
+{
+    return ([[self filename] hasPrefix:@"shared/"] || [[self filename] hasPrefix:@"Shared/"]);
+}
+
 - (NSURL *)mediaURL;
 {
     NSURL *result = [self fileURL];
