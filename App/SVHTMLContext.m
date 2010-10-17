@@ -670,7 +670,11 @@
     NSNumber *height = [object valueForKey:@"height"];
     
     // Only some elements support directly sizing. Others have to use CSS
-    if ([elementName isEqualToString:@"img"] || [elementName isEqualToString:@"object"] || [elementName isEqualToString:@"embed"] || [elementName isEqualToString:@"iframe"])
+    if ([elementName isEqualToString:@"img"] ||
+        [elementName isEqualToString:@"video"] ||
+        [elementName isEqualToString:@"object"] ||
+        [elementName isEqualToString:@"embed"] ||
+        [elementName isEqualToString:@"iframe"])
     {
         [self pushAttribute:@"width" value:[width description]];
         if (height) [self pushAttribute:@"height" value:[height description]];
