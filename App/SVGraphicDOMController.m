@@ -154,9 +154,16 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Start loading DOM objects from HTML
-    OBASSERT(!_offscreenWebViewController);
-    _offscreenWebViewController = [[SVOffscreenWebViewController alloc] init];
-    [_offscreenWebViewController setDelegate:self];
+    if (_offscreenWebViewController)
+    {
+        // Need to restart loading. Do so by pretending we already finished
+        [self didUpdate];
+    }
+    else
+    {
+        _offscreenWebViewController = [[SVOffscreenWebViewController alloc] init];
+        [_offscreenWebViewController setDelegate:self];
+    }
     
     [_offscreenWebViewController loadHTMLFragment:htmlString];
     [htmlString release];
