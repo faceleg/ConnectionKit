@@ -98,8 +98,8 @@
     
     KTPage *page = [[self HTMLContext] page];
     [graphic willInsertIntoPage:page];
-    [graphic didAddToPage:page];
     [self addGraphic:graphic placeInline:NO];
+    [graphic didAddToPage:page];
 }
 
 #pragma mark Selection fallback
