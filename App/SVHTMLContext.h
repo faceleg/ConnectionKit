@@ -143,6 +143,8 @@ typedef enum {
 
 
 #pragma mark Metrics
+// These methods take care of generating width, height or style attributes matching the object's size (which depends on the element being written).
+// In addition, when editing, the context will keep the DOM matching the object's size, live
 - (void)startElement:(NSString *)elementName bindSizeToObject:(NSObject *)object;
 - (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object DOMControllerClass:(Class)controllerClass;  // support
 
