@@ -17,7 +17,14 @@
 
 - (DOMNode *)willWriteDOMElement:(DOMElement *)element
 {
-    return [[self delegate] HTMLWriter:self willWriteDOMElement:element];
+    if ([self delegate])
+    {
+        return [[self delegate] HTMLWriter:self willWriteDOMElement:element];
+    }
+    else
+    {
+        return element;
+    }
 }
 
 @end
