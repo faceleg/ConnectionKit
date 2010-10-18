@@ -108,10 +108,9 @@
     return (*height == nil || [super validateHeight:height error:error]);
 }
 
-- (CGSize)originalSize;
-{
-	return CGSizeMake(200.0f, 0.0f);
-}
+- (BOOL)isConstrainProportionsEditable; { return NO; }
+
+- (CGSize)originalSize; { return CGSizeMake(200.0f, 0.0f); }
 
 - (BOOL)canMakeOriginalSize;
 {

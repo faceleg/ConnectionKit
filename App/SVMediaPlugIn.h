@@ -33,6 +33,7 @@
 
 #pragma mark Metrics
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
+- (BOOL)isConstrainProportionsEditable;
 - (CGSize)originalSize;
 
 - (BOOL)shouldWriteHTMLInline;

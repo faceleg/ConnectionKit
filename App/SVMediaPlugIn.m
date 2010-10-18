@@ -58,6 +58,8 @@
     return result;
 }
 
+- (BOOL)isConstrainProportionsEditable; { return YES; }
+
 - (CGSize)originalSize;
 {
     CGSize result = CGSizeZero;

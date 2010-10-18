@@ -63,7 +63,7 @@
         [self setTypeToPublish:[media typeOfFile]];
         
         [self makeOriginalSize];    // calling super will scale back down if needed
-        [self setConstrainProportions:YES];
+        [self setConstrainProportions:[self isConstrainProportionsEditable]];
     }
     
     [super willInsertIntoPage:page];
@@ -331,7 +331,7 @@
 
 @dynamic constrainedAspectRatio;
 
-- (BOOL)isConstrainProportionsEditable; { return YES; }
+- (BOOL)isConstrainProportionsEditable; { return [[self plugIn] isConstrainProportionsEditable]; }
 
 @dynamic naturalWidth;
 @dynamic naturalHeight;
@@ -569,7 +569,7 @@
         
         NSNumber *oldWidth = [self width];
         [self makeOriginalSize];
-        [self setConstrainProportions:YES];
+        [self setConstrainProportions:[self isConstrainProportionsEditable]];
         [self setWidth:oldWidth];
     }
     
