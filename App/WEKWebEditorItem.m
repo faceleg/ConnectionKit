@@ -9,6 +9,7 @@
 #import "WEKWebEditorItem.h"
 #import "WEKWebEditorView.h"
 
+#import "NSColor+Karelia.h"
 #import "DOMNode+Karelia.h"
 
 
@@ -217,15 +218,6 @@
 
 - (void)updateToReflectSelection;
 {
-    if ([self isEditing])
-    {
-        [[[self selectableDOMElement] style] setOutline:@"3px rgb(0,127,255) solid"];
-        [[[self selectableDOMElement] style] setProperty:@"outline-offset" value:@"1px" priority:@""];
-    }
-    else
-    {
-        [[[self selectableDOMElement] style] removeProperty:@"outline"];
-    }
 }
 
 @synthesize selected = _selected;
@@ -257,7 +249,17 @@
 @synthesize editing = _editing;
 - (void)setEditing:(BOOL)isEditing;
 {
-    _editing = isEditing;
+    if (isEditing)
+    {
+        _editing = isEditing;
+        [self setNeedsDisplay];
+    }
+    else
+    {
+        [self setNeedsDisplay];
+        _editing = isEditing;
+    }
+    
     [self updateToReflectSelection];
 }
 
@@ -419,7 +421,11 @@
 {
     NSRect result = NSZeroRect; // by default, don't draw
     
-    if ([self isSelected] || [self isEditing])
+    if ([self isEditing])
+    {
+        result = NSInsetRect([[self selectableDOMElement] boundingBox], -4.0f, -4.0f);
+    }
+    else if ([self isSelected])
     {
         SVSelectionBorder *border = [self newSelectionBorder];
         result = [border drawingRectForGraphicBounds:[self rect]];
@@ -461,6 +467,11 @@
         }
         
         [border release];
+    }
+    else if ([self isEditing])
+    {
+        [[NSColor aquaColor] set];
+        NSFrameRectWithWidth([self drawingRect], 3.0f);
     }
 }
 
