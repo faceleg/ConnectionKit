@@ -71,16 +71,18 @@
             NSString *fileName = [[path lastPathComponent] stringByDeletingPathExtension];
             NSString *legalizedFileName = [fileName legalizedWebPublishingFileName];
             
+            NSString *extension = [path pathExtension];
+            NSString *legalizedExtension = [extension legalizedWebPublishingFileName];
+            
             NSString *legalizedPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:
-                                       [legalizedFileName stringByAppendingPathExtension:
-                                        [path pathExtension]]];
+                                       [legalizedFileName stringByAppendingPathExtension:legalizedExtension]];
             
             NSString *uniquePath = [[self valueForKey:@"file"] uniqueUploadPath:legalizedPath];
             *value = uniquePath;
         }
         else if ([path isEqualToString:[[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"]])
         {
-            // Case 40782. Poor bloke somehow has a file publishing directly as "_Media"
+            // #40782. Poor bloke somehow has a file publishing directly as "_Media"
             result = NO;
         }
     }
