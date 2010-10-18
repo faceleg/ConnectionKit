@@ -348,7 +348,18 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 #pragma mark Contents Cache
 
-- (NSData *)mediaData; { return [[self webResource] data]; }
+- (NSData *)mediaData;
+{
+    if ([NSThread isMainThread])
+    {
+        return [[self webResource] data];
+    }
+    else
+    {
+        // This is annoying. WebKit doesn't let you access a WebResource's data on non-main thread. Guess we'll have to move away from it eventually. #92087
+        return [[self ks_proxyOnThread:nil] mediaData];
+    }
+}
 
 - (WebResource *)webResource;
 {
