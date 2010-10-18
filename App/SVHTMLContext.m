@@ -28,6 +28,7 @@
 #import "NSIndexPath+Karelia.h"
 #import "NSString+Karelia.h"
 #import "KSURLUtilities.h"
+#import "NSObject+Karelia.h"
 
 #import "KSStringWriter.h"
 
@@ -661,17 +662,16 @@
 
 - (void)startElement:(NSString *)elementName bindSizeToObject:(NSObject *)object;
 {
-    [self buildAttributesForElement:elementName bindSizeToObject:object DOMControllerClass:nil];
+    [self buildAttributesForElement:elementName bindSizeToObject:object DOMControllerClass:nil  sizeDelta:NSZeroSize];
     [self startElement:elementName];
 }
 
-- (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object DOMControllerClass:(Class)controllerClass;
+- (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object DOMControllerClass:(Class)controllerClass  sizeDelta:(NSSize)sizeDelta;
 {
-    NSNumber *width = [object valueForKey:@"width"];
-    if ([width unsignedIntValue] <= 0) width = nil;
-    
-    NSNumber *height = [object valueForKey:@"height"];
-    if ([height unsignedIntValue] <= 0) height = nil;
+	int w = [object integerForKey:@"width"];
+	int h = [object integerForKey:@"height"];
+    NSNumber *width  = (w <= 0) ? nil : [NSNumber numberWithInt:w+sizeDelta.width];
+	NSNumber *height = (h <= 0) ? nil : [NSNumber numberWithInt:h+sizeDelta.height];
     
     // Only some elements support directly sizing. Others have to use CSS
     if ([elementName isEqualToString:@"img"] ||
@@ -685,7 +685,10 @@
     }
     else
     {
-        NSString *style = [NSString stringWithFormat:@"width:%@px; height:%@px;", width, height];
+		NSMutableString *style = [NSMutableString string];
+		if (width)  [style appendFormat:@"width:%@px;",  width];
+		if (width && height) [style appendString:@" "];	// space between if both set
+		if (height) [style appendFormat:@"height:%@px;", height];
         [self pushAttribute:@"style" value:style];
     }
 }

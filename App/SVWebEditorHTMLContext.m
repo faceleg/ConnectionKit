@@ -210,7 +210,7 @@
 
 #pragma mark Metrics
 
-- (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object DOMControllerClass:(Class)controllerClass;
+- (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object DOMControllerClass:(Class)controllerClass  sizeDelta:(NSSize)sizeDelta;
 {
     // Figure out a decent controller class
     if (!controllerClass) 
@@ -234,7 +234,7 @@
     _openSizeBindingController = YES;
     [controller release];
     
-    [super buildAttributesForElement:elementName bindSizeToObject:object DOMControllerClass:controllerClass];
+    [super buildAttributesForElement:elementName bindSizeToObject:object DOMControllerClass:controllerClass sizeDelta:sizeDelta];
 }
 
 - (void)endElement;

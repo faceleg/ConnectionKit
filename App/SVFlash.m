@@ -158,13 +158,11 @@
 {
 	NSString *flashSourcePath  = flashSourceURL ? [context relativeURLStringOfURL:flashSourceURL] : @"";
 	
-	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
-	[context pushAttribute:@"height" value:[NSNumber numberWithInt:self.height]];
 	[context pushAttribute:@"classid" value:@"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"];	// Proper value?
 	[context pushAttribute:@"codebase" value:@"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"];
 	// align?  It was in Sandvox 1.x.  Doesn't seem to be officially supported though.
 	
-	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil];
+	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
 
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context startElement:@"object" preferredIdName:@"flash" className:nil attributes:nil];	// class, attributes already pushed
@@ -184,8 +182,6 @@
 	// We may as well do nested <embed> tag though are there really any browsers that need it?
 	
 	[context pushAttribute:@"src" value:flashSourcePath];
-	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
-	[context pushAttribute:@"height" value:[NSNumber numberWithInt:self.height]];
 	// Align middle? In 1.x
 	[context pushAttribute:@"quality" value:@"high"];
 	[context pushAttribute:@"scale" value:@"tofit"];

@@ -384,15 +384,12 @@
 	NSString *movieSourcePath  = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
 	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
 
-	NSUInteger heightWithBar = self.height
-	+ (self.controller ? 16 : 0);
+	NSUInteger barHeight = self.controller ? 16 : 0;
 	
-	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
-	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	[context pushAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
 	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
 	
-	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil];
+	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight)];
 
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context pushPreferredIdName:@"quicktime"];
@@ -426,14 +423,10 @@
 	// I don't think there is any way to use the poster frame for a click to play
 	NSString *movieSourcePath = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
 	
-	NSUInteger heightWithBar = self.height
-	+ (self.controller ? 46 : 0);		// Windows media controller is 46 pixels (on windows; adjusted on macs)
+	NSUInteger barHeight = self.controller ? 46 : 0;		// Windows media controller is 46 pixels (on windows; adjusted on macs)
 
-	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
-	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	[context pushAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
-	
-	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil];
+	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSMakeSize(0,barHeight)];
 
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context pushPreferredIdName:@"wmplayer"];
@@ -459,8 +452,6 @@
 
 	// Actually write the video
 	if ([self shouldWriteHTMLInline]) [self.container buildClassName:context];
-	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
-	[context pushAttribute:@"height" value:[NSNumber numberWithInt:self.height]];
 	
 	if (self.controller)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
 	if (self.autoplay)	[context pushAttribute:@"autoplay" value:@"autoplay"];
@@ -469,7 +460,7 @@
 	
 	if (self.posterFrame)	[context pushAttribute:@"poster" value:posterSourcePath];
 
-	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil];
+	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
 
 	NSString *elementID = [context pushPreferredIdName:@"video"];
     [context startElement:@"video"];
@@ -632,13 +623,9 @@
 	
 	if ([self shouldWriteHTMLInline]) [self.container buildClassName:context];
 	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
-	[context pushAttribute:@"data" value:playerPath];
-	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
+	[context pushAttribute:@"data" value:playerPath];	
 	
-	NSUInteger heightWithBar = barHeight + self.height;
-	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
-	
-	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil];
+	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSMakeSize(0,barHeight)];
 
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context pushPreferredIdName:videoFlashPath];

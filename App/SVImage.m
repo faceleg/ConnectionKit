@@ -209,7 +209,7 @@
     
     if ([self shouldWriteHTMLInline]) [[self container] buildClassName:context];
     
-    [context buildAttributesForElement:@"img" bindSizeToObject:self DOMControllerClass:[SVImageDOMController class]];
+    [context buildAttributesForElement:@"img" bindSizeToObject:self DOMControllerClass:[SVImageDOMController class]  sizeDelta:NSZeroSize];
     
     SVMediaRecord *media = [self media];
     if (media)
