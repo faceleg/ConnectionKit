@@ -148,9 +148,8 @@
 - (void)webEditorTextDidChange;
 {
     // Validate the HTML
-    NSMutableString *html = [[NSMutableString alloc] init];
-    SVFieldEditorHTMLWriter *context = [[SVFieldEditorHTMLWriter alloc] initWithOutputWriter:html];
-    [html release];
+    KSStringWriter *writer = [[KSStringWriter alloc] init];
+    SVFieldEditorHTMLWriter *context = [[SVFieldEditorHTMLWriter alloc] initWithOutputStringWriter:writer];
     
     
     DOMHTMLElement *textElement = [self innerTextHTMLElement];
@@ -167,6 +166,7 @@
     
     
     // Copy HTML across to ourself
+    NSString *html = [writer string];
     if (![html isEqualToString:_uneditedValue])
     {
         [self setHTMLString:html needsUpdate:NO];
@@ -185,6 +185,7 @@
     
     // Finish up
     [context release];
+    [writer release];
     [super webEditorTextDidChange];
 }
 
