@@ -61,6 +61,14 @@
     {
         [[self container] setTypeToPublish:(NSString *)kUTTypeJPEG];
     }
+    
+    // External images become auto sized
+    if (![self media] && [self externalSourceURL])
+    {
+        [[self container] setConstrainProportions:NO];
+        [self setWidth:0];
+        [self setHeight:0];
+    }
 }
 
 + (NSArray *)allowedFileTypes
