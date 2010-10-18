@@ -16,6 +16,7 @@
 #import "NSString+Karelia.h"
 #import "KSURLUtilities.h"
 #import "QTMovie+Karelia.h"
+#import "KSThreadProxy.h"
 
 #import "BDAlias.h"
 
