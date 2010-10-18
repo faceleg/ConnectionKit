@@ -178,18 +178,20 @@
     
     
     // Collections
-    NSMenuItem *item = [menu addItemWithTitle:NSLocalizedString(@"Collections", "toolbar menu")
-                                       action:nil
-                                keyEquivalent:@""];
+    //NSMenuItem *item = [menu addItemWithTitle:NSLocalizedString(@"Collections", "toolbar menu")
+    //                                   action:nil
+    //                            keyEquivalent:@""];
 	
-	[[pulldownButton lastItem] setIconImage:[NSImage imageNamed:@"toolbar_collection"]];
+	//[[pulldownButton lastItem] setIconImage:[NSImage imageNamed:@"toolbar_collection"]];
 
-    NSMenu *collectionsMenu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"Collections", "toolbar menu")];
-    [item setSubmenu:collectionsMenu];
-    [KTElementPlugInWrapper populateMenuWithCollectionPresets:collectionsMenu atIndex:0];
-    [collectionsMenu release];
+    //NSMenu *collectionsMenu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"Collections", "toolbar menu")];
+    //[item setSubmenu:collectionsMenu];
+    [KTElementPlugInWrapper populateMenuWithCollectionPresets:menu atIndex:2];
+    //[collectionsMenu release];
     
 
+    [menu addItem:[NSMenuItem separatorItem]];
+    
 
     [menu addItemWithTitle:NSLocalizedString(@"External Link", "New page pulldown button menu item title")
                     action:@selector(addExternalLinkPage:)
