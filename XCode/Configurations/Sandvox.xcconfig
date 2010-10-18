@@ -10,7 +10,7 @@ SANDVOX_VERSION = 2.0a18
 // For checking alpha/beta behaviors, better to test for being *not* VARIANT_RELEASE
 // We use the macro with the secret key so that sparkle can match with key on the server end.
 PRODUCT_VARIANT = ALPHA
-PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE = 'ALPHA_19R'
+PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE = ALPHA_19R
 
 
 // expiry for beta
