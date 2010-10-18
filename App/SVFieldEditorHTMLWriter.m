@@ -423,12 +423,12 @@
 
 #pragma mark Attribute Whitelist
 
-- (BOOL)validateAttribute:(NSString *)attributeName ofElement:(NSString *)tagName;
+- (BOOL)validateAttribute:(NSString *)attributeName ofElement:(NSString *)elementName;
 {
     BOOL result = NO;
     
     // Allow class and style on any element except <BR>
-    if (tagName && ![tagName isEqualToString:@"br"])
+    if (elementName && ![elementName isEqualToString:@"br"])
     {
         result = ([attributeName isEqualToString:@"class"] ||
                   [attributeName isEqualToString:@"style"]);
