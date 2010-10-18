@@ -408,7 +408,8 @@
                    [tagName isEqualToString:@"EM"] ||
                    [tagName isEqualToString:@"BR"] ||
                    [tagName isEqualToString:@"SUP"] ||
-                   [tagName isEqualToString:@"SUB"]);
+                   [tagName isEqualToString:@"SUB"] ||
+                   [tagName isEqualToString:@"FONT"]);
     
     return result;
 }
@@ -426,6 +427,11 @@
 - (BOOL)validateAttribute:(NSString *)attributeName ofElement:(NSString *)elementName;
 {
     BOOL result = NO;
+    
+    if ([elementName isEqualToString:@"font"])
+    {
+        if ([attributeName isEqualToString:@"face"] || [attributeName isEqualToString:@"size"] || [attributeName isEqualToString:@"color"]) return YES;
+    }
     
     // Allow class and style on any element except <BR>
     if (elementName && ![elementName isEqualToString:@"br"])
