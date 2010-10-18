@@ -219,9 +219,8 @@
 {
     if ([self isEditing])
     {
-        [[[self selectableDOMElement] style] setProperty:@"outline"
-                                                   value:@"1px gray solid"
-                                                priority:@""];
+        [[[self selectableDOMElement] style] setOutline:@"3px rgb(0,127,255) solid"];
+        [[[self selectableDOMElement] style] setProperty:@"outline-offset" value:@"1px" priority:@""];
     }
     else
     {
