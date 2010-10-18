@@ -45,8 +45,9 @@
 
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 {
-    // SVGraphic.width is optional. For media graphics it becomes compulsary
-    BOOL result = (*height != nil);
+    // SVGraphic.width is optional. For media graphics it becomes compulsary unless using external URL
+    BOOL result = (*height != nil || (![self media] && [self externalSourceURL]));
+    
     if (!result && error)
     {
         *error = [NSError errorWithDomain:NSCocoaErrorDomain

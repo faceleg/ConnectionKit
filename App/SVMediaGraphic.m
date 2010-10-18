@@ -333,8 +333,8 @@
 }
 - (BOOL)validateWidth:(NSNumber **)width error:(NSError **)error;
 {
-    // SVGraphic.width is optional. For media graphics it becomes compulsary
-    BOOL result = (*width != nil);
+    // SVGraphic.width is optional. For media graphics it becomes compulsory unless using external URL
+    BOOL result = (*width != nil || (![self media] && [self externalSourceURL]));
     if (!result && error)
     {
         *error = [NSError errorWithDomain:NSCocoaErrorDomain
@@ -363,7 +363,7 @@
 }
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 {
-    // SVGraphic.width is optional. For media graphics it becomes compulsary
+    // Push off validation to plug-in
     return [[self plugIn] validateHeight:height error:error];
 }
 
