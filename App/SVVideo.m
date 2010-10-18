@@ -395,7 +395,8 @@
 	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil];
 
 	// ID on <object> apparently required for IE8
-	NSString *elementID = [context startElement:@"object" preferredIdName:@"quicktime" className:nil attributes:nil];	// class, attributes already pushed
+	NSString *elementID = [context pushPreferredIdName:@"quicktime"];
+    [context startElement:@"object"];
 	
 	if (posterSourceURL
 		&& !self.autoplay)	// poster and not auto-starting? make it an href
@@ -435,7 +436,8 @@
 	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil];
 
 	// ID on <object> apparently required for IE8
-	NSString *elementID = [context startElement:@"object" preferredIdName:@"wmplayer" className:nil attributes:nil];	// class, attributes already pushed
+	NSString *elementID = [context pushPreferredIdName:@"wmplayer"];
+    [context startElement:@"object"];
 	
 	[context writeParamElementWithName:@"url" value:movieSourcePath];
 	[context writeParamElementWithName:@"autostart" value:self.autoplay ? @"true" : @"false"];
@@ -469,7 +471,8 @@
 
 	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil];
 
-	NSString *elementID = [context startElement:@"video" preferredIdName:@"video" className:nil attributes:nil];	// class, attributes already pushed
+	NSString *elementID = [context pushPreferredIdName:@"video"];
+    [context startElement:@"video"];
 	
 	// Remove poster on iOS < 4; prevents video from working
 	[context startJavascriptElementWithSrc:nil];
@@ -638,7 +641,8 @@
 	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil];
 
 	// ID on <object> apparently required for IE8
-	NSString *elementID = [context startElement:@"object" preferredIdName:videoFlashPlayer className:nil attributes:nil];	// class, attributes already pushed
+	NSString *elementID = [context pushPreferredIdName:videoFlashPath];
+    [context startElement:@"object"];
 	
 	[context writeParamElementWithName:@"movie" value:playerPath];
 	[context writeParamElementWithName:@"flashvars" value:flashVars];
