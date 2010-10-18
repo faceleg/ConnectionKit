@@ -667,7 +667,10 @@
 - (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object DOMControllerClass:(Class)controllerClass;
 {
     NSNumber *width = [object valueForKey:@"width"];
+    if ([width unsignedIntValue] <= 0) width = nil;
+    
     NSNumber *height = [object valueForKey:@"height"];
+    if ([height unsignedIntValue] <= 0) height = nil;
     
     // Only some elements support directly sizing. Others have to use CSS
     if ([elementName isEqualToString:@"img"] ||
@@ -676,7 +679,7 @@
         [elementName isEqualToString:@"embed"] ||
         [elementName isEqualToString:@"iframe"])
     {
-        [self pushAttribute:@"width" value:[width description]];
+        if (width) [self pushAttribute:@"width" value:[width description]];
         if (height) [self pushAttribute:@"height" value:[height description]];
     }
     else

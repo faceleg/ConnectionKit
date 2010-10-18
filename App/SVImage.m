@@ -216,8 +216,8 @@
     {
         [context writeImageWithSourceMedia:media
                                        alt:alt
-                                     width:[NSNumber numberWithUnsignedInt:self.width]
-                                    height:[NSNumber numberWithUnsignedInt:self.height]
+                                     width:self.container.width
+                                    height:self.container.height
                                       type:[[self container] typeToPublish]];
     }
     else
@@ -226,8 +226,8 @@
         
         [context writeImageWithSrc:(URL ? [context relativeURLStringOfURL:URL] : @"")
                                alt:alt
-                             width:[NSNumber numberWithInt:self.width]
-                            height:[NSNumber numberWithInt:self.height]];
+                             width:self.container.width
+                            height:self.container.height];
     }
     
     [context addDependencyOnObject:self keyPath:@"media"];
