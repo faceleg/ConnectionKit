@@ -523,14 +523,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             
             if (css)
 			{
-#ifdef VARIANT_BETA
+#ifndef VARIANT_RELEASE
 				[cssWriter writeCSSString:
 				 [NSString stringWithFormat:@"/* ----------- Source: %@ ----------- */",
 				  [[someCSS path] lastPathComponent]]];
 #endif
 				[cssWriter writeCSSString:css];
 
-#ifdef VARIANT_BETA
+#ifndef VARIANT_RELEASE
 				[cssWriter writeCSSString:
 				 [NSString stringWithFormat:@"/* ----------- End:    %@ ----------- */",
 				  [[someCSS path] lastPathComponent]]];
