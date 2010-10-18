@@ -31,6 +31,8 @@
 
 @property(nonatomic, copy) NSString *externalSourceURLString;
 
+- (void)didSetSource;
+
 @property(nonatomic, copy, readwrite) NSNumber *constrainedAspectRatio;
 
 @end
@@ -119,27 +121,6 @@
 
 #pragma mark Media
 
-- (void)didSetSource;
-{
-    // Reset poster frame
-    [[[self posterFrame] managedObjectContext] deleteObject:[self posterFrame]];
-    [self replaceMedia:nil forKeyPath:@"posterFrame"];
-    
-    
-    // Does this change the type?
-    NSString *identifier = [self plugInIdentifier];
-    SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
-    
-    if (![[self plugIn] isKindOfClass:[factory plugInClass]])
-    {
-        [self loadPlugInAsNew:NO];
-        [[self plugIn] awakeFromNew];
-    }
-    
-    
-    [[self plugIn] didSetSource];
-}
-
 @dynamic media;
 - (void)setMedia:(SVMediaRecord *)media;
 {
@@ -194,6 +175,32 @@
 }
 
 #pragma mark Source
+
+- (void)didSetSource;
+{
+    // Reset poster frame
+    [[[self posterFrame] managedObjectContext] deleteObject:[self posterFrame]];
+    [self replaceMedia:nil forKeyPath:@"posterFrame"];
+    
+    
+    // Does this change the type?
+    NSString *identifier = [self plugInIdentifier];
+    SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
+    
+    if (![[self plugIn] isKindOfClass:[factory plugInClass]])
+    {
+        NSNumber *width = [self width];
+        
+        [self loadPlugInAsNew:NO];
+        [[self plugIn] awakeFromNew];   // which will probably set size…
+        
+        // …so bring the width back to desired value
+        [self setWidth:width];
+    }
+    
+    
+    [[self plugIn] didSetSource];
+}
 
 - (NSURL *)sourceURL;
 {
