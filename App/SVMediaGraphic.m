@@ -230,6 +230,21 @@
     return result;
 }
 
+- (BOOL)validateSource:(NSError **)error;
+{
+    // Must have media OR external URL as soure. #92086
+    if (![self media] && ![self externalSourceURL])
+    {
+        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                               code:NSValidationMissingMandatoryPropertyError
+                               localizedDescription:@"Must have either media or external URL as source"];
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
 #pragma mark Poster Frame
 
 @dynamic posterFrame;
@@ -371,6 +386,28 @@
 {
     // Push off validation to plug-in
     return [[self plugIn] validateHeight:height error:error];
+}
+
+#pragma mark Validation
+
+- (BOOL)validateForInsert:(NSError **)error;
+{
+    if ([super validateForInsert:error])
+    {
+        return [self validateSource:error];
+    }
+    
+    return NO;
+}
+
+- (BOOL)validateForUpdate:(NSError **)error;
+{
+    if ([super validateForUpdate:error])
+    {
+        return [self validateSource:error];
+    }
+    
+    return NO;
 }
 
 #pragma mark HTML
