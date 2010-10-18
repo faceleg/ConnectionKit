@@ -244,7 +244,10 @@
 	
 	// Actually write the audio
 	if ([self shouldWriteHTMLInline]) [self.container buildClassName:context];
-	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
+	if (self.width)
+	{
+		[context pushAttribute:@"style" value:[NSString stringWithFormat:@"width:%dpx;", self.width]];
+	}
 	[context pushAttribute:@"height" value:[NSNumber numberWithInt:self.height]];
 	
 	if (self.controller)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
