@@ -331,7 +331,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     // Hide border on <OBJECT> tags etc.
     DOMElement *selectionElement = [self selectableDOMElement];
     NSString *tagName = [selectionElement tagName];
-    if ([tagName isEqualToString:@"AUDIO"] || [tagName isEqualToString:@"VIDEO"])
+    
+    if ([tagName isEqualToString:@"AUDIO"] ||
+        [tagName isEqualToString:@"VIDEO"] ||
+        [tagName isEqualToString:@"OBJECT"])
     {
         [result setBorderColor:nil];
     }
