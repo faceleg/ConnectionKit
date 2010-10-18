@@ -52,6 +52,8 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Updating
 
+@synthesize sizeDelta = _delta;
+
 - (void)update;
 {
     // mark the current area for drawing
@@ -66,7 +68,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     [context buildAttributesForElement:[[element tagName] lowercaseString]
                       bindSizeToObject:object
                     DOMControllerClass:[self class]
-							 sizeDelta:NSZeroSize];			// Need something dynamic here?
+							 sizeDelta:[self sizeDelta]];			// Need something dynamic here?
     
     NSDictionary *attributes = [context elementAttributes];
     [element setAttribute:@"width" value:[attributes objectForKey:@"width"]];

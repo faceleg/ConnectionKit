@@ -11,7 +11,10 @@
 
 @interface SVSizeBindingDOMController : SVDOMController
 {
-
+  @private
+    NSSize  _delta;
 }
+
+@property(nonatomic) NSSize sizeDelta;
 
 @end

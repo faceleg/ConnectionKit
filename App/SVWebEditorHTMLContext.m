@@ -227,8 +227,9 @@
     
     
     // 
-    SVDOMController *controller = [[controllerClass alloc] initWithRepresentedObject:
-                                   [[self currentDOMController] representedObject]];
+    SVSizeBindingDOMController *controller = [[controllerClass alloc] initWithRepresentedObject:
+                                              [[self currentDOMController] representedObject]];
+    [controller setSizeDelta:sizeDelta];
     
     [self startDOMController:controller];
     _openSizeBindingController = YES;
