@@ -1856,7 +1856,6 @@
 		272C18940D0C131B00734495 /* KTMediaFileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileUpload.m; sourceTree = "<group>"; };
 		272DA588108E6F42007A99D5 /* SVPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugIn.h; sourceTree = "<group>"; };
 		272DA589108E6F42007A99D5 /* SVPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugIn.m; sourceTree = "<group>"; };
-		272EEBB70DDA65190012005E /* KTMediaManager+MediaContainers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMediaManager+MediaContainers.m"; sourceTree = "<group>"; };
 		272F1F4F10C2CBE600BBB836 /* SVContentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVContentObject.h; sourceTree = "<group>"; };
 		272F1F5010C2CBE600BBB836 /* SVContentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVContentObject.m; sourceTree = "<group>"; };
 		272FBCC90D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVSiteOutlineViewController+Icons.m"; sourceTree = "<group>"; };
@@ -1917,8 +1916,6 @@
 		274FA0F011297AFD000E0FDA /* WEKWebEditorView+EditingSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WEKWebEditorView+EditingSupport.m"; sourceTree = "<group>"; };
 		27503418126C6BCF006F87ED /* SVMediaDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaDOMController.h; sourceTree = "<group>"; };
 		27503419126C6BCF006F87ED /* SVMediaDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaDOMController.m; sourceTree = "<group>"; };
-		275167870CBCE40000C91DFA /* KTMediaContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaContainer.h; sourceTree = "<group>"; };
-		275167880CBCE40000C91DFA /* KTMediaContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaContainer.m; sourceTree = "<group>"; };
 		2752005B10B5DF4400F96309 /* SVParagraphDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVParagraphDOMController.h; sourceTree = "<group>"; };
 		2752005C10B5DF4400F96309 /* SVParagraphDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVParagraphDOMController.m; sourceTree = "<group>"; };
 		2752330910A8938400120CE8 /* KSInspectorTabCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInspectorTabCell.h; sourceTree = "<group>"; };
@@ -2013,8 +2010,6 @@
 		278ACCC7116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVQuickLookPreviewHTMLContext.m; sourceTree = "<group>"; };
 		278EC6F10C97136500A212EC /* KTHTMLParserCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLParserCache.h; sourceTree = "<group>"; };
 		278EC6F20C97136500A212EC /* KTHTMLParserCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLParserCache.m; sourceTree = "<group>"; };
-		278ECF1D0D25DAF80012BA6B /* KTMediaContainer+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMediaContainer+Pasteboard.m"; sourceTree = "<group>"; };
-		278ED0DC0D2865260012BA6B /* KTMediaContainer+Pasteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaContainer+Pasteboard.h"; sourceTree = "<group>"; };
 		278F799810B44A1B00BDBAF7 /* SVRichText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRichText.h; sourceTree = "<group>"; };
 		278F799910B44A1B00BDBAF7 /* SVRichText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRichText.m; sourceTree = "<group>"; };
 		278FCE911079F2AD0091A239 /* NSEvent+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEvent+Karelia.h"; sourceTree = "<group>"; };
@@ -3137,13 +3132,10 @@
 		272EEA6B0DDA560C0012005E /* 1.5 */ = {
 			isa = PBXGroup;
 			children = (
-				275167870CBCE40000C91DFA /* KTMediaContainer.h */,
-				275167880CBCE40000C91DFA /* KTMediaContainer.m */,
 				27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */,
 				27DECBA90DE03F0800D795F3 /* KTMediaFileEqualityTester.m */,
 				272C18930D0C131B00734495 /* KTMediaFileUpload.h */,
 				272C18940D0C131B00734495 /* KTMediaFileUpload.m */,
-				272EEBB70DDA65190012005E /* KTMediaManager+MediaContainers.m */,
 				27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */,
 				2786BEE40CAD24980086F9E0 /* KTMediaManager.h */,
 				2786BEE50CAD24980086F9E0 /* KTMediaManager.m */,
@@ -3489,8 +3481,6 @@
 		278ECE560D259F400012BA6B /* Pasteboard */ = {
 			isa = PBXGroup;
 			children = (
-				278ECF1D0D25DAF80012BA6B /* KTMediaContainer+Pasteboard.m */,
-				278ED0DC0D2865260012BA6B /* KTMediaContainer+Pasteboard.h */,
 			);
 			name = Pasteboard;
 			sourceTree = "<group>";
