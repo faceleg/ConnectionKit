@@ -117,7 +117,7 @@
     }
 }
 
-#pragma mark Source
+#pragma mark Media
 
 - (void)didSetSource;
 {
@@ -164,6 +164,8 @@
 
 + (NSString *)meditEntityName; { return @"GraphicMedia"; }
 
+#pragma mark External URL
+
 @dynamic externalSourceURLString;
 - (void) setExternalSourceURLString:(NSString *)source;
 {
@@ -185,6 +187,8 @@
     
     [self setExternalSourceURLString:[URL absoluteString]];
 }
+
+#pragma mark Source
 
 - (NSURL *)sourceURL;
 {
@@ -225,6 +229,8 @@
     result = [result arrayByAddingObjectsFromArray:[KSWebLocation webLocationPasteboardTypes]];
     return result;
 }
+
+#pragma mark Poster Frame
 
 @dynamic posterFrame;
 - (BOOL)validatePosterFrame:(SVMediaRecord **)media error:(NSError **)error;
