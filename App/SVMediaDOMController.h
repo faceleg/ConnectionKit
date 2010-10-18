@@ -8,10 +8,15 @@
 
 #import "SVSizeBindingDOMController.h"
 
+#import "SVMediaGraphic.h"
+
 
 @interface SVMediaDOMController : SVSizeBindingDOMController
 {
-    
+@private
+    BOOL    _drawAsDropTarget;
 }
+
+- (BOOL)isMediaPlaceholder;
 
 @end

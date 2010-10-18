@@ -10,16 +10,10 @@
 #import "SVMediaDOMController.h"
 #import "SVGraphicDOMController.h"
 #import "SVImage.h"
-#import "SVMediaGraphic.h"
 
 
-@interface SVImageDOMController : SVSizeBindingDOMController    // should descend from SVMediaDOMController when I get time
-{
-  @private
-    BOOL    _drawAsDropTarget;
-}
+@interface SVImageDOMController : SVMediaDOMController
 
-- (BOOL)isMediaPlaceholder;
 
 @end
 
