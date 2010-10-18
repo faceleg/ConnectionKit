@@ -122,7 +122,7 @@
 - (void)didSetSource;
 {
     // Reset poster frame
-    [[self managedObjectContext] deleteObject:[self posterFrame]];
+    [[[self posterFrame] managedObjectContext] deleteObject:[self posterFrame]];
     [self replaceMedia:nil forKeyPath:@"posterFrame"];
     
     
