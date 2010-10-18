@@ -8,7 +8,10 @@ SANDVOX_VERSION = 2.0a18
 // the SLA variant to wrap around the .dmg [ALPHA,BETA,RELEASE]
 // Also determines if VARIANT_ALPHA or VARIANT_BETA or VARIANT_RELEASE is defined.
 // For checking alpha/beta behaviors, better to test for being *not* VARIANT_RELEASE
+// We use the macro with the secret key so that sparkle can match with key on the server end.
 PRODUCT_VARIANT = ALPHA
+PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE = 'ALPHA_19R'
+
 
 // expiry for beta
 EXPIRY_TIMESTAMP = '@\"2010-11-15 11:59:59 -0800\"'
@@ -41,4 +44,8 @@ GCC_C_LANGUAGE_STANDARD = c99
 
 // note:  RIGHT NOW WE HAVE BAD PROBLEMS RUNNING A RELEASE BUILD IF IT IS != OMNI_FORCE_ASSERTIONS
 OMNI_DEBUG_CURRENT_SETTING = OMNI_FORCE_ASSERTIONS
+
+// For betas that are to be localized, be sure to set IBC_FLATTEN_NIBS to NO (which, apparently, gets echoed to IBC_STRIP_NIBS)
+IBC_FLATTEN_NIBS = YES
+// NOTE: WE NEED TO MANUALLY SET 'NO' IN CONNECTION AND IMEDIA PROJECTS for localizers
 

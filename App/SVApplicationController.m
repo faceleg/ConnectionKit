@@ -552,7 +552,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	// made a release and somebody was originally getting betas.
 	
 	NSString *feedType = [[defaults objectForKey:@"KSFeedType"] lowercaseString];
-	if (nil == feedType || [feedType isEqualToString:@""])		// 'beta' or 'release' or '' (empty string) for none
+	if (nil == feedType || [feedType isEqualToString:@""])		// 'beta' or 'release' or 'alpha...' or '' (empty string) for none
 	{
 		NSString *feedType = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"KSFeedType"] lowercaseString];	// default feed type
 		[defaults setObject:feedType forKey:@"KSFeedType"];
@@ -1338,7 +1338,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	// set menu to opposite of flag
 	if ( newValue )
 	{
-		// [panelController setIdentifier:@"Sandvox"];
+		[panelController.window setTitle:NSLocalizedString(@"Media Browser", @"title for window")];
 		[panelController showWindow:sender];
 	}
 	else
