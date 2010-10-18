@@ -1338,59 +1338,64 @@ typedef enum {  // this copied from WebPreferences+Private.h
         NSEvent *mouseDownEvent = [_mouseDownEvent retain];
         [_mouseDownEvent release],  _mouseDownEvent = nil;
         
-        
-        // Should this go through to the WebView?
-        NSPoint location = [[self webView] convertPoint:[mouseUpEvent locationInWindow] fromView:nil];
-        
-        WEKWebEditorItem *item = [self selectableItemAtPoint:location];
-        if ([item allowsDirectAccessToWebViewWhenSelected])
+        @try
         {
-            [self forwardMouseEvent:mouseUpEvent selector:_cmd];
-        }
-        
-                                  
-        // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
-        if (_mouseUpMayBeginEditing && [mouseUpEvent timestamp] - [mouseDownEvent timestamp] < 0.5)
-        {
-            // Is the item at that location supposed to be for editing?
-            // This is true if the clicked child item is either:
-            //  A)  selectable
-            //  B)  editable text
-            //
-            // Actually, trying out ignoring that! Mike. #84932
+            // Should this go through to the WebView?
+            NSPoint location = [[self webView] convertPoint:[mouseUpEvent locationInWindow] fromView:nil];
             
-            
-            NSDictionary *elementInfo = [[self webView] elementAtPoint:location];
-            
-            /*DOMNode *node = [elementInfo objectForKey:WebElementDOMNodeKey];
-            WEKWebEditorItem *item = [[self selectedItem] hitTestDOMNode:node];
-            
-            if (([item isSelectable] && item != [self selectedItem]) ||
-                ([item conformsToProtocol:@protocol(SVWebEditorText)] && [(id)item isEditable]) ||
-                [node isKindOfClass:[DOMHTMLObjectElement class]])*/
-            
-            
-            // It doesn't ever make sense to start editing "inside" an element which has no content
-            if ([[[self selectedItem] HTMLElement] hasChildNodes])
+            WEKWebEditorItem *item = [self selectableItemAtPoint:location];
+            if ([item allowsDirectAccessToWebViewWhenSelected])
             {
-                NSArray *items = [[self selectedItems] copy];
-                [self selectItems:nil byExtendingSelection:NO];
-                [self setEditingItems:items];    // should only be 1
-                [items release];
+                [self forwardMouseEvent:mouseUpEvent selector:_cmd];
+            }
+            
+                                      
+            // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
+            if (_mouseUpMayBeginEditing && [mouseUpEvent timestamp] - [mouseDownEvent timestamp] < 0.5)
+            {
+                // Is the item at that location supposed to be for editing?
+                // This is true if the clicked child item is either:
+                //  A)  selectable
+                //  B)  editable text
+                //
+                // Actually, trying out ignoring that! Mike. #84932
                 
-                // Repost equivalent events (unless a link) so they go to their correct target. Can't call -sendEvent: as that doesn't update -currentEvent. Post in reverse order since I'm placing onto the front of the queue
-                if (![elementInfo objectForKey:WebElementLinkURLKey])
+                
+                NSDictionary *elementInfo = [[self webView] elementAtPoint:location];
+                DOMElement *element = [elementInfo objectForKey:WebElementDOMNodeKey];
+                /*WEKWebEditorItem *item = [[self selectedItem] hitTestDOMNode:node];
+                
+                if (([item isSelectable] && item != [self selectedItem]) ||
+                    ([item conformsToProtocol:@protocol(SVWebEditorText)] && [(id)item isEditable]) ||
+                    [node isKindOfClass:[DOMHTMLObjectElement class]])*/
+                
+                
+                // It doesn't ever make sense to start editing "inside" an element which has no content
+                if ([[[self selectedItem] HTMLElement] hasChildNodes])
                 {
+                    NSArray *items = [[self selectedItems] copy];
+                    [self selectItems:nil byExtendingSelection:NO];
+                    [self setEditingItems:items];    // should only be 1
+                    [items release];
+                    
+                    // Repost equivalent events (unless a link or object) so they go to their correct target. Can't call -sendEvent: as that doesn't update -currentEvent. Calling return is fine because of the @finally block
+                    if ([elementInfo objectForKey:WebElementLinkURLKey]) return;
+                    
+                    NSString *tagName = [element tagName];
+                    if ([tagName isEqualToString:@"OBJECT"] || [tagName isEqualToString:@"VIDEO"] || [tagName isEqualToString:@"AUDIO"]) return;
+                    
+                    // Post in reverse order since I'm placing onto the front of the queue
                     [NSApp postEvent:[mouseUpEvent eventWithClickCount:1] atStart:YES];
                     [NSApp postEvent:[mouseDownEvent eventWithClickCount:1] atStart:YES];
                 }
             }
         }
-        
-        
-        // Tidy up
-        [mouseDownEvent release];
-        _mouseUpMayBeginEditing = NO;
+        @finally
+        {
+            // Tidy up
+            [mouseDownEvent release];
+            _mouseUpMayBeginEditing = NO;
+        }
     }
 }
 
