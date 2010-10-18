@@ -191,6 +191,11 @@
 	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
 	[context pushAttribute:@"pluginspage" value:@"http://www.macromedia.com/go/getflashplayer"];
 	
+	if (self.flashvars && ![self.flashvars isEqualToString:@""])
+	{
+		[context pushAttribute:@"flashvars" value:self.flashvars];
+	}
+
 	// Not going to use buildAttributesForElement:bindSizeToObject: for this element since it's hidden from Sandvox anyhow, just a fallback.
 	[context startElement:@"embed"];
 	

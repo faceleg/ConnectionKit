@@ -122,6 +122,7 @@
 	// NOOP
 }
 
++ (BOOL)isExplicitlySized; { return NO; }
 
 #pragma mark General
 + (NSArray *)allowedFileTypes;
