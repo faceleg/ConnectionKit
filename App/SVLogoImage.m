@@ -33,6 +33,9 @@
     [self setTypeToPublish:[[self media] typeOfFile]];
 }
 
+- (SVMediaRecord *)posterFrame; { return nil; }
+- (void)setPosterFrame:(SVMediaRecord *)media; { }
+
 - (void)createDefaultIntroAndCaption; { }
 
 + (NSString *)meditEntityName; { return @"LogoMedia"; }
