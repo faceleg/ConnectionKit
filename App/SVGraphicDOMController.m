@@ -329,7 +329,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     SVSelectionBorder *result = [super newSelectionBorder];
     
     // Hide border on <OBJECT> tags etc.
-    DOMHTMLElement *selectionElement = [self selectableDOMElement];
+    DOMElement *selectionElement = [self selectableDOMElement];
     NSString *tagName = [selectionElement tagName];
     if ([tagName isEqualToString:@"AUDIO"] || [tagName isEqualToString:@"VIDEO"])
     {
