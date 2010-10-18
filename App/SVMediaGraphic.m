@@ -121,6 +121,11 @@
 
 - (void)didSetSource;
 {
+    // Reset poster frame
+    [[self managedObjectContext] deleteObject:[self posterFrame]];
+    [self replaceMedia:nil forKeyPath:@"posterFrame"];
+    
+    
     // Does this change the type?
     NSString *identifier = [self plugInIdentifier];
     SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
