@@ -65,19 +65,33 @@
     return [SVMediaGraphic readableTypesForPasteboard:nil];
 }
 
+#pragma mark Drawing
+
+- (NSRect)dropTargetRect;
+{
+    NSRect result = [[self HTMLElement] boundingBox];
+    
+    // Movies draw using Core Animation so sit above any custom drawing of our own. Workaround by outsetting the rect
+    NSString *tagName = [[self HTMLElement] tagName];
+    if ([tagName isEqualToString:@"VIDEO"] || [tagName isEqualToString:@"OBJECT"])
+    {
+        result = NSInsetRect(result, -2.0f, -2.0f);
+    }
+    
+    return result;
+}
+
 - (NSRect)drawingRect;
 {
     NSRect result = [super drawingRect];
     
     if (_drawAsDropTarget)
     {
-        result = NSUnionRect(result, [[self HTMLElement] boundingBox]);
+        result = NSUnionRect(result, [self dropTargetRect]);
     }
     
     return result;
 }
-
-#pragma mark Drawing
 
 - (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;
 {
@@ -87,7 +101,7 @@
     if (_drawAsDropTarget)
     {
         [[NSColor aquaColor] set];
-        NSFrameRectWithWidth([[self HTMLElement] boundingBox], 2.0f);
+        NSFrameRectWithWidth([self dropTargetRect], 2.0f);
     }
 }
 
