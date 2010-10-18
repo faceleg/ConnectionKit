@@ -13,9 +13,10 @@
 #import "SVContentDOMController.h"
 #import "SVGraphicDOMController.h"
 #import "SVHTMLTextBlock.h"
+#import "SVImageDOMController.h"
+#import "SVMediaPlugIn.h"
 #import "SVRichText.h"
 #import "SVSidebarDOMController.h"
-#import "SVSizeBindingDOMController.h"
 #import "SVSummaryDOMController.h"
 #import "SVTemplateParser.h"
 #import "SVTextFieldDOMController.h"
@@ -211,7 +212,21 @@
 
 - (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object DOMControllerClass:(Class)controllerClass;
 {
-    if (!controllerClass) controllerClass = [SVSizeBindingDOMController class];
+    // Figure out a decent controller class
+    if (!controllerClass) 
+    {
+        if ([object isKindOfClass:[SVMediaPlugIn class]])
+        {
+            controllerClass = [SVMediaDOMController class];
+        }
+        else
+        {
+            controllerClass = [SVSizeBindingDOMController class];
+        }
+    }
+    
+    
+    // 
     SVDOMController *controller = [[controllerClass alloc] initWithRepresentedObject:
                                    [[self currentDOMController] representedObject]];
     

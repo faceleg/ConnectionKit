@@ -515,6 +515,7 @@
         
         if ([graphic canWriteHTMLInline])
         {
+            // It's almost certainly media, generate DOM controller to match
             [graphic writeBody:self];
         }
         else
