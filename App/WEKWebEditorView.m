@@ -1381,8 +1381,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
                     // Repost equivalent events (unless a link or object) so they go to their correct target. Can't call -sendEvent: as that doesn't update -currentEvent. Calling return is fine because of the @finally block
                     if ([elementInfo objectForKey:WebElementLinkURLKey]) return;
                     
-                    NSString *tagName = [element tagName];
-                    if ([tagName isEqualToString:@"OBJECT"] || [tagName isEqualToString:@"VIDEO"] || [tagName isEqualToString:@"AUDIO"]) return;
+                    if ([element isKindOfClass:[DOMElement class]]) // could actually be any DOMNode subclass
+                    {
+                        NSString *tagName = [element tagName];
+                        if ([tagName isEqualToString:@"OBJECT"] || [tagName isEqualToString:@"VIDEO"] || [tagName isEqualToString:@"AUDIO"]) return;
+                    }
                     
                     // Post in reverse order since I'm placing onto the front of the queue
                     [NSApp postEvent:[mouseUpEvent eventWithClickCount:1] atStart:YES];
