@@ -674,16 +674,7 @@ static SVGraphicFactory *sRawHTMLFactory;
 /*! returns unionSet of acceptedDragTypes from all known KTDataSources */
 + (NSArray *)graphicPasteboardTypes;
 {
-    static NSMutableArray *result;
-	
-    if (!result)
-    {
-        result = [[NSMutableArray alloc] init];
-        
-        return [SVMediaGraphic readableTypesForPasteboard:nil];
-	}
-    
-    return result;
+    return [SVMediaGraphic readableTypesForPasteboard:nil];
 }
 
 #pragma mark SVGraphicFactory
