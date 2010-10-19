@@ -35,15 +35,7 @@
 //
 
 #import "TwitterFeedPlugIn.h"
-
 #import "NSURL+Twitter.h"
-
-
-// LocalizedStringInThisBundle(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder")
-// LocalizedStringInThisBundle(@"Please enter your Twitter username or", "WebView prompt fragment")
-// LocalizedStringInThisBundle(@"sign up", "WebView prompt fragment")
-// LocalizedStringInThisBundle(@"for a Twitter account", "WebView prompt fragment")
-
 
 
 @implementation TwitterFeedPlugIn
@@ -101,15 +93,30 @@
         if ( [context liveDataFeeds] )
         {
             // write a div with the call back script
+            NSString *uniqueID = [[context HTMLWriter] startElement:@"div"
+                                                    preferredIdName:@"twitter_div"
+                                                          className:nil
+                                                         attributes:nil];
+            [[context HTMLWriter] endElement];
+            
         }
         else
         {
             // write placeholder message
+            [[context HTMLWriter] writeText:LocalizedStringInThisBundle(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder")];
         }
     }
     else if ( [context isForEditing] )
     {
         // write placeholder message to sign up for account
+        [[context HTMLWriter] writeText:LocalizedStringInThisBundle(@"Please enter your Twitter username or ", "WebView prompt fragment")];
+        [[context HTMLWriter] startAnchorElementWithHref:@"https://twitter.com/signup"
+                                                   title:LocalizedStringInThisBundle(@"Twitter Signup", "WebView link title") 
+                                                  target:nil 
+                                                     rel:nil];
+        [[context HTMLWriter] writeText:LocalizedStringInThisBundle(@"sign up", "WebView prompt fragment")];
+        [[context HTMLWriter] endElement];
+        [[context HTMLWriter] writeText:LocalizedStringInThisBundle(@" for a Twitter account", "WebView prompt fragment")];
     }
 }
 
@@ -130,26 +137,6 @@
 	
 	return result;
 }
-
-#pragma mark -
-#pragma mark Init
-
-//- (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
-//{
-//	[super awakeFromDragWithDictionary:aDataSourceDictionary];
-//	
-//	// Look for a YouTube URL
-//	NSString *URLString = [aDataSourceDictionary valueForKey:kKTDataSourceURLString];
-//	if (URLString)
-//	{
-//		NSURL *URL = [NSURL URLWithString:URLString];
-//		NSString *username = [URL twitterUsername];
-//        if (username)
-//		{
-//			[[self delegateOwner] setValue:username forKey:@"username"];
-//		}
-//	}
-//}
 
 #pragma mark -
 #pragma mark Other
@@ -201,10 +188,13 @@
     NSURL *URL = [item URL];
     if ( URL  )
     {
-        self.username = [URL twitterUsername];
-        if ( [item title] )
+        if ( [URL twitterUsername] )
         {
-            self.title = [item title];
+            self.username = [URL twitterUsername];
+            if ( [item title] )
+            {
+                self.title = [item title];
+            }
         }
     }
 }
