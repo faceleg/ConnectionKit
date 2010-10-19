@@ -137,7 +137,7 @@
     {
         // Resize image to fit in space
         NSUInteger width = self.width;
-        [[self container] makeOriginalSize];
+        [self.container makeOriginalSize];
         if (self.width > width) self.width = width;
     }
 }
