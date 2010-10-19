@@ -48,6 +48,26 @@
 
 @implementation TwitterFeedPlugIn
 
+
+#pragma mark -
+#pragma mark SVPlugIn
+
+@synthesize username = _username;
+@synthesize count = _count;
+@synthesize includeTimestamp = _includeTimestamp;
+@synthesize openLinksInNewWindow = _openLinksInNewWindow;
+
++ (NSArray *)plugInKeys
+{ 
+    return [NSArray arrayWithObjects:
+            @"username", 
+            @"count", 
+            @"includeTimestamp", 
+            @"openLinksInNewWindow", 
+            nil];
+}
+
+
 #pragma mark -
 #pragma mark Class Methods
 

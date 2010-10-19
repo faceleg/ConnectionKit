@@ -38,6 +38,17 @@
 
 
 @interface TwitterFeedPlugIn : SVPlugIn
+{
+    NSString *_username;
+    NSUInteger _count;
+    BOOL _includeTimestamp;
+    BOOL _openLinksInNewWindow;
+}
+
+@property (nonatomic, copy) NSString *username;
+@property (nonatomic) NSUInteger count;
+@property (nonatomic) BOOL includeTimestamp;
+@property (nonatomic) BOOL openLinksInNewWindow;
 
 - (IBAction)openTwitter:(id)sender;
 
