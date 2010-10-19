@@ -133,19 +133,12 @@
     [super didSetSource];
 	[self _mediaChanged];
 
-    if ([self constrainProportions])    // generally true
+    if ([self.container constrainProportions])    // generally true
     {
         // Resize image to fit in space
-		
-		NSURL *URL = [[self media] fileURL];
-		if ([URL isFileURL])	// Get original size as soon as possible
-		{
-			NSData *contentsData = [NSData dataWithContentsOfURL:URL];
-			[self setOriginalSizeFromData:contentsData];
-		}
-		
+        NSUInteger width = self.width;
         [self makeOriginalSize];
-       // ???? Why were we doing this? if ([self.width isGreaterThan:width]) [self setWidth:width];
+        if (self.width > width) self.width = width;
     }
 }
 
@@ -376,7 +369,9 @@
 	SVMediaRecord *media = [self media];
 	if (media)
 	{
-		[self setOriginalSizeFromData:[media mediaData]];
+		NSData *newData = [NSData newDataWithContentsOfMedia:media];
+		[self setOriginalSizeFromData:newData];
+		[newData release];
 	}
 	else	// Load the data asynchronously and check that way.
 	{
