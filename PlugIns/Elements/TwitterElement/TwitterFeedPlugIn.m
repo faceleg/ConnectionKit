@@ -39,7 +39,7 @@
 #import "NSURL+Twitter.h"
 
 
-// LocalizedStringInThisBundle(@"This is a placeholder for a Twitter pagelet. It will appear here once published or if you enable live data feeds in the preferences.", "WebView Placeholder")
+// LocalizedStringInThisBundle(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder")
 // LocalizedStringInThisBundle(@"Please enter your Twitter username or", "WebView prompt fragment")
 // LocalizedStringInThisBundle(@"sign up", "WebView prompt fragment")
 // LocalizedStringInThisBundle(@"for a Twitter account", "WebView prompt fragment")
@@ -67,6 +67,51 @@
             nil];
 }
 
+#pragma mark HTML Generation
+
+- (void)writeHTML:(id <SVPlugInContext>)context
+{
+    // add dependencies
+    [context addDependencyForKeyPath:@"username" ofObject:self];
+    [context addDependencyForKeyPath:@"count" ofObject:self];
+    [context addDependencyForKeyPath:@"includeTimestamp" ofObject:self];
+    [context addDependencyForKeyPath:@"openLinksInNewWindow" ofObject:self];
+    
+//    [[if username]]
+//    [[if parser.liveDataFeeds]]
+//    <div id="twitter_div_[[=uniqueID]]">
+//    </div>
+//    <script type="text/javascript" src="[[resourcepath delegate.twitterCallbackScriptPath]]"></script>
+//    [[else2]]
+//    <div class="svx-placeholder">
+//	[['This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.]]
+//      </div>
+//      [[endif2]]
+//      
+//      [[else]]
+//      [[if parser.HTMLGenerationPurpose==0]]
+//      <div class="svx-placeholder">
+//      [['Please enter your Twitter username or]] <a href="http://twitter.com/signup">[['sign up]]</a> [['for a Twitter account]]
+//    </div>
+//    [[endif2]]
+//    [[endif]]
+    
+    if ( self.username )
+    {
+        if ( [context liveDataFeeds] )
+        {
+            // write a div with the call back script
+        }
+        else
+        {
+            // write placeholder message
+        }
+    }
+    else if ( [context isForEditing] )
+    {
+        // write placeholder message to sign up for account
+    }
+}
 
 #pragma mark -
 #pragma mark Class Methods
@@ -109,6 +154,11 @@
 #pragma mark -
 #pragma mark Other
 
+- (NSString *)uniqueID
+{
+    return @"73";
+}
+
 - (NSString *)twitterCallbackScriptPath
 {
 	NSString *result = [[self bundle] pathForResource:@"twittercallbacktemplate" ofType:@"js"];
@@ -132,60 +182,31 @@
 //}
 
 #pragma mark -
-#pragma mark Data Source
+#pragma mark SVPlugInPasteboardReading
 
-//+ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
-//{
-//	return [KSWebLocation webLocationPasteboardTypes];
-//}
-//
-//+ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pasteboard;
-//{
-//    return 1;
-//}
-//
-//+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
-//{
-//	KTSourcePriority result = KTSourcePriorityNone;
-//    
-//	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pboard readWeblocFiles:YES ignoreFileURLs:YES];
-//	
-//	if ([webLocations count] > dragIndex)
-//	{
-//		NSURL *URL = [[webLocations objectAtIndex:dragIndex] URL];
-//		if ([URL twitterUsername])
-//		{
-//			result = KTSourcePrioritySpecialized;
-//		}
-//	}
-//	
-//	return result;
-//}
-//
-//+ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
-//                      fromPasteboard:(NSPasteboard *)pasteboard
-//                             atIndex:(unsigned)dragIndex
-//				  forCreatingPagelet:(BOOL)isCreatingPagelet;
-//{
-//	BOOL result = NO;
-//    
-//    NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
-//	
-//	if ([webLocations count] > dragIndex)
-//	{
-//		NSURL *URL = [[webLocations objectAtIndex:dragIndex] URL];
-//		NSString *title = [[webLocations objectAtIndex:dragIndex] title];
-//		
-//		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
-//        if (!KSISNULL(title))
-//		{
-//			[aDictionary setObject:title forKey:kKTDataSourceTitle];
-//		}
-//		
-//		result = YES;
-//	}
-//    
-//    return result;
-//}
++ (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
+{
+    NSURL *URL = [item URL];
+    if ( [URL twitterUsername] )
+    {
+        return KTSourcePriorityIdeal;
+    }
+    
+	return KTSourcePriorityNone;
+}
+
+// returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
+- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
+{
+    NSURL *URL = [item URL];
+    if ( URL  )
+    {
+        self.username = [URL twitterUsername];
+        if ( [item title] )
+        {
+            self.title = [item title];
+        }
+    }
+}
 
 @end
