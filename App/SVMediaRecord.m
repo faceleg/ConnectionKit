@@ -485,6 +485,10 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 		NSSize dimensions = [QTMovie dimensionsOfMovieWithIMBImageItem:self];
 		result = NSSizeToCGSize(dimensions);
     }
+	else if ([[self typeOfFile] conformsToUTI:@"com.adobe.shockwave-flash"])
+	{
+		NSLog(@"Um, why do we have to get the dimension this way when we already set it ?");
+    }
 	else
 	{
 		NSLog(@"Unknown file type %@ for media", [self typeOfFile]);
