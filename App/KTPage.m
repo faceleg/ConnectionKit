@@ -396,11 +396,10 @@
 
 #pragma mark Thumbnail
 
-- (BOOL)writeThumbnail:(SVHTMLContext *)context
-              maxWidth:(NSUInteger)width
-             maxHeight:(NSUInteger)height
-        imageClassName:(NSString *)className
-                dryRun:(BOOL)dryRun;
+- (BOOL)writeThumbnailImage:(SVHTMLContext *)context
+                   maxWidth:(NSUInteger)width
+                  maxHeight:(NSUInteger)height
+                     dryRun:(BOOL)dryRun;
 {
     switch ([[self thumbnailType] integerValue])
     {
@@ -412,10 +411,6 @@
             {
                 if (!dryRun)
                 {
-                    // Start anchor
-                    [context pushClassName:@"imageLink"];
-                    [context startAnchorElementWithPage:self];
-                    
                     // Write image itself
                     CGFloat aspectRatio = [source thumbnailAspectRatio];
                     if (aspectRatio > 1.0f)
@@ -435,16 +430,13 @@
                                                  width:[NSNumber numberWithUnsignedInteger:width]
                                                 height:[NSNumber numberWithUnsignedInteger:height]
                                                   type:type];
-                    
-                    // Finish up
-                    [context endElement];
                 }
                 return YES;
             }
             else
             {
                 // Write placeholder if desired
-                return [super writeThumbnail:context maxWidth:width maxHeight:height imageClassName:className dryRun:dryRun];
+                return [super writeThumbnailImage:context maxWidth:width maxHeight:height dryRun:dryRun];
             }
         }
             
@@ -456,11 +448,10 @@
             SVSiteItem *page = [[controller arrangedObjects] firstObjectKS];
             [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
             
-            return [page writeThumbnail:context
-                               maxWidth:width
-                              maxHeight:height
-                         imageClassName:className
-                                 dryRun:dryRun];
+            return [page writeThumbnailImage:context
+                                    maxWidth:width
+                                   maxHeight:height
+                                      dryRun:dryRun];
         }
             
         case SVThumbnailTypeLastChildItem:
@@ -471,20 +462,18 @@
             SVSiteItem *page = [[controller arrangedObjects] lastObject];
             [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
             
-            return [page writeThumbnail:context
-                               maxWidth:width
-                              maxHeight:height
-                         imageClassName:className
-                                 dryRun:dryRun];
+            return [page writeThumbnailImage:context
+                                    maxWidth:width
+                                   maxHeight:height
+                                      dryRun:dryRun];
         }
             
         default:
             // Hand off to super for custom/no thumbnail
-            return [super writeThumbnail:context
-                                maxWidth:width
-                               maxHeight:height
-                          imageClassName:className
-                                  dryRun:dryRun];
+            return [super writeThumbnailImage:context
+                                     maxWidth:width
+                                    maxHeight:height
+                                       dryRun:dryRun];
     }
 }
 

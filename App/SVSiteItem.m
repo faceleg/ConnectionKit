@@ -393,33 +393,69 @@
         imageClassName:(NSString *)className
                 dryRun:(BOOL)dryRun;
 {
-    if ([[self thumbnailType] integerValue] == SVThumbnailTypeCustom && [self customThumbnail])
+    // Write placeholder if there's no built-in image
+    
+    
+    if (dryRun) // just test if there is a thumbnail
     {
-        if (!dryRun)
-        {
-            [context pushClassName:@"imageLink"];
-            [context startAnchorElementWithPage:self];
-            
-            if (className) [(SVHTMLContext *)context pushClassName:className];
-            [context writeImageWithSourceMedia:[self customThumbnail]
-                                           alt:@""
-                                         width:[NSNumber numberWithUnsignedInteger:width]
-                                        height:[NSNumber numberWithUnsignedInteger:height]
-                                          type:nil];
-            
-            [context endElement];
-        }
-        return YES;
+        return [self writeThumbnailImage:context maxWidth:width maxHeight:height dryRun:dryRun];
     }
-    else if (!dryRun)
+    else
     {
         [context pushClassName:@"imageLink"];
         [context startAnchorElementWithPage:self];
         
         if (className) [(SVHTMLContext *)context pushClassName:className];
-        [self writePlaceholderThumbnail:context width:width height:height];
+        BOOL result = [self writeThumbnailImage:context maxWidth:width maxHeight:height dryRun:dryRun];
         
         [context endElement];
+        
+        return result;
+    }
+    
+    
+    
+    if ([[self thumbnailType] integerValue] == SVThumbnailTypeNone)
+    {
+        
+    }
+    else
+    {
+        [context pushClassName:@"imageLink"];
+        [context startAnchorElementWithPage:self];
+            
+        if (className) [context pushClassName:className];
+        BOOL result = [self writeThumbnailImage:context maxWidth:width maxHeight:height dryRun:dryRun];
+            
+        [context endElement];
+        
+        return result;
+    }
+    
+    
+    return NO;
+}
+
+- (BOOL)writeThumbnailImage:(SVHTMLContext *)context
+                   maxWidth:(NSUInteger)width
+                  maxHeight:(NSUInteger)height
+                     dryRun:(BOOL)dryRun;
+{
+    if ([[self thumbnailType] integerValue] == SVThumbnailTypeCustom && [self customThumbnail])
+    {
+        if (!dryRun)
+        {
+            [context writeImageWithSourceMedia:[self customThumbnail]
+                                           alt:@""
+                                         width:[NSNumber numberWithUnsignedInteger:width]
+                                        height:[NSNumber numberWithUnsignedInteger:height]
+                                          type:nil];
+        }
+        return YES;
+    }
+    else if (!dryRun)
+    {
+        [self writePlaceholderThumbnail:context width:width height:height];
     }
     
     return NO;
