@@ -21,7 +21,7 @@
 #pragma mark -
 
 
-@interface SVImagePageletDOMController : SVGraphicDOMController
+@interface SVMediaPageletDOMController : SVGraphicDOMController
 {  
   @private
     SVImageDOMController    *_imageDOMController;

@@ -25,8 +25,8 @@
 {
     [super awakeFromHTMLContext:context];
     
-    SVImagePageletDOMController *parent = (SVImagePageletDOMController *)[self parentWebEditorItem];
-    OBASSERT([parent isKindOfClass:[SVImagePageletDOMController class]]);
+    SVMediaPageletDOMController *parent = (SVMediaPageletDOMController *)[self parentWebEditorItem];
+    OBASSERT([parent isKindOfClass:[SVMediaPageletDOMController class]]);
     [parent setImageDOMController:self];
 }
 
@@ -105,7 +105,7 @@
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle;
 {
     // Image lives inside a graphic DOM controller, so use the size limit from that instead
-    return [(SVImagePageletDOMController *)[self parentWebEditorItem] constrainSize:size handle:handle];
+    return [(SVMediaPageletDOMController *)[self parentWebEditorItem] constrainSize:size handle:handle];
 }
 
 - (NSSize)minSize;
@@ -154,7 +154,7 @@
 #pragma mark -
 
 
-@implementation SVImagePageletDOMController
+@implementation SVMediaPageletDOMController
 
 - (SVSizeBindingDOMController *)newSizeBindingControllerWithRepresentedObject:(id)object;
 {
@@ -263,7 +263,7 @@
 - (SVDOMController *)newDOMController;
 {
     //Class class = ([self isPagelet] ? [SVImagePageletDOMController class] : [SVImageDOMController class]);
-    return [[SVImagePageletDOMController alloc] initWithRepresentedObject:self];
+    return [[SVMediaPageletDOMController alloc] initWithRepresentedObject:self];
 }
 
 @end

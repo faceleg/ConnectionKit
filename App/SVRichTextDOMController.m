@@ -393,7 +393,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Create controller for graphic
-    SVImagePageletDOMController *controller = (SVImagePageletDOMController *)[image newDOMController];
+    SVMediaPageletDOMController *controller = (SVMediaPageletDOMController *)[image newDOMController];
     [controller awakeFromHTMLContext:[self HTMLContext]];
     [[controller imageDOMController] setHTMLElement:imageElement];
     [controller setHTMLElement:imageElement];
