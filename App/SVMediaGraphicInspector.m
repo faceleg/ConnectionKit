@@ -23,6 +23,15 @@
 
 @implementation SVMediaGraphicInspector
 
+#pragma mark Init
+
+- (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    [self setTitle:NSLocalizedString(@"Media", "inspector title")];
+    return self;
+}
+
 #pragma mark View
 
 - (void)loadView;
