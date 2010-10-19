@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1040</int>
 		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">788</string>
+		<string key="IBDocument.InterfaceBuilderVersion">820</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">788</string>
+			<string key="NS.object.0">820</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -19,18 +19,13 @@
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.Metadata">
-			<bool key="EncodedWithXMLCoder">YES</bool>
-			<object class="NSArray" key="dict.sortedKeys" id="0">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-			</object>
-			<object class="NSMutableArray" key="dict.values">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-			</object>
+			<string key="NS.key.0">PluginDependencyRecalculationVersion</string>
+			<integer value="1" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="356378386">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSCustomObject" id="361710874">
-				<string key="NSClassName">TwitterElementDelegate</string>
+				<string key="NSClassName">TwitterFeedPlugIn</string>
 			</object>
 			<object class="NSCustomObject" id="194304845">
 				<string key="NSClassName">FirstResponder</string>
@@ -238,7 +233,9 @@
 									<string key="NSString">NaN</string>
 									<object class="NSDictionary" key="NSAttributes">
 										<bool key="EncodedWithXMLCoder">YES</bool>
-										<reference key="dict.sortedKeys" ref="0"/>
+										<object class="NSArray" key="dict.sortedKeys" id="0">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+										</object>
 										<object class="NSMutableArray" key="dict.values">
 											<bool key="EncodedWithXMLCoder">YES</bool>
 										</object>
@@ -337,55 +334,10 @@
 				</object>
 				<string key="NSExtension">NSResponder</string>
 			</object>
-			<object class="NSObjectController" id="681690506">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>delegate.diggType</string>
-					<string>delegate.diggUserOptions</string>
-					<string>delegate.diggUser</string>
-					<string>delegate.diggNumberMask</string>
-					<string>delegate.diggCategory</string>
-					<string>delegate.enableUserFields</string>
-					<string>delegate.enableCategory</string>
-					<string>diggDescriptions</string>
-					<string>diggType</string>
-					<string>diggUser</string>
-					<string>diggCategory</string>
-					<string>diggNumberMask</string>
-					<string>diggUserOptions</string>
-					<string>maximumStories</string>
-					<string>diggCOun</string>
-					<string>diggCount</string>
-					<string>openLinksInNewWindow</string>
-					<string>diggStoryPromotion</string>
-					<string>username</string>
-					<string>count</string>
-					<string>friendsTimeline</string>
-					<string>includeTimestamp</string>
-				</object>
-				<bool key="NSEditable">YES</bool>
-				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
-			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.username</string>
-						<reference key="source" ref="729453611"/>
-						<reference key="destination" ref="681690506"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="729453611"/>
-							<reference key="NSDestination" ref="681690506"/>
-							<string key="NSLabel">value: selection.username</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.username</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">403</int>
-				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">openTwitter:</string>
@@ -396,67 +348,87 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.count</string>
+						<string key="label">value: inspectedObjectsController.selection.username</string>
+						<reference key="source" ref="729453611"/>
+						<reference key="destination" ref="361710874"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="729453611"/>
+							<reference key="NSDestination" ref="361710874"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.username</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.username</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">454</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.count</string>
 						<reference key="source" ref="501979337"/>
-						<reference key="destination" ref="681690506"/>
+						<reference key="destination" ref="361710874"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="501979337"/>
-							<reference key="NSDestination" ref="681690506"/>
-							<string key="NSLabel">value: selection.count</string>
+							<reference key="NSDestination" ref="361710874"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.count</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.count</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.count</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">411</int>
+					<int key="connectionID">456</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.count</string>
+						<string key="label">value: inspectedObjectsController.selection.count</string>
 						<reference key="source" ref="223232723"/>
-						<reference key="destination" ref="681690506"/>
+						<reference key="destination" ref="361710874"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="223232723"/>
-							<reference key="NSDestination" ref="681690506"/>
-							<string key="NSLabel">value: selection.count</string>
+							<reference key="NSDestination" ref="361710874"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.count</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.count</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.count</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">417</int>
+					<int key="connectionID">458</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.openLinksInNewWindow</string>
-						<reference key="source" ref="857904516"/>
-						<reference key="destination" ref="681690506"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="857904516"/>
-							<reference key="NSDestination" ref="681690506"/>
-							<string key="NSLabel">value: selection.openLinksInNewWindow</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.openLinksInNewWindow</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">439</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.includeTimestamp</string>
+						<string key="label">value: inspectedObjectsController.selection.includeTimestamp</string>
 						<reference key="source" ref="809529774"/>
-						<reference key="destination" ref="681690506"/>
+						<reference key="destination" ref="361710874"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="809529774"/>
-							<reference key="NSDestination" ref="681690506"/>
-							<string key="NSLabel">value: selection.includeTimestamp</string>
+							<reference key="NSDestination" ref="361710874"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.includeTimestamp</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.includeTimestamp</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.includeTimestamp</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSAlwaysPresentsApplicationModalAlerts</string>
+								<boolean value="YES" key="NS.object.0"/>
+							</object>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">440</int>
+					<int key="connectionID">462</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.openLinksInNewWindow</string>
+						<reference key="source" ref="857904516"/>
+						<reference key="destination" ref="361710874"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="857904516"/>
+							<reference key="NSDestination" ref="361710874"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.openLinksInNewWindow</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.openLinksInNewWindow</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">464</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -596,12 +568,6 @@
 						<reference key="parent" ref="280967165"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">23</int>
-						<reference key="object" ref="681690506"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">PageletController</string>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">443</int>
 						<reference key="object" ref="870337553"/>
 						<reference key="parent" ref="316108466"/>
@@ -673,8 +639,6 @@
 					<string>110.ImportedFromIB2</string>
 					<string>21.IBPluginDependency</string>
 					<string>21.ImportedFromIB2</string>
-					<string>23.IBPluginDependency</string>
-					<string>23.ImportedFromIB2</string>
 					<string>360.CustomClassName</string>
 					<string>360.IBPluginDependency</string>
 					<string>360.ImportedFromIB2</string>
@@ -697,6 +661,16 @@
 					<string>435.ImportedFromIB2</string>
 					<string>437.IBPluginDependency</string>
 					<string>437.ImportedFromIB2</string>
+					<string>443.IBPluginDependency</string>
+					<string>444.IBPluginDependency</string>
+					<string>445.IBPluginDependency</string>
+					<string>446.IBPluginDependency</string>
+					<string>447.IBPluginDependency</string>
+					<string>448.IBPluginDependency</string>
+					<string>449.IBPluginDependency</string>
+					<string>450.IBPluginDependency</string>
+					<string>451.IBPluginDependency</string>
+					<string>452.IBPluginDependency</string>
 					<string>5.IBEditorWindowLastContentRect</string>
 					<string>5.IBPluginDependency</string>
 					<string>5.ImportedFromIB2</string>
@@ -710,8 +684,6 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<boolean value="YES"/>
 					<string>KSLabel</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -734,6 +706,16 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{42, 938}, {250, 150}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -755,13 +737,14 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">452</int>
+			<int key="maxID">464</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
 					<string key="className">FirstResponder</string>
+					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">:</string>
 						<string key="NS.object.0">id</string>
@@ -787,27 +770,8 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">KTAbstractPluginDelegate</string>
-					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">myDelegateOwner</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">myDelegateOwner</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">myDelegateOwner</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">TwitterElementDelegate</string>
-					<string key="superclassName">KTAbstractPluginDelegate</string>
+					<string key="className">TwitterFeedPlugIn</string>
+					<string key="superclassName">SVPlugIn</string>
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">openTwitter:</string>
 						<string key="NS.object.0">id</string>
@@ -820,8 +784,19 @@
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">TwitterFeedPlugIn.h</string>
+					</object>
+				</object>
+			</object>
+			<object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.1+">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVPlugIn</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBDocumentRelativeSource</string>
+						<string key="minorKey">../../../../App/SVPlugIn.h</string>
 					</object>
 				</object>
 			</object>
@@ -911,27 +886,11 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">NSController</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">AppKit.framework/Headers/NSController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">NSFormatter</string>
 					<string key="superclassName">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">Foundation.framework/Headers/NSFormatter.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSManagedObjectContext</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">CoreData.framework/Headers/NSManagedObjectContext.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1192,14 +1151,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">Foundation.framework/Headers/NSURLDownload.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObjectController</string>
-					<string key="superclassName">NSController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">AppKit.framework/Headers/NSObjectController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
