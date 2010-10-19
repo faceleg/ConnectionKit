@@ -75,6 +75,7 @@
 #import "NSBundle+Karelia.h"
 #import "QTMovie+Karelia.h"
 #import "NSImage+Karelia.h"
+#import "NSColor+Karelia.h"
 
 @interface SVAudio ()
 - (void)loadAudio;		// after it has changed (URL or media), determine codecType; later we may kick off load to test properties
