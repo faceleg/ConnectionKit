@@ -1,8 +1,8 @@
 //
-//  TwitterElementDelegate.m
+//  TwitterFeedPlugIn.m
 //  TwitterElement
 //
-//  Copyright (c) 2006, Karelia Software. All rights reserved.
+//  Copyright (c) 2006-2010, Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -108,11 +108,6 @@
 
 #pragma mark -
 #pragma mark Other
-
-- (IBAction)openTwitter:(id)sender
-{
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://twitter.com"]];
-}
 
 - (NSString *)twitterCallbackScriptPath
 {

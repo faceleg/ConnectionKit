@@ -16,6 +16,7 @@
 		3C4A18610D5F9C07009476BF /* TwitterFeedTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A185E0D5F9C07009476BF /* TwitterFeedTemplate.html */; };
 		3C4A187F0D5F9E25009476BF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A187D0D5F9E25009476BF /* Localizable.strings */; };
 		3C4A189B0D5F9F5C009476BF /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A189A0D5F9F5C009476BF /* License.rtf */; };
+		3CB768FF126E2F4D008098C6 /* TwitterFeedInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB768FE126E2F4D008098C6 /* TwitterFeedInspector.m */; };
 		3CFEF261122C33DE005A08FC /* TwitterFeedInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CFEF25F122C33DE005A08FC /* TwitterFeedInspector.xib */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
@@ -41,6 +42,8 @@
 		3C4A18740D5F9DD5009476BF /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C4A187E0D5F9E25009476BF /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C4A189A0D5F9F5C009476BF /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
+		3CB768FD126E2F4D008098C6 /* TwitterFeedInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFeedInspector.h; sourceTree = "<group>"; };
+		3CB768FE126E2F4D008098C6 /* TwitterFeedInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterFeedInspector.m; sourceTree = "<group>"; };
 		3CFEF260122C33DE005A08FC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TwitterFeedInspector.xib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Twitter.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Twitter.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -108,6 +111,8 @@
 			children = (
 				3C4A18590D5F9BFB009476BF /* TwitterFeedPlugIn.h */,
 				3C4A185A0D5F9BFB009476BF /* TwitterFeedPlugIn.m */,
+				3CB768FD126E2F4D008098C6 /* TwitterFeedInspector.h */,
+				3CB768FE126E2F4D008098C6 /* TwitterFeedInspector.m */,
 				27DB7FA90EA696C60099ED9E /* NSURL+Twitter.h */,
 				27DB7FAA0EA696C60099ED9E /* NSURL+Twitter.m */,
 			);
@@ -255,6 +260,7 @@
 			files = (
 				3C4A185B0D5F9BFB009476BF /* TwitterFeedPlugIn.m in Sources */,
 				27DB7FAB0EA696C60099ED9E /* NSURL+Twitter.m in Sources */,
+				3CB768FF126E2F4D008098C6 /* TwitterFeedInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,8 +1,8 @@
 //
-//  TwitterFeedPlugIn.h
+//  TwitterFeedInspector.m
 //  TwitterElement
 //
-//  Copyright (c) 2006-2010, Karelia Software. All rights reserved.
+//  Copyright (c) 2010, Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -34,21 +34,14 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "SandvoxPlugin.h"
+#import "TwitterFeedInspector.h"
 
 
-@interface TwitterFeedPlugIn : SVPlugIn
+@implementation TwitterFeedInspector
+
+- (IBAction)openTwitter:(id)sender
 {
-    NSString *_username;
-    NSUInteger _count;
-    BOOL _includeTimestamp;
-    BOOL _openLinksInNewWindow;
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://twitter.com"]];
 }
-
-@property (nonatomic, copy) NSString *username;
-@property (nonatomic) NSUInteger count;
-@property (nonatomic) BOOL includeTimestamp;
-@property (nonatomic) BOOL openLinksInNewWindow;
-
 
 @end
