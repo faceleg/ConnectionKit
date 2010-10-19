@@ -88,6 +88,8 @@
     return result;
 }
 
+/*  There shouldn't be any need to call this method directly. Instead, it should only be called internally from -[SVMediaGraphic makeOriginalSize]
+ */
 - (void)makeOriginalSize;
 {
     CGSize size = [self originalSize];
