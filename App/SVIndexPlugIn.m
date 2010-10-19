@@ -142,6 +142,7 @@
     }
     
     // add dependencies
+    [context addDependencyForKeyPath:@"indexedCollection" ofObject:self];
     [context addDependencyForKeyPath:@"maxItems" ofObject:self];
     [context addDependencyForKeyPath:@"enableMaxItems" ofObject:self];
     
