@@ -219,6 +219,18 @@
     size = [super constrainSize:size handle:handle];
     
     
+    // HACK for #92183: ignore -isExplicitly sized and go to maximum width. Re-uses quite a bit of super's code.
+    if (size.width <= 0)
+    {
+        DOMNode *parent = [[self HTMLElement] parentNode];
+        DOMCSSStyleDeclaration *style = [[[self HTMLElement] ownerDocument] 
+                                         getComputedStyle:(DOMElement *)parent
+                                         pseudoElement:@""];
+        
+        size.width = [[style width] floatValue];
+    }
+    
+    
     // Snap to original size if you are very close to it
 	BOOL resizingWidth = (handle == kSVGraphicUpperLeftHandle ||
                           handle == kSVGraphicMiddleLeftHandle ||
