@@ -143,7 +143,7 @@
 						<reference key="NSSuperview" ref="913361672"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="335458967">
-							<int key="NSCellFlags">67239424</int>
+							<int key="NSCellFlags">69336577</int>
 							<int key="NSCellFlags2">1346502656</int>
 							<string key="NSContents"/>
 							<reference key="NSSupport" ref="26"/>

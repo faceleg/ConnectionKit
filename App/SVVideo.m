@@ -74,6 +74,7 @@
 #import <QuickLook/QuickLook.h>
 #import "KSThreadProxy.h"
 #import "NSImage+KTExtensions.h"
+#import "NSColor+Karelia.h"
 
 @interface QTMovie (ApplePrivate)
 
@@ -628,7 +629,7 @@
 	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSMakeSize(0,barHeight)];
 
 	// ID on <object> apparently required for IE8
-	NSString *elementID = [context pushPreferredIdName:videoFlashPath];
+	NSString *elementID = [context pushPreferredIdName:[playerPath lastPathComponent]];
     [context startElement:@"object"];
 	
 	[context writeParamElementWithName:@"movie" value:playerPath];
@@ -894,11 +895,24 @@
 	{
 		result = NSLocalizedString(@"Video cannot be played in most browsers.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
-	
-	NSDictionary *attribs = [[NSDictionary alloc] initWithObjectsAndKeys:
+	result = [result stringByAppendingString:@" "];	// space between message and the hyperlinked "More"
+	NSMutableDictionary *attribs = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
 							 [NSFont systemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
 							 nil];
-	NSAttributedString *info = [[[NSAttributedString alloc] initWithString:result attributes:attribs] autorelease];								 
+	NSMutableAttributedString *info = [[[NSMutableAttributedString alloc] initWithString:result attributes:attribs] autorelease];
+	NSDictionary *linkAttribs
+	= [NSDictionary dictionaryWithObjectsAndKeys:
+	   [NSURL URLWithString:[NSString stringWithFormat:@"http://docs.karelia.com/z/Supported_Video_Formats.html?type=%@", type]],
+	   NSLinkAttributeName,
+	   [NSNumber numberWithInteger:NSSingleUnderlineStyle], NSUnderlineStyleAttributeName,
+	   [NSCursor pointingHandCursor], NSCursorAttributeName,
+	   [NSColor linkColor], NSForegroundColorAttributeName,
+	   nil];
+	[attribs addEntriesFromDictionary:linkAttribs];
+	
+	[info appendAttributedString:
+	 [[[NSAttributedString alloc] initWithString:NSLocalizedString(@"More", @"hyperlink to a page that will tell more details about the warning")
+					   attributes:attribs] autorelease]];
     [attribs release];
 	return info;
 }
