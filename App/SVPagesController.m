@@ -303,6 +303,27 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     }
 }
 
+#pragma mark Managing Selections
+
+- (BOOL)setSelectedObjects:(NSArray *)objects;
+{
+    BOOL result = [super setSelectedObjects:objects];
+    if (result && [[self selectedObjects] count] < [objects count])
+    {
+        // SVPagesController loads pages lazily, so selection may not have been loaded yet
+        NSDictionary *info = [self infoForBinding:NSContentSetBinding];
+        
+        NSMutableSet *content = [[info objectForKey:NSObservedObjectKey] mutableSetValueForKeyPath:[info objectForKey:NSObservedKeyPathKey]];
+        
+        [content addObjectsFromArray:objects];
+        
+        // retry
+        result = [super setSelectedObjects:objects];
+    }
+    
+    return result;
+}
+
 #pragma mark Inserting Objects
 
 - (void) insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
