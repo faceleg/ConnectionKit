@@ -459,7 +459,7 @@
 	[context pushAttribute:@"preload" value:[NSARRAY(@"metadata", @"none", @"auto") objectAtIndex:self.preload + 1]];
 	if (self.loop)		[context pushAttribute:@"loop" value:@"loop"];
 	
-	if (self.posterFrame)	[context pushAttribute:@"poster" value:posterSourcePath];
+	if (posterSourceURL)	[context pushAttribute:@"poster" value:posterSourcePath];
 
 	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
 
@@ -581,13 +581,13 @@
 	}
 	else
 	{
-		NSDictionary *formatLookupDict = (self.posterFrame) ? posterParamLookup : noPosterParamLookup;
+		NSDictionary *formatLookupDict = (posterSourceURL) ? posterParamLookup : noPosterParamLookup;
 		flashVarFormatString = [formatLookupDict objectForKey:videoFlashPlayer];
 	}
 	
 	// Now instantiate the string from the format
 	NSMutableString *flashVars = nil;
-	if (self.posterFrame)
+	if (posterSourceURL)
 	{
 		flashVars = [NSMutableString stringWithFormat:flashVarFormatString, movieSourcePath, posterSourcePath];
 	}
