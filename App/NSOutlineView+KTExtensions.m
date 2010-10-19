@@ -83,6 +83,14 @@
 	if (result < 0)
 	{
 		id parent = [self parentForItem:item];
+        
+        
+        // REAL UGLY HACK: -parentForItem: doesn't always seem to work, so let's look it directly
+        if (!parent && [item isKindOfClass:[SVSiteItem class]])
+        {
+            parent = [item parentPage];
+        }
+        
 		if (parent)
 		{
 			int parentRow = [self makeItemVisible:parent];
@@ -136,8 +144,7 @@
 {
     NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
     
-    id item;
-    for (item in theItems)
+    for (id item in theItems)
     {
         NSInteger row = [self rowForItem:item];
 		
