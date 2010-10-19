@@ -627,6 +627,8 @@
 		27F2790B11F9F29400B7F8FA /* SVBannerPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F2790911F9F29400B7F8FA /* SVBannerPickerController.m */; };
 		27F27AAF11FA57C400B7F8FA /* BWRoundedRectBoxView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F27AAD11FA57C400B7F8FA /* BWRoundedRectBoxView.h */; };
 		27F27AB011FA57C400B7F8FA /* BWRoundedRectBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F27AAE11FA57C400B7F8FA /* BWRoundedRectBoxView.m */; };
+		27F33BDC126E101600CDC551 /* SVIndexDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F33BDA126E101600CDC551 /* SVIndexDOMController.h */; };
+		27F33BDD126E101600CDC551 /* SVIndexDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F33BDB126E101600CDC551 /* SVIndexDOMController.m */; };
 		27F36590115EB7BA003BDA5F /* SVArticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F3658E115EB7BA003BDA5F /* SVArticle.h */; };
 		27F36591115EB7BA003BDA5F /* SVArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F3658F115EB7BA003BDA5F /* SVArticle.m */; };
 		27F365ED11602161003BDA5F /* SVMetricsInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F365EB11602161003BDA5F /* SVMetricsInspector.h */; };
@@ -2190,6 +2192,8 @@
 		27F2790911F9F29400B7F8FA /* SVBannerPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBannerPickerController.m; sourceTree = "<group>"; };
 		27F27AAD11FA57C400B7F8FA /* BWRoundedRectBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWRoundedRectBoxView.h; sourceTree = "<group>"; };
 		27F27AAE11FA57C400B7F8FA /* BWRoundedRectBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWRoundedRectBoxView.m; sourceTree = "<group>"; };
+		27F33BDA126E101600CDC551 /* SVIndexDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndexDOMController.h; sourceTree = "<group>"; };
+		27F33BDB126E101600CDC551 /* SVIndexDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndexDOMController.m; sourceTree = "<group>"; };
 		27F3658E115EB7BA003BDA5F /* SVArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVArticle.h; sourceTree = "<group>"; };
 		27F3658F115EB7BA003BDA5F /* SVArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVArticle.m; sourceTree = "<group>"; };
 		27F365EB11602161003BDA5F /* SVMetricsInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMetricsInspector.h; sourceTree = "<group>"; };
@@ -3201,6 +3205,8 @@
 				2704228012142F710077298A /* SVSizeBindingDOMController.m */,
 				27503418126C6BCF006F87ED /* SVMediaDOMController.h */,
 				27503419126C6BCF006F87ED /* SVMediaDOMController.m */,
+				27F33BDA126E101600CDC551 /* SVIndexDOMController.h */,
+				27F33BDB126E101600CDC551 /* SVIndexDOMController.m */,
 			);
 			name = "Other DOM Controllers";
 			sourceTree = "<group>";
@@ -5779,6 +5785,7 @@
 				27ACC6EF126317CE00EA521E /* SVFillController.h in Headers */,
 				27ACC73912631ADC00EA521E /* SVPageThumbnailController.h in Headers */,
 				2750341A126C6BCF006F87ED /* SVMediaDOMController.h in Headers */,
+				27F33BDC126E101600CDC551 /* SVIndexDOMController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7277,6 +7284,7 @@
 				27ACC6F0126317CE00EA521E /* SVFillController.m in Sources */,
 				27ACC73A12631ADC00EA521E /* SVPageThumbnailController.m in Sources */,
 				2750341B126C6BCF006F87ED /* SVMediaDOMController.m in Sources */,
+				27F33BDD126E101600CDC551 /* SVIndexDOMController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

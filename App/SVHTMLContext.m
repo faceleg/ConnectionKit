@@ -511,27 +511,8 @@
         [self startElement:@"div"];
         
         
-        // Graphic body
-        [self pushClassName:@"figure-content"];  // identifies for #84956
+        [self writeGraphicBody: graphic];
         
-        if ([graphic canWriteHTMLInline])
-        {
-            // It's almost certainly media, generate DOM controller to match
-            [graphic writeBody:self];
-        }
-        else
-        {
-            @try
-            {
-                [[self writeElement:@"div" contentsInvocationTarget:graphic]
-                 writeBody:self];
-            }
-            @catch (NSException *exception)
-            {
-                // Was probably caused by a plug-in. Log and soldier on. #88083
-                NSLog(@"Writing graphic body raised exception, probably due to incorrect use of HTML Writer");
-            }
-        }
         
         
         // Caption if requested
@@ -582,6 +563,31 @@
     
     // Finish up
     if (callout) [self endCallout];
+}
+
+- (void)writeGraphicBody:(SVGraphic *)graphic;
+{
+    // Graphic body
+    [self pushClassName:@"figure-content"];  // identifies for #84956
+    
+    if ([graphic canWriteHTMLInline])
+    {
+        // It's almost certainly media, generate DOM controller to match
+        [graphic writeBody:self];
+    }
+    else
+    {
+        @try
+        {
+            [[self writeElement:@"div" contentsInvocationTarget:graphic]
+             writeBody:self];
+        }
+        @catch (NSException *exception)
+        {
+            // Was probably caused by a plug-in. Log and soldier on. #88083
+            NSLog(@"Writing graphic body raised exception, probably due to incorrect use of HTML Writer");
+        }
+    }
 }
 
 - (void)writeGraphics:(NSArray *)graphics;  // convenience

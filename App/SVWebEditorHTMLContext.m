@@ -14,6 +14,7 @@
 #import "SVGraphicDOMController.h"
 #import "SVHTMLTextBlock.h"
 #import "SVImageDOMController.h"
+#import "SVIndexDOMController.h"
 #import "SVMediaPlugIn.h"
 #import "SVRichText.h"
 #import "SVSidebarDOMController.h"
@@ -187,6 +188,26 @@
     // Reset
     [self endDOMController];
     _currentDOMController = currentController;
+}
+
+- (void)writeGraphicBody:(SVGraphic *)graphic;
+{
+    // Indexes should wrapped in their own controller
+    if ([graphic isKindOfClass:[SVPlugInGraphic class]] &&
+        [[(SVPlugInGraphic *)graphic plugIn] isKindOfClass:[SVIndexPlugIn class]])
+    {
+        SVDOMController *controller = [[SVIndexDOMController alloc] initWithRepresentedObject:graphic];
+        [self startDOMController:controller];
+        [controller release];
+    
+        [super writeGraphicBody:graphic];
+    
+        [self endDOMController];
+    }
+    else
+    {
+        [super writeGraphicBody:graphic];
+    }
 }
 
 - (void)startCalloutForGraphic:(SVGraphic *)graphic;
