@@ -24,6 +24,7 @@
 #import "NSError+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
+#import "KSThreadProxy.h"
 
 
 @interface SVImage ()
@@ -50,6 +51,78 @@
     [super dealloc];
 }
 
+#pragma mark Media dimensions
+
++ (NSOperationQueue*) sharedDimensionCheckQueue;
+{
+	static NSOperationQueue *sSharedDimensionCheckQueue = nil;
+	@synchronized(self)
+	{
+		if (sSharedDimensionCheckQueue == nil)
+		{
+			sSharedDimensionCheckQueue = [[NSOperationQueue alloc] init];
+		}
+	}
+	return sSharedDimensionCheckQueue;
+}
+
+// Called back on main thread 
+- (void)gotSize:(NSSize)aSize;
+{
+	OBASSERT([NSThread isMainThread]);
+
+	self.container.naturalWidth  = [NSNumber numberWithFloat:aSize.width];
+	self.container.naturalHeight = [NSNumber numberWithFloat:aSize.height];
+}
+
+- (void)getDimensionsFromURL:(NSURL *)aURL		// CALLED FROM OPERATION
+{
+	OBASSERT(![NSThread isMainThread]);
+	OBPRECONDITION(aURL);
+
+	self.container.naturalWidth  = nil;
+	self.container.naturalHeight = nil;
+
+	NSSize theSize = NSZeroSize;
+	
+	CGImageSourceRef source = CGImageSourceCreateWithURL((CFURLRef)aURL, NULL);
+	if (source)
+	{
+		NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+								 [NSNumber numberWithBool:NO],kCGImageSourceShouldCache,
+								 nil];
+		
+		CFDictionaryRef props = CGImageSourceCopyPropertiesAtIndex(source,  0, (CFDictionaryRef)options );
+		
+		if (props)
+		{
+			NSNumber *height = [((NSDictionary *)props) objectForKey:((NSString *)kCGImagePropertyPixelHeight)];
+			NSNumber *width  = [((NSDictionary *)props) objectForKey:((NSString *)kCGImagePropertyPixelWidth)];
+			theSize = NSMakeSize(width.intValue, height.intValue);
+			
+			CFRelease(props);
+		}
+		CFRelease(source);
+	}
+	
+	[[self ks_proxyOnThread:nil waitUntilDone:NO] gotSize:theSize];
+}
+
+- (void)getDimensionsFromRemoteImage;
+{
+	NSURL *sourceURL = [self externalSourceURL];
+	if (sourceURL)
+	{
+		// Use imageIO to check the dimensions, on a background thread.
+	
+		NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
+																				selector:@selector(getDimensionsFromURL:)
+																				  object:sourceURL];
+		[[[self class] sharedDimensionCheckQueue] addOperation:operation];
+        [operation release];
+	}
+}
+
 #pragma mark Media
 
 - (void)didSetSource;
@@ -68,6 +141,8 @@
         [[self container] setConstrainProportions:NO];
         [self setWidth:0];
         [self setHeight:0];
+		
+		[self getDimensionsFromRemoteImage];
     }
 }
 
