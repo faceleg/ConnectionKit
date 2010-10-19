@@ -137,6 +137,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
     
     
+    // Turn observation back on. #92124
+    [self setObservesDependencies:YES];
+    
+    
     // Copy across data resources
     WebDataSource *dataSource = [[[[self webEditor] webView] mainFrame] dataSource];
     for (id <SVMedia> aMediaRecord in [context media])
