@@ -50,6 +50,4 @@
 @property (nonatomic) BOOL includeTimestamp;
 @property (nonatomic) BOOL openLinksInNewWindow;
 
-@property (nonatomic, readonly) NSString *uniqueID;
-
 @end

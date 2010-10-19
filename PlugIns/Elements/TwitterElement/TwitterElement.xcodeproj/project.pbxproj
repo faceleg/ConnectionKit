@@ -86,15 +86,15 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CE2802EF12432CA800B00F3D /* toolbar_twitter.tiff */,
-				271018400E96708F0095D365 /* twitter_logo.png */,
-				3CFEF25F122C33DE005A08FC /* TwitterFeedInspector.xib */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C4A187D0D5F9E25009476BF /* Localizable.strings */,
+				3CFEF25F122C33DE005A08FC /* TwitterFeedInspector.xib */,
 				3C4A189A0D5F9F5C009476BF /* License.rtf */,
 				2737B0200E994BFC00048D1F /* scripttemplate.html */,
 				2737B0400E9977AB00048D1F /* twittercallbacktemplate.js */,
+				CE2802EF12432CA800B00F3D /* toolbar_twitter.tiff */,
+				271018400E96708F0095D365 /* twitter_logo.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";

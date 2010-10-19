@@ -69,6 +69,13 @@
     [context addDependencyForKeyPath:@"includeTimestamp" ofObject:self];
     [context addDependencyForKeyPath:@"openLinksInNewWindow" ofObject:self];
     
+    // add resources
+    NSString *resourcePath = [[self bundle] pathForResource:@"twittercallbacktemplate" ofType:@"js"];
+    NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
+    NSURL *callbackURL = [[SVPlugIn currentContext] addResourceWithURL:resourceURL];
+    
+    NSString *uniqueID = nil;
+    
 //    [[if username]]
 //    [[if parser.liveDataFeeds]]
 //    <div id="twitter_div_[[=uniqueID]]">
@@ -92,18 +99,28 @@
     {
         if ( [context liveDataFeeds] )
         {
-            // write a div with the call back script
-            NSString *uniqueID = [[context HTMLWriter] startElement:@"div"
-                                                    preferredIdName:@"twitter_div"
-                                                          className:nil
-                                                         attributes:nil];
-            [[context HTMLWriter] endElement];
-            
+            // write a div with the call back to script
+            uniqueID = [[context HTMLWriter] startElement:@"div"
+                                          preferredIdName:@"twitter_div"
+                                                className:nil
+                                               attributes:nil];
+            NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"text/javascript", @"type",
+                                   callbackURL, @"src",
+                                   nil];
+            [[context HTMLWriter] startElement:@"script" attributes:attrs];
+            [[context HTMLWriter] endElement]; // </script>
+            [[context HTMLWriter] endElement]; // </div>
         }
         else
         {
             // write placeholder message
             [[context HTMLWriter] writeText:LocalizedStringInThisBundle(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder")];
+        }
+        
+        if ( [context isForPublishing] )
+        {
+            // write script to endBodyMarkup
         }
     }
     else if ( [context isForEditing] )
@@ -138,19 +155,6 @@
 	return result;
 }
 
-#pragma mark -
-#pragma mark Other
-
-- (NSString *)uniqueID
-{
-    return @"73";
-}
-
-- (NSString *)twitterCallbackScriptPath
-{
-	NSString *result = [[self bundle] pathForResource:@"twittercallbacktemplate" ofType:@"js"];
-	return result;
-}
 
 //- (void)addLevelTextToEndBody:(NSMutableString *)ioString forPage:(KTPage *)aPage
 //{
