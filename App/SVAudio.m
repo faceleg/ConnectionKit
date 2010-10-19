@@ -645,7 +645,7 @@
 }
 
 
-- (NSString *)info
+- (NSAttributedString *)info
 {
 	NSString *result = @"";
 	NSString *type = self.codecType;
@@ -685,7 +685,26 @@
 	{
 		result = NSLocalizedString(@"Audio cannot be played in most browsers.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
 	}
-	return result;
+	result = [result stringByAppendingString:@" "];	// space between message and the hyperlinked "More"
+	NSMutableDictionary *attribs = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+									[NSFont systemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
+									nil];
+	NSMutableAttributedString *info = [[[NSMutableAttributedString alloc] initWithString:result attributes:attribs] autorelease];
+	NSDictionary *linkAttribs
+	= [NSDictionary dictionaryWithObjectsAndKeys:
+	   [NSURL URLWithString:[NSString stringWithFormat:@"http://docs.karelia.com/z/Supported_Audio_Formats.html?type=%@", type]],
+	   NSLinkAttributeName,
+	   [NSNumber numberWithInteger:NSSingleUnderlineStyle], NSUnderlineStyleAttributeName,
+	   [NSCursor pointingHandCursor], NSCursorAttributeName,
+	   [NSColor linkColor], NSForegroundColorAttributeName,
+	   nil];
+	[attribs addEntriesFromDictionary:linkAttribs];
+	
+	[info appendAttributedString:
+	 [[[NSAttributedString alloc] initWithString:NSLocalizedString(@"More", @"hyperlink to a page that will tell more details about the warning")
+									  attributes:attribs] autorelease]];
+    [attribs release];
+	return info;
 }
 
 
