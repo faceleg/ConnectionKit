@@ -341,7 +341,7 @@
     BOOL constrainProportions = [self constrainProportions];
     [self setConstrainProportions:NO];  // temporarily turn off so we get desired size.
     
-    [super makeOriginalSize];
+    [super makeOriginalSize];   // calls through to the plug-in's -makeOriginalSize method
     
     [self setConstrainProportions:constrainProportions];
 }
