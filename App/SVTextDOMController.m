@@ -285,9 +285,9 @@
 
 - (BOOL)webEditorTextValidateDrop:(id <NSDraggingInfo>)dragInfo;
 {
-    // Don't allow dragged graphics
+    // Don't allow dragged graphics. It seems I actually do, but not sure why! #92311
     NSArray *types = [[dragInfo draggingPasteboard] types];
-    BOOL result = (![types containsObject:kSVGraphicPboardType] &&
+    BOOL result = (//![types containsObject:kSVGraphicPboardType] &&
                    ![types containsObject:@"com.karelia.html+graphics"]);
     
     return result;
