@@ -1183,7 +1183,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
              fromDataSource:(WebDataSource *)dataSource;
 {
     
-    // Load in any subresources
+    // Load in any subresources. Having to be rather forceful at the moment :(
     if ([[request URL] isEqual:[[dataSource request] URL]])
     {
         for (id <SVMedia> aMediaRecord in [[self HTMLContext] media])
@@ -1191,6 +1191,17 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
             if ([aMediaRecord mediaData])
             {
                 [dataSource addSubresource:[(SVMediaRecord *)aMediaRecord webResource]];
+            }
+        }
+    }
+    else
+    {
+        for (id <SVMedia> aMediaRecord in [[self HTMLContext] media])
+        {
+            WebResource *resource = [(SVMediaRecord *)aMediaRecord webResource];
+            if ([[resource URL] isEqual:[request URL]])
+            {
+                [dataSource addSubresource:resource];
             }
         }
     }
