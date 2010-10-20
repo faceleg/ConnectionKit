@@ -73,7 +73,11 @@
 {
     if (![self isNativeRepresentation])
     {
-        if ([[self mediaRecord] mediaURL])
+        if ([[self mediaRecord] mediaData])
+        {
+            // FIXME: Support scaling from data
+        }
+        else
         {
             NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[[self mediaRecord] mediaURL]
                                                       size:NSMakeSize([[self width] floatValue], [[self height] floatValue])

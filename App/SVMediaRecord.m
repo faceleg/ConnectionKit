@@ -233,7 +233,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 - (NSURL *)mediaURL;
 {
     NSURL *result = [self fileURL];
-    if (!result) result = [[self webResource] URL];
+    if (!result) result = [[[self webResource] ks_proxyOnThread:nil] URL];
     return result;
 }
 
