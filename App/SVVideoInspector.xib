@@ -55,53 +55,54 @@
 							<string key="NSKeyEquivalent"/>
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
-							<object class="NSMenuItem" key="NSMenuItem" id="1024200511">
+							<object class="NSMenuItem" key="NSMenuItem" id="710299960">
 								<reference key="NSMenu" ref="38382149"/>
-								<string key="NSTitle">Custom Image</string>
+								<string key="NSTitle">None</string>
 								<string key="NSKeyEquiv"/>
 								<int key="NSKeyEquivModMask">1048576</int>
 								<int key="NSMnemonicLoc">2147483647</int>
 								<int key="NSState">1</int>
-								<object class="NSCustomResource" key="NSOnImage" id="1049615964">
+								<object class="NSCustomResource" key="NSOnImage" id="582239447">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSMenuCheckmark</string>
 								</object>
-								<object class="NSCustomResource" key="NSMixedImage" id="276977530">
+								<object class="NSCustomResource" key="NSMixedImage" id="141131348">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSMenuMixedState</string>
 								</object>
 								<string key="NSAction">_popUpItemAction:</string>
-								<int key="NSTag">2</int>
+								<int key="NSTag">1</int>
 								<reference key="NSTarget" ref="650411990"/>
 							</object>
 							<bool key="NSMenuItemRespectAlignment">YES</bool>
 							<object class="NSMenu" key="NSMenu" id="38382149">
 								<string key="NSTitle">OtherViews</string>
 								<array class="NSMutableArray" key="NSMenuItems">
-									<object class="NSMenuItem" id="710299960">
-										<reference key="NSMenu" ref="38382149"/>
-										<string key="NSTitle">None</string>
-										<string key="NSKeyEquiv"/>
-										<int key="NSKeyEquivModMask">1048576</int>
-										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="1049615964"/>
-										<reference key="NSMixedImage" ref="276977530"/>
-										<string key="NSAction">_popUpItemAction:</string>
-										<reference key="NSTarget" ref="650411990"/>
-									</object>
+									<reference ref="710299960"/>
 									<object class="NSMenuItem" id="357564105">
 										<reference key="NSMenu" ref="38382149"/>
 										<string key="NSTitle">Automatic</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="1049615964"/>
-										<reference key="NSMixedImage" ref="276977530"/>
+										<reference key="NSOnImage" ref="582239447"/>
+										<reference key="NSMixedImage" ref="141131348"/>
 										<string key="NSAction">_popUpItemAction:</string>
-										<int key="NSTag">1</int>
+										<int key="NSTag">2</int>
 										<reference key="NSTarget" ref="650411990"/>
 									</object>
-									<reference ref="1024200511"/>
+									<object class="NSMenuItem" id="1024200511">
+										<reference key="NSMenu" ref="38382149"/>
+										<string key="NSTitle">Custom Image</string>
+										<string key="NSKeyEquiv"/>
+										<int key="NSKeyEquivModMask">1048576</int>
+										<int key="NSMnemonicLoc">2147483647</int>
+										<reference key="NSOnImage" ref="582239447"/>
+										<reference key="NSMixedImage" ref="141131348"/>
+										<string key="NSAction">_popUpItemAction:</string>
+										<int key="NSTag">3</int>
+										<reference key="NSTarget" ref="650411990"/>
+									</object>
 								</array>
 								<object class="NSFont" key="NSMenuFont" id="852255889">
 									<string key="NSName">LucidaGrande</string>
@@ -109,7 +110,6 @@
 									<int key="NSfFlags">1044</int>
 								</object>
 							</object>
-							<int key="NSSelectedIndex">2</int>
 							<int key="NSPreferredEdge">1</int>
 							<bool key="NSUsesItemFromMenu">YES</bool>
 							<bool key="NSAltersState">YES</bool>
@@ -969,7 +969,7 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 				<string key="195.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="198.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="199.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="200.IBEditorWindowLastContentRect">{{53, 763}, {216, 54}}</string>
+				<string key="200.IBEditorWindowLastContentRect">{{56, 601}, {216, 54}}</string>
 				<string key="200.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="201.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="202.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -978,7 +978,7 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="21.ImportedFromIB2"/>
 				<string key="213.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="7.IBEditorWindowLastContentRect">{{57, 547}, {230, 309}}</string>
+				<string key="7.IBEditorWindowLastContentRect">{{60, 547}, {230, 309}}</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="7.ImportedFromIB2"/>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
