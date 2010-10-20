@@ -73,27 +73,20 @@
 {
     if (![self isNativeRepresentation])
     {
-        if ([[self mediaRecord] mediaData])
-        {
-            // FIXME: Support scaling from data
-        }
-        else
-        {
-            NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[[self mediaRecord] mediaURL]
-                                                      size:NSMakeSize([[self width] floatValue], [[self height] floatValue])
-                                               scalingMode:KSImageScalingModeAspectFit
-                                                sharpening:0.0f
-                                         compressionFactor:1.0f
-                                                  fileType:[self type]];
-            
-            SVImageScalingOperation *op = [[SVImageScalingOperation alloc] initWithURL:URL];
-            [op start];
-            
-            NSData *result = [[[op result] copy] autorelease];
-            [op release];
-            
-            return result;
-        }
+        NSDictionary *params = [NSURL
+                                sandvoxImageParametersWithSize:NSMakeSize([[self width] floatValue], [[self height] floatValue])
+                                scalingMode:KSImageScalingModeAspectFit
+                                sharpening:0.0f
+                                compressionFactor:1.0f
+                                fileType:[self type]];
+        
+        SVImageScalingOperation *op = [[SVImageScalingOperation alloc] initWithMedia:[self mediaRecord] parameters:params];
+        [op start];
+        
+        NSData *result = [[[op result] copy] autorelease];
+        [op release];
+        
+        return result;
     }
     else
     {

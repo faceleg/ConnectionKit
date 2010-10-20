@@ -38,14 +38,11 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 											  host:[fileURL host]
 											  path:[fileURL path]];
 	
-	NSMutableDictionary *query = [[NSMutableDictionary alloc] init];
-	
-    if (!NSEqualSizes(size, NSZeroSize)) [query setObject:NSStringFromSize(size) forKey:@"size"];
-	[query setObject:[NSString stringWithFormat:@"%i", scalingMode] forKey:@"mode"];
-	if (UTI) [query setObject:UTI forKey:@"filetype"];
-	[query setObject:[NSString stringWithFormat:@"%f", sharpening] forKey:@"sharpen"];
-	[query setFloat:compression forKey:@"compression"];
-	
+	NSDictionary *query = [self sandvoxImageParametersWithSize:size
+                                                   scalingMode:scalingMode
+                                                    sharpening:sharpening
+                                             compressionFactor:compression
+                                                      fileType:UTI];
 	
 	NSURL *result = [NSURL ks_URLWithScheme:KTImageScalingURLProtocolScheme
                                        host:[fileURL host]
@@ -94,6 +91,23 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 	{
 		return fileURL;	
 	}
+}
+
++ (NSDictionary *)sandvoxImageParametersWithSize:(NSSize)size
+                                     scalingMode:(KSImageScalingMode)scalingMode
+                                      sharpening:(CGFloat)sharpening
+                               compressionFactor:(CGFloat)compression
+                                        fileType:(NSString *)UTI;
+{
+    NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
+	
+    if (!NSEqualSizes(size, NSZeroSize)) [result setObject:NSStringFromSize(size) forKey:@"size"];
+	[result setObject:[NSString stringWithFormat:@"%i", scalingMode] forKey:@"mode"];
+	if (UTI) [result setObject:UTI forKey:@"filetype"];
+	[result setObject:[NSString stringWithFormat:@"%f", sharpening] forKey:@"sharpen"];
+	[result setFloat:compression forKey:@"compression"];
+    
+    return result;
 }
 
 @end

@@ -14,6 +14,7 @@
 
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
+#import "NSURL+Karelia.h"
 #import "KSURLUtilities.h"
 
 #import <QuartzCore/CoreImage.h>
@@ -21,16 +22,32 @@
 
 @implementation SVImageScalingOperation
 
-- (id)initWithURL:(NSURL *)url;
+- (id)initWithMedia:(id <SVMedia>)media parameters:(NSDictionary *)params;
 {
     [self init];
-    _sourceURL = [url copy];
+    
+    _sourceMedia = [media retain];
+    _parameters = [params copy];
+    
+    return self;
+}
+
+- (id)initWithURL:(NSURL *)URL;
+{
+    [self init];
+    
+    _sourceMedia = [[SVMedia alloc] initWithURL:
+                    [NSURL URLWithScheme:@"file" host:[URL host] path:[URL path]]];
+    
+    _parameters = [[URL ks_queryParameters] copy];
+    
     return self;
 }
 
 - (void)dealloc
 {
-    [_sourceURL release];
+    [_sourceMedia release];
+    [_parameters release];
     [_result release];
     [_response release];
     
@@ -46,13 +63,19 @@
 
 /*  Support method to read in an image, scale it down and then create the the specified data representation
  */
-- (NSData *)_loadImageAtURL:(NSURL *)sourceURL scaledToSize:(NSSize)size type:(NSString *)fileType error:(NSError **)error // Mode will be read from the URL
+- (NSData *)_loadImageScaledToSize:(NSSize)size type:(NSString *)fileType error:(NSError **)error // Mode will be read from the URL
 {
-    NSURL *URL = _sourceURL;
-    
-    
     // Load the image from disk
-    CIImage *sourceImage = [[CIImage alloc] initWithContentsOfURL:sourceURL];
+    CIImage *sourceImage;
+    if ([_sourceMedia mediaData])
+    {
+        sourceImage = [[CIImage alloc] initWithData:[_sourceMedia mediaData]];
+    }
+    else
+    {
+        sourceImage = [[CIImage alloc] initWithContentsOfURL:[_sourceMedia mediaURL]];
+    }
+    
     if (!sourceImage)
     {
         if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
@@ -63,7 +86,7 @@
     
     
     // Construct image scaling properties dictionary from the URL
-    NSDictionary *URLQuery = [URL ks_queryParameters];
+    NSDictionary *URLQuery = _parameters;
     KSImageScalingMode scalingMode = [URLQuery integerForKey:@"mode"];
     
     
@@ -169,9 +192,17 @@
 
 /*  Support method to convert an image to the specified format without scaling
  */
-- (NSData *)_loadImageAtURL:(NSURL *)URL convertToType:(NSString *)fileType error:(NSError **)error
+- (NSData *)_loadImageConvertedToType:(NSString *)fileType error:(NSError **)error
 {
-    CGImageSourceRef imageSource = CGImageSourceCreateWithURL((CFURLRef)URL, NULL);
+    CGImageSourceRef imageSource;
+    if ([_sourceMedia mediaData])
+    {
+        imageSource = CGImageSourceCreateWithData((CFDataRef)[_sourceMedia mediaData], NULL);
+    }
+    else
+    {
+        imageSource = CGImageSourceCreateWithURL((CFURLRef)[_sourceMedia mediaURL], NULL);
+    }
     OBASSERT(imageSource);
     
     NSMutableData *result = [NSMutableData data];
@@ -193,9 +224,18 @@
     return result;
 }
 
-- (NSData *)_loadFaviconFromURL:(NSURL *)URL error:(NSError **)error
+- (NSData *)_loadFavicon:(NSError **)error
 {
-    NSImage *sourceImage = [[NSImage alloc] initWithContentsOfURL:URL];
+    NSImage *sourceImage;
+    if ([_sourceMedia mediaData])
+    {
+        sourceImage = [[NSImage alloc] initWithData:[_sourceMedia mediaData]];
+    }
+    else
+    {
+        sourceImage = [[NSImage alloc] initWithContentsOfURL:[_sourceMedia mediaURL]];
+    }
+    
     NSData *result = [sourceImage faviconRepresentation];
     [sourceImage release];
     return result;
@@ -204,42 +244,30 @@
 - (void)main
 {
     @try
-    {
-        NSURL *URL = _sourceURL;
-        
-        
-        
-        // Construct image scaling properties dictionary from the URL
-        NSDictionary *URLQuery = [URL ks_queryParameters];
-        
-        NSURL *sourceURL = [[NSURL alloc] initWithScheme:@"file" host:[URL host] path:[URL path]];
-        OBASSERT(sourceURL);
-        
-        
-        
+    {        
         // There are three possible ways to render the result
         //  A) Scale with CoreImage
         //  B) Convert without scaling using CGImageDestination/Source
         //  C) Create a favicon representation
-        NSString *UTI = [URLQuery objectForKey:@"filetype"];
+        NSString *UTI = [_parameters objectForKey:@"filetype"];
         OBASSERT(UTI);
         
         NSData *imageData = nil;    NSError *error = nil;
         if ([UTI isEqualToString:(NSString *)kUTTypeICO])
         {
             // This is a little bit of a hack as it ignores size info, and purely creates a favicon
-            imageData = [self _loadFaviconFromURL:sourceURL error:&error];
+            imageData = [self _loadFavicon:&error];
         }
         else
         {
-            NSString *size = [URLQuery objectForKey:@"size"];
+            NSString *size = [_parameters objectForKey:@"size"];
             if (size)
             {
-                imageData = [self _loadImageAtURL:sourceURL scaledToSize:NSSizeFromString(size) type:UTI error:&error];
+                imageData = [self _loadImageScaledToSize:NSSizeFromString(size) type:UTI error:&error];
             }
             else
             {
-                imageData = [self _loadImageAtURL:sourceURL convertToType:UTI error:&error];
+                imageData = [self _loadImageConvertedToType:UTI error:&error];
             }
         }
         
@@ -248,7 +276,7 @@
         if (imageData)
         {
             // Construct new cached response
-            _response = [[NSURLResponse alloc] initWithURL:URL
+            _response = [[NSURLResponse alloc] initWithURL:[_sourceMedia mediaURL]
                                                   MIMEType:[NSString MIMETypeForUTI:UTI]
                                      expectedContentLength:[imageData length]
                                           textEncodingName:nil];

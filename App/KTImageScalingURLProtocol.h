@@ -29,6 +29,12 @@ extern NSString *KTImageScalingURLProtocolScheme;
 
 + (NSURL *)sandvoxImageURLWithFileURL:(NSURL *)fileURL scalingProperties:(NSDictionary *)properties;
 
++ (NSDictionary *)sandvoxImageParametersWithSize:(NSSize)size
+                                     scalingMode:(KSImageScalingMode)scalingMode
+                                      sharpening:(CGFloat)sharpening
+                               compressionFactor:(CGFloat)compression
+                                        fileType:(NSString *)UTI;
+
 @end
 
 

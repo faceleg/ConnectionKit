@@ -7,16 +7,19 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "SVMediaProtocol.h"
 
 
 @interface SVImageScalingOperation : NSOperation
 {
   @private
-    NSURL           *_sourceURL;
+    id <SVMedia>    _sourceMedia;
+    NSDictionary    *_parameters;
     NSData          *_result;
     NSURLResponse   *_response;
 }
 
+- (id)initWithMedia:(id <SVMedia>)media parameters:(NSDictionary *)params;
 - (id)initWithURL:(NSURL *)url;
 
 @property(nonatomic, copy, readonly) NSData *result;
