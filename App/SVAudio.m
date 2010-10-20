@@ -151,14 +151,12 @@
 - (void)loadAudio;		// after it has changed (URL or media), determine codecType; later we may kick off load to test properties
 {
 	NSURL *movieSourceURL = nil;
-	//	BOOL openAsync = NO;
 	
 	SVMediaRecord *media = [self media];
 	
     if (media)
     {
 		movieSourceURL = [media mediaURL];
-		//		openAsync = YES;
 		self.codecType = [NSString UTIForFileAtPath:[movieSourceURL path]];
 	}
 	else
@@ -166,16 +164,6 @@
 		movieSourceURL = [self externalSourceURL];
 		self.codecType = [NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]];
 	}
-	//	if (movieSourceURL)
-	//	{
-	//		NSDictionary *movieAttributes = [NSDictionary dictionaryWithObjectsAndKeys: 
-	//						   movieSourceURL, QTMovieURLAttribute,
-	//						   [NSNumber numberWithBool:openAsync], QTMovieOpenAsyncOKAttribute,
-	//						   // 10.6 only :-( [NSNumber numberWithBool:YES], QTMovieOpenForPlaybackAttribute,	// From Tim Monroe @ WWDC2010, so we can check how movie was loaded
-	//						   nil];
-	//		[self loadMovieFromAttributes:movieAttributes];
-	//		
-	//	}
 }
 
 
