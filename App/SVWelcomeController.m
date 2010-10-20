@@ -305,21 +305,21 @@
 			case kKSLicenseCheckFailed:	// license entered but it's not valid
 				
 				stickyHeadline = NSLocalizedString(@"Invalid Registration Key", @"title of reminder note - please make sure this will fit on welcome window when unlicensed");
-				stickyDetails = [NSString stringWithFormat:NSLocalizedString(@"Sandvox is free for publishing small websites, up to %d pages. For more complex sites, you need to enter a valid license.", @"explanation of license status - please make sure this will fit on welcome window when unlicensed")];
+				stickyDetails = [NSString stringWithFormat:NSLocalizedString(@"Sandvox is free for publishing small websites, up to %d pages. For more complex sites, you need to enter a valid license.", @"explanation of license status - please make sure this will fit on welcome window when unlicensed"), kMaxNumberOfFreePublishedPages];
 				stickyButtonTitle = NSLocalizedString(@"Enter License Key", @"Button title to enter a license Code");
 				
 				break;
 			case kKSLicenseExpired:		// Trial license expired
 			
 				stickyHeadline = NSLocalizedString(@"Trial License Expired", @"title of reminder note - please make sure this will fit on welcome window when unlicensed");
-				stickyDetails = [NSString stringWithFormat:NSLocalizedString(@"The registration key you entered has expired.", @"explanation of license status - please make sure this will fit on welcome window when unlicensed"), kMaxNumberOfFreePublishedPages];
+				stickyDetails = NSLocalizedString(@"The registration key you entered has expired.", @"explanation of license status - please make sure this will fit on welcome window when unlicensed");
 				stickyButtonTitle = NSLocalizedString(@"Buy a License", @"Button title to purchase a license");
 				
 				break;
 			case kKSNoLongerValid:		// License from a previous version of Sandvox
 				
 				stickyHeadline = NSLocalizedString(@"Upgrade to Sandvox 2", @"title of reminder note - please make sure this will fit on welcome window when unlicensed");
-				stickyDetails = [NSString stringWithFormat:NSLocalizedString(@"Your registration key for Sandvox 1 is not valid for version 2. Functionality will be limited.", @"explanation of license status - please make sure this will fit on welcome window when unlicensed"), kMaxNumberOfFreePublishedPages];
+				stickyDetails = NSLocalizedString(@"Your registration key for Sandvox 1 is not valid for version 2. Functionality will be limited.", @"explanation of license status - please make sure this will fit on welcome window when unlicensed");
 				stickyButtonTitle = NSLocalizedString(@"Upgrade your License", @"Button title to purchase a license");
 				
 				break;
