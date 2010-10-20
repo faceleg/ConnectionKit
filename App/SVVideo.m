@@ -212,7 +212,7 @@
 		videoURL = self.externalSourceURL;
 	}
 	// Rebuild URL by substituting in path. Create a FAKE URL for a synthesized thumbnail.
-	NSString *newPath = [[[videoURL path] stringByDeletingPathExtension] stringByAppendingString:@"_poster.jpg"];
+	NSString *newPath = [[[videoURL path] stringByDeletingPathExtension] stringByAppendingString:@".jpg"];
 	
 	NSURL *fakeURL = [[[NSURL alloc] initWithScheme:[videoURL scheme]
 											   host:[videoURL host]
