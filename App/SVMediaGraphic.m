@@ -561,11 +561,11 @@
     // Swap in the new media
     if (media || URL)
     {
-        if (media) [self replaceMedia:media forKeyPath:@"media"];
-        
-        // Reset size
+        // Reset size BEFORE media so setting the source can store a new size
         self.naturalWidth = nil;
         self.naturalHeight = nil;
+        
+        if (media) [self replaceMedia:media forKeyPath:@"media"];
         
         NSNumber *oldWidth = [self width];
         [self makeOriginalSize];
