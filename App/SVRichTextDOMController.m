@@ -392,28 +392,25 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [textAttachment setCausesWrap:[NSNumber numberWithBool:NO]];
     
     
-    // Create controller for graphic
+    // Create controller for graphic and hook up to imported node
     SVMediaPageletDOMController *controller = (SVMediaPageletDOMController *)[image newDOMController];
     [controller awakeFromHTMLContext:[self HTMLContext]];
     [[controller imageDOMController] setHTMLElement:imageElement];
     [controller setHTMLElement:imageElement];
     
     [self addChildWebEditorItem:controller];
+    
+    
+    // Generate new DOM node to match what model would normally generate
+    [controller update];
     [controller release];
-    
-    
-    // Replace old DOM element with new one
-    DOMNode *result = [imageElement nextSibling];
-    DOMNode *parentNode = [imageElement parentNode];
-    [parentNode removeChild:imageElement];
-    [parentNode insertBefore:[controller HTMLElement] refChild:result];
     
     
     // Write the replacement
     [self write:writer selectableItem:controller];
     
     
-    return result;
+    return [[controller HTMLElement] nextSibling];
 }
 
 - (DOMNode *)HTMLWriter:(SVParagraphedHTMLWriter *)writer willWriteDOMElement:(DOMElement *)element;
