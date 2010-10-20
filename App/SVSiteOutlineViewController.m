@@ -361,30 +361,33 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	}
 }
 
-- (void)removePagesObject:(KTPage *)aPage
+- (void)removePages:(NSSet *)pages
 {
-	if ([_pages containsObject:aPage])
-	{
-		// KVO
-        [self willChangeValueForKey:@"pages"
-                    withSetMutation:NSKeyValueMinusSetMutation
-                       usingObjects:[NSSet setWithObject:aPage]];
-        
-        // Remove observers
-		[aPage removeObserver:self forKeyPath:@"sortedChildren"];
-		[aPage removeObserver:self forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]];
-		
-		// Uncache custom icon to free memory
-		[_cachedImagesByRepresentation removeObjectForKey:aPage];
-		
-		// Remove from the set
-		[_pages removeObject:aPage];
-        
-        // KVO
-        [self didChangeValueForKey:@"pages"
-                   withSetMutation:NSKeyValueMinusSetMutation
-                      usingObjects:[NSSet setWithObject:aPage]];
-	}
+	// KVO
+    [self willChangeValueForKey:@"pages"
+                withSetMutation:NSKeyValueMinusSetMutation
+                   usingObjects:pages];
+    
+    for (SVSiteItem *aPage in pages)
+    {
+        if ([_pages containsObject:aPage])
+        {
+            // Remove observers
+            [aPage removeObserver:self forKeyPath:@"sortedChildren"];
+            [aPage removeObserver:self forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]];
+            
+            // Uncache custom icon to free memory
+            [_cachedImagesByRepresentation removeObjectForKey:aPage];
+            
+            // Remove from the set
+            [_pages removeObject:aPage];
+        }
+    }
+    
+    // KVO
+    [self didChangeValueForKey:@"pages"
+               withSetMutation:NSKeyValueMinusSetMutation
+                  usingObjects:pages];
 }
 
 /*	Support method that returns the main keypaths the site outline depends on.
