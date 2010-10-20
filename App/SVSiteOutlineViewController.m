@@ -756,35 +756,38 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
     if ([self canDelete])
     {
-        NSSet *selection = [[[NSSet alloc] initWithArray:[[self content] selectedObjects]] autorelease];
+        SVPagesController *controller = [self content];
+        if ([controller canRemove])
+        {
+            NSSet *selection = [[[NSSet alloc] initWithArray:[[self content] selectedObjects]] autorelease];
+            
+            [controller remove:sender];
+            
+            // Label undo menu
+            NSUndoManager *undoManager = [[[self rootPage] managedObjectContext] undoManager];
+            if ([selection count] == 1)
+            {
+                if ([[selection anyObject] isCollection])
+                {
+                    [undoManager setActionName:NSLocalizedString(@"Delete Collection", "Delete Collection MenuItem")];
+                }
+                else
+                {
+                    [undoManager setActionName:NSLocalizedString(@"Delete Page", "Delete Page MenuItem")];
+                }
+            }
+            else
+            {
+                [undoManager setActionName:NSLocalizedString(@"Delete Pages", "Delete Pages MenuItem")];
+            }
+        }
         
         // Remove the pages from their parents
-        NSSet *parentPages = [selection valueForKey:@"parentPage"];
-        for (KTPage *aParentPage in parentPages)
-        {
-            [aParentPage removePages:selection];	// Far more efficient than calling -removePage: repetitively
-        }
-            
-        // Delete the pages
-		[[[self rootPage] managedObjectContext] deleteObjectsInCollection:selection];
-		
-		// Label undo menu
-        NSUndoManager *undoManager = [[[self rootPage] managedObjectContext] undoManager];
-		if ([selection count] == 1)
-		{
-			if ([[selection anyObject] isCollection])
-			{
-				[undoManager setActionName:NSLocalizedString(@"Delete Collection", "Delete Collection MenuItem")];
-			}
-			else
-			{
-				[undoManager setActionName:NSLocalizedString(@"Delete Page", "Delete Page MenuItem")];
-			}
-		}
-		else
-		{
-			[undoManager setActionName:NSLocalizedString(@"Delete Pages", "Delete Pages MenuItem")];
-		}
+        //NSSet *parentPages = [selection valueForKey:@"parentPage"];
+        //for (KTPage *aParentPage in parentPages)
+        //{
+        //    [aParentPage removePages:selection];	// Far more efficient than calling -removePage: repetitively
+        //}
     }
     else
     {

@@ -23,6 +23,8 @@
 #import "SVSidebarPageletsController.h"
 #import "SVTextAttachment.h"
 
+#import "NSManagedObjectContext+KTExtensions.h"
+
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSObject+Karelia.h"
@@ -324,7 +326,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     return result;
 }
 
-#pragma mark Inserting Objects
+#pragma mark Adding and Removing Objects
 
 - (void) insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
 {
@@ -539,6 +541,39 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
             NSString *suggestedFilename = [object suggestedFilename];
             [object setFileName:[suggestedFilename stringByDeletingPathExtension]];
         }
+    }
+}
+
+- (void) willRemoveObjects:(NSArray *)objects;
+{
+    // Remove the pages from their parents
+    NSSet *pages = [[NSSet alloc] initWithArray:objects];
+    
+    NSSet *parentPages = [pages valueForKey:@"parentPage"];
+    for (KTPage *aCollection in parentPages)
+    {
+        [aCollection removePages:pages];	// Far more efficient than calling -removePage: repetitively
+    }
+    
+    [pages release];
+    
+    
+    // Delete
+    [super willRemoveObjects:objects];
+}
+
+- (void) willRemoveObject:(id)object;
+{
+    [super willRemoveObject:object];
+
+    // Delete. Pages have to be treated specially, but I forgot quite why
+    if ([object isKindOfClass:[KTPage class]])
+    {
+        [[self managedObjectContext] deletePage:object];
+    }
+    else
+    {
+        [[self managedObjectContext] deleteObject:object];
     }
 }
 

@@ -14,7 +14,7 @@
 //
 //  That sort of logic all used to be in the model, but you end up trying to do too much in one place.
 
-#import <Cocoa/Cocoa.h>
+#import "KSArrayController.h"
 
 
 extern NSString *SVPagesControllerDidInsertObjectNotification;
@@ -24,7 +24,7 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 @protocol SVPagesControllerDelegate;
 
 
-@interface SVPagesController : NSArrayController
+@interface SVPagesController : KSArrayController
 {
   @private
     NSDictionary    *_presetDict;
