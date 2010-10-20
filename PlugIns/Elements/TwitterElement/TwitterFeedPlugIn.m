@@ -112,12 +112,14 @@
                                           preferredIdName:@"twitter_div_"
                                                 className:nil
                                                attributes:nil];
+            
             NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @"text/javascript", @"type",
                                    callbackURL, @"src",
                                    nil];
             [[context HTMLWriter] startElement:@"script" attributes:attrs];
             [[context HTMLWriter] endElement]; // </script>
+            
             [[context HTMLWriter] endElement]; // </div>
         }
         else
