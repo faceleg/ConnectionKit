@@ -40,6 +40,14 @@
     _drawAsDropTarget = NO;
 }
 
+- (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender;
+{
+    [self setNeedsDisplay];
+    _drawAsDropTarget = NO;
+    
+    return YES;
+}
+
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
 {
     NSPasteboard *pboard = [sender draggingPasteboard];
@@ -52,12 +60,6 @@
     }
     
     return NO;
-}
-
-- (void)concludeDragOperation:(id <NSDraggingInfo>)sender;
-{
-    [self setNeedsDisplay];
-    _drawAsDropTarget = NO;
 }
 
 - (NSArray *)registeredDraggedTypes;
