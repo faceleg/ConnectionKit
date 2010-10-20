@@ -13,7 +13,8 @@
 
 @interface SVIndexDOMController : SVDOMController
 {
-
+@private
+    BOOL    _drawAsDropTarget;
 }
 
 @end
