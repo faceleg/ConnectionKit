@@ -416,12 +416,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     [_customIconGenerationQueue removeAllObjects];
     
     // We could use -mutableSetValueForKey to do this, but it will crash if used during -dealloc
-    NSEnumerator *pagesEnumerator = [[self pages] objectEnumerator];
-    KTPage *aPage;
-    while (aPage = [pagesEnumerator nextObject])
-    {
-        [self removePagesObject:aPage];
-    }
+    [self removePages:[self pages]];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
