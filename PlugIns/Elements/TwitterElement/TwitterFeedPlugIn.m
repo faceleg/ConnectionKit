@@ -101,7 +101,7 @@
     NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
     NSURL *callbackURL = [[SVPlugIn currentContext] addResourceWithURL:resourceURL];
     
-    NSString *uniqueID = @"twitter_div_";
+    NSString *uniqueID = @"twitter_div";
     
     if ( self.username )
     {
@@ -109,7 +109,7 @@
         {
             // write a div with callback script
             uniqueID = [[context HTMLWriter] startElement:@"div"
-                                          preferredIdName:@"twitter_div_"
+                                          preferredIdName:@"twitter_div"
                                                 className:nil
                                                attributes:nil];
             
@@ -127,7 +127,7 @@
             [[context HTMLWriter] writeText:LocalizedStringInThisBundle(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder")];
         }
         
-        if ( [context isForPublishing] )
+        if ( [context isForPublishing] || [context isForEditing] )
         {
             [self writeScriptToEndBodyMarkup:uniqueID];            
         }
@@ -165,7 +165,7 @@
                         @"<script type=\"text/javascript\">\n"
                         @"function twitterCallback%@(obj)\n"
                         @"{\n"
-                        @" twitterCallback_withOptions(obj, 'twitter_div_%@', %@, %@;"
+                        @" twitterCallback_withOptions(obj, 'twitter_div%@', %@, %@;"
                         @"}\n"
                         @"</script>\n",
                         uniqueID, uniqueID, linksFlag, timestampFlag];
