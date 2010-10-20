@@ -551,10 +551,6 @@
                                       entityName:[[self class] meditEntityName]
                   insertIntoManagedObjectContext:[self managedObjectContext]];
         }
-        else if (URL)
-        {
-            [self setExternalSourceURL:URL];
-        }
     }
     
     
@@ -565,7 +561,14 @@
         self.naturalWidth = nil;
         self.naturalHeight = nil;
         
-        if (media) [self replaceMedia:media forKeyPath:@"media"];
+        if (media)
+        {
+            [self replaceMedia:media forKeyPath:@"media"];
+        }
+        else
+        {
+            [self setExternalSourceURL:URL];
+        }
         
         NSNumber *oldWidth = [self width];
         [self makeOriginalSize];
