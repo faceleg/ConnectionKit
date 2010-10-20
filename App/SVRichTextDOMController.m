@@ -398,6 +398,15 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [textAttachment setCausesWrap:[NSNumber numberWithBool:
                                    ([[style display] isEqualToString:@"block"] ? YES : NO)]];
     
+    NSString *floatProperty = [style getPropertyValue:@"float"];
+    if ([floatProperty isEqualToString:@"left"])
+    {
+        [textAttachment setWrapRight:YES];  // believe it, this is the right call!
+    }
+    else if ([floatProperty isEqualToString:@"right"])
+    {
+        [textAttachment setWrapLeft:YES];  // believe it, this is the right call!
+    }
     
     // Create controller for graphic and hook up to imported node
     SVMediaPageletDOMController *controller = (SVMediaPageletDOMController *)[image newDOMController];
