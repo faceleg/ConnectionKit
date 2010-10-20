@@ -567,6 +567,15 @@
     //[[self webEditor] moveDragHighlightToDOMNode:nil];
 }
 
+- (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender
+{
+    [self removeDragCaret];
+    //[[self webEditor] moveDragHighlightToDOMNode:nil];
+    [[self webEditor] removeDragCaret];
+    
+    return YES;
+}
+
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)dragInfo;
 {
     BOOL result = NO;
@@ -596,7 +605,7 @@
     
     
     // Insert HTML into DOM, using caret if possible
-    if ([[self webEditor] shouldChangeText:self])
+    if ([pagelets count] && [[self webEditor] shouldChangeText:self])
     {
         DOMNode *node = [self childForDraggingInfo:dragInfo];
         [self moveDragCaretToBeforeDOMNode:node draggingInfo:dragInfo];
@@ -615,16 +624,7 @@
     }
     
     
-    
-    
     return result;
-}
-
-- (void)concludeDragOperation:(id <NSDraggingInfo>)sender;
-{
-    [self removeDragCaret];
-    //[[self webEditor] moveDragHighlightToDOMNode:nil];
-    [[self webEditor] removeDragCaret];
 }
 
 - (NSArray *)registeredDraggedTypes;
