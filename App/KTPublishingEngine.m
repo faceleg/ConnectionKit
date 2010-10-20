@@ -614,8 +614,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         if ([self status] > KTPublishingEngineStatusGatheringMedia)
         {
             //  The media rep does not already exist on the server, so need to assign it a new path
-            NSString *result = [[self baseRemotePath]
-                                stringByAppendingPathComponent:[media preferredUploadPath]];
+            result = [[self baseRemotePath] stringByAppendingPathComponent:[media preferredUploadPath]];
                        
             NSUInteger count = 1;
             while (![self shouldPublishToPath:result])
