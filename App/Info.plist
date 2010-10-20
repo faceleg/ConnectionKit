@@ -205,9 +205,11 @@
 	<string>KTApplication</string>
 	<key>SUFeedURL</key>
 	<string>http://launch.karelia.com/appcast.php</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>dsa_pub.pem</string>
 	<key>KSFeedType</key>
 	<string>${PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE}</string>
-	<key>SUIncludeProfile</key>
+	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUEnableAutomaticChecks</key>
 	<false/>
@@ -445,7 +447,5 @@
 			</dict>
 		</dict>
 	</array>
-	<key>SUPublicDSAKeyFile</key>
-	<string>dsa_pub.pem</string>
 </dict>
 </plist>
