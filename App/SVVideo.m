@@ -972,14 +972,13 @@
 - (void)loadMovie;
 {
 	NSURL *movieSourceURL = nil;
-	BOOL openAsync = NO;
+	BOOL openAsync = YES;			// I think this will be OK for both
 	
 	SVMediaRecord *media = self.media;
 	
     if (media)
     {
 		movieSourceURL = [media mediaURL];
-		openAsync = YES;
 		self.codecType = [NSString UTIForFileAtPath:[movieSourceURL path]];
 	}
 	else
