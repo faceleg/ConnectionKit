@@ -39,7 +39,6 @@
 
 
 @interface TwitterFeedPlugIn ()
-//- (void)writeScriptToEndBodyMarkup:(NSString *)uniqueID;
 - (void)writeScriptToEndBodyMarkup:(NSString *)uniqueID context:(id<SVPlugInContext>)context;
 @end
 
@@ -68,26 +67,6 @@
 
 #pragma mark -
 #pragma mark HTML Generation
-
-
-//    [[if username]]
-//    [[if parser.liveDataFeeds]]
-//    <div id="twitter_div_[[=uniqueID]]">
-//    </div>
-//    <script type="text/javascript" src="[[resourcepath delegate.twitterCallbackScriptPath]]"></script>
-//    [[else2]]
-//    <div class="svx-placeholder">
-//	[['This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.]]
-//      </div>
-//      [[endif2]]
-//      
-//      [[else]]
-//      [[if parser.HTMLGenerationPurpose==0]]
-//      <div class="svx-placeholder">
-//      [['Please enter your Twitter username or]] <a href="http://twitter.com/signup">[['sign up]]</a> [['for a Twitter account]]
-//    </div>
-//    [[endif2]]
-//    [[endif]]
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
@@ -147,20 +126,8 @@
     }
 }
 
-
-//<script type="text/javascript">
-//function twitterCallback[[=uniqueID]](obj)
-//{
-//    twitterCallback_withOptions(obj, 'twitter_div_[[=uniqueID]]', [[if openLinksInNewWindow]]true[[else]]false[[endif]], [[if includeTimestamp]]true[[else]]false[[endif]]);
-//}
-//</script>
-//<script type="text/javascript" src="http://twitter.com/statuses/user_timeline/[[=username]].json?callback=twitterCallback[[=uniqueID]]&amp;count=[[=count]]"></script>
-
 - (void)writeScriptToEndBodyMarkup:(NSString *)uniqueID context:(id<SVPlugInContext>)context
 {
-    //FIXME: why is [SVPlugIn currentContext] returning nil?
-    //id<SVPlugInContext> context = [SVPlugIn currentContext];
-    
     NSString *linksFlag = (self.openLinksInNewWindow) ? @"true" : @"false";
     NSString *timestampFlag = (self.includeTimestamp) ? @"true" : @"false";
     NSString *script1 = [NSString stringWithFormat:
