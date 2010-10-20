@@ -38,6 +38,11 @@
 #import "NSURL+Twitter.h"
 
 
+@interface TwitterFeedPlugIn ()
+- (void)writeScriptToEndBodyMarkup:(NSString *)uniqueID;
+@end
+
+
 @implementation TwitterFeedPlugIn
 
 
@@ -59,23 +64,11 @@
             nil];
 }
 
+
+#pragma mark -
 #pragma mark HTML Generation
 
-- (void)writeHTML:(id <SVPlugInContext>)context
-{
-    // add dependencies
-    [context addDependencyForKeyPath:@"username" ofObject:self];
-    [context addDependencyForKeyPath:@"count" ofObject:self];
-    [context addDependencyForKeyPath:@"includeTimestamp" ofObject:self];
-    [context addDependencyForKeyPath:@"openLinksInNewWindow" ofObject:self];
-    
-    // add resources
-    NSString *resourcePath = [[self bundle] pathForResource:@"twittercallbacktemplate" ofType:@"js"];
-    NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
-    NSURL *callbackURL = [[SVPlugIn currentContext] addResourceWithURL:resourceURL];
-    
-    NSString *uniqueID = nil;
-    
+
 //    [[if username]]
 //    [[if parser.liveDataFeeds]]
 //    <div id="twitter_div_[[=uniqueID]]">
@@ -94,14 +87,29 @@
 //    </div>
 //    [[endif2]]
 //    [[endif]]
+
+- (void)writeHTML:(id <SVPlugInContext>)context
+{
+    // add dependencies
+    [context addDependencyForKeyPath:@"username" ofObject:self];
+    [context addDependencyForKeyPath:@"count" ofObject:self];
+    [context addDependencyForKeyPath:@"includeTimestamp" ofObject:self];
+    [context addDependencyForKeyPath:@"openLinksInNewWindow" ofObject:self];
+    
+    // add resources
+    NSString *resourcePath = [[self bundle] pathForResource:@"twittercallbacktemplate" ofType:@"js"];
+    NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
+    NSURL *callbackURL = [[SVPlugIn currentContext] addResourceWithURL:resourceURL];
+    
+    NSString *uniqueID = @"twitter_div_";
     
     if ( self.username )
     {
         if ( [context liveDataFeeds] )
         {
-            // write a div with the call back to script
+            // write a div with callback script
             uniqueID = [[context HTMLWriter] startElement:@"div"
-                                          preferredIdName:@"twitter_div"
+                                          preferredIdName:@"twitter_div_"
                                                 className:nil
                                                attributes:nil];
             NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -114,13 +122,12 @@
         }
         else
         {
-            // write placeholder message
             [[context HTMLWriter] writeText:LocalizedStringInThisBundle(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder")];
         }
         
         if ( [context isForPublishing] )
         {
-            // write script to endBodyMarkup
+            [self writeScriptToEndBodyMarkup:uniqueID];            
         }
     }
     else if ( [context isForEditing] )
@@ -137,40 +144,37 @@
     }
 }
 
-#pragma mark -
-#pragma mark Class Methods
 
-+ (NSString *)scriptTemplate
+//            <script type="text/javascript">
+//            function twitterCallback[[=uniqueID]](obj)
+//            {
+//                twitterCallback_withOptions(obj, 'twitter_div_[[=uniqueID]]', [[if openLinksInNewWindow]]true[[else]]false[[endif]], [[if includeTimestamp]]true[[else]]false[[endif]]);
+//            }
+//            </script>
+//            <script type="text/javascript" src="http://twitter.com/statuses/user_timeline/[[=username]].json?callback=twitterCallback[[=uniqueID]]&amp;count=[[=count]]"></script>
+
+- (void)writeScriptToEndBodyMarkup:(NSString *)uniqueID
 {
-	static NSString *result;
-	
-	if (!result)
-	{
-		NSString *path = [[NSBundle bundleForClass:self] pathForResource:@"scripttemplate" ofType:@"html"];
-		OBASSERT(path);
-		
-		result = [[NSString alloc] initWithContentsOfFile:path usedEncoding:NULL error:NULL];
-	}
-	
-	return result;
+    id<SVPlugInContext> context = [SVPlugIn currentContext];
+    
+    NSString *linksFlag = (self.openLinksInNewWindow) ? @"true" : @"false";
+    NSString *timestampFlag = (self.includeTimestamp) ? @"true" : @"false";
+    NSString *script1 = [NSString stringWithFormat:
+                        @"<script type=\"text/javascript\">\n"
+                        @"function twitterCallback%@(obj)\n"
+                        @"{\n"
+                        @" twitterCallback_withOptions(obj, 'twitter_div_%@', %@, %@;"
+                        @"}\n"
+                        @"</script>\n",
+                        uniqueID, uniqueID, linksFlag, timestampFlag];
+    [[context endBodyMarkup] appendString:script1];
+    
+    NSString *script2 = [NSString stringWithFormat:
+                         @"<script type=\"text/javascript\" src=\"http://twitter.com/statuses/user_timeline/%@.json?callback=twitterCallback%@&amp;count=%ld\"></script>",
+                         self.username, uniqueID, self.count];
+    [[context endBodyMarkup] appendString:script2];
 }
 
-
-//- (void)addLevelTextToEndBody:(NSMutableString *)ioString forPage:(KTPage *)aPage
-//{
-//	if ([[self delegateOwner] valueForKey:@"username"])
-//	{
-//		// Append element-specific script
-//		NSString *template = [[self class] scriptTemplate];
-//		KTHTMLParser *parser = [[KTHTMLParser alloc] initWithTemplate:template component:[self delegateOwner]];
-//		[parser setCurrentPage:aPage];
-//		
-//		NSString *script = [parser parseTemplate];
-//		if (script) [ioString appendString:script];
-//		
-//		[parser release];
-//	}
-//}
 
 #pragma mark -
 #pragma mark SVPlugInPasteboardReading
@@ -186,7 +190,6 @@
 	return KTSourcePriorityNone;
 }
 
-// returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
 - (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
 {
     NSURL *URL = [item URL];
