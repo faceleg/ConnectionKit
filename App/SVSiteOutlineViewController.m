@@ -475,12 +475,13 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	
 	
 	// Do the reload
-	NSArray *oldSelection = [[self outlineView] selectedItems];
+	//NSArray *oldSelection = [[self outlineView] selectedItems];
 	[self reloadItem:page reloadChildren:YES];
 	
 	
 	
 	// Correct the selection
+    /*  I think this should be handled by SVPagesController these days. #92429
 	NSMutableSet *correctedSelection = [NSMutableSet setWithArray:oldSelection];
 	[correctedSelection minusSet:removedPages];
 		
@@ -497,9 +498,10 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	{
 		OBASSERT(page);
         [correctedSelection addObject:page];
-	}
+     }
+     */
 	
-	[[self outlineView] selectItems:[correctedSelection allObjects] forceDidChangeNotification:YES];
+	[[self outlineView] selectItems:[[self content] selectedObjects] forceDidChangeNotification:NO];
 }
 
 /*	There was a change that doesn't affect the tree itself, so we just need to mark the outline for display.
