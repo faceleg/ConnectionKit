@@ -205,7 +205,7 @@
 	
 	
 	self.HTMLTextPageMenuItem = [pulldownButton lastItem];		// save for later since this gets hidden if not Pro
-	[self.HTMLTextPageMenuItem setIconImage:[NSImage imageNamed:@"HTML"]];
+	[self.HTMLTextPageMenuItem setIconImage:[NSImage imageNamed:@"toolbar_html_element"]];
 	
     [menu addItem:[NSMenuItem separatorItem]];
     
