@@ -39,7 +39,8 @@
 
 
 @interface TwitterFeedPlugIn ()
-- (void)writeScriptToEndBodyMarkup:(NSString *)uniqueID;
+//- (void)writeScriptToEndBodyMarkup:(NSString *)uniqueID;
+- (void)writeScriptToEndBodyMarkup:(NSString *)uniqueID context:(id<SVPlugInContext>)context;
 @end
 
 
@@ -99,7 +100,7 @@
     // add resources
     NSString *resourcePath = [[self bundle] pathForResource:@"twittercallbacktemplate" ofType:@"js"];
     NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
-    NSURL *callbackURL = [[SVPlugIn currentContext] addResourceWithURL:resourceURL];
+    NSURL *callbackURL = [context addResourceWithURL:resourceURL];
     
     NSString *uniqueID = @"twitter_div";
     
@@ -129,7 +130,7 @@
         
         if ( [context isForPublishing] || [context isForEditing] )
         {
-            [self writeScriptToEndBodyMarkup:uniqueID];            
+            [self writeScriptToEndBodyMarkup:uniqueID context:context];            
         }
     }
     else if ( [context isForEditing] )
@@ -147,17 +148,18 @@
 }
 
 
-//            <script type="text/javascript">
-//            function twitterCallback[[=uniqueID]](obj)
-//            {
-//                twitterCallback_withOptions(obj, 'twitter_div_[[=uniqueID]]', [[if openLinksInNewWindow]]true[[else]]false[[endif]], [[if includeTimestamp]]true[[else]]false[[endif]]);
-//            }
-//            </script>
-//            <script type="text/javascript" src="http://twitter.com/statuses/user_timeline/[[=username]].json?callback=twitterCallback[[=uniqueID]]&amp;count=[[=count]]"></script>
+//<script type="text/javascript">
+//function twitterCallback[[=uniqueID]](obj)
+//{
+//    twitterCallback_withOptions(obj, 'twitter_div_[[=uniqueID]]', [[if openLinksInNewWindow]]true[[else]]false[[endif]], [[if includeTimestamp]]true[[else]]false[[endif]]);
+//}
+//</script>
+//<script type="text/javascript" src="http://twitter.com/statuses/user_timeline/[[=username]].json?callback=twitterCallback[[=uniqueID]]&amp;count=[[=count]]"></script>
 
-- (void)writeScriptToEndBodyMarkup:(NSString *)uniqueID
+- (void)writeScriptToEndBodyMarkup:(NSString *)uniqueID context:(id<SVPlugInContext>)context
 {
-    id<SVPlugInContext> context = [SVPlugIn currentContext];
+    //FIXME: why is [SVPlugIn currentContext] returning nil?
+    //id<SVPlugInContext> context = [SVPlugIn currentContext];
     
     NSString *linksFlag = (self.openLinksInNewWindow) ? @"true" : @"false";
     NSString *timestampFlag = (self.includeTimestamp) ? @"true" : @"false";
@@ -165,14 +167,14 @@
                         @"<script type=\"text/javascript\">\n"
                         @"function twitterCallback%@(obj)\n"
                         @"{\n"
-                        @" twitterCallback_withOptions(obj, 'twitter_div%@', %@, %@;"
+                        @"    twitterCallback_withOptions(obj, '%@', %@, %@);\n"
                         @"}\n"
                         @"</script>\n",
                         uniqueID, uniqueID, linksFlag, timestampFlag];
     [[context endBodyMarkup] appendString:script1];
     
     NSString *script2 = [NSString stringWithFormat:
-                         @"<script type=\"text/javascript\" src=\"http://twitter.com/statuses/user_timeline/%@.json?callback=twitterCallback%@&amp;count=%ld\"></script>",
+                         @"<script type=\"text/javascript\" src=\"http://twitter.com/statuses/user_timeline/%@.json?callback=twitterCallback%@&amp;count=%ld\">\n</script>\n",
                          self.username, uniqueID, self.count];
     [[context endBodyMarkup] appendString:script2];
 }
