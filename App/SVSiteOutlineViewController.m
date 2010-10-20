@@ -59,7 +59,6 @@
 - (void)setDropSiteItem:(id)item dropChildIndex:(NSInteger)index;
 
 - (BOOL)moveSiteItems:(NSArray *)items intoCollection:(KTPage *)collection childIndex:(NSInteger)index;
-- (BOOL)acceptArchivedPagesDrop:(NSArray *)archivedPages ontoPage:(KTPage *)page childIndex:(int)anIndex;
 
 @end
 
