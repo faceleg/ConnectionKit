@@ -389,7 +389,14 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [textAttachment setGraphic:image];
     [textAttachment setBody:text];
     [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
-    [textAttachment setCausesWrap:[NSNumber numberWithBool:NO]];
+    
+    
+    // Match wrap settings if possible
+    DOMCSSStyleDeclaration *style = [[[self webEditor] webView] computedStyleForElement:imageElement
+                                                                          pseudoElement:nil];
+    
+    [textAttachment setCausesWrap:[NSNumber numberWithBool:
+                                   ([[style display] isEqualToString:@"block"] ? YES : NO)]];
     
     
     // Create controller for graphic and hook up to imported node
