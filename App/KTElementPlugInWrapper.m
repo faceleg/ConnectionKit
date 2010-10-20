@@ -210,7 +210,7 @@
     NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
                             NSLocalizedString(@"Empty Collection", "toolbar menu"), @"KTPresetTitle",
                             [NSNumber numberWithInt:0], @"KTPluginPriority",
-							[NSImage imageNamed:@"toolbar_empty_page.tiff" ], @"KTPluginIcon",	// indicator of the actual icon
+							[NSImage imageNamed:@"toolbar_collection.tiff" ], @"KTPluginIcon",	// indicator of the actual icon
                             nil];
     
     return result;
