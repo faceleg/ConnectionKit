@@ -544,8 +544,13 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     }
 }
 
-- (void) willRemoveObjects:(NSArray *)objects;
+/* We manage removals by modifying the model directly, so don't call through to super
+ */
+
+- (void)removeObjectsAtArrangedObjectIndexes:(NSIndexSet *)indexes
 {
+    NSArray *objects = [[self arrangedObjects] objectsAtIndexes:indexes];
+    
     // Remove the pages from their parents
     NSSet *pages = [[NSSet alloc] initWithArray:objects];
     
@@ -559,7 +564,12 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     
     // Delete
-    [super willRemoveObjects:objects];
+    [self willRemoveObjects:objects];
+}
+
+- (void)removeObjectAtArrangedObjectIndex:(NSUInteger)index;
+{
+    [self removeObjectsAtArrangedObjectIndexes:[NSIndexSet indexSetWithIndex:index]];
 }
 
 - (void) willRemoveObject:(id)object;
