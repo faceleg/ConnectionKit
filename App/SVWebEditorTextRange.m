@@ -107,7 +107,7 @@
     
     
     // Locate the end of the range
-    [range ks_setStartWithIndexPath:[self endIndexPath] fromNode:commonAncestorContainer];
+    [range ks_setEndWithIndexPath:[self endIndexPath] fromNode:commonAncestorContainer];
 }
 
 #pragma mark NSCopying
