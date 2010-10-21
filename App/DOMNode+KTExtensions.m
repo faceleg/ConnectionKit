@@ -144,7 +144,7 @@
  */
 - (DOMNode *)descendantNodeAtIndexPath:(NSIndexPath *)indexPath
 {
-	DOMNode *result = nil;
+	DOMNode *result = self; // empty paths should return self
 	
 	DOMNode *aParentNode = self;
 	unsigned position;
