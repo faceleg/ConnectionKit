@@ -169,6 +169,7 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 #pragma mark Save Panel
 
+/*  We were putting up an iWork-esque control over whether audio & video get copied in. Changed mind on that. #63782
 - (BOOL)prepareSavePanel:(NSSavePanel *)savePanel;
 {
     BOOL result = [super prepareSavePanel:savePanel];
@@ -182,7 +183,7 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
     [savePanel setAccessoryView:[_accessoryViewController view]];
     
     return result;
-}
+}*/
 
 - (NSArray *)writableTypesForSaveOperation:(NSSaveOperationType)saveOperation
 {
