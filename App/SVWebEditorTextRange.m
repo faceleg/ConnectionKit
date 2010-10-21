@@ -8,9 +8,8 @@
 
 #import "SVWebEditorTextRange.h"
 
-#import "DOMNode+KTExtensions.h"
+#import "DOMRange+Karelia.h"
 
-#import "NSIndexPath+Karelia.h"
 #import "DOMNode+Karelia.h"
 
 
@@ -71,13 +70,11 @@
                               containerNode:(DOMNode *)containerNode;
 {
     // Seek out the start index
-    NSIndexPath *startPath = [[[domRange startContainer] indexPathFromNode:containerNode]
-                              indexPathByAddingIndex:[domRange startOffset]];
+    NSIndexPath *startPath = [domRange ks_startIndexPathFromNode:containerNode];
     
     
     // Seek out end index
-    NSIndexPath *endPath = [[[domRange endContainer] indexPathFromNode:containerNode]
-                            indexPathByAddingIndex:[domRange endOffset]];
+    NSIndexPath *endPath = [domRange ks_endIndexPathFromNode:containerNode];
     
     
     // Build the result
@@ -105,16 +102,12 @@
 - (void)populateDOMRange:(DOMRange *)range fromContainerNode:(DOMNode *)commonAncestorContainer;
 {
     // Locate the start of the range. OUCH
-    NSIndexPath *containerPath = [[self startIndexPath] indexPathByRemovingLastIndex];
-    [range setStart:[commonAncestorContainer descendantNodeAtIndexPath:containerPath]
-             offset:[[self startIndexPath] lastIndex]];
+    [range ks_setStartWithIndexPath:[self startIndexPath] fromNode:commonAncestorContainer];
     
     
     
     // Locate the end of the range
-    containerPath = [[self endIndexPath] indexPathByRemovingLastIndex];
-    [range setEnd:[commonAncestorContainer descendantNodeAtIndexPath:containerPath]
-           offset:[[self endIndexPath] lastIndex]];
+    [range ks_setStartWithIndexPath:[self endIndexPath] fromNode:commonAncestorContainer];
 }
 
 #pragma mark NSCopying
