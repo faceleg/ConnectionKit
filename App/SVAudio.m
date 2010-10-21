@@ -73,7 +73,6 @@
 #import "SVHTMLContext.h"
 #import "NSString+Karelia.h"
 #import "NSBundle+Karelia.h"
-#import "QTMovie+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSColor+Karelia.h"
 
