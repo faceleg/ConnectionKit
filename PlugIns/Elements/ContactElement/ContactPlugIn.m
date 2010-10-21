@@ -102,6 +102,13 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	[pool release];
 }
 
+- (void)awakeFromNew;
+{
+    [super awakeFromNew];
+    
+    [self setAddress:[KSEmailAddressComboBox primaryEmailAddress]];
+}
+
 + (NSArray *)plugInKeys;
 {
     return [NSArray arrayWithObjects:@"fields", @"address", @"copyToSender", @"sendButtonTitle", @"subjectLabel", @"emailLabel", @"nameLabel", @"messageLabel", @"sideLabels", @"subjectType", @"subjectText", nil];
