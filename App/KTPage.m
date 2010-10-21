@@ -425,11 +425,16 @@
                     id <SVMedia> media = [source thumbnailMedia];
                     NSString *type = [(SVMediaRecord *)media typeOfFile];
                     
+                    NSString *title = [[[media preferredUploadPath] lastPathComponent]stringByDeletingPathExtension];
+                    title = [title stringByAppendingFormat:@"_%u", width];
+                    NSString *filename = [title stringByAppendingPathExtension:[NSString filenameExtensionForUTI:type]];
+                    
                     [context writeImageWithSourceMedia:media
                                                    alt:@""
                                                  width:[NSNumber numberWithUnsignedInteger:width]
                                                 height:[NSNumber numberWithUnsignedInteger:height]
-                                                  type:type];
+                                                  type:type
+                                     preferredFilename:filename];
                 }
                 return YES;
             }

@@ -309,7 +309,8 @@
                                        alt:alt
                                      width:self.container.width
                                     height:self.container.height
-                                      type:[[self container] typeToPublish]];
+                                      type:[[self container] typeToPublish]
+                         preferredFilename:nil];
     }
     else
     {

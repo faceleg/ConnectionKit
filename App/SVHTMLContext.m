@@ -816,9 +816,10 @@
                               alt:(NSString *)altText
                             width:(NSNumber *)width
                            height:(NSNumber *)height
-                             type:(NSString *)type;
+                             type:(NSString *)type
+                preferredFilename:(NSString *)filename;
 {
-    NSURL *URL = [self addImageMedia:media width:width height:height type:type preferredFilename:nil];
+    NSURL *URL = [self addImageMedia:media width:width height:height type:type preferredFilename:filename];
     NSString *src = (URL ? [self relativeURLStringOfURL:URL] : @"");
     
     [self writeImageWithSrc:src

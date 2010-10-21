@@ -449,7 +449,8 @@
                                            alt:@""
                                          width:[NSNumber numberWithUnsignedInteger:width]
                                         height:[NSNumber numberWithUnsignedInteger:height]
-                                          type:nil];
+                                          type:nil
+                             preferredFilename:nil];
         }
         return YES;
     }

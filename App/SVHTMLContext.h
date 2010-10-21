@@ -202,7 +202,8 @@ typedef enum {
                               alt:(NSString *)altText
                             width:(NSNumber *)width
                            height:(NSNumber *)height
-                             type:(NSString *)type;
+                             type:(NSString *)type
+                preferredFilename:(NSString *)preferredFilename;
 
 
 #pragma mark Resource Files
