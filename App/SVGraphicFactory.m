@@ -146,6 +146,8 @@
 {
     SVMediaGraphic *result = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
     [result awakeFromPasteboardItem:item];
+    [result makeOriginalSize]; // It's someone else's responsibility to make it smaller again. #92640
+    
     return result;
 }
 
