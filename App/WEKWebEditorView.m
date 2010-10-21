@@ -30,6 +30,8 @@
 #import "NSWorkspace+Karelia.h"
 #import "WebView+Karelia.h"
 
+#import "KSHTMLWriter+DOM.h"
+
 
 NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlaySelectionDidChange";
 NSString *kSVWebEditorViewWillChangeNotification = @"SVWebEditorViewWillChange";
@@ -496,10 +498,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
         else if ([itemToDeselect webEditor] == self)
         {
             DOMElement *element = [itemToDeselect selectableDOMElement];
-            DOMRange *range = [[element ownerDocument] createRange];
-            [range setStartBefore:element];
-            [range collapse:YES];
-            [self setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
+            if ([element ks_isDescendantOfDOMNode:[element ownerDocument]])
+            {
+                DOMRange *range = [[element ownerDocument] createRange];
+                [range setStartBefore:element];
+                [range collapse:YES];
+                [self setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
+            }
         }
     }
     
