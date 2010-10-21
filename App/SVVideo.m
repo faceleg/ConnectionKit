@@ -85,8 +85,7 @@
 
 @interface SVVideo ()
 
-- (void)loadMovie;
-- (void)loadMovieFromAttributes:(NSDictionary *)anAttributes;
+- (BOOL)loadMovieFromAttributes:(NSDictionary *)anAttributes;
 - (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
 - (void)calculateMovieDimensions:(QTMovie *)aMovie;
 - (void)calculateMoviePlayability:(QTMovie *)aMovie;
@@ -312,7 +311,6 @@
 	self.container.naturalHeight = nil;
 	
 	// Load the movie to figure out the media size and codecType and poster frame
-	[self loadMovie];
 }
 
 - (void)didSetSource;
@@ -328,8 +326,50 @@
         if (self.width > width) self.width = width;
     }
     
-    // Match file type
-    //// STILL NEEDED? [self setCodecType:[self.media typeOfFile]];
+	if (self.media || self.externalSourceURL)
+	{
+		BOOL shouldSetSourceFromMedia = [self shouldSetSourceFromMedia:self.media orURL:self.externalSourceURL];
+		NSLog(@"shouldSetSourceFromMedia = %d", shouldSetSourceFromMedia);
+	}
+}
+
+- (BOOL)shouldSetSourceFromMedia:(SVMediaRecord *)aMedia orURL:(NSURL *)aURL;
+{
+	BOOL result = NO;
+	// Try to make a QTMovie out of this, or parse as FLV which is a special case (since QT is not needed to show.)
+
+	NSURL *movieSourceURL = nil;
+	BOOL openAsync = YES;			// I think this will be OK for both
+	
+	
+    if (aMedia)
+    {
+		movieSourceURL = [aMedia mediaURL];
+		self.codecType = [NSString UTIForFileAtPath:[movieSourceURL path]];	// actually look at the file, not just its extension
+	}
+	else
+	{
+		movieSourceURL = aURL;
+		self.codecType = [NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]];
+	}
+	if (movieSourceURL)
+	{
+		NSMutableDictionary *movieAttributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
+												movieSourceURL, QTMovieURLAttribute,
+												[NSNumber numberWithBool:openAsync], QTMovieOpenAsyncOKAttribute,
+												nil];
+		if (IMBRunningOnSnowLeopardOrNewer())
+		{
+			// Wait, DON'T do this necessarily ... Problem is that when we try to do betterPosterImage
+			// (to determine poster image for remote URL) it won't allow us if we opened the movie
+			// for playback only.
+			// *** Canceling drag because exception 'QTDisallowedForInitializationPurposeException' (reason 'Tried to use QTMovie method quickTimeMovie, which is not allowed when QTMovieOpenForPlaybackAttribute is YES.') was raised during a dragging session
+			
+			// [movieAttributes setValue:[NSNumber numberWithBool:YES] forKey:@"QTMovieOpenForPlaybackAttribute"];	// From Tim Monroe @ WWDC2010, so we can check how movie was loaded
+		}
+		result = [self loadMovieFromAttributes:movieAttributes];
+	}
+	return result;
 }
 
 + (BOOL)acceptsType:(NSString *)uti;
@@ -998,50 +1038,13 @@
 	_dimensionCalculationMovie = aMovie;
 }
 
-// Loads or reloads the movie from URL, path, or data.
-- (void)loadMovie;
-{
-	NSURL *movieSourceURL = nil;
-	BOOL openAsync = YES;			// I think this will be OK for both
-	
-	SVMediaRecord *media = self.media;
-	
-    if (media)
-    {
-		movieSourceURL = [media mediaURL];
-		self.codecType = [NSString UTIForFileAtPath:[movieSourceURL path]];
-	}
-	else
-	{
-		movieSourceURL = self.externalSourceURL;
-		self.codecType = [NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]];
-	}
-	if (movieSourceURL)
-	{
-		NSMutableDictionary *movieAttributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
-						   movieSourceURL, QTMovieURLAttribute,
-						   [NSNumber numberWithBool:openAsync], QTMovieOpenAsyncOKAttribute,
-						   nil];
-		if (IMBRunningOnSnowLeopardOrNewer())
-		{
-			// Wait, DON'T do this necessarily ... Problem is that when we try to do betterPosterImage
-			// (to determine poster image for remote URL) it won't allow us if we opened the movie
-			// for playback only.
-			// *** Canceling drag because exception 'QTDisallowedForInitializationPurposeException' (reason 'Tried to use QTMovie method quickTimeMovie, which is not allowed when QTMovieOpenForPlaybackAttribute is YES.') was raised during a dragging session
 
-			// [movieAttributes setValue:[NSNumber numberWithBool:YES] forKey:@"QTMovieOpenForPlaybackAttribute"];	// From Tim Monroe @ WWDC2010, so we can check how movie was loaded
-		}
-		[self loadMovieFromAttributes:movieAttributes];
-		
-	}
-}
-
-- (void)loadMovieFromAttributes:(NSDictionary *)anAttributes
+- (BOOL)loadMovieFromAttributes:(NSDictionary *)anAttributes
 {
+	BOOL result = NO;
 	// Ignore for background threads as there is no need to do this during a doc import
 	// (STILL APPLICABLE FOR SANDVOX 2?
-    if (![NSThread isMainThread]) return;
-    
+    if (![NSThread isMainThread])  return NO;
     
     [self setDimensionCalculationMovie:nil];	// will clear out any old movie, exit movies on thread
 	NSError *error = nil;
@@ -1055,7 +1058,7 @@
 	
 	movie = [[[QTMovie alloc] initWithAttributes:anAttributes
 										   error:&error] autorelease];
-	if (movie)
+	if (movie && [[movie tracks] count] && (NSOrderedSame != QTTimeCompare([movie duration], QTZeroTime)))
 	{
 		long movieLoadState = [[movie attributeForKey:QTMovieLoadStateAttribute] longValue];
 		
@@ -1087,6 +1090,7 @@
 															 name:QTMovieLoadStateDidChangeNotification object:movie];
 			}
 		}
+		result = YES;	// OK to go ... we will be be getting asynchronous loading stuff coming in soon.
 	}
 	else	// No movie?  Maybe it's a format that QuickTime can't read.  We can try FLV
 	{
@@ -1117,6 +1121,9 @@
 			{
 				self.dimensionCalculationConnection = [[[KSSimpleURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:URL] delegate:self] autorelease];
 				self.dimensionCalculationConnection.bytesNeeded = 1024;	// Let's just get the first 1K ... should be enough.
+
+				// I don't have the dimensions right now, however I am assuming that if we got this far then we are ok.
+				result = YES;	// if we got dimensions, then this is defintely readable.
 			}
 		}
 		if (nil != movieData)
@@ -1127,9 +1134,12 @@
 			{
 				self.container.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
 				self.container.naturalHeight = [NSNumber numberWithFloat:dimensions.height];
+				
+				result = YES;	// if we got dimensions, then this is defintely readable.
 			}
 		}
 	}
+	return result;
 }
 	
 // Asynchronous load returned -- try to set the dimensions.
