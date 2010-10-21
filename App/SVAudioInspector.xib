@@ -34,22 +34,22 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="NSButton" id="307583445">
+					<object class="NSButton" id="1014930933">
 						<reference key="NSNextResponder" ref="913361672"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{7, 8}, {166, 18}}</string>
 						<reference key="NSSuperview" ref="913361672"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSButtonCell" key="NSCell" id="411660683">
+						<object class="NSButtonCell" key="NSCell" id="227856647">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">131072</int>
-							<string key="NSContents">Copy movie into document</string>
+							<string key="NSContents">Copy audio into document</string>
 							<object class="NSFont" key="NSSupport" id="26">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">11</double>
 								<int key="NSfFlags">3100</int>
 							</object>
-							<reference key="NSControlView" ref="307583445"/>
+							<reference key="NSControlView" ref="1014930933"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
 							<object class="NSCustomResource" key="NSNormalImage">
@@ -65,7 +65,7 @@
 							<int key="NSPeriodicInterval">25</int>
 						</object>
 					</object>
-					<object class="NSBox" id="224958683">
+					<object class="NSBox" id="352482976">
 						<reference key="NSNextResponder" ref="913361672"/>
 						<int key="NSvFlags">10</int>
 						<string key="NSFrame">{{10, 52}, {210, 5}}</string>
@@ -75,12 +75,12 @@
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">0</int>
 							<string key="NSContents">Box</string>
-							<object class="NSFont" key="NSSupport" id="942718712">
+							<object class="NSFont" key="NSSupport" id="733481319">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">13</double>
 								<int key="NSfFlags">1044</int>
 							</object>
-							<object class="NSColor" key="NSBackgroundColor" id="184282404">
+							<object class="NSColor" key="NSBackgroundColor" id="1061399072">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
 								<string key="NSColorName">textBackgroundColor</string>
@@ -99,22 +99,22 @@
 						<int key="NSTitlePosition">0</int>
 						<bool key="NSTransparent">NO</bool>
 					</object>
-					<object class="NSTextField" id="329045380">
+					<object class="NSTextField" id="295364444">
 						<reference key="NSNextResponder" ref="913361672"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{7, 32}, {60, 14}}</string>
 						<reference key="NSSuperview" ref="913361672"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="854764640">
+						<object class="NSTextFieldCell" key="NSCell" id="133998957">
 							<int key="NSCellFlags">67239488</int>
 							<int key="NSCellFlags2">272761856</int>
 							<string key="NSContents">Advanced</string>
-							<object class="NSFont" key="NSSupport" id="227078079">
+							<object class="NSFont" key="NSSupport" id="822852663">
 								<string key="NSName">LucidaGrande-Bold</string>
 								<double key="NSSize">11</double>
 								<int key="NSfFlags">16</int>
 							</object>
-							<reference key="NSControlView" ref="329045380"/>
+							<reference key="NSControlView" ref="295364444"/>
 							<object class="NSColor" key="NSBackgroundColor" id="462958731">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
@@ -191,8 +191,8 @@
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">0</int>
 							<string key="NSContents">Box</string>
-							<reference key="NSSupport" ref="942718712"/>
-							<reference key="NSBackgroundColor" ref="184282404"/>
+							<reference key="NSSupport" ref="733481319"/>
+							<reference key="NSBackgroundColor" ref="1061399072"/>
 							<object class="NSColor" key="NSTextColor">
 								<int key="NSColorSpace">3</int>
 								<bytes key="NSWhite">MCAwLjgwMDAwMDAxMTkAA</bytes>
@@ -354,7 +354,7 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 							<int key="NSCellFlags">67239488</int>
 							<int key="NSCellFlags2">272761856</int>
 							<string key="NSContents">Options</string>
-							<reference key="NSSupport" ref="227078079"/>
+							<reference key="NSSupport" ref="822852663"/>
 							<reference key="NSControlView" ref="328372100"/>
 							<reference key="NSBackgroundColor" ref="462958731"/>
 							<reference key="NSTextColor" ref="565674741"/>
@@ -515,10 +515,10 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: inspectedObjectsController.selection.media.shouldCopyFileIntoDocument</string>
-						<reference key="source" ref="307583445"/>
+						<reference key="source" ref="1014930933"/>
 						<reference key="destination" ref="36281372"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="307583445"/>
+							<reference key="NSSource" ref="1014930933"/>
 							<reference key="NSDestination" ref="36281372"/>
 							<string key="NSLabel">value: inspectedObjectsController.selection.media.shouldCopyFileIntoDocument</string>
 							<string key="NSBinding">value</string>
@@ -531,10 +531,10 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: inspectedObjectsController.selection.media.filename</string>
-						<reference key="source" ref="307583445"/>
+						<reference key="source" ref="1014930933"/>
 						<reference key="destination" ref="36281372"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="307583445"/>
+							<reference key="NSSource" ref="1014930933"/>
 							<reference key="NSDestination" ref="36281372"/>
 							<string key="NSLabel">enabled: inspectedObjectsController.selection.media.filename</string>
 							<string key="NSBinding">enabled</string>
@@ -584,9 +584,9 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 							<reference ref="324963362"/>
 							<reference ref="413958448"/>
 							<reference ref="878256204"/>
-							<reference ref="329045380"/>
-							<reference ref="224958683"/>
-							<reference ref="307583445"/>
+							<reference ref="295364444"/>
+							<reference ref="352482976"/>
+							<reference ref="1014930933"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">View</string>
@@ -679,34 +679,34 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">221</int>
-						<reference key="object" ref="329045380"/>
+						<reference key="object" ref="295364444"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="854764640"/>
+							<reference ref="133998957"/>
 						</array>
 						<reference key="parent" ref="913361672"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">222</int>
-						<reference key="object" ref="224958683"/>
+						<reference key="object" ref="352482976"/>
 						<reference key="parent" ref="913361672"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">223</int>
-						<reference key="object" ref="307583445"/>
+						<reference key="object" ref="1014930933"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="411660683"/>
+							<reference ref="227856647"/>
 						</array>
 						<reference key="parent" ref="913361672"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">224</int>
-						<reference key="object" ref="411660683"/>
-						<reference key="parent" ref="307583445"/>
+						<reference key="object" ref="227856647"/>
+						<reference key="parent" ref="1014930933"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">225</int>
-						<reference key="object" ref="854764640"/>
-						<reference key="parent" ref="329045380"/>
+						<reference key="object" ref="133998957"/>
+						<reference key="parent" ref="295364444"/>
 					</object>
 				</array>
 			</object>
