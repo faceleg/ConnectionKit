@@ -51,7 +51,20 @@
     [super dealloc];
 }
 
-#pragma mark Media dimensions
+#pragma mark Metrics
+
+- (void)makeOriginalSize;
+{
+    if ([self media] || ![self externalSourceURL])
+    {
+        [super makeOriginalSize];
+    }
+    else    // external images should go back to auto. #92571
+    {
+        [self setWidth:0];
+        [self setHeight:0];
+    }
+}
 
 + (NSOperationQueue*) sharedDimensionCheckQueue;
 {
