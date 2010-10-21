@@ -334,7 +334,20 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         [orphanedItem setHTMLElement:imageElement];
         [self write:writer selectableItem:(SVGraphicDOMController *)orphanedItem];
-        return [[orphanedItem HTMLElement] nextSibling];
+        DOMNode *result = [[orphanedItem HTMLElement] nextSibling];
+        
+        // Fake a change of text selection so the new item gets noticed and selecred if needed. #92313
+        // Possibly the act of setting a WEKWebEditorItem's HTMLElement could do this automatically
+        WebView *webView = [[self webEditor] webView];
+        DOMRange *selection = [webView selectedDOMRange];
+        
+        [[webView editingDelegate] webView:webView
+              shouldChangeSelectedDOMRange:selection
+                                toDOMRange:selection
+                                  affinity:[webView selectionAffinity]
+                            stillSelecting:NO];
+        
+        return result;
     }
     
     
