@@ -34,13 +34,13 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="NSButton" id="576534866">
+					<object class="NSButton" id="847878665">
 						<reference key="NSNextResponder" ref="913361672"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{7, 8}, {166, 18}}</string>
 						<reference key="NSSuperview" ref="913361672"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSButtonCell" key="NSCell" id="310706431">
+						<object class="NSButtonCell" key="NSCell" id="214170388">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">131072</int>
 							<string key="NSContents">Copy movie into document</string>
@@ -49,7 +49,7 @@
 								<double key="NSSize">11</double>
 								<int key="NSfFlags">3100</int>
 							</object>
-							<reference key="NSControlView" ref="576534866"/>
+							<reference key="NSControlView" ref="847878665"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
 							<object class="NSCustomResource" key="NSNormalImage">
@@ -65,7 +65,7 @@
 							<int key="NSPeriodicInterval">25</int>
 						</object>
 					</object>
-					<object class="NSBox" id="416913477">
+					<object class="NSBox" id="809009204">
 						<reference key="NSNextResponder" ref="913361672"/>
 						<int key="NSvFlags">34</int>
 						<string key="NSFrame">{{10, 52}, {210, 5}}</string>
@@ -99,13 +99,13 @@
 						<int key="NSTitlePosition">0</int>
 						<bool key="NSTransparent">NO</bool>
 					</object>
-					<object class="NSTextField" id="318359588">
+					<object class="NSTextField" id="653530911">
 						<reference key="NSNextResponder" ref="913361672"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{7, 32}, {60, 14}}</string>
 						<reference key="NSSuperview" ref="913361672"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="711894449">
+						<object class="NSTextFieldCell" key="NSCell" id="766989649">
 							<int key="NSCellFlags">67239488</int>
 							<int key="NSCellFlags2">272761856</int>
 							<string key="NSContents">Advanced</string>
@@ -114,7 +114,7 @@
 								<double key="NSSize">11</double>
 								<int key="NSfFlags">16</int>
 							</object>
-							<reference key="NSControlView" ref="318359588"/>
+							<reference key="NSControlView" ref="653530911"/>
 							<object class="NSColor" key="NSBackgroundColor" id="462958731">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
@@ -791,10 +791,10 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: inspectedObjectsController.selection.media.shouldCopyFileIntoDocument</string>
-						<reference key="source" ref="576534866"/>
+						<reference key="source" ref="847878665"/>
 						<reference key="destination" ref="36281372"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="576534866"/>
+							<reference key="NSSource" ref="847878665"/>
 							<reference key="NSDestination" ref="36281372"/>
 							<string key="NSLabel">value: inspectedObjectsController.selection.media.shouldCopyFileIntoDocument</string>
 							<string key="NSBinding">value</string>
@@ -803,6 +803,26 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 						</object>
 					</object>
 					<int key="connectionID">273</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.media.filename</string>
+						<reference key="source" ref="847878665"/>
+						<reference key="destination" ref="36281372"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="847878665"/>
+							<reference key="NSDestination" ref="36281372"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.media.filename</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.media.filename</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSIsNil</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">276</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -845,9 +865,9 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 							<reference ref="628658729"/>
 							<reference ref="562366246"/>
 							<reference ref="849113549"/>
-							<reference ref="318359588"/>
-							<reference ref="416913477"/>
-							<reference ref="576534866"/>
+							<reference ref="653530911"/>
+							<reference ref="809009204"/>
+							<reference ref="847878665"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">View</string>
@@ -1025,34 +1045,34 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">267</int>
-						<reference key="object" ref="318359588"/>
+						<reference key="object" ref="653530911"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="711894449"/>
+							<reference ref="766989649"/>
 						</array>
 						<reference key="parent" ref="913361672"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">268</int>
-						<reference key="object" ref="416913477"/>
+						<reference key="object" ref="809009204"/>
 						<reference key="parent" ref="913361672"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">269</int>
-						<reference key="object" ref="711894449"/>
-						<reference key="parent" ref="318359588"/>
+						<reference key="object" ref="766989649"/>
+						<reference key="parent" ref="653530911"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">270</int>
-						<reference key="object" ref="576534866"/>
+						<reference key="object" ref="847878665"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="310706431"/>
+							<reference ref="214170388"/>
 						</array>
 						<reference key="parent" ref="913361672"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">271</int>
-						<reference key="object" ref="310706431"/>
-						<reference key="parent" ref="576534866"/>
+						<reference key="object" ref="214170388"/>
+						<reference key="parent" ref="847878665"/>
 					</object>
 				</array>
 			</object>
@@ -1125,7 +1145,7 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">273</int>
+			<int key="maxID">276</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
