@@ -222,9 +222,12 @@
         selector == @selector(deleteToBeginningOfLine:) ||
         selector == @selector(deleteBackwardByDecomposingPreviousCharacter:))
     {
-        // Bit of a bug in WebKit that means when you delete backwards in an empty text area, the empty paragraph object gets deleted. Fair enough, but WebKit doesn't send you a delegate message asking permission! #71489 #75402
-        NSString *text = [[self textHTMLElement] innerText];
-        if (![text length] || [text isEqualToString:@"\n"])
+        // Bit of a bug in WebKit that means when you delete backwards from start of a text area, the empty paragraph object gets deleted. Fair enough, but WebKit doesn't send you a delegate message asking permission! #71489 #75402
+        DOMRange *range = [self selectedDOMRange];
+        [range setStart:[self textHTMLElement] offset:0];
+        
+        NSString *text = [range text];
+        if ([text length] == 0)
         {
             return YES;
         }
