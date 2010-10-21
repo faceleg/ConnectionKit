@@ -1444,6 +1444,14 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
 {
     BOOL result = [_draggingDestination performDragOperation:sender];
+    
+    // Ditch the cycle as early as possible to avoid messaging a zombie
+    if (![_draggingDestination respondsToSelector:@selector(concludeDragOperation:)] &&
+        ![_draggingDestination respondsToSelector:@selector(draggingEnded:)])
+    {
+        _draggingDestination = nil;
+    }
+    
     return result;
 }
 
