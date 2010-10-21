@@ -161,6 +161,23 @@
     return result;
 }
 
+#pragma mark -
+#pragma mark Metrics
+
+// Allow zero height for external URL.
+- (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
+{
+    BOOL result = (*height != nil || (![self media] && [self externalSourceURL]));
+    
+    if (!result && error)
+    {
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                     code:NSValidationMissingMandatoryPropertyError
+                     localizedDescription:@"height is a mandatory property"];
+    }
+    
+    return result;
+}
 
 
 #pragma mark -
