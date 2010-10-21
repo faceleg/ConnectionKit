@@ -23,7 +23,13 @@
 @synthesize loop		= _loop;
 @synthesize controller	= _controller;
 @synthesize preload		= _preload;
-@synthesize codecType	= _codecType;
+
+- (NSString *)codecType; { return [[self container] codecType]; }
+- (void)setCodecType:(NSString *)type;
+{
+    [[self container] setCodecType:type];
+    [[self container] didSetSource];
+}
 
 #pragma mark Properties
 
@@ -55,7 +61,6 @@
 			 @"loop",
 			 @"preload",
 			 @"controller",
-			 @"codecType",
 			 nil]];
 }
 

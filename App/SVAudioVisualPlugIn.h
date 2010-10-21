@@ -31,6 +31,7 @@ typedef enum {
 @property  BOOL loop;
 @property  BOOL controller;
 @property  PreloadState preload;
-@property(copy) NSString *codecType;	// determined from file's UTI, or by further analysis
+
+@property(nonatomic, copy) NSString *codecType;	// determined from file's UTI, or by further analysis. NOT KVO-compliant
 
 @end
