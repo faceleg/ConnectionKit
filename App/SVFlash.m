@@ -356,7 +356,7 @@
 - (void)setOriginalSizeFromData:(NSData *)aData;
 {
 	NSSize aSize = NSZeroSize;
-	if ([self attemptToGetSize:&aSize fromSWFData:aData])
+	if ([self attemptToGetSize:&aSize fromSWFData:aData] && aSize.width && aSize.height)
 	{
 		self.container.naturalWidth  = [NSNumber numberWithFloat:aSize.width];
 		self.container.naturalHeight = [NSNumber numberWithFloat:aSize.height];
