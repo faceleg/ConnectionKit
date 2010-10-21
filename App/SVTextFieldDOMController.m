@@ -320,6 +320,13 @@
             [[firstChild className] isEqualToString:@"in"])
         {
             result = firstChild;
+            
+            // Make sure there's no later content outside the <SPAN> #92432
+            DOMNode *nextNode;
+            while (nextNode = [result nextSibling])
+            {
+                [result appendChild:nextNode];
+            }
         }
         else
         {
