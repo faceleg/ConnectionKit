@@ -419,17 +419,25 @@
 
 - (NSRect)drawingRect;  // expressed in our DOM node's document view's coordinates
 {
-    NSRect result = NSZeroRect; // by default, don't draw
+    // By default, do no drawing of our own, only children
+    NSRect result = NSZeroRect;
+    for (WEKWebEditorItem *aChild in [self childWebEditorItems])
+    {
+        result = NSUnionRect(result, [aChild drawingRect]);
+    }
     
     if ([self isEditing])
     {
-        result = NSInsetRect([[self selectableDOMElement] boundingBox], -4.0f, -4.0f);
+        NSRect outline = NSInsetRect([[self selectableDOMElement] boundingBox], -4.0f, -4.0f);
+        result = NSUnionRect(result, outline);
     }
     else if ([self isSelected])
     {
         SVSelectionBorder *border = [self newSelectionBorder];
-        result = [border drawingRectForGraphicBounds:[self rect]];
+        NSRect outline = [border drawingRectForGraphicBounds:[self rect]];
         [border release];
+        
+        result = NSUnionRect(result, outline);
     }
     
     return result;
