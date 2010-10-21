@@ -12,6 +12,7 @@
 
 #import "DOMNode+Karelia.h"
 #import "DOMElement+Karelia.h"
+#import "DOMRange+Karelia.h"
 
 
 @interface SVFieldEditorHTMLWriter ()
@@ -331,11 +332,27 @@
 
 - (DOMElement *)changeDOMElement:(DOMElement *)element toTagName:(NSString *)tagName;
 {
-    //WebView *webView = [[[element ownerDocument] webFrame] webView];
+    // When editing the DOM, WebKit has a nasty habbit of losing track of the selection. Since we're swapping one node for another, can correct by deducing new selection from index paths.
+    // We probably don't actually need to do this for all changes, only those inside the selection, but then, maybe that's where all changes should be happening anyway?
+    DOMDocument *doc = [element ownerDocument];
+    WebView *webView = [[doc webFrame] webView];
+    DOMRange *selection = [webView selectedDOMRange];
     
+    NSIndexPath *startPath = [selection ks_startIndexPathFromNode:doc];
+    NSIndexPath *endPath = [selection ks_endIndexPathFromNode:doc];
+    
+    // Make replacement
     DOMElement *result = [[element parentNode] replaceChildNode:element
                                       withElementWithTagName:tagName
                                                 moveChildren:YES];
+    
+    
+    // Try to correct selection
+    if (startPath) [selection ks_setStartWithIndexPath:startPath fromNode:doc];
+    if (endPath) [selection ks_setEndWithIndexPath:endPath fromNode:doc];
+    
+    [webView setSelectedDOMRange:selection affinity:[webView selectionAffinity]];
+    
     
     return result;
 }
