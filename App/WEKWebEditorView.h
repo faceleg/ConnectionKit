@@ -44,7 +44,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     BOOL            _liveLinks;
     NSPasteboard    *_insertionPasteboard;
     
-    WEKWebEditorItem <SVWebEditorText>   *_changingTextController;   // weak ref, only used in passing
+    NSMutableArray  *_changingTextControllers;
     
     // Drag & Drop
     NSArray     *_draggedItems;

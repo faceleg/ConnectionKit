@@ -185,7 +185,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [_rootItem release];
     
     [_selectedItems release];
-    OBASSERT(!_changingTextController);
+    [_changingTextControllers release];
     
     [_webView close];
     [_webView release];
@@ -774,13 +774,20 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [[NSNotificationCenter defaultCenter]
      postNotificationName:kSVWebEditorViewWillChangeNotification object:self];
     
-    _changingTextController = textController;
     
+    // Mark the controller that's changing. Be lazy about it!
+    if (!_changingTextControllers) _changingTextControllers = [[NSMutableArray alloc] initWithCapacity:1];
+    OBASSERT(_changingTextControllers);
     
-    // Temporarily mark the DOM as changing. #80643
-    // Yes, this is a rather horrible, kludgy hack. Mike.
-    DOMDocument *doc = [self HTMLDocument];
-    [[doc documentElement] setAttribute:@"class" value:@"webeditor-changing"];
+    if (![_changingTextControllers containsObjectIdenticalTo:textController])
+    {
+        [_changingTextControllers addObject:textController];
+        
+        // Temporarily mark the DOM as changing. #80643
+        // Yes, this is a rather horrible, kludgy hack. Mike.
+        DOMDocument *doc = [self HTMLDocument];
+        [[doc documentElement] setAttribute:@"class" value:@"webeditor-changing"];
+    }
     
     
     return YES;
@@ -793,8 +800,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [[doc documentElement] removeAttribute:@"class"];
     
     
-    [_changingTextController webEditorTextDidChange];
-    _changingTextController = nil;
+    [_changingTextControllers makeObjectsPerformSelector:@selector(webEditorTextDidChange)];
+    [_changingTextControllers removeAllObjects];
     
     [[NSNotificationCenter defaultCenter]
      postNotificationName:kSVWebEditorViewDidChangeNotification object:self];
@@ -1900,6 +1907,17 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     BOOL result = [self canEditText];
     
+    
+    // In the case of dragging text within the editor, WebKit should ask our permission to edit the source range too, but doesn't in y testing. #92432. We'll have to fake it until Apple make it!
+    if (result)
+    {
+        if (action == WebViewInsertActionDropped)
+        {
+            result = [self webView:webView shouldDeleteDOMRange:[self selectedDOMRange]];
+        }
+    }
+     
+    
     if (result)
     {
         id <SVWebEditorText> text = [self textItemForDOMRange:range];
@@ -1921,6 +1939,17 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 - (BOOL)webView:(WebView *)webView shouldInsertText:(NSString *)string replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 {
     BOOL result = [self canEditText];
+    
+    
+    // In the case of dragging text within the editor, WebKit should ask our permission to edit the source range too, but doesn't in y testing. #92432. We'll have to fake it until Apple make it!
+    if (result)
+    {
+        if (action == WebViewInsertActionDropped)
+        {
+            result = [self webView:webView shouldDeleteDOMRange:[self selectedDOMRange]];
+        }
+    }
+    
     
     if (result)
     {
