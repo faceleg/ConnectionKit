@@ -70,7 +70,7 @@ enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 
 /*
  Plugin Properties we use:
-	
+ 
  sendButtonTitle
  subjectPrompt
  subjectText
@@ -88,25 +88,18 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-
+	
     [ContactPlugIn setKeys:
-        [NSArray arrayWithObjects: @"address", nil]
-        triggerChangeNotificationsForDependentKey: @"encodedRecipient"];
+	 [NSArray arrayWithObjects: @"address", nil]
+triggerChangeNotificationsForDependentKey: @"encodedRecipient"];
 	[ContactPlugIn setKeys:
-        [NSArray arrayWithObjects: @"subjectType", nil]
-        triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
+	 [NSArray arrayWithObjects: @"subjectType", nil]
+triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
 	[ContactPlugIn setKeys:
-        [NSArray arrayWithObjects: @"subjectType", @"subjectText", nil]
-        triggerChangeNotificationsForDependentKey: @"subjectInputHTML"];
+	 [NSArray arrayWithObjects: @"subjectType", @"subjectText", nil]
+triggerChangeNotificationsForDependentKey: @"subjectInputHTML"];
 	
 	[pool release];
-}
-
-- (void)awakeFromNew;
-{
-    [super awakeFromNew];
-    
-    [self setAddress:[KSEmailAddressComboBox primaryEmailAddress]];
 }
 
 + (NSArray *)plugInKeys;
@@ -134,12 +127,12 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
     // Create initial fields if needed
     if (![self fields])
 	{
-        // Want to localize field labels according to the site…
+        // Want to localize field labels according to the site‚Ä¶
 		NSString *languageCode = [page language];
         NSDictionary *localizations = [[NSDictionary alloc] initWithContentsOfFile:[[self bundle] pathForResource:@"ContactStrings" ofType:@"plist"]];
         NSDictionary *localizedStrings = [localizations objectForKey:languageCode];
         
-		// …if not found, try the langauge without a region, e.g. fr-CA -> fr
+		// ‚Ä¶if not found, try the langauge without a region, e.g. fr-CA -> fr
         if (!localizedStrings)
         {
             unsigned int whereDash = [languageCode rangeOfString:@"-"].location;
@@ -152,7 +145,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
         
         // TO DO ... try the current langauge
         
-        // …last resort, try English
+        // ‚Ä¶last resort, try English
         if (!localizedStrings) localizedStrings = [localizations objectForKey:@"en"];
         
         
@@ -225,15 +218,15 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	{
 		case kKTContactSubjectField:
 			result = LocalizedStringInThisBundle(@"Suggested Subject (optional)",
-									   @"Label for subject field when it will be a text field");
+												 @"Label for subject field when it will be a text field");
 			break;
 		case kKTContactSubjectSelection:
 			result = LocalizedStringInThisBundle(@"List of Subjects (separate by commas)",
-									   @"Label for subject field when it will be a selection menu");
+												 @"Label for subject field when it will be a selection menu");
 			break;
 		case kKTContactSubjectHidden:
 			result = LocalizedStringInThisBundle(@"Fixed Subject for all messages",
-									   @"Label for subject field when it will be hidden");
+												 @"Label for subject field when it will be hidden");
 			break;
 	}
 	return result;
@@ -256,7 +249,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	{
 		case kKTContactSubjectField:
 			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"text\" value=\"%@\" />", 
-				[([self delegateOwner]) uniqueID], [subjectText stringByEscapingHTMLEntities]];
+					  [([self delegateOwner]) uniqueID], [subjectText stringByEscapingHTMLEntities]];
 			break;
 		case kKTContactSubjectSelection:
 		{
@@ -266,21 +259,21 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 			NSArray *lineArray = [subjectText componentsSeparatedByLineSeparators];
 			NSEnumerator *theEnum = [lineArray objectEnumerator];
 			NSString *oneLine;
-
+			
 			[buf appendFormat:@"<select id=\"s%@\" name=\"s\">", [[self delegateOwner] uniqueID]];
 			while (nil != (oneLine = [theEnum nextObject]) )
 			{
 				NSArray *commaArray = [oneLine componentsSeparatedByCommas];
 				NSEnumerator *theEnum = [commaArray objectEnumerator];
 				NSString *oneItem;
-
+				
 				while (nil != (oneItem = [theEnum nextObject]) )
 				{
 					NSString *trimmedItem = [oneItem trim];
 					if (![trimmedItem isEqualToString:@""])
 					{
 						[buf appendFormat:[NSString stringWithFormat:@"<option>%@</option>",
-							[trimmedItem stringByEscapingHTMLEntities]]];
+										   [trimmedItem stringByEscapingHTMLEntities]]];
 					}
 				}
 				
@@ -291,7 +284,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		}
 		case kKTContactSubjectHidden:
 			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"hidden\" value=\"%@\" />", 
-				[[self delegateOwner] uniqueID], [subjectText stringByEscapingHTMLEntities]];
+					  [[self delegateOwner] uniqueID], [subjectText stringByEscapingHTMLEntities]];
 			break;
 	}
 	
@@ -320,7 +313,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	// where there's junk at the end.
 	
 	[mailData getBytes:inBytes];
-
+	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSString *passwordString = [defaults objectForKey:@"mailmePassword"];
 	if (nil == passwordString)
@@ -351,9 +344,9 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	
 	NSData *trimmedData = [NSData dataWithBytes:outBytes length:newLength];
 	NSString *result = [trimmedData base64Encoding];
-
-//	LOG((@"Encrypted %@ as %@ --> %@", email, trimmedData, result ));
-
+	
+	//	LOG((@"Encrypted %@ as %@ --> %@", email, trimmedData, result ));
+	
 #ifdef DEBUG
     [self decode:result];
 #endif    
@@ -365,7 +358,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 - (void)decode:(NSString *)v
 {
     NSData *decodedTrimmedData = [NSData dataWithBase64EncodedString:v];
-
+	
     unsigned char outBytes[MAX_EMAILS_LENGTH];
 	unsigned char inBytes[MAX_EMAILS_LENGTH] = { 0 };
     [decodedTrimmedData getBytes:inBytes];
@@ -380,8 +373,8 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	
 	BF_KEY key;
 	BF_set_key(&key, (int) strlen(password), (unsigned char *) password);
-
-
+	
+	
     unsigned char ivec[8] = { 0,0,0,0, 0,0,0,0 };
 	int num = 0;
 	
@@ -393,8 +386,8 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 					 &num,						// num
 					 BF_DECRYPT);				// encode vs. decode
     
-//    NSString *decryptedEmail = [NSString stringWithCString:(const char *)outBytes encoding:NSUTF8StringEncoding]; // encoding should match the encoding of mailData, above, shouldn't it???
-//	NSLog(@"Decrypted %@ --> %@ as %@", v, decodedTrimmedData, decryptedEmail);
+	//    NSString *decryptedEmail = [NSString stringWithCString:(const char *)outBytes encoding:NSUTF8StringEncoding]; // encoding should match the encoding of mailData, above, shouldn't it???
+	//	NSLog(@"Decrypted %@ --> %@ as %@", v, decodedTrimmedData, decryptedEmail);
 }
 #endif
 
@@ -407,7 +400,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 #pragma mark *** NEW STUFF ***
 
 /*! URL - The defaults bit allows users to override it.
-*/
+ */
 - (NSString *)mailmeURL
 {
 	NSString *result = [[NSUserDefaults standardUserDefaults] objectForKey:@"mailmeURL"];
