@@ -763,8 +763,8 @@
 	{
 		[context pushAttribute:@"style"
 						 value:[NSString stringWithFormat:
-								@"padding:1px 1px 1px 6px; color:#888; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; width:%dpx; height:%dpx;",
-								self.width, self.height]];
+								@"padding:1px 1px 1px 6px; color:#888; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; width:%dpx;",
+								self.width]];
 		[context startElement:@"div"];
 		
 		[context pushAttribute:@"width" value:[NSNumber numberWithInt:16]];
