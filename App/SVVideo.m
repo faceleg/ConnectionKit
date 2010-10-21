@@ -499,7 +499,7 @@
 	[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
 	
 	// we have mp4, so no ogv/webm, so force a fallback if NOT webkit-based.
-	if ([self.codecType conformsToUTI:@"public.mpeg-4"])
+	if ([self.codecType conformsToUTI:@"public.mpeg-4"] || [self.codecType conformsToUTI:@"public.3gpp"])
 	{
 		[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play this natively\n\t\tfallback(video);\n\t}\n"];
 	}
@@ -695,14 +695,20 @@
 	    movieSourceURL = [context addMedia:media];
 	}
 
+	// POSSIBLE OTHER TAGS TO CONSIDER:  public.3gpp2 public.mpeg com.microsoft.windows-media-wm
 	// Determine tag(s) to use
 	// video || flash (not mutually exclusive) are mutually exclusive with microsoft, quicktime
 	NSString *type = self.codecType;
-	BOOL videoTag = [type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"public.ogg-theora"] || [type conformsToUTI:@"public.webm"];
+	BOOL videoTag = [type conformsToUTI:@"public.mpeg-4"]
+		|| [type conformsToUTI:@"public.ogg-theora"]
+		|| [type conformsToUTI:@"public.webm"]
+		|| [type conformsToUTI:@"public.3gpp"] ;
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if ([defaults boolForKey:@"avoidVideoTag"]) videoTag = NO;
 	
-	BOOL flashTag = [type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"com.adobe.flash.video"];
+	BOOL flashTag = [type conformsToUTI:@"public.mpeg-4"]
+		|| [type conformsToUTI:@"public.3gpp"]
+		|| [type conformsToUTI:@"com.adobe.flash.video"];
 	if ([defaults boolForKey:@"avoidFlashVideo"]) flashTag = NO;
 	
 	BOOL microsoftTag = [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"];
@@ -710,7 +716,9 @@
 	// quicktime fallback, but not for mp4.  We may want to be more selective of mpeg-4 types though.
 	// Also show quicktime when there is no media at all
 	BOOL quicktimeTag = !media || ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
-	&& ![type conformsToUTI:@"public.mpeg-4"];
+	&& ![type conformsToUTI:@"public.mpeg-4"]
+	&& ![type conformsToUTI:@"public.3gpp"]
+			;
 
 	
 	NSURL *posterSourceURL = nil;
@@ -814,7 +822,8 @@
 	BOOL disable = (nil == type)
 	|| [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"]
 	|| ( (([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
-		  && ![type conformsToUTI:@"public.mpeg-4"]) && self.externalSourceURL );
+		  && ![type conformsToUTI:@"public.mpeg-4"]
+		  && ![type conformsToUTI:@"public.3gpp"]) && self.externalSourceURL );
 	return !disable;
 }
 
@@ -831,7 +840,7 @@
 	{
 		result =[ NSImage imageNamed:@"checkmark"];;
 	}
-	else if ([type conformsToUTI:@"public.mpeg-4"])			// might not be iOS compatible
+	else if ([type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"public.3gpp"])			// might not be iOS compatible
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
 	}
@@ -871,7 +880,7 @@
 	{
 		result = NSLocalizedString(@"Video is compatible with a wide range of devices.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
-	else if ([type conformsToUTI:@"public.mpeg-4"])			// might not be iOS compatible
+	else if ([type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"public.3gpp"])			// might not be iOS compatible
 	{
 		result = NSLocalizedString(@"You will need to verify if this video will play on iOS devices.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
@@ -968,7 +977,7 @@
 	_dimensionCalculationMovie = aMovie;
 }
 
-// Loads or reloads the movie/flash from URL, path, or data.
+// Loads or reloads the movie from URL, path, or data.
 - (void)loadMovie;
 {
 	NSURL *movieSourceURL = nil;
@@ -1087,15 +1096,17 @@
 			{
 				self.dimensionCalculationConnection = [[[KSSimpleURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:URL] delegate:self] autorelease];
 				self.dimensionCalculationConnection.bytesNeeded = 1024;	// Let's just get the first 1K ... should be enough.
-				self.container.naturalWidth = [NSNumber numberWithInt:0];	
-				self.container.naturalHeight = [NSNumber numberWithInt:0];		// set to zero so we don't keep asking.  Hopefully answer comes soon.
 			}
 		}
 		if (nil != movieData)
 		{
 			NSSize dimensions = [QTMovie dimensionsFromUnloadableMovieData:movieData];
-			self.container.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
-			self.container.naturalHeight = [NSNumber numberWithFloat:dimensions.height];	// even if it can't be figured out, at least it's not nil anymore
+			// Only set natural size if we really have a value
+			if (dimensions.width && dimensions.height)
+			{
+				self.container.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
+				self.container.naturalHeight = [NSNumber numberWithFloat:dimensions.height];
+			}
 		}
 	}
 }
@@ -1104,8 +1115,12 @@
 - (void)connection:(KSSimpleURLConnection *)connection didFinishLoadingData:(NSData *)data response:(NSURLResponse *)response;
 {
 	NSSize dimensions = [QTMovie dimensionsFromUnloadableMovieData:data];
-	self.container.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
-	self.container.naturalHeight = [NSNumber numberWithFloat:dimensions.height];	// even if it can't be figured out, at least it's not nil anymore
+	// Only set natural size if we really have a value
+	if (dimensions.width && dimensions.height)
+	{
+		self.container.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
+		self.container.naturalHeight = [NSNumber numberWithFloat:dimensions.height];
+	}
 	self.dimensionCalculationConnection = nil;
 }
 
