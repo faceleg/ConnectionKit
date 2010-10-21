@@ -172,6 +172,7 @@
 	[context writeParamElementWithName:@"type" value:@"application/x-shockwave-flash"];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://www.macromedia.com/go/getflashplayer"];	
 	
+	/*
 	// We may as well do nested <embed> tag though are there really any browsers that need it?
 	
 	[context pushAttribute:@"src" value:flashSourcePath];
@@ -193,6 +194,9 @@
 	[context startElement:@"embed"];
 	
 	[context endElement];
+	*/
+	
+	
 	[context endElement];
 	
 	return elementID;	// ID of outer object tag
