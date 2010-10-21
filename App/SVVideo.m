@@ -176,7 +176,7 @@
 - (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
 {
 	SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"PosterFrame" insertIntoManagedObjectContext:[self.container managedObjectContext] error:NULL];	
-	[self replaceMedia:media forKeyPath:@"posterFrame"];
+	[self replaceMedia:media forKeyPath:@"container.posterFrame"];
 }
 
 #pragma mark Poster Frame - QuickLook
@@ -330,7 +330,7 @@
 	{
 		case kPosterTypeChoose:
 			// Switching to choose from automatic? Clear out the image.
-			[self replaceMedia:nil forKeyPath:@"posterFrame"];
+			[self replaceMedia:nil forKeyPath:@"container.posterFrame"];
 			break;
 		case kPosterFrameTypeAutomatic:
 			if (kPosterFrameTypeUndefined != old)	// possibly get new frame only if we already had some other value.
@@ -1087,8 +1087,8 @@
 			{
 				self.dimensionCalculationConnection = [[[KSSimpleURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:URL] delegate:self] autorelease];
 				self.dimensionCalculationConnection.bytesNeeded = 1024;	// Let's just get the first 1K ... should be enough.
-				self.container.naturalWidth = 0;	
-				self.container.naturalHeight = 0;		// set to zero so we don't keep asking.  Hopefully answer comes soon.
+				self.container.naturalWidth = [NSNumber numberWithInt:0];	
+				self.container.naturalHeight = [NSNumber numberWithInt:0];		// set to zero so we don't keep asking.  Hopefully answer comes soon.
 			}
 		}
 		if (nil != movieData)
