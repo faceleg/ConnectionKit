@@ -329,7 +329,7 @@
     }
     
     // Match file type
-    [self setCodecType:[self.media typeOfFile]];
+    //// STILL NEEDED? [self setCodecType:[self.media typeOfFile]];
 }
 
 + (BOOL)acceptsType:(NSString *)uti;
