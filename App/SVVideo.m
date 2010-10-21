@@ -232,24 +232,26 @@
 	{
 		videoURL = self.externalSourceURL;
 	}
-	// Rebuild URL by substituting in path. Create a FAKE URL for a synthesized thumbnail.
-	NSString *newPath = [[[videoURL path] stringByDeletingPathExtension] stringByAppendingString:@".jpg"];
-	
-	NSURL *fakeURL = [[[NSURL alloc] initWithScheme:[videoURL scheme]
-											   host:[videoURL host]
-											   path:newPath]
-					  autorelease];
-	
-	SVMediaRecord *posterMedia = nil;
-	if (jpegData)
+	if (videoURL)		// just in case we got cleared out from switching to an audio
 	{
-		posterMedia = [SVMediaRecord mediaWithData:jpegData
-											   URL:fakeURL
-                                        entityName:@"PosterFrame"
-                    insertIntoManagedObjectContext:[self.container managedObjectContext]];	
+		// Rebuild URL by substituting in path. Create a FAKE URL for a synthesized thumbnail.
+		NSString *newPath = [[[videoURL path] stringByDeletingPathExtension] stringByAppendingString:@".jpg"];
+		
+		NSURL *fakeURL = [[[NSURL alloc] initWithScheme:[videoURL scheme]
+												   host:[videoURL host]
+												   path:newPath]
+						  autorelease];
+		
+		SVMediaRecord *posterMedia = nil;
+		if (jpegData)
+		{
+			posterMedia = [SVMediaRecord mediaWithData:jpegData
+												   URL:fakeURL
+											entityName:@"PosterFrame"
+						insertIntoManagedObjectContext:[self.container managedObjectContext]];	
+		}
+		[self replaceMedia:posterMedia forKeyPath:@"container.posterFrame"];
 	}
-	[self replaceMedia:posterMedia forKeyPath:@"container.posterFrame"];
-
 }
 
 - (void)getQuickLookForFileURL:(NSURL *)fileURL		// CALLED FROM OPERATION
