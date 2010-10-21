@@ -70,6 +70,7 @@
 #import "NSImage+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSBundle+Karelia.h"
+#import "NSError+Karelia.h"
 #import "QTMovie+Karelia.h"
 #import <QuickLook/QuickLook.h>
 #import "KSThreadProxy.h"
