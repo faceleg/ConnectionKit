@@ -118,10 +118,6 @@
 	return NO;
 }		// Audio is media, but it doesn't have an original/natural size.
 
-- (void)makeOriginalSize;
-{	
-	// NOOP
-}
 
 + (BOOL)isExplicitlySized; { return NO; }
 
