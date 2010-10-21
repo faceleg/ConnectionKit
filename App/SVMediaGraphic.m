@@ -567,9 +567,10 @@
     // Swap in the new media
     if (media || URL)
     {
-        // Reset size BEFORE media so setting the source can store a new size
+        // Reset size & codecType BEFORE media so setting the source can store a new size
         self.naturalWidth = nil;
         self.naturalHeight = nil;
+        [self setExtensibleProperty:nil forKey:@"codecType"];
         
         if (media)
         {
