@@ -89,7 +89,9 @@
 
 - (NSRect)boundingBox;  // like -[DOMNode boundingBox] but performs union with subcontroller boxes
 - (NSRect)rect;
-- (NSRect)drawingRect;  // expressed in our DOM node's document view's coordinates
+
+// Expressed in -HTMLElement's document view's coordinates. If overrding, generally call super and union your custom rect with that
+- (NSRect)drawingRect;
 
 - (SVSelectionBorder *)newSelectionBorder;
 

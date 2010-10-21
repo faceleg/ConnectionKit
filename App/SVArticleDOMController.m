@@ -433,14 +433,13 @@
 
 - (NSRect)drawingRect;
 {
+    NSRect result = [super drawingRect];
     if (_displayDropOutline)
     {
-        return [[self dropOutlineDOMElement] boundingBox];
+        result = NSUnionRect(result, [[self dropOutlineDOMElement] boundingBox]);
     }
-    else
-    {
-        return [super drawingRect];
-    }
+    
+    return result;
 }
 
 #pragma mark Dragging Destination
