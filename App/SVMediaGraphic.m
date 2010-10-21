@@ -581,7 +581,18 @@
         NSNumber *oldWidth = [self width];
         [self makeOriginalSize];
         [self setConstrainProportions:[self isConstrainProportionsEditable]];
-        [self setWidth:oldWidth];
+        if (oldWidth)
+        {
+            [self setWidth:oldWidth];
+        }
+        else
+        {
+            if ([[self width] integerValue] > 200)
+            {
+                [self setWidth:[NSNumber numberWithInt:200]];
+            }
+            // If going from external URL to proper media, this means your image is quite probably now 200px wide. Not ideal, but so rare I'm not going to worry abiout it. #92576
+        }
     }
     
     
