@@ -462,13 +462,14 @@
 	 */
 	
 	NSString *type = [self codecType];
-	BOOL audioTag = !media
-	|| [type conformsToUTI:(NSString *)kUTTypeMP3]
+	BOOL audioTag =
+	   [type conformsToUTI:(NSString *)kUTTypeMP3]
 	|| [type conformsToUTI:@"public.ogg-vorbis"]
 	|| [type conformsToUTI:@"com.microsoft.waveform-audio"]
 	|| [type conformsToUTI:(NSString *)kUTTypeMPEG4Audio]
 	|| [type conformsToUTI:@"public.aiff-audio"]
 	|| [type conformsToUTI:@"public.aifc-audio"]
+	|| [type conformsToUTI:@"public.au-audio"]
 	;
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -609,6 +610,7 @@
 	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie]
 			 || [type conformsToUTI:@"public.aiff-audio"]
 			 || [type conformsToUTI:@"public.aifc-audio"]
+			 || [type conformsToUTI:@"public.au-audio"]
 			 || [type conformsToUTI:(NSString *)kUTTypeMPEG4Audio])
 	{
 		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
@@ -653,6 +655,7 @@
 	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie]
 			 || [type conformsToUTI:@"public.aiff-audio"]
 			 || [type conformsToUTI:@"public.aifc-audio"]
+			 || [type conformsToUTI:@"public.au-audio"]
 			 || [type conformsToUTI:(NSString *)kUTTypeMPEG4Audio])
 	{
 		result = NSLocalizedString(@"Audio will not play on Windows PCs unless QuickTime is installed", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
