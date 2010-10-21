@@ -806,7 +806,8 @@
 - (NSURL *)addImageMedia:(id <SVMedia, IMBImageItem>)media
                    width:(NSNumber *)width
                   height:(NSNumber *)height
-                    type:(NSString *)type;
+                    type:(NSString *)type
+       preferredFilename:(NSString *)preferredFilename;
 {
     return [self addMedia:media];
 }
@@ -817,7 +818,7 @@
                            height:(NSNumber *)height
                              type:(NSString *)type;
 {
-    NSURL *URL = [self addImageMedia:media width:width height:height type:type];
+    NSURL *URL = [self addImageMedia:media width:width height:height type:type preferredFilename:nil];
     NSString *src = (URL ? [self relativeURLStringOfURL:URL] : @"");
     
     [self writeImageWithSrc:src

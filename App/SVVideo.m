@@ -753,7 +753,8 @@
 		posterSourceURL = [context addImageMedia:self.posterFrame
 										   width:[NSNumber numberWithUnsignedInt:self.width]
 										  height:[NSNumber numberWithUnsignedInt:self.height]
-											type:(NSString *)kUTTypeJPEG];
+											type:(NSString *)kUTTypeJPEG
+                               preferredFilename:nil];
 	}
 		
 	BOOL unknownTag = NO;	// will be set below if nothing can be generated

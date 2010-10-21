@@ -95,10 +95,11 @@
     return nil;
 }
 
-- (NSURL *)addImageMedia:(id <SVMedia>)media
+- (NSURL *)addImageMedia:(id <SVMedia, IMBImageItem>)media
                    width:(NSNumber *)width
                   height:(NSNumber *)height
-                    type:(NSString *)type;
+                    type:(NSString *)type
+       preferredFilename:(NSString *)preferredFilename;
 {
     // When scaling an image, need full suite of parameters
     if (width || height)
