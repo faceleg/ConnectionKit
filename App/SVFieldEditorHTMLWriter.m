@@ -425,8 +425,7 @@
                    [tagName isEqualToString:@"EM"] ||
                    [tagName isEqualToString:@"BR"] ||
                    [tagName isEqualToString:@"SUP"] ||
-                   [tagName isEqualToString:@"SUB"] ||
-                   [tagName isEqualToString:@"FONT"]);
+                   [tagName isEqualToString:@"SUB"]);
     
     return result;
 }
@@ -445,6 +444,7 @@
 {
     BOOL result = NO;
     
+	// <FONT> tags are no longer allowed, but leave this in in case we turn support back on again
     if ([elementName isEqualToString:@"font"])
     {
         if ([attributeName isEqualToString:@"face"] || [attributeName isEqualToString:@"size"] || [attributeName isEqualToString:@"color"]) return YES;
