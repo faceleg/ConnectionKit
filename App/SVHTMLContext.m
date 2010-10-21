@@ -676,8 +676,8 @@
 {
 	int w = [object integerForKey:@"width"];
 	int h = [object integerForKey:@"height"];
-    NSNumber *width  = (w <= 0) ? nil : [NSNumber numberWithInt:w+sizeDelta.width];
-	NSNumber *height = (h <= 0) ? nil : [NSNumber numberWithInt:h+sizeDelta.height];
+    NSNumber *width  = (w+sizeDelta.width <= 0) ? nil : [NSNumber numberWithInt:w+sizeDelta.width];
+	NSNumber *height = (h+sizeDelta.height <= 0) ? nil : [NSNumber numberWithInt:h+sizeDelta.height];
     
     // Only some elements support directly sizing. Others have to use CSS
     if ([elementName isEqualToString:@"img"] ||
