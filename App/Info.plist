@@ -446,6 +446,29 @@
 				<string>audio/ogg</string>
 			</dict>
 		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.audio</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>QuickTime Audio</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.apple.quicktime-audio</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mov</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>audio/mov</string>
+			</dict>
+		</dict>
+		
+		
+		
+		
 	</array>
 </dict>
 </plist>

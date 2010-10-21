@@ -482,7 +482,8 @@
 	
 	// quicktime fallback, but not for mp4.  We may want to be more selective of mpeg-4 types though.
 	// Also show quicktime when there is no media at all
-	BOOL quicktimeTag =  [type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie];
+	BOOL quicktimeTag =  [type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie]
+	|| [type conformsToUTI:@"com.apple.quicktime-audio"];		// latter is our made-up tag for recognizing .mov without video track
 	
 	BOOL unknownTag = !(audioTag || flashTag || microsoftTag || quicktimeTag);
 	

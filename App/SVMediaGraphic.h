@@ -28,6 +28,7 @@
 @property(nonatomic, copy) NSNumber *isMediaPlaceholder; // BOOL, mandatory
 - (void)setMediaWithURL:(NSURL *)URL;
 + (NSString *)mediaEntityName;
+- (void)didSetSource;
 
 @property(nonatomic, copy) NSURL *externalSourceURL;
 

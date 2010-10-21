@@ -756,28 +756,7 @@
 		
 	BOOL unknownTag = NO;	// will be set below if nothing can be generated
 	NSString *videoID = nil;
-	
-	// Just like Audio .... In case this has no height, it's probably audio.
-	// WHEN EDITING, AND NO CONTROLLER, PUT IN SOMETHING VISIBLE SO WE CAN SELECT THE GRAPHIC.
-	if (!self.controller && (0 == self.container.naturalHeight.intValue) && [context isForEditing])
-	{
-		[context pushAttribute:@"style"
-						 value:[NSString stringWithFormat:
-								@"padding:1px 1px 1px 6px; color:#888; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; width:%dpx;",
-								self.width]];
-		[context startElement:@"div"];
 		
-		[context pushAttribute:@"width" value:[NSNumber numberWithInt:16]];
-		[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:16] stringValue]];
-		[context pushAttribute:@"src" value:[[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"sound_placeholder"]] absoluteString]];
-		[context pushAttribute:@"style" value:@"vertical-align:text-bottom; padding-right:4px;"];
-		[context startElement:@"img"];
-		[context endElement];
-		
-		[context writeText:[[movieSourceURL path] lastPathComponent]];
-		[context endElement];
-	}
-	
 	// START THE TAGS
 	
 	if (quicktimeTag)
@@ -1237,9 +1216,18 @@
 		}
 	}
 	
-	// Chances are if we got here with zero width/height, there is just no video track!
-	self.container.naturalWidth  = [NSNumber numberWithFloat:movieSize.width];
-	self.container.naturalHeight = [NSNumber numberWithFloat:movieSize.height];
+	if (0 == movieSize.width || 0 == movieSize.height)
+	{
+		// Chances are if we got here with zero width/height, there is just no video track -- so become an audio file!
+		[self setCodecType:@"com.apple.quicktime-audio"];		// Our specialization of generic quicktime movie
+		[[self container] didSetSource];
+		// This will re-create things as an audio....
+	}
+	else
+	{
+		self.container.naturalWidth  = [NSNumber numberWithFloat:movieSize.width];
+		self.container.naturalHeight = [NSNumber numberWithFloat:movieSize.height];
+	}
 }
 
 
