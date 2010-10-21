@@ -27,7 +27,7 @@
 @property(nonatomic, retain) SVMediaRecord *posterFrame;
 @property(nonatomic, copy) NSNumber *isMediaPlaceholder; // BOOL, mandatory
 - (void)setMediaWithURL:(NSURL *)URL;
-+ (NSString *)meditEntityName;
++ (NSString *)mediaEntityName;
 
 @property(nonatomic, copy) NSURL *externalSourceURL;
 

@@ -58,7 +58,7 @@
     // Placeholder image
     if (![self media])
     {
-        SVMediaRecord *media = [[page master] makePlaceholdImageMediaWithEntityName:[[self class] meditEntityName]];
+        SVMediaRecord *media = [[page master] makePlaceholdImageMediaWithEntityName:[[self class] mediaEntityName]];
         [self setMedia:media];
         [self setTypeToPublish:[media typeOfFile]];
         
@@ -140,7 +140,7 @@
     if (URL)
     {
         media = [SVMediaRecord mediaWithURL:URL
-                                 entityName:[[self class] meditEntityName]
+                                 entityName:[[self class] mediaEntityName]
              insertIntoManagedObjectContext:[self managedObjectContext]
                                       error:NULL];
     }
@@ -148,7 +148,7 @@
     [self replaceMedia:media forKeyPath:@"media"];
 }
 
-+ (NSString *)meditEntityName; { return @"GraphicMedia"; }
++ (NSString *)mediaEntityName; { return @"GraphicMedia"; }
 
 #pragma mark External URL
 
@@ -514,7 +514,7 @@
         
         SVMediaRecord *media = [SVMediaRecord mediaWithData:data
                                                         URL:url
-                                                 entityName:[[self class] meditEntityName]
+                                                 entityName:[[self class] mediaEntityName]
                              insertIntoManagedObjectContext:[self managedObjectContext]];
         
         [self setMedia:media];
@@ -535,7 +535,7 @@
     if ([URL isFileURL])
     {
         media = [SVMediaRecord mediaWithURL:URL
-                                 entityName:[[self class] meditEntityName]
+                                 entityName:[[self class] mediaEntityName]
              insertIntoManagedObjectContext:[self managedObjectContext]
                                       error:NULL];
     }
@@ -556,7 +556,7 @@
             
             media = [SVMediaRecord mediaWithData:[item dataForType:type]
                                              URL:url
-                                      entityName:[[self class] meditEntityName]
+                                      entityName:[[self class] mediaEntityName]
                   insertIntoManagedObjectContext:[self managedObjectContext]];
         }
     }

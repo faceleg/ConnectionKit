@@ -25,7 +25,7 @@
                              [[NSBundle mainBundle] pathForImageResource:@"LogoPlaceholder"]];
     
     [self setMedia:[SVMediaRecord mediaWithBundledURL:placeholderURL
-                                               entityName:[[self class] meditEntityName]
+                                               entityName:[[self class] mediaEntityName]
                            insertIntoManagedObjectContext:[self managedObjectContext]]];
     
     [self setSize:NSMakeSize(200.0f, 128.0f)];    // fallback
@@ -38,7 +38,7 @@
 
 - (void)createDefaultIntroAndCaption; { }
 
-+ (NSString *)meditEntityName; { return @"LogoMedia"; }
++ (NSString *)mediaEntityName; { return @"LogoMedia"; }
 
 @dynamic hidden;
 
