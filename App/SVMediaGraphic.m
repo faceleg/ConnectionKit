@@ -80,7 +80,7 @@
 - (NSString *)plugInIdentifier;
 {
     // The plug-in to use depends on the type of file you have. Ideally use .codecType as it means the file's content has been better analyzed
-    NSString *type = [self extensiblePropertyForKey:@"codecType"];
+    NSString *type = [self codecType];
     if (!type) type = [[self media] typeOfFile];
     if (!type) type = [NSString UTIForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
     
@@ -273,7 +273,27 @@
     return result;
 }
 
-#pragma mark Media Conversion
+#pragma mark Media Type
+
+- (NSString *)codecType; { return [self extensiblePropertyForKey:@"codecType"]; }
+- (void)setCodecType:(NSString *)type;
+{
+    if (type)
+    {
+        [self setExtensibleProperty:type forKey:@"codecType"];
+    }
+    else
+    {
+        [self removeExtensiblePropertyForKey:@"codecType"];
+    }
+}
+
+- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key;
+{
+    return ([key isEqualToString:@"codecType"] ?
+            YES :
+            [super usesExtensiblePropertiesForUndefinedKey:key]);
+}
 
 @dynamic typeToPublish;
 - (BOOL)validateTypeToPublish:(NSString **)type error:(NSError **)error;
@@ -570,7 +590,7 @@
         // Reset size & codecType BEFORE media so setting the source can store a new size
         self.naturalWidth = nil;
         self.naturalHeight = nil;
-        [self removeExtensiblePropertyForKey:@"codecType"];
+        [self setCodecType:nil];
         
         if (media)
         {

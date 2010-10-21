@@ -40,7 +40,8 @@
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
 
 
-#pragma mark Media Conversion
+#pragma mark Media Type
+@property(nonatomic, copy) NSString *codecType;
 @property(nonatomic, copy) NSString *typeToPublish;
 
 
