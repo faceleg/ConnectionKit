@@ -419,10 +419,7 @@
 
 - (NSString *)startUnknown:(SVHTMLContext *)context;
 {
-	[context pushAttribute:@"style"
-					 value:[NSString stringWithFormat:
-							@"width:%dpx; height:%dpx;",
-							self.width, self.height]];
+	[context buildAttributesForElement:@"div" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
 	 NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
 	[context writeElement:@"p" text:NSLocalizedString(@"Unable to embed audio. Perhaps it is not a recognized audio format.", @"Warning shown to user when audio can't be embedded")];
 	// don't end....

@@ -205,10 +205,7 @@
 
 - (NSString *)writeUnknown:(SVHTMLContext *)context;
 {
-	[context pushAttribute:@"style"
-					 value:[NSString stringWithFormat:
-							@"width:%dpx; height:%dpx;",
-							self.width, self.height]];
+	[context buildAttributesForElement:@"div" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
 	NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
 	[context writeElement:@"p" text:NSLocalizedString(@"Unable to show Flash. Perhaps it is not a recognized file format.", @"Warning shown to user when Flash can't be embedded")];
 	// Poster may be shown next, so don't end....
