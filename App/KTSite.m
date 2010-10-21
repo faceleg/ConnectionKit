@@ -159,20 +159,21 @@
 	}
 	
     
-    // We have an odd bug where occasionally, a page will have a parent, but the parent will not recognise it as a child.
-    // To fix, we need to delete such pages.
-    static NSPredicate *orphansPredicate;
-    if (!orphansPredicate) orphansPredicate = [[NSPredicate predicateWithFormat:@"indexPath == nil"] retain];
+    // We have an odd bug where occasionally, a page will have a parent, but the parent will not recognise it as a child. To fix, we need to delete such pages.
+    // However, that is causing problems with 2.0 #92429. I think we no longer need this functionality, so commenting out. We'll see if orphaned pages do somehow appear again.
     
-    NSArray *orphanedPages = [unsortedResult filteredArrayUsingPredicate:orphansPredicate];
-    if ([orphanedPages count] > 0)
-    {
-        NSLog(@"Deleting orphaned pages:\n%@", orphanedPages);
-        [[self managedObjectContext] deleteObjectsInCollection:orphanedPages];
+    //static NSPredicate *orphansPredicate;
+    //if (!orphansPredicate) orphansPredicate = [[NSPredicate predicateWithFormat:@"indexPath == nil"] retain];
+    
+    //NSArray *orphanedPages = [unsortedResult filteredArrayUsingPredicate:orphansPredicate];
+    //if ([orphanedPages count] > 0)
+    //{
+    //    NSLog(@"Deleting orphaned pages:\n%@", orphanedPages);
+    //    [[self managedObjectContext] deleteObjectsInCollection:orphanedPages];
         
-        result = [self _pagesInSiteMenu]; // After the deletion, it should be safe to run again
-    }
-    else
+    //    result = [self _pagesInSiteMenu]; // After the deletion, it should be safe to run again
+    //}
+    //else
     {
         // Sort the pages according to their index path from root
         result = [unsortedResult sortedArrayUsingDescriptors:[[self class] _siteMenuSortDescriptors]];
