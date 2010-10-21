@@ -21,7 +21,8 @@
 - (id)initWithSourceMedia:(id <SVMedia>)mediaRecord
                     width:(NSNumber *)width
                    height:(NSNumber *)height
-                     type:(NSString *)type;
+                     type:(NSString *)type
+      preferredUploadPath:(NSString *)path;
 {
     self = [self init];
     
@@ -29,6 +30,7 @@
     _width = [width copy];
     _height = [height copy];
     _type = [type copy];
+    _uploadPath = [path copy];
     
     return self;
 }
@@ -39,6 +41,7 @@
     [_width release];
     [_height release];
     [_type release];
+    [_uploadPath release];
     
     [super dealloc];
 }
@@ -56,17 +59,23 @@
 
 - (NSString *)preferredUploadPath;
 {
-    if ([self type])
+    if (!_uploadPath)
     {
-        NSString *name = [[[self mediaRecord] preferredUploadPath] stringByDeletingPathExtension];
-        
-        NSString *result = [name stringByAppendingPathExtension:
-                            [NSString filenameExtensionForUTI:[self type]]];
-        
-        return result;
+        if ([self type])
+        {
+            NSString *name = [[[self mediaRecord] preferredUploadPath] stringByDeletingPathExtension];
+            
+            _uploadPath = [name stringByAppendingPathExtension:
+                           [NSString filenameExtensionForUTI:[self type]]];
+            [_uploadPath retain];
+        }
+        else
+        {
+            _uploadPath = [[[self mediaRecord] preferredUploadPath] copy];
+        }
     }
     
-    return [[self mediaRecord] preferredUploadPath];
+    return _uploadPath;
 }
 
 - (NSData *)mediaData;

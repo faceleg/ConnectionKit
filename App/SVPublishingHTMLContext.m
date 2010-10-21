@@ -118,10 +118,19 @@
         height = nil;
     }
     
+    NSString *path = nil;
+    if (preferredFilename)
+    {
+        path = [[[media preferredUploadPath]
+                 stringByDeletingLastPathComponent]
+                stringByAppendingPathComponent:preferredFilename];
+    }
+    
     id <SVMedia> scaledMedia = [[SVImageMedia alloc] initWithSourceMedia:media
                                                                    width:width
                                                                   height:height
-                                                                    type:type];
+                                                                    type:type
+                                                     preferredUploadPath:path];
     
     NSURL *result = [self addMedia:scaledMedia];
     [scaledMedia release];
