@@ -84,8 +84,11 @@
 {
 	OBASSERT([NSThread isMainThread]);
 
-	self.container.naturalWidth  = [NSNumber numberWithFloat:aSize.width];
-	self.container.naturalHeight = [NSNumber numberWithFloat:aSize.height];
+	if (aSize.width && aSize.height)
+	{
+		self.container.naturalWidth  = [NSNumber numberWithFloat:aSize.width];
+		self.container.naturalHeight = [NSNumber numberWithFloat:aSize.height];
+	}
 }
 
 - (void)getDimensionsFromURL:(NSURL *)aURL		// CALLED FROM OPERATION
