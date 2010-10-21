@@ -570,7 +570,7 @@
         // Reset size & codecType BEFORE media so setting the source can store a new size
         self.naturalWidth = nil;
         self.naturalHeight = nil;
-        [self setExtensibleProperty:nil forKey:@"codecType"];
+        [self removeExtensiblePropertyForKey:@"codecType"];
         
         if (media)
         {
