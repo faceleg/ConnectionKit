@@ -52,7 +52,7 @@
     [_HTMLString release]; _HTMLString = html;
     
     // Update DOM to match
-    if (updateDOM) [self setNeedsUpdate];
+    if (updateDOM && [self textHTMLElement]) [self setNeedsUpdate];
 }
 
 - (NSString *)string
