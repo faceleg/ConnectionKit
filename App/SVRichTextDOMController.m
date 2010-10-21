@@ -355,7 +355,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     SVRichText *text = [self representedObject];
     NSManagedObjectContext *context = [text managedObjectContext];
     
-    SVMediaRecord *media;
+    SVMediaRecord *media = nil;
     NSURL *URL = [imageElement absoluteImageURL];
     if ([URL isFileURL])
     {
@@ -367,16 +367,26 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     else
     {
         WebResource *resource = [[[[imageElement ownerDocument] webFrame] dataSource] subresourceForURL:URL];
-        
-        media = [SVMediaRecord mediaWithWebResource:resource
-                                         entityName:@"GraphicMedia"
-                     insertIntoManagedObjectContext:context];
-        
-        [media setPreferredFilename:[@"pastedImage" stringByAppendingPathExtension:[URL ks_pathExtension]]];
+        if (resource)   // e.g. Chrome only provides the URL. #92311
+        {
+            media = [SVMediaRecord mediaWithWebResource:resource
+                                             entityName:@"GraphicMedia"
+                         insertIntoManagedObjectContext:context];
+            
+            // FIXME: Why not match the URL's filename?
+            [media setPreferredFilename:[@"pastedImage" stringByAppendingPathExtension:[URL ks_pathExtension]]];
+        }
     }
     
     SVMediaGraphic *image = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
-    [image setMedia:media];
+    if (media)
+    {
+        [image setMedia:media];
+    }
+    else
+    {
+        [image setExternalSourceURL:URL];
+    }
     
     
     // Try to divine image size
