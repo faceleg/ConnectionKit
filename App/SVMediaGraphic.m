@@ -331,7 +331,15 @@
 
 @dynamic constrainedAspectRatio;
 
-- (BOOL)isConstrainProportionsEditable; { return [[self plugIn] isConstrainProportionsEditable]; }
+- (BOOL)isConstrainProportionsEditable;
+{
+    // Should only be possible to turn it on once size is known
+    BOOL result = ([[self width] integerValue] > 0 &&
+                   [[self height] integerValue] > 0 &&
+                   [[self plugIn] isConstrainProportionsEditable]);
+    
+    return result;
+}
 
 @dynamic naturalWidth;
 @dynamic naturalHeight;
