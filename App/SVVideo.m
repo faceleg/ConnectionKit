@@ -85,6 +85,8 @@
 
 @interface SVVideo ()
 
+- (BOOL) loadMovieFromURL:(NSURL *)movieSourceURL;
+- (BOOL)shouldSetSourceFromMedia:(SVMediaRecord *)aMedia orURL:(NSURL *)aURL;
 - (BOOL)loadMovieFromAttributes:(NSDictionary *)anAttributes;
 - (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
 - (void)calculateMovieDimensions:(QTMovie *)aMovie;
@@ -95,7 +97,7 @@
 @implementation SVVideo 
 
 @synthesize posterFrameType = _posterFrameType;
-
+@synthesize alreadyCheckedVideoSource = _alreadyCheckedVideoSource;
 
 //	LocalizedStringInThisBundle(@"This is a placeholder for a video. The full video will appear once you publish this website, but to see the video in Sandvox, please enable live data feeds in the preferences.", "Live data feeds disabled message.")
 
@@ -113,6 +115,8 @@
 	self.autoplay = NO;
 	self.loop = NO;
 	self.posterFrameType = kPosterFrameTypeAutomatic;
+	
+	self.alreadyCheckedVideoSource = NO;
 	
     // Show caption
     if ([[[self.container textAttachment] placement] intValue] != SVGraphicPlacementInline)
@@ -325,50 +329,57 @@
         [self.container makeOriginalSize];
         if (self.width > width) self.width = width;
     }
-    
-	if (self.media || self.externalSourceURL)
-	{
-		BOOL shouldSetSourceFromMedia = [self shouldSetSourceFromMedia:self.media orURL:self.externalSourceURL];
-		NSLog(@"shouldSetSourceFromMedia = %d", shouldSetSourceFromMedia);
-	}
-}
-
-- (BOOL)shouldSetSourceFromMedia:(SVMediaRecord *)aMedia orURL:(NSURL *)aURL;
-{
-	BOOL result = NO;
-	// Try to make a QTMovie out of this, or parse as FLV which is a special case (since QT is not needed to show.)
-
+ 
 	NSURL *movieSourceURL = nil;
-	BOOL openAsync = YES;			// I think this will be OK for both
-	
-	
-    if (aMedia)
+	if (self.media)
     {
-		movieSourceURL = [aMedia mediaURL];
+		movieSourceURL = [self.media mediaURL];
 		self.codecType = [NSString UTIForFileAtPath:[movieSourceURL path]];	// actually look at the file, not just its extension
 	}
 	else
 	{
-		movieSourceURL = aURL;
+		movieSourceURL = self.externalSourceURL;
 		self.codecType = [NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]];
 	}
-	if (movieSourceURL)
+	
+	
+	
+	
+	if (!self.alreadyCheckedVideoSource && (self.media || self.externalSourceURL))
 	{
-		NSMutableDictionary *movieAttributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
-												movieSourceURL, QTMovieURLAttribute,
-												[NSNumber numberWithBool:openAsync], QTMovieOpenAsyncOKAttribute,
-												nil];
-		if (IMBRunningOnSnowLeopardOrNewer())
-		{
-			// Wait, DON'T do this necessarily ... Problem is that when we try to do betterPosterImage
-			// (to determine poster image for remote URL) it won't allow us if we opened the movie
-			// for playback only.
-			// *** Canceling drag because exception 'QTDisallowedForInitializationPurposeException' (reason 'Tried to use QTMovie method quickTimeMovie, which is not allowed when QTMovieOpenForPlaybackAttribute is YES.') was raised during a dragging session
-			
-			// [movieAttributes setValue:[NSNumber numberWithBool:YES] forKey:@"QTMovieOpenForPlaybackAttribute"];	// From Tim Monroe @ WWDC2010, so we can check how movie was loaded
-		}
-		result = [self loadMovieFromAttributes:movieAttributes];
+		(void) [self shouldSetSourceFromMedia:self.media orURL:self.externalSourceURL];
 	}
+	self.alreadyCheckedVideoSource = NO;		// turn this off, for next time we have a shouldSetSource.../didSetSource
+}
+
+// Called before didSetSource.... but not always, so it can't have side effects!
+- (BOOL)shouldSetSourceFromMedia:(SVMediaRecord *)aMedia orURL:(NSURL *)aURL;
+{
+	self.alreadyCheckedVideoSource = YES;		// no need to kick off any requests
+	BOOL result = NO;
+	// Try to make a QTMovie out of this, or parse as FLV which is a special case (since QT is not needed to show.)
+
+	result = [self loadMovieFromURL:aMedia ? [aMedia mediaURL] : aURL];
+	return result;
+}
+
+- (BOOL) loadMovieFromURL:(NSURL *)movieSourceURL;
+{
+	BOOL openAsync = YES;			// I think this will be OK for both
+	NSMutableDictionary *movieAttributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
+											movieSourceURL, QTMovieURLAttribute,
+											[NSNumber numberWithBool:openAsync], QTMovieOpenAsyncOKAttribute,
+											nil];
+	if (IMBRunningOnSnowLeopardOrNewer())
+	{
+		// Wait, DON'T do this necessarily ... Problem is that when we try to do betterPosterImage
+		// (to determine poster image for remote URL) it won't allow us if we opened the movie
+		// for playback only.
+		// *** Canceling drag because exception 'QTDisallowedForInitializationPurposeException' (reason 'Tried to use QTMovie method quickTimeMovie, which is not allowed when QTMovieOpenForPlaybackAttribute is YES.') was raised during a dragging session
+		
+		// [movieAttributes setValue:[NSNumber numberWithBool:YES] forKey:@"QTMovieOpenForPlaybackAttribute"];	// From Tim Monroe @ WWDC2010, so we can check how movie was loaded
+	}
+	BOOL result = [self loadMovieFromAttributes:movieAttributes];
 	return result;
 }
 
@@ -1027,12 +1038,7 @@
 
 - (void)setDimensionCalculationMovie:(QTMovie *)aMovie
 {
-	// If we are clearing out an existing movie, we're done, so exit movie on thread.  I hope this is right!
-	if (nil == aMovie && nil != _dimensionCalculationMovie && ![NSThread isMainThread])
-	{
-		OSErr err = ExitMoviesOnThread();
-		if (err != noErr) NSLog(@"Unable to ExitMoviesOnThread; %d", err);
-	}
+    OBASSERT([NSThread isMainThread]);
 	[aMovie retain];
 	[_dimensionCalculationMovie release];
 	_dimensionCalculationMovie = aMovie;
@@ -1044,18 +1050,12 @@
 	BOOL result = NO;
 	// Ignore for background threads as there is no need to do this during a doc import
 	// (STILL APPLICABLE FOR SANDVOX 2?
-    if (![NSThread isMainThread])  return NO;
+    OBASSERT([NSThread isMainThread]);
     
     [self setDimensionCalculationMovie:nil];	// will clear out any old movie, exit movies on thread
 	NSError *error = nil;
 	QTMovie *movie = nil;
-	
-	if (![NSThread isMainThread])
-	{
-		OSErr err = EnterMoviesOnThread(0);
-		if (err != noErr) NSLog(@"Unable to EnterMoviesOnThread; %d", err);
-	}
-	
+		
 	movie = [[[QTMovie alloc] initWithAttributes:anAttributes
 										   error:&error] autorelease];
 	if (movie && [[movie tracks] count] && (NSOrderedSame != QTTimeCompare([movie duration], QTZeroTime)))
@@ -1071,11 +1071,6 @@
 			[self calculateMovieDimensions:movie];
 			[self calculateMoviePlayability:movie];
 			
-			if (![NSThread isMainThread])	// we entered, so exit now that we're done with that
-			{
-				OSErr err = ExitMoviesOnThread();	// I hope this is 
-				if (err != noErr) NSLog(@"Unable to ExitMoviesOnThread; %d", err);
-			}
 		}
 		else	// not ready yet; wait until loaded if we are publishing
 		{
@@ -1083,23 +1078,15 @@
 			[movie setDelegate:self];
 			
 			/// Case 18430: we only add observers on main thread
-			if ( [NSThread isMainThread] )
-			{
-				[[NSNotificationCenter defaultCenter] addObserver:self
-														 selector:@selector(loadStateChanged:)
-															 name:QTMovieLoadStateDidChangeNotification object:movie];
-			}
+
+			[[NSNotificationCenter defaultCenter] addObserver:self
+													 selector:@selector(loadStateChanged:)
+														 name:QTMovieLoadStateDidChangeNotification object:movie];
 		}
 		result = YES;	// OK to go ... we will be be getting asynchronous loading stuff coming in soon.
 	}
 	else	// No movie?  Maybe it's a format that QuickTime can't read.  We can try FLV
-	{
-		if (![NSThread isMainThread])	// we entered, so exit now that we're done with that
-		{
-			OSErr err = ExitMoviesOnThread();	// I hope this is 
-			if (err != noErr) NSLog(@"Unable to ExitMoviesOnThread; %d", err);
-		}
-		
+	{		
 		// get the data from what we stored in the quicktime initialization dictionary
 		NSData *movieData = nil;
 		if (nil != [anAttributes objectForKey:QTMovieDataReferenceAttribute])
@@ -1115,7 +1102,9 @@
 			NSURL *URL = [anAttributes objectForKey:QTMovieURLAttribute];
 			if ([URL isFileURL])
 			{
-				movieData = [NSData dataWithContentsOfURL:URL];
+				// we only need a bit of data so let's try this.
+				// http://www.cocoabuilder.com/archive/cocoa/228846-is-there-more-efficient-way-to-get-the-first-4-bytes-off-nsinputstream-to-compare.html
+				movieData = [NSData dataWithContentsOfURL:URL options:NSUncachedRead error:nil];
 			}
 			else	// not a file; load asynchronously
 			{
@@ -1123,7 +1112,7 @@
 				self.dimensionCalculationConnection.bytesNeeded = 1024;	// Let's just get the first 1K ... should be enough.
 
 				// I don't have the dimensions right now, however I am assuming that if we got this far then we are ok.
-				result = YES;	// if we got dimensions, then this is defintely readable.
+				result = YES;
 			}
 		}
 		if (nil != movieData)
