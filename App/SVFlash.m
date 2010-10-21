@@ -161,14 +161,14 @@
 	NSString *elementID = [context startElement:@"object" preferredIdName:@"flash" className:nil attributes:nil];	// class, attributes already pushed
 	
 	[context writeParamElementWithName:@"movie" value:flashSourcePath];
-	[context writeParamElementWithName:@"quality" value:@"high"];	// or autohigh
+	[context writeParamElementWithName:@"quality" value:@"autohigh"];	// or autohigh
 	[context writeParamElementWithName:@"scale" value:@"showall"];
 
 	
 	[context writeParamElementWithName:@"play" value:self.autoplay ? @"true" : @"false"];
 	[context writeParamElementWithName:@"menu" value:self.showMenu ? @"true" : @"false"];
 	[context writeParamElementWithName:@"loop" value:self.loop ? @"true" : @"false"];
-	[context writeParamElementWithName:@"scale" value:@"tofit"];
+	[context writeParamElementWithName:@"scale" value:@"default"];
 	[context writeParamElementWithName:@"type" value:@"application/x-shockwave-flash"];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://www.macromedia.com/go/getflashplayer"];	
 	
@@ -176,8 +176,8 @@
 	
 	[context pushAttribute:@"src" value:flashSourcePath];
 	// Align middle? In 1.x
-	[context pushAttribute:@"quality" value:@"high"];
-	[context pushAttribute:@"scale" value:@"tofit"];
+	[context pushAttribute:@"quality" value:@"autohigh"];
+	[context pushAttribute:@"scale" value:@"default"];
 	[context pushAttribute:@"play" value:self.autoplay ? @"true" : @"false"];
 	[context pushAttribute:@"menu" value:self.showMenu ? @"true" : @"false"];
 	[context pushAttribute:@"loop" value:self.loop ? @"true" : @"false"];
