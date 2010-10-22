@@ -61,12 +61,13 @@
         SVMediaRecord *media = [[page master] makePlaceholdImageMediaWithEntityName:[[self class] mediaEntityName]];
         [self setMedia:media];
         [self setTypeToPublish:[media typeOfFile]];
-        
-        [self makeOriginalSize];    // calling super will scale back down if needed
-        [self setConstrainProportions:[self isConstrainProportionsEditable]];
+        // Sizing will be handled in a moment
     }
     
-    [super willInsertIntoPage:page];
+    [super willInsertIntoPage:page];    // calls -makeOriginalSize internally
+    
+    [self setConstrainProportions:[self isConstrainProportionsEditable]];
+    
     
     // Show caption
     if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)
