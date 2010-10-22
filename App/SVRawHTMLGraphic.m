@@ -20,6 +20,15 @@
 @dynamic lastValidMarkupDigest;
 @dynamic shouldPreviewWhenEditing;
 
+#pragma mark Metrics
+
+- (void)makeOriginalSize;
+{
+    // Aim at auto-size
+    [self setWidth:nil];
+    [self setHeight:nil];
+}
+
 #pragma mark HTML
 
 - (void)writeBody:(SVHTMLContext *)context;

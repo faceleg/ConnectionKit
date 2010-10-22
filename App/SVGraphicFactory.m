@@ -264,6 +264,7 @@
     SVRawHTMLGraphic *result = [NSEntityDescription insertNewObjectForEntityForName:@"RawHTMLGraphic" inManagedObjectContext:context];
     
     [result setHTMLString:@"<span>[[RAW HTML]]</span>"];
+    [result makeOriginalSize];
     
     return result;
 }
