@@ -53,20 +53,12 @@
 	<string>amazon</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
-		<key>automaticListSorting</key>
-		<integer>1</integer>
-		<key>automaticListType</key>
-		<integer>-1</integer>
 		<key>centeredThumbnailWidths</key>
 		<integer>100</integer>
 		<key>frame</key>
 		<integer>2</integer>
 		<key>layout</key>
 		<integer>1</integer>
-		<key>listSource</key>
-		<integer>0</integer>
-		<key>maxNumberProducts</key>
-		<integer>10</integer>
 		<key>showComments</key>
 		<true/>
 		<key>showCreators</key>
