@@ -1400,7 +1400,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	// We have our own copy of the "globe in a cube" becuase this changed to a hard disk kind of icon in Leopard.  Not what we wanted.
 	// I think we just have to have our own copy of this.
 	
-	return [[NSBundle mainBundle] pathForImageResource:@"GenericFileServerIcon.icns"];	// kGenericFileServerIcon
+	return [[NSBundle mainBundle] pathForImageResource:@"toolbar_setup_host.tiff"];
 }
 
 - (NSString *) sharingImagePath
