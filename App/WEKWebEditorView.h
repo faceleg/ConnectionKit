@@ -183,6 +183,10 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 - (WEKWebEditorItem <SVWebEditorText> *)textItemForDOMRange:(DOMRange *)range;
 
 
+#pragma mark Scrolling
+- (void)scrollItemToVisible:(WEKWebEditorItem *)item;
+
+
 @end
 
 
