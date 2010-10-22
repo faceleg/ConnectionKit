@@ -395,6 +395,18 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     [super addObject:object];
 }
 
+- (void)addObjects:(NSArray *)objects toCollection:(KTPage *)collection;
+{
+    OBPRECONDITION(objects);
+    OBPRECONDITION(collection);
+    
+    
+    for (SVSiteItem *anObject in objects)
+    {
+        [self addObject:anObject toCollection:collection];
+    }
+}
+
 - (SVSiteItem *)newObjectFromPropertyList:(id)aPlist destinedForCollection:(KTPage *)collection
 {
     [self setEntityName:[aPlist valueForKey:@"entity"]];
@@ -426,7 +438,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         
         if ([graphics count])
         {
-            [self addObjects:graphics];
+            [self addObjects:graphics toCollection:collection];
             return YES;
         }
     }

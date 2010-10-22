@@ -49,6 +49,8 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 @property(nonatomic, copy) NSURL *objectURL;
 
 - (void)addObject:(id)object toCollection:(KTPage *)collection;
+- (void)addObjects:(NSArray *)objects toCollection:(KTPage *)collection;
+
 - (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
 
 - (void)moveObject:(id)object toCollection:(KTPage *)collection index:(NSUInteger)index;
