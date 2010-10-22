@@ -108,8 +108,6 @@
 
 - (void)awakeFromNew;
 {
-	[self.container setConstrainProportions:YES];		// We will likely want this on
-	
 	self.controller = YES;
 	self.preload = kPreloadAuto;
 	self.autoplay = NO;

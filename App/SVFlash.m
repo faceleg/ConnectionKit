@@ -60,8 +60,6 @@
 
 - (void)awakeFromNew;
 {
-	[self.container setConstrainProportions:YES];		// We will likely want this on
-
 	self.autoplay = NO;
 	self.loop = NO;
 	self.showMenu = YES;
