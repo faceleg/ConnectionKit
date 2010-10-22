@@ -10,7 +10,6 @@
 
 #import "AmazonListProduct.h"
 #import "APManualListProduct.h"
-#import "APAutomaticListProduct.h"
 
 
 @interface APProductAttributesCell ()
@@ -118,12 +117,6 @@
 	}
 	else
 	{
-		// If this is an wishlist product draw in grey if enough have been received.
-		BOOL hasBeenReceived = NO;
-		if ([product isKindOfClass: [APAutomaticListProduct class]]) {
-			hasBeenReceived = [(APAutomaticListProduct *)product desiredQuantityHasBeenReceived];
-		}
-		
 		NSString *creator = [product creator];
 		
 		// If available, draw creator as well
@@ -132,14 +125,14 @@
 					  line2: creator
 				  withFrame: cellFrame
 				     inView: controlView
-					useGray: hasBeenReceived];
+					useGray: NO];
 		}
 		else {
 			[self drawSingleLine: productTitle
 					   withFrame: cellFrame
 						  inView: controlView
 			   allowTextWrapping: NO
-						 useGray: hasBeenReceived];
+						 useGray: NO];
 		}
 	}
 }
