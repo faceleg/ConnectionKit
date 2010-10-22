@@ -33,6 +33,17 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
+- (id)initWithURL:(NSURL *)URL;
+{
+    self = [self init];
+    
+    NSString *code = [URL absoluteString];
+    [self validateValue:&code forKey:@"productCode" error:NULL];
+    [self setProductCode:code];
+    
+    return self;
+}
+
 - (void)dealloc
 {
 	// If the request is still running, cancel it

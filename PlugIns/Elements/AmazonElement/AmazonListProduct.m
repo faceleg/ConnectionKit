@@ -83,7 +83,10 @@
 
 - (void)setASIN:(NSString *)ASIN
 {
-	ASIN = [ASIN copy];
+	if (ASIN)
+    {
+        ASIN = [ASIN copy];
+    }
 	[myASIN release];
 	myASIN = ASIN;
 }

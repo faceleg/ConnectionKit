@@ -31,6 +31,8 @@
 }
 
 // Init & Load
+- (id)initWithURL:(NSURL *)URL;
+
 - (void)load;	// Loads everything including the thumbnail
 - (NSError *)lastLoadError;
 

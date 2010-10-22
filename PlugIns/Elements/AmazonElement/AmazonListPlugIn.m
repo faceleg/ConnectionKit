@@ -124,37 +124,13 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 		NSString *ASIN = [browserURL amazonProductASIN];	// Product
 		if (ASIN && ![ASIN isEqualToString:@""])
 		{
-			APManualListProduct *product = [[APManualListProduct alloc] init];
-			[self insertObject:product inProductsAtIndex:0];
+			APManualListProduct *product = [[APManualListProduct alloc] initWithURL:browserURL];
+            [self insertObject:product inProductsAtIndex:0];
 			
-			[product setProductCode:[browserURL absoluteString]];
 			[product release];
 		}
     }
 }
-
-//- (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
-//{
-//	[super awakeFromDragWithDictionary:aDataSourceDictionary];
-//	
-//	// Look for an Amazon URL
-//	NSString *URLString = [aDataSourceDictionary valueForKey:kKTDataSourceURLString];
-//	if (URLString)
-//	{
-//		NSURL *URL = [NSURL URLWithString:URLString];
-//		NSString *ASIN = [URL amazonProductASIN];	// Product
-//		
-//        if (ASIN && ![ASIN isEqualToString:@""])
-//		{
-//			APManualListProduct *product = [[APManualListProduct alloc] init];
-//			[self insertObject:product inProductsAtIndex:0];
-//			
-//			[product setProductCode:URLString];
-//            [product validateValueForKey:@"productCode" error:NULL];
-//			[product release];
-//		}
-//	}
-//}
 
 #pragma mark Dealloc
 
@@ -226,16 +202,13 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 					   context:(void *)context
 {
 	// Pass on manual list observations
-	if ([[self products] containsObjectIdenticalTo:object])
+	if ([[self products] indexOfObjectIdenticalTo:object] != NSNotFound)
 	{
 		[self observeValueForKeyPath:keyPath ofManualListProduct:object change:change context:context];
 	}
 	
-	// Bail if the object's not our associated plugin
-	if (object != self)
-    {
-		return;
-	}
+	// Bail if the object's not ourself
+	if (object != self) return;
 	
 	
 	id changeNewObject = [change objectForKey:NSKeyValueChangeNewKey];
@@ -351,7 +324,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	return result;
 }
 
-#pragma mark -
 #pragma mark Product Previews
 
 - (void)writeHTML:(id <SVPlugInContext>)context;
@@ -373,72 +345,26 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	}
 }
 
-#pragma mark -
-#pragma mark Data Source
+#pragma mark Pasteboard
 
-+ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
-{
-	return SVWebLocationGetReadablePasteboardTypes(pasteboard);
-}
-
-+ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)sender
-{
-    return 1;
-}
-
-+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
++ (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item
 {
     KTSourcePriority result = KTSourcePriorityNone;
     
-	NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pboard
-													  readWeblocFiles:YES
-													   ignoreFileURLs:YES];
-	
-	if (webLocations && [webLocations count] > dragIndex)
+	NSURL *URL = [item URL];
+	if ([URL amazonProductASIN])
 	{
-		NSURL *URL = [[webLocations objectAtIndex:dragIndex] URL];
-		if ([URL amazonProductASIN])
-		{
-			result = KTSourcePriorityIdeal;
-		}
+        result = KTSourcePriorityIdeal;
 	}
 	
 	return result;
 }
 
-//+ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
-//                      fromPasteboard:(NSPasteboard *)pasteboard
-//                             atIndex:(unsigned)dragIndex
-//				  forCreatingPagelet:(BOOL)isCreatingPagelet;
-//{
-//    BOOL result = NO;
-//    
-//    NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pasteboard
-//													  readWeblocFiles:YES
-//													   ignoreFileURLs:YES];
-//	
-//	
-//	if (webLocations && [webLocations count] > dragIndex)
-//	{
-//		NSURL *URL = [[webLocations objectAtIndex:dragIndex] URL];
-//		NSString *title = [[webLocations objectAtIndex:dragIndex] title];
-//		
-//		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
-//        if (!KSISNULL(title))
-//		{
-//			[aDictionary setObject:title forKey:kKTDataSourceTitle];
-//		}
-//		
-//		result = YES;
-//	}
-//    
-//    return result;
-//}
-
-+ (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type
+- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
 {
-    return KTSourcePriorityNone;
+    APManualListProduct *product = [[APManualListProduct alloc] initWithURL:[item URL]];
+    [[self mutableArrayValueForKey:@"products"] addObject:product];
+    [product release];
 }
-
 
 @end
