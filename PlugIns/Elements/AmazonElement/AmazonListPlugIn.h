@@ -9,8 +9,9 @@
 //	storage, and Inspector accessor methods.
 
 
-#import <Cocoa/Cocoa.h>
 #import "SandvoxPlugin.h"
+
+#import <AmazonSupport/AmazonSupport.h>
 
 
 extern NSString * const APDisplayTabIdentifier;

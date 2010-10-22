@@ -63,21 +63,6 @@
 	}
 }
 
-#pragma mark KVO
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-					  ofObject:(id)object
-					    change:(NSDictionary *)change
-					   context:(void *)context
-{
-	if (object == [self inspectedObjectsController])
-	{
-		if ([keyPath isEqualToString:@"selection.maxNumberProducts"])
-        {
-		}
-	}
-}
-
 #pragma mark Table views
 
 - (void)prepareTableViews
