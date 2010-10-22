@@ -137,7 +137,16 @@
     }
     else
     {
-        result = [super validateElement:tagName];
+        // Super allows standard inline elements. We only support them once inside a paragraph or similar
+        if ([self openElementsCount] > 0)
+        {
+            result = [super validateElement:tagName];
+        }
+        else
+        {
+            // Line breaks are permitted at top-level though
+            result = [tagName isEqualToString:@"BR"];
+        }
     }
     
     return result;
