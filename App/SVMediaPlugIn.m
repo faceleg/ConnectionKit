@@ -64,26 +64,26 @@
 {
     CGSize result = CGSizeZero;
     
-    SVMediaRecord *media = [self media];
-    if (media)
-	{
-		SVMediaGraphic *container = [self container];
-        
-        NSNumber *naturalWidth = container.naturalWidth;
-		NSNumber *naturalHeight = container.naturalHeight;
-		// Try to get cached natural size first
-		if (nil != naturalWidth && nil != naturalHeight)
-		{
-			result = CGSizeMake([naturalWidth floatValue], [naturalHeight floatValue]);
-		}
-		else	// ask the media for it, and cache it.
-		{
-			result = [media originalSize];
-			container.naturalWidth = [NSNumber numberWithFloat:result.width];
-			container.naturalHeight = [NSNumber numberWithFloat:result.height];
-		}
-	}
-	
+    SVMediaGraphic *container = [self container];
+    
+    NSNumber *naturalWidth = container.naturalWidth;
+    NSNumber *naturalHeight = container.naturalHeight;
+    // Try to get cached natural size first
+    if (nil != naturalWidth && nil != naturalHeight)
+    {
+        result = CGSizeMake([naturalWidth floatValue], [naturalHeight floatValue]);
+    }
+    else	// ask the media for it, and cache it.
+    {
+        SVMediaRecord *media = [self media];
+        if (media)
+        {
+            result = [media originalSize];
+            container.naturalWidth = [NSNumber numberWithFloat:result.width];
+            container.naturalHeight = [NSNumber numberWithFloat:result.height];
+        }
+    }
+    
     
     return result;
 }
