@@ -355,6 +355,25 @@
 {
 	self.alreadyCheckedVideoSource = YES;		// no need to kick off any requests
 	BOOL result = NO;
+	
+	// Unless check is overridden by defaults...
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	if (NO)
+		
+// TEMPORARY TEMPORARY TEMPORARY ------- RESTORE TO THIS:  (![defaults boolForKey:@"videoFlashRemoteOverride"])
+	{
+		// First check it if it a remote FLV ... NO is the answer, due to need for cross-domain stuff http://flv-player.net/help/
+		if (!aMedia && aURL)
+		{
+			NSString *UTI = [NSString UTIForFilenameExtension:[[aURL path] pathExtension]];
+			if ([UTI conformsToUTI:@"com.adobe.flash.video"])
+			{
+				return NO;		// short circuit now....
+			}
+		}
+		
+	}
+	
 	// Try to make a QTMovie out of this, or parse as FLV which is a special case (since QT is not needed to show.)
 
 	result = [self loadMovieFromURL:aMedia ? [aMedia mediaURL] : aURL];
@@ -738,6 +757,17 @@
 	[context writeImageWithSrc:posterSourcePath alt:altForMovieFallback width:[NSNumber numberWithUnsignedInt:self.width] height:[NSNumber numberWithUnsignedInt:self.height]];
 }
 
+
+- (NSString *)startNoRemoteFlashVideo:(SVHTMLContext *)context;
+{
+	[context buildAttributesForElement:@"div" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
+	NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
+	[context writeElement:@"p" text:NSLocalizedString(@"Unable to show remotely hosted Flash-based video.", @"Warning shown to user when video can't be embedded")];
+	// Poster may be shown next, so don't end....
+	
+	return elementID;
+}
+
 - (NSString *)startUnknown:(SVHTMLContext *)context;
 {
 	[context buildAttributesForElement:@"div" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
@@ -779,6 +809,14 @@
 		|| [type conformsToUTI:@"public.3gpp"]
 		|| [type conformsToUTI:@"com.adobe.flash.video"];
 	if ([defaults boolForKey:@"avoidFlashVideo"]) flashTag = NO;
+	
+	BOOL flashDisallowedTag = (!self.media
+		&& ![defaults boolForKey:@"videoFlashRemoteOverride"]);	// hidden pref to allow for remote URL
+	
+// TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY
+	flashDisallowedTag = NO;
+	
+	if (flashDisallowedTag) flashTag = NO;
 	
 	BOOL microsoftTag = [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"];
 	
@@ -829,8 +867,14 @@
 		
 		if (flashTag)	// inner
 		{
-			[self startFlash:context movieSourceURL:movieSourceURL posterSourceURL:posterSourceURL]; 
+			[self startFlash:context movieSourceURL:movieSourceURL posterSourceURL:posterSourceURL];
 		}
+	}
+	else if (flashDisallowedTag)
+	{
+		// Can't handle remotely hosted flash.  Do something similar to the "unknown" tag.
+		[self startNoRemoteFlashVideo:context];
+		unknownTag = YES;
 	}
 	else	// completely unknown video type
 	{
