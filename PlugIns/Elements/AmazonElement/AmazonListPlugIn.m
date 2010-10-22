@@ -87,7 +87,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
     
     // Observer storage
     [self addObserver:self
-			  forKeyPaths:[NSSet setWithObjects:@"layout", @"showThumbnails", @"showTitles", @"automaticListCode", @"automaticListSorting", nil]
+			  forKeyPaths:[NSSet setWithObjects:@"layout", @"showThumbnails", @"showTitles", nil]
 				  options:NSKeyValueObservingOptionNew
 				  context:NULL];
 	
@@ -132,20 +132,11 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 			[product release];
 		}
 		
-		NSString *listID = nil;	// List
-		[browserURL getAmazonListType:NULL andID:&listID];
-		if (listID && ![listID isEqualToString:@""])
-		{
-			[self setAutomaticListCode:[browserURL absoluteString]];
-		}
 		
-		
-		// If there is a predefined list ID, go with it
+        // If there is a predefined list ID, go with it
 		NSString *defaultListCode = [[[self bundle] objectForInfoDictionaryKey:@"DefaultListIDs"]
 			objectForKey:[AmazonECSOperation ISOCountryCodeOfStore:[self store]]];
-		
-		[self setAutomaticListCode:defaultListCode];
-	}
+    }
 }
 
 //- (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
@@ -180,8 +171,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
                                                                 @"layout",
                                                                 @"showThumbnails",
                                                                 @"showTitles",
-                                                                @"automaticListCode",
-                                                                @"automaticListSorting",
                                                                 nil]];
 	
 	// End KVO
@@ -191,8 +180,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 					
 	// Relase iVars
 	[_products release];
-	[myAutomaticList release];
-	[myAutomaticListProductsToDisplay release];
 	
 	[super dealloc];
 }
@@ -201,7 +188,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 + (NSArray *)plugInKeys
 {
-    return [NSSet setWithObjects:@"store", @"layout", @"showProductPreviews", @"frame", @"automaticListCode", @"automaticListType", @"automaticListSorting", @"showPrices", @"showThumbnails", @"showNewPricesOnly", @"showTitles", @"maxNumberProducts", @"showComments", @"showCreators", @"products", @"showLinkToList", nil];
+    return [NSSet setWithObjects:@"store", @"layout", @"showProductPreviews", @"frame", @"showPrices", @"showThumbnails", @"showNewPricesOnly", @"showTitles", @"maxNumberProducts", @"showComments", @"showCreators", @"products", @"showLinkToList", nil];
 }
 
 @synthesize store = _store;
@@ -212,9 +199,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	// Save the new value in the prefs for future plugins
 	[[NSUserDefaults standardUserDefaults] setInteger:newStore forKey:@"AmazonLatestStore"];
 	
-	// Reload the manual and automatic lists
-	[self loadAutomaticList];
-	
+	// Reload the products
 	NSEnumerator *enumerator = [[self products] objectEnumerator];
 	APManualListProduct *product;
 	while (product = [enumerator nextObject]) {
@@ -228,9 +213,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 @synthesize showProductPreviews = _showProductPreviews;
 @synthesize frame = _frame;
 
-@synthesize automaticListCode = _automaticListCode;
-@synthesize automaticListType = _automaticListType;
-@synthesize automaticListSorting = _automaticListSorting;
 @synthesize showPrices = _showPrices;
 @synthesize showThumbnails = _showThumbnails;
 @synthesize showNewPricesOnly = _showNewPricesOnly;
@@ -285,10 +267,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 		if (changeNewObject == [NSNull null] || ![changeNewObject boolValue]) {
 			[self setShowThumbnails:YES];
 		}
-	}
-	else if ([keyPath isEqualToString:@"automaticListCode"] || [keyPath isEqualToString:@"automaticListSorting"])
-	{
-		[self loadAutomaticList];
 	}
 	
 	//	Changes to the layout or list source need us to recalculate the availability of the

@@ -31,24 +31,11 @@
 	IBOutlet NSButton			*oManualListAddProductButton;
 	IBOutlet NSButton			*oManualListRemoveProductButton;
 	IBOutlet NSArrayController	*manualProductsArrayController;
-	
-	IBOutlet KSPlaceholderTableView	*automaticListTableView;
-	IBOutlet NTBoxView				*automaticTableButtonsBox;
-	
+		
 	IBOutlet NSSegmentedControl	*listLayoutSegmentedControl;
-	
-	
-  @private
-	NSString	*mySelectedTab;
 }
-
-- (NSString *)selectedTabIdentifier;
-- (void)setSelectedTabIdentifier:(NSString *)identifier;
 
 - (IBAction)reloadSelectedProduct:(id)sender;
 - (IBAction)reloadAllProducts:(id)sender;
-
-- (IBAction)reloadList:(id)sender;
-- (IBAction)openListURL:(id)sender;
 
 @end

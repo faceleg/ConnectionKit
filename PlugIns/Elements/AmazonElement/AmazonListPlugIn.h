@@ -49,9 +49,6 @@ typedef enum {
     NSInteger               _frame;
     NSInteger               _centeredThumbnailWidths;
     
-    NSString                *_automaticListCode;
-    AmazonListType          _automaticListType;
-    AmazonWishListSorting   _automaticListSorting;
     BOOL                    _showPrices;
 	BOOL                    _showThumbnails;
     BOOL                    _showNewPricesOnly;
@@ -65,10 +62,6 @@ typedef enum {
 	NSMutableArray	*_products;
 	
 	BOOL	manualListIsBeingArchivedOrUnarchived;
-	
-	// Automatic list
-	AmazonListProductList	*myAutomaticList;
-	NSArray			*myAutomaticListProductsToDisplay;
 }
 
 @property(nonatomic) AmazonStoreCountry store;
@@ -77,9 +70,6 @@ typedef enum {
 @property(nonatomic) NSInteger frame;
 @property(nonatomic) NSInteger centeredThumbnailWidths;
 
-@property(nonatomic, copy) NSString *automaticListCode;
-@property(nonatomic) AmazonListType automaticListType;
-@property(nonatomic) AmazonWishListSorting automaticListSorting;
 @property(nonatomic) BOOL showPrices;
 @property(nonatomic) BOOL showThumbnails;
 @property(nonatomic) BOOL showNewPricesOnly;
@@ -118,16 +108,5 @@ typedef enum {
 
 - (void)loadAllManualListProducts;
 - (void)archiveManualListProductsAndRegisterUndoOperation:(BOOL)registerUndo;
-
-@end
-
-
-@interface AmazonListPlugIn (AutomaticList)
-// Automatic lists
-- (AmazonListProductList *)automaticList;
-- (void)setAutomaticList:(AmazonListProductList *)list;
-- (NSArray *)automaticListProductsToDisplay;
-- (void)setAutomaticListProductsToDisplay:(NSArray *)products;
-- (void)loadAutomaticList;
 
 @end

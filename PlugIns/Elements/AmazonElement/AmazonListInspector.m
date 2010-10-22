@@ -21,13 +21,6 @@
 - (void)prepareTableViews;
 - (void)centerLayoutSegmentIcons;
 
-- (void)observeChangesToAutomaticListData;
-- (void)stopObservingChangesToAutomaticListData;
-- (void)populateAutomaticListTableView;
-- (void)automaticListDidChangeLoadingStatus;
-
-- (void)updateAutomaticListPlaceholderText;
-
 @end
 
 
@@ -39,7 +32,6 @@
 - (id)init
 {
 	[super init];
-	[self setSelectedTabIdentifier:APProductsOrListTabIdentifier];
 	return self;
 }
 
@@ -48,8 +40,6 @@
 	[self initializeStoreSelectionPopupButton];
 	[self prepareTableViews];
 	[self centerLayoutSegmentIcons];
-	
-	[self observeChangesToAutomaticListData];
 }
 
 - (void)initializeStoreSelectionPopupButton
@@ -73,17 +63,6 @@
 	}
 }
 
-#pragma mark Dealloc
-
-- (void)dealloc
-{
-	[self stopObservingChangesToAutomaticListData];
-	
-	[mySelectedTab release];
-	
-	[super dealloc];
-}
-
 #pragma mark KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -93,37 +72,12 @@
 {
 	if (object == [self inspectedObjectsController])
 	{
-		if ([keyPath isEqualToString:@"selection.automaticListCode"])
+		if ([keyPath isEqualToString:@"selection.maxNumberProducts"])
         {
-			[self updateAutomaticListPlaceholderText];
-		}
-		else if ([keyPath isEqualToString:@"selection.maxNumberProducts"] ||
-				 [keyPath isEqualToString:@"selection.automaticList.products"])
-        {
-			[self populateAutomaticListTableView];
-		}
-		else if ([keyPath isEqualToString:@"selection.automaticList.loadingData"])
-        {
-			[self automaticListDidChangeLoadingStatus];
 		}
 	}
 }
 
-#pragma mark -
-#pragma mark TabView
-
-#pragma mark Selected tab
-
-- (NSString *)selectedTabIdentifier { return mySelectedTab; }
-
-- (void)setSelectedTabIdentifier:(NSString *)identifier
-{
-	identifier = [identifier copy];
-	[mySelectedTab release];
-	mySelectedTab = identifier;
-}
-
-#pragma mark -
 #pragma mark Table views
 
 - (void)prepareTableViews
@@ -131,134 +85,8 @@
 	// Sort out double-clicking
 	[manualProductsTableView setTarget: [manualProductsTableView dataSource]];
 	[manualProductsTableView setDoubleAction: @selector(openProductURL:)];
-	
-	[automaticListTableView setTarget: [automaticListTableView dataSource]];
-	[automaticListTableView setDoubleAction: @selector(openProductURL:)];
-	
-	// disable drag and drop in the automatic list
-	[[automaticListTableView dataSource] setAllowsDragAndDropTableReordering:NO];
 }
 
-- (void)observeChangesToAutomaticListData
-{
-	[[self inspectedObjectsController] addObserver:self
-					   forKeyPath:@"selection.automaticListCode"
-					      options:0
-						  context:nil];
-	
-	[[self inspectedObjectsController] addObserver:self
-					   forKeyPath:@"selection.maxNumberProducts"
-					      options:0
-						  context:nil];
-	
-	[[self inspectedObjectsController] addObserver:self
-					   forKeyPath:@"selection.automaticList.products"
-					      options:0
-						  context:nil];
-	
-	[[self inspectedObjectsController] addObserver:self
-					   forKeyPath:@"selection.automaticList.loadingData"
-					      options:0
-						  context:nil];
-}
-
-- (void)stopObservingChangesToAutomaticListData
-{
-	[[self inspectedObjectsController] removeObserver:self forKeyPath:@"selection.automaticListCode"];
-	[[self inspectedObjectsController] removeObserver:self forKeyPath:@"selection.maxNumberProducts"];
-	[[self inspectedObjectsController] removeObserver:self forKeyPath:@"selection.automaticList.products"];
-	[[self inspectedObjectsController] removeObserver:self forKeyPath:@"selection.automaticList.loadingData"];
-}
-
-- (void)populateAutomaticListTableView
-{
-	NSArray *allProducts = [[self inspectedObjectsController]
-                            valueForKeyPath:@"selection.automaticList.products"];
-    
-	if (!NSIsControllerMarker(allProducts) && [allProducts count])
-	{
-		// Build the range as appropriate
-		NSRange productsRange;
-		NSUInteger maxNumberProducts = [[[self inspectedObjectsController]
-                                         valueForKeyPath:@"selection.maxNumberProducts"]
-                                        unsignedIntegerValue];
-		
-		if ([allProducts count] < maxNumberProducts || maxNumberProducts == 0) {
-			productsRange = NSMakeRange(0, [allProducts count]);
-		}
-		else {
-			productsRange = NSMakeRange(0, maxNumberProducts);
-		}
-		
-		[[self inspectedObjectsController] setValue:[allProducts subarrayWithRange:productsRange]
-                                         forKeyPath:@"selection.automaticListProductsToDisplay"];
-	}
-	else
-	{
-		[[self inspectedObjectsController] setValue:nil
-                                         forKeyPath:@"selection.automaticListProductsToDisplay"];
-	}
-}
-
-- (void)automaticListDidChangeLoadingStatus
-{
-	BOOL loading = NO;
-	id value = [[self inspectedObjectsController] valueForKeyPath:@"selection.automaticList.loadingData"];
-	
-	if ([value isKindOfClass:[NSNumber class]]) {
-		loading = [value boolValue];
-	}
-	
-	[automaticListTableView setLoadingData:loading];
-	
-	[self updateAutomaticListPlaceholderText];
-}
-
-- (void)updateAutomaticListPlaceholderText
-{
-	id plugIn = [[self inspectedObjectsController] valueForKeyPath:@"selection.self"];
-    if (NSIsControllerMarker(plugIn)) plugIn = nil;
-    
-	NSString *listCode = [plugIn automaticListCode];
-	BOOL listLoading = [[plugIn automaticList] isLoadingData];
-	NSArray *products = [plugIn automaticListProductsToDisplay];
-	
-	
-	[automaticListTableView setPlaceholderStringColor:[NSColor grayColor]];	// Grey is the default
-	
-	if (!listCode || [listCode isEqualToString:@""]) {	// Remind the user what to do
-		[automaticListTableView setPlaceholderString:LocalizedStringInThisBundle(@"Please enter the ID or public URL of an Amazon list above", "Table placeholder text")];
-	}
-	else if (listLoading || (products && [products count] > 0))	{ // Nothing to display once loaded or loading
-		[automaticListTableView setPlaceholderString:nil];
-	}
-	else	// This lot are errors (in red!)
-	{
-		[automaticListTableView setPlaceholderStringColor:[NSColor redColor]];
-		
-		NSError *error = [[plugIn automaticList] lastLoadError];
-		NSURL *URL = [NSURL URLWithString:listCode];
-		
-		if (error && [[error domain] isEqualToString:NSURLErrorDomain] && [error code] == -1009)
-        { // No internet connection
-			[automaticListTableView setPlaceholderString:LocalizedStringInThisBundle(@"No Internet connection", "table cell")];
-		}
-		else if ([[URL scheme] length] && [[URL resourceSpecifier] length])
-        {	// The user entered an invalid URL
-			[automaticListTableView setPlaceholderString:LocalizedStringInThisBundle(@"The URL entered does not appear to be a public Amazon list URL", "error message in tableview")];
-		}
-		else if (!products || [products count] == 0)
-        {	// Nothing found
-			[automaticListTableView setPlaceholderString:LocalizedStringInThisBundle(@"No list with that ID was found", "error message in tableview")];
-		}
-		else
-        {	// Fallback onto general "error"
-			[automaticListTableView setPlaceholderString:LocalizedStringInThisBundle(@"There was an error loading the list.", "error message in tableview")];
-		}
-	}
-}
-
-#pragma mark -
 #pragma mark Gear Buttons
 
 - (IBAction)reloadSelectedProduct:(id)sender
@@ -286,29 +114,8 @@
     {
 		result = ([[manualProductsArrayController arrangedObjects] count] > 0);
 	}
-	else if (action == @selector(openListURL:))
-    {
-		result = ([[self inspectedObjectsController]
-                   valueForKeyPath:@"selection.automaticList.listURL"] != nil);
-	}
 	
 	return result;
-}
-
-- (IBAction)reloadList:(id)sender
-{
-	[[[self inspectedObjectsController] selectedObjects]
-     makeObjectsPerformSelector:@selector(loadAutomaticList)];
-}
-
-- (IBAction)openListURL:(id)sender
-{
-	NSURL *URL = [[self inspectedObjectsController] valueForKeyPath:@"selection.automaticList.listURL"];
-	
-    if (URL && !NSIsControllerMarker(URL))
-    {
-		[[NSWorkspace sharedWorkspace] openURL: URL];
-	}
 }
 
 @end
