@@ -188,7 +188,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 + (NSArray *)plugInKeys
 {
-    return [NSSet setWithObjects:@"store", @"layout", @"showProductPreviews", @"frame", @"showPrices", @"showThumbnails", @"showNewPricesOnly", @"showTitles", @"maxNumberProducts", @"showComments", @"showCreators", @"products", @"showLinkToList", nil];
+    return [NSSet setWithObjects:@"store", @"layout", @"showProductPreviews", @"frame", @"showPrices", @"showThumbnails", @"showNewPricesOnly", @"showTitles", @"showComments", @"showCreators", @"products", @"showLinkToList", nil];
 }
 
 @synthesize store = _store;
@@ -217,7 +217,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 @synthesize showThumbnails = _showThumbnails;
 @synthesize showNewPricesOnly = _showNewPricesOnly;
 @synthesize showTitles = _showTitles;
-@synthesize maxNumberProducts = _maxNumberProducts;
 @synthesize showComments = _showComments;
 @synthesize showCreators = _showCreators;
 @synthesize showLinkToList = _showLinkToList;

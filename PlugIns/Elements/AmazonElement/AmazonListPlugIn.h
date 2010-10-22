@@ -12,8 +12,6 @@
 #import <Cocoa/Cocoa.h>
 #import "SandvoxPlugin.h"
 
-#import "AmazonListProductList.h"
-
 
 extern NSString * const APDisplayTabIdentifier;
 extern NSString * const APProductsOrListTabIdentifier;
@@ -53,7 +51,6 @@ typedef enum {
 	BOOL                    _showThumbnails;
     BOOL                    _showNewPricesOnly;
     BOOL                    _showTitles;
-    NSInteger               _maxNumberProducts;
     BOOL                    _showComments;
     BOOL                    _showCreators;
     BOOL                    _showLinkToList;
@@ -74,7 +71,6 @@ typedef enum {
 @property(nonatomic) BOOL showThumbnails;
 @property(nonatomic) BOOL showNewPricesOnly;
 @property(nonatomic) BOOL showTitles;
-@property(nonatomic) NSInteger maxNumberProducts;
 @property(nonatomic) BOOL showComments;
 @property(nonatomic) BOOL showCreators;
 @property(nonatomic) BOOL showLinkToList;
