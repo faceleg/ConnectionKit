@@ -53,7 +53,7 @@
 
 #pragma mark Metrics
 
-- (void)makeOriginalSize;
+- (void)XmakeOriginalSize;
 {
     if ([self media] || ![self externalSourceURL])
     {
