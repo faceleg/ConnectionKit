@@ -337,6 +337,10 @@
 {
     if (constrainProportions)
     {
+        // Doesn't make sense to constrain proportions unless both values are known
+        OBASSERT([[self height] intValue] > 0);
+        OBASSERT([[self width] intValue] > 0);
+        
         CGFloat aspectRatio = [[self width] floatValue] / [[self height] floatValue];
         [self setConstrainedAspectRatio:[NSNumber numberWithFloat:aspectRatio]];
     }
