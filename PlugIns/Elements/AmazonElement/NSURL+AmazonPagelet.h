@@ -17,7 +17,6 @@
 // Amazon URLs
 - (AmazonStoreCountry)amazonStore;
 - (NSString *)amazonProductASIN;
-- (void)getAmazonListType:(AmazonListType *)listType andID:(NSString **)listId;
 
 @end
 
