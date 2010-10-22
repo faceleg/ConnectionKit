@@ -1,4 +1,4 @@
-[[if listSource==0]]
+[[if self]][[comment Didn't want to take the if statement out yet since it means changing a whole bunch of others]]
 [[if productsSuitableForPublishing]]
 [[comment WE HAVE PRODUCTS.  LET'S SHOW 'EM. ]]
 [[if layout==6]]
@@ -73,21 +73,6 @@
 [[comment NO PRODUCTS SUITABLE FOR PUBLISHING ]]
 [[if HTMLGenerationPurpose==0]]
 <p style="text-align:center;">[['Please add Amazon products to this list using the Inspector.]]</p>
-[[endif3]]
-[[endif2]]
-[[else]]
-[[comment WISH LIST ]]
-[[if automaticListType>0]]
-[[if HTMLGenerationPurpose||parser.liveDataFeeds]]
-<script src="[[=&kareliaHTMLURL]]" type="text/javascript"></script>
-[[else3]]
-<div class="amazonListPlaceholder">
-	[['This is a placeholder; your Amazon list will appear here once published or if you enable live data feeds in the preferences.]]
-</div>
-[[endif3]]
-[[else2]]
-[[if HTMLGenerationPurpose==0]]
-<p style="text-align:center;">[['Please specify an Amazon list (e.g. a wish list or listmania) to display using the Inspector.]]</p>
 [[endif3]]
 [[endif2]]
 [[endif]]

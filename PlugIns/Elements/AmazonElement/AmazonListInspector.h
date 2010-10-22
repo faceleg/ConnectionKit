@@ -52,8 +52,3 @@
 - (IBAction)openListURL:(id)sender;
 
 @end
-
-
-@interface NSTabView (APInspectorController)
-- (void)insertTabViewItemIfNotAlreadyPresent:(NSTabViewItem *)tabViewItem atIndex:(unsigned)index;
-@end

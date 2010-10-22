@@ -92,7 +92,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 				  context:NULL];
 	
 	[self addObserver:self
-			  forKeyPaths:[NSSet setWithObjects:@"listSource", @"manualListProducts", nil]
+			  forKeyPaths:[NSSet setWithObjects:@"manualListProducts", nil]
 				  options:0
 				  context:NULL];
     
@@ -136,7 +136,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 		[browserURL getAmazonListType:NULL andID:&listID];
 		if (listID && ![listID isEqualToString:@""])
 		{
-			[self setListSource:AmazonPageletLoadFromList];
 			[self setAutomaticListCode:[browserURL absoluteString]];
 		}
 		
@@ -172,15 +171,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 //	}
 //}
 
-- (void)awakeFromNib
-{
-	// Load the automatic list if needed
-	if ([self listSource] == AmazonPageletLoadFromList)
-    {
-		[self loadAutomaticList];
-	}
-}
-
 #pragma mark Dealloc
 
 - (void)dealloc
@@ -192,7 +182,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
                                                                 @"showTitles",
                                                                 @"automaticListCode",
                                                                 @"automaticListSorting",
-                                                                @"listSource",
                                                                 nil]];
 	
 	// End KVO
@@ -212,7 +201,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 + (NSArray *)plugInKeys
 {
-    return [NSSet setWithObjects:@"store", @"listSource", @"layout", @"showProductPreviews", @"frame", @"automaticListCode", @"automaticListType", @"automaticListSorting", @"showPrices", @"showThumbnails", @"showNewPricesOnly", @"showTitles", @"maxNumberProducts", @"showComments", @"showCreators", @"products", @"showLinkToList", nil];
+    return [NSSet setWithObjects:@"store", @"layout", @"showProductPreviews", @"frame", @"automaticListCode", @"automaticListType", @"automaticListSorting", @"showPrices", @"showThumbnails", @"showNewPricesOnly", @"showTitles", @"maxNumberProducts", @"showComments", @"showCreators", @"products", @"showLinkToList", nil];
 }
 
 @synthesize store = _store;
@@ -235,7 +224,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	[self loadAllManualListProducts];
 }
 
-@synthesize listSource = _listSource;
 @synthesize layout = _layout;
 @synthesize showProductPreviews = _showProductPreviews;
 @synthesize frame = _frame;
@@ -305,7 +293,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	
 	//	Changes to the layout or list source need us to recalculate the availability of the
 	//	"showPrices" appearance option
-	if ([keyPath isEqualToString:@"layout"] || [keyPath isEqualToString:@"listSource"])
+	if ([keyPath isEqualToString:@"layout"])
 	{
 		[self willChangeValueForKey:@"showPricesOptionAvailable"];
 		[self didChangeValueForKey:@"showPricesOptionAvailable"];
@@ -321,8 +309,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
     
     
 	// If there are existing list items, warn the user of the possible implications
-	if ([self listSource] == AmazonPageletPickByHand)
-	{
 		if ([self products] && [[self products] count] > 0)
 		{
 			NSString *titleFormat = LocalizedStringInThisBundle(@"Change to the %@ Amazon store?", "alert title");
@@ -339,27 +325,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 			int result = [alert runModal];
 			if (result == NSAlertAlternateReturn) *outStore = [self valueForKey:@"store"];
 		}
-	}
-	else if ([self listSource] == AmazonPageletLoadFromList)
-	{
-		NSArray *listProducts = [[self automaticList] products];
-		if ([listProducts count])
-		{
-			NSString *titleFormat = LocalizedStringInThisBundle(@"Change to the %@ Amazon store?", "alert title");
-			NSString *storeName = [AmazonECSOperation nameOfStore:store];	// already localized
-			NSString *title = [NSString stringWithFormat:titleFormat, storeName];
-			
-			NSAlert *alert =
-				[NSAlert alertWithMessageText:title
-								defaultButton:LocalizedStringInThisBundle(@"Change Store", "button text")
-							  alternateButton:LocalizedStringInThisBundle(@"Cancel", "button text")
-								  otherButton:nil
-					informativeTextWithFormat:LocalizedStringInThisBundle(@"Amazon lists are normally specific to a particular country. If you change the store your list may no longer be found.", "alert message")];
-			
-			int result = [alert runModal];
-			if (result == NSAlertAlternateReturn) *outStore = [self valueForKey:@"store"];
-		}
-	}
 	
 	return YES;
 }
@@ -409,8 +374,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 - (BOOL)showPricesOptionAvailable
 {
 	// Not available in all circumstances
-	BOOL result = ([self listSource] == AmazonPageletLoadFromList ||
-				   [self layout] == APLayoutEnhanced ||
+	BOOL result = ([self layout] == APLayoutEnhanced ||
 				   [self layout] == APLayoutRandom);
 				   
 	return result;

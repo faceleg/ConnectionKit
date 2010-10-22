@@ -21,10 +21,6 @@
 - (void)prepareTableViews;
 - (void)centerLayoutSegmentIcons;
 
-- (void)observeChangesToListSource;
-- (void)stopObservingChangesToListSource;
-- (void)listSourceDidChange:(id)newValue;
-
 - (void)observeChangesToAutomaticListData;
 - (void)stopObservingChangesToAutomaticListData;
 - (void)populateAutomaticListTableView;
@@ -53,7 +49,6 @@
 	[self prepareTableViews];
 	[self centerLayoutSegmentIcons];
 	
-	[self observeChangesToListSource];
 	[self observeChangesToAutomaticListData];
 }
 
@@ -82,7 +77,6 @@
 
 - (void)dealloc
 {
-	[self stopObservingChangesToListSource];
 	[self stopObservingChangesToAutomaticListData];
 	
 	[mySelectedTab release];
@@ -102,10 +96,6 @@
 		if ([keyPath isEqualToString:@"selection.automaticListCode"])
         {
 			[self updateAutomaticListPlaceholderText];
-		}
-		else if ([keyPath isEqualToString:@"selection.listSource"])
-        {
-			[self listSourceDidChange:[object valueForKeyPath:keyPath]];
 		}
 		else if ([keyPath isEqualToString:@"selection.maxNumberProducts"] ||
 				 [keyPath isEqualToString:@"selection.automaticList.products"])
@@ -131,56 +121,6 @@
 	identifier = [identifier copy];
 	[mySelectedTab release];
 	mySelectedTab = identifier;
-}
-
-- (void)observeChangesToListSource
-{
-	[[self inspectedObjectsController] addObserver:self
-                                        forKeyPath:@"selection.listSource"
-                                           options:NSKeyValueObservingOptionInitial
-                                           context:nil];
-	
-	// We must retain the tab view items so that they are not deallocated when removed from the tab view
-	[productsTabViewItem retain];
-	[listTabViewItem retain];
-}
-
-- (void)stopObservingChangesToListSource
-{
-	[[self inspectedObjectsController] removeObserver:self forKeyPath:@"selection.listSource"];
-	
-	[productsTabViewItem release];
-	[listTabViewItem release];
-}
-
-- (void)listSourceDidChange:(id)newValue
-{
-	// Add and remove the appropriate tab view items
-	
-	///	This new check of the value's class is to handle closing the document. What happens is we get a
-	/// _NSStateMarker rather than an NSNumber since there is no longer anything connected to the
-	/// plugin controller.
-	
-	if ([newValue isKindOfClass:[NSNumber class]])
-	{
-		AmazonPageletListSource newSource = [newValue intValue];
-		NSString *itemIdentifier = [[tabView selectedTabViewItem] identifier];
-		
-		switch (newSource)
-		{
-			case AmazonPageletPickByHand:
-				[tabView removeTabViewItem:listTabViewItem];
-				[tabView insertTabViewItemIfNotAlreadyPresent:productsTabViewItem atIndex:0];
-				break;
-				
-			case AmazonPageletLoadFromList:
-				[tabView removeTabViewItem:productsTabViewItem];
-				[tabView insertTabViewItemIfNotAlreadyPresent:listTabViewItem atIndex:0];
-				break;
-		}
-		
-		[tabView selectTabViewItemWithIdentifier:itemIdentifier];
-	}
 }
 
 #pragma mark -
@@ -368,22 +308,6 @@
     if (URL && !NSIsControllerMarker(URL))
     {
 		[[NSWorkspace sharedWorkspace] openURL: URL];
-	}
-}
-
-@end
-
-
-#pragma mark -
-
-
-@implementation NSTabView (APInspectorController)
-
-- (void)insertTabViewItemIfNotAlreadyPresent:(NSTabViewItem *)tabViewItem atIndex:(unsigned)index;
-{
-	if ([[self tabViewItems] indexOfObjectIdenticalTo:tabViewItem] == NSNotFound)
-    {
-		[self insertTabViewItem:tabViewItem atIndex:index];
 	}
 }
 

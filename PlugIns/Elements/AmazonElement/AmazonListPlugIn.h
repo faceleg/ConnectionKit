@@ -15,11 +15,6 @@
 #import "AmazonListProductList.h"
 
 
-typedef enum {
-	AmazonPageletPickByHand = 0,
-	AmazonPageletLoadFromList = 1,
-} AmazonPageletListSource;
-
 extern NSString * const APDisplayTabIdentifier;
 extern NSString * const APProductsOrListTabIdentifier;
 
@@ -49,7 +44,6 @@ typedef enum {
 {
   @private
     AmazonStoreCountry      _store;
-    AmazonPageletListSource _listSource;
     APListLayout            _layout;
     BOOL                    _showProductPreviews;
     NSInteger               _frame;
@@ -78,7 +72,6 @@ typedef enum {
 }
 
 @property(nonatomic) AmazonStoreCountry store;
-@property(nonatomic) AmazonPageletListSource listSource;
 @property(nonatomic) APListLayout layout;
 @property(nonatomic) BOOL showProductPreviews;
 @property(nonatomic) NSInteger frame;
