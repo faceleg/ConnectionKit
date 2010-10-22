@@ -12,7 +12,6 @@
 #import <AmazonSupport/AmazonSupport.h>
 
 #import "AmazonListPlugIn.h"
-#import "AmazonListProductList.h"
 
 
 @interface AmazonListInspector ()

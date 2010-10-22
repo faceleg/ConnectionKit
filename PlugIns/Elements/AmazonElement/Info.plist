@@ -22,21 +22,6 @@
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
-	<key>DefaultListIDs</key>
-	<dict>
-		<key>ca</key>
-		<string>RS6YQNNZCU0J5</string>
-		<key>de</key>
-		<string>R1KEJU5MDXRDRJ</string>
-		<key>fr</key>
-		<string>R30000ZNO56RH9</string>
-		<key>jp</key>
-		<string>R3G0Q98EJAS46D</string>
-		<key>uk</key>
-		<string>R27IM0LJ9PWD0Z</string>
-		<key>us</key>
-		<string>RNKG97HK7JE5J</string>
-	</dict>
 	<key>KSMinimumAppVersion</key>
 	<string>2.0</string>
 	<key>KTCategory</key>

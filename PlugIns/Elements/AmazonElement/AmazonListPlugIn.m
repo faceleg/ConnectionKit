@@ -130,11 +130,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 			[product setProductCode:[browserURL absoluteString]];
 			[product release];
 		}
-		
-		
-        // If there is a predefined list ID, go with it
-		NSString *defaultListCode = [[[self bundle] objectForInfoDictionaryKey:@"DefaultListIDs"]
-			objectForKey:[AmazonECSOperation ISOCountryCodeOfStore:[self store]]];
     }
 }
 
