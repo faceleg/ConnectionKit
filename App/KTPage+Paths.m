@@ -106,7 +106,9 @@
             result = [self identifier];
         }
         
-        return [result stringByAppendingPathExtension:[self pathExtension]];
+        if (![self isCollection]) result = [result stringByAppendingPathExtension:[self pathExtension]];
+        
+        return result;
     }
 }
 
