@@ -509,7 +509,7 @@
 	[context writeParamElementWithName:@"autostart" value:self.autoplay ? @"true" : @"false"];
 	[context writeParamElementWithName:@"showcontrols" value:self.controller ? @"true" : @"false"];
 	[context writeParamElementWithName:@"playcount" value:self.loop ? @"9999" : @"1"];
-	[context writeParamElementWithName:@"type" value:@"application/x-oleobject"];
+//	[context writeParamElementWithName:@"type" value:@"application/x-oleobject"];	... TOOK OUT, BREAKS DISPLAY ON MAC
 	[context writeParamElementWithName:@"uiMode" value:@"mini"];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://microsoft.com/windows/mediaplayer/en/download/"];
 
@@ -784,7 +784,7 @@
 	
 	// quicktime fallback, but not for mp4.  We may want to be more selective of mpeg-4 types though.
 	// Also show quicktime when there is no media at all
-	BOOL quicktimeTag = !media || ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
+	BOOL quicktimeTag = ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
 	&& ![type conformsToUTI:@"public.mpeg-4"]
 	&& ![type conformsToUTI:@"public.3gpp"]
 			;
@@ -1144,6 +1144,7 @@
 
 - (void)connection:(KSSimpleURLConnection *)connection didFailWithError:(NSError *)error;
 {
+	LOG((@"Connection failed:%@", error));
 	// do nothing with the error, but clear out the connection.
 	self.dimensionCalculationConnection = nil;
 }
