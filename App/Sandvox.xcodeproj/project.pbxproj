@@ -247,8 +247,6 @@
 		270172B711CFB566001512F6 /* SVProxyHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 270172B511CFB566001512F6 /* SVProxyHTMLContext.m */; };
 		270172F311CFBEF3001512F6 /* KSStringXMLEntityEscaping.h in Headers */ = {isa = PBXBuildFile; fileRef = 270172F111CFBEF3001512F6 /* KSStringXMLEntityEscaping.h */; settings = {ATTRIBUTES = (); }; };
 		270172F411CFBEF3001512F6 /* KSStringXMLEntityEscaping.m in Sources */ = {isa = PBXBuildFile; fileRef = 270172F211CFBEF3001512F6 /* KSStringXMLEntityEscaping.m */; };
-		2701749D11D10417001512F6 /* SVWebEditorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2701749B11D10417001512F6 /* SVWebEditorView.h */; };
-		2701749E11D10417001512F6 /* SVWebEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2701749C11D10417001512F6 /* SVWebEditorView.m */; };
 		2704228112142F710077298A /* SVSizeBindingDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2704227F12142F710077298A /* SVSizeBindingDOMController.h */; };
 		2704228212142F710077298A /* SVSizeBindingDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2704228012142F710077298A /* SVSizeBindingDOMController.m */; };
 		27080FBE113DD9C900E66F92 /* SVLogoImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 27080FBC113DD9C900E66F92 /* SVLogoImage.h */; };
@@ -1780,8 +1778,6 @@
 		270172B511CFB566001512F6 /* SVProxyHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProxyHTMLContext.m; sourceTree = "<group>"; };
 		270172F111CFBEF3001512F6 /* KSStringXMLEntityEscaping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSStringXMLEntityEscaping.h; sourceTree = "<group>"; };
 		270172F211CFBEF3001512F6 /* KSStringXMLEntityEscaping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSStringXMLEntityEscaping.m; sourceTree = "<group>"; };
-		2701749B11D10417001512F6 /* SVWebEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorView.h; sourceTree = "<group>"; };
-		2701749C11D10417001512F6 /* SVWebEditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorView.m; sourceTree = "<group>"; };
 		2704227F12142F710077298A /* SVSizeBindingDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSizeBindingDOMController.h; sourceTree = "<group>"; };
 		2704228012142F710077298A /* SVSizeBindingDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSizeBindingDOMController.m; sourceTree = "<group>"; };
 		27080FBC113DD9C900E66F92 /* SVLogoImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLogoImage.h; sourceTree = "<group>"; };
@@ -3284,8 +3280,6 @@
 				CE26FA1308C4D9C500C9604B /* design-time.css */,
 				2759CC991039711200E2C046 /* SVWebEditorViewController.h */,
 				2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */,
-				2701749B11D10417001512F6 /* SVWebEditorView.h */,
-				2701749C11D10417001512F6 /* SVWebEditorView.m */,
 				27DD09401202DF980083C7C1 /* SVContentDOMController.h */,
 				27DD09411202DF980083C7C1 /* SVContentDOMController.m */,
 			);
@@ -5731,7 +5725,6 @@
 				277FDD6111CE21650083F1BF /* KSMegaBufferedWriter.h in Headers */,
 				270172B611CFB566001512F6 /* SVProxyHTMLContext.h in Headers */,
 				270172F311CFBEF3001512F6 /* KSStringXMLEntityEscaping.h in Headers */,
-				2701749D11D10417001512F6 /* SVWebEditorView.h in Headers */,
 				27B82D9611D4A9A00086CB6E /* SVRawHTMLGraphic.h in Headers */,
 				27B82F1B11D50F260086CB6E /* SVDOMToHTMLWriter.h in Headers */,
 				CE5B1CB811E54A37005E2C5E /* KTFeedbackReporter.h in Headers */,
@@ -7225,7 +7218,6 @@
 				277FDD6211CE21650083F1BF /* KSMegaBufferedWriter.m in Sources */,
 				270172B711CFB566001512F6 /* SVProxyHTMLContext.m in Sources */,
 				270172F411CFBEF3001512F6 /* KSStringXMLEntityEscaping.m in Sources */,
-				2701749E11D10417001512F6 /* SVWebEditorView.m in Sources */,
 				27B82D9711D4A9A00086CB6E /* SVRawHTMLGraphic.m in Sources */,
 				27B82F1D11D50F260086CB6E /* SVDOMToHTMLWriter.m in Sources */,
 				CE5B1CB911E54A38005E2C5E /* KTFeedbackReporter.m in Sources */,
