@@ -593,6 +593,7 @@
         [self setCodecType:nil];
 		
 		BOOL shouldSetSource = YES;
+		// unfortunately, at this point in the game, [self plugin] is an SVImage.
 		if ([[self plugIn] respondsToSelector:@selector(shouldSetSourceFromMedia:orURL:)])
 		{
 			shouldSetSource = [[self plugIn] shouldSetSourceFromMedia:media orURL:URL];
