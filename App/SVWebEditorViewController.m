@@ -442,6 +442,13 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
         
         [_selectionToRestore release]; _selectionToRestore = nil;
     }
+    
+    
+    // Scroll selection into view
+    if ([webEditor selectedItem])
+    {
+        [webEditor centerSelectionInVisibleArea:self];  // this isn't quite the right method as we don't actually want to center, but it performs well enough for now. Something like -scrollItemToVisible: could be ideal
+    }
 }
 
 - (void)updateDidTimeout
