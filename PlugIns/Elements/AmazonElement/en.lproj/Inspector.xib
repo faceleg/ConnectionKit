@@ -224,7 +224,7 @@
 							<object class="NSTabViewItem" id="85554065">
 								<string key="NSIdentifier">productsOrList</string>
 								<object class="NSView" key="NSView" id="826007103">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder" ref="766885201"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -661,6 +661,7 @@
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {230, 290}}</string>
+									<reference key="NSSuperview" ref="766885201"/>
 								</object>
 								<string key="NSLabel">Products</string>
 								<reference key="NSColor" ref="466156009"/>
@@ -669,7 +670,7 @@
 							<object class="NSTabViewItem" id="984739961">
 								<string key="NSIdentifier">display</string>
 								<object class="NSView" key="NSView" id="922510970">
-									<reference key="NSNextResponder" ref="766885201"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1103,20 +1104,19 @@
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {230, 290}}</string>
-									<reference key="NSSuperview" ref="766885201"/>
 								</object>
 								<string key="NSLabel">Appearance</string>
 								<reference key="NSColor" ref="466156009"/>
 								<reference key="NSTabView" ref="766885201"/>
 							</object>
 						</object>
-						<reference key="NSSelectedTabViewItem" ref="984739961"/>
+						<reference key="NSSelectedTabViewItem" ref="85554065"/>
 						<reference key="NSFont" ref="26"/>
 						<int key="NSTvFlags">134217728</int>
 						<bool key="NSDrawsBackground">YES</bool>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="922510970"/>
+							<reference ref="826007103"/>
 						</object>
 					</object>
 				</object>
@@ -1499,22 +1499,6 @@
 						<reference key="destination" ref="932370723"/>
 					</object>
 					<int key="connectionID">1055</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedIdentifier: selectedTabIdentifier</string>
-						<reference key="source" ref="766885201"/>
-						<reference key="destination" ref="865670079"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="766885201"/>
-							<reference key="NSDestination" ref="865670079"/>
-							<string key="NSLabel">selectedIdentifier: selectedTabIdentifier</string>
-							<string key="NSBinding">selectedIdentifier</string>
-							<string key="NSKeyPath">selectedTabIdentifier</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">1058</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -3619,15 +3603,11 @@ cm9kdWN0A</string>
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>openListURL:</string>
 							<string>reloadAllProducts:</string>
-							<string>reloadList:</string>
 							<string>reloadSelectedProduct:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 						</object>
@@ -3636,23 +3616,13 @@ cm9kdWN0A</string>
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>openListURL:</string>
 							<string>reloadAllProducts:</string>
-							<string>reloadList:</string>
 							<string>reloadSelectedProduct:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
-								<string key="name">openListURL:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">reloadAllProducts:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">reloadList:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -3665,8 +3635,6 @@ cm9kdWN0A</string>
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>automaticListTableView</string>
-							<string>automaticTableButtonsBox</string>
 							<string>listLayoutSegmentedControl</string>
 							<string>listTabViewItem</string>
 							<string>manualProductsArrayController</string>
@@ -3680,8 +3648,6 @@ cm9kdWN0A</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>KSPlaceholderTableView</string>
-							<string>NTBoxView</string>
 							<string>NSSegmentedControl</string>
 							<string>NSTabViewItem</string>
 							<string>NSArrayController</string>
@@ -3698,8 +3664,6 @@ cm9kdWN0A</string>
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>automaticListTableView</string>
-							<string>automaticTableButtonsBox</string>
 							<string>listLayoutSegmentedControl</string>
 							<string>listTabViewItem</string>
 							<string>manualProductsArrayController</string>
@@ -3713,14 +3677,6 @@ cm9kdWN0A</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">automaticListTableView</string>
-								<string key="candidateClassName">KSPlaceholderTableView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">automaticTableButtonsBox</string>
-								<string key="candidateClassName">NTBoxView</string>
-							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">listLayoutSegmentedControl</string>
 								<string key="candidateClassName">NSSegmentedControl</string>
