@@ -136,7 +136,14 @@
 #pragma mark Properties
 
 @synthesize hyperlinkTitles = _hyperlinkTitles;
-@synthesize showPermaLink = _showPermaLink;
+@synthesize shortTitles = _shortTitles;
+@synthesize showThumbnails = _showThumbnails;
+@synthesize includeLargeMedia = _includeLargeMedia;
+@synthesize showPermaLinks = _showPermaLinks;
 @synthesize truncateChars = _truncateChars;
+@synthesize truncationType = _truncationType;
+@synthesize layoutType = _layoutType;
+@synthesize showTimestamps = _showTimestamps;
+
 
 @end

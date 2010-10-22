@@ -36,16 +36,32 @@
 
 #import "SandvoxPlugin.h"
 
+typedef enum { kTruncateCharactes, kTruncateWords, kTruncateParagraphs } IndexTruncationType;
+typedef enum { kLayoutSections, kLayoutList, kLayoutTable } IndexLayoutType;
 
+	
+	
 @interface GeneralIndexPlugIn : SVIndexPlugIn 
 {
     BOOL _hyperlinkTitles;
-    BOOL _showPermaLink;
+    BOOL _shortTitles;
+	BOOL _showThumbnails;
+	BOOL _includeLargeMedia;
+	BOOL _showTimestamps;
+    BOOL _showPermaLinks;
     NSUInteger _truncateChars;
+    IndexTruncationType _truncationType;
+	IndexLayoutType _layoutType;
 }
 
-@property (nonatomic, assign) BOOL hyperlinkTitles;
-@property (nonatomic, assign) BOOL showPermaLink;
-@property (nonatomic, assign) NSUInteger truncateChars;
+@property  BOOL hyperlinkTitles;
+@property  BOOL shortTitles;
+@property  BOOL showThumbnails;
+@property  BOOL includeLargeMedia;
+@property  BOOL showTimestamps;
+@property  BOOL showPermaLinks;
+@property  NSUInteger truncateChars;
+@property  IndexTruncationType truncationType;
+@property  IndexLayoutType layoutType;
 
 @end
