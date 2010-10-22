@@ -161,8 +161,12 @@
 - (void)registerRequestedKeyPath:(NSString *)keyPath forObject:(NSObject *)object
 {
 	// Alert the context
-	[[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]
-     addDependencyOnObject:object keyPath:keyPath];
+    SVTemplateParser *parser = [self overridingValueForKey:@"parser"];
+    if ([parser respondsToSelector:@selector(HTMLContext)])
+    {
+        [[(id)parser HTMLContext] addDependencyOnObject:object
+                                                keyPath:keyPath];
+    }
 }
 
 @end
