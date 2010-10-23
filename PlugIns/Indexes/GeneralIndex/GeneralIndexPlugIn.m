@@ -66,12 +66,144 @@
     [context addDependencyForKeyPath:@"truncateChars" ofObject:self];
 }
 
+- (void)writeIndexStart
+{
+	id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+	switch(self.layoutType)
+	{
+		case kLayoutTable:
+			[context startElement:@"table" attributes:[NSDictionary dictionaryWithObjectsAndKeys:
+													   @"1", @"border", nil]];
+			break;
+		case kLayoutList:
+			[context startElement:@"ul"];
+			break;
+		case kLayoutSections:
+			break;
+	}
+}
 
-/*
- [[textblock property:item.titleHTML flags:"line" tag:h3 graphicalTextCode:h3 hyperlink:item]]
- or
- [[textblock property:item.titleHTML flags:"line" tag:h3 graphicalTextCode:h3]]
-*/
+- (void)writeIndexEnd
+{
+	id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+	switch(self.layoutType)
+	{
+		case kLayoutTable:
+			[context endElement];
+			break;
+		case kLayoutList:
+			[context endElement];
+			break;
+		case kLayoutSections:
+			break;
+	}
+}
+
+
+- (void)writeInnards
+{
+    id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+	unsigned int index = [context currentIteration];
+	int count = [context currentIterationsCount];
+
+	NSMutableArray *classes = [NSMutableArray arrayWithObject:@"article"];
+	if (index != NSNotFound)
+	{
+		NSString *indexClass = [NSString stringWithFormat:@"i%i", index + 1];
+		[classes appendObject:indexClass];
+
+		NSString *eoClass = (0 == ((index + 1) % 2)) ? @"e" : @"o";
+		[classes appendObject:indexClass];
+
+		if (index == (count - 1))
+		{
+			[classes appendObject:"last-item"];
+		}
+	}
+	NSString *className = [classes componentsJoinedByString:@" "];
+	
+	
+	
+	switch(self.layoutType)
+	{
+		case kLayoutTable:
+			[context startElement:@"tr" className:className];
+			break;
+		case kLayoutList:
+			[context startElement:@"li" className:className];
+			break;
+		case kLayoutSections:
+			[context startElement:@"div" className:className];
+			break;
+	}
+	
+	// Table: We write Thumb, then title....
+	if (kLayoutTable == self.layoutType)
+	{
+		[context startElement:@"td" classname:@"dli1"];
+		[self writeThumbnailImageOfIteratedPage];
+		[context endElement];
+		[context startElement:@"td" classname:@"dli2"];
+		[self writeTitleOfIteratedPage];
+		[context endElement];
+		[context startElement:@"td" classname:@"dli3"];
+		[self writeSummaryOfIteratedPage];
+		[context endElement];
+		if (self.showTimestamps)
+		{
+			[context startElement:@"td" classname:@"dli4"];
+			// [context writeText:iteratedPage.timestamp];
+			[context endElement];
+		}
+	}
+	else
+	{
+		
+		
+		
+		
+	}
+	
+	/*
+	 <h3>[[=writeTitleOfIteratedPage]]</h3>
+	 [[=writeThumbnailImageOfIteratedPage]]
+	 [[=writeSummaryOfIteratedPage]]
+	 <div class="article-info">
+	 [[if truncateChars>0]]
+	 <div class="continue-reading-link">
+	 [[if parser.HTMLGenerationPurpose]]<a href="[[path iteratedPage]]">[[endif2]][[continueReadingLink iteratedPage]][[if parser.HTMLGenerationPurpose]]</a>[[endif2]]
+	 </div>
+	 [[endif]]
+	 [[if iteratedPage.includeTimestamp]]
+	 <div class="timestamp">
+	 [[if showPermaLink]]
+	 <a [[target iteratedPage]]href="[[path iteratedPage]]">[[=&iteratedPage.timestamp]]</a>
+	 [[else2]]
+	 [[=&iteratedPage.timestamp]]
+	 [[endif2]]
+	 </div>
+	 [[endif]]
+	 [[COMMENT parsecomponent iteratedPage iteratedPage.commentsTemplate]]
+	 </div> <!-- article-info -->
+	 </div> <!-- article -->
+	 <div class="clear">
+	 
+	 
+
+	 <ul>
+	 [[foreach indexablePagesOfCollection item]]
+	 <li class="[[i]] [[eo]][[last]]">
+	 <h3>[[=writeTitleAndLinkOfIteratedPage]]</h3>
+	 </li>
+	 [[endForEach]]
+	 </ul>	 
+	 
+	 
+	*/
+
+	[context endElement];		// li, tr, or div
+}
 
 - (void)writeTitleOfIteratedPage
 {
@@ -87,6 +219,7 @@
     
     if ( self.hyperlinkTitles ) { [[context HTMLWriter] endElement]; } // </a> 
 }
+
 
 
 /*
