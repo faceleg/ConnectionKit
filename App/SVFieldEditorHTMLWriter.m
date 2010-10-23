@@ -19,7 +19,7 @@
 
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 
-- (DOMElement *)changeDOMElement:(DOMElement *)element toTagName:(NSString *)tagName;
+- (DOMElement *)replaceDOMElement:(DOMElement *)element withElementWithTagName:(NSString *)tagName;
 - (DOMNode *)unlinkDOMElementBeforeWriting:(DOMElement *)element;
 - (void)populateSpanElementAttributes:(DOMElement *)span
                       fromFontElement:(DOMHTMLFontElement *)fontElement;
@@ -291,19 +291,19 @@
     if ([tagName isEqualToString:@"B"] ||
         [element isKindOfClass:[DOMHTMLHeadingElement class]])
     {
-        result = [self changeDOMElement:element toTagName:@"STRONG"];
+        result = [self replaceDOMElement:element withElementWithTagName:@"STRONG"];
     }
     
     // Convert italics to <EM>
     else if ([tagName isEqualToString:@"I"])
     {
-        result = [self changeDOMElement:element toTagName:@"EM"];
+        result = [self replaceDOMElement:element withElementWithTagName:@"EM"];
     }
     
     // Convert a <FONT> tag to <SPAN> with appropriate styling
     else if ([tagName isEqualToString:@"FONT"])
     {
-        result = [self changeDOMElement:element toTagName:@"SPAN"];
+        result = [self replaceDOMElement:element withElementWithTagName:@"SPAN"];
         
         [self populateSpanElementAttributes:(DOMHTMLElement *)result
                   fromFontElement:(DOMHTMLFontElement *)element];
@@ -313,7 +313,7 @@
         // Everything else gets removed, or replaced with a <span> with appropriate styling
         if ([[element style] length] > 0)
         {
-            DOMElement *replacement = [self changeDOMElement:element toTagName:@"SPAN"];
+            DOMElement *replacement = [self replaceDOMElement:element withElementWithTagName:@"SPAN"];
             [replacement copyInheritedStylingFromElement:element];
             
             result = replacement;
@@ -330,7 +330,7 @@
     return [result nodeByStrippingNonParagraphNodes:self];
 }
 
-- (DOMElement *)changeDOMElement:(DOMElement *)element toTagName:(NSString *)tagName;
+- (DOMElement *)replaceDOMElement:(DOMElement *)element withElementWithTagName:(NSString *)tagName;
 {
     // When editing the DOM, WebKit has a nasty habbit of losing track of the selection. Since we're swapping one node for another, can correct by deducing new selection from index paths.
     // We probably don't actually need to do this for all changes, only those inside the selection, but then, maybe that's where all changes should be happening anyway?

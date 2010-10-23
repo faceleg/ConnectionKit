@@ -79,7 +79,7 @@
     // Completely invalid, or top-level elements should be converted into paragraphs
     else if ([self openElementsCount] == 0)
     {
-        return [self changeDOMElement:element toTagName:@"P"];
+        return [self replaceDOMElement:element withElementWithTagName:@"P"];
     }
     
     
@@ -96,7 +96,7 @@
             }
             else
             {
-                return [self changeDOMElement:element toTagName:@"P"];
+                return [self replaceDOMElement:element withElementWithTagName:@"P"];
             }
         }
         else

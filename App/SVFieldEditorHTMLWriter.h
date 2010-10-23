@@ -36,7 +36,7 @@
 
 #pragma mark Cleanup
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
-- (DOMElement *)changeDOMElement:(DOMElement *)element toTagName:(NSString *)tagName;
+- (DOMElement *)replaceDOMElement:(DOMElement *)element withElementWithTagName:(NSString *)tagName;
 
 
 #pragma mark Tag Whitelist
