@@ -166,7 +166,16 @@
 - (BOOL)shouldWriteHTMLInline; { return NO; }
 - (BOOL)canWriteHTMLInline; { return NO; }
 - (id <SVMedia>)thumbnailMedia; { return [self media]; }
-- (id)imageRepresentation; { return [[self media] imageRepresentation]; }
+
+- (id)imageRepresentation;
+{
+    id <SVMedia> media = [self thumbnailMedia];
+    id result = [media mediaData];
+    if (!result) result = [media mediaURL];
+    
+    return result;
+}
+
 - (NSString *)imageRepresentationType; { return [[self media] imageRepresentationType]; }
 
 
