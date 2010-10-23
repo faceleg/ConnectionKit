@@ -341,4 +341,13 @@
     return result;
 }
 
+#pragma mark Thumbnail
+
+- (NSString *)imageRepresentationType;
+{
+    return ([[self thumbnailMedia] mediaData] ?
+            IKImageBrowserNSDataRepresentationType :
+            IKImageBrowserNSURLRepresentationType);
+}
+
 @end

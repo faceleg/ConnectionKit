@@ -176,7 +176,11 @@
     return result;
 }
 
-- (NSString *)imageRepresentationType; { return [[self media] imageRepresentationType]; }
+- (NSString *)imageRepresentationType;
+{
+    // Default to Quick Look. Subclasses can get better
+    return ([[self thumbnailMedia] mediaData] ? nil : IKImageBrowserQuickLookPathRepresentationType);
+}
 
 
 #pragma mark Inspector
