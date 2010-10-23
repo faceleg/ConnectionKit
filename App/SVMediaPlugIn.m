@@ -81,10 +81,9 @@
 {
     CGSize result = CGSizeZero;
     
-    SVMediaGraphic *container = [self container];
+    NSNumber *naturalWidth = self.naturalWidth;
+    NSNumber *naturalHeight = self.naturalHeight;
     
-    NSNumber *naturalWidth = container.naturalWidth;
-    NSNumber *naturalHeight = container.naturalHeight;
     // Try to get cached natural size first
     if (nil != naturalWidth && nil != naturalHeight)
     {
@@ -96,8 +95,8 @@
         if (media)
         {
             result = [media originalSize];
-            container.naturalWidth = [NSNumber numberWithFloat:result.width];
-            container.naturalHeight = [NSNumber numberWithFloat:result.height];
+            [self setNaturalWidth:[NSNumber numberWithFloat:result.width]
+                           height:[NSNumber numberWithFloat:result.height]];
         }
     }
     
