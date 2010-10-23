@@ -28,6 +28,8 @@
 
 #import "assertions.h"
 
+#import <QuickLook/QuickLook.h>
+
 
 NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 
@@ -82,6 +84,16 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
             result = [[rep copy] autorelease];
             [result setSize:NSMakeSize(maxSize, maxSize)];
             if (isThumbnail) *isThumbnail = NO;
+        }
+        else if ([type isEqualToString:IKImageBrowserQuickLookPathRepresentationType])
+        {
+            // TODO: Run this on background thread and cache result
+            CFURLRef url = (CFURLRef)([rep isKindOfClass:[NSString class]] ? [NSURL fileURLWithPath:rep] : rep);
+            
+            CGImageRef image = QLThumbnailImageCreate(NULL, url, CGSizeMake(maxSize, maxSize), NULL);
+            NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithCGImage:image];
+            result = [NSImage imageWithBitmap:bitmap];
+            [bitmap release];
         }
         else if (rep)
         {
