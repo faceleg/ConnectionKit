@@ -86,8 +86,7 @@
 
 	if (aSize.width && aSize.height)
 	{
-		self.container.naturalWidth  = [NSNumber numberWithFloat:aSize.width];
-		self.container.naturalHeight = [NSNumber numberWithFloat:aSize.height];
+		[self setNaturalWidth:[NSNumber numberWithFloat:aSize.width] height:[NSNumber numberWithFloat:aSize.height]];
 	}
 }
 
@@ -96,8 +95,7 @@
 	OBASSERT(![NSThread isMainThread]);
 	OBPRECONDITION(aURL);
 
-	self.container.naturalWidth  = nil;
-	self.container.naturalHeight = nil;
+	[self setNaturalWidth:nil height:nil];
 
 	NSSize theSize = NSZeroSize;
 	

@@ -244,7 +244,6 @@
             {
                 priority = [priorityID intValue];
             } 
-			NSLog(@"DJW TO HANDLE THIS LOGIC");
             if (priority > 0	// don't add zero-priority items to menu!
                 && (priority < 9 || gIsPro || (nil == gRegistrationString)) )	// only if non-advanced or advanced allowed.
             {
@@ -317,14 +316,7 @@
         }
         
         [menuItem setTitle:presetTitle];
-		
-		if (9 == priority && nil == gRegistrationString)
-		{
-			// [menuItem setPro:YES];
-			// TODO: deal with notification
-		}
-		NSLog(@"DJW to del with pro/registration issues once this is going again");
-		
+				
 		// set target/action
 		[menuItem setRepresentedObject:presetDict];
 		[menuItem setAction:@selector(addCollection:)];

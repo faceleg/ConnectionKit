@@ -171,7 +171,7 @@
 {
     BOOL result = (*height != nil	// height is non-nil is one way for it to be OK
 				   || (![self media] && [self externalSourceURL])	// or, if height was nil, then if media is external
-				   || (0 == self.container.naturalHeight)				// or, if neither of those, it's *natural* height is zero (no video track)
+				   || (0 == [self.naturalHeight intValue])			// or, if neither of those, it's *natural* height is zero (no video track)
 				   );
     
     if (!result && error)
@@ -309,8 +309,7 @@
 	}
 	
 	// Video changed - clear out the known width/height so we can recalculate
-	self.container.naturalWidth = nil;
-	self.container.naturalHeight = nil;
+	[self setNaturalWidth:nil height:nil];
 	
 	// Load the movie to figure out the media size and codecType and poster frame
 }
@@ -1163,8 +1162,7 @@
 			// Only set natural size if we really have a value
 			if (dimensions.width && dimensions.height)
 			{
-				self.container.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
-				self.container.naturalHeight = [NSNumber numberWithFloat:dimensions.height];
+				[self setNaturalWidth:[NSNumber numberWithFloat:dimensions.width] height:[NSNumber numberWithFloat:dimensions.height]];
 				
 				result = YES;	// if we got dimensions, then this is defintely readable.
 			}
@@ -1180,8 +1178,7 @@
 	// Only set natural size if we really have a value
 	if (dimensions.width && dimensions.height)
 	{
-		self.container.naturalWidth  = [NSNumber numberWithFloat:dimensions.width];
-		self.container.naturalHeight = [NSNumber numberWithFloat:dimensions.height];
+		[self setNaturalWidth:[NSNumber numberWithFloat:dimensions.width] height:[NSNumber numberWithFloat:dimensions.height]];
 	}
 	self.dimensionCalculationConnection = nil;
 }
@@ -1270,8 +1267,7 @@
 	}
 	else
 	{
-		self.container.naturalWidth  = [NSNumber numberWithFloat:movieSize.width];
-		self.container.naturalHeight = [NSNumber numberWithFloat:movieSize.height];
+		[self setNaturalWidth:[NSNumber numberWithFloat:movieSize.width] height:[NSNumber numberWithFloat:movieSize.height]];
 	}
 }
 

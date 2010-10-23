@@ -119,8 +119,7 @@
 	NSLog(@"SVFlash Media set.");
 	
 	// Flash changed - clear out the known width/height so we can recalculate
-	self.container.naturalWidth = nil;
-	self.container.naturalHeight = nil;
+	[self setNaturalWidth:nil height:nil];
 	
 	// Load the movie to figure out the media size and codecType
 	[self loadMovie];
@@ -357,8 +356,7 @@
 	NSSize aSize = NSZeroSize;
 	if ([self attemptToGetSize:&aSize fromSWFData:aData] && aSize.width && aSize.height)
 	{
-		self.container.naturalWidth  = [NSNumber numberWithFloat:aSize.width];
-		self.container.naturalHeight = [NSNumber numberWithFloat:aSize.height];
+		[self setNaturalWidth:[NSNumber numberWithFloat:aSize.width] height:[NSNumber numberWithFloat:aSize.height]];
 	}
 	
 }
