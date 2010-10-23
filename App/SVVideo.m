@@ -308,9 +308,6 @@
 		[self getPosterFrameFromQuickLook];
 	}
 	
-	// Video changed - clear out the known width/height so we can recalculate
-	[self setNaturalWidth:nil height:nil];
-	
 	// Load the movie to figure out the media size and codecType and poster frame
 }
 

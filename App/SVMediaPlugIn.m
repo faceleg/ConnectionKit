@@ -70,7 +70,7 @@
     [graphic setNaturalWidth:width];
     [graphic setNaturalHeight:height];
     
-    if (![graphic width] && ![graphic height])
+    if (![graphic width] && ![graphic height] && width && height)
     {
         [graphic makeOriginalSize];
         [graphic setConstrainProportions:YES];

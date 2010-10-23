@@ -95,8 +95,6 @@
 	OBASSERT(![NSThread isMainThread]);
 	OBPRECONDITION(aURL);
 
-	[self setNaturalWidth:nil height:nil];
-
 	NSSize theSize = NSZeroSize;
 	
 	CGImageSourceRef source = CGImageSourceCreateWithURL((CFURLRef)aURL, NULL);
