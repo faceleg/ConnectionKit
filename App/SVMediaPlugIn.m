@@ -60,6 +60,23 @@
 
 - (BOOL)isConstrainProportionsEditable; { return YES; }
 
+- (NSNumber *)naturalWidth; { return [[self container] naturalWidth]; }
+
+- (NSNumber *)naturalHeight; { return [[self container] naturalHeight]; }
+
+- (void)setNaturalWidth:(NSNumber *)width height:(NSNumber *)height;
+{
+    SVMediaGraphic *graphic = [self container];
+    [graphic setNaturalWidth:width];
+    [graphic setNaturalHeight:height];
+    
+    if (![graphic width] && ![graphic height])
+    {
+        [graphic makeOriginalSize];
+        [graphic setConstrainProportions:YES];
+    }
+}
+
 - (CGSize)originalSize;
 {
     CGSize result = CGSizeZero;

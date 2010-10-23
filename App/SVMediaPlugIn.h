@@ -32,10 +32,18 @@
 
 
 #pragma mark Metrics
+
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 - (BOOL)isConstrainProportionsEditable;
+
+// Please use this API rather than talking to the container
+- (NSNumber *)naturalWidth;
+- (NSNumber *)naturalHeight;
+- (void)setNaturalWidth:(NSNumber *)width height:(NSNumber *)height;
 - (CGSize)originalSize;
 
+
+#pragma mark HTML
 - (BOOL)shouldWriteHTMLInline;
 - (BOOL)canWriteHTMLInline;   // NO for most graphics. Images and Raw HTML return YES
 - (id <SVMedia>)thumbnailMedia;			// usually just media; might be poster frame of movie
