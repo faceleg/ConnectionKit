@@ -51,9 +51,16 @@
 + (NSArray *)plugInKeys
 { 
     NSArray *plugInKeys = [NSArray arrayWithObjects:
-                           @"hyperlinkTitles", 
-                           @"showPermaLink", 
-                           @"truncateChars", 
+						   @"hyperlinkTitles",
+						   @"includeLargeMedia",
+						   @"layoutType",
+						   @"shortTitles",
+						   @"showPermaLinks",
+						   @"showSummaries",
+						   @"showThumbnails",
+						   @"showTimestamps",
+						   @"truncateCount",
+						   @"truncationType",
                            nil];    
     return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
 }
@@ -67,9 +74,16 @@
     [super writeHTML:context];
     
     // add dependencies
-    [context addDependencyForKeyPath:@"hyperlinkTitles" ofObject:self];
-    [context addDependencyForKeyPath:@"showPermaLink" ofObject:self];
-    [context addDependencyForKeyPath:@"truncateChars" ofObject:self];
+	[context addDependencyForKeyPath:@"hyperlinkTitles"		ofObject:self];
+	[context addDependencyForKeyPath:@"includeLargeMedia"	ofObject:self];
+	[context addDependencyForKeyPath:@"layoutType"			ofObject:self];
+	[context addDependencyForKeyPath:@"shortTitles"			ofObject:self];
+	[context addDependencyForKeyPath:@"showPermaLinks"		ofObject:self];
+	[context addDependencyForKeyPath:@"showSummaries"		ofObject:self];
+	[context addDependencyForKeyPath:@"showThumbnails"		ofObject:self];
+	[context addDependencyForKeyPath:@"showTimestamps"		ofObject:self];
+	[context addDependencyForKeyPath:@"truncateCount"		ofObject:self];
+	[context addDependencyForKeyPath:@"truncationType"		ofObject:self];
 }
 
 - (void)writeIndexStart
@@ -80,7 +94,7 @@
 	{
 		case kLayoutTable:
 			[writer startElement:@"table" attributes:[NSDictionary dictionaryWithObjectsAndKeys:
-													   @"1", @"border", nil]];
+													   @"1", @"border", nil]];		// TEMPORARY BORDER
 			break;
 		case kLayoutList:
 			[writer startElement:@"ul"];
@@ -150,36 +164,54 @@
 	// Table: We write Thumb, then title....
 	if (kLayoutTable == self.layoutType)
 	{
-		[writer startElement:@"td" className:@"dli1"];
-		[self writeThumbnailImageOfIteratedPage];
-		[writer endElement];
+		if (self.showThumbnails)
+		{
+			[writer startElement:@"td" className:@"dli1"];
+			[self writeThumbnailImageOfIteratedPage];
+			[writer endElement];
+		}
 		[writer startElement:@"td" className:@"dli2"];
+		[writer startElement:@"h3" className:@"index-title"];
 		[self writeTitleOfIteratedPage];
 		[writer endElement];
-		[writer startElement:@"td" className:@"dli3"];
-		[self writeSummaryOfIteratedPage];
 		[writer endElement];
+		
+		if (self.showSummaries)
+		{
+			[writer startElement:@"td" className:@"dli3"];
+			[self writeSummaryOfIteratedPage];
+			[writer endElement];
+		}
+		
 		if (self.showTimestamps)
 		{
 			[writer startElement:@"td" className:@"dli4"];
-			// [writer writeText:iteratedPage.timestamp];
+			[writer writeText:iteratedPage.timestampDescription];
 			[writer endElement];
 		}
 	}
 	else
 	{
-		
+		[writer startElement:@"h3" className:@"index-title"];
+		[self writeTitleOfIteratedPage];
+		[writer endElement];
+
+		if (self.showThumbnails)
+		{
+			[self writeThumbnailImageOfIteratedPage];
+		}
+		if (self.showSummaries)
+		{
+			[self writeSummaryOfIteratedPage];
+		}
 		
 		
 		
 	}
 	
 	/*
-	 <h3>[[=writeTitleOfIteratedPage]]</h3>
-	 [[=writeThumbnailImageOfIteratedPage]]
-	 [[=writeSummaryOfIteratedPage]]
 	 <div class="article-info">
-	 [[if truncateChars>0]]
+	 [[if truncateCount>0]]
 	 <div class="continue-reading-link">
 	 [[if parser.HTMLGenerationPurpose]]<a href="[[path iteratedPage]]">[[endif2]][[continueReadingLink iteratedPage]][[if parser.HTMLGenerationPurpose]]</a>[[endif2]]
 	 </div>
@@ -197,17 +229,6 @@
 	 </div> <!-- article-info -->
 	 </div> <!-- article -->
 	 <div class="clear">
-	 
-	 
-
-	 <ul>
-	 [[foreach indexablePagesOfCollection item]]
-	 <li class="[[i]] [[eo]][[last]]">
-	 <h3>[[=writeTitleAndLinkOfIteratedPage]]</h3>
-	 </li>
-	 [[endForEach]]
-	 </ul>	 
-	 
 	 
 	*/
 
@@ -240,7 +261,7 @@
 {
     id<SVPlugInContext> context = [SVPlugIn currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
-    [iteratedPage writeSummary:context truncation:self.truncateChars];
+    [iteratedPage writeSummary:context truncation:self.truncateCount];
 }
 
 
@@ -280,14 +301,15 @@
 #pragma mark Properties
 
 @synthesize hyperlinkTitles = _hyperlinkTitles;
-@synthesize shortTitles = _shortTitles;
-@synthesize showThumbnails = _showThumbnails;
 @synthesize includeLargeMedia = _includeLargeMedia;
-@synthesize showPermaLinks = _showPermaLinks;
-@synthesize truncateChars = _truncateChars;
-@synthesize truncationType = _truncationType;
 @synthesize layoutType = _layoutType;
+@synthesize shortTitles = _shortTitles;
+@synthesize showPermaLinks = _showPermaLinks;
+@synthesize showSummaries = _showSummaries;
+@synthesize showThumbnails = _showThumbnails;
 @synthesize showTimestamps = _showTimestamps;
+@synthesize truncateCount = _truncateCount;
+@synthesize truncationType = _truncationType;
 
 
 @end

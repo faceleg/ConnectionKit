@@ -43,25 +43,27 @@ typedef enum { kLayoutSections, kLayoutList, kLayoutTable } IndexLayoutType;
 	
 @interface GeneralIndexPlugIn : SVIndexPlugIn 
 {
+	BOOL _includeLargeMedia;
+	BOOL _showThumbnails;
+	BOOL _showTimestamps;
+	IndexLayoutType _layoutType;
     BOOL _hyperlinkTitles;
     BOOL _shortTitles;
-	BOOL _showThumbnails;
-	BOOL _includeLargeMedia;
-	BOOL _showTimestamps;
     BOOL _showPermaLinks;
-    NSUInteger _truncateChars;
+    BOOL _showSummaries;
     IndexTruncationType _truncationType;
-	IndexLayoutType _layoutType;
+    NSUInteger _truncateCount;
 }
 
 @property  BOOL hyperlinkTitles;
-@property  BOOL shortTitles;
-@property  BOOL showThumbnails;
 @property  BOOL includeLargeMedia;
-@property  BOOL showTimestamps;
+@property  BOOL shortTitles;
 @property  BOOL showPermaLinks;
-@property  NSUInteger truncateChars;
-@property  IndexTruncationType truncationType;
+@property  BOOL showSummaries;
+@property  BOOL showThumbnails;
+@property  BOOL showTimestamps;
 @property  IndexLayoutType layoutType;
+@property  IndexTruncationType truncationType;
+@property  NSUInteger truncateCount;
 
 @end
