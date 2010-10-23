@@ -32,9 +32,12 @@
     [propertyList setValue:[[self codeInjection] serializedProperties]
                     forKey:@"codeInjection"];
     
-    // Children
-    NSArray *children = [[self sortedChildren] valueForKey:@"serializedProperties"];
-    [propertyList setValue:children forKey:@"childItems"];
+    // Children, but not if root. #89388
+    if (![self isRootPage])
+    {
+        NSArray *children = [[self sortedChildren] valueForKey:@"serializedProperties"];
+        [propertyList setValue:children forKey:@"childItems"];
+    }
 }
 
 - (void)awakeFromPropertyList:(id)propertyList
