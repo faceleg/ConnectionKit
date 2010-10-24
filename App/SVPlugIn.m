@@ -358,6 +358,8 @@ static id <SVPlugInContext> sCurrentContext;
 
 #pragma mark Pasteboard
 
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard; { return nil; }
+
 + (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item; { return KTSourcePriorityNone; }
 
 - (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item; { }

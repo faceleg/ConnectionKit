@@ -8,7 +8,9 @@
 
 #import "SVMediaPlugIn.h"
 
+#import "SVImage.h"
 #import "SVMediaRecord.h"
+#import "KSWebLocation+SVWebLocation.h"
 
 #import "NSString+Karelia.h"
 #import "KSURLUtilities.h"
@@ -186,5 +188,14 @@
 #pragma mark Inspector
 
 - (id)valueForUndefinedKey:(NSString *)key; { return NSNotApplicableMarker; }
+
+#pragma mark Pasteboard
+
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+    NSArray *result = [SVImage allowedFileTypes]; // want to read by UTI ideally
+    result = [result arrayByAddingObjectsFromArray:[KSWebLocation webLocationPasteboardTypes]];
+    return result;
+}
 
 @end

@@ -134,7 +134,7 @@
         // This code is very similar to SVImageDOMController. Perhaps can bring together
         NSPasteboard *pboard = [sender draggingPasteboard];
         
-        NSString *type = [pboard availableTypeFromArray:[SVMediaGraphic readableTypesForPasteboard:pboard]];
+        NSString *type = [pboard availableTypeFromArray:[SVMediaPlugIn readableTypesForPasteboard:pboard]];
         if (type)
         {
             [aGraphic awakeFromPasteboardItem:pboard];

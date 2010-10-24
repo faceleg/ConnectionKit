@@ -238,13 +238,6 @@
 	return [result allObjects];
 }
 
-+ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
-{
-    NSArray *result = [SVImage allowedFileTypes]; // want to read by UTI ideally
-    result = [result arrayByAddingObjectsFromArray:[KSWebLocation webLocationPasteboardTypes]];
-    return result;
-}
-
 - (BOOL)validateSource:(NSError **)error;
 {
     // Must have media OR external URL as soure. #92086

@@ -126,7 +126,8 @@
 
 
 #pragma mark Pasteboard
-// Default is to refuse all locations. You should study the location and return a KTSourcePriority to match
+// Default is to refuse all items. You should study the location and return a KTSourcePriority to match
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
 + (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 - (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
 

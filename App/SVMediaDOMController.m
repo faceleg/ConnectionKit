@@ -115,7 +115,7 @@
 {
     NSPasteboard *pboard = [sender draggingPasteboard];
     
-    NSString *type = [pboard availableTypeFromArray:[SVMediaGraphic readableTypesForPasteboard:pboard]];
+    NSString *type = [pboard availableTypeFromArray:[SVMediaPlugIn readableTypesForPasteboard:pboard]];
     if (type)
     {
         [[self representedObject] awakeFromPasteboardItem:pboard];
@@ -127,7 +127,8 @@
 
 - (NSArray *)registeredDraggedTypes;
 {
-    return [SVMediaGraphic readableTypesForPasteboard:nil];
+    return [SVMediaPlugIn readableTypesForPasteboard:
+            [NSPasteboard pasteboardWithName:NSDragPboard]];
 }
 
 #pragma mark Drawing
