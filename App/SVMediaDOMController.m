@@ -21,6 +21,68 @@
 // TODO: proper logic for this:
 - (BOOL)isMediaPlaceholder; { return YES; }
 
+- (DOMElement *)selectableDOMElement; { return [self HTMLElement]; }
+
+#pragma mark Resize
+
+- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
+{
+    // Size calculated – now what to store?
+    BOOL resizingWidth = (handle == kSVGraphicUpperLeftHandle ||
+                          handle == kSVGraphicMiddleLeftHandle ||
+                          handle == kSVGraphicLowerLeftHandle ||
+                          handle == kSVGraphicUpperRightHandle ||
+                          handle == kSVGraphicMiddleRightHandle ||
+                          handle == kSVGraphicLowerRightHandle);
+    
+    BOOL resizingHeight = (handle == kSVGraphicUpperLeftHandle ||
+                           handle == kSVGraphicUpperMiddleHandle ||
+                           handle == kSVGraphicUpperRightHandle ||
+                           handle == kSVGraphicLowerLeftHandle ||
+                           handle == kSVGraphicLowerMiddleHandle ||
+                           handle == kSVGraphicLowerRightHandle);
+    
+    
+    // Apply the change
+    SVMediaGraphic *image = [self representedObject];
+	if (resizingWidth)
+    {
+        if (resizingHeight)
+        {
+            [image setSize:size];
+        }
+        else
+        {
+            [image setWidth:[NSNumber numberWithFloat:size.width]];
+        }
+    }
+    else if (resizingHeight)
+    {
+        [image setHeight:[NSNumber numberWithFloat:size.height]];
+    }
+}
+
+- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle;
+{
+    // Image lives inside a graphic DOM controller, so use the size limit from that instead
+    return [(SVMediaGraphicDOMController *)[self parentWebEditorItem] constrainSize:size handle:handle];
+}
+
+- (NSSize)minSize;
+{
+    // Remove the 200px width restriction
+    NSSize result = [super minSize];
+    result.width = result.height;
+    return result;
+}
+
+- (unsigned int)resizingMask
+{
+    // Super's behaviour is enough to handle width, but we want height to be adjustable too.
+    unsigned int result = (kCALayerBottomEdge | [super resizingMask]);
+    return result;
+}
+
 #pragma mark Drag & Drop
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
