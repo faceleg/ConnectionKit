@@ -195,11 +195,12 @@
 
 - (DOMElement *)selectableDOMElement;
 {
-    // Normally we are, but not for chrome-less images
-    DOMElement *imageElement = [[self imageDOMController] HTMLElement];
+    // Normally we are, but not for chrome-less media
+    // This can be identified by a descendant controller claiming the *same* DOM element as us
     DOMElement *result = [super selectableDOMElement];
-    
-    if (result == imageElement) result = nil;
+    WEKWebEditorItem *controller = [self hitTestDOMNode:result];
+        
+    if ([controller HTMLElement] == result) result = nil;
     return result;
 }
 
