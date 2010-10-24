@@ -8,6 +8,7 @@
 
 #import "SVMediaDOMController.h"
 
+#import "SVImageDOMController.h"
 #import "SVPasteboardItemInternal.h"
 
 #import "NSColor+Karelia.h"
@@ -105,6 +106,132 @@
         [[NSColor aquaColor] set];
         NSFrameRectWithWidth([self dropTargetRect], 2.0f);
     }
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation SVMediaGraphicDOMController
+
+- (SVSizeBindingDOMController *)newSizeBindingControllerWithRepresentedObject:(id)object;
+{
+    return [[SVImageDOMController alloc] initWithRepresentedObject:object];
+}
+
+- (void)dealloc
+{
+    [_imageDOMController release];
+    [super dealloc];
+}
+
+#pragma mark Controller
+
+@synthesize imageDOMController = _imageDOMController;
+
+- (DOMElement *)selectableDOMElement;
+{
+    // Normally we are, but not for chrome-less images
+    DOMElement *imageElement = [[self imageDOMController] HTMLElement];
+    DOMElement *result = [super selectableDOMElement];
+    
+    if (result == imageElement) result = nil;
+    return result;
+}
+
+#pragma mark DOM
+
+- (void)setHTMLElement:(DOMHTMLElement *)element;
+{
+    // Is this a change due to being orphaned while editing? If so, pass down to image controller too. #83312
+    if ([self HTMLElement] == [[self imageDOMController] HTMLElement])
+    {
+        [[self imageDOMController] setHTMLElement:element];
+    }
+    
+    [super setHTMLElement:element];
+}
+
+- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+{
+    // Hook up image controller first
+    SVMediaDOMController *imageController = [self imageDOMController];
+    if (![imageController isHTMLElementCreated])
+    {
+        [imageController loadHTMLElementFromDocument:document];
+    }
+    
+    [super loadHTMLElementFromDocument:document];
+    
+    // If it failed that's because the image is chromeless, so adopt its element
+    if (![self isHTMLElementCreated])
+    {
+        [self setHTMLElement:[imageController HTMLElement]];
+    }
+}
+
+#pragma mark Resizing
+
+- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle;
+{
+    size = [super constrainSize:size handle:handle];
+    
+    
+    // HACK for #92183: ignore -isExplicitly sized and go to maximum width
+    if (size.width <= 0) size.width = [self maxWidth];
+    
+    
+    // Snap to original size if you are very close to it
+	BOOL resizingWidth = (handle == kSVGraphicUpperLeftHandle ||
+                          handle == kSVGraphicMiddleLeftHandle ||
+                          handle == kSVGraphicLowerLeftHandle ||
+                          handle == kSVGraphicUpperRightHandle ||
+                          handle == kSVGraphicMiddleRightHandle ||
+                          handle == kSVGraphicLowerRightHandle);
+    
+    BOOL resizingHeight = (handle == kSVGraphicUpperLeftHandle ||
+                           handle == kSVGraphicUpperMiddleHandle ||
+                           handle == kSVGraphicUpperRightHandle ||
+                           handle == kSVGraphicLowerLeftHandle ||
+                           handle == kSVGraphicLowerMiddleHandle ||
+                           handle == kSVGraphicLowerRightHandle);
+    
+    SVMediaGraphic *image = [self representedObject];
+	CGSize originalSize = [[image plugIn] originalSize];
+	
+    
+	// Snap if we are near the original size.
+    if (originalSize.width > 0 && originalSize.height > 0)
+    {
+        int snap = MIN(originalSize.width/4, 10);	// snap to smaller of 25% image width or 10 pixels
+        if (resizingWidth && ( abs(size.width - originalSize.width) < snap) )
+        {
+            size.width = originalSize.width;
+        }
+        if (resizingHeight && ( abs(size.height - originalSize.height) < snap) )
+        {
+            size.height = originalSize.height;
+        }
+    }
+    
+    
+    return size;
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation SVMediaGraphic (SVDOMController)
+
+- (SVDOMController *)newDOMController;
+{
+    //Class class = ([self isPagelet] ? [SVImagePageletDOMController class] : [SVImageDOMController class]);
+    return [[SVMediaGraphicDOMController alloc] initWithRepresentedObject:self];
 }
 
 @end

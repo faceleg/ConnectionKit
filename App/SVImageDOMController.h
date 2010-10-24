@@ -8,25 +8,10 @@
 
 
 #import "SVMediaDOMController.h"
-#import "SVGraphicDOMController.h"
 #import "SVImage.h"
 
 
 @interface SVImageDOMController : SVMediaDOMController
 
-
-@end
-
-
-#pragma mark -
-
-
-@interface SVMediaPageletDOMController : SVGraphicDOMController
-{  
-  @private
-    SVImageDOMController    *_imageDOMController;
-}
-
-@property(nonatomic, retain) SVImageDOMController *imageDOMController;
 
 @end

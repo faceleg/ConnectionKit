@@ -7,6 +7,7 @@
 //
 
 #import "SVSizeBindingDOMController.h"
+#import "SVGraphicDOMController.h"
 
 #import "SVMediaGraphic.h"
 
@@ -18,5 +19,19 @@
 }
 
 - (BOOL)isMediaPlaceholder;
+
+@end
+
+
+#pragma mark -
+
+
+@interface SVMediaGraphicDOMController : SVGraphicDOMController
+{  
+@private
+    SVMediaDOMController    *_imageDOMController;
+}
+
+@property(nonatomic, retain) SVMediaDOMController *imageDOMController;
 
 @end
