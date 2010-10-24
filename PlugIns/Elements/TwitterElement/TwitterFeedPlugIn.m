@@ -150,6 +150,11 @@
 #pragma mark -
 #pragma mark SVPlugInPasteboardReading
 
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
+{
+    return SVWebLocationGetReadablePasteboardTypes(pasteboard);
+}
+
 + (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 {
     NSURL *URL = [item URL];

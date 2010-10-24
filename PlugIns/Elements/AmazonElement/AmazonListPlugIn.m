@@ -347,6 +347,11 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 #pragma mark Pasteboard
 
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
+{
+    return SVWebLocationGetReadablePasteboardTypes(pasteboard);
+}
+
 + (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item
 {
     KTSourcePriority result = KTSourcePriorityNone;
