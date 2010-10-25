@@ -39,6 +39,8 @@
 
 
 // LocalizedStringInThisBundle(@"Flickr (Placeholder)", "String_On_Page_Template")
+// LocalizedStringInThisBundle(@"Flickr photos", "String_On_Page_Template")
+// LocalizedStringInThisBundle(@" tagged with ", "String_On_Page_Template")
 
 
 @implementation FlickrPlugIn
