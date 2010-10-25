@@ -775,7 +775,7 @@
 		&& ![defaults boolForKey:@"videoFlashRemoteOverride"]);	// hidden pref to allow for remote URL
 	
 // TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY
-	// flashDisallowedTag = NO;
+	flashDisallowedTag = NO;
 	
 	if (flashDisallowedTag) flashTag = NO;
 	
