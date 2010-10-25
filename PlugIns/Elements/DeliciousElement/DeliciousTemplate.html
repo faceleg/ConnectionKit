@@ -93,5 +93,8 @@ document.getElementById('delicious-container-[[=container.elementID]]').appendCh
 </ul>
 [[endif2]]
 [[else]]
-[[if !parser.HTMLGenerationPurpose]]<p style="text-align:center;">[['(Please set your delicious.com ID using the Pagelet Inspector)]]</p>[[endif2]]
+[[if !parser.HTMLGenerationPurpose]]
+<div class="svx-placeholder">
+    [['(Please set your delicious.com ID using the Inspector)]]
+</div>[[endif2]]
 [[endif]]
