@@ -39,7 +39,7 @@
 
 // LocalizedStringInThisBundle(@"My Delicious Links", "String_On_Page_Template")
 // LocalizedStringInThisBundle(@"delicious.com example no.", "String_On_Page_Template -- followed by a number")
-// LocalizedStringInThisBundle(@"(Please set your delicious.com ID using the Inspector)", "String_On_Page_Template")
+// LocalizedStringInThisBundle(@"(A Delicious username is required in the Inspector.)", "String_On_Page_Template")
 // LocalizedStringInThisBundle(@"Bookmarks tagged ", "String_On_Page_Template")
 
 
