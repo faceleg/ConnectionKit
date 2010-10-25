@@ -881,6 +881,30 @@
     [_iteratorsStack removeLastObject];
 }
 
+- (NSString *)currentIterationCSSClassName;
+{
+    unsigned int index = [self currentIteration];
+    int count = [self currentIterationsCount];
+    
+    NSMutableArray *classes = [NSMutableArray arrayWithObject:@"article"];
+    if (index != NSNotFound)
+    {
+        NSString *indexClass = [NSString stringWithFormat:@"i%i", index + 1];
+        [classes addObject:indexClass];
+        
+        NSString *eoClass = (0 == ((index + 1) % 2)) ? @"e" : @"o";
+        [classes addObject:eoClass];
+        
+        if (index == (count - 1))
+        {
+            [classes addObject:@"last-item"];
+        }
+    }
+    
+    NSString *result = [classes componentsJoinedByString:@" "];
+    return result;
+}
+
 #pragma mark Extra markup
 
 - (NSMutableString *)extraHeaderMarkup; // can append to, query, as you like while parsing
