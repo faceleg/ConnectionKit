@@ -104,7 +104,9 @@
         }
         else
         {
+            [[context HTMLWriter] startElement:@"div" className:@"svx-placeholder"];
             [[context HTMLWriter] writeText:LocalizedStringInThisBundle(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder")];
+            [[context HTMLWriter] endElement]; // </div>
         }
         
         if ( [context isForPublishing] || [context isForEditing] )
@@ -115,14 +117,16 @@
     else if ( [context isForEditing] )
     {
         // write placeholder message to sign up for account
+        [[context HTMLWriter] startElement:@"div" className:@"svx-placeholder"];
         [[context HTMLWriter] writeText:LocalizedStringInThisBundle(@"Please enter your Twitter username or ", "WebView prompt fragment")];
         [[context HTMLWriter] startAnchorElementWithHref:@"https://twitter.com/signup"
                                                    title:LocalizedStringInThisBundle(@"Twitter Signup", "WebView link title") 
                                                   target:nil 
                                                      rel:nil];
         [[context HTMLWriter] writeText:LocalizedStringInThisBundle(@"sign up", "WebView prompt fragment")];
-        [[context HTMLWriter] endElement];
+        [[context HTMLWriter] endElement]; // </a>
         [[context HTMLWriter] writeText:LocalizedStringInThisBundle(@" for a Twitter account", "WebView prompt fragment")];
+        [[context HTMLWriter] endElement]; // </div>
     }
 }
 
