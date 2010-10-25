@@ -326,24 +326,6 @@
 		self.codecType = [NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]];
 	}
 	
-	
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if (NO)
-		
-		// TEMPORARY TEMPORARY TEMPORARY ------- RESTORE TO THIS:  (![defaults boolForKey:@"videoFlashRemoteOverride"])
-	{
-		// First check it if it a remote FLV ... NO is the answer, due to need for cross-domain stuff http://flv-player.net/help/
-		if (!self.media && self.externalSourceURL)
-		{
-			NSString *UTI = [NSString UTIForFilenameExtension:[[self.externalSourceURL path] pathExtension]];
-			if ([UTI conformsToUTI:@"com.adobe.flash.video"])
-			{
-				NSLog(@"Cross-domain Flash is going to be a problem...");
-			}
-		}
-		
-	}
-	
 	// Try to make a QTMovie out of this, or parse as FLV which is a special case (since QT is not needed to show.)
 	
 	[self loadMovieFromURL:movieSourceURL];
@@ -731,7 +713,16 @@
 {
 	[context buildAttributesForElement:@"div" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
 	NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
-	[context writeElement:@"p" text:NSLocalizedString(@"Unable to show remotely hosted Flash-based video.", @"Warning shown to user when video can't be embedded")];
+	[context startElement:@"p"];
+	[context writeText:NSLocalizedString(@"Unable to embed remotely-hosted Flash-based video.", @"Warning shown to user when video can't be embedded")];
+	[context writeText:@" "];
+	[context startAnchorElementWithHref:@"help:anchor='Supported_Video_Formats' bookID='com.karelia.Sandvox Help'"
+								  title:nil // NSLocalizedString(@"Open Sandvox Help", @"title of link to sandvox help page")
+								 target:nil rel:nil];
+	[context writeText:NSLocalizedString(@"More", @"hyperlink to a page that will tell more details about the warning")];
+	[context endElement];
+	[context endElement];
+	
 	// Poster may be shown next, so don't end....
 	
 	return elementID;
@@ -774,16 +765,17 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if ([defaults boolForKey:@"avoidVideoTag"]) videoTag = NO;
 	
-	BOOL flashTag = [type conformsToUTI:@"public.mpeg-4"]
-		|| [type conformsToUTI:@"public.3gpp"]
-		|| [type conformsToUTI:@"com.adobe.flash.video"];
+	BOOL flvMedia = [type conformsToUTI:@"com.adobe.flash.video"];
+	BOOL flashTag = flvMedia
+		|| [type conformsToUTI:@"public.mpeg-4"]
+		|| [type conformsToUTI:@"public.3gpp"];
 	if ([defaults boolForKey:@"avoidFlashVideo"]) flashTag = NO;
 	
-	BOOL flashDisallowedTag = (!self.media
+	BOOL flashDisallowedTag = (flvMedia && !self.media
 		&& ![defaults boolForKey:@"videoFlashRemoteOverride"]);	// hidden pref to allow for remote URL
 	
 // TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY
-	flashDisallowedTag = NO;
+	// flashDisallowedTag = NO;
 	
 	if (flashDisallowedTag) flashTag = NO;
 	
@@ -915,7 +907,7 @@
 	NSImage *result = nil;
 	NSString *type = self.codecType;
 
-	if (!type || !self.media)								// no movie
+	if (!type || (!self.media && !self.externalSourceURL))								// no movie
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
 	}
@@ -933,7 +925,15 @@
 	}
 	else if ([type conformsToUTI:@"com.adobe.flash.video"])
 	{
-		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		if (self.media || [defaults boolForKey:@"videoFlashRemoteOverride"])
+		{
+			result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
+		}
+		else
+		{
+			result = [NSImage imageFromOSType:kAlertStopIcon];	// Not locally hosted media, and no override -- thus can't view.
+		}
 	}
 	else if ([type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-​media-wmv"])
 	{
@@ -955,7 +955,7 @@
 	NSString *result = @"";
 	NSString *type = self.codecType;
 	
-	if (!type || !self.media)								// no movie
+	if (!type || (!self.media && !self.externalSourceURL))								// no movie
 	{
 		result = NSLocalizedString(@"Use MPEG-4 (h.264) video for maximum compatibility.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
@@ -973,7 +973,16 @@
 	}
 	else if ([type conformsToUTI:@"com.adobe.flash.video"])
 	{
-		result = NSLocalizedString(@"Video will not play on iOS devices", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		if (self.media || [defaults boolForKey:@"videoFlashRemoteOverride"])
+		{
+			result = NSLocalizedString(@"Video will not play on iOS devices", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+		}
+		else
+		{
+			result = NSLocalizedString(@"Unable to embed remotely-hosted Flash-based video.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");	// Not locally hosted media, and no override -- thus can't view.
+		}
+
 	}
 	else if ([type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-​media-wmv"])
 	{
@@ -992,9 +1001,11 @@
 							 [NSFont systemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
 							 nil];
 	NSMutableAttributedString *info = [[[NSMutableAttributedString alloc] initWithString:result attributes:attribs] autorelease];
+#warning should be help system!
+	NSURL *url = [NSURL URLWithString:@"help:anchor=Document"];
 	NSDictionary *linkAttribs
 	= [NSDictionary dictionaryWithObjectsAndKeys:
-	   [NSURL URLWithString:[NSString stringWithFormat:@"http://docs.karelia.com/z/Supported_Video_Formats.html?type=%@", type]],
+	   url,
 	   NSLinkAttributeName,
 	   [NSNumber numberWithInteger:NSSingleUnderlineStyle], NSUnderlineStyleAttributeName,
 	   [NSCursor pointingHandCursor], NSCursorAttributeName,
