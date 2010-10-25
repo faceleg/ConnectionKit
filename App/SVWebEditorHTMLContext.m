@@ -193,13 +193,20 @@
 
 - (void)writeGraphicBody:(SVGraphic *)graphic;
 {
-    SVDOMController *controller = [graphic newBodyDOMController];
-    [self startDOMController:controller];
-    [controller release];
+    if ([graphic canWriteHTMLInline])
+    {
+        [super writeGraphicBody:graphic];
+    }
+    else
+    {
+        SVDOMController *controller = [graphic newBodyDOMController];
+        [self startDOMController:controller];
+        [controller release];
 
-    [super writeGraphicBody:graphic];
+        [super writeGraphicBody:graphic];
 
-    [self endDOMController];
+        [self endDOMController];
+    }
 }
 
 - (void)startCalloutForGraphic:(SVGraphic *)graphic;
