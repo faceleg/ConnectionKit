@@ -12,6 +12,7 @@
 #import "SVCalloutDOMController.h"
 #import "SVContentDOMController.h"
 #import "SVGraphicDOMController.h"
+#import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
 #import "SVImageDOMController.h"
 #import "SVIndexDOMController.h"
@@ -420,6 +421,22 @@
 - (WEKWebEditorItem *)currentDOMController; { return nil; }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVGraphic (SVWebEditorHTMLContext)
+
+// For the benefit of pagelet HTML template
+- (void)writeBody
+{
+    SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+    [context writeGraphicBody:self];
+}
+
+@end
+
 
 
 #pragma mark -

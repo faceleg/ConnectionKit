@@ -298,9 +298,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [self doesNotRecognizeSelector:_cmd];
 }
 
-// For the benefit of pagelet HTML template
-- (void)writeBody { [self writeBody:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
-
 + (SVTemplate *)template;
 {
     static SVTemplate *result;
