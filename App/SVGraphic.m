@@ -423,12 +423,12 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard; { return nil; }
 
-- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
+- (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 {
-    NSString *title = [item title];
-    if (!title) title = [[item URL] ks_lastPathComponent];
-        
+    NSString *title = [[items lastObject] title];
     if (title) [self setTitle:title];
+    
+    return YES;
 }
 
 #pragma mark SVPlugInContainer

@@ -164,7 +164,7 @@ extern NSString *kSVGraphicPboardType;
 
 #pragma mark Pasteboard
 - (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
-- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
+- (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 
 
 #pragma mark Inspector

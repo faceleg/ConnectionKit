@@ -362,7 +362,7 @@ static id <SVPlugInContext> sCurrentContext;
 
 + (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item; { return KTSourcePriorityNone; }
 
-- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item; { }
+- (BOOL)awakeFromPasteboardItems:(NSArray *)items; { return NO; }
 
 #pragma mark Other
 

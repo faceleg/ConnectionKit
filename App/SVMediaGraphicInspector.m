@@ -89,12 +89,20 @@
 	// Use this 10.6 deprecated method, but when we are 10.6-only then use setAllowedFileTypes:
     if ([panel runModalForTypes:[SVMediaGraphic allowedTypes]] == NSFileHandlingPanelOKButton)
     {
-        KSWebLocation *file = [KSWebLocation webLocationWithURL:[panel URL]];
+        NSArray *URLs = [panel URLs];
+        NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:[URLs count]];
+        
+        for (NSURL *aURL in URLs)
+        {
+            [items addObject:[KSWebLocation webLocationWithURL:aURL]];
+        }
         
         for (SVMediaGraphic *aGraphic in [self inspectedObjects])
         {
-            [aGraphic awakeFromPasteboardItem:file];
+            [aGraphic awakeFromPasteboardItems:items];
         }
+        
+        [items release];
     }
 }
 
@@ -137,7 +145,7 @@
         NSString *type = [pboard availableTypeFromArray:[SVMediaPlugIn readableTypesForPasteboard:pboard]];
         if (type)
         {
-            [aGraphic awakeFromPasteboardItem:pboard];
+            [aGraphic awakeFromPasteboardItems:[pboard pasteboardItems]];
             result = YES;
         }
     }

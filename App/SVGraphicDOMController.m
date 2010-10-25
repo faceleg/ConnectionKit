@@ -367,9 +367,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
 {
     SVGraphic *graphic = [self representedObject];
-    [graphic awakeFromPasteboardItem:[sender draggingPasteboard]];
-    
-    return YES;
+    return [graphic awakeFromPasteboardItems:[[sender draggingPasteboard] pasteboardItems]];
 }
 
 - (NSArray *)registeredDraggedTypes;

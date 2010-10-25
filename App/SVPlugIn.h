@@ -129,7 +129,7 @@
 // Default is to refuse all items. You should study the location and return a KTSourcePriority to match
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
 + (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
-- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
+- (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 
 
 #pragma mark Undo Management

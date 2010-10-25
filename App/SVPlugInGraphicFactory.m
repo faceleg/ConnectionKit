@@ -131,7 +131,7 @@
     result = (id)[self insertNewGraphicInManagedObjectContext:context];
     @try
     {
-        [[result plugIn] awakeFromPasteboardItem:item];
+        [[result plugIn] awakeFromPasteboardItems:[NSArray arrayWithObject:item]];
     }
     @catch (NSException *exception)
     {

@@ -543,13 +543,14 @@
 
 #pragma mark Pasteboard
 
-- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
+- (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 {
-    [super awakeFromPasteboardItem:item];
+    BOOL result = [super awakeFromPasteboardItems:items];
     
     
     // Can we read a media oject from the pboard?
     SVMediaRecord *media = nil;
+    id <SVPasteboardItem> item = [items objectAtIndex:0];
     
     NSURL *URL = [item URL];
     if ([URL isFileURL])
@@ -626,11 +627,18 @@
 		else
 		{
 			LOG((@"This media cannot be set as source. Therefore we are ignoring it....."));
+            result = NO;
 		}
+    }
+    else
+    {
+        result = NO;
     }
     
     
-    [[self plugIn] awakeFromPasteboardItem:item];
+    [[self plugIn] awakeFromPasteboardItems:items];
+    
+    return result;
 }
 
 @end

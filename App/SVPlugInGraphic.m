@@ -412,9 +412,9 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     return [[[self plugIn] class] readableTypesForPasteboard:pasteboard];
 }
 
-- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
+- (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 {
-    return [[self plugIn] awakeFromPasteboardItem:item];
+    return [[self plugIn] awakeFromPasteboardItems:items];
 }
 
 #pragma mark Serialization
