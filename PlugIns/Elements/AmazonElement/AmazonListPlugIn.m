@@ -144,9 +144,13 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
                                                                 nil]];
 	
 	// End KVO
-	[_products removeObserver:self
-		  fromObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [_products count])]
-				   forKeyPaths:[NSSet setWithObjects:@"productCode", @"comment", @"loadingData", @"store", nil]];
+    for (NSString *aKey in [NSSet setWithObjects:@"productCode", @"comment", @"loadingData", @"store", nil])
+    {
+        [_products removeObserver:self
+             fromObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [_products count])]
+                      forKeyPath:aKey];
+    }
+	
 					
 	// Relase iVars
 	[_products release];
