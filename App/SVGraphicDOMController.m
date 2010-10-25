@@ -335,27 +335,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return size;
 }
 
-#pragma mark Drag & Drop
-
-- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
-{
-    return NSDragOperationCopy;
-}
-
-- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
-{
-    SVGraphic *graphic = [self representedObject];
-    [graphic awakeFromPasteboardItem:[sender draggingPasteboard]];
-    
-    return YES;
-}
-
-- (NSArray *)registeredDraggedTypes;
-{
-    SVGraphic *graphic = [self representedObject];
-    return [graphic readableTypesForPasteboard:[NSPasteboard pasteboardWithName:NSDragPboard]];
-}
-
 #pragma mark Drawing
 
 - (SVSelectionBorder *)newSelectionBorder;
@@ -382,6 +361,22 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 
 @implementation SVGraphicBodyDOMController
+
+#pragma mark Drag & Drop
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
+{
+    SVGraphic *graphic = [self representedObject];
+    [graphic awakeFromPasteboardItem:[sender draggingPasteboard]];
+    
+    return YES;
+}
+
+- (NSArray *)registeredDraggedTypes;
+{
+    SVGraphic *graphic = [self representedObject];
+    return [graphic readableTypesForPasteboard:[NSPasteboard pasteboardWithName:NSDragPboard]];
+}
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
 {
@@ -479,6 +474,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 }
 
 - (BOOL)shouldPublishEditingElementID { return NO; }
+
 - (NSString *)elementIdName { return [NSString stringWithFormat:@"graphic-%p", self]; }
 
 @end
