@@ -250,6 +250,13 @@
 	}
 	else	// Loading from disk
 	{
+//		// EMERGENCY REPAIRS...
+//		if ([self isRoot])
+//		{
+//			NSString *old = [self valueForKey:@"richTextHTML"];
+//			NSLog(@"old = %@", old);
+//			[self setValue:@"Replaced" forKey:@"richTextHTML"];
+//		}
 		NSString *identifier = [self valueForKey:@"collectionIndexBundleIdentifier"];
 		if (nil != identifier)
 		{
