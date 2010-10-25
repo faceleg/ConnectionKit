@@ -12,9 +12,6 @@
 
 
 @interface SVIndexDOMController : SVGraphicBodyDOMController
-{
-@private
-    BOOL    _drawAsDropTarget;
-}
+
 
 @end

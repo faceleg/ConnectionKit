@@ -45,7 +45,8 @@
 
 @interface SVGraphicBodyDOMController : SVDOMController
 {
-    
+@private
+    BOOL    _drawAsDropTarget;
 }
 
 @end
