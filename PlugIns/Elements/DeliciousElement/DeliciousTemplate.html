@@ -92,9 +92,15 @@ document.getElementById('delicious-container-[[=container.elementID]]').appendCh
 	<li>[['delicious.com example no.]] 3</li>
 </ul>
 [[endif2]]
+[[if restrictedTags]]
+<div class="svx-placeholder">
+    [['Tags: ]][[restrictedTags]]
+</div>
+[[endif2]]
 [[else]]
 [[if !parser.HTMLGenerationPurpose]]
 <div class="svx-placeholder">
     [['(Please set your delicious.com ID using the Inspector)]]
-</div>[[endif2]]
+</div>
+[[endif2]]
 [[endif]]
