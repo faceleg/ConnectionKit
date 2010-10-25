@@ -547,7 +547,6 @@
 {
     BOOL result = [super awakeFromPasteboardItems:items];
     
-    
     // Can we read a media oject from the pboard?
     SVMediaRecord *media = nil;
     id <SVPasteboardItem> item = [items objectAtIndex:0];
@@ -591,50 +590,31 @@
         self.naturalHeight = nil;
         [self setCodecType:nil];
 		
-		BOOL shouldSetSource = YES;
-		// unfortunately, at this point in the game, [self plugin] is an SVImage.
-		if ([[self plugIn] respondsToSelector:@selector(shouldSetSourceFromMedia:orURL:)])
+		if (media)
 		{
-			shouldSetSource = [[self plugIn] shouldSetSourceFromMedia:media orURL:URL];
-		}
-        if (shouldSetSource)
-		{
-			if (media)
-			{
-				[self replaceMedia:media forKeyPath:@"media"];
-			}
-			else
-			{
-				[self setExternalSourceURL:URL];
-			}
-			
-			NSNumber *oldWidth = [self width];
-			[self makeOriginalSize];
-			[self setConstrainProportions:[self isConstrainProportionsEditable]];
-			if (oldWidth)
-			{
-				[self setWidth:oldWidth];
-			}
-			else
-			{
-				if ([[self width] integerValue] > 200)
-				{
-					[self setWidth:[NSNumber numberWithInt:200]];
-				}
-				// If going from external URL to proper media, this means your image is quite probably now 200px wide. Not ideal, but so rare I'm not going to worry abiout it. #92576
-			}
+			[self replaceMedia:media forKeyPath:@"media"];
 		}
 		else
 		{
-			LOG((@"This media cannot be set as source. Therefore we are ignoring it....."));
-            result = NO;
+			[self setExternalSourceURL:URL];
+		}
+		
+		NSNumber *oldWidth = [self width];
+		[self makeOriginalSize];
+		[self setConstrainProportions:[self isConstrainProportionsEditable]];
+		if (oldWidth)
+		{
+			[self setWidth:oldWidth];
+		}
+		else
+		{
+			if ([[self width] integerValue] > 200)
+			{
+				[self setWidth:[NSNumber numberWithInt:200]];
+			}
+			// If going from external URL to proper media, this means your image is quite probably now 200px wide. Not ideal, but so rare I'm not going to worry abiout it. #92576
 		}
     }
-    else
-    {
-        result = NO;
-    }
-    
     
     [[self plugIn] awakeFromPasteboardItems:items];
     

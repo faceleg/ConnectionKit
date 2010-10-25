@@ -85,9 +85,8 @@
 
 @interface SVVideo ()
 
-- (BOOL) loadMovieFromURL:(NSURL *)movieSourceURL;
-- (BOOL)shouldSetSourceFromMedia:(SVMediaRecord *)aMedia orURL:(NSURL *)aURL;
-- (BOOL)loadMovieFromAttributes:(NSDictionary *)anAttributes;
+- (void)loadMovieFromURL:(NSURL *)movieSourceURL;
+- (void)loadMovieFromAttributes:(NSDictionary *)anAttributes;
 - (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
 - (void)calculateMovieDimensions:(QTMovie *)aMovie;
 - (void)calculateMoviePlayability:(QTMovie *)aMovie;
@@ -97,7 +96,6 @@
 @implementation SVVideo 
 
 @synthesize posterFrameType = _posterFrameType;
-@synthesize alreadyCheckedVideoSource = _alreadyCheckedVideoSource;
 
 //	LocalizedStringInThisBundle(@"This is a placeholder for a video. The full video will appear once you publish this website, but to see the video in Sandvox, please enable live data feeds in the preferences.", "Live data feeds disabled message.")
 
@@ -113,9 +111,7 @@
 	self.autoplay = NO;
 	self.loop = NO;
 	self.posterFrameType = kPosterFrameTypeAutomatic;
-	
-	self.alreadyCheckedVideoSource = NO;
-	
+		
     // Show caption
     if ([[[self.container textAttachment] placement] intValue] != SVGraphicPlacementInline)
     {
@@ -301,20 +297,9 @@
 #pragma mark -
 #pragma mark Media
 
-- (void)_mediaChanged;
-{
-	if (nil == self.posterFrame || self.posterFrameType != kPosterTypeChoose)		// get poster frame image UNLESS we have an override chosen.
-	{
-		[self getPosterFrameFromQuickLook];
-	}
-	
-	// Load the movie to figure out the media size and codecType and poster frame
-}
-
 - (void)didSetSource;
 {
     [super didSetSource];
-	[self _mediaChanged];
 
     if ([self.container constrainProportions])    // generally true
     {
@@ -324,6 +309,11 @@
         if (self.width > width) self.width = width;
     }
  
+	if (nil == self.posterFrame || self.posterFrameType != kPosterTypeChoose)		// get poster frame image UNLESS we have an override chosen.
+	{
+		[self getPosterFrameFromQuickLook];
+	}
+	
 	NSURL *movieSourceURL = nil;
 	if (self.media)
     {
@@ -337,46 +327,30 @@
 	}
 	
 	
-	
-	
-	if (!self.alreadyCheckedVideoSource && (self.media || self.externalSourceURL))
-	{
-		(void) [self shouldSetSourceFromMedia:self.media orURL:self.externalSourceURL];
-	}
-	self.alreadyCheckedVideoSource = NO;		// turn this off, for next time we have a shouldSetSource.../didSetSource
-}
-
-// Called before didSetSource.... but not always, so it can't have side effects!
-- (BOOL)shouldSetSourceFromMedia:(SVMediaRecord *)aMedia orURL:(NSURL *)aURL;
-{
-	self.alreadyCheckedVideoSource = YES;		// no need to kick off any requests
-	BOOL result = NO;
-	
-	// Unless check is overridden by defaults...
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if (NO)
 		
-// TEMPORARY TEMPORARY TEMPORARY ------- RESTORE TO THIS:  (![defaults boolForKey:@"videoFlashRemoteOverride"])
+		// TEMPORARY TEMPORARY TEMPORARY ------- RESTORE TO THIS:  (![defaults boolForKey:@"videoFlashRemoteOverride"])
 	{
 		// First check it if it a remote FLV ... NO is the answer, due to need for cross-domain stuff http://flv-player.net/help/
-		if (!aMedia && aURL)
+		if (!self.media && self.externalSourceURL)
 		{
-			NSString *UTI = [NSString UTIForFilenameExtension:[[aURL path] pathExtension]];
+			NSString *UTI = [NSString UTIForFilenameExtension:[[self.externalSourceURL path] pathExtension]];
 			if ([UTI conformsToUTI:@"com.adobe.flash.video"])
 			{
-				return NO;		// short circuit now....
+				NSLog(@"Cross-domain Flash is going to be a problem...");
 			}
 		}
 		
 	}
 	
 	// Try to make a QTMovie out of this, or parse as FLV which is a special case (since QT is not needed to show.)
-
-	result = [self loadMovieFromURL:aMedia ? [aMedia mediaURL] : aURL];
-	return result;
+	
+	[self loadMovieFromURL:movieSourceURL];
 }
 
-- (BOOL) loadMovieFromURL:(NSURL *)movieSourceURL;
+
+- (void) loadMovieFromURL:(NSURL *)movieSourceURL;
 {
 	BOOL openAsync = YES;			// I think this will be OK for both
 	NSMutableDictionary *movieAttributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
@@ -392,8 +366,7 @@
 		
 		// [movieAttributes setValue:[NSNumber numberWithBool:YES] forKey:@"QTMovieOpenForPlaybackAttribute"];	// From Tim Monroe @ WWDC2010, so we can check how movie was loaded
 	}
-	BOOL result = [self loadMovieFromAttributes:movieAttributes];
-	return result;
+	[self loadMovieFromAttributes:movieAttributes];
 }
 
 + (BOOL)acceptsType:(NSString *)uti;
@@ -1083,9 +1056,8 @@
 }
 
 
-- (BOOL)loadMovieFromAttributes:(NSDictionary *)anAttributes
+- (void)loadMovieFromAttributes:(NSDictionary *)anAttributes
 {
-	BOOL result = NO;
 	// Ignore for background threads as there is no need to do this during a doc import
 	// (STILL APPLICABLE FOR SANDVOX 2?
     OBASSERT([NSThread isMainThread]);
@@ -1121,7 +1093,6 @@
 													 selector:@selector(loadStateChanged:)
 														 name:QTMovieLoadStateDidChangeNotification object:movie];
 		}
-		result = YES;	// OK to go ... we will be be getting asynchronous loading stuff coming in soon.
 	}
 	else	// No movie?  Maybe it's a format that QuickTime can't read.  We can try FLV
 	{		
@@ -1150,7 +1121,6 @@
 				self.dimensionCalculationConnection.bytesNeeded = 1024;	// Let's just get the first 1K ... should be enough.
 
 				// I don't have the dimensions right now, however I am assuming that if we got this far then we are ok.
-				result = YES;
 			}
 		}
 		if (nil != movieData)
@@ -1161,11 +1131,9 @@
 			{
 				[self setNaturalWidth:[NSNumber numberWithFloat:dimensions.width] height:[NSNumber numberWithFloat:dimensions.height]];
 				
-				result = YES;	// if we got dimensions, then this is defintely readable.
 			}
 		}
 	}
-	return result;
 }
 	
 // Asynchronous load returned -- try to set the dimensions.
