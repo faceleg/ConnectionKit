@@ -380,7 +380,6 @@
 {
     [self willChangeValueForKey:@"width"];
     [self setPrimitiveValue:width forKey:@"width"];
-    [self didChangeValueForKey:@"width"];
     
     NSNumber *aspectRatio = [self constrainedAspectRatio];
     if (aspectRatio)
@@ -391,6 +390,8 @@
         [self setPrimitiveValue:[NSNumber numberWithUnsignedInteger:height] forKey:@"height"];
         [self didChangeValueForKey:@"height"];
     }
+    
+    [self didChangeValueForKey:@"width"];
 }
 - (BOOL)validateWidth:(NSNumber **)width error:(NSError **)error;
 {
@@ -410,7 +411,6 @@
 {
     [self willChangeValueForKey:@"height"];
     [self setPrimitiveValue:height forKey:@"height"];
-    [self didChangeValueForKey:@"height"];
     
     NSNumber *aspectRatio = [self constrainedAspectRatio];
     if (aspectRatio)
@@ -421,6 +421,8 @@
         [self setPrimitiveValue:[NSNumber numberWithUnsignedInteger:width] forKey:@"width"];
         [self didChangeValueForKey:@"width"];
     }
+    
+    [self didChangeValueForKey:@"height"];
 }
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 {
