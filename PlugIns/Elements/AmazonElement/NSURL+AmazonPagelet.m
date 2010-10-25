@@ -83,8 +83,9 @@
 	// If we still have nothing try decoding the URL
 	if (!result)
 	{
-		NSString *query = [[self query] stringByReplacingURLQueryPercentEscapes];
-		pathComponents = [query pathComponents];
+        NSString *query = [[self query] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+		query = [query stringByReplacing:@"+" with:@" "];	// fix + signs too!
+        pathComponents = [query pathComponents];
 		
 		result = [pathComponents searchPathComponentsForASIN];
 	}
