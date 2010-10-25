@@ -192,22 +192,13 @@
 
 - (void)writeGraphicBody:(SVGraphic *)graphic;
 {
-    // Indexes should wrapped in their own controller
-    if ([graphic isKindOfClass:[SVPlugInGraphic class]] &&
-        [[(SVPlugInGraphic *)graphic plugIn] isKindOfClass:[SVIndexPlugIn class]])
-    {
-        SVDOMController *controller = [[SVIndexDOMController alloc] initWithRepresentedObject:graphic];
-        [self startDOMController:controller];
-        [controller release];
-    
-        [super writeGraphicBody:graphic];
-    
-        [self endDOMController];
-    }
-    else
-    {
-        [super writeGraphicBody:graphic];
-    }
+    SVDOMController *controller = [graphic newBodyDOMController];
+    [self startDOMController:controller];
+    [controller release];
+
+    [super writeGraphicBody:graphic];
+
+    [self endDOMController];
 }
 
 - (void)startCalloutForGraphic:(SVGraphic *)graphic;

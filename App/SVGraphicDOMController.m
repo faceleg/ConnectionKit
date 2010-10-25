@@ -380,6 +380,17 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 #pragma mark -
 
 
+@implementation SVGraphicBodyDOMController
+
+
+
+@end
+
+
+
+#pragma mark -
+
+
 @implementation SVGraphicPlaceholderDOMController
 
 - (void)loadHTMLElementFromDocument:(DOMHTMLDocument *)document;
@@ -399,6 +410,11 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 - (SVDOMController *)newDOMController;
 {
     return [[SVGraphicDOMController alloc] initWithRepresentedObject:self];
+}
+
+- (SVDOMController *)newBodyDOMController;
+{
+    return [[SVGraphicBodyDOMController alloc] initWithRepresentedObject:self];
 }
 
 - (BOOL)shouldPublishEditingElementID { return NO; }

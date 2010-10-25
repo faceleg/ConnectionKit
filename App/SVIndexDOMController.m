@@ -105,3 +105,22 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVPlugInGraphic (SVIndexDOMController)
+
+- (SVDOMController *)newBodyDOMController;
+{
+    if ([[self plugIn] isKindOfClass:[SVIndexPlugIn class]])
+    {
+        return [[SVIndexDOMController alloc] initWithRepresentedObject:self];
+    }
+    
+    return [super newBodyDOMController];
+}
+
+@end
+

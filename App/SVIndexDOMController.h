@@ -6,12 +6,12 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVDOMController.h"
+#import "SVGraphicDOMController.h"
 
 #import "SVIndexPlugIn.h"
 
 
-@interface SVIndexDOMController : SVDOMController
+@interface SVIndexDOMController : SVGraphicBodyDOMController
 {
 @private
     BOOL    _drawAsDropTarget;
