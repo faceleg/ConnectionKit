@@ -85,6 +85,12 @@ document.getElementById('delicious-container-[[=container.elementID]]').appendCh
 <noscript><p><a href="http://delicious.com/[[=&deliciousID]][[if restrictedTags]]/[[=&%restrictedTags]][[endif3]]">[["My Delicious Links]]</a></p></noscript>
 </div>
 
+[[if restrictedTags]]
+<div class="svx-placeholder">
+    [['Tags: ]][[=restrictedTags]]
+</div>
+[[endif3]]
+
 [[else2]]
 <ul>
 	<li>[['delicious.com example no.]] 1</li>
@@ -92,11 +98,7 @@ document.getElementById('delicious-container-[[=container.elementID]]').appendCh
 	<li>[['delicious.com example no.]] 3</li>
 </ul>
 [[endif2]]
-[[if restrictedTags]]
-<div class="svx-placeholder">
-    [['Tags: ]][[restrictedTags]]
-</div>
-[[endif2]]
+
 [[else]]
 [[if !parser.HTMLGenerationPurpose]]
 <div class="svx-placeholder">
