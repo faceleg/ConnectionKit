@@ -249,7 +249,7 @@ triggerChangeNotificationsForDependentKey: @"subjectInputHTML"];
 	{
 		case kKTContactSubjectField:
 			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"text\" value=\"%@\" />", 
-					  [([self delegateOwner]) uniqueID], [subjectText stringByEscapingHTMLEntities]];
+					  [self uniqueID], [subjectText stringByEscapingHTMLEntities]];
 			break;
 		case kKTContactSubjectSelection:
 		{
@@ -260,7 +260,7 @@ triggerChangeNotificationsForDependentKey: @"subjectInputHTML"];
 			NSEnumerator *theEnum = [lineArray objectEnumerator];
 			NSString *oneLine;
 			
-			[buf appendFormat:@"<select id=\"s%@\" name=\"s\">", [[self delegateOwner] uniqueID]];
+			[buf appendFormat:@"<select id=\"s%@\" name=\"s\">", [self uniqueID]];
 			while (nil != (oneLine = [theEnum nextObject]) )
 			{
 				NSArray *commaArray = [oneLine componentsSeparatedByCommas];
@@ -284,7 +284,7 @@ triggerChangeNotificationsForDependentKey: @"subjectInputHTML"];
 		}
 		case kKTContactSubjectHidden:
 			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"hidden\" value=\"%@\" />", 
-					  [[self delegateOwner] uniqueID], [subjectText stringByEscapingHTMLEntities]];
+					  [self uniqueID], [subjectText stringByEscapingHTMLEntities]];
 			break;
 	}
 	
