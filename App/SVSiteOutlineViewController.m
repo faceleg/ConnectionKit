@@ -398,7 +398,9 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	if (!keyPaths)
 	{
 		keyPaths = [[NSSet alloc] initWithObjects:
-                    @"thumbnail",
+                    @"thumbnailType",
+                    @"customThumbnail",
+                    @"thumbnailSourceGraphic",
                     @"title",
 					@"isStale",
 					@"codeInjection.hasCodeInjection",
