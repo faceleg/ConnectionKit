@@ -89,7 +89,7 @@
     [context addDependencyForKeyPath:@"showInfo" ofObject:self];
     
     // add resources
-    NSString *path = [[self bundle] pathForResource:@"FlickrPagelet" ofType:@"css"];
+    NSString *path = [[self bundle] pathForResource:@"FlickrPlugIn" ofType:@"css"];
     if (path && ![path isEqualToString:@""]) 
     {
         NSURL *cssURL = [NSURL fileURLWithPath:path];
