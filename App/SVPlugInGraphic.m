@@ -405,6 +405,13 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (id)objectToInspect; { return [self plugIn]; }
 
+#pragma mark Pasteboard
+
+- (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
+{
+    return [[[self plugIn] class] readableTypesForPasteboard:pasteboard];
+}
+
 #pragma mark Serialization
 
 - (void)awakeFromPropertyList:(id)propertyList;

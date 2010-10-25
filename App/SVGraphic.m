@@ -422,6 +422,10 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     if (![self showBorder]) [self setBordered:NO];
 }
 
+#pragma mark Pasteboard
+
+- (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard; { return nil; }
+
 - (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
 {
     NSString *title = [item title];
