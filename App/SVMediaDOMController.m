@@ -171,6 +171,18 @@
     }
 }
 
+- (void)updateToReflectSelection;
+{
+    // Do nothing!!
+}
+
+- (SVSelectionBorder *)newSelectionBorder;
+{
+    SVSelectionBorder *result = [super newSelectionBorder];
+    [result setBorderColor:nil];
+    return result;
+}
+
 @end
 
 

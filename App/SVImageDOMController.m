@@ -41,11 +41,6 @@
 
 #pragma mark Selection
 
-- (void)updateToReflectSelection;
-{
-    // Do nothing!!
-}
-
 - (BOOL)allowsDirectAccessToWebViewWhenSelected;
 {
     // Generally, yes. EXCEPT for inline, block-level, chromeless images
@@ -60,15 +55,6 @@
         }
     }
     
-    return result;
-}
-
-#pragma mark Drawing
-
-- (SVSelectionBorder *)newSelectionBorder;
-{
-    SVSelectionBorder *result = [super newSelectionBorder];
-    [result setBorderColor:nil];
     return result;
 }
 
