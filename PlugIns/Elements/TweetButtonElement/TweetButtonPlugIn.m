@@ -123,7 +123,7 @@
         // data-text (if no text, twitter uses title of page button is on)
         if ( self.tweetText )
         {
-            [attrs setObject:self.tweetURL forKey:@"data-text"];
+            [attrs setObject:self.tweetText forKey:@"data-text"];
         }
         // data-count
         [attrs setObject:self.tweetButton forKey:@"data-count"];
