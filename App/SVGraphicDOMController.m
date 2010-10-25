@@ -12,6 +12,7 @@
 #import "SVCalloutDOMController.h"
 #import "SVContentDOMController.h"
 #import "SVMediaRecord.h"
+#import "SVPasteboardItemInternal.h"
 #import "SVRichTextDOMController.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
@@ -333,7 +334,28 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return size;
 }
 
-#pragma mark Selection Border
+#pragma mark Drag & Drop
+
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
+{
+    return NSDragOperationCopy;
+}
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
+{
+    SVGraphic *graphic = [self representedObject];
+    [graphic awakeFromPasteboardItem:[sender draggingPasteboard]];
+    
+    return YES;
+}
+
+- (NSArray *)registeredDraggedTypes;
+{
+    SVGraphic *graphic = [self representedObject];
+    return [graphic readableTypesForPasteboard:[NSPasteboard pasteboardWithName:NSDragPboard]];
+}
+
+#pragma mark Drawing
 
 - (SVSelectionBorder *)newSelectionBorder;
 {
