@@ -127,26 +127,7 @@
     id<SVPlugInContext> context = [SVPlugIn currentContext];
 	id<SVHTMLWriter> writer = [context HTMLWriter];
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
-	unsigned int index = [context currentIteration];
-	int count = [context currentIterationsCount];
-
-	NSMutableArray *classes = [NSMutableArray arrayWithObject:@"article"];
-	if (index != NSNotFound)
-	{
-		NSString *indexClass = [NSString stringWithFormat:@"i%i", index + 1];
-		[classes addObject:indexClass];
-
-		NSString *eoClass = (0 == ((index + 1) % 2)) ? @"e" : @"o";
-		[classes addObject:eoClass];
-
-		if (index == (count - 1))
-		{
-			[classes addObject:@"last-item"];
-		}
-	}
-	NSString *className = [classes componentsJoinedByString:@" "];
-	
-	
+	NSString *className = [context currentIterationCSSClassName];
 	
 	switch(self.layoutType)
 	{
