@@ -8,9 +8,9 @@
 			<embed src="http://www.[[if privacy]]youtube-nocookie[[else3]]youtube[[endif3]].com/v/[[=videoID]][[if !includeRelatedVideos]]&amp;rel=0[[endif3]][[if playHD]]&amp;hd=1[[endif3]]&amp;color1=[[=color1.youTubeVideoColorString]]&amp;color2=[[=color2.youTubeVideoColorString]][[if showBorder]]&amp;border=1[[endif3]]&amp;hl=[[=&parser.outputWriter.language]]"
 				type="application/x-shockwave-flash" wmode="transparent" width="[[=width]]" height="[[=height]]"></embed>
 [[else2]]
-			<p>[['This is a placeholder for the YouTube video at:]]</p>
+			<div class="svx-placeholder" style="width:[[=width]]px; height:[[=height]]px;">[['This is a placeholder for the YouTube video at:]]
 			<p><a href="[[=&userVideoCode]]">[[=&userVideoCode]]</a></p>
-			<p>[['To see the video in Sandvox, please enable live data feeds in the Preferences.]]</p>
+			[['To see the video in Sandvox, please enable live data feeds in the Preferences.]]</div>
 [[endif2]]
 		[[=endElement]]
 	</div>
