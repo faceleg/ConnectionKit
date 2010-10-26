@@ -49,6 +49,7 @@
 {
     SVMediaGraphic *result = [NSEntityDescription insertNewObjectForEntityForName:@"MediaGraphic"
                                                            inManagedObjectContext:context];
+    [result setWidth:nil];  // graphics normally default to 200px. #92688
     [result loadPlugInAsNew:YES];
     return result;
 }
