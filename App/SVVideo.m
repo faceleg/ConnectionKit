@@ -869,9 +869,16 @@
 	}
 	
 	// END THE TAGS
+	
+	if (unknownTag)
+	{
+		OBASSERT([@"div" isEqualToString:[context topElement]]);
+		[context endElement];
+	}
 		
 	if (flashTag || quicktimeTag || microsoftTag)
 	{
+        //[context startElement:@"object"];
 		OBASSERT([@"object" isEqualToString:[context topElement]]);
 		[context endElement];	//  </object>
 	}
@@ -882,12 +889,6 @@
 		[context endElement];
 		
 		[self writePostVideoScript:context referringToID:videoID];
-	}
-	
-	if (unknownTag)
-	{
-		OBASSERT([@"div" isEqualToString:[context topElement]]);
-		[context endElement];
 	}
 }
 
