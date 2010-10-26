@@ -360,11 +360,20 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	return result;
 }
 
-- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
+- (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 {
-    APManualListProduct *product = [[APManualListProduct alloc] initWithURL:[item URL]];
-    [[self mutableArrayValueForKey:@"products"] addObject:product];
-    [product release];
+    BOOL result = NO;
+    
+    for (id <SVPasteboardItem> item in items)
+    {
+        APManualListProduct *product = [[APManualListProduct alloc] initWithURL:[item URL]];
+        [[self mutableArrayValueForKey:@"products"] addObject:product];
+        [product release];
+        
+        result = YES;
+    }
+    
+    return result;
 }
 
 @end
