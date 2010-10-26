@@ -55,7 +55,6 @@
 // Foundation extensions
 #import "NSBundle+Karelia.h"
 #import "NSData+Karelia.h"
-#import "NSObject+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Sandvox.h"
