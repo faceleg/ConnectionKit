@@ -25,7 +25,11 @@
 @synthesize preload		= _preload;
 
 - (NSString *)codecType; { return [[self container] codecType]; }
-- (void)setCodecType:(NSString *)type; { [[self container] setCodecType:type]; }
+- (void)setCodecType:(NSString *)type reloadPlugIn:(BOOL)reload;
+{
+    [[self container] setCodecType:type];
+    if (reload) [[self container] didSetSource];
+}
 
 #pragma mark Properties
 

@@ -318,12 +318,16 @@
 	if (self.media)
     {
 		movieSourceURL = [self.media mediaURL];
-		self.codecType = [NSString UTIForFileAtPath:[movieSourceURL path]];	// actually look at the file, not just its extension
+        
+		[self setCodecType:[NSString UTIForFileAtPath:[movieSourceURL path]]
+              reloadPlugIn:NO];	// actually look at the file, not just its extension
 	}
 	else
 	{
 		movieSourceURL = self.externalSourceURL;
-		self.codecType = [NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]];
+        
+		[self setCodecType:[NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]]
+              reloadPlugIn:NO];
 	}
 	
 	// Try to make a QTMovie out of this, or parse as FLV which is a special case (since QT is not needed to show.)
@@ -1176,7 +1180,7 @@
 			}
 			else	// QTMovie can't be created, and we can't find dimensions from data (FLV), so disallow!
 			{
-				self.codecType = @"unloadable-video";	// force the unknown codecType.
+				[self setCodecType:@"unloadable-video" reloadPlugIn:NO];	// force the unknown codecType.
 			}
 		}
 	}
@@ -1193,7 +1197,7 @@
 	}
 	else	// QTMovie can't be created, and we can't find dimensions from data (FLV), so disallow!
 	{
-		self.codecType = @"unloadable-video";	// force the unknown codecType.
+		[self setCodecType:@"unloadable-video" reloadPlugIn:NO];	// force the unknown codecType.
 	}
 	self.dimensionCalculationConnection = nil;
 }
@@ -1276,7 +1280,7 @@
 	if (0 == movieSize.width || 0 == movieSize.height)
 	{
 		// Chances are if we got here with zero width/height, there is just no video track -- so become an audio file!
-		[self setCodecType:@"com.apple.quicktime-audio"];		// Our specialization of generic quicktime movie
+		[self setCodecType:@"com.apple.quicktime-audio" reloadPlugIn:NO];		// Our specialization of generic quicktime movie
 		[[self container] didSetSource];
 		// This will re-create things as an audio....
 		// Note: We should be sure that we don't do anything further as we unwind, since we're DONE with this movie.
