@@ -77,6 +77,13 @@
     }
 }
 
+- (void)didAddToPage:(id <SVPage>)page;
+{
+    // Make sure we don't have auto width. Super will then pull down to a good value
+    [self setWidth:[NSNumber numberWithUnsignedInteger:NSUIntegerMax]];
+    [super didAddToPage:page];
+}
+
 #pragma mark Plug-in
 
 - (NSString *)plugInIdentifier;
