@@ -181,6 +181,11 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
     // Save the new layout to the defaults
     [[NSUserDefaults standardUserDefaults] setInteger:layout
                                                forKey:@"AmazonLastLayout"];
+    
+    //	Changes to the layout or list source need us to recalculate the availability of the
+	//	"showPrices" appearance option
+    [self willChangeValueForKey:@"showPricesOptionAvailable"];
+    [self didChangeValueForKey:@"showPricesOptionAvailable"];
 }
 
 @synthesize showProductPreviews = _showProductPreviews;
@@ -231,18 +236,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	if ([[self products] indexOfObjectIdenticalTo:object] != NSNotFound)
 	{
 		[self observeValueForKeyPath:keyPath ofManualListProduct:object change:change context:context];
-	}
-	
-	// Bail if the object's not ourself
-	if (object != self) return;
-	
-	
-	//	Changes to the layout or list source need us to recalculate the availability of the
-	//	"showPrices" appearance option
-	if ([keyPath isEqualToString:@"layout"])
-	{
-		[self willChangeValueForKey:@"showPricesOptionAvailable"];
-		[self didChangeValueForKey:@"showPricesOptionAvailable"];
 	}
 }
 
