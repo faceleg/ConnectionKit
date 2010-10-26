@@ -582,6 +582,12 @@
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
 	}
+	else if ([type isEqualToString:@"unloadable-audio"])	
+	{
+		// Special type ... A movie type that might be valid on some systems but can't be shown on this mac
+		// (e.g. it might load if we had Perian, Flip4Mac, XiphQT ... but we don't.
+		result = [NSImage imageFromOSType:kAlertStopIcon];
+	}
 	else if ([type conformsToUTI:(NSString *)kUTTypeAppleProtectedMPEG4Audio])
 	{
 		result = [NSImage imageFromOSType:kAlertStopIcon];
@@ -626,6 +632,12 @@
 	if (!type || (!self.media && !self.externalSourceURL))								// no data?
 	{
 		result = NSLocalizedString(@"Use .mp3 or .wav file for maximum compatibility.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
+	}
+	else if ([type isEqualToString:@"unloadable-audio"])	
+	{
+		// Special type ... A movie type that might be valid on some systems but can't be shown on this mac
+		// (e.g. it might load if we had Perian, Flip4Mac, XiphQT ... but we don't.
+		result = NSLocalizedString(@"Audio cannot be loaded on this computer.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
 	}
 	else if ([type conformsToUTI:(NSString *)kUTTypeAppleProtectedMPEG4Audio])
 	{

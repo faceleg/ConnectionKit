@@ -912,11 +912,11 @@
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
 	}
-	else if ([type isEqualToString:@"unviewable-video"])	
+	else if ([type isEqualToString:@"unloadable-video"])	
 	{
 		// Special type ... A movie type that might be valid on some systems but can't be shown on this mac
 		// (e.g. it might load if we had Perian, Flip4Mac, XiphQT ... but we don't.
-		result = [NSImage imageFromOSType:kAlertStopIcon];	// Not locally hosted media, and no override -- thus can't view.
+		result = [NSImage imageFromOSType:kAlertStopIcon];
 	}
 	else if ([type conformsToUTI:@"public.h264.ios"])		// HAPPY!  everything-compatible.  NOT YET IMPLEMENTED, AS QUICKTIME API CAN'T TELL US.
 	{
@@ -966,7 +966,7 @@
 	{
 		result = NSLocalizedString(@"Use MPEG-4 (h.264) video for maximum compatibility.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
-	else if ([type isEqualToString:@"unviewable-video"])	
+	else if ([type isEqualToString:@"unloadable-video"])	
 	{
 		// Special type ... A movie type that might be valid on some systems but can't be shown on this mac
 		// (e.g. it might load if we had Perian, Flip4Mac, XiphQT ... but we don't.
@@ -1158,7 +1158,7 @@
 			}
 			else	// QTMovie can't be created, and we can't find dimensions from data (FLV), so disallow!
 			{
-				self.codecType = @"unviewable-video";	// force the unknown codecType.
+				self.codecType = @"unloadable-video";	// force the unknown codecType.
 			}
 		}
 	}
@@ -1175,7 +1175,7 @@
 	}
 	else	// QTMovie can't be created, and we can't find dimensions from data (FLV), so disallow!
 	{
-		self.codecType = @"unviewable-video";	// force the unknown codecType.
+		self.codecType = @"unloadable-video";	// force the unknown codecType.
 	}
 	self.dimensionCalculationConnection = nil;
 }

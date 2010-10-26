@@ -88,11 +88,12 @@
     
     if ([type conformsToUTI:(NSString *)kUTTypeMovie]
 		|| [type conformsToUTI:(NSString *)kUTTypeVideo]
-		|| [type isEqualToString:@"unviewable-video"])	// special case for video we can't actually play on this machine
+		|| [type isEqualToString:@"unloadable-video"])	// special case for video we can't actually play on this machine
     {
         return @"com.karelia.sandvox.SVVideo";
     }
-    else if ([type conformsToUTI:(NSString *)kUTTypeAudio])
+    else if ([type conformsToUTI:(NSString *)kUTTypeAudio]
+			 || [type isEqualToString:@"unloadable-audio"])	// special case for audio we can't actually play on this machine
     {
         return @"com.karelia.sandvox.SVAudio";
     }
