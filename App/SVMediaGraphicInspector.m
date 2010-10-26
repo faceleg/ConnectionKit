@@ -145,7 +145,7 @@
         NSString *type = [pboard availableTypeFromArray:[SVMediaPlugIn readableTypesForPasteboard:pboard]];
         if (type)
         {
-            [aGraphic awakeFromPasteboardItems:[pboard pasteboardItems]];
+            [aGraphic awakeFromPasteboardItems:[pboard sv_pasteboardItems]];
             result = YES;
         }
     }
