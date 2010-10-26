@@ -107,7 +107,7 @@
 - (void)awakeFromNew;
 {
 	self.controller = YES;
-	self.preload = kPreloadAuto;
+	self.preload = kPreloadNone;
 	self.autoplay = NO;
 	self.loop = NO;
 	self.posterFrameType = kPosterFrameTypeAutomatic;
@@ -190,12 +190,6 @@
 }
 
 + (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObjects:@"posterFrame", @"posterFrameType", nil]; }
-
-- (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
-{
-	SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"PosterFrame" insertIntoManagedObjectContext:[self.container managedObjectContext] error:NULL];	
-	[self replaceMedia:media forKeyPath:@"container.posterFrame"];
-}
 
 #pragma mark Poster Frame - QuickLook
 
@@ -570,7 +564,7 @@
 	if (!videoFlashPlayer) videoFlashPlayer = @"flvplayer";
 	NSString *videoFlashPath	= [defaults objectForKey:@"videoFlashPath"];	// override must specify path/URL on server
 	NSString *videoFlashExtras	= [defaults objectForKey:@"videoFlashExtras"];	// extra parameters to override for any player
-	NSString *videoFlashFormat	= [defaults objectForKey:@"videoFlashFormat"];	// format pattern with %{value1}@ and %{value2}@ for movie, poster
+	NSString *videoFlashFormat	= [defaults objectForKey:@"videoFlashFormat"];	// format pattern with %1$@ and %2$@ for movie, poster
 	NSString *videoFlashBarHeight= [defaults objectForKey:@"videoFlashBarHeight"];	// height that the navigation bar adds
 	
 	BOOL videoFlashRequiresFullURL = [defaults boolForKey:@"videoFlashRequiresFullURL"];	// usually not, but YES for flowplayer
@@ -588,7 +582,8 @@
 		if (movieSourceURL)  movieSourcePath  = [context relativeURLStringOfURL:movieSourceURL];
 		if (posterSourceURL) posterSourcePath = [context relativeURLStringOfURL:posterSourceURL];
 	}
-	
+	// Ordering string arguments:
+	// http://developer.apple.com/library/ios/#documentation/cocoa/Conceptual/LoadingResources/Strings/Strings.html%23//apple_ref/doc/uid/10000051i-CH6-99832
 	NSDictionary *noPosterParamLookup
 	= NSDICT(
 			 @"video=%@",                                  @"f4player",	
@@ -598,11 +593,11 @@
 			 @"config={\"playlist\":[{\"url\":\"%@\"}]}",  @"flowplayer");
 	NSDictionary *posterParamLookup
 	= NSDICT(
-			 @"video=%{value1}@&thumbnail=%{value2}@",         @"f4player",
-			 @"file=%{value1}@&image=%{value2}@&controlbar=over", @"jwplayer",
-			 @"flv=%{value1}@&startimage=%{value2}@&margin=0", @"flvplayer",
-			 @"movie=%{value1}@&previewimage=%{value2}@",      @"osflv",	
-			 @"config={\"playlist\":[{\"url\":\"%{value2}@\"},{\"url\":\"%{value1}@\",\"autoPlay\":false,\"autoBuffering\":true}]}",
+			 @"video=%1$@&thumbnail=%2$@",         @"f4player",
+			 @"file=%1$@&image=%2$@&controlbar=over", @"jwplayer",
+			 @"flv=%1$@&startimage=%2$@&margin=0", @"flvplayer",
+			 @"movie=%1$@&previewimage=%2$@",      @"osflv",	
+			 @"config={\"playlist\":[{\"url\":\"%2$@\"},{\"url\":\"%1$@\",\"autoPlay\":false,\"autoBuffering\":true}]}",
 			 @"flowplayer");
 	NSDictionary *barHeightLookup
 	= NSDICT(
@@ -805,6 +800,7 @@
 	
 	NSURL *posterSourceURL = nil;
 	if (self.posterFrame
+		// && [self enablePoster]
 		&& !(quicktimeTag && self.externalSourceURL)		// don't do this if this is quicktime, with an external URL
 															// since click on poster image doesn't take you to movie!
 		&& !microsoftTag									// Also ignore poster frame for microsoft
@@ -908,13 +904,14 @@
 }
 + (NSSet *)keyPathsForValuesAffectingEnablePoster
 {
-    return [NSSet setWithObjects:@"codecType", @"externalSourceURL", nil];
+    return [NSSet setWithObjects:@"preload", @"codecType", @"externalSourceURL", nil];
 }
 
 - (BOOL) enablePoster	// poster is not enabled in certain situations: Remote URL QuickTime, Microsoft tags.
 {
 	NSString *type = self.codecType;
 	BOOL disable = (nil == type)
+	// || (kPreloadAuto == self.preload)		// when preloading, you CAN'T do poster, apparently.
 	|| [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"]
 	|| ( (([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
 		  && ![type conformsToUTI:@"public.mpeg-4"]
@@ -1139,6 +1136,9 @@
 	}
 	else	// No movie?  Maybe it's a format that QuickTime can't read.  We can try FLV
 	{		
+		// Since there is no movie, we can't calculate poster frame automatically, so set it to none.
+		self.posterFrameType = kPosterFrameTypeNone;
+
 		// get the data from what we stored in the quicktime initialization dictionary
 		NSData *movieData = nil;
 		if (nil != [anAttributes objectForKey:QTMovieDataReferenceAttribute])
@@ -1150,7 +1150,7 @@
 			movieData = [NSData dataWithContentsOfFile:[anAttributes objectForKey:QTMovieFileNameAttribute]];
 		}
 		else if (nil != [anAttributes objectForKey:QTMovieURLAttribute])
-		{
+		{			
 			NSURL *URL = [anAttributes objectForKey:QTMovieURLAttribute];
 			if ([URL isFileURL])
 			{
