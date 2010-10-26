@@ -213,7 +213,7 @@
     DOMElement *result = [super selectableDOMElement];
     WEKWebEditorItem *controller = [self hitTestDOMNode:result];
         
-    if ([controller HTMLElement] == result) result = nil;
+    if (controller != self && [controller HTMLElement] == result) result = nil;
     return result;
 }
 
