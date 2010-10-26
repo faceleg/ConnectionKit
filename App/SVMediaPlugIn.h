@@ -23,7 +23,7 @@
 - (void)didSetSource;
 + (NSArray *)allowedFileTypes;
 
-- (SVMediaRecord *)posterFrame;
+@property(nonatomic, readonly) SVMediaRecord *posterFrame;  // KVO-compliant
 - (BOOL)validatePosterFrame:(SVMediaRecord *)posterFrame;
 
 

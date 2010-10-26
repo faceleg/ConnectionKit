@@ -22,8 +22,14 @@
 #pragma mark Properties
 
 - (SVMediaRecord *)media; { return [[self container] media]; }
-- (SVMediaRecord *)posterFrame; { return [[self container] posterFrame]; }
+
 - (NSURL *)externalSourceURL; { return [[self container] externalSourceURL]; }
+
+- (SVMediaRecord *)posterFrame; { return [[self container] posterFrame]; }
++ (NSSet *)keyPathsForValuesAffectingPosterFrame;
+{
+    return [NSSet setWithObject:@"container.posterFrame"];
+}
 
 - (void)didSetSource;
 {
