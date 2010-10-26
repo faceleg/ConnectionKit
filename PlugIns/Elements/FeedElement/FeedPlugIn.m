@@ -43,9 +43,13 @@
 #define kNetNewsWireString @"CorePasteboardFlavorType 0x52535373"
 
 
-// LocalizedStringInThisBundle(@"example no.", "String_On_Page_Template- followed by a number")
+
 // LocalizedStringInThisBundle(@"Please specify the URL of the feed using the Inspector.", "String_On_Page_Template")
-// LocalizedStringInThisBundle(@"item summary", "String_On_Page_Template - example of a summary of an RSS item")
+
+@interface FeedPlugIn ()
+- (BOOL)isPage;
+@end
+
 
 
 @implementation FeedPlugIn
@@ -87,6 +91,72 @@
 
 #pragma mark -
 #pragma mark HTML Generation
+
+//[[if isPage]]
+//<h3><a href="#">[[=&host]] [['example no.]] 1</a></h3>[[if summaryChars]]<p>[['item summary]]</p>[[endif4]]
+//<h3><a href="#">[[=&host]] [['example no.]] 2</a></h3>[[if summaryChars]]<p>[['item summary]]</p>[[endif4]]
+//<h3><a href="#">[[=&host]] [['example no.]] 3</a></h3>[[if summaryChars]]<p>[['item summary]]</p>[[endif4]]
+//<h3><a href="#">[[=&host]] [['example no.]] 4</a></h3>[[if summaryChars]]<p>[['item summary]]</p>[[endif4]]
+//[[else3]]
+//<ul>
+//<li><a href="#">[[=&host]] [['example no.]] 1</a>[[if summaryChars]]<br />[['item summary]][[endif4]]</li>
+//<li><a href="#">[[=&host]] [['example no.]] 2</a>[[if summaryChars]]<br />[['item summary]][[endif4]]</li>
+//<li><a href="#">[[=&host]] [['example no.]] 3</a>[[if summaryChars]]<br />[['item summary]][[endif4]]</li>
+//<li><a href="#">[[=&host]] [['example no.]] 4</a>[[if summaryChars]]<br />[['item summary]][[endif4]]</li>
+//</ul>
+//[[endif3]]
+
+- (void)writeOfflinePreviews
+{
+    id<SVPlugInContext> context = [SVPlugIn currentContext];
+    
+    NSString *exampleText = LocalizedStringInThisBundle(@"example no.", "String_On_Page_Template- followed by a number");
+    
+    NSString *itemText = LocalizedStringInThisBundle(@"item summary", "String_On_Page_Template - example of a summary of an RSS item");
+    
+    NSInteger writeMax = (self.max > 0) ? self.max : 4;
+    NSString *host = (nil != [self.feedURL host]) ? [self.feedURL host] : @"example.com";
+    
+    if ( ![self isPage] ) [[context HTMLWriter] startElement:@"ul"];    
+    
+    for ( NSInteger i = 0; i < writeMax; i++ )
+    {
+        if ( [self isPage] )
+        {
+            [[context HTMLWriter] startElement:@"h3"];
+        }
+        else
+        {
+            [[context HTMLWriter] startElement:@"li"];
+        }
+        
+        NSString *exampleLink = [NSString stringWithFormat:@"<a href=\"#\">%@ %@ %d</a>", host, exampleText, i];
+        [[context HTMLWriter] writeHTMLString:exampleLink];
+        
+        if ( ![self isPage] ) [[context HTMLWriter] endElement]; // </h3>
+        
+        if ( self.summaryChars )
+        {
+            if ( [self isPage] )
+            {
+                [[context HTMLWriter] startElement:@"p"];
+            }
+            else
+            {
+                [[context HTMLWriter] writeHTMLString:@"<br />"];
+            }
+            
+            [[context HTMLWriter] writeText:itemText];
+            
+            if ( [self isPage] ) [[context HTMLWriter] endElement]; // </p>    
+        }
+
+    }
+    
+    if ( ![self isPage] ) [[context HTMLWriter] endElement]; // </ul>    
+    
+
+}
 
 -(BOOL)validateURL:(id *)ioValue error:(NSError **)outError
 {
@@ -133,15 +203,15 @@
 	return result;
 }
 
-- (NSString *)host
-{
-    NSString *result = [self.feedURL host];
-    if ( !result )
-    {
-        result = @"";
-    }
-    return result;
-}
+//- (NSString *)host
+//{
+//    NSString *result = [self.feedURL host];
+//    if ( !result )
+//    {
+//        result = @"";
+//    }
+//    return result;
+//}
 
 /*!	We make a digest of a the "h" parameter so that our server will be less likely to be 
 	bogged down with non-Sandvox uses of our feed -> HTML gateway.
