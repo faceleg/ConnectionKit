@@ -77,7 +77,7 @@
 	AmazonStoreCountry productStore = [product store];
 	AmazonStoreCountry currentStore = [self store];
 	
-	if ([self numberOfManualProductsWithAProductCode] == 0)
+	if (productStore && [self numberOfManualProductsWithAProductCode] == 0)
     {
 		[self setStore:productStore];
 	}
