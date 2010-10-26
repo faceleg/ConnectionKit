@@ -539,7 +539,9 @@
 	[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
 	
 	// we have mp4, so no ogv/webm, so force a fallback if NOT webkit-based.
-	if ([self.codecType conformsToUTI:@"public.mpeg-4"] || [self.codecType conformsToUTI:@"public.3gpp"])
+	if ([self.codecType conformsToUTI:@"public.mpeg-4"]
+		|| [self.codecType conformsToUTI:@"public.3gpp"]
+		|| [self.codecType conformsToUTI:@"com.apple.protected-mpeg-4-video"])
 	{
 		[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play this natively\n\t\tfallback(video);\n\t}\n"];
 	}
@@ -768,6 +770,7 @@
 	// video || flash (not mutually exclusive) are mutually exclusive with microsoft, quicktime
 	NSString *type = self.codecType;
 	BOOL videoTag = [type conformsToUTI:@"public.mpeg-4"]
+		|| [type conformsToUTI:@"com.apple.protected-mpeg-4-video"]		// .m4v MIGHT BE OK
 		|| [type conformsToUTI:@"public.ogg-theora"]
 		|| [type conformsToUTI:@"public.webm"]
 		|| [type conformsToUTI:@"public.3gpp"] ;
@@ -777,6 +780,7 @@
 	BOOL flvMedia = [type conformsToUTI:@"com.adobe.flash.video"];
 	BOOL flashTag = flvMedia
 		|| [type conformsToUTI:@"public.mpeg-4"]
+		|| [type conformsToUTI:@"com.apple.protected-mpeg-4-video"]		// .m4v MIGHT BE OK
 		|| [type conformsToUTI:@"public.3gpp"];
 	if ([defaults boolForKey:@"avoidFlashVideo"]) flashTag = NO;
 	
@@ -794,6 +798,7 @@
 	// Also show quicktime when there is no media at all
 	BOOL quicktimeTag = ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
 	&& ![type conformsToUTI:@"public.mpeg-4"]
+	&& ![type conformsToUTI:@"com.apple.protected-mpeg-4-video"]
 	&& ![type conformsToUTI:@"public.3gpp"]
 			;
 
@@ -915,6 +920,7 @@
 	|| [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"]
 	|| ( (([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
 		  && ![type conformsToUTI:@"public.mpeg-4"]
+		  && ![type conformsToUTI:@"com.apple.protected-mpeg-4-video"]
 		  && ![type conformsToUTI:@"public.3gpp"]) && self.externalSourceURL );
 	return !disable;
 }
@@ -938,7 +944,10 @@
 	{
 		result =[ NSImage imageNamed:@"checkmark"];;
 	}
-	else if ([type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"public.3gpp"])			// might not be iOS compatible
+	else if ([type conformsToUTI:@"public.mpeg-4"]
+			 || [type conformsToUTI:@"public.3gpp"]
+			 || [type conformsToUTI:@"com.apple.protected-mpeg-4-video"]
+			 )			// might not be iOS compatible
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
 	}
@@ -992,7 +1001,10 @@
 	{
 		result = NSLocalizedString(@"Video is compatible with a wide range of devices.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
-	else if ([type conformsToUTI:@"public.mpeg-4"] || [type conformsToUTI:@"public.3gpp"])			// might not be iOS compatible
+	else if ([type conformsToUTI:@"public.mpeg-4"]
+			 || [type conformsToUTI:@"public.3gpp"]
+			 || [type conformsToUTI:@"com.apple.protected-mpeg-4-video"]
+			 )
 	{
 		result = NSLocalizedString(@"You will need to verify if this video will play on iOS devices.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
