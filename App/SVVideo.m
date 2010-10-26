@@ -833,7 +833,7 @@
 	}
 	else if (flashDisallowedTag)
 	{
-		// Can't handle remotely hosted flash.  Do something similar to the "unknown" tag.
+		// Can't handle remotely hosted flash.  Do something similar to the unknown tag.
 		[self startNoRemoteFlashVideo:context];
 		unknownTag = YES;
 	}
@@ -911,6 +911,12 @@
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
 	}
+	else if ([type isEqualToString:@"unviewable-video"])	
+	{
+		// Special type ... A movie type that might be valid on some systems but can't be shown on this mac
+		// (e.g. it might load if we had Perian, Flip4Mac, XiphQT ... but we don't.
+		result = [NSImage imageFromOSType:kAlertStopIcon];	// Not locally hosted media, and no override -- thus can't view.
+	}
 	else if ([type conformsToUTI:@"public.h264.ios"])		// HAPPY!  everything-compatible.  NOT YET IMPLEMENTED, AS QUICKTIME API CAN'T TELL US.
 	{
 		result =[ NSImage imageNamed:@"checkmark"];;
@@ -958,6 +964,12 @@
 	if (!type || (!self.media && !self.externalSourceURL))								// no data?
 	{
 		result = NSLocalizedString(@"Use MPEG-4 (h.264) video for maximum compatibility.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
+	}
+	else if ([type isEqualToString:@"unviewable-video"])	
+	{
+		// Special type ... A movie type that might be valid on some systems but can't be shown on this mac
+		// (e.g. it might load if we had Perian, Flip4Mac, XiphQT ... but we don't.
+		result = NSLocalizedString(@"Video cannot be loaded on this computer.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
 	else if ([type conformsToUTI:@"public.h264.ios"])		// HAPPY!  everything-compatible
 	{
@@ -1142,6 +1154,10 @@
 			{
 				[self setNaturalWidth:[NSNumber numberWithFloat:dimensions.width] height:[NSNumber numberWithFloat:dimensions.height]];
 				
+			}
+			else	// QTMovie can't be created, and we can't find dimensions from data (FLV), so disallow!
+			{
+				self.codecType = @"unviewable-video";	// force the unknown codecType.
 			}
 		}
 	}

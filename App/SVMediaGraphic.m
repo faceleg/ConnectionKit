@@ -86,7 +86,9 @@
     if (!type) type = [NSString UTIForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
     
     
-    if ([type conformsToUTI:(NSString *)kUTTypeMovie] || [type conformsToUTI:(NSString *)kUTTypeVideo])
+    if ([type conformsToUTI:(NSString *)kUTTypeMovie]
+		|| [type conformsToUTI:(NSString *)kUTTypeVideo]
+		|| [type isEqualToString:@"unviewable-video"])	// special case for video we can't actually play on this machine
     {
         return @"com.karelia.sandvox.SVVideo";
     }

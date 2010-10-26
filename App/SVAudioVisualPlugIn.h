@@ -23,8 +23,6 @@ typedef enum {
 	BOOL _controller;
 	
 	PreloadState _preload;
-
-	NSString *_codecType;
 }
 
 @property  BOOL autoplay;
