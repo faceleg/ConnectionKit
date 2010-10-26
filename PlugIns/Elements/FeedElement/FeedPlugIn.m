@@ -188,11 +188,19 @@
         //FIXME: what about https? waiting on answer from Dan (case?)
         if ([scheme hasPrefix:@"http"])	// http or https -- see if it has 
         {
+            // some extensions indicate this is a feed
             NSString *extension = [[[URL path] pathExtension] lowercaseString];
             if ([extension isEqualToString:@"xml"]
                 || [extension isEqualToString:@"rss"]
                 || [extension isEqualToString:@"rdf"]
                 || [extension isEqualToString:@"atom"])	// we support reading of atom, not generation.
+            {
+                return KTSourcePriorityIdeal;
+            }
+            
+            // some hostnames indicate this is likely a feed
+            NSString *host = [URL host];
+            if ( [host isEqualToString:@"feeds.feedburner.com"] )
             {
                 return KTSourcePriorityIdeal;
             }
