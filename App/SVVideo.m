@@ -90,6 +90,7 @@
 - (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
 - (void)calculateMovieDimensions:(QTMovie *)aMovie;
 - (void)calculateMoviePlayability:(QTMovie *)aMovie;
+- (BOOL) enablePoster;
 
 @end
 
@@ -787,10 +788,7 @@
 	
 	BOOL flashDisallowedTag = (flvMedia && !self.media
 		&& ![defaults boolForKey:@"videoFlashRemoteOverride"]);	// hidden pref to allow for remote URL
-	
-// TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY
-	flashDisallowedTag = NO;
-	
+		
 	if (flashDisallowedTag) flashTag = NO;
 	
 	BOOL microsoftTag = [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"];
@@ -806,7 +804,7 @@
 	
 	NSURL *posterSourceURL = nil;
 	if (self.posterFrame
-		// && [self enablePoster]
+		&& [self enablePoster]
 		&& !(quicktimeTag && self.externalSourceURL)		// don't do this if this is quicktime, with an external URL
 															// since click on poster image doesn't take you to movie!
 		&& !microsoftTag									// Also ignore poster frame for microsoft
@@ -917,7 +915,7 @@
 {
 	NSString *type = self.codecType;
 	BOOL disable = (nil == type)
-	// || (kPreloadAuto == self.preload)		// when preloading, you CAN'T do poster, apparently.
+	|| (kPreloadAuto == self.preload)		// when preloading, you CAN'T do poster, apparently.
 	|| [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"]
 	|| ( (([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
 		  && ![type conformsToUTI:@"public.mpeg-4"]
@@ -1263,10 +1261,13 @@
 - (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
 {
 	NSImage *posterImage = [aMovie betterPosterImage];
-	NSData *JPEGData = [posterImage JPEGRepresentationWithCompressionFactor:0.9];
-	[self gotPosterJPEGData:JPEGData];
-	
+	if (posterImage)	// It's possible an image isn't returned.
+	{
+		NSData *JPEGData = [posterImage JPEGRepresentationWithCompressionFactor:0.9];
+		[self gotPosterJPEGData:JPEGData];
+	}
 }
+
 - (void)calculateMovieDimensions:(QTMovie *)aMovie;
 {
 	NSSize movieSize = NSZeroSize;
