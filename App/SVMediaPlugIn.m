@@ -80,7 +80,7 @@
         [graphic setConstrainProportions:YES];
     }
     
-    if ([self width] > oldWidth) [self setWidth:oldWidth];
+    if (oldWidth && [self width] > oldWidth) [self setWidth:oldWidth];
 }
 
 - (CGSize)originalSize;
