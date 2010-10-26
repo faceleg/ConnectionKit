@@ -128,11 +128,27 @@
     return [super priorityForPasteboardItem:item];
 }
 
-// returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
-- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
+- (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 {
-    NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:(id <SVWebLocation>)item];  //lie for now
-    if ( link ) [self.linkList addObject:link];
+    BOOL didAwakeAtLeastOneItem = NO;
+    
+    if ( items && [items count] )
+    {
+        if ( !self.linkList ) self.linkList = [NSMutableArray arrayWithCapacity:5];
+        
+        for ( id <SVPasteboardItem>item in items )
+        {
+            NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:(id <SVWebLocation>)item];  //lie for now
+            if ( link ) 
+            {
+                [self.linkList addObject:link];
+                didAwakeAtLeastOneItem = YES;
+            }
+
+        }
+    }
+    
+    return didAwakeAtLeastOneItem;    
 }
 
 
