@@ -86,12 +86,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
     
     // Observer storage
     [self addObserver:self
-			  forKeyPaths:[NSSet setWithObjects:@"layout", @"showThumbnails", @"showTitles", nil]
-				  options:NSKeyValueObservingOptionNew
-				  context:NULL];
-	
-	[self addObserver:self
-			  forKeyPaths:[NSSet setWithObjects:@"manualListProducts", nil]
+			  forKeyPath:@"manualListProducts"
 				  options:0
 				  context:NULL];
     
@@ -137,11 +132,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 - (void)dealloc
 {
 	// Remove old observations
-	[self removeObserver:self forKeyPaths:[NSSet setWithObjects:@"manualListProducts",
-                                                                @"layout",
-                                                                @"showThumbnails",
-                                                                @"showTitles",
-                                                                nil]];
+	[self removeObserver:self forKeyPath:@"manualListProducts"];
 	
 	// End KVO
     for (NSString *aKey in [self productChangeKeyPaths])
@@ -184,13 +175,44 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 }
 
 @synthesize layout = _layout;
+- (void) setLayout:(APListLayout)layout;
+{
+    _layout = layout;
+    // Save the new layout to the defaults
+    [[NSUserDefaults standardUserDefaults] setInteger:layout
+                                               forKey:@"AmazonLastLayout"];
+}
+
 @synthesize showProductPreviews = _showProductPreviews;
 @synthesize frame = _frame;
 
 @synthesize showPrices = _showPrices;
+
 @synthesize showThumbnails = _showThumbnails;
+- (void) setShowThumbnails:(BOOL)thumbnails;
+{
+    _showThumbnails = thumbnails;
+    
+    // When setting showThumbnails to false, ensure showing titles is true
+    if (!thumbnails) {
+        [self setShowTitles:YES];
+    }
+}
+
 @synthesize showNewPricesOnly = _showNewPricesOnly;
+
 @synthesize showTitles = _showTitles;
+- (void) setShowTitles:(BOOL)titles;
+{
+    _showTitles = titles;
+    
+    // When setting showThumbnails to false, ensure showing titles is true
+    if (!titles)
+    {
+        [self setShowThumbnails:YES];
+    }
+}
+
 @synthesize showComments = _showComments;
 @synthesize showCreators = _showCreators;
 @synthesize showLinkToList = _showLinkToList;
@@ -214,30 +236,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	// Bail if the object's not ourself
 	if (object != self) return;
 	
-	
-	id changeNewObject = [change objectForKey:NSKeyValueChangeNewKey];
-	
-	
-	if ([keyPath isEqualToString:@"layout"])
-	{
-		// Save the new layout to the defaults
-		[[NSUserDefaults standardUserDefaults] setObject:changeNewObject
-												  forKey:@"AmazonLastLayout"];
-	}
-	else if ([keyPath isEqualToString:@"showThumbnails"])
-	{
-		// When setting showThumbnails to false, ensure showing titles is true
-		if (changeNewObject == [NSNull null] || ![changeNewObject boolValue]) {
-			[self setShowTitles:YES];
-		}
-	}
-	else if ([keyPath isEqualToString:@"showTitles"])
-	{
-		// When setting showThumbnails to false, ensure showing titles is true
-		if (changeNewObject == [NSNull null] || ![changeNewObject boolValue]) {
-			[self setShowThumbnails:YES];
-		}
-	}
 	
 	//	Changes to the layout or list source need us to recalculate the availability of the
 	//	"showPrices" appearance option
