@@ -743,11 +743,12 @@
 	// Prepare Media
 	
 	SVMediaRecord *media = self.media;
-	[context addDependencyOnObject:self keyPath:@"media"];
-	[context addDependencyOnObject:self keyPath:@"posterFrameType"];
-	[context addDependencyOnObject:self keyPath:@"posterFrame"];	// force rebuild if poster frame got changed
-	[context addDependencyOnObject:self keyPath:@"controller"];		// Note: other boolean properties don't affect display of page
-	
+	[context addDependencyForKeyPath:@"media"			ofObject:self];
+	[context addDependencyForKeyPath:@"posterFrameType"	ofObject:self];
+	[context addDependencyForKeyPath:@"posterFrame"		ofObject:self];	// force rebuild if poster frame got changed
+	[context addDependencyForKeyPath:@"controller"		ofObject:self];	// Note: other boolean properties don't affect display of page
+	[context addDependencyForKeyPath:@"codecType"	ofObject:self.container];
+
 	NSURL *movieSourceURL = self.externalSourceURL;
     if (media)
     {
@@ -1171,6 +1172,10 @@
 	if (dimensions.width && dimensions.height)
 	{
 		[self setNaturalWidth:[NSNumber numberWithFloat:dimensions.width] height:[NSNumber numberWithFloat:dimensions.height]];
+	}
+	else	// QTMovie can't be created, and we can't find dimensions from data (FLV), so disallow!
+	{
+		self.codecType = @"unviewable-video";	// force the unknown codecType.
 	}
 	self.dimensionCalculationConnection = nil;
 }
