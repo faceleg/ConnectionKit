@@ -92,6 +92,7 @@ typedef enum {
 		   ofManualListProduct:(APManualListProduct *)product
 						change:(NSDictionary *)change
 					   context:(void *)context;
+- (NSSet *)productChangeKeyPaths;
 
 - (unsigned)thumbnailWidths;
 - (NSString *)thumbnailWidthsString;

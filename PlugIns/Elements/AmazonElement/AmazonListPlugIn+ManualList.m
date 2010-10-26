@@ -91,7 +91,7 @@
 	
 	// Observe various keys of the product
 	[product addObserver:self
-			 forKeyPaths:[NSSet setWithObjects:@"productCode", @"comment", @"loadingData", @"store", nil]
+			 forKeyPaths:[self productChangeKeyPaths]
 				 options:0
 				 context:nil];
 	
@@ -115,7 +115,7 @@
 	
 	AmazonListProduct *product = [products objectAtIndex:index];
 	[product removeObserver:self
-				forKeyPaths:[NSSet setWithObjects:@"productCode", @"comment", @"loadingData", @"store", nil]];
+				forKeyPaths:[self productChangeKeyPaths]];
 	
 	[products removeObjectAtIndex:index];
 	
@@ -182,6 +182,11 @@
     {
         [super setSerializedValue:serializedValue forKey:key];
     }
+}
+
+- (NSSet *)productChangeKeyPaths;
+{
+    return [NSSet setWithObjects:@"productCode", @"comment", @"loadingData", @"store", nil];
 }
 
 #pragma mark -
