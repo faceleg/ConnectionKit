@@ -735,10 +735,8 @@
 
 	
 	[context buildAttributesForElement:@"div" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
-	NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
+	NSString *elementID = [context startElement:@"div" preferredIdName:@"nocrossdomain" className:nil attributes:nil];	// class, attributes already pushed
 	[context writeElement:@"p" text:noCrossDomainFlash];
-	[context endElement];
-	
 	// Poster may be shown next, so don't end....
 	
 	return elementID;
@@ -763,7 +761,6 @@
 	[context addDependencyForKeyPath:@"posterFrameType"	ofObject:self];
 	[context addDependencyForKeyPath:@"posterFrame"		ofObject:self];	// force rebuild if poster frame got changed
 	[context addDependencyForKeyPath:@"controller"		ofObject:self];	// Note: other boolean properties don't affect display of page
-	[context addDependencyForKeyPath:@"codecType"	ofObject:self.container];
 
 	NSURL *movieSourceURL = self.externalSourceURL;
     if (media)
@@ -822,7 +819,7 @@
                                preferredFilename:nil];
 	}
 		
-	BOOL unknownTag = NO;	// will be set below if nothing can be generated
+	BOOL wroteUnknownTag = NO;	// will be set below if nothing can be generated
 	NSString *videoID = nil;
 		
 	// START THE TAGS
@@ -855,12 +852,12 @@
 	{
 		// Can't handle remotely hosted flash.  Do something similar to the unknown tag.
 		[self startNoRemoteFlashVideo:context];
-		unknownTag = YES;
+		wroteUnknownTag = YES;
 	}
 	else
 	{
 		[self startUnknown:context];
-		unknownTag = YES;
+		wroteUnknownTag = YES;
 	}
 
 
@@ -874,7 +871,7 @@
 	
 	// END THE TAGS
 	
-	if (unknownTag)
+	if (wroteUnknownTag)
 	{
 		OBASSERT([@"div" isEqualToString:[context topElement]]);
 		[context endElement];
