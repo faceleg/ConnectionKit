@@ -547,7 +547,9 @@
 	}
 	else	// we have an ogv or webm (or something else?) so fallback if it's Safari, which won't handle it
 	{
-		[context writeString:@"\tif (navigator.userAgent.indexOf(' Safari/') > -1) {\n\t\t// Safari can't play this natively\n\t\tfallback(video);\n\t}\n"];
+		[context writeString:@"\tif (navigator.userAgent.indexOf(' "];
+		[context writeString:([context isForEditing] ? @"Sandvox" : @"Safari")];	// Treat Sandvox like it's Safari
+		[context writeString:@"') > -1) {\n\t\t// Safari can't play this natively\n\t\tfallback(video);\n\t}\n"];
 	}
 	[context writeString:@"} else {\n\tfallback(video);\n}\n"];
 	[context endElement];	
@@ -689,38 +691,48 @@
 	return elementID;
 }
 
+- (NSString *)cannotViewTitle:(SVHTMLContext *)context
+{
+	// Get a title to indicate that the movie cannot play inline.  (Suggest downloading, if we provide a link)
+	KTPage *thePage = [context page];
+	NSString *language = [thePage language];
+	
+	NSString *cannotViewTitle
+	= [[NSBundle mainBundle] localizedStringForString:@"cannotViewTitleText"
+											 language:language
+											 fallback:
+	   NSLocalizedStringWithDefaultValue(@"cannotViewTitleText",
+										 nil,
+										 [NSBundle mainBundle],
+										 @"This browser cannot play the embedded video file.", @"Warning to show when a video cannot be played")];
+	return cannotViewTitle;
+}
 - (void)writePosterImage:(SVHTMLContext *)context
 	posterSourceURL:(NSURL *)posterSourceURL;
 {
 	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
 
-	// Get a title to indicate that the movie cannot play inline.  (Suggest downloading, if we provide a link)
-	KTPage *thePage = [context page];
-	NSString *language = [thePage language];
-	NSString *cannotViewTitle = [[NSBundle mainBundle] localizedStringForString:@"cannotViewTitleText"
-																	   language:language
-																	   fallback:
-								 NSLocalizedStringWithDefaultValue(@"cannotViewTitleText", nil, [NSBundle mainBundle], @"Cannot view this video from the browser.", @"Warning to show when a video cannot be played")];
-	
 	NSString *altForMovieFallback = [[posterSourcePath lastPathComponent] stringByDeletingPathExtension];// Cheating ... What would be a good alt ?
 	
-	[context pushAttribute:@"title" value:cannotViewTitle];
+	[context pushAttribute:@"title" value:[self cannotViewTitle:context]];
 	[context writeImageWithSrc:posterSourcePath alt:altForMovieFallback width:[NSNumber numberWithUnsignedInt:self.width] height:[NSNumber numberWithUnsignedInt:self.height]];
 }
 
 
 - (NSString *)startNoRemoteFlashVideo:(SVHTMLContext *)context;
 {
+	KTPage *thePage = [context page];
+	NSString *language = [thePage language];
+	
+	NSString *noCrossDomainFlash = [[NSBundle mainBundle] localizedStringForString:@"noCrossDomainFlashText"
+																	   language:language
+																	   fallback:
+								 NSLocalizedStringWithDefaultValue(@"noCrossDomainFlashText", nil, [NSBundle mainBundle], @"Unable to embed remotely-hosted Flash-based video.", @"Warning to show when a video cannot be played")];
+
+	
 	[context buildAttributesForElement:@"div" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
 	NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
-	[context startElement:@"p"];
-	[context writeText:NSLocalizedString(@"Unable to embed remotely-hosted Flash-based video.", @"Warning shown to user when video can't be embedded")];
-	[context writeText:@" "];
-	[context startAnchorElementWithHref:@"help:anchor='Supported_Video_Formats' bookID='com.karelia.Sandvox Help'"
-								  title:nil // NSLocalizedString(@"Open Sandvox Help", @"title of link to sandvox help page")
-								 target:nil rel:nil];
-	[context writeText:NSLocalizedString(@"More", @"hyperlink to a page that will tell more details about the warning")];
-	[context endElement];
+	[context writeElement:@"p" text:noCrossDomainFlash];
 	[context endElement];
 	
 	// Poster may be shown next, so don't end....
@@ -732,7 +744,7 @@
 {
 	[context buildAttributesForElement:@"div" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
 	NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
-	[context writeElement:@"p" text:NSLocalizedString(@"Unable to show video. Perhaps it is not a recognized video format.", @"Warning shown to user when video can't be embedded")];
+	[context writeElement:@"p" text:[self cannotViewTitle:context]];
 	// Poster may be shown next, so don't end....
 
 	return elementID;
@@ -832,17 +844,22 @@
 			[self startFlash:context movieSourceURL:movieSourceURL posterSourceURL:posterSourceURL];
 		}
 	}
-	else if (flashDisallowedTag)
+	
+	// Deeply nested is notification that the browser can't show the embedded video.
+
+	if (flashDisallowedTag)
 	{
 		// Can't handle remotely hosted flash.  Do something similar to the unknown tag.
 		[self startNoRemoteFlashVideo:context];
 		unknownTag = YES;
 	}
-	else	// completely unknown video type
+	else
 	{
 		[self startUnknown:context];
 		unknownTag = YES;
 	}
+
+
 	
 	// INNERMOST POSTER FRAME
 	

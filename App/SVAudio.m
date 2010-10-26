@@ -275,6 +275,15 @@
 	{
 		[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play mp3 natively\n\t\tfallback(audio);\n\t}\n"];
 	}
+	// We have a .ogg, which won't play on Safari
+	else if ([[self codecType] conformsToUTI:@"public.ogg-vorbis"])
+	{
+		[context writeString:@"\tif (navigator.userAgent.indexOf(' "];
+		[context writeString:([context isForEditing] ? @"Sandvox" : @"Safari")];	// Treat Sandvox like it's Safari
+		[context writeString:@"') > -1) {\n"];
+//		[context writeString:@"\tdocument.writeln('User agent Sandvox -- ' + navigator.userAgent);\n"];
+		[context writeString:@"\t\t// Safari can't play this natively\n\t\tfallback(audio);\n\t}\n"];
+	}
 	// We have a .wav, which will play on all platforms with <audio> except Chrome, so force a fallback to Windows media object
 	else if ([[self codecType] conformsToUTI:@"com.microsoft.waveform-audio"])
 	{
@@ -282,7 +291,9 @@
 	}
 	// Note: For other audio types, we're not going to try to fallback.  They are on their own if they use another format!
 	
-	[context writeString:@"} else {\n\tfallback(audio);\n}\n"];
+	[context writeString:@"} else {\n"];
+//	[context writeString:@"\tdocument.writeln('falling back -- ' + navigator.userAgent);\n"];
+	[context writeString:@"\tfallback(audio);\n}\n"];
 	[context endElement];	
 }
 
@@ -415,10 +426,23 @@
 
 - (NSString *)startUnknown:(SVHTMLContext *)context;
 {
+	// Get a title to indicate that the movie cannot play inline.  (Suggest downloading, if we provide a link)
+	KTPage *thePage = [context page];
+	NSString *language = [thePage language];
+	
+	NSString *cannotPlayTitle
+	= [[NSBundle mainBundle] localizedStringForString:@"cannotPlayTitleText"
+											 language:language
+											 fallback:
+	   NSLocalizedStringWithDefaultValue(@"cannotPlayTitleText",
+										 nil,
+										 [NSBundle mainBundle],
+										 @"This browser cannot play the embedded audio file.", @"Warning to show when an audio cannot be played")];
+	
 	[context buildAttributesForElement:@"div" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
 	 NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
-	[context writeElement:@"p" text:NSLocalizedString(@"Unable to embed audio. Perhaps it is not a recognized audio format.", @"Warning shown to user when audio can't be embedded")];
-	// don't end....
+	[context writeElement:@"p" text:cannotPlayTitle];
+	// don't end the div....
 
 	return elementID;
 }
@@ -523,7 +547,10 @@
 	{
 		[self startFlash:context audioSourceURL:audioSourceURL]; 
 	}
-	if (unknownTag)
+
+	// Now, show the fallback *if* there is a controller showing.  This will notify visitors that there is an audio they can't see.
+	// If the controller is hidden, then the page will just be silent.
+	if (self.controller)
 	{
 		[self startUnknown:context];
 		unknownTag = YES;

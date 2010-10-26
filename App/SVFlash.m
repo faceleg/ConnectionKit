@@ -200,19 +200,6 @@
 }
 
 
-- (NSString *)writeUnknown:(SVHTMLContext *)context;
-{
-	[context buildAttributesForElement:@"div" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
-	NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
-	[context writeElement:@"p" text:NSLocalizedString(@"Unable to show Flash. Perhaps it is not a recognized file format.", @"Warning shown to user when Flash can't be embedded")];
-	// Poster may be shown next, so don't end....
-
-	OBASSERT([@"div" isEqualToString:[context topElement]]);
-	[context endElement];
-
-	return elementID;
-}
-
 - (void)writeHTML:(SVHTMLContext *)context;
 {
 	// Prepare Media
@@ -226,18 +213,7 @@
 	    flashSourceURL = [context addMedia:media];
 	}
 		
-	// need to get type from file media or URL dot-extension
-	
-	BOOL flashTag = YES; // [type conformsToUTI:@"com.adobe.shockwave-flash"];
-		
-	if (flashTag)	// inner
-	{
-		[self writeFlash:context flashSourceURL:flashSourceURL]; 
-	}
-	else	// completely unknown file type
-	{
-		[self writeUnknown:context];
-	}
+	[self writeFlash:context flashSourceURL:flashSourceURL]; 
 }
 
 
