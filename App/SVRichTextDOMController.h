@@ -8,6 +8,7 @@
 
 #import "SVTextDOMController.h"
 #import "SVFieldEditorHTMLWriter.h"
+#import "SVRichText.h"
 
 
 @class SVRichText, SVGraphic, SVWebEditorHTMLContext, SVParagraphedHTMLWriter;

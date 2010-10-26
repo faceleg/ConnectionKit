@@ -16,7 +16,6 @@
 #import "SVGraphicDOMController.h"
 #import "SVGraphicFactory.h"
 #import "SVImageDOMController.h"
-#import "SVRichText.h"
 #import "KTDocument.h"
 #import "SVImage.h"
 #import "SVLinkManager.h"
@@ -24,6 +23,7 @@
 #import "SVMediaRecord.h"
 #import "SVParagraphedHTMLWriter.h"
 #import "SVTextAttachment.h"
+#import "SVTextBox.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "WebEditingKit.h"
@@ -605,7 +605,12 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     SVTextAttachment *textAttachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
                                                                      inManagedObjectContext:[graphic managedObjectContext]];
     [textAttachment setGraphic:graphic];
-    [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
+    
+    SVGraphicPlacement placement = ([graphic isKindOfClass:[SVTextBox class]] ? // #93281
+                                    SVGraphicPlacementCallout :
+                                    SVGraphicPlacementInline);
+    [textAttachment setPlacement:[NSNumber numberWithInteger:placement]];
+    
     [textAttachment setCausesWrap:[NSNumber numberWithBool:!placeInline]];
     [textAttachment setBody:[self representedObject]];
     
