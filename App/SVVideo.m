@@ -336,6 +336,7 @@
 	NSMutableDictionary *movieAttributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
 											movieSourceURL, QTMovieURLAttribute,
 											[NSNumber numberWithBool:openAsync], QTMovieOpenAsyncOKAttribute,
+											[NSNumber numberWithBool:YES], QTMovieDontInteractWithUserAttribute,
 											nil];
 	if (IMBRunningOnSnowLeopardOrNewer())
 	{
@@ -1120,7 +1121,10 @@
 		
 	movie = [[[QTMovie alloc] initWithAttributes:anAttributes
 										   error:&error] autorelease];
-	if (movie && [[movie tracks] count] && (NSOrderedSame != QTTimeCompare([movie duration], QTZeroTime)))
+	if (movie
+		&& [[movie tracks] count]
+		&& (NSOrderedSame != QTTimeCompare([movie duration], QTZeroTime))
+		&& ![movie ks_isDRMProtected] )
 	{
 		long movieLoadState = [[movie attributeForKey:QTMovieLoadStateAttribute] longValue];
 		
