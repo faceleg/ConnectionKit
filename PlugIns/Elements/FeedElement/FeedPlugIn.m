@@ -202,19 +202,27 @@
 	return KTSourcePriorityNone;
 }
 
-// returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
-- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
+- (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 {
-    NSURL *URL = [item URL];
-    if ( URL )
+    if ( items && [items count] )
     {
-        self.feedURL = URL;
-        NSString *title = [item title];
-        if ( title )
+        id <SVPasteboardItem>item = [items objectAtIndex:0];
+        
+        NSURL *URL = [item URL];
+        if ( URL )
         {
-            [self setTitle:title];
+            self.feedURL = URL;
+            NSString *title = [item title];
+            if ( title )
+            {
+                [self setTitle:title];
+            }
+            
+            return YES;
         }
     }
+    
+    return NO;    
 }
 
 
