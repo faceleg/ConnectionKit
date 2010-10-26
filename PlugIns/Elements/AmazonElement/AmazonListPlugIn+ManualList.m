@@ -263,11 +263,19 @@
 	
 	return result;
 }
++ (NSSet *)keyPathsForValuesAffectingThumbnailWidths;
+{
+    return [NSSet setWithObjects:@"layout", @"centeredThumbnailWidths", nil];
+}
 
 - (NSString *)thumbnailWidthsString
 {
-	NSString *result = [NSString stringWithFormat:@"%upx", [self thumbnailWidths]];
+	NSString *result = [NSString stringWithFormat:@"%u", [self thumbnailWidths]];
 	return result;
+}
++ (NSSet *)keyPathsForValuesAffectingThumbnailWidthsString;
+{
+    return [NSSet setWithObject:@"thumbnailWidths"];
 }
 
 - (BOOL)validateCenteredThumbnailWidths:(id *)width error:(NSError **)error
