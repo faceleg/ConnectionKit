@@ -72,11 +72,15 @@
     [graphic setNaturalWidth:width];
     [graphic setNaturalHeight:height];
     
+    NSUInteger oldWidth = [self width];
     [graphic makeOriginalSize];
+    
     if (width && height)
     {
         [graphic setConstrainProportions:YES];
     }
+    
+    if ([self width] > oldWidth) [self setWidth:oldWidth];
 }
 
 - (CGSize)originalSize;
