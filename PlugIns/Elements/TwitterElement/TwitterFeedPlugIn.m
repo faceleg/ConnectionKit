@@ -170,20 +170,30 @@
 	return KTSourcePriorityNone;
 }
 
-- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
+- (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 {
-    NSURL *URL = [item URL];
-    if ( URL  )
+    if ( items && [items count] )
     {
-        if ( [URL twitterUsername] )
+        id <SVPasteboardItem>item = [items objectAtIndex:0];
+        
+        NSURL *URL = [item URL];
+        if ( URL  )
         {
-            self.username = [URL twitterUsername];
-            if ( [item title] )
+            if ( [URL twitterUsername] )
             {
-                self.title = [item title];
+                self.username = [URL twitterUsername];
+                if ( [item title] )
+                {
+                    self.title = [item title];
+                }
             }
         }
+        
+        return YES;
     }
+    
+    return NO;    
 }
+
 
 @end
