@@ -1240,6 +1240,7 @@
 		[self setCodecType:@"com.apple.quicktime-audio"];		// Our specialization of generic quicktime movie
 		[[self container] didSetSource];
 		// This will re-create things as an audio....
+		// Note: We should be sure that we don't do anything further as we unwind, since we're DONE with this movie.
 	}
 	else
 	{
