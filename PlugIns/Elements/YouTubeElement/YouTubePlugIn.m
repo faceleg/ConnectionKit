@@ -234,20 +234,28 @@
     return [super priorityForPasteboardItem:item];
 }
 
-// returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
-- (void)awakeFromPasteboardItem:(id <SVPasteboardItem>)item;
+- (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 {
-    NSString *videoID = [[item URL] youTubeVideoID];
-    if (videoID)
+    if ( items && [items count] )
     {
-        self.userVideoCode = [[item URL] absoluteString];
+        id <SVPasteboardItem>item = [items objectAtIndex:0];
+        
+        NSString *videoID = [[item URL] youTubeVideoID];
+        if (videoID)
+        {
+            self.userVideoCode = [[item URL] absoluteString];
+        }
+        
+        NSString *title = [item title];
+        if ( title )
+        {
+            self.title = title;
+        }
+        
+        return YES;
     }
     
-    NSString *title = [item title];
-    if ( title )
-    {
-        self.title = title;
-    }
+    return NO;    
 }
 
 
