@@ -139,11 +139,9 @@
 
 
 #pragma mark Legacy
-
 // Called by -awakeFromNew:... and -awakeFromFetch: for backward compatibility
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
-// Called by -awakeFromNew:... when there is a pasteboard for backward compatibility
-- (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary;
+
 
 @end
 
