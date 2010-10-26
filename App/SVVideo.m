@@ -955,7 +955,7 @@
 	NSString *result = @"";
 	NSString *type = self.codecType;
 	
-	if (!type || (!self.media && !self.externalSourceURL))								// no movie
+	if (!type || (!self.media && !self.externalSourceURL))								// no data?
 	{
 		result = NSLocalizedString(@"Use MPEG-4 (h.264) video for maximum compatibility.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
@@ -1001,7 +1001,7 @@
 							 [NSFont systemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
 							 nil];
 	NSMutableAttributedString *info = [[[NSMutableAttributedString alloc] initWithString:result attributes:attribs] autorelease];
-#warning should be help system!
+#warning should be help system!  How do I get it to work?
 	NSURL *url = [NSURL URLWithString:@"help:anchor=Document"];
 	NSDictionary *linkAttribs
 	= [NSDictionary dictionaryWithObjectsAndKeys:
@@ -1089,8 +1089,8 @@
 			{
 				[self calculatePosterImageFromPlayableMovie:movie];
 			}
-			[self calculateMovieDimensions:movie];
 			[self calculateMoviePlayability:movie];
+			[self calculateMovieDimensions:movie];
 			
 		}
 		else	// not ready yet; wait until loaded if we are publishing

@@ -167,9 +167,6 @@
 {
     [super didSetSource];
 	[self _mediaChanged];
-	
-    // Match file type
-    [self setCodecType:[[self media] typeOfFile]];
 }
 
 #pragma mark -
@@ -581,9 +578,7 @@
 	NSImage *result = nil;
 	NSString *type = self.codecType;
 
-	
-	
-	if (!type || ![self media])								// no movie
+	if (!type || (!self.media && !self.externalSourceURL))								// no data?
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
 	}
@@ -628,7 +623,7 @@
 	NSString *result = @"";
 	NSString *type = self.codecType;
 	
-	if (!type || ![self media])								// no movie
+	if (!type || (!self.media && !self.externalSourceURL))								// no data?
 	{
 		result = NSLocalizedString(@"Use .mp3 or .wav file for maximum compatibility.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
 	}
