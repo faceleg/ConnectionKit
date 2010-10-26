@@ -90,11 +90,14 @@
 	
 	
 	// Observe various keys of the product
-	[product addObserver:self
-			 forKeyPaths:[self productChangeKeyPaths]
+    for (NSString *aKey in [self productChangeKeyPaths])
+    {
+    [product addObserver:self
+              forKeyPath:aKey
 				 options:0
 				 context:nil];
-	
+	}
+    
 	
 	// Archive the list if needed
 	if (!manualListIsBeingArchivedOrUnarchived)
@@ -114,8 +117,10 @@
 	NSMutableArray *products = [self _products];
 	
 	AmazonListProduct *product = [products objectAtIndex:index];
-	[product removeObserver:self
-				forKeyPaths:[self productChangeKeyPaths]];
+    for (NSString *aKey in [self productChangeKeyPaths])
+    {
+        [product removeObserver:self forKeyPath:aKey];
+    }
 	
 	[products removeObjectAtIndex:index];
 	
