@@ -518,7 +518,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     return result;
 }
 
-- (void)moveObject:(id)object toCollection:(KTPage *)collection index:(NSUInteger)index;
+- (void)moveObject:(id)object toCollection:(KTPage *)collection index:(NSInteger)index;
 {
     [object retain];    // since we're potentially removing it from relationships etc.
     
@@ -539,6 +539,14 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     }
     
     [object release];
+}
+
+- (void)moveObjects:(NSArray *)objects toCollection:(KTPage *)collection index:(NSInteger)index;
+{
+    for (SVSiteItem *anItem in [objects reverseObjectEnumerator])
+    {
+        [self moveObject:anItem toCollection:collection index:index];
+    }
 }
 
 - (void)didInsertObject:(id)object intoCollection:(KTPage *)collection;

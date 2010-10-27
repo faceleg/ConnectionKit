@@ -1324,7 +1324,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (BOOL)acceptNonLinkDrop:(id <NSDraggingInfo>)info
                collection:(KTPage *)collection
-               childIndex:(int)index;
+               childIndex:(NSInteger)index;
 {
     OBPRECONDITION(collection);
     OBPRECONDITION([collection isCollection]);
@@ -1349,7 +1349,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 - (BOOL)outlineView:(NSOutlineView *)outlineView
          acceptDrop:(id <NSDraggingInfo>)info
                item:(id)item
-         childIndex:(int)anIndex
+         childIndex:(NSInteger)anIndex;
 {
 	// Remember, links are special
     NSPasteboard *pboard = [info draggingPasteboard];
@@ -1404,10 +1404,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	
     // Insert each item in turn. By running in reverse we can keep reusing the same index
     SVPagesController *controller = [self content];
-    for (SVSiteItem *anItem in [items reverseObjectEnumerator])
-    {
-        [controller moveObject:anItem toCollection:collection index:index];
-    }
+    [controller moveObjects:items toCollection:collection index:index];
 	
     
 	return YES;

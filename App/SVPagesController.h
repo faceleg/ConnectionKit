@@ -53,7 +53,8 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 
 - (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
 
-- (void)moveObject:(id)object toCollection:(KTPage *)collection index:(NSUInteger)index;
+- (void)moveObject:(id)object toCollection:(KTPage *)collection index:(NSInteger)index;
+- (void)moveObjects:(NSArray *)objects toCollection:(KTPage *)collection index:(NSInteger)index;
 
 // Doesn't add the result to collection, just uses it to determine property inheritance
 - (id)newObjectDestinedForCollection:(KTPage *)collection;
