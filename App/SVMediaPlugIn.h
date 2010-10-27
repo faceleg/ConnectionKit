@@ -25,6 +25,8 @@
 
 @property(nonatomic, readonly) SVMediaRecord *posterFrame;  // KVO-compliant
 - (BOOL)validatePosterFrame:(SVMediaRecord *)posterFrame;
+- (void)setPosterFrameWithContentsOfURL:(NSURL *)url;   // nil URL removes poster frame
+- (void)setPosterFrameWithData:(NSData *)data URL:(NSURL *)url;
 
 
 #pragma mark Publishing

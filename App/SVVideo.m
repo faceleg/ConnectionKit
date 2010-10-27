@@ -234,15 +234,14 @@
 												   path:newPath]
 						  autorelease];
 		
-		SVMediaRecord *posterMedia = nil;
 		if (jpegData)
 		{
-			posterMedia = [SVMediaRecord mediaWithData:jpegData
-												   URL:fakeURL
-											entityName:@"PosterFrame"
-						insertIntoManagedObjectContext:[self.container managedObjectContext]];	
+			[self setPosterFrameWithData:jpegData URL:fakeURL];
 		}
-		[self replaceMedia:posterMedia forKeyPath:@"container.posterFrame"];
+        else
+        {
+            [self setPosterFrameWithContentsOfURL:nil];
+        }
 	}
 }
 

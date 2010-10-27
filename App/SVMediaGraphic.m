@@ -278,13 +278,6 @@
     return result;
 }
 
-- (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
-{
-	SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"PosterFrame" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];	
-	[self replaceMedia:media forKeyPath:@"posterFrame"];
-}
-
-
 #pragma mark Media Type
 
 - (NSString *)codecType; { return [self extensiblePropertyForKey:@"codecType"]; }

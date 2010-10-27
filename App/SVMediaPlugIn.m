@@ -25,12 +25,6 @@
 
 - (NSURL *)externalSourceURL; { return [[self container] externalSourceURL]; }
 
-- (SVMediaRecord *)posterFrame; { return [[self container] posterFrame]; }
-+ (NSSet *)keyPathsForValuesAffectingPosterFrame;
-{
-    return [NSSet setWithObject:@"container.posterFrame"];
-}
-
 - (void)didSetSource;
 {
     [[self container] setTypeToPublish:[[self media] typeOfFile]];
@@ -38,9 +32,42 @@
 
 + (NSArray *)allowedFileTypes; { return nil; }
 
+#pragma mark Poster Frame
+
+- (SVMediaRecord *)posterFrame; { return [[self container] posterFrame]; }
++ (NSSet *)keyPathsForValuesAffectingPosterFrame;
+{
+    return [NSSet setWithObject:@"container.posterFrame"];
+}
+
 - (BOOL)validatePosterFrame:(SVMediaRecord *)posterFrame;
 {
     return (posterFrame == nil);
+}
+
+- (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
+{
+	SVMediaRecord *media = nil;
+    if (URL)
+    {
+        media = [SVMediaRecord mediaWithURL:URL
+                                 entityName:@"PosterFrame"
+             insertIntoManagedObjectContext:[self.container managedObjectContext]
+                                      error:NULL];	
+    }
+    
+	[self replaceMedia:media forKeyPath:@"posterFrame"];
+}
+
+
+- (void)setPosterFrameWithData:(NSData *)data URL:(NSURL *)url;
+{
+    SVMediaRecord *media = [SVMediaRecord mediaWithData:data
+                                                    URL:url
+                                             entityName:@"PosterFrame"
+                         insertIntoManagedObjectContext:[self.container managedObjectContext]];
+    
+    [self replaceMedia:media forKeyPath:@"container.posterFrame"];
 }
 
 #pragma mark Media Conversion
