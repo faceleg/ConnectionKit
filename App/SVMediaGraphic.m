@@ -532,9 +532,15 @@
     // Write image data
     SVMediaRecord *media = [self media];
     
-    NSData *data = [NSData newDataWithContentsOfMedia:media];
-    [propertyList setValue:data forKey:@"fileContents"];
-    [data release];
+    if ([media fileURL])
+    {
+        [propertyList setObject:[media fileURL] forKey:@"fileURL"];
+    }
+    else
+    {
+        NSData *data = [media mediaData];
+        [propertyList setValue:data forKey:@"fileContents"];
+    }
     
     NSURL *URL = [self sourceURL];
     [propertyList setValue:[URL absoluteString] forKey:@"sourceURL"];
@@ -545,19 +551,32 @@
     [super awakeFromPropertyList:propertyList];
     
     // Pull out image data
+    SVMediaRecord *media = nil;
+    
     NSData *data = [propertyList objectForKey:@"fileContents"];
     if (data)
     {
         NSString *urlString = [propertyList objectForKey:@"sourceURL"];
         NSURL *url = [NSURL URLWithString:urlString];
         
-        SVMediaRecord *media = [SVMediaRecord mediaWithData:data
-                                                        URL:url
-                                                 entityName:[[self class] mediaEntityName]
-                             insertIntoManagedObjectContext:[self managedObjectContext]];
-        
-        [self setMedia:media];
+        media = [SVMediaRecord mediaWithData:data
+                                         URL:url
+                                  entityName:[[self class] mediaEntityName]
+              insertIntoManagedObjectContext:[self managedObjectContext]];
     }
+    else
+    {
+        NSURL *fileURL = [propertyList objectForKey:@"fileURL"];
+        if (fileURL)
+        {
+            media = [SVMediaRecord mediaWithURL:fileURL
+                                     entityName:[[self class] mediaEntityName]
+                 insertIntoManagedObjectContext:[self managedObjectContext]
+                                          error:NULL];
+        }
+    }
+    
+    if (media) [self replaceMedia:media forKeyPath:@"media"];
 }
 
 #pragma mark Pasteboard
