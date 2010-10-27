@@ -534,7 +534,7 @@
     
     if ([media fileURL])
     {
-        [propertyList setObject:[media fileURL] forKey:@"fileURL"];
+        [propertyList setObject:[[media fileURL] absoluteString] forKey:@"fileURL"];
     }
     else
     {
@@ -566,10 +566,10 @@
     }
     else
     {
-        NSURL *fileURL = [propertyList objectForKey:@"fileURL"];
+        NSString *fileURL = [propertyList objectForKey:@"fileURL"];
         if (fileURL)
         {
-            media = [SVMediaRecord mediaWithURL:fileURL
+            media = [SVMediaRecord mediaWithURL:[NSURL URLWithString:fileURL]
                                      entityName:[[self class] mediaEntityName]
                  insertIntoManagedObjectContext:[self managedObjectContext]
                                           error:NULL];
