@@ -498,7 +498,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
         else if ([itemToDeselect webEditor] == self)
         {
             DOMElement *element = [itemToDeselect selectableDOMElement];
-            if ([element ks_isDescendantOfDOMNode:[element ownerDocument]])
+            if ([element ks_isDescendantOfDOMNode:[element ownerDocument]] &&
+                [self ks_followsResponder:[[self window] firstResponder]])
             {
                 DOMRange *range = [[element ownerDocument] createRange];
                 [range setStartBefore:element];
