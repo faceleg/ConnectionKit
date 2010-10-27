@@ -189,6 +189,11 @@
         }
         
         
+        // Select those graphics. #93340
+        NSArrayController *controller = [[self webEditorViewController] graphicsController];
+        [controller setSelectedObjects:graphics];
+        
+        
         result = YES;
     }
     
