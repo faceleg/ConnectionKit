@@ -190,7 +190,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         if (inserted)
         {
             [self setPrimitivePlugIn:plugIn];   // so as not to fire a KVO change notification
-            [self populatePlugInValues:plugIn];
+            //[self populatePlugInValues:plugIn];   // don't want this for new plug-ins
         }
         else
         {
