@@ -61,8 +61,10 @@
     // Placeholder image
     if (![self media])
     {
-        SVMediaRecord *media = [[page master] makePlaceholdImageMediaWithEntityName:[[self class] mediaEntityName]];
-        [self setMedia:media];
+        SVMediaRecord *media = [[page master] makePlaceholdImageMediaWithEntityName:
+                                [[self class] mediaEntityName]];
+        
+        [self setSourceWithMediaRecord:media];
         [self setTypeToPublish:[media typeOfFile]];
         // Sizing will be handled in a moment
     }
@@ -138,15 +140,6 @@
 #pragma mark Media
 
 @dynamic media;
-- (void)setMedia:(SVMediaRecord *)media;
-{
-    [self willChangeValueForKey:@"media"];
-    [self setPrimitiveValue:media forKey:@"media"];
-    [self didChangeValueForKey:@"media"];
-    
-    
-    [self didSetSource];
-}
 
 - (void)setSourceWithURL:(NSURL *)URL;
 {
@@ -165,6 +158,7 @@
 - (void)setSourceWithMediaRecord:(SVMediaRecord *)media;
 {
     [self replaceMedia:media forKeyPath:@"media"];
+    [self didSetSource];
 }
 
 + (NSString *)mediaEntityName; { return @"GraphicMedia"; }
