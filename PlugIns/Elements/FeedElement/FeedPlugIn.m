@@ -43,8 +43,8 @@
 #define kNetNewsWireString @"CorePasteboardFlavorType 0x52535373"
 
 
-
 // LocalizedStringInThisBundle(@"Please specify the URL of the feed using the Inspector.", "String_On_Page_Template")
+
 
 @interface FeedPlugIn ()
 - (BOOL)isPage;
@@ -91,6 +91,20 @@
 
 #pragma mark -
 #pragma mark HTML Generation
+
+- (void)writeHTML:(id <SVPlugInContext>)context
+{
+    // add dependencies
+    [context addDependencyForKeyPath:@"feedURL" ofObject:self];
+    [context addDependencyForKeyPath:@"max" ofObject:self];
+    [context addDependencyForKeyPath:@"key" ofObject:self];
+    [context addDependencyForKeyPath:@"openLinksInNewWindow" ofObject:self];
+    [context addDependencyForKeyPath:@"summaryChars" ofObject:self];
+    
+    // make it happen
+    [super writeHTML:context];
+}
+
 
 //[[if isPage]]
 //<h3><a href="#">[[=&host]] [['example no.]] 1</a></h3>[[if summaryChars]]<p>[['item summary]]</p>[[endif4]]
