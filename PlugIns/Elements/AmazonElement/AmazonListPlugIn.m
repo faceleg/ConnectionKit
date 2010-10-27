@@ -376,4 +376,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
     return result;
 }
 
++ (BOOL)supportsMultiplePasteboardItems; { return YES; }
+
 @end
