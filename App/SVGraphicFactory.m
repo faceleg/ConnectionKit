@@ -591,7 +591,9 @@ static SVGraphicFactory *sRawHTMLFactory;
     // Try to read in Web Locations
     NSArray *items = [pboard sv_pasteboardItems];
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:[items count]];
+    
     SVGraphicFactory *factory = nil;
+    NSArray *pendingItems = nil;
         
     for (id <SVPasteboardItem> anItem in items)
     {
@@ -606,7 +608,11 @@ static SVGraphicFactory *sRawHTMLFactory;
                 // Is this a different factory to the one set aside? If so, import items so far
                 if (factory && aFactory != factory)
                 {
-                    NSLog(@"Time to import items so far!");
+                    SVGraphic *graphic = [factory graphicWithPasteboardItems:pendingItems
+                                              insertIntoManagedObjectContext:context];
+                    
+                    if (graphic) [result addObject:graphic];
+                    pendingItems = nil;
                 }
                 
                 factory = aFactory;
@@ -615,8 +621,14 @@ static SVGraphicFactory *sRawHTMLFactory;
         }
         
         
-        // Create graphic, or wait until we have all the items
-        if (![[factory plugInClass] supportsMultiplePasteboardItems])
+        // Create graphic, or wait until we have all the items?
+        if ([[factory plugInClass] supportsMultiplePasteboardItems])
+        {
+            pendingItems = (pendingItems ?
+                            [pendingItems arrayByAddingObject:anItem] :
+                            [NSArray arrayWithObject:anItem]);
+        }
+        else
         {        
             SVGraphic *graphic = [factory graphicWithPasteboardItems:[NSArray arrayWithObject:anItem]
                                       insertIntoManagedObjectContext:context];
@@ -628,9 +640,9 @@ static SVGraphicFactory *sRawHTMLFactory;
     
     
     // Should all items go into a single graphic?
-    if (factory)
+    if (factory && pendingItems)
     {
-        SVGraphic *graphic = [factory graphicWithPasteboardItems:items
+        SVGraphic *graphic = [factory graphicWithPasteboardItems:pendingItems
                                   insertIntoManagedObjectContext:context];
         
         if (graphic) [result addObject:graphic];
