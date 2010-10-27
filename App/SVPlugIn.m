@@ -364,6 +364,8 @@ static id <SVPlugInContext> sCurrentContext;
 
 - (BOOL)awakeFromPasteboardItems:(NSArray *)items; { return NO; }
 
++ (BOOL)supportsMultiplePasteboardItems; { return NO; }
+
 #pragma mark Other
 
 @synthesize container = _container;

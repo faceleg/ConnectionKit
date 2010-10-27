@@ -130,6 +130,7 @@
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
 + (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 - (BOOL)awakeFromPasteboardItems:(NSArray *)items;
++ (BOOL)supportsMultiplePasteboardItems;
 
 
 #pragma mark Undo Management

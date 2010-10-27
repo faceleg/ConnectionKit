@@ -102,8 +102,7 @@
 }
 
 
-#pragma mark -
-#pragma mark SVPlugInPasteboardReading
+#pragma mark Pasteboard
 
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
 {
@@ -151,6 +150,7 @@
     return didAwakeAtLeastOneItem;    
 }
 
++ (BOOL)supportsMultiplePasteboardItems; { return YES; }
 
 #pragma mark -
 #pragma mark Properties
