@@ -263,7 +263,8 @@ webContentAreaController:(SVWebContentAreaController *)controller;
     
     if (frame == [webView mainFrame])
     {
-        if (![[request URL] ks_isEqualToURL:[self URLToLoad]])
+        WebNavigationType type = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
+        if (type != WebNavigationTypeReload && type != WebNavigationTypeOther)
         {
             result = NO;
         }
