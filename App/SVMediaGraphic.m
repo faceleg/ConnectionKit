@@ -630,11 +630,11 @@
 		
 		if (media)
 		{
-			[self replaceMedia:media forKeyPath:@"media"];
+			[self setSourceWithMediaRecord:media];
 		}
 		else
 		{
-			[self setExternalSourceURL:URL];
+			[self setSourceWithExternalURL:URL];
 		}
 		
 		NSNumber *oldWidth = [self width];
