@@ -520,32 +520,37 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 - (void)moveObject:(id)object toCollection:(KTPage *)collection index:(NSInteger)index;
 {
-    [object retain];    // since we're potentially removing it from relationships etc.
-    
-    KTPage *parent = [object parentPage];
-    if (collection != parent)   // no point removing and re-adding a page
-    {
-        [parent removeChildItem:object];
-        [collection addChildItem:object];
-        
-        [self didInsertObject:object intoCollection:collection];
-    }
-    
-    // Position item too if requested
-    if (index != NSOutlineViewDropOnItemIndex &&
-        [[collection collectionSortOrder] integerValue] == SVCollectionSortManually)
-    {
-        [collection moveChild:object toIndex:index];
-    }
-    
-    [object release];
+    [self moveObjects:[NSArray arrayWithObject:object] toCollection:collection index:index];
 }
 
 - (void)moveObjects:(NSArray *)objects toCollection:(KTPage *)collection index:(NSInteger)index;
 {
-    for (SVSiteItem *anItem in [objects reverseObjectEnumerator])
+    // Add the objects to the collection
+    for (SVSiteItem *anItem in objects)
     {
-        [self moveObject:anItem toCollection:collection index:index];
+        [anItem retain];    // since we're potentially removing it from relationships etc.
+        
+        KTPage *parent = [anItem parentPage];
+        if (collection != parent)   // no point removing and re-adding a page
+        {
+            [parent removeChildItem:anItem];
+            [collection addChildItem:anItem];
+            
+            [self didInsertObject:anItem intoCollection:collection];
+        }
+        
+        
+        [anItem release];
+    }
+    
+    
+    // Then position too if requested. This is done in reverse so we can keep reusing the same index
+    if (index != NSOutlineViewDropOnItemIndex)
+    {
+        for (SVSiteItem *anItem in [objects reverseObjectEnumerator])
+        {
+            [collection moveChild:anItem toIndex:index];
+        }
     }
 }
 
