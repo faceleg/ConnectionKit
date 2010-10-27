@@ -447,12 +447,18 @@
 
 - (void)toolbarWillAddItem:(NSNotification *)notification
 {
-    ;
-}
-
-- (void)toolbarDidRemoveItem:(NSNotification *)notification
-{
-    ;
+	NSToolbar *toolbar = [notification object];
+	NSToolbarItem *item = [[notification userInfo] objectForKey:@"item"];
+	if ([[item itemIdentifier] isEqualToString:NSToolbarShowColorsItemIdentifier])
+	{
+		[item setImage:[NSImage imageInBundleForClass:[BWToolbarPullDownItem class]
+												named:@"ToolbarItemColors.tiff"]];
+	}
+	else if ([[item itemIdentifier] isEqualToString:NSToolbarShowFontsItemIdentifier])
+	{
+		[item setImage:[NSImage imageInBundleForClass:[BWToolbarPullDownItem class]
+												named:@"ToolbarItemFonts.tiff"]];
+	}
 }
 
 @end
