@@ -23,17 +23,21 @@
 
 #pragma mark Media
 
-@property(nonatomic, retain) SVMediaRecord *media;
-@property(nonatomic, retain) SVMediaRecord *posterFrame;
-@property(nonatomic, copy) NSNumber *isMediaPlaceholder; // BOOL, mandatory
-- (void)setMediaWithURL:(NSURL *)URL;
-+ (NSString *)mediaEntityName;
-- (void)didSetSource;
-
-@property(nonatomic, copy) NSURL *externalSourceURL;
-
+@property(nonatomic, retain, readonly) SVMediaRecord *media;
 - (BOOL)hasFile;    // for bindings
+- (void)setSourceWithURL:(NSURL *)URL;
+- (void)setSourceWithMediaRecord:(SVMediaRecord *)media;
++ (NSString *)mediaEntityName;
+
+@property(nonatomic, copy, readonly) NSURL *externalSourceURL;
+- (void)setSourceWithExternalURL:(NSURL *)URL;
+
+@property(nonatomic, retain) SVMediaRecord *posterFrame;
+
+- (void)didSetSource;
 - (NSURL *)sourceURL;
+
+@property(nonatomic, copy) NSNumber *isMediaPlaceholder; // BOOL, mandatory
 
 + (BOOL)acceptsType:(NSString *)uti;
 + (NSArray *)allowedTypes;

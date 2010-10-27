@@ -29,6 +29,8 @@
 
 @interface SVMediaGraphic ()
 
+@property(nonatomic, retain, readwrite) SVMediaRecord *media;
+@property(nonatomic, copy, readwrite) NSURL *externalSourceURL;
 @property(nonatomic, copy) NSString *externalSourceURLString;
 
 - (void)didSetSource;
@@ -146,9 +148,7 @@
     [self didSetSource];
 }
 
-@dynamic isMediaPlaceholder;
-
-- (void)setMediaWithURL:(NSURL *)URL;
+- (void)setSourceWithURL:(NSURL *)URL;
 {
     SVMediaRecord *media = nil;
     if (URL)
@@ -159,10 +159,17 @@
                                       error:NULL];
     }
     
+    [self setSourceWithMediaRecord:media];
+}
+
+- (void)setSourceWithMediaRecord:(SVMediaRecord *)media;
+{
     [self replaceMedia:media forKeyPath:@"media"];
 }
 
 + (NSString *)mediaEntityName; { return @"GraphicMedia"; }
+
+@dynamic isMediaPlaceholder;
 
 #pragma mark External URL
 
@@ -186,6 +193,11 @@
     if (URL) [self replaceMedia:nil forKeyPath:@"media"];
     
     [self setExternalSourceURLString:[URL absoluteString]];
+}
+
+- (void)setSourceWithExternalURL:(NSURL *)URL;
+{
+    [self setExternalSourceURL:URL];
 }
 
 #pragma mark Source

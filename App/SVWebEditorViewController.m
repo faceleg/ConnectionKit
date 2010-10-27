@@ -690,29 +690,18 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 {
     if (returnCode == NSCancelButton) return;
     
+    
     KTPage *page = [[self HTMLContext] page];
     NSManagedObjectContext *context = [page managedObjectContext];
     
-    SVMediaRecord *media = [SVMediaRecord mediaWithURL:[sheet URL]
-                                            entityName:@"GraphicMedia"
-                        insertIntoManagedObjectContext:context
-                                                 error:NULL];
+    SVMediaGraphic *graphic = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
+    [graphic setSourceWithURL:[sheet URL]];
+    [graphic setShowsTitle:NO];
+    [graphic setShowsCaption:NO];
+    [graphic setShowsIntroduction:NO];
     
-    if (media)
-    {
-        SVMediaGraphic *graphic = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
-        [graphic setMedia:media];
-        [graphic setShowsTitle:NO];
-        [graphic setShowsCaption:NO];
-        [graphic setShowsIntroduction:NO];
-        
-        [graphic willInsertIntoPage:[[self HTMLContext] page]];
-        [self _insertPageletInSidebar:graphic];
-    }
-    else
-    {
-        NSBeep();
-    }
+    [graphic willInsertIntoPage:[[self HTMLContext] page]];
+    [self _insertPageletInSidebar:graphic];
 }
 
 #pragma mark Special Insertion

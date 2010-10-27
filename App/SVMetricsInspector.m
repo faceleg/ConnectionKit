@@ -31,7 +31,7 @@
     {
         NSURL *URL = [panel URL];
         
-        [[self inspectedObjects] makeObjectsPerformSelector:@selector(setMediaWithURL:)
+        [[self inspectedObjects] makeObjectsPerformSelector:@selector(setSourceWithURL:)
                                                  withObject:URL];
     }
 }

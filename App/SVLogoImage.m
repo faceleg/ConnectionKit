@@ -24,9 +24,9 @@
     NSURL *placeholderURL = [NSURL fileURLWithPath:
                              [[NSBundle mainBundle] pathForImageResource:@"LogoPlaceholder"]];
     
-    [self setMedia:[SVMediaRecord mediaWithBundledURL:placeholderURL
-                                               entityName:[[self class] mediaEntityName]
-                           insertIntoManagedObjectContext:[self managedObjectContext]]];
+    [self setSourceWithMediaRecord:[SVMediaRecord mediaWithBundledURL:placeholderURL
+                                                           entityName:[[self class] mediaEntityName]
+                                       insertIntoManagedObjectContext:[self managedObjectContext]]];
     
     [self setSize:NSMakeSize(200.0f, 128.0f)];    // fallback
     [self makeOriginalSize];

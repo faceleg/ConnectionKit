@@ -385,7 +385,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     }
     else
     {
-        [image setExternalSourceURL:URL];
+        [image setSourceWithExternalURL:URL];
     }
     
     
@@ -657,26 +657,15 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
-    SVMediaRecord *media = [SVMediaRecord mediaWithURL:[sheet URL]
-                                            entityName:@"GraphicMedia"
-                        insertIntoManagedObjectContext:context
-                                                 error:NULL];
     
-    if (media)
-    {
-        SVMediaGraphic *graphic = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
-        [graphic setMedia:media];
-        [graphic setShowsTitle:NO];
-        [graphic setShowsCaption:NO];
-        [graphic setShowsIntroduction:NO];
-        
-        [graphic willInsertIntoPage:[[self HTMLContext] page]];
-        [self addGraphic:graphic placeInline:YES];
-    }
-    else
-    {
-        NSBeep();
-    }
+    SVMediaGraphic *graphic = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
+    [graphic setSourceWithURL:[sheet URL]];
+    [graphic setShowsTitle:NO];
+    [graphic setShowsCaption:NO];
+    [graphic setShowsIntroduction:NO];
+    
+    [graphic willInsertIntoPage:[[self HTMLContext] page]];
+    [self addGraphic:graphic placeInline:YES];
 }
 
 #pragma mark Pasteboard
