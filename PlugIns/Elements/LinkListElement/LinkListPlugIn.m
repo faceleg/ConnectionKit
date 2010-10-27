@@ -43,7 +43,7 @@
 
 @implementation LinkListPlugIn
 
-+ (NSMutableDictionary *)displayableLinkFromLocation:(id<SVWebLocation>)location
++ (Link *)displayableLinkFromLocation:(id<SVWebLocation>)location
 {
     NSURL *URL = [location URL];
     if ( !URL ) return nil;
@@ -53,10 +53,10 @@
     NSString *title = [location title];
     if ( !title || (title == (id)[NSNull null]) ) title = [URL host];
         
-    NSMutableDictionary *result = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   [URL absoluteString], @"url",
-                                   title, @"title",
-                                   nil];
+    Link *result = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                    [URL absoluteString], @"url",
+                    title, @"title",
+                    nil];
     return result;
 }
 
@@ -65,7 +65,7 @@
     self = [super init];
     if ( self )
     {
-        self.linkList = [NSMutableArray arrayWithCapacity:5];
+        self.linkList = [NSArray array];
     }
     return self;
 }
@@ -84,8 +84,8 @@
     id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
     if ( location )
     {
-        NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:location];
-        if ( link ) [self.linkList addObject:link];
+        Link *link = [LinkListPlugIn displayableLinkFromLocation:location];
+        if ( link ) [self addLink:link];
     }
 }
 
@@ -132,15 +132,13 @@
     BOOL didAwakeAtLeastOneItem = NO;
     
     if ( items && [items count] )
-    {
-        if ( !self.linkList ) self.linkList = [NSMutableArray arrayWithCapacity:5];
-        
+    {        
         for ( id <SVPasteboardItem>item in items )
         {
-            NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:(id <SVWebLocation>)item];  //lie for now
+            Link *link = [LinkListPlugIn displayableLinkFromLocation:(id <SVWebLocation>)item];  //lie for now
             if ( link ) 
             {
-                [self.linkList addObject:link];
+                [self addLink:link];
                 didAwakeAtLeastOneItem = YES;
             }
 
@@ -148,6 +146,13 @@
     }
     
     return didAwakeAtLeastOneItem;    
+}
+
+- (void)addLink:(Link *)link
+{
+    NSMutableArray *links = [NSMutableArray arrayWithArray:self.linkList];
+    [links addObject:link];
+    self.linkList = links;
 }
 
 + (BOOL)supportsMultiplePasteboardItems; { return YES; }
