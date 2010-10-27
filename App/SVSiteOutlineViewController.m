@@ -638,6 +638,13 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     return result;
 }
 
+- (void)pagesControllerDidInsertObject:(NSNotification *)notification;
+{
+    SVSiteItem *item = [[[notification object] selectedObjects] firstObjectKS];  // Really, I ought to have a way of pulling this from the notification
+    
+    if (item) [[self outlineView] expandItem:item];
+}
+
 #pragma mark Other Actions
 
 // cut selected pages (copy and then remove from parents)
