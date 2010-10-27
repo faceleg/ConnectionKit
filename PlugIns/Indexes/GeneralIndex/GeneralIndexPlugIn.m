@@ -56,7 +56,7 @@
 						   @"layoutType",
 						   @"shortTitles",
 						   @"showPermaLinks",
-						   @"showSummaries",
+						   @"showEntries",
 						   @"showThumbnails",
 						   @"showTimestamps",
 						   @"truncateCount",
@@ -79,7 +79,7 @@
 	[context addDependencyForKeyPath:@"layoutType"			ofObject:self];
 	[context addDependencyForKeyPath:@"shortTitles"			ofObject:self];
 	[context addDependencyForKeyPath:@"showPermaLinks"		ofObject:self];
-	[context addDependencyForKeyPath:@"showSummaries"		ofObject:self];
+	[context addDependencyForKeyPath:@"showEntries"			ofObject:self];
 	[context addDependencyForKeyPath:@"showThumbnails"		ofObject:self];
 	[context addDependencyForKeyPath:@"showTimestamps"		ofObject:self];
 	[context addDependencyForKeyPath:@"truncateCount"		ofObject:self];
@@ -157,7 +157,7 @@
 		[writer endElement];
 		[writer endElement];
 		
-		if (self.showSummaries)
+		if (self.showEntries)
 		{
 			[writer startElement:@"td" className:@"dli3"];
 			[self writeSummaryOfIteratedPage];
@@ -181,7 +181,7 @@
 		{
 			[self writeThumbnailImageOfIteratedPage];
 		}
-		if (self.showSummaries)
+		if (self.showEntries)
 		{
 			[self writeSummaryOfIteratedPage];
 		}
@@ -286,7 +286,7 @@
 @synthesize layoutType = _layoutType;
 @synthesize shortTitles = _shortTitles;
 @synthesize showPermaLinks = _showPermaLinks;
-@synthesize showSummaries = _showSummaries;
+@synthesize showEntries = _showEntries;
 @synthesize showThumbnails = _showThumbnails;
 @synthesize showTimestamps = _showTimestamps;
 @synthesize truncateCount = _truncateCount;
