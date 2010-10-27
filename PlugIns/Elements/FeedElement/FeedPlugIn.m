@@ -203,16 +203,6 @@
 	return result;
 }
 
-//- (NSString *)host
-//{
-//    NSString *result = [self.feedURL host];
-//    if ( !result )
-//    {
-//        result = @"";
-//    }
-//    return result;
-//}
-
 /*!	We make a digest of a the "h" parameter so that our server will be less likely to be 
 	bogged down with non-Sandvox uses of our feed -> HTML gateway.
 */
