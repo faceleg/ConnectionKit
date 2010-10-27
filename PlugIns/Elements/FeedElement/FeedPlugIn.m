@@ -86,19 +86,6 @@
 #pragma mark -
 #pragma mark HTML Generation
 
-- (void)writeHTML:(id <SVPlugInContext>)context
-{
-    // add dependencies
-    [context addDependencyForKeyPath:@"feedURL" ofObject:self];
-    [context addDependencyForKeyPath:@"max" ofObject:self];
-    [context addDependencyForKeyPath:@"key" ofObject:self];
-    [context addDependencyForKeyPath:@"openLinksInNewWindow" ofObject:self];
-    [context addDependencyForKeyPath:@"summaryChars" ofObject:self];
-    
-    // make it happen
-    [super writeHTML:context];
-}
-
 - (void)writeOfflinePreviews
 {
     id<SVPlugInContext> context = [SVPlugIn currentContext];
