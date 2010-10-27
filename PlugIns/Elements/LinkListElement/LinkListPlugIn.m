@@ -152,7 +152,7 @@
 {
     NSMutableArray *links = [NSMutableArray arrayWithArray:self.linkList];
     [links addObject:link];
-    self.linkList = links;
+    self.linkList = [NSArray arrayWithArray:links];
 }
 
 + (BOOL)supportsMultiplePasteboardItems; { return YES; }
