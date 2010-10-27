@@ -27,6 +27,9 @@
     NSMutableSet            *_dependencies;
     BOOL                    _isObservingDependencies;
     SVWebEditorHTMLContext  *_context;
+    
+    // Dragging
+    NSArray *_dragTypes;
 }
 
 #pragma mark Creating a DOM Controller
@@ -68,6 +71,11 @@
 - (NSSize)minSize;
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle;
+
+
+#pragma mark Dragging
+- (void)registerForDraggedTypes:(NSArray *)newTypes;
+- (void)unregisterDraggedTypes;
 
 
 @end

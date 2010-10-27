@@ -59,6 +59,8 @@
     [_elementID release];
     [_context release];
     
+    [_dragTypes release];
+    
     [super dealloc];
 }
 
@@ -426,6 +428,39 @@
     
     
     return size;
+}
+
+#pragma mark Dragging
+
+- (NSArray *)registeredDraggedTypes; { return _dragTypes; }
+
+- (void)registerForDraggedTypes:(NSArray *)newTypes;
+{
+    NSArray *registeredTypes = [self registeredDraggedTypes];
+    if (registeredTypes)
+    {
+        // Add in any of newTypes that haven't already been registered
+        for (NSString *aType in newTypes)
+        {
+            if (![registeredTypes containsObject:aType])
+            {
+                NSArray *result = [registeredTypes arrayByAddingObject:aType];
+                [_dragTypes release]; _dragTypes = [result copy];
+                
+                registeredTypes = [self registeredDraggedTypes];
+            }
+        }
+    }
+    else
+    {
+        // TODO: Check the values are unique
+        _dragTypes = [newTypes copy];
+    }
+}
+
+- (void)unregisterDraggedTypes;
+{
+    [_dragTypes release]; _dragTypes = nil;
 }
 
 #pragma mark KVO
