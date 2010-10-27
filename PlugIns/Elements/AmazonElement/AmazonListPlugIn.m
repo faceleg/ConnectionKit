@@ -21,7 +21,7 @@ NSString * const APDisplayTabIdentifier = @"display";
 NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 
-// LocalizedStringInThisBundle(@"Please add Amazon products to this list using the Inspector.", "String_On_Page_Template")
+// LocalizedStringInThisBundle(@"Drag Amazon products here from your web browser", "String_On_Page_Template")
 // LocalizedStringInThisBundle(@"Please specify an Amazon list (e.g. a wish list or listmania) to display using the Inspector.", "String_On_Page_Template")
 // LocalizedStringInThisBundle(@"This is a placeholder; your Amazon list will appear here once published or if you enable live data feeds in the preferences.", "Placeholder text")
 // LocalizedStringInThisBundle(@"This is a placeholder for an Amazon product; It will appear here once published or if you enable live data feeds in the preferences.", "Placeholder text")
