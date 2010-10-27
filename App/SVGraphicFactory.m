@@ -144,6 +144,8 @@
 - (SVGraphic *)graphicWithPasteboardItem:(id <SVPasteboardItem>)item
           insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
+    // Think this method can be ditched soon
+    
     SVMediaGraphic *result = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
     [result awakeFromPasteboardItems:[NSArray arrayWithObject:item]];
     [result makeOriginalSize]; // It's someone else's responsibility to make it smaller again. #92640
@@ -575,17 +577,25 @@ static SVGraphicFactory *sRawHTMLFactory;
 
 #pragma mark Pasteboard
 
+- (SVGraphic *)graphicWithPasteboardItems:(NSArray *)items
+           insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVGraphic *result = [self insertNewGraphicInManagedObjectContext:context];
+    [result awakeFromPasteboardItems:items];
+    return result;
+}
+
 + (NSArray *)graphicsFromPasteboard:(NSPasteboard *)pboard
     insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     // Try to read in Web Locations
     NSArray *items = [pboard sv_pasteboardItems];
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:[items count]];
+    SVGraphicFactory *factory = nil;
         
     for (id <SVPasteboardItem> anItem in items)
     {
         // Test plug-ins
-        SVGraphicFactory *factory = nil;
         NSUInteger minPriority = 0;
         
         for (SVGraphicFactory *aFactory in [self registeredFactories])
@@ -593,20 +603,39 @@ static SVGraphicFactory *sRawHTMLFactory;
             NSUInteger priority = [aFactory priorityForPasteboardItem:anItem];
             if (priority > minPriority)
             {
+                // Is this a different factory to the one set aside? If so, import items so far
+                if (factory && aFactory != factory)
+                {
+                    NSLog(@"Time to import items so far!");
+                }
+                
                 factory = aFactory;
                 minPriority = priority;
             }
         }
         
         
-        // Create graphic
-        if (factory)
+        // Create graphic, or wait until we have all the items
+        if (![[factory plugInClass] supportsMultiplePasteboardItems])
         {        
-            SVGraphic *graphic = [factory graphicWithPasteboardItem:anItem
-                                     insertIntoManagedObjectContext:context];
+            SVGraphic *graphic = [factory graphicWithPasteboardItems:[NSArray arrayWithObject:anItem]
+                                      insertIntoManagedObjectContext:context];
+            
             if (graphic) [result addObject:graphic];
+            factory = nil;
         }
     }
+    
+    
+    // Should all items go into a single graphic?
+    if (factory)
+    {
+        SVGraphic *graphic = [factory graphicWithPasteboardItems:items
+                                  insertIntoManagedObjectContext:context];
+        
+        if (graphic) [result addObject:graphic];
+    }
+    
     
     return result;
 }
