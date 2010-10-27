@@ -8,6 +8,8 @@
 
 #import "SVPasteboardItemInternal.h"
 
+#import <iMedia/iMedia.h>
+
 
 @implementation SVPasteboardItem
 
@@ -34,15 +36,35 @@
 
 - (NSArray *)sv_pasteboardItems;
 {
-    // Try to read in Web Locations
-    NSArray *result = [self readWebLocations];
-    if ([result count] == 0)
-    {
-        // Fall back to reading the pasteboard itself
-        result = [NSArray arrayWithObject:self];
-    }
+    // Start with iMedia
+    IMBObjectsPromise *promise = [IMBObjectsPromise promiseFromPasteboard:self];
+    [promise start];
+    [promise waitUntilFinished];
+    NSArray *URLs = [promise fileURLs];
     
-    return result;
+    if ([URLs count])
+    {
+        NSMutableArray *result = [NSMutableArray arrayWithCapacity:[URLs count]];
+        for (NSURL *aURL in URLs)
+        {
+            // TODO: pull title out of promise if available
+            [result addObject:[KSWebLocation webLocationWithURL:aURL]];
+        }
+        
+        return result;
+    }
+    else
+    {
+        // Try to read in Web Locations
+        NSArray *result = [self readWebLocations];
+        if ([result count] == 0)
+        {
+            // Fall back to reading the pasteboard itself
+            result = [NSArray arrayWithObject:self];
+        }
+        
+        return result;
+    }
 }
 
 @end
