@@ -46,12 +46,6 @@
 // LocalizedStringInThisBundle(@"Please specify the URL of the feed using the Inspector.", "String_On_Page_Template")
 
 
-@interface FeedPlugIn ()
-- (BOOL)isPage;
-@end
-
-
-
 @implementation FeedPlugIn
 
 
@@ -105,21 +99,6 @@
     [super writeHTML:context];
 }
 
-
-//[[if isPage]]
-//<h3><a href="#">[[=&host]] [['example no.]] 1</a></h3>[[if summaryChars]]<p>[['item summary]]</p>[[endif4]]
-//<h3><a href="#">[[=&host]] [['example no.]] 2</a></h3>[[if summaryChars]]<p>[['item summary]]</p>[[endif4]]
-//<h3><a href="#">[[=&host]] [['example no.]] 3</a></h3>[[if summaryChars]]<p>[['item summary]]</p>[[endif4]]
-//<h3><a href="#">[[=&host]] [['example no.]] 4</a></h3>[[if summaryChars]]<p>[['item summary]]</p>[[endif4]]
-//[[else3]]
-//<ul>
-//<li><a href="#">[[=&host]] [['example no.]] 1</a>[[if summaryChars]]<br />[['item summary]][[endif4]]</li>
-//<li><a href="#">[[=&host]] [['example no.]] 2</a>[[if summaryChars]]<br />[['item summary]][[endif4]]</li>
-//<li><a href="#">[[=&host]] [['example no.]] 3</a>[[if summaryChars]]<br />[['item summary]][[endif4]]</li>
-//<li><a href="#">[[=&host]] [['example no.]] 4</a>[[if summaryChars]]<br />[['item summary]][[endif4]]</li>
-//</ul>
-//[[endif3]]
-
 - (void)writeOfflinePreviews
 {
     id<SVPlugInContext> context = [SVPlugIn currentContext];
@@ -131,45 +110,25 @@
     NSInteger writeMax = (self.max > 0) ? self.max : 4;
     NSString *host = (nil != [self.feedURL host]) ? [self.feedURL host] : @"example.com";
     
-    if ( ![self isPage] ) [[context HTMLWriter] startElement:@"ul"];    
+    [[context HTMLWriter] startElement:@"ul"]; // <ul>
     
-    for ( NSInteger i = 0; i < writeMax; i++ )
-    {
-        if ( [self isPage] )
-        {
-            [[context HTMLWriter] startElement:@"h3"];
-        }
-        else
-        {
-            [[context HTMLWriter] startElement:@"li"];
-        }
+    for ( NSInteger i = 1; i <= writeMax; i++ )
+    {        
+        [[context HTMLWriter] startElement:@"li"]; // <li>
         
         NSString *exampleLink = [NSString stringWithFormat:@"<a href=\"#\">%@ %@ %d</a>", host, exampleText, i];
         [[context HTMLWriter] writeHTMLString:exampleLink];
-        
-        if ( ![self isPage] ) [[context HTMLWriter] endElement]; // </h3>
-        
+                
         if ( self.summaryChars )
         {
-            if ( [self isPage] )
-            {
-                [[context HTMLWriter] startElement:@"p"];
-            }
-            else
-            {
-                [[context HTMLWriter] writeHTMLString:@"<br />"];
-            }
-            
+            [[context HTMLWriter] writeHTMLString:@"<br />"];
             [[context HTMLWriter] writeText:itemText];
-            
-            if ( [self isPage] ) [[context HTMLWriter] endElement]; // </p>    
         }
-
+        
+        [[context HTMLWriter] endElement]; // </li>    
     }
     
-    if ( ![self isPage] ) [[context HTMLWriter] endElement]; // </ul>    
-    
-
+    [[context HTMLWriter] endElement]; // </ul>    
 }
 
 -(BOOL)validateURL:(id *)ioValue error:(NSError **)outError
@@ -227,16 +186,6 @@
     NSData *data = [stringToDigest dataUsingEncoding:NSUTF8StringEncoding];
     return [data sha1DigestString];
 }
-
-- (BOOL)isPage
-{
-//	id container = [self delegateOwner];
-//	return ( [container isKindOfClass:[KTPage class]] );
-    
-    //FIXME: no longer doable, just return NO for now
-    return NO;
-}
-
 
 #pragma mark -
 #pragma mark SVPlugInPasteboardReading
