@@ -448,6 +448,8 @@
 - (void)toolbarWillAddItem:(NSNotification *)notification
 {
 	NSToolbar *toolbar = [notification object];
+    OBPRECONDITION(toolbar == [[self window] toolbar]);
+                   
 	NSToolbarItem *item = [[notification userInfo] objectForKey:@"item"];
 	if ([[item itemIdentifier] isEqualToString:NSToolbarShowColorsItemIdentifier])
 	{
