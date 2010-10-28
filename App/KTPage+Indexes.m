@@ -135,10 +135,10 @@
 }
 
 @dynamic collectionMaxSyndicatedPagesCount;
-- (BOOL)validateCollectionMaxIndexItems:(NSNumber **)max error:(NSError **)outError;
+- (BOOL)validateCollectionMaxSyndicatedPagesCount:(NSNumber **)max error:(NSError **)outError;
 {
-    // mandatory for collections, nil otherwise
-    if ([self isCollection])
+    // Mandatory for syndicated collections, optional otherwise
+    if ([self isCollection] && [[self collectionSyndicationType] boolValue])
     {
         if (!*max)
         {
@@ -146,16 +146,6 @@
                                                           code:NSValidationMissingMandatoryPropertyError
                                           localizedDescription:@"collectionMaxSyndicatedPagesCount is non-optional for collections"];
             
-            return NO;
-        }
-    }
-    else
-    {
-        if (*max)
-        {
-            if (outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain
-                                                          code:NSValidationNumberTooLargeError
-                                          localizedDescription:@"Only collections can specify a number of articles to syndicate"];
             return NO;
         }
     }
