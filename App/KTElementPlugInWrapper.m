@@ -311,7 +311,7 @@
             
             [image setDataRetained:YES];	// allow image to be scaled.
             [image setScalesWhenResized:YES];
-            [image setSize:NSMakeSize(32.0f, 32.0f)];
+            [image setSize:NSMakeSize(48.0f, 48.0f)];
             [menuItem setImage:image];
         }
         

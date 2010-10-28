@@ -28,14 +28,51 @@
     if (!result)
     {
         NSMutableArray *buffer = [[NSMutableArray alloc] init];
+        SVPageTemplate *aTemplate;
         
-        SVPageTemplate *aTemplate = [[SVPageTemplate alloc] init];
+        aTemplate = [[SVPageTemplate alloc] init];
         [aTemplate setTitle:NSLocalizedString(@"Empty/Text", "New page pulldown button menu item title")];
         [aTemplate setIcon:[NSImage imageNamed:@"toolbar_empty_page"]];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
+        aTemplate = [[SVPageTemplate alloc] init];
+        [aTemplate setTitle:NSLocalizedString(@"Empty/Text – Without Sidebar", "menu item title")];
+        [aTemplate setIcon:[NSImage imageNamed:@"toolbar_empty_page"]];
+        [buffer addObject:aTemplate];
+        [aTemplate release];
         
+        aTemplate = [[SVPageTemplate alloc] init];
+        [aTemplate setTitle:NSLocalizedString(@"Photo/Video", "menu item title")];
+        [aTemplate setIcon:[NSImage imageNamed:@"toolbar_empty_page"]];
+        [buffer addObject:aTemplate];
+        [aTemplate release];
+        
+        aTemplate = [[SVPageTemplate alloc] init];
+        [aTemplate setTitle:NSLocalizedString(@"Photo/Video – Without Sidebar", "menu item title")];
+        [aTemplate setIcon:[NSImage imageNamed:@"toolbar_empty_page"]];
+        [buffer addObject:aTemplate];
+        [aTemplate release];
+        
+        aTemplate = [[SVPageTemplate alloc] init];
+        [aTemplate setTitle:NSLocalizedString(@"Empty Collection", "menu item title")];
+        [aTemplate setIcon:[NSImage imageNamed:@"toolbar_empty_page"]];
+        //[buffer addObject:aTemplate];
+        [aTemplate release];
+        
+        aTemplate = [[SVPageTemplate alloc] init];
+        [aTemplate setTitle:NSLocalizedString(@"Contact Form", "menu item title")];
+        [aTemplate setIcon:[NSImage imageNamed:@"toolbar_empty_page"]];
+        [buffer addObject:aTemplate];
+        [aTemplate release];
+        
+        aTemplate = [[SVPageTemplate alloc] init];
+        [aTemplate setTitle:NSLocalizedString(@"Sitemap", "menu item title")];
+        [aTemplate setIcon:[NSImage imageNamed:@"toolbar_empty_page"]];
+        [buffer addObject:aTemplate];
+        [aTemplate release];
+        
+                
         result = [buffer copy];
         [buffer release];
     }
@@ -55,11 +92,11 @@
                                              keyEquivalent:@""];
     
     NSImage *icon = [[self icon] copy];
-    [icon setSize:NSMakeSize(32.0f, 32.0f)];
+    [icon setSize:NSMakeSize(48.0f, 48.0f)];
     [result setImage:icon];
     [icon release];
     
-    [result setRepresentedObject:self];
+    //[result setRepresentedObject:self];
     
     return [result autorelease];
 }
