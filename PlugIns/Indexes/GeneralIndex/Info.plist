@@ -62,6 +62,8 @@
 				<string>sandvox.RichTextElement</string>
 				<key>richTextHTML</key>
 				<string>&lt;p&gt;This is your first blog entry. What are you waiting for? Replace this text with some of your own and start blogging!&lt;/p&gt;</string>
+				<key>title</key>
+				<string>First Post</string>
 			</dict>
 			<key>KTPageSettings</key>
 			<dict>
