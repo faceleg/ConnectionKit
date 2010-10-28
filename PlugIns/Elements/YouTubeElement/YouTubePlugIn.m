@@ -81,7 +81,7 @@
     self = [super init];
     if ( self )
     {
-        self.width = 560; // "small", height should be automatically computed
+        self.width = 490; // max, widescreen, that fits in default design
     }
     return self;
 }
@@ -201,6 +201,10 @@
 - (BOOL)constrainProportions; { return YES; }
 + (BOOL)isExplicitlySized; { return YES; }
 
+- (void)makeOriginalSize;
+{
+    [self setWidth:490]; // height is auto-computed
+}
 
 #pragma mark Colors
 
