@@ -76,6 +76,17 @@
 	[super dealloc];
 }
 
+- (id)init
+{
+    self = [super init];
+    if ( self )
+    {
+        self.width = 560; // "small", height should be automatically computed
+    }
+    return self;
+}
+
+
 - (void)awakeFromNew;
 {
     [super awakeFromNew];
@@ -175,6 +186,11 @@
 + (NSSet *)keyPathsForValuesAffectingHeight;
 {
     return [NSSet setWithObject:@"width"];
+}
+
+- (NSUInteger)minWidth
+{
+    return 200; // smallest that YouTube supports
 }
 
 - (NSUInteger)minHeight
