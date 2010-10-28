@@ -234,7 +234,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     
     // Generate a first child page if desired
-    /*NSString *firstChildIdentifier = [presetDict valueForKeyPath:@"KTFirstChildSettings.pluginIdentifier"];
+    NSString *firstChildIdentifier = [presetDict valueForKeyPath:@"KTFirstChildSettings.pluginIdentifier"];
     if (firstChildIdentifier && [firstChildIdentifier isKindOfClass:[NSString class]])
     {
         NSMutableDictionary *firstChildProperties =
@@ -242,7 +242,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         [firstChildProperties removeObjectForKey:@"pluginIdentifier"];
         
         // Create first child
-        KTPage *firstChild = [self newObjectAllowingCollections:NO];
+        KTPage *firstChild = [self newObjectWithPredecessor:collection allowCollections:NO];
         
         // Insert at right place.
         [collection addChildItem:firstChild];
@@ -259,7 +259,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
                 aProperty = [indexBundle localizedStringForKey:aProperty value:nil table:@"InfoPlist"];
             }
             
-            if ([aKey isEqualToString:@"bodyText"]) // special case
+            if ([aKey isEqualToString:@"richTextHTML"]) // special case
             {
                 [[firstChild article] setString:aProperty attachments:nil];
             }
@@ -268,7 +268,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
                 [firstChild setValue:aProperty forKeyPath:aKey];
             }
         }
-    }*/
+    }
     
     
     // Any collection with an RSS feed should have an RSS Badge.
