@@ -358,18 +358,18 @@
 											<reference key="NSNextResponder" ref="520114257"/>
 											<int key="NSvFlags">34</int>
 											<array class="NSMutableArray" key="NSSubviews">
-												<object class="NSButton" id="673157193">
+												<object class="NSButton" id="954270661">
 													<reference key="NSNextResponder" ref="641495171"/>
 													<int key="NSvFlags">268</int>
 													<string key="NSFrame">{{723, 41}, {85, 18}}</string>
 													<reference key="NSSuperview" ref="641495171"/>
 													<bool key="NSEnabled">YES</bool>
-													<object class="NSButtonCell" key="NSCell" id="82835555">
+													<object class="NSButtonCell" key="NSCell" id="34122380">
 														<int key="NSCellFlags">-2080244224</int>
 														<int key="NSCellFlags2">0</int>
 														<string key="NSContents">Collection</string>
 														<reference key="NSSupport" ref="502413197"/>
-														<reference key="NSControlView" ref="673157193"/>
+														<reference key="NSControlView" ref="954270661"/>
 														<int key="NSButtonFlags">1211912703</int>
 														<int key="NSButtonFlags2">2</int>
 														<object class="NSCustomResource" key="NSNormalImage">
@@ -857,6 +857,7 @@
 					<string>hasChildren</string>
 					<string>childItems</string>
 					<string>childItems.@count</string>
+					<string>isRoot</string>
 				</array>
 				<string key="NSObjectClassName">KTPage</string>
 				<bool key="NSEditable">YES</bool>
@@ -1558,10 +1559,10 @@
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: selection.isCollection</string>
-						<reference key="source" ref="673157193"/>
+						<reference key="source" ref="954270661"/>
 						<reference key="destination" ref="601368962"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="673157193"/>
+							<reference key="NSSource" ref="954270661"/>
 							<reference key="NSDestination" ref="601368962"/>
 							<string key="NSLabel">value: selection.isCollection</string>
 							<string key="NSBinding">value</string>
@@ -1578,10 +1579,10 @@
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: selection.childItems.@count</string>
-						<reference key="source" ref="673157193"/>
+						<reference key="source" ref="954270661"/>
 						<reference key="destination" ref="601368962"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="673157193"/>
+						<object class="NSNibBindingConnector" key="connector" id="197604307">
+							<reference key="NSSource" ref="954270661"/>
 							<reference key="NSDestination" ref="601368962"/>
 							<string key="NSLabel">enabled: selection.childItems.@count</string>
 							<string key="NSBinding">enabled</string>
@@ -1594,6 +1595,30 @@
 						</object>
 					</object>
 					<int key="connectionID">2114</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled2: selection.isRoot</string>
+						<reference key="source" ref="954270661"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="954270661"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">enabled2: selection.isRoot</string>
+							<string key="NSBinding">enabled2</string>
+							<string key="NSKeyPath">selection.isRoot</string>
+							<dictionary key="NSOptions">
+								<integer value="-1" key="NSMultipleValuesPlaceholder"/>
+								<integer value="-1" key="NSNoSelectionPlaceholder"/>
+								<integer value="-1" key="NSNotApplicablePlaceholder"/>
+								<integer value="-1" key="NSNullPlaceholder"/>
+								<string key="NSValueTransformerName">NSNegateBoolean</string>
+							</dictionary>
+							<reference key="NSPreviousConnector" ref="197604307"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2116</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1788,7 +1813,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="607898317"/>
 							<reference ref="327729126"/>
-							<reference ref="673157193"/>
+							<reference ref="954270661"/>
 						</array>
 						<reference key="parent" ref="520114257"/>
 					</object>
@@ -2134,16 +2159,16 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2107</int>
-						<reference key="object" ref="673157193"/>
+						<reference key="object" ref="954270661"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="82835555"/>
+							<reference ref="34122380"/>
 						</array>
 						<reference key="parent" ref="641495171"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2108</int>
-						<reference key="object" ref="82835555"/>
-						<reference key="parent" ref="673157193"/>
+						<reference key="object" ref="34122380"/>
+						<reference key="parent" ref="954270661"/>
 					</object>
 				</array>
 			</object>
@@ -2273,7 +2298,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2114</int>
+			<int key="maxID">2116</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
