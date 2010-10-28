@@ -293,7 +293,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         
         NSAttributedString *graphicHTML = [NSAttributedString attributedHTMLStringWithGraphic:index];
         [[index textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementInline]];
-        [index willInsertIntoPage:collection];
+        [index awakeFromNew];
         
         SVRichText *article = [collection article];
         NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];

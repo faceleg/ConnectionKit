@@ -97,7 +97,7 @@
                                            insertIntoManagedObjectContext:context];
     
     KTPage *page = [[self HTMLContext] page];
-    [graphic willInsertIntoPage:page];
+    [graphic awakeFromNew];
     [self addGraphic:graphic placeInline:NO];
     [graphic didAddToPage:page];
 }

@@ -83,11 +83,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [[self plugIn] awakeFromFetch];
 }
 
-- (void)willInsertIntoPage:(KTPage *)page;
-{
-    [[self plugIn] awakeFromNew];
-    [super willInsertIntoPage:page];
-}
+- (void)awakeFromNew; { [[self plugIn] awakeFromNew]; }
 
 - (void)awakeFromExtensiblePropertyUndoUpdateForKey:(NSString *)key;
 {

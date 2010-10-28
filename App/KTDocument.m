@@ -318,7 +318,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 			SVGraphic *badge = [factory insertNewGraphicInManagedObjectContext:[self managedObjectContext]];
 			[badge setSortKey:[NSNumber numberWithShort:0]];
 			
-			[badge willInsertIntoPage:root];
+			[badge awakeFromNew];
 			[[root sidebar] addPageletsObject:badge];
 		}
 		else

@@ -202,7 +202,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     
     // Insert it
-    [pagelet willInsertIntoPage:page];
+    [pagelet awakeFromNew];
     
     // Place at end of the sidebar
     [[self pageletsController] addObject:pagelet];

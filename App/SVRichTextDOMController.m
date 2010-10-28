@@ -664,7 +664,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [graphic setShowsCaption:NO];
     [graphic setShowsIntroduction:NO];
     
-    [graphic willInsertIntoPage:[[self HTMLContext] page]];
     [self addGraphic:graphic placeInline:YES];
 }
 

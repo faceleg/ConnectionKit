@@ -41,7 +41,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [self createDefaultIntroAndCaption];
 }
 
-- (void)willInsertIntoPage:(KTPage *)page; { }
+- (void)awakeFromNew; { }
 
 - (void)didAddToPage:(id <SVPage>)page; { }
 

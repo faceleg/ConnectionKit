@@ -700,7 +700,6 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     [graphic setShowsCaption:NO];
     [graphic setShowsIntroduction:NO];
     
-    [graphic willInsertIntoPage:[[self HTMLContext] page]];
     [self _insertPageletInSidebar:graphic];
 }
 

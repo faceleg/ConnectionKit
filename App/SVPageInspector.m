@@ -348,7 +348,6 @@
                           [collection managedObjectContext]];
     
     [pagelet setShowsTitle:YES];
-    [pagelet willInsertIntoPage:collection];
     
     [sidebarController addObject:pagelet];
 }
