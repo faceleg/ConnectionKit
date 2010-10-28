@@ -803,7 +803,7 @@
     return result;
 }
 
-- (NSURL *)addImageMedia:(id <SVMedia, IMBImageItem>)media
+- (NSURL *)addImageMedia:(id <SVMedia>)media
                    width:(NSNumber *)width
                   height:(NSNumber *)height
                     type:(NSString *)type
@@ -812,7 +812,7 @@
     return [self addMedia:media];
 }
 
-- (void)writeImageWithSourceMedia:(id <SVMedia, IMBImageItem>)media
+- (void)writeImageWithSourceMedia:(id <SVMedia>)media
                               alt:(NSString *)altText
                             width:(NSNumber *)width
                            height:(NSNumber *)height

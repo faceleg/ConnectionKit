@@ -192,13 +192,13 @@ typedef enum {
 //  - If specifying size, MUST also specify type for resulting image
 //
 // Pass preferredFilename as nil if you want to use the default (same as source media)
-- (NSURL *)addImageMedia:(id <SVMedia, IMBImageItem>)media
+- (NSURL *)addImageMedia:(id <SVMedia>)media
                    width:(NSNumber *)width
                   height:(NSNumber *)height
                     type:(NSString *)type
        preferredFilename:(NSString *)preferredFilename;
 
-- (void)writeImageWithSourceMedia:(id <SVMedia, IMBImageItem>)media
+- (void)writeImageWithSourceMedia:(id <SVMedia>)media
                               alt:(NSString *)altText
                             width:(NSNumber *)width
                            height:(NSNumber *)height
