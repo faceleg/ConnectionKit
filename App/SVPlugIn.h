@@ -28,7 +28,7 @@
 #pragma mark Initialization
 
 /*  Called when inserting a fresh new plug-in (e.g. the insert menu), but not from drag 'n' drop etc.
- *  Retrieves KTPluginInitialProperties from the bundle and calls -setSerializedValue:forKey: with them
+ *  Retrieves KTPluginInitialProperties from the bundle and calls -setSerializedValue:forKey: with them. Finally, calls -makeOriginalSize
  */
 - (void)awakeFromNew;
 
