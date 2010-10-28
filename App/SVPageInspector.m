@@ -83,20 +83,13 @@
 
 #pragma mark Navigation Arrows
 
-- (IBAction)applyNavigationArrowsStyleToSiblings:(NSButton *)sender;
+- (IBAction)chooseNavigationArrowsStyle:(NSPopUpButton *)sender;
 {
-    NSNumber *style = [[self inspectedObjectsController] valueForKeyPath:@"selection.navigationArrowsStyle"];
-    
-    for (SVSiteItem *anItem in [self inspectedObjects])
+    // When turning on arrows, make sure the page will show them. #93639
+    if ([sender indexOfSelectedItem] > 0)
     {
-        KTPage *collection = [anItem parentPage];
-        for (SVSiteItem *aSibling in [collection childItems])
-        {
-            if ([aSibling isKindOfClass:[KTPage class]])
-            {
-                [(KTPage *)aSibling setNavigationArrowsStyle:style];
-            }
-        }
+        [[self inspectedObjectsController] setValue:[NSNumber numberWithBool:YES]
+                                         forKeyPath:@"selection.includeInIndex"];
     }
 }
 
