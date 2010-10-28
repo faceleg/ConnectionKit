@@ -438,22 +438,6 @@
 
 @dynamic navigationArrowsStyle;
 
-- (BOOL)validateNavigationArrowsStyle:(NSNumber **)show error:(NSError **)error;
-{
-    // Navigation arrows aren't allowed for non-collections
-    BOOL result = YES;
-    
-    if ([*show boolValue] && ![self isCollection])
-    {
-        result = NO;
-        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                                code:NSValidationNumberTooLargeError
-                                localizedDescription:@"navigationArrowsStyle is a collection property"];
-    }
-    
-    return result;
-}
-
 #pragma mark -
 #pragma mark Should probably be deprecated
 
