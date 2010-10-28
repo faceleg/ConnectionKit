@@ -64,6 +64,24 @@
     return nil;
 }
 
+- (NSDictionary *)dictionaryWithCSSStyle:(DOMCSSStyleDeclaration *)style
+                                 tagName:(NSString *)tagName;
+{
+    int length = [style length];
+    NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:length];
+    
+    for (int i = 0; i < length; i++)
+    {
+        NSString *property = [style item:i];
+        if ([self validateStyleProperty:property ofElementWithTagName:tagName])
+        {
+            [result setObject:[style getPropertyValue:property] forKey:property];
+        }
+    }
+    
+    return result;
+}
+
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 {
     // Ignore callout <div>s
@@ -96,7 +114,25 @@
             }
             else
             {
-                return [self replaceDOMElement:element withElementWithTagName:@"P"];
+                // Swap the element for a <P>, trying to retain as much style as possible. #92641
+                NSDictionary *oldStyle = [self dictionaryWithCSSStyle:style tagName:@"P"];
+                DOMElement *result = [self replaceDOMElement:element withElementWithTagName:@"P"];
+                
+                DOMCSSStyleDeclaration *paragraphStyle = [[element ownerDocument] getComputedStyle:result
+                                                                                     pseudoElement:nil];
+                
+                for (NSString *aProperty in oldStyle)
+                {
+                    NSString *aValue = [paragraphStyle getPropertyValue:aProperty];
+                    if (![aValue isEqualToString:[oldStyle objectForKey:aProperty]])
+                    {
+                        [[result style] setProperty:aProperty
+                                              value:[oldStyle objectForKey:aProperty]
+                                           priority:@""];
+                    }
+                }
+                
+                return result;
             }
         }
         else

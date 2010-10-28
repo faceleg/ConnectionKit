@@ -354,13 +354,6 @@
     [webView setSelectedDOMRange:selection affinity:[webView selectionAffinity]];
     
     
-    // Want headers to be bold still, or maybe even just match the calculated style?
-    if ([element isKindOfClass:[DOMHTMLHeadingElement class]])
-    {
-        [[result style] setFontWeight:@"bolder"];
-    }
-    
-    
     return result;
 }
 

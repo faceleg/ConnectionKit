@@ -26,6 +26,10 @@
 - (NSSet *)textAttachments;
 - (void)writeTextAttachment:(SVTextAttachment *)attachment;
 
+// Pulls out the computed style values that are valid for use
+- (NSDictionary *)dictionaryWithCSSStyle:(DOMCSSStyleDeclaration *)style
+                                 tagName:(NSString *)tagName;
+
 
 @end
 
