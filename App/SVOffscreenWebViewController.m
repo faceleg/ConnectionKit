@@ -62,22 +62,23 @@ static BOOL sDoneLoading;
 - (id)init;
 {
 	
-		NSRect frame = NSMakeRect(0.0, 0.0, 800,800);
-		
-		NSWindow *window = [[NSWindow alloc]
-							initWithContentRect:frame styleMask:NSBorderlessWindowMask
-// |NSTitledWindowMask|NSClosableWindowMask|NSResizableWindowMask|NSMiniaturizableWindowMask
-					backing:NSBackingStoreBuffered defer:NO];
-
-		[window setReleasedWhenClosed:NO];
-		
-		_webView = [[WebView alloc] initWithFrame:frame];
-		[window setContentView:_webView];
-		
-		[_webView setFrameLoadDelegate:self];
-		
-//		[myWindow orderFront:nil]; 
-
+    NSRect frame = NSMakeRect(0.0, 0.0, 800,800);
+    
+    NSWindow *window = [[NSWindow alloc]
+                        initWithContentRect:frame styleMask:NSBorderlessWindowMask
+                        // |NSTitledWindowMask|NSClosableWindowMask|NSResizableWindowMask|NSMiniaturizableWindowMask
+                        backing:NSBackingStoreBuffered defer:NO];
+    
+    [window setReleasedWhenClosed:NO];
+    
+    _webView = [[WebView alloc] initWithFrame:frame];
+    [window setContentView:_webView];
+    
+    [_webView setFrameLoadDelegate:self];
+    [_webView setPolicyDelegate:self];
+    
+    //		[myWindow orderFront:nil]; 
+    
 	self = [self initWithWindow:window];
     [window release];
     return self;
@@ -85,7 +86,6 @@ static BOOL sDoneLoading;
 
 - (void)dealloc
 {
-	_delegate = nil;
 	[_webView close];
     [_webView release];
     [super dealloc];
@@ -193,6 +193,17 @@ static BOOL sDoneLoading;
 	}
 }
 
-
+- (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener
+{
+    // Offscreen webviews only want to load the main frame. #93483
+    if (frame == [webView mainFrame])
+    {
+        [listener use];
+    }
+    else
+    {
+        [listener ignore];
+    }
+}
 
 @end
