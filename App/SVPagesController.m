@@ -391,8 +391,17 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         [object setIncludeInSiteMenu:[NSNumber numberWithBool:YES]];
     }
 	
+    
     // Do the actual controller-level insertion
     [super addObject:object];
+    
+    
+    // Suckily, the selection doesn't match the inserted object as it orta. And I can't find a good reason why
+    if ([self selectsInsertedObjects] &&
+        ![[self selectedObjects] isEqualToArray:[NSArray arrayWithObject:object]])
+    {
+        [self setSelectedObjects:[NSArray arrayWithObject:object]];
+    }
 }
 
 - (void)addObjects:(NSArray *)objects toCollection:(KTPage *)collection;
