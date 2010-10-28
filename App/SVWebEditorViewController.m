@@ -1137,6 +1137,8 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         {
             controller = [containerControllers anyObject];
         }
+        
+        [selection release];
     }
     [self setFirstResponderItem:controller];
 }
