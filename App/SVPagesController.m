@@ -100,14 +100,44 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 - (void)add:(id)sender;
 {
-    if ([[self entityName] isEqualToString:@"ExternalLink"] && ![self objectURL])
+    [self commitEditingWithDelegate:self
+                  didCommitSelector:@selector(controller:didCommitBeforeAdding:contextInfo:)
+                        contextInfo:NULL];
+}
+
+- (void)controller:(SVPagesController *)controller didCommitBeforeAdding:(BOOL)didCommit contextInfo:(void  *)contextInfo
+{
+    if (didCommit)
     {
-        // Guess URL before continuing
-        SVLink *link = [[SVLinkManager sharedLinkManager] guessLink];
-        if ([link URLString]) [self setObjectURL:[NSURL URLWithString:[link URLString]]];
+        if ([[self entityName] isEqualToString:@"ExternalLink"] && ![self objectURL])
+        {
+            // Guess URL before continuing
+            SVLink *link = [[SVLinkManager sharedLinkManager] guessLink];
+            if ([link URLString]) [self setObjectURL:[NSURL URLWithString:[link URLString]]];
+        }
+        
+        
+        SVSiteItem *item = [self newObject];
+        if ([[item childItems] count] == 1)
+        {
+            // Select the first child, rather than item itself
+            BOOL select = [self selectsInsertedObjects];
+            [self setSelectsInsertedObjects:NO];
+            
+            [self addObject:item];
+            [self setSelectedObjects:[item childPages]];
+            
+            [self setSelectsInsertedObjects:select];
+        }
+        else
+        {
+            [self addObject:item];
+        }
     }
-    
-    [super add:sender];
+    else
+    {
+        NSBeep();
+    }
 }
 
 #pragma mark Managing Objects
