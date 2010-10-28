@@ -48,7 +48,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 {
     [self setBodyHTMLElement:nil];
     OBPOSTCONDITION(!_bodyElement);
- 
+    
+    [_offscreenWebViewController setDelegate:nil];
     [_offscreenWebViewController release];  // dealloc-ing mid-update
     
     [self setRepresentedObject:nil];
