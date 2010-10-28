@@ -684,37 +684,6 @@ static SVGraphicFactory *sRawHTMLFactory;
 
 - (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item; { return KTSourcePriorityNone; }
 
-+ (id)contentsOfPasteboard:(NSPasteboard *)pasteboard forType:(NSString *)type forFactory:(SVGraphicFactory *)aFactory;
-{
-    // What should I read off the pasteboard?
-    id result;
-    
-    SVPlugInPasteboardReadingOptions readingOptions = SVPlugInPasteboardReadingAsData;
-    if ([aFactory respondsToSelector:@selector(readingOptionsForType:pasteboard:)])
-    {
-        readingOptions = [aFactory readingOptionsForType:type pasteboard:pasteboard];
-    }
-    
-    if (readingOptions & SVPlugInPasteboardReadingAsPropertyList)
-    {
-        result = [pasteboard propertyListForType:type];
-    }
-    else if (readingOptions & SVPlugInPasteboardReadingAsString)
-    {
-        result = [pasteboard stringForType:type];
-    }
-    else if (readingOptions & SVPlugInPasteboardReadingAsWebLocation)
-    {
-        result = [[pasteboard readWebLocations] firstObjectKS];
-    }
-    else
-    {
-        result = [pasteboard dataForType:type];
-    }
-    
-    return result;
-}
-
 /*! returns unionSet of acceptedDragTypes from all known KTDataSources */
 + (NSArray *)graphicPasteboardTypes;
 {

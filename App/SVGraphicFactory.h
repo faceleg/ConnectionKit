@@ -75,9 +75,6 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 - (SVGraphic *)graphicWithPasteboardItem:(id <SVPasteboardItem>)item
           insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
-// Convenience for extracting data from pboard
-+ (id)contentsOfPasteboard:(NSPasteboard *)pasteboard forType:(NSString *)type forFactory:(SVGraphicFactory *)aFactory;
-
 
 #pragma mark Menus
 
