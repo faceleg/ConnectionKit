@@ -400,6 +400,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	if (!keyPaths)
 	{
 		keyPaths = [[NSSet alloc] initWithObjects:
+                    @"isCollection",
                     @"thumbnailType",
                     @"customThumbnail",
                     @"thumbnailSourceGraphic",
@@ -531,7 +532,14 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	BOOL childrenNeedDisplay = ([keyPath isEqualToString:@"isDraft"]);
 	
 	
-	[[self outlineView] setItemNeedsDisplay:page childrenNeedDisplay:childrenNeedDisplay];
+    if ([keyPath isEqualToString:@"isCollection"])
+    {
+        [self reloadItem:page reloadChildren:childrenNeedDisplay];
+    }
+    else
+    {
+        [[self outlineView] setItemNeedsDisplay:page childrenNeedDisplay:childrenNeedDisplay];
+    }
 }
 
 #pragma mark Public Functions
