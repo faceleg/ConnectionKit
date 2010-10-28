@@ -25,8 +25,9 @@
 #import "SVApplicationController.h"
 #import "KT.h"
 #import "KTElementPlugInWrapper.h"
-#import "SVLinkManager.h"
 #import "SVGraphicFactory.h"
+#import "SVLinkManager.h"
+#import "SVPageTemplate.h"
 #import "KTToolbars.h"
 
 #import "NSImage+KTExtensions.h"
@@ -169,11 +170,7 @@
     NSPopUpButton *pulldownButton = [result popUpButton];
     NSMenu *menu = [pulldownButton menu];
 	
-    [menu addItemWithTitle:NSLocalizedString(@"Empty/Text", "New page pulldown button menu item title")
-                    action:@selector(addPage:)
-             keyEquivalent:@""];
-    
-	[[pulldownButton lastItem] setIconImage:[NSImage imageNamed:@"toolbar_empty_page"]];
+    [SVPageTemplate populateMenu:menu withPageTemplates:[SVPageTemplate pageTemplates] index:1];
 	
     
     
