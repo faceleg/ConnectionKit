@@ -73,6 +73,7 @@
     // Set our "show border" checkbox from the defaults
     self.iFrameIsBordered = [[NSUserDefaults standardUserDefaults] boolForKey:@"iFramePageletIsBordered"];
     
+    // pick an artibrary, yet visible, size to start with
     self.width = 320;
     self.height = 240;
 }
