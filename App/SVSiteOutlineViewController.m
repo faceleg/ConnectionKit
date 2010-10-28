@@ -150,6 +150,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	
 	
 	// Set up the appearance of the new view
+    [outlineView setAutoresizesOutlineColumn:NO];   // used to do this in the nib, but IB seems determined to turn on back on occasionally
+    
 	NSTableColumn *tableColumn = [outlineView tableColumnWithIdentifier:@"displayName"];
 	KTImageTextCell *imageTextCell = [[[KTImageTextCell alloc] init] autorelease];
 	[imageTextCell setEditable:YES];
@@ -429,12 +431,14 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     {
         if (!_isChangingSelection)
         {
+            _isChangingSelection = YES;
             [[self outlineView] selectItems:[[self content] selectedObjects]];
+            _isChangingSelection = NO;
         }
     }
     else
     {
-        // Ignore objects not in our pages list. If we don't NSOutlineView can occasionally embark on an endless loop.
+        // Ignore objects not in our pages list. If we don't, NSOutlineView can occasionally embark on an endless loop.
         if (![[self pages] containsObject:object])
         {
             return;
