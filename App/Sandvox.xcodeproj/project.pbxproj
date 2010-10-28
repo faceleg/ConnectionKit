@@ -3850,6 +3850,8 @@
 		27FDA7051238F483006E1A0D /* KSFileUtilities */ = {
 			isa = PBXGroup;
 			children = (
+				2797B4BC0EF6E65D00F91398 /* KSURLFormatter.h */,
+				2797B4BD0EF6E65E00F91398 /* KSURLFormatter.m */,
 				CE01A6860EAFD63600BDF264 /* KSWebLocation.h */,
 				CE01A6870EAFD63600BDF264 /* KSWebLocation.m */,
 				27FDA7061238F4C3006E1A0D /* KSURLUtilities.h */,
@@ -4837,8 +4839,6 @@
 		CE01A6B50EAFD63600BDF264 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				2797B4BC0EF6E65D00F91398 /* KSURLFormatter.h */,
-				2797B4BD0EF6E65E00F91398 /* KSURLFormatter.m */,
 				CE01A6A40EAFD63600BDF264 /* NSSortDescriptor+Karelia.h */,
 				CE01A6A50EAFD63600BDF264 /* NSSortDescriptor+Karelia.m */,
 				CE01A6A00EAFD63600BDF264 /* NSHTTPCookieStorage+Karelia.h */,
