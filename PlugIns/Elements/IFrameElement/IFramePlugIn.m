@@ -127,6 +127,12 @@
 - (NSUInteger)minWidth { return 100; }
 - (NSUInteger)minHeight { return 100; }
 
+- (void)makeOriginalSize;
+{
+    [self setWidth:320];
+    [self setHeight:640];
+}
+
 
 #pragma mark Properties
 
