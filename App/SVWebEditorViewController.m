@@ -1232,7 +1232,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         SVSiteItem *page = [KTPage siteItemForPreviewPath:relativePath inManagedObjectContext:[myPage managedObjectContext]];
         if (page)
         {
-            [[self delegate] webEditorViewController:self openPage:page];
+            [[self delegate] webEditorViewController:self openSiteItem:page];
         }
         else if ([[self view] window])
         {

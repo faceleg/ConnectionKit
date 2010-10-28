@@ -263,7 +263,7 @@
 
 #pragma mark Web Editor View Controller Delegate
 
-- (void)webEditorViewController:(SVWebEditorViewController *)sender openPage:(KTPage *)page;
+- (void)webEditorViewController:(SVWebEditorViewController *)sender openSiteItem:(SVSiteItem *)page;
 {
     // Take advantage of our binding and set that to the desired page. It will then trigger a change in our selected pages (probably)
     if (page)
