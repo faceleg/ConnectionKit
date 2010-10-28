@@ -66,8 +66,8 @@
     id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
     if ( location )
     {
-        self.linkURL = [location URL];
-        [self setTitle:[location title]];
+        if ( [location URL] ) self.linkURL = [location URL];
+        if ( [location title] ) [self setTitle:[location title]];
     }
     
     // Set our "show border" checkbox from the defaults
@@ -75,7 +75,7 @@
     
     // pick an artibrary, yet visible, size to start with
     self.width = 320;
-    self.height = 240;
+    self.height = 640;
 }
 
 
@@ -94,9 +94,10 @@
     
     NSString *class = (self.iFrameIsBordered) ? @"iframe-border" : @"iframe-no-border";
     NSString *frameBorder = (self.iFrameIsBordered) ? @"1" : @"0";
+    NSString *src = (self.linkURL) ? [self.linkURL absoluteString] : @"";
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 class, @"class",
-                                [self.linkURL absoluteString], @"src",
+                                src, @"src",
                                 @"test iframe", @"title",
                                 frameBorder, @"frameBorder",
                                 nil];
@@ -125,6 +126,7 @@
 
 - (NSUInteger)minWidth { return 100; }
 - (NSUInteger)minHeight { return 100; }
+
 
 #pragma mark Properties
 
