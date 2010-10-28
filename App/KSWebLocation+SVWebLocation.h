@@ -7,7 +7,7 @@
 //
 
 
-#import "KSWebLocation.h"
+#import "KSWebLocationPasteboardUtilities.h"
 #import "SVWebLocation.h"
 
 

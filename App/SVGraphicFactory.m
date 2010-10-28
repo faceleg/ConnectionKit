@@ -22,7 +22,7 @@
 #import "NSString+KTExtensions.h"
 
 #import "KSSortedMutableArray.h"
-#import "KSWebLocation.h"
+#import "KSWebLocationPasteboardUtilities.h"
 
 #import "NSArray+Karelia.h"
 #import "NSMenuItem+Karelia.h"

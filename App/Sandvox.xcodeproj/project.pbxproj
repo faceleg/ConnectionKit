@@ -501,6 +501,8 @@
 		279F5EB710A73E0A00F6511F /* KSInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 279F5EB610A73E0A00F6511F /* KSInspectorViewController.m */; };
 		279FF2BE0EF27699009F6A16 /* KTPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 279FF2BC0EF27699009F6A16 /* KTPublishingEngine.h */; };
 		279FF2BF0EF27699009F6A16 /* KTPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 279FF2BD0EF27699009F6A16 /* KTPublishingEngine.m */; };
+		27A02CCC12799B4D00408A72 /* KSWebLocationPasteboardUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A02CCA12799B4D00408A72 /* KSWebLocationPasteboardUtilities.h */; };
+		27A02CCD12799B4D00408A72 /* KSWebLocationPasteboardUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A02CCB12799B4D00408A72 /* KSWebLocationPasteboardUtilities.m */; };
 		27A080791151704F005D873A /* SVImageItemCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A080771151704F005D873A /* SVImageItemCell.h */; };
 		27A0807A1151704F005D873A /* SVImageItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A080781151704F005D873A /* SVImageItemCell.m */; };
 		27A095341097598600F43746 /* PageletTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27A095331097598600F43746 /* PageletTemplate.html */; };
@@ -2047,6 +2049,8 @@
 		279F5EB610A73E0A00F6511F /* KSInspectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspectorViewController.m; sourceTree = "<group>"; };
 		279FF2BC0EF27699009F6A16 /* KTPublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPublishingEngine.h; sourceTree = "<group>"; };
 		279FF2BD0EF27699009F6A16 /* KTPublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPublishingEngine.m; sourceTree = "<group>"; };
+		27A02CCA12799B4D00408A72 /* KSWebLocationPasteboardUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWebLocationPasteboardUtilities.h; sourceTree = "<group>"; };
+		27A02CCB12799B4D00408A72 /* KSWebLocationPasteboardUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebLocationPasteboardUtilities.m; sourceTree = "<group>"; };
 		27A080771151704F005D873A /* SVImageItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVImageItemCell.h; sourceTree = "<group>"; };
 		27A080781151704F005D873A /* SVImageItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVImageItemCell.m; sourceTree = "<group>"; };
 		27A0932F0D1DECDA00F57801 /* WebViewEditingHelperClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewEditingHelperClasses.h; sourceTree = "<group>"; };
@@ -3850,6 +3854,8 @@
 		27FDA7051238F483006E1A0D /* KSFileUtilities */ = {
 			isa = PBXGroup;
 			children = (
+				27A02CCA12799B4D00408A72 /* KSWebLocationPasteboardUtilities.h */,
+				27A02CCB12799B4D00408A72 /* KSWebLocationPasteboardUtilities.m */,
 				2797B4BC0EF6E65D00F91398 /* KSURLFormatter.h */,
 				2797B4BD0EF6E65E00F91398 /* KSURLFormatter.m */,
 				CE01A6860EAFD63600BDF264 /* KSWebLocation.h */,
@@ -5773,6 +5779,7 @@
 				27ACC73912631ADC00EA521E /* SVPageThumbnailController.h in Headers */,
 				2750341A126C6BCF006F87ED /* SVMediaDOMController.h in Headers */,
 				27F33BDC126E101600CDC551 /* SVIndexDOMController.h in Headers */,
+				27A02CCC12799B4D00408A72 /* KSWebLocationPasteboardUtilities.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7269,6 +7276,7 @@
 				27ACC73A12631ADC00EA521E /* SVPageThumbnailController.m in Sources */,
 				2750341B126C6BCF006F87ED /* SVMediaDOMController.m in Sources */,
 				27F33BDD126E101600CDC551 /* SVIndexDOMController.m in Sources */,
+				27A02CCD12799B4D00408A72 /* KSWebLocationPasteboardUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

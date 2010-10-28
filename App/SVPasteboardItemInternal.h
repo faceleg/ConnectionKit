@@ -7,7 +7,7 @@
 //
 
 #import "SVPasteboardItem.h"
-#import "KSWebLocation.h"
+#import "KSWebLocationPasteboardUtilities.h"
 
 
 @interface NSPasteboard (SVPasteboardItem) <SVPasteboardItem>

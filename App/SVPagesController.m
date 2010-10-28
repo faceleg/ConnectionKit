@@ -29,7 +29,7 @@
 #import "NSBundle+Karelia.h"
 #import "NSObject+Karelia.h"
 
-#import "KSWebLocation.h"
+#import "KSWebLocationPasteboardUtilities.h"
 
 #import "Debug.h"
 
