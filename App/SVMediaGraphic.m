@@ -56,7 +56,7 @@
     return result;
 }
 
-- (void)willInsertIntoPage:(KTPage *)page;
+- (void)didAddToPage:(KTPage *)page;
 {
     // Placeholder image
     if (![self media])
@@ -66,12 +66,14 @@
         
         [self setSourceWithMediaRecord:media];
         [self setTypeToPublish:[media typeOfFile]];
-        // Sizing will be handled in a moment
+        [self makeOriginalSize];
+        [self setConstrainProportions:[self isConstrainProportionsEditable]];
     }
     
-    [super willInsertIntoPage:page];    // calls -makeOriginalSize internally
+    // Make sure we don't have auto width. Super will then pull down to a good value
+    [self setWidth:[NSNumber numberWithUnsignedInteger:NSUIntegerMax]];
+    [super didAddToPage:page];
     
-    [self setConstrainProportions:[self isConstrainProportionsEditable]];
     
     
     // Show caption
@@ -79,13 +81,6 @@
     {
         [self setShowsCaption:YES];
     }
-}
-
-- (void)didAddToPage:(id <SVPage>)page;
-{
-    // Make sure we don't have auto width. Super will then pull down to a good value
-    [self setWidth:[NSNumber numberWithUnsignedInteger:NSUIntegerMax]];
-    [super didAddToPage:page];
 }
 
 #pragma mark Plug-in
