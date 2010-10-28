@@ -133,19 +133,6 @@
     
     [[self childItems] makeObjectsPerformSelector:@selector(guessEnclosures)];
 }
-- (BOOL)validateCollectionSyndicate:(NSNumber **)syndicate error:(NSError **)outError;
-{
-    // Only collections are allowed to syndicate
-    BOOL result = (![*syndicate boolValue] || [self isCollection]);
-    if (!result && outError)
-    {
-        *outError = [NSError errorWithDomain:NSCocoaErrorDomain
-                                        code:NSValidationNumberTooLargeError
-                        localizedDescription:@"Only collections can be syndicated"];
-    }
-    
-    return result;
-}
 
 @dynamic collectionMaxSyndicatedPagesCount;
 - (BOOL)validateCollectionMaxIndexItems:(NSNumber **)max error:(NSError **)outError;
