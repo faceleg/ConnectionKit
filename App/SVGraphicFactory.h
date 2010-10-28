@@ -69,11 +69,7 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 
 
 #pragma mark Pasteboard
-
 - (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
-
-- (SVGraphic *)graphicWithPasteboardItem:(id <SVPasteboardItem>)item
-          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
 #pragma mark Menus

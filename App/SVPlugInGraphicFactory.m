@@ -123,24 +123,6 @@
     return result;
 }
 
-- (SVGraphic *)graphicWithPasteboardItem:(id <SVPasteboardItem>)item
-          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    SVPlugInGraphic *result = nil;
-    
-    result = (id)[self insertNewGraphicInManagedObjectContext:context];
-    @try
-    {
-        [[result plugIn] awakeFromPasteboardItems:[NSArray arrayWithObject:item]];
-    }
-    @catch (NSException *exception)
-    {
-        // TODO: log
-    }
-    
-    return result;
-}
-
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"%@ %@", [super description], [self plugInClass]];

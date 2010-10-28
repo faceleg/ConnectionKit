@@ -141,18 +141,6 @@
     return KTSourcePriorityNone;
 }
 
-- (SVGraphic *)graphicWithPasteboardItem:(id <SVPasteboardItem>)item
-          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    // Think this method can be ditched soon
-    
-    SVMediaGraphic *result = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
-    [result awakeFromPasteboardItems:[NSArray arrayWithObject:item]];
-    [result makeOriginalSize]; // It's someone else's responsibility to make it smaller again. #92640
-    
-    return result;
-}
-
 @end
 
 
@@ -675,7 +663,7 @@ static SVGraphicFactory *sRawHTMLFactory;
     SVGraphic *result = nil;
     if (factory)
     {        
-        result = [factory graphicWithPasteboardItem:location
+        result = [factory graphicWithPasteboardItems:[NSArray arrayWithObject:location]
                      insertIntoManagedObjectContext:context];
     }
     
@@ -720,12 +708,6 @@ static SVGraphicFactory *sRawHTMLFactory;
 - (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type;
 {
     return KTSourcePriorityIdeal;
-}
-
-- (SVGraphic *)graphicWithPasteboardItem:(id <SVPasteboardItem>)item
-          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    return nil;
 }
 
 @end
