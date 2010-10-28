@@ -25,17 +25,16 @@
 #import "assertions.h"
 #import "Macros.h"
 
-// Plugins (abstract superclass of all plugins)
+// Core
 #import "SVPlugIn.h"
-#import "SVIndexPlugIn.h"
-
 #import "SVPlugInContext.h"
-
-// UI
-#import "SVIndexInspectorViewController.h"
 
 // Page composition
 #import "SVPageProtocol.h"
+
+// Indexes
+#import "SVIndexPlugIn.h"
+#import "SVIndexInspectorViewController.h"
 
 //  Media
 #import "SVMedia.h"
@@ -56,7 +55,6 @@
 #import "NSBundle+Karelia.h"
 #import "NSData+Karelia.h"
 #import "NSString+KTExtensions.h"
-#import "NSString+Karelia.h"
 #import "NSURL+Sandvox.h"
 
 // AppKit extensions
