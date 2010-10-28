@@ -37,7 +37,6 @@
 #import "ContactElementField.h"
 
 #import "ContactPlugIn.h"
-#import <NSString+Karelia.h>
 
 
 @implementation ContactElementField
