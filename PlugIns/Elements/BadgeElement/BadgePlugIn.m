@@ -123,10 +123,14 @@ static NSArray *sAltStrings = nil;
 // Use a hash to get a sort of arbitrary string for this unique document
 - (NSString *)generateBlurbVariant:(NSInteger)aVariant
 {
-    NSString *seedString = [NSString UUIDString];
+    CFUUIDRef uuid = CFUUIDCreate(NULL);
+    NSString *seedString = NSMakeCollectable(CFUUIDCreateString(NULL, uuid));
+    CFRelease(uuid);
+    
     
     NSData *hashData = [[seedString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] SHA1Digest];
     unsigned char *bytes = (unsigned char *)[hashData bytes];
+    [seedString release];
     // we have a nice 20-byte hash .... now to boil this down to a very small number!
 	
     // Make a quick checksum of this
