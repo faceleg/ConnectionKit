@@ -535,6 +535,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     if ([keyPath isEqualToString:@"isCollection"])
     {
         [self reloadItem:page reloadChildren:childrenNeedDisplay];
+        [[self outlineView] expandItem:page];
     }
     else
     {
