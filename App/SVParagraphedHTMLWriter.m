@@ -82,6 +82,32 @@
     return result;
 }
 
+- (DOMElement *)convertElementToParagraph:(DOMElement *)element cachedComputedStyle:(DOMCSSStyleDeclaration *)style;
+{
+    if (!style) style = [[element ownerDocument] getComputedStyle:element pseudoElement:@""];
+    
+    
+    // Swap the element for a <P>, trying to retain as much style as possible. #92641
+    NSDictionary *oldStyle = [self dictionaryWithCSSStyle:style tagName:@"P"];
+    DOMElement *result = [self replaceDOMElement:element withElementWithTagName:@"P"];
+    
+    DOMCSSStyleDeclaration *paragraphStyle = [[element ownerDocument] getComputedStyle:result
+                                                                         pseudoElement:nil];
+    
+    for (NSString *aProperty in oldStyle)
+    {
+        NSString *aValue = [paragraphStyle getPropertyValue:aProperty];
+        if (![aValue isEqualToString:[oldStyle objectForKey:aProperty]])
+        {
+            [[result style] setProperty:aProperty
+                                  value:[oldStyle objectForKey:aProperty]
+                               priority:@""];
+        }
+    }
+    
+    return result;
+}
+
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 {
     // Ignore callout <div>s
@@ -97,7 +123,7 @@
     // Completely invalid, or top-level elements should be converted into paragraphs
     else if ([self openElementsCount] == 0)
     {
-        return [self replaceDOMElement:element withElementWithTagName:@"P"];
+        return [self convertElementToParagraph:element cachedComputedStyle:nil];
     }
     
     
@@ -114,25 +140,7 @@
             }
             else
             {
-                // Swap the element for a <P>, trying to retain as much style as possible. #92641
-                NSDictionary *oldStyle = [self dictionaryWithCSSStyle:style tagName:@"P"];
-                DOMElement *result = [self replaceDOMElement:element withElementWithTagName:@"P"];
-                
-                DOMCSSStyleDeclaration *paragraphStyle = [[element ownerDocument] getComputedStyle:result
-                                                                                     pseudoElement:nil];
-                
-                for (NSString *aProperty in oldStyle)
-                {
-                    NSString *aValue = [paragraphStyle getPropertyValue:aProperty];
-                    if (![aValue isEqualToString:[oldStyle objectForKey:aProperty]])
-                    {
-                        [[result style] setProperty:aProperty
-                                              value:[oldStyle objectForKey:aProperty]
-                                           priority:@""];
-                    }
-                }
-                
-                return result;
+                return [self convertElementToParagraph:element cachedComputedStyle:style];
             }
         }
         else
