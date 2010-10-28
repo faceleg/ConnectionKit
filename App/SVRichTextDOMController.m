@@ -381,7 +381,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     SVMediaGraphic *image = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
     if (media)
     {
-        [image setMedia:media];
+        [image setSourceWithMediaRecord:media];
     }
     else
     {
