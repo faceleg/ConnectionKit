@@ -72,6 +72,9 @@
     
     // Set our "show border" checkbox from the defaults
     self.iFrameIsBordered = [[NSUserDefaults standardUserDefaults] boolForKey:@"iFramePageletIsBordered"];
+    
+    self.width = 320;
+    self.height = 240;
 }
 
 
@@ -119,6 +122,8 @@
 
 + (BOOL)isExplicitlySized { return YES; }
 
+- (NSUInteger)minWidth { return 100; }
+- (NSUInteger)minHeight { return 100; }
 
 #pragma mark Properties
 
