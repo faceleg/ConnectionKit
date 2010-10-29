@@ -173,7 +173,7 @@
     [result setImage:icon];
     [icon release];
     
-    //[result setRepresentedObject:self];
+    [result setRepresentedObject:self];
     
     return [result autorelease];
 }

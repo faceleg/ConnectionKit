@@ -17,6 +17,7 @@
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "SVPagesController.h"
+#import "SVPageTemplate.h"
 #import "KTElementPlugInWrapper.h"
 
 #import "NSArray+KTExtensions.h"
@@ -586,16 +587,16 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (IBAction)addPage:(id)sender;             // your basic page
 {
+    SVPageTemplate *template = [sender representedObject];
+    
     [[self content] setEntityName:@"Page"];
-    [[self content] setCollectionPreset:nil];
+    [[self content] setCollectionPreset:[template collectionPreset]];
     [[self content] add:self];
 }
 
 - (IBAction)addCollection:(id)sender;       // a collection. Uses [sender representedObject] for preset info
 {
-    [[self content] setEntityName:@"Page"];
-    [[self content] setCollectionPreset:[sender representedObject]];
-    [[self content] add:self];
+    [self addPage:sender];
 }
 
 - (IBAction)addExternalLinkPage:(id)sender; // external link
