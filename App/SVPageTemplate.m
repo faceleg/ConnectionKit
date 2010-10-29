@@ -164,15 +164,15 @@
         
         
         // One-shot pages
-        aTemplate = [[SVPageTemplate alloc] init];
+        aGraphicFactory = [SVGraphicFactory factoryWithIdentifier:@"sandvox.ContactElement"];
+        aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
         [aTemplate setTitle:NSLocalizedString(@"Contact Form", "menu item title")];
-        [aTemplate setIcon:[NSImage imageNamed:@"toolbar_empty_page"]];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
-        aTemplate = [[SVPageTemplate alloc] init];
+        aGraphicFactory = [SVGraphicFactory factoryWithIdentifier:@"sandvox.SiteMapElement"];
+        aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
         [aTemplate setTitle:NSLocalizedString(@"Sitemap", "menu item title")];
-        [aTemplate setIcon:[NSImage imageNamed:@"toolbar_empty_page"]];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
