@@ -81,7 +81,6 @@ typedef enum
 
 - (NSString *)label;
 - (void)setLabel:(NSString *)label;
-- (NSString *)labelWithLocalizedColonSuffix;
 
 - (NSString *)defaultString;
 - (void)setDefaultString:(NSString *)defaultString;
