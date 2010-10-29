@@ -84,9 +84,6 @@
 @property(nonatomic, copy) NSString *subjectText;
 
 - (int)subjectType;
-- (void)setEncodedRecipient:(NSString *)anEnc;
-- (void)setSubjectInputHTML:(NSString *)anHTML;
-- (void)setSubjectPrompt:(NSString *)aPrompt;
 - (void)setSubjectText:(NSString *)anAddress;
 - (void)setSubjectType:(int)aSubjectType;
 

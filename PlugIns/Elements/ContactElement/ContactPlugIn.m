@@ -232,11 +232,6 @@ triggerChangeNotificationsForDependentKey: @"subjectInputHTML"];
 	return result;
 }
 
-- (void)setSubjectPrompt:(NSString *)aPrompt
-{
-	[self shouldNotImplement:_cmd];
-}
-
 - (NSString *)subjectInputHTML
 {
 	NSString *result = nil;
@@ -289,11 +284,6 @@ triggerChangeNotificationsForDependentKey: @"subjectInputHTML"];
 	}
 	
 	return result;
-}
-
-- (void)setSubjectInputHTML:(NSString *)anHTML
-{
-	[self shouldNotImplement:_cmd];
 }
 
 @synthesize address = _address;
@@ -391,11 +381,6 @@ triggerChangeNotificationsForDependentKey: @"subjectInputHTML"];
 }
 #endif
 
-
-- (void)setEncodedRecipient:(NSString *)anEnc
-{
-	[self shouldNotImplement:_cmd];
-}
 
 #pragma mark *** NEW STUFF ***
 
