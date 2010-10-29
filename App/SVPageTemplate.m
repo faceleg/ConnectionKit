@@ -15,6 +15,54 @@
 
 @implementation SVPageTemplate
 
+- (id)initWithCollectionPreset:(NSDictionary *)presetDict;
+{
+    [self init];
+    [self setCollectionPreset:presetDict];
+    
+    NSString *bundleIdentifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
+    
+    KTElementPlugInWrapper *plugin = (bundleIdentifier ?
+                                      [KTElementPlugInWrapper pluginWithIdentifier:bundleIdentifier] :
+                                      nil);
+    
+    NSString *presetTitle = [presetDict objectForKey:@"KTPresetTitle"];
+    if (plugin) presetTitle = [[plugin bundle] localizedStringForKey:presetTitle
+                                                               value:presetTitle
+                                                               table:nil];
+    [self setTitle:presetTitle];
+    
+    
+    id priorityID = [presetDict objectForKey:@"KTPluginPriority"];
+    int priority = 5;
+    if (nil != priorityID)
+    {
+        priority = [priorityID intValue];
+    } 
+    
+    
+    NSImage *icon = nil;
+    if (plugin)
+    {
+        icon = [[plugin graphicFactory] icon];
+#ifdef DEBUG
+        if (nil == icon)
+        {
+            NSLog(@"nil pluginIcon for %@", presetTitle);
+        }
+#endif
+    }
+    else	// built-in, no bundle, so try to get icon directly
+    {
+        icon = [presetDict objectForKey:@"KTPluginIcon"];
+    }
+    [self setIcon:icon];
+    
+    
+    
+    return self;
+}
+
 - (void) dealloc;
 {
     [_title release];
@@ -80,51 +128,9 @@
         
         
         // Collection Presets
-        for (NSDictionary *presetDict in [self collectionPresets])
+        for (NSDictionary *aPreset in [self collectionPresets])
         {
-            aTemplate = [[SVPageTemplate alloc] init];
-            [aTemplate setCollectionPreset:presetDict];
-            
-            NSString *bundleIdentifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
-            
-            KTElementPlugInWrapper *plugin = (bundleIdentifier ?
-                                              [KTElementPlugInWrapper pluginWithIdentifier:bundleIdentifier] :
-                                              nil);
-                        
-            NSString *presetTitle = [presetDict objectForKey:@"KTPresetTitle"];
-            if (plugin) presetTitle = [[plugin bundle] localizedStringForKey:presetTitle
-                                                                       value:presetTitle
-                                                                       table:nil];
-            [aTemplate setTitle:presetTitle];
-            
-            
-            id priorityID = [presetDict objectForKey:@"KTPluginPriority"];
-            int priority = 5;
-            if (nil != priorityID)
-            {
-                priority = [priorityID intValue];
-            } 
-            
-            
-            NSImage *icon = nil;
-            if (plugin)
-            {
-                icon = [[plugin graphicFactory] icon];
-#ifdef DEBUG
-                if (nil == icon)
-                {
-                    NSLog(@"nil pluginIcon for %@", presetTitle);
-                }
-#endif
-            }
-            else	// built-in, no bundle, so try to get icon directly
-            {
-                icon = [presetDict objectForKey:@"KTPluginIcon"];
-            }
-            [aTemplate setIcon:icon];
-            
-                        
-            
+            aTemplate = [[SVPageTemplate alloc] initWithCollectionPreset:aPreset];            
             [buffer addObject:aTemplate];
             [aTemplate release];
         }
