@@ -360,7 +360,7 @@
         unsigned ourIndex = [fields indexOfObjectIdenticalTo:self];
         
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"preferredInputName LIKE[c] %@", result];
-		NSArray *previousMatches = [[fields subarrayToIndex:ourIndex] filteredArrayUsingPredicate:predicate];
+		NSArray *previousMatches = [[fields subarrayWithRange:NSMakeRange(0, ourIndex)] filteredArrayUsingPredicate:predicate];
 		
 		int i = [previousMatches count];
 		while ([previousMatches count] > 0)
@@ -369,7 +369,7 @@
 			result = [preferredName stringByAppendingFormat:@"%i", i];
             
             predicate = [NSPredicate predicateWithFormat:@"preferredInputName LIKE[c] %@", result];
-            previousMatches = [[fields subarrayToIndex:ourIndex] filteredArrayUsingPredicate:predicate];
+            previousMatches = [[fields subarrayWithRange:NSMakeRange(0, ourIndex)] filteredArrayUsingPredicate:predicate];
 		}
     }
 	
