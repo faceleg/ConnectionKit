@@ -9,6 +9,7 @@
 #import "SVPageTemplate.h"
 
 #import "KTElementPlugInWrapper.h"
+#import "SVGraphicFactory.h"
 
 #import "NSSet+Karelia.h"
 
@@ -63,12 +64,25 @@
     return self;
 }
 
-- (void) dealloc;
+- (id)initWithGraphicFactory:(SVGraphicFactory *)factory;
+{
+    OBPRECONDITION(factory);
+    
+    [self init];
+    
+    _graphicFactory = [factory retain]; // TOOD: Factories are immutable at the moment, so could copy instead
+    
+    [self setIcon:[factory icon]];
+    
+    return self;
+}
+
+- (void)dealloc;
 {
     [_title release];
     [_icon release];
     [_collectionPreset release];
-    [_graphicIdentifier release];
+    [_graphicFactory release];
     
     [super dealloc];
 }
@@ -114,15 +128,14 @@
         [buffer addObject:aTemplate];
         [aTemplate release];
         
-        aTemplate = [[SVPageTemplate alloc] init];
+        SVGraphicFactory *aGraphicFactory = [SVGraphicFactory mediaPlaceholderFactory];
+        aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
         [aTemplate setTitle:NSLocalizedString(@"Photo/Video", "menu item title")];
-        [aTemplate setIcon:[NSImage imageNamed:@"toolbar_empty_page"]];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
-        aTemplate = [[SVPageTemplate alloc] init];
+        aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
         [aTemplate setTitle:NSLocalizedString(@"Photo/Video – Without Sidebar", "menu item title")];
-        [aTemplate setIcon:[NSImage imageNamed:@"toolbar_empty_page"]];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
@@ -160,7 +173,7 @@
 @synthesize title = _title;
 @synthesize icon = _icon;
 @synthesize collectionPreset = _collectionPreset;
-@synthesize graphicIdentifier = _graphicIdentifier;
+@synthesize graphicFactory = _graphicFactory;
 
 - (NSMenuItem *)makeMenuItem;
 {
