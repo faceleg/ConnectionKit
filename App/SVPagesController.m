@@ -49,9 +49,15 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 
 @interface SVPagesController ()
+
+@property(nonatomic, retain, readwrite) SVPageTemplate *pageTemplate;
+@property(nonatomic, copy, readwrite) NSURL *objectURL;
+
 - (id)newObjectWithPredecessor:(KTPage *)predecessor allowCollections:(BOOL)allowCollections;
 - (void)configurePageAsCollection:(KTPage *)collection;
+
 - (void)didInsertObject:(id)object intoCollection:(KTPage *)collection;
+
 @end
 
 
@@ -143,10 +149,21 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 #pragma mark Managing Objects
 
-@dynamic entityName;
-
 @synthesize pageTemplate = _template;
+- (void)setEntityNameWithPageTemplate:(SVPageTemplate *)pageTemplate;
+{
+    [self setObjectURL:nil];
+    [self setEntityName:@"Page"];
+    [self setPageTemplate:pageTemplate];
+}
+
 @synthesize objectURL = _URL;
+- (void)setEntityTypeWithURL:(NSURL *)URL external:(BOOL)external;
+{
+    [self setPageTemplate:nil];
+    [self setEntityName:(external ? @"ExternalLink" : @"File")];
+    [self setObjectURL:URL];
+}
 
 - (id)newObject
 {

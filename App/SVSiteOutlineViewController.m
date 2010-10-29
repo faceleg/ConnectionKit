@@ -589,8 +589,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 {
     SVPageTemplate *template = [sender representedObject];
     
-    [[self content] setEntityName:@"Page"];
-    [[self content] setPageTemplate:template];
+    [[self content] setEntityNameWithPageTemplate:template];
     [[self content] add:self];
 }
 
@@ -601,15 +600,13 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (IBAction)addExternalLinkPage:(id)sender; // external link
 {
-    [[self content] setEntityName:@"ExternalLink"];
-    [[self content] setObjectURL:nil];
+    [[self content] setEntityTypeWithURL:nil external:YES];
     [[self content] add:self];
 }
 
 - (IBAction)addRawTextPage:(id)sender;      // Raw HTML page
 {
-    [[self content] setEntityName:@"File"];
-    [[self content] setObjectURL:nil];    // will make its own file
+    [[self content] setEntityTypeWithURL:nil external:NO];
     [[self content] add:self];
 }
 
@@ -633,8 +630,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     if (returnCode == NSCancelButton) return;
     
     
-    [[self content] setEntityName:@"File"];
-    [[self content] setObjectURL:[sheet URL]];
+    [[self content] setEntityTypeWithURL:[sheet URL] external:NO];
     [[self content] add:self];
 }
 

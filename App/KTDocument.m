@@ -385,7 +385,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     [controller setEntityName:@"Page"];
     
     SVPageTemplate *template = [[SVPageTemplate alloc] initWithCollectionPreset:[NSDictionary dictionary]];
-    [controller setPageTemplate:template];
+    [controller setEntityNameWithPageTemplate:template];
     [template release];
     
     KTPage *result = [controller newObject];

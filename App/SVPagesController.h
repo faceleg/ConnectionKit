@@ -38,15 +38,18 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 + (NSArrayController *)controllerWithPagesToIndexInCollection:(KTPage *)collection;
 
 
-#pragma mark Managing Objects
+#pragma mark Core Data Support
 
-// To create a new page/item:
-//  1.  Set .entityName to what you want. Should be Page, ExternalLink, or File.
-//  2.  Optionally, specify any additional info through -setCollectionPreset: or -setFileURL:
-//  3.  Call one of: -add: -newObject -newObjectWithPredecessor:
-@property(nonatomic, copy) NSString *entityName;
-@property(nonatomic, retain) SVPageTemplate *pageTemplate;
-@property(nonatomic, copy) NSURL *objectURL;
+// Sets the controller up to produce regular pages. Optional template specifies how to populate the new page
+- (void)setEntityNameWithPageTemplate:(SVPageTemplate *)pageTemplate;
+@property(nonatomic, retain, readonly) SVPageTemplate *pageTemplate;
+
+// Sets the controller up to produce File Downloads or External Link pages. If URL is nil for an external link, controller will attempt to guess it at insert-time
+- (void)setEntityTypeWithURL:(NSURL *)URL external:(BOOL)external;
+@property(nonatomic, copy, readonly) NSURL *objectURL;
+
+
+#pragma mark Managing Objects
 
 - (void)addObject:(id)object toCollection:(KTPage *)collection;
 - (void)addObjects:(NSArray *)objects toCollection:(KTPage *)collection;
