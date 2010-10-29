@@ -26,7 +26,7 @@ typedef enum {
 
 
 @interface NSScrollView (WEK_WebDynamicScrollBarsView)
-- (void)setVerticalScrollingMode:(ScrollbarMode)verticalMode;
+//- (void)setVerticalScrollingMode:(ScrollbarMode)verticalMode;
 @end
 
 

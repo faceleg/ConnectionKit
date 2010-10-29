@@ -118,10 +118,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [_webView setShouldCloseWithWindow:YES];    // seems correct for a doc-based app
     [_webView setMaintainsBackForwardList:NO];
     
-    NSScrollView *scrollView = [[[[_webView mainFrame] frameView] documentView] enclosingScrollView];
-    if ([scrollView respondsToSelector:@selector(setVerticalScrollingMode:)])
+    if ([_webView respondsToSelector:@selector(setAlwaysShowVerticalScroller:)])
     {
-        [scrollView setVerticalScrollingMode:ScrollbarAlwaysOn];
+        [_webView setBool:YES forKey:@"alwaysShowVerticalScroller"];
     }
     
 #ifndef VARIANT_RELEASE
