@@ -201,7 +201,7 @@ triggerChangeNotificationsForDependentKey: @"subjectInputHTML"];
 
 #pragma mark Derived Accessors
 
-- (NSString *)uniqueID; { return @"contact-form"; }
+- (NSString *)uniqueID; { return @"contactform"; }
 
 - (NSString *)CSSURLs
 {
