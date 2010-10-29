@@ -217,10 +217,10 @@
 }
 
 
-+ (void)populateMenuWithCollectionPresets:(NSMenu *)aMenu atIndex:(NSUInteger)index;
++ (NSDictionary *)collectionPresetsByIndexIdentifier
 {
-    NSMutableDictionary *dictOfPresets = [NSMutableDictionary dictionary];
-    [dictOfPresets setObject:[self emptyCollectionPreset] forKey:@"0"];
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    [result setObject:[self emptyCollectionPreset] forKey:@"0"];
 	
     
     // Go through and get the localized names of each bundle, and put into a dict keyed by name
@@ -253,13 +253,21 @@
                 NSMutableDictionary *newPreset = [presetDict mutableCopy];
                 [newPreset setObject:[bundle bundleIdentifier] forKey:@"KTPresetIndexBundleIdentifier"];
                 
-                [dictOfPresets setObject:newPreset
-                                  forKey:[NSString stringWithFormat:@"%d %@", priority, presetTitle]];
+                [result setObject:newPreset
+                           forKey:[NSString stringWithFormat:@"%d %@", priority, presetTitle]];
                 
                 [newPreset release];
             }
 		}
 	}
+    return result;
+}
+
++ (void)populateMenuWithCollectionPresets:(NSMenu *)aMenu atIndex:(NSUInteger)index;
+{
+    NSMutableDictionary *dictOfPresets;
+  dictOfPresets = [self collectionPresetsByIndexIdentifier];
+
 	
 	// Now add the sorted arrays
 	NSArray *sortedPriorityNames = [[dictOfPresets allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
