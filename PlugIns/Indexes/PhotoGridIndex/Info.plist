@@ -59,25 +59,6 @@
 			<key>KTPresetUntitled</key>
 			<string>Photo Album</string>
 		</dict>
-		<dict>
-			<key>KTPageSettings</key>
-			<dict>
-				<key>collectionSortAscending</key>
-				<false/>
-				<key>navigationArrowsStyle</key>
-				<integer>1</integer>
-				<key>collectionSortOrder</key>
-				<integer>2</integer>
-				<key>collectionSyndicationType</key>
-				<integer>2</integer>
-				<key>thumbnailType</key>
-				<integer>3</integer>
-			</dict>
-			<key>KTPresetTitle</key>
-			<string>Photo Blog</string>
-			<key>KTPresetUntitled</key>
-			<string>Photo Blog</string>
-		</dict>
 	</array>
 	<key>NSPrincipalClass</key>
 	<string>PhotoGridIndex</string>
