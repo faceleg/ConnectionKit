@@ -57,9 +57,6 @@ enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 
 @interface ContactPlugIn ()
 
-- (NSArray *)fieldsPropertyListRepresentation;
-- (NSArray *)fieldsByFetchingFromPluginProperties;
-
 #ifdef DEBUG
 - (void)decode:(NSString *)v;
 #endif
@@ -428,13 +425,6 @@ triggerChangeNotificationsForDependentKey: @"subjectInputHTML"];
 			[_emailField release]; _emailField = [aField retain];
 		}
     }
-}
-
-/*	Returns the list of fields as property list suitable for archiving
- */
-- (NSArray *)fieldsPropertyListRepresentation
-{
-	return [[self fields] valueForKey:@"dictionaryRepresentation"];
 }
 
 #pragma mark Metrics
