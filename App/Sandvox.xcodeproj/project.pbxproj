@@ -606,8 +606,6 @@
 		27E24AC710FB9591004EFE9F /* SVLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E24AC510FB9591004EFE9F /* SVLink.m */; };
 		27E24EED10FCB218004EFE9F /* SVLinkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E24EEB10FCB218004EFE9F /* SVLinkManager.h */; };
 		27E24EEE10FCB218004EFE9F /* SVLinkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E24EEC10FCB218004EFE9F /* SVLinkManager.m */; };
-		27E31C330D4B7E1600895DA1 /* KTElementPlugInWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31C310D4B7E1600895DA1 /* KTElementPlugInWrapper.h */; settings = {ATTRIBUTES = (); }; };
-		27E31C340D4B7E1600895DA1 /* KTElementPlugInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31C320D4B7E1600895DA1 /* KTElementPlugInWrapper.m */; };
 		27E83A3810ABB1D6003B8F2F /* KSCollectionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E83A3710ABB1D6003B8F2F /* KSCollectionController.h */; settings = {ATTRIBUTES = (); }; };
 		27E83E4810D9A9BA00FBEC84 /* CalloutTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */; };
 		27EF1BD00DC1F9BF00976C66 /* SVSiteOutlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF1BCE0DC1F9BF00976C66 /* SVSiteOutlineViewController.m */; };
@@ -1025,7 +1023,6 @@
 		CE01E71F1208A8590093565F /* toolbar_audio.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E7081208A8590093565F /* toolbar_audio.tiff */; };
 		CE01E7201208A8590093565F /* toolbar_badge.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E7091208A8590093565F /* toolbar_badge.tiff */; };
 		CE01E7211208A8590093565F /* toolbar_choose_design.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E70A1208A8590093565F /* toolbar_choose_design.tiff */; };
-		CE01E7221208A8590093565F /* toolbar_collection.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E70B1208A8590093565F /* toolbar_collection.tiff */; };
 		CE01E7231208A8590093565F /* toolbar_edit_link.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E70C1208A8590093565F /* toolbar_edit_link.tiff */; };
 		CE01E7251208A8590093565F /* toolbar_export.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E70E1208A8590093565F /* toolbar_export.tiff */; };
 		CE01E7271208A8590093565F /* toolbar_group.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E7101208A8590093565F /* toolbar_group.tiff */; };
@@ -1054,6 +1051,8 @@
 		CE05013B127B7FE00082BFA9 /* page_contact_sb.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE05013A127B7FE00082BFA9 /* page_contact_sb.tiff */; };
 		CE05013D127B7FE60082BFA9 /* page_sitemap_sb.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE05013C127B7FE60082BFA9 /* page_sitemap_sb.tiff */; };
 		CE050182127B86440082BFA9 /* page_html.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE050181127B86440082BFA9 /* page_html.tiff */; };
+		CE050229127B8DD80082BFA9 /* KTElementPlugInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31C320D4B7E1600895DA1 /* KTElementPlugInWrapper.m */; };
+		CE05022A127B8DD90082BFA9 /* KTElementPlugInWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31C310D4B7E1600895DA1 /* KTElementPlugInWrapper.h */; };
 		CE12151E0B5EFF3200C40320 /* LivePagesDisabled.html in Resources */ = {isa = PBXBuildFile; fileRef = CE12151D0B5EFF3200C40320 /* LivePagesDisabled.html */; };
 		CE13026B0BD009D000DC2439 /* SyntaxColorDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026A0BD009D000DC2439 /* SyntaxColorDefaults.plist */; };
 		CE13026D0BD009E700DC2439 /* HTMLSyntaxColoring.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */; };
@@ -2631,7 +2630,6 @@
 		CE01E7081208A8590093565F /* toolbar_audio.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_audio.tiff; sourceTree = "<group>"; };
 		CE01E7091208A8590093565F /* toolbar_badge.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_badge.tiff; sourceTree = "<group>"; };
 		CE01E70A1208A8590093565F /* toolbar_choose_design.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_choose_design.tiff; sourceTree = "<group>"; };
-		CE01E70B1208A8590093565F /* toolbar_collection.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_collection.tiff; sourceTree = "<group>"; };
 		CE01E70C1208A8590093565F /* toolbar_edit_link.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_edit_link.tiff; sourceTree = "<group>"; };
 		CE01E70E1208A8590093565F /* toolbar_export.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_export.tiff; sourceTree = "<group>"; };
 		CE01E7101208A8590093565F /* toolbar_group.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_group.tiff; sourceTree = "<group>"; };
@@ -5174,7 +5172,6 @@
 				CE01E7081208A8590093565F /* toolbar_audio.tiff */,
 				CE01E7091208A8590093565F /* toolbar_badge.tiff */,
 				CE01E70A1208A8590093565F /* toolbar_choose_design.tiff */,
-				CE01E70B1208A8590093565F /* toolbar_collection.tiff */,
 				CE01E70C1208A8590093565F /* toolbar_edit_link.tiff */,
 				CE01E70E1208A8590093565F /* toolbar_export.tiff */,
 				CE89C2711239AB1A0056D74B /* toolbar_flash.tiff */,
@@ -5427,7 +5424,6 @@
 				27F0341A0D34E55B005CD5B7 /* KTImageScalingSettings.h in Headers */,
 				27F63BD40D463F7800FAEB48 /* KTMaster.h in Headers */,
 				272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */,
-				27E31C330D4B7E1600895DA1 /* KTElementPlugInWrapper.h in Headers */,
 				27ACACB60D588F64004732D0 /* KTPlaceholderBindingTextField.h in Headers */,
 				3C682BBA0D6234D200B4D485 /* SandvoxPlugin.h in Headers */,
 				3C682BBD0D6234DB00B4D485 /* KTSite.h in Headers */,
@@ -5767,6 +5763,7 @@
 				27F33BDC126E101600CDC551 /* SVIndexDOMController.h in Headers */,
 				27A02CCC12799B4D00408A72 /* KSWebLocationPasteboardUtilities.h in Headers */,
 				27F9A745127A31070042D7B8 /* SVPageTemplate.h in Headers */,
+				CE05022A127B8DD90082BFA9 /* KTElementPlugInWrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6382,7 +6379,6 @@
 				CE01E71F1208A8590093565F /* toolbar_audio.tiff in Resources */,
 				CE01E7201208A8590093565F /* toolbar_badge.tiff in Resources */,
 				CE01E7211208A8590093565F /* toolbar_choose_design.tiff in Resources */,
-				CE01E7221208A8590093565F /* toolbar_collection.tiff in Resources */,
 				CE01E7231208A8590093565F /* toolbar_edit_link.tiff in Resources */,
 				CE01E7251208A8590093565F /* toolbar_export.tiff in Resources */,
 				CE01E7271208A8590093565F /* toolbar_group.tiff in Resources */,
@@ -6910,7 +6906,6 @@
 				27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */,
 				272FBCCA0D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m in Sources */,
 				272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */,
-				27E31C340D4B7E1600895DA1 /* KTElementPlugInWrapper.m in Sources */,
 				273864330D50A6F900A8A209 /* KTPage+Children.m in Sources */,
 				273864660D50BB1D00A8A209 /* KTPage+Indexes.m in Sources */,
 				27ACACB70D588F64004732D0 /* KTPlaceholderBindingTextField.m in Sources */,
@@ -7253,6 +7248,7 @@
 				27F33BDD126E101600CDC551 /* SVIndexDOMController.m in Sources */,
 				27A02CCD12799B4D00408A72 /* KSWebLocationPasteboardUtilities.m in Sources */,
 				27F9A746127A31070042D7B8 /* SVPageTemplate.m in Sources */,
+				CE050229127B8DD80082BFA9 /* KTElementPlugInWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

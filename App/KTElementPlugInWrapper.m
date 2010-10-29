@@ -205,21 +205,9 @@
 
 #pragma mark Collection Presets
 
-+ (NSDictionary *)emptyCollectionPreset;
-{
-    NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
-                            NSLocalizedString(@"Empty Collection", "toolbar menu"), @"KTPresetTitle",
-                            [NSNumber numberWithInt:0], @"KTPluginPriority",
-							[NSImage imageNamed:@"toolbar_collection.tiff" ], @"KTPluginIcon",	// indicator of the actual icon
-                            nil];
-    
-    return result;
-}
-
 + (NSSet *)collectionPresets;
 {
     NSMutableSet *result = [NSMutableSet set];
-    [result addObject:[self emptyCollectionPreset]];
 	
     
     // Go through and get the localized names of each bundle, and put into a dict keyed by name

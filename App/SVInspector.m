@@ -95,13 +95,6 @@
     [_pageInspector setIcon:[NSImage imageNamed:@"page_inspector"]];
     
     
-    // Collection
-    _collectionInspector = [[KSInspectorViewController alloc] initWithNibName:@"CollectionInspector" bundle:nil];
-    [_collectionInspector setIdentifier:@"com.karelia.Sandvox.CollectionInspector"];
-    [_collectionInspector setTitle:NSLocalizedString(@"Collection", @"Collection Inspector")];
-    [_collectionInspector setIcon:[NSImage imageNamed:@"toolbar_collection"]];
-    
-    
     // Wrap
     _wrapInspector = [[SVWrapInspector alloc] initWithNibName:@"WrapInspector" bundle:nil];
     [_wrapInspector setIdentifier:@"com.karelia.Sandvox.WrapInspector"];

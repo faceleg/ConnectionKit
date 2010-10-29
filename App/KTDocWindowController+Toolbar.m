@@ -172,21 +172,6 @@
 	
     [SVPageTemplate populateMenu:menu withPageTemplates:[SVPageTemplate pageTemplates] index:1];
 	
-    
-    
-    // Collections
-    //NSMenuItem *item = [menu addItemWithTitle:NSLocalizedString(@"Collections", "toolbar menu")
-    //                                   action:nil
-    //                            keyEquivalent:@""];
-	
-	//[[pulldownButton lastItem] setIconImage:[NSImage imageNamed:@"toolbar_collection"]];
-	
-    //NSMenu *collectionsMenu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"Collections", "toolbar menu")];
-    //[item setSubmenu:collectionsMenu];
-    //[KTElementPlugInWrapper populateMenuWithCollectionPresets:menu atIndex:5];
-    //[collectionsMenu release];
-    
-	
     [menu addItem:[NSMenuItem separatorItem]];
     
 	
