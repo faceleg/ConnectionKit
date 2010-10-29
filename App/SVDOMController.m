@@ -56,6 +56,7 @@
     [self removeAllDependencies];
     [_dependencies release];
     
+    OBASSERT(!_updateSelectors);
     [_elementID release];
     [_context release];
     
@@ -122,7 +123,7 @@
 
 - (void)didUpdate;
 {
-    _needsUpdate = NO;
+    [_updateSelectors release]; _updateSelectors = nil;
     
     SVWebEditorViewController *controller = [self webEditorViewController];
     OBASSERT(controller || ![self webEditor]);
@@ -152,12 +153,21 @@
     }
 }
 
-#pragma mark Update Scheduling
+#pragma mark Marking for Update
 
-@synthesize needsUpdate = _needsUpdate;
+- (BOOL)needsUpdate; { return [_updateSelectors count]; }
 
-- (void)setNeedsUpdate;
+- (BOOL)needsToUpdateWithSelector:(SEL)selector;    // has a specific selector been registered?
 {
+    return [_updateSelectors containsObject:NSStringFromSelector(selector)];
+}
+
+- (void)setNeedsUpdate; { [self setNeedsUpdateWithSelector:@selector(update)]; }
+
+- (void)setNeedsUpdateWithSelector:(SEL)selector;   // selector will be called at next cycle
+{
+    OBPRECONDITION(selector);
+    
     // Ignore such preposterous claims if not even attached to an element yet
     if (![self HTMLElement] && [self elementIdName]) return;
     
@@ -178,7 +188,17 @@
 	SVWebEditorViewController *controller = [self webEditorViewController];
     if ([controller respondsToSelector:@selector(scheduleUpdate)] || ![self webEditor])
     {
-        _needsUpdate = YES;
+        NSString *selectorString = NSStringFromSelector(selector);
+        if (_updateSelectors)
+        {
+            NSSet *selectors = [[_updateSelectors setByAddingObject:selectorString] copy];
+            [_updateSelectors release]; _updateSelectors = selectors;
+        }
+        else
+        {
+            _updateSelectors = [[NSSet alloc] initWithObjects:selectorString, nil];
+        }
+        
         [controller performSelector:@selector(scheduleUpdate)];
     }
     else
@@ -190,14 +210,14 @@
 
 - (void)updateIfNeeded; // recurses down the tree
 {
-    if ([self needsUpdate])
+    for (NSString *aSelectorString in _updateSelectors)
     {
         SVWebEditorViewController *controller = [self webEditorViewController];
         OBASSERT(controller);
         [controller performSelector:@selector(willUpdate)];
         
-        [self update];
-        _needsUpdate = NO;  // in case the update is async and hasn't finished yet
+        [self performSelector:NSSelectorFromString(aSelectorString)];
+        [_updateSelectors release]; _updateSelectors = nil; // in case the update is async and hasn't finished yet
     }
     
     [super updateIfNeeded];

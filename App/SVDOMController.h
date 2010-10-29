@@ -23,7 +23,7 @@
     NSString    *_elementID;
     
     // Updating
-    BOOL                    _needsUpdate;
+    NSSet                   *_updateSelectors;
     NSMutableSet            *_dependencies;
     BOOL                    _isObservingDependencies;
     SVWebEditorHTMLContext  *_context;
@@ -51,12 +51,19 @@
 
 
 #pragma mark Updating
-
 // Override to push changes through to the DOM. Rarely call directly. MUST call super or -didUpdate AFTER finishing your custom update code.
 - (void)update;
 - (void)didUpdate;
 
-@property(nonatomic, readonly) BOOL needsUpdate;
+
+#pragma mark Marking for Update
+
+- (void)setNeedsUpdate; // -update will be called at next cycle
+- (void)setNeedsUpdateWithSelector:(SEL)selector;   // selector will be called at next cycle
+
+@property(nonatomic, readonly) BOOL needsUpdate;    // have any updates been registered?
+- (BOOL)needsToUpdateWithSelector:(SEL)selector;    // has a specific selector been registered?
+
 - (void)updateIfNeeded; // recurses down the tree
 
 
