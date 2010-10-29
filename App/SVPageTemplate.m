@@ -18,14 +18,28 @@
 
 - (id)initWithCollectionPreset:(NSDictionary *)presetDict;
 {
-    [self init];
-    [self setCollectionPreset:presetDict];
-    
+    // Find corresponding bundle
     NSString *bundleIdentifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
     
     KTElementPlugInWrapper *plugin = (bundleIdentifier ?
                                       [KTElementPlugInWrapper pluginWithIdentifier:bundleIdentifier] :
                                       nil);
+    
+    
+    // Init with the right graphic factory
+    SVGraphicFactory *factory = [plugin graphicFactory];
+    if (factory)
+    {
+        [self initWithGraphicFactory:factory];
+    }
+    else
+    {
+        [self init];
+    }
+    
+    
+    // Other Stuff
+    [self setCollectionPreset:presetDict];
     
     NSString *presetTitle = [presetDict objectForKey:@"KTPresetTitle"];
     if (plugin) presetTitle = [[plugin bundle] localizedStringForKey:presetTitle
