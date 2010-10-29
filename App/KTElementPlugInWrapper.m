@@ -216,11 +216,10 @@
     return result;
 }
 
-
-+ (NSDictionary *)collectionPresetsByIndexIdentifier
++ (NSSet *)collectionPresets;
 {
-    NSMutableDictionary *result = [NSMutableDictionary dictionary];
-    [result setObject:[self emptyCollectionPreset] forKey:@"0"];
+    NSMutableSet *result = [NSMutableSet set];
+    [result addObject:[self emptyCollectionPreset]];
 	
     
     // Go through and get the localized names of each bundle, and put into a dict keyed by name
@@ -246,91 +245,16 @@
             } 
             if (priority > 0	// don't add zero-priority items to menu!
                 && (priority < 9 || gIsPro || (nil == gRegistrationString)) )	// only if non-advanced or advanced allowed.
-            {
-                NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetTitle"];
-                NSString *presetTitle = [bundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
-                
+            {                
                 NSMutableDictionary *newPreset = [presetDict mutableCopy];
                 [newPreset setObject:[bundle bundleIdentifier] forKey:@"KTPresetIndexBundleIdentifier"];
                 
-                [result setObject:newPreset
-                           forKey:[NSString stringWithFormat:@"%d %@", priority, presetTitle]];
-                
+                [result addObject:newPreset];
                 [newPreset release];
             }
 		}
 	}
     return result;
-}
-
-+ (void)populateMenuWithCollectionPresets:(NSMenu *)aMenu atIndex:(NSUInteger)index;
-{
-    NSMutableDictionary *dictOfPresets;
-  dictOfPresets = [self collectionPresetsByIndexIdentifier];
-
-	
-	// Now add the sorted arrays
-	NSArray *sortedPriorityNames = [[dictOfPresets allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-	NSEnumerator *sortedEnum = [sortedPriorityNames objectEnumerator];
-	NSString *priorityAndName;
-	
-	while (nil != (priorityAndName = [sortedEnum nextObject]) )
-	{
-		NSDictionary *presetDict = [dictOfPresets objectForKey:priorityAndName];
-		NSString *bundleIdentifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
-		
-		KTElementPlugInWrapper *plugin = (bundleIdentifier ?
-                                          [self pluginWithIdentifier:bundleIdentifier] :
-                                          nil);
-		
-        NSMenuItem *menuItem = [[[NSMenuItem alloc] init] autorelease];
-		
-		NSString *presetTitle = [presetDict objectForKey:@"KTPresetTitle"];
-        if (plugin) presetTitle = [[plugin bundle] localizedStringForKey:presetTitle
-                                                                   value:presetTitle
-                                                                   table:nil];
-        
-		id priorityID = [presetDict objectForKey:@"KTPluginPriority"];
-		int priority = 5;
-		if (nil != priorityID)
-		{
-			priority = [priorityID intValue];
-		} 
-		
-		
-        NSImage *image = nil;
-		
-		if (plugin)
-		{
-			image = [[plugin graphicFactory] icon];
-#ifdef DEBUG
-			if (nil == image)
-			{
-				NSLog(@"nil pluginIcon for %@", presetTitle);
-			}
-#endif
-		}
-		else	// built-in, no bundle, so try to get icon directly
-		{
-			image = [presetDict objectForKey:@"KTPluginIcon"];
-		}
-        if (image)
-        {
-            
-            [image setDataRetained:YES];	// allow image to be scaled.
-            [image setScalesWhenResized:YES];
-            [image setSize:NSMakeSize(48.0f, 48.0f)];
-            [menuItem setImage:image];
-        }
-        
-        [menuItem setTitle:presetTitle];
-				
-		// set target/action
-		[menuItem setRepresentedObject:presetDict];
-		[menuItem setAction:@selector(addCollection:)];
-		
-		[aMenu insertItem:menuItem atIndex:index];  index++;
-	}
 }
 
 @end

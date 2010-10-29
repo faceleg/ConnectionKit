@@ -34,7 +34,7 @@ typedef enum {
 + (NSSet *)pagePlugins;
 
 // Inserts one item per known collection preset into aMenu at the specified index.
-+ (void)populateMenuWithCollectionPresets:(NSMenu *)aMenu atIndex:(NSUInteger)index;
++ (NSSet *)collectionPresets;
 
 - (SVGraphicFactory *)graphicFactory;
 

@@ -8,6 +8,10 @@
 
 #import "SVPageTemplate.h"
 
+#import "KTElementPlugInWrapper.h"
+
+#import "NSSet+Karelia.h"
+
 
 @implementation SVPageTemplate
 
@@ -19,6 +23,26 @@
     [_graphicIdentifier release];
     
     [super dealloc];
+}
+
++ (NSArray *)collectionPresets;
+{
+    // Order plug-ins first by priority, then by name
+    //      I've turned off priority support for now to try a pure alphabetical approach - Mike
+    //NSSortDescriptor *prioritySort = [[NSSortDescriptor alloc] initWithKey:@"priority"
+    //                                                             ascending:YES];
+    NSSortDescriptor *nameSort = [[NSSortDescriptor alloc]
+                                  initWithKey:@"KTPresetTitle"
+                                  ascending:YES
+                                  selector:@selector(caseInsensitiveCompare:)];
+    
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:/*prioritySort, */nameSort, nil];
+    //[prioritySort release];
+    [nameSort release];
+    
+    NSArray *result = [[KTElementPlugInWrapper collectionPresets]
+                       KS_sortedArrayUsingDescriptors:sortDescriptors];
+    return result;
 }
 
 + (NSArray *)pageTemplates;
@@ -54,12 +78,59 @@
         [buffer addObject:aTemplate];
         [aTemplate release];
         
-        aTemplate = [[SVPageTemplate alloc] init];
-        [aTemplate setTitle:NSLocalizedString(@"Empty Collection", "menu item title")];
-        [aTemplate setIcon:[NSImage imageNamed:@"toolbar_empty_page"]];
-        //[buffer addObject:aTemplate];
-        [aTemplate release];
         
+        // Collection Presets
+        for (NSDictionary *presetDict in [self collectionPresets])
+        {
+            aTemplate = [[SVPageTemplate alloc] init];
+            [aTemplate setCollectionPreset:presetDict];
+            
+            NSString *bundleIdentifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
+            
+            KTElementPlugInWrapper *plugin = (bundleIdentifier ?
+                                              [KTElementPlugInWrapper pluginWithIdentifier:bundleIdentifier] :
+                                              nil);
+                        
+            NSString *presetTitle = [presetDict objectForKey:@"KTPresetTitle"];
+            if (plugin) presetTitle = [[plugin bundle] localizedStringForKey:presetTitle
+                                                                       value:presetTitle
+                                                                       table:nil];
+            [aTemplate setTitle:presetTitle];
+            
+            
+            id priorityID = [presetDict objectForKey:@"KTPluginPriority"];
+            int priority = 5;
+            if (nil != priorityID)
+            {
+                priority = [priorityID intValue];
+            } 
+            
+            
+            NSImage *icon = nil;
+            if (plugin)
+            {
+                icon = [[plugin graphicFactory] icon];
+#ifdef DEBUG
+                if (nil == icon)
+                {
+                    NSLog(@"nil pluginIcon for %@", presetTitle);
+                }
+#endif
+            }
+            else	// built-in, no bundle, so try to get icon directly
+            {
+                icon = [presetDict objectForKey:@"KTPluginIcon"];
+            }
+            [aTemplate setIcon:icon];
+            
+                        
+            
+            [buffer addObject:aTemplate];
+            [aTemplate release];
+        }
+        
+        
+        // One-shot pages
         aTemplate = [[SVPageTemplate alloc] init];
         [aTemplate setTitle:NSLocalizedString(@"Contact Form", "menu item title")];
         [aTemplate setIcon:[NSImage imageNamed:@"toolbar_empty_page"]];

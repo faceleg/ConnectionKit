@@ -183,7 +183,7 @@
 
     //NSMenu *collectionsMenu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"Collections", "toolbar menu")];
     //[item setSubmenu:collectionsMenu];
-    [KTElementPlugInWrapper populateMenuWithCollectionPresets:menu atIndex:5];
+    //[KTElementPlugInWrapper populateMenuWithCollectionPresets:menu atIndex:5];
     //[collectionsMenu release];
     
 
