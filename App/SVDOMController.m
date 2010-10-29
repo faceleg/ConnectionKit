@@ -56,7 +56,7 @@
     [self removeAllDependencies];
     [_dependencies release];
     
-    OBASSERT(!_updateSelectors);
+    [_updateSelectors release];
     [_elementID release];
     [_context release];
     
@@ -210,15 +210,20 @@
 
 - (void)updateIfNeeded; // recurses down the tree
 {
-    for (NSString *aSelectorString in _updateSelectors)
+    // Nil out ivar so it can be reused immediately
+    // Also in case the update is async and hasn't finished yet
+    NSSet *selectorStrings = _updateSelectors; _updateSelectors = nil;
+    
+    for (NSString *aSelectorString in selectorStrings)
     {
         SVWebEditorViewController *controller = [self webEditorViewController];
         OBASSERT(controller);
         [controller performSelector:@selector(willUpdate)];
         
         [self performSelector:NSSelectorFromString(aSelectorString)];
-        [_updateSelectors release]; _updateSelectors = nil; // in case the update is async and hasn't finished yet
     }
+    [selectorStrings release];
+    
     
     [super updateIfNeeded];
 }
