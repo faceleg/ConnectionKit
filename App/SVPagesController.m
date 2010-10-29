@@ -147,6 +147,8 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     }
 }
 
+#pragma mark Core Data Support
+
 @synthesize pageTemplate = _template;
 - (void)setEntityNameWithPageTemplate:(SVPageTemplate *)pageTemplate;
 {
@@ -217,10 +219,36 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
             [result setIncludeTimestamp:[predecessor includeTimestamp]];
         }
         
-        // Make the page into a collection if it was requested
-        if ([[self pageTemplate] collectionPreset] && allowCollections) 
+        
+        if (allowCollections)
         {
-            [self configurePageAsCollection:result];
+            SVPageTemplate *template = [self pageTemplate];
+        
+            
+            // Make the page into a collection if it was requested
+            if ([[self pageTemplate] collectionPreset]) 
+            {
+                [self configurePageAsCollection:result];
+            }
+            
+            
+            // Initial graphic for the page
+            if ([template graphicFactory])
+            {
+                SVGraphic *initialGraphic = [[template graphicFactory] insertNewGraphicInManagedObjectContext:[self managedObjectContext]];
+                
+                NSAttributedString *graphicHTML = [NSAttributedString attributedHTMLStringWithGraphic:initialGraphic];
+                [[initialGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementInline]];
+                [initialGraphic awakeFromNew];
+                
+                SVRichText *article = [result article];
+                NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
+                [html appendAttributedString:graphicHTML];
+                [article setAttributedHTMLString:html];
+                [html release];
+                
+                [initialGraphic didAddToPage:result];
+            }
         }
     }
     else if ([[self entityName] isEqualToString:@"ExternalLink"])
@@ -336,26 +364,6 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
             
             [[collection article] setString:intro attachments:nil];
         }
-    }
-    
-    
-    // Create index and insert
-    if (plugInWrapper)
-    {
-        SVGraphic *index = [[plugInWrapper graphicFactory]
-                            insertNewGraphicInManagedObjectContext:[self managedObjectContext]];
-        
-        NSAttributedString *graphicHTML = [NSAttributedString attributedHTMLStringWithGraphic:index];
-        [[index textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementInline]];
-        [index awakeFromNew];
-        
-        SVRichText *article = [collection article];
-        NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
-        [html appendAttributedString:graphicHTML];
-        [article setAttributedHTMLString:html];
-        [html release];
-        
-        [index didAddToPage:collection];
     }
 }
 
