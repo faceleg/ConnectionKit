@@ -56,6 +56,7 @@
 #import "KTMaster.h"
 #import "SVMediaRecord.h"
 #import "KTPage+Internal.h"
+#import "SVPageTemplate.h"
 #import "SVPublishingRecord.h"
 #import "SVSidebar.h"
 #import "KTSummaryWebViewTextBlock.h"
@@ -382,7 +383,10 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     SVPagesController *controller = [[SVPagesController alloc] init];
     [controller setManagedObjectContext:[self managedObjectContext]];
     [controller setEntityName:@"Page"];
-    [controller setCollectionPreset:[NSDictionary dictionary]];
+    
+    SVPageTemplate *template = [[SVPageTemplate alloc] initWithCollectionPreset:[NSDictionary dictionary]];
+    [controller setPageTemplate:template];
+    [template release];
     
     KTPage *result = [controller newObject];
 	OBASSERT(result);

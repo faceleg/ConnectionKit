@@ -19,6 +19,7 @@
 #import "SVLinkManager.h"
 #import "SVMediaRecord.h"
 #import "KTPage+Paths.h"
+#import "SVPageTemplate.h"
 #import "SVRichText.h"
 #import "SVSidebarPageletsController.h"
 #import "SVTextAttachment.h"
@@ -144,7 +145,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 @dynamic entityName;
 
-@synthesize collectionPreset = _presetDict;
+@synthesize pageTemplate = _template;
 @synthesize objectURL = _URL;
 
 - (id)newObject
@@ -194,7 +195,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         }
         
         // Make the page into a collection if it was requested
-        if ([self collectionPreset] && allowCollections) 
+        if ([[self pageTemplate] collectionPreset] && allowCollections) 
         {
             [self configurePageAsCollection:result];
         }
@@ -237,7 +238,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     //  Create a collection. Populate according to the index plug-in (-representedObject) if applicable.
     
     
-    NSDictionary *presetDict = [self collectionPreset];
+    NSDictionary *presetDict = [[self pageTemplate] collectionPreset];
 	NSString *identifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
 	KTElementPlugInWrapper *plugInWrapper = identifier ? [KTElementPlugInWrapper pluginWithIdentifier:identifier] : nil;
 	
@@ -499,7 +500,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         {
             // Create pages for each graphic
             [self setEntityName:@"Page"];
-            [self setCollectionPreset:nil];
+            [self setPageTemplate:nil];
             [self setObjectURL:nil];
             
             KTPage *page = [self newObjectDestinedForCollection:collection];

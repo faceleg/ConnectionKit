@@ -590,7 +590,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     SVPageTemplate *template = [sender representedObject];
     
     [[self content] setEntityName:@"Page"];
-    [[self content] setCollectionPreset:[template collectionPreset]];
+    [[self content] setPageTemplate:template];
     [[self content] add:self];
 }
 

@@ -20,6 +20,8 @@
 
 + (NSArray *)pageTemplates;
 
+- (id)initWithCollectionPreset:(NSDictionary *)presetDict;
+
 @property(nonatomic, copy) NSString *title;
 @property(nonatomic, retain) NSImage *icon;
 @property(nonatomic, copy) NSDictionary *collectionPreset;

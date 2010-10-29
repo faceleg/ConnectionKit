@@ -20,14 +20,14 @@
 extern NSString *SVPagesControllerDidInsertObjectNotification;
 
 
-@class KTPage;
+@class KTPage, SVPageTemplate;
 @protocol SVPagesControllerDelegate;
 
 
 @interface SVPagesController : KSArrayController
 {
   @private
-    NSDictionary    *_presetDict;
+    SVPageTemplate  *_template;
     NSURL           *_URL;
     
     id <SVPagesControllerDelegate>  _delegate;  // weak ref
@@ -45,7 +45,7 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 //  2.  Optionally, specify any additional info through -setCollectionPreset: or -setFileURL:
 //  3.  Call one of: -add: -newObject -newObjectWithPredecessor:
 @property(nonatomic, copy) NSString *entityName;
-@property(nonatomic, copy) NSDictionary *collectionPreset;
+@property(nonatomic, retain) SVPageTemplate *pageTemplate;
 @property(nonatomic, copy) NSURL *objectURL;
 
 - (void)addObject:(id)object toCollection:(KTPage *)collection;
