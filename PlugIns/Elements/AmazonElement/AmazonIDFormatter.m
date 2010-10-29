@@ -9,7 +9,8 @@
 #import "AmazonIDFormatter.h"
 
 #import "SandvoxPlugin.h"
-#import "SVURLFormatter.h"
+
+#import "NSURL+AmazonPagelet.h"
 
 
 @implementation AmazonIDFormatter
@@ -29,7 +30,7 @@
 		{
 			// Convert to uppercase and remove unwanted characters
 			NSCharacterSet *characters = [AmazonIDFormatter legalAmazonIDCharacters];
-			*anObject = [[string stringByRemovingCharactersNotInSet:characters] uppercaseString];
+			*anObject = [[string amazonList_stringByRemovingCharactersNotInSet:characters] uppercaseString];
 			
 			// The user may have mistakenly entered ISBN, ISBN10 or ISBN13 at the start
 			// If so, and the remainder is a valid ISBN number, remove it

@@ -23,4 +23,5 @@
 
 @interface NSString (NSURLAmazonPagelet)
 - (BOOL)isLikelyToBeAmazonListID;
+- (NSString *)amazonList_stringByRemovingCharactersNotInSet:(NSCharacterSet *)validCharacters;
 @end

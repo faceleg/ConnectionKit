@@ -107,12 +107,41 @@
 
 @implementation NSString (NSURLAmazonPagelet)
 
+/*! Remove all characters not in the set. Return a new string
+ */
+- (NSString *)amazonList_stringByRemovingCharactersNotInSet:(NSCharacterSet *)validCharacters
+{
+	NSMutableString *intermediateResult = [[NSMutableString alloc] initWithCapacity: [self length]];
+	NSScanner *scanner = [[NSScanner alloc] initWithString: self];
+	
+	while (![scanner isAtEnd])
+	{
+		[scanner scanUpToCharactersFromSet: validCharacters intoString: NULL];
+		
+		// If we have now reached the end of the string, exit the loop early
+		if ([scanner isAtEnd])
+			break;
+		
+		NSString *resultSubString = nil;
+		[scanner scanCharactersFromSet: validCharacters intoString: &resultSubString];
+		
+		[intermediateResult appendString: resultSubString];
+	}
+	
+	// Tidy up
+	[scanner release];
+	
+	NSString *result = [NSString stringWithString: intermediateResult];
+	[intermediateResult release];
+	return result;
+}
+
 - (BOOL)isLikelyToBeAmazonListID
 {
 	// Remove all non-alphanumeric characters and make uppercase
 	// If this still matches the original then it is likely to be a valid ID
 	NSCharacterSet *characters = [AmazonIDFormatter legalAmazonIDCharacters];
-	NSString *processedString = [[self stringByRemovingCharactersNotInSet: characters] uppercaseString];
+	NSString *processedString = [[self amazonList_stringByRemovingCharactersNotInSet:characters] uppercaseString];
 	
 	BOOL result = [processedString isEqualToString: self];
 	return result;
