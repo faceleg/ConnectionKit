@@ -145,13 +145,13 @@
         SVGraphicFactory *aGraphicFactory = [SVGraphicFactory mediaPlaceholderFactory];
         aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
 		[aTemplate setIcon:[NSImage imageNamed:@"page_photo_sb"]];
-       [aTemplate setTitle:NSLocalizedString(@"Photo/Video", "menu item title")];
+		[aTemplate setTitle:NSLocalizedString(@"Photo/Video", "menu item title")];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
         aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
  		[aTemplate setIcon:[NSImage imageNamed:@"page_photo"]];
-       [aTemplate setTitle:NSLocalizedString(@"Photo/Video – Without Sidebar", "menu item title")];
+		[aTemplate setTitle:NSLocalizedString(@"Photo/Video – Without Sidebar", "menu item title")];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
@@ -200,7 +200,7 @@
                                              keyEquivalent:@""];
     
     NSImage *icon = [[self icon] copy];
-    [icon setSize:NSMakeSize(48.0f, 48.0f)];
+    [icon setSize:NSMakeSize(40.0f, 40.0f)];
     [result setImage:icon];
     [icon release];
     
