@@ -182,10 +182,12 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	}
 	
 	if ([[self valueForKey:@"protocol"] isEqualToString:@".Mac"] 
-		&& nil == [self valueForKey:@"dotMacDomainStyle"])
+		&& 
+		(nil == [self valueForKey:@"dotMacDomainStyle"] || [[self valueForKey:@"dotMacDomainStyle"] intValue] == HOMEPAGE_MAC_COM)
+		 )
 	{
-		// It was not set, so assume it's a legacy document, which is homepage.mac.com
-		[self setValue:[NSNumber numberWithInt:HOMEPAGE_MAC_COM] forKey:@"dotMacDomainStyle"];
+		// It was not set OR SET TO OBSOLETE HOMEPAGE.MAC.COM, so assume it's a legacy document; make it default web.me.com
+		[self setValue:[NSNumber numberWithInt:WEB_ME_COM] forKey:@"dotMacDomainStyle"];
 	}
 	
 	// Try to reach localhost when localHosting checkbox is checked -- and abort it when unchecked.
