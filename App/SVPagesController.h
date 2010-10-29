@@ -48,6 +48,9 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 - (void)setEntityTypeWithURL:(NSURL *)URL external:(BOOL)external;
 @property(nonatomic, copy, readonly) NSURL *objectURL;
 
+// Overriden to reset pageTemplate and objectURL
+- (void)setEntityName:(NSString *)entityName;
+
 
 #pragma mark Managing Objects
 

@@ -147,12 +147,9 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     }
 }
 
-#pragma mark Managing Objects
-
 @synthesize pageTemplate = _template;
 - (void)setEntityNameWithPageTemplate:(SVPageTemplate *)pageTemplate;
 {
-    [self setObjectURL:nil];
     [self setEntityName:@"Page"];
     [self setPageTemplate:pageTemplate];
 }
@@ -160,10 +157,19 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 @synthesize objectURL = _URL;
 - (void)setEntityTypeWithURL:(NSURL *)URL external:(BOOL)external;
 {
-    [self setPageTemplate:nil];
     [self setEntityName:(external ? @"ExternalLink" : @"File")];
     [self setObjectURL:URL];
 }
+
+- (void)setEntityName:(NSString *)entityName;
+{
+    [self setObjectURL:nil];
+    [self setPageTemplate:nil];
+    
+    [super setEntityName:entityName];
+}
+
+#pragma mark Managing Objects
 
 - (id)newObject
 {
