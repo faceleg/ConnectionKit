@@ -244,6 +244,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         
         [[element style] setWidth:[NSString stringWithFormat:@"%@px", [graphic containerWidth]]];
     }
+    
+    [self didUpdate];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -259,7 +261,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         }
         else
         {
-            [self setNeedsUpdate];
+            [self setNeedsUpdateWithSelector:@selector(updateSize)];
         }
     }
     else
