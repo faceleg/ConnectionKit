@@ -70,6 +70,12 @@
     self.showSiteMap = YES; //FIXME: what is this property for?
 }
 
+- (void)makeOriginalSize;
+{
+    // Go to auto-sized all round
+    [self setWidth:0];
+    [self setHeight:0];
+}
 
 #pragma mark -
 #pragma mark HTML Generation
