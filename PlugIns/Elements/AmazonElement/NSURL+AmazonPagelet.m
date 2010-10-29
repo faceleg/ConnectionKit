@@ -84,7 +84,14 @@
 	if (!result)
 	{
         NSString *query = [[self query] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-		query = [query stringByReplacing:@"+" with:@" "];	// fix + signs too!
+        
+        NSMutableString *buffer = [query mutableCopy];
+        [buffer replaceOccurrencesOfString:@"+"
+                                withString:@" "
+                                   options:0
+                                     range:NSMakeRange(0, [buffer length])];
+        
+		query = [buffer autorelease];
         pathComponents = [query pathComponents];
 		
 		result = [pathComponents searchPathComponentsForASIN];
