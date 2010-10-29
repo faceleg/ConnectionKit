@@ -16,6 +16,7 @@
 {
   @private
     NSString            *_title;
+    NSString            *_subtitle;
     NSImage             *_icon;
     NSDictionary        *_collectionPreset;
     SVGraphicFactory    *_graphicFactory;
@@ -27,6 +28,7 @@
 - (id)initWithGraphicFactory:(SVGraphicFactory *)factory;
 
 @property(nonatomic, copy) NSString *title; // title of template, not created pages
+@property(nonatomic, copy) NSString *subtitle; // additional information about the menu
 @property(nonatomic, retain) NSImage *icon;
 @property(nonatomic, copy) NSDictionary *collectionPreset;
 

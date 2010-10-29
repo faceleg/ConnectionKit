@@ -12,6 +12,7 @@
 #import "SVGraphicFactory.h"
 
 #import "NSSet+Karelia.h"
+#import "NSString+KTExtensions.h"
 
 
 @implementation SVPageTemplate
@@ -46,7 +47,13 @@
                                                                value:presetTitle
                                                                table:nil];
     [self setTitle:presetTitle];
-    
+
+	NSString *presetSubtitle = [presetDict objectForKey:@"KTPresetSubtitle"];
+    if (plugin) presetSubtitle = [[plugin bundle] localizedStringForKey:presetSubtitle
+                                                               value:presetSubtitle
+                                                               table:nil];
+    [self setSubtitle:presetSubtitle];
+	
     
     id priorityID = [presetDict objectForKey:@"KTPluginPriority"];
     int priority = 5;
@@ -93,8 +100,9 @@
 
 - (void)dealloc;
 {
-    [_title release];
-    [_icon release];
+	[_title release];
+	[_subtitle release];
+	[_icon release];
     [_collectionPreset release];
     [_graphicFactory release];
     
@@ -137,8 +145,9 @@
         [aTemplate release];
         
         aTemplate = [[SVPageTemplate alloc] init];
-        [aTemplate setTitle:NSLocalizedString(@"Empty/Text – Without Sidebar", "menu item title")];
-        [aTemplate setIcon:[NSImage imageNamed:@"page_empty"]];
+        [aTemplate setTitle:NSLocalizedString(@"Empty/Text", "menu item title")];
+		[aTemplate setSubtitle:NSLocalizedString(@"Without Sidebar", "menu item subtitle")];
+		[aTemplate setIcon:[NSImage imageNamed:@"page_empty"]];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
@@ -151,8 +160,9 @@
         
         aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
  		[aTemplate setIcon:[NSImage imageNamed:@"page_photo"]];
-		[aTemplate setTitle:NSLocalizedString(@"Photo/Video – Without Sidebar", "menu item title")];
-        [buffer addObject:aTemplate];
+		[aTemplate setTitle:NSLocalizedString(@"Photo/Video", "menu item title")];
+  		[aTemplate setSubtitle:NSLocalizedString(@"Without Sidebar", "menu item subtitle")];
+		[buffer addObject:aTemplate];
         [aTemplate release];
         
         
@@ -165,7 +175,8 @@
         }
         
         
-        // One-shot pages
+        // One-shot pages ... (Is there some better way to instantiate these, so we don't have a problem if they are gone?)
+		
         aGraphicFactory = [SVGraphicFactory factoryWithIdentifier:@"sandvox.ContactElement"];
         aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
   		[aTemplate setIcon:[NSImage imageNamed:@"page_contact_sb"]];
@@ -189,6 +200,7 @@
 }
 
 @synthesize title = _title;
+@synthesize subtitle = _subtitle;
 @synthesize icon = _icon;
 @synthesize collectionPreset = _collectionPreset;
 @synthesize graphicFactory = _graphicFactory;
@@ -198,7 +210,12 @@
     NSMenuItem *result = [[NSMenuItem alloc] initWithTitle:[self title]
                                                     action:@selector(addPage:)
                                              keyEquivalent:@""];
-    
+	if ([self subtitle])
+	{
+		NSAttributedString *attributedTitle = [NSAttributedString attributedMenuTitle:[self title] subtitle:[self subtitle]];
+		[result setAttributedTitle:attributedTitle];
+	}
+   
     NSImage *icon = [[self icon] copy];
     [icon setSize:NSMakeSize(40.0f, 40.0f)];
     [result setImage:icon];
