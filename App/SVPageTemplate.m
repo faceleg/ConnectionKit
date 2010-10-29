@@ -132,24 +132,26 @@
         
         aTemplate = [[SVPageTemplate alloc] init];
         [aTemplate setTitle:NSLocalizedString(@"Empty/Text", "New page pulldown button menu item title")];
-        [aTemplate setIcon:[NSImage imageNamed:@"toolbar_empty_page"]];
+        [aTemplate setIcon:[NSImage imageNamed:@"page_empty_sb"]];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
         aTemplate = [[SVPageTemplate alloc] init];
         [aTemplate setTitle:NSLocalizedString(@"Empty/Text – Without Sidebar", "menu item title")];
-        [aTemplate setIcon:[NSImage imageNamed:@"toolbar_empty_page"]];
+        [aTemplate setIcon:[NSImage imageNamed:@"page_empty"]];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
         SVGraphicFactory *aGraphicFactory = [SVGraphicFactory mediaPlaceholderFactory];
         aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
-        [aTemplate setTitle:NSLocalizedString(@"Photo/Video", "menu item title")];
+		[aTemplate setIcon:[NSImage imageNamed:@"page_photo_sb"]];
+       [aTemplate setTitle:NSLocalizedString(@"Photo/Video", "menu item title")];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
         aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
-        [aTemplate setTitle:NSLocalizedString(@"Photo/Video – Without Sidebar", "menu item title")];
+ 		[aTemplate setIcon:[NSImage imageNamed:@"page_photo"]];
+       [aTemplate setTitle:NSLocalizedString(@"Photo/Video – Without Sidebar", "menu item title")];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
@@ -166,13 +168,15 @@
         // One-shot pages
         aGraphicFactory = [SVGraphicFactory factoryWithIdentifier:@"sandvox.ContactElement"];
         aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
-        [aTemplate setTitle:NSLocalizedString(@"Contact Form", "menu item title")];
+  		[aTemplate setIcon:[NSImage imageNamed:@"page_contact_sb"]];
+		[aTemplate setTitle:NSLocalizedString(@"Contact Form", "menu item title")];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
         aGraphicFactory = [SVGraphicFactory factoryWithIdentifier:@"sandvox.SiteMapElement"];
         aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
-        [aTemplate setTitle:NSLocalizedString(@"Sitemap", "menu item title")];
+   		[aTemplate setIcon:[NSImage imageNamed:@"page_sitemap_sb"]];
+		[aTemplate setTitle:NSLocalizedString(@"Sitemap", "menu item title")];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
