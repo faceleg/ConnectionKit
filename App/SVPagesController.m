@@ -53,7 +53,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 @property(nonatomic, retain, readwrite) SVPageTemplate *pageTemplate;
 @property(nonatomic, copy, readwrite) NSURL *objectURL;
 
-- (id)newObjectWithPredecessor:(KTPage *)predecessor allowCollections:(BOOL)allowCollections;
+- (id)newObjectWithPredecessor:(KTPage *)predecessor followTemplate:(BOOL)allowCollections;
 - (void)configurePageAsCollection:(KTPage *)collection;
 
 - (void)didInsertObject:(id)object intoCollection:(KTPage *)collection;
@@ -201,10 +201,10 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         }
     }
     
-    return [self newObjectWithPredecessor:predecessor allowCollections:YES];
+    return [self newObjectWithPredecessor:predecessor followTemplate:YES];
 }
 
-- (id)newObjectWithPredecessor:(KTPage *)predecessor allowCollections:(BOOL)allowCollections;
+- (id)newObjectWithPredecessor:(KTPage *)predecessor followTemplate:(BOOL)allowCollections;
 {
     id result = [super newObject];
     
@@ -324,7 +324,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         [firstChildProperties removeObjectForKey:@"pluginIdentifier"];
         
         // Create first child
-        KTPage *firstChild = [self newObjectWithPredecessor:collection allowCollections:NO];
+        KTPage *firstChild = [self newObjectWithPredecessor:collection followTemplate:NO];
         
         // Insert at right place.
         [collection addChildItem:firstChild];
