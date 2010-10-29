@@ -615,7 +615,22 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 {
     NSArray *objects = [[self arrangedObjects] objectsAtIndexes:indexes];
     
+    
+    // Should we avoid empty selection after this removal?
+    BOOL avoidsEmptySelection = [self avoidsEmptySelection];
+    KTPage *nextSelectionParent = nil;
+    NSUInteger nextSelectionIndex;
+
+    if (avoidsEmptySelection)
+    {
+        SVSiteItem *lastSelection = [objects lastObject];
+        nextSelectionParent = [lastSelection parentPage];
+        nextSelectionIndex = [[nextSelectionParent childPages] indexOfObjectIdenticalTo:lastSelection];
+    }
+    
+                                           
     // Remove the pages from their parents
+    [self setAvoidsEmptySelection:NO];
     NSSet *pages = [[NSSet alloc] initWithArray:objects];
     
     NSSet *parentPages = [pages valueForKey:@"parentPage"];
@@ -629,6 +644,30 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     // Delete
     [self willRemoveObjects:objects];
+    
+    
+    // Setup new selection
+    if (nextSelectionParent)
+    {
+        SVSiteItem *newSelection;
+        
+        NSArray *children = [nextSelectionParent childPages];
+        if ([children count] > nextSelectionIndex)
+        {
+            newSelection = [children objectAtIndex:nextSelectionIndex];
+        }
+        else if ([children count] == 0)
+        {
+            newSelection = nextSelectionParent;
+        }
+        else
+        {
+            newSelection = [children lastObject];
+        }
+        
+        [self setSelectedObjects:[NSArray arrayWithObject:newSelection]];
+    }
+    [self setAvoidsEmptySelection:avoidsEmptySelection];
 }
 
 - (void)removeObjectAtArrangedObjectIndex:(NSUInteger)index;
@@ -640,7 +679,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 {
     [super willRemoveObject:object];
 
-    // Delete. Pages have to be treated specially, but I forgot quite why
+    // Delete. Pages have to be treated specially, but I forget quite why
     if ([object isKindOfClass:[KTPage class]])
     {
         [[self managedObjectContext] deletePage:object];

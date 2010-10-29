@@ -358,18 +358,18 @@
 											<reference key="NSNextResponder" ref="520114257"/>
 											<int key="NSvFlags">34</int>
 											<array class="NSMutableArray" key="NSSubviews">
-												<object class="NSButton" id="1059461664">
+												<object class="NSButton" id="565612068">
 													<reference key="NSNextResponder" ref="641495171"/>
 													<int key="NSvFlags">265</int>
 													<string key="NSFrame">{{723, 41}, {85, 18}}</string>
 													<reference key="NSSuperview" ref="641495171"/>
 													<bool key="NSEnabled">YES</bool>
-													<object class="NSButtonCell" key="NSCell" id="635005956">
+													<object class="NSButtonCell" key="NSCell" id="989584082">
 														<int key="NSCellFlags">-2080244224</int>
 														<int key="NSCellFlags2">0</int>
 														<string key="NSContents">Collection</string>
 														<reference key="NSSupport" ref="502413197"/>
-														<reference key="NSControlView" ref="1059461664"/>
+														<reference key="NSControlView" ref="565612068"/>
 														<int key="NSButtonFlags">1211912703</int>
 														<int key="NSButtonFlags2">2</int>
 														<object class="NSCustomResource" key="NSNormalImage">
@@ -865,6 +865,7 @@
 					<string key="NSEntityName">Page</string>
 				</object>
 				<bool key="_NSIsUsingManagedProxy">YES</bool>
+				<bool key="NSAvoidsEmptySelection">YES</bool>
 				<bool key="NSPreservesSelection">YES</bool>
 				<bool key="NSSelectsInsertedObjects">YES</bool>
 				<bool key="NSFilterRestrictsInsertion">YES</bool>
@@ -1559,10 +1560,10 @@
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: selection.isCollection</string>
-						<reference key="source" ref="1059461664"/>
+						<reference key="source" ref="565612068"/>
 						<reference key="destination" ref="601368962"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1059461664"/>
+							<reference key="NSSource" ref="565612068"/>
 							<reference key="NSDestination" ref="601368962"/>
 							<string key="NSLabel">value: selection.isCollection</string>
 							<string key="NSBinding">value</string>
@@ -1579,10 +1580,10 @@
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: selection.childItems.@count</string>
-						<reference key="source" ref="1059461664"/>
+						<reference key="source" ref="565612068"/>
 						<reference key="destination" ref="601368962"/>
-						<object class="NSNibBindingConnector" key="connector" id="807910886">
-							<reference key="NSSource" ref="1059461664"/>
+						<object class="NSNibBindingConnector" key="connector" id="345315088">
+							<reference key="NSSource" ref="565612068"/>
 							<reference key="NSDestination" ref="601368962"/>
 							<string key="NSLabel">enabled: selection.childItems.@count</string>
 							<string key="NSBinding">enabled</string>
@@ -1599,10 +1600,10 @@
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled2: selection.isRoot</string>
-						<reference key="source" ref="1059461664"/>
+						<reference key="source" ref="565612068"/>
 						<reference key="destination" ref="601368962"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1059461664"/>
+							<reference key="NSSource" ref="565612068"/>
 							<reference key="NSDestination" ref="601368962"/>
 							<string key="NSLabel">enabled2: selection.isRoot</string>
 							<string key="NSBinding">enabled2</string>
@@ -1614,7 +1615,7 @@
 								<integer value="-1" key="NSNullPlaceholder"/>
 								<string key="NSValueTransformerName">NSNegateBoolean</string>
 							</dictionary>
-							<reference key="NSPreviousConnector" ref="807910886"/>
+							<reference key="NSPreviousConnector" ref="345315088"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
@@ -1813,7 +1814,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="607898317"/>
 							<reference ref="327729126"/>
-							<reference ref="1059461664"/>
+							<reference ref="565612068"/>
 						</array>
 						<reference key="parent" ref="520114257"/>
 					</object>
@@ -2159,16 +2160,16 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2107</int>
-						<reference key="object" ref="1059461664"/>
+						<reference key="object" ref="565612068"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="635005956"/>
+							<reference ref="989584082"/>
 						</array>
 						<reference key="parent" ref="641495171"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2108</int>
-						<reference key="object" ref="635005956"/>
-						<reference key="parent" ref="1059461664"/>
+						<reference key="object" ref="989584082"/>
+						<reference key="parent" ref="565612068"/>
 					</object>
 				</array>
 			</object>
