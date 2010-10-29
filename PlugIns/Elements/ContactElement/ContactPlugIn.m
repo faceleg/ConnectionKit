@@ -92,9 +92,7 @@ triggerChangeNotificationsForDependentKey: @"encodedRecipient"];
 	[ContactPlugIn setKeys:
 	 [NSArray arrayWithObjects: @"subjectType", nil]
 triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
-	[ContactPlugIn setKeys:
-	 [NSArray arrayWithObjects: @"subjectType", @"subjectText", nil]
-triggerChangeNotificationsForDependentKey: @"subjectInputHTML"];
+	
 	
 	[pool release];
 }
@@ -226,60 +224,6 @@ triggerChangeNotificationsForDependentKey: @"subjectInputHTML"];
 												 @"Label for subject field when it will be hidden");
 			break;
 	}
-	return result;
-}
-
-- (NSString *)subjectInputHTML
-{
-	NSString *result = nil;
-	NSString *subjectText = [self subjectText];
-	if (nil == subjectText)
-	{
-		subjectText = @"";
-	}
-	switch([self subjectType])
-	{
-		case kKTContactSubjectField:
-			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"text\" value=\"%@\" />", 
-					  [self uniqueID], [subjectText stringByEscapingHTMLEntities]];
-			break;
-		case kKTContactSubjectSelection:
-		{
-			NSMutableString *buf = [NSMutableString string];
-			
-			// Break into lines, and for each line, break into comma separated.
-			NSArray *lineArray = [subjectText componentsSeparatedByLineSeparators];
-			NSEnumerator *theEnum = [lineArray objectEnumerator];
-			NSString *oneLine;
-			
-			[buf appendFormat:@"<select id=\"s%@\" name=\"s\">", [self uniqueID]];
-			while (nil != (oneLine = [theEnum nextObject]) )
-			{
-				NSArray *commaArray = [oneLine componentsSeparatedByCommas];
-				NSEnumerator *theEnum = [commaArray objectEnumerator];
-				NSString *oneItem;
-				
-				while (nil != (oneItem = [theEnum nextObject]) )
-				{
-					NSString *trimmedItem = [oneItem trim];
-					if (![trimmedItem isEqualToString:@""])
-					{
-						[buf appendFormat:[NSString stringWithFormat:@"<option>%@</option>",
-										   [trimmedItem stringByEscapingHTMLEntities]]];
-					}
-				}
-				
-			}
-			[buf appendString:@"</select>"];
-			result = [NSString stringWithString:buf];
-			break;
-		}
-		case kKTContactSubjectHidden:
-			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"hidden\" value=\"%@\" />", 
-					  [self uniqueID], [subjectText stringByEscapingHTMLEntities]];
-			break;
-	}
-	
 	return result;
 }
 

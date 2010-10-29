@@ -66,7 +66,6 @@
 }
 
 - (NSString *)encodedRecipient;
-- (NSString *)subjectInputHTML;
 - (NSString *)subjectPrompt;
 - (NSString *)subjectText;
 
