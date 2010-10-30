@@ -44,6 +44,8 @@
 #define LARGE_ICON_ROOT_SPACING	24.00
 #define SMALL_ICON_ROOT_SPACING 16.00
 
+#define CAN_CONVERT_TO_COLLECTIONS
+
 
 @interface SVSiteOutlineViewController ()
 + (NSSet *)mostSiteOutlineRefreshingKeyPaths;
@@ -1205,7 +1207,9 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
     
     OBPRECONDITION(collection);
+#ifndef CAN_CONVERT_TO_COLLECTIONS
     OBPRECONDITION([collection isCollection]);
+#endif
     
     
     // Rule 2.
@@ -1295,7 +1299,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	
     
     // THE RULES:
-    //  1.  The drop item can only be a collection
+    //  (1.  The drop item can only be a collection) – ditching for 2.0
     //  2.  You can only drop at a specific index if the collection is manually sorted
     //  3.  You can't drop above the root page
     //  4.  When moving an existing page, can't drop it as a descendant of itself
@@ -1319,7 +1323,9 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
     
     // Rule 1. Only a collection can be dropped on/into.
+#ifndef CAN_CONVERT_TO_COLLECTIONS
     if ([siteItem isCollection])
+#endif
     {
         return [self validateNonLinkDrop:info
                       proposedCollection:[siteItem pageRepresentation]
