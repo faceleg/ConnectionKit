@@ -11,7 +11,7 @@
 #import "KTDocument.h"
 #import "NSImageView+IMBImageItem.h"
 #import "SVVideo.h"
-
+#import "SVMediaPlugIn.h"
 
 @implementation SVVideoInspector
 

@@ -61,16 +61,25 @@
 	{
 		// It could be a relative (to the bundle) or absolute path
 		NSString *filename = [[self plugInBundle] objectForInfoDictionaryKey:@"KTPluginIconName"];
-		if (![filename isAbsolutePath])
+		NSString *path = nil;
+		if ([filename isAbsolutePath])
 		{
-			filename = [[self plugInBundle] pathForImageResource:filename];
+			path = filename;
+		}
+		else
+		{
+			path = [[self plugInBundle] pathForImageResource:filename];
+			if (!path)
+			{
+				path = [[NSBundle mainBundle] pathForImageResource:filename];
+			}
 		}
 		
         // TODO: We should not be referencing absolute paths.  Instead, we should check for 'XXXX' pattern and convert that to an OSType.
 		
 		//	Create the icon, falling back to the broken image if necessary
 		/// BUGSID:34635	Used to use -initByReferencingFile: but seems to upset Tiger and the Pages/Pagelets popups
-		_icon = [[NSImage alloc] initWithContentsOfFile:filename];
+		_icon = [[NSImage alloc] initWithContentsOfFile:path];
 		if (!_icon)
 		{
 			_icon = [[NSImage brokenImage] retain];
