@@ -12,7 +12,6 @@
 
 
 @protocol SVPage, SVWebLocation;
-@class SVMedia;
 
 
 @interface SVPlugIn : NSObject

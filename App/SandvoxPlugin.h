@@ -36,9 +36,6 @@
 #import "SVIndexPlugIn.h"
 #import "SVIndexInspectorViewController.h"
 
-//  Media
-#import "SVMedia.h"
-
 // Publishing
 
 // Foundation/AppKit subclasses

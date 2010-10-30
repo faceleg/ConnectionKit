@@ -10,8 +10,7 @@
 #import "SVPlugIn.h"
 
 
-@class SVLink, SVMedia;
-@protocol SVMedia;
+@class SVLink;
 
 
 @protocol SVPage <NSObject>
