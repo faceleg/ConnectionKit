@@ -1372,7 +1372,8 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         
         
         // Fallback to article. #82408
-        result = [self articleDOMController];
+        WEKWebEditorItem *articleController = [self articleDOMController];
+        result = [articleController hitTestDOMNode:[articleController HTMLElement] draggingInfo:dragInfo];
     }
     
     
