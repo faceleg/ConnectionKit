@@ -466,6 +466,12 @@
 
 #pragma mark HTML
 
+- (void)writeBody:(SVHTMLContext *)context
+{
+    [context addDependencyOnObject:self keyPath:@"media"];
+    [super writeBody:context];
+}
+
 - (BOOL)shouldWriteHTMLInline; { return [[self plugIn] shouldWriteHTMLInline]; }
 
 - (BOOL)canWriteHTMLInline; { return true; }		// all of these can be figure-content
