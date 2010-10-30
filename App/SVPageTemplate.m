@@ -187,6 +187,7 @@
         aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
   		[aTemplate setIcon:[NSImage imageNamed:@"page_contact_sb"]];
 		[aTemplate setTitle:NSLocalizedString(@"Contact Form", "menu item title")];
+        [aTemplate setPageProperties:NSDICT([aTemplate title], @"title")];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
@@ -194,6 +195,7 @@
         aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
    		[aTemplate setIcon:[NSImage imageNamed:@"page_sitemap_sb"]];
 		[aTemplate setTitle:NSLocalizedString(@"Sitemap", "menu item title")];
+        [aTemplate setPageProperties:NSDICT([aTemplate title], @"title")];
         [buffer addObject:aTemplate];
         [aTemplate release];
         
