@@ -217,7 +217,7 @@
 	}
    
     NSImage *icon = [[self icon] copy];
-    [icon setSize:NSMakeSize(40.0f, 40.0f)];
+    [icon setSize:NSMakeSize(38.0,42.0)];
     [result setImage:icon];
     [icon release];
     
