@@ -18,7 +18,7 @@
     NSString            *_title;
     NSString            *_subtitle;
     NSImage             *_icon;
-    NSDictionary        *_collectionPreset;
+    NSDictionary        *_properties;
     SVGraphicFactory    *_graphicFactory;
 }
 

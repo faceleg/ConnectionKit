@@ -105,7 +105,7 @@
 	[_title release];
 	[_subtitle release];
 	[_icon release];
-    [_collectionPreset release];
+    [_properties release];
     [_graphicFactory release];
     
     [super dealloc];
@@ -208,7 +208,7 @@
 @synthesize title = _title;
 @synthesize subtitle = _subtitle;
 @synthesize icon = _icon;
-@synthesize pageProperties = _collectionPreset;
+@synthesize pageProperties = _properties;
 @synthesize graphicFactory = _graphicFactory;
 
 - (NSMenuItem *)makeMenuItem;
