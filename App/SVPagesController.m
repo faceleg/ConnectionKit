@@ -230,6 +230,10 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
             {
                 [self configurePageAsCollection:result];
             }
+            else
+            {
+                [result setValuesForKeysWithDictionary:[[self pageTemplate] pageProperties]];
+            }
             
             
             // Initial graphic for the page
