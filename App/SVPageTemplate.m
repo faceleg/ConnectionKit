@@ -66,7 +66,7 @@
     NSImage *icon = nil;
     if (plugin)
     {
-        icon = [[plugin graphicFactory] icon];
+        icon = [[plugin graphicFactory] pageIcon];
 #ifdef DEBUG
         if (nil == icon)
         {
@@ -76,7 +76,7 @@
     }
     else	// built-in, no bundle, so try to get icon directly
     {
-        icon = [presetDict objectForKey:@"KTPluginIcon"];
+        icon = [presetDict objectForKey:@"KTPageIconName"];
     }
     [self setIcon:icon];
     
