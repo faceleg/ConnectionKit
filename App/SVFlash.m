@@ -205,7 +205,7 @@
 	// Prepare Media
 	
 	SVMediaRecord *media = [self media];
-	[context addDependencyOnObject:self keyPath:@"media"];
+	//[context addDependencyOnObject:self keyPath:@"media"];    // don't need, graphic does for us
 	
 	NSURL *flashSourceURL = [self externalSourceURL];
     if (media)

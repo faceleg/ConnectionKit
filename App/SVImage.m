@@ -318,7 +318,7 @@
                             height:self.container.height];
     }
     
-    [context addDependencyOnObject:self keyPath:@"media"];
+    //[context addDependencyOnObject:self keyPath:@"media"];    // don't need, graphic does for us
     
     
     if ([[self container] isPagelet] && [self link]) [context endElement];

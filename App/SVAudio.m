@@ -454,7 +454,7 @@
 	// Prepare Media
 	
 	SVMediaRecord *media = [self media];
-	[context addDependencyOnObject:self keyPath:@"media"];
+	//[context addDependencyOnObject:self keyPath:@"media"];    // don't need, graphic does for us
 	[context addDependencyOnObject:self keyPath:@"controller"];		// most boolean properties don't affect display of page
 	
 	NSURL *audioSourceURL = [self externalSourceURL];

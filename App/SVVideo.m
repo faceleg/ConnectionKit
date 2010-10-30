@@ -755,7 +755,7 @@
 	// Prepare Media
 	
 	SVMediaRecord *media = self.media;
-	[context addDependencyForKeyPath:@"media"			ofObject:self];
+	//[context addDependencyForKeyPath:@"media"			ofObject:self]; // don't need, graphic does for us
 	[context addDependencyForKeyPath:@"posterFrameType"	ofObject:self];
 	[context addDependencyForKeyPath:@"posterFrame"		ofObject:self];	// force rebuild if poster frame got changed
 	[context addDependencyForKeyPath:@"controller"		ofObject:self];	// Note: other boolean properties don't affect display of page
