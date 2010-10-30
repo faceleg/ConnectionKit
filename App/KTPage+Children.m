@@ -51,6 +51,17 @@
     [self willChangeValueForKey:@"isCollection"];
     [self setPrimitiveValue:NSBOOL(YES) forKey:@"isCollection"];
     [self didChangeValueForKey:@"isCollection"];
+    
+    // Regular pages can't take thumbnail from children. #93638
+    if (!collection)
+    {
+        SVThumbnailType thumbType = [[self thumbnailType] intValue];
+        if (thumbType == SVThumbnailTypeFirstChildItem ||
+            thumbType == SVThumbnailTypeLastChildItem)
+        {
+            [self setThumbnailType:[NSNumber numberWithInt:SVThumbnailTypeNone]];
+        }
+    }
 }
 
 #pragma mark Children
