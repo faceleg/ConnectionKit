@@ -18,8 +18,11 @@
     NSData  *_data;
 }
 
-- (id)initWithURL:(NSURL *)fileURL;
+- (id)initByReferencingURL:(NSURL *)fileURL;
+- (id)initWithContentsOfURL:(NSURL *)URL error:(NSError **)outError;
+- (id)initWithContents:(NSData *)data;
 
 @property(nonatomic, copy, readonly) NSURL *mediaURL;
+@property(nonatomic, copy, readonly) NSData *mediaData;
 
 @end

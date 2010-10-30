@@ -37,7 +37,7 @@
 {
     [self init];
     
-    _sourceMedia = [[SVMedia alloc] initWithURL:
+    _sourceMedia = [[SVMedia alloc] initByReferencingURL:
                     [NSURL URLWithScheme:@"file" host:[URL host] path:[URL path]]];
     
     _parameters = [[URL ks_queryParameters] copy];

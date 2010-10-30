@@ -15,11 +15,39 @@
 
 @implementation SVMedia
 
-- (id)initWithURL:(NSURL *)fileURL;
+#pragma mark Init & Dealloc
+
+- (id)initByReferencingURL:(NSURL *)fileURL;
 {
     [self init];
     
     _fileURL = [fileURL copy];
+    
+    return self;
+}
+
+- (id)initWithContentsOfURL:(NSURL *)URL error:(NSError **)outError;
+{
+    [self init];
+    
+    _data = [[NSData alloc] initWithContentsOfURL:URL options:0 error:outError];
+    if (_data)
+    {
+        _fileURL = [URL copy];
+    }
+    else
+    {
+        [self release]; self = nil;
+    }
+    
+    return self;
+}
+
+- (id)initWithContents:(NSData *)data;
+{
+    [self init];
+    
+    _data = [data copy];
     
     return self;
 }
@@ -32,22 +60,10 @@
     [super dealloc];
 }
 
+#pragma mark Properties
+
 @synthesize mediaURL = _fileURL;
-
-@end
-
-
-#pragma mark -
-
-
-@implementation SVMedia (SVMedia)
-
-- (NSData *)mediaData;
-{
-    return nil;
-    NSData *result = _data;
-    return result;
-}
+@synthesize mediaData = _data;
 
 - (NSString *)preferredFilename    // what the media would like to named given the chance
 {
