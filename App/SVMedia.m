@@ -22,6 +22,7 @@
     [self init];
     
     _fileURL = [fileURL copy];
+    [self setPreferredFilename:[fileURL ks_lastPathComponent]];
     
     return self;
 }
@@ -34,6 +35,7 @@
     if (_data)
     {
         _fileURL = [URL copy];
+        [self setPreferredFilename:[URL ks_lastPathComponent]];
     }
     else
     {
@@ -43,11 +45,12 @@
     return self;
 }
 
-- (id)initWithContents:(NSData *)data;
+- (id)initWithWebResource:(WebResource *)resource;
 {
     [self init];
     
-    _data = [data copy];
+    _webResource = [resource copy];
+    [self setPreferredFilename:[[resource URL] ks_lastPathComponent]];
     
     return self;
 }
@@ -56,6 +59,8 @@
 {
     [_fileURL release];
     [_data release];
+    [_webResource release];
+    [_preferredFilename release];
     
     [super dealloc];
 }
@@ -63,12 +68,13 @@
 #pragma mark Properties
 
 @synthesize mediaURL = _fileURL;
-@synthesize mediaData = _data;
 
-- (NSString *)preferredFilename    // what the media would like to named given the chance
+- (NSData *)mediaData;
 {
-    return [[self mediaURL] ks_lastPathComponent];
+    return (_webResource ? [_webResource data] : _data);
 }
+
+@synthesize preferredFilename = _preferredFilename;
 
 - (NSString *)preferredUploadPath;
 {

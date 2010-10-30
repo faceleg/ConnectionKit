@@ -21,7 +21,7 @@
 #import "SVGraphicFactory.h"
 #import "KTHTMLEditorController.h"
 #import "SVLinkManager.h"
-#import "SVMediaRecord.h"
+#import "SVMedia.h"
 #import "SVPlugInGraphic.h"
 #import "KTSite.h"
 #import "SVSelectionBorder.h"
@@ -691,14 +691,21 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     if (returnCode == NSCancelButton) return;
     
     
+    // FIXME: Should reference non-images
+    SVMedia *media = [[SVMedia alloc] initWithContentsOfURL:[sheet URL] error:NULL];
+    if (!media) return;
+    
+    
     KTPage *page = [[self HTMLContext] page];
     NSManagedObjectContext *context = [page managedObjectContext];
     
     SVMediaGraphic *graphic = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
-    [graphic setSourceWithURL:[sheet URL]];
+    [graphic setSourceWithMedia:media];
     [graphic setShowsTitle:NO];
     [graphic setShowsCaption:NO];
     [graphic setShowsIntroduction:NO];
+    
+    [media release];
     
     [self _insertPageletInSidebar:graphic];
 }

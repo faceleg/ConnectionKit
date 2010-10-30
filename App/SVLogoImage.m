@@ -15,6 +15,14 @@
 #import "NSManagedObject+KTExtensions.h"
 
 
+@interface SVMediaGraphic (SVLogoImage)
+- (void)setSourceWithMediaRecord:(SVMediaRecord *)media;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVLogoImage
 
 - (void)awakeFromInsert

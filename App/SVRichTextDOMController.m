@@ -20,7 +20,7 @@
 #import "SVImage.h"
 #import "SVLinkManager.h"
 #import "SVLink.h"
-#import "SVMediaRecord.h"
+#import "SVMedia.h"
 #import "SVParagraphedHTMLWriter.h"
 #import "SVTextAttachment.h"
 #import "SVTextBox.h"
@@ -355,23 +355,19 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     SVRichText *text = [self representedObject];
     NSManagedObjectContext *context = [text managedObjectContext];
     
-    SVMediaRecord *media = nil;
+    SVMedia *media = nil;
     NSURL *URL = [imageElement absoluteImageURL];
     if ([URL isFileURL])
     {
-        media = [SVMediaRecord mediaWithURL:URL
-                                 entityName:@"GraphicMedia"
-             insertIntoManagedObjectContext:context
-                                      error:NULL];
+        media = [[SVMedia alloc] initWithContentsOfURL:URL error:NULL];
+        // FIXME: what if that failed?
     }
     else
     {
         WebResource *resource = [[[[imageElement ownerDocument] webFrame] dataSource] subresourceForURL:URL];
         if (resource)   // e.g. Chrome only provides the URL. #92311
         {
-            media = [SVMediaRecord mediaWithWebResource:resource
-                                             entityName:@"GraphicMedia"
-                         insertIntoManagedObjectContext:context];
+            media = [[SVMedia alloc] initWithWebResource:resource];
             
             // FIXME: Why not match the URL's filename?
             [media setPreferredFilename:[@"pastedImage" stringByAppendingPathExtension:[URL ks_pathExtension]]];
@@ -381,7 +377,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     SVMediaGraphic *image = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
     if (media)
     {
-        [image setSourceWithMediaRecord:media];
+        [image setSourceWithMedia:media];
+        [media release];
     }
     else
     {
@@ -656,10 +653,15 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     if (returnCode == NSCancelButton) return;
     
     
+    // FIXME: Should reference non-image URLs
+    SVMedia *media = [[SVMedia alloc] initWithContentsOfURL:[sheet URL] error:NULL];
+    if (!media) return;
+    
+    
     NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
     
     SVMediaGraphic *graphic = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
-    [graphic setSourceWithURL:[sheet URL]];
+    [graphic setSourceWithMedia:media];
     [graphic setShowsTitle:NO];
     [graphic setShowsCaption:NO];
     [graphic setShowsIntroduction:NO];

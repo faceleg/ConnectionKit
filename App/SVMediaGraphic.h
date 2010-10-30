@@ -12,7 +12,7 @@
 #import "SVPlugInGraphic.h"
 
 
-@class SVMediaRecord, SVMediaPlugIn;
+@class SVMedia, SVMediaRecord, SVMediaPlugIn;
 
 
 @interface SVMediaGraphic : SVPlugInGraphic
@@ -25,8 +25,7 @@
 
 @property(nonatomic, retain, readonly) SVMediaRecord *media;
 - (BOOL)hasFile;    // for bindings
-- (void)setSourceWithURL:(NSURL *)URL;
-- (void)setSourceWithMediaRecord:(SVMediaRecord *)media;
+- (void)setSourceWithMedia:(SVMedia *)media;
 + (NSString *)mediaEntityName;
 
 @property(nonatomic, copy, readonly) NSURL *externalSourceURL;

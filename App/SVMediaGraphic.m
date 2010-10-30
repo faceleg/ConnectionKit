@@ -33,6 +33,7 @@
 @property(nonatomic, copy, readwrite) NSURL *externalSourceURL;
 @property(nonatomic, copy) NSString *externalSourceURLString;
 
+- (void)setSourceWithMediaRecord:(SVMediaRecord *)media;
 - (void)didSetSource;
 
 @property(nonatomic, copy, readwrite) NSNumber *constrainedAspectRatio;
@@ -148,6 +149,28 @@
     }
     
     [self setSourceWithMediaRecord:media];
+}
+
+- (void)setSourceWithMedia:(SVMedia *)media;
+{
+    SVMediaRecord *record = nil;
+    
+    if ([media mediaData])
+    {
+        record = [SVMediaRecord mediaWithData:[media mediaData]
+                                          URL:[media mediaURL]
+                                   entityName:[[self class] mediaEntityName]
+               insertIntoManagedObjectContext:[self managedObjectContext]];
+    }
+    else
+    {
+        record = [SVMediaRecord mediaWithURL:[media mediaURL]
+                                  entityName:[[self class] mediaEntityName]
+              insertIntoManagedObjectContext:[self managedObjectContext]
+                                       error:NULL];
+    }
+    
+    [self setSourceWithMediaRecord:record];
 }
 
 - (void)setSourceWithMediaRecord:(SVMediaRecord *)media;
