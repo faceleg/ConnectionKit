@@ -30,7 +30,7 @@
 @property(nonatomic, copy) NSString *title; // title of template, not created pages
 @property(nonatomic, copy) NSString *subtitle; // additional information about the menu
 @property(nonatomic, retain) NSImage *icon;
-@property(nonatomic, copy) NSDictionary *collectionPreset;
+@property(nonatomic, copy) NSDictionary *pageProperties;
 
 // When inserting a page using this template, you should generally stick a graphic on it produced using this factory
 @property(nonatomic, retain, readonly) SVGraphicFactory *graphicFactory;

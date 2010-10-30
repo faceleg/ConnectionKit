@@ -11,6 +11,7 @@
 #import "KTElementPlugInWrapper.h"
 #import "SVGraphicFactory.h"
 
+#import "NSDictionary+Karelia.h"
 #import "NSSet+Karelia.h"
 #import "NSString+KTExtensions.h"
 
@@ -40,7 +41,8 @@
     
     
     // Other Stuff
-    [self setCollectionPreset:presetDict];
+    [self setPageProperties:[presetDict ks_dictionaryBySettingObject:[NSNumber numberWithBool:YES]
+                                                              forKey:@"isCollection"]];
     
     NSString *presetTitle = [presetDict objectForKey:@"KTPresetTitle"];
     if (plugin) presetTitle = [[plugin bundle] localizedStringForKey:presetTitle
@@ -202,7 +204,7 @@
 @synthesize title = _title;
 @synthesize subtitle = _subtitle;
 @synthesize icon = _icon;
-@synthesize collectionPreset = _collectionPreset;
+@synthesize pageProperties = _collectionPreset;
 @synthesize graphicFactory = _graphicFactory;
 
 - (NSMenuItem *)makeMenuItem;

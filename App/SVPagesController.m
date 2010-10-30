@@ -226,7 +226,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         
             
             // Make the page into a collection if it was requested
-            if ([[self pageTemplate] collectionPreset]) 
+            if ([[[self pageTemplate] pageProperties] boolForKey:@"isCollection"]) 
             {
                 [self configurePageAsCollection:result];
             }
@@ -289,7 +289,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     //  Create a collection. Populate according to the index plug-in (-representedObject) if applicable.
     
     
-    NSDictionary *presetDict = [[self pageTemplate] collectionPreset];
+    NSDictionary *presetDict = [[self pageTemplate] pageProperties];
 	NSString *identifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
 	KTElementPlugInWrapper *plugInWrapper = identifier ? [KTElementPlugInWrapper pluginWithIdentifier:identifier] : nil;
 	
