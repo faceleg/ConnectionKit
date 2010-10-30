@@ -24,8 +24,6 @@ typedef enum { kPosterFrameTypeUndefined = 0, kPosterFrameTypeNone, kPosterFrame
 
 + (void)writeFallbackScriptOnce:(SVHTMLContext *)context;
 
-- (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
-
 @property (retain) QTMovie *dimensionCalculationMovie;
 @property (retain) KSSimpleURLConnection *dimensionCalculationConnection;
 
