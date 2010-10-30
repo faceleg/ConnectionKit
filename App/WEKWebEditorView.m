@@ -50,6 +50,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
 #pragma mark -
 
 
+@interface DOMNode (KSHTMLWriter)
+- (BOOL)ks_isDescendantOfDOMNode:(DOMNode *)possibleAncestor;
+@end
+
+
+#pragma mark -
+
+
 @interface WEKWebEditorView ()
 
 @property(nonatomic, retain, readonly) WEKWebView *webView; // publicly declared as a plain WebView, but we know better
