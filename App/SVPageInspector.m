@@ -117,7 +117,7 @@
     }
     else if ([identifier isEqualToString:@"collection"])
     {
-        return 264.0f;
+        return 317.0f;
     }
     else
     {
