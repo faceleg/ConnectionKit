@@ -452,10 +452,16 @@
     DOMElement *element = [self textHTMLElement];
     NSPoint location = [[element documentView] convertPointFromBase:[sender draggingLocation]];
     
+    
+    /*  Walk through the children of text area (downwards on screen probably) until we find whose midpoint is beneath the cursor.
+     */
+    
     DOMTreeWalker *treeWalker = [[element ownerDocument] createTreeWalker:element
                                                                whatToShow:DOM_SHOW_ELEMENT
                                                                    filter:nil
                                                    expandEntityReferences:NO];
+    
+    DOMNode *result = nil;
     
     DOMNode *aNode = [treeWalker firstChild];
     while (aNode)
@@ -463,7 +469,7 @@
         NSRect bounds = [aNode boundingBox];
         CGFloat mid = NSMidY(bounds);
         
-        if (location.y < mid)
+        if (mid >= location.y)
         {
             // We've found our target, but dissallow it if won't cause any result
             WEKWebEditorView *webEditor = [self webEditor];
@@ -489,7 +495,8 @@
             }
             
                   
-            return aNode;
+            result = aNode;
+            break;
         }
         
         aNode = [treeWalker nextSibling];
@@ -497,9 +504,29 @@
     
     
     // No match was found, so insert at end. But if the end is a <BR>, use that!
-    DOMElement *result = (DOMElement *)[treeWalker currentNode];
-    if (![[result tagName] isEqualToString:@"BR"]) result = nil; 
+    if (!result)
+    {
+        DOMElement *lastElement = (DOMElement *)[treeWalker currentNode];
+        if ([[lastElement tagName] isEqualToString:@"BR"])
+        {
+            result = lastElement;
+        }
+    }
         
+    
+    // We've found probable drop point. But if that means placing below an empty paragraph/break, intention was probably to drop above it. So search backwards for real target. #93754
+    DOMNode *previousElement = (result ? [treeWalker previousSibling] : [treeWalker currentNode]);
+    if (previousElement)
+    {
+        WEKWebEditorItem *controller = [self hitTestDOMNode:previousElement];
+        if (controller == self) // check the element's not a graphic/callout-container
+        {
+            NSString *text = [(DOMHTMLElement *)previousElement innerText];
+            if ([text isWhitespace]) result = previousElement;
+        }
+    }
+    
+    
     return result;
 }
 
