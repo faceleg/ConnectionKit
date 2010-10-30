@@ -688,6 +688,7 @@ static SVGraphicFactory *sRawHTMLFactory;
 - (NSString *)name { SUBCLASSMUSTIMPLEMENT; return nil; }
 - (NSString *)graphicDescription { SUBCLASSMUSTIMPLEMENT; return nil; }
 - (NSImage *)icon { return nil; }
+- (NSImage *)pageIcon { return nil; }
 - (NSUInteger)priority; { return 5; }
 
 - (BOOL)isIndex; { return NO; }

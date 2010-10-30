@@ -31,7 +31,8 @@
     [_bundle release];
     [_class release];
     [_icon release];
-    
+	[_pageIcon release];
+
     [super dealloc];
 }
 
@@ -54,39 +55,56 @@
 
 - (NSString *)graphicDescription; { return [[self plugInBundle] objectForInfoDictionaryKey:@"KTPluginDescription"]; }
 
+- (NSImage *)iconWithName:(NSString *)aName;
+{
+	NSImage *result = nil;
+	// It could be a relative (to the bundle) or absolute path
+	NSString *filename = [[self plugInBundle] objectForInfoDictionaryKey:aName];
+	NSString *path = nil;
+	if ([filename isAbsolutePath])
+	{
+		path = filename;
+	}
+	else
+	{
+		path = [[self plugInBundle] pathForImageResource:filename];
+		if (!path)
+		{
+			path = [[NSBundle mainBundle] pathForImageResource:filename];
+		}
+	}
+	
+	// TODO: We should not be referencing absolute paths.  Instead, we should check for 'XXXX' pattern and convert that to an OSType.
+	
+	//	Create the icon, falling back to the broken image if necessary
+	/// BUGSID:34635	Used to use -initByReferencingFile: but seems to upset Tiger and the Pages/Pagelets popups
+	result = [[[NSImage alloc] initWithContentsOfFile:path] autorelease];
+	if (!result)
+	{
+		result = [NSImage brokenImage];
+	}
+	
+	return result;
+}
+
 - (NSImage *)icon;
 {
 	// The icon is cached; load it if not cached yet
 	if (!_icon)
 	{
-		// It could be a relative (to the bundle) or absolute path
-		NSString *filename = [[self plugInBundle] objectForInfoDictionaryKey:@"KTPluginIconName"];
-		NSString *path = nil;
-		if ([filename isAbsolutePath])
-		{
-			path = filename;
-		}
-		else
-		{
-			path = [[self plugInBundle] pathForImageResource:filename];
-			if (!path)
-			{
-				path = [[NSBundle mainBundle] pathForImageResource:filename];
-			}
-		}
-		
-        // TODO: We should not be referencing absolute paths.  Instead, we should check for 'XXXX' pattern and convert that to an OSType.
-		
-		//	Create the icon, falling back to the broken image if necessary
-		/// BUGSID:34635	Used to use -initByReferencingFile: but seems to upset Tiger and the Pages/Pagelets popups
-		_icon = [[NSImage alloc] initWithContentsOfFile:path];
-		if (!_icon)
-		{
-			_icon = [[NSImage brokenImage] retain];
-		}
+		_icon = [[self iconWithName:@"KTPluginIconName"] retain];
 	}
-	
 	return _icon;
+}
+
+- (NSImage *)pageIcon;
+{
+	// The icon is cached; load it if not cached yet
+	if (!_pageIcon)
+	{
+		_pageIcon = [[self iconWithName:@"KTPageIconName"] retain];
+	}
+	return _pageIcon;
 }
 
 #pragma mark Factory

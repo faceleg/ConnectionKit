@@ -1131,6 +1131,9 @@
 		CE35968510F3F0A10009F2CA /* SVWebSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */; };
 		CE36E59011EF95FF003EFCA8 /* designPlaceholder.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE36E58F11EF95FF003EFCA8 /* designPlaceholder.tiff */; };
 		CE36E5CA11EFA68E003EFCA8 /* plainText.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE36E5C911EFA68E003EFCA8 /* plainText.tiff */; };
+		CE390975127BA2D100C994C6 /* object_empty.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE390972127BA2D100C994C6 /* object_empty.tiff */; };
+		CE390976127BA2D100C994C6 /* object_grid.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE390973127BA2D100C994C6 /* object_grid.tiff */; };
+		CE390977127BA2D100C994C6 /* object_summaries.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE390974127BA2D100C994C6 /* object_summaries.tiff */; };
 		CE42A63111DE506600381E46 /* DTD in Resources */ = {isa = PBXBuildFile; fileRef = CE42A62311DE506600381E46 /* DTD */; };
 		CE44DFBA0BD0019400479A8E /* KTHTMLEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44DFB80BD0019400479A8E /* KTHTMLEditorController.m */; };
 		CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */; };
@@ -2757,6 +2760,9 @@
 		CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebSourceViewController.m; sourceTree = "<group>"; };
 		CE36E58F11EF95FF003EFCA8 /* designPlaceholder.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = designPlaceholder.tiff; sourceTree = "<group>"; };
 		CE36E5C911EFA68E003EFCA8 /* plainText.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = plainText.tiff; sourceTree = "<group>"; };
+		CE390972127BA2D100C994C6 /* object_empty.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = object_empty.tiff; sourceTree = "<group>"; };
+		CE390973127BA2D100C994C6 /* object_grid.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = object_grid.tiff; sourceTree = "<group>"; };
+		CE390974127BA2D100C994C6 /* object_summaries.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = object_summaries.tiff; sourceTree = "<group>"; };
 		CE42A62311DE506600381E46 /* DTD */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DTD; sourceTree = "<group>"; };
 		CE44DFB80BD0019400479A8E /* KTHTMLEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLEditorController.m; sourceTree = "<group>"; };
 		CE44DFB90BD0019400479A8E /* KTHTMLEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLEditorController.h; sourceTree = "<group>"; };
@@ -4996,6 +5002,7 @@
 				CE1BE7DD11D2AD1E00D875AE /* InspectorSorting */,
 				CE1BE7E311D2AD1E00D875AE /* Licensing */,
 				CE1BE7E511D2AD1E00D875AE /* Misc */,
+				CE390971127BA2D100C994C6 /* Objects */,
 				CE1BE7E811D2AD1E00D875AE /* PageComponents */,
 				CE050119127B7A020082BFA9 /* Pages */,
 				CE1BE7ED11D2AD1E00D875AE /* Preferences */,
@@ -5247,6 +5254,16 @@
 				CE2D42E91188BD910051E238 /* README.rtf */,
 			);
 			path = LIFlipEffect;
+			sourceTree = "<group>";
+		};
+		CE390971127BA2D100C994C6 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				CE390972127BA2D100C994C6 /* object_empty.tiff */,
+				CE390973127BA2D100C994C6 /* object_grid.tiff */,
+				CE390974127BA2D100C994C6 /* object_summaries.tiff */,
+			);
+			path = Objects;
 			sourceTree = "<group>";
 		};
 		CE58138D11DEA45D008478AF /* HTMLEditor */ = {
@@ -6419,6 +6436,9 @@
 				CE05013B127B7FE00082BFA9 /* page_contact_sb.tiff in Resources */,
 				CE05013D127B7FE60082BFA9 /* page_sitemap_sb.tiff in Resources */,
 				CE050182127B86440082BFA9 /* page_html.tiff in Resources */,
+				CE390975127BA2D100C994C6 /* object_empty.tiff in Resources */,
+				CE390976127BA2D100C994C6 /* object_grid.tiff in Resources */,
+				CE390977127BA2D100C994C6 /* object_summaries.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -93,7 +93,7 @@
     
     _graphicFactory = [factory retain]; // TOOD: Factories are immutable at the moment, so could copy instead
     
-    [self setIcon:[factory icon]];
+    [self setIcon:[factory pageIcon]];
     
     return self;
 }

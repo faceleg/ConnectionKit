@@ -30,8 +30,10 @@
 	<string>general-index</string>
 	<key>KTIndexNavigationArrowsStyle</key>
 	<integer>2</integer>
-	<key>KTPluginIconName</key>
+	<key>KTPageIconName</key>
 	<string>page_blog_sb.tiff</string>
+	<key>KTPluginIconName</key>
+	<string>object_summaries.tiff</string>
 	<key>KTPluginName</key>
 	<string>Tiles &amp; Summaries</string>
 	<key>KTPluginPriority</key>

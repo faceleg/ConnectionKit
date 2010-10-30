@@ -15,10 +15,13 @@
     Class       _class;
     NSBundle    *_bundle;
     NSImage     *_icon;
+    NSImage     *_pageIcon;
 }
 
 - (id)initWithBundle:(NSBundle *)bundle;    // assume -principalClass is the plug-in
 
 @property(nonatomic, retain, readonly) NSBundle *plugInBundle;
+
+- (NSImage *)pageIcon;
 
 @end
