@@ -131,6 +131,17 @@
     [self setPrimitiveValue:type forKey:@"collectionSyndicationType"];
     [self didChangeValueForKey:@"collectionSyndicationType"];
     
+    
+    // #93646
+    if ([type boolValue])
+    {
+        if ([[self collectionMaxSyndicatedPagesCount] integerValue] < 1)
+        {
+            [self setCollectionMaxSyndicatedPagesCount:[NSNumber numberWithUnsignedInteger:20]];
+        }
+    }
+    
+    
     [[self childItems] makeObjectsPerformSelector:@selector(guessEnclosures)];
 }
 
