@@ -516,7 +516,7 @@
     
     // We've found probable drop point. But if that means placing below an empty paragraph/break, intention was probably to drop above it. So search backwards for real target. #93754
     DOMNode *previousElement = (result ? [treeWalker previousSibling] : [treeWalker currentNode]);
-    if (previousElement)
+    while (previousElement)
     {
         WEKWebEditorItem *controller = [self hitTestDOMNode:previousElement];
         if (controller == self) // check the element's not a graphic/callout-container
@@ -524,6 +524,8 @@
             NSString *text = [(DOMHTMLElement *)previousElement innerText];
             if ([text isWhitespace]) result = previousElement;
         }
+        
+        previousElement = [treeWalker previousSibling];
     }
     
     
