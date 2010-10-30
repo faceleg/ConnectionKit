@@ -117,16 +117,8 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 			[product release];
 		}
 		
-		NSString *listID = nil;	// List
-		[browserURL getAmazonListType:NULL andID:&listID];
-		if (listID && ![listID isEqualToString:@""])
-		{
-			[element setInteger:AmazonPageletLoadFromList forKey:@"listSource"];
-			[element setValue:[browserURL absoluteString] forKey:@"automaticListCode"];
-		}
 		
-		
-		// If there is a predefined list ID, go with it
+        // If there is a predefined list ID, go with it
 		NSString *defaultListCode = [[[self bundle] objectForInfoDictionaryKey:@"DefaultListIDs"]
 			objectForKey:[AmazonECSOperation ISOCountryCodeOfStore:[element integerForKey:@"store"]]];
 		
@@ -134,7 +126,10 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	}
 	else
 	{
-		// Load manual list products
+        // Insist on being a manual list since Amazon shut automatic support down
+		[element setInteger:AmazonPageletPickByHand forKey:@"listSource"];
+        
+        // Load manual list products
 		[self unarchiveManualListProductsFromPluginProperties];
 	}
     
