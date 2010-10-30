@@ -9,6 +9,7 @@
 #import "SVImageScalingOperation.h"
 
 #import "KTImageScalingSettings.h"
+#import "SVMedia.h"
 
 #import "NSImage+KTExtensions.h"
 

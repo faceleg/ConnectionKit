@@ -1017,7 +1017,7 @@
     // Figure out the URL when published. Ideally this is from some media, but if not the published URL
     NSURL *URL = nil;
     
-    SVMedia *media = [enclosure media];
+    id <SVMedia> media = [enclosure media];
     if (media)
     {
         URL = [self addMedia:media];

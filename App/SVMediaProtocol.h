@@ -9,7 +9,6 @@
 
 #import <Foundation/Foundation.h>
 #import <iMedia/IMBImageItem.h>
-#import "SVMedia.h"
 
 
 @protocol SVMedia <NSObject>
@@ -20,13 +19,6 @@
 - (NSString *)preferredUploadPath;    // what the media would like to be placed given the chance
 
 - (BOOL)isEqualToMedia:(id <SVMedia>)otherMedia;    // return YES if you can be sure the two objects evaluate to equal data. Implement -isEqual: to call this too please!
-@end
-
-
-#pragma mark -
-
-
-@interface SVMedia (SVMedia) <SVMedia>
 @end
 
 

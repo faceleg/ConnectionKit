@@ -8,8 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "SVMediaProtocol.h"
 
-@interface SVMedia : NSObject
+
+@interface SVMedia : NSObject <SVMedia>
 {
   @private
     NSURL   *_fileURL;
