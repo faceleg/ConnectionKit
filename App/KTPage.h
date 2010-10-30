@@ -144,6 +144,7 @@ typedef enum {
 - (BOOL)isRootPage; // like NSTreeNode, the root page is defined to be one with no parent. This is just a convenience around that
 - (KTPage *)parentOrRoot;
 - (BOOL)hasChildren;
+@property(nonatomic) BOOL isCollection;
 
 
 #pragma mark Navigation Arrows

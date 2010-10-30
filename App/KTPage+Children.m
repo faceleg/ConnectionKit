@@ -46,6 +46,13 @@
 	return result;		// not an optional property, so it's OK to convert to a non-object
 }
 
+- (void)setIsCollection:(BOOL)collection;
+{
+    [self willChangeValueForKey:@"isCollection"];
+    [self setPrimitiveValue:NSBOOL(YES) forKey:@"isCollection"];
+    [self didChangeValueForKey:@"isCollection"];
+}
+
 #pragma mark Children
 
 @dynamic childItems;

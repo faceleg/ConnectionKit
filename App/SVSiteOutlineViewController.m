@@ -1382,26 +1382,30 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
     
     // Correct for the root page. i.e. a drop with a nil item is actually a drop onto/in the root page, and the index needs to be bumped slightly
-    SVSiteItem *siteItem = item;
+    KTPage *page = item;
     NSInteger index = anIndex;
-    if (!siteItem)
+    if (!page)
     {
         if (anIndex == 0) return NO;   // rule 3.
         
-        siteItem = [self rootPage];
+        page = [self rootPage];
         if (index != NSOutlineViewDropOnItemIndex) 
         {
             index--;    // we've already weeded out the case of index being 0
         }
     }
-    OBASSERT(siteItem);
+    OBASSERT(page);
     
     
     // Rule 1. Only a collection can be dropped on/into.
-    if ([siteItem isCollection])
+#ifdef CAN_CONVERT_TO_COLLECTIONS
+    [page setIsCollection:YES];
+#else
+    if ([page isCollection])
+#endif
     {
         return [self acceptNonLinkDrop:info
-                            collection:[siteItem pageRepresentation]
+                            collection:page
                             childIndex:index];
     }
     
