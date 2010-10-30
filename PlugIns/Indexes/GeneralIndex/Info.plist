@@ -41,17 +41,6 @@
 	<key>KTPresets</key>
 	<array>
 		<dict>
-			<key>KTPageSettings</key>
-			<dict>
-				<key>collectionSortOrder</key>
-				<integer>0</integer>
-			</dict>
-			<key>KTPresetTitle</key>
-			<string>Unsorted Summaries</string>
-			<key>KTPresetUntitled</key>
-			<string>Collection</string>
-		</dict>
-		<dict>
 			<key>KTFirstChildSettings</key>
 			<dict>
 				<key>allowComments</key>
