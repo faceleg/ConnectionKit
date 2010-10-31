@@ -869,7 +869,20 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     if ([self selectedItemsHaveBeenPublished] || YES)
     {
         NSAlert *alert = [[NSAlert alloc] init];
-        [alert setMessageText:@"You sure?"];
+        
+        if (makeCollection)
+        {
+            [alert setMessageText:[NSString stringWithFormat:
+                                   NSLocalizedString(@"Are you sure you want to publish the page \"%@\" as a collection?", "alert title"),
+                                   [[self content] valueForKeyPath:@"selection.title"]]];
+        }
+        else
+        {
+            [alert setMessageText:[NSString stringWithFormat:
+                                   NSLocalizedString(@"Are you sure you want to stop publishing the page \"%@\" as a collection?", "alert title"),
+                                   [[self content] valueForKeyPath:@"selection.title"]]];
+        }
+        
         [alert addButtonWithTitle:NSLocalizedString(@"Change", "button title")];
         [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button title")];
         
