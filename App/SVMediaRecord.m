@@ -224,25 +224,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 #pragma mark Location Support
 
 @dynamic filename;
-- (NSString *)Xfilename // not sure we actually need the custom logic
-{
-    [self willAccessValueForKey:@"filename"];
-    NSString *result = [self primitiveValueForKey:@"filename"];
-    [self didAccessValueForKey:@"filename"];
-    
-    // If there's a sequence of events:
-    //  1.  Insert media
-    //  2.  Other stuff
-    //  3.  Save doc
-    //  4.  Undo
-    //  The undo will return our filename to nil, but we do have one really. So, fallback to the committed value
-    if (!result)
-    {
-        result = [self committedValueForKey:@"filename"];
-    }
-    
-    return result;
-}
 
 @dynamic shouldCopyFileIntoDocument;
 
