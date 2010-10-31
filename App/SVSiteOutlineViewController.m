@@ -848,10 +848,47 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     return result;
 }
 
+// YES if any of them have
+- (BOOL)selectedItemsHaveBeenPublished;
+{
+    NSDate *published = [[self content] valueForKeyPath:@"selection.datePublished"];
+    return (published != nil);
+}
+
+- (void)setIsCollection:(BOOL)makeCollection;
+{
+    [[self content] setValue:NSBOOL(makeCollection) forKeyPath:@"selection.isCollection"];
+}
+
 - (IBAction)toggleIsCollection:(id)sender;
 {
     BOOL makeCollection = [self selectedItemsAreCollections] != NSOnState;
-    [[self content] setValue:NSBOOL(makeCollection) forKeyPath:@"selection.isCollection"];
+    
+    
+    // Warn before changing this on a published page
+    if ([self selectedItemsHaveBeenPublished] || YES)
+    {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"You sure?"];
+        [alert addButtonWithTitle:NSLocalizedString(@"Change", "button title")];
+        [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button title")];
+        
+        [alert beginSheetModalForWindow:[[self view] window]
+                          modalDelegate:self
+                         didEndSelector:@selector(toggleIsCollectionAlertDidEnd:returnCode:contextInfo:)
+                            contextInfo:NULL];
+        
+        [alert release];
+    }
+    else
+    {
+        [self setIsCollection:makeCollection];
+    }
+}
+
+- (void)toggleIsCollectionAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+{
+    
 }
 
 #pragma mark NSResponder
