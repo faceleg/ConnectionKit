@@ -99,7 +99,7 @@
     NSString *result = [@"_Media" stringByAppendingPathComponent:
                         [[self preferredFilename] legalizedWebPublishingFilename]];
     
-    if ([[result pathExtension] isEqualToString:@"jpg"])
+    if ([[result pathExtension] isEqualToString:@"jpg"])    // #91088
     {
         result = [[result stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpeg"];
     }

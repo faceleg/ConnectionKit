@@ -529,21 +529,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
-#pragma mark Publishing
-
-- (NSString *)preferredUploadPath;
-{
-    NSString *result = [@"_Media" stringByAppendingPathComponent:
-                        [[self preferredFilename] legalizedWebPublishingFilename]];
-    
-    if ([[result pathExtension] isEqualToString:@"jpg"])    // #91088
-    {
-        result = [[result stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpeg"];
-    }
-    
-    return result;
-}
-
 @end
 
 
