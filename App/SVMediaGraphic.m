@@ -137,38 +137,11 @@
 
 @dynamic media;
 
-- (void)setSourceWithURL:(NSURL *)URL;
-{
-    SVMediaRecord *media = nil;
-    if (URL)
-    {
-        media = [SVMediaRecord mediaWithURL:URL
-                                 entityName:[[self class] mediaEntityName]
-             insertIntoManagedObjectContext:[self managedObjectContext]
-                                      error:NULL];
-    }
-    
-    [self setSourceWithMediaRecord:media];
-}
-
 - (void)setSourceWithMedia:(SVMedia *)media;
 {
-    SVMediaRecord *record = nil;
-    
-    if ([media mediaData])
-    {
-        record = [SVMediaRecord mediaWithData:[media mediaData]
-                                          URL:[media mediaURL]
-                                   entityName:[[self class] mediaEntityName]
-               insertIntoManagedObjectContext:[self managedObjectContext]];
-    }
-    else
-    {
-        record = [SVMediaRecord mediaWithURL:[media mediaURL]
-                                  entityName:[[self class] mediaEntityName]
-              insertIntoManagedObjectContext:[self managedObjectContext]
-                                       error:NULL];
-    }
+    SVMediaRecord *record = [SVMediaRecord mediaRecordWithMedia:media
+                                                     entityName:[[self class] mediaEntityName]
+                                 insertIntoManagedObjectContext:[self managedObjectContext]];
     
     [self setSourceWithMediaRecord:record];
 }
