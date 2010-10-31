@@ -7,10 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTPage.h"
+
+#import "KTPage+Paths.h"
 #import "SVPagesController.h"
 #import "KSViewController.h"
 
+#import <BWToolkitFramework/BWHyperlinkButton.h>
 
 extern NSString *KTDisableCustomSiteOutlineIcons;
 
@@ -23,7 +25,9 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 {
 	IBOutlet BWSplitView *oSplitView;
     
-    IBOutlet NSView *oToggleIsCollectionConfirmationAccessoryView;
+    IBOutlet NSView             *oToggleIsCollectionConfirmationAccessoryView;
+    IBOutlet BWHyperlinkButton  *oCurrentPageURLLink;
+    IBOutlet NSTextField        *oNewPageURLLabel;
 	
   @private
     NSOutlineView       *_outlineView;

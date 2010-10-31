@@ -887,11 +887,23 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
          NSLocalizedString(@"This will break any bookmarks to the page your visitors might have saved.",
                            "alert subtitle")];
         
+        
+        // Accessory View
+        [oCurrentPageURLLink setUrlString:[[[self content] valueForKeyPath:@"selection.URL"] absoluteString]];
+        [oCurrentPageURLLink setTitle:[oCurrentPageURLLink urlString]];
+        
+        KTPage *page = [[[self content] selectedObjects] lastObject];
+        [oNewPageURLLabel setStringValue:[[page URLAsCollection:makeCollection] absoluteString]];
+        
         [alert setAccessoryView:oToggleIsCollectionConfirmationAccessoryView];
         
+        
+        // Buttons
         [alert addButtonWithTitle:NSLocalizedString(@"Change", "button title")];
         [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button title")];
         
+        
+        // Present
         [alert beginSheetModalForWindow:[[self view] window]
                           modalDelegate:self
                          didEndSelector:@selector(toggleIsCollectionAlertDidEnd:returnCode:contextInfo:)
