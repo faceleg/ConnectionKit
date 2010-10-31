@@ -919,7 +919,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (void)toggleIsCollectionAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 {
-    
+    if (returnCode == NSAlertFirstButtonReturn)
+    {
+        BOOL makeCollection = [self selectedItemsAreCollections] != NSOnState;
+        [self setIsCollection:makeCollection];
+    }
 }
 
 #pragma mark NSResponder
