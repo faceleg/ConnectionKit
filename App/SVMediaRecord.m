@@ -202,13 +202,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return ([[self filename] hasPrefix:@"shared/"] || [[self filename] hasPrefix:@"Shared/"]);
 }
 
-- (NSURL *)mediaURL;
-{
-    NSURL *result = [self fileURL];
-    if (!result) result = [[[self webResource] ks_proxyOnThread:nil] URL];
-    return result;
-}
-
 #pragma mark Updating File Wrappers
 
 - (BOOL)readFromURL:(NSURL *)URL options:(NSUInteger)options error:(NSError **)error;
@@ -370,7 +363,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     if (!otherURL || [otherRecord areContentsCached])
     {
         NSData *data = [[otherRecord mediaData] retain];
-        if (!data) data = [[NSData alloc] initWithContentsOfURL:[otherRecord mediaURL]];
+        if (!data) data = [[NSData alloc] initWithContentsOfURL:[otherRecord fileURL]];
         
         BOOL result = [self fileContentsEqualData:data];
         [data release];
@@ -407,18 +400,12 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     BOOL result = NO;
     
     NSData *data = [[self mediaData] retain];
-    if (!data) data = [[NSData alloc] initWithContentsOfURL:[self mediaURL]];
+    if (!data) data = [[NSData alloc] initWithContentsOfURL:[[self media] mediaURL]];
     
     result = [data isEqualToData:otherData];
     
     [data release];
     return result;
-}
-
-- (BOOL)isEqualToMedia:(id <SVMedia>)otherMedia;
-{
-    return ([[self mediaURL] ks_isEqualToURL:[otherMedia mediaURL]] ||
-            [[self mediaData] isEqualToData:[otherMedia mediaData]]);
 }
 
 #pragma mark Thumbnail
