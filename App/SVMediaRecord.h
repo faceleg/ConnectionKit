@@ -7,7 +7,6 @@
 //
 
 #import <CoreData/CoreData.h>
-#import "SVMediaProtocol.h"
 #import "SVDocumentFileWrapper.h"
 #import <iMedia/iMedia.h>
 
@@ -20,7 +19,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 @class BDAlias, SVMedia;
 
 
-@interface SVMediaRecord : NSManagedObject <SVMedia, SVDocumentFileWrapper, IMBImageItem>
+@interface SVMediaRecord : NSManagedObject <SVDocumentFileWrapper, IMBImageItem>
 {
   @private
     // Updating Files
@@ -36,7 +35,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 }
 
 
-#pragma mark Creating New Media
+#pragma mark Creating a Media Record
 
 // Will return nil if an alias can't be created from the URL. It's OK if the file attributes can't be read in.
 + (SVMediaRecord *)mediaWithURL:(NSURL *)URL
@@ -95,6 +94,8 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 
 
 #pragma mark Accessing Files
+
+- (SVMedia *)media; // NOT KVO-compliant (mostly because of alias handling)
 
 @property(nonatomic, copy) NSString *filename;  // no-one but the document should have reason to set this
 @property(nonatomic, copy) NSString *preferredFilename;

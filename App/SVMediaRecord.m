@@ -320,6 +320,17 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 #pragma mark Contents Cache
 
+- (SVMedia *)media;
+{
+    SVMedia *result = _media;
+    if (!result)
+    {
+        result = [[SVMedia alloc] initByReferencingURL:[self fileURL]];
+    }
+    
+    return result;
+}
+
 - (NSData *)mediaData;
 {
     if ([NSThread isMainThread])
