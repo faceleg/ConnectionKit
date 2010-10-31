@@ -445,7 +445,7 @@
     {
         if (!dryRun)
         {
-            [context writeImageWithSourceMedia:[self customThumbnail]
+            [context writeImageWithSourceMedia:[[self customThumbnail] media]
                                            alt:@""
                                          width:[NSNumber numberWithUnsignedInteger:width]
                                         height:[NSNumber numberWithUnsignedInteger:height]

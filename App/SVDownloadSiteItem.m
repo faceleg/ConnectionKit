@@ -62,7 +62,7 @@
 
 - (void)publish:(id <SVPublisher>)publishingEngine recursively:(BOOL)recursive;
 {
-    id <SVMedia> media = [self media];
+    SVMedia *media = [[self media] media];
     
     NSString *uploadPath = [publishingEngine baseRemotePath];
     uploadPath = [uploadPath stringByAppendingPathComponent:[[self parentPage] uploadPath]];

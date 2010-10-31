@@ -229,12 +229,12 @@ webContentAreaController:(SVWebContentAreaController *)controller;
         }
         else
         {
-            SVMediaRecord *media = [object mediaRepresentation];
-            if (media)
+            SVMediaRecord *record = [object mediaRepresentation];
+            if (record)
             {
-                NSString *filename = [media preferredFilename];
+                NSString *filename = [record preferredFilename];
                 NSString *type = [NSString UTIForFilenameExtension:[filename pathExtension]];
-                NSData *data = [NSData newDataWithContentsOfMedia:media];
+                NSData *data = [NSData newDataWithContentsOfMedia:[record media]];
                 
                 [[[self webView] mainFrame] loadData:data
                                             MIMEType:[NSString MIMETypeForUTI:type]

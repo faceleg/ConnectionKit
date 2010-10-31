@@ -141,11 +141,11 @@
 {
 	NSURL *movieSourceURL = nil;
 	
-	SVMediaRecord *media = [self mediaRecord];
+	SVMediaRecord *record = [self mediaRecord];
 	
-    if (media)
+    if (record)
     {
-		movieSourceURL = [media mediaURL];
+		movieSourceURL = [[record media] mediaURL];
 		[self setCodecType:[NSString UTIForFileAtPath:[movieSourceURL path]]
               reloadPlugIn:NO];
 	}
@@ -453,14 +453,14 @@
 {
 	// Prepare Media
 	
-	SVMediaRecord *media = [self mediaRecord];
+	SVMediaRecord *record = [self mediaRecord];
 	//[context addDependencyOnObject:self keyPath:@"media"];    // don't need, graphic does for us
 	[context addDependencyOnObject:self keyPath:@"controller"];		// most boolean properties don't affect display of page
 	
 	NSURL *audioSourceURL = [self externalSourceURL];
-    if (media)
+    if (record)
     {
-	    audioSourceURL = [context addMedia:media];
+	    audioSourceURL = [context addMedia:[record media]];
 	}
 	
 	

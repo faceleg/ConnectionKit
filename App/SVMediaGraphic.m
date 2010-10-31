@@ -217,11 +217,11 @@
 {
     NSURL *result = nil;
     
-    SVMediaRecord *media = [self media];
-    if (media)
+    SVMediaRecord *record = [self media];
+    if (record)
     {
-        result = [media fileURL];
-        if (!result) result = [media mediaURL];
+        result = [record fileURL];
+        if (!result) result = [[record media] mediaURL];
     }
     else
     {
@@ -527,15 +527,15 @@
     [super populateSerializedProperties:propertyList];
     
     // Write image data
-    SVMediaRecord *media = [self media];
+    SVMediaRecord *record = [self media];
     
-    if ([media fileURL])
+    if ([record fileURL])
     {
-        [propertyList setObject:[[media fileURL] absoluteString] forKey:@"fileURL"];
+        [propertyList setObject:[[record fileURL] absoluteString] forKey:@"fileURL"];
     }
     else
     {
-        NSData *data = [media mediaData];
+        NSData *data = [[record media] mediaData];
         [propertyList setValue:data forKey:@"fileContents"];
     }
     

@@ -298,10 +298,10 @@
     
     [context buildAttributesForElement:@"img" bindSizeToObject:self DOMControllerClass:[SVImageDOMController class]  sizeDelta:NSZeroSize];
     
-    SVMediaRecord *media = [self mediaRecord];
-    if (media)
+    SVMediaRecord *record = [self mediaRecord];
+    if (record)
     {
-        [context writeImageWithSourceMedia:media
+        [context writeImageWithSourceMedia:[record media]
                                        alt:alt
                                      width:self.container.width
                                     height:self.container.height

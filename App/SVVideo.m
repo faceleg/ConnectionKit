@@ -187,7 +187,7 @@
 
 - (id <SVMedia>)thumbnail
 {
-	return self.posterFrameType != kPosterFrameTypeNone ? self.posterFrame : nil;
+	return self.posterFrameType != kPosterFrameTypeNone ? self.posterFrame.media : nil;
 }
 
 + (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObjects:@"posterFrame", @"posterFrameType", nil]; }
@@ -214,7 +214,7 @@
 	OBASSERT([NSThread isMainThread]);
 	
 	// Get the media or URL, so we have a good file name for the poster
-	SVMediaRecord *media = self.media;
+	SVMediaRecord *media = self.mediaRecord;
 	NSURL *videoURL = nil;
     if (media)
     {
@@ -355,7 +355,7 @@
 }
 
 // Overrides to allow us to get our thumbnail (for index, or site outline) from poster frame.
-- (id <SVMedia>)thumbnailMedia; { return self.posterFrame; }
+- (id <SVMedia>)thumbnailMedia; { return self.posterFrame.media; }
 - (id)imageRepresentation; { return [self.posterFrame imageRepresentation]; }
 - (NSString *)imageRepresentationType { return [self.posterFrame imageRepresentationType]; }
 
@@ -753,16 +753,16 @@
 {
 	// Prepare Media
 	
-	SVMediaRecord *media = self.media;
+	SVMediaRecord *record = self.mediaRecord;
 	//[context addDependencyForKeyPath:@"media"			ofObject:self]; // don't need, graphic does for us
 	[context addDependencyForKeyPath:@"posterFrameType"	ofObject:self];
 	[context addDependencyForKeyPath:@"posterFrame"		ofObject:self];	// force rebuild if poster frame got changed
 	[context addDependencyForKeyPath:@"controller"		ofObject:self];	// Note: other boolean properties don't affect display of page
 
 	NSURL *movieSourceURL = self.externalSourceURL;
-    if (media)
+    if (record)
     {
-	    movieSourceURL = [context addMedia:media];
+	    movieSourceURL = [context addMedia:[record media]];
 	}
 
 	// POSSIBLE OTHER TAGS TO CONSIDER:  public.3gpp2 public.mpeg com.microsoft.windows-media-wm
@@ -810,7 +810,7 @@
 	{
 		// Convert to JPEG if the poster image needs scaling or converting.  
 		// (Hard-wired here, sorry dudes)
-		posterSourceURL = [context addImageMedia:self.posterFrame
+		posterSourceURL = [context addImageMedia:self.posterFrame.media
 										   width:[NSNumber numberWithUnsignedInt:self.width]
 										  height:[NSNumber numberWithUnsignedInt:self.height]
 											type:(NSString *)kUTTypeJPEG
