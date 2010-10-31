@@ -72,7 +72,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 - (IBAction)addFilePage:(id)sender;         // uses open panel to select a file, then inserts
 
 
-#pragma mark Other Actions
+#pragma mark Pasteboard Actions
 // All act using the selected page(s) as context
 
 - (IBAction)cut:(id)sender;
@@ -84,6 +84,10 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 @property(nonatomic, readonly) BOOL canCopy;  // also used by -cut: as it's effectively doing a copy op
 - (BOOL)canRename;
 @property(nonatomic, readonly) BOOL canDelete;  // also used by -cut: as it's effectively doing a delete op
+
+
+#pragma mark Page Behaviour Actions
+- (IBAction)toggleIsCollection:(id)sender;
 
 
 #pragma mark Options

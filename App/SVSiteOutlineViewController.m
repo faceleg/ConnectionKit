@@ -839,6 +839,14 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     return result;
 }
 
+#pragma mark Page Behaviour Actions
+
+- (IBAction)toggleIsCollection:(id)sender;
+{
+    BOOL makeCollection = ![sender state];
+    [[self content] setValue:NSBOOL(makeCollection) forKeyPath:@"selection.isCollection"];
+}
+
 #pragma mark NSResponder
 
 - (void)keyDown:(NSEvent *)theEvent
