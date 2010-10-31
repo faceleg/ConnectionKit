@@ -19,7 +19,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 @class BDAlias, SVMedia;
 
 
-@interface SVMediaRecord : NSManagedObject <SVDocumentFileWrapper, IMBImageItem>
+@interface SVMediaRecord : NSManagedObject <SVDocumentFileWrapper>
 {
   @private
     // Updating Files

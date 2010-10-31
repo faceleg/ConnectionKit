@@ -305,19 +305,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
-- (NSData *)mediaData;
-{
-    if ([NSThread isMainThread])
-    {
-        return [[self webResource] data];
-    }
-    else
-    {
-        // This is annoying. WebKit doesn't let you access a WebResource's data on non-main thread. Guess we'll have to move away from it eventually. #92087
-        return [[self ks_proxyOnThread:nil] mediaData];
-    }
-}
-
 - (WebResource *)webResource;
 {
     return [_media webResource];
@@ -362,8 +349,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     // If already in-memory might as well use it. If without a file URL, have no choice!
     if (!otherURL || [otherRecord areContentsCached])
     {
-        NSData *data = [[otherRecord mediaData] retain];
-        if (!data) data = [[NSData alloc] initWithContentsOfURL:[otherRecord fileURL]];
+        NSData *data = [NSData newDataWithContentsOfMedia:[otherRecord media]];
         
         BOOL result = [self fileContentsEqualData:data];
         [data release];
@@ -388,7 +374,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     else
     {
         // Fallback to comparing data. This could be made more efficient by looking at the file size before reading in from disk
-        NSData *data = [self mediaData];
+        NSData *data = [[self media] mediaData];
         result = [[NSFileManager defaultManager] ks_contents:data equalContentsAtURL:otherURL];
     }
     
@@ -399,8 +385,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 {
     BOOL result = NO;
     
-    NSData *data = [[self mediaData] retain];
-    if (!data) data = [[NSData alloc] initWithContentsOfURL:[[self media] mediaURL]];
+    NSData *data = [NSData newDataWithContentsOfMedia:[self media]];
     
     result = [data isEqualToData:otherData];
     
@@ -409,18 +394,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 }
 
 #pragma mark Thumbnail
-
-- (id)imageRepresentation
-{
-    id result = ([self areContentsCached] ? (id)[self mediaData] : (id)[self fileURL]);
-    return result;
-}
-
-- (NSString *)imageRepresentationType
-{
-    NSString *result = ([self areContentsCached] ? IKImageBrowserNSDataRepresentationType : IKImageBrowserNSURLRepresentationType);
-    return result;
-}
 
 - (CGSize)originalSize;
 {
@@ -468,7 +441,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 - (BOOL)writeToURL:(NSURL *)URL updateFileURL:(BOOL)updateFileURL error:(NSError **)outError;
 {
     // Try writing out data from memory. It'll fail if there was none
-    NSData *data = [self mediaData];
+    NSData *data = [[self media] mediaData];
     BOOL result = [data writeToURL:URL options:0 error:outError];
     if (result)
     {
