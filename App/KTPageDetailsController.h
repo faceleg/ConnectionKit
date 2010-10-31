@@ -11,7 +11,7 @@
 
 enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSiteItemType, kPageSiteItemType, kMixedSiteItemType = -1 };
 
-@class SVPagesController, KSFancySchmancyBindingsPopUpButton, KTPageDetailsBoxView, MAAttachedWindow, KTDocWindowController;
+@class SVSiteOutlineViewController, SVPagesController, KSFancySchmancyBindingsPopUpButton, KTPageDetailsBoxView, MAAttachedWindow, KTDocWindowController;
 
 
 @interface KTPageDetailsController : NSViewController
@@ -38,7 +38,10 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 	IBOutlet NSButton				*oFollowButton;
 	IBOutlet NSButton				*oChooseFileButton;
 
-	IBOutlet SVPagesController		*oPagesController;
+    IBOutlet SVSiteOutlineViewController    *oSiteOutlineController;
+	IBOutlet SVPagesController              *oPagesController;
+    
+    IBOutlet NSButton   *oPublishAsCollectionCheckbox;
 	
 	IBOutlet NSView					*oAttachedWindowView;
 	IBOutlet NSTextField			*oAttachedWindowTextField;
@@ -55,7 +58,8 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 	NSTextField	*_activeTextField;
 	MAAttachedWindow *_attachedWindow;
 
-	int _whatKindOfItemsAreSelected;
+	int     _whatKindOfItemsAreSelected;
+    BOOL    _isCollection;
 	
 	BOOL _alreadyHandlingControlTextDidChange;
 	
@@ -69,6 +73,12 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 - (IBAction) pageDetailsHelp:(id)sender;
 - (IBAction) preview:(id)sender;
 - (IBAction) chooseFile:(id)sender;
+
+
+// Publish as Collection
+- (IBAction)toggleIsCollection:(NSButton *)sender;
+@property(nonatomic) BOOL publishSelectionAsCollection;
+
 
 // Meta description
 - (NSNumber *)metaDescriptionCount;

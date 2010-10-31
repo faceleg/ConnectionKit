@@ -22,6 +22,7 @@
 #import "SVMediaRecord.h"
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
+#import "SVSiteOutlineViewController.h"
 #import "SVURLPreviewViewController.h"
 
 #import "NTBoxView.h"
@@ -212,7 +213,12 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 					 toObject:oPagesController
 				  withKeyPath:@"selection.defaultFileExtension"
 					  options:nil];
+        
+        
+        // Bind collection status
+        [self bind:@"publishSelectionAsCollection" toObject:oPagesController withKeyPath:@"selection.isCollection" options:nil];
 		
+        
 		_awokenFromNib = YES;
 	}
 }
@@ -996,6 +1002,26 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 {
 	[self layoutPageURLComponents];
 }
+
+#pragma mark Publish as Collection
+
+- (IBAction)toggleIsCollection:(NSButton *)sender;
+{
+    [oSiteOutlineController
+     toggleIsCollectionWithDelegate:self
+     didToggleSelector:@selector(siteOutlineController:didToggleIsCollection:)];
+}
+
+- (void)siteOutlineController:(SVSiteOutlineViewController *)controller didToggleIsCollection:(BOOL)success;
+{
+    // If user cancelled, repair binding value
+    if (!success)
+    {
+        [oPublishAsCollectionCheckbox setObjectValue:[oPagesController valueForKeyPath:@"selection.isCollection"]];
+    }
+}
+
+@synthesize publishSelectionAsCollection = _isCollection;
 
 #pragma mark -
 #pragma mark Text editing notifications
