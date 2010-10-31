@@ -18,7 +18,7 @@
 @interface SVMediaPlugIn : SVPlugIn <SVEnclosure>
 
 #pragma mark Source
-- (SVMediaRecord *)media;
+- (SVMediaRecord *)mediaRecord;
 - (NSURL *)externalSourceURL;
 - (void)didSetSource;
 + (NSArray *)allowedFileTypes;

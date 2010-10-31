@@ -204,7 +204,7 @@
 {
 	// Prepare Media
 	
-	SVMediaRecord *media = [self media];
+	SVMediaRecord *media = [self mediaRecord];
 	//[context addDependencyOnObject:self keyPath:@"media"];    // don't need, graphic does for us
 	
 	NSURL *flashSourceURL = [self externalSourceURL];
@@ -339,7 +339,7 @@
 
 - (void)loadMovie;
 {
-	SVMediaRecord *media = [self media];
+	SVMediaRecord *media = [self mediaRecord];
 	if (media)
 	{
 		NSData *newData = [NSData newDataWithContentsOfMedia:media];

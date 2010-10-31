@@ -141,7 +141,7 @@
 {
 	NSURL *movieSourceURL = nil;
 	
-	SVMediaRecord *media = [self media];
+	SVMediaRecord *media = [self mediaRecord];
 	
     if (media)
     {
@@ -453,7 +453,7 @@
 {
 	// Prepare Media
 	
-	SVMediaRecord *media = [self media];
+	SVMediaRecord *media = [self mediaRecord];
 	//[context addDependencyOnObject:self keyPath:@"media"];    // don't need, graphic does for us
 	[context addDependencyOnObject:self keyPath:@"controller"];		// most boolean properties don't affect display of page
 	

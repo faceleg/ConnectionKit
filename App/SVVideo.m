@@ -167,7 +167,7 @@
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 {
     BOOL result = (*height != nil	// height is non-nil is one way for it to be OK
-				   || (![self media] && [self externalSourceURL])	// or, if height was nil, then if media is external
+				   || (![self mediaRecord] && [self externalSourceURL])	// or, if height was nil, then if media is external
 				   || (0 == [self.naturalHeight intValue])			// or, if neither of those, it's *natural* height is zero (no video track)
 				   );
     

@@ -21,13 +21,13 @@
 
 #pragma mark Properties
 
-- (SVMediaRecord *)media; { return [[self container] media]; }
+- (SVMediaRecord *)mediaRecord; { return [[self container] media]; }
 
 - (NSURL *)externalSourceURL; { return [[self container] externalSourceURL]; }
 
 - (void)didSetSource;
 {
-    [[self container] setTypeToPublish:[[self media] typeOfFile]];
+    [[self container] setTypeToPublish:[[self mediaRecord] typeOfFile]];
 }
 
 + (NSArray *)allowedFileTypes; { return nil; }
@@ -69,7 +69,7 @@
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 {
     // SVGraphic.width is optional. For media graphics it becomes compulsary unless using external URL
-    BOOL result = (*height != nil || (![self media] && [self externalSourceURL]));
+    BOOL result = (*height != nil || (![self mediaRecord] && [self externalSourceURL]));
     
     if (!result && error)
     {
@@ -118,7 +118,7 @@
     }
     else	// ask the media for it, and cache it.
     {
-        SVMediaRecord *media = [self media];
+        SVMediaRecord *media = [self mediaRecord];
         if (media)
         {
             result = [media originalSize];
@@ -148,11 +148,11 @@
 - (NSURL *)downloadedURL;   // where it currently resides on disk
 {
 	NSURL *mediaURL = nil;
-	SVMediaRecord *media = [self media];
+	SVMediaRecord *record = [self mediaRecord];
 	
-    if (media)
+    if (record)
     {
-		mediaURL = [media mediaURL];
+		mediaURL = [record fileURL];
 	}
 	else
 	{
@@ -164,11 +164,11 @@
 - (long long)length;
 {
 	long long result = 0;
-	SVMediaRecord *media = [self media];
+	SVMediaRecord *record = [self mediaRecord];
 	
-    if (media)
+    if (record)
     {
-		NSData *mediaData = [media mediaData];
+		NSData *mediaData = [[record media] mediaData];
 		result = [mediaData length];
 	}
 	return result;
@@ -176,7 +176,7 @@
 
 - (NSString *)MIMEType;
 {
-	NSString *type = [[self media] typeOfFile];
+	NSString *type = [[self mediaRecord] typeOfFile];
     if (!type)
     {
         type = [NSString UTIForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
@@ -192,7 +192,7 @@
 
 - (BOOL)shouldWriteHTMLInline; { return NO; }
 - (BOOL)canWriteHTMLInline; { return NO; }
-- (id <SVMedia>)thumbnailMedia; { return [self media]; }
+- (id <SVMedia>)thumbnailMedia; { return [[self mediaRecord] media]; }
 
 - (id)imageRepresentation;
 {
