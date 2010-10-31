@@ -49,7 +49,7 @@
 - (void)setIsCollection:(BOOL)collection;
 {
     [self willChangeValueForKey:@"isCollection"];
-    [self setPrimitiveValue:NSBOOL(YES) forKey:@"isCollection"];
+    [self setPrimitiveValue:NSBOOL(collection) forKey:@"isCollection"];
     [self didChangeValueForKey:@"isCollection"];
     
     // Regular pages can't take thumbnail from children. #93638
