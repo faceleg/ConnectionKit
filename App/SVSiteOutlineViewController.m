@@ -866,10 +866,15 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
     
     // Warn before changing this on a published page
-    if ([self selectedItemsHaveBeenPublished] || YES)
+    if ([self selectedItemsHaveBeenPublished])
     {
+        NSArray *selection = [[self content] selectedObjects];
+        OBASSERT([selection count] == 1);
+        
         NSAlert *alert = [[NSAlert alloc] init];
         
+        
+        // Main text
         if (makeCollection)
         {
             [alert setMessageText:[NSString stringWithFormat:
@@ -892,7 +897,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         [oCurrentPageURLLink setUrlString:[[[self content] valueForKeyPath:@"selection.URL"] absoluteString]];
         [oCurrentPageURLLink setTitle:[oCurrentPageURLLink urlString]];
         
-        KTPage *page = [[[self content] selectedObjects] lastObject];
+        KTPage *page = [selection lastObject];
         [oNewPageURLLabel setStringValue:[[page URLAsCollection:makeCollection] absoluteString]];
         
         [alert setAccessoryView:oToggleIsCollectionConfirmationAccessoryView];
