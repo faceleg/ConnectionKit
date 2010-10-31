@@ -234,14 +234,13 @@
 												   path:newPath]
 						  autorelease];
 		
+        SVMedia *media = nil;
 		if (jpegData)
 		{
-			[self setPosterFrameWithData:jpegData URL:fakeURL];
-		}
-        else
-        {
-            [self setPosterFrameWithContentsOfURL:nil];
+            media = [[SVMedia alloc] initWithData:jpegData URL:fakeURL];
         }
+        [self setPosterFrameWithMedia:media];
+        [media release];
 	}
 }
 

@@ -45,29 +45,17 @@
     return (posterFrame == nil);
 }
 
-- (void)setPosterFrameWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
+- (void)setPosterFrameWithMedia:(SVMedia *)media;   // nil removes poster frame
 {
-	SVMediaRecord *media = nil;
-    if (URL)
+    SVMediaRecord *record = nil;
+    if (media)
     {
-        media = [SVMediaRecord mediaWithURL:URL
-                                 entityName:@"PosterFrame"
-             insertIntoManagedObjectContext:[self.container managedObjectContext]
-                                      error:NULL];	
+        record = [SVMediaRecord mediaRecordWithMedia:media
+                                          entityName:@"PosterFrame"
+                      insertIntoManagedObjectContext:[self.container managedObjectContext]];
     }
     
-	[self replaceMedia:media forKeyPath:@"posterFrame"];
-}
-
-
-- (void)setPosterFrameWithData:(NSData *)data URL:(NSURL *)url;
-{
-    SVMediaRecord *media = [SVMediaRecord mediaWithData:data
-                                                    URL:url
-                                             entityName:@"PosterFrame"
-                         insertIntoManagedObjectContext:[self.container managedObjectContext]];
-    
-    [self replaceMedia:media forKeyPath:@"container.posterFrame"];
+	[self replaceMedia:record forKeyPath:@"container.posterFrame"];
 }
 
 #pragma mark Media Conversion
