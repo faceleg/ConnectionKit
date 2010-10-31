@@ -30,6 +30,7 @@
 #import "NSArray+Karelia.h"
 #import "NSDate+Karelia.h"
 #import "NSEvent+Karelia.h"
+#import "NSInvocation+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSResponder+Karelia.h"
 #import "NSSet+Karelia.h"
@@ -862,6 +863,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (IBAction)toggleIsCollection:(id)sender;
 {
+    [self toggleIsCollectionWithDelegate:nil didToggleSelector:NULL];
+}
+
+- (void)toggleIsCollectionWithDelegate:(id)delegate didToggleSelector:(SEL)selector;
+{
     // Quick sanity check
     if (![self canToggleIsCollection])
     {
@@ -871,6 +877,15 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
     
     BOOL makeCollection = [self selectedItemsAreCollections] != NSOnState;
+    
+    
+    // Prepare callback invocation
+    NSInvocation *callback = nil;
+    if (delegate)
+    {
+        callback = [NSInvocation invocationWithSelector:selector target:delegate];
+        [callback setArgument:&self atIndex:2];
+    }
     
     
     // Warn before changing this on a published page
@@ -921,13 +936,18 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         [alert beginSheetModalForWindow:[[self view] window]
                           modalDelegate:self
                          didEndSelector:@selector(toggleIsCollectionAlertDidEnd:returnCode:contextInfo:)
-                            contextInfo:NULL];
+                            contextInfo:[callback retain]];
         
         [alert release];
     }
     else
     {
         [self setIsCollection:makeCollection];
+        
+        // Send callback
+        BOOL result = YES;
+        [callback setArgument:&result atIndex:3];
+        [callback invoke];
     }
 }
 
@@ -949,11 +969,18 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (void)toggleIsCollectionAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 {
-    if (returnCode == NSAlertFirstButtonReturn)
+    NSInvocation *callback = contextInfo;
+    
+    BOOL result = (returnCode == NSAlertFirstButtonReturn);
+    if (result)
     {
         BOOL makeCollection = [self selectedItemsAreCollections] != NSOnState;
         [self setIsCollection:makeCollection];
     }
+    
+    [callback setArgument:&result atIndex:3];
+    [callback invoke];
+    [callback release];
 }
 
 #pragma mark NSResponder

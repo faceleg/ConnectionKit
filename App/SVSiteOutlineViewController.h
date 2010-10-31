@@ -92,8 +92,10 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 @property(nonatomic, readonly) BOOL canDelete;  // also used by -cut: as it's effectively doing a delete op
 
 
-#pragma mark Page Behaviour Actions
+#pragma mark Publish as Collection
 - (IBAction)toggleIsCollection:(id)sender;
+// Follow -siteOutlineController:didToggleIsCollection: signature
+- (void)toggleIsCollectionWithDelegate:(id)delegate didToggleSelector:(SEL)selector;
 - (BOOL)canToggleIsCollection;
 
 
