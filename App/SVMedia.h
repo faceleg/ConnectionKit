@@ -15,7 +15,6 @@
 {
   @private
     NSURL       *_fileURL;
-    NSData      *_data;
     WebResource *_webResource;
     
     NSString    *_preferredFilename;
@@ -24,6 +23,7 @@
 - (id)initByReferencingURL:(NSURL *)fileURL;
 - (id)initWithContentsOfURL:(NSURL *)URL error:(NSError **)outError;
 - (id)initWithWebResource:(WebResource *)resource;
+- (id)initWithData:(NSData *)data URL:(NSURL *)URL;
 
 @property(nonatomic, copy, readonly) NSURL *mediaURL;
 @property(nonatomic, copy, readonly) NSData *mediaData;

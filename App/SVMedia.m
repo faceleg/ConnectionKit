@@ -19,6 +19,7 @@
 
 - (id)initByReferencingURL:(NSURL *)fileURL;
 {
+    OBPRECONDITION(fileURL);
     [self init];
     
     _fileURL = [fileURL copy];
@@ -31,11 +32,11 @@
 {
     [self init];
     
-    _data = [[NSData alloc] initWithContentsOfURL:URL options:0 error:outError];
-    if (_data)
+    NSData *data = [[NSData alloc] initWithContentsOfURL:URL options:0 error:outError];
+    if (data)
     {
-        _fileURL = [URL copy];
-        [self setPreferredFilename:[URL ks_lastPathComponent]];
+        self = [self initWithData:data URL:URL];
+        [data release];
     }
     else
     {
@@ -47,6 +48,7 @@
 
 - (id)initWithWebResource:(WebResource *)resource;
 {
+    OBPRECONDITION(resource);
     [self init];
     
     _webResource = [resource copy];
@@ -55,10 +57,25 @@
     return self;
 }
 
+- (id)initWithData:(NSData *)data URL:(NSURL *)url;
+{
+    NSString *type = [NSString MIMETypeForUTI:
+                      [NSString UTIForFilenameExtension:[url ks_pathExtension]]];
+    
+    WebResource *resource = [[WebResource alloc] initWithData:data
+                                                          URL:url
+                                                     MIMEType:type
+                                             textEncodingName:nil
+                                                    frameName:nil];
+    
+    self = [self initWithWebResource:resource];
+    [resource release];
+    return self;
+}
+
 - (void)dealloc;
 {
     [_fileURL release];
-    [_data release];
     [_webResource release];
     [_preferredFilename release];
     
@@ -71,7 +88,7 @@
 
 - (NSData *)mediaData;
 {
-    return (_webResource ? [_webResource data] : _data);
+    return [_webResource data];
 }
 
 @synthesize preferredFilename = _preferredFilename;
