@@ -174,6 +174,8 @@
 	return result;
 }
 
+- (SVMedia *)media; { return [[self mediaRecord] media]; }
+
 - (NSString *)MIMEType;
 {
 	NSString *type = [[self mediaRecord] typeOfFile];
