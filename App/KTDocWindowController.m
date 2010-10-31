@@ -555,6 +555,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [[self siteOutlineViewController] addFilePage:sender];
 }
 
+- (void)toggleIsCollection:(id)sender;
+{
+    [[self siteOutlineViewController] toggleIsCollection:sender];
+}
+
 #pragma mark Action Validation
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
