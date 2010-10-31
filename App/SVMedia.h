@@ -27,6 +27,7 @@
 
 @property(nonatomic, copy, readonly) NSURL *mediaURL;
 @property(nonatomic, copy, readonly) NSData *mediaData;
+@property(nonatomic, copy, readonly) WebResource *webResource;
 
 @property(nonatomic, copy) NSString *preferredFilename;
 

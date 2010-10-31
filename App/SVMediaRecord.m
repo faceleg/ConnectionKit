@@ -8,6 +8,8 @@
 
 #import "SVMediaRecord.h"
 
+#import "SVMedia.h"
+
 #import "NSManagedObject+KTExtensions.h"
 
 #import "NSError+Karelia.h"
@@ -64,28 +66,34 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
++ (SVMediaRecord *)mediaRecordWithMedia:(SVMedia *)media
+                             entityName:(NSString *)entityName
+         insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    OBPRECONDITION(media);
+    OBPRECONDITION(context);
+
+    SVMediaRecord *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
+                                                          inManagedObjectContext:context];
+    
+    result->_media = [media retain];
+    [result setPreferredFilename:[media preferredFilename]];
+    
+    return result;
+}
+
 + (SVMediaRecord *)mediaWithData:(NSData *)data
                              URL:(NSURL *)url
                       entityName:(NSString *)entityName
   insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    OBPRECONDITION(data);
-    OBPRECONDITION(context);
-
+    SVMedia *media = [[SVMedia alloc] initWithData:data URL:url];
     
-    NSString *type = [NSString MIMETypeForUTI:
-                      [NSString UTIForFilenameExtension:[url ks_pathExtension]]];
-    
-    WebResource *resource = [[WebResource alloc] initWithData:data
-                                                          URL:url
-                                                     MIMEType:type
-                                             textEncodingName:nil
-                                                    frameName:nil];
-    
-    SVMediaRecord *result = [SVMediaRecord mediaWithWebResource:resource
+    SVMediaRecord *result = [SVMediaRecord mediaRecordWithMedia:media
                                                      entityName:entityName
                                  insertIntoManagedObjectContext:context];
-    [resource release];
+    
+    [media release];
     
     return result;
 }
@@ -94,15 +102,13 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
                              entityName:(NSString *)entityName
          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    OBPRECONDITION(resource);
+    SVMedia *media = [[SVMedia alloc] initWithWebResource:resource];
     
-    NSURL *URL = [resource URL];
+    SVMediaRecord *result = [SVMediaRecord mediaRecordWithMedia:media
+                                                     entityName:entityName
+                                 insertIntoManagedObjectContext:context];
     
-    SVMediaRecord *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
-                                                          inManagedObjectContext:context];
-    
-    result->_webResource = [resource copy];
-    [result setPreferredFilename:[URL ks_lastPathComponent]];
+    [media release];
     
     return result;
 }
@@ -130,8 +136,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 - (void)dealloc
 {
-    [_URL release];			_URL = nil;
-    [_webResource release];	_webResource = nil;
+    [_media release];       _media = nil; // why set to nil?! Mike.
     [_nextObject release];	_nextObject = nil;
     
     [super dealloc];
@@ -205,7 +210,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 - (NSURL *)fileURL;
 {
 	// If the URL has been fixed, use that!
-    NSURL *result = _URL;
+    NSURL *result = [_media mediaURL];
     
     if (!result)
     {
@@ -241,8 +246,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 - (BOOL)readFromURL:(NSURL *)URL options:(NSUInteger)options error:(NSError **)error;
 {
-    URL = [URL copy];
-    [_URL release]; _URL = URL;
+    [_media release]; _media = [[SVMedia alloc] initByReferencingURL:URL];
     
     // Pass on to next object as well
     [[self nextObject] forceUpdateFromURL:URL];
@@ -364,7 +368,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 - (WebResource *)webResource;
 {
-    return _webResource;
+    return [_media webResource];
 }
 
 @synthesize fileAttributes = _attributes;
@@ -383,7 +387,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 - (BOOL)areContentsCached;
 {
-    return (_webResource != nil);
+    return ([_media webResource] != nil);
 }
 
 - (void)willTurnIntoFault
@@ -393,7 +397,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     // Only throw away data if it can be reloaded
     if ([self fileURL])
     {
-        [_webResource release]; _webResource = nil;
+        //[_webResource release]; _webResource = nil;
     }
 }
 
@@ -553,7 +557,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 {
     //  Time to store an autosave alias!
     
-    NSString *path = [_URL path];
+    NSString *path = [[_media mediaURL] path];
     if (path)
     {
         BDAlias *alias = [BDAlias aliasWithPath:path];

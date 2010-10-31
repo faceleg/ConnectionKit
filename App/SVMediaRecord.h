@@ -15,7 +15,7 @@
 extern NSString *kSVDidDeleteMediaRecordNotification;
 
 
-@class BDAlias, WebResource;
+@class BDAlias, SVMedia;
 
 
 @interface SVMediaRecord : NSManagedObject <SVMedia, SVDocumentFileWrapper, IMBImageItem>
@@ -26,9 +26,8 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
     BOOL    _moveWhenSaved;
     
     // Accessing Files
-    NSURL           *_URL;
+    SVMedia         *_media;
     NSDictionary    *_attributes;
-    WebResource     *_webResource;
     
     // Matching Media
     id <SVDocumentFileWrapper>  _nextObject;
@@ -42,6 +41,10 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
                      entityName:(NSString *)entityName
  insertIntoManagedObjectContext:(NSManagedObjectContext *)context
                           error:(NSError **)outError;
+
++ (SVMediaRecord *)mediaRecordWithMedia:(SVMedia *)media
+                             entityName:(NSString *)entityName
+         insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 // Must call -setPreferredFilename: after, and ideally -setFileAttributes: too
 + (SVMediaRecord *)mediaWithData:(NSData *)data

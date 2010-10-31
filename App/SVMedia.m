@@ -85,6 +85,7 @@
 #pragma mark Properties
 
 @synthesize mediaURL = _fileURL;
+@synthesize webResource = _webResource;
 
 - (NSData *)mediaData;
 {
