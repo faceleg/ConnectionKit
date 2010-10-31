@@ -883,17 +883,18 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         
         
         // Main text
+        KTPage *page = [selection lastObject];
         if (makeCollection)
         {
             [alert setMessageText:[NSString stringWithFormat:
-                                   NSLocalizedString(@"Are you sure you want to publish the page \"%@\" as a collection?", "alert title"),
-                                   [[self content] valueForKeyPath:@"selection.title"]]];
+                                   NSLocalizedString(@"Are you sure you want to publish the page “%@” as a collection?", "alert title"),
+                                   [page title]]];
         }
         else
         {
             [alert setMessageText:[NSString stringWithFormat:
-                                   NSLocalizedString(@"Are you sure you want to stop publishing the page \"%@\" as a collection?", "alert title"),
-                                   [[self content] valueForKeyPath:@"selection.title"]]];
+                                   NSLocalizedString(@"Are you sure you want to stop publishing the page “%@” as a collection?", "alert title"),
+                                   [page title]]];
         }
         
         [alert setInformativeText:
@@ -902,10 +903,10 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         
         
         // Accessory View
-        [oCurrentPageURLLink setUrlString:[[[self content] valueForKeyPath:@"selection.URL"] absoluteString]];
-        [oCurrentPageURLLink setTitle:[oCurrentPageURLLink urlString]];
+        NSString *currentLink = [[page URL] absoluteString];
+        [oCurrentPageURLLink setUrlString:currentLink];
+        [oCurrentPageURLLink setTitle:currentLink];
         
-        KTPage *page = [selection lastObject];
         [oNewPageURLLabel setStringValue:[[page URLAsCollection:makeCollection] absoluteString]];
         
         [alert setAccessoryView:oToggleIsCollectionConfirmationAccessoryView];
