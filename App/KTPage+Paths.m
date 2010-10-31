@@ -33,7 +33,6 @@
 @interface KTPage (PathsPrivate)
 - (NSString *)indexFilename;
 
-- (NSURL *)URL_uncached;
 - (NSString *)pathRelativeToParent;
 
 - (NSString *)pathRelativeToParentWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
@@ -350,45 +349,12 @@
 	
 	if (!result)
 	{
-		result = [self URL_uncached];
+		result = [self URLAsCollection:[self isCollection]];
 		[self setPrimitiveValue:result forKey:@"URL"];
 	}
 	
 	return result;
 }
-
-- (NSURL *)URL_uncached
-{
-	NSURL *result = nil;
-	
-    if ([self isRoot])
-    {
-        // Root is a sepcial case where we just supply the site URL
-        result = [[[self site] hostProperties] siteURL];
-        
-        // The siteURL may not include index.html, so we have to guarantee it here
-        if (!result || [[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"])
-        {
-            result = [NSURL URLWithString:[self indexFilename] relativeToURL:result];
-        }
-    }
-    else
-    {
-        // For normal pages, figure out the path relative to parent and resolve it
-        NSURL *baseURL = [[self parentPage] URL];
-        if (baseURL)
-        {
-            NSString *path = [self pathRelativeToParent];
-            if (path)
-            {
-                result = [NSURL URLWithString:path relativeToURL:baseURL];
-            }
-        }
-    }
-	
-	return [result URLWithWebEditorPreviewPath:[self previewPath]];
-}
-
 
 /*	The index.html file is not included in collection paths unless the user defaults say to.
  *	If you ask this of the home page, will either return an empty string or index.html.
@@ -500,7 +466,14 @@
 	
     if ([self isRoot])
     {
-        return [self URL];
+        // Root is a sepcial case where we just supply the site URL
+        result = [[[self site] hostProperties] siteURL];
+        
+        // The siteURL may not include index.html, so we have to guarantee it here
+        if (!result || [[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"])
+        {
+            result = [NSURL URLWithString:[self indexFilename] relativeToURL:result];
+        }
     }
     else
     {
