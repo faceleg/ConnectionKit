@@ -52,6 +52,10 @@
     [self setPrimitiveValue:NSBOOL(collection) forKey:@"isCollection"];
     [self didChangeValueForKey:@"isCollection"];
     
+    // #93959
+    [self setDatePublished:nil];
+    [self recursivelyInvalidateURL:YES];
+    
     // Regular pages can't take thumbnail from children. #93638
     if (!collection)
     {
