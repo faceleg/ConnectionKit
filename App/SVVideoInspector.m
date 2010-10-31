@@ -10,8 +10,9 @@
 
 #import "KTDocument.h"
 #import "NSImageView+IMBImageItem.h"
+#import "SVMedia.h"
 #import "SVVideo.h"
-#import "SVMediaPlugIn.h"
+
 
 @implementation SVVideoInspector
 
@@ -34,9 +35,11 @@
         
 		for (id inspectedObject in [self inspectedObjects])
 		{
-			if ([inspectedObject respondsToSelector:@selector(setPosterFrameWithContentsOfURL:)])
+			if ([inspectedObject respondsToSelector:@selector(setPosterFrameWithMedia:)])
 			{
-				[inspectedObject setPosterFrameWithContentsOfURL:URL];
+                SVMedia *media = [[SVMedia alloc] initWithContentsOfURL:URL error:NULL];
+				[inspectedObject setPosterFrameWithMedia:media];
+                [media release];
 			}
 		}
         ;
