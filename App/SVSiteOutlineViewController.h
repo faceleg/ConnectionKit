@@ -22,6 +22,8 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 @interface SVSiteOutlineViewController : NSViewController <SVPagesControllerDelegate, NSUserInterfaceValidations>
 {
 	IBOutlet BWSplitView *oSplitView;
+    
+    IBOutlet NSView *oToggleIsCollectionConfirmationAccessoryView;
 	
   @private
     NSOutlineView       *_outlineView;

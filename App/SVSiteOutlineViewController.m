@@ -883,6 +883,12 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
                                    [[self content] valueForKeyPath:@"selection.title"]]];
         }
         
+        [alert setInformativeText:
+         NSLocalizedString(@"This will break any bookmarks to the page your visitors might have saved.",
+                           "alert subtitle")];
+        
+        [alert setAccessoryView:oToggleIsCollectionConfirmationAccessoryView];
+        
         [alert addButtonWithTitle:NSLocalizedString(@"Change", "button title")];
         [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button title")];
         
