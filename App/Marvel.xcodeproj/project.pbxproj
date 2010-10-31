@@ -881,9 +881,6 @@
 		CE3BBAC9097EE82A00BF3E5F /* toolbar_media.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3BBAC8097EE82A00BF3E5F /* toolbar_media.png */; };
 		CE44DFBA0BD0019400479A8E /* KTHTMLInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44DFB80BD0019400479A8E /* KTHTMLInspectorController.m */; };
 		CE44E01F0BD0047500479A8E /* HTMLEditor.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE44E01E0BD0047400479A8E /* HTMLEditor.nib */; };
-		CE452BED109CE7DA00EFF3EC /* io0317.tla in Resources */ = {isa = PBXBuildFile; fileRef = CE452BEA109CE7DA00EFF3EC /* io0317.tla */; };
-		CE452BEE109CE7DA00EFF3EC /* io0401.tla in Resources */ = {isa = PBXBuildFile; fileRef = CE452BEB109CE7DA00EFF3EC /* io0401.tla */; };
-		CE452BEF109CE7DA00EFF3EC /* io1031.tla in Resources */ = {isa = PBXBuildFile; fileRef = CE452BEC109CE7DA00EFF3EC /* io1031.tla */; };
 		CE470B6E0BA71FA2006D6CDD /* DebugMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE470B6D0BA71FA2006D6CDD /* DebugMenu.nib */; };
 		CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */; };
 		CE494D7B0896B5CE005FBD81 /* TinyAdd.png in Resources */ = {isa = PBXBuildFile; fileRef = CE494D7A0896B5CE005FBD81 /* TinyAdd.png */; };
@@ -2466,9 +2463,6 @@
 		CE44DFB80BD0019400479A8E /* KTHTMLInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLInspectorController.m; sourceTree = "<group>"; };
 		CE44DFB90BD0019400479A8E /* KTHTMLInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLInspectorController.h; sourceTree = "<group>"; };
 		CE44E01E0BD0047400479A8E /* HTMLEditor.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = HTMLEditor.nib; sourceTree = "<group>"; };
-		CE452BEA109CE7DA00EFF3EC /* io0317.tla */ = {isa = PBXFileReference; lastKnownFileType = file; path = io0317.tla; sourceTree = "<group>"; };
-		CE452BEB109CE7DA00EFF3EC /* io0401.tla */ = {isa = PBXFileReference; lastKnownFileType = file; path = io0401.tla; sourceTree = "<group>"; };
-		CE452BEC109CE7DA00EFF3EC /* io1031.tla */ = {isa = PBXFileReference; lastKnownFileType = file; path = io1031.tla; sourceTree = "<group>"; };
 		CE470B6D0BA71FA2006D6CDD /* DebugMenu.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = DebugMenu.nib; sourceTree = "<group>"; };
 		CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPluginInstaller.h; sourceTree = "<group>"; };
 		CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginInstaller.m; sourceTree = "<group>"; };
@@ -4226,9 +4220,6 @@
 				CE01A07C0804A9DD009FE78A /* index.icns */,
 				CE01A07E0804A9DD009FE78A /* pageplugin.icns */,
 				CE01A07F0804A9DD009FE78A /* datasource.icns */,
-				CE452BEA109CE7DA00EFF3EC /* io0317.tla */,
-				CE452BEB109CE7DA00EFF3EC /* io0401.tla */,
-				CE452BEC109CE7DA00EFF3EC /* io1031.tla */,
 			);
 			name = "File Icons";
 			sourceTree = "<group>";
@@ -5689,9 +5680,6 @@
 				CE9C56AE0F55E55D00E46592 /* checkmark.tiff in Resources */,
 				CE14D01B0F589686008BE2AD /* SlideshowPlay.tiff in Resources */,
 				CE9B4B3F0F5E0C650052134C /* MiniProgressGradient.png in Resources */,
-				CE452BED109CE7DA00EFF3EC /* io0317.tla in Resources */,
-				CE452BEE109CE7DA00EFF3EC /* io0401.tla in Resources */,
-				CE452BEF109CE7DA00EFF3EC /* io1031.tla in Resources */,
 				CE51013811038F060082043E /* upload_warning.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
