@@ -568,7 +568,7 @@
         NSString *fileURL = [propertyList objectForKey:@"fileURL"];
         if (fileURL)
         {
-            record = [SVMediaRecord mediaWithURL:[NSURL URLWithString:fileURL]
+            record = [SVMediaRecord mediaByReferencingURL:[NSURL URLWithString:fileURL]
                                      entityName:[[self class] mediaEntityName]
                  insertIntoManagedObjectContext:[self managedObjectContext]
                                           error:NULL];
@@ -591,7 +591,7 @@
     NSURL *URL = [item URL];
     if ([URL isFileURL])
     {
-        record = [SVMediaRecord mediaWithURL:URL
+        record = [SVMediaRecord mediaByReferencingURL:URL
                                  entityName:[[self class] mediaEntityName]
              insertIntoManagedObjectContext:[self managedObjectContext]
                                       error:NULL];

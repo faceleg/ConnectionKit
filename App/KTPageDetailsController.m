@@ -1242,7 +1242,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		NSManagedObjectContext *context = [downloadPage managedObjectContext];
 		NSURL *url = [[panel URLs] lastObject];		// we have just one
 		NSError *error = nil;
-		SVMediaRecord *record = [SVMediaRecord mediaWithURL:url
+		SVMediaRecord *record = [SVMediaRecord mediaByReferencingURL:url
 												 entityName:@"FileMedia"
 							 insertIntoManagedObjectContext:context				/// where to we get our MOC?
 													  error:&error];

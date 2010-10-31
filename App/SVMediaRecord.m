@@ -38,7 +38,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 #pragma mark Creating New Media
 
-+ (SVMediaRecord *)mediaWithURL:(NSURL *)URL
++ (SVMediaRecord *)mediaByReferencingURL:(NSURL *)URL
                      entityName:(NSString *)entityName
  insertIntoManagedObjectContext:(NSManagedObjectContext *)context
                           error:(NSError **)outError;

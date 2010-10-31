@@ -619,7 +619,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
             NSManagedObjectContext *context = [self managedObjectContext];
             
             SVMediaRecord *record = [SVMediaRecord
-                                     mediaWithURL:[URL ks_URLByAppendingPathComponent:aFilename isDirectory:NO]
+                                     mediaByReferencingURL:[URL ks_URLByAppendingPathComponent:aFilename isDirectory:NO]
                                      entityName:@"MediaRecord"
                                      insertIntoManagedObjectContext:context
                                      error:NULL];

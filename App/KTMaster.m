@@ -264,7 +264,7 @@
 
 - (void)setBannerWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
 {
-    SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"Banner" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
+    SVMediaRecord *media = [SVMediaRecord mediaByReferencingURL:URL entityName:@"Banner" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
     
     [self replaceMedia:media forKeyPath:@"banner"];
 }
@@ -342,7 +342,7 @@
 
 - (void)setFaviconWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
 {    
-    SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"Favicon" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
+    SVMediaRecord *media = [SVMediaRecord mediaByReferencingURL:URL entityName:@"Favicon" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
     
     [self replaceMedia:media forKeyPath:@"faviconMedia"];
 }

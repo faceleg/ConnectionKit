@@ -31,7 +31,7 @@
 {
     NSManagedObjectContext *context = [[oInspectorViewController representedObject] managedObjectContext];
     
-    SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL
+    SVMediaRecord *media = [SVMediaRecord mediaByReferencingURL:URL
                                             entityName:@"Thumbnail"
                         insertIntoManagedObjectContext:context
                                                  error:NULL];
