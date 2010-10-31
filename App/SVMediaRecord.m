@@ -305,11 +305,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
-- (WebResource *)webResource;
-{
-    return [_media webResource];
-}
-
 @synthesize fileAttributes = _attributes;
 - (NSDictionary *)fileAttributes
 {
