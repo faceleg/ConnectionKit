@@ -356,8 +356,18 @@
 
 // Overrides to allow us to get our thumbnail (for index, or site outline) from poster frame.
 - (id <SVMedia>)thumbnailMedia; { return self.posterFrame.media; }
-- (id)imageRepresentation; { return [self.posterFrame imageRepresentation]; }
-- (NSString *)imageRepresentationType { return [self.posterFrame imageRepresentationType]; }
+
+- (id)imageRepresentation;
+{
+    SVMedia *media = [[self posterFrame] media];
+    return (media.mediaData ? (id)media.mediaData : (id)media.mediaURL);
+}
+
+- (NSString *)imageRepresentationType
+{
+    SVMedia *media = [[self posterFrame] media];
+    return (media.mediaData ? IKImageBrowserNSDataRepresentationType : IKImageBrowserNSURLRepresentationType);
+}
 
 #pragma mark -
 #pragma mark Custom setters (instead of KVO)
