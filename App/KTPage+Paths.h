@@ -25,6 +25,7 @@ typedef enum	//	Defines the 3 ways of linking to a collection:
 	KTCollectionDirectoryPath,			//		collection
 	KTCollectionHTMLDirectoryPath,		//		collection/
 	KTCollectionIndexFilePath,			//		collection/index.html
+    KTCollectionNotEvenACollection = -1 //      filename.html
 }
 KTCollectionPathStyle;
 
@@ -50,14 +51,18 @@ KTCollectionPathStyle;
 - (NSArray *)availablePathExtensions;
 
 
-// Summat else
+#pragma mark Summat else
 - (NSString *)indexFilename;
 - (NSString *)indexFileName;
 - (NSString *)archivesFilename;
 
 
-// Publishing
+#pragma mark Publishing
 - (NSString *)uploadPath;
+
+
+#pragma mark Custom
+- (NSURL *)URLAsCollection:(BOOL)collection;
 
 
 @end

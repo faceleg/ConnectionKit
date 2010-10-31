@@ -395,10 +395,14 @@
  */
 - (NSString *)pathRelativeToParent
 {
-	int collectionPathStyle = KTCollectionHTMLDirectoryPath;
-	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"]) {
-		collectionPathStyle = KTCollectionIndexFilePath;
-	}
+	KTCollectionPathStyle collectionPathStyle = KTCollectionNotEvenACollection;
+    if ([self isCollection])
+    {
+        collectionPathStyle = KTCollectionHTMLDirectoryPath;
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"]) {
+            collectionPathStyle = KTCollectionIndexFilePath;
+        }
+    }
 	
 	NSString *result = [self pathRelativeToParentWithCollectionPathStyle:collectionPathStyle];
 	return result;
@@ -437,7 +441,7 @@
 		result = [self fileName];
 	}
 	
-	if ([self isCollection])
+	if (collectionPathStyle != KTCollectionNotEvenACollection)
 	{
 		if (collectionPathStyle == KTCollectionIndexFilePath)
 		{
@@ -484,6 +488,43 @@
 			result = [result ks_URLDirectoryPath];
 		}
 	}
+	
+	return result;
+}
+
+#pragma mark Custom
+
+- (NSURL *)URLAsCollection:(BOOL)collection;
+{
+    NSURL *result = nil;
+	
+    if ([self isRoot])
+    {
+        return [self URL];
+    }
+    else
+    {
+        // For normal pages, figure out the path relative to parent and resolve it
+        NSURL *baseURL = [[self parentPage] URL];
+        if (baseURL)
+        {
+            KTCollectionPathStyle collectionPathStyle = KTCollectionNotEvenACollection;
+            if (collection)
+            {
+                collectionPathStyle = KTCollectionHTMLDirectoryPath;
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"])
+                {
+                    collectionPathStyle = KTCollectionIndexFilePath;
+                }
+            }
+            
+            NSString *path = [self pathRelativeToParentWithCollectionPathStyle:collectionPathStyle];
+            if (path)
+            {
+                result = [NSURL URLWithString:path relativeToURL:baseURL];
+            }
+        }
+    }
 	
 	return result;
 }
