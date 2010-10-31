@@ -262,27 +262,28 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     else if ([[self entityName] isEqualToString:@"File"])
     {
         // Import specified file if possible
-        SVMediaRecord *media = nil;
+        SVMediaRecord *record = nil;
         if ([self objectURL])
         {
-            media = [SVMediaRecord mediaWithURL:[self objectURL] entityName:@"FileMedia" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
+            record = [SVMediaRecord mediaWithURL:[self objectURL] entityName:@"FileMedia" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
         }
-        if (!media)
+        if (!record)
         {
             NSData *data = [@"" dataUsingEncoding:NSUTF8StringEncoding];
             
-            media = [SVMediaRecord
-                     mediaWithData:data
-                     URL:[NSURL URLWithString:@"x-sandvox-fake-url:///emptystring.html"]
-                     entityName:@"FileMedia"
-                     insertIntoManagedObjectContext:[self managedObjectContext]];
+            SVMedia *media = [[SVMedia alloc]
+                              initWithData:data
+                              URL:[NSURL URLWithString:@"x-sandvox-fake-url:///emptystring.html"]];
             
             [media setPreferredFilename:@"Untitled.html"];
             
-            
+            record = [SVMediaRecord mediaRecordWithMedia:media
+                                              entityName:@"FileMedia"
+                          insertIntoManagedObjectContext:[self managedObjectContext]];
+            [media release];
         }
         
-        [(SVDownloadSiteItem *)result setMedia:media];
+        [(SVDownloadSiteItem *)result setMedia:record];
     }
     
     return result;

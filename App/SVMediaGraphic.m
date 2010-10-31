@@ -548,32 +548,34 @@
     [super awakeFromPropertyList:propertyList];
     
     // Pull out image data
-    SVMediaRecord *media = nil;
+    SVMediaRecord *record = nil;
     
     NSData *data = [propertyList objectForKey:@"fileContents"];
     if (data)
     {
         NSString *urlString = [propertyList objectForKey:@"sourceURL"];
         NSURL *url = [NSURL URLWithString:urlString];
+        SVMedia *media = [[SVMedia alloc] initWithData:data URL:url];
         
-        media = [SVMediaRecord mediaWithData:data
-                                         URL:url
-                                  entityName:[[self class] mediaEntityName]
-              insertIntoManagedObjectContext:[self managedObjectContext]];
+        record = [SVMediaRecord mediaRecordWithMedia:media
+                                          entityName:[[self class] mediaEntityName]
+                      insertIntoManagedObjectContext:[self managedObjectContext]];
+        
+        [media release];
     }
     else
     {
         NSString *fileURL = [propertyList objectForKey:@"fileURL"];
         if (fileURL)
         {
-            media = [SVMediaRecord mediaWithURL:[NSURL URLWithString:fileURL]
+            record = [SVMediaRecord mediaWithURL:[NSURL URLWithString:fileURL]
                                      entityName:[[self class] mediaEntityName]
                  insertIntoManagedObjectContext:[self managedObjectContext]
                                           error:NULL];
         }
     }
     
-    if (media) [self replaceMedia:media forKeyPath:@"media"];
+    if (record) [self replaceMedia:record forKeyPath:@"media"];
 }
 
 #pragma mark Pasteboard
@@ -583,13 +585,13 @@
     BOOL result = [super awakeFromPasteboardItems:items];
     
     // Can we read a media oject from the pboard?
-    SVMediaRecord *media = nil;
+    SVMediaRecord *record = nil;
     id <SVPasteboardItem> item = [items objectAtIndex:0];
     
     NSURL *URL = [item URL];
     if ([URL isFileURL])
     {
-        media = [SVMediaRecord mediaWithURL:URL
+        record = [SVMediaRecord mediaWithURL:URL
                                  entityName:[[self class] mediaEntityName]
              insertIntoManagedObjectContext:[self managedObjectContext]
                                       error:NULL];
@@ -609,25 +611,27 @@
                                          host:[NSString UUIDString]
                                          path:path];        
             
-            media = [SVMediaRecord mediaWithData:[item dataForType:type]
-                                             URL:url
-                                      entityName:[[self class] mediaEntityName]
-                  insertIntoManagedObjectContext:[self managedObjectContext]];
+            SVMedia *media = [[SVMedia alloc] initWithData:[item dataForType:type] URL:url];
+            
+            record = [SVMediaRecord mediaRecordWithMedia:media
+                                              entityName:[[self class] mediaEntityName]
+                          insertIntoManagedObjectContext:[self managedObjectContext]];
+            [media release];
         }
     }
     
     
     // Swap in the new media
-    if (media || URL)
+    if (record || URL)
     {
         // Reset size & codecType BEFORE media so setting the source can store a new size
         self.naturalWidth = nil;
         self.naturalHeight = nil;
         [self setCodecType:nil];
 		
-		if (media)
+		if (record)
 		{
-			[self setSourceWithMediaRecord:media];
+			[self setSourceWithMediaRecord:record];
 		}
 		else
 		{

@@ -8,8 +8,6 @@
 
 #import "SVMediaRecord.h"
 
-#import "SVMedia.h"
-
 #import "NSManagedObject+KTExtensions.h"
 
 #import "NSError+Karelia.h"
@@ -78,37 +76,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     
     result->_media = [media retain];
     [result setPreferredFilename:[media preferredFilename]];
-    
-    return result;
-}
-
-+ (SVMediaRecord *)mediaWithData:(NSData *)data
-                             URL:(NSURL *)url
-                      entityName:(NSString *)entityName
-  insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    SVMedia *media = [[SVMedia alloc] initWithData:data URL:url];
-    
-    SVMediaRecord *result = [SVMediaRecord mediaRecordWithMedia:media
-                                                     entityName:entityName
-                                 insertIntoManagedObjectContext:context];
-    
-    [media release];
-    
-    return result;
-}
-
-+ (SVMediaRecord *)mediaWithWebResource:(WebResource *)resource
-                             entityName:(NSString *)entityName
-         insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    SVMedia *media = [[SVMedia alloc] initWithWebResource:resource];
-    
-    SVMediaRecord *result = [SVMediaRecord mediaRecordWithMedia:media
-                                                     entityName:entityName
-                                 insertIntoManagedObjectContext:context];
-    
-    [media release];
     
     return result;
 }

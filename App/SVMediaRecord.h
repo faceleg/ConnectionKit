@@ -11,6 +11,8 @@
 #import "SVDocumentFileWrapper.h"
 #import <iMedia/iMedia.h>
 
+#import "SVMedia.h"
+
 
 extern NSString *kSVDidDeleteMediaRecordNotification;
 
@@ -43,16 +45,6 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
                           error:(NSError **)outError;
 
 + (SVMediaRecord *)mediaRecordWithMedia:(SVMedia *)media
-                             entityName:(NSString *)entityName
-         insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-
-// Must call -setPreferredFilename: after, and ideally -setFileAttributes: too
-+ (SVMediaRecord *)mediaWithData:(NSData *)data
-                             URL:(NSURL *)url
-                      entityName:(NSString *)entityName
-  insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-
-+ (SVMediaRecord *)mediaWithWebResource:(WebResource *)resource
                              entityName:(NSString *)entityName
          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
