@@ -94,6 +94,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 #pragma mark Page Behaviour Actions
 - (IBAction)toggleIsCollection:(id)sender;
+- (BOOL)canToggleIsCollection;
 
 
 #pragma mark Options

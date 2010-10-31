@@ -862,6 +862,14 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (IBAction)toggleIsCollection:(id)sender;
 {
+    // Quick sanity check
+    if (![self canToggleIsCollection])
+    {
+        NSBeep();
+        return;
+    }
+    
+    
     BOOL makeCollection = [self selectedItemsAreCollections] != NSOnState;
     
     
@@ -920,6 +928,22 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     {
         [self setIsCollection:makeCollection];
     }
+}
+
+- (BOOL)canToggleIsCollection;
+{
+    BOOL result = NO;
+    
+    // Can't enable control if collection already has children…
+    NSNumber *haveChildren = [[self content] valueForKeyPath:@"selection.hasChildren"];
+    if (!NSIsControllerMarker(haveChildren) && ![haveChildren boolValue])
+    {
+        // …or is home page
+        NSNumber *containsHome = [[self content] valueForKeyPath:@"selection.isRoot"];
+        if (!NSIsControllerMarker(containsHome) && ![containsHome boolValue]) result = YES;
+    }
+    
+    return result;
 }
 
 - (void)toggleIsCollectionAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
@@ -1650,17 +1674,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         id control = anItem;
         [control setState:[self selectedItemsAreCollections]];
         
-        // Can't enable control if collection already has children, or is home page
-        NSNumber *haveChildren = [[self content] valueForKeyPath:@"selection.hasChildren"];
-        if (NSIsControllerMarker(haveChildren) || [haveChildren boolValue])
-        {
-            result = NO;
-        }
-        else
-        {
-            NSNumber *containsHome = [[self content] valueForKeyPath:@"selection.isRoot"];
-            if (NSIsControllerMarker(containsHome) || [containsHome boolValue]) result = NO;
-        }
+        result = [self canToggleIsCollection];
     }
     
     
