@@ -841,9 +841,16 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 #pragma mark Page Behaviour Actions
 
+- (NSCellStateValue)selectedItemsAreCollections;
+{
+    NSNumber *state = [[self content] valueForKeyPath:@"selection.isCollection"];
+    NSCellStateValue result = (NSIsControllerMarker(state) ? NSMixedState : [state integerValue]);
+    return result;
+}
+
 - (IBAction)toggleIsCollection:(id)sender;
 {
-    BOOL makeCollection = ![sender state];
+    BOOL makeCollection = [self selectedItemsAreCollections] != NSOnState;
     [[self content] setValue:NSBOOL(makeCollection) forKeyPath:@"selection.isCollection"];
 }
 
@@ -1559,6 +1566,26 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     {
         result = [self canDelete];
     }
+    
+    else if (action == @selector(toggleIsCollection:))
+    {
+        // Set state to match
+        id control = anItem;
+        [control setState:[self selectedItemsAreCollections]];
+        
+        // Can't enable control if collection already has children, or is home page
+        NSNumber *haveChildren = [[self content] valueForKeyPath:@"selection.hasChildren"];
+        if (NSIsControllerMarker(haveChildren) || [haveChildren boolValue])
+        {
+            result = NO;
+        }
+        else
+        {
+            NSNumber *containsHome = [[self content] valueForKeyPath:@"selection.isRoot"];
+            if (NSIsControllerMarker(containsHome) || [containsHome boolValue]) result = NO;
+        }
+    }
+    
     
     return result;
 }
