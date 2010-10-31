@@ -33,7 +33,7 @@
 @interface KTPage (PathsPrivate)
 - (NSString *)indexFilename;
 
-- (NSString *)pathRelativeToParent;
+- (NSString *)URLStringRelativeToParentPageAsCollection:(BOOL)collection;
 
 - (NSString *)pathRelativeToParentWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
 - (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
@@ -308,7 +308,7 @@
 	else
 	{
 		// For normal pages, figure out the path relative to parent and resolve it
-		NSString *path = [self pathRelativeToParent];
+		NSString *path = [self URLStringRelativeToParentPageAsCollection:[self isCollection]];
 		if (path)
 		{
 			result = [NSURL URLWithString:path relativeToURL:[[self parentPage] _baseExampleURL]];
@@ -359,10 +359,10 @@
 /*	The index.html file is not included in collection paths unless the user defaults say to.
  *	If you ask this of the home page, will either return an empty string or index.html.
  */
-- (NSString *)pathRelativeToParent
+- (NSString *)URLStringRelativeToParentPageAsCollection:(BOOL)collection;
 {
 	KTCollectionPathStyle collectionPathStyle = KTCollectionNotEvenACollection;
-    if ([self isCollection])
+    if (collection)
     {
         collectionPathStyle = KTCollectionHTMLDirectoryPath;
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"]) {
@@ -481,17 +481,7 @@
         NSURL *baseURL = [[self parentPage] URL];
         if (baseURL)
         {
-            KTCollectionPathStyle collectionPathStyle = KTCollectionNotEvenACollection;
-            if (collection)
-            {
-                collectionPathStyle = KTCollectionHTMLDirectoryPath;
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"])
-                {
-                    collectionPathStyle = KTCollectionIndexFilePath;
-                }
-            }
-            
-            NSString *path = [self pathRelativeToParentWithCollectionPathStyle:collectionPathStyle];
+            NSString *path = [self URLStringRelativeToParentPageAsCollection:collection];
             if (path)
             {
                 result = [NSURL URLWithString:path relativeToURL:baseURL];
