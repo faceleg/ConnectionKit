@@ -14,7 +14,6 @@
 #import "NSImage+Karelia.h"
 #import "NSString+Karelia.h"
 #import "KSURLUtilities.h"
-#import "QTMovie+Karelia.h"
 #import "KSThreadProxy.h"
 
 #import "BDAlias.h"
@@ -332,33 +331,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     {
         //[_webResource release]; _webResource = nil;
     }
-}
-
-#pragma mark Thumbnail
-
-- (CGSize)originalSize;
-{
-    CGSize result = CGSizeZero;
-    
-	if ([[self typeOfFile] conformsToUTI:(NSString *)kUTTypeImage])
-	{
-		result = IMBImageItemGetSize(self);
-	}
-	else if ([[self typeOfFile] conformsToUTI:(NSString *)kUTTypeMovie])
-	{
-		NSSize dimensions = [QTMovie dimensionsOfMovieWithIMBImageItem:self];
-		result = NSSizeToCGSize(dimensions);
-    }
-	else if ([[self typeOfFile] conformsToUTI:@"com.adobe.shockwave-flash"])
-	{
-		NSLog(@"Um, why do we have to get the dimension this way when we already set it ?");
-    }
-	else
-	{
-		NSLog(@"Unknown file type %@ for media", [self typeOfFile]);
-	}
-    
-    return result;
 }
 
 #pragma mark File Management

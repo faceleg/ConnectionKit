@@ -105,10 +105,6 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 - (NSString *)typeOfFile;
 
 
-#pragma mark Image
-- (CGSize)originalSize;
-
-
 #pragma mark Location Support
 
 // Media Records start out life with no filename. They acquire one upon the first time they are due to be copied into the doc package

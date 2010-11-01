@@ -118,10 +118,10 @@
     }
     else	// ask the media for it, and cache it.
     {
-        SVMediaRecord *media = [self mediaRecord];
-        if (media)
+        SVMediaRecord *record = [self mediaRecord];
+        if (record)
         {
-            result = [media originalSize];
+            result = [[record media] originalSize];
             [self setNaturalWidth:[NSNumber numberWithFloat:result.width]
                            height:[NSNumber numberWithFloat:result.height]];
         }

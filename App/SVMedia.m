@@ -12,6 +12,7 @@
 #import "NSFileManager+Karelia.h"
 #import "NSString+Karelia.h"
 #import "KSURLUtilities.h"
+#import "QTMovie+Karelia.h"
 
 
 @implementation SVMedia
@@ -215,6 +216,40 @@
                                                           error:outError];
     }
     
+    
+    return result;
+}
+
+#pragma mark Deprecated
+
+- (NSString *)typeOfFile
+{
+	NSString *fileName = [self preferredFilename];
+	NSString *UTI = [NSString UTIForFilenameExtension:[fileName pathExtension]];
+	return UTI;
+}
+
+- (CGSize)originalSize;
+{
+    CGSize result = CGSizeZero;
+    
+	if ([[self typeOfFile] conformsToUTI:(NSString *)kUTTypeImage])
+	{
+		result = IMBImageItemGetSize((id)self);
+	}
+	else if ([[self typeOfFile] conformsToUTI:(NSString *)kUTTypeMovie])
+	{
+		NSSize dimensions = [QTMovie dimensionsOfMovieWithIMBImageItem:(id)self];
+		result = NSSizeToCGSize(dimensions);
+    }
+	else if ([[self typeOfFile] conformsToUTI:@"com.adobe.shockwave-flash"])
+	{
+		NSLog(@"Um, why do we have to get the dimension this way when we already set it ?");
+    }
+	else
+	{
+		NSLog(@"Unknown file type %@ for media", [self typeOfFile]);
+	}
     
     return result;
 }
