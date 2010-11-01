@@ -504,21 +504,6 @@
                    insertIntoManagedObjectContext:[self managedObjectContext]];
 }
 
-#pragma mark Support
-
-- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key
-{
-    BOOL result = [super usesExtensiblePropertiesForUndefinedKey:key];
-    
-    if ([key isEqualToString:@"commentsProvider"])
-    {
-        result = YES;
-    }
-    
-    return result;
-}
-
-
 @end
 
 
