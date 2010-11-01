@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <BWToolkitFramework/BWToolkitFramework.h>
 
 
 enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSiteItemType, kPageSiteItemType, kMixedSiteItemType = -1 };
@@ -41,8 +42,8 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
     IBOutlet SVSiteOutlineViewController    *oSiteOutlineController;
 	IBOutlet SVPagesController              *oPagesController;
     
-    IBOutlet NSButton   *oPublishAsCollectionCheckbox;
-	
+	IBOutlet BWIWorkPopUpButton		*oPublishAsCollectionPopup;
+
 	IBOutlet NSView					*oAttachedWindowView;
 	IBOutlet NSTextField			*oAttachedWindowTextField;
 	IBOutlet NSTextField			*oAttachedWindowExplanation;

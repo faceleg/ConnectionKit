@@ -1022,8 +1022,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
     // If user cancelled, repair binding value
     if (!success)
     {
-        [oPublishAsCollectionCheckbox setObjectValue:[oPagesController valueForKeyPath:@"selection.isCollection"]];
-    }
+		BOOL isCollection = [oPagesController valueForKeyPath:@"selection.isCollection"];
+        [oPublishAsCollectionPopup selectItemWithTag:(isCollection?1:0)];
+	}
 }
 
 @synthesize publishSelectionAsCollection = _isCollection;
