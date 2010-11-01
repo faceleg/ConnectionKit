@@ -97,9 +97,9 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 + (NSArray *)graphicsFromPasteboard:(NSPasteboard *)pasteboard
     insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
-+ (SVGraphic *)graphicFromWebLocation:(KSWebLocation *)location
-                          minPriority:(NSUInteger)minPriority
-       insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVGraphic *)graphicFromPasteboardItem:(id <SVPasteboardItem>)pasteboardItem
+                             minPriority:(NSUInteger)minPriority
+          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (NSArray *)graphicPasteboardTypes;
 

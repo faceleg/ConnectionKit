@@ -640,9 +640,9 @@ static SVGraphicFactory *sRawHTMLFactory;
     return result;
 }
 
-+ (SVGraphic *)graphicFromWebLocation:(KSWebLocation *)location
-                          minPriority:(NSUInteger)minPriority
-       insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVGraphic *)graphicFromPasteboardItem:(id <SVPasteboardItem>)pasteboardItem
+                             minPriority:(NSUInteger)minPriority
+          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVGraphicFactory *factory = nil;
     
@@ -650,7 +650,7 @@ static SVGraphicFactory *sRawHTMLFactory;
     // Test plug-ins
     for (SVGraphicFactory *aFactory in [self registeredFactories])
     {
-        NSUInteger priority = [aFactory priorityForPasteboardItem:location];
+        NSUInteger priority = [aFactory priorityForPasteboardItem:pasteboardItem];
         if (priority > minPriority)
         {
             factory = aFactory;
@@ -662,8 +662,8 @@ static SVGraphicFactory *sRawHTMLFactory;
     // Create graphic
     SVGraphic *result = nil;
     if (factory)
-    {        
-        result = [factory graphicWithPasteboardItems:[NSArray arrayWithObject:location]
+    {
+        result = [factory graphicWithPasteboardItems:[NSArray arrayWithObject:pasteboardItem]
                      insertIntoManagedObjectContext:context];
     }
     
