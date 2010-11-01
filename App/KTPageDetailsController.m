@@ -849,12 +849,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		int *theMarginsAfter = nil;
 		
 		NSArray *pageItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oExtensionPopup,oFollowButton,nil];
-		int pageExtraX [] = {4,5,8,0};
+		int pageExtraX [] = {4,52,8,0};
 		int pageMarginsAfter[] = {0,-1,8,0};
-		
-		NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oExtensionPopup,oFollowButton,nil];
-		int collectionExtraX [] = {4,5,8,0};
-		int collectionMarginsAfter[] = {0,-1,8,0};
 		
 		NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oMultiplePagesField,oExtensionPopup,nil];
 		int markerExtraX [] = {4,4,8};
@@ -882,12 +878,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 					theExtraX = markerExtraX;
 					theMarginsAfter = markerMarginsAfter;
 					break;
-				case NSOnState:
-					itemsToLayOut = collectionItemsToLayOut;
-					theExtraX = collectionExtraX;
-					theMarginsAfter = collectionMarginsAfter;
-					break;
 				case NSOffState:
+				case NSOnState:
 					itemsToLayOut = pageItemsToLayOut;
 					theExtraX = pageExtraX;
 					theMarginsAfter = pageMarginsAfter;

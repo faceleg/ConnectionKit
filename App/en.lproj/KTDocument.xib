@@ -554,12 +554,12 @@
 														<object class="NSPopUpButton" id="408006662">
 															<reference key="NSNextResponder" ref="327729126"/>
 															<int key="NSvFlags">265</int>
-															<string key="NSFrame">{{492, 37}, {70, 17}}</string>
+															<string key="NSFrame">{{492, 37}, {58, 17}}</string>
 															<reference key="NSSuperview" ref="327729126"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSPopUpButtonCell" key="NSCell" id="738358046">
 																<int key="NSCellFlags">-2076049856</int>
-																<int key="NSCellFlags2">134350848</int>
+																<int key="NSCellFlags2">133120</int>
 																<reference key="NSSupport" ref="26"/>
 																<reference key="NSControlView" ref="408006662"/>
 																<int key="NSButtonFlags">-2035138305</int>
@@ -575,7 +575,7 @@
 																<int key="NSPeriodicInterval">75</int>
 																<object class="NSMenuItem" key="NSMenuItem" id="612147183">
 																	<reference key="NSMenu" ref="584733159"/>
-																	<string key="NSTitle">html</string>
+																	<string key="NSTitle">.shtml</string>
 																	<string key="NSKeyEquiv"/>
 																	<int key="NSKeyEquivModMask">1048576</int>
 																	<int key="NSMnemonicLoc">2147483647</int>
@@ -802,6 +802,7 @@
 					<string>childItems</string>
 					<string>childItems.@count</string>
 					<string>isRoot</string>
+					<string>availableDotExtensions</string>
 				</array>
 				<string key="NSObjectClassName">KTPage</string>
 				<bool key="NSEditable">YES</bool>
@@ -1513,49 +1514,6 @@
 					<int key="connectionID">2104</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">content: selection.availablePathExtensions</string>
-						<reference key="source" ref="408006662"/>
-						<reference key="destination" ref="601368962"/>
-						<object class="NSNibBindingConnector" key="connector" id="601826230">
-							<reference key="NSSource" ref="408006662"/>
-							<reference key="NSDestination" ref="601368962"/>
-							<string key="NSLabel">content: selection.availablePathExtensions</string>
-							<string key="NSBinding">content</string>
-							<string key="NSKeyPath">selection.availablePathExtensions</string>
-							<dictionary key="NSOptions">
-								<boolean value="YES" key="NSInsertsNullPlaceholder"/>
-								<string key="NSMultipleValuesPlaceholder">MULTIPLE</string>
-								<string key="NSNullPlaceholder">NULL</string>
-								<boolean value="NO" key="NSRaisesForNotApplicableKeys"/>
-							</dictionary>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">2105</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedObject: selection.customPathExtension</string>
-						<reference key="source" ref="408006662"/>
-						<reference key="destination" ref="601368962"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="408006662"/>
-							<reference key="NSDestination" ref="601368962"/>
-							<string key="NSLabel">selectedObject: selection.customPathExtension</string>
-							<string key="NSBinding">selectedObject</string>
-							<string key="NSKeyPath">selection.customPathExtension</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSRaisesForNotApplicableKeys</string>
-								<boolean value="NO" key="NS.object.0"/>
-							</object>
-							<reference key="NSPreviousConnector" ref="601826230"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">2106</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">toggleIsCollection:</string>
 						<reference key="source" ref="363902086"/>
@@ -1594,6 +1552,49 @@
 						<reference key="destination" ref="363902086"/>
 					</object>
 					<int key="connectionID">2147</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">content: selection.availableDotExtensions</string>
+						<reference key="source" ref="408006662"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector" id="1014029109">
+							<reference key="NSSource" ref="408006662"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">content: selection.availableDotExtensions</string>
+							<string key="NSBinding">content</string>
+							<string key="NSKeyPath">selection.availableDotExtensions</string>
+							<dictionary key="NSOptions">
+								<boolean value="YES" key="NSInsertsNullPlaceholder"/>
+								<string key="NSMultipleValuesPlaceholder">MULTIPLE</string>
+								<string key="NSNullPlaceholder">NULL</string>
+								<boolean value="NO" key="NSRaisesForNotApplicableKeys"/>
+							</dictionary>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2169</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedObject: selection.customPathExtension</string>
+						<reference key="source" ref="408006662"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="408006662"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">selectedObject: selection.customPathExtension</string>
+							<string key="NSBinding">selectedObject</string>
+							<string key="NSKeyPath">selection.customPathExtension</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSRaisesForNotApplicableKeys</string>
+								<boolean value="NO" key="NS.object.0"/>
+							</object>
+							<reference key="NSPreviousConnector" ref="1014029109"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2170</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2226,7 +2227,7 @@
 					<bytes key="NSTransformStruct">P4AAAL+AAABEBAAAwlAAAA</bytes>
 				</object>
 				<string key="1751.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1752.IBEditorWindowLastContentRect">{{1181, 351}, {94, 20}}</string>
+				<string key="1752.IBEditorWindowLastContentRect">{{902, 648}, {94, 20}}</string>
 				<string key="1752.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1753.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1756.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2318,7 +2319,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2168</int>
+			<int key="maxID">2170</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
