@@ -82,8 +82,6 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 //  You should have no need under normal usage to call -setFileURL: yourself; the document takes care of that for you. Similarly there should be no need to call -alias directly yourself.
 //  .fileURL is not KVO-compliant
 
-- (NSURL *)fileURL;
-
 - (BOOL)isPlaceholder;
 
 

@@ -175,23 +175,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 - (NSURL *)fileURL;
 {
 	// If the URL has been fixed, use that!
-    NSURL *result = [_media mediaURL];
-    
-    if (!result)
-    {
-        // Get best path we can out of the alias
-        NSString *path = [[self autosaveAlias] fullPath];
-        if (!path) path = [[self alias] fullPath];
-        if (!path) path = [[self autosaveAlias] lastKnownPath];
-        if (!path) path = [[self alias] lastKnownPath];
-        
-        // Ignore files which are in the Trash
-        if ([path rangeOfString:@".Trash"].location != NSNotFound) path = nil;
-        
-        
-        if (path) result = [NSURL fileURLWithPath:path];
-    }
-    
+    NSURL *result = [[self media] fileURL];    
     return result;
 }
 
@@ -297,7 +281,18 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     SVMedia *result = _media;
     if (!result)
     {
-        result = [[SVMedia alloc] initByReferencingURL:[self fileURL]];
+        // Get best path we can out of the alias
+        NSString *path = [[self autosaveAlias] fullPath];
+        if (!path) path = [[self alias] fullPath];
+        if (!path) path = [[self autosaveAlias] lastKnownPath];
+        if (!path) path = [[self alias] lastKnownPath];
+        
+        // Ignore files which are in the Trash
+        if ([path rangeOfString:@".Trash"].location != NSNotFound) path = nil;
+        
+        
+        if (path) result = [[SVMedia alloc] initByReferencingURL:[NSURL fileURLWithPath:path]];
+        [result autorelease];
     }
     
     return result;
