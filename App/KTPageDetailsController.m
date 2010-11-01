@@ -93,6 +93,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	[[NSNotificationCenter defaultCenter] removeObserver:self
 													name:NSViewBoundsDidChangeNotification
 												  object:[self view]];
+    
+    [self unbind:@"publishSelectionAsCollection"];
 	
 	self.view = nil;		// stop observing early.
 	
