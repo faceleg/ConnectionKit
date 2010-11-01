@@ -153,6 +153,14 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     return [(SVGraphicDOMController *)[self parentWebEditorItem] constrainSize:size handle:handle];
 }
 
+- (unsigned int)resizingMask
+{
+    // Super's behaviour is enough to handle width, but we want height to be adjustable 
+    // TODO: Figure out how to disallow width change on inapplicable objects
+    unsigned int result = (kCALayerBottomEdge | [super resizingMask]);
+    return result;
+}
+
 @end
 
 
