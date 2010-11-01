@@ -58,7 +58,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     BOOL    _isForwardingCommandToWebView;
     
     // Drawing
-    NSMutableSet    *_itemsToDraw;
+    NSMutableArray  *_itemsToDisplay;
     
     // Datasource/delegate
     id <WEKWebEditorDataSource>  _dataSource;    // weak ref as you'd expect

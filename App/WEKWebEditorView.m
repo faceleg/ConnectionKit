@@ -117,7 +117,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // other ivars
     _selectedItems = [[NSMutableArray alloc] init];
-    _itemsToDraw = [[NSMutableSet alloc] init];
+    _itemsToDisplay = [[NSMutableArray alloc] init];
     
     
     // WebView
@@ -1011,7 +1011,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         NSRect drawingRect = [anItem drawingRect];
         if (drawingRect.size.width == 0.0f && drawingRect.size.height == 0.0f)
         {
-            [_itemsToDraw removeObject:anItem];
+            [_itemsToDisplay removeObjectIdenticalTo:anItem];
         }
         else
         {
@@ -1023,7 +1023,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (NSSet *)itemsToDisplay;
 {
-    return [[_itemsToDraw copy] autorelease];
+    return [NSSet setWithArray:_itemsToDisplay];
 }
 
 - (void)setNeedsDisplayForItem:(WEKWebEditorItem *)item;
@@ -1031,7 +1031,34 @@ typedef enum {  // this copied from WebPreferences+Private.h
     NSRect drawingRect = [item drawingRect];
     [[self documentView] setNeedsDisplayInRect:drawingRect];
     
-    [_itemsToDraw addObject:item];
+    BOOL markedForDisplay = NO;
+    
+    NSUInteger i;
+    for (i = 0; i < [_itemsToDisplay count]; i++)
+    {
+        WEKWebEditorItem *anItem = [_itemsToDisplay objectAtIndex:i];
+        
+        // Is the item already present? Or covered by an ancestor? If so, can ignore request
+        if ([item isDescendantOfWebEditorItem:anItem]) return;
+        
+        // Remove/replace any descendants of the item since they're now covered by item
+        if ([anItem isDescendantOfWebEditorItem:item])
+        {
+            if (markedForDisplay)
+            {
+                [_itemsToDisplay removeObjectAtIndex:i];
+                i--;
+            }
+            else
+            {
+                [_itemsToDisplay replaceObjectAtIndex:i withObject:item];
+                markedForDisplay = YES;
+            }
+        }
+    }
+    
+    // Remove/replace any descendants of the item since they're now covered by item
+    if (!markedForDisplay) [_itemsToDisplay addObject:item];
 }
 
 - (BOOL)inLiveGraphicResize; { return _resizingGraphic; }
