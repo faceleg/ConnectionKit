@@ -276,6 +276,27 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 {
     DOMElement *result = [self graphicDOMElement];
     if (!result) result = [self HTMLElement];
+    
+    
+    // Seek out a better matching child which has no siblings. #93557
+    DOMTreeWalker *walker = [[result ownerDocument] createTreeWalker:result
+                                                          whatToShow:DOM_SHOW_ELEMENT
+                                                              filter:nil
+                                              expandEntityReferences:NO];
+    
+    DOMNode *aNode = [walker currentNode];
+    while (aNode && ![walker nextSibling])
+    {
+        WEKWebEditorItem *controller = [self hitTestDOMNode:aNode];
+        if (controller != self && [controller isSelectable])
+        {
+            result = nil;
+            break;
+        }
+        
+        aNode = [walker nextNode];
+    }
+    
     return result;
 }
 
