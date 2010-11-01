@@ -908,18 +908,30 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
+- (id)selectableDescendantOfItem:(WEKWebEditorItem *)anItem forRepresentedObject:(id)anObject;
+{
+    WEKWebEditorItem *result = nil;
+    for (result in [anItem childWebEditorItems])
+    {
+        result = [result hitTestRepresentedObject:anObject];
+        if (result && ![result isSelectable])
+        {
+            result = [self selectableDescendantOfItem:result forRepresentedObject:anObject];
+        }
+        
+        if (result) break;
+    }
+    
+    return result;
+}
+
 - (id)selectableItemForRepresentedObject:(id)anObject;
 {
     WEKWebEditorItem *result = [[self contentItem] hitTestRepresentedObject:anObject];
     if (![result isSelectable])
     {
         // If it's not selectable, root around the descendants
-        for (result in [result childWebEditorItems])
-        {
-            result = [result hitTestRepresentedObject:anObject];
-            if ([result isSelectable]) return result;
-        }
-        result = nil;
+        result = [self selectableDescendantOfItem:result forRepresentedObject:anObject];
     }
     
     return result;
