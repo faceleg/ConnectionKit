@@ -730,14 +730,18 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 - (IBAction)paste:(id)sender;
 {
-    SVSidebarPageletsController *sidebarPageletsController =
-    [_graphicsController sidebarPageletsController];
-    
-    NSUInteger index = [sidebarPageletsController selectionIndex];
-    if (index >= NSNotFound) index = 0;
-    
-    [sidebarPageletsController insertPageletsFromPasteboard:[NSPasteboard generalPasteboard]
-                                      atArrangedObjectIndex:index];
+    // Get first responder item to do it hopefully
+    if (![[[self webEditor] selectedItem] tryToPerform:_cmd with:sender])
+    {
+        SVSidebarPageletsController *sidebarPageletsController =
+        [_graphicsController sidebarPageletsController];
+        
+        NSUInteger index = [sidebarPageletsController selectionIndex];
+        if (index >= NSNotFound) index = 0;
+        
+        [sidebarPageletsController insertPageletsFromPasteboard:[NSPasteboard generalPasteboard]
+                                          atArrangedObjectIndex:index];
+    }
 }
 
 

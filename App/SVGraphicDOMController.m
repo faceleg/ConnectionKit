@@ -315,6 +315,18 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
 }
 
+#pragma mark Paste
+
+- (void)paste:(id)sender;
+{
+    SVGraphic *graphic = [self representedObject];
+    
+    if (![graphic awakeFromPasteboardItems:[[NSPasteboard generalPasteboard] sv_pasteboardItems]])
+    {
+        NSBeep();
+    }
+}
+
 #pragma mark Resizing
 
 - (unsigned int)resizingMask
