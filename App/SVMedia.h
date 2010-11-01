@@ -39,5 +39,8 @@
 - (BOOL)fileContentsEqualData:(NSData *)data;
 
 
+#pragma mark Writing Files
+- (BOOL)writeToURL:(NSURL *)URL error:(NSError **)outError;
+
 
 @end

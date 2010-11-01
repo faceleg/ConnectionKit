@@ -200,6 +200,25 @@
     return result;
 }
 
+#pragma mark Writing Files
+
+- (BOOL)writeToURL:(NSURL *)URL error:(NSError **)outError;
+{
+    // Try writing out data from memory. It'll fail if there was none
+    NSData *data = [self mediaData];
+    BOOL result = [data writeToURL:URL options:0 error:outError];
+    if (!result)
+    {
+        // Fallback to copying the file
+        result = [[NSFileManager defaultManager] copyItemAtPath:[[self fileURL] path]
+                                                         toPath:[URL path]
+                                                          error:outError];
+    }
+    
+    
+    return result;
+}
+
 @end
 
 

@@ -382,8 +382,8 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 - (BOOL)writeToURL:(NSURL *)URL updateFileURL:(BOOL)updateFileURL error:(NSError **)outError;
 {
     // Try writing out data from memory. It'll fail if there was none
-    NSData *data = [[self media] mediaData];
-    BOOL result = [data writeToURL:URL options:0 error:outError];
+    BOOL result = [[self media] writeToURL:URL error:outError];
+    
     if (result)
     {
         if ([self fileAttributes])
@@ -392,13 +392,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
                                                       ofItemAtPath:[URL path]
                                                              error:outError];
         }
-    }
-    else
-    {
-        // Fallback to copying the file
-        result = [[NSFileManager defaultManager] copyItemAtPath:[[self fileURL] path]
-                                                         toPath:[URL path]
-                                                          error:outError];
     }
     
     
