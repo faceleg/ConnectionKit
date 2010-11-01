@@ -218,12 +218,6 @@
 	return result;
 }
 
-- (NSArray *)availableDotExtensions
-{
-	NSArray *result = [NSArray arrayWithObjects:@"/", [NSNull null], @".html", @".htm", @".php", @".shtml", @".asp", nil];
-	return result;
-}
-
 #pragma mark Filenames & Extensions
 
 /*	The correct filename for the index.html file, taking into account user defaults and any custom settings

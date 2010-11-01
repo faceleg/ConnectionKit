@@ -27,7 +27,10 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 	
 	IBOutlet NSTextField			*oBaseURLField;
 	IBOutlet NSTextField			*oFileNameField;
+	IBOutlet NSTextField			*oDotSeparator;
 
+	IBOutlet NSTextField			*oSlashSeparator;
+	IBOutlet NSTextField			*oIndexDotSeparator;
 	IBOutlet KSFancySchmancyBindingsPopUpButton			*oExtensionPopup;
 	IBOutlet NSTextField			*oMultiplePagesField;
 
