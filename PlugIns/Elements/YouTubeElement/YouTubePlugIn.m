@@ -118,6 +118,7 @@
 {
     [super writeHTML:context];
     [context addDependencyForKeyPath:@"widescreen" ofObject:self];
+    [context addDependencyForKeyPath:@"showBorder" ofObject:self];
 }
 
 - (void)startObjectElement;
@@ -161,6 +162,7 @@
     return result;
 }
 
+// this seems never to be called
 - (NSUInteger)widthForHeight:(NSUInteger)height
 {
     // subtract control bar
