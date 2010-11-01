@@ -20,7 +20,7 @@
 {
     [super loadView];
     
-    [oPosterImageView bind:IMBImageItemBinding toObject:self withKeyPath:@"inspectedObjectsController.selection.posterFrame" options:nil];
+    [oPosterImageView bind:IMBImageItemBinding toObject:self withKeyPath:@"inspectedObjectsController.selection.plugIn" options:nil];
 }
 
 - (IBAction)choosePosterFrame:(id)sender;
