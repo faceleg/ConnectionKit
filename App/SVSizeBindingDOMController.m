@@ -9,7 +9,7 @@
 #import "SVSizeBindingDOMController.h"
 
 #import "SVGraphicDOMController.h"
-#import "SVMediaGraphic.h"
+#import "SVPlugInGraphic.h"
 #import "SVPlugIn.h"
 #import "SVWebEditorHTMLContext.h"
 
@@ -129,21 +129,21 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Apply the change
-    SVPlugInGraphic *image = [self representedObject];
+    SVPlugInGraphic *graphic = [self representedObject];
 	if (resizingWidth)
     {
         if (resizingHeight)
         {
-            [image setSize:size];
+            [graphic setSize:size];
         }
         else
         {
-            [image setWidth:[NSNumber numberWithFloat:size.width]];
+            [graphic setWidth:[NSNumber numberWithFloat:size.width]];
         }
     }
     else if (resizingHeight)
     {
-        [image setHeight:[NSNumber numberWithFloat:size.height]];
+        [graphic setHeight:[NSNumber numberWithFloat:size.height]];
     }
 }
 
