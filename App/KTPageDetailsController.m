@@ -30,6 +30,7 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSWorkspace+Karelia.h"
+#import "NSDictionary+Karelia.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -812,10 +813,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	[oFileNameField setHidden:(!hasLocalPath
 							   || (kPageSiteItemType == self.whatKindOfItemsAreSelected && IS_ROOT_STATE == pageIsCollectionState))];
 
-	[oDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOffState != pageIsCollectionState)];
-	[oSlashSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOnState != pageIsCollectionState)];
-	[oIndexDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOffState == pageIsCollectionState)];
-
 	[oMultiplePagesField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSMixedState != pageIsCollectionState)];
 	
 	[oExtensionPopup setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
@@ -851,21 +848,21 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		int *theExtraX = nil;
 		int *theMarginsAfter = nil;
 		
-		NSArray *pageItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
-		int pageExtraX [] = {4,5,6,8,0};
-		int pageMarginsAfter[] = {0,-1,0,8,0};
+		NSArray *pageItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oExtensionPopup,oFollowButton,nil];
+		int pageExtraX [] = {4,5,8,0};
+		int pageMarginsAfter[] = {0,-1,8,0};
 		
-		NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oSlashSeparator, oIndexDotSeparator,oExtensionPopup,oFollowButton,nil];
-		int collectionExtraX [] = {4,5,1,6,8,0};
-		int collectionMarginsAfter[] = {0,-1,0,0,8,0};
+		NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oExtensionPopup,oFollowButton,nil];
+		int collectionExtraX [] = {4,5,8,0};
+		int collectionMarginsAfter[] = {0,-1,8,0};
 		
-		NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oMultiplePagesField,oDotSeparator,oExtensionPopup,nil];
-		int markerExtraX [] = {4,4,6,8};
-		int markerMarginsAfter[] = {0,0,0,8};
+		NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oMultiplePagesField,oExtensionPopup,nil];
+		int markerExtraX [] = {4,4,8};
+		int markerMarginsAfter[] = {0,0,8};
 			
-		NSArray *rootItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oIndexDotSeparator,oExtensionPopup,oFollowButton,nil];
-		int rootExtraX [] = {0,6,8,0};
-		int rootMarginsAfter[] = {0,0,8,0};
+		NSArray *rootItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oExtensionPopup,oFollowButton,nil];
+		int rootExtraX [] = {0,8,0};
+		int rootMarginsAfter[] = {0,8,0};
 		
 		NSArray *mediaItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oFollowButton,nil];
 		int mediaExtraX [] = {4,5,1};
@@ -1022,7 +1019,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
     // If user cancelled, repair binding value
     if (!success)
     {
-		BOOL isCollection = [oPagesController valueForKeyPath:@"selection.isCollection"];
+		BOOL isCollection = [[oPagesController valueForKeyPath:@"selection.isCollection"] intValue];
         [oPublishAsCollectionPopup selectItemWithTag:(isCollection?1:0)];
 	}
 }
