@@ -468,7 +468,7 @@
     
     if ([[self thumbnailType] integerValue] == SVThumbnailTypeCustom)
     {
-        result = [[self customThumbnail] imageRepresentation];
+        result = [[[self customThumbnail] media] imageRepresentation];
     }
     
     return result;
@@ -480,7 +480,7 @@
     
     if ([[self thumbnailType] integerValue] == SVThumbnailTypeCustom)
     {
-        result = [[self customThumbnail] imageRepresentationType];
+        result = [[[self customThumbnail] media] imageRepresentationType];
     }
     
     return result;
