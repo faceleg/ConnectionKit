@@ -524,11 +524,11 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     
     // Create graphics for the content
-    NSArray *locations = [pboard readWebLocations];
-    for (KSWebLocation *aLocation in locations)
+    NSArray *items = [pboard sv_pasteboardItems];
+    for (id <SVPasteboardItem> anItem in items)
     {
         SVGraphic *aGraphic = [SVGraphicFactory
-                               graphicFromWebLocation:aLocation
+                               graphicFromPasteboardItem:anItem
                                minPriority:KTSourcePriorityReasonable   // don't want stuff like list of links
                                insertIntoManagedObjectContext:[self managedObjectContext]];
     
@@ -566,7 +566,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         else
         {
             // Fallback to adding download or external URL with location
-            NSURL *URL = [aLocation URL];
+            NSURL *URL = [anItem URL];
             [self setObjectURL:URL];
             
             if ([URL isFileURL])
