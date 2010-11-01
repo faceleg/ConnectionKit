@@ -488,6 +488,26 @@
     [_dragTypes release]; _dragTypes = nil;
 }
 
+#pragma mark Drawing
+
+- (SVSelectionBorder *)newSelectionBorder;
+{
+    SVSelectionBorder *result = [super newSelectionBorder];
+    
+    // Hide border on <OBJECT> tags etc.
+    DOMElement *selectionElement = [self selectableDOMElement];
+    NSString *tagName = [selectionElement tagName];
+    
+    if ([tagName isEqualToString:@"AUDIO"] ||
+        [tagName isEqualToString:@"VIDEO"] ||
+        [tagName isEqualToString:@"OBJECT"] ||
+        [tagName isEqualToString:@"IFRAME"])
+    {
+        [result setBorderColor:nil];
+    }
+    return result;
+}
+
 #pragma mark KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
