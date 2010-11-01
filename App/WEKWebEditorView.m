@@ -1759,8 +1759,19 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 - (void)webView:(WebView *)sender didDrawRect:(NSRect)dirtyRect
 {
     NSView *drawingView = [NSView focusView];
-    NSRect dirtyDrawingRect = [drawingView convertRect:dirtyRect fromView:sender];
-    [self drawOverlayRect:dirtyDrawingRect inView:drawingView];
+    
+    // Only want to draw overlay in main frame
+    WebFrame *mainFrame = [sender mainFrame];
+    if ([drawingView isDescendantOf:[mainFrame frameView]])
+    {
+        for (WebFrame *aFrame in [mainFrame childFrames])
+        {
+            if ([drawingView isDescendantOf:[aFrame frameView]]) return; 
+        }
+        
+        NSRect dirtyDrawingRect = [drawingView convertRect:dirtyRect fromView:sender];
+        [self drawOverlayRect:dirtyDrawingRect inView:drawingView];
+    }
 }
 
 - (void)webView:(WebView *)sender dragImage:(NSImage *)anImage at:(NSPoint)viewLocation offset:(NSSize)initialOffset event:(NSEvent *)event pasteboard:(NSPasteboard *)pboard source:(id)sourceObj slideBack:(BOOL)slideFlag forView:(NSView *)view;
