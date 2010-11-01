@@ -1004,10 +1004,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)drawSelectionRect:(NSRect)dirtyRect inView:(NSView *)view;
 {
-    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
-    [border setMinSize:NSMakeSize(5.0f, 5.0f)];
-    
-    
     // Draw items
     for (WEKWebEditorItem *anItem in [self itemsToDisplay])
     {
@@ -1023,10 +1019,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
             if ([view needsToDrawRect:drawingRect]) [anItem drawRect:dirtyRect inView:view];
         }
     }
-    
-    
-    // Tidy up
-    [border release];
 }
 
 - (NSSet *)itemsToDisplay;
