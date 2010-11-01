@@ -188,11 +188,11 @@
 
 - (void)forgetDraggedItems; // call if you want to take over handling of drag source
 {
-    // Restore opacity
+    /*/ Restore opacity
     for (WEKWebEditorItem *anItem in [self draggedItems])
     {
         [[[anItem selectableDOMElement] style] removeProperty:@"opacity"];        
-    }
+    }*/
     
     // Ditch the items
     [_draggedItems release]; _draggedItems = nil;
