@@ -26,6 +26,7 @@
 - (void)loadPlaceholderDOMElementInDocument:(DOMDocument *)document;
 
 - (CGFloat)maxWidth;
+- (void)updateSize;
 
 
 @end

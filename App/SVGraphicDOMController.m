@@ -237,13 +237,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (void)updateSize;
 {
-    if ([self isSelectable])	// #93182
-    {
-        SVGraphic *graphic = [self representedObject];
-        DOMElement *element = [self graphicDOMElement];
-        
-        [[element style] setWidth:[NSString stringWithFormat:@"%@px", [graphic containerWidth]]];
-    }
+    SVGraphic *graphic = [self representedObject];
+    DOMElement *element = [self graphicDOMElement];
+    
+    [[element style] setWidth:[NSString stringWithFormat:@"%@px", [graphic containerWidth]]];
     
     [self didUpdate];
 }

@@ -194,6 +194,20 @@
     }
 }
 
+#pragma mark Update
+
+- (void)updateSize;
+{
+    if ([self isSelectable])	// #93182
+    {
+        [super updateSize];
+    }
+    else
+    {
+        [self didUpdate];   // fake it
+    }
+}
+
 #pragma mark Resizing
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle;
