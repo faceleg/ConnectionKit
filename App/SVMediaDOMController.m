@@ -206,17 +206,6 @@
 
 @synthesize imageDOMController = _imageDOMController;
 
-- (DOMElement *)selectableDOMElement;
-{
-    // Normally we are, but not for chrome-less media
-    // This can be identified by a descendant controller claiming the *same* DOM element as us
-    DOMElement *result = [super selectableDOMElement];
-    WEKWebEditorItem *controller = [self hitTestDOMNode:result];
-        
-    if (controller != self && [controller HTMLElement] == result) result = nil;
-    return result;
-}
-
 #pragma mark DOM
 
 - (void)setHTMLElement:(DOMHTMLElement *)element;
