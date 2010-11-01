@@ -564,9 +564,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 
 #pragma mark Media
 
-- (id <SVDocumentFileWrapper>)duplicateOfMediaRecord:(SVMediaRecord *)media;
+- (id <SVDocumentFileWrapper>)duplicateOfMediaRecord:(SVMediaRecord *)mediaRecord;
 {
-    OBPRECONDITION(media);
+    OBPRECONDITION(mediaRecord);
     
     //  Look through out existing media to see if there is one with the same data
     
@@ -577,7 +577,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     for (NSString *aKey in wrappers)
     {
         SVMediaRecord *aMediaRecord = [wrappers objectForKey:aKey];
-        if ([media fileContentsEqualMediaRecord:aMediaRecord])
+        if ([[mediaRecord media] fileContentsEqualMedia:[aMediaRecord media]])
         {
             result = aMediaRecord;
             break;

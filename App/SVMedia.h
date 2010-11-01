@@ -25,10 +25,19 @@
 - (id)initWithWebResource:(WebResource *)resource;
 - (id)initWithData:(NSData *)data URL:(NSURL *)URL;
 
-@property(nonatomic, copy, readonly) NSURL *mediaURL;
+@property(nonatomic, copy, readonly) NSURL *fileURL;
 @property(nonatomic, copy, readonly) NSData *mediaData;
 @property(nonatomic, copy, readonly) WebResource *webResource;
 
 @property(nonatomic, copy) NSString *preferredFilename;
+
+
+#pragma mark Comparing Media
+- (BOOL)fileContentsEqualMedia:(SVMedia *)otherMedia;
+// Used to be -matchesContentsOfURL: but actually behaves rather differently to NSFileWrapper method of same name
+- (BOOL)fileContentsEqualContentsOfURL:(NSURL *)url;
+- (BOOL)fileContentsEqualData:(NSData *)data;
+
+
 
 @end

@@ -11,7 +11,6 @@
 #import "NSManagedObject+KTExtensions.h"
 
 #import "NSError+Karelia.h"
-#import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSString+Karelia.h"
 #import "KSURLUtilities.h"
@@ -333,59 +332,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     {
         //[_webResource release]; _webResource = nil;
     }
-}
-
-#pragma mark Comparing Files
-
-- (BOOL)fileContentsEqualMediaRecord:(SVMediaRecord *)otherRecord;
-{
-    NSURL *otherURL = [otherRecord fileURL];
-    
-    // If already in-memory might as well use it. If without a file URL, have no choice!
-    if (!otherURL || [otherRecord areContentsCached])
-    {
-        NSData *data = [NSData newDataWithContentsOfMedia:[otherRecord media]];
-        
-        BOOL result = [self fileContentsEqualData:data];
-        [data release];
-        return result;
-    }
-    else
-    {
-        return [self fileContentsEqualContentsOfURL:otherURL];
-    }
-}
-
-- (BOOL)fileContentsEqualContentsOfURL:(NSURL *)otherURL;
-{
-    BOOL result = NO;
-    
-    NSURL *URL = [self fileURL];
-    if (URL)
-    {
-        result = [[NSFileManager defaultManager] contentsEqualAtPath:[otherURL path]
-                                                             andPath:[URL path]];
-    }
-    else
-    {
-        // Fallback to comparing data. This could be made more efficient by looking at the file size before reading in from disk
-        NSData *data = [[self media] mediaData];
-        result = [[NSFileManager defaultManager] ks_contents:data equalContentsAtURL:otherURL];
-    }
-    
-    return result;
-}
-
-- (BOOL)fileContentsEqualData:(NSData *)otherData;
-{
-    BOOL result = NO;
-    
-    NSData *data = [NSData newDataWithContentsOfMedia:[self media]];
-    
-    result = [data isEqualToData:otherData];
-    
-    [data release];
-    return result;
 }
 
 #pragma mark Thumbnail

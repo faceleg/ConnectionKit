@@ -9,6 +9,7 @@
 #import "SVMedia.h"
 #import "SVMediaProtocol.h"
 
+#import "NSFileManager+Karelia.h"
 #import "NSString+Karelia.h"
 #import "KSURLUtilities.h"
 
@@ -36,6 +37,7 @@
     if (data)
     {
         self = [self initWithData:data URL:URL];
+        _fileURL = [URL copy];
         [data release];
     }
     else
@@ -84,9 +86,15 @@
 
 #pragma mark Properties
 
-@synthesize mediaURL = _fileURL;
+@synthesize fileURL = _fileURL;
 @synthesize webResource = _webResource;
 
+- (NSURL *)mediaURL;
+{
+    NSURL *result = [[self webResource] URL];
+    if (!result) result = [self fileURL];
+    return result;
+}
 - (NSData *)mediaData;
 {
     return [_webResource data];
@@ -138,6 +146,59 @@
 }
 
 - (NSUInteger)hash; { return 0; }
+
+#pragma mark Comparing Media
+
+- (BOOL)fileContentsEqualMedia:(SVMedia *)otherMedia;
+{
+    NSURL *otherURL = [otherMedia fileURL];
+    
+    // If already in-memory might as well use it. If without a file URL, have no choice!
+    if (!otherURL || [otherMedia mediaData])
+    {
+        NSData *data = [NSData newDataWithContentsOfMedia:otherMedia];
+        
+        BOOL result = [self fileContentsEqualData:data];
+        [data release];
+        return result;
+    }
+    else
+    {
+        return [self fileContentsEqualContentsOfURL:otherURL];
+    }
+}
+
+- (BOOL)fileContentsEqualContentsOfURL:(NSURL *)otherURL;
+{
+    BOOL result = NO;
+    
+    NSURL *URL = [self fileURL];
+    if (URL)
+    {
+        result = [[NSFileManager defaultManager] contentsEqualAtPath:[otherURL path]
+                                                             andPath:[URL path]];
+    }
+    else
+    {
+        // Fallback to comparing data. This could be made more efficient by looking at the file size before reading in from disk
+        NSData *data = [self mediaData];
+        result = [[NSFileManager defaultManager] ks_contents:data equalContentsAtURL:otherURL];
+    }
+    
+    return result;
+}
+
+- (BOOL)fileContentsEqualData:(NSData *)otherData;
+{
+    BOOL result = NO;
+    
+    NSData *data = [NSData newDataWithContentsOfMedia:self];
+    
+    result = [data isEqualToData:otherData];
+    
+    [data release];
+    return result;
+}
 
 @end
 
