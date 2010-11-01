@@ -406,6 +406,14 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return YES;
 }
 
+#pragma mark Resize
+
+- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle;
+{
+    // Body lives inside a graphic DOM controller, so use the size limit from that instead
+    return [(SVDOMController *)[self parentWebEditorItem] constrainSize:size handle:handle];
+}
+
 #pragma mark Drawing
 
 - (NSRect)dropTargetRect;
