@@ -33,10 +33,7 @@
 	<key>KTPluginIconName</key>
 	<string>/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericURLIcon.icns</string>
 	<key>KTPluginInitialProperties</key>
-	<dict>
-		<key>linkURL</key>
-		<string></string>
-	</dict>
+	<dict/>
 	<key>KTPluginName</key>
 	<string>External Page</string>
 	<key>KTPluginUntitledName</key>
