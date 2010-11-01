@@ -996,13 +996,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     // Draw selection
-    [self drawSelectionRect:dirtyRect inView:view];
+    [self drawItemsRect:dirtyRect inView:view];
     
     // Draw drag caret
     [self drawDragCaretInView:view];
 }
 
-- (void)drawSelectionRect:(NSRect)dirtyRect inView:(NSView *)view;
+- (void)drawItemsRect:(NSRect)dirtyRect inView:(NSView *)view;
 {
     // Draw items
     for (WEKWebEditorItem *anItem in [self itemsToDisplay])
@@ -1015,8 +1015,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
         }
         else
         {
-            // Only draw if the item is in the dirty rect (otherwise can get pretty pricey)
-            if ([view needsToDrawRect:drawingRect]) [anItem drawRect:dirtyRect inView:view];
+            // Only draw if the item is in the dirty rect (otherwise can get pretty pricey). Use -displayRect: to target descendants as well
+            if ([view needsToDrawRect:drawingRect]) [anItem displayRect:dirtyRect inView:view];
         }
     }
 }

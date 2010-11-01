@@ -121,7 +121,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 #pragma mark Drawing
 // The editor contains a variety of subviews. When it needs the effect of drawing an overlay above them this method is called, telling you the view that is being drawn into, and where.
 - (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view;
-- (void)drawSelectionRect:(NSRect)dirtyRect inView:(NSView *)view;
+- (void)drawItemsRect:(NSRect)dirtyRect inView:(NSView *)view;
 
 @property(nonatomic, copy, readonly) NSSet *itemsToDisplay;
 - (void)setNeedsDisplayForItem:(WEKWebEditorItem *)item;

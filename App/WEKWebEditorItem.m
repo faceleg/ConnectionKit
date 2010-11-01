@@ -483,6 +483,16 @@
     }
 }
 
+- (void)displayRect:(NSRect)aRect inView:(NSView *)view;
+{
+    [self drawRect:aRect inView:view];
+    
+    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+    {
+        [anItem displayRect:aRect inView:view];
+    }
+}
+
 - (SVSelectionBorder *)newSelectionBorder;
 {
     SVSelectionBorder *border = [[SVSelectionBorder alloc] init];

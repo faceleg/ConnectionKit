@@ -103,6 +103,7 @@
 #pragma mark Drawing
 // dirtyRect is expressed in the view's co-ordinate system. view is not necessarily the context being drawn into (but generally is)
 - (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;
+- (void)displayRect:(NSRect)aRect inView:(NSView *)view;    // Calls -drawRect:… down the tree
 
 
 #pragma mark Debugging
