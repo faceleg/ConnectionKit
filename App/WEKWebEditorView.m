@@ -575,7 +575,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     DOMCSSStyleDeclaration *style = [[self webView] computedStyleForElement:element
                                                               pseudoElement:nil];
     
-    BOOL result = ([[style display] isEqualToString:@"inline"] &&
+    BOOL result = ([[element tagName] isEqualToString:@"IMG"] &&
+                   [[style display] isEqualToString:@"inline"] &&
                    [element isKindOfClass:[DOMHTMLElement class]] &&
                    [(DOMHTMLElement *)element isContentEditable]);
     
