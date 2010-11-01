@@ -129,7 +129,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Apply the change
-    SVMediaGraphic *image = [self representedObject];
+    SVPlugInGraphic *image = [self representedObject];
 	if (resizingWidth)
     {
         if (resizingHeight)

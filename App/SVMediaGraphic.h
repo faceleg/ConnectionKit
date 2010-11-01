@@ -50,8 +50,8 @@
 #pragma mark Metrics
 
 
-// If -constrainProportions returns YES, sizing methods will adjust to maintain proportions
-- (void)setSize:(NSSize)size;   // convenience
+/* If -constrainProportions returns YES, sizing methods will adjust to maintain proportions
+ */
 
 @property(nonatomic) BOOL constrainProportions;
 @property(nonatomic, copy, readonly) NSNumber *constrainedAspectRatio;

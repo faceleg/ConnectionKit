@@ -39,6 +39,7 @@
 
 
 #pragma mark Metrics
+- (void)setSize:(NSSize)size;   // convenience
 - (NSUInteger)minWidth;
 - (NSUInteger)minHeight;
 @property(nonatomic, readonly) BOOL constrainProportions;
