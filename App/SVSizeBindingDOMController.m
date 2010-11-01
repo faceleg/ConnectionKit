@@ -118,8 +118,6 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 @implementation SVPlugIn (SVSizeBindingDOMController)
 
-- (NSString *)elementIdName; { return nil; }
-
 - (BOOL)shouldPublishEditingElementID; { return NO; }
 
 @end
