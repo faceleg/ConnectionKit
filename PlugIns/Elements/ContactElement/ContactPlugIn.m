@@ -376,8 +376,7 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
 - (void)makeOriginalSize;
 {
     // Contact forms generally want to be full-width
-    [self setWidth:0];
-    [self setHeight:0];
+    [self setWidth:nil height:nil];
 }
 
 @end

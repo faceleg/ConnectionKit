@@ -73,8 +73,7 @@
 - (void)makeOriginalSize;
 {
     // Go to auto-sized all round
-    [self setWidth:0];
-    [self setHeight:0];
+    [self setWidth:nil height:nil];
 }
 
 #pragma mark -

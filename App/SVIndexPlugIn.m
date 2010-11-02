@@ -35,8 +35,7 @@
 
 - (void)makeOriginalSize;
 {
-    [self setWidth:0];
-    [self setHeight:0];
+    [self setWidth:nil height:nil];
 }
 
 

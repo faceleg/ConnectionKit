@@ -75,6 +75,7 @@
 #pragma mark Metrics
 
 - (NSNumber *) width; { return [[self container] width]; }
+- (NSNumber *)height; { return [[self container] height]; }
 
 - (void)setSizeWithWidth:(NSNumber *)width height:(NSNumber *)height;
 {

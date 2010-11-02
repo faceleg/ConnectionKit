@@ -53,19 +53,6 @@
 
 #pragma mark Metrics
 
-- (void)XmakeOriginalSize;
-{
-    if ([self media] || ![self externalSourceURL])
-    {
-        [super makeOriginalSize];
-    }
-    else    // external images should go back to auto. #92571
-    {
-        [self setWidth:0];
-        [self setHeight:0];
-    }
-}
-
 + (NSOperationQueue*) sharedDimensionCheckQueue;
 {
 	static NSOperationQueue *sSharedDimensionCheckQueue = nil;
@@ -151,8 +138,7 @@
     if (![self media] && [self externalSourceURL])
     {
         [[self container] setConstrainProportions:NO];
-        [self setWidth:0];
-        [self setHeight:0];
+        [self setWidth:nil height:nil];
 		
 		[self getDimensionsFromRemoteImage];
     }
