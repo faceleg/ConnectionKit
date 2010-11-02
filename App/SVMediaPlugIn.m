@@ -77,46 +77,6 @@
 - (NSNumber *) width; { return [[self container] width]; }
 - (NSNumber *)height; { return [[self container] height]; }
 
-- (void)setSizeWithWidth:(NSNumber *)width height:(NSNumber *)height;
-{
-    if ([self constrainedAspectRatio])
-    {
-        CGFloat constraintRatio = [[[self container] constrainedAspectRatio] floatValue];
-        
-        
-        if (width && height)
-        {
-            CGFloat aspectRatio = [width floatValue] / [height floatValue];
-            
-            if (aspectRatio < constraintRatio)
-            {
-                width = nil;
-            }
-            else
-            {
-                height = nil;
-            }
-        }
-        
-        
-        // Apply the constraint
-        OBASSERT(!(width && height));
-        
-        if (width)
-        {
-            height = [NSNumber numberWithUnsignedInteger:([width floatValue] / constraintRatio)];
-        }
-        else if (height)
-        {
-            width = [NSNumber numberWithUnsignedInteger:([height floatValue] * constraintRatio)];
-        }
-    }
-    
-    
-    // Store
-    [super setSizeWithWidth:width height:height];
-}
-
 + (BOOL)isExplicitlySized; { return YES; }
 
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
@@ -140,7 +100,7 @@
 }
 - (void)setConstrainedAspectRatio:(NSNumber *)ratio;
 {
-    [[self container] setConstrainedAspectRatio:ratio];
+    [[self container] performSelector:_cmd withObject:ratio];
 }
 
 - (NSNumber *)naturalWidth; { return [[self container] naturalWidth]; }

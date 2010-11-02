@@ -239,12 +239,6 @@ static id <SVPlugInContext> sCurrentContext;
     [[self container] setHeight:height];
 }
 
-- (void)setSizeWithWidth:(NSNumber *)width height:(NSNumber *)height;
-{
-    if (width) [[self container] setWidth:width];
-    if (height) [[self container] setHeight:height];
-}
-
 - (NSNumber *)elementWidth; { return [[self container] width]; }
 - (NSNumber *)elementHeight; { return [[self container] height]; }
 
