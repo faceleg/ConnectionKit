@@ -133,8 +133,14 @@
     return result;
 }
 
-- (BOOL)constrainProportions; { return [[self container] constrainProportions]; }
-- (BOOL)isConstrainProportionsEditable; { return YES; }
+- (NSNumber *)constrainedAspectRatio;
+{
+    return [[self container] constrainedAspectRatio];
+}
+- (void)setConstrainedAspectRatio:(NSNumber *)ratio;
+{
+    [[self container] setConstrainedAspectRatio:ratio];
+}
 
 - (NSNumber *)naturalWidth; { return [[self container] naturalWidth]; }
 

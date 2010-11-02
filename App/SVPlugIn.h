@@ -102,7 +102,8 @@
 - (NSUInteger)minWidth;    // default is 200
 - (NSUInteger)minHeight;    // default is 1
 
-- (BOOL)constrainProportions;   // default is NO
+// Default is nil (unconstrained). You can override to get resizing behaviour that constrains proportions
+- (NSNumber *)constrainedAspectRatio;
 
 // Called when plug-in is first inserted, and whenever 'Original Size' button in the Inspector is clicked. Override if you're not happy with the default size used (200 x 0 for now).
 - (void)makeOriginalSize;

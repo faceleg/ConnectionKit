@@ -251,7 +251,7 @@ static id <SVPlugInContext> sCurrentContext;
 - (NSUInteger)minWidth; { return 200; }
 - (NSUInteger)minHeight; { return 1; }
 
-- (BOOL)constrainProportions; { return NO; }
+- (NSNumber *)constrainedAspectRatio; { return nil; }
 
 - (void)makeOriginalSize;
 {

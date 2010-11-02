@@ -323,7 +323,6 @@
 
 #pragma mark Size
 
-- (BOOL)constrainProportions { return [self constrainedAspectRatio] != nil; }
 - (void)setConstrainProportions:(BOOL)constrainProportions;
 {
     if (constrainProportions)
@@ -352,8 +351,7 @@
 {
     // Should only be possible to turn it on once size is known
     BOOL result = ([[self width] integerValue] > 0 &&
-                   [[self height] integerValue] > 0 &&
-                   [[self plugIn] isConstrainProportionsEditable]);
+                   [[self height] integerValue] > 0);
     
     return result;
 }
