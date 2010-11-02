@@ -106,7 +106,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         
         if ([[self plugIn] width] > maxWidth)
         {
-            [[self plugIn] setWidth:maxWidth];
+            [[self plugIn] setSizeWithWidth:[NSNumber numberWithUnsignedInteger:maxWidth] height:nil];
         }
     }
     

@@ -72,7 +72,7 @@
     }
     
     // Make sure we don't have auto width. Super will then pull down to a good value
-    [self setSizeWithWidth:[NSNumber numberWithUnsignedInteger:NSUIntegerMax] height:nil];
+    [self setSizeWithWidth:[NSNumber numberWithUnsignedInteger:4096] height:nil];
     [super didAddToPage:page];
     
     
