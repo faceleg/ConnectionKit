@@ -349,7 +349,9 @@
 	
 	if (!result)
 	{
-		result = [self URLAsCollection:[self isCollection]];
+		result = [[self URLAsCollection:[self isCollection]]
+                  URLWithWebEditorPreviewPath:[self previewPath]];
+        
 		[self setPrimitiveValue:result forKey:@"URL"];
 	}
 	
