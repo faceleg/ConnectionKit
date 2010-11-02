@@ -518,7 +518,7 @@
     DOMNode *previousElement = (result ? [treeWalker previousSibling] : [treeWalker currentNode]);
     while (previousElement)
     {
-        WEKWebEditorItem *controller = [self hitTestDOMNode:previousElement];
+        WEKWebEditorItem *controller = [self itemForDOMNode:previousElement];
         if (controller == self) // check the element's not a graphic/callout-container
         {
             NSString *text = [(DOMHTMLElement *)previousElement innerText];

@@ -305,7 +305,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     DOMNode *parentNode = [element parentNode];
     
     if ([writer openElementsCount] &&
-        ![graphic canWriteHTMLInline])
+        ![graphic shouldWriteHTMLInline])
     {
         // Push the element off up the tree; it will be written next time round
         [[parentNode parentNode] insertBefore:element refChild:[parentNode nextSibling]];
@@ -466,10 +466,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     if (item)
     {
         // …If there are 2 controllers with the same node (e.g. plain image), hit-testing favours the inner one. We actually want to write the outer.
-        while ([item HTMLElement] == [[item parentWebEditorItem] HTMLElement])
-        {
-            item = [item parentWebEditorItem];
-        }
         return [self write:writer DOMElement:element item:item];
     }
     
@@ -600,7 +596,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         [controller setNeedsUpdate];
         [controller updateIfNeeded];    // push it through quickly
         
-        // Finish the edit – had to wait until both node and controller were present
+        // Finish the edit – had to wait until both node and controller were present
         [webEditor didChangeText];
     }
     
