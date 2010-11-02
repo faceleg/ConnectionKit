@@ -275,21 +275,24 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     WEKWebEditorItem *result = nil;
     
-    // Standard logic mostly works, but we want to ignore anything outside the graphic
+    
+    // Standard logic mostly works, but we want to ignore anything outside the graphic, instead of the HTML element
     DOMElement *testElement = [self graphicDOMElement];
     if (!testElement) testElement = [self HTMLElement];
     
     if ([node ks_isDescendantOfElement:testElement])
     {
+        NSArray *children = [self childWebEditorItems];
+        
         // Search for a descendant
-        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+        for (WEKWebEditorItem *anItem in children)
         {
             result = [anItem hitTestDOMNode:node];
             if (result) break;
         }
-        
+            
         // If no descendants claim it, node is ours
-        if (!result && testElement) result = self;
+        if (!result) result = self;
     }
     
     return result;
