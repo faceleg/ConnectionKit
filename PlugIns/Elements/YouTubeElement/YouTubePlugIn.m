@@ -151,32 +151,15 @@
     return result;
 }
 
-// this seems never to be called
-- (NSUInteger)widthForHeight:(NSUInteger)height
-{
-    // subtract control bar
-    NSUInteger videoHeight = height - YOUTUBE_CONTROLBAR_HEIGHT;
-    
-    // account for YouTube's (colored) border, if showing
-    if ( self.showBorder ) videoHeight -= YOUTUBE_BORDER_HEIGHT;
-        
-    NSUInteger result = (self.widescreen) ? (videoHeight * 16)/9 : (videoHeight * 4)/3;
-    return result;
-}
-
 - (NSNumber *)elementHeight
 {
-    return [NSNumber numberWithUnsignedInteger:[self heightForWidth:[[self width] unsignedIntegerValue]]];
-}
-
-- (void)setHeight:(NSUInteger)height;
-{
-    [self setWidth:[self widthForHeight:height]];
-}
-
-+ (NSSet *)keyPathsForValuesAffectingHeight;
-{
-    return [NSSet setWithObject:@"width"];
+    // always leave room for control bar
+    NSUInteger result = [[super elementHeight] unsignedIntegerValue] + YOUTUBE_CONTROLBAR_HEIGHT;
+    
+    // leave room for colored border, if applicable
+    if ( self.showBorder ) { result += YOUTUBE_BORDER_HEIGHT; }
+    
+    return [NSNumber numberWithUnsignedInteger:result];
 }
 
 - (NSUInteger)minWidth
@@ -189,12 +172,18 @@
     return [self heightForWidth:[self minWidth]];
 }
 
-- (BOOL)constrainProportions; { return YES; }
+- (NSNumber *)constrainedAspectRatio;
+{
+    float result = (self.widescreen ? 9.0f/16.0f : 3.0f/4.0f);
+    return [NSNumber numberWithFloat:result];
+}
+
 + (BOOL)isExplicitlySized; { return YES; }
 
 - (void)makeOriginalSize;
 {
-    [self setWidth:490]; // height is auto-computed
+    float height = 490 * [[self constrainedAspectRatio] floatValue];
+    [self setWidth:[NSNumber numberWithInt:490] height:[NSNumber numberWithUnsignedInteger:height]];
 }
 
 #pragma mark Colors
