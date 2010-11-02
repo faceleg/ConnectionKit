@@ -1010,7 +1010,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 #pragma mark Publish as Collection
 
-- (IBAction)toggleIsCollection:(NSButton *)sender;
+- (IBAction)toggleIsCollection:(NSPopUpButton *)sender;
 {
     [oSiteOutlineController
      toggleIsCollectionWithDelegate:self
