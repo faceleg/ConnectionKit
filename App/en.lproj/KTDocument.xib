@@ -2,12 +2,12 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10F2521</string>
-		<string key="IBDocument.InterfaceBuilderVersion">823</string>
+		<string key="IBDocument.SystemVersion">10F569</string>
+		<string key="IBDocument.InterfaceBuilderVersion">804</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<dictionary class="NSMutableDictionary" key="IBDocument.PluginVersions">
-			<string key="com.apple.InterfaceBuilder.CocoaPlugin">823</string>
+			<string key="com.apple.InterfaceBuilder.CocoaPlugin">804</string>
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
@@ -481,7 +481,7 @@
 														<object class="NSTextField" id="899980468">
 															<reference key="NSNextResponder" ref="327729126"/>
 															<int key="NSvFlags">266</int>
-															<string key="NSFrame">{{423, 40}, {64, 14}}</string>
+															<string key="NSFrame">{{440, 40}, {47, 14}}</string>
 															<reference key="NSSuperview" ref="327729126"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTextFieldCell" key="NSCell" id="737292473">
@@ -502,7 +502,7 @@
 														<object class="NSTextField" id="452661693">
 															<reference key="NSNextResponder" ref="327729126"/>
 															<int key="NSvFlags">266</int>
-															<string key="NSFrame">{{17, 20}, {695, 14}}</string>
+															<string key="NSFrame">{{1, 20}, {695, 14}}</string>
 															<reference key="NSSuperview" ref="327729126"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTextFieldCell" key="NSCell" id="25421999">
@@ -580,13 +580,13 @@
 														<object class="NSTextField" id="204785403">
 															<reference key="NSNextResponder" ref="327729126"/>
 															<int key="NSvFlags">265</int>
-															<string key="NSFrame">{{380, 39}, {41, 14}}</string>
+															<string key="NSFrame">{{380, 39}, {58, 14}}</string>
 															<reference key="NSSuperview" ref="327729126"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTextFieldCell" key="NSCell" id="319158873">
 																<int key="NSCellFlags">68288064</int>
 																<int key="NSCellFlags2">272761856</int>
-																<string key="NSContents">index .</string>
+																<string key="NSContents">→ index .</string>
 																<reference key="NSSupport" ref="26"/>
 																<reference key="NSControlView" ref="204785403"/>
 																<reference key="NSBackgroundColor" ref="97692237"/>
