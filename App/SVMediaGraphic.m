@@ -60,7 +60,7 @@
 - (void)didAddToPage:(KTPage *)page;
 {
     // Placeholder image
-    if (![self media])
+    if (![self media] && ![self externalSourceURL])
     {
         SVMediaRecord *media = [[page master] makePlaceholdImageMediaWithEntityName:
                                 [[self class] mediaEntityName]];
