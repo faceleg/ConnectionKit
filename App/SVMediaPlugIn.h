@@ -16,9 +16,13 @@
 
 
 @interface SVMediaPlugIn : SVPlugIn <SVEnclosure>
+{
+  @private
+    SVMedia *_media;
+}
 
 #pragma mark Source
-- (SVMediaRecord *)mediaRecord;
+@property(nonatomic, readonly) SVMedia *media;  // KVO-compliant and everything!
 - (NSURL *)externalSourceURL;
 - (void)didSetSource;
 + (NSArray *)allowedFileTypes;

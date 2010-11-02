@@ -365,7 +365,7 @@
     
     if ([[self thumbnailType] integerValue] == SVThumbnailTypeCustom)
     {
-        CGSize size = IMBImageItemGetSize([self customThumbnail]);
+        CGSize size = IMBImageItemGetSize([[self customThumbnail] media]);
         result = size.width / size.height;
     }
     

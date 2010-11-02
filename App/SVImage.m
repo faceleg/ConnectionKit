@@ -55,7 +55,7 @@
 
 - (void)XmakeOriginalSize;
 {
-    if ([self mediaRecord] || ![self externalSourceURL])
+    if ([self media] || ![self externalSourceURL])
     {
         [super makeOriginalSize];
     }
@@ -148,7 +148,7 @@
     }
     
     // External images become auto sized
-    if (![self mediaRecord] && [self externalSourceURL])
+    if (![self media] && [self externalSourceURL])
     {
         [[self container] setConstrainProportions:NO];
         [self setWidth:0];
@@ -298,10 +298,10 @@
     
     [context buildAttributesForElement:@"img" bindSizeToObject:self DOMControllerClass:[SVImageDOMController class]  sizeDelta:NSZeroSize];
     
-    SVMediaRecord *record = [self mediaRecord];
-    if (record)
+    SVMedia *media = [self media];
+    if (media)
     {
-        [context writeImageWithSourceMedia:[record media]
+        [context writeImageWithSourceMedia:media
                                        alt:alt
                                      width:self.container.width
                                     height:self.container.height

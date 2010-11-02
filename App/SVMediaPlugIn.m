@@ -21,14 +21,23 @@
 
 #pragma mark Properties
 
-- (SVMediaRecord *)mediaRecord; { return [[self container] media]; }
+- (SVMedia *)media;
+{
+    if (!_media)
+    {
+        _media = [[[self container] media] media];
+    }
+    
+    return _media;
+}
+/*+ (NSSet *)keyPathsForValuesAffectingMedia;
+{
+    return [NSSet setWithObject:@"container.mediaRecord"];
+}*/
 
 - (NSURL *)externalSourceURL; { return [[self container] externalSourceURL]; }
 
-- (void)didSetSource;
-{
-    [[self container] setTypeToPublish:[[self mediaRecord] typeOfFile]];
-}
+- (void)didSetSource; { }
 
 + (NSArray *)allowedFileTypes; { return nil; }
 
@@ -69,7 +78,7 @@
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 {
     // SVGraphic.width is optional. For media graphics it becomes compulsary unless using external URL
-    BOOL result = (*height != nil || (![self mediaRecord] && [self externalSourceURL]));
+    BOOL result = (*height != nil || (![self media] && [self externalSourceURL]));
     
     if (!result && error)
     {
@@ -118,10 +127,10 @@
     }
     else	// ask the media for it, and cache it.
     {
-        SVMediaRecord *record = [self mediaRecord];
-        if (record)
+        SVMedia *media = [self media];
+        if (media)
         {
-            result = [[record media] originalSize];
+            result = [media originalSize];
             [self setNaturalWidth:[NSNumber numberWithFloat:result.width]
                            height:[NSNumber numberWithFloat:result.height]];
         }
@@ -148,11 +157,11 @@
 - (NSURL *)downloadedURL;   // where it currently resides on disk
 {
 	NSURL *mediaURL = nil;
-	SVMediaRecord *record = [self mediaRecord];
+	SVMedia *media = [self media];
 	
-    if (record)
+    if (media)
     {
-		mediaURL = [record fileURL];
+		mediaURL = [media fileURL];
 	}
 	else
 	{
@@ -164,21 +173,19 @@
 - (long long)length;
 {
 	long long result = 0;
-	SVMediaRecord *record = [self mediaRecord];
+	SVMedia *media = [self media];
 	
-    if (record)
+    if (media)
     {
-		NSData *mediaData = [[record media] mediaData];
+		NSData *mediaData = [media mediaData];
 		result = [mediaData length];
 	}
 	return result;
 }
 
-- (SVMedia *)media; { return [[self mediaRecord] media]; }
-
 - (NSString *)MIMEType;
 {
-	NSString *type = [[self mediaRecord] typeOfFile];
+	NSString *type = [(id)[self media] typeOfFile];
     if (!type)
     {
         type = [NSString UTIForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
@@ -194,7 +201,7 @@
 
 - (BOOL)shouldWriteHTMLInline; { return NO; }
 - (BOOL)canWriteHTMLInline; { return NO; }
-- (id <SVMedia>)thumbnailMedia; { return [[self mediaRecord] media]; }
+- (id <SVMedia>)thumbnailMedia; { return [self media]; }
 
 - (id)imageRepresentation;
 {

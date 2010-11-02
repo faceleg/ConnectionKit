@@ -189,6 +189,12 @@
 
 - (void)didSetSource;
 {
+    // Reset type
+    NSString *type = [[self media] typeOfFile];
+    if (!type) type = [NSString UTIForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
+    [self setTypeToPublish:type];
+    
+    
     // Reset poster frame
     [[[self posterFrame] managedObjectContext] deleteObject:[self posterFrame]];
     [self replaceMedia:nil forKeyPath:@"posterFrame"];

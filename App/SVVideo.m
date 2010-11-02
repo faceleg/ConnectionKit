@@ -167,7 +167,7 @@
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 {
     BOOL result = (*height != nil	// height is non-nil is one way for it to be OK
-				   || (![self mediaRecord] && [self externalSourceURL])	// or, if height was nil, then if media is external
+				   || (![self media] && [self externalSourceURL])	// or, if height was nil, then if media is external
 				   || (0 == [self.naturalHeight intValue])			// or, if neither of those, it's *natural* height is zero (no video track)
 				   );
     
@@ -214,7 +214,7 @@
 	OBASSERT([NSThread isMainThread]);
 	
 	// Get the media or URL, so we have a good file name for the poster
-	SVMediaRecord *media = self.mediaRecord;
+	SVMedia *media = self.media;
 	NSURL *videoURL = nil;
     if (media)
     {
@@ -763,16 +763,16 @@
 {
 	// Prepare Media
 	
-	SVMediaRecord *record = self.mediaRecord;
+	SVMedia *media = self.media;
 	//[context addDependencyForKeyPath:@"media"			ofObject:self]; // don't need, graphic does for us
 	[context addDependencyForKeyPath:@"posterFrameType"	ofObject:self];
 	[context addDependencyForKeyPath:@"posterFrame"		ofObject:self];	// force rebuild if poster frame got changed
 	[context addDependencyForKeyPath:@"controller"		ofObject:self];	// Note: other boolean properties don't affect display of page
 
 	NSURL *movieSourceURL = self.externalSourceURL;
-    if (record)
+    if (media)
     {
-	    movieSourceURL = [context addMedia:[record media]];
+	    movieSourceURL = [context addMedia:media];
 	}
 
 	// POSSIBLE OTHER TAGS TO CONSIDER:  public.3gpp2 public.mpeg com.microsoft.windows-media-wm
