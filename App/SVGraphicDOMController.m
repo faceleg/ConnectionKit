@@ -403,14 +403,27 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
+    CGFloat maxWidth = [self maxWidth];
+    SVGraphic *graphic = [self representedObject];
+    
     if (snapToFit)
     {
-        CGFloat maxWidth = [self maxWidth];
-        
         if (size.width > maxWidth)
         {
-            SVGraphic *graphic = [self representedObject];
             size.width = ([graphic isExplicitlySized] ? maxWidth : 0.0f);
+        }
+    }
+    
+    
+    // Keep within max width
+    NSNumber *aspectRatio = [graphic constrainedProportionsRatio];
+    if (aspectRatio)
+    {
+        CGFloat width = size.height * [aspectRatio floatValue];
+        
+        if (width > maxWidth)
+        {
+            
         }
     }
     

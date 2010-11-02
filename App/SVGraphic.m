@@ -183,6 +183,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 @dynamic height;
 
+- (NSNumber *)constrainedProportionsRatio; { return nil; }
+
 - (void)makeOriginalSize;
 {
     [self setWidth:[NSNumber numberWithInt:200]];
