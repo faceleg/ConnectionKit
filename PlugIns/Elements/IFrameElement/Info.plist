@@ -31,7 +31,7 @@
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
 	<key>KTPluginIconName</key>
-	<string>/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericURLIcon.icns</string>
+	<string>toolbar_iframe.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict/>
 	<key>KTPluginName</key>

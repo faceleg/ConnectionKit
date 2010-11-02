@@ -14,6 +14,7 @@
 		3CA9005F0D63C69200815310 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9005E0D63C69200815310 /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CE8EDFC71280828E00974D56 /* toolbar_iframe.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE8EDFC61280828E00974D56 /* toolbar_iframe.tiff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		3CA900610D63C69F00815310 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* IFrame.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IFrame.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE8EDFC61280828E00974D56 /* toolbar_iframe.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_iframe.tiff; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -86,6 +88,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE8EDFC61280828E00974D56 /* toolbar_iframe.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C00496F1210CDC1006BAD9C /* IFrameInspector.xib */,
 				3CA900400D63C62400815310 /* IFrameTemplate.html */,
@@ -208,6 +211,7 @@
 				3CA900480D63C63600815310 /* Localizable.strings in Resources */,
 				3CA9005F0D63C69200815310 /* License.rtf in Resources */,
 				3C0049711210CDC1006BAD9C /* IFrameInspector.xib in Resources */,
+				CE8EDFC71280828E00974D56 /* toolbar_iframe.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
