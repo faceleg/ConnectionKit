@@ -31,6 +31,8 @@
 #import "KSNetworkNotifier.h"
 #import "SVRawHTMLGraphic.h"
 #import "NSMenuItem+Karelia.h"
+#import "SVCommentsWindowController.h"
+#import "SVGoogleWindowController.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
@@ -827,14 +829,20 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)configureGoogle:(id)sender;
 {
-	NSLog(@"To Do: Configure Google");
-	NSBeep();
+    if ( !self.googleWindowController )
+    {
+        self.googleWindowController = [[[SVGoogleWindowController alloc] initWithWindowNibName:@"SVGoogleSheet"] autorelease];
+    }
+    [self.googleWindowController configureGoogle:self];
 }
 
 - (IBAction)configureComments:(id)sender;
 {
-	NSLog(@"To Do: Configure Comments");
-	NSBeep();
+    if ( !self.commentsWindowController )
+    {
+        self.commentsWindowController = [[[SVCommentsWindowController alloc] initWithWindowNibName:@"SVCommentsSheet"] autorelease];
+    }
+    [self.commentsWindowController configureComments:self];
 }
 
 
