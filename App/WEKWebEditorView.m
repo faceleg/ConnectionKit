@@ -85,7 +85,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 
 // Event handling
-- (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector;
+- (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector cachedTargetView:(NSView *)targetView;
 
 
 // Undo
@@ -1187,7 +1187,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
-- (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector
+- (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector cachedTargetView:(NSView *)targetView;
 {
     // If content also decides it's not interested in the event, we will be given it again as part of the responder chain. So, keep track of whether we're processing and ignore the event in such cases.
     if (_isProcessingEvent)
@@ -1196,8 +1196,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     else
     {
-        NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-        NSView *targetView = [[self webView] hitTest:location];
+        if (!targetView)
+        {
+            NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+            targetView = [[self webView] hitTest:location];
+        }
         
         _isProcessingEvent = YES;
         [targetView performSelector:selector withObject:theEvent];
@@ -1352,7 +1355,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // If mousing down on an image, pass the event through. Must do before changing selection so that WebView becomes first responder
         if ([item allowsDirectAccessToWebViewWhenSelected])
         {
-            [self forwardMouseEvent:event selector:_cmd];
+            [self forwardMouseEvent:event selector:_cmd cachedTargetView:nil];
             [self selectItem:item event:event];
             //[NSApp postEvent:event atStart:YES];
         }
@@ -1398,7 +1401,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
             WEKWebEditorItem *item = [self selectableItemAtPoint:location];
             if ([item allowsDirectAccessToWebViewWhenSelected])
             {
-                [self forwardMouseEvent:mouseUpEvent selector:_cmd];
+                [self forwardMouseEvent:mouseUpEvent selector:_cmd cachedTargetView:nil];
             }
             
                                       
@@ -1472,7 +1475,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
             // Continue with the event, but to WebView perhaps?
             if ([item allowsDirectAccessToWebViewWhenSelected])
             {
-                [self forwardMouseEvent:theEvent selector:_cmd];
+                [self forwardMouseEvent:theEvent selector:_cmd cachedTargetView:nil];
             }
             else
             {
@@ -1507,13 +1510,15 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)mouseDragged:(NSEvent *)theEvent;
 {
-    [self forwardMouseEvent:theEvent selector:_cmd];
+    [self forwardMouseEvent:theEvent selector:_cmd cachedTargetView:nil];
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent
 {
-    // We're not personally interested in scroll events, let content have a crack at them.
-    [self forwardMouseEvent:theEvent selector:_cmd];
+    // We're not personally interested in scroll events.
+    // Want the main frame to handle them; NOT subframes as they're supposed to be contained by a graphic which isn't editing
+    NSView *targetView = [[[[[self webView] mainFrame] frameView] documentView] enclosingScrollView];
+    [self forwardMouseEvent:theEvent selector:_cmd cachedTargetView:targetView];
 }
 
 - (void)didSendFlagsChangedEvent:(NSNotification *)notification
