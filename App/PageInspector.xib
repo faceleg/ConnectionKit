@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="141"/>
+			<integer value="197"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -48,7 +48,7 @@
 							<object class="NSTabViewItem" id="33785467">
 								<string key="NSIdentifier">page</string>
 								<object class="NSView" key="NSView" id="776333486">
-									<reference key="NSNextResponder" ref="40048264"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -992,7 +992,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {244, 446}}</string>
-									<reference key="NSSuperview" ref="40048264"/>
 								</object>
 								<string key="NSLabel">Page</string>
 								<reference key="NSColor" ref="991363190"/>
@@ -1574,7 +1573,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<object class="NSTabViewItem" id="773659695">
 								<string key="NSIdentifier">collection</string>
 								<object class="NSView" key="NSView" id="658615396">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder" ref="40048264"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1588,14 +1587,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 												<object class="NSTabViewItem" id="477226391">
 													<string key="NSIdentifier">2</string>
 													<object class="NSView" key="NSView" id="563777082">
-														<nil key="NSNextResponder"/>
+														<reference key="NSNextResponder" ref="894696129"/>
 														<int key="NSvFlags">256</int>
 														<object class="NSMutableArray" key="NSSubviews">
 															<bool key="EncodedWithXMLCoder">YES</bool>
 															<object class="NSTextField" id="1044469191">
 																<reference key="NSNextResponder" ref="563777082"/>
 																<int key="NSvFlags">266</int>
-																<string key="NSFrame">{{7, 322}, {216, 22}}</string>
+																<string key="NSFrame">{{7, 280}, {216, 22}}</string>
 																<reference key="NSSuperview" ref="563777082"/>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTextFieldCell" key="NSCell" id="1066240885">
@@ -1611,18 +1610,18 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 															<object class="NSButton" id="608614525">
 																<reference key="NSNextResponder" ref="563777082"/>
 																<int key="NSvFlags">269</int>
-																<string key="NSFrame">{{48, 350}, {134, 17}}</string>
+																<string key="NSFrame">{{40, 303}, {150, 28}}</string>
 																<reference key="NSSuperview" ref="563777082"/>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSButtonCell" key="NSCell" id="857272325">
 																	<int key="NSCellFlags">67239424</int>
 																	<int key="NSCellFlags2">134348800</int>
-																	<string key="NSContents">Publish as Collection</string>
-																	<reference key="NSSupport" ref="331003521"/>
+																	<string key="NSContents">Convert to Collection…</string>
+																	<reference key="NSSupport" ref="26"/>
 																	<reference key="NSControlView" ref="608614525"/>
 																	<int key="NSButtonFlags">-2034876161</int>
-																	<int key="NSButtonFlags2">164</int>
-																	<reference key="NSAlternateImage" ref="26"/>
+																	<int key="NSButtonFlags2">129</int>
+																	<reference key="NSAlternateImage" ref="331003521"/>
 																	<string key="NSAlternateContents"/>
 																	<string key="NSKeyEquivalent"/>
 																	<int key="NSPeriodicDelay">200</int>
@@ -1631,6 +1630,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 															</object>
 														</object>
 														<string key="NSFrameSize">{230, 447}</string>
+														<reference key="NSSuperview" ref="894696129"/>
 													</object>
 													<string key="NSLabel">Page</string>
 													<reference key="NSColor" ref="991363190"/>
@@ -1639,7 +1639,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 												<object class="NSTabViewItem" id="984233350">
 													<string key="NSIdentifier">1</string>
 													<object class="NSView" key="NSView" id="747201708">
-														<reference key="NSNextResponder" ref="894696129"/>
+														<nil key="NSNextResponder"/>
 														<int key="NSvFlags">256</int>
 														<object class="NSMutableArray" key="NSSubviews">
 															<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1728,18 +1728,18 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 															<object class="NSButton" id="762383611">
 																<reference key="NSNextResponder" ref="747201708"/>
 																<int key="NSvFlags">293</int>
-																<string key="NSFrame">{{25, 39}, {180, 17}}</string>
+																<string key="NSFrame">{{36, 34}, {158, 28}}</string>
 																<reference key="NSSuperview" ref="747201708"/>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSButtonCell" key="NSCell" id="827086676">
 																	<int key="NSCellFlags">67239424</int>
 																	<int key="NSCellFlags2">134348800</int>
-																	<string key="NSContents">Stop Publishing as Collection</string>
-																	<reference key="NSSupport" ref="331003521"/>
+																	<string key="NSContents">Convert to Single Page…</string>
+																	<reference key="NSSupport" ref="26"/>
 																	<reference key="NSControlView" ref="762383611"/>
 																	<int key="NSButtonFlags">-2034876161</int>
-																	<int key="NSButtonFlags2">164</int>
-																	<reference key="NSAlternateImage" ref="26"/>
+																	<int key="NSButtonFlags2">129</int>
+																	<reference key="NSAlternateImage" ref="331003521"/>
 																	<string key="NSAlternateContents"/>
 																	<string key="NSKeyEquivalent"/>
 																	<int key="NSPeriodicDelay">200</int>
@@ -2236,39 +2236,38 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 															</object>
 														</object>
 														<string key="NSFrameSize">{230, 447}</string>
-														<reference key="NSSuperview" ref="894696129"/>
 													</object>
 													<string key="NSLabel">Collection</string>
 													<reference key="NSColor" ref="991363190"/>
 													<reference key="NSTabView" ref="894696129"/>
 												</object>
 											</object>
-											<reference key="NSSelectedTabViewItem" ref="984233350"/>
+											<reference key="NSSelectedTabViewItem" ref="477226391"/>
 											<reference key="NSFont" ref="26"/>
 											<int key="NSTvFlags">134217734</int>
 											<bool key="NSAllowTruncatedLabels">YES</bool>
-											<bool key="NSDrawsBackground">YES</bool>
 											<object class="NSMutableArray" key="NSSubviews">
 												<bool key="EncodedWithXMLCoder">YES</bool>
-												<reference ref="747201708"/>
+												<reference ref="563777082"/>
 											</object>
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {244, 446}}</string>
+									<reference key="NSSuperview" ref="40048264"/>
 								</object>
 								<string key="NSLabel">Collection</string>
 								<reference key="NSColor" ref="991363190"/>
 								<reference key="NSTabView" ref="40048264"/>
 							</object>
 						</object>
-						<reference key="NSSelectedTabViewItem" ref="33785467"/>
+						<reference key="NSSelectedTabViewItem" ref="773659695"/>
 						<reference key="NSFont" ref="26"/>
 						<int key="NSTvFlags">134217728</int>
 						<bool key="NSAllowTruncatedLabels">YES</bool>
 						<bool key="NSDrawsBackground">YES</bool>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="776333486"/>
+							<reference ref="658615396"/>
 						</object>
 					</object>
 				</object>
@@ -5411,7 +5410,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<string>oMetaDescriptionPrompt</string>
 							<string>oMultiplePagesField</string>
 							<string>oPagesController</string>
-							<string>oPublishAsCollectionCheckbox</string>
+							<string>oPublishAsCollectionPopup</string>
 							<string>oSiteOutlineController</string>
 							<string>oSlashSeparator</string>
 							<string>oWindowTitleField</string>
@@ -5437,7 +5436,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>SVPagesController</string>
-							<string>NSButton</string>
+							<string>BWIWorkPopUpButton</string>
 							<string>SVSiteOutlineViewController</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
@@ -5466,7 +5465,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<string>oMetaDescriptionPrompt</string>
 							<string>oMultiplePagesField</string>
 							<string>oPagesController</string>
-							<string>oPublishAsCollectionCheckbox</string>
+							<string>oPublishAsCollectionPopup</string>
 							<string>oSiteOutlineController</string>
 							<string>oSlashSeparator</string>
 							<string>oWindowTitleField</string>
@@ -5547,8 +5546,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 								<string key="candidateClassName">SVPagesController</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">oPublishAsCollectionCheckbox</string>
-								<string key="candidateClassName">NSButton</string>
+								<string key="name">oPublishAsCollectionPopup</string>
+								<string key="candidateClassName">BWIWorkPopUpButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oSiteOutlineController</string>
