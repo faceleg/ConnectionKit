@@ -55,15 +55,23 @@
     }
     else
     {
-        // Try to read in Web Locations
-        NSArray *result = [self readWebLocations];
-        if ([result count] == 0)
+        // Next comes raw data to handle dragged, linked images
+        if ([self availableTypeFromArray:[NSBitmapImageRep imageTypes]])
         {
-            // Fall back to reading the pasteboard itself
-            result = [NSArray arrayWithObject:self];
+            return [NSArray arrayWithObject:self];
         }
-        
-        return result;
+        else
+        {
+            // Try to read in Web Locations
+            NSArray *result = [self readWebLocations];
+            if ([result count] == 0)
+            {
+                // Fall back to reading the pasteboard itself
+                result = [NSArray arrayWithObject:self];
+            }
+            
+            return result;
+        }
     }
 }
 
