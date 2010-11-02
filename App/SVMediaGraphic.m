@@ -367,30 +367,6 @@
 
 #pragma mark Size, inherited
 
-- (void)setSizeWithWidth:(NSNumber *)width;
-{
-    [self setWidth:width];
-    
-    NSNumber *aspectRatio = [self constrainedAspectRatio];
-    if (aspectRatio)
-    {
-        NSUInteger height = ([width floatValue] / [aspectRatio floatValue]);
-        [self setHeight:[NSNumber numberWithUnsignedInteger:height]];
-    }
-}
-
-- (void)setSizeWithHeight:(NSNumber *)height;
-{
-    [self setHeight:height];
-    
-    NSNumber *aspectRatio = [self constrainedAspectRatio];
-    if (aspectRatio)
-    {
-        NSUInteger width = ([height floatValue] * [aspectRatio floatValue]);
-        [self setWidth:[NSNumber numberWithUnsignedInteger:width]];
-    }
-}
-
 - (BOOL)validateWidth:(NSNumber **)width error:(NSError **)error;
 {
     // SVGraphic.width is optional. For media graphics it becomes compulsory unless using external URL
@@ -616,13 +592,13 @@
 		[self setConstrainProportions:[self isConstrainProportionsEditable]];
 		if (oldWidth)
 		{
-			[self setSizeWithWidth:oldWidth];
+			[self setSizeWithWidth:oldWidth height:nil];
 		}
 		else
 		{
 			if ([[self width] integerValue] > 200)
 			{
-				[self setSizeWithWidth:[NSNumber numberWithInt:200]];
+				[self setSizeWithWidth:[NSNumber numberWithInt:200] height:nil];
 			}
 			// If going from external URL to proper media, this means your image is quite probably now 200px wide. Not ideal, but so rare I'm not going to worry abiout it. #92576
 		}
