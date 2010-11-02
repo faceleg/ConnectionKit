@@ -74,6 +74,8 @@
 
 #pragma mark Metrics
 
+- (NSNumber *) width; { return [[self container] width]; }
+
 - (void)setSizeWithWidth:(NSNumber *)width height:(NSNumber *)height;
 {
     if ([self constrainProportions])
@@ -144,7 +146,7 @@
     [graphic setNaturalWidth:width];
     [graphic setNaturalHeight:height];
     
-    NSUInteger oldWidth = [self width];
+    NSNumber *oldWidth = [self width];
     [graphic makeOriginalSize];
     
     if (width && height)
@@ -152,7 +154,7 @@
         [graphic setConstrainProportions:YES];
     }
     
-    if (oldWidth && [self width] > oldWidth) [self setWidth:oldWidth];
+    if (oldWidth && [[self width] unsignedIntegerValue] > [oldWidth unsignedIntegerValue]) [self setSizeWithWidth:oldWidth height:height];
 }
 
 - (CGSize)originalSize;
@@ -189,8 +191,8 @@
     CGSize size = [self originalSize];
     if (!CGSizeEqualToSize(size, CGSizeZero))
     {
-        [self setWidth:size.width];
-        [self setHeight:size.height];
+        [self setWidth:[NSNumber numberWithUnsignedInteger:size.width]
+                height:[NSNumber numberWithUnsignedInteger:size.height]];
     }
 }
 

@@ -296,10 +296,10 @@
 
     if ([self.container constrainProportions])    // generally true
     {
-        // Resize image to fit in space
+        /*/ Resize image to fit in space
         NSUInteger width = self.width;
         [self.container makeOriginalSize];
-        if (self.width > width) self.width = width;
+        if (self.width > width) self.width = width;*/
     }
  
 	if (nil == self.posterFrame || self.posterFrameType != kPosterTypeChoose)		// get poster frame image UNLESS we have an override chosen.
@@ -726,7 +726,7 @@
 	NSString *altForMovieFallback = [[posterSourcePath lastPathComponent] stringByDeletingPathExtension];// Cheating ... What would be a good alt ?
 	
 	[context pushAttribute:@"title" value:[self cannotViewTitle:context]];
-	[context writeImageWithSrc:posterSourcePath alt:altForMovieFallback width:[NSNumber numberWithUnsignedInt:self.width] height:[NSNumber numberWithUnsignedInt:self.height]];
+	[context writeImageWithSrc:posterSourcePath alt:altForMovieFallback width:self.width height:self.height];
 }
 
 
@@ -821,8 +821,8 @@
 		// Convert to JPEG if the poster image needs scaling or converting.  
 		// (Hard-wired here, sorry dudes)
 		posterSourceURL = [context addImageMedia:self.posterFrame.media
-										   width:[NSNumber numberWithUnsignedInt:self.width]
-										  height:[NSNumber numberWithUnsignedInt:self.height]
+										   width:self.width
+										  height:self.height
 											type:(NSString *)kUTTypeJPEG
                                preferredFilename:nil];
 	}
@@ -1302,8 +1302,7 @@
 	if (0 == movieSize.width || 0 == movieSize.height)
 	{
 		// Chances are if we got here with zero width/height, there is just no video track -- so become an audio file!
-		[self setCodecType:@"com.apple.quicktime-audio" reloadPlugIn:NO];		// Our specialization of generic quicktime movie
-		[[self container] didSetSource];
+		[self setCodecType:@"com.apple.quicktime-audio" reloadPlugIn:YES];		// Our specialization of generic quicktime movie
 		// This will re-create things as an audio....
 		// Note: We should be sure that we don't do anything further as we unwind, since we're DONE with this movie.
 	}

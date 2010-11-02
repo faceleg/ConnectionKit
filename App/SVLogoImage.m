@@ -36,8 +36,9 @@
                                                            entityName:[[self class] mediaEntityName]
                                        insertIntoManagedObjectContext:[self managedObjectContext]]];
     
-    [[self plugIn] setWidth:200];
-    [[self plugIn] setHeight:128];
+    [[self plugIn] setWidth:[NSNumber numberWithUnsignedInteger:200]
+                     height:[NSNumber numberWithUnsignedInteger:128]];
+    
     [self makeOriginalSize];
     [self setTypeToPublish:[[self media] typeOfFile]];
 }

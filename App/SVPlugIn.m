@@ -7,6 +7,8 @@
 //
 
 #import "SVPlugIn.h"
+#import "SVPlugInGraphic.h"
+
 #import "SVPageProtocol.h"
 
 #import "KTDataSourceProtocol.h"
@@ -32,7 +34,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 
 @interface SVPlugIn ()
-@property(nonatomic, assign, readwrite) id container;
+@property(nonatomic, assign, readwrite) SVPlugInGraphic *container;
 @end
 
 
@@ -231,33 +233,20 @@ static id <SVPlugInContext> sCurrentContext;
 
 #pragma mark Metrics
 
-- (NSUInteger)width; { return [[(SVGraphic *)[self container] width] unsignedIntegerValue]; }
-- (void)setWidth:(NSUInteger)width;
+- (void)setWidth:(NSNumber *)width height:(NSNumber *)height;
 {
-    NSNumber *widthValue = (width ? [NSNumber numberWithUnsignedInteger:width] : nil);
-    [(SVGraphic *)[self container] setWidth:widthValue];
-}
-+ (NSSet *)keyPathsForValuesAffectingWidth;
-{
-    return [NSSet setWithObject:@"container.width"];
-}
-
-- (NSUInteger)height; { return [[(SVGraphic *)[self container] height] unsignedIntegerValue]; }
-- (void)setHeight:(NSUInteger)height;
-{
-    NSNumber *heightValue = (height ? [NSNumber numberWithUnsignedInteger:height] : nil);
-    [(SVGraphic *)[self container] setHeight:heightValue];
-}
-+ (NSSet *)keyPathsForValuesAffectingHeight;
-{
-    return [NSSet setWithObject:@"container.height"];
+    [[self container] setWidth:width];
+    [[self container] setHeight:height];
 }
 
 - (void)setSizeWithWidth:(NSNumber *)width height:(NSNumber *)height;
 {
-    if (width) [self setWidth:[width unsignedIntegerValue]];
-    if (height) [self setHeight:[height unsignedIntegerValue]];
+    if (width) [[self container] setWidth:width];
+    if (height) [[self container] setHeight:height];
 }
+
+- (NSNumber *)elementWidth; { return [[self container] width]; }
+- (NSNumber *)elementHeight; { return [[self container] height]; }
 
 - (NSUInteger)minWidth; { return 200; }
 - (NSUInteger)minHeight; { return 1; }
@@ -266,8 +255,7 @@ static id <SVPlugInContext> sCurrentContext;
 
 - (void)makeOriginalSize;
 {
-    [self setWidth:200];
-    [self setHeight:0];
+    [self setWidth:[NSNumber numberWithInt:200] height:nil];
 }
 
 + (BOOL)isExplicitlySized; { return NO; }

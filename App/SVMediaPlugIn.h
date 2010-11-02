@@ -35,6 +35,9 @@
 
 #pragma mark Metrics
 
+- (NSNumber *)width;
+- (NSNumber *)height;
+
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 - (BOOL)isConstrainProportionsEditable;
 

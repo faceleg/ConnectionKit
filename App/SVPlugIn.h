@@ -90,9 +90,12 @@
 
 #pragma mark Metrics
 
-// Size methods return 0 when unknown/'auto' sized. You should generally try to use CSS to fill the space available. If your markup is unsuitable for that, aim at 200 pixels. Setter methods are considered a "request" so may not actually change anything, at least not right away.
-@property(nonatomic) NSUInteger width;
-@property(nonatomic) NSUInteger height;
+// Nil values are treated as "auto" size
+- (void)setWidth:(NSNumber *)width height:(NSNumber *)height;
+
+// The width and height of the HTML element you generate. Can override if need to include some chrome around the content. (e.g. controller on a video player)
+- (NSNumber *)elementWidth;
+- (NSNumber *)elementHeight;
 
 - (void)setSizeWithWidth:(NSNumber *)width height:(NSNumber *)height;
 

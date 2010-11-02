@@ -181,8 +181,8 @@
 	
 	NSUInteger heightWithBar = self.controller ? 16 : 0;
 	
-	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
-	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
+	[context pushAttribute:@"width" value:self.width];
+	[context pushAttribute:@"height" value:[NSNumber numberWithInteger:heightWithBar]];
 	[context pushAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
 	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
 
@@ -208,8 +208,8 @@
 	
 	NSUInteger heightWithBar = self.controller ? 46 : 0;		// Windows media controller is 46 pixels (on windows; adjusted on macs)
 	
-	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
-	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
+	[context pushAttribute:@"width" value:self.width];
+	[context pushAttribute:@"height" value:[NSNumber numberWithInteger:heightWithBar]];
 	[context pushAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
 
 	// ID on <object> apparently required for IE8
@@ -403,7 +403,7 @@
 	if ([self shouldWriteHTMLInline]) [self.container buildClassName:context];
 	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
 	[context pushAttribute:@"data" value:playerPath];
-	[context pushAttribute:@"width" value:[NSNumber numberWithInt:self.width]];
+	[context pushAttribute:@"width" value:self.width];
 	
 	NSUInteger heightWithBar = barHeight;
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];

@@ -104,7 +104,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         NSUInteger maxWidth = 490;
         if ([self isPagelet]) maxWidth = 200;
         
-        if ([[self plugIn] width] > maxWidth)
+        if ([[[self plugIn] elementWidth] unsignedIntegerValue] > maxWidth)
         {
             [[self plugIn] setSizeWithWidth:[NSNumber numberWithUnsignedInteger:maxWidth] height:nil];
         }
@@ -279,6 +279,9 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 #pragma mark Metrics
 
+- (NSNumber *)elementWidth; { return [[self plugIn] elementWidth]; }
+- (NSNumber *)elementHeight; { return [[self plugIn] elementHeight]; }
+
 - (void)setSizeWithWidth:(NSNumber *)width height:(NSNumber *)height;
 {
     [[self plugIn] setSizeWithWidth:width height:height];
@@ -291,8 +294,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     NSNumber *result = nil;
     if ([self isExplicitlySized] || [[self placement] intValue] == SVGraphicPlacementInline)
     {
-        NSUInteger width = [plugIn width];
-        if (width) result = [NSNumber numberWithUnsignedInteger:width];
+        result = [self width];
     }
     else
     {
@@ -326,8 +328,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     NSNumber *result = nil;
     if ([self isExplicitlySized])
     {
-        NSUInteger height = [plugIn height];
-        if (height) result = [NSNumber numberWithUnsignedInteger:height];
+        result = [self height];
     }
     else
     {

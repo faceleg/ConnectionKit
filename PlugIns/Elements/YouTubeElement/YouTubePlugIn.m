@@ -76,17 +76,6 @@
 	[super dealloc];
 }
 
-- (id)init
-{
-    self = [super init];
-    if ( self )
-    {
-        self.width = 490; // max, widescreen, that fits in default design
-    }
-    return self;
-}
-
-
 - (void)awakeFromNew;
 {
     [super awakeFromNew];
@@ -175,9 +164,9 @@
     return result;
 }
 
-- (NSUInteger)height
+- (NSNumber *)elementHeight
 {
-    return [self heightForWidth:[self width]];
+    return [NSNumber numberWithUnsignedInteger:[self heightForWidth:[[self width] unsignedIntegerValue]]];
 }
 
 - (void)setHeight:(NSUInteger)height;

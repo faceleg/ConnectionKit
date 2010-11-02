@@ -130,13 +130,13 @@
     [super didSetSource];
 	[self _mediaChanged];
 
-    if ([self.container constrainProportions])    // generally true
+    /*if ([self.container constrainProportions])    // generally true
     {
         // Resize image to fit in space
         NSUInteger width = self.width;
         [self.container makeOriginalSize];
         if (self.width > width) self.width = width;
-    }
+    }*/
 }
 
 #pragma mark -
