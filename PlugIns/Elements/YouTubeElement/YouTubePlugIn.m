@@ -174,7 +174,7 @@
 
 - (NSNumber *)constrainedAspectRatio;
 {
-    float result = (self.widescreen ? 9.0f/16.0f : 3.0f/4.0f);
+    float result = (self.widescreen ? 16.0f/9.0f : 4.0f/3.0f);
     return [NSNumber numberWithFloat:result];
 }
 
@@ -182,7 +182,7 @@
 
 - (void)makeOriginalSize;
 {
-    float height = 490 * [[self constrainedAspectRatio] floatValue];
+    float height = 490 / [[self constrainedAspectRatio] floatValue];
     [self setWidth:[NSNumber numberWithInt:490] height:[NSNumber numberWithUnsignedInteger:height]];
 }
 
