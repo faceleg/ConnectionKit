@@ -757,6 +757,8 @@
 		3CACE247127FB82300983DF2 /* SVCommentsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CACE245127FB82300983DF2 /* SVCommentsWindowController.m */; };
 		3CACE29F127FB99400983DF2 /* SVGoogleWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CACE29D127FB99400983DF2 /* SVGoogleWindowController.h */; };
 		3CACE2A0127FB99400983DF2 /* SVGoogleWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CACE29E127FB99400983DF2 /* SVGoogleWindowController.m */; };
+		3CACE2CA127FC19E00983DF2 /* SVCommentsSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CACE2C8127FC19E00983DF2 /* SVCommentsSheet.xib */; };
+		3CACE2CD127FC21100983DF2 /* SVGoogleSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CACE2CB127FC21100983DF2 /* SVGoogleSheet.xib */; };
 		3CBDE9120EBA65D20059C56C /* KTLocalPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CBDE9100EBA65D20059C56C /* KTLocalPublishingEngine.h */; };
 		3CBDE9130EBA65D20059C56C /* KTLocalPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDE9110EBA65D20059C56C /* KTLocalPublishingEngine.m */; };
 		3CBFD398093C45930057668A /* KTSiteOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD396093C45930057668A /* KTSiteOutlineView.m */; };
@@ -2374,6 +2376,8 @@
 		3CACE245127FB82300983DF2 /* SVCommentsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVCommentsWindowController.m; sourceTree = "<group>"; };
 		3CACE29D127FB99400983DF2 /* SVGoogleWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGoogleWindowController.h; sourceTree = "<group>"; };
 		3CACE29E127FB99400983DF2 /* SVGoogleWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGoogleWindowController.m; sourceTree = "<group>"; };
+		3CACE2C9127FC19E00983DF2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVCommentsSheet.xib; sourceTree = "<group>"; };
+		3CACE2CC127FC21100983DF2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVGoogleSheet.xib; sourceTree = "<group>"; };
 		3CBDE9100EBA65D20059C56C /* KTLocalPublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTLocalPublishingEngine.h; sourceTree = "<group>"; };
 		3CBDE9110EBA65D20059C56C /* KTLocalPublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTLocalPublishingEngine.m; sourceTree = "<group>"; };
 		3CBFD395093C45930057668A /* KTSiteOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSiteOutlineView.h; sourceTree = "<group>"; };
@@ -5351,8 +5355,10 @@
 				CE5B1CB711E54A37005E2C5E /* KTFeedbackReporter.m */,
 				3CACE244127FB82300983DF2 /* SVCommentsWindowController.h */,
 				3CACE245127FB82300983DF2 /* SVCommentsWindowController.m */,
+				3CACE2C8127FC19E00983DF2 /* SVCommentsSheet.xib */,
 				3CACE29D127FB99400983DF2 /* SVGoogleWindowController.h */,
 				3CACE29E127FB99400983DF2 /* SVGoogleWindowController.m */,
+				3CACE2CB127FC21100983DF2 /* SVGoogleSheet.xib */,
 			);
 			name = "Other Window Controllers";
 			sourceTree = "<group>";
@@ -6456,6 +6462,8 @@
 				CE390975127BA2D100C994C6 /* object_empty.tiff in Resources */,
 				CE390976127BA2D100C994C6 /* object_grid.tiff in Resources */,
 				CE390977127BA2D100C994C6 /* object_summaries.tiff in Resources */,
+				3CACE2CA127FC19E00983DF2 /* SVCommentsSheet.xib in Resources */,
+				3CACE2CD127FC21100983DF2 /* SVGoogleSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7631,6 +7639,22 @@
 				3C9BC1FD103DF94300D2CF47 /* en */,
 			);
 			name = Prefs.xib;
+			sourceTree = "<group>";
+		};
+		3CACE2C8127FC19E00983DF2 /* SVCommentsSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3CACE2C9127FC19E00983DF2 /* en */,
+			);
+			name = SVCommentsSheet.xib;
+			sourceTree = "<group>";
+		};
+		3CACE2CB127FC21100983DF2 /* SVGoogleSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3CACE2CC127FC21100983DF2 /* en */,
+			);
+			name = SVGoogleSheet.xib;
 			sourceTree = "<group>";
 		};
 		CE12151D0B5EFF3200C40320 /* LivePagesDisabled.html */ = {
