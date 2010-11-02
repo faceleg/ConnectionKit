@@ -354,29 +354,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 }
 
 
-- (void)setSize:(NSSize)size;
-{
-    if ([self constrainProportions])
-    {
-        CGFloat constraintRatio = [[self contentWidth] floatValue] / [[self contentHeight] floatValue];
-        CGFloat aspectRatio = size.width / size.height;
-        
-        if (aspectRatio < constraintRatio)
-        {
-            [self setHeight:[NSNumber numberWithFloat:size.height]];
-        }
-        else
-        {
-            [self setWidth:[NSNumber numberWithFloat:size.width]];
-        }
-    }
-    else
-    {
-        [[self plugIn] setWidth:size.width];
-        [[self plugIn] setHeight:size.height];
-    }
-}
-
 - (void)makeOriginalSize; { [[self plugIn] makeOriginalSize]; }
 
 - (BOOL)isExplicitlySized; { return [[[self plugIn] class] isExplicitlySized]; }
