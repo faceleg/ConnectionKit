@@ -83,6 +83,7 @@
 
 
 #pragma mark Comments
+@property(nonatomic, readonly) NSString *commentsSummary;
 - (KTCommentsProvider)commentsProvider;
 - (void)setCommentsProvider:(KTCommentsProvider)aKTCommentsProvider;
 

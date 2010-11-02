@@ -385,6 +385,16 @@
 
 #pragma mark Comments
 
++ (NSSet *)keyPathsForValuesAffectingCommentsSummary
+{
+	return [NSSet setWithObjects:@"commentsProvider", @"commentsOwner", nil];
+}
+
+- (NSString *)commentsSummary
+{
+    return @"None Yet!";
+}
+
 // TODO: this is kind of hacky, for Sandvox 2 all should be combined
 // into the fewest, flexible attributes possible
 - (KTCommentsProvider)commentsProvider
