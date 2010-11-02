@@ -16,10 +16,6 @@
 
 
 @interface SVMediaPlugIn : SVPlugIn <SVEnclosure>
-{
-  @private
-    SVMedia *_media;
-}
 
 #pragma mark Source
 @property(nonatomic, readonly) SVMedia *media;  // KVO-compliant and everything!

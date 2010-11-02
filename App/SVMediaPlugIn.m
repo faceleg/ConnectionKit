@@ -23,17 +23,12 @@
 
 - (SVMedia *)media;
 {
-    if (!_media)
-    {
-        _media = [[[self container] media] media];
-    }
-    
-    return _media;
+    return [[[self container] media] media];
 }
-/*+ (NSSet *)keyPathsForValuesAffectingMedia;
++ (NSSet *)keyPathsForValuesAffectingMedia;
 {
-    return [NSSet setWithObject:@"container.mediaRecord"];
-}*/
+    return [NSSet setWithObject:@"container.media.media"];
+}
 
 - (NSURL *)externalSourceURL; { return [[self container] externalSourceURL]; }
 
