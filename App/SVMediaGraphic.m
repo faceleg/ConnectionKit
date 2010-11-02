@@ -189,6 +189,12 @@
 
 - (void)didSetSource;
 {
+    // Reset size & codecType BEFORE media so setting the source can store a new size
+    self.naturalWidth = nil;
+    self.naturalHeight = nil;
+    [self setCodecType:nil];
+    
+    
     // Reset type
     NSString *type = [[self media] typeOfFile];
     if (!type) type = [NSString UTIForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
@@ -573,12 +579,7 @@
     // Swap in the new media
     if (record || URL)
     {
-        // Reset size & codecType BEFORE media so setting the source can store a new size
-        self.naturalWidth = nil;
-        self.naturalHeight = nil;
-        [self setCodecType:nil];
-		
-		if (record)
+        if (record)
 		{
 			[self setSourceWithMediaRecord:record];
 		}
