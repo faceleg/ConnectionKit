@@ -137,20 +137,6 @@
 
 #pragma mark Metrics
 
-- (NSUInteger)heightForWidth:(NSUInteger)width
-{
-    // check for widescreen
-    NSUInteger result = (self.widescreen) ? (width * 9)/16 : (width * 3)/4;
-    
-    // always leave room for control bar
-    result += YOUTUBE_CONTROLBAR_HEIGHT; // always leave room for the control bar
-
-    // leave room for colored border, if applicable
-    if ( self.showBorder ) { result += YOUTUBE_BORDER_HEIGHT; }
-    
-    return result;
-}
-
 - (NSNumber *)elementHeight
 {
     // always leave room for control bar
@@ -165,11 +151,6 @@
 - (NSUInteger)minWidth
 {
     return 200; // smallest that YouTube supports
-}
-
-- (NSUInteger)minHeight
-{
-    return [self heightForWidth:[self minWidth]];
 }
 
 - (NSNumber *)constrainedAspectRatio;
