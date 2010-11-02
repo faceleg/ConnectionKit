@@ -77,7 +77,7 @@
 #pragma mark Resizing
 - (NSSize)minSize;
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
-- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle;
+- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 
 
 #pragma mark Dragging

@@ -147,10 +147,10 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     }
 }
 
-- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle;
+- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
     // Graphic lives inside a body DOM controller, so use the size limit from that instead
-    return [(SVDOMController *)[self parentWebEditorItem] constrainSize:size handle:handle];
+    return [(SVDOMController *)[self parentWebEditorItem] constrainSize:size handle:handle snapToFit:snapToFit];
 }
 
 - (unsigned int)resizingMask

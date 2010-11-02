@@ -371,14 +371,17 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return result;
 }
 
-- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle;
+- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
-    CGFloat maxWidth = [self maxWidth];
-    
-    if (size.width > maxWidth)
+    if (snapToFit)
     {
-        SVGraphic *graphic = [self representedObject];
-        size.width = ([graphic isExplicitlySized] ? maxWidth : 0.0f);
+        CGFloat maxWidth = [self maxWidth];
+        
+        if (size.width > maxWidth)
+        {
+            SVGraphic *graphic = [self representedObject];
+            size.width = ([graphic isExplicitlySized] ? maxWidth : 0.0f);
+        }
     }
     
     return size;
@@ -430,10 +433,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Resize
 
-- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle;
+- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
     // Body lives inside a graphic DOM controller, so use the size limit from that instead
-    return [(SVDOMController *)[self parentWebEditorItem] constrainSize:size handle:handle];
+    return [(SVDOMController *)[self parentWebEditorItem] constrainSize:size handle:handle snapToFit:snapToFit];
 }
 
 #pragma mark Drawing

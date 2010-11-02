@@ -25,6 +25,11 @@
 
 #pragma mark Resize
 
+- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
+{
+    [[self representedObject] setSize:size];
+}
+
 - (NSSize)minSize;
 {
     // Remove the 200px width restriction
@@ -210,45 +215,48 @@
 
 #pragma mark Resizing
 
-- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle;
+- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
-    size = [super constrainSize:size handle:handle];
+    size = [super constrainSize:size handle:handle snapToFit:snapToFit];
     
     
     // HACK for #92183: ignore -isExplicitly sized and go to maximum width
     if (size.width <= 0) size.width = [self maxWidth];
     
     
-    // Snap to original size if you are very close to it
-	BOOL resizingWidth = (handle == kSVGraphicUpperLeftHandle ||
-                          handle == kSVGraphicMiddleLeftHandle ||
-                          handle == kSVGraphicLowerLeftHandle ||
-                          handle == kSVGraphicUpperRightHandle ||
-                          handle == kSVGraphicMiddleRightHandle ||
-                          handle == kSVGraphicLowerRightHandle);
-    
-    BOOL resizingHeight = (handle == kSVGraphicUpperLeftHandle ||
-                           handle == kSVGraphicUpperMiddleHandle ||
-                           handle == kSVGraphicUpperRightHandle ||
-                           handle == kSVGraphicLowerLeftHandle ||
-                           handle == kSVGraphicLowerMiddleHandle ||
-                           handle == kSVGraphicLowerRightHandle);
-    
-    SVMediaGraphic *image = [self representedObject];
-	CGSize originalSize = [[image plugIn] originalSize];
-	
-    
-	// Snap if we are near the original size.
-    if (originalSize.width > 0 && originalSize.height > 0)
+    if (snapToFit)
     {
-        int snap = MIN(originalSize.width/4, 10);	// snap to smaller of 25% image width or 10 pixels
-        if (resizingWidth && ( abs(size.width - originalSize.width) < snap) )
+        // Snap to original size if you are very close to it
+        BOOL resizingWidth = (handle == kSVGraphicUpperLeftHandle ||
+                              handle == kSVGraphicMiddleLeftHandle ||
+                              handle == kSVGraphicLowerLeftHandle ||
+                              handle == kSVGraphicUpperRightHandle ||
+                              handle == kSVGraphicMiddleRightHandle ||
+                              handle == kSVGraphicLowerRightHandle);
+        
+        BOOL resizingHeight = (handle == kSVGraphicUpperLeftHandle ||
+                               handle == kSVGraphicUpperMiddleHandle ||
+                               handle == kSVGraphicUpperRightHandle ||
+                               handle == kSVGraphicLowerLeftHandle ||
+                               handle == kSVGraphicLowerMiddleHandle ||
+                               handle == kSVGraphicLowerRightHandle);
+        
+        SVMediaGraphic *image = [self representedObject];
+        CGSize originalSize = [[image plugIn] originalSize];
+        
+        
+        // Snap if we are near the original size.
+        if (originalSize.width > 0 && originalSize.height > 0)
         {
-            size.width = originalSize.width;
-        }
-        if (resizingHeight && ( abs(size.height - originalSize.height) < snap) )
-        {
-            size.height = originalSize.height;
+            int snap = MIN(originalSize.width/4, 10);	// snap to smaller of 25% image width or 10 pixels
+            if (resizingWidth && ( abs(size.width - originalSize.width) < snap) )
+            {
+                size.width = originalSize.width;
+            }
+            if (resizingHeight && ( abs(size.height - originalSize.height) < snap) )
+            {
+                size.height = originalSize.height;
+            }
         }
     }
     

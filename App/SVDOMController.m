@@ -425,12 +425,10 @@
     if (bounds.size.height<=minSize.height) bounds.size.height = minSize.height;
     
     
-    // Apply constraints, UNLESS the command key is held down. Why not use current NSEvent? - Mike
-    NSSize size = bounds.size;
-    if ((GetCurrentKeyModifiers() & cmdKey) == 0)
-	{
-        size = [self constrainSize:size handle:handle];
-    }
+    // Apply constraints. Snap to guides UNLESS the command key is held down. Why not use current NSEvent? - Mike
+    NSSize size = [self constrainSize:bounds.size
+                               handle:handle
+                            snapToFit:((GetCurrentKeyModifiers() & cmdKey) == 0)];
     
     
     // Finally, we can go ahead and resize
@@ -440,17 +438,19 @@
     return handle;
 }
 
-- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle;
+- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
-    // Whew, what a lot of questions! Now, should this drag be disallowed on account of making the DOM element bigger than its container? #84958
-    DOMNode *parent = [[self HTMLElement] parentNode];
-    DOMCSSStyleDeclaration *style = [[[self HTMLElement] ownerDocument] 
-                                     getComputedStyle:(DOMElement *)parent
-                                     pseudoElement:@""];
-    
-    CGFloat maxWidth = [[style width] floatValue];
-    if (size.width > maxWidth) size.width = maxWidth;
-    
+    if (snapToFit)
+    {
+        // Whew, what a lot of questions! Now, should this drag be disallowed on account of making the DOM element bigger than its container? #84958
+        DOMNode *parent = [[self HTMLElement] parentNode];
+        DOMCSSStyleDeclaration *style = [[[self HTMLElement] ownerDocument] 
+                                         getComputedStyle:(DOMElement *)parent
+                                         pseudoElement:@""];
+        
+        CGFloat maxWidth = [[style width] floatValue];
+        if (size.width > maxWidth) size.width = maxWidth;
+    }
     
     return size;
 }
