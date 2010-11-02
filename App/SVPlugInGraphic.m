@@ -404,11 +404,12 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [[self plugIn] setBool:constrain forKey:@"constrainProportions"];
 }
 
-
 - (BOOL)isConstrainProportionsEditable;
 {
     return [[self plugIn] respondsToSelector:@selector(setConstrainProportions:)];
 }
+
+- (NSNumber *)constrainedProportionsRatio; { return [[self plugIn] constrainedAspectRatio]; }
 
 #pragma mark Thumbnail
 

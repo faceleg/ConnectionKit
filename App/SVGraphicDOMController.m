@@ -423,7 +423,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         
         if (width > maxWidth)
         {
-            
+            size.width = maxWidth;
+            size.height = maxWidth / [aspectRatio floatValue];
         }
     }
     
