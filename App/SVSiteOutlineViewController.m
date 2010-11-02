@@ -1700,7 +1700,10 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     {
         // Set state to match
         id control = anItem;
-        [control setState:[self selectedItemsAreCollections]];
+        NSString *title = ([self selectedItemsAreCollections] ?
+                           NSLocalizedString(@"Convert to Single Page", "menu title") :
+                           NSLocalizedString(@"Convert to Collection", "menu title"));
+        [control setTitle:title];
         
         result = [self canToggleIsCollection];
     }

@@ -2,16 +2,16 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">804</string>
+		<string key="IBDocument.SystemVersion">10F2521</string>
+		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<dictionary class="NSMutableDictionary" key="IBDocument.PluginVersions">
-			<string key="com.apple.InterfaceBuilder.CocoaPlugin">804</string>
+			<string key="com.apple.InterfaceBuilder.CocoaPlugin">823</string>
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="2045"/>
+			<integer value="1701"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -296,7 +296,7 @@
 																</object>
 																<object class="NSMenuItem" id="27226798">
 																	<reference key="NSMenu" ref="272058959"/>
-																	<string key="NSTitle">Publish as Collection</string>
+																	<string key="NSTitle">Convert to Collection</string>
 																	<string key="NSKeyEquiv"/>
 																	<int key="NSMnemonicLoc">2147483647</int>
 																	<reference key="NSOnImage" ref="439133155"/>
@@ -362,6 +362,7 @@
 																</object>
 															</array>
 														</object>
+														<int key="NSSelectedIndex">4</int>
 														<bool key="NSPullDown">YES</bool>
 														<int key="NSPreferredEdge">1</int>
 														<bool key="NSUsesItemFromMenu">YES</bool>
@@ -2498,7 +2499,7 @@
 				<string key="1694.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1699.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
 				<string key="1700.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
-				<string key="1701.IBEditorWindowLastContentRect">{{120, 879}, {333, 152}}</string>
+				<string key="1701.IBEditorWindowLastContentRect">{{328, 479}, {333, 152}}</string>
 				<string key="1701.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
 				<string key="1702.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
 				<string key="1703.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
