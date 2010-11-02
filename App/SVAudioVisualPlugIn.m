@@ -8,6 +8,13 @@
 
 #import "SVAudioVisualPlugIn.h"
 
+#import "SVMediaGraphic.h"
+
+
+@interface SVMediaPlugIn (InheritedPrivate)
+@property(nonatomic, readonly) SVMediaGraphic *container;
+@end
+
 
 @implementation SVAudioVisualPlugIn
 
