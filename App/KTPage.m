@@ -457,4 +457,65 @@
 		[self fileName], [self wrappedValueForKey:@"uniqueID"], [self wrappedValueForKey:@"pluginIdentifier"]];
 }
 
+#pragma mark -
+#pragma mark rescue documents with funky HTML
+
+- (IBAction) clearPageHTML:(id)sender;
+{
+	[self setValue:@"" forKey:@"richTextHTML"];
+}
+
+- (IBAction) copyRichTextHTML:(id)sender;
+{
+	NSString *old = [self valueForKey:@"richTextHTML"];
+	NSPasteboard *pb = [NSPasteboard generalPasteboard];
+	[pb declareTypes:[NSArray arrayWithObjects:NSStringPboardType, nil] owner:nil];
+	[pb setString:old forType:NSStringPboardType];
+}
+
+- (IBAction) pasteRichTextHTML:(id)sender;
+{
+	NSLog(@"pasting rich text");
+	NSPasteboard *pb = [NSPasteboard generalPasteboard];
+	NSString *bestType = [pb availableTypeFromArray:[NSArray arrayWithObjects:NSStringPboardType, nil]];
+    NSString *new = [pb stringForType:bestType];
+	[self setValue:new forKey:@"richTextHTML"];
+}
+
+- (IBAction) rebuildRichTextHTML:(id)sender;
+{
+	NSString *old = [self valueForKey:@"richTextHTML"];
+	old = [NSString stringWithFormat:@"<html><head><META http-equiv='Content-Type' content='text/html; charset=UTF-8'></head><body>%@</body></html>", old];
+	NSData *oldData = [old dataUsingEncoding:NSUTF8StringEncoding];
+	NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+						  [NSNumber numberWithInt: NSUTF8StringEncoding],
+						  NSCharacterEncodingDocumentAttribute,
+						  nil];
+	NSAttributedString *attr = [[[NSAttributedString alloc] initWithHTML:oldData documentAttributes:&attributes] autorelease];
+	if (attr)
+	{
+		NSPasteboard *pb = [NSPasteboard generalPasteboard];
+		[pb declareTypes:[NSArray arrayWithObjects:NSRTFDPboardType, NSRTFPboardType, nil] owner:nil];
+		
+		NSData *rtf = [attr RTFFromRange:NSMakeRange(0,[attr length]) documentAttributes:nil];
+		[pb setData:rtf forType:NSRTFPboardType];
+
+		NSData *rtfd = [attr RTFDFromRange:NSMakeRange(0,[attr length]) documentAttributes:nil];
+		[pb setData:rtfd forType:NSRTFDPboardType];
+		
+		NSFileWrapper *fw = [attr RTFDFileWrapperFromRange:NSMakeRange(0,[attr length]) documentAttributes:nil];
+		NSString *desktopPath = [@"~/Desktop/rescued.rtfd" stringByExpandingTildeInPath];
+		[fw writeToFile:desktopPath atomically:YES updateFilenames:YES]; 
+
+		
+	}
+	else
+	{
+		NSBeep();
+		NSLog(@"Couldn't convert to an attributed string.");
+	}
+	
+}
+
+
 @end

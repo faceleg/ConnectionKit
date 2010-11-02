@@ -180,6 +180,11 @@ extern NSString *KTDocumentWillSaveNotification;
 
 - (IBAction)revertDocumentToSnapshot:(id)sender;
 
+- (IBAction) clearPageHTML:(id)sender;
+- (IBAction) copyRichTextHTML:(id)sender;
+- (IBAction) pasteRichTextHTML:(id)sender;
+- (IBAction) rebuildRichTextHTML:(id)sender;
+
 + (NSURL *)snapshotsDirectoryURL;
 - (NSURL *)snapshotDirectoryURL;
 - (NSURL *)snapshotURL;

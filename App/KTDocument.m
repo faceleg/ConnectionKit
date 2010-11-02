@@ -964,6 +964,31 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
 }
 
+- (IBAction) clearPageHTML:(id)sender;
+{
+	KTPage *page = [[[self windowController] siteOutlineController] selectedPage];
+	[page clearPageHTML:sender];
+}
+
+- (IBAction) copyRichTextHTML:(id)sender;
+{
+	//if (![@"sandvox.HTMLElement" isEqualToString:[sourceObject valueForKey:@"pluginIdentifier"]])
+	KTPage *page = [[[self windowController] siteOutlineController] selectedPage];
+	[page copyRichTextHTML:sender];
+}
+
+- (IBAction) pasteRichTextHTML:(id)sender;
+{
+	KTPage *page = [[[self windowController] siteOutlineController] selectedPage];
+	[page pasteRichTextHTML:sender];
+}
+
+- (IBAction) rebuildRichTextHTML:(id)sender;
+{
+	KTPage *page = [[[self windowController] siteOutlineController] selectedPage];
+	[page rebuildRichTextHTML:sender];
+}
+
 #pragma mark -
 #pragma mark Delegate Methods
 
