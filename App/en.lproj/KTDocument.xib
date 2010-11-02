@@ -2,16 +2,16 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10F2521</string>
-		<string key="IBDocument.InterfaceBuilderVersion">823</string>
+		<string key="IBDocument.SystemVersion">10F569</string>
+		<string key="IBDocument.InterfaceBuilderVersion">804</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<dictionary class="NSMutableDictionary" key="IBDocument.PluginVersions">
-			<string key="com.apple.InterfaceBuilder.CocoaPlugin">823</string>
+			<string key="com.apple.InterfaceBuilder.CocoaPlugin">804</string>
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="1701"/>
+			<integer value="2045"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -362,7 +362,6 @@
 																</object>
 															</array>
 														</object>
-														<int key="NSSelectedIndex">4</int>
 														<bool key="NSPullDown">YES</bool>
 														<int key="NSPreferredEdge">1</int>
 														<bool key="NSUsesItemFromMenu">YES</bool>
@@ -398,7 +397,7 @@
 														<object class="NSPopUpButton" id="481224017">
 															<reference key="NSNextResponder" ref="327729126"/>
 															<int key="NSvFlags">265</int>
-															<string key="NSFrame">{{561, 37}, {86, 17}}</string>
+															<string key="NSFrame">{{591, 37}, {86, 17}}</string>
 															<reference key="NSSuperview" ref="327729126"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSPopUpButtonCell" key="NSCell" id="68074209">
@@ -503,7 +502,7 @@
 														<object class="NSTextField" id="452661693">
 															<reference key="NSNextResponder" ref="327729126"/>
 															<int key="NSvFlags">266</int>
-															<string key="NSFrame">{{1, 21}, {695, 14}}</string>
+															<string key="NSFrame">{{17, 20}, {695, 14}}</string>
 															<reference key="NSSuperview" ref="327729126"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTextFieldCell" key="NSCell" id="25421999">
@@ -652,7 +651,7 @@
 														<object class="NSButton" id="597655839">
 															<reference key="NSNextResponder" ref="327729126"/>
 															<int key="NSvFlags">265</int>
-															<string key="NSFrame">{{681, 39}, {12, 13}}</string>
+															<string key="NSFrame">{{571, 39}, {12, 13}}</string>
 															<reference key="NSSuperview" ref="327729126"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSButtonCell" key="NSCell" id="979489525">
@@ -1782,6 +1781,22 @@
 					<int key="connectionID">2161</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleIsCollection:</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="481224017"/>
+					</object>
+					<int key="connectionID">2169</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oPublishAsCollectionPopup</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="481224017"/>
+					</object>
+					<int key="connectionID">2170</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">selectedTag: publishSelectionAsCollection</string>
 						<reference key="source" ref="481224017"/>
@@ -1792,18 +1807,14 @@
 							<string key="NSLabel">selectedTag: publishSelectionAsCollection</string>
 							<string key="NSBinding">selectedTag</string>
 							<string key="NSKeyPath">publishSelectionAsCollection</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSMultipleValuesPlaceholder</string>
+								<string key="NS.object.0">Multiple</string>
+							</object>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">2168</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">toggleIsCollection:</string>
-						<reference key="source" ref="408607898"/>
-						<reference key="destination" ref="481224017"/>
-					</object>
-					<int key="connectionID">2169</int>
+					<int key="connectionID">2171</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2149,11 +2160,11 @@
 							<reference ref="130323050"/>
 							<reference ref="139174513"/>
 							<reference ref="209282229"/>
-							<reference ref="452661693"/>
 							<reference ref="987946768"/>
 							<reference ref="899980468"/>
 							<reference ref="408006662"/>
 							<reference ref="481224017"/>
+							<reference ref="452661693"/>
 						</array>
 						<reference key="parent" ref="641495171"/>
 					</object>
@@ -2528,6 +2539,9 @@
 				<string key="1766.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1767.CustomClassName">KSFocusingTextField</string>
 				<string key="1767.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSAffineTransform" key="1767.IBViewBoundsToFrameTransform">
+					<bytes key="NSTransformStruct">P4AAAL+AAAA/gAAAwgQAAA</bytes>
+				</object>
 				<string key="1768.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1769.CustomClassName">KSFocusingTextField</string>
 				<string key="1769.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2622,7 +2636,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2169</int>
+			<int key="maxID">2171</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

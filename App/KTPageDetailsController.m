@@ -851,21 +851,21 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		int *theExtraX = nil;
 		int *theMarginsAfter = nil;
 		
-		NSArray *pageItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
-		int pageExtraX [] = {4,5,6,8,0};
-		int pageMarginsAfter[] = {0,-1,0,8,0};
+		NSArray *pageItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oDotSeparator,oExtensionPopup,oFollowButton,oPublishAsCollectionPopup,nil];
+		int pageExtraX [] = {4,5,6,8,0,0};
+		int pageMarginsAfter[] = {0,-1,0,8,12,0};
 		
-		NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oSlashSeparator, oIndexDotSeparator,oExtensionPopup,oFollowButton,nil];
-		int collectionExtraX [] = {4,5,1,6,8,0};
-		int collectionMarginsAfter[] = {0,-1,0,0,8,0};
+		NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oSlashSeparator, oIndexDotSeparator,oExtensionPopup,oFollowButton,oPublishAsCollectionPopup,nil];
+		int collectionExtraX [] = {4,5,1,6,8,0,0};
+		int collectionMarginsAfter[] = {0,-1,0,0,8,12,0};
 		
-		NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oMultiplePagesField,oDotSeparator,oExtensionPopup,nil];
-		int markerExtraX [] = {4,4,6,8};
-		int markerMarginsAfter[] = {0,0,0,8};
+		NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oMultiplePagesField,oDotSeparator,oExtensionPopup,oPublishAsCollectionPopup,nil];
+		int markerExtraX [] = {4,4,6,8,0};
+		int markerMarginsAfter[] = {0,0,0,8,12};
 			
-		NSArray *rootItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oIndexDotSeparator,oExtensionPopup,oFollowButton,nil];
-		int rootExtraX [] = {0,6,8,0};
-		int rootMarginsAfter[] = {0,0,8,0};
+		NSArray *rootItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oIndexDotSeparator,oExtensionPopup,oFollowButton,oPublishAsCollectionPopup,nil];
+		int rootExtraX [] = {0,6,8,0,0};
+		int rootMarginsAfter[] = {0,0,8,12,0};
 		
 		NSArray *mediaItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oFollowButton,nil];
 		int mediaExtraX [] = {4,5,1};
