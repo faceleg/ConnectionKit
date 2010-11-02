@@ -18,6 +18,11 @@
 #import "NSError+Karelia.h"
 
 
+@interface SVMediaPlugIn (InheritedPrivate)
+@property(nonatomic, readonly) SVMediaGraphic *container;
+@end
+
+
 @implementation SVMediaPlugIn
 
 #pragma mark Properties
