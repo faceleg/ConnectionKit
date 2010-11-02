@@ -69,6 +69,16 @@
 
 #pragma mark Metrics
 
+- (void)setWidth:(NSUInteger)width;
+{
+    [[self container] setSizeWithWidth:[NSNumber numberWithUnsignedInteger:width]];
+}
+
+- (void)setHeight:(NSUInteger)height;
+{
+    [[self container] setSizeWithHeight:[NSNumber numberWithUnsignedInteger:height]];
+}
+
 + (BOOL)isExplicitlySized; { return YES; }
 
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;

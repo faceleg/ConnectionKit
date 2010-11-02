@@ -72,7 +72,7 @@
     }
     
     // Make sure we don't have auto width. Super will then pull down to a good value
-    [self setWidth:[NSNumber numberWithUnsignedInteger:NSUIntegerMax]];
+    [self setSizeWithWidth:[NSNumber numberWithUnsignedInteger:NSUIntegerMax]];
     [super didAddToPage:page];
     
     
@@ -212,7 +212,7 @@
         [[self plugIn] awakeFromNew];   // which will probably set size…
         
         // …so bring the width back to desired value
-        [self setWidth:width];
+        [self setSizeWithWidth:width];
     }
     
     
@@ -326,11 +326,11 @@
         
         if (aspectRatio < constraintRatio)
         {
-            [self setHeight:[NSNumber numberWithFloat:size.height]];
+            [self setSizeWithHeight:[NSNumber numberWithFloat:size.height]];
         }
         else
         {
-            [self setWidth:[NSNumber numberWithFloat:size.width]];
+            [self setSizeWithWidth:[NSNumber numberWithFloat:size.width]];
         }
     }
     else
@@ -390,23 +390,30 @@
 
 #pragma mark Size, inherited
 
-- (void)setWidth:(NSNumber *)width;
+- (void)setSizeWithWidth:(NSNumber *)width;
 {
-    [self willChangeValueForKey:@"width"];
-    [self setPrimitiveValue:width forKey:@"width"];
+    [self setWidth:width];
     
     NSNumber *aspectRatio = [self constrainedAspectRatio];
     if (aspectRatio)
     {
         NSUInteger height = ([width floatValue] / [aspectRatio floatValue]);
-        
-        [self willChangeValueForKey:@"height"];
-        [self setPrimitiveValue:[NSNumber numberWithUnsignedInteger:height] forKey:@"height"];
-        [self didChangeValueForKey:@"height"];
+        [self setHeight:[NSNumber numberWithUnsignedInteger:height]];
     }
-    
-    [self didChangeValueForKey:@"width"];
 }
+
+- (void)setSizeWithHeight:(NSNumber *)height;
+{
+    [self setHeight:height];
+    
+    NSNumber *aspectRatio = [self constrainedAspectRatio];
+    if (aspectRatio)
+    {
+        NSUInteger width = ([height floatValue] * [aspectRatio floatValue]);
+        [self setWidth:[NSNumber numberWithUnsignedInteger:width]];
+    }
+}
+
 - (BOOL)validateWidth:(NSNumber **)width error:(NSError **)error;
 {
     // SVGraphic.width is optional. For media graphics it becomes compulsory unless using external URL
@@ -421,23 +428,6 @@
     return result;
 }
 
-- (void)setHeight:(NSNumber *)height;
-{
-    [self willChangeValueForKey:@"height"];
-    [self setPrimitiveValue:height forKey:@"height"];
-    
-    NSNumber *aspectRatio = [self constrainedAspectRatio];
-    if (aspectRatio)
-    {
-        NSUInteger width = ([height floatValue] * [aspectRatio floatValue]);
-        
-        [self willChangeValueForKey:@"width"];
-        [self setPrimitiveValue:[NSNumber numberWithUnsignedInteger:width] forKey:@"width"];
-        [self didChangeValueForKey:@"width"];
-    }
-    
-    [self didChangeValueForKey:@"height"];
-}
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 {
     // Push off validation to plug-in
@@ -649,13 +639,13 @@
 		[self setConstrainProportions:[self isConstrainProportionsEditable]];
 		if (oldWidth)
 		{
-			[self setWidth:oldWidth];
+			[self setSizeWithWidth:oldWidth];
 		}
 		else
 		{
 			if ([[self width] integerValue] > 200)
 			{
-				[self setWidth:[NSNumber numberWithInt:200]];
+				[self setSizeWithWidth:[NSNumber numberWithInt:200]];
 			}
 			// If going from external URL to proper media, this means your image is quite probably now 200px wide. Not ideal, but so rare I'm not going to worry abiout it. #92576
 		}

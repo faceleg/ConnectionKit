@@ -676,7 +676,7 @@ static SVGraphicFactory *sRawHTMLFactory;
 /*! returns unionSet of acceptedDragTypes from all known KTDataSources */
 + (NSArray *)graphicPasteboardTypes;
 {
-    return [SVMediaPlugIn readableTypesForPasteboard:nil];
+    return [SVMediaGraphic allowedTypes];
 }
 
 #pragma mark SVGraphicFactory
