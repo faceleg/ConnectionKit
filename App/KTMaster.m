@@ -397,35 +397,37 @@
 
 // TODO: this is kind of hacky, for Sandvox 2 all should be combined
 // into the fewest, flexible attributes possible
-- (KTCommentsProvider)commentsProvider
-{
-	return (KTCommentsProvider)[[self valueForUndefinedKey:@"commentsProvider"] intValue];
-}
-
-- (void)setCommentsProvider:(KTCommentsProvider)aKTCommentsProvider
-{
-	NSSet *keys = [NSSet setWithObjects:@"wantsDisqus", @"wantsJSKit", @"wantsHaloscan", @"wantsIntenseDebate", nil];
-	[self willChangeValuesForKeys:keys];
-	[self setValue:[NSNumber numberWithInt:aKTCommentsProvider] forUndefinedKey:@"commentsProvider"];
-	[self didChangeValuesForKeys:keys];
-	
-	// for backward compatibility with 1.5.4
-	if ( KTCommentsProviderJSKit == aKTCommentsProvider )
-	{
-		[self setValue:[NSNumber numberWithBool:YES] forUndefinedKey:@"wantsJSKit"];
-		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsHaloscan"];
-	}
-	else if ( KTCommentsProviderHaloscan == aKTCommentsProvider )
-	{
-		[self setValue:[NSNumber numberWithBool:YES] forUndefinedKey:@"wantsHaloscan"];
-		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsJSKit"];
-	}
-	else
-	{
-		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsHaloscan"];
-		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsJSKit"];
-	}
-}
+@dynamic commentsProvider;
+@dynamic commentsOwner;
+//- (KTCommentsProvider)commentsProvider
+//{
+//	return (KTCommentsProvider)[[self valueForUndefinedKey:@"commentsProvider"] intValue];
+//}
+//
+//- (void)setCommentsProvider:(KTCommentsProvider)aKTCommentsProvider
+//{
+//	NSSet *keys = [NSSet setWithObjects:@"wantsDisqus", @"wantsJSKit", @"wantsHaloscan", @"wantsIntenseDebate", nil];
+//	[self willChangeValuesForKeys:keys];
+//	[self setValue:[NSNumber numberWithInt:aKTCommentsProvider] forUndefinedKey:@"commentsProvider"];
+//	[self didChangeValuesForKeys:keys];
+//	
+//	// for backward compatibility with 1.5.4
+//	if ( KTCommentsProviderJSKit == aKTCommentsProvider )
+//	{
+//		[self setValue:[NSNumber numberWithBool:YES] forUndefinedKey:@"wantsJSKit"];
+//		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsHaloscan"];
+//	}
+//	else if ( KTCommentsProviderHaloscan == aKTCommentsProvider )
+//	{
+//		[self setValue:[NSNumber numberWithBool:YES] forUndefinedKey:@"wantsHaloscan"];
+//		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsJSKit"];
+//	}
+//	else
+//	{
+//		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsHaloscan"];
+//		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsJSKit"];
+//	}
+//}
 
 - (BOOL)wantsIntenseDebate
 {

@@ -84,8 +84,10 @@
 
 #pragma mark Comments
 @property(nonatomic, readonly) NSString *commentsSummary;
-- (KTCommentsProvider)commentsProvider;
-- (void)setCommentsProvider:(KTCommentsProvider)aKTCommentsProvider;
+@property(nonatomic, assign) NSInteger commentsProvider;
+@property(nonatomic, retain) NSString *commentsOwner;
+//- (KTCommentsProvider)commentsProvider;
+//- (void)setCommentsProvider:(KTCommentsProvider)aKTCommentsProvider;
 
 - (BOOL)wantsDisqus;
 - (void)setWantsDisqus:(BOOL)aBool;
