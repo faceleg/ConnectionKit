@@ -14,4 +14,7 @@
 
 }
 
+- (void)configureComments:(NSWindowController *)sender;
+- (IBAction)closeSheet:(id)sender;
+
 @end
