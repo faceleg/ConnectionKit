@@ -753,6 +753,10 @@
 		3CA6B98D11F9130B004A4794 /* YRKSpinningProgressIndicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CA6B98B11F9130B004A4794 /* YRKSpinningProgressIndicator.h */; };
 		3CA6B98E11F9130B004A4794 /* YRKSpinningProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA6B98C11F9130B004A4794 /* YRKSpinningProgressIndicator.m */; };
 		3CA9B30E0804643200C3053B /* KTDocument+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9B30D0804643200C3053B /* KTDocument+Properties.m */; };
+		3CACE246127FB82300983DF2 /* SVCommentsWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CACE244127FB82300983DF2 /* SVCommentsWindowController.h */; };
+		3CACE247127FB82300983DF2 /* SVCommentsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CACE245127FB82300983DF2 /* SVCommentsWindowController.m */; };
+		3CACE29F127FB99400983DF2 /* SVGoogleWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CACE29D127FB99400983DF2 /* SVGoogleWindowController.h */; };
+		3CACE2A0127FB99400983DF2 /* SVGoogleWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CACE29E127FB99400983DF2 /* SVGoogleWindowController.m */; };
 		3CBDE9120EBA65D20059C56C /* KTLocalPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CBDE9100EBA65D20059C56C /* KTLocalPublishingEngine.h */; };
 		3CBDE9130EBA65D20059C56C /* KTLocalPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDE9110EBA65D20059C56C /* KTLocalPublishingEngine.m */; };
 		3CBFD398093C45930057668A /* KTSiteOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD396093C45930057668A /* KTSiteOutlineView.m */; };
@@ -2366,6 +2370,10 @@
 		3CA9B30D0804643200C3053B /* KTDocument+Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Properties.m"; sourceTree = "<group>"; };
 		3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BadgeElement.xcodeproj; path = ../PlugIns/Elements/BadgeElement/BadgeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FeedElement.xcodeproj; path = ../PlugIns/Elements/FeedElement/FeedElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3CACE244127FB82300983DF2 /* SVCommentsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVCommentsWindowController.h; sourceTree = "<group>"; };
+		3CACE245127FB82300983DF2 /* SVCommentsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVCommentsWindowController.m; sourceTree = "<group>"; };
+		3CACE29D127FB99400983DF2 /* SVGoogleWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGoogleWindowController.h; sourceTree = "<group>"; };
+		3CACE29E127FB99400983DF2 /* SVGoogleWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGoogleWindowController.m; sourceTree = "<group>"; };
 		3CBDE9100EBA65D20059C56C /* KTLocalPublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTLocalPublishingEngine.h; sourceTree = "<group>"; };
 		3CBDE9110EBA65D20059C56C /* KTLocalPublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTLocalPublishingEngine.m; sourceTree = "<group>"; };
 		3CBFD395093C45930057668A /* KTSiteOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSiteOutlineView.h; sourceTree = "<group>"; };
@@ -5341,6 +5349,10 @@
 				CE7779E40AE499C3002E6844 /* SVWelcomeController.m */,
 				CE5B1CB611E54A37005E2C5E /* KTFeedbackReporter.h */,
 				CE5B1CB711E54A37005E2C5E /* KTFeedbackReporter.m */,
+				3CACE244127FB82300983DF2 /* SVCommentsWindowController.h */,
+				3CACE245127FB82300983DF2 /* SVCommentsWindowController.m */,
+				3CACE29D127FB99400983DF2 /* SVGoogleWindowController.h */,
+				3CACE29E127FB99400983DF2 /* SVGoogleWindowController.m */,
 			);
 			name = "Other Window Controllers";
 			sourceTree = "<group>";
@@ -5781,6 +5793,8 @@
 				27A02CCC12799B4D00408A72 /* KSWebLocationPasteboardUtilities.h in Headers */,
 				27F9A745127A31070042D7B8 /* SVPageTemplate.h in Headers */,
 				CE05022A127B8DD90082BFA9 /* KTElementPlugInWrapper.h in Headers */,
+				3CACE246127FB82300983DF2 /* SVCommentsWindowController.h in Headers */,
+				3CACE29F127FB99400983DF2 /* SVGoogleWindowController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5880,6 +5894,9 @@
 /* Begin PBXProject section */
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Karelia Software";
+			};
 			buildConfigurationList = CE3BC24108575E2800576982 /* Build configuration list for PBXProject "Sandvox" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = en;
@@ -7269,6 +7286,8 @@
 				27A02CCD12799B4D00408A72 /* KSWebLocationPasteboardUtilities.m in Sources */,
 				27F9A746127A31070042D7B8 /* SVPageTemplate.m in Sources */,
 				CE050229127B8DD80082BFA9 /* KTElementPlugInWrapper.m in Sources */,
+				3CACE247127FB82300983DF2 /* SVCommentsWindowController.m in Sources */,
+				3CACE2A0127FB99400983DF2 /* SVGoogleWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
