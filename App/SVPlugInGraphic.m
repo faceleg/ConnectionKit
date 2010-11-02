@@ -284,13 +284,50 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (void)setSizeWithWidth:(NSNumber *)width height:(NSNumber *)height;
 {
-    [[self plugIn] setSizeWithWidth:width height:height];
+    if ([self constrainProportions])
+    {
+        CGFloat constraintRatio = [[[self plugIn] constrainedAspectRatio] floatValue];
+        
+        
+        if (width && height)
+        {
+            CGFloat aspectRatio = [width floatValue] / [height floatValue];
+            
+            if (aspectRatio < constraintRatio)
+            {
+                width = nil;
+            }
+            else
+            {
+                height = nil;
+            }
+        }
+        
+        
+        // Apply the constraint
+        OBASSERT(!(width && height));
+        
+        if (width)
+        {
+            height = [NSNumber numberWithUnsignedInteger:([width floatValue] / constraintRatio)];
+        }
+        else if (height)
+        {
+            width = [NSNumber numberWithUnsignedInteger:([height floatValue] * constraintRatio)];
+        }
+    }
+    else
+    {
+        if (!height) height = [self height];
+        if (!width) width = [self width];
+    }
+    
+    // Store
+    [[self plugIn] setWidth:width height:height];
 }
 
 - (NSNumber *)contentWidth;
 {
-    SVPlugIn *plugIn = [self plugIn];
-    
     NSNumber *result = nil;
     if ([self isExplicitlySized] || [[self placement] intValue] == SVGraphicPlacementInline)
     {
@@ -305,9 +342,9 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 }
 - (void)setContentWidth:(NSNumber *)width;
 {
-    [[self plugIn] setSizeWithWidth:width height:nil];
+    [self setSizeWithWidth:width height:nil];
 }
-+ (NSSet *)keyPathsForValuesAffectingContentWidth; { return [NSSet setWithObject:@"plugIn.width"]; }
++ (NSSet *)keyPathsForValuesAffectingContentWidth; { return [NSSet setWithObject:@"width"]; }
 - (BOOL)validateContentWidth:(NSNumber **)width error:(NSError **)error;
 {
     BOOL result = YES;
@@ -323,8 +360,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (NSNumber *)contentHeight;
 {
-    SVPlugIn *plugIn = [self plugIn];
-    
     NSNumber *result = nil;
     if ([self isExplicitlySized])
     {
@@ -339,9 +374,9 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 }
 - (void)setContentHeight:(NSNumber *)height;
 {
-    [[self plugIn] setSizeWithWidth:nil height:height];
+    [self setSizeWithWidth:nil height:height];
 }
-+ (NSSet *)keyPathsForValuesAffectingContentHeight; { return [NSSet setWithObject:@"plugIn.height"]; }
++ (NSSet *)keyPathsForValuesAffectingContentHeight; { return [NSSet setWithObject:@"height"]; }
 - (BOOL)validateContentHeight:(NSNumber **)height error:(NSError **)error;
 {
     BOOL result = YES;
