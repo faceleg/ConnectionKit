@@ -271,10 +271,33 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
 {
+    OBPRECONDITION(node);
+    
     WEKWebEditorItem *result = nil;
     
+    // Standard logic mostly works, but we want to ignore anything outside the graphic
+    DOMElement *testElement = [self graphicDOMElement];
+    if (!testElement) testElement = [self HTMLElement];
+    
+    if ([node ks_isDescendantOfElement:testElement])
+    {
+        // Search for a descendant
+        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+        {
+            result = [anItem hitTestDOMNode:node];
+            if (result) break;
+        }
+        
+        // If no descendants claim it, node is ours
+        if (!result && testElement) result = self;
+    }
+    
+    return result;
+    
+    
     // We only want to claim nodes that are inside the selectable region
-    if ([node ks_isDescendantOfElement:[self selectableDOMElement]])
+    DOMElement *selectable = [self selectableDOMElement];
+    if (!selectable || [node ks_isDescendantOfElement:selectable])
     {
         result = [super hitTestDOMNode:node];
     }
