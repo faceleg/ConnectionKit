@@ -222,6 +222,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     }
 }
 
+@synthesize commentsWindowController = _commentsWindowController;
+@synthesize googleWindowController = _googleWindowController;
+
 #pragma mark Window Title
 
 /*  We append the title of our current content to the default. This gives a similar effect to the titlebar in a web browser.
@@ -827,6 +830,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	NSLog(@"To Do: Configure Google");
 	NSBeep();
 }
+
+- (IBAction)configureComments:(id)sender;
+{
+	NSLog(@"To Do: Configure Comments");
+	NSBeep();
+}
+
 
 #pragma mark Persistence
 

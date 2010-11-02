@@ -35,6 +35,8 @@
 @class KTPage;
 @class KTCodeInjectionController;
 @class SVDesignChooserWindowController;
+@class SVCommentsWindowController;
+@class SVGoogleWindowController;
 @class BWAnchoredPopUpButton;
 
 extern NSString *gInfoWindowAutoSaveName;
@@ -79,6 +81,12 @@ extern NSString *gInfoWindowAutoSaveName;
     
     // Design Chooser
     SVDesignChooserWindowController *_designChooserWindowController;
+    
+    // Comments
+    SVCommentsWindowController *_commentsWindowController;
+    
+    // Google
+    SVGoogleWindowController *_googleWindowController;
 	
 	NSMenuItem						*_rawHTMLMenuItem;		// like an outlet
 	NSMenuItem						*_HTMLTextPageMenuItem;		// like an outlet
@@ -96,6 +104,8 @@ extern NSString *gInfoWindowAutoSaveName;
 @property(nonatomic, retain) NSMenuItem *rawHTMLMenuItem;
 @property(nonatomic, retain) NSMenuItem *HTMLTextPageMenuItem;
 
+@property(nonatomic, retain) SVCommentsWindowController *commentsWindowController;
+@property(nonatomic, retain) SVGoogleWindowController *googleWindowController;
 
 
 //- (void)updateEditMenuItems;
