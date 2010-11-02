@@ -279,6 +279,11 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 #pragma mark Metrics
 
+- (void)setSizeWithWidth:(NSNumber *)width height:(NSNumber *)height;
+{
+    [[self plugIn] setSizeWithWidth:width height:height];
+}
+
 - (NSNumber *)contentWidth;
 {
     SVPlugIn *plugIn = [self plugIn];
@@ -298,7 +303,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 }
 - (void)setContentWidth:(NSNumber *)width;
 {
-    [[self plugIn] setWidth:[width unsignedIntegerValue]];
+    [[self plugIn] setSizeWithWidth:width height:nil];
 }
 + (NSSet *)keyPathsForValuesAffectingContentWidth; { return [NSSet setWithObject:@"plugIn.width"]; }
 - (BOOL)validateContentWidth:(NSNumber **)width error:(NSError **)error;
@@ -333,7 +338,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 }
 - (void)setContentHeight:(NSNumber *)height;
 {
-    [[self plugIn] setHeight:[height unsignedIntegerValue]];
+    [[self plugIn] setSizeWithWidth:nil height:height];
 }
 + (NSSet *)keyPathsForValuesAffectingContentHeight; { return [NSSet setWithObject:@"plugIn.height"]; }
 - (BOOL)validateContentHeight:(NSNumber **)height error:(NSError **)error;

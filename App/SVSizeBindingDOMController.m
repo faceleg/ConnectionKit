@@ -130,21 +130,10 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     
     // Apply the change
     SVPlugInGraphic *graphic = [self representedObject];
-	if (resizingWidth)
-    {
-        if (resizingHeight)
-        {
-            [graphic setSize:size];
-        }
-        else
-        {
-            [graphic setWidth:[NSNumber numberWithFloat:size.width]];
-        }
-    }
-    else if (resizingHeight)
-    {
-        [graphic setHeight:[NSNumber numberWithFloat:size.height]];
-    }
+    
+    NSNumber *width = (resizingWidth ? [NSNumber numberWithFloat:size.width] : nil);
+    NSNumber *height = (resizingHeight ? [NSNumber numberWithFloat:size.height]: nil);
+    [graphic setSizeWithWidth:width height:height];
 }
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;

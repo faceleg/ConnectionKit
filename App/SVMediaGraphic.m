@@ -72,7 +72,7 @@
     }
     
     // Make sure we don't have auto width. Super will then pull down to a good value
-    [self setSizeWithWidth:[NSNumber numberWithUnsignedInteger:NSUIntegerMax]];
+    [self setSizeWithWidth:[NSNumber numberWithUnsignedInteger:NSUIntegerMax] height:nil];
     [super didAddToPage:page];
     
     
@@ -212,7 +212,7 @@
         [[self plugIn] awakeFromNew];   // which will probably set size…
         
         // …so bring the width back to desired value
-        [self setSizeWithWidth:width];
+        [self setSizeWithWidth:width height:nil];
     }
     
     
@@ -316,29 +316,6 @@
 }
 
 #pragma mark Size
-
-- (void)setSize:(NSSize)size;
-{
-    if ([self constrainProportions])
-    {
-        CGFloat constraintRatio = [[self constrainedAspectRatio] floatValue];
-        CGFloat aspectRatio = size.width / size.height;
-        
-        if (aspectRatio < constraintRatio)
-        {
-            [self setSizeWithHeight:[NSNumber numberWithFloat:size.height]];
-        }
-        else
-        {
-            [self setSizeWithWidth:[NSNumber numberWithFloat:size.width]];
-        }
-    }
-    else
-    {
-        [self setWidth:[NSNumber numberWithFloat:size.width]];
-        [self setHeight:[NSNumber numberWithFloat:size.height]];
-    }
-}
 
 - (BOOL)constrainProportions { return [self constrainedAspectRatio] != nil; }
 - (void)setConstrainProportions:(BOOL)constrainProportions;

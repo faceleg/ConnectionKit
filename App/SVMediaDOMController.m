@@ -25,11 +25,6 @@
 
 #pragma mark Resize
 
-- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
-{
-    [[self representedObject] setSize:size];
-}
-
 - (NSSize)minSize;
 {
     // Remove the 200px width restriction

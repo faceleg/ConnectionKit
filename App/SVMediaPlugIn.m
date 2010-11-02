@@ -74,14 +74,44 @@
 
 #pragma mark Metrics
 
-- (void)setWidth:(NSUInteger)width;
+- (void)setSizeWithWidth:(NSNumber *)width height:(NSNumber *)height;
 {
-    [[self container] setSizeWithWidth:[NSNumber numberWithUnsignedInteger:width]];
-}
-
-- (void)setHeight:(NSUInteger)height;
-{
-    [[self container] setSizeWithHeight:[NSNumber numberWithUnsignedInteger:height]];
+    if ([self constrainProportions])
+    {
+        CGFloat constraintRatio = [[[self container] constrainedAspectRatio] floatValue];
+        
+        
+        if (width && height)
+        {
+            CGFloat aspectRatio = [width floatValue] / [height floatValue];
+            
+            if (aspectRatio < constraintRatio)
+            {
+                width = nil;
+            }
+            else
+            {
+                height = nil;
+            }
+        }
+        
+        
+        // Apply the constraint
+        OBASSERT(!(width && height));
+        
+        if (width)
+        {
+            height = [NSNumber numberWithUnsignedInteger:([width floatValue] / constraintRatio)];
+        }
+        else if (height)
+        {
+            width = [NSNumber numberWithUnsignedInteger:([height floatValue] * constraintRatio)];
+        }
+    }
+    
+    
+    // Store
+    [super setSizeWithWidth:width height:height];
 }
 
 + (BOOL)isExplicitlySized; { return YES; }
@@ -101,6 +131,7 @@
     return result;
 }
 
+- (BOOL)constrainProportions; { return [[self container] constrainProportions]; }
 - (BOOL)isConstrainProportionsEditable; { return YES; }
 
 - (NSNumber *)naturalWidth; { return [[self container] naturalWidth]; }

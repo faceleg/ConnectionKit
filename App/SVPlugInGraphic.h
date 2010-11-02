@@ -40,6 +40,7 @@
 
 #pragma mark Metrics
 
+- (void)setSizeWithWidth:(NSNumber *)width height:(NSNumber *)height;
 @property(nonatomic, copy) NSNumber *contentWidth;
 @property(nonatomic, copy) NSNumber *contentHeight;
 

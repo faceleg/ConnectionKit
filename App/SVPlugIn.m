@@ -253,6 +253,12 @@ static id <SVPlugInContext> sCurrentContext;
     return [NSSet setWithObject:@"container.height"];
 }
 
+- (void)setSizeWithWidth:(NSNumber *)width height:(NSNumber *)height;
+{
+    if (width) [self setWidth:[width unsignedIntegerValue]];
+    if (height) [self setHeight:[height unsignedIntegerValue]];
+}
+
 - (NSUInteger)minWidth; { return 200; }
 - (NSUInteger)minHeight; { return 1; }
 

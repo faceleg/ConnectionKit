@@ -94,6 +94,8 @@
 @property(nonatomic) NSUInteger width;
 @property(nonatomic) NSUInteger height;
 
+- (void)setSizeWithWidth:(NSNumber *)width height:(NSNumber *)height;
+
 - (NSUInteger)minWidth;    // default is 200
 - (NSUInteger)minHeight;    // default is 1
 
