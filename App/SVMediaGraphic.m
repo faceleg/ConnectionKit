@@ -359,16 +359,6 @@
 @dynamic naturalWidth;
 @dynamic naturalHeight;
 
-- (void)makeOriginalSize;
-{
-    BOOL constrainProportions = [self constrainProportions];
-    [self setConstrainProportions:NO];  // temporarily turn off so we get desired size.
-    
-    [super makeOriginalSize];   // calls through to the plug-in's -makeOriginalSize method
-    
-    [self setConstrainProportions:constrainProportions];
-}
-
 #pragma mark Size, inherited
 
 - (BOOL)validateWidth:(NSNumber **)width error:(NSError **)error;
