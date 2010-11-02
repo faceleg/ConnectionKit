@@ -60,7 +60,6 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 	MAAttachedWindow *_attachedWindow;
 
 	int     _whatKindOfItemsAreSelected;
-    BOOL    _isCollection;
 	
 	BOOL _alreadyHandlingControlTextDidChange;
 	
@@ -78,7 +77,6 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 
 // Publish as Collection
 - (IBAction)toggleIsCollection:(NSButton *)sender;
-@property(nonatomic) BOOL publishSelectionAsCollection;
 
 
 // Meta description

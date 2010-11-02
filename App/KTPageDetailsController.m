@@ -97,9 +97,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 													name:NSViewBoundsDidChangeNotification
 												  object:[self view]];
     
-    [self unbind:@"publishSelectionAsCollection"];
-	
-	self.view = nil;		// stop observing early.
+    self.view = nil;		// stop observing early.
 	
 	self.activeTextField = nil;
 	[_metaDescriptionCount release];
@@ -220,11 +218,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 					  options:nil];
         
         
-        // Bind collection status
-        [self bind:@"publishSelectionAsCollection" toObject:oPagesController withKeyPath:@"selection.isCollection" options:nil];
-		
-        
-		_awokenFromNib = YES;
+        _awokenFromNib = YES;
 	}
 }
 
@@ -1026,8 +1020,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
         [oPublishAsCollectionPopup selectItemWithTag:(isCollection?1:0)];
 	}
 }
-
-@synthesize publishSelectionAsCollection = _isCollection;
 
 #pragma mark -
 #pragma mark Text editing notifications

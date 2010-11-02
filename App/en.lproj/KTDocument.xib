@@ -2,12 +2,12 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">804</string>
+		<string key="IBDocument.SystemVersion">10F2521</string>
+		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<dictionary class="NSMutableDictionary" key="IBDocument.PluginVersions">
-			<string key="com.apple.InterfaceBuilder.CocoaPlugin">804</string>
+			<string key="com.apple.InterfaceBuilder.CocoaPlugin">823</string>
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
@@ -919,6 +919,7 @@
 					<string>childItems</string>
 					<string>childItems.@count</string>
 					<string>isRoot</string>
+					<string>willPublishAsCollection</string>
 				</array>
 				<string key="NSObjectClassName">KTPage</string>
 				<bool key="NSEditable">YES</bool>
@@ -1798,15 +1799,15 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: publishSelectionAsCollection</string>
+						<string key="label">selectedTag: selection.willPublishAsCollection</string>
 						<reference key="source" ref="481224017"/>
-						<reference key="destination" ref="408607898"/>
+						<reference key="destination" ref="601368962"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="481224017"/>
-							<reference key="NSDestination" ref="408607898"/>
-							<string key="NSLabel">selectedTag: publishSelectionAsCollection</string>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">selectedTag: selection.willPublishAsCollection</string>
 							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">publishSelectionAsCollection</string>
+							<string key="NSKeyPath">selection.willPublishAsCollection</string>
 							<object class="NSDictionary" key="NSOptions">
 								<string key="NS.key.0">NSMultipleValuesPlaceholder</string>
 								<string key="NS.object.0">Multiple</string>
@@ -1814,7 +1815,7 @@
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">2171</int>
+					<int key="connectionID">2176</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2636,7 +2637,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2171</int>
+			<int key="maxID">2176</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

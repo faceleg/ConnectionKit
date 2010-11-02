@@ -68,6 +68,13 @@
     }
 }
 
+- (BOOL)willPublishAsCollection; { return [self isCollection]; }
+- (void)setWillPublishAsCollection:(BOOL)collection; { }
++ (NSSet *) keyPathsForValuesAffectingWillPublishAsCollection;
+{
+    return [NSSet setWithObject:@"isCollection"];
+}
+
 #pragma mark Children
 
 @dynamic childItems;

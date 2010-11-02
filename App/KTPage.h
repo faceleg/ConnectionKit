@@ -145,6 +145,7 @@ typedef enum {
 - (KTPage *)parentOrRoot;
 - (BOOL)hasChildren;
 @property(nonatomic) BOOL isCollection;
+@property(nonatomic, readonly) BOOL willPublishAsCollection;    // dummy setter for binding to
 
 
 #pragma mark Navigation Arrows
