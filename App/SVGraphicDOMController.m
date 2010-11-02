@@ -285,24 +285,15 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         NSArray *children = [self childWebEditorItems];
         
         // Search for a descendant
+        // Body DOM Controller will take care of looking for a single selectable child for us
         for (WEKWebEditorItem *anItem in children)
         {
             result = [anItem hitTestDOMNode:node];
             if (result) break;
         }
-            
-        // If no descendants claim it, node is ours
-        if (!result) result = self;
-    }
-    
-    return result;
-    
-    
-    // We only want to claim nodes that are inside the selectable region
-    DOMElement *selectable = [self selectableDOMElement];
-    if (!selectable || [node ks_isDescendantOfElement:selectable])
-    {
-        result = [super hitTestDOMNode:node];
+          
+        
+        if (!result && [children count] > 1) result = self;
     }
     
     return result;
@@ -433,6 +424,28 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 
 @implementation SVGraphicBodyDOMController
+
+#pragma mark Selection
+
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
+{
+    WEKWebEditorItem *result = [super hitTestDOMNode:node];
+    
+    
+    // Pretend we're not here if only child element is selectable
+    if (result == self && [[self childWebEditorItems] count] == 1)
+    {
+        // Seek out a better matching child which has no siblings. #93557
+        DOMTreeWalker *walker = [[node ownerDocument] createTreeWalker:node
+                                                            whatToShow:DOM_SHOW_ELEMENT
+                                                                filter:nil
+                                                expandEntityReferences:NO];
+        
+        if ([walker currentNode] && ![walker nextSibling]) result = nil;
+    }
+    
+    return result;
+}
 
 #pragma mark Drag & Drop
 
