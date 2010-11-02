@@ -8,7 +8,8 @@
 
 #import "SVMediaPlugIn.h"
 
-#import "SVImage.h"
+#import "SVGraphicFactory.h"
+#import "SVMediaGraphic.h"
 #import "SVMediaRecord.h"
 #import "KSWebLocation+SVWebLocation.h"
 
@@ -222,7 +223,7 @@
 
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
 {
-    NSArray *result = [SVImage allowedFileTypes]; // want to read by UTI ideally
+    NSArray *result = [SVGraphicFactory graphicPasteboardTypes]; // want to read by UTI ideally
     result = [result arrayByAddingObjectsFromArray:[KSWebLocation webLocationPasteboardTypes]];
     return result;
 }

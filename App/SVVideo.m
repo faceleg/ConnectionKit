@@ -272,7 +272,7 @@
 
 - (void)getPosterFrameFromQuickLook;
 {
-	SVMediaRecord *media = self.container.media;
+	SVMedia *media = self.media;
 	if (media)
 	{
 		NSURL *mediaURL = [media fileURL];

@@ -8,6 +8,8 @@
 
 #import "SVInspectorViewController.h"
 
+#import "SVMediaGraphic.h"
+
 
 @class KSURLInfoField;
 

@@ -10,9 +10,9 @@
 
 
 #import "SVPlugInGraphic.h"
+#import "SVMediaPlugIn.h"
 
-
-@class SVMedia, SVMediaRecord, SVMediaPlugIn;
+@class SVMedia, SVMediaRecord;
 
 
 @interface SVMediaGraphic : SVPlugInGraphic

@@ -12,7 +12,8 @@
 #import "SVPlugIn.h"
 #import "SVEnclosure.h"
 
-#import "SVMediaGraphic.h"
+#import "SVMediaRecord.h"
+#import "SVPlugInGraphic.h"
 
 
 @interface SVMediaPlugIn : SVPlugIn <SVEnclosure>
@@ -56,5 +57,5 @@
 
 
 @interface SVMediaPlugIn (Inherited)
-@property(nonatomic, readonly) SVMediaGraphic *container;
+@property(nonatomic, readonly) SVPlugInGraphic *container;
 @end

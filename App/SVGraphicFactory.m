@@ -15,6 +15,7 @@
 #import "SVVideo.h"
 #import "SVAudio.h"
 #import "SVFlash.h"
+#import "SVMediaGraphic.h"
 #import "SVPlugIn.h"
 #import "SVRawHTMLGraphic.h"
 #import "SVTextBox.h"
