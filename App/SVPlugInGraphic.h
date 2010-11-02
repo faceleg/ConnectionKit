@@ -39,7 +39,11 @@
 
 
 #pragma mark Metrics
+
+@property(nonatomic, copy) NSNumber *contentWidth;
+@property(nonatomic, copy) NSNumber *contentHeight;
 - (void)setSize:(NSSize)size;   // convenience
+
 - (NSUInteger)minWidth;
 - (NSUInteger)minHeight;
 @property(nonatomic, readonly) BOOL constrainProportions;
