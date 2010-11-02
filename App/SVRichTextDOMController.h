@@ -44,8 +44,11 @@
 
 
 #pragma mark Links
-
 @property(nonatomic, retain, readonly) DOMHTMLAnchorElement *selectedLink;
+
+
+#pragma mark Items
+- (WEKWebEditorItem *)itemForDOMNode:(DOMNode *)node;
 
 
 @end

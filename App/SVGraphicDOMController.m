@@ -267,7 +267,20 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
 }
 
-#pragma mark State
+#pragma mark Selection & Editing
+
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
+{
+    WEKWebEditorItem *result = nil;
+    
+    // We only want to claim nodes that are inside the selectable region
+    if ([node ks_isDescendantOfElement:[self selectableDOMElement]])
+    {
+        result = [super hitTestDOMNode:node];
+    }
+    
+    return result;
+}
 
 - (DOMElement *)selectableDOMElement;
 {
@@ -284,7 +297,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     DOMNode *aNode = [walker currentNode];
     while (aNode && ![walker nextSibling])
     {
-        WEKWebEditorItem *controller = [self hitTestDOMNode:aNode];
+        WEKWebEditorItem *controller = [super hitTestDOMNode:aNode];
         if (controller != self && [controller isSelectable])
         {
             result = nil;

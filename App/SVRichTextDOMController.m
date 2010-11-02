@@ -91,6 +91,16 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Hierarchy
 
+- (WEKWebEditorItem *)itemForDOMNode:(DOMNode *)node;
+{
+    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+    {
+        if ([anItem HTMLElement] == node) return anItem;
+    }
+    
+    return nil;
+}
+
 - (WEKWebEditorItem *)orphanedWebEditorItemMatchingDOMNode:(DOMNode *)aNode;
 {
     for (WEKWebEditorItem *anItem in [self childWebEditorItems])
@@ -452,8 +462,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 - (DOMNode *)HTMLWriter:(SVParagraphedHTMLWriter *)writer willWriteDOMElement:(DOMElement *)element;
 {
     // If the element is inside an DOM controller, write that out instead…
-    WEKWebEditorItem *item = [self hitTestDOMNode:element];
-    if (item != self)
+    WEKWebEditorItem *item = [self itemForDOMNode:element];
+    if (item)
     {
         // …If there are 2 controllers with the same node (e.g. plain image), hit-testing favours the inner one. We actually want to write the outer.
         while ([item HTMLElement] == [[item parentWebEditorItem] HTMLElement])
