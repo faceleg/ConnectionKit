@@ -78,7 +78,7 @@
 
 - (void)setSizeWithWidth:(NSNumber *)width height:(NSNumber *)height;
 {
-    if ([self constrainProportions])
+    if ([self constrainedAspectRatio])
     {
         CGFloat constraintRatio = [[[self container] constrainedAspectRatio] floatValue];
         
