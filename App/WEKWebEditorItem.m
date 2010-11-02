@@ -118,6 +118,7 @@
 - (void)addChildWebEditorItem:(WEKWebEditorItem *)item;
 {
     OBPRECONDITION(item);
+    OBPRECONDITION(item != self);
     
     WEKWebEditorItem *parent = [item parentWebEditorItem];
     if (parent == self) return;   // nothing to do
