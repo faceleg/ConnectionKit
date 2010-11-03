@@ -593,8 +593,11 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         WEKWebEditorItem *parentController = [self hitTestDOMNode:[controller HTMLElement]];
         [parentController addChildWebEditorItem:controller];
         
-        [controller setNeedsUpdate];
-        [controller updateIfNeeded];    // push it through quickly
+        // Tell the graphic what's happened
+        KTPage *page = [[self HTMLContext] page];
+        [graphic didAddToPage:page];
+        
+        [controller update];	// push it through quickly
         
         // Finish the edit – had to wait until both node and controller were present
         [webEditor didChangeText];
@@ -621,7 +624,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // Insert
     DOMRange *insertionRange = [self insertionRangeForGraphic:graphic];
     [self insertGraphic:graphic range:insertionRange];
-
     
     
     

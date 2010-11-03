@@ -107,10 +107,8 @@
     SVGraphic *graphic = [SVGraphicFactory graphicWithActionSender:sender
                                            insertIntoManagedObjectContext:context];
     
-    KTPage *page = [[self HTMLContext] page];
     [graphic awakeFromNew];
     [self addGraphic:graphic placeInline:NO];
-    [graphic didAddToPage:page];
 }
 
 #pragma mark Selection fallback
