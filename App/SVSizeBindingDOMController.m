@@ -59,7 +59,11 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 - (void)updateSize;
 {
-    // mark the current area for drawing
+    // Workaround for #94381. Make sure any selectable parent redraws
+    [[[self selectableAncestors] lastObject] setNeedsDisplay];
+    
+    
+    
     DOMHTMLElement *element = [self HTMLElement];
     NSObject *object = [self representedObject];
     
