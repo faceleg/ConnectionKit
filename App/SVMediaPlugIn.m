@@ -129,7 +129,7 @@
     
     if (oldWidth && [[self width] unsignedIntegerValue] > [oldWidth unsignedIntegerValue])
     {
-        [[self container] setSizeWithWidth:oldWidth height:height];
+        [[self container] setContentWidth:oldWidth];
     }
 }
 

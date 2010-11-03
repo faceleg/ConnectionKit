@@ -72,7 +72,7 @@
     }
     
     // Make sure we don't have auto width. Super will then pull down to a good value
-    [self setSizeWithWidth:[NSNumber numberWithUnsignedInteger:4096] height:nil];
+    [self setContentWidth:[NSNumber numberWithUnsignedInteger:4096]];
     [super didAddToPage:page];
     
     
@@ -218,7 +218,7 @@
         [[self plugIn] awakeFromNew];   // which will probably set size…
         
         // …so bring the width back to desired value
-        [self setSizeWithWidth:width height:nil];
+        [self setContentWidth:width];
     }
     
     
@@ -574,13 +574,13 @@
 		[self setConstrainProportions:[self isConstrainProportionsEditable]];
 		if (oldWidth)
 		{
-			[self setSizeWithWidth:oldWidth height:nil];
+			[self setContentWidth:oldWidth];
 		}
 		else
 		{
 			if ([[self width] integerValue] > 200)
 			{
-				[self setSizeWithWidth:[NSNumber numberWithInt:200] height:nil];
+				[self setContentWidth:[NSNumber numberWithInt:200]];
 			}
 			// If going from external URL to proper media, this means your image is quite probably now 200px wide. Not ideal, but so rare I'm not going to worry abiout it. #92576
 		}
