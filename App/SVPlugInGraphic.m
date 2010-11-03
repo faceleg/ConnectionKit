@@ -406,7 +406,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 {
     return ([self width] &&
             [self height] &&
-            [[self plugIn] respondsToSelector:@selector(setConstrainProportions:)]);
+            [[self plugIn] respondsToSelector:@selector(setConstrainedAspectRatio:)]);
 }
 
 - (NSNumber *)constrainedProportionsRatio; { return [[self plugIn] constrainedAspectRatio]; }
