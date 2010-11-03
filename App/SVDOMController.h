@@ -71,7 +71,7 @@
 @property(nonatomic, copy, readonly) NSSet *dependencies;
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 - (void)removeAllDependencies;
-@property(nonatomic) BOOL observesDependencies;
+- (BOOL)isObservingDependencies;
 
 
 #pragma mark Resizing
@@ -131,7 +131,8 @@
 
 
 #pragma mark Dependencies
-- (void)setObservesDependencies:(BOOL)observe;
+- (void)startObservingDependencies; // recursive
+- (void)stopObservingDependencies;  // recursive
 
 
 #pragma mark Drag & Drop

@@ -28,7 +28,7 @@
     [super init];
     
     _dependencies = [[NSMutableSet alloc] init];
-    [self setObservesDependencies:YES]; // in case a dependency got setup before -init
+    [self startObservingDependencies];
     
     return self;
 }
@@ -173,7 +173,7 @@
     
     
     // Once we're marked for update, no point continuing to observe
-    [self setObservesDependencies:NO];
+    [self stopObservingDependencies];
     
     
     // By default, controllers don't know how to update, so must update parent instead
@@ -232,7 +232,7 @@
 
 - (NSSet *)dependencies { return [[_dependencies copy] autorelease]; }
 
-- (void)startObservingDependency:(KSObjectKeyPathPair *)pair;
+- (void)beginObservingDependency:(KSObjectKeyPathPair *)pair;
 {
     [[pair object] addObserver:self
                     forKeyPath:[pair keyPath]
@@ -240,15 +240,15 @@
                        context:sWebViewDependenciesObservationContext];
 }
 
-- (void)startObservingDependencies;
+- (void)beginObservingDependencies;
 {
     for (KSObjectKeyPathPair *aDependency in [self dependencies])
     {
-        [self startObservingDependency:aDependency];
+        [self beginObservingDependency:aDependency];
     }
 }
 
-- (void)stopObservingDependencies;
+- (void)endObservingDependencies;
 {
     for (KSObjectKeyPathPair *aDependency in [self dependencies])
     {
@@ -266,25 +266,32 @@
         if (![_dependencies containsObject:pair])
         {
             [_dependencies addObject:pair];
-            if ([self observesDependencies]) [self startObservingDependency:pair];
+            if ([self isObservingDependencies]) [self beginObservingDependency:pair];
         }
     }
 }
 
 - (void)removeAllDependencies;
 {
-    if ([self observesDependencies]) [self stopObservingDependencies];
+    if ([self isObservingDependencies]) [self endObservingDependencies];
     [_dependencies removeAllObjects];
 }
 
-@synthesize observesDependencies = _isObservingDependencies;
-- (void)setObservesDependencies:(BOOL)observe;
+- (void)startObservingDependencies;
 {
-    if (observe && ![self observesDependencies]) [self startObservingDependencies];
-    if (!observe && [self observesDependencies]) [self stopObservingDependencies];
+    if (![self isObservingDependencies]) [self beginObservingDependencies];
     
-    _isObservingDependencies = observe;
+    [super startObservingDependencies]; // recurse
 }
+
+- (void)stopObservingDependencies;
+{
+    if ([self isObservingDependencies]) [self endObservingDependencies];
+    
+    [super stopObservingDependencies]; // recurse
+}
+
+- (BOOL)isObservingDependencies; { return _isObservingDependencies; }
 
 #pragma mark Sidebar
 
@@ -578,7 +585,17 @@
 
 - (SVWebEditorHTMLContext *)HTMLContext { return nil; }
 
-- (void)setObservesDependencies:(BOOL)observe; { }
+#pragma mark Dependencies
+
+- (void)startObservingDependencies;
+{
+    [[self childWebEditorItems] makeObjectsPerformSelector:_cmd];
+}
+
+- (void)stopObservingDependencies;
+{
+    [[self childWebEditorItems] makeObjectsPerformSelector:_cmd];
+}
 
 #pragma mark Drag & Drop
 

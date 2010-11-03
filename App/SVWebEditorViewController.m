@@ -552,7 +552,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     // Start observing dependencies
-    [item setObservesDependencies:YES];
+    [item startObservingDependencies];
     
     
     // Register descendants
@@ -565,7 +565,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 - (void)unregisterWebEditorItem:(WEKWebEditorItem *)item;  // recurses through, registering descendants too
 {
     // Turn off dependencies
-    [item setObservesDependencies:NO];
+    [item stopObservingDependencies];
     
     // Unregister descendants
     for (WEKWebEditorItem *anItem in [item childWebEditorItems])

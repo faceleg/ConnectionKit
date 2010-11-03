@@ -408,6 +408,8 @@
 - (void)writeBody:(SVHTMLContext *)context
 {
     [context addDependencyOnObject:self keyPath:@"media"];
+    if (![self media]) [context addDependencyOnObject:self keyPath:@"externalSourceURL"];
+    
     [super writeBody:context];
 }
 

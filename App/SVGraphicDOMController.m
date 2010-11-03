@@ -141,7 +141,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Turn observation back on. #92124
-    [self setObservesDependencies:YES];
+    [self startObservingDependencies];
     
     
     // Copy across data resources
