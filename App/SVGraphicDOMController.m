@@ -417,11 +417,27 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
                                handle == kSVGraphicLowerMiddleHandle ||
                                handle == kSVGraphicLowerRightHandle);
         
-        if (!resizingHeight)
+        if (resizingWidth)
         {
-            size.height = size.width / [ratio floatValue];
+            if (resizingHeight)
+            {
+                // Go for the biggest size of the two possibilities
+                CGFloat unconstrainedRatio = size.width / size.height;
+                if (unconstrainedRatio < [ratio floatValue])
+                {
+                    size.width = size.height * [ratio floatValue];
+                }
+                else
+                {
+                    size.height = size.width / [ratio floatValue];
+                }
+            }
+            else
+            {
+                size.height = size.width / [ratio floatValue];
+            }
         }
-        else if (!resizingWidth)
+        else
         {
             size.width = size.height * [ratio floatValue];
         }
