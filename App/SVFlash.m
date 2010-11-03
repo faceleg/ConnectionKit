@@ -87,7 +87,11 @@
 
 + (NSArray *) allowedFileTypes
 {
-	return [NSArray arrayWithObjects:@"com.adobe.shockwave-flash", nil];
+	return [NSArray arrayWithObjects:@"com.adobe.shockwave-flash",
+			@"com.macromedia.shockwave-flash",	// annoying to have to check both, but somehow I got the macromedia UTI....
+			nil];
+	
+	// com.macromedia.shockwave-flash ???
 }
 
 - (NSString *)plugInIdentifier; // use standard reverse DNS-style string

@@ -105,7 +105,8 @@
     {
         return @"com.karelia.sandvox.SVAudio";
     }
-    else if ([type conformsToUTI:@"com.adobe.shockwave-flash"])
+    else if ([type conformsToUTI:@"com.adobe.shockwave-flash"] || [type conformsToUTI:@"com.macromedia.shockwave-flash"])
+		// annoying to have to check both, but somehow I got the macromedia UTI....
     {
         return @"com.karelia.sandvox.SVFlash";
     }
