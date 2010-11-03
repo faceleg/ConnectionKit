@@ -159,6 +159,7 @@
                                     host:([self privacy] ? @"www.youtube-nocookie.com" : @"www.youtube.com")
                                     path:[@"/v/" stringByAppendingString:[self videoID]]
                          queryParameters:parameters];
+    [context addDependencyForKeyPath:@"privacy" ofObject:self];
                                           
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
