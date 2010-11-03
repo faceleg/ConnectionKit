@@ -70,6 +70,8 @@
 
 #pragma mark Media Conversion
 
+- (NSString *)typeToPublish; { return [[self container] typeToPublish]; }
+- (void)setTypeToPublish:(NSString *)type; { [[self container] setTypeToPublish:type]; }
 - (BOOL)validateTypeToPublish:(NSString *)type; { return YES; }
 
 #pragma mark Metrics

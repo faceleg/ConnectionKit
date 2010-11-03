@@ -129,9 +129,9 @@
     [super didSetSource];
     
     // Adjust file type if not valid
-    if (![self validateTypeToPublish:[[self container] typeToPublish]])
+    if (![self validateTypeToPublish:[self typeToPublish]])
     {
-        [[self container] setTypeToPublish:(NSString *)kUTTypeJPEG];
+        [self setTypeToPublish:(NSString *)kUTTypeJPEG];
     }
     
     // External images become auto sized
