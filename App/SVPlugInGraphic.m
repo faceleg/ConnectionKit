@@ -422,7 +422,13 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 {
-    return [[self plugIn] awakeFromPasteboardItems:items];
+    BOOL result = [super awakeFromPasteboardItems:items];
+    if (result)
+    {
+        result = [[self plugIn] awakeFromPasteboardItems:items];
+    }
+    
+    return result;
 }
 
 #pragma mark Serialization

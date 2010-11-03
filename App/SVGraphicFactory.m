@@ -571,6 +571,12 @@ static SVGraphicFactory *sRawHTMLFactory;
 {
     SVGraphic *result = [self insertNewGraphicInManagedObjectContext:context];
     [result awakeFromPasteboardItems:items];
+    
+    // Set title to match. #94380
+    NSString *title = [[items lastObject] title];
+    if (!title) title = [[[items lastObject] URL] ks_lastPathComponent];
+    if (title) [result setTitle:title];
+    
     return result;
 }
 
