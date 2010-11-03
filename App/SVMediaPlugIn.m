@@ -121,7 +121,10 @@
         [graphic setConstrainProportions:YES];
     }
     
-    if (oldWidth && [[self width] unsignedIntegerValue] > [oldWidth unsignedIntegerValue]) [self setSizeWithWidth:oldWidth height:height];
+    if (oldWidth && [[self width] unsignedIntegerValue] > [oldWidth unsignedIntegerValue])
+    {
+        [[self container] setSizeWithWidth:oldWidth height:height];
+    }
 }
 
 - (CGSize)originalSize;
