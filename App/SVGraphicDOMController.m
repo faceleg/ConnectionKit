@@ -361,10 +361,13 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
 {
-    // Size calculated – now what to store?
-    NSNumber *width = (size.width > 0.0f ? [NSNumber numberWithFloat:size.width] : nil);
+    // Apply the change
     SVGraphic *graphic = [self representedObject];
-	[graphic setWidth:width];
+    
+    NSNumber *width = [NSNumber numberWithInt:size.width];
+    NSNumber *height = [NSNumber numberWithInt:size.height];
+    [graphic setWidth:width];
+    [graphic setHeight:height];
     
     
     [super resizeToSize:size byMovingHandle:handle];
@@ -445,12 +448,9 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     
-    
-    
-    CGFloat maxWidth = [self maxWidth];
-    
     if (snapToFit)
     {
+        CGFloat maxWidth = [self maxWidth];
         if (size.width > maxWidth)
         {
             // Keep within max width

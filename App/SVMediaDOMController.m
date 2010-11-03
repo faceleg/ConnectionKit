@@ -215,10 +215,6 @@
     size = [super constrainSize:size handle:handle snapToFit:snapToFit];
     
     
-    // HACK for #92183: ignore -isExplicitly sized and go to maximum width
-    if (size.width <= 0) size.width = [self maxWidth];
-    
-    
     if (snapToFit)
     {
         // Snap to original size if you are very close to it

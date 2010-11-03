@@ -111,28 +111,13 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
 {
-    // Size calculated – now what to store?
-    BOOL resizingWidth = (handle == kSVGraphicUpperLeftHandle ||
-                          handle == kSVGraphicMiddleLeftHandle ||
-                          handle == kSVGraphicLowerLeftHandle ||
-                          handle == kSVGraphicUpperRightHandle ||
-                          handle == kSVGraphicMiddleRightHandle ||
-                          handle == kSVGraphicLowerRightHandle);
-    
-    BOOL resizingHeight = (handle == kSVGraphicUpperLeftHandle ||
-                           handle == kSVGraphicUpperMiddleHandle ||
-                           handle == kSVGraphicUpperRightHandle ||
-                           handle == kSVGraphicLowerLeftHandle ||
-                           handle == kSVGraphicLowerMiddleHandle ||
-                           handle == kSVGraphicLowerRightHandle);
-    
-    
     // Apply the change
     SVPlugInGraphic *graphic = [self representedObject];
     
-    NSNumber *width = (resizingWidth ? [NSNumber numberWithFloat:size.width] : nil);
-    NSNumber *height = (resizingHeight ? [NSNumber numberWithFloat:size.height]: nil);
-    [graphic setSizeWithWidth:width height:height];
+    NSNumber *width = [NSNumber numberWithInt:size.width];
+    NSNumber *height = [NSNumber numberWithInt:size.height];
+    [graphic setWidth:width];
+    [graphic setHeight:height];
 }
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
