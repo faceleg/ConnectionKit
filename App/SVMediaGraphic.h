@@ -49,7 +49,6 @@
 
 #pragma mark Metrics
 
-@property(nonatomic) BOOL constrainProportions;
 @property(nonatomic, copy, readonly) NSNumber *constrainedAspectRatio;
 
 @property(nonatomic, copy) NSNumber *naturalWidth;		// Nil means unknown; 0 means checked but not attainable
