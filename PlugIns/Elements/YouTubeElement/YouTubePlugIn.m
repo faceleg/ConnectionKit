@@ -165,6 +165,11 @@
 
 #pragma mark Metrics
 
+- (NSNumber *)elementWidthPadding
+{
+    return ([self showBorder] ? [NSNumber numberWithUnsignedInteger:YOUTUBE_BORDER_HEIGHT] : nil);
+}
+
 - (NSNumber *)elementHeightPadding
 {
     // always leave room for control bar
