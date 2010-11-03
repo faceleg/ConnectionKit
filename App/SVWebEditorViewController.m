@@ -468,7 +468,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
                                              target:self
                                            argument:nil
                                               order:0
-                                              modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
+                                              modes:NSARRAY(NSDefaultRunLoopMode, NSEventTrackingRunLoopMode)];
 	}
     _willUpdate = YES;
 }
