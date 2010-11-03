@@ -293,6 +293,8 @@
                                     height:self.container.height
                                       type:[self typeToPublish]
                          preferredFilename:nil];
+        
+        [context addDependencyOnObject:self keyPath:@"typeToPublish"];
     }
     else
     {
