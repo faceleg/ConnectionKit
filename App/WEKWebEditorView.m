@@ -887,7 +887,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Look for children at the deepest possible level (normally top-level). Keep backing out until we find something of use
     
     result = [[self contentItem] hitTestDOMNode:nextNode];
-    while (result && ![nextNode ks_isDescendantOfElement:[result selectableDOMElement]])
+    while (result && ![result isSelectable])
     {
         result = [result parentWebEditorItem];
     }
@@ -1964,7 +1964,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     BOOL result = [self canEditText];
     
     
-    // In the case of dragging text within the editor, WebKit should ask our permission to edit the source range too, but doesn't in y testing. #92432. We'll have to fake it until Apple make it!
+    // In the case of dragging text within the editor, WebKit should ask our permission to edit the source range too, but doesn't in my testing. #92432. We'll have to fake it until Apple make it!
     if (result)
     {
         if (action == WebViewInsertActionDropped)
