@@ -592,9 +592,13 @@
 
 - (void)writeGraphics:(NSArray *)graphics;  // convenience
 {
+    [self beginIteratingWithCount:[graphics count]];
+    
     for (SVGraphic *anObject in graphics)
     {
         [self writeGraphic:anObject];
+        
+        [self nextIteration];
     }
 }
 
