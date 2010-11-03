@@ -674,8 +674,8 @@
 
 - (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object DOMControllerClass:(Class)controllerClass  sizeDelta:(NSSize)sizeDelta;
 {
-	int w = [object integerForKey:@"elementWidth"];
-	int h = [object integerForKey:@"elementHeight"];
+	int w = [object integerForKey:@"width"];
+	int h = [object integerForKey:@"height"];
     NSNumber *width  = (w+sizeDelta.width <= 0) ? nil : [NSNumber numberWithInt:w+sizeDelta.width];
 	NSNumber *height = (h+sizeDelta.height <= 0) ? nil : [NSNumber numberWithInt:h+sizeDelta.height];
     
@@ -705,7 +705,14 @@
 {
     // Push the extra attributes
     [self pushAttributes:attributes];
-    [self startElement:elementName bindSizeToObject:plugIn];
+    
+    [self buildAttributesForElement:elementName
+                   bindSizeToObject:[plugIn performSelector:@selector(container)]
+                 DOMControllerClass:nil
+                          sizeDelta:NSMakeSize([[plugIn elementWidthPadding] unsignedIntegerValue],
+                                               [[plugIn elementHeightPadding] unsignedIntegerValue])];
+    
+    [self startElement:elementName];
 }
 
 #pragma mark Summaries

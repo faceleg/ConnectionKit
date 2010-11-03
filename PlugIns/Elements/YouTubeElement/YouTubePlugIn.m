@@ -132,18 +132,46 @@
     }
 }
 
+- (void)writeEmbedElement;
+{
+    id <SVPlugInContext> context = [SVPlugIn currentContext];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    if (![self includeRelatedVideos]) [parameters setObject:@"0" forKey:@"rel"];
+    if ([self playHD]) [parameters setObject:@"1" forKey:@"hd"];
+    [parameters setObject:[[self color1] youTubeVideoColorString] forKey:@"color1"];
+    [parameters setObject:[[self color2] youTubeVideoColorString] forKey:@"color2"];
+    if (self.showBorder) [parameters setObject:@"1" forKey:@"border"];
+    [parameters setValue:[[context page] language] forKey:@"hl"];
+    
+    NSURL *base = [NSURL svURLWithScheme:@"http"
+                                    host:([self privacy] ? @"www.youtube-nocookie.com" : @"www.youtube.com")
+                                    path:[@"/v/" stringByAppendingString:[self videoID]]
+                         queryParameters:parameters];
+                                          
+    
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [base absoluteString], @"src",
+                                @"application/x-shockwave-flash", @"type",
+                                @"transparent", @"wmode",
+                                nil];
+    
+    [[context HTMLWriter] startElement:@"embed" bindSizeToPlugIn:self attributes:attributes];
+    [[context HTMLWriter] endElement];
+}
+
 - (void)endElement; { [[[SVPlugIn currentContext] HTMLWriter] endElement]; }
 
 
 #pragma mark Metrics
 
-- (NSNumber *)elementHeight
+- (NSNumber *)elementHeightPadding
 {
     // always leave room for control bar
-    NSUInteger result = [[super elementHeight] unsignedIntegerValue] + YOUTUBE_CONTROLBAR_HEIGHT;
+    NSUInteger result = YOUTUBE_CONTROLBAR_HEIGHT;
     
     // leave room for colored border, if applicable
-    if ( self.showBorder ) { result += YOUTUBE_BORDER_HEIGHT; }
+    if ( self.showBorder ) result += YOUTUBE_BORDER_HEIGHT;
     
     return [NSNumber numberWithUnsignedInteger:result];
 }

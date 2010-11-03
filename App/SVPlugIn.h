@@ -93,21 +93,24 @@
 // Nil values are treated as "auto" size
 - (void)setWidth:(NSNumber *)width height:(NSNumber *)height;
 
-// The width and height of the HTML element you generate. Can override if need to include some chrome around the content. (e.g. controller on a video player)
-- (NSNumber *)elementWidth;
-- (NSNumber *)elementHeight;
-
 - (NSUInteger)minWidth;    // default is 200
 - (NSUInteger)minHeight;    // default is 1
+
+// Called when plug-in is first inserted, and whenever 'Original Size' button in the Inspector is clicked. Override to call -setWidth:height: if you're not happy with the default size used (200 x 0 for now).
+- (void)makeOriginalSize;
+
+
+#pragma mark Resizing
+
+// Default is NO. If your plug-in is based around a sizeable object (e.g. YouTube) return YES to get proper behaviour. This makes width editable in the Inspector when not placed inline (and perhaps more, but you get the idea).
+// If you also need to include some chrome around the content. (e.g. controller on a video player), implement these methods to specify how much padding is needed. Default is nil padding.
++ (BOOL)isExplicitlySized;
+- (NSNumber *)elementWidthPadding;
+- (NSNumber *)elementHeightPadding;
 
 // Default is nil (unconstrained). You can override to get resizing behaviour that constrains proportions
 - (NSNumber *)constrainedAspectRatio;
 
-// Called when plug-in is first inserted, and whenever 'Original Size' button in the Inspector is clicked. Override if you're not happy with the default size used (200 x 0 for now).
-- (void)makeOriginalSize;
-
-// Default is NO. If your plug-in is based around a sizeable object (e.g. YouTube) return YES to get proper behaviour. This makes width editable in the Inspector when not placed inline (and perhaps more, but you get the idea)
-+ (BOOL)isExplicitlySized;
 
 
 #pragma mark Pages

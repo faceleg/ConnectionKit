@@ -239,20 +239,22 @@ static id <SVPlugInContext> sCurrentContext;
     [[self container] setHeight:height];
 }
 
-- (NSNumber *)elementWidth; { return [[self container] width]; }
-- (NSNumber *)elementHeight; { return [[self container] height]; }
-
 - (NSUInteger)minWidth; { return 200; }
 - (NSUInteger)minHeight; { return 1; }
-
-- (NSNumber *)constrainedAspectRatio; { return nil; }
 
 - (void)makeOriginalSize;
 {
     [self setWidth:[NSNumber numberWithInt:200] height:nil];
 }
 
+#pragma mark Resizing
+
 + (BOOL)isExplicitlySized; { return NO; }
+
+- (NSNumber *)elementWidthPadding; { return nil; }
+- (NSNumber *)elementHeightPadding; { return nil; }
+
+- (NSNumber *)constrainedAspectRatio; { return nil; }
 
 #pragma mark Pages
 

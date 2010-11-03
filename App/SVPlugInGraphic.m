@@ -104,7 +104,8 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         NSUInteger maxWidth = 490;
         if ([self isPagelet]) maxWidth = 200;
         
-        if ([[[self plugIn] elementWidth] unsignedIntegerValue] > maxWidth)
+        NSUInteger elementWidth = [[self width] unsignedIntegerValue] + [[[self plugIn] elementWidthPadding] unsignedIntegerValue];
+        if (elementWidth > maxWidth)
         {
             [self setSizeWithWidth:[NSNumber numberWithUnsignedInteger:maxWidth] height:nil];
         }
@@ -278,9 +279,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 }
 
 #pragma mark Metrics
-
-- (NSNumber *)elementWidth; { return [[self plugIn] elementWidth]; }
-- (NSNumber *)elementHeight; { return [[self plugIn] elementHeight]; }
 
 - (void)setSizeWithWidth:(NSNumber *)width height:(NSNumber *)height;
 {
