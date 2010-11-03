@@ -136,6 +136,8 @@
 {
     id <SVPlugInContext> context = [SVPlugIn currentContext];
     
+    
+    // Build src URL parameters
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
     if (![self includeRelatedVideos]) [parameters setObject:@"0" forKey:@"rel"];
@@ -154,7 +156,8 @@
     
     [parameters setValue:[[context page] language] forKey:@"hl"];
     
-    
+
+    // Build src URL
     NSURL *base = [NSURL svURLWithScheme:@"http"
                                     host:([self privacy] ? @"www.youtube-nocookie.com" : @"www.youtube.com")
                                     path:[@"/v/" stringByAppendingString:[self videoID]]
@@ -162,6 +165,7 @@
     [context addDependencyForKeyPath:@"privacy" ofObject:self];
                                           
     
+    // Write <EMBED>
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [base absoluteString], @"src",
                                 @"application/x-shockwave-flash", @"type",
