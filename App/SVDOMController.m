@@ -118,12 +118,12 @@
 
 - (void)update;
 {
-    [self didUpdate];
+    [self didUpdateWithSelector:_cmd];
 }
 
-- (void)didUpdate;
+- (void)didUpdateWithSelector:(SEL)selector;
 {
-    [_updateSelectors release]; _updateSelectors = nil;
+    [_updateSelectors removeObject:NSStringFromSelector(selector)];
     
     SVWebEditorViewController *controller = [self webEditorViewController];
     OBASSERT(controller || ![self webEditor]);
@@ -191,12 +191,11 @@
         NSString *selectorString = NSStringFromSelector(selector);
         if (_updateSelectors)
         {
-            NSSet *selectors = [[_updateSelectors setByAddingObject:selectorString] copy];
-            [_updateSelectors release]; _updateSelectors = selectors;
+            [_updateSelectors addObject:selectorString];
         }
         else
         {
-            _updateSelectors = [[NSSet alloc] initWithObjects:selectorString, nil];
+            _updateSelectors = [[NSMutableSet alloc] initWithObjects:selectorString, nil];
         }
         
         [controller performSelector:@selector(scheduleUpdate)];

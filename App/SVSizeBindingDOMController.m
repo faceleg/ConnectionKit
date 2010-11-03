@@ -83,7 +83,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Finish
-    [self didUpdate];
+    [self didUpdateWithSelector:_cmd];
 }
 
 - (void)setNeedsUpdate;

@@ -23,7 +23,7 @@
     NSString    *_elementID;
     
     // Updating
-    NSSet                   *_updateSelectors;
+    NSMutableSet            *_updateSelectors;
     NSMutableSet            *_dependencies;
     BOOL                    _isObservingDependencies;
     SVWebEditorHTMLContext  *_context;
@@ -53,7 +53,7 @@
 #pragma mark Updating
 // Override to push changes through to the DOM. Rarely call directly. MUST call super or -didUpdate AFTER finishing your custom update code.
 - (void)update;
-- (void)didUpdate;
+- (void)didUpdateWithSelector:(SEL)selector;
 
 
 #pragma mark Marking for Update

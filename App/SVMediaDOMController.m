@@ -204,7 +204,7 @@
     }
     else
     {
-        [self didUpdate];   // fake it
+        [self didUpdateWithSelector:_cmd];   // fake it
     }
 }
 

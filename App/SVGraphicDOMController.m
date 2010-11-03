@@ -164,7 +164,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     if (_offscreenWebViewController)
     {
         // Need to restart loading. Do so by pretending we already finished
-        [self didUpdate];
+        [self didUpdateWithSelector:_cmd];
     }
     else
     {
@@ -227,7 +227,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Finish
-    [self didUpdate];
+    [self didUpdateWithSelector:@selector(update)];
     
     
     // Teardown
@@ -242,7 +242,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     [[element style] setWidth:[NSString stringWithFormat:@"%@px", [graphic containerWidth]]];
     
-    [self didUpdate];
+    [self didUpdateWithSelector:_cmd];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
