@@ -246,6 +246,7 @@
     {
         [self beginObservingDependency:aDependency];
     }
+    _isObservingDependencies = YES;
 }
 
 - (void)endObservingDependencies;
@@ -254,6 +255,7 @@
     {
         [[aDependency object] removeObserver:self forKeyPath:[aDependency keyPath]];
     }
+    _isObservingDependencies = NO;
 }
 
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
