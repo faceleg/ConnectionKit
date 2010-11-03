@@ -404,7 +404,9 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (BOOL)isConstrainProportionsEditable;
 {
-    return [[self plugIn] respondsToSelector:@selector(setConstrainProportions:)];
+    return ([self width] &&
+            [self height] &&
+            [[self plugIn] respondsToSelector:@selector(setConstrainProportions:)]);
 }
 
 - (NSNumber *)constrainedProportionsRatio; { return [[self plugIn] constrainedAspectRatio]; }

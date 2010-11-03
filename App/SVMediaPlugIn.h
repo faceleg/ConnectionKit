@@ -40,7 +40,6 @@
 - (NSNumber *)height;
 
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
-- (BOOL)isConstrainProportionsEditable;
 
 // Please use this API rather than talking to the container
 - (NSNumber *)naturalWidth;
