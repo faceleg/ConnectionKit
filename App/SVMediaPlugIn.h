@@ -30,7 +30,7 @@
 
 
 #pragma mark Publishing
-@property(nonatomic, copy) NSString *typeToPublish; // NOT KVO-compliant
+@property(nonatomic, copy) NSString *typeToPublish; // KVO-compliant
 - (BOOL)validateTypeToPublish:(NSString *)type;
 
 

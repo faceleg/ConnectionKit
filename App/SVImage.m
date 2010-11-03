@@ -250,12 +250,12 @@
 
 - (NSBitmapImageFileType)storageType;
 {
-    NSBitmapImageFileType result = [NSBitmapImageRep typeForUTI:[[self container] typeToPublish]];
+    NSBitmapImageFileType result = [NSBitmapImageRep typeForUTI:[self typeToPublish]];
     return result;
 }
 - (void) setStorageType:(NSBitmapImageFileType)storageType;
 {
-    [[self container] setTypeToPublish:[NSBitmapImageRep ks_typeForBitmapImageFileType:storageType]];
+    [self setTypeToPublish:[NSBitmapImageRep ks_typeForBitmapImageFileType:storageType]];
 }
 + (NSSet *)keyPathsForValuesAffectingStorageType;
 {
@@ -291,7 +291,7 @@
                                        alt:alt
                                      width:self.container.width
                                     height:self.container.height
-                                      type:[[self container] typeToPublish]
+                                      type:[self typeToPublish]
                          preferredFilename:nil];
     }
     else

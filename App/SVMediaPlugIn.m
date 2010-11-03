@@ -73,6 +73,10 @@
 - (NSString *)typeToPublish; { return [[self container] typeToPublish]; }
 - (void)setTypeToPublish:(NSString *)type; { [[self container] setTypeToPublish:type]; }
 - (BOOL)validateTypeToPublish:(NSString *)type; { return YES; }
++ (NSSet *)keyPathsForValuesAffectingTypeToPublish;
+{
+    return [NSSet setWithObject:@"container.typeToPublish"];
+}
 
 #pragma mark Metrics
 
