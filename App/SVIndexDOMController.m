@@ -15,9 +15,13 @@
 
 @implementation SVIndexDOMController
 
-- (NSArray *)registeredDraggedTypes
+- (void) setRepresentedObject:(id)object;
 {
-    return [SVGraphicFactory graphicPasteboardTypes];
+    [super setRepresentedObject:object];
+    
+    // We'll take basically anything, since that avoids having to load all plug-ins
+    [self unregisterDraggedTypes];
+    [self registerForDraggedTypes:[NSArray arrayWithObject:(NSString *)kUTTypeItem]];
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;

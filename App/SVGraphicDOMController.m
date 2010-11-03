@@ -496,16 +496,20 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Drag & Drop
 
+- (void) setRepresentedObject:(id)object;
+{
+    [super setRepresentedObject:object];
+    
+    // Handle whatever the object does
+    [self unregisterDraggedTypes];
+    NSArray *types = [object readableTypesForPasteboard:[NSPasteboard pasteboardWithName:NSDragPboard]];
+    [self registerForDraggedTypes:types];
+}
+
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
 {
     SVGraphic *graphic = [self representedObject];
     return [graphic awakeFromPasteboardItems:[[sender draggingPasteboard] sv_pasteboardItems]];
-}
-
-- (NSArray *)registeredDraggedTypes;
-{
-    SVGraphic *graphic = [self representedObject];
-    return [graphic readableTypesForPasteboard:[NSPasteboard pasteboardWithName:NSDragPboard]];
 }
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
