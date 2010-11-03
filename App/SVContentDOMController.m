@@ -13,4 +13,9 @@
 
 @synthesize webEditorViewController = _viewController;
 
+- (void)setNeedsUpdate;
+{
+    [[self webEditorViewController] setNeedsUpdate];
+}
+
 @end

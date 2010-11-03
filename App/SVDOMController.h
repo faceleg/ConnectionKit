@@ -51,15 +51,18 @@
 
 
 #pragma mark Updating
-// Override to push changes through to the DOM. Rarely call directly. MUST call super or -didUpdate AFTER finishing your custom update code.
-- (void)update;
-- (void)didUpdateWithSelector:(SEL)selector;
+- (BOOL)canUpdate;  // default is [self respondsToSelector:@selector(update)]
+- (void)didUpdateWithSelector:(SEL)selector;    // you MUST call this after updating
 
 
 #pragma mark Marking for Update
 
-- (void)setNeedsUpdate; // -update will be called at next cycle
-- (void)setNeedsUpdateWithSelector:(SEL)selector;   // selector will be called at next cycle
+// If the receiver supports updating itself (-canUpdate), schedules an update with -setNeedsUpdateWithSelector:
+// Otherwise, proceeds up the hierarchy looking for a controller that does support updating
+- (void)setNeedsUpdate;
+
+// Direct action to schedule a selector on next runloop pass
+- (void)setNeedsUpdateWithSelector:(SEL)selector;
 
 @property(nonatomic, readonly) BOOL needsUpdate;    // have any updates been registered?
 - (BOOL)needsToUpdateWithSelector:(SEL)selector;    // has a specific selector been registered?
@@ -125,7 +128,7 @@
 
 #pragma mark Updating
 - (SVWebEditorViewController *)webEditorViewController;
-- (void)setNeedsUpdate; // WEKWebEditorItem can't manage updating, so passes off to view controller
+- (void)setNeedsUpdate; // pass up to parent
 - (void)updateIfNeeded; // recurses down the tree
 - (SVWebEditorHTMLContext *)HTMLContext;
 

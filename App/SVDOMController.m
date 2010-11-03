@@ -116,9 +116,9 @@
 
 #pragma mark Updating
 
-- (void)update;
+- (BOOL)canUpdate;
 {
-    [self didUpdateWithSelector:_cmd];
+    return [self respondsToSelector:@selector(update)];
 }
 
 - (void)didUpdateWithSelector:(SEL)selector;
@@ -162,7 +162,17 @@
     return [_updateSelectors containsObject:NSStringFromSelector(selector)];
 }
 
-- (void)setNeedsUpdate; { [self setNeedsUpdateWithSelector:@selector(update)]; }
+- (void)setNeedsUpdate;
+{
+    if ([self canUpdate])
+    {
+        [self setNeedsUpdateWithSelector:@selector(update)];
+    }
+    else
+    {
+        [super setNeedsUpdate];
+    }
+}
 
 - (void)setNeedsUpdateWithSelector:(SEL)selector;   // selector will be called at next cycle
 {
@@ -174,14 +184,6 @@
     
     // Once we're marked for update, no point continuing to observe
     [self stopObservingDependencies];
-    
-    
-    // By default, controllers don't know how to update, so must update parent instead
-    if ([self methodForSelector:@selector(update)] == 
-        [SVDOMController instanceMethodForSelector:@selector(update)])
-    {
-        return [super setNeedsUpdate];
-    }
     
     
     // Try to get hold of the controller in charge of update coalescing
@@ -199,11 +201,6 @@
         }
         
         [controller performSelector:@selector(scheduleUpdate)];
-    }
-    else
-    {
-        OBASSERT(controller);
-        [self update];
     }
 }
 
@@ -571,11 +568,7 @@
 
 - (void)setNeedsUpdate;
 {
-    SVWebEditorViewController *controller = [self webEditorViewController];
-    if ([controller respondsToSelector:_cmd])
-    {
-        [controller performSelector:_cmd];
-    }
+    [[self parentWebEditorItem] setNeedsUpdate];
 }
 
 - (void)updateIfNeeded; // recurses down the tree

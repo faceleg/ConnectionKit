@@ -137,7 +137,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [self setPageletDOMControllers:controllers];
     [controllers release];
     
-    [super update];
+    [self didUpdateWithSelector:_cmd];
 }
 
 - (SVSidebarDOMController *)sidebarDOMController; { return self; }

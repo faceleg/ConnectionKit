@@ -39,11 +39,6 @@
     return result;
 }
 
-#pragma mark Updating
-
-// Updating should be handled by parent. I wish I could remember why this isn't the default
-- (void)setNeedsUpdate; { [[self parentWebEditorItem] setNeedsUpdate]; }
-
 @end
 
 

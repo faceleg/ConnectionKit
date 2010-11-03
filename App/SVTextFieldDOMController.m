@@ -113,7 +113,7 @@
         [[self webEditor] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
     }
     
-    [super update];
+    [self didUpdateWithSelector:_cmd];
 }
 
 #pragma mark Editing
