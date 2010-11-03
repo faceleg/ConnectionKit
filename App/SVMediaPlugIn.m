@@ -80,10 +80,10 @@
 
 #pragma mark Metrics
 
-- (NSNumber *) width; { return [[self container] width]; }
-- (NSNumber *)height; { return [[self container] height]; }
-
 + (BOOL)isExplicitlySized; { return YES; }
+
+- (NSNumber *)width; { return [[self container] width]; }
+- (NSNumber *)height; { return [[self container] height]; }
 
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 {
@@ -99,6 +99,9 @@
     
     return result;
 }
+
+- (NSUInteger)minWidth; { return 1; }
+- (NSUInteger)minHeight; { return 1; }
 
 - (NSNumber *)constrainedAspectRatio;
 {
