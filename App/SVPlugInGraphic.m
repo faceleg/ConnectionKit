@@ -296,8 +296,14 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 }
 - (void)setContentWidth:(NSNumber *)width;
 {
-    NSUInteger height = ([width floatValue] / [[self constrainedProportionsRatio] floatValue]);
-    [self setHeight:[NSNumber numberWithUnsignedInteger:height]];
+    [self setWidth:width];
+    
+    NSNumber *ratio = [self constrainedProportionsRatio];
+    if (ratio)
+    {
+        NSUInteger height = ([width floatValue] / [ratio floatValue]);
+        [self setHeight:[NSNumber numberWithUnsignedInteger:height]];
+    }
 }
 + (NSSet *)keyPathsForValuesAffectingContentWidth; { return [NSSet setWithObject:@"width"]; }
 - (BOOL)validateContentWidth:(NSNumber **)width error:(NSError **)error;
@@ -329,8 +335,14 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 }
 - (void)setContentHeight:(NSNumber *)height;
 {
-    NSUInteger width = ([height floatValue] / [[self constrainedProportionsRatio] floatValue]);
-    [self setWidth:[NSNumber numberWithUnsignedInteger:width]];
+    [self setHeight:height];
+    
+    NSNumber *ratio = [self constrainedProportionsRatio];
+    if (ratio)
+    {
+        NSUInteger width = ([height floatValue] / [ratio floatValue]);
+        [self setWidth:[NSNumber numberWithUnsignedInteger:width]];
+    }
 }
 + (NSSet *)keyPathsForValuesAffectingContentHeight; { return [NSSet setWithObject:@"height"]; }
 - (BOOL)validateContentHeight:(NSNumber **)height error:(NSError **)error;
