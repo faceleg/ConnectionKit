@@ -41,6 +41,17 @@
 
 @implementation SVArticleDOMController
 
+- (id)init;
+{
+    [super init];
+    
+    // We'll accept pretty much anything
+    [self registerForDraggedTypes:[NSArray arrayWithObject:(NSString *)kUTTypeItem]];
+    [self registerForDraggedTypes:[NSAttributedString attributedHTMStringPasteboardTypes]];
+    
+    return self;
+}
+
 - (void)dealloc
 {
     [_earlyCalloutController release];
@@ -656,31 +667,6 @@
     
     
     return result;
-}
-
-- (NSArray *)registeredDraggedTypes;
-{
-    NSMutableSet *result = [[NSMutableSet alloc] initWithArray:
-                            [SVGraphicFactory graphicPasteboardTypes]];
-    
-    [result addObjectsFromArray:[NSAttributedString attributedHTMStringPasteboardTypes]];
-    [result addObject:kSVGraphicPboardType];
-    
-    // Weed out string and image types since we want Web Editor to handle them.
-    [result minusSet:
-     [NSSet setWithArray:[NSImage imageUnfilteredPasteboardTypes]]];
-    [result removeObject:NSStringPboardType];
-    [result removeObject:WebArchivePboardType];
-    [result removeObject:NSHTMLPboardType];
-    [result removeObject:NSRTFDPboardType];
-    [result removeObject:NSRTFPboardType];
-    
-                      
-
-    
-    NSArray *result2 = [result allObjects];
-    [result release];
-    return result2;
 }
 
 #pragma mark Drag Caret
