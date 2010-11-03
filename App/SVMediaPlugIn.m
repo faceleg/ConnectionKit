@@ -170,8 +170,9 @@
     CGSize size = [self originalSize];
     if (!CGSizeEqualToSize(size, CGSizeZero))
     {
-        [self setWidth:[NSNumber numberWithUnsignedInteger:size.width]
-                height:[NSNumber numberWithUnsignedInteger:size.height]];
+        NSNumber *width = (size.width > 0 ? [NSNumber numberWithUnsignedInteger:size.width] : nil);
+        NSNumber *height = (size.height > 0 ? [NSNumber numberWithUnsignedInteger:size.height] : nil);
+        [self setWidth:width height:height];
     }
 }
 
