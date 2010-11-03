@@ -1114,7 +1114,6 @@
 	_dimensionCalculationMovie = aMovie;
 }
 
-
 - (void)loadMovieFromAttributes:(NSDictionary *)anAttributes
 {
 	// Ignore for background threads as there is no need to do this during a doc import
@@ -1132,29 +1131,15 @@
 		&& (NSOrderedSame != QTTimeCompare([movie duration], QTZeroTime))
 		&& ![movie ks_isDRMProtected] )
 	{
-		long movieLoadState = [[movie attributeForKey:QTMovieLoadStateAttribute] longValue];
+		[self setDimensionCalculationMovie:movie];		// cache and retain for async loading.
+	
+		/// Case 18430: we only add observers on main thread
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(loadStateChanged:)
+													 name:QTMovieLoadStateDidChangeNotification object:movie];
 		
-		if (movieLoadState >= kMovieLoadStatePlayable)	// Do we have dimensions now?
-		{
-			if (!self.media && self.posterFrameType == kPosterFrameTypeAutomatic)	// ONLY try to get poster image for a *remote* URL
-			{
-				[self calculatePosterImageFromPlayableMovie:movie];
-			}
-			[self calculateMoviePlayability:movie];
-			[self calculateMovieDimensions:movie];
-			
-		}
-		else	// not ready yet; wait until loaded if we are publishing
-		{
-			[self setDimensionCalculationMovie:movie];		// cache and retain for async loading.
-			[movie setDelegate:self];
-			
-			/// Case 18430: we only add observers on main thread
-
-			[[NSNotificationCenter defaultCenter] addObserver:self
-													 selector:@selector(loadStateChanged:)
-														 name:QTMovieLoadStateDidChangeNotification object:movie];
-		}
+		[[NSNotificationCenter defaultCenter] postNotificationName:QTMovieLoadStateDidChangeNotification
+															object:movie];
 	}
 	else	// No movie?  Maybe it's a format that QuickTime can't read.  We can try FLV
 	{		
@@ -1241,13 +1226,17 @@
 		long loadState = [[movie attributeForKey:QTMovieLoadStateAttribute] longValue];
 		if (loadState >= kMovieLoadStateLoaded)
 		{
+			[self calculateMovieDimensions:movie];
+			[self calculateMoviePlayability:movie];
+		}
+
+		if (loadState >= kMovieLoadStatePlayable)
+		{
 			if (!self.media && self.posterFrameType == kPosterFrameTypeAutomatic)	// ONLY try to get poster image for a *remote* URL
 			{
 				[self calculatePosterImageFromPlayableMovie:movie];
 			}
-			[self calculateMovieDimensions:movie];
-			[self calculateMoviePlayability:movie];
-		
+			
 			[[NSNotificationCenter defaultCenter] removeObserver:self];
 			self.dimensionCalculationMovie = nil;	// we are done with movie now!
 		}
