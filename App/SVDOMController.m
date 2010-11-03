@@ -595,30 +595,5 @@
 
 - (NSArray *)registeredDraggedTypes; { return nil; }
 
-- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node
-                       draggingInfo:(id <NSDraggingInfo>)info;
-{
-    OBPRECONDITION(node);
-    
-    WEKWebEditorItem *result = nil;
-    
-    if ([node ks_isDescendantOfElement:[self HTMLElement]] || ![self HTMLElement])
-    {
-        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
-        {
-            result = [anItem hitTestDOMNode:node draggingInfo:info];
-            if (result) break;
-        }
-        
-        if (!result)
-        {
-            NSArray *types = [self registeredDraggedTypes];
-            if ([[info draggingPasteboard] availableTypeFromArray:types]) result = self;
-        }
-    }
-    
-    return result;
-}
-
 @end
 

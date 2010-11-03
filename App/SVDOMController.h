@@ -86,6 +86,7 @@
 #pragma mark Dragging
 - (void)registerForDraggedTypes:(NSArray *)newTypes;
 - (void)unregisterDraggedTypes;
+- (NSArray *)registeredDraggedTypes;
 
 
 @end
@@ -140,8 +141,6 @@
 
 #pragma mark Drag & Drop
 - (NSArray *)registeredDraggedTypes;
-- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node
-                       draggingInfo:(id <NSDraggingInfo>)info;
 
 
 @end

@@ -64,6 +64,15 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 #pragma mark -
 
 
+@interface WEKWebEditorItem (SVWebEditorViewController)
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node
+                  draggingPasteboard:(NSPasteboard *)pasteboard;
+@end
+
+
+#pragma mark -
+
+
 @interface SVWebEditorViewController ()
 
 @property(nonatomic, readwrite) BOOL viewIsReadyToAppear;
@@ -1366,7 +1375,8 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     
     DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
     
-    id result = [[webEditor contentItem] hitTestDOMNode:node draggingInfo:dragInfo];
+    id result = [[webEditor contentItem] hitTestDOMNode:node
+                                     draggingPasteboard:[dragInfo draggingPasteboard]];
     
     if (!result)
     {
@@ -1384,7 +1394,8 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         
         // Fallback to article. #82408
         WEKWebEditorItem *articleController = [self articleDOMController];
-        result = [articleController hitTestDOMNode:[articleController HTMLElement] draggingInfo:dragInfo];
+        result = [articleController hitTestDOMNode:[articleController HTMLElement]
+                                draggingPasteboard:[dragInfo draggingPasteboard]];
     }
     
     
@@ -1482,4 +1493,38 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation WEKWebEditorItem (SVWebEditorViewController)
+
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node
+                  draggingPasteboard:(NSPasteboard *)pasteboard;
+{
+    OBPRECONDITION(node);
+    
+    WEKWebEditorItem *result = nil;
+    
+    if ([node ks_isDescendantOfElement:[self HTMLElement]] || ![self HTMLElement])
+    {
+        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+        {
+            result = [anItem hitTestDOMNode:node draggingPasteboard:pasteboard];
+            if (result) break;
+        }
+        
+        if (!result)
+        {
+            NSArray *types = [self registeredDraggedTypes];
+            if ([pasteboard availableTypeFromArray:types]) result = self;
+        }
+    }
+    
+    return result;
+}
+
+@end
+
 
