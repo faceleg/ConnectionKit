@@ -252,7 +252,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 {
     if (context == sGraphicSizeObservationContext)
     {
-        [self setNeedsUpdateWithSelector:@selector(updateSize)];
+        //[self setNeedsUpdateWithSelector:@selector(updateSize)];
+        [self updateSize];
     }
     else
     {

@@ -57,7 +57,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 @synthesize sizeDelta = _delta;
 
-- (void)updateSize;
+- (void)update;
 {
     // mark the current area for drawing
     DOMHTMLElement *element = [self HTMLElement];
@@ -99,7 +99,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 {
     if (context == sObjectSizeObservationContext)
     {
-        [self setNeedsUpdateWithSelector:@selector(updateSize)];
+        [self update];
     }
     else
     {
