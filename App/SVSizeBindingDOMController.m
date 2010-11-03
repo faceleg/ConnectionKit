@@ -57,7 +57,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 @synthesize sizeDelta = _delta;
 
-- (void)update;
+- (void)updateSize;
 {
     // mark the current area for drawing
     DOMHTMLElement *element = [self HTMLElement];
@@ -86,6 +86,12 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     [self didUpdate];
 }
 
+- (void)setNeedsUpdate;
+{
+    // Palm off on parent
+    [[self parentWebEditorItem] setNeedsUpdate];
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary *)change
@@ -93,7 +99,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 {
     if (context == sObjectSizeObservationContext)
     {
-        [self setNeedsUpdate];
+        [self setNeedsUpdateWithSelector:@selector(updateSize)];
     }
     else
     {

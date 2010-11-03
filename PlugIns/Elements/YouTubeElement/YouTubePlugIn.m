@@ -137,12 +137,23 @@
     id <SVPlugInContext> context = [SVPlugIn currentContext];
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
     if (![self includeRelatedVideos]) [parameters setObject:@"0" forKey:@"rel"];
+    [context addDependencyForKeyPath:@"includeRelatedVideos" ofObject:self];
+    
     if ([self playHD]) [parameters setObject:@"1" forKey:@"hd"];
+    [context addDependencyForKeyPath:@"playHD" ofObject:self];
+    
     [parameters setObject:[[self color1] youTubeVideoColorString] forKey:@"color1"];
     [parameters setObject:[[self color2] youTubeVideoColorString] forKey:@"color2"];
+    [context addDependencyForKeyPath:@"color1" ofObject:self];
+    [context addDependencyForKeyPath:@"color2" ofObject:self];
+    
     if (self.showBorder) [parameters setObject:@"1" forKey:@"border"];
+    [context addDependencyForKeyPath:@"showBorder" ofObject:self];
+    
     [parameters setValue:[[context page] language] forKey:@"hl"];
+    
     
     NSURL *base = [NSURL svURLWithScheme:@"http"
                                     host:([self privacy] ? @"www.youtube-nocookie.com" : @"www.youtube.com")
