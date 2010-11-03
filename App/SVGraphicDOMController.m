@@ -364,8 +364,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     // Apply the change
     SVGraphic *graphic = [self representedObject];
     
-    NSNumber *width = [NSNumber numberWithInt:size.width];
-    NSNumber *height = [NSNumber numberWithInt:size.height];
+    NSNumber *width = (size.width > 0 ? [NSNumber numberWithInt:size.width] : nil);
+    NSNumber *height = (size.height > 0 ? [NSNumber numberWithInt:size.height] : nil);
     [graphic setWidth:width];
     [graphic setHeight:height];
     
