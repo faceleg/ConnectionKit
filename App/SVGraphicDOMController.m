@@ -397,30 +397,53 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
-    CGFloat maxWidth = [self maxWidth];
+    // If constrained proportions, apply that
     SVGraphic *graphic = [self representedObject];
+    NSNumber *ratio = [graphic constrainedProportionsRatio];
+
+    if (ratio)
+    {
+        BOOL resizingWidth = (handle == kSVGraphicUpperLeftHandle ||
+                              handle == kSVGraphicMiddleLeftHandle ||
+                              handle == kSVGraphicLowerLeftHandle ||
+                              handle == kSVGraphicUpperRightHandle ||
+                              handle == kSVGraphicMiddleRightHandle ||
+                              handle == kSVGraphicLowerRightHandle);
+        
+        BOOL resizingHeight = (handle == kSVGraphicUpperLeftHandle ||
+                               handle == kSVGraphicUpperMiddleHandle ||
+                               handle == kSVGraphicUpperRightHandle ||
+                               handle == kSVGraphicLowerLeftHandle ||
+                               handle == kSVGraphicLowerMiddleHandle ||
+                               handle == kSVGraphicLowerRightHandle);
+        
+        if (!resizingHeight)
+        {
+            size.height = size.width / [ratio floatValue];
+        }
+        else if (!resizingWidth)
+        {
+            size.width = size.height * [ratio floatValue];
+        }
+    }
+    
+    
+    
+    
+    
+    CGFloat maxWidth = [self maxWidth];
     
     if (snapToFit)
     {
         if (size.width > maxWidth)
         {
+            // Keep within max width
+            // Switch over to auto-sized for simple graphics
             size.width = ([graphic isExplicitlySized] ? maxWidth : 0.0f);
+            if (ratio) size.height = maxWidth / [ratio floatValue];
         }
     }
     
-    
-    // Keep within max width
-    NSNumber *aspectRatio = [graphic constrainedProportionsRatio];
-    if (aspectRatio)
-    {
-        CGFloat width = size.height * [aspectRatio floatValue];
-        
-        if (width > maxWidth)
-        {
-            size.width = maxWidth;
-            size.height = maxWidth / [aspectRatio floatValue];
-        }
-    }
     
     return size;
 }
