@@ -136,44 +136,14 @@
     }
 }
 
-- (CGSize)originalSize;
-{
-    CGSize result = CGSizeZero;
-    
-    NSNumber *naturalWidth = self.naturalWidth;
-    NSNumber *naturalHeight = self.naturalHeight;
-    
-    // Try to get cached natural size first
-    if (nil != naturalWidth && nil != naturalHeight)
-    {
-        result = CGSizeMake([naturalWidth floatValue], [naturalHeight floatValue]);
-    }
-    else	// ask the media for it, and cache it.
-    {
-        SVMedia *media = [self media];
-        if (media)
-        {
-            result = [media originalSize];
-            [self setNaturalWidth:[NSNumber numberWithFloat:result.width]
-                           height:[NSNumber numberWithFloat:result.height]];
-        }
-    }
-    
-    
-    return result;
-}
-
 /*  There shouldn't be any need to call this method directly. Instead, it should only be called internally from -[SVMediaGraphic makeOriginalSize]
  */
 - (void)makeOriginalSize;
 {
-    CGSize size = [self originalSize];
-    if (!CGSizeEqualToSize(size, CGSizeZero))
-    {
-        NSNumber *width = (size.width > 0 ? [NSNumber numberWithUnsignedInteger:size.width] : nil);
-        NSNumber *height = (size.height > 0 ? [NSNumber numberWithUnsignedInteger:size.height] : nil);
-        [self setWidth:width height:height];
-    }
+    NSNumber *width = [self naturalWidth];
+    NSNumber *height = [self naturalHeight];
+    
+    if (width && height) [self setWidth:width height:height];
 }
 
 #pragma mark SVEnclosure

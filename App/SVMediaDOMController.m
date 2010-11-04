@@ -232,21 +232,22 @@
                                handle == kSVGraphicLowerMiddleHandle ||
                                handle == kSVGraphicLowerRightHandle);
         
-        SVMediaGraphic *image = [self representedObject];
-        CGSize originalSize = [[image plugIn] originalSize];
-        
+        SVMediaPlugIn *plugIn = [(SVMediaGraphic *)[self representedObject] plugIn];
+        NSNumber *naturalWidth = [plugIn naturalWidth];
+        NSNumber *naturalHeight = [plugIn naturalHeight];
+         
         
         // Snap if we are near the original size.
-        if (originalSize.width > 0 && originalSize.height > 0)
+        if (naturalWidth && naturalHeight)
         {
-            int snap = MIN(originalSize.width/4, 10);	// snap to smaller of 25% image width or 10 pixels
-            if (resizingWidth && ( abs(size.width - originalSize.width) < snap) )
+            int snap = MIN([naturalWidth floatValue]/4, 10);	// snap to smaller of 25% image width or 10 pixels
+            if (resizingWidth && ( abs(size.width - [naturalWidth floatValue]) < snap) )
             {
-                size.width = originalSize.width;
+                size.width = [naturalWidth floatValue];
             }
-            if (resizingHeight && ( abs(size.height - originalSize.height) < snap) )
+            if (resizingHeight && ( abs(size.height - [naturalHeight floatValue]) < snap) )
             {
-                size.height = originalSize.height;
+                size.height = [naturalHeight floatValue];
             }
         }
     }

@@ -82,7 +82,6 @@
 
 @implementation SVAudio
 
-#pragma mark -
 #pragma mark Lifetime
 
 - (void)awakeFromNew;
@@ -99,6 +98,10 @@
     }
 }
 
+- (void)makeOriginalSize;
+{
+    [self setWidth:[NSNumber numberWithUnsignedInt:200] height:nil];
+}
 
 #pragma mark Metrics
 
@@ -107,8 +110,6 @@
     // Audio is unique among media, having auto height.
     return (*height == nil || [super validateHeight:height error:error]);
 }
-
-- (CGSize)originalSize; { return CGSizeMake(200.0f, 0.0f); }
 
 + (BOOL)isExplicitlySized; { return NO; }
 

@@ -45,7 +45,6 @@
 - (NSNumber *)naturalWidth;
 - (NSNumber *)naturalHeight;
 - (void)setNaturalWidth:(NSNumber *)width height:(NSNumber *)height;
-- (CGSize)originalSize;
 
 
 #pragma mark HTML
