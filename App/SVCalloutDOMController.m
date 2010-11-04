@@ -8,6 +8,8 @@
 
 #import "SVCalloutDOMController.h"
 
+#import "SVParagraphedHTMLWriter.h"
+
 
 @interface DOMElement (SVCalloutDOMController)
 - (DOMNodeList *)getElementsByClassName:(NSString *)name;
@@ -59,6 +61,19 @@
     
     [self setHTMLElement:(DOMHTMLElement *)calloutContainer];
     [self setCalloutContentElement:calloutContent];
+}
+
+#pragma mark Attributed HTML
+
+- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriter *)writer;
+{
+    DOMNode *aNode = [[self calloutContentElement] firstChild];
+    while (aNode)
+    {
+        aNode = [aNode writeTopLevelParagraph:writer];
+    }
+    
+    return YES;
 }
 
 #pragma mark Other

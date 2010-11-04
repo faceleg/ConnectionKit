@@ -252,16 +252,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         if (![controller writeAttributedHTML:writer])
         {
             result = element;
-            
-            DOMNodeList *calloutContents = [element getElementsByClassName:@"callout-content"];
-            for (unsigned i = 0; i < [calloutContents length]; i++)
-            {
-                DOMNode *aNode = [[calloutContents item:i] firstChild];
-                while (aNode)
-                {
-                    aNode = [aNode writeTopLevelParagraph:writer];
-                }
-            }
         }
     }
     
