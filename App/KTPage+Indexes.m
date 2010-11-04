@@ -100,6 +100,7 @@
 	
 	return nil;
 }
++ (NSSet *) keyPathsForValuesAffectingPreviousPage; { return [NSSet setWithObject:@"parentPage.childPages"]; }
 
 - (KTPage *)nextPage
 {
@@ -121,6 +122,7 @@
 	
 	return nil;
 }
++ (NSSet *) keyPathsForValuesAffectingNextPage; { return [NSSet setWithObject:@"parentPage.childPages"]; }
 
 #pragma mark Syndication
 

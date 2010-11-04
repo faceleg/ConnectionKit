@@ -264,13 +264,9 @@
 {
 	// Clear the cache
 	[self willChangeValueForKey:@"sortedChildren"];
-	[[self childItems] makeObjectsPerformSelector:@selector(willChangeValuesForKeys:)
-									 withObject:[KTPage sortedChildrenDependentChildrenKeys]];
 	
 	[self setPrimitiveValue:nil forKey:@"sortedChildren"];
 	
-	[[self childItems] makeObjectsPerformSelector:@selector(didChangeValuesForKeys:)
-									 withObject:[KTPage sortedChildrenDependentChildrenKeys]];
 	[self didChangeValueForKey:@"sortedChildren"];
 	
 	
