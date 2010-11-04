@@ -257,7 +257,9 @@
 	}
     else
     {
-        result = [self tryToPerform:selector with:nil];
+        // Generally don't want to pass up the responder chain. #94455
+        result = [self respondsToSelector:selector];
+        if (result) [self doCommandBySelector:selector];
     }
 	
 	return result;
