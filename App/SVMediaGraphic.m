@@ -176,8 +176,12 @@
 {
     if (URL) [self replaceMedia:nil forKeyPath:@"media"];
     
-    [self setExternalSourceURLString:[URL absoluteString]];
-    if (URL) [self didSetSource];
+    // Bindings can sometimes call this twice while swapping plug-in Inspector types, so we have to be a bit defensive to avoid calling -didSetSource twice
+    if (![[URL absoluteString] isEqualToString:[[self externalSourceURL] absoluteString]])
+    {
+        [self setExternalSourceURLString:[URL absoluteString]];
+        if (URL) [self didSetSource];
+    }
 }
 
 - (void)setSourceWithExternalURL:(NSURL *)URL;
