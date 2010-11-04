@@ -74,7 +74,7 @@
 	<key>KTPageletCanHaveTitle</key>
 	<false/>
 	<key>KTPluginIconName</key>
-	<string>iChat.icns</string>
+	<string>toolbar_imstatus.tiff</string>
 	<key>KTElementAllowsIntroduction</key>
 	<true/>
 	<key>KTPluginInitialProperties</key>

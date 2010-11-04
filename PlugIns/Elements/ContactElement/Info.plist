@@ -39,7 +39,7 @@
 		<string>ContactElement.css</string>
 	</array>
 	<key>KTPluginIconName</key>
-	<string>/Applications/Mail.app/Contents/Resources/app.icns</string>
+	<string>toolbar_contact.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>copyToSender</key>
