@@ -22,7 +22,8 @@
     SVSidebarPageletsController *_pageletsController;
     
     // Drag & Drop
-    DOMElement          *_dragCaret;
+    DOMElement  *_dragCaret;
+    BOOL        _drawAsDropTarget;
 }
 
 - (id)initWithPageletsController:(SVSidebarPageletsController *)pageletsController;

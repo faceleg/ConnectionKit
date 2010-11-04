@@ -17,6 +17,7 @@
 #import "WebEditingKit.h"
 
 #import "NSArray+Karelia.h"
+#import "NSColor+Karelia.h"
 #import "DOMNode+Karelia.h"
 
 
@@ -383,6 +384,9 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
 {
+    _drawAsDropTarget = YES;
+    [self setNeedsDisplay];
+    
     return [self draggingUpdated:sender];
 }
 
@@ -424,14 +428,9 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     
     // Finish up
-    if (result)
+    if (!result)
     {
-        [[self webEditor] moveDragHighlightToDOMNode:[self sidebarDivElement]];
-    }
-    else
-    {
-        [self removeDragCaret];
-        [[self webEditor] moveDragHighlightToDOMNode:nil];
+        [self draggingExited:dragInfo];
     }
     
     return result;
@@ -439,9 +438,19 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender;
 {
+    [self setNeedsDisplay];
+    _drawAsDropTarget = NO;
+    
     [self removeDragCaret];
-    [[self webEditor] moveDragHighlightToDOMNode:nil];
     [[self webEditor] removeDragCaret];
+}
+
+- (BOOL) prepareForDragOperation:(id <NSDraggingInfo>)sender;
+{
+    [self setNeedsDisplay];
+    _drawAsDropTarget = NO;
+    
+    return YES;
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)dragInfo;
@@ -537,6 +546,38 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     [[node parentNode] insertBefore:_dragCaret refChild:[node nextSibling]];
     [style setHeight:@"75px"];
+}
+
+#pragma mark Drawing
+
+- (NSRect)dropTargetRect;
+{
+    NSRect result = [[self sidebarDivElement] boundingBox];
+    return result;
+}
+
+- (NSRect)drawingRect;
+{
+    NSRect result = [super drawingRect];
+    
+    if (_drawAsDropTarget)
+    {
+        result = NSUnionRect(result, [self dropTargetRect]);
+    }
+    
+    return result;
+}
+
+- (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;
+{
+    [super drawRect:dirtyRect inView:view];
+    
+    // Draw outline
+    if (_drawAsDropTarget)
+    {
+        [[NSColor aquaColor] set];
+        NSFrameRectWithWidth([self dropTargetRect], 2.0f);
+    }
 }
 
 #pragma mark KVO
