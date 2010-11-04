@@ -35,7 +35,9 @@
 - (void)setCodecType:(NSString *)type reloadPlugIn:(BOOL)reload;
 {
     [[self container] setCodecType:type];
-    if (reload) [[self container] didSetSource];
+    
+    // Ignore reload flag and check 
+    [[self container] reloadPlugInIfNeeded];
 }
 
 #pragma mark Properties

@@ -98,18 +98,20 @@
     if (!type) type = [NSString UTIForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
     
     
-    if ([type conformsToUTI:(NSString *)kUTTypeMovie]
-		|| [type conformsToUTI:(NSString *)kUTTypeVideo]
-		|| [type isEqualToString:@"unloadable-video"])	// special case for video we can't actually play on this machine
+    if ([type conformsToUTI:(NSString *)kUTTypeMovie] ||
+        [type conformsToUTI:(NSString *)kUTTypeVideo] ||
+        [type isEqualToString:@"unloadable-video"])	// special case for video we can't actually play on this machine
     {
         return @"com.karelia.sandvox.SVVideo";
     }
-    else if ([type conformsToUTI:(NSString *)kUTTypeAudio]
-			 || [type isEqualToString:@"unloadable-audio"])	// special case for audio we can't actually play on this machine
+    else if ([type conformsToUTI:(NSString *)kUTTypeAudio] ||
+             [type conformsToUTI:@"com.apple.quicktime-audio"] ||   // nothing built-in that I can see
+			 [type isEqualToString:@"unloadable-audio"])	// special case for audio we can't actually play on this machine
     {
         return @"com.karelia.sandvox.SVAudio";
     }
-    else if ([type conformsToUTI:@"com.adobe.shockwave-flash"] || [type conformsToUTI:@"com.macromedia.shockwave-flash"])
+    else if ([type conformsToUTI:@"com.adobe.shockwave-flash"] ||
+             [type conformsToUTI:@"com.macromedia.shockwave-flash"])
 		// annoying to have to check both, but somehow I got the macromedia UTI....
     {
         return @"com.karelia.sandvox.SVFlash";
@@ -191,6 +193,25 @@
 
 #pragma mark Source
 
+- (void)reloadPlugInIfNeeded
+{
+    // Does this change the type?
+    NSString *identifier = [self plugInIdentifier];
+    SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
+    
+    if (![[self plugIn] isKindOfClass:[factory plugInClass]])
+    {
+        NSNumber *width = [self width];
+        
+        [self loadPlugInAsNew:NO];
+        [[self plugIn] awakeFromNew];   // which will probably set size…
+        
+        // …so bring the width back to desired value
+        [self setContentWidth:width];
+    }
+    
+}
+
 - (void)didSetSource;
 {
     // Reset size & codecType BEFORE media so setting the source can store a new size
@@ -210,20 +231,7 @@
     [self replaceMedia:nil forKeyPath:@"posterFrame"];
     
     
-    // Does this change the type?
-    NSString *identifier = [self plugInIdentifier];
-    SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
-    
-    if (![[self plugIn] isKindOfClass:[factory plugInClass]])
-    {
-        NSNumber *width = [self width];
-        
-        [self loadPlugInAsNew:NO];
-        [[self plugIn] awakeFromNew];   // which will probably set size…
-        
-        // …so bring the width back to desired value
-        [self setContentWidth:width];
-    }
+    [self reloadPlugInIfNeeded];
     
     
     [[self plugIn] didSetSource];
