@@ -332,7 +332,8 @@
         {
             DOMRange *selection = [[self webEditor] selectedDOMRange];
             DOMNode *selectionNode = [selection commonAncestorContainer];
-            BOOL repairSelection = (selectionNode == result);
+            BOOL selectAll = (selectionNode == result);
+            
             
             // Create one and insert it
             firstChild = (DOMHTMLElement *)[[result ownerDocument] createElement:@"SPAN"];
@@ -341,6 +342,7 @@
             DOMNode *refNode = [result firstChild];
             [result insertBefore:firstChild refChild:refNode];
             
+            
             // Move any existing nodes inside the span
             while (refNode)
             {
@@ -348,13 +350,12 @@
                 refNode = [firstChild nextSibling];
             }
             
-            // Finish, repairing selection if needed
+            
+            // Finish, repairing selection as needed
             result = firstChild;
-            if (repairSelection)
-            {
-                [selection selectNodeContents:result];
-                [[self webEditor] setSelectedDOMRange:selection affinity:0];
-            }
+            
+            if (selectAll) [selection selectNodeContents:result];
+            [[self webEditor] setSelectedDOMRange:selection affinity:0];
         }
     }
     
