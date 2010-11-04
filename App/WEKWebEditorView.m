@@ -2117,6 +2117,17 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 [self doCommandBySelector:command];
                 result = YES;
             }
+            
+            else if (command == @selector(delete:))
+            {
+                // For text, generally want WebView to handle it. But if there's an empty selection, nothing for WebKit to do so see if we can take over
+                DOMRange *selection = [self selectedDOMRange];
+                if (selection && [selection collapsed])
+                {
+                    [self delete:nil];
+                    result = YES;
+                }
+            }
         }
     }
     

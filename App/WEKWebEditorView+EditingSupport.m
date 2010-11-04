@@ -101,7 +101,8 @@
 
 - (void)delete:(id)sender forwardingSelector:(SEL)action;
 {
-    if ([self selectedDOMRange])
+    DOMRange *selection = [self selectedDOMRange];
+    if (selection && ![selection collapsed])
     {
         [self forceWebViewToPerform:action withObject:sender];
     }
