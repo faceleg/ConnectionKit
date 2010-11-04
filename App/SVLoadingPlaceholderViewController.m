@@ -79,18 +79,19 @@
     {
         // Take snapshot
         NSView *view = [webEditorController view];
-        [view lockFocus];
-        
-        NSBitmapImageRep *snapshot = [[NSBitmapImageRep alloc]
-                                      initWithFocusedViewRect:[view bounds]];
-        
-        [view unlockFocus];
-        
-        // Display it
-        NSImage *image = [[NSImage alloc] initWithBitmapImageRepresentation:snapshot];
-        [snapshot release];
-        [[self backgroundImageView] setImage:image];
-        [image release];
+        if ([view lockFocusIfCanDraw])
+        {
+            NSBitmapImageRep *snapshot = [[NSBitmapImageRep alloc]
+                                          initWithFocusedViewRect:[view bounds]];
+            
+            [view unlockFocus];
+            
+            // Display it
+            NSImage *image = [[NSImage alloc] initWithBitmapImageRepresentation:snapshot];
+            [snapshot release];
+            [[self backgroundImageView] setImage:image];
+            [image release];
+        }
     }
     else
     {
