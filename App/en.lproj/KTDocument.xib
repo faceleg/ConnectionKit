@@ -580,13 +580,13 @@
 														<object class="NSTextField" id="204785403">
 															<reference key="NSNextResponder" ref="327729126"/>
 															<int key="NSvFlags">265</int>
-															<string key="NSFrame">{{380, 39}, {58, 14}}</string>
+															<string key="NSFrame">{{380, 39}, {59, 14}}</string>
 															<reference key="NSSuperview" ref="327729126"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTextFieldCell" key="NSCell" id="319158873">
 																<int key="NSCellFlags">68288064</int>
 																<int key="NSCellFlags2">272761856</int>
-																<string key="NSContents">→ index .</string>
+																<string key="NSContents"> → index .</string>
 																<reference key="NSSupport" ref="26"/>
 																<reference key="NSControlView" ref="204785403"/>
 																<reference key="NSBackgroundColor" ref="97692237"/>
