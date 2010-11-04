@@ -71,8 +71,12 @@
         [self setConstrainProportions:[self isConstrainProportionsEditable]];
     }
     
-    // Make sure we don't have auto width. Super will then pull down to a good value
-    [self setContentWidth:[NSNumber numberWithUnsignedInteger:4096]];
+    // Make sure we don't have auto width. Super will then pull down to a good value. #64384
+    NSNumber *width = [self naturalWidth];
+    if (!width) width = [NSNumber numberWithUnsignedInteger:200];
+    [self setContentWidth:width];
+    
+    
     [super didAddToPage:page];
     
     
