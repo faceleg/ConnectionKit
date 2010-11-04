@@ -547,12 +547,11 @@
 		[self startFlash:context audioSourceURL:audioSourceURL]; 
 	}
 
-	// Now, show the fallback *if* there is a controller showing.  This will notify visitors that there is an audio they can't see.
-	// If the controller is hidden, then the page will just be silent.
-	if (self.controller)
+	// I would like to put a warning inside the object tags, but this seems to overpower the controller, at least on webkit.  So don't.
+	// So only do this if it's truly playable.
+	if (unknownTag)
 	{
 		[self startUnknown:context];
-		unknownTag = YES;
 	}
 	
 	// END THE TAGS, in reverse order
@@ -638,6 +637,7 @@
 			 || [type conformsToUTI:@"public.aiff-audio"]
 			 || [type conformsToUTI:@"public.aifc-audio"]
 			 || [type conformsToUTI:@"public.au-audio"]
+			 || [type conformsToUTI:@"com.apple.quicktime-audio"]
 			 || [type conformsToUTI:(NSString *)kUTTypeMPEG4Audio])
 	{
 		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
@@ -689,6 +689,7 @@
 			 || [type conformsToUTI:@"public.aiff-audio"]
 			 || [type conformsToUTI:@"public.aifc-audio"]
 			 || [type conformsToUTI:@"public.au-audio"]
+			 || [type conformsToUTI:@"com.apple.quicktime-audio"]
 			 || [type conformsToUTI:(NSString *)kUTTypeMPEG4Audio])
 	{
 		result = NSLocalizedString(@"Audio will not play on Windows PCs unless QuickTime is installed", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
