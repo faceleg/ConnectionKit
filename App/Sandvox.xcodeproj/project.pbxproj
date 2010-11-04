@@ -1037,7 +1037,6 @@
 		CE01E7281208A8590093565F /* toolbar_html_element.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E7111208A8590093565F /* toolbar_html_element.tiff */; };
 		CE01E7291208A8590093565F /* toolbar_html.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E7121208A8590093565F /* toolbar_html.tiff */; };
 		CE01E72A1208A8590093565F /* toolbar_image.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E7131208A8590093565F /* toolbar_image.tiff */; };
-		CE01E72B1208A8590093565F /* toolbar_index.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E7141208A8590093565F /* toolbar_index.tiff */; };
 		CE01E72C1208A8590093565F /* toolbar_media.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E7151208A8590093565F /* toolbar_media.tiff */; };
 		CE01E72D1208A8590093565F /* toolbar_new_page.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E7161208A8590093565F /* toolbar_new_page.tiff */; };
 		CE01E72E1208A8590093565F /* toolbar_objects.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E7171208A8590093565F /* toolbar_objects.tiff */; };
@@ -1207,6 +1206,7 @@
 		CE9B4B430F5E0C780052134C /* UKDockProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9B4B410F5E0C780052134C /* UKDockProgressIndicator.m */; };
 		CE9E5260111C933B00BEF1C8 /* SVDocumentInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = CE9E525E111C933B00BEF1C8 /* SVDocumentInspector.h */; };
 		CE9E5261111C933B00BEF1C8 /* SVDocumentInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9E525F111C933B00BEF1C8 /* SVDocumentInspector.m */; };
+		CEA32B2F12833AEB00648C39 /* object_index.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEA32B2E12833AEB00648C39 /* object_index.tiff */; };
 		CEA962C30AF6A924008A1367 /* sandvox.css in Resources */ = {isa = PBXBuildFile; fileRef = CEA962C20AF6A924008A1367 /* sandvox.css */; };
 		CEAE132C08450536007025D4 /* RSSTemplate.xml in Resources */ = {isa = PBXBuildFile; fileRef = CEAE132B08450536007025D4 /* RSSTemplate.xml */; };
 		CEAE166A084530C1007025D4 /* KTHostProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CEAE1668084530C1007025D4 /* KTHostProperties.m */; };
@@ -2655,7 +2655,6 @@
 		CE01E7111208A8590093565F /* toolbar_html_element.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_html_element.tiff; sourceTree = "<group>"; };
 		CE01E7121208A8590093565F /* toolbar_html.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_html.tiff; sourceTree = "<group>"; };
 		CE01E7131208A8590093565F /* toolbar_image.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_image.tiff; sourceTree = "<group>"; };
-		CE01E7141208A8590093565F /* toolbar_index.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_index.tiff; sourceTree = "<group>"; };
 		CE01E7151208A8590093565F /* toolbar_media.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_media.tiff; sourceTree = "<group>"; };
 		CE01E7161208A8590093565F /* toolbar_new_page.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_new_page.tiff; sourceTree = "<group>"; };
 		CE01E7171208A8590093565F /* toolbar_objects.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_objects.tiff; sourceTree = "<group>"; };
@@ -2852,6 +2851,7 @@
 		CE9B4B410F5E0C780052134C /* UKDockProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKDockProgressIndicator.m; sourceTree = "<group>"; };
 		CE9E525E111C933B00BEF1C8 /* SVDocumentInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocumentInspector.h; sourceTree = "<group>"; };
 		CE9E525F111C933B00BEF1C8 /* SVDocumentInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocumentInspector.m; sourceTree = "<group>"; };
+		CEA32B2E12833AEB00648C39 /* object_index.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = object_index.tiff; sourceTree = "<group>"; };
 		CEA962C20AF6A924008A1367 /* sandvox.css */ = {isa = PBXFileReference; explicitFileType = text.css; fileEncoding = 4; path = sandvox.css; sourceTree = "<group>"; };
 		CEA9AE8A0A6420F600855897 /* ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = ja; path = ja.lproj/Credits.html; sourceTree = "<group>"; };
 		CEA9AE8F0A6420F700855897 /* ja */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; lineEnding = 0; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -5205,7 +5205,6 @@
 				CE01E7121208A8590093565F /* toolbar_html.tiff */,
 				CE01E7131208A8590093565F /* toolbar_image.tiff */,
 				CE62DD0D1271FF3C004E81EE /* toolbar_info.tiff */,
-				CE01E7141208A8590093565F /* toolbar_index.tiff */,
 				CE01E7151208A8590093565F /* toolbar_media.tiff */,
 				CE01E7161208A8590093565F /* toolbar_new_page.tiff */,
 				CE01E7171208A8590093565F /* toolbar_objects.tiff */,
@@ -5280,6 +5279,7 @@
 				CE390972127BA2D100C994C6 /* object_empty.tiff */,
 				CE390973127BA2D100C994C6 /* object_grid.tiff */,
 				CE390974127BA2D100C994C6 /* object_summaries.tiff */,
+				CEA32B2E12833AEB00648C39 /* object_index.tiff */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -6432,7 +6432,6 @@
 				CE01E7281208A8590093565F /* toolbar_html_element.tiff in Resources */,
 				CE01E7291208A8590093565F /* toolbar_html.tiff in Resources */,
 				CE01E72A1208A8590093565F /* toolbar_image.tiff in Resources */,
-				CE01E72B1208A8590093565F /* toolbar_index.tiff in Resources */,
 				CE01E72C1208A8590093565F /* toolbar_media.tiff in Resources */,
 				CE01E72D1208A8590093565F /* toolbar_new_page.tiff in Resources */,
 				CE01E72E1208A8590093565F /* toolbar_objects.tiff in Resources */,
@@ -6471,6 +6470,7 @@
 				CE390977127BA2D100C994C6 /* object_summaries.tiff in Resources */,
 				3CACE2CA127FC19E00983DF2 /* SVCommentsSheet.xib in Resources */,
 				3CACE2CD127FC21100983DF2 /* SVGoogleSheet.xib in Resources */,
+				CEA32B2F12833AEB00648C39 /* object_index.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

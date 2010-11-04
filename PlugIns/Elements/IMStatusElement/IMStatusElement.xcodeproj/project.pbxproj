@@ -23,6 +23,7 @@
 		3CFCD655123AF4B1003A635C /* NSString+IMStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFCD654123AF4B1003A635C /* NSString+IMStatus.m */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CEA32AE81283356500648C39 /* toolbar_imstatus.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEA32AE71283356500648C39 /* toolbar_imstatus.tiff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		3CFCD654123AF4B1003A635C /* NSString+IMStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IMStatus.m"; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* IMStatus.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IMStatus.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEA32AE71283356500648C39 /* toolbar_imstatus.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_imstatus.tiff; sourceTree = "<group>"; };
 		CEB4FD9710309DBC0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEB4FD9810309DBC0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -111,6 +113,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CEA32AE71283356500648C39 /* toolbar_imstatus.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3CD67922120680AB0011B194 /* IMStatusInspector.xib */,
 				3C42E4290D64FB59004F35FD /* iChat.icns */,
@@ -253,6 +256,7 @@
 				3C42E43B0D64FB65004F35FD /* Localizable.strings in Resources */,
 				3C42E4550D64FBCC004F35FD /* License.rtf in Resources */,
 				3CD67924120680AB0011B194 /* IMStatusInspector.xib in Resources */,
+				CEA32AE81283356500648C39 /* toolbar_imstatus.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
