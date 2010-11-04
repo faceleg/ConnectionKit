@@ -355,11 +355,13 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 - (void)update;
 {
     _reload = NO;
-	[self loadPage:[[self HTMLContext] page]];
 	
     // Clearly the webview is no longer in need of refreshing
+    // Used to mark this *after* -loadPage: but it's possible that a change could happen while loading, mark us for update, but then be wiped out once -loadPage: returns
     _willUpdate = NO;
 	_needsUpdate = NO;
+    
+    [self loadPage:[[self HTMLContext] page]];
 }
 
 - (BOOL)isUpdating; { return _updatesCount; }
