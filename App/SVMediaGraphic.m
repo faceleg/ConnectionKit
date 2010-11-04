@@ -166,12 +166,6 @@
 #pragma mark External URL
 
 @dynamic externalSourceURLString;
-- (void) setExternalSourceURLString:(NSString *)source;
-{
-    [self willChangeValueForKey:@"externalSourceURLString"];
-    [self setPrimitiveValue:source forKey:@"externalSourceURLString"];
-    [self didChangeValueForKey:@"externalSourceURLString"];
-}
 
 - (NSURL *)externalSourceURL
 {
