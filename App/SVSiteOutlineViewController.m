@@ -102,8 +102,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         // Icon queue
         _queue = [[NSOperationQueue alloc] init];
         [_queue setMaxConcurrentOperationCount:2];  // empirical. Left to its own devices, GCD will often spawn 1 thread per image as the op becomes disk-bound. On most Macs 2 is definitely faster than 1
-        
-        _customIconGenerationQueue = [[NSMutableArray alloc] init];
     }
         
 	return self;
@@ -130,7 +128,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	[_cachedPluginIcons release];
 	[_cachedImagesByRepresentation release];
     [_queue release];
-	[_customIconGenerationQueue release];
     
     
 	[super dealloc];
@@ -420,7 +417,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 - (void)resetPageObservation
 {
     // Cancel any pending icons
-    [_customIconGenerationQueue removeAllObjects];
+    //[_customIconGenerationQueue removeAllObjects];
     
     // We could use -mutableSetValueForKey to do this, but it will crash if used during -dealloc
     [self removePages:[self pages]];
