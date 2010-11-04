@@ -98,13 +98,14 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 {
     [super didAddToPage:page];
     
-    // Start off at a decent size
-    if ([[[self plugIn] class] isExplicitlySized])
+    // Size to fit
+    NSNumber *width = [self width];
+    if (width)
     {
         NSUInteger maxWidth = 490;
         if ([self isPagelet]) maxWidth = 200;
         
-        NSUInteger elementWidth = [[self width] unsignedIntegerValue] + [[[self plugIn] elementWidthPadding] unsignedIntegerValue];
+        NSUInteger elementWidth = [width unsignedIntegerValue] + [[[self plugIn] elementWidthPadding] unsignedIntegerValue];
         if (elementWidth > maxWidth)
         {
             [self setContentWidth:[NSNumber numberWithUnsignedInteger:maxWidth]];
