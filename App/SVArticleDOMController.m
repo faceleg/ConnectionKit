@@ -385,7 +385,7 @@
     
     
     // Remove originals. For some reason -delete: does not fire change notifications
-    [[self webEditor] deleteForward:self];
+    [self deleteObjects:self];
     
     
     // Update selection
@@ -430,6 +430,49 @@
     {
         NSBeep();
     }
+}
+
+- (void)deleteObjects:(id)sender;
+{
+    WEKWebEditorView *webEditor = [self webEditor];
+    if ([webEditor shouldChangeText:self])
+    {
+        NSArray *selection = [self selectedItems];
+        for (WEKWebEditorItem *anItem in selection)
+        {
+            [anItem tryToRemove];
+        }
+        
+        [[webEditor dataSource] webEditor:webEditor deleteItems:selection];
+        
+        [webEditor didChangeText];
+    }
+}
+
+#pragma mark Selection
+
+- (NSArray *)selectedItems;
+{
+    NSArray *objects = [[[self webEditorViewController] graphicsController] selectedObjects];
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[objects count]];
+    
+    for (SVGraphic *anObject in objects)
+    {
+        WEKWebEditorItem *item = [self hitTestRepresentedObject:anObject];
+        if (item)
+        {
+            // Search up to find the highest item
+            WEKWebEditorItem *parent = [item parentWebEditorItem];
+            while (parent != self && parent != [parent calloutDOMController])
+            {
+                item = parent; parent = [item parentWebEditorItem];
+            }
+            
+            [result addObject:item];
+        }
+    }
+    
+    return result;
 }
 
 #pragma mark Drawing
