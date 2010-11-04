@@ -8,7 +8,7 @@
 
 #import "SVCalloutDOMController.h"
 
-#import "SVParagraphedHTMLWriter.h"
+#import "SVRichTextDOMController.h"
 
 
 @interface DOMElement (SVCalloutDOMController)
@@ -67,13 +67,48 @@
 
 - (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriter *)writer;
 {
-    DOMNode *aNode = [[self calloutContentElement] firstChild];
-    while (aNode)
+    // Temporarily switch delegate to us for writing out children
+    id delegate = [writer delegate];
+    [writer setDelegate:self];
+    
+    @try
     {
-        aNode = [aNode writeTopLevelParagraph:writer];
+        DOMNode *aNode = [[self calloutContentElement] firstChild];
+        while (aNode)
+        {
+            aNode = [aNode writeTopLevelParagraph:writer];
+        }
+    }
+    @finally
+    {
+        [writer setDelegate:delegate];
     }
     
     return YES;
+}
+
+- (WEKWebEditorItem *)itemForDOMNode:(DOMNode *)node;
+{
+    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+    {
+        if ([anItem HTMLElement] == node) return anItem;
+    }
+    
+    return nil;
+}
+
+- (DOMNode *)HTMLWriter:(SVParagraphedHTMLWriter *)writer willWriteDOMElement:(DOMElement *)element;
+{
+    DOMNode *result = element;
+    
+    // If the element is inside an DOM controller, write that out instead…
+    WEKWebEditorItem *item = [self itemForDOMNode:element];
+    if (item)
+    {
+        if ([item writeAttributedHTML:writer]) result = [element nextSibling];
+    }
+    
+    return result;
 }
 
 #pragma mark Other

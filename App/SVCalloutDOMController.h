@@ -8,8 +8,10 @@
 
 #import "SVDOMController.h"
 
+#import "SVParagraphedHTMLWriter.h"
 
-@interface SVCalloutDOMController : SVDOMController
+
+@interface SVCalloutDOMController : SVDOMController <SVDOMToHTMLWriterDelegate>
 {
   @private
     DOMElement  *_calloutContent;
