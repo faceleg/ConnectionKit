@@ -179,7 +179,13 @@
     OBPRECONDITION(selector);
     
     // Ignore such preposterous claims if not even attached to an element yet
-    if (![self HTMLElement] && [self elementIdName]) return;
+    if (![self HTMLElement] && [self elementIdName])
+    {
+        // But this could be because the Web Editor is mid reload. If so, do a full update (nasty, but best option available right now I think). #93345
+        SVWebEditorViewController *viewController = [self webEditorViewController];
+        [viewController setNeedsUpdate];
+        return;
+    }
     
     
     // Once we're marked for update, no point continuing to observe
