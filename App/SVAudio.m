@@ -144,14 +144,12 @@
     if (media)
     {
 		movieSourceURL = [media mediaURL];
-		[self setCodecType:[NSString UTIForFileAtPath:[movieSourceURL path]]
-              reloadPlugIn:NO];
+		[self setCodecType:[NSString UTIForFileAtPath:[movieSourceURL path]]];
 	}
 	else
 	{
 		movieSourceURL = [self externalSourceURL];
-		[self setCodecType:[NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]]
-              reloadPlugIn:NO];
+		[self setCodecType:[NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]]];
 	}
 }
 

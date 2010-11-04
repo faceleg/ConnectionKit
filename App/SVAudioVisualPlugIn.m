@@ -32,7 +32,7 @@
 @synthesize preload		= _preload;
 
 - (NSString *)codecType; { return [[self container] codecType]; }
-- (void)setCodecType:(NSString *)type reloadPlugIn:(BOOL)reload;
+- (void)setCodecType:(NSString *)type;
 {
     [[self container] setCodecType:type];
     

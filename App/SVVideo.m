@@ -312,15 +312,13 @@
     {
 		movieSourceURL = [self.media mediaURL];
         
-		[self setCodecType:[NSString UTIForFileAtPath:[movieSourceURL path]]
-              reloadPlugIn:NO];	// actually look at the file, not just its extension
+		[self setCodecType:[NSString UTIForFileAtPath:[movieSourceURL path]]];	// actually look at the file, not just its extension
 	}
 	else
 	{
 		movieSourceURL = self.externalSourceURL;
         
-		[self setCodecType:[NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]]
-              reloadPlugIn:NO];
+		[self setCodecType:[NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]]];
 	}
 	
 	// Try to make a QTMovie out of this, or parse as FLV which is a special case (since QT is not needed to show.)
@@ -1184,7 +1182,7 @@
 			}
 			else	// QTMovie can't be created, and we can't find dimensions from data (FLV), so disallow!
 			{
-				[self setCodecType:@"unloadable-video" reloadPlugIn:NO];	// force the unknown codecType.
+				[self setCodecType:@"unloadable-video"];	// force the unknown codecType.
 			}
 		}
 	}
@@ -1201,7 +1199,7 @@
 	}
 	else	// QTMovie can't be created, and we can't find dimensions from data (FLV), so disallow!
 	{
-		[self setCodecType:@"unloadable-video" reloadPlugIn:NO];	// force the unknown codecType.
+		[self setCodecType:@"unloadable-video"];	// force the unknown codecType.
 	}
 	self.dimensionCalculationConnection = nil;
 }
@@ -1291,7 +1289,7 @@
 	if (0 == movieSize.width || 0 == movieSize.height)
 	{
 		// Chances are if we got here with zero width/height, there is just no video track -- so become an audio file!
-		[self setCodecType:@"com.apple.quicktime-audio" reloadPlugIn:YES];		// Our specialization of generic quicktime movie
+		[self setCodecType:@"com.apple.quicktime-audio"];		// Our specialization of generic quicktime movie
 		// This will re-create things as an audio....
 		// Note: We should be sure that we don't do anything further as we unwind, since we're DONE with this movie.
 	}

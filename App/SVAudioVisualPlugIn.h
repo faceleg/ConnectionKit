@@ -30,9 +30,8 @@ typedef enum {
 @property  BOOL controller;
 @property  PreloadState preload;
 
-// Determined from file's UTI, or by further analysis. NOT KVO-compliant
-@property(nonatomic, copy, readonly) NSString *codecType;
-- (void)setCodecType:(NSString *)type reloadPlugIn:(BOOL)reload;
+// Determined from file's UTI, or by further analysis. NOT KVO-compliant. Will reload plug-in if needed
+@property(nonatomic, copy) NSString *codecType;
 
 
 @end
