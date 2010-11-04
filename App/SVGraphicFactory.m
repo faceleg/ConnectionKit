@@ -31,6 +31,8 @@
 #import "NSString+Karelia.h"
 #import "NSImage+Karelia.h"
 
+#import "KSURLUtilities.h"
+
 #import "Registration.h"
 
 
