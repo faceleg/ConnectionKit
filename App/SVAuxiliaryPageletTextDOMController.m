@@ -22,7 +22,23 @@
 {
     if ([self shouldDisplayPlaceholderString])
     {
-        [[self textHTMLElement] setInnerHTML:NSLocalizedString(@"<p>Double-click to edit</p>", "placeholder")];
+        NSString *entityName = [[[self representedObject] entity] name];
+        
+        NSString *placeholder;
+        if ([entityName isEqualToString:@"PageletIntroduction"])
+        {
+            placeholder = NSLocalizedString(@"<p>Introduction text</p>", "placeholder");
+        }
+        else if ([entityName isEqualToString:@"PageletCaption"])
+        {
+            placeholder = NSLocalizedString(@"<p>Caption text</p>", "placeholder");
+        }
+        else
+        {
+            placeholder = NSLocalizedString(@"<p>Double-click to edit</p>", "placeholder");
+        }
+        
+        [[self textHTMLElement] setInnerHTML:placeholder];
     }
 }
 
