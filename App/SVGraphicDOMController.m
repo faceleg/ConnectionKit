@@ -12,6 +12,7 @@
 #import "SVCalloutDOMController.h"
 #import "SVContentDOMController.h"
 #import "SVMediaRecord.h"
+#import "SVParagraphedHTMLWriter.h"
 #import "SVPasteboardItemInternal.h"
 #import "SVRichTextDOMController.h"
 #import "SVTextAttachment.h"
@@ -348,6 +349,72 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     {
         NSBeep();
     }
+}
+
+#pragma mark Attributed HTML
+
+- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriter *)writer;
+{
+    SVGraphic *graphic = [self representedObject];
+    SVTextAttachment *attachment = [graphic textAttachment];
+    
+    
+    // Is it allowed?
+    if ([graphic isPagelet])
+    {
+        if ([writer allowsPagelets])
+        {
+            if ([writer openElementsCount] > 0)
+            {
+                return NO;
+            }
+        }
+        else
+        {
+            NSLog(@"This text block does not support block graphics");
+            return NO;
+        }
+    }
+    
+    
+    
+    
+    // Go ahead and write    
+    
+    // Newly inserted graphics tend not to have a corresponding text attachment yet. If so, create one
+    if (!attachment)
+    {
+        // Guess placement from controller hierarchy
+        SVGraphicPlacement placement = ([self calloutDOMController] ?
+                                        SVGraphicPlacementInline :
+                                        SVGraphicPlacementCallout);
+        
+        attachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
+                                                   inManagedObjectContext:[graphic managedObjectContext]];
+        [attachment setGraphic:graphic];
+        [attachment setPlacement:[NSNumber numberWithInteger:placement]];
+        //[attachment setWrap:[NSNumber numberWithInteger:SVGraphicWrapRightSplit]];
+        [attachment setBody:[[self textDOMController] representedObject]];
+    }
+    
+    
+    // Set attachment location
+    [writer writeTextAttachment:attachment];
+    
+    [writer flush];
+    KSStringWriter *stringWriter = [writer valueForKeyPath:@"_output"];     // HACK!
+    NSRange range = NSMakeRange([(NSString *)stringWriter length] - 1, 1);  // HACK!
+    
+    if (!NSEqualRanges([attachment range], range))
+    {
+        [attachment setRange:range];
+    }
+    
+    
+    
+    
+    
+    return YES;
 }
 
 #pragma mark Resizing

@@ -62,6 +62,9 @@
 #pragma mark Properties
 - (BOOL)allowsPagelets;
 
+#pragma mark Attributed HTML
+// Return YES if manages to write self. Otherwise return NO to treat as standard HTML
+- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriter *)writer;
 
 @end
 

@@ -228,70 +228,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (void)willWriteText:(SVParagraphedHTMLWriter *)writer; { }
 
-- (BOOL)write:(SVParagraphedHTMLWriter *)writer selectableItem:(WEKWebEditorItem *)controller;
-{
-    SVGraphic *graphic = [controller representedObject];
-    SVTextAttachment *attachment = [graphic textAttachment];
-    
-    
-    // Is it allowed?
-    if ([graphic isPagelet])
-    {
-        if ([self allowsPagelets])
-        {
-            if ([writer openElementsCount] > 0)
-            {
-                return NO;
-            }
-        }
-        else
-        {
-            NSLog(@"This text block does not support block graphics");
-            return NO;
-        }
-    }
-    
-    
-    
-    
-    // Go ahead and write    
-    
-    // Newly inserted graphics tend not to have a corresponding text attachment yet. If so, create one
-    if (!attachment)
-    {
-        // Guess placement from controller hierarchy
-        SVGraphicPlacement placement = ([controller parentWebEditorItem] == self ?
-                                        SVGraphicPlacementInline :
-                                        SVGraphicPlacementCallout);
-        
-        attachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
-                                                       inManagedObjectContext:[graphic managedObjectContext]];
-        [attachment setGraphic:graphic];
-        [attachment setPlacement:[NSNumber numberWithInteger:placement]];
-        //[attachment setWrap:[NSNumber numberWithInteger:SVGraphicWrapRightSplit]];
-        [attachment setBody:[self representedObject]];
-    }
-    
-    
-    // Set attachment location
-    [writer writeTextAttachment:attachment];
-    
-    [writer flush];
-    KSStringWriter *stringWriter = [writer valueForKeyPath:@"_output"];     // HACK!
-    NSRange range = NSMakeRange([(NSString *)stringWriter length] - 1, 1);  // HACK!
-    
-    if (!NSEqualRanges([attachment range], range))
-    {
-        [attachment setRange:range];
-    }
-    
-    
-    
-    
-    
-    return YES;
-}
-
 - (DOMNode *)write:(SVParagraphedHTMLWriter *)writer
         DOMElement:(DOMElement *)element
               item:(WEKWebEditorItem *)controller;
@@ -313,12 +249,10 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     else
     {
         // Graphics are written as-is. Callouts write their contents
-        if ([controller isKindOfClass:[SVGraphicDOMController class]])
+        if (![controller writeAttributedHTML:writer])
         {
-            if (![self write:writer selectableItem:controller]) result = element;
-        }
-        else
-        {
+            result = element;
+            
             DOMNodeList *calloutContents = [element getElementsByClassName:@"callout-content"];
             for (unsigned i = 0; i < [calloutContents length]; i++)
             {
@@ -343,7 +277,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     if (orphanedItem)
     {
         [orphanedItem setHTMLElement:imageElement];
-        [self write:writer selectableItem:(SVGraphicDOMController *)orphanedItem];
+        [orphanedItem writeAttributedHTML:writer];
         DOMNode *result = [[orphanedItem HTMLElement] nextSibling];
         
         // Fake a change of text selection so the new item gets noticed and selecred if needed. #92313
@@ -453,7 +387,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Write the replacement
-    [self write:writer selectableItem:controller];
+    [controller writeAttributedHTML:writer];
     
     
     return [[controller HTMLElement] nextSibling];
@@ -730,6 +664,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 @implementation WEKWebEditorItem (SVRichTextDOMController)
 
 - (BOOL)allowsPagelets; { return NO; }
+
+- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriter *)writer; { return NO; }
 
 @end
 
