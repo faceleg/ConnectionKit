@@ -2127,6 +2127,11 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                     [self delete:nil];
                     result = YES;
                 }
+                else
+                {
+                    // WebKit BUG: -delete: doesn't ask permission of the delegate, so we must do so here
+                    [self webView:webView shouldDeleteDOMRange:selection];
+                }
             }
         }
     }
