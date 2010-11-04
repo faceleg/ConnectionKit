@@ -386,8 +386,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     {
         // Guess placement from controller hierarchy
         SVGraphicPlacement placement = ([self calloutDOMController] ?
-                                        SVGraphicPlacementInline :
-                                        SVGraphicPlacementCallout);
+                                        SVGraphicPlacementCallout :
+                                        SVGraphicPlacementInline);
         
         attachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
                                                    inManagedObjectContext:[graphic managedObjectContext]];
