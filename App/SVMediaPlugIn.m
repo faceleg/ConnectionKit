@@ -221,8 +221,8 @@
 
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
 {
-    NSArray *result = [SVGraphicFactory graphicPasteboardTypes]; // want to read by UTI ideally
-    result = [result arrayByAddingObjectsFromArray:[KSWebLocation webLocationPasteboardTypes]];
+    NSArray *result = [[KSWebLocation webLocationPasteboardTypes]
+                       arrayByAddingObjectsFromArray:[self allowedFileTypes]];
     return result;
 }
 

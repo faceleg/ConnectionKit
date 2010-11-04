@@ -22,7 +22,7 @@
 @property(nonatomic, readonly) SVMedia *media;  // KVO-compliant and everything!
 - (NSURL *)externalSourceURL;
 - (void)didSetSource;
-+ (NSArray *)allowedFileTypes;
++ (NSArray *)allowedFileTypes;  // subclasses should override
 
 @property(nonatomic, readonly) SVMediaRecord *posterFrame;  // KVO-compliant
 - (BOOL)validatePosterFrame:(SVMediaRecord *)posterFrame;
@@ -53,6 +53,11 @@
 - (id <SVMedia>)thumbnailMedia;			// usually just media; might be poster frame of movie
 - (id)imageRepresentation;
 - (NSString *)imageRepresentationType;
+
+
+#pragma mark Pasteboard
+// Overrides inherited behaviour to return Web Location types plus +allowedFileTypes. You shouldn't need to customise any further.
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
 
 
 @end
