@@ -375,6 +375,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
+    /*  This logic is almost identical to SVSizeBindingDOMController, although the code here can probably be pared down to deal only with width
+     */
+    
+    
     // If constrained proportions, apply that
     SVGraphic *graphic = [self representedObject];
     NSNumber *ratio = [graphic constrainedProportionsRatio];
@@ -437,6 +441,26 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     return size;
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation WEKWebEditorItem (SVGraphicDOMController)
+
+- (SVGraphicDOMController *)enclosingGraphicDOMController;
+{
+    id result = [self parentWebEditorItem];
+    
+    if (![result isKindOfClass:[SVGraphicDOMController class]])
+    {
+        result = [result enclosingGraphicDOMController];
+    }
+    
+    return result;
 }
 
 @end

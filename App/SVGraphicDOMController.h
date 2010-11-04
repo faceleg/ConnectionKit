@@ -35,6 +35,14 @@
 #pragma mark -
 
 
+@interface WEKWebEditorItem (SVGraphicDOMController)
+- (SVGraphicDOMController *)enclosingGraphicDOMController;
+@end
+
+
+#pragma mark -
+
+
 // And provide a base implementation of the protocol:
 @interface SVGraphic (SVDOMController) <SVDOMControllerRepresentedObject>
 - (SVDOMController *)newBodyDOMController;
