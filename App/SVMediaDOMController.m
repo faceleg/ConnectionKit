@@ -33,13 +33,6 @@
     return result;
 }
 
-- (unsigned int)resizingMask
-{
-    // Super's behaviour is enough to handle width, but we want height to be adjustable too.
-    unsigned int result = (kCALayerBottomEdge | [super resizingMask]);
-    return result;
-}
-
 #pragma mark Drag & Drop
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
