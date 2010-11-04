@@ -535,7 +535,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	
 	if (!sIndicatorCharacterSet)
 	{
-		sIndicatorCharacterSet = [[NSCharacterSet characterSetWithCharactersInString:@"=&%_"] retain];
+		sIndicatorCharacterSet = [[NSCharacterSet characterSetWithCharactersInString:@"=&%_-"] retain];
 	}
 	
 	return sIndicatorCharacterSet;
