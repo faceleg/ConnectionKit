@@ -1,0 +1,27 @@
+//
+//  SVImageItem.h
+//  Sandvox
+//
+//  Created by Mike on 04/11/2010.
+//  Copyright 2010 Karelia Software. All rights reserved.
+//
+//  A simple implementation of IMBImageItem that can be passed off to a background thread for processing, since we shouldn't do so with managed objects directly
+
+
+#import <iMedia/iMedia.h>
+
+
+@interface SVImageItem : NSObject <IMBImageItem>
+{
+  @private
+    id          _rep;
+    NSString    *_repType;
+    
+    id <IMBImageItem>   _sourceItem;
+}
+
+- (id)initWithIMBImageItem:(id <IMBImageItem>)item;
+
+@property(nonatomic, readonly) id <IMBImageItem> originalItem;
+
+@end

@@ -12,6 +12,7 @@
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "KTDocument.h"
+#import "SVImageItem.h"
 #import "SVMediaRecord.h"
 #import "SVSiteItem.h"
 
@@ -103,13 +104,16 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
             {
                 [_cachedImagesByRepresentation setObject:[NSNull null] forKey:rep];
                 
-                NSInvocation *invocation =
-                [NSInvocation invocationWithSelector:@selector(threaded_loadIconForItem:imageRepresentation:)
-                                              target:self
-                                           arguments:[NSArray arrayWithObjects:item, rep, nil]];
+                SVImageItem *imageItem = [[SVImageItem alloc] initWithIMBImageItem:item];
                 
-                NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+                NSOperation *op = [[NSInvocationOperation alloc]
+                                   initWithTarget:self
+                                   selector:@selector(threaded_loadIconWithItem:)
+                                   object:imageItem];
+                
+                
                 [_queue addOperation:op];
+                [imageItem release];
                 [op release];
             }
             else if ((id)result == [NSNull null])   // it hasn't loaded yet
@@ -136,13 +140,13 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	return result;
 }
 
-- (void)didLoadIcon:(NSImage *)icon forItem:(SVSiteItem *)item imageRepresentation:(id)rep;
+- (void)didLoadIcon:(NSImage *)icon withItem:(SVImageItem *)item;
 {
-    [_cachedImagesByRepresentation setObject:icon forKey:rep];
-    [[self outlineView] setItemNeedsDisplay:item childrenNeedDisplay:NO];
+    [_cachedImagesByRepresentation setObject:icon forKey:[item imageRepresentation]];
+    [[self outlineView] setItemNeedsDisplay:[item originalItem] childrenNeedDisplay:NO];
 }
 
-- (void)threaded_loadIconForItem:(SVSiteItem *)item imageRepresentation:(id)rep;
+- (void)threaded_loadIconWithItem:(SVImageItem *)item;
 {
     CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(item, NULL);
     if (imageSource)
@@ -156,7 +160,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
         {
             [result setBackgroundColor:[NSColor whiteColor]];
             
-            [[self ks_proxyOnThread:nil waitUntilDone:NO] didLoadIcon:result forItem:item imageRepresentation:rep];
+            [[self ks_proxyOnThread:nil waitUntilDone:NO] didLoadIcon:result withItem:item];
             [result release];
         }
     }

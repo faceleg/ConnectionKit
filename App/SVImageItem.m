@@ -1,0 +1,40 @@
+//
+//  SVImageItem.m
+//  Sandvox
+//
+//  Created by Mike on 04/11/2010.
+//  Copyright 2010 Karelia Software. All rights reserved.
+//
+
+#import "SVImageItem.h"
+
+
+@implementation SVImageItem
+
+- (id)initWithIMBImageItem:(id <IMBImageItem>)item;
+{
+    [self init];
+    
+    _rep = [[item imageRepresentation] retain];
+    _repType = [[item imageRepresentationType] copy];
+    
+    _sourceItem = [item retain];
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    [_rep release];
+    [_repType release];
+    [_sourceItem release];
+    
+    [super dealloc];
+}
+
+- (id)imageRepresentation; { return _rep; }
+- (NSString *)imageRepresentationType; { return _repType; }
+
+@synthesize originalItem = _sourceItem;
+
+@end
