@@ -372,30 +372,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [super resizeToSize:size byMovingHandle:handle];
 }
 
-- (CGFloat)maxWidth;
-{
-    // Whew, what a lot of questions! Now, should this drag be disallowed on account of making the DOM element bigger than its container? #84958
-    DOMNode *parent = [[self HTMLElement] parentNode];
-    DOMCSSStyleDeclaration *style = [[[self HTMLElement] ownerDocument] 
-                                     getComputedStyle:(DOMElement *)parent
-                                     pseudoElement:@""];
-    
-    CGFloat result = [[style width] floatValue];
-    
-    
-    // Bring back down to take into account margin/border/padding. #94079
-    DOMElement *graphic = [self graphicDOMElement];
-    if (!graphic) graphic = [self HTMLElement];
-        
-    style = [[[self HTMLElement] ownerDocument] getComputedStyle:graphic
-                                                   pseudoElement:@""];
-    
-    result -= ([[style borderLeftWidth] integerValue] + [[style paddingLeft] integerValue] +
-               [[style borderRightWidth] integerValue] + [[style paddingRight] integerValue]);
-    
-    
-    return result;
-}
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
