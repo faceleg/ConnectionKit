@@ -165,8 +165,6 @@
     [self willChangeValueForKey:@"externalSourceURLString"];
     [self setPrimitiveValue:source forKey:@"externalSourceURLString"];
     [self didChangeValueForKey:@"externalSourceURLString"];
-    
-    [self didSetSource];
 }
 
 - (NSURL *)externalSourceURL
@@ -179,6 +177,7 @@
     if (URL) [self replaceMedia:nil forKeyPath:@"media"];
     
     [self setExternalSourceURLString:[URL absoluteString]];
+    if (URL) [self didSetSource];
 }
 
 - (void)setSourceWithExternalURL:(NSURL *)URL;
@@ -544,6 +543,7 @@
             NSString *path = [[@"/" stringByAppendingPathComponent:@"pasted-file"]
                               stringByAppendingPathExtension:extension];
             
+            // TODO: Use as much of URL as possible
             NSURL *url = [NSURL URLWithScheme:@"sandvox-fake-url"
                                          host:[NSString UUIDString]
                                          path:path];        
@@ -559,16 +559,9 @@
     
     
     // Swap in the new media
-    if (record || URL)
+    if (record)
     {
-        if (record)
-		{
-			[self setSourceWithMediaRecord:record];
-		}
-		else
-		{
-			[self setSourceWithExternalURL:URL];
-		}
+        [self setSourceWithMediaRecord:record];
 		
 		NSNumber *oldWidth = [self width];
 		[self makeOriginalSize];
@@ -585,9 +578,9 @@
 			}
 			// If going from external URL to proper media, this means your image is quite probably now 200px wide. Not ideal, but so rare I'm not going to worry abiout it. #92576
 		}
-    }
     
-    [[self plugIn] awakeFromPasteboardItems:items];
+        result = [[self plugIn] awakeFromPasteboardItems:items];
+    }
     
     return result;
 }
