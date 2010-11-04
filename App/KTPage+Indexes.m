@@ -27,7 +27,7 @@
 #import "NSString+KTExtensions.h"
 #import "KSURLUtilities.h"
 #import "NSXMLElement+Karelia.h"
-
+#import "SVWebEditorHTMLContext.h"
 
 @interface KTPage (PathsPrivate)
 - (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
@@ -369,7 +369,7 @@
 
 
     [context endElement];
-    if ([context respondsToSelector:@selector(endDOMController)]) [context endDOMController];
+    if ([context respondsToSelector:@selector(endDOMController)]) [((SVWebEditorHTMLContext *)context) endDOMController];
 }
 
 /*!	Here is the main information about how summaryHTML works.

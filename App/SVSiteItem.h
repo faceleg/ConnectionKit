@@ -154,6 +154,7 @@ typedef enum {
 - (KTCodeInjection *)codeInjection;
 
 - (NSString *)baseExampleURLString;
+- (NSURL *)_baseExampleURL;
 
 - (BOOL)isRoot;
 
