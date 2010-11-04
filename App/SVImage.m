@@ -134,9 +134,16 @@
         [self setTypeToPublish:(NSString *)kUTTypeJPEG];
     }
     
-    // External images become auto sized
-    if (![self media] && [self externalSourceURL])
+    if ([self media])
     {
+        // Store natural size
+        CGSize size = [[self media] originalSize];
+        [self setNaturalWidth:[NSNumber numberWithUnsignedInt:size.width]
+                       height:[NSNumber numberWithUnsignedInt:size.height]];
+    }
+    else if ([self externalSourceURL])
+    {
+        // External images become auto sized
         [[self container] setConstrainProportions:NO];
         [self setWidth:nil height:nil];
 		
