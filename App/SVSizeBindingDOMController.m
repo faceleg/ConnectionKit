@@ -107,6 +107,8 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Resize
 
+- (CGFloat)maxWidth; { return [[self enclosingGraphicDOMController] maxWidth]; }
+
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
 {
     // Apply the change
@@ -120,8 +122,81 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
-    // Graphic lives inside a body DOM controller, so use the size limit from that instead
-    return [(SVDOMController *)[self parentWebEditorItem] constrainSize:size handle:handle snapToFit:snapToFit];
+    /*  This logic is almost identical to SVGraphicDOMController, although the code there can probably be pared down to deal only with width
+     */
+    
+    
+    // Take into account padding
+    SVPlugInGraphic *graphic = [self representedObject];
+    
+    NSNumber *widthPadding = [[graphic plugIn] elementWidthPadding];
+    if (widthPadding) size.width -= [widthPadding floatValue];
+    
+    NSNumber *heightPadding = [[graphic plugIn] elementHeightPadding];
+    if (heightPadding) size.height -= [heightPadding floatValue];
+    
+    
+    // If constrained proportions, apply that
+    NSNumber *ratio = [graphic constrainedProportionsRatio];
+    
+    if (ratio)
+    {
+        BOOL resizingWidth = (handle == kSVGraphicUpperLeftHandle ||
+                              handle == kSVGraphicMiddleLeftHandle ||
+                              handle == kSVGraphicLowerLeftHandle ||
+                              handle == kSVGraphicUpperRightHandle ||
+                              handle == kSVGraphicMiddleRightHandle ||
+                              handle == kSVGraphicLowerRightHandle);
+        
+        BOOL resizingHeight = (handle == kSVGraphicUpperLeftHandle ||
+                               handle == kSVGraphicUpperMiddleHandle ||
+                               handle == kSVGraphicUpperRightHandle ||
+                               handle == kSVGraphicLowerLeftHandle ||
+                               handle == kSVGraphicLowerMiddleHandle ||
+                               handle == kSVGraphicLowerRightHandle);
+        
+        if (resizingWidth)
+        {
+            if (resizingHeight)
+            {
+                // Go for the biggest size of the two possibilities
+                CGFloat unconstrainedRatio = size.width / size.height;
+                if (unconstrainedRatio < [ratio floatValue])
+                {
+                    size.width = size.height * [ratio floatValue];
+                }
+                else
+                {
+                    size.height = size.width / [ratio floatValue];
+                }
+            }
+            else
+            {
+                size.height = size.width / [ratio floatValue];
+            }
+        }
+        else
+        {
+            size.width = size.height * [ratio floatValue];
+        }
+    }
+    
+    
+    
+    if (snapToFit)
+    {
+        CGFloat maxWidth = [self maxWidth];
+        if (size.width > maxWidth)
+        {
+            // Keep within max width
+            // Switch over to auto-sized for simple graphics
+            size.width = ([graphic isExplicitlySized] ? maxWidth : 0.0f);
+            if (ratio) size.height = maxWidth / [ratio floatValue];
+        }
+    }
+    
+    
+    return size;
 }
 
 - (unsigned int)resizingMask
