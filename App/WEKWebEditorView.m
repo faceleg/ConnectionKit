@@ -1239,7 +1239,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [self mouseMoved:event];
 }
 
-- (void)dragImageForEvent:(NSEvent *)theEvent
+- (void)dragImageForEvent:(NSEvent *)event
 {
     if (!_mouseDownEvent) return;   // otherwise we initiate a drag multiple times!
     
@@ -1268,11 +1268,56 @@ typedef enum {  // this copied from WebPreferences+Private.h
         [pboard declareTypes:nil owner:nil];
     }    
     
+    
+    
+    //NSView *docView = [self documentView];
+    NSPoint dragLocation = [self convertPoint:[event locationInWindow] fromView:nil];
+    WEKWebEditorItem *item = [self selectedItemAtPoint:dragLocation handle:NULL];
+    OBASSERT(item);
+    
+    // For dragging, item needs to become relatively positioned
+    DOMCSSStyleDeclaration *style = [[item selectableDOMElement] style];
+    [style setProperty:@"opacity" value:@"0.5" priority:nil];
+    [style setPosition:@"relative"];
+    [style setLeft:nil];
+    [style setTop:nil];
+    [style setRight:nil];
+    [style setBottom:nil];
+    
+    [item setSelected:NO];
+    
+    while ([event type] != NSLeftMouseUp)
+    {
+        // Handle the event
+        event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+        [[self documentView] autoscroll:event];
+        
+        NSPoint dropLocation = [self convertPoint:[event locationInWindow] fromView:nil];
+        
+        CGFloat xOffset = dropLocation.x - dragLocation.x;
+        CGFloat yOffset = dropLocation.y - dragLocation.y;
+        
+        [style setLeft:[[[NSNumber numberWithFloat:xOffset] description] stringByAppendingString:@"px"]];
+        [style setBottom:[[[NSNumber numberWithFloat:yOffset] description] stringByAppendingString:@"px"]];
+    }
+    
+    
+    // Reset position/appearance
+    [style setPosition:nil];
+    [style removeProperty:@"opacity"];
+    
+    [item setSelected:YES];
+    
+    return;
+    
+    
+    
+    
     NSArray *items = [self selectedItems];
+         
     if ([[self dataSource] webEditor:self writeItems:items toPasteboard:pboard])
     {
         // Now let's start a-dragging!
-        WEKWebEditorItem *item = [self selectedItem]; // FIXME: use the item actually being dragged
         
         NSDragOperation op = ([item draggingSourceOperationMaskForLocal:NO] |
                               [item draggingSourceOperationMaskForLocal:YES]);
@@ -1286,7 +1331,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 @try
                 {
                     [[self documentView] dragImageForItem:item
-                                                    event:theEvent
+                                                    event:event
                                                pasteboard:pboard
                                                    source:self];                    
                     /*[self dragImage:dragImage
