@@ -1269,8 +1269,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     // Reset position/appearance
-    //[style setPosition:nil];
-    //[style removeProperty:@"opacity"];
+    [item moveEnded];
     
     [item setSelected:YES];
     

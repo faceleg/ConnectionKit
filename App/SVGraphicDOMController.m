@@ -427,6 +427,12 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return [[self textDOMController] moveGraphicWithDOMController:self offset:offset];
 }
 
+- (void)moveEnded;
+{
+    [super moveEnded];
+    [self removeRelativePositioning];
+}
+
 - (void)moveToRelativePosition:(NSPoint)position;
 {
     DOMCSSStyleDeclaration *style = [[self selectableDOMElement] style];
@@ -434,6 +440,14 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     [style setLeft:[[[NSNumber numberWithFloat:position.x] description] stringByAppendingString:@"px"]];
     [style setTop:[[[NSNumber numberWithFloat:position.y] description] stringByAppendingString:@"px"]];
+}
+
+- (void)removeRelativePositioning;
+{
+    DOMCSSStyleDeclaration *style = [[self selectableDOMElement] style];
+    [style setPosition:nil];
+    [style setLeft:nil];
+    [style setTop:nil];
 }
 
 #pragma mark Resizing

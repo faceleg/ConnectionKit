@@ -31,6 +31,7 @@
 
 #pragma mark Moving
 - (void)moveToRelativePosition:(NSPoint)position;
+- (void)removeRelativePositioning;
 
 
 @end

@@ -82,6 +82,7 @@
 
 #pragma mark Moving
 - (BOOL)moveWithOffset:(NSSize)offset;
+- (void)moveEnded;
 
 
 #pragma mark Resizing
