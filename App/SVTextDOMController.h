@@ -14,7 +14,7 @@
 #import "KSKeyValueBinding.h"
 
 
-@class SVHTMLTextBlock;
+@class SVHTMLTextBlock, SVGraphicDOMController;
 
 
 @interface SVTextDOMController : SVDOMController <SVWebEditorText, DOMEventListener>
@@ -76,6 +76,11 @@
 - (void)webEditorTextDidChange; // if you override, call super at end of method to get undo coalescing
 
 
+#pragma mark Moving
+- (BOOL)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
+                              offset:(NSSize)offset;
+
+                  
 @end
 
 

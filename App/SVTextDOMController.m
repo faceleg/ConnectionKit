@@ -351,6 +351,14 @@
     [_undoCoalescingSelection release]; _undoCoalescingSelection = selection;
 }
 
+#pragma mark Moving
+
+- (BOOL)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
+                              offset:(NSSize)offset;
+{
+    return NO;
+}
+
 @end
 
 
