@@ -377,9 +377,15 @@
 
 #pragma mark Moving
 
-- (NSSize)moveWithOffset:(NSSize)offset;
+- (BOOL)moveToPosition:(CGPoint)position;
 {
-    return offset;
+    return NO;
+}
+
+- (CGPoint)position;    // center point (for moving) in doc view coordinates
+{
+    NSRect rect = [self rect];
+    return CGPointMake(NSMidX(rect), NSMidY(rect));
 }
 
 - (void)moveEnded; { }

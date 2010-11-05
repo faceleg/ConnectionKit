@@ -115,14 +115,19 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 /*  Probably don't really want to move this item, but the graphic as a whole
  */
 
-- (NSSize)moveWithOffset:(NSSize)offset;
+- (BOOL)moveToPosition:(CGPoint)position;
 {
-    return [[self enclosingGraphicDOMController] moveWithOffset:offset];
+    return [[self enclosingGraphicDOMController] moveToPosition:position];
 }
 
 - (void)moveEnded;
 {
     return [[self enclosingGraphicDOMController] moveEnded];
+}
+
+- (CGPoint)position;    // center point (for moving) in doc view coordinates
+{
+    return [[self enclosingGraphicDOMController] position];
 }
 
 #pragma mark Resize

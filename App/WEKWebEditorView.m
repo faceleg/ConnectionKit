@@ -1252,8 +1252,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
     OBASSERT(item);
     
     NSView *docView = [[item HTMLElement] documentView];
-    //NSPoint dragLocation = [docView convertPoint:eventLocation fromView:nil];
-    NSSize offset = NSZeroSize;
+    NSPoint dragLocation = [docView convertPoint:eventLocation fromView:nil];
+    CGPoint position = [item position];
+    
+    NSSize offset = NSMakeSize(position.x - dragLocation.x, position.y - dragLocation.y);
     
     while ([event type] != NSLeftMouseUp)
     {
@@ -1261,11 +1263,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
         event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
         [docView autoscroll:event];
         
-        NSSize delta = NSMakeSize([event deltaX], [event deltaY]);
-        delta.width += offset.width; delta.height += offset.height;
+        dragLocation = [docView convertPoint:[event locationInWindow] fromView:nil];
+        position = CGPointMake(dragLocation.x + offset.width, dragLocation.y + offset.height);
         
-        NSSize offset = [item moveWithOffset:delta];
-        offset.width -= delta.width; offset.height -= delta.height;
+        [item moveToPosition:position];
     }
     
     

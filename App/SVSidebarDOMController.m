@@ -559,11 +559,15 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 #pragma mark Moving
 
 - (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
-                                offset:(NSSize)offset;
+                            toPosition:(CGPoint)position;
 {
     OBPRECONDITION(graphicController);
     
     DOMCSSStyleDeclaration *style = [[graphicController selectableDOMElement] style];
+    
+    
+    CGPoint graphicPosition = [graphicController position];
+    NSSize offset = NSMakeSize(position.x - graphicPosition.x, position.y - graphicPosition.y);
     
     
     // Take existing offset into account
@@ -602,15 +606,15 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         DOMElement *previousElement = [element previousSiblingOfClass:[DOMElement class]];
         if (previousElement)
         {
-            NSSize size = [previousElement boundingBox].size;
-            
-            if (offset.height <= -0.5 * size.height)
+            WEKWebEditorItem *previousItem = [self itemForDOMNode:previousElement];
+            if (previousItem)
             {
-                // Move the element
-                WEKWebEditorItem *item = [self itemForDOMNode:previousElement];
-                if (item)
+                NSSize size = [previousElement boundingBox].size;
+                
+                if (offset.height <= -0.5 * size.height)
                 {
-                    SVGraphic *graphic = [item representedObject];
+                    // Move the element
+                    SVGraphic *graphic = [previousItem representedObject];
                     [[self pageletsController] moveObject:[graphicController representedObject]
                                               beforeObject:graphic];
                     
@@ -618,13 +622,24 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
                     offset.height += size.height;
                 }
             }
+            else
+            {
+                // There's no where to go, so limit offset to 0
+                offset.height = 0.0f;
+            }
+        }
+        else
+        {
+            // There's no where to go, so limit offset to 0
+            offset.height = 0.0f;
         }
     }
     
     
     
     
-    // Position graphic to match event. Don't allow horizontal shift
+    // Position graphic to match event. Don't allow horizontal shift. Limit to bounds of pagelets
+    
     [graphicController moveToRelativePosition:NSMakePoint(0.0f, offset.height)];
     
     

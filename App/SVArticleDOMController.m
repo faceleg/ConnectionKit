@@ -490,10 +490,10 @@
 }
 
 - (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
-                                offset:(NSSize)offset;
+                            toPosition:(CGPoint)position;
 {
     OBPRECONDITION(graphicController);
-    
+    NSSize offset;
     
     DOMCSSStyleDeclaration *style = [[graphicController selectableDOMElement] style];
     

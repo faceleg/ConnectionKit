@@ -81,8 +81,9 @@
 
 
 #pragma mark Moving
-- (NSSize)moveWithOffset:(NSSize)offset;    // return the amount moved
+- (BOOL)moveToPosition:(CGPoint)position;
 - (void)moveEnded;
+- (CGPoint)position;    // center point (for moving) in doc view coordinates
 
 
 #pragma mark Resizing

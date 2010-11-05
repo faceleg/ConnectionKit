@@ -420,14 +420,16 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Moving
 
-- (NSSize)moveWithOffset:(NSSize)offset;
+- (BOOL)moveToPosition:(CGPoint)position;
 {
+    // See if super fancies a crack
+    if ([super moveToPosition:position]) return YES;
+    
+    
     id dragController = [self textDOMController];
     if (!dragController) dragController = [self sidebarDOMController];
     
-    NSSize result = (dragController ?
-                     [dragController moveGraphicWithDOMController:self offset:offset] :
-                     NSZeroSize);
+    [dragController moveGraphicWithDOMController:self toPosition:position];
     
     
     // Starting a move turns off selection handles so needs display
@@ -437,7 +439,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         _moving = YES;
     }
     
-    return result;
+    return (dragController != nil);
 }
 
 - (void)moveEnded;
