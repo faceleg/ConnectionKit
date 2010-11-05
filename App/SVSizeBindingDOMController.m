@@ -115,7 +115,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 /*  Probably don't really want to move this item, but the graphic as a whole
  */
 
-- (BOOL)moveWithOffset:(NSSize)offset;
+- (NSSize)moveWithOffset:(NSSize)offset;
 {
     return [[self enclosingGraphicDOMController] moveWithOffset:offset];
 }

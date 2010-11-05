@@ -353,10 +353,10 @@
 
 #pragma mark Moving
 
-- (BOOL)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
+- (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
                               offset:(NSSize)offset;
 {
-    return NO;
+    return NSZeroSize;
 }
 
 @end

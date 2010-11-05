@@ -558,7 +558,8 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 #pragma mark Moving
 
-- (BOOL)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController offset:(NSSize)offset;
+- (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
+                                offset:(NSSize)offset;
 {
     OBPRECONDITION(graphicController);
     
@@ -627,7 +628,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [graphicController moveToRelativePosition:NSMakePoint(0.0f, offset.height)];
     
     
-    return YES;
+    return offset;
 }
 
 #pragma mark Drawing

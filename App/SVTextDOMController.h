@@ -77,8 +77,8 @@
 
 
 #pragma mark Moving
-- (BOOL)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
-                              offset:(NSSize)offset;
+- (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
+                                offset:(NSSize)offset;
 
                   
 @end

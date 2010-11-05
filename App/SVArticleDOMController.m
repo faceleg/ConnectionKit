@@ -489,7 +489,8 @@
     return NO;
 }
 
-- (BOOL)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController offset:(NSSize)offset;
+- (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
+                                offset:(NSSize)offset;
 {
     OBPRECONDITION(graphicController);
     
@@ -555,7 +556,7 @@
     [graphicController moveToRelativePosition:NSMakePoint(offset.width, offset.height)];
     
     
-    return YES;
+    return offset;
 }
 
 #pragma mark Drawing

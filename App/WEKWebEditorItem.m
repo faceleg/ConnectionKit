@@ -377,9 +377,9 @@
 
 #pragma mark Moving
 
-- (BOOL)moveWithOffset:(NSSize)offset;
+- (NSSize)moveWithOffset:(NSSize)offset;
 {
-    return NO;
+    return offset;
 }
 
 - (void)moveEnded; { }

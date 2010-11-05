@@ -81,7 +81,7 @@
 
 
 #pragma mark Moving
-- (BOOL)moveWithOffset:(NSSize)offset;
+- (NSSize)moveWithOffset:(NSSize)offset;    // return the amount moved
 - (void)moveEnded;
 
 
