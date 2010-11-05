@@ -71,6 +71,14 @@
         [self setConstrainProportions:[self isConstrainProportionsEditable]];
     }
     
+    
+    // Placeholder images have effectively changed source. #94513
+    if ([[self media] isPlaceholder])
+    {
+        [self didSetSource];
+    }
+    
+    
     // Make sure we don't have auto width. Super will then pull down to a good value. #64384
     NSNumber *width = [self naturalWidth];
     if (!width) width = [NSNumber numberWithUnsignedInteger:200];
