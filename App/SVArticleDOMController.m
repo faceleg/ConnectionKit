@@ -493,7 +493,6 @@
 {
     OBPRECONDITION(graphicController);
     
-    [graphicController setSelected:NO];
     
     DOMCSSStyleDeclaration *style = [[graphicController selectableDOMElement] style];
     
