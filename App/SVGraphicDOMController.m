@@ -417,6 +417,75 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return YES;
 }
 
+#pragma mark Moving
+
+- (BOOL)moveWithOffset:(NSSize)offset;
+{
+    // Let's just see if super wants to handle it for some mad reason
+    if ([super moveWithOffset:offset]) return YES;
+    
+    
+    DOMCSSStyleDeclaration *style = [[self selectableDOMElement] style];
+    
+    
+    // Take existing offset into account
+    NSString *left = [style left];
+    if (left) offset.width += [left floatValue];
+    
+    NSString *top = [style top];
+    if (top) offset.height += [top floatValue];
+    
+    
+    // Is there space to rearrange?
+    DOMElement *element = [self HTMLElement];
+    if (offset.height > 0.0f)
+    {
+        DOMElement *nextElement = [element nextSiblingOfClass:[DOMElement class]];
+        if (nextElement)
+        {
+            NSSize size = [nextElement boundingBox].size;
+            
+            if (offset.height >= 0.5 * size.height)
+            {
+                // Move the element
+                [[element parentNode] insertBefore:element
+                                          refChild:[nextElement nextSiblingOfClass:[DOMElement class]]];
+                
+                // Adjust drag location to match
+                offset.height -= size.height;
+            }
+        }
+    }
+    else if (offset.height < 0.0f)
+    {
+        DOMElement *previousElement = [element previousSiblingOfClass:[DOMElement class]];
+        if (previousElement)
+        {
+            NSSize size = [previousElement boundingBox].size;
+            
+            if (offset.height <= -0.5 * size.height)
+            {
+                // Move the element
+                [[element parentNode] insertBefore:element
+                                          refChild:previousElement];
+                
+                // Adjust drag location to match
+                offset.height += size.height;
+            }
+        }
+    }
+    
+    
+    
+    
+    // Position graphic to match event. // TODO: handle multiple drags
+    [style setLeft:[[[NSNumber numberWithFloat:offset.width] description] stringByAppendingString:@"px"]];
+    [style setTop:[[[NSNumber numberWithFloat:offset.height] description] stringByAppendingString:@"px"]];
+    
+    
+    return YES;
+}
+
 #pragma mark Resizing
 
 - (unsigned int)resizingMask
