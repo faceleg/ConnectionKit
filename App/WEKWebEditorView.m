@@ -1269,11 +1269,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }    
     
     
-    
-    //NSView *docView = [self documentView];
-    NSPoint dragLocation = [self convertPoint:[event locationInWindow] fromView:nil];
-    WEKWebEditorItem *item = [self selectedItemAtPoint:dragLocation handle:NULL];
+    NSPoint eventLocation = [event locationInWindow];
+    WEKWebEditorItem *item = [self selectedItemAtPoint:[self convertPoint:eventLocation fromView:nil]
+                                                handle:NULL];
     OBASSERT(item);
+    
+    NSView *docView = [[item HTMLElement] documentView];
+    NSPoint dragLocation = [docView convertPoint:eventLocation fromView:nil];
     
     // For dragging, item needs to become relatively positioned
     DOMCSSStyleDeclaration *style = [[item selectableDOMElement] style];
@@ -1290,15 +1292,15 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         // Handle the event
         event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-        [[self documentView] autoscroll:event];
+        [docView autoscroll:event];
         
-        NSPoint dropLocation = [self convertPoint:[event locationInWindow] fromView:nil];
+        NSPoint dropLocation = [docView convertPoint:[event locationInWindow] fromView:nil];
         
         CGFloat xOffset = dropLocation.x - dragLocation.x;
         CGFloat yOffset = dropLocation.y - dragLocation.y;
         
         [style setLeft:[[[NSNumber numberWithFloat:xOffset] description] stringByAppendingString:@"px"]];
-        [style setBottom:[[[NSNumber numberWithFloat:yOffset] description] stringByAppendingString:@"px"]];
+        [style setTop:[[[NSNumber numberWithFloat:yOffset] description] stringByAppendingString:@"px"]];
     }
     
     
