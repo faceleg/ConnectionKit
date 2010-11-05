@@ -91,16 +91,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Hierarchy
 
-- (WEKWebEditorItem *)itemForDOMNode:(DOMNode *)node;
-{
-    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
-    {
-        if ([anItem HTMLElement] == node) return anItem;
-    }
-    
-    return nil;
-}
-
 - (WEKWebEditorItem *)orphanedWebEditorItemMatchingDOMNode:(DOMNode *)aNode;
 {
     for (WEKWebEditorItem *anItem in [self childWebEditorItems])

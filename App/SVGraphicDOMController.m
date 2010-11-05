@@ -15,6 +15,7 @@
 #import "SVParagraphedHTMLWriter.h"
 #import "SVPasteboardItemInternal.h"
 #import "SVRichTextDOMController.h"
+#import "SVSidebarDOMController.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
 
@@ -424,7 +425,15 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     // Let's just see if super wants to handle it for some mad reason
     if ([super moveWithOffset:offset]) return YES;
     
-    return [[self textDOMController] moveGraphicWithDOMController:self offset:offset];
+    SVTextDOMController *textController = [self textDOMController];
+    if (textController)
+    {
+        return [textController moveGraphicWithDOMController:self offset:offset];
+    }
+    else
+    {
+        return [[self sidebarDOMController] moveGraphicWithDOMController:self offset:offset];
+    }
 }
 
 - (void)moveEnded;
@@ -452,7 +461,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     if (animated)
     {
         [style setProperty:@"-webkit-transition-property" value:@"left, top" priority:nil];
-        [style setProperty:@"-webkit-transition-duration" value:@"0.2s" priority:nil];
+        [style setProperty:@"-webkit-transition-duration" value:@"0.25s" priority:nil];
     }
     else
     {

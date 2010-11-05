@@ -12,6 +12,8 @@
 #import "SVSidebarPageletsController.h"
 
 
+@class SVGraphicDOMController;
+
 @interface SVSidebarDOMController : SVDOMController
 {
   @private
@@ -40,6 +42,10 @@
 
 - (void)removeDragCaret;
 - (void)moveDragCaretToAfterDOMNode:(DOMNode *)node;
+
+
+#pragma mark Moving
+- (BOOL)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController offset:(NSSize)offset;
 
 
 @end

@@ -556,6 +556,79 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [style setHeight:@"75px"];
 }
 
+#pragma mark Moving
+
+- (BOOL)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController offset:(NSSize)offset;
+{
+    OBPRECONDITION(graphicController);
+    
+    [graphicController setSelected:NO];
+    
+    DOMCSSStyleDeclaration *style = [[graphicController selectableDOMElement] style];
+    
+    
+    // Take existing offset into account
+    NSString *left = [style left];
+    if (left) offset.width += [left floatValue];
+    
+    NSString *top = [style top];
+    if (top) offset.height += [top floatValue];
+    
+    
+    // Is there space to rearrange?
+    DOMElement *element = [graphicController HTMLElement];
+    if (offset.height > 0.0f)
+    {
+        DOMElement *nextElement = [element nextSiblingOfClass:[DOMElement class]];
+        if (nextElement)
+        {
+            NSSize size = [nextElement boundingBox].size;
+            
+            if (offset.height >= 0.5 * size.height)
+            {
+                // Move the element
+                WEKWebEditorItem *item = [self itemForDOMNode:nextElement];
+                SVGraphic *graphic = [item representedObject];
+                [[self pageletsController] moveObject:[graphicController representedObject]
+                                          afterObject:graphic];
+                
+                
+                // Adjust drag location to match
+                offset.height -= size.height;
+            }
+        }
+    }
+    else if (offset.height < 0.0f)
+    {
+        DOMElement *previousElement = [element previousSiblingOfClass:[DOMElement class]];
+        if (previousElement)
+        {
+            NSSize size = [previousElement boundingBox].size;
+            
+            if (offset.height <= -0.5 * size.height)
+            {
+                // Move the element
+                WEKWebEditorItem *item = [self itemForDOMNode:previousElement];
+                SVGraphic *graphic = [item representedObject];
+                [[self pageletsController] moveObject:[graphicController representedObject]
+                                          beforeObject:graphic];
+                
+                // Adjust drag location to match
+                offset.height += size.height;
+            }
+        }
+    }
+    
+    
+    
+    
+    // Position graphic to match event. // TODO: handle multiple drags
+    [graphicController moveToRelativePosition:NSMakePoint(offset.width, offset.height)];
+    
+    
+    return YES;
+}
+
 #pragma mark Drawing
 
 - (NSRect)dropTargetRect;

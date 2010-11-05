@@ -41,6 +41,10 @@
 - (SVSizeBindingDOMController *)newSizeBindingControllerWithRepresentedObject:(id)object;
 
 
+#pragma mark Hierarchy
+- (WEKWebEditorItem *)itemForDOMNode:(DOMNode *)node;
+
+
 #pragma mark Content
 
 //  Asks content object to locate node in the DOM, then stores it as receiver's .HTMLElement. Removes the element's ID attribute from the DOM if it's only there for editing support (so as to keep the Web Inspector tidy)

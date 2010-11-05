@@ -65,6 +65,18 @@
     [super dealloc];
 }
 
+#pragma mark Hierarchy
+
+- (WEKWebEditorItem *)itemForDOMNode:(DOMNode *)node;
+{
+    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+    {
+        if ([anItem HTMLElement] == node) return anItem;
+    }
+    
+    return nil;
+}
+
 #pragma mark Content
 
 - (void)createHTMLElement
