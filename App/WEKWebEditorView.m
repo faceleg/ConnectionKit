@@ -1453,8 +1453,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
                     [node isKindOfClass:[DOMHTMLObjectElement class]])*/
                 
                 
-                // It doesn't ever make sense to start editing "inside" an element which has no content
-                if ([[[self selectedItem] HTMLElement] hasChildNodes])
+                // Inline images don't want to be edited inside since they're already fully accessible for dragging etc.
+                if (![[self selectedItem] allowsDirectAccessToWebViewWhenSelected])
                 {
                     NSArray *items = [[self selectedItems] copy];
                     [self selectItems:nil byExtendingSelection:NO];
