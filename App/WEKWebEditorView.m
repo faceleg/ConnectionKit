@@ -1267,7 +1267,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     while ([event type] != NSLeftMouseUp)
     {
-        // Move graphic to match event. // TODO: handle multiple drags
+        // Calculate change from event
         event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
         [docView autoscroll:event];
         
@@ -1275,9 +1275,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
         
         CGFloat xOffset = dropLocation.x - dragLocation.x;
         CGFloat yOffset = dropLocation.y - dragLocation.y;
-        
-        [style setLeft:[[[NSNumber numberWithFloat:xOffset] description] stringByAppendingString:@"px"]];
-        [style setTop:[[[NSNumber numberWithFloat:yOffset] description] stringByAppendingString:@"px"]];
         
         
         // Is there space to rearrange?
@@ -1297,6 +1294,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
                     
                     // Adjust drag location to match
                     dragLocation.y += size.height;
+                    yOffset = dropLocation.y - dragLocation.y;
                 }
             }
         }
@@ -1315,9 +1313,15 @@ typedef enum {  // this copied from WebPreferences+Private.h
                     
                     // Adjust drag location to match
                     dragLocation.y -= size.height;
+                    yOffset = dropLocation.y - dragLocation.y;
                 }
             }
         }
+        
+        
+        // Position graphic to match event. // TODO: handle multiple drags
+        [style setLeft:[[[NSNumber numberWithFloat:xOffset] description] stringByAppendingString:@"px"]];
+        [style setTop:[[[NSNumber numberWithFloat:yOffset] description] stringByAppendingString:@"px"]];
     }
     
     
