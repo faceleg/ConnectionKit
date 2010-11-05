@@ -153,17 +153,8 @@
                                               imageName:(NSString *)imageName;
 {
     BWToolbarPullDownItem *result = [[BWToolbarPullDownItem alloc] initWithItemIdentifier:identifier];
-    
-    
-    // construct pulldown button ... composite the Add.
-	
     NSImage *image = [NSImage imageNamed:imageName];
-	image = [[image copy] autorelease];
-	[image setScalesWhenResized:YES];
-	[image setSize:NSMakeSize(32.0,32.0)];
-	
-    image = [image imageWithCompositedAddBadge];
-    [result setImage:image];
+	[result setImage:image];
 	
     
     // Generate the menu
@@ -205,14 +196,7 @@
 {
 	BWToolbarPullDownItem *result = [[BWToolbarPullDownItem alloc] initWithItemIdentifier:identifier];
 	
-	// construct pulldown button ... composite the Add.
-	
 	NSImage *image = [NSImage imageNamed:imageName];
-	image = [[image copy] autorelease];
-	[image setScalesWhenResized:YES];
-	[image setSize:NSMakeSize(32.0,32.0)];
-	
-	image = [image imageWithCompositedAddBadge];
 	[result setImage:image];
 	
 	

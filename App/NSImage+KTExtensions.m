@@ -16,28 +16,31 @@
 
 @implementation NSImage ( KTApplication )
 
+// This has a big flaw -- it only works for one image size.  Really we ought to be getting all of the NSImage's sizes, and
+// doing the composite for each size of the badge.
+
 - (NSImage *)imageWithCompositedAddBadge
 {
 	static NSImage *sBadgeAddImage = nil;
 	if (nil == sBadgeAddImage)
 	{
-		sBadgeAddImage = [[NSImage imageNamed:@"BadgeAdd"] retain];
+		sBadgeAddImage = [[NSImage imageNamed:@"toolbar_plus_badge"] retain];
 	}
 	
 
 	NSImage *newImage = [[[NSImage alloc] initWithSize:[self size]] autorelease];
-        
+	
     [newImage lockFocus];
-    [self drawAtPoint:NSZeroPoint
+		[self drawAtPoint:NSZeroPoint
 			 fromRect:NSMakeRect(0,0,[self size].width, [self size].height)
-			operation:NSCompositeSourceOver fraction:1.0];
-
-	[sBadgeAddImage drawAtPoint:NSZeroPoint
+				operation:NSCompositeSourceOver fraction:1.0];
+		
+		[sBadgeAddImage drawAtPoint:NSZeroPoint
 					   fromRect:NSMakeRect(0,0,[sBadgeAddImage size].width, [sBadgeAddImage size].height)
-			operation:NSCompositeSourceOver fraction:1.0];
-	
-	[newImage unlockFocus];
-	
+					operation:NSCompositeSourceOver fraction:1.0];
+		
+		[newImage unlockFocus];
+
 	return newImage;
 }
 
