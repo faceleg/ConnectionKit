@@ -477,6 +477,18 @@
 
 #pragma mark Moving
 
+// Like -insertBefore:refChild: but asks before making change. Caller should send -didChange… message after
+- (BOOL)moveDOMElement:(DOMElement *)element beforeChild:(DOMNode *)refNode;
+{
+    if ([[self webEditor] shouldChangeText:self])
+    {
+        [[self textHTMLElement] insertBefore:element refChild:refNode];
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (BOOL)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController offset:(NSSize)offset;
 {
     OBPRECONDITION(graphicController);
@@ -505,11 +517,13 @@
             if (offset.height >= 0.5 * size.height)
             {
                 // Move the element
-                [[self textHTMLElement] insertBefore:element
-                                            refChild:[nextElement nextSiblingOfClass:[DOMElement class]]];
-                
-                // Adjust drag location to match
-                offset.height -= size.height;
+                if ([self moveDOMElement:element beforeChild:[nextElement nextSiblingOfClass:[DOMElement class]]])
+                {
+                    // Adjust drag location to match
+                    offset.height -= size.height;
+                    
+                    [[self webEditor] didChangeText];
+                }
             }
         }
     }
@@ -523,11 +537,13 @@
             if (offset.height <= -0.5 * size.height)
             {
                 // Move the element
-                [[self textHTMLElement] insertBefore:element
-                                            refChild:previousElement];
-                
-                // Adjust drag location to match
-                offset.height += size.height;
+                if ([self moveDOMElement:element beforeChild:previousElement])
+                {
+                    // Adjust drag location to match
+                    offset.height += size.height;
+                    
+                    [[self webEditor] didChangeText];
+                }
             }
         }
     }
