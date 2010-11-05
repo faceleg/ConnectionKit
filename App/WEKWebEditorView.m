@@ -1272,7 +1272,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         [docView autoscroll:event];
         
         NSSize offset = NSMakeSize([event deltaX], [event deltaY]);
-        [item moveWithOffset:offset];
+        if (![item moveWithOffset:offset]) break;
     }
     
     
