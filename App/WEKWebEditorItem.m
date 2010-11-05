@@ -478,7 +478,6 @@
         if ([view needsToDrawRect:borderDrawingRect])
         {
             [border setResizingMask:[self resizingMask]];
-            [border setEditing:[[self webEditor] inLiveGraphicResize]];
             [border drawWithGraphicBounds:frameRect inView:view];
         }
         
@@ -505,6 +504,7 @@
 {
     SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
     [border setMinSize:NSMakeSize(5.0f, 5.0f)];
+    [border setEditing:[[self webEditor] inLiveGraphicResize]];
     
     return border;
 }
