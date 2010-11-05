@@ -342,7 +342,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     NSNumber *ratio = [self constrainedProportionsRatio];
     if (ratio)
     {
-        NSUInteger width = ([height floatValue] / [ratio floatValue]);
+        NSUInteger width = ([height floatValue] * [ratio floatValue]);
         if (width < 1) width = 1;
         [self setWidth:[NSNumber numberWithUnsignedInteger:width]];
     }
