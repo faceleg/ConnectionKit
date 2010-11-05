@@ -303,6 +303,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     if (ratio)
     {
         NSUInteger height = ([width floatValue] / [ratio floatValue]);
+        if (height < 1) height = 1;
         [self setHeight:[NSNumber numberWithUnsignedInteger:height]];
     }
 }
@@ -342,6 +343,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     if (ratio)
     {
         NSUInteger width = ([height floatValue] / [ratio floatValue]);
+        if (width < 1) width = 1;
         [self setWidth:[NSNumber numberWithUnsignedInteger:width]];
     }
 }
