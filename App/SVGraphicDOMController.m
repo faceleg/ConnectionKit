@@ -430,22 +430,35 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 - (void)moveEnded;
 {
     [super moveEnded];
-    [self removeRelativePositioning];
+    [self removeRelativePositioning:YES];
 }
 
 - (void)moveToRelativePosition:(NSPoint)position;
 {
     DOMCSSStyleDeclaration *style = [[self selectableDOMElement] style];
+    [style removeProperty:@"-webkit-transition-duration"];
+    
     [style setPosition:@"relative"];
     
     [style setLeft:[[[NSNumber numberWithFloat:position.x] description] stringByAppendingString:@"px"]];
     [style setTop:[[[NSNumber numberWithFloat:position.y] description] stringByAppendingString:@"px"]];
 }
 
-- (void)removeRelativePositioning;
+- (void)removeRelativePositioning:(BOOL)animated;
 {
     DOMCSSStyleDeclaration *style = [[self selectableDOMElement] style];
-    [style setPosition:nil];
+    
+    // Is there any way we can turn position off after animation?
+    if (animated)
+    {
+        [style setProperty:@"-webkit-transition-property" value:@"left, top" priority:nil];
+        [style setProperty:@"-webkit-transition-duration" value:@"0.2s" priority:nil];
+    }
+    else
+    {
+        //[style setPosition:nil];
+    }
+    
     [style setLeft:nil];
     [style setTop:nil];
 }
