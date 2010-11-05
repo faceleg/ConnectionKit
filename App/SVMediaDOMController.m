@@ -21,8 +21,6 @@
 // TODO: proper logic for this:
 - (BOOL)isMediaPlaceholder; { return YES; }
 
-- (DOMElement *)selectableDOMElement; { return [self HTMLElement]; }
-
 #pragma mark Resize
 
 - (NSSize)minSize;

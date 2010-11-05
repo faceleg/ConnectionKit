@@ -42,7 +42,12 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Selection
 
-- (DOMElement *) selectableDOMElement; { return [self HTMLElement]; }
+- (DOMElement *) selectableDOMElement;
+{
+    // Can be selected if graphic is explictly sized
+    SVPlugInGraphic *graphic = [self representedObject];
+    return ([graphic isExplicitlySized] ? [self HTMLElement] : nil);
+}
 
 - (BOOL)tryToRemove;
 {
