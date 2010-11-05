@@ -609,12 +609,15 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
             {
                 // Move the element
                 WEKWebEditorItem *item = [self itemForDOMNode:previousElement];
-                SVGraphic *graphic = [item representedObject];
-                [[self pageletsController] moveObject:[graphicController representedObject]
-                                          beforeObject:graphic];
-                
-                // Adjust drag location to match
-                offset.height += size.height;
+                if (item)
+                {
+                    SVGraphic *graphic = [item representedObject];
+                    [[self pageletsController] moveObject:[graphicController representedObject]
+                                              beforeObject:graphic];
+                    
+                    // Adjust drag location to match
+                    offset.height += size.height;
+                }
             }
         }
     }
