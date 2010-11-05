@@ -17,6 +17,8 @@
     DOMHTMLElement  *_bodyElement;
     
     SVOffscreenWebViewController    *_offscreenWebViewController;
+    
+    BOOL    _moving;
 }
 
 + (SVGraphicDOMController *)graphicPlaceholderDOMController;

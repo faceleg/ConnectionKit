@@ -425,15 +425,28 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     // Let's just see if super wants to handle it for some mad reason
     if ([super moveWithOffset:offset]) return YES;
     
+    
     SVTextDOMController *textController = [self textDOMController];
+    
+    BOOL result;
     if (textController)
     {
-        return [textController moveGraphicWithDOMController:self offset:offset];
+        result = [textController moveGraphicWithDOMController:self offset:offset];
     }
     else
     {
-        return [[self sidebarDOMController] moveGraphicWithDOMController:self offset:offset];
+        result = [[self sidebarDOMController] moveGraphicWithDOMController:self offset:offset];
     }
+    
+    
+    // Starting a move turns off selection handles so needs display
+    if (result && !_moving)
+    {
+        [self setNeedsDisplay];
+        _moving = YES;
+    }
+    
+    return result;
 }
 
 - (void)moveEnded;
@@ -469,14 +482,40 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     {
         [style setProperty:@"-webkit-transition-property" value:@"left, top" priority:nil];
         [style setProperty:@"-webkit-transition-duration" value:@"0.25s" priority:nil];
+        
+        [self performSelector:@selector(removeRelativePositioningAnimationDidEnd)
+                   withObject:nil
+                   afterDelay:0.25];
     }
     else
     {
-        //[style setPosition:nil];
+        [style setPosition:nil];
+        
+        _moving = NO;
+        [self setNeedsDisplay];
     }
     
     [style setLeft:nil];
     [style setTop:nil];
+}
+
+- (void)removeRelativePositioningAnimationDidEnd;
+{
+    DOMCSSStyleDeclaration *style = [[self selectableDOMElement] style];
+    [style setPosition:nil];
+    
+    _moving = NO;
+    [self setNeedsDisplay];
+}
+
+- (SVSelectionBorder *)newSelectionBorder;
+{
+    SVSelectionBorder *result = [super newSelectionBorder];
+    
+    // Turn off handles while moving
+    if (_moving) [result setEditing:YES];
+    
+    return result;
 }
 
 #pragma mark Resizing
