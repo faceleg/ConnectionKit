@@ -479,6 +479,9 @@
 
 - (BOOL)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController offset:(NSSize)offset;
 {
+    OBPRECONDITION(graphicController);
+    
+    
     DOMCSSStyleDeclaration *style = [[graphicController selectableDOMElement] style];
     
     
@@ -502,8 +505,8 @@
             if (offset.height >= 0.5 * size.height)
             {
                 // Move the element
-                [[element parentNode] insertBefore:element
-                                          refChild:[nextElement nextSiblingOfClass:[DOMElement class]]];
+                [[self textHTMLElement] insertBefore:element
+                                            refChild:[nextElement nextSiblingOfClass:[DOMElement class]]];
                 
                 // Adjust drag location to match
                 offset.height -= size.height;
@@ -520,8 +523,8 @@
             if (offset.height <= -0.5 * size.height)
             {
                 // Move the element
-                [[element parentNode] insertBefore:element
-                                          refChild:previousElement];
+                [[self textHTMLElement] insertBefore:element
+                                            refChild:previousElement];
                 
                 // Adjust drag location to match
                 offset.height += size.height;
@@ -533,8 +536,7 @@
     
     
     // Position graphic to match event. // TODO: handle multiple drags
-    [style setLeft:[[[NSNumber numberWithFloat:offset.width] description] stringByAppendingString:@"px"]];
-    [style setTop:[[[NSNumber numberWithFloat:offset.height] description] stringByAppendingString:@"px"]];
+    [graphicController moveToRelativePosition:NSMakePoint(offset.width, offset.height)];
     
     
     return YES;

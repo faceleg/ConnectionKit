@@ -1255,14 +1255,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     //NSPoint dragLocation = [docView convertPoint:eventLocation fromView:nil];
     
     // For dragging, item needs to become relatively positioned
-    DOMCSSStyleDeclaration *style = [[item selectableDOMElement] style];
-    //[style setProperty:@"opacity" value:@"0.5" priority:nil];
-    [style setPosition:@"relative"];
-    [style setLeft:nil];
-    [style setTop:nil];
-    [style setRight:nil];
-    [style setBottom:nil];
-    
     [item setSelected:NO];
     
     while ([event type] != NSLeftMouseUp)
@@ -1277,8 +1269,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     // Reset position/appearance
-    [style setPosition:nil];
-    [style removeProperty:@"opacity"];
+    //[style setPosition:nil];
+    //[style removeProperty:@"opacity"];
     
     [item setSelected:YES];
     

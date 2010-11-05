@@ -29,6 +29,10 @@
 - (void)updateSize;
 
 
+#pragma mark Moving
+- (void)moveToRelativePosition:(NSPoint)position;
+
+
 @end
 
 
