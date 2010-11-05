@@ -1246,6 +1246,92 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     
+    NSPoint eventLocation = [event locationInWindow];
+    WEKWebEditorItem *item = [self selectedItemAtPoint:[self convertPoint:eventLocation fromView:nil]
+                                                handle:NULL];
+    OBASSERT(item);
+    
+    NSView *docView = [[item HTMLElement] documentView];
+    NSPoint dragLocation = [docView convertPoint:eventLocation fromView:nil];
+    
+    // For dragging, item needs to become relatively positioned
+    DOMCSSStyleDeclaration *style = [[item selectableDOMElement] style];
+    //[style setProperty:@"opacity" value:@"0.5" priority:nil];
+    [style setPosition:@"relative"];
+    [style setLeft:nil];
+    [style setTop:nil];
+    [style setRight:nil];
+    [style setBottom:nil];
+    
+    [item setSelected:NO];
+    
+    while ([event type] != NSLeftMouseUp)
+    {
+        // Move graphic to match event. // TODO: handle multiple drags
+        event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+        [docView autoscroll:event];
+        
+        NSPoint dropLocation = [docView convertPoint:[event locationInWindow] fromView:nil];
+        
+        CGFloat xOffset = dropLocation.x - dragLocation.x;
+        CGFloat yOffset = dropLocation.y - dragLocation.y;
+        
+        [style setLeft:[[[NSNumber numberWithFloat:xOffset] description] stringByAppendingString:@"px"]];
+        [style setTop:[[[NSNumber numberWithFloat:yOffset] description] stringByAppendingString:@"px"]];
+        
+        
+        // Is there space to rearrange?
+        DOMElement *element = [item HTMLElement];
+        if (yOffset > 0.0f)
+        {
+            DOMElement *nextElement = [element nextSiblingOfClass:[DOMElement class]];
+            if (nextElement)
+            {
+                NSSize size = [nextElement boundingBox].size;
+                
+                if (yOffset >= 0.5 * size.height)
+                {
+                    // Move the element
+                    [[element parentNode] insertBefore:element
+                                              refChild:[nextElement nextSiblingOfClass:[DOMElement class]]];
+                    
+                    // Adjust drag location to match
+                    dragLocation.y += size.height;
+                }
+            }
+        }
+        else if (yOffset < 0.0f)
+        {
+            DOMElement *previousElement = [element previousSiblingOfClass:[DOMElement class]];
+            if (previousElement)
+            {
+                NSSize size = [previousElement boundingBox].size;
+                
+                if (yOffset <= -0.5 * size.height)
+                {
+                    // Move the element
+                    [[element parentNode] insertBefore:element
+                                              refChild:previousElement];
+                    
+                    // Adjust drag location to match
+                    dragLocation.y -= size.height;
+                }
+            }
+        }
+    }
+    
+    
+    // Reset position/appearance
+    [style setPosition:nil];
+    [style removeProperty:@"opacity"];
+    
+    [item setSelected:YES];
+    
+    return;
+    
+    
+    
+    
     //  Ideally, we'd place onto the pasteboard:
     //      Sandvox item info, everything, else, WebKit, does, normally
     //
@@ -1267,52 +1353,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         [pboard declareTypes:nil owner:nil];
     }    
-    
-    
-    NSPoint eventLocation = [event locationInWindow];
-    WEKWebEditorItem *item = [self selectedItemAtPoint:[self convertPoint:eventLocation fromView:nil]
-                                                handle:NULL];
-    OBASSERT(item);
-    
-    NSView *docView = [[item HTMLElement] documentView];
-    NSPoint dragLocation = [docView convertPoint:eventLocation fromView:nil];
-    
-    // For dragging, item needs to become relatively positioned
-    DOMCSSStyleDeclaration *style = [[item selectableDOMElement] style];
-    [style setProperty:@"opacity" value:@"0.5" priority:nil];
-    [style setPosition:@"relative"];
-    [style setLeft:nil];
-    [style setTop:nil];
-    [style setRight:nil];
-    [style setBottom:nil];
-    
-    [item setSelected:NO];
-    
-    while ([event type] != NSLeftMouseUp)
-    {
-        // Handle the event
-        event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-        [docView autoscroll:event];
-        
-        NSPoint dropLocation = [docView convertPoint:[event locationInWindow] fromView:nil];
-        
-        CGFloat xOffset = dropLocation.x - dragLocation.x;
-        CGFloat yOffset = dropLocation.y - dragLocation.y;
-        
-        [style setLeft:[[[NSNumber numberWithFloat:xOffset] description] stringByAppendingString:@"px"]];
-        [style setTop:[[[NSNumber numberWithFloat:yOffset] description] stringByAppendingString:@"px"]];
-    }
-    
-    
-    // Reset position/appearance
-    [style setPosition:nil];
-    [style removeProperty:@"opacity"];
-    
-    [item setSelected:YES];
-    
-    return;
-    
-    
     
     
     NSArray *items = [self selectedItems];
