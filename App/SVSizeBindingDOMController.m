@@ -110,6 +110,21 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     }
 }
 
+#pragma mark Moving
+
+/*  Probably don't really want to move this item, but the graphic as a whole
+ */
+
+- (BOOL)moveWithOffset:(NSSize)offset;
+{
+    return [[self enclosingGraphicDOMController] moveWithOffset:offset];
+}
+
+- (void)moveEnded;
+{
+    return [[self enclosingGraphicDOMController] moveEnded];
+}
+
 #pragma mark Resize
 
 - (CGFloat)maxWidth; { return [[self enclosingGraphicDOMController] maxWidth]; }

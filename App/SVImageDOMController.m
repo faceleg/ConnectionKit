@@ -43,16 +43,13 @@
 
 - (BOOL)allowsDirectAccessToWebViewWhenSelected;
 {
-    // Generally, yes. EXCEPT for inline, block-level, chromeless images
-    BOOL result = YES;
+    // Generally, no. EXCEPT for inline, non-wrap-causing images
+    BOOL result = NO;
     
-    if (![[self parentWebEditorItem] isSelectable])
+    SVImage *image = [self representedObject];
+    if ([image shouldWriteHTMLInline])
     {
-        SVImage *image = [self representedObject];
-        if (![image shouldWriteHTMLInline])
-        {
-            result = NO;
-        }
+        result = YES;
     }
     
     return result;
