@@ -1254,9 +1254,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     NSView *docView = [[item HTMLElement] documentView];
     //NSPoint dragLocation = [docView convertPoint:eventLocation fromView:nil];
     
-    // For dragging, item needs to become relatively positioned
-    [item setSelected:NO];
-    
     while ([event type] != NSLeftMouseUp)
     {
         // Calculate change from event
@@ -1270,9 +1267,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Reset position/appearance
     [item moveEnded];
-    
-    [item setSelected:YES];
-    
+        
     return;
     
     
