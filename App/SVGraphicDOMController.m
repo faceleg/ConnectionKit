@@ -460,14 +460,18 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     // Display space currently occupied…
     [self setNeedsDisplay];
     
+    
     // Make the move
     DOMCSSStyleDeclaration *style = [[self selectableDOMElement] style];
     [style removeProperty:@"-webkit-transition-duration"];
     
     [style setPosition:@"relative"];
+    [style setZIndex:@"9999"];
     
     [style setLeft:[[[NSNumber numberWithFloat:position.x] description] stringByAppendingString:@"px"]];
     [style setTop:[[[NSNumber numberWithFloat:position.y] description] stringByAppendingString:@"px"]];
+    
+    
     
     // …and also new space
     [self setNeedsDisplay];
@@ -490,6 +494,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     else
     {
         [style setPosition:nil];
+        [style setZIndex:nil];
         
         _moving = NO;
         [self setNeedsDisplay];
@@ -503,6 +508,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 {
     DOMCSSStyleDeclaration *style = [[self selectableDOMElement] style];
     [style setPosition:nil];
+    [style setZIndex:nil];
     
     _moving = NO;
     [self setNeedsDisplay];
