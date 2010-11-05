@@ -92,9 +92,14 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
             CFURLRef url = (CFURLRef)([rep isKindOfClass:[NSString class]] ? [NSURL fileURLWithPath:rep] : rep);
             
             CGImageRef image = QLThumbnailImageCreate(NULL, url, CGSizeMake(maxSize, maxSize), NULL);
-            NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithCGImage:image];
-            result = [NSImage imageWithBitmap:bitmap];
-            [bitmap release];
+            if (image)
+            {
+                NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithCGImage:image];
+                CFRelease(image);
+                
+                result = [NSImage imageWithBitmap:bitmap];
+                [bitmap release];
+            }
         }
         else if (rep)
         {
