@@ -546,7 +546,8 @@
     DOMElement *selectionElement = [self selectableDOMElement];
     NSString *tagName = [selectionElement tagName];
     
-    if ([tagName isEqualToString:@"AUDIO"] ||
+    if ([tagName isEqualToString:@"IMG"] ||
+        [tagName isEqualToString:@"AUDIO"] ||
         [tagName isEqualToString:@"VIDEO"] ||
         [tagName isEqualToString:@"OBJECT"] ||
         [tagName isEqualToString:@"IFRAME"])
