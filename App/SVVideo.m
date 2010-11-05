@@ -1228,7 +1228,7 @@
 			[self calculateMoviePlayability:movie];
 		}
 
-		if (loadState >= kMovieLoadStatePlayable)
+		if (loadState >= kMovieLoadStatePlaythroughOK)
 		{
 			if (!self.media && self.posterFrameType == kPosterFrameTypeAutomatic)	// ONLY try to get poster image for a *remote* URL
 			{
