@@ -623,8 +623,8 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     
     
-    // Position graphic to match event. // TODO: handle multiple drags
-    [graphicController moveToRelativePosition:NSMakePoint(offset.width, offset.height)];
+    // Position graphic to match event. Don't allow horizontal shift
+    [graphicController moveToRelativePosition:NSMakePoint(0.0f, offset.height)];
     
     
     return YES;
