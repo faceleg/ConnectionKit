@@ -80,6 +80,10 @@
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)flag;
 
 
+#pragma mark Moving
+- (BOOL)moveWithOffset:(NSSize)offset;
+
+
 #pragma mark Resizing
 - (unsigned int)resizingMask;   // default is 0
 - (SVGraphicHandle)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point;
