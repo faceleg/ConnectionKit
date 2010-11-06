@@ -589,10 +589,11 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     if (gapAvailable > 0.0f)
     {
+        index++;
         if (index < [pagelets count])
         {
-            SVGraphicDOMController *nextPagelet = [pagelets objectAtIndex:index+1];
-            if (position.y >= [nextPagelet resetPosition].y)
+            SVGraphicDOMController *nextPagelet = [pagelets objectAtIndex:index];
+            if (2 * gapAvailable > [[nextPagelet HTMLElement] boundingBox].size.height)
             {
                 // Make the swap
                 [[self pageletsController] moveObject:[graphicController representedObject]
@@ -613,7 +614,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         if (index > 0)
         {
             SVGraphicDOMController *previousPagelet = [pagelets objectAtIndex:index-1];
-            if (position.y <= [previousPagelet resetPosition].y)
+            if (2 * -gapAvailable > [[previousPagelet HTMLElement] boundingBox].size.height)
             {
                 // Make the swap
                 [[self pageletsController] moveObject:[graphicController representedObject]
