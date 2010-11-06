@@ -384,35 +384,32 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
 {
-    _drawAsDropTarget = YES;
-    [self setNeedsDisplay];
-    
     return [self draggingUpdated:sender];
 }
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)dragInfo;
 {
     NSDragOperation result = NSDragOperationNone;
+
+    BOOL sourceIsWebEditor = ([dragInfo draggingSource] == [self webEditor]);
     
-    NSUInteger dropIndex = [self indexOfDrop:dragInfo];
-    if (dropIndex != NSNotFound)
+    
+    // Figure out mask. Same logic is in SVArticleDOMController - can we refactor?
+    NSDragOperation mask = [dragInfo draggingSourceOperationMask];
+    if (sourceIsWebEditor)
     {
-        BOOL sourceIsWebEditor = ([dragInfo draggingSource] == [self webEditor]);
-        
-        
-        // Figure out mask. Same logic is in SVArticleDOMController - can we refactor?
-        NSDragOperation mask = [dragInfo draggingSourceOperationMask];
-        if (sourceIsWebEditor)
+        result = mask & NSDragOperationGeneric;
+    }
+    if (!result) result = mask & NSDragOperationCopy;
+    if (!result) result = mask & NSDragOperationGeneric;
+    
+    
+    if (sourceIsWebEditor && result)
+    {
+        NSUInteger dropIndex = [self indexOfDrop:dragInfo];
+        if (dropIndex != NSNotFound)
         {
-            result = mask & NSDragOperationGeneric;
-        }
-        if (!result) result = mask & NSDragOperationCopy;
-        if (!result) result = mask & NSDragOperationGeneric;
-        
-        
-        if (result)
-        {
-            // Place the drag caret to match the drop index
+                // Place the drag caret to match the drop index
             NSArray *pageletControllers = [self pageletDOMControllers];
             if (dropIndex >= [pageletControllers count])
             {
@@ -439,6 +436,11 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     if (!result)
     {
         [self draggingExited:dragInfo];
+    }
+    else if (!_drawAsDropTarget)
+    {
+        _drawAsDropTarget = YES;
+        [self setNeedsDisplay];
     }
     
     return result;
