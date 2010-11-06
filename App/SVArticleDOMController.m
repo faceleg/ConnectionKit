@@ -489,23 +489,38 @@
     return NO;
 }
 
-- (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
+- (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphic
                             toPosition:(CGPoint)position
                                  event:(NSEvent *)event;
 {
-    OBPRECONDITION(graphicController);
+    OBPRECONDITION(graphic);
     NSSize offset;
     
     
-    CGPoint graphicPosition = [graphicController positionIgnoringRelativePosition];
+    CGPoint graphicPosition = [graphic positionIgnoringRelativePosition];
     
     CGPoint relativePosition = CGPointMake(position.x - graphicPosition.x, position.y - graphicPosition.y);
-    [graphicController moveToRelativePosition:relativePosition];
+    
+    
+    // Don't move up if the first element
+    if (![[graphic HTMLElement] previousSiblingOfClass:[DOMElement class]])
+    {
+        if (relativePosition.y < 0.0f) relativePosition.y = 0.0f;
+    }
+    
+    [graphic moveToRelativePosition:relativePosition];
+    
+    
+    
+    
+    
+    
+    
     
     
     return offset;
     
-    DOMCSSStyleDeclaration *style = [[graphicController selectableDOMElement] style];
+    DOMCSSStyleDeclaration *style = [[graphic selectableDOMElement] style];
     
     
     // Take existing offset into account
@@ -517,7 +532,7 @@
     
     
     // Is there space to rearrange?
-    DOMElement *element = [graphicController HTMLElement];
+    DOMElement *element = [graphic HTMLElement];
     if (offset.height > 0.0f)
     {
         DOMElement *nextElement = [element nextSiblingOfClass:[DOMElement class]];
@@ -563,7 +578,7 @@
     
     
     // Position graphic to match event. // TODO: handle multiple drags
-    [graphicController moveToPosition:CGPointMake(offset.width, offset.height)];
+    [graphic moveToPosition:CGPointMake(offset.width, offset.height)];
     
     
     return offset;
