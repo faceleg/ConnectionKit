@@ -429,7 +429,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     id dragController = [self textDOMController];
     if (!dragController) dragController = [self sidebarDOMController];
     
-    [dragController moveGraphicWithDOMController:self toPosition:position];
+    [dragController moveGraphicWithDOMController:self toPosition:position event:event];
     
     
     // Starting a move turns off selection handles so needs display

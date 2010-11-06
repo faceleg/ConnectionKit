@@ -560,90 +560,90 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 - (BOOL)tryToMovePagelet:(SVGraphicDOMController *)pagelet downToPosition:(CGPoint)position;
 {
-    CGPoint startPosition = [pagelet resetPosition];
-    CGFloat gapAvailable = position.y - startPosition.y;
+    NSArray *pagelets = [self pageletDOMControllers];
+    NSUInteger index = [pagelets indexOfObjectIdenticalTo:pagelet]  + 1;
     
-    if (gapAvailable > 0.0f)
+    CGPoint startPosition = [pagelet resetPosition];
+    
+    if (index < [pagelets count])
     {
-        NSArray *pagelets = [self pageletDOMControllers];
-        NSUInteger index = [pagelets indexOfObjectIdenticalTo:pagelet]  + 1;
+        CGFloat gapAvailable = position.y - startPosition.y;
+        SVGraphicDOMController *nextPagelet = [pagelets objectAtIndex:index];
         
-        if (index < [pagelets count])
+        if (2 * gapAvailable > [[nextPagelet HTMLElement] boundingBox].size.height)
         {
-            SVGraphicDOMController *nextPagelet = [pagelets objectAtIndex:index];
-            if (2 * gapAvailable > [[nextPagelet HTMLElement] boundingBox].size.height)
-            {
-                // Make the swap
-                [[self pageletsController] moveObject:[pagelet representedObject]
-                                          afterObject:[nextPagelet representedObject]];
-                
-                // By calling back in, we should account for a drag that somehow covers multiple pagelets
-                [self updateIfNeeded];
-                [self tryToMovePagelet:pagelet downToPosition:position];
-                return YES;
-            }
+            // Make the swap
+            [[self pageletsController] moveObject:[pagelet representedObject]
+                                      afterObject:[nextPagelet representedObject]];
             
-            [pagelet moveToPosition:position];
-            return NO;
+            // By calling back in, we should account for a drag that somehow covers multiple pagelets
+            [self updateIfNeeded];
+            [self tryToMovePagelet:pagelet downToPosition:position];
+            return YES;
         }
     }
+    else
+    {
+        // This is the last pagelet. Disallow dragging down
+        if (position.y > startPosition.y) position = startPosition;
+    }
     
-    // This is the last pagelet. Disallow dragging down
-    [pagelet moveToPosition:startPosition];
+    [pagelet moveToPosition:position];
     return NO;
 }
 
 - (BOOL)tryToMovePagelet:(SVGraphicDOMController *)pagelet upToPosition:(CGPoint)position;
 {
-    CGPoint startPosition = [pagelet resetPosition];
-    CGFloat gapAvailable = position.y - startPosition.y;
+    NSArray *pagelets = [self pageletDOMControllers];
+    NSUInteger index = [pagelets indexOfObjectIdenticalTo:pagelet];
     
-    if (gapAvailable < 0.0f)
+    CGPoint startPosition = [pagelet resetPosition];
+    
+    if (index > 0)
     {
-        NSArray *pagelets = [self pageletDOMControllers];
-        NSUInteger index = [pagelets indexOfObjectIdenticalTo:pagelet];
+        CGFloat gapAvailable = position.y - startPosition.y;
+        SVGraphicDOMController *previousPagelet = [pagelets objectAtIndex:index-1];
         
-        if (index > 0)
+        if (2 * -gapAvailable > [[previousPagelet HTMLElement] boundingBox].size.height)
         {
-            SVGraphicDOMController *previousPagelet = [pagelets objectAtIndex:index-1];
-            if (2 * -gapAvailable > [[previousPagelet HTMLElement] boundingBox].size.height)
-            {
-                // Make the swap
-                [[self pageletsController] moveObject:[pagelet representedObject]
-                                         beforeObject:[previousPagelet representedObject]];
-                
-                // By calling back in, we should account for a drag that somehow covers multiple pagelets
-                [self updateIfNeeded];
-                [self tryToMovePagelet:pagelet upToPosition:position];
-                return YES;
-            }
+            // Make the swap
+            [[self pageletsController] moveObject:[pagelet representedObject]
+                                     beforeObject:[previousPagelet representedObject]];
             
-            [pagelet moveToPosition:position];
-            return NO;
+            // By calling back in, we should account for a drag that somehow covers multiple pagelets
+            [self updateIfNeeded];
+            [self tryToMovePagelet:pagelet upToPosition:position];
+            return YES;
         }
     }
+    else
+    {
+        // This is the last pagelet. Disallow dragging down
+        if (position.y < startPosition.y) position = startPosition;
+    }    
     
-    // This is the last pagelet. Disallow dragging down
-    [pagelet moveToPosition:startPosition];
+    [pagelet moveToPosition:position];
     return NO;
 }
 
 - (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
-                            toPosition:(CGPoint)position;
+                            toPosition:(CGPoint)position
+                                 event:(NSEvent *)event;
 {
     OBPRECONDITION(graphicController);
     
-    position.x = 0.0f;
     
     // Do any of siblings fit into the available space?
-    if (position.y < [graphicController resetPosition].y)
+    CGFloat delta = [event deltaY];
+    if (delta < 0.0f)
     {
         [self tryToMovePagelet:graphicController upToPosition:position];
     }
-    else
+    else if (delta > 0.0f)
     {
         [self tryToMovePagelet:graphicController downToPosition:position];
     }
+    
     
     return NSZeroSize;
 }

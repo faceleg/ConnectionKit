@@ -354,7 +354,8 @@
 #pragma mark Moving
 
 - (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
-                            toPosition:(CGPoint)position;
+                            toPosition:(CGPoint)position
+                                 event:(NSEvent *)event;
 {
     return NSZeroSize;
 }

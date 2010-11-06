@@ -490,7 +490,8 @@
 }
 
 - (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
-                            toPosition:(CGPoint)position;
+                            toPosition:(CGPoint)position
+                                 event:(NSEvent *)event;
 {
     OBPRECONDITION(graphicController);
     NSSize offset;
