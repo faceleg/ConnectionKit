@@ -565,17 +565,75 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     position.x = 0.0f;
     
+    NSArray *pagelets = [self pageletDOMControllers];
     
-    CGFloat constraint = [[[self pageletDOMControllers] objectAtIndex:0] resetPosition].y;
+    CGFloat constraint = [[pagelets objectAtIndex:0] resetPosition].y;
     if (position.y <= constraint + 6.0f)    // snap to position with 5 pixels
     {
         position.y = constraint;
     }
     else
     {
-        constraint = [[[self pageletDOMControllers] lastObject] resetPosition].y;
+        constraint = [[pagelets lastObject] resetPosition].y;
         if (position.y >= constraint + 6.0f) position.y = constraint;
     }
+    
+    
+    
+    
+    
+    
+    // Do any of siblings fit into the available space?
+    NSUInteger index = [pagelets indexOfObjectIdenticalTo:graphicController];
+    CGFloat gapAvailable = position.y - [graphicController resetPosition].y;
+    
+    if (gapAvailable > 0.0f)
+    {
+        if (index < [pagelets count])
+        {
+            SVGraphicDOMController *nextPagelet = [pagelets objectAtIndex:index+1];
+            if (position.y >= [nextPagelet resetPosition].y)
+            {
+                // Make the swap
+                [[self pageletsController] moveObject:[graphicController representedObject]
+                                          afterObject:[nextPagelet representedObject]];
+                
+                // By calling back in, we should account for a drag that somehow covers multiple pagelets
+                [self updateIfNeeded];
+                return [self moveGraphicWithDOMController:graphicController toPosition:position];
+            }
+        }
+        else
+        {
+            // This is the last pagelet. Disallow dragging down
+        }
+    }
+    else if (gapAvailable < 0.0f)
+    {
+        if (index > 0)
+        {
+            SVGraphicDOMController *previousPagelet = [pagelets objectAtIndex:index-1];
+            if (position.y <= [previousPagelet resetPosition].y)
+            {
+                // Make the swap
+                [[self pageletsController] moveObject:[graphicController representedObject]
+                                         beforeObject:[previousPagelet representedObject]];
+                
+                // By calling back in, we should account for a drag that somehow covers multiple pagelets
+                [self updateIfNeeded];
+                return [self moveGraphicWithDOMController:graphicController toPosition:position];
+            }
+        }
+        else
+        {
+            // This is the first pagelet. Disallow dragging up
+        }
+    }
+    
+    
+    
+    
+    
     
     [graphicController moveToPosition:position];
     
