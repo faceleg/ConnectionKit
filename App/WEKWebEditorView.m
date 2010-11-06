@@ -1451,8 +1451,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 
                 NSDictionary *elementInfo = [[self webView] elementAtPoint:location];
                 DOMElement *element = [elementInfo objectForKey:WebElementDOMNodeKey];
-                /*WEKWebEditorItem *item = [[self selectedItem] hitTestDOMNode:node];
                 
+                /*
                 if (([item isSelectable] && item != [self selectedItem]) ||
                     ([item conformsToProtocol:@protocol(SVWebEditorText)] && [(id)item isEditable]) ||
                     [node isKindOfClass:[DOMHTMLObjectElement class]])*/
@@ -1466,15 +1466,23 @@ typedef enum {  // this copied from WebPreferences+Private.h
                     [self setEditingItems:items];    // should only be 1
                     [items release];
                     
-                    // Repost equivalent events (unless a link or object) so they go to their correct target. Can't call -sendEvent: as that doesn't update -currentEvent. Calling return is fine because of the @finally block
+                    
+                    /*  Generally, repost equivalent events (unless a link or object) so they go to their correct target.
+                     */
+                    
+                    // return keyword is fine because of the @finally block
                     if ([elementInfo objectForKey:WebElementLinkURLKey]) return;
                     
-                    if ([element isKindOfClass:[DOMElement class]]) // could actually be any DOMNode subclass
+                    // don't send event through to video-like things as they would misinterpret it
+                    item = [self selectableItemForDOMNode:element];
+                    if ([items lastObject] == item &&
+                        [element isKindOfClass:[DOMElement class]]) // could actually be any DOMNode subclass
                     {
                         NSString *tagName = [element tagName];
                         if ([tagName isEqualToString:@"OBJECT"] || [tagName isEqualToString:@"VIDEO"] || [tagName isEqualToString:@"AUDIO"]) return;
                     }
                     
+                    // Can't call -sendEvent: as that doesn't update -currentEvent.
                     // Post in reverse order since I'm placing onto the front of the queue
                     [NSApp postEvent:[mouseUpEvent eventWithClickCount:1] atStart:YES];
                     [NSApp postEvent:[mouseDownEvent eventWithClickCount:1] atStart:YES];
