@@ -445,7 +445,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 - (void)moveEnded;
 {
     [super moveEnded];
-    [self removeRelativePositioning:YES];
+    [self resetPosition:YES];
 }
 
 - (void)moveToPosition:(CGPoint)position;
@@ -465,23 +465,19 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Take existing offset into account
-    CGFloat topValue = position.y - currentPosition.y;
-    NSString *top = [style top];
-    if (top) topValue += [top floatValue];
+    _relativePosition.y += position.y - currentPosition.y;
     
     
     //[style setLeft:[[[NSNumber numberWithFloat:position.x] description] stringByAppendingString:@"px"]];
     
-    top = [[[NSNumber numberWithFloat:topValue] description] stringByAppendingString:@"px"];
-    [style setTop:top];
-    
-    
+    [style setTop:[[[NSNumber numberWithFloat:_relativePosition.y] description]
+                   stringByAppendingString:@"px"]];
     
     // …and also new space
     [self setNeedsDisplay];
 }
 
-- (void)removeRelativePositioning:(BOOL)animated;
+- (void)resetPosition:(BOOL)animated;
 {
     DOMCSSStyleDeclaration *style = [[self selectableDOMElement] style];
     
@@ -504,8 +500,18 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         [self setNeedsDisplay];
     }
     
+    _relativePosition = CGPointZero;
     [style setLeft:nil];
     [style setTop:nil];
+}
+
+- (CGPoint)resetPosition;
+{
+    CGPoint result = [self position];
+    result.x -= _relativePosition.x;
+    result.y -= _relativePosition.y;
+    
+    return result;
 }
 
 - (void)removeRelativePositioningAnimationDidEnd;

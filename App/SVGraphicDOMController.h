@@ -19,6 +19,7 @@
     SVOffscreenWebViewController    *_offscreenWebViewController;
     
     BOOL    _moving;
+    CGPoint _relativePosition;
 }
 
 + (SVGraphicDOMController *)graphicPlaceholderDOMController;
@@ -33,7 +34,8 @@
 
 #pragma mark Moving
 - (void)moveToPosition:(CGPoint)position;
-- (void)removeRelativePositioning:(BOOL)animated;
+- (void)resetPosition:(BOOL)animated;
+- (CGPoint)resetPosition;
 
 
 @end
