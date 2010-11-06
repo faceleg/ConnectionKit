@@ -33,9 +33,10 @@
 
 
 #pragma mark Moving
-- (void)moveToPosition:(CGPoint)position;
-- (void)resetPosition:(BOOL)animated;
-- (CGPoint)resetPosition;
+- (void)moveToRelativePosition:(CGPoint)position;
+- (void)moveToPosition:(CGPoint)position;   // takes existing relative position into account
+- (void)removeRelativePosition:(BOOL)animated;
+- (CGPoint)positionIgnoringRelativePosition;
 
 
 @end

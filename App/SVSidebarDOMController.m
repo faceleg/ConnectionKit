@@ -563,7 +563,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     NSArray *pagelets = [self pageletDOMControllers];
     NSUInteger index = [pagelets indexOfObjectIdenticalTo:pagelet]  + 1;
     
-    CGPoint startPosition = [pagelet resetPosition];
+    CGPoint startPosition = [pagelet positionIgnoringRelativePosition];
     
     if (index < [pagelets count])
     {
@@ -597,7 +597,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     NSArray *pagelets = [self pageletDOMControllers];
     NSUInteger index = [pagelets indexOfObjectIdenticalTo:pagelet];
     
-    CGPoint startPosition = [pagelet resetPosition];
+    CGPoint startPosition = [pagelet positionIgnoringRelativePosition];
     
     if (index > 0)
     {

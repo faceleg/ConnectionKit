@@ -445,10 +445,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 - (void)moveEnded;
 {
     [super moveEnded];
-    [self resetPosition:YES];
+    [self removeRelativePosition:YES];
 }
 
-- (void)moveToPosition:(CGPoint)position;
+- (void)moveToRelativePosition:(CGPoint)position;
 {
     // Display space currently occupied…
     [self setNeedsDisplay];
@@ -460,24 +460,31 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     [style setPosition:@"relative"];
     [style setZIndex:@"9999"];
+        
     
-    CGPoint currentPosition = [self position];
-    
-    
-    // Take existing offset into account
-    _relativePosition.y += position.y - currentPosition.y;
-    
-    
-    //[style setLeft:[[[NSNumber numberWithFloat:position.x] description] stringByAppendingString:@"px"]];
-    
-    [style setTop:[[[NSNumber numberWithFloat:_relativePosition.y] description]
+    _relativePosition = position;
+    [style setLeft:[[[NSNumber numberWithFloat:position.x] description]
+                    stringByAppendingString:@"px"]];
+    [style setTop:[[[NSNumber numberWithFloat:position.y] description]
                    stringByAppendingString:@"px"]];
+    
     
     // …and also new space
     [self setNeedsDisplay];
 }
 
-- (void)resetPosition:(BOOL)animated;
+- (void)moveToPosition:(CGPoint)position;
+{
+    // Take existing offset into account
+    CGPoint currentPosition = [self positionIgnoringRelativePosition];
+    
+    CGPoint relativePosition = CGPointMake(position.x - currentPosition.x,
+                                           position.y - currentPosition.y);
+    
+    [self moveToRelativePosition:relativePosition];
+}
+
+- (void)removeRelativePosition:(BOOL)animated;
 {
     DOMCSSStyleDeclaration *style = [[self selectableDOMElement] style];
     
@@ -505,7 +512,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [style setTop:nil];
 }
 
-- (CGPoint)resetPosition;
+- (CGPoint)positionIgnoringRelativePosition;
 {
     CGPoint result = [self position];
     result.x -= _relativePosition.x;
