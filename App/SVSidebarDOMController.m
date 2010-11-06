@@ -567,14 +567,14 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     
     CGFloat constraint = [[[self pageletDOMControllers] objectAtIndex:0] resetPosition].y;
-    if (position.y < constraint)
+    if (position.y <= constraint + 6.0f)    // snap to position with 5 pixels
     {
         position.y = constraint;
     }
     else
     {
         constraint = [[[self pageletDOMControllers] lastObject] resetPosition].y;
-        if (position.y > constraint) position.y = constraint;
+        if (position.y >= constraint + 6.0f) position.y = constraint;
     }
     
     [graphicController moveToPosition:position];
