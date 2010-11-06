@@ -567,25 +567,14 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     NSArray *pagelets = [self pageletDOMControllers];
     
-    CGFloat constraint = [[pagelets objectAtIndex:0] resetPosition].y;
-    if (position.y <= constraint + 6.0f)    // snap to position with 5 pixels
-    {
-        position.y = constraint;
-    }
-    else
-    {
-        constraint = [[pagelets lastObject] resetPosition].y;
-        if (position.y >= constraint + 6.0f) position.y = constraint;
-    }
-    
-    
-    
-    
+        
     
     
     // Do any of siblings fit into the available space?
     NSUInteger index = [pagelets indexOfObjectIdenticalTo:graphicController];
-    CGFloat gapAvailable = position.y - [graphicController resetPosition].y;
+    
+    CGPoint startPosition = [graphicController resetPosition];
+    CGFloat gapAvailable = position.y - startPosition.y;
     
     if (gapAvailable > 0.0f)
     {
@@ -607,6 +596,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         else
         {
             // This is the last pagelet. Disallow dragging down
+            position = startPosition;
         }
     }
     else if (gapAvailable < 0.0f)
@@ -628,6 +618,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         else
         {
             // This is the first pagelet. Disallow dragging up
+            position = startPosition;
         }
     }
     
@@ -637,81 +628,6 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     
     [graphicController moveToPosition:position];
-    
-    
-    
-    return;
-    
-    
-    
-    
-    CGPoint graphicPosition = [graphicController position];
-    
-    
-    CGFloat relativeTop = 0.0f;
-    
-    
-    // Is there space to rearrange?
-    DOMElement *element = [graphicController HTMLElement];
-    if (position.y > graphicPosition.y)
-    {
-        DOMElement *nextElement = [element nextSiblingOfClass:[DOMElement class]];
-        if (nextElement)
-        {
-            WEKWebEditorItem *nextItem = [self itemForDOMNode:nextElement];
-            if (nextItem)
-            {
-                relativeTop = position.y - graphicPosition.y;
-                NSSize size = [nextElement boundingBox].size;
-                
-                if (relativeTop >= 0.5 * size.height)
-                {
-                    // Move the element
-                    SVGraphic *graphic = [nextItem representedObject];
-                    [[self pageletsController] moveObject:[graphicController representedObject]
-                                              afterObject:graphic];
-                    
-                    
-                    // Adjust drag location to match
-                    relativeTop -= size.height;
-                }
-            }
-        }
-    }
-    else if (position.y < graphicPosition.y)
-    {
-        DOMElement *previousElement = [element previousSiblingOfClass:[DOMElement class]];
-        if (previousElement)
-        {
-            WEKWebEditorItem *previousItem = [self itemForDOMNode:previousElement];
-            if (previousItem)
-            {
-                relativeTop = position.y - graphicPosition.y;
-                NSSize size = [previousElement boundingBox].size;
-                
-                if (relativeTop <= -0.5 * size.height)
-                {
-                    // Move the element
-                    SVGraphic *graphic = [previousItem representedObject];
-                    [[self pageletsController] moveObject:[graphicController representedObject]
-                                              beforeObject:graphic];
-                    
-                    // Adjust drag location to match
-                    relativeTop += size.height;
-                }
-            }
-        }
-    }
-    
-    
-    
-    // Position graphic to match event. Don't allow horizontal shift. Limit to bounds of pagelets
-    if (relativeTop != 0.0f)
-    {
-                
-        
-        
-    }
     
     
     return NSZeroSize;
