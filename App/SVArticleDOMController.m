@@ -553,7 +553,7 @@
     
     
     // Position graphic to match event. // TODO: handle multiple drags
-    [graphicController moveToRelativePosition:NSMakePoint(offset.width, offset.height)];
+    [graphicController moveToPosition:CGPointMake(offset.width, offset.height)];
     
     
     return offset;

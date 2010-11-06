@@ -420,10 +420,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Moving
 
-- (BOOL)moveToPosition:(CGPoint)position;
+- (BOOL)moveToPosition:(CGPoint)position event:(NSEvent *)event;
 {
     // See if super fancies a crack
-    if ([super moveToPosition:position]) return YES;
+    if ([super moveToPosition:position event:event]) return YES;
     
     
     id dragController = [self textDOMController];
@@ -448,7 +448,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [self removeRelativePositioning:YES];
 }
 
-- (void)moveToRelativePosition:(NSPoint)position;
+- (void)moveToPosition:(CGPoint)position;
 {
     // Display space currently occupied…
     [self setNeedsDisplay];
@@ -461,8 +461,19 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [style setPosition:@"relative"];
     [style setZIndex:@"9999"];
     
-    [style setLeft:[[[NSNumber numberWithFloat:position.x] description] stringByAppendingString:@"px"]];
-    [style setTop:[[[NSNumber numberWithFloat:position.y] description] stringByAppendingString:@"px"]];
+    CGPoint currentPosition = [self position];
+    
+    
+    // Take existing offset into account
+    CGFloat topValue = position.y - currentPosition.y;
+    NSString *top = [style top];
+    if (top) topValue += [top floatValue];
+    
+    
+    //[style setLeft:[[[NSNumber numberWithFloat:position.x] description] stringByAppendingString:@"px"]];
+    
+    top = [[[NSNumber numberWithFloat:topValue] description] stringByAppendingString:@"px"];
+    [style setTop:top];
     
     
     

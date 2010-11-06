@@ -32,7 +32,7 @@
 
 
 #pragma mark Moving
-- (void)moveToRelativePosition:(NSPoint)position;
+- (void)moveToPosition:(CGPoint)position;
 - (void)removeRelativePositioning:(BOOL)animated;
 
 

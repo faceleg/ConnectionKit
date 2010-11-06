@@ -1266,7 +1266,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         dragLocation = [docView convertPoint:[event locationInWindow] fromView:nil];
         position = CGPointMake(dragLocation.x + offset.width, dragLocation.y + offset.height);
         
-        [item moveToPosition:position];
+        [item moveToPosition:position event:event];
     }
     
     

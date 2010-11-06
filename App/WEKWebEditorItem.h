@@ -81,7 +81,7 @@
 
 
 #pragma mark Moving
-- (BOOL)moveToPosition:(CGPoint)position;
+- (BOOL)moveToPosition:(CGPoint)position event:(NSEvent *)event;
 - (void)moveEnded;
 - (CGPoint)position;    // center point (for moving) in doc view coordinates
 

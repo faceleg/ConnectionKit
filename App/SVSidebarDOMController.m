@@ -563,45 +563,51 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 {
     OBPRECONDITION(graphicController);
     
-    DOMCSSStyleDeclaration *style = [[graphicController selectableDOMElement] style];
+    
+    
+    [graphicController moveToPosition:position];
+    
+    
+    
+    return;
+    
+    
     
     
     CGPoint graphicPosition = [graphicController position];
-    NSSize offset = NSMakeSize(position.x - graphicPosition.x, position.y - graphicPosition.y);
     
     
-    // Take existing offset into account
-    NSString *left = [style left];
-    if (left) offset.width += [left floatValue];
-    
-    NSString *top = [style top];
-    if (top) offset.height += [top floatValue];
+    CGFloat relativeTop = 0.0f;
     
     
     // Is there space to rearrange?
     DOMElement *element = [graphicController HTMLElement];
-    if (offset.height > 0.0f)
+    if (position.y > graphicPosition.y)
     {
         DOMElement *nextElement = [element nextSiblingOfClass:[DOMElement class]];
         if (nextElement)
         {
-            NSSize size = [nextElement boundingBox].size;
-            
-            if (offset.height >= 0.5 * size.height)
+            WEKWebEditorItem *nextItem = [self itemForDOMNode:nextElement];
+            if (nextItem)
             {
-                // Move the element
-                WEKWebEditorItem *item = [self itemForDOMNode:nextElement];
-                SVGraphic *graphic = [item representedObject];
-                [[self pageletsController] moveObject:[graphicController representedObject]
-                                          afterObject:graphic];
+                relativeTop = position.y - graphicPosition.y;
+                NSSize size = [nextElement boundingBox].size;
                 
-                
-                // Adjust drag location to match
-                offset.height -= size.height;
+                if (relativeTop >= 0.5 * size.height)
+                {
+                    // Move the element
+                    SVGraphic *graphic = [nextItem representedObject];
+                    [[self pageletsController] moveObject:[graphicController representedObject]
+                                              afterObject:graphic];
+                    
+                    
+                    // Adjust drag location to match
+                    relativeTop -= size.height;
+                }
             }
         }
     }
-    else if (offset.height < 0.0f)
+    else if (position.y < graphicPosition.y)
     {
         DOMElement *previousElement = [element previousSiblingOfClass:[DOMElement class]];
         if (previousElement)
@@ -609,9 +615,10 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
             WEKWebEditorItem *previousItem = [self itemForDOMNode:previousElement];
             if (previousItem)
             {
+                relativeTop = position.y - graphicPosition.y;
                 NSSize size = [previousElement boundingBox].size;
                 
-                if (offset.height <= -0.5 * size.height)
+                if (relativeTop <= -0.5 * size.height)
                 {
                     // Move the element
                     SVGraphic *graphic = [previousItem representedObject];
@@ -619,31 +626,24 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
                                               beforeObject:graphic];
                     
                     // Adjust drag location to match
-                    offset.height += size.height;
+                    relativeTop += size.height;
                 }
             }
-            else
-            {
-                // There's no where to go, so limit offset to 0
-                offset.height = 0.0f;
-            }
-        }
-        else
-        {
-            // There's no where to go, so limit offset to 0
-            offset.height = 0.0f;
         }
     }
     
     
     
-    
     // Position graphic to match event. Don't allow horizontal shift. Limit to bounds of pagelets
+    if (relativeTop != 0.0f)
+    {
+                
+        
+        
+    }
     
-    [graphicController moveToRelativePosition:NSMakePoint(0.0f, offset.height)];
     
-    
-    return offset;
+    return NSZeroSize;
 }
 
 #pragma mark Drawing

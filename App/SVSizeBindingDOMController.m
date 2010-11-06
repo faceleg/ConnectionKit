@@ -115,9 +115,9 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 /*  Probably don't really want to move this item, but the graphic as a whole
  */
 
-- (BOOL)moveToPosition:(CGPoint)position;
+- (BOOL)moveToPosition:(CGPoint)position event:(NSEvent *)event;
 {
-    return [[self enclosingGraphicDOMController] moveToPosition:position];
+    return [[self enclosingGraphicDOMController] moveToPosition:position event:event];
 }
 
 - (void)moveEnded;
