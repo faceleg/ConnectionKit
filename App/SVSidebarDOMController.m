@@ -563,7 +563,19 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 {
     OBPRECONDITION(graphicController);
     
+    position.x = 0.0f;
     
+    
+    CGFloat constraint = [[[self pageletDOMControllers] objectAtIndex:0] resetPosition].y;
+    if (position.y < constraint)
+    {
+        position.y = constraint;
+    }
+    else
+    {
+        constraint = [[[self pageletDOMControllers] lastObject] resetPosition].y;
+        if (position.y > constraint) position.y = constraint;
+    }
     
     [graphicController moveToPosition:position];
     
