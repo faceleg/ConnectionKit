@@ -496,6 +496,15 @@
     OBPRECONDITION(graphicController);
     NSSize offset;
     
+    
+    CGPoint graphicPosition = [graphicController positionIgnoringRelativePosition];
+    
+    CGPoint relativePosition = CGPointMake(position.x - graphicPosition.x, position.y - graphicPosition.y);
+    [graphicController moveToRelativePosition:relativePosition];
+    
+    
+    return offset;
+    
     DOMCSSStyleDeclaration *style = [[graphicController selectableDOMElement] style];
     
     
