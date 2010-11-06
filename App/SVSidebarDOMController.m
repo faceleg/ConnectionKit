@@ -558,18 +558,18 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 #pragma mark Moving
 
-- (BOOL)tryToMovePagelet:(SVGraphicDOMController *)pagelet downToPosition:(CGPoint)position;
+- (void)tryToMovePagelet:(SVGraphicDOMController *)pagelet downToPosition:(CGPoint)position;
 {
     NSArray *pagelets = [self pageletDOMControllers];
     NSUInteger index = [pagelets indexOfObjectIdenticalTo:pagelet]  + 1;
     
     CGPoint startPosition = [pagelet positionIgnoringRelativePosition];
+    CGFloat gapAvailable = position.y - startPosition.y;
+    if (index == 1 && gapAvailable < 0.0f) return;  // constrain to top of sidebar
     
     if (index < [pagelets count])
     {
-        CGFloat gapAvailable = position.y - startPosition.y;
         SVGraphicDOMController *nextPagelet = [pagelets objectAtIndex:index];
-        
         if (2 * gapAvailable > [[nextPagelet HTMLElement] boundingBox].size.height)
         {
             // Make the swap
@@ -579,7 +579,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
             // By calling back in, we should account for a drag that somehow covers multiple pagelets
             [self updateIfNeeded];
             [self tryToMovePagelet:pagelet downToPosition:position];
-            return YES;
+            return;
         }
     }
     else
@@ -588,22 +588,21 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         if (position.y > startPosition.y) position = startPosition;
     }
     
-    [pagelet moveToPosition:position];
-    return NO;
+    [pagelet moveToRelativePosition:CGPointMake(0.0f, position.y - startPosition.y)];
 }
 
-- (BOOL)tryToMovePagelet:(SVGraphicDOMController *)pagelet upToPosition:(CGPoint)position;
+- (void)tryToMovePagelet:(SVGraphicDOMController *)pagelet upToPosition:(CGPoint)position;
 {
     NSArray *pagelets = [self pageletDOMControllers];
     NSUInteger index = [pagelets indexOfObjectIdenticalTo:pagelet];
     
     CGPoint startPosition = [pagelet positionIgnoringRelativePosition];
-    
+    CGFloat gapAvailable = position.y - startPosition.y;
+    if (index+1 >= [pagelets count] && gapAvailable > 0.0f) return;
+        
     if (index > 0)
     {
-        CGFloat gapAvailable = position.y - startPosition.y;
         SVGraphicDOMController *previousPagelet = [pagelets objectAtIndex:index-1];
-        
         if (2 * -gapAvailable > [[previousPagelet HTMLElement] boundingBox].size.height)
         {
             // Make the swap
@@ -613,7 +612,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
             // By calling back in, we should account for a drag that somehow covers multiple pagelets
             [self updateIfNeeded];
             [self tryToMovePagelet:pagelet upToPosition:position];
-            return YES;
+            return;
         }
     }
     else
@@ -622,8 +621,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         if (position.y < startPosition.y) position = startPosition;
     }    
     
-    [pagelet moveToPosition:position];
-    return NO;
+    [pagelet moveToRelativePosition:CGPointMake(0.0f, position.y - startPosition.y)];
 }
 
 - (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
