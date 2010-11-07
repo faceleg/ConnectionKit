@@ -497,16 +497,35 @@
     NSSize offset;
     
     
-    CGPoint graphicPosition = [graphic positionIgnoringRelativePosition];
+    // Restrict position within text
+    CGPoint currentPosition = [graphic position];
+    NSRect frame = [graphic rect];
+    frame.origin.x += position.x - currentPosition.x;
+    frame.origin.y += position.y - currentPosition.y;
     
-    CGPoint relativePosition = CGPointMake(position.x - graphicPosition.x, position.y - graphicPosition.y);
-    
-    
-    // Don't move up if the first element
-    if (![[graphic HTMLElement] previousSiblingOfClass:[DOMElement class]])
+    NSRect bounds = [[self textHTMLElement] boundingBox];
+    if (NSMinX(frame) < NSMinX(bounds))
     {
-        if (relativePosition.y < 0.0f) relativePosition.y = 0.0f;
+        position.x += (NSMinX(bounds) - NSMinX(frame));
     }
+    else if (NSMaxX(frame) > NSMaxX(bounds))
+    {
+        position.x -= (NSMaxX(frame) - NSMaxX(bounds));
+    }
+    
+    if (NSMinY(frame) < NSMinY(bounds))
+    {
+        position.y += (NSMinY(bounds) - NSMinY(frame));
+    }
+    else if (NSMaxY(frame) > NSMaxY(bounds))
+    {
+        position.y -= (NSMaxY(frame) - NSMaxY(bounds));
+    }
+    
+    
+    // Make the move
+    CGPoint staticPosition = [graphic positionIgnoringRelativePosition];
+    CGPoint relativePosition = CGPointMake(position.x - staticPosition.x, position.y - staticPosition.y);
     
     [graphic moveToRelativePosition:relativePosition];
     
