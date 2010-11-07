@@ -61,6 +61,38 @@
 
                 <li>Create a new <a href="Raw_HTML.html" title="Raw HTML">Raw HTML</a> page or pagelet and set its HTML code to be that you just copied from the <a href="Contact_Form.html" title="Contact Form">Contact Form</a>.</li>
             </ol>
+        </div>
+
+        <p>Unless you also have a non-customized, standard contact form on your page, you will need to also import the CSS (Cascading Style Sheet) code in order to cause your form to look right.</p>
+
+        <div class="instructions">
+            <p><b>To import the Cascading Style Sheet for the Contact Form:</b></p>
+
+            <ol>
+                <li>In the Finder, control-click on your Sandvox application and choose "Show Package Contents"</li>
+
+                <li>Navigate down to find Contents → Plugins → Contact.svxElement</li>
+
+                <li>Control-click on Contact.svxElement and choose "Show Package Contents"</li>
+
+                <li>Navigate down to find Contents → Resources → ContactElement.css</li>
+
+                <li>Open this file using any text editor such as TextEdit</li>
+
+                <li>Select All, and then Copy the text to the clipboard.</li>
+
+                <li>In Sandvox, from the Site menu, choose either Page Code Injection (if your custom contact form appears only on the one page) or Site Code Injection (if the form appears on multiple pages)</li>
+
+                <li>Choose the second tab, "Head Area"</li>
+
+                <li>In the lower field, type:</li>
+            </ol>
+            <pre>
+&lt;style&gt;
+&lt;/style&gt;
+</pre>
+
+            <p>10. Paste the text on the clipboard into the lower field between those two lines</p>
         </div><a name="Predefined_Inputs" id="Predefined_Inputs"></a>
 
         <h2><span class="mw-headline">Predefined Inputs</span></h2>
