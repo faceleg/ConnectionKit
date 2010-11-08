@@ -524,41 +524,48 @@
     }
     
     
-    
-    // Set wrap to match
-    SVGraphicWrap wrap;
-    if (position.x < NSMidX(bounds))
+    // Snap to fit current wrap. #94884
+    CGPoint staticPosition = [graphicController positionIgnoringRelativePosition];
+    if (position.x > staticPosition.x - 10.0f &&
+        position.x < staticPosition.x + 10.0f)
     {
-        CGFloat leftEdge = NSMinX(frame) + position.x - currentPosition.x;
-        if (leftEdge - NSMinX(bounds) < NSMidX(bounds) - position.x) // closer to left
-        {
-            wrap = SVGraphicWrapRightSplit;
-        }
-        else
-        {
-            wrap = SVGraphicWrapCenterSplit;
-        }
+        position.x = staticPosition.x;
     }
     else
     {
-        CGFloat rightEdge = NSMaxX(frame) + position.x - currentPosition.x;
-        if (NSMaxX(bounds) - rightEdge < position.x - NSMidX(bounds)) // closer to right
+        // Set wrap to match
+        SVGraphicWrap wrap;
+        if (position.x < NSMidX(bounds))
         {
-            wrap = SVGraphicWrapLeftSplit;
+            CGFloat leftEdge = NSMinX(frame) + position.x - currentPosition.x;
+            if (leftEdge - NSMinX(bounds) < NSMidX(bounds) - position.x) // closer to left
+            {
+                wrap = SVGraphicWrapRightSplit;
+            }
+            else
+            {
+                wrap = SVGraphicWrapCenterSplit;
+            }
         }
         else
         {
-            wrap = SVGraphicWrapCenterSplit;
+            CGFloat rightEdge = NSMaxX(frame) + position.x - currentPosition.x;
+            if (NSMaxX(bounds) - rightEdge < position.x - NSMidX(bounds)) // closer to right
+            {
+                wrap = SVGraphicWrapLeftSplit;
+            }
+            else
+            {
+                wrap = SVGraphicWrapCenterSplit;
+            }
         }
+        
+        [[graphic textAttachment] setWrap:[NSNumber numberWithInt:wrap]];
+        [graphicController updateIfNeeded]; // push through so position can be set accurately
     }
-    
-    [[graphic textAttachment] setWrap:[NSNumber numberWithInt:wrap]];
-    [graphicController updateIfNeeded]; // push through so position can be set accurately
-    
     
     
     // Is there space to rearrange?
-    CGPoint staticPosition = [graphicController positionIgnoringRelativePosition];
     DOMElement *element = [graphicController HTMLElement];
     
     if (position.y > currentPosition.y)
