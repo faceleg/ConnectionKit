@@ -494,10 +494,9 @@
                                  event:(NSEvent *)event;
 {
     OBPRECONDITION(graphic);
-    NSSize offset;
     
     
-    // Restrict position within text
+    // Restrict position to bounds of text
     CGPoint currentPosition = [graphic position];
     NSRect frame = [graphic rect];
     frame.origin.x += position.x - currentPosition.x;
@@ -523,70 +522,41 @@
     }
     
     
-    // Make the move
-    CGPoint staticPosition = [graphic positionIgnoringRelativePosition];
-    CGPoint relativePosition = CGPointMake(position.x - staticPosition.x, position.y - staticPosition.y);
-    
-    [graphic moveToRelativePosition:relativePosition];
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    return offset;
-    
-    DOMCSSStyleDeclaration *style = [[graphic selectableDOMElement] style];
-    
-    
-    // Take existing offset into account
-    NSString *left = [style left];
-    if (left) offset.width += [left floatValue];
-    
-    NSString *top = [style top];
-    if (top) offset.height += [top floatValue];
-    
-    
     // Is there space to rearrange?
+    CGPoint staticPosition = [graphic positionIgnoringRelativePosition];
     DOMElement *element = [graphic HTMLElement];
-    if (offset.height > 0.0f)
+    
+    if (position.y > currentPosition.y)
     {
         DOMElement *nextElement = [element nextSiblingOfClass:[DOMElement class]];
         if (nextElement)
         {
             NSSize size = [nextElement boundingBox].size;
+            CGFloat gap = position.y - staticPosition.y;
             
-            if (offset.height >= 0.5 * size.height)
+            if (gap >= 0.5 * size.height)
             {
                 // Move the element
                 if ([self moveDOMElement:element beforeChild:[nextElement nextSiblingOfClass:[DOMElement class]]])
                 {
-                    // Adjust drag location to match
-                    offset.height -= size.height;
-                    
                     [[self webEditor] didChangeText];
                 }
             }
         }
     }
-    else if (offset.height < 0.0f)
+    else if (position.y < currentPosition.y)
     {
         DOMElement *previousElement = [element previousSiblingOfClass:[DOMElement class]];
         if (previousElement)
         {
             NSSize size = [previousElement boundingBox].size;
+            CGFloat gap = staticPosition.y - position.y;
             
-            if (offset.height <= -0.5 * size.height)
+            if (gap >= 0.5 * size.height)
             {
                 // Move the element
                 if ([self moveDOMElement:element beforeChild:previousElement])
                 {
-                    // Adjust drag location to match
-                    offset.height += size.height;
-                    
                     [[self webEditor] didChangeText];
                 }
             }
@@ -594,13 +564,16 @@
     }
     
     
+    // Move
+    [graphic moveToPosition:position];
     
     
-    // Position graphic to match event. // TODO: handle multiple drags
-    [graphic moveToPosition:CGPointMake(offset.width, offset.height)];
     
     
-    return offset;
+    
+    
+    
+    return ;
 }
 
 #pragma mark Drawing
