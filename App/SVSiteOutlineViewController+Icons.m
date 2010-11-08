@@ -190,12 +190,17 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	// If there isn't a cached icon, try to create it
 	if (!result)
 	{
-		id <IMBImageItem> faviconRecord = [[[self rootPage] master] favicon];
+		SVMediaRecord *faviconRecord = [[[self rootPage] master] favicon];
 		
 		// Create the thumbnail
         if (faviconRecord)
         {
-            CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(faviconRecord, NULL);
+            SVImageItem *imageItem = [[SVImageItem alloc]
+                                      initWithImageRepresentation:[[faviconRecord media] imageRepresentation]
+                                      type:[[faviconRecord media] imageRepresentationType]];
+            
+            CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(imageItem, NULL);
+            [imageItem release];
             
             if (imageSource)
             {

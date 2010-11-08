@@ -20,6 +20,7 @@
     id <IMBImageItem>   _sourceItem;
 }
 
+- (id)initWithImageRepresentation:(id)rep type:(NSString *)repType;
 - (id)initWithIMBImageItem:(id <IMBImageItem>)item;
 
 @property(nonatomic, readonly) id <IMBImageItem> originalItem;

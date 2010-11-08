@@ -320,9 +320,9 @@
 
 #pragma mark Favicon
 
-- (id <IMBImageItem>)favicon
+- (SVMediaRecord *)favicon
 {
-    id <IMBImageItem> result = nil;
+    SVMediaRecord *result = nil;
     
     if ([[self faviconType] integerValue] > 0)
     {

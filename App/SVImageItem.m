@@ -11,12 +11,19 @@
 
 @implementation SVImageItem
 
-- (id)initWithIMBImageItem:(id <IMBImageItem>)item;
+- (id)initWithImageRepresentation:(id)rep type:(NSString *)repType;
 {
     [self init];
     
-    _rep = [[item imageRepresentation] retain];
-    _repType = [[item imageRepresentationType] copy];
+    _rep = [rep retain];
+    _repType = [repType copy];
+    
+    return self;
+}
+
+- (id)initWithIMBImageItem:(id <IMBImageItem>)item;
+{
+    self = [self initWithImageRepresentation:[item imageRepresentation] type:[item imageRepresentationType]];
     
     _sourceItem = [item retain];
     
