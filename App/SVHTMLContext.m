@@ -486,7 +486,7 @@
         
         // <div class="graphic-container center">
         [graphic buildClassName:self];
-        [self startElement:@"div" className:@"graphic-container"];
+        [self startElement:@"div"];
         
         
         // <div class="graphic"> or <img class="graphic">
