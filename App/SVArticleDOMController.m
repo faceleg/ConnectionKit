@@ -489,16 +489,18 @@
     return NO;
 }
 
-- (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphic
+- (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
                             toPosition:(CGPoint)position
                                  event:(NSEvent *)event;
 {
-    OBPRECONDITION(graphic);
+    OBPRECONDITION(graphicController);
     
+    SVGraphic *graphic = [graphicController representedObject];
     
+   
     // Restrict position to bounds of text
-    CGPoint currentPosition = [graphic position];
-    NSRect frame = [graphic rect];
+    CGPoint currentPosition = [graphicController position];
+    NSRect frame = [graphicController rect];
     frame.origin.x += position.x - currentPosition.x;
     frame.origin.y += position.y - currentPosition.y;
     
@@ -522,9 +524,22 @@
     }
     
     
+    // Set wrap to match
+    if (position.x < NSMidX(bounds))
+    {
+        [[graphic textAttachment] setWrap:SVContentObjectWrapBlockRight];
+    }
+    else
+    {
+        [[graphic textAttachment] setWrap:SVContentObjectWrapBlockLeft];
+    }
+    
+    [graphicController updateIfNeeded]; // push through so position can be set accurately
+    
+    
     // Is there space to rearrange?
-    CGPoint staticPosition = [graphic positionIgnoringRelativePosition];
-    DOMElement *element = [graphic HTMLElement];
+    CGPoint staticPosition = [graphicController positionIgnoringRelativePosition];
+    DOMElement *element = [graphicController HTMLElement];
     
     if (position.y > currentPosition.y)
     {
@@ -565,7 +580,7 @@
     
     
     // Move
-    [graphic moveToPosition:position];
+    [graphicController moveToPosition:position];
     
     
     
