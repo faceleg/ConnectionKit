@@ -489,9 +489,9 @@
     return NO;
 }
 
-- (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
-                            toPosition:(CGPoint)position
-                                 event:(NSEvent *)event;
+- (void)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
+                          toPosition:(CGPoint)position
+                               event:(NSEvent *)event;
 {
     OBPRECONDITION(graphicController);
     

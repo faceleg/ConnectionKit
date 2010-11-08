@@ -630,9 +630,9 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [pagelet moveToRelativePosition:CGPointMake(0.0f, position.y - startPosition.y)];
 }
 
-- (NSSize)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
-                            toPosition:(CGPoint)position
-                                 event:(NSEvent *)event;
+- (void)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
+                          toPosition:(CGPoint)position
+                               event:(NSEvent *)event;
 {
     OBPRECONDITION(graphicController);
     
@@ -647,9 +647,6 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     {
         [self tryToMovePagelet:graphicController downToPosition:position];
     }
-    
-    
-    return NSZeroSize;
 }
 
 #pragma mark Drawing
