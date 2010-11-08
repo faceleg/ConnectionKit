@@ -247,6 +247,23 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [self didUpdateWithSelector:_cmd];
 }
 
+- (void)updateWrap;
+{
+    SVGraphic *graphic = [self representedObject];
+    
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:nil];
+    [graphic buildClassName:context];
+    
+    NSString *className = [context elementClassName];
+    DOMHTMLElement *element = [self HTMLElement];
+    [element setClassName:className];
+    
+    [context release];
+    
+    
+    [self didUpdateWithSelector:_cmd];
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary *)change
@@ -256,6 +273,13 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     {
         [self setNeedsUpdateWithSelector:@selector(updateSize)];
     }
+    
+    // Special case where we don't want complete updaye
+    else if ([keyPath isEqualToString:@"textAttachment.wrap"])
+    {
+        [self setNeedsUpdateWithSelector:@selector(updateWrap)];
+    }
+    
     else
     {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
