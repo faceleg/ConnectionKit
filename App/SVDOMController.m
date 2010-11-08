@@ -179,6 +179,12 @@
     if ([self canUpdate])
     {
         [self setNeedsUpdateWithSelector:@selector(update)];
+    
+        // Once we're marked for update, no point continuing to observe
+        if ([self needsUpdate])
+        {
+            [self stopObservingDependencies];
+        }
     }
     else
     {
@@ -198,10 +204,6 @@
         [viewController setNeedsUpdate];
         return;
     }
-    
-    
-    // Once we're marked for update, no point continuing to observe
-    [self stopObservingDependencies];
     
     
     // Try to get hold of the controller in charge of update coalescing
