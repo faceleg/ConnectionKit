@@ -46,7 +46,7 @@
     // Generally, no. EXCEPT for inline, non-wrap-causing images
     BOOL result = NO;
     
-    SVImage *image = [self representedObject];
+    SVMediaGraphic *image = [self representedObject];
     if ([image shouldWriteHTMLInline])
     {
         result = YES;

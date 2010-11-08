@@ -193,7 +193,6 @@
 
 #pragma mark HTML
 
-- (BOOL)shouldWriteHTMLInline; { return NO; }
 - (BOOL)canWriteHTMLInline; { return NO; }
 - (id <SVMedia>)thumbnailMedia; { return [self media]; }
 

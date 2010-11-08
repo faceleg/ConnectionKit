@@ -500,7 +500,7 @@
 	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
 
 	// Actually write the video
-	if ([self shouldWriteHTMLInline]) [self.container buildClassName:context];
+	if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context];
 	
 	if (self.controller)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
 	if (self.autoplay)	[context pushAttribute:@"autoplay" value:@"autoplay"];
@@ -675,7 +675,7 @@
 		playerPath = [context relativeURLStringOfURL:playerURL];
 	}
 	
-	if ([self shouldWriteHTMLInline]) [self.container buildClassName:context];
+	if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context];
 	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
 	[context pushAttribute:@"data" value:playerPath];	
 	

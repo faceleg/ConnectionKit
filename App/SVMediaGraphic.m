@@ -16,6 +16,7 @@
 #import "SVMediaRecord.h"
 #import "SVImage.h"
 #import "KTPage.h"
+#import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
 #import "KSWebLocation.h"
 #import "SVVideo.h"
@@ -416,7 +417,29 @@
     [super writeBody:context];
 }
 
-- (BOOL)shouldWriteHTMLInline; { return [[self plugIn] shouldWriteHTMLInline]; }
+- (BOOL)shouldWriteHTMLInline;
+{
+    BOOL result = [super shouldWriteHTMLInline];
+    
+    // Media becomes inline once you turn off all additional stuff like title & caption
+    if (![self isPagelet])
+    {
+        SVTextAttachment *attachment = [self textAttachment];
+        if (![[attachment causesWrap] boolValue])
+        {
+            result = YES;
+        }
+        else
+        {
+            SVGraphicWrap wrap = [[attachment wrap] intValue];
+            result = (wrap == SVGraphicWrapRight ||
+                      wrap == SVGraphicWrapLeft ||
+                      wrap == SVGraphicWrapNone);
+        }
+    }
+    
+    return result;
+}
 
 - (BOOL)canWriteHTMLInline; { return [[self plugIn] canWriteHTMLInline]; }
 

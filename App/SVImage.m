@@ -14,7 +14,6 @@
 #import "SVMediaGraphicInspector.h"
 #import "SVMediaRecord.h"
 #import "SVSiteItem.h"
-#import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
 #import "KSWebLocation.h"
 
@@ -171,30 +170,6 @@
 
 #pragma mark Placement
 
-- (BOOL)shouldWriteHTMLInline;
-{
-    BOOL result = [super shouldWriteHTMLInline];
-    
-    // Images become inline once you turn off all additional stuff like title & caption
-    if (![[self container] isPagelet])
-    {
-        SVTextAttachment *attachment = [[self container] textAttachment];
-        if (![[attachment causesWrap] boolValue])
-        {
-            result = YES;
-        }
-        else
-        {
-            SVGraphicWrap wrap = [[attachment wrap] intValue];
-            result = (wrap == SVGraphicWrapRight ||
-                      wrap == SVGraphicWrapLeft ||
-                      wrap == SVGraphicWrapNone);
-        }
-    }
-    
-    return result;
-}
-
 - (BOOL)canWriteHTMLInline; { return YES; }
 
 + (NSSet *)keyPathsForValuesAffectingIsPagelet;
@@ -287,7 +262,7 @@
     NSString *alt = [self alternateText];
     if (!alt) alt = @"";
     
-    if ([self shouldWriteHTMLInline]) [[self container] buildClassName:context];
+    if ([[self container] shouldWriteHTMLInline]) [[self container] buildClassName:context];
     
     [context buildAttributesForElement:@"img" bindSizeToObject:self DOMControllerClass:[SVImageDOMController class]  sizeDelta:NSZeroSize];
     
