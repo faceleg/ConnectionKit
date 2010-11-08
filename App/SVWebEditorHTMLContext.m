@@ -193,7 +193,7 @@
 
 - (void)writeGraphicBody:(SVGraphic *)graphic;
 {
-    if ([graphic canWriteHTMLInline])
+    if ([graphic isKindOfClass:[SVMediaGraphic class]])
     {
         [super writeGraphicBody:graphic];
     }

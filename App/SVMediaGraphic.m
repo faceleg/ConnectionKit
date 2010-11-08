@@ -418,7 +418,7 @@
 
 - (BOOL)shouldWriteHTMLInline; { return [[self plugIn] shouldWriteHTMLInline]; }
 
-- (BOOL)canWriteHTMLInline; { return true; }		// all of these can be figure-content
+- (BOOL)canWriteHTMLInline; { return [[self plugIn] canWriteHTMLInline]; }
 
 #pragma mark Inspector
 

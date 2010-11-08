@@ -15,7 +15,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
 #import "KTMaster.h"
-#import "SVMediaRecord.h"
+#import "SVMediaGraphic.h"
 #import "KTPage.h"
 #import "KTSite.h"
 #import "SVTemplate.h"
@@ -491,7 +491,7 @@
         
         // <div class="graphic"> or <img class="graphic">
         [self pushClassName:@"graphic"];
-        if (![graphic showsCaption] && [graphic canWriteHTMLInline]) // special case for images
+        if (![graphic showsCaption] && [graphic isKindOfClass:[SVMediaGraphic class]]) // special case for media
         {
             [graphic writeBody:self];
             [self endElement];
@@ -570,7 +570,7 @@
     // Graphic body
     [self pushClassName:@"figure-content"];  // identifies for #84956
     
-    if ([graphic canWriteHTMLInline])
+    if ([graphic isKindOfClass:[SVMediaGraphic class]])
     {
         // It's almost certainly media, generate DOM controller to match
         [graphic writeBody:self];
