@@ -387,10 +387,10 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     return [self draggingUpdated:sender];
 }
 
-- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)dragInfo;
+- (NSDragOperation)dragOperation:(id <NSDraggingInfo>)dragInfo;
 {
     NSDragOperation result = NSDragOperationNone;
-
+    
     BOOL sourceIsWebEditor = ([dragInfo draggingSource] == [self webEditor]);
     
     
@@ -403,8 +403,16 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     if (!result) result = mask & NSDragOperationCopy;
     if (!result) result = mask & NSDragOperationGeneric;
     
+    return result;
+}
+
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)dragInfo;
+{
+    NSDragOperation result = [self dragOperation:dragInfo];
+
     
-    if (sourceIsWebEditor && result)
+    
+    if (result && ([dragInfo draggingSource] == [self webEditor]))
     {
         NSUInteger dropIndex = [self indexOfDrop:dragInfo];
         if (dropIndex != NSNotFound)
@@ -416,7 +424,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
                 DOMNode *node = [[self sidebarDivElement] lastChild];
                 DOMRange *range = [[node ownerDocument] createRange];
                 [range setStartAfter:node];
-                if (sourceIsWebEditor) [[self webEditor] moveDragCaretToDOMRange:range];
+                [[self webEditor] moveDragCaretToDOMRange:range];
                 //[self moveDragCaretToAfterDOMNode:node];
             }
             else
@@ -425,7 +433,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
                 
                 DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
                 [range setStartBefore:[aPageletItem HTMLElement]];
-                if (sourceIsWebEditor) [[self webEditor] moveDragCaretToDOMRange:range];
+                [[self webEditor] moveDragCaretToDOMRange:range];
                 //[self moveDragCaretToAfterDOMNode:[[aPageletItem HTMLElement] previousSibling]];
             }
         }
