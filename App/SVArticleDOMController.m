@@ -524,17 +524,37 @@
     }
     
     
+    
     // Set wrap to match
     if (position.x < NSMidX(bounds))
     {
-        [[graphic textAttachment] setWrap:SVContentObjectWrapBlockRight];
+        CGFloat leftEdge = NSMinX(frame) + position.x - currentPosition.x;
+        if (leftEdge - NSMinX(bounds) < NSMidX(bounds) - position.x) // closer to left
+        {
+            [[graphic textAttachment] setWrap:SVContentObjectWrapBlockRight];
+        }
+        else
+        {
+            [[graphic textAttachment] setWrap:SVContentObjectWrapBlockCenter];
+            
+            // Snap to center if within 5px
+        }
     }
     else
     {
-        [[graphic textAttachment] setWrap:SVContentObjectWrapBlockLeft];
+        CGFloat rightEdge = NSMaxX(frame) + position.x - currentPosition.x;
+        if (NSMaxX(bounds) - rightEdge < position.x - NSMidX(bounds)) // closer to right
+        {
+            [[graphic textAttachment] setWrap:SVContentObjectWrapBlockLeft];
+        }
+        else
+        {
+            [[graphic textAttachment] setWrap:SVContentObjectWrapBlockCenter];
+        }
     }
     
     [graphicController updateIfNeeded]; // push through so position can be set accurately
+    
     
     
     // Is there space to rearrange?
