@@ -137,6 +137,11 @@
 {
     [_updateSelectors removeObject:NSStringFromSelector(selector)];
     
+    
+    // Turn dependencies back on. #94602
+    if (![self needsUpdate]) [self startObservingDependencies];
+    
+    
     SVWebEditorViewController *controller = [self webEditorViewController];
     OBASSERT(controller || ![self webEditor]);
     [controller performSelector:@selector(didUpdate)];
