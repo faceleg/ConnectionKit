@@ -466,11 +466,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)dragInfo;
 {
     NSUInteger dropIndex = [self indexOfDrop:dragInfo];
-    if (dropIndex == NSNotFound)
-    {
-        NSBeep();
-        return NO;
-    }
+    if (dropIndex == NSNotFound) dropIndex = 0;
     
     
     BOOL result = NO;
