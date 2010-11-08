@@ -514,7 +514,7 @@
     // Fallback to regular icon
     if (!result)
     {
-        result = [NSImage imageNamed:@"toolbar_new_page.tiff"];
+        result = [NSImage imageNamed:@"newPage.tiff"];
     }
     
     return result;

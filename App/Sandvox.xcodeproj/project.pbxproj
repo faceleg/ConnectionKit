@@ -1184,6 +1184,7 @@
 		CE8D5A7C112B339A007AC2F0 /* validator.css in Resources */ = {isa = PBXBuildFile; fileRef = CE8D5A7B112B339A007AC2F0 /* validator.css */; };
 		CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */; };
 		CE8E714110B5D0950005BD91 /* KTDesignFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8E713F10B5D0950005BD91 /* KTDesignFamily.m */; };
+		CE925D861288838C00DB2168 /* newPage.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE925D851288838C00DB2168 /* newPage.tiff */; };
 		CE9B4B420F5E0C780052134C /* UKDockProgressIndicator.h in Headers */ = {isa = PBXBuildFile; fileRef = CE9B4B400F5E0C780052134C /* UKDockProgressIndicator.h */; };
 		CE9B4B430F5E0C780052134C /* UKDockProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9B4B410F5E0C780052134C /* UKDockProgressIndicator.m */; };
 		CE9E5260111C933B00BEF1C8 /* SVDocumentInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = CE9E525E111C933B00BEF1C8 /* SVDocumentInspector.h */; };
@@ -2830,6 +2831,7 @@
 		CE8D5A7B112B339A007AC2F0 /* validator.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = validator.css; sourceTree = "<group>"; };
 		CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignFamily.h; sourceTree = "<group>"; };
 		CE8E713F10B5D0950005BD91 /* KTDesignFamily.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesignFamily.m; sourceTree = "<group>"; };
+		CE925D851288838C00DB2168 /* newPage.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = newPage.tiff; sourceTree = "<group>"; };
 		CE9B4B400F5E0C780052134C /* UKDockProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKDockProgressIndicator.h; sourceTree = "<group>"; };
 		CE9B4B410F5E0C780052134C /* UKDockProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKDockProgressIndicator.m; sourceTree = "<group>"; };
 		CE9E525E111C933B00BEF1C8 /* SVDocumentInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocumentInspector.h; sourceTree = "<group>"; };
@@ -5186,6 +5188,7 @@
 			children = (
 				CE1BE7F411D2AD1E00D875AE /* download.tiff */,
 				CE1BE7F511D2AD1E00D875AE /* draftPattern.png */,
+				CE925D851288838C00DB2168 /* newPage.tiff */,
 				CE1BE7F611D2AD1E00D875AE /* notPublishable.png */,
 				CE1BE7F911D2AD1E00D875AE /* syringe.tiff */,
 				CE36E5C911EFA68E003EFCA8 /* plainText.tiff */,
@@ -6475,6 +6478,7 @@
 				CEA32DDA1284884900648C39 /* toolbar_setup_host.tiff in Resources */,
 				CEA32DDB1284884900648C39 /* toolbar_text.tiff in Resources */,
 				CEA32DDC1284884900648C39 /* toolbar_video.tiff in Resources */,
+				CE925D861288838C00DB2168 /* newPage.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
