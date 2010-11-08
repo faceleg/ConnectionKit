@@ -123,7 +123,16 @@
     // Completely invalid, or top-level elements should be converted into paragraphs
     else if ([self openElementsCount] == 0)
     {
-        return [self convertElementToParagraph:element cachedComputedStyle:nil];
+        // Special case: Line breaks are permitted as the very last element
+        // TODO: Rather than read ahead to next DOM element, use same technique as other tidy up and delete the element during a later pass
+        if ([tagName isEqualToString:@"BR"] && ![element nextSiblingOfClass:[DOMElement class]])
+        {
+            return element; // so it gets written normally
+        }
+        else
+        {
+            return [self convertElementToParagraph:element cachedComputedStyle:nil];
+        }
     }
     
     
@@ -189,7 +198,7 @@
         else
         {
             // Line breaks are permitted at top-level though
-            result = [tagName isEqualToString:@"BR"];
+            result = NO;
         }
     }
     
