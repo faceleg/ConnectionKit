@@ -184,21 +184,26 @@
         // One-shot pages ... (Is there some better way to instantiate these, so we don't have a problem if they are gone?)
 		
         aGraphicFactory = [SVGraphicFactory factoryWithIdentifier:@"sandvox.ContactElement"];
-        aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
-  		[aTemplate setIcon:[NSImage imageNamed:@"page_contact_sb"]];
-		[aTemplate setTitle:NSLocalizedString(@"Contact Form", "menu item title")];
-        [aTemplate setPageProperties:NSDICT([aTemplate title], @"title")];
-        [buffer addObject:aTemplate];
-        [aTemplate release];
+		if (aGraphicFactory)
+		{
+			aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
+			[aTemplate setIcon:[NSImage imageNamed:@"page_contact_sb"]];
+			[aTemplate setTitle:NSLocalizedString(@"Contact Form", "menu item title")];
+			[aTemplate setPageProperties:NSDICT([aTemplate title], @"title")];
+			[buffer addObject:aTemplate];
+			[aTemplate release];
+		}
         
         aGraphicFactory = [SVGraphicFactory factoryWithIdentifier:@"sandvox.SiteMapElement"];
-        aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
-   		[aTemplate setIcon:[NSImage imageNamed:@"page_sitemap_sb"]];
-		[aTemplate setTitle:NSLocalizedString(@"Sitemap", "menu item title")];
-        [aTemplate setPageProperties:NSDICT([aTemplate title], @"title")];
-        [buffer addObject:aTemplate];
-        [aTemplate release];
-        
+		if (aGraphicFactory)
+		{
+			aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
+			[aTemplate setIcon:[NSImage imageNamed:@"page_sitemap_sb"]];
+			[aTemplate setTitle:NSLocalizedString(@"Sitemap", "menu item title")];
+			[aTemplate setPageProperties:NSDICT([aTemplate title], @"title")];
+			[buffer addObject:aTemplate];
+			[aTemplate release];
+        }
                 
         result = [buffer copy];
         [buffer release];

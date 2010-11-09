@@ -324,7 +324,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		}
 		else
 		{
-			NSLog(@"Could not find badge element to add to initial document.");
+			LOG((@"Could not find badge element to add to initial document."));
 		}
 
         
