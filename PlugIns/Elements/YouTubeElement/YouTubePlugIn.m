@@ -181,7 +181,8 @@
 {
     id <SVPlugInContext> context = [SVPlugIn currentContext];
     
-    NSString *embed = [NSString stringWithFormat:@"http://www.youtube.com/embed/%@", [self videoID]];
+    NSString *embedHost = (self.privacy) ? @"www.youtube-nocookie.com" : @"www.youtube.com";
+    NSString *embed = [NSString stringWithFormat:@"http://%@/embed/%@", embedHost, [self videoID]];
     if ( !self.includeRelatedVideos )
     {
         embed = [embed stringByAppendingString:@"?rel=0"];
@@ -198,6 +199,10 @@
                       bindSizeToPlugIn:self 
                             attributes:attributes];
     [[context HTMLWriter] endElement]; // </iframe>
+    
+    [context addDependencyForKeyPath:@"privacy" ofObject:self];
+    [context addDependencyForKeyPath:@"videoID" ofObject:self];
+    [context addDependencyForKeyPath:@"includeRelatedVideos" ofObject:self];
 }
 
 
