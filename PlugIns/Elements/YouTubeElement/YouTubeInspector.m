@@ -34,16 +34,8 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-
 #import "YouTubeInspector.h"
 #import "YouTubePlugIn.h"
-#import "YouTubeCocoaExtensions.h"
-
-
-//	LocalizedStringInThisBundle(@"This is a placeholder for the YouTube video at:", "Live data feeds are disabled");
-//	LocalizedStringInThisBundle(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", "Live data feeds are disabled");
-//	LocalizedStringInThisBundle(@"Sorry, but no YouTube video was found for the code you entered.", "User entered an invalid YouTube code");
-//	LocalizedStringInThisBundle(@"Please use the Inspector to specify a YouTube video.", "No video code has been entered yet");
 
 
 @implementation YouTubeInspector
