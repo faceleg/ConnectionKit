@@ -264,6 +264,9 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
     
     
+    // Will need redraw of some kind, particularly if selected
+    [self setNeedsDisplay];
+    
     // Update class name to get new wrap
     SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:nil];
     [graphic buildClassName:context];
