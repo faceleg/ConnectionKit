@@ -439,8 +439,15 @@
         treeLevel:(int)aTreeLevel
 {
 	KTPage *currentParserPage = [context page];
-	
-	[context startElement:@"ul" idName:nil className:nil];
+
+	if (0 == aTreeLevel)
+	{
+		[context startElement:@"ul"];
+	}
+	else
+	{
+		[context startElement:@"ul" writeInline:YES];		// for Webkit bug, don't have white space in here 
+	}
 
 	int i=1;	// 1-based iteration
 	int last = [anArray count];
@@ -450,31 +457,42 @@
 		SVSiteItem *siteItem = item.siteItem;
 		NSArray *children = item.childItems;
 
+		[context pushClassName:[NSString stringWithFormat:@"i%d", i]];
+		[context pushClassName:(i%2)?@"o":@"e"];
+		if (i == last)
+		{
+			[context pushClassName:@"last"];
+		}
+		if ([children count])
+		{
+			[context pushClassName:@"hasSubmenu"];
+		}
+		
 		if (siteItem == currentParserPage)
 		{
-			[context startElement:@"li" idName:nil className:
-			 [NSString stringWithFormat:@"i%d %@%@%@ currentPage", i, (i%2)?@"o":@"e", (i==last)? @" last" : @"", [children count] ? @" hasSubmenu" : @""]];
+			[context pushClassName:@"currentPage"];
 		}
 		else
 		{
-			// define currentParent as being that this menu item is along the path to the currently generated page.
 			BOOL isCurrentParent = (currentParserPage != siteItem
 									&& [currentParserPage isDescendantOfItem:siteItem]
 									&& [item containsSiteItem:currentParserPage]
 									);
-			
-			[context startElement:@"li" idName:nil className:
-			 [NSString stringWithFormat:@"i%d %@%@%@%@",
-			  i,
-			  (i%2)?@"o":@"e",
-			  (i==last)? @" last" : @"",
-			  [children count] ? @" hasSubmenu" : @"",
-			  isCurrentParent ? @" currentParent" : @""
-			  ]];
-			
+			if (isCurrentParent)
+			{
+				[context pushClassName:@"currentParent"];
+			}
+		}
+		[context startElement:@"li" writeInline:YES];
+
+		// start the anchor
+		if (siteItem != currentParserPage)
+		{
 			NSString *urlString = [context relativeURLStringOfURL:[siteItem URL]];
-			
-			[context startAnchorElementWithHref:urlString title:[siteItem title] target:nil rel:nil];
+			[context pushAttribute:@"href" value:urlString];
+			[context pushAttribute:@"title" value:[siteItem title]];
+			[context startElement:@"a" writeInline:YES];
+			// WAS [context startAnchorElementWithHref:urlString title: target:nil rel:nil];
 			// TODO: targetStringForPage:targetPage
 		}
 		
