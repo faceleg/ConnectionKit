@@ -181,11 +181,17 @@
 {
     id <SVPlugInContext> context = [SVPlugIn currentContext];
     
+    NSString *embed = [NSString stringWithFormat:@"http://www.youtube.com/embed/%@", [self videoID]];
+    if ( !self.includeRelatedVideos )
+    {
+        embed = [embed stringByAppendingString:@"?rel=0"];
+    }
+    
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 @"YouTube", @"title",
                                 @"youtube-player", @"class",
                                 @"text/html", @"type",
-                                @"http://www.youtube.com/embed/R-mUh4MOuvk?rel=0", @"src",
+                                embed, @"src",
                                 @"0", @"frameborder",
                                 nil];
     [[context HTMLWriter] startElement:@"iframe" 
