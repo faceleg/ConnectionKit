@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>KTPluginIconName</key>
+	<string>toolbar_facebook.tiff</string>
+	<key>CFBundleGetInfoString</key>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2010 Karelia Software</string>
+	<key>KTPluginUntitledName</key>
+	<string>Facebook</string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.${PRODUCT_NAME:rfc1034Identifier}</string>
+	<key>KTPluginPriority</key>
+	<integer>5</integer>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${SANDVOX_VERSION}</string>
+	<key>CFBundleSignature</key>
+	<string>Svox</string>
+	<key>CFBundleVersion</key>
+	<string>${SVN_VERSION}</string>
+	<key>NSPrincipalClass</key>
+	<string>FacebookPlugIn</string>
+	<key>KTPluginName</key>
+	<string>Facebook</string>
+	<key>KSHelpAnchor</key>
+	<string>Facebook</string>
+	<key>KTCategory</key>
+	<integer>4</integer>
+	<key>KSMinimumAppVersion</key>
+	<string>2.0</string>
+</dict>
+</plist>
