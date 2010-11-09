@@ -10,6 +10,7 @@
 
 #import "SVImageDOMController.h"
 #import "SVPasteboardItemInternal.h"
+#import "SVTextAttachment.h"
 
 #import "NSColor+Karelia.h"
 
@@ -19,7 +20,19 @@
 #pragma mark Properties
 
 // TODO: proper logic for this:
-- (BOOL)isMediaPlaceholder; { return YES; }
+- (BOOL)isMediaPlaceholder;
+{
+    // Don't accept drops on inline images
+    BOOL result = YES;
+    
+    SVPlugInGraphic *graphic = [self representedObject];
+    if ([graphic textAttachment] && ![[[graphic textAttachment] causesWrap] boolValue])
+    {
+        result = NO;
+    }
+    
+    return result;
+}
 
 #pragma mark Resize
 
