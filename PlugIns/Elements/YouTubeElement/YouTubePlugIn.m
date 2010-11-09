@@ -97,7 +97,7 @@
     self.widescreen = YES;
     
     // try the HTML5 iFrame
-    self.useIFrame = NO;
+    self.useIFrame = YES;
     
     // Prepare initial colors
     self.useCustomSecondaryColor = NO;
