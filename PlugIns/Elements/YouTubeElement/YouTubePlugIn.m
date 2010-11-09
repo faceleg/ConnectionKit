@@ -87,11 +87,11 @@
     if ( location.URL && [location.URL youTubeVideoID] )
     {
         self.userVideoCode = [location.URL absoluteString];
-    }
-    
-    if ( location.title )
-    {
-        self.title = location.title;
+        
+        if ( location.title )
+        {
+            self.title = location.title;
+        }
     }
     
     // hint to user: prefer widescreen
