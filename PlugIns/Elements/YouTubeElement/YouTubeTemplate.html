@@ -6,11 +6,11 @@
 			<param name="movie" value="http://www.[[if privacy]]youtube-nocookie[[else3]]youtube[[endif3]].com/v/[[=videoID]][[if !includeRelatedVideos]]&amp;rel=0[[endif3]][[if playHD]]&amp;hd=1[[endif3]]&amp;color1=[[=color1.youTubeVideoColorString]]&amp;color2=[[=color2.youTubeVideoColorString]][[if showBorder]]&amp;border=1[[endif3]]&amp;hl=[[=&parser.outputWriter.language]]"></param>
 			<param name="wmode" value="transparent"></param>
 			[[=writeEmbedElement]]
-[[else2]]
+        [[else2]]
 			<div class="svx-placeholder" style="width:[[=elementWidth]]px; height:[[=elementHeight]]px;">[['This is a placeholder for the YouTube video at:]]
 			<p><a href="[[=&userVideoCode]]">[[=&userVideoCode]]</a></p>
 			[['To see the video in Sandvox, please enable live data feeds in the Preferences.]]</div>
-[[endif2]]
+        [[endif2]]
 		[[=endElement]]
 	</div>
 </div>
