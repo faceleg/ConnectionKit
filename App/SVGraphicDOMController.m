@@ -509,7 +509,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Make the move
-    DOMCSSStyleDeclaration *style = [[self selectableDOMElement] style];
+    DOMElement *element = [self graphicDOMElement];
+    OBASSERT(element);
+    
+    DOMCSSStyleDeclaration *style = [element style];
     [style removeProperty:@"-webkit-transition-duration"];
     
     [style setPosition:@"relative"];
@@ -540,7 +543,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (void)removeRelativePosition:(BOOL)animated;
 {
-    DOMCSSStyleDeclaration *style = [[self selectableDOMElement] style];
+    DOMCSSStyleDeclaration *style = [[self graphicDOMElement] style];
     
     // Is there any way we can turn position off after animation?
     if (animated)
@@ -579,7 +582,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (void)removeRelativePositioningAnimationDidEnd;
 {
-    DOMCSSStyleDeclaration *style = [[self selectableDOMElement] style];
+    DOMCSSStyleDeclaration *style = [[self graphicDOMElement] style];
     [style setPosition:nil];
     [style setZIndex:nil];
     
