@@ -113,6 +113,7 @@
     [context addDependencyForKeyPath:@"includeRelatedVideos" ofObject:self];
     [context addDependencyForKeyPath:@"privacy" ofObject:self];
     [context addDependencyForKeyPath:@"useIFrame" ofObject:self];
+    [context addDependencyForKeyPath:@"userVideoCode" ofObject:self];
     [context addDependencyForKeyPath:@"widescreen" ofObject:self];
 }
 
@@ -146,6 +147,7 @@
     [parameters setObject:[[self color2] youTubeVideoColorString] forKey:@"color2"];
     [context addDependencyForKeyPath:@"color1" ofObject:self];
     [context addDependencyForKeyPath:@"color2" ofObject:self];
+    [context addDependencyForKeyPath:@"useCustomSecondaryColor" ofObject:self];
     
     if (self.showBorder) [parameters setObject:@"1" forKey:@"border"];
     [context addDependencyForKeyPath:@"showBorder" ofObject:self];
@@ -198,10 +200,6 @@
                       bindSizeToPlugIn:self 
                             attributes:attributes];
     [[context HTMLWriter] endElement]; // </iframe>
-    
-    [context addDependencyForKeyPath:@"privacy" ofObject:self];
-    [context addDependencyForKeyPath:@"videoID" ofObject:self];
-    [context addDependencyForKeyPath:@"includeRelatedVideos" ofObject:self];
 }
 
 
