@@ -39,8 +39,8 @@
 #import "YouTubeCocoaExtensions.h"
 
 
-#define YOUTUBE_BORDER_HEIGHT 20
-#define YOUTUBE_CONTROLBAR_HEIGHT 25
+#define YOUTUBE_BORDER_HEIGHT 12
+#define YOUTUBE_CONTROLBAR_HEIGHT 26
 #define HTML5_CONTROLBAR_HEIGHT 42
 
 
@@ -273,7 +273,7 @@
 
 - (NSNumber *)elementWidthPadding
 {
-    return ( (self.showBorder && !self.useIFrame) ? [NSNumber numberWithUnsignedInteger:YOUTUBE_BORDER_HEIGHT] : nil );
+    return ( (self.showBorder && !self.useIFrame) ? [NSNumber numberWithUnsignedInteger:(YOUTUBE_BORDER_HEIGHT * 2)] : nil );
 }
 
 - (NSNumber *)elementHeightPadding
@@ -282,7 +282,7 @@
     NSUInteger result = (YES == self.useIFrame) ? HTML5_CONTROLBAR_HEIGHT : YOUTUBE_CONTROLBAR_HEIGHT;
     
     // leave room for colored border, if applicable
-    if ( self.showBorder && !self.useIFrame ) result += YOUTUBE_BORDER_HEIGHT;
+    if ( self.showBorder && !self.useIFrame ) result += (YOUTUBE_BORDER_HEIGHT * 2);
     
     return [NSNumber numberWithUnsignedInteger:result];
 }
