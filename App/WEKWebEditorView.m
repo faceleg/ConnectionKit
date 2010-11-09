@@ -244,6 +244,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
 @synthesize contentItem = _contentItem;
 - (void)setContentItem:(WEKWebEditorItem *)item;
 {
+    // No existing controllers need drawing. #95073
+    [_itemsToDisplay removeAllObjects];
+    
     [[self contentItem] removeFromParentWebEditorItem];
     _contentItem = item;    // _rootItem will retain it for us
     if (item) [_rootItem addChildWebEditorItem:item];
@@ -1020,6 +1023,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Draw items
     for (WEKWebEditorItem *anItem in [self itemsToDisplay])
     {
+        // #95073
+        OBASSERT([anItem isDescendantOfWebEditorItem:[self contentItem]]);
+        
         // Is the item actually for drawing?
         NSRect drawingRect = [anItem drawingRect];
         if (drawingRect.size.width == 0.0f && drawingRect.size.height == 0.0f)
