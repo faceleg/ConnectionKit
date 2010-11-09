@@ -52,8 +52,8 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 - (BOOL)tryToRemove;
 {
     // Remove parent controller instead of ourself
-    WEKWebEditorItem *parent = [self parentWebEditorItem];
-    OBASSERT([parent isKindOfClass:[SVGraphicDOMController class]]);
+    SVGraphicDOMController *parent = [self enclosingGraphicDOMController];
+    OBASSERT(parent);
     
     return [parent tryToRemove];
 }
