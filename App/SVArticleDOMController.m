@@ -560,8 +560,12 @@
             }
         }
         
-        [[graphic textAttachment] setWrap:[NSNumber numberWithInt:wrap]];
-        [graphicController updateIfNeeded]; // push through so position can be set accurately
+        SVTextAttachment *attachment = [graphic textAttachment];
+        if ([[attachment wrap] intValue] != wrap)
+        {
+            [attachment setWrap:[NSNumber numberWithInt:wrap]];
+            [graphicController updateIfNeeded]; // push through so position can be set accurately
+        }
     }
     
     
