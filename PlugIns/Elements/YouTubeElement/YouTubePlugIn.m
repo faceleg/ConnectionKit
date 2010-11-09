@@ -110,9 +110,10 @@
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
     [super writeHTML:context];
-    [context addDependencyForKeyPath:@"widescreen" ofObject:self];
-    [context addDependencyForKeyPath:@"showBorder" ofObject:self];
+    [context addDependencyForKeyPath:@"includeRelatedVideos" ofObject:self];
+    [context addDependencyForKeyPath:@"privacy" ofObject:self];
     [context addDependencyForKeyPath:@"useIFrame" ofObject:self];
+    [context addDependencyForKeyPath:@"widescreen" ofObject:self];
 }
 
 
@@ -137,7 +138,6 @@
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
     if (![self includeRelatedVideos]) [parameters setObject:@"0" forKey:@"rel"];
-    [context addDependencyForKeyPath:@"includeRelatedVideos" ofObject:self];
     
     if ([self playHD]) [parameters setObject:@"1" forKey:@"hd"];
     [context addDependencyForKeyPath:@"playHD" ofObject:self];
@@ -149,7 +149,7 @@
     
     if (self.showBorder) [parameters setObject:@"1" forKey:@"border"];
     [context addDependencyForKeyPath:@"showBorder" ofObject:self];
-    
+
     [parameters setValue:[[context page] language] forKey:@"hl"];
     
 
@@ -158,7 +158,6 @@
                                     host:([self privacy] ? @"www.youtube-nocookie.com" : @"www.youtube.com")
                                     path:[@"/v/" stringByAppendingString:[self videoID]]
                          queryParameters:parameters];
-    [context addDependencyForKeyPath:@"privacy" ofObject:self];
                                           
     
     // Write <EMBED>
