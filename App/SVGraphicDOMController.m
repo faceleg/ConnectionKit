@@ -381,6 +381,19 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
 }
 
+- (NSRect)rect;
+{
+    DOMElement *element = [self graphicDOMElement];
+    if (element)
+    {
+        return [element boundingBox];
+    }
+    else
+    {
+        return [super rect];
+    }
+}
+
 #pragma mark Paste
 
 - (void)paste:(id)sender;
