@@ -1479,7 +1479,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
                         [element isKindOfClass:[DOMElement class]]) // could actually be any DOMNode subclass
                     {
                         NSString *tagName = [element tagName];
-                        if ([tagName isEqualToString:@"OBJECT"] || [tagName isEqualToString:@"VIDEO"] || [tagName isEqualToString:@"AUDIO"]) return;
+                        if ([tagName isEqualToString:@"OBJECT"] ||
+                            [tagName isEqualToString:@"EMBED"] ||
+                            [tagName isEqualToString:@"VIDEO"] ||
+                            [tagName isEqualToString:@"AUDIO"])
+                        {
+                            return;
+                        }
                     }
                     
                     // Can't call -sendEvent: as that doesn't update -currentEvent.
