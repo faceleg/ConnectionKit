@@ -26,7 +26,7 @@ var ddsmoothmenu={
 	Remove arrow image setup, we do this in CSS.
 */
 //Specify full URL to down and right arrow images (0 is padding-right added to top level LIs with drop downs):
-transition: {overtime:20, outtime:500}, //duration of slide in/ out animation, in milliseconds
+transition: {overtime:20, outtime:300}, //duration of slide in/ out animation, in milliseconds
 shadow: {enable:false, offsetx:5, offsety:5}, //enable shadow?
 showhidedelay: {showdelay: 40, hidedelay: 80}, //set delay in milliseconds before sub menus appear and disappear, respectively
 
@@ -109,7 +109,15 @@ buildmenu:function($, setting){
 					var menuleft=header.istopheader && setting.orientation!='v'? 0 : header._dimensions.w
 					menuleft=(header._offsets.left+menuleft+header._dimensions.subulw>$(window).width())? (header.istopheader && setting.orientation!='v'? -header._dimensions.subulw+header._dimensions.w : -header._dimensions.w) : menuleft //calculate this sub menu's offsets from its parent
 					if ($targetul.queue().length<=1){ //if 1 or less queued animations
-						$targetul.css({left:menuleft+"px", width:header._dimensions.subulw+'px', visibility:'visible'});
+						$targetul.css({left:menuleft+"px", width:header._dimensions.subulw+'px'}).animate({height:'show',opacity:'show'}, ddsmoothmenu.transition.overtime)
+						if (smoothmenu.shadow.enable){
+							var shadowleft=header.istopheader? $targetul.offset().left+ddsmoothmenu.shadow.offsetx : menuleft
+							var shadowtop=header.istopheader?$targetul.offset().top+smoothmenu.shadow.offsety : header._shadowoffset.y
+							if (!header.istopheader && ddsmoothmenu.detectwebkit){ //in WebKit browsers, restore shadow's opacity to full
+								header.$shadow.css({opacity:1})
+							}
+							header.$shadow.css({overflow:'', width:header._dimensions.subulw+'px', left:shadowleft+'px', top:shadowtop+'px'}).animate({height:header._dimensions.subulh+'px'}, ddsmoothmenu.transition.overtime)
+						}
 					}
 				}, ddsmoothmenu.showhidedelay.showdelay)
 			},
@@ -117,14 +125,19 @@ buildmenu:function($, setting){
 				var $targetul=$subul
 				var header=$curobj.get(0)
 				clearTimeout($targetul.data('timers').showtimer)
-			
-		$targetul.data('timers').hidetimer=setTimeout(function(){
-					$targetul.css({visibility:'hidden'});
+				$targetul.data('timers').hidetimer=setTimeout(function(){
+					$targetul.animate({height:'hide', opacity:'hide'}, ddsmoothmenu.transition.outtime)
+					if (smoothmenu.shadow.enable){
+						if (ddsmoothmenu.detectwebkit){ //in WebKit browsers, set first child shadow's opacity to 0, as "overflow:hidden" doesn't work in them
+							header.$shadow.children('div:eq(0)').css({opacity:0})
+						}
+						header.$shadow.css({overflow:'hidden'}).animate({height:0}, ddsmoothmenu.transition.outtime)
+					}
 				}, ddsmoothmenu.showhidedelay.hidedelay)
 			}
 		) //end hover
 	}) //end $headers.each()
-	$mainmenu.find("ul").css({display:'block', visibility:'hidden'})
+	$mainmenu.find("ul").css({display:'none', visibility:'visible'})
 },
 
 /* 2010-08-05, ssp

@@ -1421,14 +1421,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C5851881289AC980084315D /* FacebookElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Facebook.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = FacebookElement;
 		};
 		3C5851911289ACB00084315D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C5851881289AC980084315D /* FacebookElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* FacebookElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = FacebookElement;
 		};
 		3C5A77C90EB6E08F0049B898 /* PBXContainerItemProxy */ = {
