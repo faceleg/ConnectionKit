@@ -597,6 +597,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Store items
     [_selectionParentItems release]; _selectionParentItems = [items copy];
+    
+    // All but editing item should be darkened
+    [self setNeedsDisplay:YES];
 }
 
 - (NSArray *)editingItemsForDOMRange:(DOMRange *)range selectedItem:(WEKWebEditorItem *)item;
@@ -1016,6 +1019,15 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Draw drag caret
     [self drawDragCaretInView:view];
+    
+    
+    // Darken area around editing item
+    WEKWebEditorItem *editingItem = [[self editingItems] lastObject];
+    if (editingItem)
+    {
+        [[NSColor colorWithCalibratedWhite:0.0 alpha:0.2] set];
+        NSRectFillUsingOperation(dirtyRect, NSCompositeSourceOver);
+    }
 }
 
 - (void)drawItemsRect:(NSRect)dirtyRect inView:(NSView *)view;
