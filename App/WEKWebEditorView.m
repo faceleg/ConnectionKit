@@ -1464,8 +1464,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
                     [node isKindOfClass:[DOMHTMLObjectElement class]])*/
                 
                 
-                // Inline images don't want to be edited inside since they're already fully accessible for dragging etc.
-                if (![[self selectedItem] allowsDirectAccessToWebViewWhenSelected])
+                // Inline images don't want to be edited inside since they're already fully accessible for dragging etc. Basically applies to all images
+                if ([[item HTMLElement] hasChildNodes] ||
+                    ![[self selectedItems] containsObjectIdenticalTo:item])
                 {
                     NSArray *items = [[self selectedItems] copy];
                     [self selectItems:nil byExtendingSelection:NO];
