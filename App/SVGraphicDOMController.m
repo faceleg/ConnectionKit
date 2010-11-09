@@ -566,6 +566,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [style setTop:nil];
 }
 
+- (BOOL)hasRelativePosition; { return _moving; }
+
 - (CGPoint)positionIgnoringRelativePosition;
 {
     CGPoint result = [self position];
@@ -590,7 +592,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     SVSelectionBorder *result = [super newSelectionBorder];
     
     // Turn off handles while moving
-    if (_moving) [result setEditing:YES];
+    if ([self hasRelativePosition]) [result setEditing:YES];
     
     return result;
 }
