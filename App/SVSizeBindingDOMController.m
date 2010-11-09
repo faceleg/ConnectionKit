@@ -186,7 +186,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
             {
                 // Go for the biggest size of the two possibilities
                 CGFloat unconstrainedRatio = size.width / size.height;
-                if (unconstrainedRatio < [ratio floatValue])
+                if (fabs(unconstrainedRatio) < [ratio floatValue])
                 {
                     size.width = size.height * [ratio floatValue];
                 }
