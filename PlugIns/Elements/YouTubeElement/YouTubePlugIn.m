@@ -41,6 +41,7 @@
 
 #define YOUTUBE_BORDER_HEIGHT 20
 #define YOUTUBE_CONTROLBAR_HEIGHT 25
+#define HTML5_CONTROLBAR_HEIGHT 42
 
 
 @implementation YouTubePlugIn
@@ -272,16 +273,16 @@
 
 - (NSNumber *)elementWidthPadding
 {
-    return ([self showBorder] ? [NSNumber numberWithUnsignedInteger:YOUTUBE_BORDER_HEIGHT] : nil);
+    return ( (self.showBorder && !self.useIFrame) ? [NSNumber numberWithUnsignedInteger:YOUTUBE_BORDER_HEIGHT] : nil );
 }
 
 - (NSNumber *)elementHeightPadding
 {
     // always leave room for control bar
-    NSUInteger result = YOUTUBE_CONTROLBAR_HEIGHT;
+    NSUInteger result = (YES == self.useIFrame) ? HTML5_CONTROLBAR_HEIGHT : YOUTUBE_CONTROLBAR_HEIGHT;
     
     // leave room for colored border, if applicable
-    if ( self.showBorder ) result += YOUTUBE_BORDER_HEIGHT;
+    if ( self.showBorder && !self.useIFrame ) result += YOUTUBE_BORDER_HEIGHT;
     
     return [NSNumber numberWithUnsignedInteger:result];
 }
