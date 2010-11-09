@@ -96,6 +96,9 @@
     // hint to user: prefer widescreen
     self.widescreen = YES;
     
+    // try the HTML5 iFrame
+    self.useIFrame = NO;
+    
     // Prepare initial colors
     self.useCustomSecondaryColor = NO;
     self.color2 = [YouTubePlugIn defaultPrimaryColor];  
@@ -109,34 +112,26 @@
     [super writeHTML:context];
     [context addDependencyForKeyPath:@"widescreen" ofObject:self];
     [context addDependencyForKeyPath:@"showBorder" ofObject:self];
+    [context addDependencyForKeyPath:@"useIFrame" ofObject:self];
 }
+
+
+//<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/R-mUh4MOuvk?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/R-mUh4MOuvk?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>
 
 - (void)startObjectElement;
 {
     id <SVPlugInContext> context = [SVPlugIn currentContext];
     
-    if ([context liveDataFeeds])
-    {
-        NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"application/x-shockwave-flash"
-                                                               forKey:@"type"];
-        [[context HTMLWriter] startElement:@"object"
-                          bindSizeToPlugIn:self
-                                attributes:attributes];
-    }
-    else
-    {
-        NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
-                                                               forKey:@"class"];
-        [[context HTMLWriter] startElement:@"div" 
-                          bindSizeToPlugIn:self 
-                                attributes:attributes];
-    }
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"application/x-shockwave-flash"
+                                                           forKey:@"type"];
+    [[context HTMLWriter] startElement:@"object"
+                      bindSizeToPlugIn:self
+                            attributes:attributes];
 }
 
 - (void)writeEmbedElement;
 {
     id <SVPlugInContext> context = [SVPlugIn currentContext];
-    
     
     // Build src URL parameters
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -177,12 +172,32 @@
     [[context HTMLWriter] endElement];
 }
 
-- (void)endElement; { [[[SVPlugIn currentContext] HTMLWriter] endElement]; }
+- (void)endObjectElement; { [[[SVPlugIn currentContext] HTMLWriter] endElement]; }
+
+
+//<iframe title="YouTube video player" class="youtube-player" type="text/html" width="425" height="349" src="http://www.youtube.com/embed/R-mUh4MOuvk?rel=0" frameborder="0"></iframe>
+
+- (void)writeIFrameCode
+{
+    id <SVPlugInContext> context = [SVPlugIn currentContext];
+    
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                @"YouTube", @"title",
+                                @"youtube-player", @"class",
+                                @"text/html", @"type",
+                                @"http://www.youtube.com/embed/R-mUh4MOuvk?rel=0", @"src",
+                                @"0", @"frameborder",
+                                nil];
+    [[context HTMLWriter] startElement:@"iframe" 
+                      bindSizeToPlugIn:self 
+                            attributes:attributes];
+    [[context HTMLWriter] endElement]; // </iframe>
+}
 
 
 //<div class="svx-placeholder" style="width:[[=elementWidth]]px; height:[[=elementHeight]]px;">[['This is a placeholder for the YouTube video at:]]
-//                                                                                               <p><a href="[[=&userVideoCode]]">[[=&userVideoCode]]</a></p>
-//                                                                                               [['To see the video in Sandvox, please enable live data feeds in the Preferences.]]</div>
+//<p><a href="[[=&userVideoCode]]">[[=&userVideoCode]]</a></p>
+//[['To see the video in Sandvox, please enable live data feeds in the Preferences.]]</div>
 
 - (void)writeNoLiveData
 {

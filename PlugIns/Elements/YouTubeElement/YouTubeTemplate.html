@@ -1,15 +1,19 @@
 [[if videoID]]
 <div class="VideoElement">
-	<div class="video">
-		[[=startObjectElement]]
-		[[if parser.liveDataFeeds]]
-			<param name="movie" value="http://www.[[if privacy]]youtube-nocookie[[else3]]youtube[[endif3]].com/v/[[=videoID]][[if !includeRelatedVideos]]&amp;rel=0[[endif3]][[if playHD]]&amp;hd=1[[endif3]]&amp;color1=[[=color1.youTubeVideoColorString]]&amp;color2=[[=color2.youTubeVideoColorString]][[if showBorder]]&amp;border=1[[endif3]]&amp;hl=[[=&parser.outputWriter.language]]"></param>
-			<param name="wmode" value="transparent"></param>
-			[[=writeEmbedElement]]
+    <div class="video">
+        [[if parser.liveDataFeeds]]
+            [[if useIFrame]]
+                [[=writeIFrameCode]]
+            [[else3]]
+                [[=startObjectElement]]
+                    <param name="movie" value="http://www.[[if privacy]]youtube-nocookie[[else4]]youtube[[endif4]].com/v/[[=videoID]][[if !includeRelatedVideos]]&amp;rel=0[[endif4]][[if playHD]]&amp;hd=1[[endif4]]&amp;color1=[[=color1.youTubeVideoColorString]]&amp;color2=[[=color2.youTubeVideoColorString]][[if showBorder]]&amp;border=1[[endif4]]&amp;hl=[[=&parser.outputWriter.language]]"></param>
+                    <param name="wmode" value="transparent"></param>
+                [[=writeEmbedElement]]
+                [[=endObjectElement]]
+            [[endif3]]
         [[else2]]
             [[=writeNoLiveData]]
         [[endif2]]
-		[[=endElement]]
 	</div>
 </div>
 [[else]]
