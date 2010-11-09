@@ -24,6 +24,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 @interface SVMediaRecord ()
 
+@property(nonatomic, retain, readwrite) SVMedia *media;
 @property(nonatomic, retain, readwrite) BDAlias *alias;
 
 @end
@@ -72,7 +73,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     SVMediaRecord *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
                                                           inManagedObjectContext:context];
     
-    result->_media = [media retain];
+    [result setMedia:media];
     [result setPreferredFilename:[media preferredFilename]];
     
     return result;
@@ -188,7 +189,9 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 - (BOOL)readFromURL:(NSURL *)URL options:(NSUInteger)options error:(NSError **)error;
 {
-    [_media release]; _media = [[SVMedia alloc] initByReferencingURL:URL];
+    SVMedia *media = [[SVMedia alloc] initByReferencingURL:URL];
+    [self setMedia:media];
+    [media release];
     
     // Pass on to next object as well
     [[self nextObject] forceUpdateFromURL:URL];
@@ -276,6 +279,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 #pragma mark Contents Cache
 
+@synthesize media = _media;
 - (SVMedia *)media;
 {
     if (!_media)

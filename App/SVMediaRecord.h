@@ -93,7 +93,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 
 #pragma mark Accessing Files
 
-- (SVMedia *)media; // KVO-compliant (alias resolution is cached)
+@property(nonatomic, retain, readonly) SVMedia *media; // KVO-compliant (alias resolution is cached)
 
 @property(nonatomic, copy) NSString *filename;  // no-one but the document should have reason to set this
 @property(nonatomic, copy) NSString *preferredFilename;
