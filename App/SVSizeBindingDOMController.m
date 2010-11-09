@@ -165,7 +165,8 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     
     // If constrained proportions, apply that. Have to enforce min sizes too
     NSNumber *ratio = [graphic constrainedProportionsRatio];
-    
+    NSUInteger minWidth = [[graphic plugIn] minWidth];
+        
     if (ratio)
     {
         BOOL resizingWidth = (handle == kSVGraphicUpperLeftHandle ||
@@ -184,6 +185,9 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
         
         if (resizingWidth)
         {
+            // Enforce min width
+            if (size.width < minWidth) size.width = minWidth;
+            
             if (resizingHeight)
             {
                 // Go for the biggest size of the two possibilities
