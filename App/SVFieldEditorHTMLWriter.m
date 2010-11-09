@@ -450,11 +450,11 @@
         if ([attributeName isEqualToString:@"face"] || [attributeName isEqualToString:@"size"] || [attributeName isEqualToString:@"color"]) return YES;
     }
     
-    // Allow class and style on any element except <BR>
+    // Allow style on any element except <BR>.
+    // Used to allow class. #94455
     if (elementName && ![elementName isEqualToString:@"br"])
     {
-        result = ([attributeName isEqualToString:@"class"] ||
-                  [attributeName isEqualToString:@"style"]);
+        result = ([attributeName isEqualToString:@"style"]);
     }
     
     return result;
