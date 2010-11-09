@@ -251,6 +251,20 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 {
     SVGraphic *graphic = [self representedObject];
     
+    
+    // Some wrap changes actually need a full update. #94915
+    BOOL writeInline = [graphic shouldWriteHTMLInline];
+    NSString *oldTag = [[self HTMLElement] tagName];
+    
+    if ((writeInline && ![oldTag isEqualToString:@"IMG"]) ||
+        (!writeInline && ![oldTag isEqualToString:@"DIV"]))
+    {
+        [self update];
+        return;
+    }
+    
+    
+    // Update class name to get new wrap
     SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:nil];
     [graphic buildClassName:context];
     
