@@ -428,7 +428,12 @@
 
 - (NSRect)rect;
 {
-    return [[self selectableDOMElement] boundingBox];
+    NSRect result = NSZeroRect;
+    
+    DOMElement *element = [self selectableDOMElement];
+    if (element) result = [element boundingBox];
+    
+    return result;
 }
 
 - (NSRect)drawingRect;  // expressed in our DOM node's document view's coordinates
