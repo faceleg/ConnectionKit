@@ -151,6 +151,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
      */
     
     
+    
     // Take into account padding
     SVPlugInGraphic *graphic = [self representedObject];
     
@@ -161,7 +162,8 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     if (heightPadding) size.height -= [heightPadding floatValue];
     
     
-    // If constrained proportions, apply that
+    
+    // If constrained proportions, apply that. Have to enforce min sizes too
     NSNumber *ratio = [graphic constrainedProportionsRatio];
     
     if (ratio)
@@ -203,6 +205,14 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
         else
         {
             size.width = size.height * [ratio floatValue];
+            
+            // Is this too low? If so, bump size back up. #94988
+            NSUInteger minWidth = [[graphic plugIn] minWidth];
+            if (size.width < minWidth)
+            {
+                size.width = minWidth;
+                size.height = size.width / [ratio floatValue];
+            }
         }
     }
     
