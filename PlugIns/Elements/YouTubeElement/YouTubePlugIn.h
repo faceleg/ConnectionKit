@@ -56,6 +56,7 @@
 	BOOL _playHD;
 	BOOL _includeRelatedVideos;
 	BOOL _useCustomSecondaryColor;
+    BOOL _useIFrame;
 }
 
 @property (nonatomic, copy) NSString *userVideoCode;
@@ -70,6 +71,7 @@
 @property (nonatomic) BOOL privacy;
 @property (nonatomic) BOOL includeRelatedVideos;
 @property (nonatomic) BOOL useCustomSecondaryColor;
+@property (nonatomic) BOOL useIFrame;
 
 + (NSColor *)defaultPrimaryColor;
 - (void)resetColors;

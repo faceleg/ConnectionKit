@@ -43,12 +43,6 @@
 #define YOUTUBE_CONTROLBAR_HEIGHT 25
 
 
-//	LocalizedStringInThisBundle(@"This is a placeholder for the YouTube video at:", "Live data feeds are disabled");
-//	LocalizedStringInThisBundle(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", "Live data feeds are disabled");
-//	LocalizedStringInThisBundle(@"Sorry, but no YouTube video was found for the code you entered.", "User entered an invalid YouTube code");
-//	LocalizedStringInThisBundle(@"Please use the Inspector to specify a YouTube video.", "No video code has been entered yet");
-
-
 @implementation YouTubePlugIn
 
 
@@ -63,7 +57,8 @@
             @"widescreen", 
             @"showBorder", 
             @"includeRelatedVideos", 
-            @"useCustomSecondaryColor", 
+            @"useCustomSecondaryColor",
+            @"useIFrame",
             @"privacy", 
             @"playHD", 
             nil];
@@ -185,6 +180,71 @@
 - (void)endElement; { [[[SVPlugIn currentContext] HTMLWriter] endElement]; }
 
 
+//<div class="svx-placeholder" style="width:[[=elementWidth]]px; height:[[=elementHeight]]px;">[['This is a placeholder for the YouTube video at:]]
+//                                                                                               <p><a href="[[=&userVideoCode]]">[[=&userVideoCode]]</a></p>
+//                                                                                               [['To see the video in Sandvox, please enable live data feeds in the Preferences.]]</div>
+
+- (void)writeNoLiveData
+{
+    id <SVPlugInContext> context = [SVPlugIn currentContext];
+    
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
+                                                           forKey:@"class"];
+    [[context HTMLWriter] startElement:@"div" 
+                      bindSizeToPlugIn:self 
+                            attributes:attributes];
+    
+    NSString *message = LocalizedStringInThisBundle(@"This is a placeholder for the YouTube video at:", "Live data feeds are disabled");
+    [[context HTMLWriter] writeText:message];
+    
+    [[context HTMLWriter] startElement:@"p"];
+    [[context HTMLWriter] startAnchorElementWithHref:[self userVideoCode] 
+                                               title:[self userVideoCode] 
+                                              target:nil 
+                                                 rel:nil];
+    [[context HTMLWriter] endElement]; // </a>
+    [[context HTMLWriter] endElement]; // </p>
+    
+    message = LocalizedStringInThisBundle(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", "Live data feeds are disabled");
+    [[context HTMLWriter] writeText:message];
+    
+    [[context HTMLWriter] endElement]; // </div>
+}
+
+//<div class="svx-placeholder" style="width:[[=elementWidth]]px; height:[[=elementHeight]]px;">[['Sorry, but no YouTube video was found for the code you entered.]]</div>
+
+- (void)writeNoVideoFound
+{
+    id <SVPlugInContext> context = [SVPlugIn currentContext];
+    
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
+                                                           forKey:@"class"];
+    [[context HTMLWriter] startElement:@"div" 
+                      bindSizeToPlugIn:self 
+                            attributes:attributes];
+    NSString *message = LocalizedStringInThisBundle(@"Sorry, but no YouTube video was found for the code you entered.", "User entered an invalid YouTube code");
+    [[context HTMLWriter] writeText:message];
+    [[context HTMLWriter] endElement];
+}
+
+
+//<div class="svx-placeholder" style="width:[[=elementWidth]]px; height:[[=elementHeight]]px;">[['Please use the Inspector to specify a YouTube video.]]</div>
+
+- (void)writeNoVideoSpecified
+{
+    id <SVPlugInContext> context = [SVPlugIn currentContext];
+    
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
+                                                           forKey:@"class"];
+    [[context HTMLWriter] startElement:@"div" 
+                      bindSizeToPlugIn:self 
+                            attributes:attributes];
+    NSString *message = LocalizedStringInThisBundle(@"Please use the Inspector to specify a YouTube video.", "No video code has been entered yet");
+    [[context HTMLWriter] writeText:message];
+    [[context HTMLWriter] endElement];    
+}
+
+
 #pragma mark Metrics
 
 - (NSNumber *)elementWidthPadding
@@ -304,6 +364,7 @@
 @synthesize showBorder = _showBorder;
 @synthesize includeRelatedVideos = _includeRelatedVideos;
 @synthesize useCustomSecondaryColor = _useCustomSecondaryColor;
+@synthesize useIFrame = _useIFrame;
 
 @synthesize userVideoCode = _userVideoCode;
 - (void)setUserVideoCode:(NSString *)string

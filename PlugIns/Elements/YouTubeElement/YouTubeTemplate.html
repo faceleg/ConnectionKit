@@ -7,18 +7,15 @@
 			<param name="wmode" value="transparent"></param>
 			[[=writeEmbedElement]]
         [[else2]]
-			<div class="svx-placeholder" style="width:[[=elementWidth]]px; height:[[=elementHeight]]px;">[['This is a placeholder for the YouTube video at:]]
-			<p><a href="[[=&userVideoCode]]">[[=&userVideoCode]]</a></p>
-			[['To see the video in Sandvox, please enable live data feeds in the Preferences.]]</div>
+            [[=writeNoLiveData]]
         [[endif2]]
 		[[=endElement]]
 	</div>
 </div>
-
 [[else]]
-[[if userVideoCode]]
-<div class="svx-placeholder" style="width:[[=elementWidth]]px; height:[[=elementHeight]]px;">[['Sorry, but no YouTube video was found for the code you entered.]]</div>
-[[else2]]
-<div class="svx-placeholder" style="width:[[=elementWidth]]px; height:[[=elementHeight]]px;">[['Please use the Inspector to specify a YouTube video.]]</div>
-[[endif2]]
+    [[if userVideoCode]]
+        [[=writeNoVideoFound]]
+    [[else2]]
+        [[=writeNoVideoSpecified]]
+    [[endif2]]
 [[endif]]
