@@ -1501,6 +1501,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
                     [self setEditingItems:items];    // should only be 1
                     [items release];
                     
+                    [self updateMouseoverWithFakeEvent];
+                    
                     
                     /*  Generally, repost equivalent events (unless a link or object) so they go to their correct target.
                      */
