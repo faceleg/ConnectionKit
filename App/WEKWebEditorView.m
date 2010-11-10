@@ -170,7 +170,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if ([self window])
     {
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(didSendFlagsChangedEvent:)
+                                                 selector:@selector(updateMouseoverWithFakeEvent)
                                                      name:KTApplicationDidSendFlagsChangedEvent
                                                    object:[KTApplication sharedApplication]];
     }
@@ -1603,7 +1603,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [self forwardMouseEvent:theEvent selector:_cmd cachedTargetView:targetView];
 }
 
-- (void)didSendFlagsChangedEvent:(NSNotification *)notification
+- (void)updateMouseoverWithFakeEvent;
 {
     // WebKit doesn't seem to notice a flags changed event for editable links. We can force it to here
     if ([[self documentView] respondsToSelector:@selector(_updateMouseoverWithFakeEvent)])

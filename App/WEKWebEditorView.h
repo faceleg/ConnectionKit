@@ -141,8 +141,11 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 
 #pragma mark Dispatching Messages
+
 // Makes the WebView perform the action WITHOUT allowing the Web Editor to step in as delegate
 - (void)forceWebViewToPerform:(SEL)action withObject:(id)sender;
+
+- (void)updateMouseoverWithFakeEvent;
 
 
 #pragma mark Setting the DataSource/Delegate
