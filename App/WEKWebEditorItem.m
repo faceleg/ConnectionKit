@@ -473,7 +473,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;
 {
-    if ([self isSelected])
+    if ([self isSelected] || [self isEditing])
     {
         // Draw if we're in the dirty rect (otherwise drawing can get pretty pricey)
         DOMElement *element = [self HTMLElement];
@@ -515,7 +515,7 @@
 {
     SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
     [border setMinSize:NSMakeSize(5.0f, 5.0f)];
-    [border setEditing:[[self webEditor] inLiveGraphicResize]];
+    [border setEditing:([self isEditing] || [[self webEditor] inLiveGraphicResize])];
     
     return border;
 }
