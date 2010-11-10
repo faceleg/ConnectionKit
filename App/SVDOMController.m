@@ -377,12 +377,11 @@
     return result;
 }
 
-- (unsigned int)resizingMask
+- (unsigned int)resizingMaskForDOMElement:(DOMElement *)element;
 {
     unsigned int result = kCALayerRightEdge; // default to adjustment from right-hand edge
     
     
-    DOMElement *element = [self selectableDOMElement];
     DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element pseudoElement:@""];
     
     
@@ -400,13 +399,20 @@
     }
     
     
-    // Couldn't tell from float/alignment, so fall back to guessing from block margins
+    // Couldn't tell from float/alignment. For inline elements, maybe parent is more helpful?
+    if ([[style display] isEqualToString:@"inline"])
+    {
+        return [self resizingMaskForDOMElement:(DOMElement *)[element parentNode]];
+    }
+    
+        
+    // Fall back to guessing from block margins
     DOMCSSRuleList *rules = [[element ownerDocument] getMatchedCSSRules:element pseudoElement:@""];
     
     for (int i = 0; i < [rules length]; i++)
     {
         DOMCSSRule *aRule = [rules item:i];
-        style = [(DOMElement *)aRule style];  // not published in our version of WebKit
+        DOMCSSStyleDeclaration *style = [(DOMElement *)aRule style];  // not published in our version of WebKit
         
         if ([[style marginLeft] isEqualToString:@"auto"])
         {
@@ -418,6 +424,13 @@
     
     
     // Finish up
+    return result;
+}
+
+- (unsigned int)resizingMask
+{
+    DOMElement *element = [self selectableDOMElement];
+    unsigned int result = [self resizingMaskForDOMElement:element];
     return result;
 }
 
