@@ -1074,6 +1074,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)setNeedsDisplayForItem:(WEKWebEditorItem *)item;
 {
+    OBPRECONDITION(item);
+    
     NSRect drawingRect = [item drawingRect];
     [[self documentView] setNeedsDisplayInRect:drawingRect];
     
