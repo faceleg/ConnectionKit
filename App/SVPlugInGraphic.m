@@ -102,8 +102,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     NSNumber *width = [self width];
     if (width)
     {
-        NSUInteger maxWidth = 490;
-        if ([self isPagelet]) maxWidth = 200;
+        NSUInteger maxWidth = [self maxWidthOnPage:page];
         
         NSUInteger elementWidth = [width unsignedIntegerValue] + [[[self plugIn] elementWidthPadding] unsignedIntegerValue];
         if (elementWidth > maxWidth)
