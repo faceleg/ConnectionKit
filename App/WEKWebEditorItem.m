@@ -193,8 +193,11 @@
 
 - (void)itemWillMoveToParentWebEditorItem:(WEKWebEditorItem *)newParentItem;
 {
-    WEKWebEditorView *webEditor = [self webEditor];
-    [[webEditor delegate] webEditor:webEditor willRemoveItem:self];
+    if (!newParentItem)
+    {
+        WEKWebEditorView *webEditor = [self webEditor];
+        [webEditor willRemoveItem:self];
+    }
 }
 
 - (void)itemDidMoveToParentWebEditorItem; { }

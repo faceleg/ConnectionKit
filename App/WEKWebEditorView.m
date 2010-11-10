@@ -241,6 +241,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
+#pragma mark Items
+
 @synthesize contentItem = _contentItem;
 - (void)setContentItem:(WEKWebEditorItem *)item;
 {
@@ -250,6 +252,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [[self contentItem] removeFromParentWebEditorItem];
     _contentItem = item;    // _rootItem will retain it for us
     if (item) [_rootItem addChildWebEditorItem:item];
+}
+
+- (void)willRemoveItem:(WEKWebEditorItem *)item;
+{
+    OBPRECONDITION(item);
+    [[self delegate] webEditor:self willRemoveItem:item];
 }
 
 #pragma mark Text Selection

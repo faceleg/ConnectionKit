@@ -82,7 +82,10 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 // Blocks until either loading is finished or date is reached. Returns YES if the former.
 - (BOOL)loadUntilDate:(NSDate *)date;
 
+
+#pragma mark Items
 @property(nonatomic, retain) WEKWebEditorItem *contentItem;   // add your items here after loading finishes
+- (void)willRemoveItem:(WEKWebEditorItem *)item;
 
 
 #pragma mark Selection
