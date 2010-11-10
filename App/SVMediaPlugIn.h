@@ -36,9 +36,6 @@
 
 #pragma mark Metrics
 
-- (NSNumber *)width;
-- (NSNumber *)height;
-
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 
 // Please use this API rather than talking to the container

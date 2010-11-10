@@ -82,9 +82,6 @@
 
 + (BOOL)isExplicitlySized; { return YES; }
 
-- (NSNumber *)width; { return [[self container] width]; }
-- (NSNumber *)height; { return [[self container] height]; }
-
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 {
     // SVGraphic.width is optional. For media graphics it becomes compulsary unless using external URL

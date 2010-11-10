@@ -91,6 +91,8 @@
 #pragma mark Metrics
 
 // Nil values are treated as "auto" size
+- (NSNumber *)width;
+- (NSNumber *)height;
 - (void)setWidth:(NSNumber *)width height:(NSNumber *)height;
 
 - (NSUInteger)minWidth;    // default is 200

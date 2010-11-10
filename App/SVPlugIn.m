@@ -233,6 +233,9 @@ static id <SVPlugInContext> sCurrentContext;
 
 #pragma mark Metrics
 
+- (NSNumber *)width; { return [[self container] width]; }
+- (NSNumber *)height; { return [[self container] height]; }
+
 - (void)setWidth:(NSNumber *)width height:(NSNumber *)height;
 {
     [[self container] setWidth:width];
