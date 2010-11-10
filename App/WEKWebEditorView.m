@@ -1025,8 +1025,20 @@ typedef enum {  // this copied from WebPreferences+Private.h
     WEKWebEditorItem *editingItem = [[self editingItems] lastObject];
     if (editingItem)
     {
+        // Clip the rect covering editing item since we want to appear normal
+        CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+        CGContextSaveGState(context);
+        
+        CGContextAddRect(context, NSRectToCGRect(dirtyRect));        
+        CGRect clipRect = NSRectToCGRect([editingItem rect]);
+        CGContextAddRect(context, clipRect);
+        CGContextEOClip(context);
+        
+        // Draw everything else slightly darkened
         [[NSColor colorWithCalibratedWhite:0.0 alpha:0.2] set];
         NSRectFillUsingOperation(dirtyRect, NSCompositeSourceOver);
+        
+        CGContextRestoreGState(context);
     }
 }
 
