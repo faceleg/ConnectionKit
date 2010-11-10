@@ -11,7 +11,6 @@
 		3C42E4240D64FB4B004F35FD /* ABPerson+IMStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E41F0D64FB4B004F35FD /* ABPerson+IMStatus.m */; };
 		3C42E4250D64FB4B004F35FD /* IMStatusPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E4210D64FB4B004F35FD /* IMStatusPlugIn.m */; };
 		3C42E4260D64FB4B004F35FD /* IMStatusService.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E4230D64FB4B004F35FD /* IMStatusService.m */; };
-		3C42E42F0D64FB59004F35FD /* iChat.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4290D64FB59004F35FD /* iChat.icns */; };
 		3C42E4310D64FB59004F35FD /* offline.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E42B0D64FB59004F35FD /* offline.png */; };
 		3C42E4320D64FB59004F35FD /* online.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E42C0D64FB59004F35FD /* online.png */; };
 		3C42E4330D64FB59004F35FD /* online_skype.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E42D0D64FB59004F35FD /* online_skype.png */; };
@@ -39,7 +38,6 @@
 		3C42E4210D64FB4B004F35FD /* IMStatusPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMStatusPlugIn.m; sourceTree = "<group>"; };
 		3C42E4220D64FB4B004F35FD /* IMStatusService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMStatusService.h; sourceTree = "<group>"; };
 		3C42E4230D64FB4B004F35FD /* IMStatusService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMStatusService.m; sourceTree = "<group>"; };
-		3C42E4290D64FB59004F35FD /* iChat.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = iChat.icns; sourceTree = "<group>"; };
 		3C42E42B0D64FB59004F35FD /* offline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = offline.png; sourceTree = "<group>"; };
 		3C42E42C0D64FB59004F35FD /* online.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = online.png; sourceTree = "<group>"; };
 		3C42E42D0D64FB59004F35FD /* online_skype.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = online_skype.png; sourceTree = "<group>"; };
@@ -116,7 +114,6 @@
 				CEA32AE71283356500648C39 /* toolbar_imstatus.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3CD67922120680AB0011B194 /* IMStatusInspector.xib */,
-				3C42E4290D64FB59004F35FD /* iChat.icns */,
 				3C42E42B0D64FB59004F35FD /* offline.png */,
 				3C42E42C0D64FB59004F35FD /* online.png */,
 				3C42E42D0D64FB59004F35FD /* online_skype.png */,
@@ -248,7 +245,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
-				3C42E42F0D64FB59004F35FD /* iChat.icns in Resources */,
 				3C42E4310D64FB59004F35FD /* offline.png in Resources */,
 				3C42E4320D64FB59004F35FD /* online.png in Resources */,
 				3C42E4330D64FB59004F35FD /* online_skype.png in Resources */,
