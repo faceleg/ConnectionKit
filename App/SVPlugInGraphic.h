@@ -45,6 +45,7 @@
 
 - (NSUInteger)minWidth;
 - (NSUInteger)minHeight;
+
 @property(nonatomic) BOOL constrainProportions;
 - (BOOL)isConstrainProportionsEditable;
 

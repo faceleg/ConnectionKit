@@ -368,7 +368,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 - (NSUInteger)minWidth; { return [[self plugIn] minWidth]; }
 - (NSUInteger)minHeight; { return [[self plugIn] minHeight]; }
 
-
 - (BOOL)constrainProportions; { return [[self plugIn] constrainedAspectRatio] != nil; }
 - (void)setConstrainProportions:(BOOL)constrain;
 {

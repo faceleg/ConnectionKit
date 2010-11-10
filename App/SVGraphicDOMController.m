@@ -11,9 +11,6 @@
 
 #import "SVCalloutDOMController.h"
 #import "SVContentDOMController.h"
-#import "KTDesign.h"
-#import "KTImageScalingSettings.h"
-#import "KTMaster.h"
 #import "SVMediaRecord.h"
 #import "KTPage.h"
 #import "SVParagraphedHTMLWriter.h"
@@ -709,41 +706,11 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 - (CGFloat)maxWidth;
 {
     // Base limit on design rather than the DOM
-    KTPage *page = [[self HTMLContext] page];
-    KTDesign *design = [[page master] design];
-    
     SVGraphic *graphic = [self representedObject];
-    SVGraphicPlacement placement = [[graphic placement] intValue];
+    OBASSERT(graphic);
     
-    KTImageScalingSettings *settings = nil;
-    switch (placement)
-    {
-        case SVGraphicPlacementInline:
-        {
-            if ([[page showSidebar] boolValue])
-            {
-                settings = [design imageScalingSettingsForUse:@"KTSidebarPageMedia"];
-            }
-            else
-            {
-                settings = [design imageScalingSettingsForUse:@"KTPageMedia"];
-            }
-            break;
-        }
-            
-        case SVGraphicPlacementCallout:
-            settings = [design imageScalingSettingsForUse:@"KTPageletMedia"];
-            break;
-            
-        case SVGraphicPlacementSidebar:
-            settings = [design imageScalingSettingsForUse:@"sidebarImage"];
-            break;
-    }
-    OBASSERT(settings);
-    
-    
-    CGFloat result = [settings size].width;
-    return result;
+    KTPage *page = [[self HTMLContext] page];
+    return [graphic maxWidthOnPage:page];
 }
 
 @end

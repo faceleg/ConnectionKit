@@ -10,7 +10,10 @@
 
 #import "SVArticle.h"
 #import "SVAuxiliaryPageletText.h"
+#import "KTDesign.h"
 #import "SVHTMLTemplateParser.h"
+#import "KTImageScalingSettings.h"
+#import "KTMaster.h"
 #import "KTPage.h"
 #import "SVRichText.h"
 #import "SVTemplate.h"
@@ -182,6 +185,43 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 }
 
 @dynamic height;
+
+- (CGFloat)maxWidthOnPage:(KTPage *)page;
+{
+    KTDesign *design = [[page master] design];
+    
+    SVGraphicPlacement placement = [[self placement] intValue];
+    
+    KTImageScalingSettings *settings = nil;
+    switch (placement)
+    {
+        case SVGraphicPlacementInline:
+        {
+            if ([[page showSidebar] boolValue])
+            {
+                settings = [design imageScalingSettingsForUse:@"KTSidebarPageMedia"];
+            }
+            else
+            {
+                settings = [design imageScalingSettingsForUse:@"KTPageMedia"];
+            }
+            break;
+        }
+            
+        case SVGraphicPlacementCallout:
+            settings = [design imageScalingSettingsForUse:@"KTPageletMedia"];
+            break;
+            
+        case SVGraphicPlacementSidebar:
+            settings = [design imageScalingSettingsForUse:@"sidebarImage"];
+            break;
+    }
+    OBASSERT(settings);
+    
+    
+    CGFloat result = [settings size].width;
+    return result;
+}
 
 - (NSNumber *)constrainedProportionsRatio; { return nil; }
 

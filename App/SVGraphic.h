@@ -122,6 +122,8 @@ extern NSString *kSVGraphicPboardType;
 @property(nonatomic, copy) NSNumber *width;
 @property(nonatomic, copy) NSNumber *height;
 
+- (CGFloat)maxWidthOnPage:(id <SVPage>)page;
+
 - (NSNumber *)constrainedProportionsRatio;
 
 - (void)makeOriginalSize;
