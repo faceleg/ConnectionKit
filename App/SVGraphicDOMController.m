@@ -709,10 +709,38 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 - (CGFloat)maxWidth;
 {
     // Base limit on design rather than the DOM
-    KTDesign *design = [[[[self HTMLContext] page] master] design];
+    KTPage *page = [[self HTMLContext] page];
+    KTDesign *design = [[page master] design];
     
-    KTImageScalingSettings *settings = [design imageScalingSettingsForUse:@"sidebarImage"];
+    SVGraphic *graphic = [self representedObject];
+    SVGraphicPlacement placement = [[graphic placement] intValue];
+    
+    KTImageScalingSettings *settings = nil;
+    switch (placement)
+    {
+        case SVGraphicPlacementInline:
+        {
+            if ([[page showSidebar] boolValue])
+            {
+                settings = [design imageScalingSettingsForUse:@"KTSidebarPageMedia"];
+            }
+            else
+            {
+                settings = [design imageScalingSettingsForUse:@"KTPageMedia"];
+            }
+            break;
+        }
+            
+        case SVGraphicPlacementCallout:
+            settings = [design imageScalingSettingsForUse:@"KTPageletMedia"];
+            break;
+            
+        case SVGraphicPlacementSidebar:
+            settings = [design imageScalingSettingsForUse:@"sidebarImage"];
+            break;
+    }
     OBASSERT(settings);
+    
     
     CGFloat result = [settings size].width;
     return result;
