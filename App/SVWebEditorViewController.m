@@ -464,7 +464,10 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 - (void)updateDidTimeout
 {
-    [_contentAreaController presentLoadingViewController];
+    if ([_contentAreaController selectedViewControllerWhenReady] == self)
+    {
+        [_contentAreaController presentLoadingViewController];
+    }
 }
 
 #pragma mark Update Scheduling
