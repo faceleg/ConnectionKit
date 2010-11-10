@@ -381,7 +381,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         if (itemIsSelected && [event clickCount] == 1) // #94614
         {
             // If you click an aready selected item quick enough, it will start editing
-            _mouseUpMayBeginEditing = YES;
+            _mouseUpMayBeginEditing = [self ks_followsResponder:[[self window] firstResponder]];
         }
     }
 }
@@ -1404,13 +1404,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     
-    // If the item is non-inline, simulate -acceptsFirstResponder by making self the first responder
-    DOMHTMLElement *element = [item HTMLElement];
-    if (![self shouldTrySelectingDOMElementInline:element] || ![element isContentEditable])
-    {
-        [[self window] makeFirstResponder:self];
-    }
-    
     
     
     // What was clicked? We want to know top-level object
@@ -1428,6 +1421,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
         else
         {
             [self selectItem:item event:event];
+            
+            // If the item is non-inline, simulate -acceptsFirstResponder by making self the first responder
+            DOMHTMLElement *element = [item HTMLElement];
+            if (![self shouldTrySelectingDOMElementInline:element] || ![element isContentEditable])
+            {
+                [[self window] makeFirstResponder:self];
+            }
+            
             if ([[[item HTMLElement] documentView] _web_dragShouldBeginFromMouseDown:event withExpiration:[NSDate distantFuture]])
             {
                 [self dragImageForEvent:event];
