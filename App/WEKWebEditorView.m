@@ -1019,7 +1019,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         CGContextEOClip(context);
         
         // Draw everything else slightly darkened
-        [[NSColor colorWithCalibratedWhite:0.0 alpha:0.2] set];
+        [[NSColor colorWithCalibratedWhite:0.25 alpha:0.25] set];
         NSRectFillUsingOperation(dirtyRect, NSCompositeSourceOver);
         
         CGContextRestoreGState(context);
