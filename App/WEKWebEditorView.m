@@ -1003,24 +1003,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view
 {
-    // Draw drop highlight if there is one. 1px inset from bounding box, "Aqua" colour
-    if (_dragHighlightNode)
-    {
-        WEKWebEditorItem *item = [[self contentItem] hitTestDOMNode:_dragHighlightNode];
-        NSRect dropRect = (item ? [item boundingBox] : [_dragHighlightNode boundingBox]);    // pretending it's a node
-        
-        [[NSColor aquaColor] setFill];
-        NSFrameRectWithWidth(dropRect, 1.0f);
-    }
-    
-    
-    // Draw selection
-    [self drawItemsRect:dirtyRect inView:view];
-    
-    // Draw drag caret
-    [self drawDragCaretInView:view];
-    
-    
     // Darken area around editing item
     WEKWebEditorItem *editingItem = [[self editingItems] lastObject];
     if (editingItem)
@@ -1042,6 +1024,25 @@ typedef enum {  // this copied from WebPreferences+Private.h
         
         CGContextRestoreGState(context);
     }
+    
+    
+    // Draw drop highlight if there is one. 1px inset from bounding box, "Aqua" colour
+    if (_dragHighlightNode)
+    {
+        WEKWebEditorItem *item = [[self contentItem] hitTestDOMNode:_dragHighlightNode];
+        NSRect dropRect = (item ? [item boundingBox] : [_dragHighlightNode boundingBox]);    // pretending it's a node
+        
+        [[NSColor aquaColor] setFill];
+        NSFrameRectWithWidth(dropRect, 1.0f);
+    }
+    
+    
+    // Draw selection
+    [self drawItemsRect:dirtyRect inView:view];
+    
+    
+    // Draw drag caret
+    [self drawDragCaretInView:view];
 }
 
 - (void)drawItemsRect:(NSRect)dirtyRect inView:(NSView *)view;
