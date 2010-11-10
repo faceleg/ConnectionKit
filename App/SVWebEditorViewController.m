@@ -86,6 +86,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 @property(nonatomic, retain, readonly) SVWebContentObjectsController *primitiveSelectedObjectsController;
 
 - (void)setSelectedTextRange:(SVWebEditorTextRange *)textRange affinity:(NSSelectionAffinity)affinity;
+- (void)selectObjects:(NSArray *)objects inWebEditor:(WEKWebEditorView *)webEditor;
+
 @end
 
 
@@ -417,29 +419,12 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     // Match selection to controller
     NSArray *selectedObjects = [[self graphicsController] selectedObjects];
-    NSMutableArray *newSelection = [NSMutableArray arrayWithCapacity:[selectedObjects count]];
+    NSArray *currentSelectedObjects = [[webEditor selectedItems] valueForKey:@"representedObject"];
     
-    for (id anObject in selectedObjects)
+    if (![selectedObjects isEqualToArray:currentSelectedObjects])
     {
-        id newItem = [[self webEditor] selectableItemForRepresentedObject:anObject];
-        if ([[newItem HTMLElement] ks_isDescendantOfDOMNode:[[newItem HTMLElement] ownerDocument]])
-        {
-            [newSelection addObject:newItem];
-            
-            // To select an inline element, the Web Editor or one of its descendants must first be selected
-            if ([webEditor shouldTrySelectingDOMElementInline:[newItem HTMLElement]])
-            {
-                [[[self view] window] makeFirstResponder:webEditor];
-            }
-        }
-        else
-        {
-            // #83787
-            [[self graphicsController] removeSelectedObjects:[NSArray arrayWithObject:anObject]];
-        }
+        [self selectObjects:selectedObjects inWebEditor:webEditor];
     }
-    
-    [webEditor selectItems:newSelection byExtendingSelection:NO];   // this will feed back to us and the controller in notification
     
     
     // Restore selection…
@@ -607,6 +592,33 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
             [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:YES];
         }
     }
+}
+
+- (void)selectObjects:(NSArray *)objects inWebEditor:(WEKWebEditorView *)webEditor;
+{
+    NSMutableArray *newSelection = [NSMutableArray arrayWithCapacity:[objects count]];
+    
+    for (id anObject in objects)
+    {
+        id newItem = [[self webEditor] selectableItemForRepresentedObject:anObject];
+        if ([[newItem HTMLElement] ks_isDescendantOfDOMNode:[[newItem HTMLElement] ownerDocument]])
+        {
+            [newSelection addObject:newItem];
+            
+            // To select an inline element, the Web Editor or one of its descendants must first be selected
+            if ([webEditor shouldTrySelectingDOMElementInline:[newItem HTMLElement]])
+            {
+                [[[self view] window] makeFirstResponder:webEditor];
+            }
+        }
+        else
+        {
+            // #83787
+            [[self graphicsController] removeSelectedObjects:[NSArray arrayWithObject:anObject]];
+        }
+    }
+    
+    [webEditor selectItems:newSelection byExtendingSelection:NO];    // this will feed back to us and the controller in notification
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
