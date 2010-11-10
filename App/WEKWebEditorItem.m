@@ -89,10 +89,6 @@
 
 - (void)setParentWebEditorItem:(WEKWebEditorItem *)item
 {
-    // When removing from the heirarchy, make sure we're no longer selected. Do before swapping in new parent item so we can Web Editor can still be found for -drawingRect etc.
-    WEKWebEditorView *webEditorToRemoveFrom = (!item && [self isSelected] ? [self webEditor] : nil);
-    [webEditorToRemoveFrom deselectItem:self];
-    
     _parentController = item;
     [self setNextResponder:item];
     

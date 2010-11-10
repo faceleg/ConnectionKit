@@ -258,6 +258,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
 {
     OBPRECONDITION(item);
     [[self delegate] webEditor:self willRemoveItem:item];
+    
+    // Make sure it's no longer selected
+    [self deselectItem:item];
+    
+    // No longer need to display item
+    [_itemsToDisplay removeObjectIdenticalTo:item];
 }
 
 #pragma mark Text Selection
