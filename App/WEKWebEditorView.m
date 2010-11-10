@@ -1029,9 +1029,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
         CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
         CGContextSaveGState(context);
         
-        CGContextAddRect(context, NSRectToCGRect(dirtyRect));        
-        CGRect clipRect = NSRectToCGRect([editingItem rect]);
-        CGContextAddRect(context, clipRect);
+        CGRect unclippedRect = NSRectToCGRect([editingItem rect]);
+        
+        CGContextBeginPath(context);
+        CGContextAddRect(context, CGRectInfinite); 
+        CGContextAddRect(context, unclippedRect);
         CGContextEOClip(context);
         
         // Draw everything else slightly darkened
