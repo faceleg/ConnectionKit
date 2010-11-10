@@ -779,8 +779,8 @@
 	NSString *type = self.codecType;
 	BOOL videoTag = [type conformsToUTI:@"public.mpeg-4"]
 		|| [type conformsToUTI:@"com.apple.protected-mpeg-4-video"]		// .m4v MIGHT BE OK
-		|| [type conformsToUTI:@"public.ogg-theora"]
-		|| [type conformsToUTI:@"public.webm"]
+//		|| [type conformsToUTI:@"public.ogg-theora"]	// DON'T TRY TO PLAY THESE TYPES
+//		|| [type conformsToUTI:@"public.webm"]			// SINCE WE CAN'T SEE IT IN WEBKIT
 		|| [type conformsToUTI:@"public.3gpp"] ;
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if ([defaults boolForKey:@"avoidVideoTag"]) videoTag = NO;
@@ -956,10 +956,6 @@
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
 	}
-	else if ([type conformsToUTI:@"public.ogg-theora"] || [type conformsToUTI:@"public.webm"])
-	{
-		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
-	}
 	else if ([type conformsToUTI:@"com.adobe.flash.video"])
 	{
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -1012,10 +1008,6 @@
 			 )
 	{
 		result = NSLocalizedString(@"You will need to verify if this video will play on iOS devices.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
-	}
-	else if ([type conformsToUTI:@"public.ogg-theora"] || [type conformsToUTI:@"public.webm"])
-	{
-		result = NSLocalizedString(@"Video will only play on certain browsers.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
 	else if ([type conformsToUTI:@"com.adobe.flash.video"])
 	{

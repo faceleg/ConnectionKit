@@ -483,7 +483,7 @@
 	NSString *type = [self codecType];
 	BOOL audioTag =
 	   [type conformsToUTI:(NSString *)kUTTypeMP3]
-	|| [type conformsToUTI:@"public.ogg-vorbis"]
+//	|| [type conformsToUTI:@"public.ogg-vorbis"]		// DO NOT TRY TO SHOW OGG -- WON'T SHOW IN WEBKIT.
 	|| [type conformsToUTI:@"com.microsoft.waveform-audio"]
 	|| [type conformsToUTI:(NSString *)kUTTypeMPEG4Audio]
 	|| [type conformsToUTI:@"public.aiff-audio"]
@@ -629,10 +629,6 @@
 	{
 		result = [NSImage imageFromOSType:kAlertNoteIcon];
 	}
-	else if ([type conformsToUTI:@"public.ogg-vorbis"])
-	{
-		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
-	}
 	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie]
 			 || [type conformsToUTI:@"public.aiff-audio"]
 			 || [type conformsToUTI:@"public.aifc-audio"]
@@ -680,10 +676,6 @@
 	else if ([type conformsToUTI:(NSString *)kUTTypeMP3])			// might not be iOS compatible
 	{
 		result = NSLocalizedString(@"You should verify that audio will play on iOS devices.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
-	}
-	else if ([type conformsToUTI:@"public.ogg-vorbis"])
-	{
-		result = NSLocalizedString(@"Audio will only play on certain browsers.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
 	}
 	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie]
 			 || [type conformsToUTI:@"public.aiff-audio"]
