@@ -98,16 +98,20 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 {
     [super didAddToPage:page];
     
-    // Size to fit
+    // Size to fit…
     NSNumber *width = [self width];
     if (width)
     {
-        NSUInteger maxWidth = [self maxWidthOnPage:page];
-        
-        NSUInteger elementWidth = [width unsignedIntegerValue] + [[[self plugIn] elementWidthPadding] unsignedIntegerValue];
-        if (elementWidth > maxWidth)
+        // …but only if actually appearing somewhere!
+        if ([self textAttachment] || [[self sidebars] count])
         {
-            [self setContentWidth:[NSNumber numberWithUnsignedInteger:maxWidth]];
+            NSUInteger maxWidth = [self maxWidthOnPage:page];
+            
+            NSUInteger elementWidth = [width unsignedIntegerValue] + [[[self plugIn] elementWidthPadding] unsignedIntegerValue];
+            if (elementWidth > maxWidth)
+            {
+                [self setContentWidth:[NSNumber numberWithUnsignedInteger:maxWidth]];
+            }
         }
     }
     
