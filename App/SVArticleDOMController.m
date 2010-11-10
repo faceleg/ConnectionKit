@@ -46,7 +46,7 @@
     [super init];
     
     // We'll accept pretty much anything
-    [self registerForDraggedTypes:[NSArray arrayWithObject:(NSString *)kUTTypeItem]];
+    [self registerForDraggedTypes:NSARRAY((NSString *)kUTTypeItem, NSFilenamesPboardType)];
     [self registerForDraggedTypes:[NSAttributedString attributedHTMStringPasteboardTypes]];
     
     return self;
