@@ -615,7 +615,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 - (unsigned int)resizingMask
 {
     DOMElement *element = [self graphicDOMElement];
-    return (element ? [super resizingMask] : 0);
+    return (element ? [self resizingMaskForDOMElement:element] : 0);
 }
 
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;

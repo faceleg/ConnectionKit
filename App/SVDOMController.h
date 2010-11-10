@@ -86,6 +86,7 @@
 - (CGFloat)maxWidth;
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
+- (unsigned int)resizingMaskForDOMElement:(DOMElement *)element;    // support
 
 
 #pragma mark Dragging
