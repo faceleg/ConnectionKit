@@ -11,7 +11,11 @@
 
 #import "SVCalloutDOMController.h"
 #import "SVContentDOMController.h"
+#import "KTDesign.h"
+#import "KTImageScalingSettings.h"
+#import "KTMaster.h"
 #import "SVMediaRecord.h"
+#import "KTPage.h"
 #import "SVParagraphedHTMLWriter.h"
 #import "SVPasteboardItemInternal.h"
 #import "SVRichTextDOMController.h"
@@ -700,6 +704,18 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     return size;
+}
+
+- (CGFloat)maxWidth;
+{
+    // Base limit on design rather than the DOM
+    KTDesign *design = [[[[self HTMLContext] page] master] design];
+    
+    KTImageScalingSettings *settings = [design imageScalingSettingsForUse:@"sidebarImage"];
+    OBASSERT(settings);
+    
+    CGFloat result = [settings size].width;
+    return result;
 }
 
 @end
