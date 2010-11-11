@@ -568,7 +568,7 @@
 - (void)writeGraphicBody:(SVGraphic *)graphic;
 {
     // Graphic body
-    [self pushClassName:@"figure-content"];  // identifies for #84956
+    if (![graphic isPagelet]) [self pushClassName:@"figure-content"];  // identifies for #84956
     
     if ([graphic isKindOfClass:[SVMediaGraphic class]])
     {
