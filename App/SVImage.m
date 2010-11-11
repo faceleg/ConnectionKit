@@ -248,10 +248,9 @@
 
 #pragma mark HTML
 
-- (void)writeHTML:(SVHTMLContext *)context
+- (void)writeInlineHTML: (SVHTMLContext *) context isPagelet: (BOOL) isPagelet
 {
     // Link
-    BOOL isPagelet = [[self container] isPagelet];
     if (isPagelet && [self link])
     {
         [context startAnchorElementWithHref:[[self link] URLString] title:nil target:nil rel:nil];
@@ -291,7 +290,27 @@
     //[context addDependencyOnObject:self keyPath:@"media"];    // don't need, graphic does for us
     
     
-    if ([[self container] isPagelet] && [self link]) [context endElement];
+    if (isPagelet && [self link]) [context endElement];
+}
+
+- (void)writeHTML:(SVHTMLContext *)context
+{
+    // Pagelets expect a few extra classes
+    BOOL isPagelet = [[self container] isPagelet];
+    if (isPagelet)
+    {
+        [context startElement:@"div" className:@"ImageElement"];
+        [context startElement:@"div" className:@"photo"];
+        
+        [self writeInlineHTML:context isPagelet:isPagelet];
+        
+        [context endElement];
+        [context endElement];
+    }
+    else
+    {
+        [self writeInlineHTML:context isPagelet:isPagelet];
+    }
 }
 
 - (BOOL)shouldPublishEditingElementID; { return NO; }
