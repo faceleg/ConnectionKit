@@ -282,10 +282,10 @@
     //[context addDependencyOnObject:self keyPath:@"media"];    // don't need, graphic does for us
 }
 
-- (void)writeInlineHTML: (SVHTMLContext *) context isPagelet: (BOOL) isPagelet
+- (void)writeHTML:(SVHTMLContext *)context
 {
     // Link
-    if (isPagelet && [self link])
+    if ([[self container] isPagelet] && [self link])
     {
         [context startAnchorElementWithHref:[[self link] URLString] title:nil target:nil rel:nil];
         [self writeImageElement:context];
@@ -297,25 +297,8 @@
     }
 }
 
-- (void)writeHTML:(SVHTMLContext *)context
-{
-    // Pagelets expect a few extra classes
-    BOOL isPagelet = [[self container] isPagelet];
-    if (isPagelet)
-    {
-        [context startElement:@"div" className:@"ImageElement"];
-        [context startElement:@"div" className:@"photo"];
-        
-        [self writeInlineHTML:context isPagelet:isPagelet];
-        
-        [context endElement];
-        [context endElement];
-    }
-    else
-    {
-        [self writeInlineHTML:context isPagelet:isPagelet];
-    }
-}
++ (NSString *)elementClassName; { return @"ImageElement"; }
++ (NSString *)contentClassName; { return @"photo"; }
 
 - (BOOL)shouldPublishEditingElementID; { return NO; }
 

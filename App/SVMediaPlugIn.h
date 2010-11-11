@@ -45,7 +45,15 @@
 
 
 #pragma mark HTML
+
 - (BOOL)canWriteHTMLInline;   // NO for most graphics. Images and Raw HTML return YES
+
+// For backwards compat. with 1.x:
++ (NSString *)elementClassName; // e.g. "VideoElement"
++ (NSString *)contentClassName; // e.g. "photo"
+
+
+#pragma mark Thumbnail
 - (id <SVMedia>)thumbnailMedia;			// usually just media; might be poster frame of movie
 - (id)imageRepresentation;
 - (NSString *)imageRepresentationType;

@@ -414,7 +414,26 @@
     [context addDependencyOnObject:self keyPath:@"media"];
     if (![self media]) [context addDependencyOnObject:self keyPath:@"externalSourceURL"];
     
-    [super writeBody:context];
+    
+    // Pagelets expect a few extra classes
+    BOOL isPagelet = [self isPagelet];
+    NSString *elementClass = [[[self plugIn] class] elementClassName];
+    NSString *contentClass = [[[self plugIn] class] contentClassName];
+    
+    if (isPagelet && elementClass && contentClass)
+    {
+        [context startElement:@"div" className:elementClass];
+        [context startElement:@"div" className:contentClass];
+        
+        [super writeBody:context];
+        
+        [context endElement];
+        [context endElement];
+    }
+    else
+    {
+        [super writeBody:context];
+    }
 }
 
 - (BOOL)shouldWriteHTMLInline;

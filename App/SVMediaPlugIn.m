@@ -191,6 +191,13 @@
 #pragma mark HTML
 
 - (BOOL)canWriteHTMLInline; { return NO; }
+
+// For backwards compat. with 1.x:
++ (NSString *)elementClassName; { return nil; }
++ (NSString *)contentClassName; { return nil; }
+
+#pragma mark Thumbnail
+
 - (id <SVMedia>)thumbnailMedia; { return [self media]; }
 
 - (id)imageRepresentation;
