@@ -73,9 +73,10 @@
 			 nil]];
 }
 
+#pragma mark HTML
 
-
-
-
+// 1.x rendered all non-images as video in one form or another, so we have to do the same for backwards compat.
++ (NSString *) elementClassName; { return @"VideoElement"; }
++ (NSString *) contentClassName; { return @"video"; }
 
 @end
