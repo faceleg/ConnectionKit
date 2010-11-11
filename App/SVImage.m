@@ -271,8 +271,8 @@
     {
         [context writeImageWithSourceMedia:media
                                        alt:alt
-                                     width:self.container.width
-                                    height:self.container.height
+                                     width:nil  // nil sizing because bindSizeToObject: takes care
+                                    height:nil  // of that already
                                       type:[self typeToPublish]
                          preferredFilename:nil];
         
