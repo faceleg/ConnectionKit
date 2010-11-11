@@ -248,15 +248,8 @@
 
 #pragma mark HTML
 
-- (void)writeInlineHTML: (SVHTMLContext *) context isPagelet: (BOOL) isPagelet
+- (void)writeImageElement:(SVHTMLContext *)context
 {
-    // Link
-    if (isPagelet && [self link])
-    {
-        [context startAnchorElementWithHref:[[self link] URLString] title:nil target:nil rel:nil];
-    }
-    
-    
     // Actually write the image
     NSString *alt = [self alternateText];
     if (!alt) alt = @"";
@@ -286,11 +279,22 @@
                              width:self.container.width
                             height:self.container.height];
     }
-    
     //[context addDependencyOnObject:self keyPath:@"media"];    // don't need, graphic does for us
-    
-    
-    if (isPagelet && [self link]) [context endElement];
+}
+
+- (void)writeInlineHTML: (SVHTMLContext *) context isPagelet: (BOOL) isPagelet
+{
+    // Link
+    if (isPagelet && [self link])
+    {
+        [context startAnchorElementWithHref:[[self link] URLString] title:nil target:nil rel:nil];
+        [self writeImageElement:context];
+        [context endElement];
+    }
+    else
+    {
+        [self writeImageElement: context];
+    }
 }
 
 - (void)writeHTML:(SVHTMLContext *)context
