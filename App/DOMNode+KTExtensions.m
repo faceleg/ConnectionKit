@@ -1203,7 +1203,9 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 	DOMNode *result = [super removeJunkRecursiveRestrictive:aRestrictive
 									   allowEmptyParagraphs:anAllowEmptyParagraphs];		// call super to deal with children
 	
-	
+	// For repairing a document ... but then we lose the colors.  Ugh.
+	// [result removeAnyDescendentElementsNamed:@"FONT"];
+
 	// remove P with a BR in it.
 	if ([[((DOMElement *)result) tagName] isEqualToString:@"P"])
 	{

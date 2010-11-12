@@ -543,6 +543,8 @@
         [[self DOMNode] setInnerHTML:expectedHTML];
     }
     
+	// Clean up to START editing?  Maybe useful to repair a document with too many FONT tags.
+	// [self removeDOMJunkAllowingEmptyParagraphs:YES];
 	
 	myIsEditing = YES;
 	return YES;
