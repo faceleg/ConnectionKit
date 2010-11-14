@@ -29,9 +29,4 @@
     // Ignore
 }
 
-- (void)XwriteString:(NSString *)string;
-{
-    // Ignore
-}
-
 @end
