@@ -603,7 +603,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 @synthesize editingItems = _selectionParentItems;
 - (void)setEditingItems:(NSArray *)items
 {
-    if ([items isEqualToArray:[self editingItems]]) return;
+    if (KSISEQUAL(items, [self editingItems])) return;  // KSISEQUAL handles nil array
     
     // Let them know
     [[self editingItems] setBool:NO forKey:@"editing"];
