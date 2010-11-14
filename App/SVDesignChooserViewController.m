@@ -142,10 +142,13 @@
 	
 	// a register for those notifications on the synchronized content view.
 	[[NSNotificationCenter defaultCenter] removeObserver:self];	// in case we are changing to a new view?
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(viewBoundsDidChange:)
-												 name:NSViewBoundsDidChangeNotification
-											   object:imageBrowser];
+    if (imageBrowser)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(viewBoundsDidChange:)
+                                                     name:NSViewBoundsDidChangeNotification
+                                                   object:imageBrowser];
+    }
 }
 
 #pragma mark View
