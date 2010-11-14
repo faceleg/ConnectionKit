@@ -111,6 +111,10 @@
     
     return result;
 }
++ (NSSet *)keyPathsForValuesAffectingMenuTitle;
+{
+    return [NSSet setWithObjects:@"title", @"customMenuTitle", nil];
+}
 
 @dynamic customMenuTitle;
 
