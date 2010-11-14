@@ -1211,27 +1211,20 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
-- (NSMenu *)menuForEvent:(NSEvent *)theEvent
+- (NSMenu *)menuForEvent:(NSEvent *)theEvent;
 {
-    NSMenu *result = [super menuForEvent:theEvent];
-    
+    NSMenu *result = nil;
     
     // Where's the click? Is it a selection handle? They don't want a menu
     NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
     
     SVGraphicHandle handle;
     WEKWebEditorItem *item = [self itemHitTest:location handle:&handle];
-    if (item && handle != kSVGraphicNoHandle) return result;
-    
-    
-    // Ask WebView for menu if item wants it
-    if ([item allowsDirectAccessToWebViewWhenSelected])
+    if (!item || handle == kSVGraphicNoHandle)
     {
-        NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-        NSView *targetView = [[self webView] hitTest:location];
-        result = [targetView menuForEvent:theEvent];
+        result = [item menuForEvent:theEvent];
+        if (!result) result = [super menuForEvent:theEvent];
     }
-    
     
     return result;
 }
@@ -1400,17 +1393,21 @@ typedef enum {  // this copied from WebPreferences+Private.h
  */
 - (void)mouseDown:(NSEvent *)event;
 {
-    // Store the event for a bit (for draging, editing, etc.). Note that we're not interested in it while editing
-    [_mouseDownEvent release];
-    _mouseDownEvent = [event retain];
-    
-    
-    
-    // Where's the click? Is it a selection handle? They trigger special resize event
+    // Direct to target item
+    NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
+    WEKWebEditorItem *item = [self itemHitTest:location handle:NULL];
+    [item mouseDown:event];
+}
+
+- (void)mouseDown2:(NSEvent *)event;
+{
     NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
     
     SVGraphicHandle handle;
     WEKWebEditorItem *item = [self itemHitTest:location handle:&handle];
+    
+    
+    // Where's the click? Is it a selection handle? They trigger special resize event
     if (item && handle != kSVGraphicNoHandle)
     {
 		[self resizeItem:item usingHandle:handle withEvent:event];
@@ -1419,11 +1416,17 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     
     
+    // Store the event for a bit (for draging, editing, etc.). Note that we're not interested in it while editing
+    [_mouseDownEvent release];
+    _mouseDownEvent = [event retain];
+    
+    
+    
     
     
     
     // What was clicked? We want to know top-level object
-      
+    
     if (item)
     {
         

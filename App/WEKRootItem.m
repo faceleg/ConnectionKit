@@ -32,6 +32,13 @@
     return result;
 }
 
+/*  Route events back to the web editor since no item handled it
+ */
+- (void)mouseDown:(NSEvent *)theEvent;
+{
+    [[self webEditor] performSelector:@selector(mouseDown2:) withObject:theEvent];
+}
+
 @end
 
 

@@ -366,6 +366,25 @@
     return result;
 }
 
+- (NSMenu *)menuForEvent:(NSEvent *)theEvent;
+{
+    NSMenu *result = nil;
+    
+    // Ask WebView for menu if item wants it
+    if ([self allowsDirectAccessToWebViewWhenSelected])
+    {
+        NSPoint location = [[self webEditor] convertPoint:[theEvent locationInWindow] fromView:nil];
+        NSView *targetView = [[[self webEditor] webView] hitTest:location];
+        result = [targetView menuForEvent:theEvent];
+    }
+    else
+    {
+        result = [[self parentWebEditorItem] menuForEvent:theEvent];
+    }
+    
+    return result;
+}
+
 #pragma mark UI
 
 - (NSArray *)contextMenuItemsForElement:(NSDictionary *)element

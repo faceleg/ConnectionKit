@@ -407,6 +407,22 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
 }
 
+#pragma mark Events
+
+- (NSMenu *)menuForEvent:(NSEvent *)theEvent;
+{
+    if (![self isSelected]) return [super menuForEvent:theEvent];
+    
+    
+    NSMenu *result = [[[NSMenu alloc] init] autorelease];
+    
+    [result addItemWithTitle:NSLocalizedString(@"Delete", "menu item")
+                      action:@selector(delete:)
+               keyEquivalent:@""];
+    
+    return result;
+}
+
 #pragma mark Attributed HTML
 
 - (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriter *)writer;

@@ -67,8 +67,11 @@
 
 
 #pragma mark Editing
+
 // Feels like somewhat of a hack: removes item from tree, asking enclosing text for permission
 - (BOOL)tryToRemove;
+
+- (NSMenu *)menuForEvent:(NSEvent *)theEvent;
 
 
 #pragma mark UI
