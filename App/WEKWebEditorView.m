@@ -2078,6 +2078,47 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView shouldDeleteDOMRange:(DOMRange *)range
 {
+    // WebKit will quite happily delete embedded graphics when there is a collapsed selection, which we don't want. #95681
+    DOMRange *selection = [self selectedDOMRange];
+    if (selection && [selection collapsed])
+    {
+        // Forward delete?
+        DOMNode *startNode = [range ks_startNode:NULL];
+        if (startNode == [selection ks_endNode:NULL])
+        {
+            NSArray *items = [self selectableItemsInDOMRange:range];
+            if ([items count])
+            {
+                WEKWebEditorItem *startItem = [items objectAtIndex:0];
+                if ([startItem HTMLElement] == startNode)
+                {
+                    
+                }
+                else
+                {
+                    // Ony delete up to the start item please
+                    [range setEndBefore:[startItem HTMLElement]];
+                    
+                    if ([self shouldChangeTextInDOMRange:range])
+                    {
+                        [range deleteContents];
+                        [self didChangeText];
+                        
+                        [self changeSelectionByDeselectingAll:YES
+                                               orDeselectItem:nil
+                                                  selectItems:[NSArray arrayWithObject:startItem]
+                                                     DOMRange:nil
+                                                   isUIAction:YES];
+                    }
+                    
+                    return NO;
+                }
+            }
+        }
+    }
+    
+    
+    
     return [self shouldChangeTextInDOMRange:range];
 }
 
