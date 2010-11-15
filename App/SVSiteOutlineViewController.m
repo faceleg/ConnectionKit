@@ -951,13 +951,16 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 {
     BOOL result = NO;
     
-    // Can't enable control if collection already has children…
-    NSNumber *haveChildren = [[self content] valueForKeyPath:@"selection.hasChildren"];
-    if (!NSIsControllerMarker(haveChildren) && ![haveChildren boolValue])
+    if ([[[self content] selectedObjects] count] == 1)
     {
-        // …or is home page
-        NSNumber *containsHome = [[self content] valueForKeyPath:@"selection.isRoot"];
-        if (!NSIsControllerMarker(containsHome) && ![containsHome boolValue]) result = YES;
+        // Can't enable control if collection already has children…
+        NSNumber *haveChildren = [[self content] valueForKeyPath:@"selection.hasChildren"];
+        if (!NSIsControllerMarker(haveChildren) && ![haveChildren boolValue])
+        {
+            // …or is home page
+            NSNumber *containsHome = [[self content] valueForKeyPath:@"selection.isRoot"];
+            if (!NSIsControllerMarker(containsHome) && ![containsHome boolValue]) result = YES;
+        }
     }
     
     return result;
