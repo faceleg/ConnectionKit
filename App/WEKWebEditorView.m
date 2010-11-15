@@ -31,6 +31,7 @@
 #import "WebView+Karelia.h"
 
 #import "KSHTMLWriter+DOM.h"
+#import "KSSortedMutableArray.h"
 
 
 NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlaySelectionDidChange";
@@ -979,7 +980,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     if (textController)
     {
-        NSMutableArray *result = [NSMutableArray array];
+        // We want the result sorted to match DOM. #95785
+        NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"HTMLElement"
+                                                             ascending:YES
+                                                              selector:@selector(ks_compareDocumentPosition:)];
+        
+        NSMutableArray *result = [KSSortedMutableArray arrayWithSortDescriptor:sort];
         
         for (WEKWebEditorItem *anItem in [textController selectableTopLevelDescendants])
         {
