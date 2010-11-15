@@ -1565,10 +1565,25 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     OBPRECONDITION([collection isCollection]);
     
 	
+    NSMutableArray *expansion = [[NSMutableArray alloc] initWithCapacity:[items count]];
+    for (SVSiteItem *anItem in items)
+    {
+        BOOL expanded = [[self outlineView] isItemExpanded:anItem];
+        [expansion addObject:NSBOOL(expanded)];
+    }
+    
     // Insert each item in turn. By running in reverse we can keep reusing the same index
     SVPagesController *controller = [self content];
     [controller moveObjects:items toCollection:collection index:index];
 	
+    // Restore expansion state. #95795
+    NSUInteger i, count = [items count];
+    for (i = 0; i < count; i++)
+    {
+        SVSiteItem *anItem = [items objectAtIndex:i];
+        BOOL expanded = [[expansion objectAtIndex:i] boolValue];
+        if (expanded) [[self outlineView] expandItem:anItem];
+    }
     
 	return YES;
 }
