@@ -405,7 +405,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:NO isUIAction:YES];
         
-        if (itemIsSelected && [event clickCount] == 1) // #94614
+        if (itemIsSelected)
         {
             // If you click an aready selected item quick enough, it will start editing
             _mouseUpMayBeginEditing = [self ks_followsResponder:[[self window] firstResponder]];
