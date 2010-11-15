@@ -259,8 +259,19 @@ typedef enum {  // this copied from WebPreferences+Private.h
     OBPRECONDITION(item);
     [[self delegate] webEditor:self willRemoveItem:item];
     
-    // Make sure it's no longer selected
-    [self deselectItem:item];
+    
+    // Make sure it or a descendant is no longer selected
+    NSArray *selection = [[self selectedItems] copy];
+    for (WEKWebEditorItem *anItem in selection)
+    {
+        if ([anItem isDescendantOfWebEditorItem:item])
+        {
+            [self deselectItem:anItem];
+            [_itemsToDisplay removeObjectIdenticalTo:anItem];
+        }
+    }
+    [selection release];
+    
     
     // No longer need to display item
     [_itemsToDisplay removeObjectIdenticalTo:item];
