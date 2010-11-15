@@ -353,6 +353,7 @@
                 
             case SVGraphicPlacementInline:
                 [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementCallout]];
+                [aGraphic didAddToPage:[[self HTMLContext] page]];
                 break;
         
             default:
