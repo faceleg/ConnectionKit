@@ -1637,11 +1637,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
-- (void)mouseDragged:(NSEvent *)theEvent;
-{
-    [self forwardMouseEvent:theEvent selector:_cmd cachedTargetView:nil];
-}
-
 - (void)scrollWheel:(NSEvent *)theEvent
 {
     // We're not personally interested in scroll events.
