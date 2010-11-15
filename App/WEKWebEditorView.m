@@ -1871,6 +1871,11 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return result;
 }
 
+- (NSUInteger)webView:(WebView *)sender dragSourceActionMaskForPoint:(NSPoint)point;
+{
+    return (WebDragSourceActionDHTML | WebDragSourceActionLink | WebDragSourceActionSelection);
+}
+
 - (BOOL)webView:(WebView *)sender shouldPerformAction:(SEL)action fromSender:(id)fromObject;
 {
     // Give focused text a chance
