@@ -1396,20 +1396,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [_mouseDownEvent release],  _mouseDownEvent = nil;
 }
 
-/*  Actions we could take from this:
- *      - Deselect everything
- *      - Change selection to new item
- *      - Start editing selected item (actually happens upon -mouseUp:)
- *      - Add to the selection
- */
-- (void)mouseDown:(NSEvent *)event;
-{
-    // Direct to target item
-    NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
-    WEKWebEditorItem *item = [self itemHitTest:location handle:NULL];
-    [item mouseDown:event];
-}
-
 - (void)mouseDown2:(NSEvent *)event;
 {
     NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
@@ -1480,6 +1466,28 @@ typedef enum {  // this copied from WebPreferences+Private.h
             // Don't really expect to hit this point. Since if there is no item at the location, we should never have hit-tested positively in the first place
             [super mouseDown:event];
         }
+    }
+}
+
+/*  Actions we could take from this:
+ *      - Deselect everything
+ *      - Change selection to new item
+ *      - Start editing selected item (actually happens upon -mouseUp:)
+ *      - Add to the selection
+ */
+- (void)mouseDown:(NSEvent *)event;
+{
+    // Direct to target item
+    NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
+    WEKWebEditorItem *item = [self itemHitTest:location handle:NULL];
+    
+    if (item)
+    {
+        [item mouseDown:event];
+    }
+    else
+    {
+        [self mouseDown2:event];
     }
 }
 
