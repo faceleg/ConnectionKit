@@ -130,7 +130,7 @@
 - (void)willWriteGraphic:(SVGraphic *)graphic;
 {
     // Register placement dependency early so it causes article to update, not graphic/callout
-    [self addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
+    if ([graphic textAttachment]) [self addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
 }
 
 - (void)writeGraphic:(SVGraphic *)graphic;
