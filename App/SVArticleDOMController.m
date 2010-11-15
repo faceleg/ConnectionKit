@@ -719,7 +719,7 @@
     while (previousElement)
     {
         WEKWebEditorItem *controller = [self itemForDOMNode:previousElement];
-        if (controller == self) // check the element's not a graphic/callout-container
+        if (!controller) // check the element's not a graphic/callout-container
         {
             NSString *text = [(DOMHTMLElement *)previousElement innerText];
             if ([text isWhitespace]) result = previousElement;
