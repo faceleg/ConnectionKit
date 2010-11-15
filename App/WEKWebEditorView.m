@@ -1436,7 +1436,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // If mousing down on an image, pass the event through. Must do before changing selection so that WebView becomes first responder
         if ([item allowsDirectAccessToWebViewWhenSelected])
         {
-            [self forwardMouseEvent:event selector:_cmd cachedTargetView:nil];
+            [self forwardMouseEvent:event selector:@selector(mouseDown:) cachedTargetView:nil];
             [self selectItem:item event:event];
             //[NSApp postEvent:event atStart:YES];
         }
