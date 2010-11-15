@@ -268,6 +268,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         if ([anItem isDescendantOfWebEditorItem:item])
         {
             [self deselectItem:anItem];
+            [self setEditingItems:nil]; // have to force this one sadly
             [_itemsToDisplay removeObjectIdenticalTo:anItem];
         }
     }
