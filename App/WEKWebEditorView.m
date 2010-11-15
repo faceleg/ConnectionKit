@@ -1873,7 +1873,8 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (NSUInteger)webView:(WebView *)sender dragSourceActionMaskForPoint:(NSPoint)point;
 {
-    return (WebDragSourceActionDHTML | WebDragSourceActionLink | WebDragSourceActionSelection);
+    // #95354
+    return (WebDragSourceActionDHTML | WebDragSourceActionSelection);
 }
 
 - (BOOL)webView:(WebView *)sender shouldPerformAction:(SEL)action fromSender:(id)fromObject;
