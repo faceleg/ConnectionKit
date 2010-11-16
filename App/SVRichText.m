@@ -18,6 +18,7 @@
 #import "NSSet+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
+#import "KSStringHTMLEntityUnescaping.h"
 
 
 @interface SVRichText ()

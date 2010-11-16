@@ -30,6 +30,7 @@
 #import "NSString+Karelia.h"
 #import "KSURLUtilities.h"
 #import "NSObject+Karelia.h"
+#import "KSStringHTMLEntityUnescaping.h"
 
 #import <WebKit/WebKit.h>
 

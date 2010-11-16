@@ -23,6 +23,7 @@
 #import "SVTextContentHTMLContext.h"
 #import "SVTitleBox.h"
 #import "SVWebEditorHTMLContext.h"
+#import "KSStringHTMLEntityUnescaping.h"
 
 #import "KSSilencingConfirmSheet.h"
 #import "KSThreadProxy.h"

@@ -9,6 +9,7 @@
 #import "SVTextContentHTMLContext.h"
 
 #import "NSString+Karelia.h"
+#import "KSStringHTMLEntityUnescaping.h"
 
 
 @implementation SVTextContentHTMLContext

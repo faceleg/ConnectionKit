@@ -15,6 +15,7 @@
 #import "NSString+KTExtensions.h"
 
 #import "KSStringXMLEntityEscaping.h"
+#import "KSStringHTMLEntityUnescaping.h"
 
 
 @implementation SVTitleBox 

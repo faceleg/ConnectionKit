@@ -28,6 +28,7 @@
 #import "KSURLUtilities.h"
 #import "NSXMLElement+Karelia.h"
 #import "SVWebEditorHTMLContext.h"
+#import "KSStringHTMLEntityUnescaping.h"
 
 @interface KTPage (PathsPrivate)
 - (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
