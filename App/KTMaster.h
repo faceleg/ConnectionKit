@@ -83,24 +83,17 @@
 
 
 #pragma mark Comments
-@property(nonatomic, readonly) NSString *commentsSummary;
-@property(nonatomic, assign) NSNumber *commentsProvider;
 @property(nonatomic, retain) NSString *commentsOwner;
-//- (KTCommentsProvider)commentsProvider;
-//- (void)setCommentsProvider:(KTCommentsProvider)aKTCommentsProvider;
+@property(nonatomic, assign) NSNumber *commentsProvider;
+@property(nonatomic, readonly) NSString *commentsSummary;
 
 - (BOOL)wantsDisqus;
-- (void)setWantsDisqus:(BOOL)aBool;
+- (BOOL)wantsHaloscan;
+- (BOOL)wantsIntenseDebate;
+- (BOOL)wantsJSKit;
 
 - (NSString *)disqusShortName;
 - (void)setDisqusShortName:(NSString *)aString;
-
-
-- (BOOL)wantsHaloscan;
-- (void)setWantsHaloscan:(BOOL)aBool;
-
-- (BOOL)wantsJSKit;
-- (void)setWantsJSKit:(BOOL)aBool;
 
 - (NSString *)JSKitModeratorEmail;
 - (void)setJSKitModeratorEmail:(NSString *)aString;
