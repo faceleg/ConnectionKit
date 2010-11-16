@@ -385,10 +385,37 @@
 @synthesize widescreen = _widescreen;
 @synthesize playHD = _playHD;
 @synthesize privacy = _privacy;
-@synthesize showBorder = _showBorder;
 @synthesize includeRelatedVideos = _includeRelatedVideos;
 @synthesize useCustomSecondaryColor = _useCustomSecondaryColor;
 @synthesize useIFrame = _useIFrame;
+
+@synthesize showBorder = _showBorder;
+- (void)setShowBorder:(BOOL)showBorder;
+{
+    if (![self useIFrame])
+    {
+        if (showBorder && ![self showBorder])
+        {
+            // Decrease width to match border
+            NSUInteger width = [[self width] unsignedIntegerValue] - 2*YOUTUBE_BORDER_HEIGHT;
+            NSUInteger height = width / [[self constrainedAspectRatio] floatValue];
+            
+            [self setWidth:[NSNumber numberWithUnsignedInteger:width]
+                    height:[NSNumber numberWithUnsignedInteger:height]];
+        }
+        else if (!showBorder && [self showBorder])
+        {
+            // Increase width to match border
+            NSUInteger width = [[self width] unsignedIntegerValue] + 2*YOUTUBE_BORDER_HEIGHT;
+            NSUInteger height = width / [[self constrainedAspectRatio] floatValue];
+            
+            [self setWidth:[NSNumber numberWithUnsignedInteger:width]
+                    height:[NSNumber numberWithUnsignedInteger:height]];
+        }
+    }
+    
+    _showBorder = showBorder;
+}
 
 @synthesize userVideoCode = _userVideoCode;
 - (void)setUserVideoCode:(NSString *)string
