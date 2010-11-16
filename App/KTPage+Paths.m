@@ -406,7 +406,7 @@
 	NSString *result = @"";
 	if (![self isRoot])
 	{
-		result = [self fileName];
+		result = [self filename];
 	}
 	
 	if (collectionPathStyle != KTCollectionNotEvenACollection)
@@ -419,14 +419,6 @@
 		{
 			result = [result ks_URLDirectoryPath];
 		}
-	}
-	else
-	{
-		OBASSERT([self pathExtension]);
-        if (![result isEqualToString:@""])  // appending to an empty string logs a warning. case 40704
-        {
-            result = [result stringByAppendingPathExtension:[self pathExtension]];
-        }
 	}
 	
 	return result;
