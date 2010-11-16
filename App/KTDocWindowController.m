@@ -842,6 +842,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     {
         self.commentsWindowController = [[[SVCommentsWindowController alloc] initWithWindowNibName:@"SVCommentsSheet"] autorelease];
     }
+    [self.commentsWindowController setMaster:[[[[self document] site] rootPage] master]];
     [self.commentsWindowController configureComments:self];
 }
 
