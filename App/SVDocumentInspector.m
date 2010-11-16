@@ -98,15 +98,6 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
 	
 }
 
-//  check representedObject property that's the document.  windowForSheet -- to forward the message....
-
-- (IBAction)configureComments:(id)sender;
-{
-	KTDocument *doc = [self representedObject];
-	NSLog(@"configureComments %@", doc);
-	
-}
-
 - (IBAction)chooseFavicon:(id)sender;
 {
 	KTDocument *document = [self representedObject];
