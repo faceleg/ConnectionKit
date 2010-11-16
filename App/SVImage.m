@@ -43,6 +43,18 @@
                                                               nil]];
 }
 
+- (void)awakeFromNew;
+{
+    [super awakeFromNew];
+    
+    // Initial link. #51410
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"shouldIncludeLink"] &&
+        [[NSUserDefaults standardUserDefaults] boolForKey:@"linkImageToOriginal"])
+    {
+        [self setLink:[[[SVLink alloc] initLinkToFullSizeImageOpensInNewWindow:NO] autorelease]];
+    }
+}
+
 - (void)dealloc;
 {
     [_altText release];
