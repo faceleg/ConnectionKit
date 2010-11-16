@@ -1468,6 +1468,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     // Rule 1. Only a collection can be dropped on/into.
 #ifndef CAN_CONVERT_TO_COLLECTIONS
     if ([siteItem isCollection])
+#else
+    if ([siteItem pageRepresentation])
 #endif
     {
         return [self validateNonLinkDrop:info
