@@ -24,7 +24,6 @@
 	IBOutlet NSImageView *oProBadge;
 }
 
-- (IBAction)configureComments:(id)sender;
 - (IBAction)chooseFavicon:(id)sender;
 
 - (NSArray *)languages;
