@@ -385,6 +385,26 @@
 
 #pragma mark Comments
 
+- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key
+{
+    if ( [key isEqualToString:@"disqusShortName"] )
+    {
+        return YES;
+    }
+    else if ( [key isEqualToString:@"IntenseDebateAccountID"] )
+    {
+        return YES;
+    }
+    else if ( [key isEqualToString:@"JSKitModeratorEmail"] )
+    {
+        return YES;
+    }
+    else
+    {
+        return [super usesExtensiblePropertiesForUndefinedKey:key];
+    }
+}
+
 + (NSSet *)keyPathsForValuesAffectingCommentsSummary
 {
 	return [NSSet setWithObjects:@"commentsProvider", @"commentsOwner", nil];
@@ -395,108 +415,27 @@
     return @"None Yet!";
 }
 
-// TODO: this is kind of hacky, for Sandvox 2 all should be combined
-// into the fewest, flexible attributes possible
-@dynamic commentsProvider;
 @dynamic commentsOwner;
-//- (KTCommentsProvider)commentsProvider
-//{
-//	return (KTCommentsProvider)[[self valueForUndefinedKey:@"commentsProvider"] intValue];
-//}
-//
-//- (void)setCommentsProvider:(KTCommentsProvider)aKTCommentsProvider
-//{
-//	NSSet *keys = [NSSet setWithObjects:@"wantsDisqus", @"wantsJSKit", @"wantsHaloscan", @"wantsIntenseDebate", nil];
-//	[self willChangeValuesForKeys:keys];
-//	[self setValue:[NSNumber numberWithInt:aKTCommentsProvider] forUndefinedKey:@"commentsProvider"];
-//	[self didChangeValuesForKeys:keys];
-//	
-//	// for backward compatibility with 1.5.4
-//	if ( KTCommentsProviderJSKit == aKTCommentsProvider )
-//	{
-//		[self setValue:[NSNumber numberWithBool:YES] forUndefinedKey:@"wantsJSKit"];
-//		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsHaloscan"];
-//	}
-//	else if ( KTCommentsProviderHaloscan == aKTCommentsProvider )
-//	{
-//		[self setValue:[NSNumber numberWithBool:YES] forUndefinedKey:@"wantsHaloscan"];
-//		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsJSKit"];
-//	}
-//	else
-//	{
-//		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsHaloscan"];
-//		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsJSKit"];
-//	}
-//}
-
-- (BOOL)wantsIntenseDebate
-{
-	return (KTCommentsProviderIntenseDebate == [self commentsProvider]);
-}
-
-- (void)setWantsIntenseDebate:(BOOL)aBool
-{
-	[self setCommentsProvider:KTCommentsProviderIntenseDebate];
-}
-
-- (NSString *)IntenseDebateAccountID
-{
-	return [self valueForUndefinedKey:@"IntenseDebateAccountID"];
-}
-
-- (void)setIntenseDebateAccountID:(NSString *)aString
-{
-	[self setValue:aString forUndefinedKey:@"IntenseDebateAccountID"];
-}
+@dynamic commentsProvider;
 
 - (BOOL)wantsDisqus
 {
-	return (KTCommentsProviderDisqus == [self commentsProvider]);
-}
-
-- (void)setWantsDisqus:(BOOL)aBool
-{
-	[self setCommentsProvider:KTCommentsProviderDisqus];
-}
-
-- (NSString *)disqusShortName
-{
-	return [self valueForUndefinedKey:@"disqusShortName"];
-}
-
-- (void)setDisqusShortName:(NSString *)aString
-{
-	[self setValue:aString forUndefinedKey:@"disqusShortName"];
+	return (KTCommentsProviderDisqus == [[self commentsProvider] unsignedIntValue]);
 }
 
 - (BOOL)wantsHaloscan
 {
-	return (KTCommentsProviderHaloscan == [self commentsProvider]);
+	return (KTCommentsProviderHaloscan == [[self commentsProvider] unsignedIntValue]);
 }
 
-- (void)setWantsHaloscan:(BOOL)aBool
+- (BOOL)wantsIntenseDebate
 {
-	[self setCommentsProvider:KTCommentsProviderHaloscan];
+	return (KTCommentsProviderIntenseDebate == [[self commentsProvider] unsignedIntValue]);
 }
 
 - (BOOL)wantsJSKit
 {
-	return (KTCommentsProviderJSKit == [self commentsProvider]);
-}
-
-- (void)setWantsJSKit:(BOOL)aBool
-{
-	[self setCommentsProvider:KTCommentsProviderJSKit];
-}
-
-- (NSString *)JSKitModeratorEmail
-{
-	return [self valueForUndefinedKey:@"JSKitModeratorEmail"];
-}
-
-- (void)setJSKitModeratorEmail:(NSString *)aString
-{
-	[self setValue:aString forUndefinedKey:@"JSKitModeratorEmail"];
+	return (KTCommentsProviderJSKit == [[self commentsProvider] unsignedIntValue]);
 }
 
 #pragma mark Placeholder Image
