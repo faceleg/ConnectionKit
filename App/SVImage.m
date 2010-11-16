@@ -299,7 +299,19 @@
     // Link
     if ([[self container] isPagelet] && [self link])
     {
-        [context startAnchorElementWithHref:[[self link] URLString] title:nil target:nil rel:nil];
+        SVLink *link = [self link];
+        NSString *href = @"";
+        if ([link linkType] == SVLinkToFullSizeImage)
+        {
+            NSURL *URL = [context addMedia:[self media]];
+            if (URL) href = [context relativeURLStringOfURL:URL];
+        }
+        else
+        {
+            href = [[self link] URLString];
+        }
+        
+        [context startAnchorElementWithHref:href title:nil target:nil rel:nil];
         [self writeImageElement:context];
         [context endElement];
     }
