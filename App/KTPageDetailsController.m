@@ -22,6 +22,8 @@
 #import "KSShadowedRectView.h"
 #import "KSURLFormatter.h"
 #import "KSValidateCharFormatter.h"
+
+#import "BDAlias.h"
 #import "MAAttachedWindow.h"
 #import "NTBoxView.h"
 
@@ -1232,8 +1234,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 	NSOpenPanel *panel = [[site document] makeChooseDialog];
     
-	[panel beginSheetForDirectory:nil
-                             file:nil
+    NSString *path = [[[item mediaRepresentation] alias] lastKnownPath];
+    
+	[panel beginSheetForDirectory:[path stringByDeletingLastPathComponent]
+                             file:[path lastPathComponent]
                             types:[panel allowedFileTypes]
                    modalForWindow:[[self view] window]
                     modalDelegate:self
