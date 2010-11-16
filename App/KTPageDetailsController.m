@@ -1231,19 +1231,28 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	KTSite *site = [item site];
 
 	NSOpenPanel *panel = [[site document] makeChooseDialog];
-	
-	int returnCode = [panel runModalForTypes:[panel allowedFileTypes]];
-	
-	if (returnCode == NSOKButton && [[panel URLs] count])
+    
+	[panel beginSheetForDirectory:nil
+                             file:nil
+                            types:[panel allowedFileTypes]
+                   modalForWindow:[[self view] window]
+                    modalDelegate:self
+                   didEndSelector:@selector(chooseFilePanelDidEnd:returnCode:contextInfo:)
+                      contextInfo:NULL];
+}
+
+- (void)chooseFilePanelDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode contextInfo:(void *)context;
+{
+    if (returnCode == NSOKButton && [[panel URLs] count])
 	{
 		SVDownloadSiteItem *downloadPage = [[oPagesController selectedObjects] lastObject];
 		NSManagedObjectContext *context = [downloadPage managedObjectContext];
 		NSURL *url = [[panel URLs] lastObject];		// we have just one
 		NSError *error = nil;
 		SVMediaRecord *record = [SVMediaRecord mediaByReferencingURL:url
-												 entityName:@"FileMedia"
-							 insertIntoManagedObjectContext:context				/// where to we get our MOC?
-													  error:&error];
+                                                          entityName:@"FileMedia"
+                                      insertIntoManagedObjectContext:context				/// where to we get our MOC?
+                                                               error:&error];
 		if (error)
 		{
 			[[NSApplication sharedApplication] presentError:error];
@@ -1254,8 +1263,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			[downloadPage replaceMedia:record forKeyPath:@"media"];
 		}
 	}
-	 
 }
-
 
 @end
