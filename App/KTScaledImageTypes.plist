@@ -63,7 +63,7 @@
 	<key>KTSidebarPageMedia</key>
 	<dict>
 		<key>maxWidth</key>
-		<integer>320</integer>
+		<integer>430</integer>
 	</dict>
 	<key>largeImage</key>
 	<dict>
