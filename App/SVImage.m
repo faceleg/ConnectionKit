@@ -184,6 +184,18 @@
 #pragma mark Link
 
 @synthesize link = _link;
+- (void)setLink:(SVLink *)link;
+{
+    link = [link copy];
+    [_link release]; _link = link;
+    
+    [[NSUserDefaults standardUserDefaults] setBool:(link != nil) forKey:@"shouldIncludeLink"];
+    if (link)
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:([link linkType] == SVLinkToFullSizeImage)
+                                                forKey:@"linkImageToOriginal"];
+    }
+}
 
 - (id)serializedValueForKey:(NSString *)key;
 {
