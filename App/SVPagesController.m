@@ -384,15 +384,14 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         
         NSMutableSet *content = [[info objectForKey:NSObservedObjectKey] mutableSetValueForKeyPath:[info objectForKey:NSObservedKeyPathKey]];
         
-        BOOL avoidEmptySelection = [self avoidsEmptySelection];
-        BOOL preserveSelection = [self preservesSelection];
+        [self saveSelectionAttributes];
         [self setAvoidsEmptySelection:NO];
         [self setPreservesSelection:NO];
         
         [content addObjectsFromArray:objects];
         
-        [self setAvoidsEmptySelection:avoidEmptySelection];
-        [self setPreservesSelection:preserveSelection];
+        [self restoreSelectionAttributes];
+        
         
         // retry
         result = [super setSelectedObjects:objects];
