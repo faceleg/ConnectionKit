@@ -8,8 +8,14 @@
 
 #import "SVCommentsWindowController.h"
 #import "Debug.h"
+#import "KTMaster.h"
 
 @implementation SVCommentsWindowController
+
+- (void)setMaster:(KTMaster *)master
+{
+    [objectController setContent:master];
+}
 
 - (void)configureComments:(NSWindowController *)sender;
 {
@@ -25,6 +31,7 @@
 - (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 {
     [[self window] orderOut:nil];
+    [objectController setContent:nil];
 }
 
 - (IBAction)closeSheet:(id)sender
