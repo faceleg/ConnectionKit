@@ -93,6 +93,18 @@
 
 - (NSString *)filename { return [self.media preferredFilename]; }
 
+@dynamic fileName;
+- (void)setFileName:(NSString *)name;
+{
+    [self willChangeValueForKey:@"fileName"];
+    [self setPrimitiveValue:name forKey:@"fileName"];
+    
+    // This invalidates publishing status
+    [self setDatePublished:nil];
+    
+    [self didChangeValueForKey:@"fileName"];
+}
+
 - (KTMaster *)master; { return [[self parentPage] master]; }
 
 @end

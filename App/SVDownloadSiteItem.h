@@ -15,5 +15,6 @@
 @interface SVDownloadSiteItem : SVSiteItem
 
 @property(nonatomic, retain) SVMediaRecord *media;
+@property(nonatomic, copy) NSString *fileName;
 
 @end
