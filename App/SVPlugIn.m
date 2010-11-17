@@ -216,20 +216,20 @@ static id <SVPlugInContext> sCurrentContext;
 
 #pragma mark Layout
 
-- (NSString *)title { return [_container title]; }
-- (void)setTitle:(NSString *)title { [_container setTitle:title]; }
+- (NSString *)title { return [[self container] title]; }
+- (void)setTitle:(NSString *)title { [[self container] setTitle:title]; }
 
-- (BOOL)showsTitle { return [_container showsTitle]; }
-- (void)setShowsTitle:(BOOL)show { [_container setShowsTitle:show]; }
+- (BOOL)showsTitle { return [[self container] showsTitle]; }
+- (void)setShowsTitle:(BOOL)show { [[self container] setShowsTitle:show]; }
 
-- (BOOL)showsIntroduction { return [_container showsIntroduction]; }
-- (void)setShowsIntroduction:(BOOL)show { [_container setShowsIntroduction:show]; }
+- (BOOL)showsIntroduction { return [[self container] showsIntroduction]; }
+- (void)setShowsIntroduction:(BOOL)show { [[self container] setShowsIntroduction:show]; }
 
-- (BOOL)showsCaption { return [_container showsCaption]; }
-- (void)setShowsCaption:(BOOL)show { [_container setShowsCaption:show]; }
+- (BOOL)showsCaption { return [[self container] showsCaption]; }
+- (void)setShowsCaption:(BOOL)show { [[self container] setShowsCaption:show]; }
 
-- (BOOL)isBordered { return [_container isBordered]; }
-- (void)setBordered:(BOOL)show { [_container setBordered:show]; }
+- (BOOL)isBordered { return [[self container] isBordered]; }
+- (void)setBordered:(BOOL)show { [[self container] setBordered:show]; }
 
 #pragma mark Metrics
 
@@ -331,7 +331,7 @@ static id <SVPlugInContext> sCurrentContext;
 
 - (void)disableUndoRegistration;
 {
-    NSUndoManager *undoManager = [[_container managedObjectContext] undoManager];
+    NSUndoManager *undoManager = [[[self container] managedObjectContext] undoManager];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
                                                         object:undoManager];
@@ -341,7 +341,7 @@ static id <SVPlugInContext> sCurrentContext;
 
 - (void)enableUndoRegistration;
 {
-    NSUndoManager *undoManager = [[_container managedObjectContext] undoManager];
+    NSUndoManager *undoManager = [[[self container] managedObjectContext] undoManager];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
                                                         object:undoManager];
