@@ -1,19 +1,19 @@
 //
-//  SVParagraphedHTMLWriter.h
+//  SVParagraphedHTMLWriterDOMAdaptor.h
 //  Sandvox
 //
 //  Created by Mike on 10/02/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVFieldEditorHTMLWriter.h"
+#import "SVFieldEditorHTMLWriterDOMAdapator.h"
 #import "WebEditingKit.h"
 
 
 @class SVRichTextDOMController, SVTextAttachment;
 
 
-@interface SVParagraphedHTMLWriter : SVFieldEditorHTMLWriter
+@interface SVParagraphedHTMLWriterDOMAdaptor : SVFieldEditorHTMLWriterDOMAdapator
 {
   @private
     BOOL    _allowsBlockGraphics;
@@ -38,5 +38,5 @@
 
 
 @interface DOMNode (SVBodyText)
-- (DOMNode *)writeTopLevelParagraph:(KSHTMLWriter *)context;
+- (DOMNode *)writeTopLevelParagraph:(SVParagraphedHTMLWriterDOMAdaptor *)context;
 @end

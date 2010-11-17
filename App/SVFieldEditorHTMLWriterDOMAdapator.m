@@ -1,12 +1,12 @@
 //
-//  SVFieldEditorHTMLWriter.m
+//  SVFieldEditorHTMLWriterDOMAdapater.m
 //  Sandvox
 //
 //  Created by Mike on 10/01/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVFieldEditorHTMLWriter.h"
+#import "SVFieldEditorHTMLWriterDOMAdapator.h"
 
 #import "NSString+Karelia.h"
 
@@ -14,8 +14,10 @@
 #import "DOMElement+Karelia.h"
 #import "DOMRange+Karelia.h"
 
+#import "KSHTMLWriter.h"
 
-@interface SVFieldEditorHTMLWriter ()
+
+@interface SVFieldEditorHTMLWriterDOMAdapator ()
 
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 
@@ -35,7 +37,7 @@
 
 - (BOOL)isParagraphCharacterStyle;  // returns YES unless the receiver is text, <a>, <br>, image etc.
 
-- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLWriter *)context;
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLWriterDOMAdapator *)context;
 
 @end
 
@@ -43,11 +45,11 @@
 #pragma mark -
 
 
-@implementation SVFieldEditorHTMLWriter
+@implementation SVFieldEditorHTMLWriterDOMAdapator
 
-- (id)initWithOutputWriter:(id <KSWriter>)output;
+- (id)initWithXMLWriter:(KSXMLWriter *)writer;
 {
-    return [self initWithOutputStringWriter:(id)output];    // should blow up!
+    return [self initWithOutputStringWriter:(id)writer];    // should blow up!
 }
 
 - (id)initWithOutputStringWriter:(KSStringWriter *)output;
@@ -62,7 +64,9 @@
                                                    object:_output];
     }
     
-    self = [super initWithOutputWriter:_output];
+    KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:_output];
+    self = [super initWithXMLWriter:writer];
+    [writer release];
     
     _pendingStartTagDOMElements = [[NSMutableArray alloc] init];
     _pendingEndDOMElements = [[NSMutableArray alloc] init];
@@ -72,15 +76,6 @@
 
 - (void)dealloc
 {
-    // [super dealloc] will call -flush at some point, so these ivars must be set to nil
-    [_pendingStartTagDOMElements release]; _pendingStartTagDOMElements = nil;
-    [_pendingEndDOMElements release]; _pendingEndDOMElements = nil;
-    
-    [super dealloc];
-}
-
-- (void)close;
-{
     if (_output)
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -89,7 +84,11 @@
         [_output release]; _output = nil;
     }
     
-    [super close];
+    // [super dealloc] will call -flush at some point, so these ivars must be set to nil
+    [_pendingStartTagDOMElements release]; _pendingStartTagDOMElements = nil;
+    [_pendingEndDOMElements release]; _pendingEndDOMElements = nil;
+    
+    [super dealloc];
 }
 
 #pragma mark Properties
@@ -145,7 +144,7 @@
         
         
         // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
-        if ([self hasOpenElement:[tagName lowercaseString]])
+        if ([[self XMLWriter] hasOpenElement:[tagName lowercaseString]])
         {
             // Shuffle up following nodes
             DOMElement *parent = (DOMElement *)[element parentNode];
@@ -210,11 +209,11 @@
                     [self removeUnsupportedCustomStyling:style fromElement:elementName];
                     
                     // Have to write it specially as changes don't show up in [anAttribute value] sadly
-                    [self pushAttribute:@"style" value:[style cssText]];
+                    [[self XMLWriter] pushAttribute:@"style" value:[style cssText]];
                 }
                 else
                 {
-                    [self pushAttribute:attributeName value:[anAttribute value]];
+                    [[self XMLWriter] pushAttribute:attributeName value:[anAttribute value]];
                 }
             }
             else
@@ -227,7 +226,7 @@
     
     
     // Open tag. Make it inline so we match DOM exactly. (i.e text nodes take care of whitespace for us)
-    [self startElement:elementName writeInline:YES];
+    [[self XMLWriter] startElement:elementName writeInline:YES];
     
     
     // Finish setting up buffer
@@ -238,7 +237,7 @@
 {
     DOMNode *result = nil;
     
-    NSString *tagName = [self topElement];
+    NSString *tagName = [[self XMLWriter] topElement];
     if ([[self class] isElementWithTagNameContent:tagName])
     {
         result = [super endElementWithDOMElement:element];
@@ -412,7 +411,7 @@
     // List items are permitted inside of a list. We don't actually allow lists, but this is handy for subclasses that do implement lists
     if (!result && [tagName isEqualToString:@"LI"])
     {
-        if ([self topElementIsList]) result = YES;
+        if ([(KSHTMLWriter *)[self XMLWriter] topElementIsList]) result = YES;
     }
     
     return result;
@@ -521,7 +520,7 @@
     }
 }
 
-- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLWriter *)context; { return self; }
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLWriterDOMAdapator *)context; { return self; }
 
 @end
 
@@ -529,7 +528,7 @@
 
 - (BOOL)isParagraphCharacterStyle; { return YES; }
 
-- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLWriter *)context;
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLWriterDOMAdapator *)context;
 {
     if (![context validateElement:[self tagName]])
     {

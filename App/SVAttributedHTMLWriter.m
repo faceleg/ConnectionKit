@@ -11,7 +11,7 @@
 #import "SVAttributedHTML.h"
 
 #import "SVGraphic.h"
-#import "SVParagraphedHTMLWriter.h"
+#import "SVParagraphedHTMLWriterDOMAdaptor.h"
 #import "SVRichText.h"
 #import "SVTextAttachment.h"
 #import "SVRichTextDOMController.h"
@@ -60,7 +60,7 @@
     [attributedString release];
 }
 
-- (DOMNode *)HTMLWriter:(KSHTMLWriter *)writer willWriteDOMElement:(DOMElement *)element;
+- (DOMNode *)DOMAdaptor:(KSHTMLWriter *)writer willWriteDOMElement:(DOMElement *)element;
 {
     for (SVDOMController *aController in _graphicControllers)
     {
@@ -77,7 +77,7 @@
 
 - (void)writeDOMRange:(DOMRange *)range graphicControllers:(NSArray *)graphicControllers;
 {
-    SVDOMToHTMLWriter *writer = [[SVDOMToHTMLWriter alloc] initWithOutputWriter:self];
+    KSXMLWriterDOMAdaptor *writer = [[KSXMLWriterDOMAdaptor alloc] initWithOutputWriter:self];
     [writer setDelegate:self];
     
     _graphicControllers = graphicControllers;

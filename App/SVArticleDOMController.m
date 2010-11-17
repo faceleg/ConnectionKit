@@ -154,7 +154,7 @@
 
 @synthesize earlyCalloutDOMController = _earlyCalloutController;
 
-- (void)willWriteText:(SVParagraphedHTMLWriter *)writer;
+- (void)willWriteText:(SVParagraphedHTMLWriterDOMAdaptor *)writer;
 {
     // Write early callouts first
     SVCalloutDOMController *calloutController = [self earlyCalloutDOMController];

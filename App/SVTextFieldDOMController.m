@@ -9,7 +9,7 @@
 #import "SVTextFieldDOMController.h"
 
 #import "SVHTMLTextBlock.h"
-#import "SVFieldEditorHTMLWriter.h"
+#import "SVFieldEditorHTMLWriterDOMAdapator.h"
 #import "SVWebEditorHTMLContext.h"
 
 #import "DOMNode+Karelia.h"
@@ -149,19 +149,19 @@
 {
     // Validate the HTML
     KSStringWriter *writer = [[KSStringWriter alloc] init];
-    SVFieldEditorHTMLWriter *context = [[SVFieldEditorHTMLWriter alloc] initWithOutputStringWriter:writer];
+    SVFieldEditorHTMLWriterDOMAdapator *adaptor = [[SVFieldEditorHTMLWriterDOMAdapator alloc] initWithOutputStringWriter:writer];
     
     
     DOMHTMLElement *textElement = [self innerTextHTMLElement];
     if (textElement)
     {
-        [context writeInnerOfDOMNode:textElement];
+        [adaptor writeInnerOfDOMNode:textElement];
     }
     else
     {
         // fallback
-        [context startElement:@"br"];
-        [context endElement];
+        [[adaptor XMLWriter] startElement:@"br"];
+        [[adaptor XMLWriter] endElement];
     }
     
     
@@ -184,7 +184,7 @@
     
     
     // Finish up
-    [context release];
+    [adaptor release];
     [writer release];
     [super webEditorTextDidChange];
 }

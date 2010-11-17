@@ -21,7 +21,7 @@
 #import "SVLinkManager.h"
 #import "SVLink.h"
 #import "SVMedia.h"
-#import "SVParagraphedHTMLWriter.h"
+#import "SVParagraphedHTMLWriterDOMAdaptor.h"
 #import "SVTextAttachment.h"
 #import "SVTextBox.h"
 #import "SVWebContentObjectsController.h"
@@ -161,8 +161,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
        
     KSStringWriter *stringWriter = [[KSStringWriter alloc] init];
     
-    SVParagraphedHTMLWriter *writer = 
-    [[SVParagraphedHTMLWriter alloc] initWithOutputStringWriter:stringWriter];
+    SVParagraphedHTMLWriterDOMAdaptor *writer = 
+    [[SVParagraphedHTMLWriterDOMAdaptor alloc] initWithOutputStringWriter:stringWriter];
     
     [writer setDelegate:self];
     [writer setAllowsPagelets:[self allowsPagelets]];
@@ -216,9 +216,9 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [super webEditorTextDidChange];
 }
 
-- (void)willWriteText:(SVParagraphedHTMLWriter *)writer; { }
+- (void)willWriteText:(SVParagraphedHTMLWriterDOMAdaptor *)writer; { }
 
-- (DOMNode *)write:(SVParagraphedHTMLWriter *)writer
+- (DOMNode *)write:(SVParagraphedHTMLWriterDOMAdaptor *)adaptor
         DOMElement:(DOMElement *)element
               item:(WEKWebEditorItem *)controller;
 {
@@ -230,7 +230,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     DOMNode *parentNode = [element parentNode];
     
-    if ([writer openElementsCount] &&
+    if ([[adaptor XMLWriter] openElementsCount] &&
         ![graphic shouldWriteHTMLInline])
     {
         // Push the element off up the tree; it will be written next time round
@@ -239,7 +239,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     else
     {
         // Graphics are written as-is. Callouts write their contents
-        if (![controller writeAttributedHTML:writer])
+        if (![controller writeAttributedHTML:adaptor])
         {
             result = element;
         }
@@ -250,7 +250,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 }
 
 - (DOMNode *)convertImageElementToGraphic:(DOMHTMLImageElement *)imageElement
-                               HTMLWriter:(SVParagraphedHTMLWriter *)writer;
+                               HTMLWriter:(SVParagraphedHTMLWriterDOMAdaptor *)writer;
 {
     // Is there an orphaned item we should reconnect to?
     WEKWebEditorItem *orphanedItem = [self orphanedWebEditorItemMatchingDOMNode:imageElement];
@@ -373,7 +373,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     return [[controller HTMLElement] nextSibling];
 }
 
-- (DOMNode *)HTMLWriter:(SVParagraphedHTMLWriter *)writer willWriteDOMElement:(DOMElement *)element;
+- (DOMNode *)DOMAdaptor:(SVParagraphedHTMLWriterDOMAdaptor *)writer willWriteDOMElement:(DOMElement *)element;
 {
     // If the element is inside an DOM controller, write that out instead…
     WEKWebEditorItem *item = [self itemForDOMNode:element];
@@ -645,7 +645,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (BOOL)allowsPagelets; { return NO; }
 
-- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriter *)writer; { return NO; }
+- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriterDOMAdaptor *)writer; { return NO; }
 
 @end
 

@@ -1,5 +1,5 @@
 //
-//  SVFieldEditorHTMLWriter.h
+//  SVFieldEditorHTMLWriterDOMAdapator.h
 //  Sandvox
 //
 //  Created by Mike on 10/01/2010.
@@ -13,11 +13,11 @@
 //  -   Only a small whitelist of elements, attributes and styling are permitted. Anything failing to make the grade will be removed from the DOM and not actually written to the context.
 
 
-#import "SVDOMToHTMLWriter.h"
+#import "KSXMLWriterDOMAdaptor.h"
 #import "KSStringWriter.h";
 
 
-@interface SVFieldEditorHTMLWriter : SVDOMToHTMLWriter
+@interface SVFieldEditorHTMLWriterDOMAdapator : KSXMLWriterDOMAdaptor
 {
     NSMutableArray          *_pendingStartTagDOMElements;
   @private
@@ -27,6 +27,7 @@
     BOOL    _allowsImages;
 }
 
+// Constructs intermediate HTML Writer for you
 - (id)initWithOutputStringWriter:(KSStringWriter *)output;
 
 

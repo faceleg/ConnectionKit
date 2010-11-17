@@ -13,7 +13,7 @@
 #import "SVContentDOMController.h"
 #import "SVMediaRecord.h"
 #import "KTPage.h"
-#import "SVParagraphedHTMLWriter.h"
+#import "SVParagraphedHTMLWriterDOMAdaptor.h"
 #import "SVPasteboardItemInternal.h"
 #import "SVRichTextDOMController.h"
 #import "SVSidebarDOMController.h"
@@ -425,7 +425,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Attributed HTML
 
-- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriter *)writer;
+- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriterDOMAdaptor *)adaptor;
 {
     SVGraphic *graphic = [self representedObject];
     SVTextAttachment *attachment = [graphic textAttachment];
@@ -434,9 +434,9 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     // Is it allowed?
     if ([graphic isPagelet])
     {
-        if ([writer allowsPagelets])
+        if ([adaptor allowsPagelets])
         {
-            if ([writer openElementsCount] > 0)
+            if ([[adaptor XMLWriter] openElementsCount] > 0)
             {
                 return NO;
             }
@@ -471,10 +471,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Set attachment location
-    [writer writeTextAttachment:attachment];
+    [adaptor writeTextAttachment:attachment];
     
-    [writer flush];
-    KSStringWriter *stringWriter = [writer valueForKeyPath:@"_output"];     // HACK!
+    [[adaptor XMLWriter] flush];
+    KSStringWriter *stringWriter = [adaptor valueForKeyPath:@"_output"];     // HACK!
     NSRange range = NSMakeRange([(NSString *)stringWriter length] - 1, 1);  // HACK!
     
     if (!NSEqualRanges([attachment range], range))

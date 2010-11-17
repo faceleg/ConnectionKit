@@ -65,7 +65,7 @@
 
 #pragma mark Attributed HTML
 
-- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriter *)writer;
+- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriterDOMAdaptor *)writer;
 {
     // Temporarily switch delegate to us for writing out children
     id delegate = [writer delegate];
@@ -97,7 +97,7 @@
     return nil;
 }
 
-- (DOMNode *)HTMLWriter:(SVParagraphedHTMLWriter *)writer willWriteDOMElement:(DOMElement *)element;
+- (DOMNode *)DOMAdaptor:(SVParagraphedHTMLWriterDOMAdaptor *)writer willWriteDOMElement:(DOMElement *)element;
 {
     DOMNode *result = element;
     

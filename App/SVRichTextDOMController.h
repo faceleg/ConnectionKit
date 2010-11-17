@@ -7,14 +7,14 @@
 //
 
 #import "SVTextDOMController.h"
-#import "SVFieldEditorHTMLWriter.h"
+#import "SVFieldEditorHTMLWriterDOMAdapator.h"
 #import "SVRichText.h"
 
 
-@class SVRichText, SVGraphic, SVWebEditorHTMLContext, SVParagraphedHTMLWriter;
+@class SVRichText, SVGraphic, SVWebEditorHTMLContext, SVParagraphedHTMLWriterDOMAdaptor;
 
 
-@interface SVRichTextDOMController : SVTextDOMController <SVDOMToHTMLWriterDelegate>
+@interface SVRichTextDOMController : SVTextDOMController <KSXMLWriterDOMAdaptorDelegate>
 {        
     BOOL    _isUpdating;
     
@@ -37,8 +37,8 @@
 
 
 #pragma mark Responding to Changes
-- (void)willWriteText:(SVParagraphedHTMLWriter *)writer;
-- (DOMNode *)write:(SVParagraphedHTMLWriter *)writer
+- (void)willWriteText:(SVParagraphedHTMLWriterDOMAdaptor *)writer;
+- (DOMNode *)write:(SVParagraphedHTMLWriterDOMAdaptor *)writer
         DOMElement:(DOMElement *)element
               item:(WEKWebEditorItem *)controller;
 
@@ -60,7 +60,7 @@
 
 #pragma mark Attributed HTML
 // Return YES if manages to write self. Otherwise return NO to treat as standard HTML
-- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriter *)writer;
+- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriterDOMAdaptor *)writer;
 
 @end
 

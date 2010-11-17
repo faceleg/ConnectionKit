@@ -6,13 +6,13 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVParagraphedHTMLWriter.h"
+#import "SVParagraphedHTMLWriterDOMAdaptor.h"
 
 #import "NSString+Karelia.h"
 #import "DOMNode+Karelia.h"
 
 
-@implementation SVParagraphedHTMLWriter
+@implementation SVParagraphedHTMLWriterDOMAdaptor
 
 #pragma mark Init & Dealloc
 
@@ -44,7 +44,7 @@
 - (void)writeTextAttachment:(SVTextAttachment *)attachment;
 {
     [_attachments addObject:attachment];
-    [self writeString:[NSString stringWithUnichar:NSAttachmentCharacter]];
+    [[self XMLWriter] writeString:[NSString stringWithUnichar:NSAttachmentCharacter]];
 }
 
 #pragma mark Cleanup
@@ -121,7 +121,7 @@
     
     
     // Completely invalid, or top-level elements should be converted into paragraphs
-    else if ([self openElementsCount] == 0)
+    else if ([[self XMLWriter] openElementsCount] == 0)
     {
         // Special case: Line breaks are permitted as the very last element
         // TODO: Rather than read ahead to next DOM element, use same technique as other tidy up and delete the element during a later pass
@@ -164,7 +164,7 @@
 - (void)writeText:(NSString *)string;
 {
     // At start of top element, ignore whitespace. #76588
-    if ([self openElementsCount] == 1 &&
+    if ([[self XMLWriter] openElementsCount] == 1 &&
         [_pendingStartTagDOMElements count] &&
         [string isWhitespace])
     {
@@ -185,13 +185,13 @@
         [tagName isEqualToString:@"UL"] ||
         [tagName isEqualToString:@"OL"])
     {
-        result = ([self openElementsCount] == 0 ||
-                  [[self topElement] isEqualToStringCaseInsensitive:@"LI"]);
+        result = ([[self XMLWriter] openElementsCount] == 0 ||
+                  [[[self XMLWriter] topElement] isEqualToStringCaseInsensitive:@"LI"]);
     }
     else
     {
         // Super allows standard inline elements. We only support them once inside a paragraph or similar
-        if ([self openElementsCount] > 0)
+        if ([[self XMLWriter] openElementsCount] > 0)
         {
             result = [super validateElement:tagName];
         }
@@ -261,7 +261,7 @@
 
 @implementation DOMNode (SVBodyText)
 
-- (DOMNode *)writeTopLevelParagraph:(KSHTMLWriter *)context;
+- (DOMNode *)writeTopLevelParagraph:(SVParagraphedHTMLWriterDOMAdaptor *)context;
 {
     //  Don't want unknown nodes
     DOMNode *result = [self nextSibling];
@@ -274,7 +274,7 @@
 
 @implementation DOMElement (SVBodyText)
 
-- (DOMNode *)writeTopLevelParagraph:(KSHTMLWriter *)writer;
+- (DOMNode *)writeTopLevelParagraph:(SVParagraphedHTMLWriterDOMAdaptor *)writer;
 {
     //  Elements can be treated pretty normally
     DOMNode *node = [writer willWriteDOMElement:self];
@@ -295,7 +295,7 @@
 
 @implementation DOMText (SVBodyText)
 
-- (DOMNode *)writeTopLevelParagraph:(KSHTMLWriter *)context;
+- (DOMNode *)writeTopLevelParagraph:(SVParagraphedHTMLWriterDOMAdaptor *)context;
 {
     NSString *text = [self textContent];
     if ([text isWhitespace])
