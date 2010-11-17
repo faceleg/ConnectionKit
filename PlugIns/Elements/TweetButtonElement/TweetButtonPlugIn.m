@@ -62,27 +62,27 @@
 // horizontal button is 110  (at least) x 20
 // vertical button is 55 x 62 (at least)
 
-- (NSUInteger)width
+- (NSNumber *)width
 {
     if ( STYLE_HORIZONTAL == self.tweetButtonStyle )
     {
-        return 110;
+        return [NSNumber numberWithUnsignedInteger:110];
     }
     else 
     {
-        return [self minWidth];
+        return [NSNumber numberWithUnsignedInteger:[self minWidth]];
     }
 }
 
-- (NSUInteger)height
+- (NSNumber *)height
 {
     if ( STYLE_VERTICAL == self.tweetButtonStyle )
     {
-        return 62;
+        return [NSNumber numberWithUnsignedInteger:62];
     }
     else 
     {
-        return [self minHeight];
+        return [NSNumber numberWithUnsignedInteger:[self minHeight]];
     }
 }
 
