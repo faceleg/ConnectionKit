@@ -14,13 +14,14 @@
 
 - (void)setMaster:(KTMaster *)master
 {
-    [objectController setContent:master];
+    if ( [self window] )
+    {
+        [objectController setContent:master];
+    }
 }
 
 - (void)configureComments:(NSWindowController *)sender;
 {
-    LOG((@"...configure Comments..."));
-    
     [NSApp beginSheet:[self window] 
        modalForWindow:[sender window] 
         modalDelegate:self 
@@ -38,6 +39,5 @@
 {
     [NSApp endSheet:[self window]];
 }
-
 
 @end
