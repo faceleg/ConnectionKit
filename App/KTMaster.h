@@ -83,15 +83,16 @@
 
 
 #pragma mark Comments
-@property(nonatomic, retain) NSString *commentsOwner;
 @property(nonatomic, assign) NSNumber *commentsProvider;
 @property(nonatomic, readonly) NSString *commentsSummary;
 
+// convenciences for examining KTCommentsProvider
 - (BOOL)wantsDisqus;
-- (BOOL)wantsHaloscan;
+- (BOOL)wantsHaloscan;  // for backward compatibility with KTCommentsProvider enum
 - (BOOL)wantsIntenseDebate;
 - (BOOL)wantsJSKit;
 
+// extensible properties
 - (NSString *)disqusShortName;
 - (void)setDisqusShortName:(NSString *)aString;
 

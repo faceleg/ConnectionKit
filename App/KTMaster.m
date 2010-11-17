@@ -385,38 +385,34 @@
 
 #pragma mark Comments
 
-- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key
+@dynamic commentsProvider;
+
+- (NSString *)commentsSummary
 {
-    if ( [key isEqualToString:@"disqusShortName"] )
+    NSString *result = NSLocalizedString(@"None Selected", @"no comments");
+    
+    switch ( [[self commentsProvider] unsignedIntValue] )
     {
-        return YES;
+        case KTCommentsProviderDisqus:
+            result = [NSString stringWithFormat:@"Disqus, %@", [self disqusShortName]];
+            break;
+        case KTCommentsProviderIntenseDebate:
+            result = [NSString stringWithFormat:@"IntenseDebate, %@", [self IntenseDebateAccountID]];
+            break;
+        case KTCommentsProviderJSKit:
+            result = [NSString stringWithFormat:@"Echo/JS-Kit, %@", [self JSKitModeratorEmail]];
+            break;
+        default:
+            break;
     }
-    else if ( [key isEqualToString:@"IntenseDebateAccountID"] )
-    {
-        return YES;
-    }
-    else if ( [key isEqualToString:@"JSKitModeratorEmail"] )
-    {
-        return YES;
-    }
-    else
-    {
-        return [super usesExtensiblePropertiesForUndefinedKey:key];
-    }
+    
+    return result;
 }
 
 + (NSSet *)keyPathsForValuesAffectingCommentsSummary
 {
-	return [NSSet setWithObjects:@"commentsProvider", @"commentsOwner", nil];
+	return [NSSet setWithObjects:@"commentsProvider", nil];
 }
-
-- (NSString *)commentsSummary
-{
-    return @"None Yet!";
-}
-
-@dynamic commentsOwner;
-@dynamic commentsProvider;
 
 - (BOOL)wantsDisqus
 {
@@ -436,6 +432,20 @@
 - (BOOL)wantsJSKit
 {
 	return (KTCommentsProviderJSKit == [[self commentsProvider] unsignedIntValue]);
+}
+
+- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key
+{
+    if ( [key isEqualToString:@"disqusShortName"]
+        || [key isEqualToString:@"IntenseDebateAccountID"]
+        || [key isEqualToString:@"JSKitModeratorEmail"] )
+    {
+        return YES;
+    }
+    else
+    {
+        return [super usesExtensiblePropertiesForUndefinedKey:key];
+    }
 }
 
 - (NSString *)disqusShortName
@@ -488,7 +498,6 @@
         [self removeExtensiblePropertyForKey:@"IntenseDebateAccountID"];
     }
 }
-
 
 #pragma mark Placeholder Image
 
