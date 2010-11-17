@@ -98,6 +98,8 @@
 - (NSString *)JSKitModeratorEmail;
 - (void)setJSKitModeratorEmail:(NSString *)aString;
 
+- (NSString *)IntenseDebateAccountID;
+- (void)setIntenseDebateAccountID:(NSString *)aString;
 
 #pragma mark Placeholder Image
 - (SVMediaRecord *)makePlaceholdImageMediaWithEntityName:(NSString *)entityName;

@@ -438,6 +438,58 @@
 	return (KTCommentsProviderJSKit == [[self commentsProvider] unsignedIntValue]);
 }
 
+- (NSString *)disqusShortName
+{
+    return [self extensiblePropertyForKey:@"disqusShortName"];
+}
+
+- (void)setDisqusShortName:(NSString *)aString
+{
+    if ( aString )
+    {
+        [self setExtensibleProperty:aString forKey:@"disqusShortName"];
+    }
+    else
+    {
+        [self removeExtensiblePropertyForKey:@"disqusShortName"];
+    }
+}
+
+- (NSString *)JSKitModeratorEmail
+{
+    return [self extensiblePropertyForKey:@"JSKitModeratorEmail"];
+}
+
+- (void)setJSKitModeratorEmail:(NSString *)aString
+{
+    if ( aString )
+    {
+        [self setExtensibleProperty:aString forKey:@"JSKitModeratorEmail"];
+    }
+    else
+    {
+        [self removeExtensiblePropertyForKey:@"JSKitModeratorEmail"];
+    }
+}
+
+- (NSString *)IntenseDebateAccountID
+{
+    return [self extensiblePropertyForKey:@"IntenseDebateAccountID"];
+}
+
+- (void)setIntenseDebateAccountID:(NSString *)aString
+{
+    if ( aString )
+    {
+        [self setExtensibleProperty:aString forKey:@"IntenseDebateAccountID"];
+    }
+    else
+    {
+        [self removeExtensiblePropertyForKey:@"IntenseDebateAccountID"];
+    }
+}
+
+
 #pragma mark Placeholder Image
 
 - (SVMediaRecord *)makePlaceholdImageMediaWithEntityName:(NSString *)entityName;
