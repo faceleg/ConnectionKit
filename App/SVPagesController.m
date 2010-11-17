@@ -17,6 +17,7 @@
 #import "KTElementPlugInWrapper.h"
 #import "SVLink.h"
 #import "SVLinkManager.h"
+#import "SVMediaGraphic.h"
 #import "SVMediaRecord.h"
 #import "KTPage+Paths.h"
 #import "SVPageTemplate.h"
@@ -215,6 +216,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         
         if (predecessor)
         {
+            [result setShowSidebar:[predecessor showSidebar]];
             [result setAllowComments:[predecessor allowComments]];
             [result setIncludeTimestamp:[predecessor includeTimestamp]];
         }
@@ -550,6 +552,12 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
             KTPage *page = [self newObjectDestinedForCollection:collection];
             [page setTitle:[aGraphic title]];
             
+            // First media added to a collection probably doesn't want sidebar. #96013
+            if (![[collection childItems] count] && [aGraphic isKindOfClass:[SVMediaGraphic class]])
+            {
+                [page setShowSidebar:NSBOOL(NO)]; 
+            }
+                      
             
             // Insert page into the collection. Do before inserting graphic so behaviour dependant on containing collection works. #90905
             [self addObject:page toCollection:collection];
