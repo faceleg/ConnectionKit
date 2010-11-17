@@ -102,6 +102,7 @@
 
 - (void)dealloc;
 {
+    [_identifier release];
 	[_title release];
 	[_subtitle release];
 	[_icon release];
@@ -212,6 +213,7 @@
     return result;
 }
 
+@synthesize identifier = _identifier;
 @synthesize title = _title;
 @synthesize subtitle = _subtitle;
 @synthesize icon = _icon;

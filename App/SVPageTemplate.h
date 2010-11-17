@@ -15,6 +15,7 @@
 @interface SVPageTemplate : NSObject
 {
   @private
+    NSString            *_identifier;
     NSString            *_title;
     NSString            *_subtitle;
     NSImage             *_icon;
@@ -27,6 +28,7 @@
 - (id)initWithCollectionPreset:(NSDictionary *)presetDict;
 - (id)initWithGraphicFactory:(SVGraphicFactory *)factory;
 
+@property(nonatomic, copy) NSString *identifier;
 @property(nonatomic, copy) NSString *title; // title of template, not created pages
 @property(nonatomic, copy) NSString *subtitle; // additional information about the menu
 @property(nonatomic, retain) NSImage *icon;
