@@ -460,6 +460,7 @@
 
 - (void)setDisqusShortName:(NSString *)aString
 {
+    [self willChangeValueForKey:@"disqusShortName"];
     if ( aString )
     {
         [self setExtensibleProperty:aString forKey:@"disqusShortName"];
@@ -468,6 +469,7 @@
     {
         [self removeExtensiblePropertyForKey:@"disqusShortName"];
     }
+    [self didChangeValueForKey:@"disqusShortName"];
 }
 
 - (NSString *)JSKitModeratorEmail
@@ -477,6 +479,7 @@
 
 - (void)setJSKitModeratorEmail:(NSString *)aString
 {
+    [self willChangeValueForKey:@"JSKitModeratorEmail"];
     if ( aString )
     {
         [self setExtensibleProperty:aString forKey:@"JSKitModeratorEmail"];
@@ -485,6 +488,7 @@
     {
         [self removeExtensiblePropertyForKey:@"JSKitModeratorEmail"];
     }
+    [self didChangeValueForKey:@"JSKitModeratorEmail"];
 }
 
 - (NSString *)IntenseDebateAccountID
@@ -494,6 +498,7 @@
 
 - (void)setIntenseDebateAccountID:(NSString *)aString
 {
+    [self willChangeValueForKey:@"IntenseDebateAccountID"];
     if ( aString )
     {
         [self setExtensibleProperty:aString forKey:@"IntenseDebateAccountID"];
@@ -502,6 +507,7 @@
     {
         [self removeExtensiblePropertyForKey:@"IntenseDebateAccountID"];
     }
+    [self didChangeValueForKey:@"IntenseDebateAccountID"];
 }
 
 #pragma mark Placeholder Image
