@@ -31,6 +31,10 @@
 
 - (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 {
+    if ( ![sheet makeFirstResponder:sheet] )
+    {
+        [sheet endEditingFor:nil];
+    }
     [[self window] orderOut:nil];
     [objectController setContent:nil];
 }
