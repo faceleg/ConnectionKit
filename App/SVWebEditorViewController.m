@@ -119,6 +119,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     [[[self webEditor] undoManager] removeAllActionsWithTarget:self];
     
+    [self setContentDOMController:nil];
     [self setWebEditor:nil];   // needed to tear down data source
     [self setDelegate:nil];
     
