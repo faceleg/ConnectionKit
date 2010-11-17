@@ -56,8 +56,10 @@
 
 @interface SVCommentsWindowController : NSWindowController 
 {
-    IBOutlet NSObjectController *objectController;
+    NSObjectController *_objectController;
 }
+
+@property (nonatomic, retain) IBOutlet NSObjectController *objectController;
 
 - (void)configureComments:(NSWindowController *)sender;
 - (void)setMaster:(KTMaster *)master;

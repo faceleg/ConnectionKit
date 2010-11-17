@@ -11,12 +11,19 @@
 #import "KTMaster.h"
 
 @implementation SVCommentsWindowController
+@synthesize objectController = _objectController;
+
+- (void)dealloc
+{
+    self.objectController = nil;
+    [super dealloc];
+}
 
 - (void)setMaster:(KTMaster *)master
 {
     if ( [self window] )
     {
-        [objectController setContent:master];
+        [self.objectController setContent:master];
     }
 }
 
@@ -36,7 +43,7 @@
         [sheet endEditingFor:nil];
     }
     [[self window] orderOut:nil];
-    [objectController setContent:nil];
+    [self.objectController setContent:nil];
 }
 
 - (IBAction)closeSheet:(id)sender
