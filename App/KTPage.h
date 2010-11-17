@@ -44,6 +44,7 @@ typedef enum {
 
 #pragma mark Body
 @property(nonatomic, retain, readonly) SVRichText *article;
+@property(nonatomic, copy) NSString *masterIdentifier;
 
 
 #pragma mark Properties

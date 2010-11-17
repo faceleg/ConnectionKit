@@ -223,7 +223,8 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         if (allowCollections)
         {
             SVPageTemplate *template = [self pageTemplate];
-        
+            [result setMasterIdentifier:[[self pageTemplate] identifier]];
+            
             
             // Make the page into a collection if it was requested
             if ([[[self pageTemplate] pageProperties] boolForKey:@"isCollection"]) 

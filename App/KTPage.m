@@ -308,6 +308,8 @@
     }
 }
 
+@dynamic masterIdentifier;
+
 #pragma mark Properties
 
 - (void)setSite:(KTSite *)site recursively:(BOOL)recursive;
