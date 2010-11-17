@@ -411,7 +411,12 @@
 
 + (NSSet *)keyPathsForValuesAffectingCommentsSummary
 {
-	return [NSSet setWithObjects:@"commentsProvider", nil];
+	return [NSSet setWithObjects:
+            @"commentsProvider", 
+            @"disqusShortName", 
+            @"IntenseDebateAccountID", 
+            @"JSKitModeratorEmail", 
+            nil];
 }
 
 - (BOOL)wantsDisqus
