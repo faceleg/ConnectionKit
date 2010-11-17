@@ -574,6 +574,11 @@
 {
     BOOL result = [super awakeFromPasteboardItems:items];
     
+    
+    NSString *title = [[items lastObject] title];
+    if (title) [self setTitle:title];
+    
+    
     // Can we read a media oject from the pboard?
     SVMediaRecord *record = nil;
     id <SVPasteboardItem> item = [items objectAtIndex:0];
