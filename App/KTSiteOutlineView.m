@@ -48,7 +48,7 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 	[super draggingExited:sender];
 }
 
-- (NSMenu *)menuForEvent:(NSEvent *)theEvent
+/*- (NSMenu *)menuForEvent:(NSEvent *)theEvent
 {
 	NSPoint point = [self convertPoint:[theEvent locationInWindow] fromView:nil];
 	int row = [self rowAtPoint:point];
@@ -130,7 +130,7 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
     // default is just to return super's implementation
 	NSMenu *standardMenu = [super menuForEvent:theEvent];
     return standardMenu;
-}
+}*/
 
 #pragma mark -
 #pragma mark Reloading
