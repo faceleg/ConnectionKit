@@ -1,38 +1,6 @@
 [[if !disableComments]]
 [[if allowComments]]
 									<!-- comments -->
-[[if master.wantsHaloscan]]
-[[if master.haloscanUserName]]
-									<div class="comments">
-										<p>
-											[[if parser.HTMLGenerationPurpose]]<a href="http://www.haloscan.com/comments/[[=&%master.haloscanUserName]]/[[=uniqueID]]/" title="[[`Comment]]" onclick="HaloScan('[[=uniqueID]]'); return false;"><script type="text/javascript">postCount('[[=uniqueID]]'); </script></a>[[else5]][[`Haloscan Comments]][[endif5]]
-[[if master.supportTrackbacks]]
-											<script type="text/javascript">document.write(' | ');</script>
-											[[if parser.HTMLGenerationPurpose]]<a href="http://www.haloscan.com/tb/[[=&%master.haloscanUserName]]/[[=uniqueID]]/" title="[[`Other Posts About This]]" onclick="HaloScanTB('[[=uniqueID]]'); return false;"><script type="text/javascript">postCountTB('[[=uniqueID]]'); </script></a>[[else6]][[`Trackback]][[endif6]]
-	<!-- Begin trackback -->
-	<!-- Auto Discovery RDF Code
-	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-	xmlns:dc="http://purl.org/dc/elements/1.1/"
-	xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-	<rdf:Description
-	rdf:about="[[=&URL]]"
-	dc:identifier="[[=&URL]]"
-	dc:title="[[=&titleText]]"
-	trackback:ping="http://haloscan.com/tb/[[=&%master.haloscanUserName]]/[[=uniqueID]]" />
-	</rdf:RDF>
-	-->
-	<!-- End trackback -->
-[[endif5]]
-										</p>
-									</div> <!-- /comments -->
-[[else4]]
-[[if parser.HTMLGenerationPurpose==0]]
-									<div class="comments">
-										<p style="color:red;">[[`To enable Haloscan comments, enter your Haloscan ID into the Site Inspector]]</p>
-									</div>
-[[endif5]]
-[[endif4]]
-[[endif3]]
 [[if master.wantsJSKit]]
 [[if master.JSKitModeratorEmail]]
 									[[if parser.isPublishing]]
