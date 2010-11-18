@@ -60,7 +60,7 @@
     [attributedString release];
 }
 
-- (DOMNode *)DOMAdaptor:(KSHTMLWriter *)writer willWriteDOMElement:(DOMElement *)element;
+- (DOMNode *)DOMAdaptor:(KSXMLWriterDOMAdaptor *)writer willWriteDOMElement:(DOMElement *)element;
 {
     for (SVDOMController *aController in _graphicControllers)
     {
