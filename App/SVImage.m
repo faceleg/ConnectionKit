@@ -285,12 +285,15 @@
     SVMedia *media = [self media];
     if (media)
     {
-        [context writeImageWithSourceMedia:media
-                                       alt:alt
-                                     width:nil  // nil sizing because bindSizeToObject: takes care
-                                    height:nil  // of that already
-                                      type:[self typeToPublish]
-                         preferredFilename:nil];
+        NSURL *URL = [context addImageMedia:media
+                                      width:[self width]
+                                     height:[self height]
+                                       type:[self typeToPublish]
+                          preferredFilename:nil];
+        
+        [context writeImageWithSrc:(URL ? [context relativeURLStringOfURL:URL] : @"")
+                               alt:alt
+                             width:nil height:nil];// nil sizing because bindSizeToObject: takes care
         
         [context addDependencyOnObject:self keyPath:@"typeToPublish"];
     }
