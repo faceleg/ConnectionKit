@@ -278,6 +278,30 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 @dynamic sidebars;
 
+#pragma mark Template
+
+- (BOOL)wasCreatedByTemplate;
+{
+    return [[self valueForUndefinedKey:@"wasCreatedByTemplate"] boolValue];
+}
+
+- (void)setWasCreatedByTemplate:(BOOL)template;
+{
+    [self setValue:NSBOOL(template) forUndefinedKey:@"wasCreatedByTemplate"];
+}
+
+- (BOOL) usesExtensiblePropertiesForUndefinedKey:(NSString *)key;
+{
+    if ([key isEqualToString:@"wasCreatedByTemplate"])
+    {
+        return YES;
+    }
+    else
+    {
+        return [super usesExtensiblePropertiesForUndefinedKey:key];
+    }
+}
+
 #pragma mark Validation
 
 - (BOOL)validateForInsert:(NSError **)error
@@ -383,7 +407,14 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (id)valueForUndefinedKey:(NSString *)key
 {
-    return NSNotApplicableMarker;
+    if ([self usesExtensiblePropertiesForUndefinedKey:key])
+    {
+        return [super valueForUndefinedKey:key];
+    }
+    else
+    {
+        return NSNotApplicableMarker;
+    }
 }
 
 #pragma mark Serialization

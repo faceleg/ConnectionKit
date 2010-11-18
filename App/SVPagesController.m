@@ -205,7 +205,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     return [self newObjectWithPredecessor:predecessor followTemplate:YES];
 }
 
-- (id)newObjectWithPredecessor:(KTPage *)predecessor followTemplate:(BOOL)allowCollections;
+- (id)newObjectWithPredecessor:(KTPage *)predecessor followTemplate:(BOOL)followTemplate;
 {
     id result = [super newObject];
     
@@ -222,7 +222,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         }
         
         
-        if (allowCollections)
+        if (followTemplate)
         {
             SVPageTemplate *template = [self pageTemplate];
             [result setMasterIdentifier:[[self pageTemplate] identifier]];
@@ -243,6 +243,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
             if ([template graphicFactory])
             {
                 SVGraphic *initialGraphic = [[template graphicFactory] insertNewGraphicInManagedObjectContext:[self managedObjectContext]];
+                [initialGraphic setWasCreatedByTemplate:YES];
                 
                 NSAttributedString *graphicHTML = [NSAttributedString attributedHTMLStringWithGraphic:initialGraphic];
                 [[initialGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementInline]];

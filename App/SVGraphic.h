@@ -146,6 +146,10 @@ extern NSString *kSVGraphicPboardType;
 @property(nonatomic, readonly) NSSet *sidebars;
 
 
+#pragma mark Template
+@property(nonatomic) BOOL wasCreatedByTemplate;
+
+
 #pragma mark HTML
 
 - (void)writeBody:(SVHTMLContext *)context;  // Subclasses MUST override
