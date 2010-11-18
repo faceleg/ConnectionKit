@@ -979,6 +979,8 @@
     NSRange range = NSMakeRange(0, [attributedHTML length]);
     NSUInteger location = 0;
     
+    BOOL firstItem = YES;
+    
     while (location < range.length)
     {
         NSRange effectiveRange;
@@ -990,6 +992,7 @@
         if (attachment)
         {
             // Write the graphic
+            [self pushClassName:(firstItem ? @"first" : @"not-first-item")];
             [self writeGraphic:[attachment graphic]];
         }
         else
@@ -1000,6 +1003,9 @@
         
         // Advance the search
         location = location + effectiveRange.length;
+        
+        // Having written the first bit of content, it's time to start marking that
+        firstItem = NO;
     }
 }
 
