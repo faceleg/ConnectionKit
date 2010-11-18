@@ -445,7 +445,17 @@
 
 - (BOOL)wantsDisqus
 {
-	return (KTCommentsProviderDisqus == [[self commentsProvider] unsignedIntValue]);
+	//return (KTCommentsProviderDisqus == [[self commentsProvider] unsignedIntValue]);
+	if (KTCommentsProviderDisqus == [[self commentsProvider] unsignedIntValue])
+    {
+        LOG((@"wantsDisqus is YES"));
+        return YES;
+    }
+    else
+    {
+        LOG((@"wantsDisqus is NO"));
+        return NO;
+    }
 }
 
 - (BOOL)wantsHaloscan
