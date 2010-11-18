@@ -450,6 +450,7 @@
 
 - (BOOL)wantsHaloscan
 {
+    NSLog(@"warning: Haloscan is no longer supported.");
 	return (KTCommentsProviderHaloscan == [[self commentsProvider] unsignedIntValue]);
 }
 
