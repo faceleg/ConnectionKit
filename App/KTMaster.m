@@ -394,13 +394,37 @@
     switch ( [[self commentsProvider] unsignedIntValue] )
     {
         case KTCommentsProviderDisqus:
-            result = [NSString stringWithFormat:@"Disqus, %@", [self disqusShortName]];
+            if ( [self disqusShortName] )
+            {
+                result = [NSString stringWithFormat:@"Disqus, %@", [self disqusShortName]];
+            }
+            else
+            {
+                result = NSLocalizedString(@"Disqus, short name not set", @"");
+            }
             break;
         case KTCommentsProviderIntenseDebate:
-            result = [NSString stringWithFormat:@"IntenseDebate, %@", [self IntenseDebateAccountID]];
+            if ( [self IntenseDebateAccountID] )
+            {
+                // AccountID is cryptic and long, don't display it
+                result = @"IntenseDebate";
+            }
+            else
+            {
+                result = NSLocalizedString(@"IntenseDebate, no Account ID", @"");
+            }
             break;
         case KTCommentsProviderJSKit:
-            result = [NSString stringWithFormat:@"Echo/JS-Kit, %@", [self JSKitModeratorEmail]];
+            if ( [self JSKitModeratorEmail] )
+            {
+                NSString *email = [[[self JSKitModeratorEmail] componentsSeparatedByString:@"@"] objectAtIndex:0];
+                result = [NSString stringWithFormat:@"Echo/JS-Kit, %@", email];
+            }
+            else
+            {
+                result = [NSString stringWithFormat:@"Echo/JS-Kit"];
+                result = NSLocalizedString(@"Echo/JS-Kit, no moderator", @"");
+            }
             break;
         default:
             break;
