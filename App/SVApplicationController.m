@@ -88,13 +88,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 // NSLocalizedString(@"To enable comments, please choose a Weblog Comments provider in the Site Inspector", "Prompt in webview")
 // NSLocalizedString(@"Comments", "String_On_Page_Template -- text for link on a blog posting")
 
-// Haloscan
-// NSLocalizedString(@"To enable Haloscan comments, enter your Haloscan ID into the Site Inspector", "Prompt in webview")
-// NSLocalizedString(@"Comment", "String_On_Page_Template -- text for link on a blog posting")
-// NSLocalizedString(@"Other Posts About This", "String_On_Page_Template - description of trackbacks")
-// NSLocalizedString(@"Trackback", "String_On_Page_Template - text for trackback link")
-// NSLocalizedString(@"Haloscan Comments", "String_On_Page_Template -- text for link on a blog posting")
-
 // JS-Kit
 // NSLocalizedString(@"To enable JS-Kit comments, enter your moderator email address into the Site Inspector", "Prompt in webview")
 // NSLocalizedString(@"JS-Kit Comments", "String_On_Page_Template -- text for link on a blog posting")
@@ -365,10 +358,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 					@"karelsofwa-20",	@"AmazonAssociatesToken",
 		
 		[NSNumber numberWithBool:NO],			@"PreferRelativeLinks", // obsolete
-		
-		[NSNumber numberWithBool:YES],			@"supportTrackbacks",	// obsolete
-		@"",									@"haloscanUserName",
-		
+				
 		[NSNumber numberWithBool:YES], @"DoAnimations",
 		[NSNumber numberWithInt:100], @"MaximumDraggedPages",	// don't allow dragging THAT many items
 		
@@ -398,9 +388,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithFloat:0.3],			@"KTSharpeningFactor",
 		[NSNumber numberWithFloat:0.7],			kSVPreferredImageCompressionFactorKey,
 		[NSNumber numberWithBool:NO],			kSVPrefersPNGImageFormatKey,
-										 
-		[NSNumber numberWithBool:YES],			@"KTHaloscanTrackbacks",	// KTHaloscanID is nil initially
-		
+										 		
 		[NSNumber numberWithBool:NO],			@"ShowSearchPaths",			// NSLog where items are searched for
 		
 		[NSNumber numberWithInt:kReportAsk],	@"ReportErrors",
