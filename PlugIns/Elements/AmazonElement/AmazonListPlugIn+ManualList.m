@@ -180,7 +180,9 @@
 {
     if ([key isEqualToString:@"products"])
     {
-        NSArray *products = [NSKeyedUnarchiver unarchiveObjectWithData:serializedValue];
+        NSArray *products = (serializedValue ?
+                             [NSKeyedUnarchiver unarchiveObjectWithData:serializedValue] :
+                             [NSArray array]);
         [[self mutableArrayValueForKey:@"products"] setArray:products];
     }
     else
