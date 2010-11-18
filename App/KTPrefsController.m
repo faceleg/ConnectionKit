@@ -130,12 +130,6 @@
 	[oCompressionSample setTarget:self];
 	[oCompressionSample setImageScaling:NSScaleNone];	// if we scaled, it would be all wonky
 	
-	// Fix the transparent background
-//	[oHaloscanTextView setDrawsBackground:NO];
-//	NSScrollView *scrollView = [oHaloscanTextView enclosingScrollView];
-//	[scrollView setDrawsBackground:NO];
-//	[[scrollView contentView] setCopiesOnScroll:NO];
-
 	[[self window] center];
 	
 	// Kick things off, initialize image stuff
