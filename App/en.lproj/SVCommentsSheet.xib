@@ -377,60 +377,60 @@
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
-								<object class="NSMenuItem" key="NSMenuItem" id="273680639">
+								<object class="NSMenuItem" key="NSMenuItem" id="628159821">
 									<reference key="NSMenu" ref="120549219"/>
-									<string key="NSTitle">Intense Debate</string>
+									<string key="NSTitle">None</string>
 									<string key="NSKeyEquiv"/>
-									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<int key="NSState">1</int>
-									<object class="NSCustomResource" key="NSOnImage" id="523626784">
+									<object class="NSCustomResource" key="NSOnImage" id="652282657">
 										<string key="NSClassName">NSImage</string>
 										<string key="NSResourceName">NSMenuCheckmark</string>
 									</object>
-									<object class="NSCustomResource" key="NSMixedImage" id="1062801574">
+									<object class="NSCustomResource" key="NSMixedImage" id="274626850">
 										<string key="NSClassName">NSImage</string>
 										<string key="NSResourceName">NSMenuMixedState</string>
 									</object>
 									<string key="NSAction">_popUpItemAction:</string>
-									<int key="NSTag">4</int>
 									<reference key="NSTarget" ref="834431286"/>
 								</object>
 								<bool key="NSMenuItemRespectAlignment">YES</bool>
 								<object class="NSMenu" key="NSMenu" id="120549219">
 									<string key="NSTitle">OtherViews</string>
 									<array class="NSMutableArray" key="NSMenuItems">
-										<object class="NSMenuItem" id="628159821">
-											<reference key="NSMenu" ref="120549219"/>
-											<string key="NSTitle">None</string>
-											<string key="NSKeyEquiv"/>
-											<int key="NSMnemonicLoc">2147483647</int>
-											<reference key="NSOnImage" ref="523626784"/>
-											<reference key="NSMixedImage" ref="1062801574"/>
-											<string key="NSAction">_popUpItemAction:</string>
-											<reference key="NSTarget" ref="834431286"/>
-										</object>
+										<reference ref="628159821"/>
 										<object class="NSMenuItem" id="796295326">
 											<reference key="NSMenu" ref="120549219"/>
 											<string key="NSTitle">Disqus</string>
 											<string key="NSKeyEquiv"/>
 											<int key="NSKeyEquivModMask">1048576</int>
 											<int key="NSMnemonicLoc">2147483647</int>
-											<reference key="NSOnImage" ref="523626784"/>
-											<reference key="NSMixedImage" ref="1062801574"/>
+											<reference key="NSOnImage" ref="652282657"/>
+											<reference key="NSMixedImage" ref="274626850"/>
 											<string key="NSAction">_popUpItemAction:</string>
 											<int key="NSTag">3</int>
 											<reference key="NSTarget" ref="834431286"/>
 										</object>
-										<reference ref="273680639"/>
-										<object class="NSMenuItem" id="733052749">
+										<object class="NSMenuItem" id="273680639">
 											<reference key="NSMenu" ref="120549219"/>
-											<string key="NSTitle">JS-Kit (Legacy)</string>
+											<string key="NSTitle">Intense Debate</string>
 											<string key="NSKeyEquiv"/>
 											<int key="NSKeyEquivModMask">1048576</int>
 											<int key="NSMnemonicLoc">2147483647</int>
-											<reference key="NSOnImage" ref="523626784"/>
-											<reference key="NSMixedImage" ref="1062801574"/>
+											<reference key="NSOnImage" ref="652282657"/>
+											<reference key="NSMixedImage" ref="274626850"/>
+											<string key="NSAction">_popUpItemAction:</string>
+											<int key="NSTag">4</int>
+											<reference key="NSTarget" ref="834431286"/>
+										</object>
+										<object class="NSMenuItem" id="733052749">
+											<reference key="NSMenu" ref="120549219"/>
+											<string key="NSTitle">Echo/JS-Kit</string>
+											<string key="NSKeyEquiv"/>
+											<int key="NSKeyEquivModMask">1048576</int>
+											<int key="NSMnemonicLoc">2147483647</int>
+											<reference key="NSOnImage" ref="652282657"/>
+											<reference key="NSMixedImage" ref="274626850"/>
 											<string key="NSAction">_popUpItemAction:</string>
 											<int key="NSTag">2</int>
 											<reference key="NSTarget" ref="834431286"/>
@@ -438,7 +438,6 @@
 									</array>
 									<reference key="NSMenuFont" ref="67376933"/>
 								</object>
-								<int key="NSSelectedIndex">2</int>
 								<int key="NSPreferredEdge">1</int>
 								<bool key="NSUsesItemFromMenu">YES</bool>
 								<bool key="NSAltersState">YES</bool>
@@ -910,7 +909,7 @@
 					<bytes key="NSTransformStruct">P4AAAL+AAABDCAAAwzUAAA</bytes>
 				</object>
 				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="14.IBEditorWindowLastContentRect">{{154, 630}, {336, 83}}</string>
+				<string key="14.IBEditorWindowLastContentRect">{{154, 630}, {168, 83}}</string>
 				<string key="14.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="15.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="16.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
