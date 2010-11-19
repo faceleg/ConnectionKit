@@ -57,14 +57,6 @@
     [self setSubtitle:presetSubtitle];
 	
     
-    id priorityID = [presetDict objectForKey:@"KTPluginPriority"];
-    int priority = 5;
-    if (nil != priorityID)
-    {
-        priority = [priorityID intValue];
-    } 
-    
-    
     NSImage *icon = nil;
     if (plugin)
     {
