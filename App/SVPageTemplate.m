@@ -220,32 +220,46 @@
 @synthesize pageProperties = _properties;
 @synthesize graphicFactory = _graphicFactory;
 
-- (NSMenuItem *)makeMenuItem;
+- (NSMenuItem *)makeMenuItemWithIcon:(BOOL)includeIcon;
 {
-    NSMenuItem *result = [[NSMenuItem alloc] initWithTitle:[self title]
+	// If there is an icon, we also have a subtitle.  If not, then the subtitle must go onto the main title.
+	NSString *title = [self title];
+	if (!includeIcon)
+	{
+		NSString *subtitle = [self subtitle];
+		if (subtitle)
+		{
+			title = [NSString stringWithFormat:@"%@ %@", title, subtitle];
+		}
+	}
+	
+    NSMenuItem *result = [[NSMenuItem alloc] initWithTitle:title
                                                     action:@selector(addPage:)
                                              keyEquivalent:@""];
-	if ([self subtitle])
+	if (includeIcon)
 	{
-		NSAttributedString *attributedTitle = [NSAttributedString attributedMenuTitle:[self title] subtitle:[self subtitle]];
-		[result setAttributedTitle:attributedTitle];
+		if ([self subtitle])
+		{
+			NSAttributedString *attributedTitle = [NSAttributedString attributedMenuTitle:[self title] subtitle:[self subtitle]];
+			[result setAttributedTitle:attributedTitle];
+		}
+		
+		NSImage *icon = [[self icon] copy];
+		[icon setSize:NSMakeSize(38.0,42.0)];
+		[result setImage:icon];
+		[icon release];
 	}
-   
-    NSImage *icon = [[self icon] copy];
-    [icon setSize:NSMakeSize(38.0,42.0)];
-    [result setImage:icon];
-    [icon release];
     
     [result setRepresentedObject:self];
     
     return [result autorelease];
 }
 
-+ (void)populateMenu:(NSMenu *)menu withPageTemplates:(NSArray *)templates index:(NSUInteger)index;
++ (void)populateMenu:(NSMenu *)menu withPageTemplates:(NSArray *)templates index:(NSUInteger)index includeIcons:(BOOL)includeIcon;
 {
     for (SVPageTemplate *aTemplate in templates)
     {
-        NSMenuItem *menuItem = [aTemplate makeMenuItem];
+        NSMenuItem *menuItem = [aTemplate makeMenuItemWithIcon:includeIcon];
         [menu insertItem:menuItem atIndex:index];
         index++;
     }

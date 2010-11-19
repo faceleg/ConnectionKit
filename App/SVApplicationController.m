@@ -69,6 +69,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "NSImage+Karelia.h"
 #import "NSMenuItem+Karelia.h"
 #import "NSWorkspace+Karelia.h"
+#import "SVPageTemplate.h"
 
 #import <AmazonSupport/AmazonSupport.h>
 #import <Connection/Connection.h>
@@ -951,6 +952,9 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
                                                         withObject:nil];
             [insertMenu insertItem:item atIndex:index]; 
             
+			// Presets
+			[SVPageTemplate populateMenu:[oInsertBlankPageMenuItem menu] withPageTemplates:[SVPageTemplate pageTemplates] index:2 includeIcons:NO];
+
             // Text box item
             factory = [SVGraphicFactory textBoxFactory];
             item = [factory makeMenuItemWithDescription:NO];

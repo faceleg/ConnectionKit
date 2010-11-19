@@ -37,7 +37,7 @@
 // When inserting a page using this template, you should generally stick a graphic on it produced using this factory
 @property(nonatomic, retain, readonly) SVGraphicFactory *graphicFactory;
 
-- (NSMenuItem *)makeMenuItem;
-+ (void)populateMenu:(NSMenu *)menu withPageTemplates:(NSArray *)templates index:(NSUInteger)index;
+- (NSMenuItem *)makeMenuItemWithIcon:(BOOL)includeIcon;
++ (void)populateMenu:(NSMenu *)menu withPageTemplates:(NSArray *)templates index:(NSUInteger)index includeIcons:(BOOL)include;
 
 @end

@@ -161,7 +161,7 @@
     NSPopUpButton *pulldownButton = [result popUpButton];
     NSMenu *menu = [pulldownButton menu];
 	
-    [SVPageTemplate populateMenu:menu withPageTemplates:[SVPageTemplate pageTemplates] index:1];
+    [SVPageTemplate populateMenu:menu withPageTemplates:[SVPageTemplate pageTemplates] index:1 includeIcons:YES];
 	
     [menu addItem:[NSMenuItem separatorItem]];
     
