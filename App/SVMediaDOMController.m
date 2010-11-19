@@ -195,7 +195,7 @@
 
 - (void)updateSize;
 {
-    if ([self isSelectable])	// #93182
+    if ([[self selectableTopLevelDescendants] count] > 1)	// #93182
     {
         [super updateSize];
     }
