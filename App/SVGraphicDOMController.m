@@ -346,6 +346,9 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (DOMElement *)selectableDOMElement;
 {
+    return nil;
+    
+    
     DOMElement *result = [self graphicDOMElement];
     if (!result) result = (id)[[[self HTMLElement] getElementsByClassName:@"pagelet-body"] item:0];
     ;
@@ -775,6 +778,11 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 @implementation SVGraphicBodyDOMController
 
 #pragma mark Selection
+
+- (DOMElement *) selectableDOMElement;
+{
+    return [self HTMLElement]; 
+}
 
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
 {
