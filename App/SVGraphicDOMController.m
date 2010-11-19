@@ -528,6 +528,14 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [self removeRelativePosition:YES];
 }
 
+/*  Have to re-implement because SVDOMController overrides
+ */
+- (CGPoint)position;
+{
+    NSRect rect = [self rect];
+    return CGPointMake(NSMidX(rect), NSMidY(rect));
+}
+
 #pragma mark Relative Position
 
 - (DOMElement *)relativePositionDOMElement;

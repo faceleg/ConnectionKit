@@ -523,6 +523,26 @@
     return size;
 }
 
+#pragma mark Moving
+
+/*  Probably don't really want to move this item, but the graphic as a whole
+ */
+
+- (BOOL)moveToPosition:(CGPoint)position event:(NSEvent *)event;
+{
+    return [[self enclosingGraphicDOMController] moveToPosition:position event:event];
+}
+
+- (void)moveEnded;
+{
+    return [[self enclosingGraphicDOMController] moveEnded];
+}
+
+- (CGPoint)position;    // center point (for moving) in doc view coordinates
+{
+    return [[self enclosingGraphicDOMController] position];
+}
+
 #pragma mark Dragging
 
 - (NSArray *)registeredDraggedTypes; { return _dragTypes; }
