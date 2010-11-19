@@ -132,6 +132,11 @@
     return result;
 }
 
+- (DOMElement *)selectableDOMElement;
+{
+    return ([self enclosingGraphicDOMController] ? [self HTMLElement] : nil);
+}
+
 #pragma mark Editing
 
 - (void)webEditorTextDidChange;
