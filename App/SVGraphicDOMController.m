@@ -396,15 +396,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (NSRect)rect;
 {
-    DOMElement *element = [self graphicDOMElement];
-    if (element)
-    {
-        return [element boundingBox];
-    }
-    else
-    {
-        return [super rect];
-    }
+    return [[self HTMLElement] boundingBox];
 }
 
 #pragma mark Paste
