@@ -49,7 +49,7 @@
         case SVThumbnailTypeCustom:
             [self bind:@"thumbnailMedia"
               toObject:([self content] ? [self content] : nil)
-           withKeyPath:@"customThumbnail"
+           withKeyPath:@"self"
                options:nil];
             break;
             
