@@ -588,6 +588,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [graphic setShowsCaption:NO];
     [graphic setShowsIntroduction:NO];
     
+    [media release];
+    
     [self addGraphic:graphic placeInline:YES];
 }
 
