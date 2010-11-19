@@ -347,7 +347,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 - (DOMElement *)selectableDOMElement;
 {
     DOMElement *result = [self graphicDOMElement];
-    if (!result) result = [self HTMLElement];
+    if (!result) result = (id)[[[self HTMLElement] getElementsByClassName:@"pagelet-body"] item:0];
+    ;
     
     
     // Seek out a better matching child which has no siblings. #93557
@@ -532,7 +533,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 - (DOMElement *)relativePositionDOMElement;
 {
     DOMElement *result = [self graphicDOMElement];
-    if (!result) result = [self selectableDOMElement];
+    if (!result) result = [self HTMLElement];
     
     OBPOSTCONDITION(result);
     return result;
