@@ -321,7 +321,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 										 
 		[NSNumber numberWithBool:NO],			@"AllowPasswordToBeLogged", // for Connection class
 		
-		[NSNumber numberWithBool:YES],			@"ShowOutlineTooltips",
 		[NSNumber numberWithBool:YES],			@"OutlineTooltipShowPageType",
 		[NSNumber numberWithBool:YES],			@"OutlineTooltipShowIndexType",
 		[NSNumber numberWithBool:YES],			@"OutlineTooltipShowTitle",
