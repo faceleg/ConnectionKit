@@ -91,7 +91,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [self setContentDOMElement:[document getElementById:@"sidebar-content"]];
 }
 
-- (void)update;
+- (void)updatePageletOrdering;
 {
     // Arrange DOM nodes to match. Start by removing all
     DOMElement *contentElement = [self contentDOMElement];
@@ -687,7 +687,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 {
     if (context == sSVSidebarDOMControllerPageletsObservation)
     {
-        [self setNeedsUpdate];
+        [self setNeedsUpdateWithSelector:@selector(updatePageletOrdering)];
     }
     else
     {
