@@ -330,6 +330,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
         if ([[textAttachment causesWrap] boolValue])
         {
             [context pushClassName:@"graphic-container"];
+            [context pushClassName:@"ImageElement"];
             
             switch ([[textAttachment wrap] integerValue])
             {
