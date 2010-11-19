@@ -94,36 +94,43 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
     return self;
 }
 
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
+- (void) awakeFromNewIgnoringWebBrowser
 {
-	if (isNewlyCreatedObject)
-	{
-		// When creating a new pagelet, try to use the most recent Amazon store
-		NSNumber *lastSelectedStore = [[NSUserDefaults standardUserDefaults] objectForKey:@"AmazonLatestStore"];
-		if (lastSelectedStore) [self setStore:[lastSelectedStore integerValue]];
-		
-		
-		// And also most recent layout
-		NSNumber *lastLayout = [[NSUserDefaults standardUserDefaults] objectForKey:@"AmazonLastLayout"];
-		if (lastLayout) [self setLayout:[lastLayout integerValue]];
-		
-		
-		// Get the current URL from Safari and look for a possible product or list
-		NSURL *browserURL = nil;
-        id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
-        if ( location )
-        {
-            browserURL = [location URL];
-        }
-		
-		NSString *ASIN = [browserURL amazonProductASIN];	// Product
-		if (ASIN && ![ASIN isEqualToString:@""])
-		{
-			APManualListProduct *product = [[APManualListProduct alloc] initWithURL:browserURL];
-            [self insertObject:product inProductsAtIndex:0];
-			
-			[product release];
-		}
+    [super awakeFromNew];
+    
+    
+	// When creating a new pagelet, try to use the most recent Amazon store
+    NSNumber *lastSelectedStore = [[NSUserDefaults standardUserDefaults] objectForKey:@"AmazonLatestStore"];
+    if (lastSelectedStore) [self setStore:[lastSelectedStore integerValue]];
+    
+    
+    // And also most recent layout
+    NSNumber *lastLayout = [[NSUserDefaults standardUserDefaults] objectForKey:@"AmazonLastLayout"];
+    if (lastLayout) [self setLayout:[lastLayout integerValue]];
+    
+}
+
+- (void)awakeFromNew
+{
+    [self awakeFromNewIgnoringWebBrowser];
+    
+    
+    
+    // Get the current URL from Safari and look for a possible product or list
+    NSURL *browserURL = nil;
+    id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
+    if ( location )
+    {
+        browserURL = [location URL];
+    }
+    
+    NSString *ASIN = [browserURL amazonProductASIN];	// Product
+    if (ASIN && ![ASIN isEqualToString:@""])
+    {
+        APManualListProduct *product = [[APManualListProduct alloc] initWithURL:browserURL];
+        [self insertObject:product inProductsAtIndex:0];
+        
+        [product release];
     }
 }
 
@@ -363,6 +370,12 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 - (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 {
     BOOL result = NO;
+    
+    // need some initial properties. #96302
+    if (![self layout])
+    {
+        [self awakeFromNewIgnoringWebBrowser];
+    }
     
     for (id <SVPasteboardItem> item in items)
     {
