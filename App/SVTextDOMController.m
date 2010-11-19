@@ -92,13 +92,17 @@
     _editable = flag;
     
     // Annoyingly, calling -setContentEditable:nil or similar does not remove the attribute
-    if (flag)
+    DOMHTMLElement *element = [self textHTMLElement];
+    if (element)
     {
-        [[self textHTMLElement] setContentEditable:@"true"];
-    }
-    else
-    {
-        [[self textHTMLElement] removeAttribute:@"contentEditable"];
+        if (flag)
+        {
+            [element setContentEditable:@"true"];
+        }
+        else
+        {
+            [element removeAttribute:@"contenteditable"];
+        }
     }
 }
 
