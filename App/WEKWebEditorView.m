@@ -986,6 +986,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
                                                               selector:@selector(ks_compareDocumentPosition:)];
         
         NSMutableArray *result = [KSSortedMutableArray arrayWithSortDescriptor:sort];
+        [sort release];
         
         for (WEKWebEditorItem *anItem in [textController selectableTopLevelDescendants])
         {
