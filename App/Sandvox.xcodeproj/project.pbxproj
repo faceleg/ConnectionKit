@@ -2111,8 +2111,8 @@
 		27B5921311AE85C100E10A1E /* WEKWebViewEditing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEKWebViewEditing.m; sourceTree = "<group>"; };
 		27B82D9411D4A9A00086CB6E /* SVRawHTMLGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRawHTMLGraphic.h; sourceTree = "<group>"; };
 		27B82D9511D4A9A00086CB6E /* SVRawHTMLGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRawHTMLGraphic.m; sourceTree = "<group>"; };
-		27B82F1A11D50F260086CB6E /* KSXMLWriterDOMAdaptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSXMLWriterDOMAdaptor.h; path = ../../KSHTMLWriter/DOM/KSXMLWriterDOMAdaptor.h; sourceTree = "<group>"; };
-		27B82F1C11D50F260086CB6E /* KSXMLWriterDOMAdaptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSXMLWriterDOMAdaptor.m; path = ../../KSHTMLWriter/DOM/KSXMLWriterDOMAdaptor.m; sourceTree = "<group>"; };
+		27B82F1A11D50F260086CB6E /* KSXMLWriterDOMAdaptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSXMLWriterDOMAdaptor.h; path = DOM/KSXMLWriterDOMAdaptor.h; sourceTree = "<group>"; };
+		27B82F1C11D50F260086CB6E /* KSXMLWriterDOMAdaptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSXMLWriterDOMAdaptor.m; path = DOM/KSXMLWriterDOMAdaptor.m; sourceTree = "<group>"; };
 		27BA06C61125A46900B9D8F4 /* SVWebEditorTextRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorTextRange.h; sourceTree = "<group>"; };
 		27BA06C71125A46900B9D8F4 /* SVWebEditorTextRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorTextRange.m; sourceTree = "<group>"; };
 		27BCCCA00F09609E00B06B35 /* KTRemotePublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTRemotePublishingEngine.h; sourceTree = "<group>"; };
@@ -3407,8 +3407,6 @@
 				2796DEE211733440000DD6EC /* SVMediaGatheringHTMLContext.m */,
 				270172B411CFB566001512F6 /* SVProxyHTMLContext.h */,
 				270172B511CFB566001512F6 /* SVProxyHTMLContext.m */,
-				27B82F1A11D50F260086CB6E /* KSXMLWriterDOMAdaptor.h */,
-				27B82F1C11D50F260086CB6E /* KSXMLWriterDOMAdaptor.m */,
 				27DD0A551202FC120083C7C1 /* SVWebEditingURL.h */,
 				27DD0A561202FC120083C7C1 /* SVWebEditingURL.m */,
 				2782B2D912367C6E00C5F870 /* SVEnclosure.h */,
@@ -3687,6 +3685,8 @@
 		27CC248211F07277007FB3FE /* KSHTMLWriter */ = {
 			isa = PBXGroup;
 			children = (
+				27B82F1A11D50F260086CB6E /* KSXMLWriterDOMAdaptor.h */,
+				27B82F1C11D50F260086CB6E /* KSXMLWriterDOMAdaptor.m */,
 				277E72F6113416A20081389F /* KSHTMLWriter.h */,
 				277E72F8113416A20081389F /* KSHTMLWriter.m */,
 				27EF99C011A4205600FC8424 /* KSXMLWriter.h */,
