@@ -429,9 +429,7 @@
 
 - (unsigned int)resizingMask
 {
-    DOMElement *element = [self selectableDOMElement];
-    unsigned int result = [self resizingMaskForDOMElement:element];
-    return result;
+    return [[self enclosingGraphicDOMController] resizingMask];
 }
 
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;

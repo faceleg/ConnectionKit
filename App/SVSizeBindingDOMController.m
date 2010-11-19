@@ -224,7 +224,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     
     // Graphic's behaviour is enough to handle width, but we want height to be adjustable if requested
     unsigned int result = [[self enclosingGraphicDOMController] resizingMask];  // inline
-    if (!result) result = [super resizingMask];                                 // sidebar & callout
+    if (!result) result = [self resizingMaskForDOMElement:[self HTMLElement]];  // sidebar & callout
     
     SVPlugInGraphic *graphic = [self representedObject];
     if ([graphic isExplicitlySized]) result = (result | kCALayerBottomEdge);
