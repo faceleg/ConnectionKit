@@ -88,7 +88,7 @@
                                        inheritFromContext:[self HTMLContext]];
     [[self textBlock] buildGraphicalText:context];
     
-    NSString *style = [[context elementAttributes] objectForKey:@"style"];
+    NSString *style = [[[context currentElementInfo] attributesAsDictionary] objectForKey:@"style"];
     [[[self textHTMLElement] style] setCssText:style];
     [context release];
 }

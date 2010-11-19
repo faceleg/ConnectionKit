@@ -82,7 +82,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
                     DOMControllerClass:[self class]
 							 sizeDelta:[self sizeDelta]];			// Need something dynamic here?
     
-    NSDictionary *attributes = [context elementAttributes];
+    NSDictionary *attributes = [[context currentElementInfo] attributesAsDictionary];
     [element setAttribute:@"width" value:[attributes objectForKey:@"width"]];
     [element setAttribute:@"height" value:[attributes objectForKey:@"height"]];
     [element setAttribute:@"style" value:[attributes objectForKey:@"style"]];
