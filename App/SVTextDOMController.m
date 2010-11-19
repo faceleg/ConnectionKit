@@ -9,6 +9,7 @@
 #import "SVTextDOMController.h"
 
 #import "SVHTMLTextBlock.h"
+#import "SVTitleBox.h"
 #import "WebEditingKit.h"
 #import "SVWebEditorViewController.h"
 
@@ -139,6 +140,13 @@
 - (DOMElement *)selectableDOMElement;
 {
     return ([self enclosingGraphicDOMController] ? [self HTMLElement] : nil);
+}
+
+- (BOOL) tryToRemove;
+{
+    SVTitleBox *text = [self representedObject];
+    [text setHidden:NSBOOL(YES)];
+    return (text != nil);
 }
 
 #pragma mark Editing
