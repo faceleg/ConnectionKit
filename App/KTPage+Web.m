@@ -691,12 +691,12 @@
 
 - (void)writeSiteMenu
 {
+	// Add dependency whether or not there are any in the site menu, so we can get messages even if there are zero pages in it.
+	SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+	[context addDependencyOnObject:self keyPath:@"site.pagesInSiteMenu"];
+
 	if (self.site.pagesInSiteMenu.count)	// Are there any pages in the site menu?
 	{
-		SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
-		
-		[context addDependencyOnObject:self keyPath:@"site.pagesInSiteMenu"];
-
 		[context startElement:@"div" idName:@"sitemenu" className:nil];			// <div id="sitemenu">
 		[context startElement:@"h2" idName:nil className:@"hidden"];				// hidden skip navigation menu
 		[context writeString:
@@ -721,29 +721,5 @@
 		[context writeEndTagWithComment:@"/sitemenu"];
 	}
 }
-/*
- Based on this template markup:
- [[if site.pagesInSiteMenu]]
-	 <div id='sitemenu'>
-		 <h2 class='hidden'>[[`skipNavigationTitleHTML]]<a rel='nofollow' href='#page-content'>[[`skipNavigationLinkHTML]]</a></h2>
-		 <div id='sitemenu-content'>
-			 <ul>
-				 [[forEach site.pagesInSiteMenu toplink]]
-					 [[if toplink==parser.currentPage]]
-						 <li class='[[i]] [[eo]][[last]] currentPage'>
-							[[textblock property:toplink.menuTitle graphicalTextCode:mc tag:span]]
-						 </li>
-					 [[else2]]
-						 <li class='[[i]] [[eo]][[last]][[if !parser.currentPage.includeInSiteMenu]][[if toplink==parser.currentPage.parentPage]][[if parser.currentPage.parentPage.index]] currentParent[[endif5]][[endif4]][[endif3]]'>
-							 <a [[target toplink]]href='[[path toplink]]' title='[[=&toplink.titleText]]'>
-							 [[textblock property:toplink.menuTitle graphicalTextCode:m tag:span]]</a>
-						 </li>
-					 [[endif2]]
-				 [[endForEach]]
-			 </ul>
-		 </div> <!-- sitemenu-content -->
-	 </div> <!-- sitemenu -->
- [[endif]]
-*/ 
 
 @end
