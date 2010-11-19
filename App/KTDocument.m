@@ -62,6 +62,7 @@
 #import "KTSummaryWebViewTextBlock.h"
 #import "SVTextBox.h"
 #import "KTLocalPublishingEngine.h"
+#import "KTDesignPlaceholder.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
@@ -480,6 +481,11 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 #pragma mark Reading From and Writing to URLs
 
+- (void)openDesignChooser
+{
+	[[self windowForSheet] doCommandBySelector:@selector(chooseDesign:)];
+}
+
 /*!
  *  If the media is not marked as autosaved, returns the URL it should have. Otherwise returns nil.
  */
@@ -495,7 +501,14 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         {
             // Special case; design placeholder image
             // This is kind of a hack to jump to the placeholder I admit; will fix up if we need more
-            NSBundle *bundle = [[[[[self site] rootPage] master] design] bundle];
+			KTDesign *design = [[[[self site] rootPage] master] design];
+			if ([design isKindOfClass:[KTDesignPlaceholder class]])
+			{
+				// Force design chooser sheet to open if we don't have a design
+				[self performSelector:@selector(openDesignChooser) withObject:nil afterDelay:0.0];
+			}
+			
+            NSBundle *bundle = [design bundle];
             NSString *filename = [path lastPathComponent];
             
             NSString *resultPath = [bundle pathForResource:[filename stringByDeletingPathExtension] 
