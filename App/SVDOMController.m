@@ -213,7 +213,7 @@
     
     // Try to get hold of the controller in charge of update coalescing
 	SVWebEditorViewController *controller = [self webEditorViewController];
-    if ([controller respondsToSelector:@selector(scheduleUpdate)] || ![self webEditor])
+    if ([controller respondsToSelector:@selector(scheduleUpdate)])
     {
         NSString *selectorString = NSStringFromSelector(selector);
         if (_updateSelectors)
