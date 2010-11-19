@@ -10,11 +10,12 @@
 
 #import "SVAttributedHTML.h"
 #import "SVCalloutDOMController.h"
+#import "SVContentDOMController.h"
 #import "SVGraphicFactory.h"
+#import "KTPage.h"
 #import "SVSidebarPageletsController.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorViewController.h"
-#import "KTPage.h"
 
 #import "KSWebLocation.h"
 
@@ -474,6 +475,55 @@
     }
     
     return result;
+}
+
+#pragma mark Updating
+
+- (void)update;
+{
+    // Tear down dependencies etc.
+    [self removeAllDependencies];
+    [self setChildWebEditorItems:nil];
+    
+    
+    // Write HTML
+    NSMutableString *htmlString = [[NSMutableString alloc] init];
+    
+    SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
+                                       initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
+    
+    [[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
+    [[self representedObject] writeHTML:context];//[context writeText:[self representedObject] withDOMController:self];
+    
+    
+    // Copy top-level dependencies across to parent. #79396
+    [context flush];    // you never know!
+    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
+    {
+        [(SVDOMController *)[self parentWebEditorItem] addDependency:aDependency];
+    }
+    
+    
+    // Turn observation back on. #92124
+    //[self startObservingDependencies];
+    
+    
+    // Bring end body code into the html
+    [context writeEndBodyString];
+    [context release];
+    
+    
+    // Update DOM
+    [[self HTMLElement] setOuterHTML:htmlString];
+    [htmlString release];
+    
+    
+    // Hook up new DOM Controller
+    SVArticleDOMController *replacement = [[[context rootDOMController] childWebEditorItems] lastObject];
+    [[self parentWebEditorItem] replaceChildWebEditorItem:self with:replacement];
+    
+    
+    [replacement didUpdateWithSelector:_cmd];
 }
 
 #pragma mark Moving

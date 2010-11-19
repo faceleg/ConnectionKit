@@ -125,6 +125,25 @@
     [self endDOMController];
 }
 
+#pragma mark Text
+
+- (void)writeText:(SVRichText *)text withDOMController:(SVDOMController *)controller;
+{
+    // Fake it and don't insert into hierarchy
+    SVDOMController *currentController = _currentDOMController;
+    _currentDOMController = controller;
+    _needsToWriteElementID = YES;
+    
+    
+    // Generate HTML
+    [text writeHTML:self];
+    
+    
+    // Reset
+    [self endDOMController];
+    _currentDOMController = currentController;
+}
+
 #pragma mark Graphics
 
 - (void)willWriteGraphic:(SVGraphic *)graphic;

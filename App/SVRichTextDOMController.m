@@ -115,13 +115,13 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 @synthesize updating = _isUpdating;
 
-- (void)willUpdate
+- (void)XwillUpdate
 {
     OBPRECONDITION(!_isUpdating);
     _isUpdating = YES;
 }
 
-- (void)didUpdate
+- (void)XdidUpdate
 {
     OBPRECONDITION(_isUpdating);
     _isUpdating = NO;

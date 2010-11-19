@@ -12,7 +12,7 @@
 
 
 @class SVWebEditorViewController, SVContentDOMController, SVSidebarDOMController;
-@class SVContentObject, SVSidebar, SVSidebarPageletsController;
+@class SVContentObject, SVRichText, SVSidebar, SVSidebarPageletsController;
 @class SVMediaRecord;
 
 
@@ -37,6 +37,10 @@
 
 #pragma mark Media
 - (NSSet *)media;
+
+
+#pragma mark Text
+- (void)writeText:(SVRichText *)text withDOMController:(SVDOMController *)controller;
 
 
 #pragma mark Graphics
