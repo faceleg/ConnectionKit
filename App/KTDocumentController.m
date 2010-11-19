@@ -73,6 +73,19 @@
     }
 }
 
+- (id)openUntitledDocumentAndDisplay:(BOOL)displayDocument error:(NSError **)outError
+{
+    KTDocument *doc = [super openUntitledDocumentAndDisplay:displayDocument error:outError];
+    
+    // Start by showing Design Chooser
+    if (doc && displayDocument) 
+    {
+        [[doc windowForSheet] doCommandBySelector:@selector(chooseDesign:)];
+    }
+    
+    return doc;
+}
+
 - (id)makeUntitledDocumentOfType:(NSString *)typeName error:(NSError **)outError
 {
     // Do nothing if the license is invalid
