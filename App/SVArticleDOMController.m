@@ -681,17 +681,18 @@
     }
     else if (position.y < currentPosition.y)
     {
-        DOMElement *previousElement = [element previousSiblingOfClass:[DOMElement class]];
-        if (previousElement)
+        DOMNode *previousNode = [element previousSibling];
+        if (previousNode)
         {
-            NSSize size = [previousElement boundingBox].size;
+            NSSize size = [previousNode boundingBox].size;
             CGFloat gap = staticPosition.y - position.y;
             
-            if (gap >= 0.5 * size.height)
+            if (gap >= 0.5 * size.height)   // for many nodes height is 0
             {
                 // Move the element
-                if ([self moveDOMElement:element beforeChild:previousElement])
+                if ([[self webEditor] shouldChangeText:self])
                 {
+                    [[self textHTMLElement] insertBefore:previousNode refChild:[element nextSibling]];
                     [[self webEditor] didChangeText];
                 }
             }
