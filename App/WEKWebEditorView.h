@@ -57,6 +57,10 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     BOOL    _isProcessingEvent;
     BOOL    _isForwardingCommandToWebView;
     
+    // Guides
+    NSNumber    *_xGuide;
+    NSNumber    *_yGuide;
+    
     // Drawing
     NSMutableArray  *_itemsToDisplay;
     
@@ -119,6 +123,12 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 - (void)didChangeText;
 
 - (NSPasteboard *)insertionPasteboard;
+
+
+#pragma mark Guides
+@property(nonatomic, copy, readonly) NSNumber *xGuide;
+@property(nonatomic, copy, readonly) NSNumber *yGuide;
+- (void)setXGuide:(NSNumber *)x yGuide:(NSNumber *)y;
 
 
 #pragma mark Drawing

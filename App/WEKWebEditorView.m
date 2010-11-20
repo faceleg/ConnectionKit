@@ -88,6 +88,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector cachedTargetView:(NSView *)targetView;
 
 
+#pragma mark Guides
+@property(nonatomic, copy, readwrite) NSNumber *xGuide;
+@property(nonatomic, copy, readwrite) NSNumber *yGuide;
+
+
 // Undo
 - (NSUndoManager *)webViewUndoManager;
 
@@ -862,6 +867,61 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
+#pragma mark Guides
+
+@synthesize xGuide = _xGuide;
+@synthesize yGuide = _yGuide;
+
+- (NSRect)xGuideRect;
+{
+    NSRect bounds = [[self documentView] bounds];
+    
+    NSRect result = NSMakeRect([[self xGuide] floatValue],
+                               bounds.origin.y,
+                               1.0f,
+                               bounds.size.height);
+    return result;
+}
+
+- (NSRect)yGuideRect;
+{
+    NSRect bounds = [[self documentView] bounds];
+    
+    NSRect result = NSMakeRect(bounds.origin.x,
+                               [[self yGuide] floatValue],
+                               bounds.size.width,
+                               1.0f);
+    
+    return result;
+}
+
+- (void)setXGuide:(NSNumber *)x yGuide:(NSNumber *)y;
+{
+    NSView *view = [self documentView];
+    
+    if (!KSISEQUAL(x, [self xGuide]))
+    {
+        if ([self xGuide]) [view setNeedsDisplayInRect:[self xGuideRect]];
+        [self setXGuide:x];
+        if ([self xGuide]) [view setNeedsDisplayInRect:[self xGuideRect]];
+    }
+    
+    if (!KSISEQUAL(y, [self yGuide]))
+    {
+        if ([self yGuide]) [view setNeedsDisplayInRect:[self yGuideRect]];
+        [self setYGuide:y];
+        if ([self yGuide]) [view setNeedsDisplayInRect:[self yGuideRect]];
+    }
+}
+
+- (void)drawGuidesInView:(NSView *)view;
+{
+    [[NSColor yellowColor] set];    // lemon
+    
+    if ([self xGuide]) NSRectFill([self xGuideRect]);
+    if ([self yGuide])  NSRectFill([self yGuideRect]);
+}
+
 #pragma mark Undo
 
 - (NSUndoManager *)webViewUndoManager
@@ -1052,6 +1112,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Draw drag caret
     [self drawDragCaretInView:view];
+    
+    
+    [self drawGuidesInView:view];
 }
 
 - (void)drawItemsRect:(NSRect)dirtyRect inView:(NSView *)view;
