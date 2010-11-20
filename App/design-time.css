@@ -23,10 +23,13 @@
 #sidebar { min-height:190px; }
 
 
+img { -webkit-user-select:none; }
+
 /*  By default, <DIV>s in article is selectable… */
-img, .article .kBlock[contenteditable=true] > div {
+.article .kBlock[contenteditable=true] > div {
     -webkit-user-select:none;
 }
+div[contenteditable] { -webkit-user-select:text; }
 
 
 /*  Flickr (and potentially other code) uses an offscreen invisible image. This can ruin dragging */

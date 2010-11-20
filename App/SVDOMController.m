@@ -160,13 +160,15 @@
     // Turn off editing for enclosing text temporarily. #75840
     // It's a little hacky, but works!
     SVTextDOMController *textController = [[self parentWebEditorItem] textDOMController];
+    DOMHTMLElement *element = [textController textHTMLElement];
+    
     if ([self isEditing])
     {
-        [[textController textHTMLElement] removeAttribute:@"contenteditable"];
+        [[element style] setProperty:@"-webkit-user-modify" value:@"read-only" priority:@"!important"];
     }
     else
     {
-        [textController setEditable:[textController isEditable]];
+        [[element style] removeProperty:@"-webkit-user-modify"];
     }
 }
 
