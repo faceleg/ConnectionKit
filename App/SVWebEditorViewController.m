@@ -1144,7 +1144,6 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         
         _isChangingSelection = YES;
         result = [[self graphicsController] setSelectedObjects:objects];
-        [self synchronizeLinkManagerWithSelection:proposedRange];
         _isChangingSelection = NO;
     }
     
@@ -1155,6 +1154,10 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
 {
     WEKWebEditorView *webEditor = [notification object];
     OBPRECONDITION(webEditor == [self webEditor]);
+    
+    
+    // This used to be done in -…shouldChange… but that often caused WebView to overrite the result moments later
+    [self synchronizeLinkManagerWithSelection:[webEditor selectedDOMRange]];
     
     
     // Set our first responder item to match
