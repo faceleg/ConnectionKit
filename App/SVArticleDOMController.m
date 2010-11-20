@@ -519,11 +519,13 @@
     
     
     // Hook up new DOM Controller
-    SVArticleDOMController *replacement = [[[context rootDOMController] childWebEditorItems] lastObject];
-    [[self parentWebEditorItem] replaceChildWebEditorItem:self with:replacement];
+    NSArray *replacements = [[context rootDOMController] childWebEditorItems];
+    [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:replacements];
     
-    
-    [replacement didUpdateWithSelector:_cmd];
+    for (SVDOMController *replacement in replacements)
+    {
+        [replacement didUpdateWithSelector:_cmd];
+    }
 }
 
 #pragma mark Moving
