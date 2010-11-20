@@ -535,10 +535,7 @@
 {
     if ([[self webEditor] shouldChangeText:self])
     {
-        //[[self textHTMLElement] insertBefore:element refChild:refNode];
-        // Don't do it this way as that makes the element re-render. Instead, leave the element in place and move ref node around it
-        [[self textHTMLElement] insertBefore:refNode refChild:[element nextSibling]];
-        
+        [[self textHTMLElement] insertBefore:element refChild:refNode];
         return YES;
     }
     
@@ -675,9 +672,8 @@
             if (gap >= 0.5 * size.height)
             {
                 // Move the element
-                if ([[self webEditor] shouldChangeText:self])
+                if ([self moveDOMElement:element beforeChild:[nextElement nextSiblingOfClass:[DOMElement class]]])
                 {
-                    [[self textHTMLElement] insertBefore:nextElement refChild:element];
                     [[self webEditor] didChangeText];
                 }
             }
@@ -694,9 +690,8 @@
             if (gap >= 0.5 * size.height)
             {
                 // Move the element
-                if ([[self webEditor] shouldChangeText:self])
+                if ([self moveDOMElement:element beforeChild:previousElement])
                 {
-                    [[self textHTMLElement] insertBefore:previousElement refChild:[element nextSibling]];
                     [[self webEditor] didChangeText];
                 }
             }
