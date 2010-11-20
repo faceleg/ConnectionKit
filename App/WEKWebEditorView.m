@@ -1035,29 +1035,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view
 {
-    // Darken area around editing item
-    WEKWebEditorItem *editingItem = [[self editingItems] lastObject];
-    if (editingItem)
-    {
-        // Clip the rect covering editing item since we want to appear normal
-        CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-        CGContextSaveGState(context);
-        
-        CGRect unclippedRect = NSRectToCGRect([editingItem rect]);
-        
-        CGContextBeginPath(context);
-        CGContextAddRect(context, CGRectInfinite); 
-        CGContextAddRect(context, unclippedRect);
-        CGContextEOClip(context);
-        
-        // Draw everything else slightly darkened
-        [[NSColor colorWithCalibratedWhite:0.25 alpha:0.25] set];
-        NSRectFillUsingOperation(dirtyRect, NSCompositeSourceOver);
-        
-        CGContextRestoreGState(context);
-    }
-    
-    
     // Draw drop highlight if there is one. 1px inset from bounding box, "Aqua" colour
     if (_dragHighlightNode)
     {
