@@ -15,8 +15,6 @@
 #import "SVMediaRecord.h"
 #import "SVSiteItem.h"
 #import "SVWebEditorHTMLContext.h"
-#import "KSWebLocation.h"
-
 #import "NSManagedObject+KTExtensions.h"
 
 #import "NSBitmapImageRep+Karelia.h"
@@ -24,6 +22,9 @@
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "KSThreadProxy.h"
+
+#import "KSPathUtilities.h"
+#import "KSWebLocation.h"
 
 
 @interface SVImage ()
@@ -285,11 +286,13 @@
     SVMedia *media = [self media];
     if (media)
     {
+        NSString *filename = [[[media preferredUploadPath] lastPathComponent] ks_stringWithPathSuffix:@"_med"];
+        
         NSURL *URL = [context addImageMedia:media
                                       width:[self width]
                                      height:[self height]
                                        type:[self typeToPublish]
-                          preferredFilename:nil];
+                          preferredFilename:filename];
         
         [context writeImageWithSrc:(URL ? [context relativeURLStringOfURL:URL] : @"")
                                alt:alt
