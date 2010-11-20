@@ -132,4 +132,11 @@
     [context startAnchorElementWithHref:[self URLString] title:nil target:nil rel:nil];
 }
 
+#pragma mark Description
+
+-(NSString *) description;
+{
+    return [[super description] stringByAppendingFormat:@" %@", [self URLString]];
+}
+
 @end
