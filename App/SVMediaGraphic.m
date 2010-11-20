@@ -436,6 +436,14 @@
     }
 }
 
+- (void)buildClassName:(SVHTMLContext *)context;
+{
+    [super buildClassName:context];
+    
+    NSString *elementClass = [[[self plugIn] class] elementClassName];
+    if (elementClass) [context pushClassName:elementClass];
+}
+
 - (BOOL)shouldWriteHTMLInline;
 {
     BOOL result = [super shouldWriteHTMLInline];
