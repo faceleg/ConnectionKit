@@ -565,6 +565,9 @@
     frame.origin.y += position.y - currentPosition.y;
     
     NSRect bounds = [[self textHTMLElement] boundingBox];
+    bounds.size.height += 10.0f;    // be more lenient here since float etc. all come into play
+    
+    
     if (NSMinX(frame) < NSMinX(bounds))
     {
         position.x += (NSMinX(bounds) - NSMinX(frame));
@@ -654,10 +657,19 @@
     
     if (position.y > currentPosition.y)
     {
+        // Seek out the next element worth swapping with. It must be an element, and not floated or 0 height
         DOMElement *nextElement = [element nextSiblingOfClass:[DOMElement class]];
+        NSSize size = [nextElement boundingBox].size;
+        
+        while (nextElement && size.height <= 0.0f)
+        {
+            nextElement = [nextElement nextSiblingOfClass:[DOMElement class]];
+            size = [nextElement boundingBox].size;
+        }
+            
         if (nextElement)
         {
-            NSSize size = [nextElement boundingBox].size;
+            // Is there space to make the move?
             CGFloat gap = position.y - staticPosition.y;
             
             if (gap >= 0.5 * size.height)
