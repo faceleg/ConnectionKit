@@ -1372,6 +1372,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Reset position/appearance
     [item moveEnded];
+    [self setXGuide:nil yGuide:nil];
         
     return;
     
