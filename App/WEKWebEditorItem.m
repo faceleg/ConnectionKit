@@ -136,7 +136,7 @@
     [item itemDidMoveToParentWebEditorItem];
 }
 
-- (void)replaceChildWebEditorItem:(WEKWebEditorItem *)oldItem with:(WEKWebEditorItem *)newItem;
+- (void)replaceChildWebEditorItem:(WEKWebEditorItem *)oldItem withItems:(NSArray *)newItems
 {
     NSMutableArray *children = [[self childWebEditorItems] mutableCopy];
     NSUInteger index = [children indexOfObject:oldItem];
@@ -145,18 +145,25 @@
     // Start swap
     [oldItem itemWillMoveToParentWebEditorItem:nil];
     [oldItem setParentWebEditorItem:nil];
-    [children replaceObjectAtIndex:index withObject:newItem];
+    [children replaceObjectsInRange:NSMakeRange(index, 1) withObjectsFromArray:newItems];
     
     // Alert new
-    [newItem itemWillMoveToParentWebEditorItem:self];
+    [newItems makeObjectsPerformSelector:@selector(itemWillMoveToParentWebEditorItem:)
+                              withObject:self];
     
     // Finish the swap
     [_childControllers release]; _childControllers = children;
     [oldItem itemDidMoveToParentWebEditorItem];
     
     // Alert new
-    [newItem setParentWebEditorItem:self];
-    [newItem itemDidMoveToParentWebEditorItem];
+    [newItems makeObjectsPerformSelector:@selector(setParentWebEditorItem:) withObject:self];
+    [newItems makeObjectsPerformSelector:@selector(itemDidMoveToParentWebEditorItem)];
+}
+
+- (void)replaceChildWebEditorItem:(WEKWebEditorItem *)oldItem with:(WEKWebEditorItem *)newItem;
+{
+    [self replaceChildWebEditorItem:oldItem 
+                          withItems:[NSArray arrayWithObject:newItem]];
 }
 
 - (void)removeFromParentWebEditorItem;

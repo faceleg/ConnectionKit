@@ -37,6 +37,7 @@
 
 - (void)addChildWebEditorItem:(WEKWebEditorItem *)controller;
 - (void)replaceChildWebEditorItem:(WEKWebEditorItem *)oldItem with:(WEKWebEditorItem *)newItem;
+- (void)replaceChildWebEditorItem:(WEKWebEditorItem *)oldItem withItems:(NSArray *)newItems;
 - (void)removeFromParentWebEditorItem;
 
 - (void)itemWillMoveToParentWebEditorItem:(WEKWebEditorItem *)newParentItem;
