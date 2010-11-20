@@ -838,6 +838,11 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Resize
 
+- (void) resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
+{
+    return [[self enclosingGraphicDOMController] resizeToSize:size byMovingHandle:handle];
+}
+
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
     // Body lives inside a graphic DOM controller, so use the size limit from that instead
