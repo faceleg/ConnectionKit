@@ -585,6 +585,9 @@
     
     
     // Snap to fit current wrap. #94884
+    SVTextAttachment *attachment = [graphic textAttachment];
+    SVGraphicWrap wrap = [[attachment wrap] intValue];
+    
     CGPoint staticPosition = [graphicController positionIgnoringRelativePosition];
     if (position.x > staticPosition.x - 10.0f &&
         position.x < staticPosition.x + 10.0f)
@@ -594,7 +597,6 @@
     else
     {
         // Set wrap to match
-        SVGraphicWrap wrap;
         if (position.x < NSMidX(bounds))
         {
             CGFloat leftEdge = NSMinX(frame) + position.x - currentPosition.x;
@@ -620,13 +622,31 @@
             }
         }
         
-        SVTextAttachment *attachment = [graphic textAttachment];
         if ([[attachment wrap] intValue] != wrap)
         {
             [attachment setWrap:[NSNumber numberWithInt:wrap]];
             [graphicController updateIfNeeded]; // push through so position can be set accurately
         }
     }
+    
+    
+    // Show guide for choice of wrap
+    NSNumber *guide;
+    switch (wrap)
+    {
+        case SVGraphicWrapRightSplit:
+            guide = [NSNumber numberWithFloat:NSMinX(bounds)];
+            break;
+        case SVGraphicWrapCenterSplit:
+            guide = [NSNumber numberWithFloat:NSMidX(bounds)];
+            break;
+        case SVGraphicWrapLeftSplit:
+            guide = [NSNumber numberWithFloat:NSMaxX(bounds)];
+            break;
+        default:
+            guide = nil;
+    }
+    [[self webEditor] setXGuide:guide yGuide:nil];
     
     
     // Is there space to rearrange?
