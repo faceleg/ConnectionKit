@@ -655,16 +655,16 @@
     if (position.y > currentPosition.y)
     {
         // Seek out the next element worth swapping with. It must be an element, and not floated or 0 height
-        DOMElement *nextElement = [element nextSiblingOfClass:[DOMElement class]];
-        NSSize size = [nextElement boundingBox].size;
+        DOMNode *nextNode = [element nextSibling];
+        NSSize size = [nextNode boundingBox].size;
         
-        while (nextElement && size.height <= 0.0f)
+        while (nextNode && size.height <= 0.0f)
         {
-            nextElement = [nextElement nextSiblingOfClass:[DOMElement class]];
-            size = [nextElement boundingBox].size;
+            nextNode = [nextNode nextSiblingOfClass:[DOMElement class]];
+            size = [nextNode boundingBox].size;
         }
             
-        if (nextElement)
+        if (nextNode)
         {
             // Is there space to make the move?
             CGFloat gap = position.y - staticPosition.y;
@@ -672,8 +672,9 @@
             if (gap >= 0.5 * size.height)
             {
                 // Move the element
-                if ([self moveDOMElement:element beforeChild:[nextElement nextSiblingOfClass:[DOMElement class]]])
+                if ([[self webEditor] shouldChangeText:self])
                 {
+                    [[self textHTMLElement] insertBefore:nextNode refChild:element];
                     [[self webEditor] didChangeText];
                 }
             }
