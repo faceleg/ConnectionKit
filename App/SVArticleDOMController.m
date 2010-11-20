@@ -656,12 +656,12 @@
     {
         // Seek out the next element worth swapping with. It must be an element, and not floated or 0 height
         DOMNode *nextNode = [element nextSibling];
-        NSSize size = [nextNode boundingBox].size;
+        NSSize size = [nextNode totalBoundingBox].size;
         
         while (nextNode && size.height <= 0.0f)
         {
             nextNode = [nextNode nextSiblingOfClass:[DOMElement class]];
-            size = [nextNode boundingBox].size;
+            size = [nextNode totalBoundingBox].size;
         }
             
         if (nextNode)
@@ -685,7 +685,7 @@
         DOMNode *previousNode = [element previousSibling];
         if (previousNode)
         {
-            NSSize size = [previousNode boundingBox].size;
+            NSSize size = [previousNode totalBoundingBox].size;
             CGFloat gap = staticPosition.y - position.y;
             
             if (gap >= 0.5 * size.height)   // for many nodes height is 0
