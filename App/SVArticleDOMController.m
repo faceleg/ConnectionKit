@@ -685,10 +685,8 @@
         DOMNode *previousNode = [element previousSibling];
         if (previousNode)
         {
-            NSSize size = [previousNode totalBoundingBox].size;
-            CGFloat gap = staticPosition.y - position.y;
-            
-            if (gap >= 0.5 * size.height)   // for many nodes height is 0
+            NSRect previousFrame = [previousNode boundingBox];            
+            if (previousFrame.size.height <= 0.0f || NSMinY(frame) < NSMidY(previousFrame))
             {
                 // Move the element
                 if ([[self webEditor] shouldChangeText:self])
