@@ -592,6 +592,10 @@
     {
         [result setBorderColor:nil];
     }
+    
+    // Turn off handles while moving
+    if ([[self enclosingGraphicDOMController] hasRelativePosition]) [result setEditing:YES];
+    
     return result;
 }
 

@@ -232,18 +232,6 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     return result;
 }
 
-#pragma mark Drawing
-
-- (SVSelectionBorder *)newSelectionBorder;
-{
-    SVSelectionBorder *result = [super newSelectionBorder];
-    
-    // Turn off handles while moving
-    if ([[self enclosingGraphicDOMController] hasRelativePosition]) [result setEditing:YES];
-    
-    return result;
-}
-
 @end
 
 
