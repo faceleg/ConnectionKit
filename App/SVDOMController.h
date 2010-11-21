@@ -89,6 +89,11 @@
 - (unsigned int)resizingMaskForDOMElement:(DOMElement *)element;    // support
 
 
+#pragma mark Moving
+- (void)moveUp;     // swaps with previous sibling node
+- (void)moveDown;   // swaps with next sibling node
+
+
 #pragma mark Dragging
 - (void)registerForDraggedTypes:(NSArray *)newTypes;
 - (void)unregisterDraggedTypes;

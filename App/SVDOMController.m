@@ -543,6 +543,22 @@
     return [[self enclosingGraphicDOMController] position];
 }
 
+- (void)moveUp;     // swaps with previous sibling node
+{
+    DOMElement *element = [self HTMLElement];
+    
+    [[element parentNode] insertBefore:[element previousSibling]
+                              refChild:[element nextSibling]];
+}
+
+- (void)moveDown;   // swaps with next sibling node
+{
+    DOMElement *element = [self HTMLElement];
+    
+    [[element parentNode] insertBefore:[element nextSibling]
+                              refChild:element];
+}
+
 #pragma mark Dragging
 
 - (NSArray *)registeredDraggedTypes; { return _dragTypes; }

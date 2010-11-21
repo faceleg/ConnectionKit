@@ -677,7 +677,7 @@
                 // Move the element
                 if ([[self webEditor] shouldChangeText:self])
                 {
-                    [[self textHTMLElement] insertBefore:nextNode refChild:element];
+                    [graphicController moveDown];
                     [[self webEditor] didChangeText];
                 }
             }
@@ -694,7 +694,7 @@
                 // Move the element
                 if ([[self webEditor] shouldChangeText:self])
                 {
-                    [[self textHTMLElement] insertBefore:previousNode refChild:[element nextSibling]];
+                    [graphicController moveUp];
                     [[self webEditor] didChangeText];
                 }
             }
