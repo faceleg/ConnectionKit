@@ -562,7 +562,10 @@
     frame.origin.y += position.y - currentPosition.y;
     
     NSRect bounds = [[self textHTMLElement] boundingBox];
-    bounds.size.height += 10.0f;    // be more lenient here since float etc. all come into play
+    
+    // Expand the bottom of the box out to the end of main content
+    NSRect docBounds = [[[[self HTMLElement] ownerDocument] getElementById:@"main-content"] boundingBox];
+    bounds.size.height = docBounds.size.height - (NSMinY(bounds) - NSMinY(docBounds)) - 1.0f;
     
     
     if (NSMinX(frame) < NSMinX(bounds))
