@@ -69,7 +69,9 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	NSImage *result = nil;
     if (isThumbnail) *isThumbnail = NO;
 	
-	// The home page always appears as some kind of favicon
+	NSUInteger maxSize = [self maximumIconSize];
+    
+    // The home page always appears as some kind of favicon
 	if (item == [self rootPage])
 	{
 		result = [self favicon];
@@ -78,7 +80,6 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	{
         id rep = [item imageRepresentation];
         NSString *type = [item imageRepresentationType];
-        NSUInteger maxSize = [self maximumIconSize];
         
         if ([type isEqualToString:IKImageBrowserNSImageRepresentationType])
         {
@@ -131,14 +132,20 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	}
               
               
-    if (!result) result = [self bundleIconForItem:item];
+    if (!result)
+    {
+        result = [self bundleIconForItem:item];
+        
+        // As a final resort, we fallback to the broken icon
+        if (!result)
+        {
+            result = [NSImage brokenImage];
+        }
+        
+        result = [[result copy] autorelease];
+        [result setSize:NSMakeSize(maxSize, maxSize)];
+    }
 	
-	
-	// As a final resort, we fallback to the broken icon
-	if (!result)
-	{
-		result = [NSImage brokenImage];
-	}
 	
 	
     OBPOSTCONDITION(result);
