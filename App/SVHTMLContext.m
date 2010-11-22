@@ -994,6 +994,9 @@
             // Write the graphic
             [self pushClassName:(firstItem ? @"first" : @"not-first-item")];
             [self writeGraphic:[attachment graphic]];
+            
+            // Having written the first bit of content, it's time to start marking that
+            firstItem = NO;
         }
         else
         {
@@ -1003,9 +1006,6 @@
         
         // Advance the search
         location = location + effectiveRange.length;
-        
-        // Having written the first bit of content, it's time to start marking that
-        firstItem = NO;
     }
 }
 
