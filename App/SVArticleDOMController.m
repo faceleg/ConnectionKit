@@ -714,11 +714,11 @@
 
 /*  We'll leave it up to the indivdual graphics
  */
-- (void)moveUp:(id)sender;
+- (void)moveObjectUp:(id)sender;
 {
     [[self selectedItems] makeObjectsPerformSelector:_cmd withObject:sender];
 }
-- (void)moveDown:(id)sender;
+- (void)moveObjectDown:(id)sender;
 {
     [[self selectedItems] makeObjectsPerformSelector:_cmd withObject:sender];
 }

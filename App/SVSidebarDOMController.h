@@ -50,8 +50,8 @@
                           toPosition:(CGPoint)position
                                event:(NSEvent *)event;
 
-- (void)moveUp:(id)sender;
-- (void)moveDown:(id)sender;
+- (void)moveObjectUp:(id)sender;
+- (void)moveObjectDown:(id)sender;
 
 @end
 
@@ -62,4 +62,5 @@
 @interface WEKWebEditorItem (SVSidebarDOMController)
 - (SVSidebarDOMController *)sidebarDOMController;
 @end
+
 

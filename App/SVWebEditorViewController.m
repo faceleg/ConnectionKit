@@ -1344,9 +1344,13 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         [self paste:nil];
         return YES;
     }
-    else if (action == @selector(moveUp:) || action == @selector(moveDown:))
+    else if (action == @selector(moveUp:))
     {
-        [[self firstResponderItem] doCommandBySelector:action];
+        [[self firstResponderItem] doCommandBySelector:@selector(moveObjectUp:)];
+    }
+    else if (action == @selector(moveDown:))
+    {
+        [[self firstResponderItem] doCommandBySelector:@selector(moveObjectDown:)];
     }
     else if (action == @selector(reload:))
     {

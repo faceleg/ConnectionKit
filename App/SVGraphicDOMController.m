@@ -640,7 +640,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return result;
 }
 
-- (void)moveUp:(id)sender;
+- (void)moveObjectUp:(id)sender;
 {
     // Should this move ourself, or a callout?
     SVDOMController *objectToMove = [self calloutDOMController];
@@ -663,7 +663,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [webEditor didChangeText];
 }
 
-- (void)moveDown:(id)sender;
+- (void)moveObjectDown:(id)sender;
 {
     // Should this move ourself, or a callout?
     SVDOMController *objectToMove = [self calloutDOMController];

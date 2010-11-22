@@ -40,8 +40,8 @@
 - (BOOL)hasRelativePosition;
 - (CGPoint)positionIgnoringRelativePosition;
 
-- (void)moveUp:(id)sender;
-- (void)moveDown:(id)sender;
+- (void)moveObjectUp:(id)sender;
+- (void)moveObjectDown:(id)sender;
 
 
 @end
