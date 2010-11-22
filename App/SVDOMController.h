@@ -81,6 +81,10 @@
 - (BOOL)isObservingDependencies;
 
 
+#pragma mark Editing
+- (void)delete;
+
+
 #pragma mark Resizing
 - (NSSize)minSize;
 - (CGFloat)maxWidth;

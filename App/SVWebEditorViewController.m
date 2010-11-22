@@ -1042,8 +1042,16 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     return [self textAreaForDOMRange:range];
 }
 
-- (BOOL)webEditor:(WEKWebEditorView *)sender deleteItems:(NSArray *)items;
+- (BOOL)webEditor:(WEKWebEditorView *)sender removeItems:(NSArray *)items;
 {
+    // Maybe the first responder wants to handle it (i.e. if they're in an article)
+    if ([[self firstResponderItem] tryToPerform:@selector(deleteObjects:) with:self])
+    {
+        return YES;
+    }
+    
+    
+    
     NSArray *objects = [items valueForKey:@"representedObject"];
     if ([objects isEqualToArray:[[self graphicsController] selectedObjects]])
     {

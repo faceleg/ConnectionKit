@@ -49,13 +49,13 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     return ([graphic isExplicitlySized] ? [self HTMLElement] : nil);
 }
 
-- (BOOL)tryToRemove;
+- (void)delete;
 {
     // Remove parent controller instead of ourself
     SVGraphicDOMController *parent = [self enclosingGraphicDOMController];
     OBASSERT(parent);
     
-    return [parent tryToRemove];
+    [parent delete];
 }
 
 #pragma mark Updating

@@ -142,11 +142,10 @@
     return ([self enclosingGraphicDOMController] ? [self HTMLElement] : nil);
 }
 
-- (BOOL) tryToRemove;
+- (void)delete;
 {
     SVTitleBox *text = [self representedObject];
     [text setHidden:NSBOOL(YES)];
-    return (text != nil);
 }
 
 #pragma mark Editing

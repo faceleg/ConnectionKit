@@ -102,26 +102,13 @@
 - (void)delete:(id)sender forwardingSelector:(SEL)action;
 {
     DOMRange *selection = [self selectedDOMRange];
-    if (selection && ![selection collapsed])
+    if (selection)// && ![selection collapsed])
     {
         [self forceWebViewToPerform:action withObject:sender];
     }
     else
     {
-        NSArray *items = [[self selectedItems] copy];   // delete is likely to change selectedItems
-        for (WEKWebEditorItem *anItem in items)
-        {
-            OBASSERT([anItem tryToRemove]);
-        }
-        
-        if (![[self dataSource] webEditor:self deleteItems:items])
-        {
-            NSBeep();
-        }
-        
-        [items release];
-        
-        [self didChangeText];
+        if (![[self dataSource] webEditor:self deleteItems:[self selectedItems]]) NSBeep();
     }
 }
 

@@ -335,6 +335,29 @@
     return result;
 }
 
+#pragma mark Editing
+
+- (void)delete;
+{
+    BOOL result = YES;
+    
+    DOMHTMLElement *element = [self HTMLElement];
+    WEKWebEditorView *webEditor = [self webEditor];
+    
+    // Check WebEditor is OK with the change
+    DOMRange *range = [[element ownerDocument] createRange];
+    [range selectNode:element];
+    
+    result = [webEditor shouldChangeTextInDOMRange:range];
+    if (result)
+    {
+        [element ks_removeFromParentNode];
+        [self removeFromParentWebEditorItem];
+    }
+    
+    [range detach];
+}
+
 #pragma mark Summary
 
 - (NSArray *)contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems;

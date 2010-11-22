@@ -182,7 +182,8 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 - (BOOL)copySelectedItemsToGeneralPasteboard;
 // - (IBAction)paste:(id)sender;
 
-- (IBAction)delete:(id)sender;  // deletes the selected items. If there are none, deletes selected text
+// If there's a selected DOM range in an editable text area, delete that. If not, ask delegate to remove selected items. Same applies to -deleteForward: and -deleteBackward:
+- (IBAction)delete:(id)sender;
 
 
 #pragma mark Undo
@@ -246,7 +247,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 - (WEKWebEditorItem <SVWebEditorText> *)webEditor:(WEKWebEditorView *)sender
                             textBlockForDOMRange:(DOMRange *)range;
 
-- (BOOL)webEditor:(WEKWebEditorView *)sender deleteItems:(NSArray *)items;
+- (BOOL)webEditor:(WEKWebEditorView *)sender removeItems:(NSArray *)items;
 
 // Return YES if the delegate wants to handle link creation itself
 - (BOOL)webEditor:(WEKWebEditorView *)sender createLink:(id)actionSender;

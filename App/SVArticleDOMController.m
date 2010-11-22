@@ -440,9 +440,9 @@
     if ([webEditor shouldChangeText:self])
     {
         NSArray *selection = [self selectedItems];
-        for (WEKWebEditorItem *anItem in selection)
+        for (SVDOMController *anItem in selection)
         {
-            [anItem tryToRemove];
+            [anItem delete];
         }
         
         [[webEditor dataSource] webEditor:webEditor deleteItems:selection];
