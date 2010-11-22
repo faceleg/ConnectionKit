@@ -43,6 +43,8 @@
 - (void)createHTMLElement;
 - (BOOL)isHTMLElementCreated;
 
+- (DOMRange *)DOMRange; // returns -HTMLElement as a range
+
 //  Somewhat problematically, the DOM will retain any event listeners added to it. This can quite easily leave a DOM controller and its HTML element in a retain cycle. When the DOM is torn down, it somehow releases the listener repeatedly, causing a crash.
 //  The best solution I can come up with is to avoid the retain cycle between listener and DOM by creating a simple proxy to listen to events and forward them on to the real target, but not retain either object. That object is automatically managed for you and returned here.
 @property(nonatomic, retain, readonly) id <DOMEventListener> eventsListener;

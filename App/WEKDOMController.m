@@ -66,6 +66,14 @@
 
 - (BOOL)isHTMLElementCreated { return (_DOMElement != nil); }
 
+- (DOMRange *)DOMRange; // returns -HTMLElement as a range
+{
+    DOMElement *element = [self HTMLElement];
+    DOMRange *result = [[element ownerDocument] createRange];
+    [result selectNode:element];
+    return result;
+}
+
 - (id <DOMEventListener>)eventsListener;
 {
     if (!_eventListener)
