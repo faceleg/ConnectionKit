@@ -673,28 +673,27 @@
             if (gap >= 0.5 * size.height)
             {
                 // Move the element
-                if ([[self webEditor] shouldChangeText:self])
-                {
-                    [graphicController exchangeWithNextDOMNode];
-                    [[self webEditor] didChangeText];
-                }
+                [graphicController moveDown];
             }
         }
     }
     else if (position.y < currentPosition.y)
     {
         DOMNode *previousNode = [element previousSibling];
+        NSRect previousFrame = [previousNode boundingBox];            
+        
+        while (previousNode && previousFrame.size.height <= 0.0f)
+        {
+            previousNode = [previousNode previousSiblingOfClass:[DOMElement class]];
+            previousFrame = [previousNode totalBoundingBox];
+        }
+        
         if (previousNode)
         {
-            NSRect previousFrame = [previousNode boundingBox];            
             if (previousFrame.size.height <= 0.0f || NSMinY(frame) < NSMidY(previousFrame))
             {
                 // Move the element
-                if ([[self webEditor] shouldChangeText:self])
-                {
-                    [graphicController exchangeWithPreviousDOMNode];
-                    [[self webEditor] didChangeText];
-                }
+                [graphicController moveUp];
             }
         }
     }
