@@ -833,6 +833,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     {
         self.googleWindowController = [[[SVGoogleWindowController alloc] initWithWindowNibName:@"SVGoogleSheet"] autorelease];
     }
+    [self.googleWindowController setSite:[[self document] site]];
     [self.googleWindowController configureGoogle:self];
 }
 
