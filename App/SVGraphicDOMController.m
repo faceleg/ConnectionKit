@@ -643,21 +643,37 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 - (void)moveUp:(id)sender;
 {
     WEKWebEditorView *webEditor = [self webEditor];
-    if ([webEditor shouldChangeTextInDOMRange:[self DOMRange]])
+    DOMNode *previousNode = [[self HTMLElement] previousSibling];
+    
+    while (previousNode && [webEditor shouldChangeTextInDOMRange:[self DOMRange]])
     {
         [self moveUp];
-        [webEditor didChangeText];
+        
+        // Have we made a noticeable move yet?
+        NSSize size = [previousNode boundingBox].size;
+        if (size.width > 0.0f || size.height > 0.0f) break;
+        
+        previousNode = [[self HTMLElement] previousSibling];
     }
+    [webEditor didChangeText];
 }
 
 - (void)moveDown:(id)sender;
 {
     WEKWebEditorView *webEditor = [self webEditor];
-    if ([webEditor shouldChangeTextInDOMRange:[self DOMRange]])
+    DOMNode *nextNode = [[self HTMLElement] nextSibling];
+    
+    while (nextNode && [webEditor shouldChangeTextInDOMRange:[self DOMRange]])
     {
         [self moveDown];
-        [webEditor didChangeText];
+        
+        // Have we made a noticeable move yet?
+        NSSize size = [nextNode boundingBox].size;
+        if (size.width > 0.0f || size.height > 0.0f) break;
+        
+        nextNode = [[self HTMLElement] nextSibling];
     }
+    [webEditor didChangeText];
 }
 
 #pragma mark Resizing
