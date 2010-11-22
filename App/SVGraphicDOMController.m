@@ -647,7 +647,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     while (previousNode && [webEditor shouldChangeTextInDOMRange:[self DOMRange]])
     {
-        [self moveUp];
+        [self exchangeWithPreviousDOMNode];
         
         // Have we made a noticeable move yet?
         NSSize size = [previousNode boundingBox].size;
@@ -665,7 +665,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     while (nextNode && [webEditor shouldChangeTextInDOMRange:[self DOMRange]])
     {
-        [self moveDown];
+        [self exchangeWithNextDOMNode];
         
         // Have we made a noticeable move yet?
         NSSize size = [nextNode boundingBox].size;

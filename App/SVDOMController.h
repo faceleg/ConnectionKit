@@ -94,8 +94,8 @@
 
 
 #pragma mark Moving
-- (void)moveUp;     // swaps with previous sibling node
-- (void)moveDown;   // swaps with next sibling node
+- (void)exchangeWithPreviousDOMNode;
+- (void)exchangeWithNextDOMNode;
 
 
 #pragma mark Dragging

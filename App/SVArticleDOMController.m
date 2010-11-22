@@ -675,7 +675,7 @@
                 // Move the element
                 if ([[self webEditor] shouldChangeText:self])
                 {
-                    [graphicController moveDown];
+                    [graphicController exchangeWithNextDOMNode];
                     [[self webEditor] didChangeText];
                 }
             }
@@ -692,7 +692,7 @@
                 // Move the element
                 if ([[self webEditor] shouldChangeText:self])
                 {
-                    [graphicController moveUp];
+                    [graphicController exchangeWithPreviousDOMNode];
                     [[self webEditor] didChangeText];
                 }
             }

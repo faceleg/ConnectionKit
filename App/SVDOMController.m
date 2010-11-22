@@ -566,7 +566,7 @@
     return [[self enclosingGraphicDOMController] position];
 }
 
-- (void)moveUp;     // swaps with previous sibling node
+- (void)exchangeWithPreviousDOMNode;     // swaps with previous sibling node
 {
     DOMElement *element = [self HTMLElement];
     
@@ -574,7 +574,7 @@
                               refChild:[element nextSibling]];
 }
 
-- (void)moveDown;   // swaps with next sibling node
+- (void)exchangeWithNextDOMNode;   // swaps with next sibling node
 {
     DOMElement *element = [self HTMLElement];
     
