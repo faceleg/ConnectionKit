@@ -723,6 +723,42 @@
     [[self selectedItems] makeObjectsPerformSelector:@selector(moveDown)];
 }
 
+- (void)moveItemUp:(WEKWebEditorItem *)item;
+{
+    WEKWebEditorView *webEditor = [self webEditor];
+    DOMNode *previousNode = [[item HTMLElement] previousSibling];
+    
+    while (previousNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])
+    {
+        [item exchangeWithPreviousDOMNode];
+        
+        // Have we made a noticeable move yet?
+        NSSize size = [previousNode boundingBox].size;
+        if (size.width > 0.0f || size.height > 0.0f) break;
+        
+        previousNode = [[item HTMLElement] previousSibling];
+    }
+    [webEditor didChangeText];
+}
+
+- (void)moveItemDown:(WEKWebEditorItem *)item;
+{
+    WEKWebEditorView *webEditor = [item webEditor];
+    DOMNode *nextNode = [[item HTMLElement] nextSibling];
+    
+    while (nextNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])
+    {
+        [item exchangeWithNextDOMNode];
+        
+        // Have we made a noticeable move yet?
+        NSSize size = [nextNode boundingBox].size;
+        if (size.width > 0.0f || size.height > 0.0f) break;
+        
+        nextNode = [[item HTMLElement] nextSibling];
+    }
+    [webEditor didChangeText];
+}
+
 #pragma mark Drawing
 
 - (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;

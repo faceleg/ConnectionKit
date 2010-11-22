@@ -566,22 +566,6 @@
     return [[self enclosingGraphicDOMController] position];
 }
 
-- (void)exchangeWithPreviousDOMNode;     // swaps with previous sibling node
-{
-    DOMElement *element = [self HTMLElement];
-    
-    [[element parentNode] insertBefore:[element previousSibling]
-                              refChild:[element nextSibling]];
-}
-
-- (void)exchangeWithNextDOMNode;   // swaps with next sibling node
-{
-    DOMElement *element = [self HTMLElement];
-    
-    [[element parentNode] insertBefore:[element nextSibling]
-                              refChild:element];
-}
-
 #pragma mark Dragging
 
 - (NSArray *)registeredDraggedTypes; { return _dragTypes; }
@@ -718,23 +702,53 @@
     [[self childWebEditorItems] makeObjectsPerformSelector:_cmd];
 }
 
-#pragma mark Moving
+#pragma mark Moving in Article
 
-- (void)moveUp;
+- (void)moveItemUp:(SVDOMController *)item;
 {
     // By default have no idea how to move, so get parent to do it
-    [[self parentWebEditorItem] moveUp];
+    [[self parentWebEditorItem] moveItemUp:self];
 }
 
-- (void)moveDown;
+- (void)moveItemDown:(SVDOMController *)item;
 {
     // By default have no idea how to move, so get parent to do it
-    [[self parentWebEditorItem] moveDown];
+    [[self parentWebEditorItem] moveItemDown:self];
 }
+
+- (void)moveUp; { [[self parentWebEditorItem] moveItemUp:self]; }
+
+- (void)moveDown; { [[self parentWebEditorItem] moveItemDown:self]; }
 
 #pragma mark Drag & Drop
 
 - (NSArray *)registeredDraggedTypes; { return nil; }
+
+@end
+
+
+#pragma mark -
+
+
+@implementation WEKDOMController (SVDOMController)
+
+#pragma mark Moving
+
+- (void)exchangeWithPreviousDOMNode;     // swaps with previous sibling node
+{
+    DOMElement *element = [self HTMLElement];
+    
+    [[element parentNode] insertBefore:[element previousSibling]
+                              refChild:[element nextSibling]];
+}
+
+- (void)exchangeWithNextDOMNode;   // swaps with next sibling node
+{
+    DOMElement *element = [self HTMLElement];
+    
+    [[element parentNode] insertBefore:[element nextSibling]
+                              refChild:element];
+}
 
 @end
 

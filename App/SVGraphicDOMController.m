@@ -640,52 +640,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return result;
 }
 
-- (void)moveUp;
-{
-    // Should this move ourself, or a callout?
-    SVDOMController *objectToMove = [self calloutDOMController];
-    if (!objectToMove) objectToMove = self;
-    
-    
-    WEKWebEditorView *webEditor = [self webEditor];
-    DOMNode *previousNode = [[objectToMove HTMLElement] previousSibling];
-    
-    while (previousNode && [webEditor shouldChangeTextInDOMRange:[objectToMove DOMRange]])
-    {
-        [objectToMove exchangeWithPreviousDOMNode];
-        
-        // Have we made a noticeable move yet?
-        NSSize size = [previousNode boundingBox].size;
-        if (size.width > 0.0f || size.height > 0.0f) break;
-        
-        previousNode = [[objectToMove HTMLElement] previousSibling];
-    }
-    [webEditor didChangeText];
-}
-
-- (void)moveDown;
-{
-    // Should this move ourself, or a callout?
-    SVDOMController *objectToMove = [self calloutDOMController];
-    if (!objectToMove) objectToMove = self;
-    
-    
-    WEKWebEditorView *webEditor = [objectToMove webEditor];
-    DOMNode *nextNode = [[objectToMove HTMLElement] nextSibling];
-    
-    while (nextNode && [webEditor shouldChangeTextInDOMRange:[objectToMove DOMRange]])
-    {
-        [objectToMove exchangeWithNextDOMNode];
-        
-        // Have we made a noticeable move yet?
-        NSSize size = [nextNode boundingBox].size;
-        if (size.width > 0.0f || size.height > 0.0f) break;
-        
-        nextNode = [[objectToMove HTMLElement] nextSibling];
-    }
-    [webEditor didChangeText];
-}
-
 #pragma mark Resizing
 
 - (unsigned int)resizingMask

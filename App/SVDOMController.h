@@ -93,11 +93,6 @@
 - (unsigned int)resizingMaskForDOMElement:(DOMElement *)element;    // support
 
 
-#pragma mark Moving
-- (void)exchangeWithPreviousDOMNode;
-- (void)exchangeWithNextDOMNode;
-
-
 #pragma mark Dragging
 - (void)registerForDraggedTypes:(NSArray *)newTypes;
 - (void)unregisterDraggedTypes;
@@ -154,7 +149,13 @@
 - (void)stopObservingDependencies;  // recursive
 
 
-#pragma mark Moving
+#pragma mark Moving in Article
+
+// Default implementation doesn't know how to handle the move, so passes on, asking parent to move itself. Generally item should be a child
+- (void)moveItemUp:(WEKWebEditorItem *)item;
+- (void)moveItemDown:(WEKWebEditorItem *)item;
+
+// Ask parent to move receiver
 - (void)moveUp;
 - (void)moveDown;
 
@@ -164,3 +165,17 @@
 
 
 @end
+
+
+#pragma mark -
+
+
+@interface WEKDOMController (SVDOMController)
+
+#pragma mark Moving
+- (void)exchangeWithPreviousDOMNode;
+- (void)exchangeWithNextDOMNode;
+
+
+@end
+
