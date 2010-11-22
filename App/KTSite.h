@@ -63,6 +63,7 @@ typedef enum {
 
 // Google sitemap
 - (NSString *)googleSiteMapXMLString;
+- (NSString *)publishedSitemapURLString;
 
 // Publishing
 @property(nonatomic, retain, readonly) KTHostProperties *hostProperties;
