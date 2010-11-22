@@ -212,7 +212,7 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
 
 #pragma mark Moving Pagelets
 
-- (void)moveUp:(id)sender;
+- (void)exchangeWithPrevious:(id)sender;
 {
     // Move selected objects up one if they can
     NSIndexSet *selection = [self selectionIndexes];
@@ -232,7 +232,7 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     }
 }
 
-- (void)moveDown:(id)sender;
+- (void)exchangeWithNext:(id)sender;
 {
     // Move selected objects down one if they can
     NSIndexSet *selection = [self selectionIndexes];

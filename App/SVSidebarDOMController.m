@@ -651,12 +651,12 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 - (void)moveUp:(id)sender;
 {
-    [[self pageletsController] moveUp:sender];
+    [[self pageletsController] exchangeWithPrevious:sender];
 }
 
 - (void)moveDown:(id)sender;
 {
-    [[self pageletsController] moveDown:sender];
+    [[self pageletsController] exchangeWithNext:sender];
 }
 
 #pragma mark Drawing
