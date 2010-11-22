@@ -119,6 +119,9 @@
  */
 - (void)moveItemUp:(WEKWebEditorItem *)item;
 {
+    if ([[self childWebEditorItems] count] <= 1) return [super moveItemUp:item];
+    
+    
     OBPRECONDITION(item);
     OBPRECONDITION([item parentWebEditorItem] == self);
     
@@ -146,6 +149,9 @@
 
 - (void)moveItemDown:(WEKWebEditorItem *)item;
 {
+    if ([[self childWebEditorItems] count] <= 1) return [super moveItemDown:item];
+    
+    
     OBPRECONDITION(item);
     OBPRECONDITION([item parentWebEditorItem] == self);
     
