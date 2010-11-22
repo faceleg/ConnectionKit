@@ -10,6 +10,8 @@
 
 #import "SVRichTextDOMController.h"
 
+#import "DOMNode+Karelia.h"
+
 
 @interface DOMElement (SVCalloutDOMController)
 - (DOMNodeList *)getElementsByClassName:(NSString *)name;
@@ -109,6 +111,65 @@
     }
     
     return result;
+}
+
+#pragma mark Moving
+
+/*  Normally it's enough to move ourself up or down instead of the item. But if we contain multiple graphics, have to get more cunning
+ */
+- (void)moveItemUp:(WEKWebEditorItem *)item;
+{
+    OBPRECONDITION(item);
+    OBPRECONDITION([item parentWebEditorItem] == self);
+    
+    
+    // Is there anywhere to move to within callout?
+    WEKWebEditorView *webEditor = [self webEditor];
+    DOMNode *previousNode = [item previousDOMNode];
+    
+    while (previousNode && [webEditor shouldChangeTextInDOMRange:[self DOMRange]])
+    {
+        [item exchangeWithPreviousDOMNode];
+        
+        if ([previousNode hasSize])
+        {
+            [webEditor didChangeText];
+            return;
+        }
+        
+        previousNode = [item previousDOMNode];
+    }
+    
+    
+    [super moveItemUp:item];
+}
+
+- (void)moveItemDown:(WEKWebEditorItem *)item;
+{
+    OBPRECONDITION(item);
+    OBPRECONDITION([item parentWebEditorItem] == self);
+    
+    
+    // Is there anywhere to move to within callout?
+    WEKWebEditorView *webEditor = [self webEditor];
+    DOMNode *nextNode = [item nextDOMNode];
+    
+    while (nextNode && [webEditor shouldChangeTextInDOMRange:[self DOMRange]])
+    {
+        [item exchangeWithNextDOMNode];
+        
+        if ([nextNode hasSize])
+        {
+            [webEditor didChangeText];
+            return;
+        }
+        
+        nextNode = [item nextDOMNode];
+    }
+    
+    
+    // Guess not; do a normal move instead
+    [super moveItemDown:item];
 }
 
 #pragma mark Other
