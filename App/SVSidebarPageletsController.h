@@ -37,6 +37,8 @@
 - (void)moveObject:(id)object toIndex:(NSUInteger)index;
 - (void)moveObject:(id)object beforeObject:(id)pagelet;
 - (void)moveObject:(id)object afterObject:(id)pagelet;
+- (void)moveUp:(id)sender;
+- (void)moveDown:(id)sender;
 
 
 #pragma mark Recursion

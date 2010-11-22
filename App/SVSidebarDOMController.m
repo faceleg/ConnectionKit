@@ -649,6 +649,16 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     }
 }
 
+- (void)moveUp:(id)sender;
+{
+    [[self pageletsController] moveUp:sender];
+}
+
+- (void)moveDown:(id)sender;
+{
+    [[self pageletsController] moveDown:sender];
+}
+
 #pragma mark Drawing
 
 - (NSRect)dropTargetRect;

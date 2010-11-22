@@ -45,10 +45,13 @@
 
 
 #pragma mark Moving
+
 - (void)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
                           toPosition:(CGPoint)position
                                event:(NSEvent *)event;
 
+- (void)moveUp:(id)sender;
+- (void)moveDown:(id)sender;
 
 @end
 

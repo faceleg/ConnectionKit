@@ -1346,15 +1346,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     }
     else if (action == @selector(moveUp:) || action == @selector(moveDown:))
     {
-        for (WEKWebEditorItem *anItem in [sender selectedItems])
-        {
-            if ([anItem sidebarDOMController])
-            {
-                [[_graphicsController sidebarPageletsController] performSelector:action
-                                                                      withObject:nil];
-                break;
-            }
-        }        
+        [[self firstResponderItem] doCommandBySelector:action];
     }
     else if (action == @selector(reload:))
     {
