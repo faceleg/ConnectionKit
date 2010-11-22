@@ -46,6 +46,11 @@
 - (NSEnumerator *)enumerator;
 
 
+#pragma mark Siblings
+- (WEKWebEditorItem *)previousWebEditorItem;
+- (WEKWebEditorItem *)nextWebEditorItem;
+
+
 #pragma mark Selection
 
 - (BOOL)isSelectable;   // convenience for -selectableDOMElement

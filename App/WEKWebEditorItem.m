@@ -217,6 +217,32 @@
     [[self childWebEditorItems] makeObjectsPerformSelector:_cmd withObject:descendants];
 }
 
+#pragma mark Siblings
+
+- (WEKWebEditorItem *)previousWebEditorItem;
+{
+    WEKWebEditorItem *parent = [self parentWebEditorItem];
+    NSArray *siblings = [parent childWebEditorItems];
+    NSUInteger index = [siblings indexOfObjectIdenticalTo:self];
+    if (index > 0)
+    {
+        return [siblings objectAtIndex:(index - 1)];
+    }
+    return nil;
+}
+
+- (WEKWebEditorItem *)nextWebEditorItem;
+{
+    WEKWebEditorItem *parent = [self parentWebEditorItem];
+    NSArray *siblings = [parent childWebEditorItems];
+    NSUInteger index = [siblings indexOfObjectIdenticalTo:self] + 1;
+    if (index <= [siblings count])
+    {
+        return [siblings objectAtIndex:index];
+    }
+    return nil;    
+}
+
 #pragma mark Selection
 
 - (BOOL)isSelectable; { return [self selectableDOMElement] != nil; }
