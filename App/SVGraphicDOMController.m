@@ -642,36 +642,46 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (void)moveUp:(id)sender;
 {
-    WEKWebEditorView *webEditor = [self webEditor];
-    DOMNode *previousNode = [[self HTMLElement] previousSibling];
+    // Should this move ourself, or a callout?
+    SVDOMController *objectToMove = [self calloutDOMController];
+    if (!objectToMove) objectToMove = self;
     
-    while (previousNode && [webEditor shouldChangeTextInDOMRange:[self DOMRange]])
+    
+    WEKWebEditorView *webEditor = [self webEditor];
+    DOMNode *previousNode = [[objectToMove HTMLElement] previousSibling];
+    
+    while (previousNode && [webEditor shouldChangeTextInDOMRange:[objectToMove DOMRange]])
     {
-        [self exchangeWithPreviousDOMNode];
+        [objectToMove exchangeWithPreviousDOMNode];
         
         // Have we made a noticeable move yet?
         NSSize size = [previousNode boundingBox].size;
         if (size.width > 0.0f || size.height > 0.0f) break;
         
-        previousNode = [[self HTMLElement] previousSibling];
+        previousNode = [[objectToMove HTMLElement] previousSibling];
     }
     [webEditor didChangeText];
 }
 
 - (void)moveDown:(id)sender;
 {
-    WEKWebEditorView *webEditor = [self webEditor];
-    DOMNode *nextNode = [[self HTMLElement] nextSibling];
+    // Should this move ourself, or a callout?
+    SVDOMController *objectToMove = [self calloutDOMController];
+    if (!objectToMove) objectToMove = self;
     
-    while (nextNode && [webEditor shouldChangeTextInDOMRange:[self DOMRange]])
+    
+    WEKWebEditorView *webEditor = [objectToMove webEditor];
+    DOMNode *nextNode = [[objectToMove HTMLElement] nextSibling];
+    
+    while (nextNode && [webEditor shouldChangeTextInDOMRange:[objectToMove DOMRange]])
     {
-        [self exchangeWithNextDOMNode];
+        [objectToMove exchangeWithNextDOMNode];
         
         // Have we made a noticeable move yet?
         NSSize size = [nextNode boundingBox].size;
         if (size.width > 0.0f || size.height > 0.0f) break;
         
-        nextNode = [[self HTMLElement] nextSibling];
+        nextNode = [[objectToMove HTMLElement] nextSibling];
     }
     [webEditor didChangeText];
 }
