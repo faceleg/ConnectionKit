@@ -726,17 +726,16 @@
 - (void)moveItemUp:(WEKWebEditorItem *)item;
 {
     WEKWebEditorView *webEditor = [self webEditor];
-    DOMNode *previousNode = [[item HTMLElement] previousSibling];
+    DOMNode *previousNode = [item previousDOMNode];
     
     while (previousNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])
     {
         [item exchangeWithPreviousDOMNode];
         
         // Have we made a noticeable move yet?
-        NSSize size = [previousNode boundingBox].size;
-        if (size.width > 0.0f || size.height > 0.0f) break;
+        if ([previousNode hasSize]) break;
         
-        previousNode = [[item HTMLElement] previousSibling];
+        previousNode = [item previousDOMNode];
     }
     [webEditor didChangeText];
 }
@@ -744,17 +743,16 @@
 - (void)moveItemDown:(WEKWebEditorItem *)item;
 {
     WEKWebEditorView *webEditor = [item webEditor];
-    DOMNode *nextNode = [[item HTMLElement] nextSibling];
+    DOMNode *nextNode = [item nextDOMNode];
     
     while (nextNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])
     {
         [item exchangeWithNextDOMNode];
         
         // Have we made a noticeable move yet?
-        NSSize size = [nextNode boundingBox].size;
-        if (size.width > 0.0f || size.height > 0.0f) break;
+        if ([nextNode hasSize]) break;
         
-        nextNode = [[item HTMLElement] nextSibling];
+        nextNode = [item nextDOMNode];
     }
     [webEditor didChangeText];
 }
