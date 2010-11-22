@@ -172,6 +172,10 @@
 
 @interface WEKDOMController (SVDOMController)
 
+- (DOMNode *)previousDOMNode;
+- (DOMNode *)nextDOMNode;
+
+
 #pragma mark Moving
 - (void)exchangeWithPreviousDOMNode;
 - (void)exchangeWithNextDOMNode;

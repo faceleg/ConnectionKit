@@ -732,6 +732,10 @@
 
 @implementation WEKDOMController (SVDOMController)
 
+- (DOMNode *)previousDOMNode; { return [[self HTMLElement] previousSibling]; }
+
+- (DOMNode *)nextDOMNode; { return [[self HTMLElement] nextSibling]; }
+
 #pragma mark Moving
 
 - (void)exchangeWithPreviousDOMNode;     // swaps with previous sibling node
