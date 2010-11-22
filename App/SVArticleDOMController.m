@@ -445,8 +445,6 @@
             [anItem delete];
         }
         
-        [[webEditor dataSource] webEditor:webEditor deleteItems:selection];
-        
         [webEditor didChangeText];
     }
 }

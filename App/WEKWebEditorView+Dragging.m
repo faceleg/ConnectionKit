@@ -164,13 +164,8 @@
     
     if ([self draggedItems])
     {
-        for (WEKWebEditorItem *anItem in [self draggedItems])
-        {
-            [anItem delete];
-        }
-        
         // Remove the objects
-        [[self dataSource] webEditor:self deleteItems:[self draggedItems]];
+        [[self dataSource] webEditor:self removeItems:[self draggedItems]];
         
         // Clean up
         [self forgetDraggedItems];

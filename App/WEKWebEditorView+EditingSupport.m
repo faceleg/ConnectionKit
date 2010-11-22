@@ -108,7 +108,7 @@
     }
     else
     {
-        if (![[self dataSource] webEditor:self deleteItems:[self selectedItems]]) NSBeep();
+        if (![[self dataSource] webEditor:self removeItems:[self selectedItems]]) NSBeep();
     }
 }
 
