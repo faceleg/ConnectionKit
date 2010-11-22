@@ -718,6 +718,20 @@
     [[self childWebEditorItems] makeObjectsPerformSelector:_cmd];
 }
 
+#pragma mark Moving
+
+- (void)moveUp;
+{
+    // By default have no idea how to move, so get parent to do it
+    [[self parentWebEditorItem] moveUp];
+}
+
+- (void)moveDown;
+{
+    // By default have no idea how to move, so get parent to do it
+    [[self parentWebEditorItem] moveDown];
+}
+
 #pragma mark Drag & Drop
 
 - (NSArray *)registeredDraggedTypes; { return nil; }

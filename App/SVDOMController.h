@@ -154,6 +154,11 @@
 - (void)stopObservingDependencies;  // recursive
 
 
+#pragma mark Moving
+- (void)moveUp;
+- (void)moveDown;
+
+
 #pragma mark Drag & Drop
 - (NSArray *)registeredDraggedTypes;
 
