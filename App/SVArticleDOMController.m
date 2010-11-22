@@ -712,6 +712,17 @@
     return ;
 }
 
+/*  We'll leave it up to the indivdual graphics
+ */
+- (void)moveUp:(id)sender;
+{
+    [[self selectedItems] makeObjectsPerformSelector:_cmd withObject:sender];
+}
+- (void)moveDown:(id)sender;
+{
+    [[self selectedItems] makeObjectsPerformSelector:_cmd withObject:sender];
+}
+
 #pragma mark Drawing
 
 - (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;

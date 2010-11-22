@@ -640,6 +640,26 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return result;
 }
 
+- (void)moveUp:(id)sender;
+{
+    WEKWebEditorView *webEditor = [self webEditor];
+    if ([webEditor shouldChangeTextInDOMRange:[self DOMRange]])
+    {
+        [self moveUp];
+        [webEditor didChangeText];
+    }
+}
+
+- (void)moveDown:(id)sender;
+{
+    WEKWebEditorView *webEditor = [self webEditor];
+    if ([webEditor shouldChangeTextInDOMRange:[self DOMRange]])
+    {
+        [self moveDown];
+        [webEditor didChangeText];
+    }
+}
+
 #pragma mark Resizing
 
 - (unsigned int)resizingMask
