@@ -1,30 +1,6 @@
 [[if !disableComments]]
 [[if allowComments]]
 									<!-- comments -->
-[[if master.wantsJSKit]]
-[[if master.JSKitModeratorEmail]]
-									[[if parser.isPublishing]]
-									[[if self==parser.currentPage]]
-									<div class="js-kit-comments" [[if userDefaults.JSKitReverseOrder]]backwards="yes"[[endif7]] [[if userDefaults.JSKitDisableAvatars]]avatars="no"[[endif7]] [[if userDefaults.JSKitDisableThreading]]thread="no"[[endif7]] path="[[=&JSKitPath]]" permalink="[[=&URL]]"></div>
-									<div class="clear"></div>
-									[[else6]]
-									<div class="comments">
-										<p><a href="[[=&URL]]"><span class="js-kit-comments-count" path="[[=&JSKitPath]]">0</span> [[`Comments]]</a></p>
-									</div>
-									[[endif6]]
-									[[else5]]
-									<div class="comments">
-										<p>[[`JS-Kit Comments]]</p>
-									</div>
-									[[endif5]]
-[[else4]]
-[[if parser.HTMLGenerationPurpose==0]]
-									<div class="comments">
-										<p style="color:red;">[[`To enable JS-Kit comments, enter your moderator email address into the Site Inspector]]</p>
-									</div>
-[[endif5]]
-[[endif4]]
-[[endif3]]
 [[if master.wantsDisqus]]
 [[if master.disqusShortName]]
 									[[if parser.isPublishing]]
