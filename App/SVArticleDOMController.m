@@ -541,6 +541,25 @@
     return NO;
 }
 
+- (DOMNode *)nodeToMoveControllerBefore:(SVDOMController *)controller;
+{
+    DOMElement *element = [controller HTMLElement];
+    
+    DOMTreeWalker *walker = [[element ownerDocument] createTreeWalker:[self textHTMLElement]
+                                                           whatToShow:DOM_SHOW_ALL
+                                                               filter:nil
+                                               expandEntityReferences:NO];
+    [walker setCurrentNode:element];
+    
+    DOMNode *result = [walker ks_previousNodeIgnoringChildren];
+    while (result && ![result hasSize])
+    {
+        result = [walker ks_previousNodeIgnoringChildren];
+    }
+    
+    return result;
+}
+
 - (DOMNode *)nodeToMoveControllerAfter:(SVDOMController *)controller;
 {
     DOMElement *element = [controller HTMLElement];
@@ -681,8 +700,6 @@
     
     
     // Is there space to rearrange?
-    DOMElement *element = [graphicController HTMLElement];
-    
     if (position.y > currentPosition.y)
     {
         DOMNode *nextNode = [self nodeToMoveControllerAfter:graphicController];
@@ -701,18 +718,7 @@
     }
     else if (position.y < currentPosition.y)
     {
-        DOMTreeWalker *walker = [[element ownerDocument] createTreeWalker:[self textHTMLElement]
-                                                               whatToShow:DOM_SHOW_ALL
-                                                                   filter:nil
-                                                   expandEntityReferences:NO];
-        [walker setCurrentNode:element];
-        
-        DOMNode *previousNode = [walker ks_previousNodeIgnoringChildren];
-        while (previousNode && ![previousNode hasSize])
-        {
-            previousNode = [walker ks_previousNodeIgnoringChildren];
-        }
-        
+        DOMNode *previousNode = [self nodeToMoveControllerBefore:graphicController];
         if (previousNode)
         {
             NSRect previousFrame = [previousNode boundingBox];            
