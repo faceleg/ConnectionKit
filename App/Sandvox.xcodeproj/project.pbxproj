@@ -405,6 +405,8 @@
 		276AB40A125F444C006FED25 /* SVPasteboardItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 276AB408125F444C006FED25 /* SVPasteboardItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		276AB40B125F444C006FED25 /* SVPasteboardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 276AB409125F444C006FED25 /* SVPasteboardItem.m */; };
 		276AB462125F4B43006FED25 /* SVPasteboardItemInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276AB461125F4B43006FED25 /* SVPasteboardItemInternal.h */; };
+		276C004E129BE40500568A73 /* SVGraphicContainerDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 276C004C129BE40500568A73 /* SVGraphicContainerDOMController.h */; };
+		276C004F129BE40500568A73 /* SVGraphicContainerDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276C004D129BE40500568A73 /* SVGraphicContainerDOMController.m */; };
 		276C151D114A6C0300D30CFE /* GraphicInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 276C151C114A6C0300D30CFE /* GraphicInspector.xib */; };
 		276F8AB210D572780094AA73 /* SVDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 276F8AB010D572780094AA73 /* SVDOMController.h */; };
 		276F8AB310D572780094AA73 /* SVDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276F8AB110D572780094AA73 /* SVDOMController.m */; };
@@ -1960,6 +1962,8 @@
 		276AB408125F444C006FED25 /* SVPasteboardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPasteboardItem.h; sourceTree = "<group>"; };
 		276AB409125F444C006FED25 /* SVPasteboardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPasteboardItem.m; sourceTree = "<group>"; };
 		276AB461125F4B43006FED25 /* SVPasteboardItemInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPasteboardItemInternal.h; sourceTree = "<group>"; };
+		276C004C129BE40500568A73 /* SVGraphicContainerDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGraphicContainerDOMController.h; sourceTree = "<group>"; };
+		276C004D129BE40500568A73 /* SVGraphicContainerDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGraphicContainerDOMController.m; sourceTree = "<group>"; };
 		276C151C114A6C0300D30CFE /* GraphicInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GraphicInspector.xib; sourceTree = "<group>"; };
 		276F8AB010D572780094AA73 /* SVDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMController.h; sourceTree = "<group>"; };
 		276F8AB110D572780094AA73 /* SVDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMController.m; sourceTree = "<group>"; };
@@ -3235,6 +3239,8 @@
 				27503419126C6BCF006F87ED /* SVMediaDOMController.m */,
 				27F33BDA126E101600CDC551 /* SVIndexDOMController.h */,
 				27F33BDB126E101600CDC551 /* SVIndexDOMController.m */,
+				276C004C129BE40500568A73 /* SVGraphicContainerDOMController.h */,
+				276C004D129BE40500568A73 /* SVGraphicContainerDOMController.m */,
 			);
 			name = "Other DOM Controllers";
 			sourceTree = "<group>";
@@ -5839,6 +5845,7 @@
 				3CACE29F127FB99400983DF2 /* SVGoogleWindowController.h in Headers */,
 				27711D541282BBCA00AE27CC /* SVImageItem.h in Headers */,
 				271884431296A28000139C89 /* KSElementInfo.h in Headers */,
+				276C004E129BE40500568A73 /* SVGraphicContainerDOMController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7348,6 +7355,7 @@
 				3CACE2A0127FB99400983DF2 /* SVGoogleWindowController.m in Sources */,
 				27711D551282BBCA00AE27CC /* SVImageItem.m in Sources */,
 				271884441296A28000139C89 /* KSElementInfo.m in Sources */,
+				276C004F129BE40500568A73 /* SVGraphicContainerDOMController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

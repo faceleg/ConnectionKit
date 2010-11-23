@@ -546,10 +546,6 @@
 {
     OBPRECONDITION(graphicController);
     
-    // Can't move callouts yet
-    if ([graphicController calloutDOMController]) return;
-    
-    
     SVGraphic *graphic = [graphicController representedObject];
     
    
