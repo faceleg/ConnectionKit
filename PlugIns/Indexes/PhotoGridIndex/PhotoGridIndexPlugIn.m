@@ -39,6 +39,13 @@
 
 @implementation PhotoGridIndexPlugIn
 
+- (void)awakeFromNew
+{
+    [super awakeFromNew];
+    self.enableMaxItems = NO;
+}
+
+
 #pragma mark HTML Generation
 
 - (void)writeHTML:(id <SVPlugInContext>)context
