@@ -217,22 +217,7 @@
     }
 	
     
-    if (![self isForPublishing])    // during publishing, pub engine will take care of design CSS
-    {
-        // Load up DESIGN CSS, which might override the generic stuff
-        KTDesign *design = [[page master] design];
-        [design writeCSS:self];
-        
-        
-        // For preview/quicklook mode, the banner CSS (after the design's main.css)
-        [[page master] writeBannerCSS:self];
-        
-		// Finally, the stuff that is code-injected.
-		[[page master] writeCodeInjectionCSS:self];
-    }
-	
-    
-	// If we're for editing, include additional editing CSS
+    // If we're for editing, include additional editing CSS. Used to write the design CSS just here as well, but that interferes with animations. #96704
 	if ([self isForEditing])
 	{
 		NSString *editingCSSPath = [[NSBundle mainBundle] pathForResource:@"design-time"

@@ -252,6 +252,20 @@
             }
         }
 	}
+    
+    if (![context isForPublishing])    // during publishing, pub engine will take care of design CSS
+    {
+        // Load up DESIGN CSS, which might override the generic stuff
+        KTDesign *design = [[self master] design];
+        [design writeCSS:context];
+        
+        
+        // For preview/quicklook mode, the banner CSS (after the design's main.css)
+        [[self master] writeBannerCSS:context];
+        
+		// Finally, the stuff that is code-injected.
+		[[self master] writeCodeInjectionCSS:context];
+    }
 }
 
 #pragma mark Publishing
