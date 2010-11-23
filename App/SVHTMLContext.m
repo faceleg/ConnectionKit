@@ -20,6 +20,7 @@
 #import "KTSite.h"
 #import "SVTemplate.h"
 #import "SVTextAttachment.h"
+#import "SVTextBox.h"
 #import "SVTitleBox.h"
 #import "SVWebEditingURL.h"
 
@@ -570,7 +571,7 @@
     // Graphic body
     if (![graphic isPagelet]) [self pushClassName:@"figure-content"];  // identifies for #84956
     
-    if ([graphic isKindOfClass:[SVMediaGraphic class]])
+    if ([graphic isKindOfClass:[SVMediaGraphic class]] || [graphic isKindOfClass:[SVTextBox class]])
     {
         // It's almost certainly media, generate DOM controller to match
         [graphic writeBody:self];

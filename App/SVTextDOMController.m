@@ -139,10 +139,7 @@
 
 - (DOMElement *)selectableDOMElement;
 {
-    // Ugly HACK, don't want text box to be selectable. #96670
-    return ([[self parentWebEditorItem] isKindOfClass:[SVGraphicDOMController class]] ?
-            [self HTMLElement]
-            : nil);
+    return ([self enclosingGraphicDOMController] ? [self HTMLElement] : nil);
 }
 
 - (void)delete;
