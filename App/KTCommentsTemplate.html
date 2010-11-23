@@ -1,4 +1,3 @@
-[[if !disableComments]]
 [[if allowComments]]
 									<!-- comments -->
 [[if master.wantsDisqus]]
@@ -11,24 +10,24 @@
 											var disqus_title = "[[=&titleText]]";
 										</script>
 									</div>
-									[[else6]]
+									[[else5]]
 									<div class="comments">
 										<p><a href="[[=&URL]]#disqus_thread">View Comments</a></p>
 									</div>
-									[[endif6]]
-									[[else5]]
+									[[endif5]]
+									[[else4]]
 									<div class="comments">
 										<p>[[`Disqus Comments]]</p>
 									</div>
-									[[endif5]]
-[[else4]]
+									[[endif4]]
+[[else3]]
 [[if parser.HTMLGenerationPurpose==0]]
 									<div class="comments">
 										<p style="color:red;">[[`To enable Disqus comments, enter the Disqus short name of this site into the Site Inspector]]</p>
 									</div>
-[[endif5]]
 [[endif4]]
 [[endif3]]
+[[endif2]]
 [[if master.wantsIntenseDebate]]
 [[if master.IntenseDebateAccountID]]
 									[[if parser.isPublishing]]
@@ -41,29 +40,28 @@
 									</script>
 									<span id="IDCommentsPostTitle" style="display:none"></span>
 									<script type="text/javascript" src="http://www.intensedebate.com/js/genericCommentWrapperV2.js"></script>
-									[[else6]]
+									[[else5]]
 									<script type="text/javascript">
 										var idcomments_acct = "[[=master.IntenseDebateAccountID]]";
 										var idcomments_post_id = "[[=&URL]]";
 										var idcomments_post_url = "[[=&URL]]";
 									</script>
 									<script type="text/javascript" src="http://www.intensedebate.com/js/genericLinkWrapperV2.js"></script>
-									[[endif6]]
-									[[else5]]
+									[[endif5]]
+									[[else4]]
 									<div class="comments">
 										<p>[[`IntenseDebate Comments]]</p>
 									</div>
-									[[endif5]]
-[[else4]]
+									[[endif4]]
+[[else3]]
 [[if parser.HTMLGenerationPurpose==0]]
 									<div class="comments">
 										<p style="color:red;">[[`To enable IntenseDebate comments, enter the Account ID of this site into the Site Inspector]]</p>
 									</div>
-[[endif5]]
 [[endif4]]
 [[endif3]]
-									<!-- comments -->
 [[endif2]]
+									<!-- comments -->
 [[endif]]
 
 [[if allowComments]]
