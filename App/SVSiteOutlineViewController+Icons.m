@@ -155,7 +155,20 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 - (void)didLoadIcon:(NSImage *)icon withItem:(SVImageItem *)item;
 {
     [_cachedImagesByRepresentation setObject:icon forKey:[item imageRepresentation]];
-    [[self outlineView] setItemNeedsDisplay:[item originalItem] childrenNeedDisplay:NO];
+    
+    // Redraw any items affected
+    NSOutlineView *outlineView = [self outlineView];
+    NSRange visibleRows = [outlineView rowsInRect:[outlineView visibleRect]];
+    
+    for (int aRow = visibleRows.location; aRow < visibleRows.location + visibleRows.length; aRow++)
+    {
+        SVSiteItem *anItem = [outlineView itemAtRow:aRow];
+        if ([item isEqualToIMBImageItem:anItem])
+        {
+            NSRect displayRect = [outlineView rectOfRow:aRow];
+            [outlineView setNeedsDisplayInRect:displayRect];
+        }
+    }
 }
 
 - (void)threaded_loadIconWithItem:(SVImageItem *)item;
