@@ -660,19 +660,17 @@
     {
         // Seek out the next element worth swapping with. It must be an element, and not floated or 0 height
         DOMNode *nextNode = [walker ks_nextNodeIgnoringChildren];
-        NSSize size = [nextNode totalBoundingBox].size;
-        
-        while (nextNode && size.height <= 0.0f)
+        while (nextNode && ![nextNode hasSize])
         {
             // Seek out next node.
             nextNode = [walker ks_nextNodeIgnoringChildren];
-            size = [nextNode totalBoundingBox].size;
         }
             
         if (nextNode)
         {
             // Is there space to make the move?
             CGFloat gap = position.y - staticPosition.y;
+            NSSize size = [nextNode totalBoundingBox].size;
             
             if (gap >= 0.5 * size.height)
             {
@@ -684,16 +682,14 @@
     else if (position.y < currentPosition.y)
     {
         DOMNode *previousNode = [walker ks_previousNodeIgnoringChildren];
-        NSRect previousFrame = [previousNode boundingBox];            
-        
-        while (previousNode && previousFrame.size.height <= 0.0f)
+        while (previousNode && ![previousNode hasSize])
         {
             previousNode = [walker ks_previousNodeIgnoringChildren];
-            previousFrame = [previousNode totalBoundingBox];
         }
         
         if (previousNode)
         {
+            NSRect previousFrame = [previousNode boundingBox];            
             if (previousFrame.size.height <= 0.0f || NSMinY(frame) < NSMidY(previousFrame))
             {
                 // Move the element
