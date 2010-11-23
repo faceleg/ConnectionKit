@@ -71,26 +71,30 @@
 						<object class="NSTabView" id="1025076104">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">18</int>
-							<string key="NSFrame">{{13, 40}, {571, 200}}</string>
+							<string key="NSFrame">{{13, 40}, {571, 202}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<array class="NSMutableArray" key="NSTabViewItems">
 								<object class="NSTabViewItem" id="117311597">
 									<string key="NSIdentifier">1</string>
 									<object class="NSView" key="NSView" id="885603463">
-										<nil key="NSNextResponder"/>
+										<reference key="NSNextResponder" ref="1025076104"/>
 										<int key="NSvFlags">256</int>
 										<array class="NSMutableArray" key="NSSubviews">
 											<object class="NSButton" id="131746322">
 												<reference key="NSNextResponder" ref="885603463"/>
 												<int key="NSvFlags">266</int>
-												<string key="NSFrame">{{15, 135}, {354, 18}}</string>
+												<string key="NSFrame">{{15, 123}, {181, 18}}</string>
 												<reference key="NSSuperview" ref="885603463"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="211905806">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">Generate Google Sitemap</string>
-													<reference key="NSSupport" ref="95827749"/>
+													<string key="NSContents">Publish Google Sitemap</string>
+													<object class="NSFont" key="NSSupport" id="315492409">
+														<string key="NSName">LucidaGrande-Bold</string>
+														<double key="NSSize">13</double>
+														<int key="NSfFlags">16</int>
+													</object>
 													<reference key="NSControlView" ref="131746322"/>
 													<int key="NSButtonFlags">1211912703</int>
 													<int key="NSButtonFlags2">2</int>
@@ -106,7 +110,7 @@
 											<object class="NSTextField" id="408123332">
 												<reference key="NSNextResponder" ref="885603463"/>
 												<int key="NSvFlags">266</int>
-												<string key="NSFrame">{{38, 112}, {422, 17}}</string>
+												<string key="NSFrame">{{33, 105}, {422, 17}}</string>
 												<reference key="NSSuperview" ref="885603463"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="162844923">
@@ -138,7 +142,7 @@
 											<object class="NSTextField" id="700491503">
 												<reference key="NSNextResponder" ref="885603463"/>
 												<int key="NSvFlags">266</int>
-												<string key="NSFrame">{{41, 82}, {493, 22}}</string>
+												<string key="NSFrame">{{41, 70}, {493, 22}}</string>
 												<reference key="NSSuperview" ref="885603463"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="861004790">
@@ -153,22 +157,23 @@
 												</object>
 											</object>
 										</array>
-										<string key="NSFrame">{{10, 33}, {551, 154}}</string>
+										<string key="NSFrame">{{10, 33}, {551, 156}}</string>
+										<reference key="NSSuperview" ref="1025076104"/>
 									</object>
-									<string key="NSLabel">Sitemap Activation</string>
+									<string key="NSLabel">Sitemap</string>
 									<reference key="NSColor" ref="897300439"/>
 									<reference key="NSTabView" ref="1025076104"/>
 								</object>
 								<object class="NSTabViewItem" id="33900136">
 									<string key="NSIdentifier">2</string>
 									<object class="NSView" key="NSView" id="314415495">
-										<reference key="NSNextResponder" ref="1025076104"/>
+										<nil key="NSNextResponder"/>
 										<int key="NSvFlags">256</int>
 										<array class="NSMutableArray" key="NSSubviews">
 											<object class="NSTextField" id="240678307">
 												<reference key="NSNextResponder" ref="314415495"/>
 												<int key="NSvFlags">274</int>
-												<string key="NSFrame">{{17, 15}, {517, 80}}</string>
+												<string key="NSFrame">{{17, 17}, {517, 82}}</string>
 												<reference key="NSSuperview" ref="314415495"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="766657121">
@@ -210,7 +215,7 @@
 															<object class="NSTextView" id="33104557">
 																<reference key="NSNextResponder" ref="549004473"/>
 																<int key="NSvFlags">2322</int>
-																<string key="NSFrameSize">{517, 32}</string>
+																<string key="NSFrameSize">{529, 32}</string>
 																<reference key="NSSuperview" ref="549004473"/>
 																<object class="NSTextContainer" key="NSTextContainer" id="128945786">
 																	<object class="NSLayoutManager" key="NSLayoutManager">
@@ -219,8 +224,8 @@
 																				<characters key="NS.bytes">Visit Google Analytics to add a profile for your website. Paste the provided code below and then publish your website to begin tracking.</characters>
 																			</object>
 																			<array class="NSMutableArray" key="NSAttributes">
-																				<dictionary id="625696820">
-																					<object class="NSFont" key="NSFont" id="700060579">
+																				<dictionary id="558505944">
+																					<object class="NSFont" key="NSFont" id="363458868">
 																						<string key="NSName">LucidaGrande</string>
 																						<double key="NSSize">13</double>
 																						<int key="NSfFlags">16</int>
@@ -268,7 +273,7 @@
 																					</object>
 																				</dictionary>
 																				<dictionary>
-																					<reference key="NSFont" ref="700060579"/>
+																					<reference key="NSFont" ref="363458868"/>
 																					<object class="NSURL" key="NSLink">
 																						<nil key="NS.base"/>
 																						<string key="NS.relative">http://www.google.com/analytics/</string>
@@ -288,7 +293,7 @@
 																		<nil key="NSDelegate"/>
 																	</object>
 																	<reference key="NSTextView" ref="33104557"/>
-																	<double key="NSWidth">517</double>
+																	<double key="NSWidth">529</double>
 																	<int key="NSTCFlags">1</int>
 																</object>
 																<object class="NSTextViewSharedData" key="NSSharedData">
@@ -330,7 +335,7 @@
 																<nil key="NSDelegate"/>
 															</object>
 														</array>
-														<string key="NSFrameSize">{517, 48}</string>
+														<string key="NSFrameSize">{529, 32}</string>
 														<reference key="NSSuperview" ref="1038595011"/>
 														<reference key="NSNextKeyView" ref="33104557"/>
 														<reference key="NSDocView" ref="33104557"/>
@@ -362,7 +367,7 @@
 														<double key="NSPercent">0.94565218687057495</double>
 													</object>
 												</array>
-												<string key="NSFrame">{{17, 103}, {517, 48}}</string>
+												<string key="NSFrame">{{11, 107}, {529, 32}}</string>
 												<reference key="NSSuperview" ref="314415495"/>
 												<reference key="NSNextKeyView" ref="549004473"/>
 												<int key="NSsFlags">512</int>
@@ -371,34 +376,33 @@
 												<reference key="NSContentView" ref="549004473"/>
 											</object>
 										</array>
-										<string key="NSFrame">{{10, 33}, {551, 154}}</string>
-										<reference key="NSSuperview" ref="1025076104"/>
+										<string key="NSFrame">{{10, 33}, {551, 156}}</string>
 									</object>
 									<string key="NSLabel">Google Analytics</string>
 									<reference key="NSColor" ref="897300439"/>
 									<reference key="NSTabView" ref="1025076104"/>
 								</object>
 							</array>
-							<reference key="NSSelectedTabViewItem" ref="33900136"/>
+							<reference key="NSSelectedTabViewItem" ref="117311597"/>
 							<reference key="NSFont" ref="95827749"/>
 							<int key="NSTvFlags">0</int>
 							<bool key="NSAllowTruncatedLabels">YES</bool>
 							<bool key="NSDrawsBackground">YES</bool>
 							<array class="NSMutableArray" key="NSSubviews">
-								<reference ref="314415495"/>
+								<reference ref="885603463"/>
 							</array>
 						</object>
 						<object class="NSTextField" id="127488005">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{17, 396}, {446, 17}}</string>
+							<string key="NSFrame">{{17, 396}, {81, 17}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="827903231">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">Webmaster Tools Site Verification</string>
-								<reference key="NSSupport" ref="95827749"/>
+								<string key="NSContents">Verification</string>
+								<reference key="NSSupport" ref="315492409"/>
 								<reference key="NSControlView" ref="127488005"/>
 								<reference key="NSBackgroundColor" ref="897300439"/>
 								<reference key="NSTextColor" ref="980328774"/>
@@ -415,7 +419,7 @@
 										<object class="NSTextView" id="929790806">
 											<reference key="NSNextResponder" ref="279564785"/>
 											<int key="NSvFlags">2322</int>
-											<string key="NSFrameSize">{557, 48}</string>
+											<string key="NSFrameSize">{569, 48}</string>
 											<reference key="NSSuperview" ref="279564785"/>
 											<object class="NSTextContainer" key="NSTextContainer" id="602831153">
 												<object class="NSLayoutManager" key="NSLayoutManager">
@@ -426,9 +430,9 @@ ZSB1c2luZyB0aGUgQWRkIGEgTUVUQSB0YWciIG9wdGlvbi4gUGFzdGUgdGhlIHByb3ZpZGVkIHRhZyBi
 ZWxvdyBhbmQgdGhlbiBwdWJsaXNoIHlvdXIgd2Vic2l0ZSB0byBjb25maXJtIHZlcmlmaWNhdGlvbi4</bytes>
 														</object>
 														<array class="NSMutableArray" key="NSAttributes">
-															<reference ref="625696820"/>
+															<reference ref="558505944"/>
 															<dictionary>
-																<reference key="NSFont" ref="700060579"/>
+																<reference key="NSFont" ref="363458868"/>
 																<object class="NSURL" key="NSLink">
 																	<nil key="NS.base"/>
 																	<string key="NS.relative">http://www.google.com/webmasters/tools/</string>
@@ -464,7 +468,7 @@ ZWxvdyBhbmQgdGhlbiBwdWJsaXNoIHlvdXIgd2Vic2l0ZSB0byBjb25maXJtIHZlcmlmaWNhdGlvbi4<
 													<nil key="NSDelegate"/>
 												</object>
 												<reference key="NSTextView" ref="929790806"/>
-												<double key="NSWidth">557</double>
+												<double key="NSWidth">569</double>
 												<int key="NSTCFlags">1</int>
 											</object>
 											<object class="NSTextViewSharedData" key="NSSharedData">
@@ -485,16 +489,21 @@ ZWxvdyBhbmQgdGhlbiBwdWJsaXNoIHlvdXIgd2Vic2l0ZSB0byBjb25maXJtIHZlcmlmaWNhdGlvbi4<
 												<nil key="NSDefaultParagraphStyle"/>
 											</object>
 											<int key="NSTVFlags">6</int>
-											<string key="NSMaxSize">{562, 1e+07}</string>
+											<string key="NSMaxSize">{569, 1e+07}</string>
 											<string key="NSMinize">{223, 13}</string>
 											<nil key="NSDelegate"/>
 										</object>
 									</array>
-									<string key="NSFrameSize">{557, 62}</string>
+									<string key="NSFrameSize">{569, 48}</string>
 									<reference key="NSSuperview" ref="165569073"/>
 									<reference key="NSNextKeyView" ref="929790806"/>
 									<reference key="NSDocView" ref="929790806"/>
-									<reference key="NSBGColor" ref="709411300"/>
+									<object class="NSColor" key="NSBGColor">
+										<int key="NSColorSpace">6</int>
+										<string key="NSCatalogName">System</string>
+										<string key="NSColorName">controlBackgroundColor</string>
+										<reference key="NSColor" ref="11824007"/>
+									</object>
 									<reference key="NSCursor" ref="1010953485"/>
 									<int key="NScvFlags">2</int>
 								</object>
@@ -519,7 +528,7 @@ ZWxvdyBhbmQgdGhlbiBwdWJsaXNoIHlvdXIgd2Vic2l0ZSB0byBjb25maXJtIHZlcmlmaWNhdGlvbi4<
 									<double key="NSPercent">0.94565218687057495</double>
 								</object>
 							</array>
-							<string key="NSFrame">{{20, 326}, {557, 62}}</string>
+							<string key="NSFrame">{{14, 340}, {569, 48}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSNextKeyView" ref="279564785"/>
 							<int key="NSsFlags">0</int>
@@ -530,7 +539,7 @@ ZWxvdyBhbmQgdGhlbiBwdWJsaXNoIHlvdXIgd2Vic2l0ZSB0byBjb25maXJtIHZlcmlmaWNhdGlvbi4<
 						<object class="NSTextField" id="177887969">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">266</int>
-							<string key="NSFrame">{{20, 242}, {557, 76}}</string>
+							<string key="NSFrame">{{20, 256}, {557, 76}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="200557576">
@@ -913,9 +922,9 @@ ZWxvdyBhbmQgdGhlbiBwdWJsaXNoIHlvdXIgd2Vic2l0ZSB0byBjb25maXJtIHZlcmlmaWNhdGlvbi4<
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1.IBEditorWindowLastContentRect">{{270, 677}, {597, 433}}</string>
+				<string key="1.IBEditorWindowLastContentRect">{{269, 677}, {597, 433}}</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1.IBWindowTemplateEditedContentRect">{{270, 677}, {597, 433}}</string>
+				<string key="1.IBWindowTemplateEditedContentRect">{{269, 677}, {597, 433}}</string>
 				<boolean value="NO" key="1.NSWindowTemplate.visibleAtLaunch"/>
 				<string key="1.WindowOrigin">{196, 240}</string>
 				<string key="1.editorWindowContentRectSynchronizationRect">{{202, 428}, {480, 270}}</string>
