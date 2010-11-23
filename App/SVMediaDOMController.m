@@ -34,6 +34,13 @@
     return result;
 }
 
+- (DOMElement *)selectableDOMElement;
+{
+    // Can be selected if graphic is explictly sized
+    SVPlugInGraphic *graphic = [self representedObject];
+    return ([graphic isExplicitlySized] ? [self HTMLElement] : nil);
+}
+
 #pragma mark Resize
 
 - (NSSize)minSize;
