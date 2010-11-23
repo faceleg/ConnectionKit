@@ -502,11 +502,14 @@
         NSString *className = [graphic inlineGraphicClassName];
         if (className) [self pushClassName:className];
         
-        NSNumber *width = [graphic containerWidth];
-        if (width)
+        if (![graphic isExplicitlySized])
         {
-            NSString *style = [NSString stringWithFormat:@"width:%upx", [width unsignedIntValue]];
-            [self pushAttribute:@"style" value:style];
+            NSNumber *width = [graphic containerWidth];
+            if (width)
+            {
+                NSString *style = [NSString stringWithFormat:@"width:%upx", [width unsignedIntValue]];
+                [self pushAttribute:@"style" value:style];
+            }
         }
         
         [self startElement:@"div"];
@@ -514,6 +517,9 @@
         
         [self writeGraphicBody: graphic];
         
+        
+        // Finish up
+        [self endElement];
         
         
         // Caption if requested
@@ -533,7 +539,7 @@
         
         // Finish up
         [self endElement];
-        [self endElement];
+
     }
     else
     {

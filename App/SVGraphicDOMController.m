@@ -244,7 +244,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     DOMElement *element = [self graphicDOMElement];
     
     NSNumber *width = [graphic containerWidth];
-    if (width)
+    if (width && ![graphic isExplicitlySized])
     {
         [[element style] setWidth:[NSString stringWithFormat:@"%@px", width]];
     }
