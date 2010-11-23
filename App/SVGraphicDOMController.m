@@ -775,7 +775,14 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (DOMElement *) selectableDOMElement;
 {
-    return [self HTMLElement]; 
+    // Normally selectable, unless there's a selectable child. #96670
+    BOOL selectable = YES;
+    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+    {
+        if ([anItem isSelectable]) selectable = NO;
+    }
+    
+    return (selectable ? [self HTMLElement] : nil);
 }
 
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
