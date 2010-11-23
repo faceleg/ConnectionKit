@@ -543,8 +543,8 @@
 
 - (void)writeGraphic:(SVGraphic *)graphic;  // takes care of callout stuff for you
 {
-    // If the placement changes, want whole Text Area to update
-    [self addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
+    // If the placement changes, want whole Text Area to update. Seems this is already covered elsewhere now, as everything works fine with this line commented out, and re-enabling triggers a KVO zombie when moving from inline
+    //[self addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
     if ([graphic isPagelet])    // #83929
     {
         [self addDependencyForKeyPath:@"showsTitle" ofObject:graphic];
