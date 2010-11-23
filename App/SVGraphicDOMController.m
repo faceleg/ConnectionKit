@@ -321,24 +321,31 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     WEKWebEditorItem *result = nil;
     
     
-    // Standard logic mostly works, but we want to ignore anything outside the graphic, instead of the HTML element
-    DOMElement *testElement = [self graphicDOMElement];
-    if (!testElement) testElement = [self HTMLElement];
-    
-    if ([node ks_isDescendantOfElement:testElement])
+    if ([self isSelectable])    // think we don't need this code branch any more
     {
-        NSArray *children = [self childWebEditorItems];
+        // Standard logic mostly works, but we want to ignore anything outside the graphic, instead of the HTML element
+        DOMElement *testElement = [self graphicDOMElement];
+        if (!testElement) testElement = [self HTMLElement];
         
-        // Search for a descendant
-        // Body DOM Controller will take care of looking for a single selectable child for us
-        for (WEKWebEditorItem *anItem in children)
+        if ([node ks_isDescendantOfElement:testElement])
         {
-            result = [anItem hitTestDOMNode:node];
-            if (result) break;
+            NSArray *children = [self childWebEditorItems];
+            
+            // Search for a descendant
+            // Body DOM Controller will take care of looking for a single selectable child for us
+            for (WEKWebEditorItem *anItem in children)
+            {
+                result = [anItem hitTestDOMNode:node];
+                if (result) break;
+            }
+            
+            
+            if (!result && [children count] > 1) result = self;
         }
-          
-        
-        if (!result && [children count] > 1) result = self;
+    }
+    else
+    {
+        result = [super hitTestDOMNode:node];
     }
     
     return result;
