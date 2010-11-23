@@ -118,6 +118,14 @@
 - (void)moveGraphicWithDOMController:(SVDOMController *)graphicController toPosition:(CGPoint)position event:(NSEvent *)event;
 {
     id <SVGraphicContainerDOMController> article = (id)[self parentWebEditorItem];
+    
+    // Translate the position to our co-ordinates
+    CGPoint myPosition = [self position];
+    CGPoint graphicPosition = [graphicController position];
+    
+    position.x += (myPosition.x - graphicPosition.x);                      
+    position.y += (myPosition.y - graphicPosition.y);
+    
     [article moveGraphicWithDOMController:self toPosition:position event:event];
 }
 
