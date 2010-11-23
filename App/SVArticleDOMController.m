@@ -27,6 +27,7 @@
 
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
+#import "DOMTreeWalker+Karelia.h"
 
 
 @interface DOMNode (KSHTMLWriter)
@@ -649,15 +650,22 @@
     // Is there space to rearrange?
     DOMElement *element = [graphicController HTMLElement];
     
+    DOMTreeWalker *walker = [[element ownerDocument] createTreeWalker:[self textHTMLElement]
+                                                           whatToShow:DOM_SHOW_ALL
+                                                               filter:nil
+                                               expandEntityReferences:NO];
+    [walker setCurrentNode:element];
+    
     if (position.y > currentPosition.y)
     {
         // Seek out the next element worth swapping with. It must be an element, and not floated or 0 height
-        DOMNode *nextNode = [element nextSibling];
+        DOMNode *nextNode = [walker ks_nextNodeIgnoringChildren];
         NSSize size = [nextNode totalBoundingBox].size;
         
         while (nextNode && size.height <= 0.0f)
         {
-            nextNode = [nextNode nextSiblingOfClass:[DOMElement class]];
+            // Seek out next node.
+            nextNode = [walker ks_nextNodeIgnoringChildren];
             size = [nextNode totalBoundingBox].size;
         }
             
@@ -675,12 +683,12 @@
     }
     else if (position.y < currentPosition.y)
     {
-        DOMNode *previousNode = [element previousSibling];
+        DOMNode *previousNode = [walker ks_previousNodeIgnoringChildren];
         NSRect previousFrame = [previousNode boundingBox];            
         
         while (previousNode && previousFrame.size.height <= 0.0f)
         {
-            previousNode = [previousNode previousSiblingOfClass:[DOMElement class]];
+            previousNode = [walker ks_previousNodeIgnoringChildren];
             previousFrame = [previousNode totalBoundingBox];
         }
         
