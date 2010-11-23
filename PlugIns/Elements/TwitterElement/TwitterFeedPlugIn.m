@@ -132,22 +132,25 @@
 
 - (void)writeScriptToEndBodyMarkup:(NSString *)uniqueID context:(id<SVPlugInContext>)context
 {
-    NSString *linksFlag = (self.openLinksInNewWindow) ? @"true" : @"false";
-    NSString *timestampFlag = (self.includeTimestamp) ? @"true" : @"false";
-    NSString *script1 = [NSString stringWithFormat:
-                        @"<script type=\"text/javascript\">\n"
-                        @"function twitterCallback%@(obj)\n"
-                        @"{\n"
-                        @"    twitterCallback_withOptions(obj, '%@', %@, %@);\n"
-                        @"}\n"
-                        @"</script>\n",
-                        uniqueID, uniqueID, linksFlag, timestampFlag];
-    [[context endBodyMarkup] appendString:script1];
-    
-    NSString *script2 = [NSString stringWithFormat:
-                         @"<script type=\"text/javascript\" src=\"http://twitter.com/statuses/user_timeline/%@.json?callback=twitterCallback%@&amp;count=%ld\">\n</script>\n",
-                         self.username, uniqueID, self.count];
-    [[context endBodyMarkup] appendString:script2];
+    if ([context liveDataFeeds])
+    {
+        NSString *linksFlag = (self.openLinksInNewWindow) ? @"true" : @"false";
+        NSString *timestampFlag = (self.includeTimestamp) ? @"true" : @"false";
+        NSString *script1 = [NSString stringWithFormat:
+                            @"<script type=\"text/javascript\">\n"
+                            @"function twitterCallback%@(obj)\n"
+                            @"{\n"
+                            @"    twitterCallback_withOptions(obj, '%@', %@, %@);\n"
+                            @"}\n"
+                            @"</script>\n",
+                            uniqueID, uniqueID, linksFlag, timestampFlag];
+        [[context endBodyMarkup] appendString:script1];
+        
+        NSString *script2 = [NSString stringWithFormat:
+                             @"<script type=\"text/javascript\" src=\"http://twitter.com/statuses/user_timeline/%@.json?callback=twitterCallback%@&amp;count=%ld\">\n</script>\n",
+                             self.username, uniqueID, self.count];
+        [[context endBodyMarkup] appendString:script2];
+    }
 }
 
 
