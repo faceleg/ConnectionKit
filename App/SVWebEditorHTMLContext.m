@@ -271,7 +271,7 @@
     [controller setSizeDelta:sizeDelta];
     
     [self startDOMController:controller];
-    _openSizeBindingController = YES;
+    _openSizeBindingControllersCount++;
     [controller release];
     
     [super buildAttributesForElement:elementName bindSizeToObject:object DOMControllerClass:controllerClass sizeDelta:sizeDelta];
@@ -281,10 +281,10 @@
 {
     [super endElement];
     
-    if (_openSizeBindingController)
+    if (_openSizeBindingControllersCount)
     {
         [self endDOMController];
-        _openSizeBindingController = NO;
+        _openSizeBindingControllersCount--;
     }
 }
 
