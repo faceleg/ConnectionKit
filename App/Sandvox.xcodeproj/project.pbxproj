@@ -407,6 +407,8 @@
 		276AB462125F4B43006FED25 /* SVPasteboardItemInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276AB461125F4B43006FED25 /* SVPasteboardItemInternal.h */; };
 		276C004E129BE40500568A73 /* SVGraphicContainerDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 276C004C129BE40500568A73 /* SVGraphicContainerDOMController.h */; };
 		276C004F129BE40500568A73 /* SVGraphicContainerDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276C004D129BE40500568A73 /* SVGraphicContainerDOMController.m */; };
+		276C010C129C00F800568A73 /* DOMTreeWalker+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 276C010A129C00F800568A73 /* DOMTreeWalker+Karelia.h */; };
+		276C010D129C00F800568A73 /* DOMTreeWalker+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 276C010B129C00F800568A73 /* DOMTreeWalker+Karelia.m */; };
 		276C151D114A6C0300D30CFE /* GraphicInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 276C151C114A6C0300D30CFE /* GraphicInspector.xib */; };
 		276F8AB210D572780094AA73 /* SVDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 276F8AB010D572780094AA73 /* SVDOMController.h */; };
 		276F8AB310D572780094AA73 /* SVDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276F8AB110D572780094AA73 /* SVDOMController.m */; };
@@ -1964,6 +1966,8 @@
 		276AB461125F4B43006FED25 /* SVPasteboardItemInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPasteboardItemInternal.h; sourceTree = "<group>"; };
 		276C004C129BE40500568A73 /* SVGraphicContainerDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGraphicContainerDOMController.h; sourceTree = "<group>"; };
 		276C004D129BE40500568A73 /* SVGraphicContainerDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGraphicContainerDOMController.m; sourceTree = "<group>"; };
+		276C010A129C00F800568A73 /* DOMTreeWalker+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMTreeWalker+Karelia.h"; sourceTree = "<group>"; };
+		276C010B129C00F800568A73 /* DOMTreeWalker+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMTreeWalker+Karelia.m"; sourceTree = "<group>"; };
 		276C151C114A6C0300D30CFE /* GraphicInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GraphicInspector.xib; sourceTree = "<group>"; };
 		276F8AB010D572780094AA73 /* SVDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMController.h; sourceTree = "<group>"; };
 		276F8AB110D572780094AA73 /* SVDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMController.m; sourceTree = "<group>"; };
@@ -5008,6 +5012,8 @@
 				27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */,
 				27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */,
 				27DB902F11209AEA00B1895C /* DOMNamedNodeMap+Karelia.m */,
+				276C010A129C00F800568A73 /* DOMTreeWalker+Karelia.h */,
+				276C010B129C00F800568A73 /* DOMTreeWalker+Karelia.m */,
 			);
 			path = WebKit;
 			sourceTree = "<group>";
@@ -5846,6 +5852,7 @@
 				27711D541282BBCA00AE27CC /* SVImageItem.h in Headers */,
 				271884431296A28000139C89 /* KSElementInfo.h in Headers */,
 				276C004E129BE40500568A73 /* SVGraphicContainerDOMController.h in Headers */,
+				276C010C129C00F800568A73 /* DOMTreeWalker+Karelia.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7356,6 +7363,7 @@
 				27711D551282BBCA00AE27CC /* SVImageItem.m in Sources */,
 				271884441296A28000139C89 /* KSElementInfo.m in Sources */,
 				276C004F129BE40500568A73 /* SVGraphicContainerDOMController.m in Sources */,
+				276C010D129C00F800568A73 /* DOMTreeWalker+Karelia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
