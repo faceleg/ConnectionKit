@@ -630,7 +630,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [pagelet moveToRelativePosition:CGPointMake(0.0f, position.y - startPosition.y)];
 }
 
-- (void)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
+- (void)moveGraphicWithDOMController:(SVDOMController *)graphicController
                           toPosition:(CGPoint)position
                                event:(NSEvent *)event;
 {

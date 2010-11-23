@@ -12,12 +12,13 @@
 #import "SVDOMController.h"
 #import "SVWebEditorTextProtocol.h"
 #import "KSKeyValueBinding.h"
+#import "SVGraphicContainerDOMController.h"
 
 
 @class SVHTMLTextBlock, SVGraphicDOMController;
 
 
-@interface SVTextDOMController : SVDOMController <SVWebEditorText, DOMEventListener>
+@interface SVTextDOMController : SVDOMController <SVWebEditorText, SVGraphicContainerDOMController, DOMEventListener>
 {
   @private
     DOMHTMLElement  *_textElement;
@@ -76,12 +77,6 @@
 - (void)webEditorTextDidChange; // if you override, call super at end of method to get undo coalescing
 
 
-#pragma mark Moving
-- (void)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
-                          toPosition:(CGPoint)position
-                               event:(NSEvent *)event;
-
-                  
 @end
 
 

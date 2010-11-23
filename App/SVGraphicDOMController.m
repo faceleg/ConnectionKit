@@ -509,10 +509,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Starting a move turns off selection handles so needs display
-    if (dragController && !_moving)
+    if (dragController && ![self hasRelativePosition])
     {
         [self setNeedsDisplay];
-        _moving = YES;
+        //_moving = YES;
     }
     
     return (dragController != nil);
@@ -532,101 +532,13 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return CGPointMake(NSMidX(rect), NSMidY(rect));
 }
 
-#pragma mark Relative Position
-
 - (DOMElement *)relativePositionDOMElement;
 {
     DOMElement *result = [self graphicDOMElement];
-    if (!result) result = [self HTMLElement];
+    if (!result) result = [super relativePositionDOMElement];
     
     OBPOSTCONDITION(result);
     return result;
-}
-
-- (void)moveToRelativePosition:(CGPoint)position;
-{
-    // Display space currently occupied…
-    [self setNeedsDisplay];
-    
-    
-    // Make the move
-    
-    DOMCSSStyleDeclaration *style = [[self relativePositionDOMElement] style];
-    [style removeProperty:@"-webkit-transition-duration"];
-    
-    [style setPosition:@"relative"];
-    [style setZIndex:@"9999"];
-        
-    
-    _relativePosition = position;
-    [style setLeft:[[[NSNumber numberWithFloat:position.x] description]
-                    stringByAppendingString:@"px"]];
-    [style setTop:[[[NSNumber numberWithFloat:position.y] description]
-                   stringByAppendingString:@"px"]];
-    
-    
-    // …and also new space
-    [self setNeedsDisplay];
-}
-
-- (void)moveToPosition:(CGPoint)position;
-{
-    // Take existing offset into account
-    CGPoint currentPosition = [self positionIgnoringRelativePosition];
-    
-    CGPoint relativePosition = CGPointMake(position.x - currentPosition.x,
-                                           position.y - currentPosition.y);
-    
-    [self moveToRelativePosition:relativePosition];
-}
-
-- (void)removeRelativePosition:(BOOL)animated;
-{
-    DOMCSSStyleDeclaration *style = [[self relativePositionDOMElement] style];
-    
-    // Is there any way we can turn position off after animation?
-    if (animated)
-    {
-        [style setProperty:@"-webkit-transition-property" value:@"left, top" priority:nil];
-        [style setProperty:@"-webkit-transition-duration" value:@"0.25s" priority:nil];
-        
-        [self performSelector:@selector(removeRelativePositioningAnimationDidEnd)
-                   withObject:nil
-                   afterDelay:0.25];
-    }
-    else
-    {
-        [style setPosition:nil];
-        [style setZIndex:nil];
-        
-        _moving = NO;
-        [self setNeedsDisplay];
-    }
-    
-    _relativePosition = CGPointZero;
-    [style setLeft:nil];
-    [style setTop:nil];
-}
-
-- (BOOL)hasRelativePosition; { return _moving; }
-
-- (CGPoint)positionIgnoringRelativePosition;
-{
-    CGPoint result = [self position];
-    result.x -= _relativePosition.x;
-    result.y -= _relativePosition.y;
-    
-    return result;
-}
-
-- (void)removeRelativePositioningAnimationDidEnd;
-{
-    DOMCSSStyleDeclaration *style = [[self relativePositionDOMElement] style];
-    [style setPosition:nil];
-    [style setZIndex:nil];
-    
-    _moving = NO;
-    [self setNeedsDisplay];
 }
 
 - (SVSelectionBorder *)newSelectionBorder;

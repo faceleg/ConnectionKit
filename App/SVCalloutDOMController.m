@@ -115,9 +115,10 @@
 
 #pragma mark Moving
 
-- (void)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController toPosition:(CGPoint)position event:(NSEvent *)event;
+- (void)moveGraphicWithDOMController:(SVDOMController *)graphicController toPosition:(CGPoint)position event:(NSEvent *)event;
 {
-    
+    id <SVGraphicContainerDOMController> article = (id)[self parentWebEditorItem];
+    [article moveGraphicWithDOMController:self toPosition:position event:event];
 }
 
 /*  Normally it's enough to move ourself up or down instead of the item. But if we contain multiple graphics, have to get more cunning

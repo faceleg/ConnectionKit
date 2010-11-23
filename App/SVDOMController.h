@@ -28,6 +28,10 @@
     BOOL                    _isObservingDependencies;
     SVWebEditorHTMLContext  *_context;
     
+    // Moving
+    BOOL    _moving;
+    CGPoint _relativePosition;
+    
     // Dragging
     NSArray *_dragTypes;
 }
@@ -91,6 +95,15 @@
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 - (unsigned int)resizingMaskForDOMElement:(DOMElement *)element;    // support
+
+
+#pragma mark Moving
+- (void)moveToRelativePosition:(CGPoint)position;
+- (void)moveToPosition:(CGPoint)position;   // takes existing relative position into account
+- (void)removeRelativePosition:(BOOL)animated;
+- (BOOL)hasRelativePosition;
+- (CGPoint)positionIgnoringRelativePosition;
+- (DOMElement *)relativePositionDOMElement;
 
 
 #pragma mark Dragging

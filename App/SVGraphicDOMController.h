@@ -17,9 +17,6 @@
     DOMHTMLElement  *_bodyElement;
     
     SVOffscreenWebViewController    *_offscreenWebViewController;
-    
-    BOOL    _moving;
-    CGPoint _relativePosition;
 }
 
 + (SVGraphicDOMController *)graphicPlaceholderDOMController;
@@ -30,14 +27,6 @@
 
 - (void)update;
 - (void)updateSize;
-
-
-#pragma mark Moving
-- (void)moveToRelativePosition:(CGPoint)position;
-- (void)moveToPosition:(CGPoint)position;   // takes existing relative position into account
-- (void)removeRelativePosition:(BOOL)animated;
-- (BOOL)hasRelativePosition;
-- (CGPoint)positionIgnoringRelativePosition;
 
 
 @end

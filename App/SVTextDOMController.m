@@ -369,7 +369,7 @@
 
 #pragma mark Moving
 
-- (void)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
+- (void)moveGraphicWithDOMController:(SVDOMController *)graphicController
                           toPosition:(CGPoint)position
                                event:(NSEvent *)event;
 {
