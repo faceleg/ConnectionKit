@@ -25,4 +25,7 @@
 
 @property(nonatomic, readonly) id <IMBImageItem> originalItem;
 
+- (BOOL)isEqualToIMBImageItem:(id <IMBImageItem>)anItem;
+
+
 @end

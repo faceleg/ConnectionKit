@@ -44,4 +44,10 @@
 
 @synthesize originalItem = _sourceItem;
 
+- (BOOL)isEqualToIMBImageItem:(id <IMBImageItem>)anItem;
+{
+    return ([[self imageRepresentationType] isEqualToString:[anItem imageRepresentationType]] &&
+            [[self imageRepresentation] isEqual:[anItem imageRepresentation]]);
+}
+
 @end
