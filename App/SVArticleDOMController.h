@@ -7,6 +7,7 @@
 //
 
 #import "SVRichTextDOMController.h"
+#import "SVGraphicContainerDOMController.h"
 
 #import "SVArticle.h"
 
@@ -14,7 +15,7 @@
 @class SVCalloutDOMController;
 
 
-@interface SVArticleDOMController : SVRichTextDOMController <DOMEventListener>
+@interface SVArticleDOMController : SVRichTextDOMController <SVGraphicContainerDOMController, DOMEventListener>
 {
   @private
     SVCalloutDOMController  *_earlyCalloutController;

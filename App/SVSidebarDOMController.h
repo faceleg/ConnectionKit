@@ -8,13 +8,14 @@
 
 
 #import "SVDOMController.h"
+#import "SVGraphicContainerDOMController.h"
 
 #import "SVSidebarPageletsController.h"
 
 
 @class SVGraphicDOMController;
 
-@interface SVSidebarDOMController : SVDOMController
+@interface SVSidebarDOMController : SVDOMController <SVGraphicContainerDOMController>
 {
   @private
     DOMElement  *_sidebarDiv;
@@ -45,11 +46,6 @@
 
 
 #pragma mark Moving
-
-- (void)moveGraphicWithDOMController:(SVGraphicDOMController *)graphicController
-                          toPosition:(CGPoint)position
-                               event:(NSEvent *)event;
-
 - (void)moveObjectUp:(id)sender;
 - (void)moveObjectDown:(id)sender;
 

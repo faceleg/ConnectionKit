@@ -503,8 +503,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     if ([super moveToPosition:position event:event]) return YES;
     
     
-    id dragController = [self textDOMController];
-    if (!dragController) dragController = [self sidebarDOMController];
+    id <SVGraphicContainerDOMController> dragController = [self graphicContainerDOMController];
     
     [dragController moveGraphicWithDOMController:self toPosition:position event:event];
     
