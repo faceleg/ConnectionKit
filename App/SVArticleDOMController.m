@@ -582,69 +582,78 @@
     }
     
     
-    // Snap to fit current wrap. #94884
-    SVTextAttachment *attachment = [graphic textAttachment];
-    SVGraphicWrap wrap = [[attachment wrap] intValue];
-    
     CGPoint staticPosition = [graphicController positionIgnoringRelativePosition];
-    if (position.x > staticPosition.x - 10.0f &&
-        position.x < staticPosition.x + 10.0f)
+    
+    if ([[graphic placement] intValue] == SVGraphicPlacementInline)
     {
-        position.x = staticPosition.x;
-    }
-    else
-    {
-        // Set wrap to match
-        if (position.x < NSMidX(bounds))
+        // Snap to fit current wrap. #94884
+        SVTextAttachment *attachment = [graphic textAttachment];
+        SVGraphicWrap wrap = [[attachment wrap] intValue];
+        
+        if (position.x > staticPosition.x - 10.0f &&
+            position.x < staticPosition.x + 10.0f)
         {
-            CGFloat leftEdge = NSMinX(frame) + position.x - currentPosition.x;
-            if (leftEdge - NSMinX(bounds) < NSMidX(bounds) - position.x) // closer to left
-            {
-                wrap = SVGraphicWrapRightSplit;
-            }
-            else
-            {
-                wrap = SVGraphicWrapCenterSplit;
-            }
+            position.x = staticPosition.x;
         }
         else
         {
-            CGFloat rightEdge = NSMaxX(frame) + position.x - currentPosition.x;
-            if (NSMaxX(bounds) - rightEdge < position.x - NSMidX(bounds)) // closer to right
+            // Set wrap to match
+            if (position.x < NSMidX(bounds))
             {
-                wrap = SVGraphicWrapLeftSplit;
+                CGFloat leftEdge = NSMinX(frame) + position.x - currentPosition.x;
+                if (leftEdge - NSMinX(bounds) < NSMidX(bounds) - position.x) // closer to left
+                {
+                    wrap = SVGraphicWrapRightSplit;
+                }
+                else
+                {
+                    wrap = SVGraphicWrapCenterSplit;
+                }
             }
             else
             {
-                wrap = SVGraphicWrapCenterSplit;
+                CGFloat rightEdge = NSMaxX(frame) + position.x - currentPosition.x;
+                if (NSMaxX(bounds) - rightEdge < position.x - NSMidX(bounds)) // closer to right
+                {
+                    wrap = SVGraphicWrapLeftSplit;
+                }
+                else
+                {
+                    wrap = SVGraphicWrapCenterSplit;
+                }
+            }
+            
+            if ([[attachment wrap] intValue] != wrap)
+            {
+                [attachment setWrap:[NSNumber numberWithInt:wrap]];
+                [graphicController updateIfNeeded]; // push through so position can be set accurately
             }
         }
         
-        if ([[attachment wrap] intValue] != wrap)
+        
+        // Show guide for choice of wrap
+        NSNumber *guide;
+        switch (wrap)
         {
-            [attachment setWrap:[NSNumber numberWithInt:wrap]];
-            [graphicController updateIfNeeded]; // push through so position can be set accurately
+            case SVGraphicWrapRightSplit:
+                guide = [NSNumber numberWithFloat:NSMinX(bounds)];
+                break;
+            case SVGraphicWrapCenterSplit:
+                guide = [NSNumber numberWithFloat:NSMidX(bounds)];
+                break;
+            case SVGraphicWrapLeftSplit:
+                guide = [NSNumber numberWithFloat:NSMaxX(bounds)];
+                break;
+            default:
+                guide = nil;
         }
+        [[self webEditor] setXGuide:guide yGuide:nil];
     }
-    
-    
-    // Show guide for choice of wrap
-    NSNumber *guide;
-    switch (wrap)
+    else
     {
-        case SVGraphicWrapRightSplit:
-            guide = [NSNumber numberWithFloat:NSMinX(bounds)];
-            break;
-        case SVGraphicWrapCenterSplit:
-            guide = [NSNumber numberWithFloat:NSMidX(bounds)];
-            break;
-        case SVGraphicWrapLeftSplit:
-            guide = [NSNumber numberWithFloat:NSMaxX(bounds)];
-            break;
-        default:
-            guide = nil;
+        // Callouts only move vertically
+        position.x = staticPosition.x;
     }
-    [[self webEditor] setXGuide:guide yGuide:nil];
     
     
     // Is there space to rearrange?
