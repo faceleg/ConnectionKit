@@ -191,13 +191,13 @@
 					<object class="NSButton" id="912621814">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{7, 55}, {64, 18}}</string>
+						<string key="NSFrame">{{112, 75}, {95, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="848265579">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">131072</int>
-							<string key="NSContents">Caption</string>
+							<string key="NSContents">Show Caption</string>
 							<object class="NSFont" key="NSSupport" id="652711766">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">11</double>
@@ -217,13 +217,13 @@
 					<object class="NSButton" id="298414928">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{112, 75}, {88, 18}}</string>
+						<string key="NSFrame">{{7, 55}, {119, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="1055903990">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">131072</int>
-							<string key="NSContents">Introduction</string>
+							<string key="NSContents">Show Introduction</string>
 							<reference key="NSSupport" ref="652711766"/>
 							<reference key="NSControlView" ref="298414928"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -239,13 +239,13 @@
 					<object class="NSButton" id="544062517">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{7, 75}, {46, 18}}</string>
+						<string key="NSFrame">{{7, 75}, {77, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="43912756">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">131072</int>
-							<string key="NSContents">Title</string>
+							<string key="NSContents">Show Title</string>
 							<reference key="NSSupport" ref="652711766"/>
 							<reference key="NSControlView" ref="544062517"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -312,7 +312,7 @@
 						<object class="NSMutableArray" key="NSCells">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="NSButtonCell" id="126046436">
-								<int key="NSCellFlags">-1543373312</int>
+								<int key="NSCellFlags">604110336</int>
 								<int key="NSCellFlags2">131072</int>
 								<string key="NSContents">Inline (moves with text)</string>
 								<object class="NSFont" key="NSSupport" id="26">
@@ -1622,13 +1622,13 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference ref="694617456"/>
 							<reference ref="634981887"/>
 							<reference ref="544062517"/>
-							<reference ref="298414928"/>
 							<reference ref="634969056"/>
 							<reference ref="651530567"/>
-							<reference ref="912621814"/>
 							<reference ref="452184308"/>
 							<reference ref="1073514111"/>
 							<reference ref="552693827"/>
+							<reference ref="298414928"/>
+							<reference ref="912621814"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -1880,7 +1880,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>254.IBPluginDependency</string>
 					<string>288.IBPluginDependency</string>
 					<string>289.IBPluginDependency</string>
+					<string>289.IBViewBoundsToFrameTransform</string>
 					<string>290.IBPluginDependency</string>
+					<string>290.IBViewBoundsToFrameTransform</string>
 					<string>291.IBPluginDependency</string>
 					<string>293.IBPluginDependency</string>
 					<string>295.IBPluginDependency</string>
@@ -1920,7 +1922,13 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABCzgAAwlQAAA</bytes>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABC/gAAwrYAAA</bytes>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
