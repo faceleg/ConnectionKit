@@ -30,15 +30,6 @@
     [parent setImageDOMController:self];
 }
 
-#pragma mark Element
-
-- (NSString *)elementIdName;
-{
-    NSString *idName = [(SVMediaGraphicDOMController *)[self parentWebEditorItem] elementIdName];
-    NSString *result = (idName ? [@"image-" stringByAppendingString:idName] : nil);
-    return result;
-}
-
 #pragma mark Selection
 
 - (BOOL)allowsDirectAccessToWebViewWhenSelected;
