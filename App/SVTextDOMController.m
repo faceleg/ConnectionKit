@@ -139,7 +139,9 @@
 
 - (DOMElement *)selectableDOMElement;
 {
-    return ([self enclosingGraphicDOMController] ? [self HTMLElement] : nil);
+    return ([self representedObject] && [self enclosingGraphicDOMController] ?
+            [self HTMLElement] :
+            nil);
 }
 
 - (void)delete;
