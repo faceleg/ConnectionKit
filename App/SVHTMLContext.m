@@ -510,15 +510,7 @@
         // Caption if requested
         if ([graphic showsCaption]) // was registered as dependecy at start of if block
         {
-            SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
-            [textBlock setHTMLSourceObject:graphic];
-            [textBlock setHTMLSourceKeyPath:@"caption"];
-            [textBlock setEditable:YES];
-            [textBlock setImportsGraphics:YES];
-            [textBlock setCustomCSSClassName:@"caption"];
-            
-            [textBlock writeHTML:self];
-            [textBlock release];
+            [self writeGraphicIgnoringCallout:[graphic caption]];
         }
         
         

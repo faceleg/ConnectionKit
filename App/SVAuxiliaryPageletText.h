@@ -6,12 +6,12 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import <CoreData/CoreData.h>
+
 #import "SVRichText.h"
+#import "SVGraphic.h"
 
-@class SVGraphic;
 
-@interface SVAuxiliaryPageletText :  SVRichText  
+@interface SVAuxiliaryPageletText : SVRichText <SVGraphic> 
 
 @property(nonatomic, retain, readonly) SVGraphic *pagelet;
 @property(nonatomic, retain) NSNumber *hidden; // BOOL, mandatory

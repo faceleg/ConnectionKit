@@ -48,6 +48,22 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 #pragma mark -
 
 
+@protocol SVGraphic <NSObject>
+
+@property(nonatomic, copy) NSNumber *width;
+@property(nonatomic, copy) NSNumber *contentWidth;  // what appears in the Inspector
+
+
+#pragma mark HTML
+- (void)writeBody:(SVHTMLContext *)context;  // Subclasses MUST override
+
+
+@end
+
+
+#pragma mark -
+
+
 extern NSString *kSVGraphicPboardType;
 
 
@@ -57,7 +73,7 @@ extern NSString *kSVGraphicPboardType;
 @protocol SVPage, SVMedia, SVEnclosure;
 
 
-@interface SVGraphic : KSExtensibleManagedObject <IMBImageItem>
+@interface SVGraphic : KSExtensibleManagedObject <SVGraphic, IMBImageItem>
 
 #pragma mark Initialization
 - (void)awakeFromNew;
@@ -129,8 +145,6 @@ extern NSString *kSVGraphicPboardType;
 - (void)makeOriginalSize;
 - (BOOL)canMakeOriginalSize;
 - (BOOL)isExplicitlySized;
-
-@property(nonatomic, copy) NSNumber *contentWidth;
 
 - (NSNumber *)containerWidth;
 
