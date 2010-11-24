@@ -232,6 +232,41 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     return result;
 }
 
+#pragma mark Layout
+
+- (NSRect)rect;
+{
+    NSRect result = NSZeroRect;
+    
+    DOMElement *element = [self selectableDOMElement];
+    if (element)
+    {
+        result = [element boundingBox];
+        
+        // Take into account padding and border
+        DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element
+                                                                    pseudoElement:nil];
+        
+        CGFloat padding = [[style paddingLeft] floatValue];
+        result.origin.x += padding;
+        result.size.width -= [[style paddingRight] floatValue] + padding;
+        
+        padding = [[style paddingTop] floatValue];
+        result.origin.y += padding;
+        result.size.height -= [[style paddingBottom] floatValue] + padding;
+        
+        padding = [[style borderLeftWidth] floatValue];
+        result.origin.x += padding;
+        result.size.width -= [[style borderRightWidth] floatValue] + padding;
+        
+        padding = [[style borderTopWidth] floatValue];
+        result.origin.y += padding;
+        result.size.height -= [[style borderBottomWidth] floatValue] + padding;
+    }
+    
+    return result;
+}
+
 @end
 
 
