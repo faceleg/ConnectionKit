@@ -34,7 +34,7 @@
 
 - (NSString *)elementIdName;
 {
-    NSString *idName = [[self representedObject] elementIdName];
+    NSString *idName = [(SVMediaGraphicDOMController *)[self parentWebEditorItem] elementIdName];
     NSString *result = (idName ? [@"image-" stringByAppendingString:idName] : nil);
     return result;
 }
