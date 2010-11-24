@@ -115,7 +115,7 @@
     frameRect = [self frameRectForGraphicBounds:frameRect];
     
     // Then enlarge to accomodate selection handles
-    NSRect result = NSInsetRect(frameRect, -3.0, -3.0);
+    NSRect result = NSInsetRect(frameRect, -4.0, -3.0);
     return result;
 }
 
@@ -249,12 +249,18 @@
 
 - (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
 {
+    unsigned int mask = [self resizingMask];
+    
     // First draw overall frame. enlarge by 1 pixel to avoid drawing directly over the graphic
     NSColor *border = [self borderColor];
     if (border)
     {
+        NSRect outlineRect = NSInsetRect(frameRect, -1.0, -1.0);
+        if (!mask) frameRect = outlineRect; // Non-resizeable borders draw their handles slightly differently
+        
         [border setFill];
-        NSFrameRectWithWidthUsingOperation([view centerScanRect:NSInsetRect(frameRect, -1.0, -1.0)],
+        
+        NSFrameRectWithWidthUsingOperation([view centerScanRect:outlineRect],
                                            1.0,
                                            NSCompositeSourceOver);
     }
@@ -276,13 +282,12 @@
         CGFloat maxY = NSMaxY(editingHandlesRect);
         
         
-        unsigned int mask = [self resizingMask];
         BOOL canResizeLeft = (mask & kCALayerLeftEdge);
         BOOL canResizeTop = (mask & kCALayerTopEdge);
         BOOL canResizeRight = (mask & kCALayerRightEdge);
         BOOL canResizeBottom = (mask & kCALayerBottomEdge);
         
-        if (canResizeTop || canResizeBottom || !(canResizeLeft || canResizeRight))
+        if (canResizeTop || canResizeBottom || canResizeLeft || canResizeRight)
         {
             [self drawSelectionHandleAtPoint:NSMakePoint(minX, minY)
                                       inView:view
@@ -312,7 +317,7 @@
             }
         }
         
-        if (NSHeight(frameRect) > 16.0f)
+        if (!mask || NSHeight(frameRect) > 16.0f)
         {
             [self drawSelectionHandleAtPoint:NSMakePoint(minX, midY)
                                       inView:view
@@ -349,8 +354,31 @@
     }
     else
     {
-        [[[NSColor aquaColor] colorWithAlphaComponent:0.5] setFill];
-        NSFrameRectWithWidthUsingOperation(rect, 1.0, NSCompositeSourceOver);
+        // Normally draw a translucent version of the regular handle…
+        if ([self resizingMask])
+        {
+            [[[NSColor aquaColor] colorWithAlphaComponent:0.5] setFill];
+            NSFrameRectWithWidthUsingOperation(rect, 1.0, NSCompositeSourceOver);
+        }
+        
+        // …but for unresizeable borders draw circular handles. Needs some layout tweaks to pull off
+        else
+        {
+            NSGraphicsContext *context = [NSGraphicsContext currentContext];
+            [context saveGraphicsState];
+            [context setShouldAntialias:NO];
+            
+            [[NSColor blackColor] setStroke];
+            [[NSColor whiteColor] setFill];
+            
+            rect = NSInsetRect(rect, 0.5, 0.5);
+            NSBezierPath *path = [NSBezierPath bezierPathWithOvalInRect:rect];
+            [path setLineWidth:1.0];
+            [path fill];
+            [path stroke];
+            
+            [context restoreGraphicsState];
+        }
     }
 }
 
