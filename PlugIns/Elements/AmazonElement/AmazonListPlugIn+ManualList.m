@@ -162,7 +162,7 @@
  */
 - (void)archiveManualListProductsAndRegisterUndoOperation:(BOOL)registerUndo
 {
-	LOG((@"Archiving manual Amazon products list"));
+	//LOG((@"Archiving manual Amazon products list"));
 	
 	manualListIsBeingArchivedOrUnarchived = YES;
 	

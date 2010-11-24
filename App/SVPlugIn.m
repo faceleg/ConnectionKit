@@ -172,15 +172,6 @@ static id <SVPlugInContext> sCurrentContext;
     return result;
 }
 
-#pragma mark Identifier
-
-+ (NSString *)plugInIdentifier; // use standard reverse DNS-style string
-{
-    NSBundle *bundle = [NSBundle bundleForClass:self];
-    NSString *result = [bundle bundleIdentifier];
-    return result;
-}
-
 #pragma mark Storage
 
 + (NSArray *)plugInKeys; { return [NSArray array]; }
@@ -362,10 +353,6 @@ static id <SVPlugInContext> sCurrentContext;
 #pragma mark Other
 
 @synthesize container = _container;
-
-#pragma mark Legacy
-
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject { }
 
 @end
 

@@ -13,6 +13,14 @@
 #import "SVHTMLContext.h"
 
 
+@interface SVIndexPlugIn ()
+@property(nonatomic, retain) NSArrayController *indexablePagesController;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVIndexPlugIn
 
 - (void)awakeFromNew

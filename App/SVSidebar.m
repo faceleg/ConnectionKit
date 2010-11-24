@@ -77,8 +77,6 @@
     [self writePageletsHTML:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]];
 }
 
-- (NSString *)elementIdName; { return @"sidebar-container"; }
-
 - (BOOL)shouldPublishEditingElementID; { return YES; }
 
 @end

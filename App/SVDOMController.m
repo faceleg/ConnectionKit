@@ -38,7 +38,7 @@
     // Use the object's own ID if it has one. Otherwise make up our own
     if (self = [self init])
     {
-        NSString *idName = [content elementIdName];
+        NSString *idName = [NSString stringWithFormat:@"graphic-%p", content];
 		if (idName) [self setElementIdName:idName];
 		
     	[self setRepresentedObject:content];
@@ -769,8 +769,6 @@
 {
     return [[SVDOMController alloc] initWithRepresentedObject:self];
 }
-
-- (NSString *)elementIdName; { return nil; }
 
 - (BOOL)shouldPublishEditingElementID; { return NO; }
 

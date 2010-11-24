@@ -28,10 +28,6 @@
 + (SVPlugInGraphic *)insertNewGraphicWithPlugInIdentifier:(NSString *)identifier
                                    inManagedObjectContext:(NSManagedObjectContext *)context;
 
-// When pulling content off the pasteboard, the plug-in is already created and populated by the pasteboard. Use this method to create a graphic object to host it
-+ (SVPlugInGraphic *)insertNewGraphicWithPlugIn:(SVPlugIn *)plugIn
-                         inManagedObjectContext:(NSManagedObjectContext *)context;
-
 
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
 @property(nonatomic, retain, readonly) SVPlugIn *plugIn;

@@ -32,7 +32,6 @@
 - (NSURL *)addResourceWithURL:(NSURL *)fileURL;
 - (void)addCSSString:(NSString *)css;
 - (void)addCSSWithURL:(NSURL *)cssURL;
-- (NSURL *)mainCSSURL;
 
 // Extra markup
 - (NSMutableString *)extraHeaderMarkup;
@@ -42,16 +41,13 @@
 - (BOOL)isForEditing; // YES if HTML is intended to be edited directly in a Web Editor
 - (BOOL)isForQuickLookPreview;  // yeah, you get the idea
 - (BOOL)isForPublishing;
-- (BOOL)liveDataFeeds;
-- (BOOL)shouldWriteServerSideScripts;   // YES when -isForPublishing, but not when validating page
+- (BOOL)liveDataFeeds;  // When NO, you should write placeholders instead of loading from the web
 
 // State
 - (id <SVPage>)page;
 
 - (NSString *)currentIterationCSSClassName;
 - (id)objectForCurrentTemplateIteration;
-
-- (NSString *)visibleSiteTitle;
 
 @end
 
@@ -64,15 +60,14 @@
 #pragma mark Basics
 
 - (void)startElement:(NSString *)elementName attributes:(NSDictionary *)attributes;
+- (void)endElement;
+
+// Convenience methods for -startElement:attributes:
 - (void)startElement:(NSString *)tagName;
 - (void)startElement:(NSString *)tagName className:(NSString *)className;
 - (void)startElement:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
-- (void)endElement;
 
 - (void)writeText:(NSString *)string;
-
-//  Writes a newline character and the tabs to match -indentationLevel. Nornally newlines are automatically written for you; call this if you need an extra one.
-- (void)startNewline;
 
 - (void)writeComment:(NSString *)comment;   // escapes the string, and wraps in a comment tag
 
@@ -81,12 +76,12 @@
 
 #pragma mark Convenience/Special
 
-// Handles subtleties of Sandvox pages
-- (void)startAnchorElementWithPage:(id <SVPage>)page;
-
 //  <a href="...." target="..." rel="nofollow">
 //  Raw version of the above for if you need to link to something over than an SVPage
 - (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
+
+// Takes care of using the right href, title and target for the page
+- (void)startAnchorElementWithPage:(id <SVPage>)page;
 
 // For when you need to write an element and be sure the ID is unique. Perfect for hooking up a script. Returns the best unique ID available
 - (NSString *)startElement:(NSString *)tagName
@@ -102,7 +97,6 @@
 
 #pragma mark Properties
 - (BOOL)isXHTML;
-- (NSStringEncoding)encoding;   // default is UTF-8
 
 
 @end

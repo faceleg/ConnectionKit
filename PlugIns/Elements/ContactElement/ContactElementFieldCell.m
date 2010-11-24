@@ -79,13 +79,7 @@
 {
 	if (!myLockIconCell)
 	{
-		NSImage *icon = [NSImage imageNamed:@"NSLockLockedTemplate"];	// try for Leopard resizable version
-		if (nil == icon)
-		{
-			// fallback
-			icon = [NSImage imageInBundle:[NSBundle bundleForClass:[self class]]
-									named:@"lock.png"];
-		}
+		NSImage *icon = [NSImage imageNamed:@"NSLockLockedTemplate"];
 	
 		myLockIconCell = [[NSImageCell alloc] initImageCell:icon];
 		[myLockIconCell setImageAlignment:NSImageAlignCenter];

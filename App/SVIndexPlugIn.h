@@ -26,7 +26,6 @@
 @property(nonatomic) BOOL enableMaxItems;
 @property(nonatomic) NSUInteger maxItems;
 
-@property(nonatomic, retain) NSArrayController *indexablePagesController;
 @property(nonatomic, readonly) NSArray *indexablePagesOfCollection;
 
 @end

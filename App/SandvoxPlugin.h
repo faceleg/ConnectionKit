@@ -21,9 +21,8 @@
 
 
 // Debugging
-#import "Debug.h"
-#import "assertions.h"
-#import "Macros.h"
+#import "assertions.h"  // TODO: private
+#import "Macros.h"      // TODO: private
 
 // Core
 #import "SVPlugIn.h"
@@ -39,27 +38,27 @@
 // Publishing
 
 // Foundation/AppKit subclasses
-#import "KSEmailAddressComboBox.h"
-#import "KSLabel.h"
-#import "KSPlaceholderTableView.h"
-#import "KSTrimFirstLineFormatter.h"
-#import "KSVerticallyAlignedTextCell.h"
+#import "KSEmailAddressComboBox.h"          // TODO: private
+#import "KSLabel.h"                         // TODO: replace with SVLabel
+#import "KSPlaceholderTableView.h"          // TODO: private
+#import "KSTrimFirstLineFormatter.h"        // TODO: Rename as SV…
+#import "KSVerticallyAlignedTextCell.h"     // TODO: private
 #import "SVPasteboardItem.h"
 #import "SVWebLocation.h"
 #import "SVURLFormatter.h"
 
 // Foundation extensions
-#import "NSBundle+Karelia.h"
-#import "NSData+Karelia.h"
+#import "NSBundle+Karelia.h"  // TODO: Publish -localizedStringForString:language:fallback: only
+#import "NSData+Karelia.h"      // TODO: private
 #import "NSURL+Sandvox.h"
 
 // AppKit extensions
-#import "NSColor+Karelia.h"
-#import "NSImage+Karelia.h"
+#import "NSColor+Karelia.h"     // TODO: project
+#import "NSImage+Karelia.h"     // TODO: private
 
 // Value Transformers
-#import "KSContainsObjectValueTransformer.h"
-#import "KSIsEqualValueTransformer.h"
+#import "KSContainsObjectValueTransformer.h"    // TODO: project
+#import "KSIsEqualValueTransformer.h"           // TODO: private
 
 // Third Party
-#import "DNDArrayController.h"
+#import "DNDArrayController.h"  // TODO: private

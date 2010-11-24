@@ -364,7 +364,7 @@
 		274E77EE0D6269B6004F89C2 /* NSManagedObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A713F0BF7ADE100776464 /* NSManagedObject+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		274E77F40D6269E3004F89C2 /* NSBundle+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAA0D62345000B4D485 /* NSBundle+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		274E78010D626A49004F89C2 /* NSSet+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BB20D62347A00B4D485 /* NSSet+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
-		274E78080D626A93004F89C2 /* NSManagedObjectContext+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71410BF7ADE100776464 /* NSManagedObjectContext+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E78080D626A93004F89C2 /* NSManagedObjectContext+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71410BF7ADE100776464 /* NSManagedObjectContext+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		274E829D0D627328004F89C2 /* NSDocumentController+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */; };
 		274FA0DD11297971000E0FDA /* WEKRootItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 274FA0DB11297971000E0FDA /* WEKRootItem.h */; };
 		274FA0DE11297971000E0FDA /* WEKRootItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 274FA0DC11297971000E0FDA /* WEKRootItem.m */; };
@@ -387,7 +387,7 @@
 		2759CC9C1039711300E2C046 /* SVWebEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */; };
 		2759CC9F103976D800E2C046 /* SVWebContentAreaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */; };
 		2759CCA0103976D800E2C046 /* SVWebContentAreaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */; };
-		275C5F88122831CE00CD22B8 /* SVMedia.h in Headers */ = {isa = PBXBuildFile; fileRef = 275C5F86122831CE00CD22B8 /* SVMedia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		275C5F88122831CE00CD22B8 /* SVMedia.h in Headers */ = {isa = PBXBuildFile; fileRef = 275C5F86122831CE00CD22B8 /* SVMedia.h */; settings = {ATTRIBUTES = (); }; };
 		275C5F89122831CE00CD22B8 /* SVMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 275C5F87122831CE00CD22B8 /* SVMedia.m */; };
 		275D9C6D125C80DE004A3A53 /* SVSiteItemController.h in Headers */ = {isa = PBXBuildFile; fileRef = 275D9C6B125C80DE004A3A53 /* SVSiteItemController.h */; };
 		275D9C6E125C80DE004A3A53 /* SVSiteItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 275D9C6C125C80DE004A3A53 /* SVSiteItemController.m */; };
@@ -774,7 +774,7 @@
 		3CE2CA4C0D6D51F500B2D56B /* NSString+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BB60D62348400B4D485 /* NSString+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		3CE2CA510D6D54B300B2D56B /* AmazonSupport.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54A10D625983004885E7 /* AmazonSupport.framework */; };
 		3CE2CA6B0D6D54CD00B2D56B /* Connection.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F547C0D625919004885E7 /* Connection.framework */; };
-		3CE79D890D6260D000FCEE6D /* NSArray+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CE79D870D6260D000FCEE6D /* NSArray+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3CE79D890D6260D000FCEE6D /* NSArray+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CE79D870D6260D000FCEE6D /* NSArray+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		3CE79D8A0D6260D000FCEE6D /* NSArray+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE79D880D6260D000FCEE6D /* NSArray+KTExtensions.m */; };
 		3CE79DB90D6261B300FCEE6D /* NSOutlineView+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CE79DB70D6261B300FCEE6D /* NSOutlineView+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		3CE79DBA0D6261B300FCEE6D /* NSOutlineView+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE79DB80D6261B300FCEE6D /* NSOutlineView+KTExtensions.m */; };
@@ -937,7 +937,7 @@
 		CE01A7B70EAFD63600BDF264 /* Registration.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6B20EAFD63600BDF264 /* Registration.h */; };
 		CE01A7B80EAFD63600BDF264 /* RichTextHTMLTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6B30EAFD63600BDF264 /* RichTextHTMLTransformer.h */; };
 		CE01A7B90EAFD63600BDF264 /* RichTextHTMLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6B40EAFD63600BDF264 /* RichTextHTMLTransformer.m */; };
-		CE01A7BA0EAFD63600BDF264 /* assertions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6B60EAFD63600BDF264 /* assertions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7BA0EAFD63600BDF264 /* assertions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6B60EAFD63600BDF264 /* assertions.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE01A7BB0EAFD63600BDF264 /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6B70EAFD63600BDF264 /* assertions.m */; };
 		CE01A7BC0EAFD63600BDF264 /* CharsetToEncodingTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6B80EAFD63600BDF264 /* CharsetToEncodingTransformer.h */; };
 		CE01A7BD0EAFD63600BDF264 /* CharsetToEncodingTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6B90EAFD63600BDF264 /* CharsetToEncodingTransformer.m */; };
@@ -947,7 +947,7 @@
 		CE01A7C10EAFD63600BDF264 /* ContainerIsEmptyTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6BD0EAFD63600BDF264 /* ContainerIsEmptyTransformer.m */; };
 		CE01A7C20EAFD63600BDF264 /* ContainerIsNotEmptyTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6BE0EAFD63600BDF264 /* ContainerIsNotEmptyTransformer.h */; };
 		CE01A7C30EAFD63600BDF264 /* ContainerIsNotEmptyTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6BF0EAFD63600BDF264 /* ContainerIsNotEmptyTransformer.m */; };
-		CE01A7C40EAFD63600BDF264 /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6C00EAFD63600BDF264 /* Debug.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7C40EAFD63600BDF264 /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6C00EAFD63600BDF264 /* Debug.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A7C50EAFD63600BDF264 /* Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6C10EAFD63600BDF264 /* Debug.m */; };
 		CE01A7C80EAFD63600BDF264 /* KSContainsObjectValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6C40EAFD63600BDF264 /* KSContainsObjectValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A7C90EAFD63600BDF264 /* KSContainsObjectValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6C50EAFD63600BDF264 /* KSContainsObjectValueTransformer.m */; };

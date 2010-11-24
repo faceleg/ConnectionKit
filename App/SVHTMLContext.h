@@ -101,6 +101,7 @@ typedef enum {
 @property(nonatomic, copy) NSURL *baseURL;
 @property(nonatomic) BOOL liveDataFeeds;
 @property(nonatomic, copy) NSString *language;
+- (BOOL)shouldWriteServerSideScripts;   // YES when -isForPublishing, but not when validating page
 
 @property(nonatomic, readonly) KTHTMLGenerationPurpose generationPurpose;
 - (BOOL)isForEditing;		// Synonym, apparently...

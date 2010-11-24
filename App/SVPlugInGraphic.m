@@ -49,22 +49,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     return result;
 }
 
-+ (SVPlugInGraphic *)insertNewGraphicWithPlugIn:(SVPlugIn *)plugIn
-                         inManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    SVPlugInGraphic *result =
-    [NSEntityDescription insertNewObjectForEntityForName:@"PlugInGraphic"    
-                                  inManagedObjectContext:context];
-    
-    [result setValue:[[plugIn class] plugInIdentifier] forKey:@"plugInIdentifier"];
-    
-    
-    [result setPlugIn:plugIn useSerializedProperties:YES];  // passing YES to copy the current properties out of the plug-in
-    
-    
-    return result;
-}
-
 - (void)awakeFromInsert
 {
     [super awakeFromInsert];

@@ -21,8 +21,6 @@
     id  _template;
 }
 
-+ (NSString *)plugInIdentifier; // use standard reverse DNS-style string
-
 
 #pragma mark Initialization
 
@@ -74,8 +72,6 @@
 // Default implementation parses the template specified in Info.plist
 - (void)writeInnerHTML:(id <SVPlugInContext>)context;
 
-- (NSString *)inlineGraphicClassName;
-
 
 #pragma mark Layout
 
@@ -95,6 +91,7 @@
 - (NSNumber *)height;
 - (void)setWidth:(NSNumber *)width height:(NSNumber *)height;
 
+// Override these if your plug-in is more liberal than the defaults
 - (NSUInteger)minWidth;    // default is 200
 - (NSUInteger)minHeight;    // default is 1
 
@@ -105,8 +102,8 @@
 #pragma mark Resizing
 
 // Default is NO. If your plug-in is based around a sizeable object (e.g. YouTube) return YES to get proper behaviour. This makes width editable in the Inspector when not placed inline (and perhaps more, but you get the idea).
-// If you also need to include some chrome around the content. (e.g. controller on a video player), implement these methods to specify how much padding is needed. Default is nil padding.
 + (BOOL)isExplicitlySized;
+// If you also need to include some chrome around the content. (e.g. controller on a video player), implement these methods to specify how much padding is needed. Default is nil padding.
 - (NSNumber *)elementWidthPadding;
 - (NSNumber *)elementHeightPadding;
 
@@ -114,21 +111,12 @@
 - (NSNumber *)constrainedAspectRatio;
 
 
-
 #pragma mark Pages
+// Called whenever the plug-in is added to a different page, moves placement within a page, or a significant feature of the page changes such as the design.
 - (void)didAddToPage:(id <SVPage>)page;
 
 
-#pragma mark The Wider World
-@property(nonatomic, readonly) NSBundle *bundle;    // the object representing the plug-in's bundle
-
-
-#pragma mark Thumbnail
-- (NSURL *)thumbnailURL;
-
-
 #pragma mark UI
-
 // Default implementation guesses classname and nib, returning nil if they're not found. Override if you that's not good enough.
 + (SVInspectorViewController *)makeInspectorViewController;
 
@@ -145,11 +133,6 @@
 // Don't have direct access to undo manager
 - (void)disableUndoRegistration;
 - (void)enableUndoRegistration;
-
-
-#pragma mark Legacy
-// Called by -awakeFromNew:... and -awakeFromFetch: for backward compatibility
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
 
 
 @end
