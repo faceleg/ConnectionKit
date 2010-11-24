@@ -300,22 +300,28 @@
                                       inView:view
                                      enabled:(canResizeBottom && canResizeRight)];
             
-            [self drawSelectionHandleAtPoint:NSMakePoint(midX, minY)
-                                      inView:view
-                                     enabled:canResizeTop];
-            
-            [self drawSelectionHandleAtPoint:NSMakePoint(midX, maxY)
-                                      inView:view
-                                     enabled:canResizeBottom];
+            if (NSWidth(frameRect) > 16.0f)
+            {
+                [self drawSelectionHandleAtPoint:NSMakePoint(midX, minY)
+                                          inView:view
+                                         enabled:canResizeTop];
+                
+                [self drawSelectionHandleAtPoint:NSMakePoint(midX, maxY)
+                                          inView:view
+                                         enabled:canResizeBottom];
+            }
         }
         
-        [self drawSelectionHandleAtPoint:NSMakePoint(minX, midY)
-                                  inView:view
-                                 enabled:canResizeLeft];
-        
-        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, midY)
-                                  inView:view
-                                 enabled:canResizeRight];
+        if (NSHeight(frameRect) > 16.0f)
+        {
+            [self drawSelectionHandleAtPoint:NSMakePoint(minX, midY)
+                                      inView:view
+                                     enabled:canResizeLeft];
+            
+            [self drawSelectionHandleAtPoint:NSMakePoint(maxX, midY)
+                                      inView:view
+                                     enabled:canResizeRight];
+        }
     }
 }
 
