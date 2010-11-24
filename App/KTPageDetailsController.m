@@ -828,11 +828,13 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		NSRect frame = [oExternalURLField frame];
 		frame.origin.x = newLeft;
 		
-		NSAttributedString *text = [oExternalURLField attributedStringValue];
+        // This code sets up the box width, but the call to -attributedStringValue causes the URL formatter to kick in undesireably. Same goes for if you call -stringValue. If left to its own devices, the text field already knows how to draw itself to match the width of the content; is there some way you can hook into that for sizing logic instead?
+        
+        /*NSAttributedString *text = [oExternalURLField attributedStringValue];
 		int width = ceilf([text size].width)  + 2;
 		if (width > availableForAll) width = availableForAll;	// make sure a really long URL will fit
-		frame.size.width = width;
-		
+		frame.size.width = width;*/
+        
 		[oExternalURLField setFrame:frame];
 
 		// Move the follow button over
