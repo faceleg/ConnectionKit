@@ -17,6 +17,9 @@
 #import "Debug.h"
 
 
+NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
+
+
 @implementation NSManagedObjectContext (KTExtensions)
 
 /*! returns an autoreleased core data stack with file at aStoreURL */

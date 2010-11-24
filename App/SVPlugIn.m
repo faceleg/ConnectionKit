@@ -30,9 +30,6 @@
 #import "NSManagedObject+KTExtensions.h"
 
 
-NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
-
-
 @interface SVPlugIn ()
 @property(nonatomic, assign, readwrite) SVPlugInGraphic *container;
 @end

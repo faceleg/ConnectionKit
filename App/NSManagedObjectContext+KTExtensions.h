@@ -21,6 +21,9 @@
 #import "NSManagedObjectContext+Karelia.h"
 
 
+extern NSString *SVPageWillBeDeletedNotification;
+
+
 @class KTAbstractElement, KTDocument, KTSite, KTPage, KTPage;
 
 @interface NSManagedObjectContext (KTExtensions)
