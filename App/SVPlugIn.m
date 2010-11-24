@@ -42,10 +42,7 @@
 
 #pragma mark Initialization & Tear Down
 
-- (void)awakeFromFetch;
-{
-    [self awakeFromBundleAsNewlyCreatedObject:NO];
-}
+- (void)awakeFromFetch; { }
 
 - (void)awakeFromNew;
 {
@@ -66,10 +63,6 @@
         
         [self setSerializedValue:value forKey:aKey];
     }
-    
-    
-    // Legacy
-    [self awakeFromBundleAsNewlyCreatedObject:YES];
     
     
     // Size
