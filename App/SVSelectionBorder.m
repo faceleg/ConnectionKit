@@ -342,6 +342,28 @@
                                                   7.0,
                                                   7.0)];
     
+    
+    // For unresizeable borders draw circular handles. Needs some layout tweaks to pull off
+    if (![self resizingMask])
+    {
+         [[NSColor blackColor] setStroke];
+        [[NSColor whiteColor] setFill];
+        
+        rect = NSInsetRect(rect, 0.5, 0.5);
+        NSBezierPath *path = [NSBezierPath bezierPathWithOvalInRect:rect];
+        [path setLineWidth:1.0];
+        [path fill];
+        
+        NSGraphicsContext *context = [NSGraphicsContext currentContext];
+        [context saveGraphicsState];
+        [context setShouldAntialias:NO];
+        [path stroke];
+        [context restoreGraphicsState];
+        
+        return;
+    }
+    
+    
     // Draw middle
     [[NSColor colorWithCalibratedWhite:1.0 alpha:(enabled ? 1.0 : 0.5)] setFill];
     NSRectFillUsingOperation(NSInsetRect(rect, 1.0f, 1.0f), NSCompositeSourceOver);
@@ -354,31 +376,8 @@
     }
     else
     {
-        // Normally draw a translucent version of the regular handle…
-        if ([self resizingMask])
-        {
-            [[[NSColor aquaColor] colorWithAlphaComponent:0.5] setFill];
-            NSFrameRectWithWidthUsingOperation(rect, 1.0, NSCompositeSourceOver);
-        }
-        
-        // …but for unresizeable borders draw circular handles. Needs some layout tweaks to pull off
-        else
-        {
-            NSGraphicsContext *context = [NSGraphicsContext currentContext];
-            [context saveGraphicsState];
-            [context setShouldAntialias:NO];
-            
-            [[NSColor blackColor] setStroke];
-            [[NSColor whiteColor] setFill];
-            
-            rect = NSInsetRect(rect, 0.5, 0.5);
-            NSBezierPath *path = [NSBezierPath bezierPathWithOvalInRect:rect];
-            [path setLineWidth:1.0];
-            [path fill];
-            [path stroke];
-            
-            [context restoreGraphicsState];
-        }
+        [[[NSColor aquaColor] colorWithAlphaComponent:0.5] setFill];
+        NSFrameRectWithWidthUsingOperation(rect, 1.0, NSCompositeSourceOver);
     }
 }
 
