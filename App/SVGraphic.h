@@ -52,10 +52,16 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 @property(nonatomic, copy) NSNumber *width;
 @property(nonatomic, copy) NSNumber *contentWidth;  // what appears in the Inspector
+- (NSNumber *)containerWidth;
+- (BOOL)isExplicitlySized;
+
+- (id <SVGraphic>)captionGraphic;
 
 
 #pragma mark HTML
 - (void)writeBody:(SVHTMLContext *)context;  // Subclasses MUST override
+- (BOOL)shouldWriteHTMLInline;
+- (BOOL)isPagelet;      // whether to generate <div class="pagelet"> etc. HTML. KVO-compliant
 
 
 @end
@@ -87,10 +93,6 @@ extern NSString *kSVGraphicPboardType;
 
 #pragma mark Pagelet
 
-- (BOOL)shouldWriteHTMLInline;
-- (BOOL)isPagelet;      // whether to generate <div class="pagelet"> etc. HTML. KVO-compliant
-
-
 - (BOOL)canWriteHTMLInline;   // NO for most graphics. Images and Raw HTML return YES
 
 - (BOOL)isCallout;  // whether to generate enclosing <div class="callout"> etc.
@@ -106,17 +108,15 @@ extern NSString *kSVGraphicPboardType;
 
 #pragma mark Intro & Caption
 
+@property(nonatomic, retain) SVAuxiliaryPageletText *introduction;
 @property(nonatomic) BOOL showsIntroduction;    // convenience
-@property(nonatomic) BOOL showsCaption;         // convenience
-
-// Full API:
-- (void)createDefaultIntroAndCaption;
-
-@property (nonatomic, retain) SVAuxiliaryPageletText *introduction;
 - (BOOL)canHaveIntroduction;
 
-@property (nonatomic, retain) SVAuxiliaryPageletText *caption;
+@property(nonatomic, retain) SVAuxiliaryPageletText *caption;
+@property(nonatomic) BOOL showsCaption;         // convenience
 - (BOOL)canHaveCaption;
+
+- (void)createDefaultIntroAndCaption;
 
 
 #pragma mark Layout/Styling
@@ -144,9 +144,6 @@ extern NSString *kSVGraphicPboardType;
 
 - (void)makeOriginalSize;
 - (BOOL)canMakeOriginalSize;
-- (BOOL)isExplicitlySized;
-
-- (NSNumber *)containerWidth;
 
 
 #pragma mark Sidebar

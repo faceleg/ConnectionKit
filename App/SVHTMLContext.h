@@ -32,7 +32,7 @@ typedef enum {
 
 @class KSStringWriter;
 @class KTPage, SVSiteItem, SVArchivePage, SVGraphic, SVHTMLTextBlock, SVLink, SVMediaRecord;
-@protocol SVMedia, SVEnclosure;
+@protocol SVGraphic, SVMedia, SVEnclosure;
 
 
 @interface SVHTMLContext : KSHTMLWriter <SVPlugInContext, SVHTMLWriter, KSMegaBufferedWriterDelegate>
@@ -141,8 +141,8 @@ typedef enum {
 - (void)writeGraphics:(NSArray *)graphics;  // convenience
 
 // For subclassers:
-- (void)writeGraphicIgnoringCallout:(SVGraphic *)graphic;   
-- (void)writeGraphicBody:(SVGraphic *)graphic;
+- (void)writeGraphicIgnoringCallout:(id <SVGraphic>)graphic;
+- (void)writeGraphicBody:(id <SVGraphic>)graphic;
 
 - (NSUInteger)numberOfGraphicsOnPage; // incremented for each call to -writeGraphic:
 

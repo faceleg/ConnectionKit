@@ -6,6 +6,12 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
+//  
+//  Sandvox's general class for other controllers to subclass.
+//  Supports NSWidthBinding.
+//
+
+
 #import "WebEditingKit.h"
 
 #import "SVContentObject.h"
@@ -24,6 +30,7 @@
     
     // Updating
     NSMutableSet            *_updateSelectors;
+    NSNumber                *_width;
     NSMutableSet            *_dependencies;
     BOOL                    _isObservingDependencies;
     SVWebEditorHTMLContext  *_context;
@@ -78,7 +85,12 @@
 - (void)updateIfNeeded; // recurses down the tree
 
 
-#pragma mark Dependencies
+#pragma mark Size Binding
+// Width value is stored in an ivar, NOT read from the DOM. You can bind it with NSWidthBinding
+@property(nonatomic, copy) NSNumber *width;
+
+
+#pragma mark Generic Dependencies
 @property(nonatomic, copy, readonly) NSSet *dependencies;
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 - (void)removeAllDependencies;

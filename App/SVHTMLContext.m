@@ -9,7 +9,6 @@
 #import "SVWebEditorHTMLContext.h"
 
 #import "KTDesign.h"
-#import "SVGraphic.h"
 #import "SVEnclosure.h"
 #import "KTHostProperties.h"
 #import "SVHTMLTemplateParser.h"
@@ -455,7 +454,7 @@
     [parser release];
 }
 
-- (void)writeGraphicIgnoringCallout:(SVGraphic *)graphic
+- (void)writeGraphicIgnoringCallout:(id <SVGraphic>)graphic;
 {
     // Update number of graphics
     _numberOfGraphics++;
@@ -463,28 +462,32 @@
     
     if ([graphic isPagelet])
     {
-        [self writePagelet:graphic];
+        [self writePagelet:(SVGraphic *)graphic];
     }
-    else if (![graphic shouldWriteHTMLInline])
+    else if ([graphic shouldWriteHTMLInline])
+    {
+        [graphic writeBody:self];
+    }
+    else
     {
         // Register dependencies that come into play regardless of the route writing takes
         [self addDependencyOnObject:graphic keyPath:@"showsCaption"];
         
         // <div class="graphic-container center">
-        [graphic buildClassName:self];
+        [(SVGraphic *)graphic buildClassName:self];
         [self startElement:@"div"];
         
         
         // <div class="graphic"> or <img class="graphic">
         [self pushClassName:@"graphic"];
-        if (![graphic showsCaption] && [graphic isKindOfClass:[SVMediaGraphic class]]) // special case for media
+        if (![graphic captionGraphic] && [graphic isKindOfClass:[SVMediaGraphic class]]) // special case for media
         {
             [graphic writeBody:self];
             [self endElement];
             return;
         }
         
-        NSString *className = [graphic inlineGraphicClassName];
+        NSString *className = [(SVGraphic *)graphic inlineGraphicClassName];
         if (className) [self pushClassName:className];
         
         if (![graphic isExplicitlySized])
@@ -500,7 +503,7 @@
         [self startElement:@"div"];
         
         
-        [self writeGraphicBody: graphic];
+        [self writeGraphicBody:graphic];
         
         
         // Finish up
@@ -508,19 +511,16 @@
         
         
         // Caption if requested
-        if ([graphic showsCaption]) // was registered as dependecy at start of if block
+        id <SVGraphic> caption = [graphic captionGraphic];
+        if (caption) // was registered as dependecy at start of if block
         {
-            [self writeGraphicIgnoringCallout:[graphic caption]];
+            [self writeGraphicIgnoringCallout:caption];
         }
         
         
         // Finish up
         [self endElement];
 
-    }
-    else
-    {
-        [graphic writeBody:self];
     }
 }
 
@@ -549,7 +549,7 @@
     if (callout) [self endCallout];
 }
 
-- (void)writeGraphicBody:(SVGraphic *)graphic;
+- (void)writeGraphicBody:(id <SVGraphic>)graphic;
 {
     // Graphic body
     if (![graphic isPagelet]) [self pushClassName:@"figure-content"];  // identifies for #84956

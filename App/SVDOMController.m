@@ -251,7 +251,18 @@
     [super updateIfNeeded];
 }
 
-#pragma mark Dependencies
+#pragma mark Size Binding
+
+@synthesize width = _width;
+- (void)setWidth:(NSNumber *)width;
+{
+    width = [width copy];
+    [_width release]; _width = width;
+    
+    
+}
+
+#pragma mark Generic Dependencies
 
 - (NSSet *)dependencies { return [[_dependencies copy] autorelease]; }
 

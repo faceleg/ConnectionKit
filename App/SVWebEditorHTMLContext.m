@@ -210,7 +210,7 @@
     _currentDOMController = currentController;
 }
 
-- (void)writeGraphicBody:(SVGraphic *)graphic;
+- (void)writeGraphicBody:(id <SVGraphic>)graphic;
 {
     if ([graphic isKindOfClass:[SVMediaGraphic class]])
     {
@@ -218,7 +218,7 @@
     }
     else
     {
-        SVDOMController *controller = [graphic newBodyDOMController];
+        SVDOMController *controller = [(SVGraphic *)graphic newBodyDOMController];
         [self startDOMController:controller];
         [controller release];
 

@@ -146,6 +146,13 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return result;
 }
 
+- (id <SVGraphic>)captionGraphic;
+{
+    SVAuxiliaryPageletText *result = [self caption];
+    if ([[result hidden] boolValue]) result = nil;
+    return result;
+}
+
 - (BOOL)canHaveCaption; { return YES; }
 
 @dynamic introduction;

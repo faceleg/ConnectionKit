@@ -24,6 +24,8 @@
 @dynamic pagelet;
 @dynamic hidden;
 
+- (id <SVGraphic>)captionGraphic; { return nil; }
+
 #pragma mark HTML
 
 - (void)writeBody:(SVHTMLContext *)context;
@@ -63,5 +65,9 @@
 {
     [self setWidth:width];
 }
+
+- (NSNumber *) containerWidth; { return [self width]; }
+
+- (BOOL)isExplicitlySized; { return NO; }
 
 @end
