@@ -652,6 +652,15 @@
     return result;
 }
 
+- (NSRect)rectIgnoringRelativePosition;
+{
+    NSRect result = [self rect];
+    result.origin.x -= _relativePosition.x;
+    result.origin.y -= _relativePosition.y;
+    
+    return result;
+}
+
 - (void)removeRelativePositioningAnimationDidEnd;
 {
     DOMCSSStyleDeclaration *style = [[self relativePositionDOMElement] style];

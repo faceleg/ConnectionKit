@@ -103,6 +103,7 @@
 - (void)removeRelativePosition:(BOOL)animated;
 - (BOOL)hasRelativePosition;
 - (CGPoint)positionIgnoringRelativePosition;
+- (NSRect)rectIgnoringRelativePosition;
 - (DOMElement *)relativePositionDOMElement;
 
 
