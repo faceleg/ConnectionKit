@@ -1000,11 +1000,11 @@
     }
     
     
-    // Insert HTML into DOM, using caret if possible
+    // Insert HTML into DOM
     if ([pagelets count] && [[self webEditor] shouldChangeText:self])
     {
         DOMNode *node = [self childForDraggingInfo:dragInfo];
-        [self moveDragCaretToBeforeDOMNode:node draggingInfo:dragInfo];
+        //[self moveDragCaretToBeforeDOMNode:node draggingInfo:dragInfo];
         
         if (result = [self insertGraphics:pagelets beforeDOMNode:node])
         {
