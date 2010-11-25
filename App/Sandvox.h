@@ -22,6 +22,7 @@
 
 // Core
 #import "SVPlugIn.h"
+#import "SVInspectorViewController.h"
 #import "SVPlugInContext.h"
 
 // Indexes
