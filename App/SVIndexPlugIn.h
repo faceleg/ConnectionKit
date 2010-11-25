@@ -6,6 +6,10 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
+//
+//  +makeInspectorViewController will return a SVIndexInspectorViewController if no better class is provided by the plug-in
+//
+
 
 #import "SVPlugIn.h"
 

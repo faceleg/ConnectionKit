@@ -117,7 +117,7 @@
 
 
 #pragma mark UI
-// Default implementation guesses classname and nib, returning nil if they're not found. Override if you that's not good enough.
+// Default implementation guesses nib, returning nil if one isn't found. Classname is also guessed, falling back to vanilla SVInspectorViewController. Override if that's not good enough.
 + (SVInspectorViewController *)makeInspectorViewController;
 
 
