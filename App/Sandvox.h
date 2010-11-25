@@ -32,8 +32,8 @@
 // Page composition
 #import "SVPageProtocol.h"
 
-// Foundation extensions
-#import "NSBundle+Karelia.h"  // TODO: Publish -localizedStringForString:language:fallback: only
+// Cocoa extensions
+#import "NSBundle+Sandvox.h"
 #import "NSURL+Sandvox.h"
 #import "KSLabel.h"                         // TODO: replace with SVLabel
 #import "KSTrimFirstLineFormatter.h"        // TODO: Rename as SV…

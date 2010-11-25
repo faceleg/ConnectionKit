@@ -53,7 +53,7 @@
     // TODO: Figure out language. Perhaps we could have an API on inspector view controller?
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 	NSString *language = nil;//[[pluginDelegate page] valueForKeyPath:@"master.language"];
-	[newField setLabel:[bundle localizedStringForString:@"New field" language:language]];
+	[newField setLabel:[bundle localizedStringForString:@"New field" language:language fallback:@"New field"]];
 	
 	return newField;
 }

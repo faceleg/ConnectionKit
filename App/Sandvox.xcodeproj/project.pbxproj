@@ -421,6 +421,7 @@
 		2774DFAC0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2774DFAA0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m */; };
 		277560360CA5228B00D8A412 /* KSObjectKeyPathPair.h in Headers */ = {isa = PBXBuildFile; fileRef = 277560340CA5228B00D8A412 /* KSObjectKeyPathPair.h */; settings = {ATTRIBUTES = (); }; };
 		277560370CA5228B00D8A412 /* KSObjectKeyPathPair.m in Sources */ = {isa = PBXBuildFile; fileRef = 277560350CA5228B00D8A412 /* KSObjectKeyPathPair.m */; };
+		277586CB129E846B0027C7FF /* NSBundle+Sandvox.h in Headers */ = {isa = PBXBuildFile; fileRef = 277586C9129E846B0027C7FF /* NSBundle+Sandvox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2775DB6C11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 2775DB6A11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h */; };
 		2775DB6D11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 2775DB6B11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m */; };
 		277892A010CD5FA3008AA683 /* SVTitleBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2778929E10CD5FA3008AA683 /* SVTitleBox.h */; };
@@ -906,7 +907,7 @@
 		CE01A7980EAFD63600BDF264 /* NSBezierPath+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6930EAFD63600BDF264 /* NSBezierPath+Karelia.m */; };
 		CE01A7990EAFD63600BDF264 /* NSBitmapImageRep+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6940EAFD63600BDF264 /* NSBitmapImageRep+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A79A0EAFD63600BDF264 /* NSBitmapImageRep+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6950EAFD63600BDF264 /* NSBitmapImageRep+Karelia.m */; };
-		CE01A79B0EAFD63600BDF264 /* NSBundle+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6960EAFD63600BDF264 /* NSBundle+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A79B0EAFD63600BDF264 /* NSBundle+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6960EAFD63600BDF264 /* NSBundle+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A79C0EAFD63600BDF264 /* NSBundle+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6970EAFD63600BDF264 /* NSBundle+Karelia.m */; };
 		CE01A79D0EAFD63600BDF264 /* NSColor+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6980EAFD63600BDF264 /* NSColor+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A79E0EAFD63600BDF264 /* NSColor+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6990EAFD63600BDF264 /* NSColor+Karelia.m */; };
@@ -1980,6 +1981,7 @@
 		2774DFAA0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageScalingURLProtocol.m; sourceTree = "<group>"; };
 		277560340CA5228B00D8A412 /* KSObjectKeyPathPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSObjectKeyPathPair.h; sourceTree = "<group>"; };
 		277560350CA5228B00D8A412 /* KSObjectKeyPathPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSObjectKeyPathPair.m; sourceTree = "<group>"; };
+		277586C9129E846B0027C7FF /* NSBundle+Sandvox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Sandvox.h"; sourceTree = "<group>"; };
 		2775DB6A11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCaseInsensitiveDictionary.h; sourceTree = "<group>"; };
 		2775DB6B11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSCaseInsensitiveDictionary.m; sourceTree = "<group>"; };
 		2778929E10CD5FA3008AA683 /* SVTitleBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTitleBox.h; sourceTree = "<group>"; };
@@ -3084,6 +3086,7 @@
 				3C7B015D122F526B0098E147 /* CollectionInfo.xib */,
 				2745948A123944FE005D0640 /* NSURL+Sandvox.h */,
 				2745948B123944FE005D0640 /* NSURL+Sandvox.m */,
+				277586C9129E846B0027C7FF /* NSBundle+Sandvox.h */,
 			);
 			name = "2.0 Plug-in System";
 			sourceTree = "<group>";
@@ -5853,6 +5856,7 @@
 				271884431296A28000139C89 /* KSElementInfo.h in Headers */,
 				276C004E129BE40500568A73 /* SVGraphicContainerDOMController.h in Headers */,
 				276C010C129C00F800568A73 /* DOMTreeWalker+Karelia.h in Headers */,
+				277586CB129E846B0027C7FF /* NSBundle+Sandvox.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
