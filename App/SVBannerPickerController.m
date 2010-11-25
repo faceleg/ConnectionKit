@@ -55,7 +55,7 @@
     {
         id banner = [[oInspectorViewController inspectedObjectsController]
                      valueForKeyPath:@"selection.master.banner"];
-        result = (banner != nil);
+        result = (banner == nil);
     }
         
     return result;
