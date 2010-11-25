@@ -33,7 +33,7 @@
 
 
 #pragma mark Extra markup
-// If the same markup has already been added, goes ignored
+// Appends the markup just before the </BODY> tag. If same code has already been added, goes ignored
 - (void)addMarkupToEndOfBody:(NSString *)markup;
 
 
