@@ -38,8 +38,8 @@
     // Use the object's own ID if it has one. Otherwise make up our own
     if (self = [self init])
     {
-        NSString *idName = [NSString stringWithFormat:@"graphic-%p", content];
-		if (idName) [self setElementIdName:idName];
+        NSString *idName = [NSString stringWithFormat:@"%@-%p", [self className], content];
+		[self setElementIdName:idName];
 		
     	[self setRepresentedObject:content];
     }
