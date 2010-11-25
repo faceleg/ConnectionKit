@@ -75,8 +75,6 @@
 // For the benefit of methods which don't have direct access to the context. e.g. methods called from an HTML template.
 + (id <SVPlugInContext>)currentContext;
 
-- (void)writeInnerHTML:(id <SVPlugInContext>)context;
-
 
 #pragma mark Layout
 
