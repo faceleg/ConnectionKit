@@ -97,7 +97,22 @@ static id <SVPlugInContext> sCurrentContext;
     
     
     sCurrentContext = context;
-    [self writeInnerHTML:context];
+    
+    // Parse our built-in template
+    SVTemplate *template = [self HTMLTemplate];
+    if ( template )
+    {
+        SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
+                                                                            component:self];
+        
+        [parser parseIntoHTMLContext:(SVHTMLContext *)context];
+        [parser release];
+    }
+    else if ( [[self bundle] objectForInfoDictionaryKey:@"KTTemplateName"] )
+    {
+        OBPRECONDITION(template); // we're defining a template in Info.plist but there isn't one there!
+    }
+    
     sCurrentContext = nil;
 }
 
@@ -137,24 +152,6 @@ static id <SVPlugInContext> sCurrentContext;
     }
     
     return _template;
-}
-
-- (void)writeInnerHTML:(id <SVPlugInContext>)context;
-{
-    // Parse our built-in template
-    SVTemplate *template = [self HTMLTemplate];
-    if ( template )
-    {
-        SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
-                                                                            component:self];
-        
-        [parser parseIntoHTMLContext:(SVHTMLContext *)context];
-        [parser release];
-    }
-    else if ( [[self bundle] objectForInfoDictionaryKey:@"KTTemplateName"] )
-    {
-        OBPRECONDITION(template); // we're defining a template in Info.plist but there isn't one there!
-    }	
 }
 
 - (NSString *)inlineGraphicClassName;

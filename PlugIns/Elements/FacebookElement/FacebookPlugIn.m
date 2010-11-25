@@ -39,7 +39,7 @@
 
 @implementation FacebookPlugIn
 
-- (void)writeInnerHTML:(id <SVPlugInContext>)context
+- (void)writeHTML:(id <SVPlugInContext>)context
 {
     [[context HTMLWriter] writeText:@"I like you."];
 }

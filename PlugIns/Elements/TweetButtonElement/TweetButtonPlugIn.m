@@ -106,7 +106,7 @@
 
 #pragma mark HTML Generation
 
-- (void)writeInnerHTML:(id <SVPlugInContext>)context
+- (void)writeHTML:(id <SVPlugInContext>)context
 {
     if ( [context liveDataFeeds] )
     {

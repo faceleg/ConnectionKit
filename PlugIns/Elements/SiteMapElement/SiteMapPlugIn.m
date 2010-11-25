@@ -188,7 +188,7 @@
     }
 }
 
-- (void)writeInnerHTML:(id <SVPlugInContext>)context
+- (void)writeHTML:(id <SVPlugInContext>)context
 {
 	id<SVPage> thisPage = (id<SVPage>)[context page];
     if ( thisPage ) // only generate a map if the context has a page
