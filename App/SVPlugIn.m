@@ -32,6 +32,7 @@
 
 @interface SVPlugIn ()
 @property(nonatomic, assign, readwrite) SVPlugInGraphic *container;
+- (NSBundle *)bundle;
 @end
 
 
