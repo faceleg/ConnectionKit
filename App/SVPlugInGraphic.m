@@ -362,7 +362,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (id <SVMedia>)thumbnailMedia;
 {
-    return ([[self plugIn] thumbnailURL] ? self : nil);
+    return nil;//return ([[self plugIn] thumbnailURL] ? self : nil);
 }
 
 - (CGFloat)thumbnailAspectRatio;
@@ -374,7 +374,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     return result;
 }
 
-- (NSURL *)mediaURL; { return [[self plugIn] thumbnailURL]; }
+- (NSURL *)mediaURL; { return nil; }//[[self plugIn] thumbnailURL]; }
 - (NSData *)mediaData; { return nil; }
 - (NSString *)preferredFilename; { return [[self mediaURL] ks_lastPathComponent]; }
 
