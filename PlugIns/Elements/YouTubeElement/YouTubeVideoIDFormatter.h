@@ -36,6 +36,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "Sandvox.h"
+#import "KSTrimFirstLineFormatter.h"
 
 
 @interface YouTubeVideoIDFormatter : KSTrimFirstLineFormatter { }

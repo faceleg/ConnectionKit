@@ -36,7 +36,7 @@
 #import "NSBundle+Sandvox.h"
 #import "NSURL+Sandvox.h"
 #import "SVLabel.h"
-#import "KSTrimFirstLineFormatter.h"        // TODO: Rename as SV…
+#import "SVFieldFormatter.h"
 #import "SVPasteboardItem.h"
 #import "SVWebLocation.h"
 #import "SVURLFormatter.h"

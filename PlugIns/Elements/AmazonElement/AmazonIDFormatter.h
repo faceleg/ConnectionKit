@@ -12,7 +12,7 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import <KSTrimFirstLineFormatter.h>
+#import "KSTrimFirstLineFormatter.h"
 
 
 @interface AmazonIDFormatter : KSTrimFirstLineFormatter

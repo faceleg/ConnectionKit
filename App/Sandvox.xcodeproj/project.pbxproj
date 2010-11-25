@@ -424,6 +424,8 @@
 		277586CB129E846B0027C7FF /* NSBundle+Sandvox.h in Headers */ = {isa = PBXBuildFile; fileRef = 277586C9129E846B0027C7FF /* NSBundle+Sandvox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		277586F2129E87F80027C7FF /* SVLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 277586F0129E87F80027C7FF /* SVLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		277586F3129E87F80027C7FF /* SVLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 277586F1129E87F80027C7FF /* SVLabel.m */; };
+		27758712129E8A740027C7FF /* SVFieldFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27758710129E8A740027C7FF /* SVFieldFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27758713129E8A740027C7FF /* SVFieldFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27758711129E8A740027C7FF /* SVFieldFormatter.m */; };
 		2775DB6C11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 2775DB6A11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h */; };
 		2775DB6D11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 2775DB6B11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m */; };
 		277892A010CD5FA3008AA683 /* SVTitleBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2778929E10CD5FA3008AA683 /* SVTitleBox.h */; };
@@ -958,7 +960,7 @@
 		CE01A7CB0EAFD63600BDF264 /* KSIsEqualValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6C70EAFD63600BDF264 /* KSIsEqualValueTransformer.m */; };
 		CE01A7CC0EAFD63600BDF264 /* KSRoundingValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6C80EAFD63600BDF264 /* KSRoundingValueTransformer.h */; };
 		CE01A7CD0EAFD63600BDF264 /* KSRoundingValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6C90EAFD63600BDF264 /* KSRoundingValueTransformer.m */; };
-		CE01A7CE0EAFD63600BDF264 /* KSTrimFirstLineFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6CA0EAFD63600BDF264 /* KSTrimFirstLineFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7CE0EAFD63600BDF264 /* KSTrimFirstLineFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6CA0EAFD63600BDF264 /* KSTrimFirstLineFormatter.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE01A7CF0EAFD63600BDF264 /* KSTrimFirstLineFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6CB0EAFD63600BDF264 /* KSTrimFirstLineFormatter.m */; };
 		CE01A7D00EAFD63600BDF264 /* KSUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6CC0EAFD63600BDF264 /* KSUtilities.h */; };
 		CE01A7D10EAFD63600BDF264 /* KSUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6CD0EAFD63600BDF264 /* KSUtilities.m */; };
@@ -1986,6 +1988,8 @@
 		277586C9129E846B0027C7FF /* NSBundle+Sandvox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Sandvox.h"; sourceTree = "<group>"; };
 		277586F0129E87F80027C7FF /* SVLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLabel.h; sourceTree = "<group>"; };
 		277586F1129E87F80027C7FF /* SVLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLabel.m; sourceTree = "<group>"; };
+		27758710129E8A740027C7FF /* SVFieldFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVFieldFormatter.h; sourceTree = "<group>"; };
+		27758711129E8A740027C7FF /* SVFieldFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFieldFormatter.m; sourceTree = "<group>"; };
 		2775DB6A11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCaseInsensitiveDictionary.h; sourceTree = "<group>"; };
 		2775DB6B11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSCaseInsensitiveDictionary.m; sourceTree = "<group>"; };
 		2778929E10CD5FA3008AA683 /* SVTitleBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTitleBox.h; sourceTree = "<group>"; };
@@ -3093,6 +3097,8 @@
 				277586C9129E846B0027C7FF /* NSBundle+Sandvox.h */,
 				277586F0129E87F80027C7FF /* SVLabel.h */,
 				277586F1129E87F80027C7FF /* SVLabel.m */,
+				27758710129E8A740027C7FF /* SVFieldFormatter.h */,
+				27758711129E8A740027C7FF /* SVFieldFormatter.m */,
 			);
 			name = "2.0 Plug-in System";
 			sourceTree = "<group>";
@@ -5864,6 +5870,7 @@
 				276C010C129C00F800568A73 /* DOMTreeWalker+Karelia.h in Headers */,
 				277586CB129E846B0027C7FF /* NSBundle+Sandvox.h in Headers */,
 				277586F2129E87F80027C7FF /* SVLabel.h in Headers */,
+				27758712129E8A740027C7FF /* SVFieldFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7376,6 +7383,7 @@
 				276C004F129BE40500568A73 /* SVGraphicContainerDOMController.m in Sources */,
 				276C010D129C00F800568A73 /* DOMTreeWalker+Karelia.m in Sources */,
 				277586F3129E87F80027C7FF /* SVLabel.m in Sources */,
+				27758713129E8A740027C7FF /* SVFieldFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
