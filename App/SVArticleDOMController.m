@@ -370,6 +370,8 @@
     // Insert copies into sidebar
     SVWebEditorHTMLContext *context = [self HTMLContext];
     SVSidebarPageletsController *sidebarController = [context sidebarPageletsController];
+    if (!sidebarController) return NSBeep();
+    
     SVWebEditorViewController *viewController = [self webEditorViewController]; OBASSERT(viewController);
     NSArrayController *graphicsController = [viewController graphicsController];
     
