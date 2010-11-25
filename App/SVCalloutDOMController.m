@@ -194,11 +194,6 @@
 
 #pragma mark Other
 
-- (NSString *)elementIdName;
-{
-    return [NSString stringWithFormat:@"callout-controller-%p", self];
-}
-
 - (SVCalloutDOMController *)calloutDOMController;
 {
     return self;
