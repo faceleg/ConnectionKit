@@ -122,7 +122,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
     NSDictionary *divAttrs = [NSDictionary dictionaryWithObject:@"" forKey:@"style"];
-    [[context HTMLWriter] startElement:@"div" attributes:divAttrs];
+    [context startElement:@"div" attributes:divAttrs];
     
     [context addDependencyForKeyPath:@"username" ofObject:self];
 
@@ -212,15 +212,15 @@ NSString *IMWantBorderKey = @"wantBorder";
                                                     range:NSMakeRange(0, [writeableHTMLCode length])];
         }
         
-        [[context HTMLWriter] writeHTMLString:writeableHTMLCode];
+        [context writeHTMLString:writeableHTMLCode];
     }
     else
     {
         NSString *noIDMessage = LocalizedStringInThisBundle(@"(Please set your ID using the object inspector)", @"");
-        [[context HTMLWriter] writeText:noIDMessage];
+        [context writeText:noIDMessage];
     }
 
-    [[context HTMLWriter] endElement]; // </div>
+    [context endElement]; // </div>
 }
 
 #pragma mark Properties

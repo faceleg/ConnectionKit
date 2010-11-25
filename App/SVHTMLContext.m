@@ -1049,8 +1049,6 @@
 
 #pragma mark SVPlugInContext
 
-- (id <SVHTMLWriter>)HTMLWriter; { return self; }
-
 - (id)objectForCurrentTemplateIteration;
 {
     SVHTMLTemplateParser *parser = [SVHTMLTemplateParser currentTemplateParser];

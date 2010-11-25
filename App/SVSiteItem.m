@@ -59,7 +59,7 @@
 
 - (void)writeTitle:(id <SVPlugInContext>)context;   // uses rich txt/html when available
 {
-    [[context HTMLWriter] writeText:[self title]];
+    [context writeText:[self title]];
 }
 
 #pragma mark Dates
@@ -386,8 +386,8 @@
                                                             @"width:%upx; height:%upx;",
                                                             width,
                                                             height]];
-    [[context HTMLWriter] startElement:@"div"];
-    [[context HTMLWriter] endElement];
+    [context startElement:@"div"];
+    [context endElement];
     
 }
 

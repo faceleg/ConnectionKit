@@ -35,7 +35,7 @@ typedef enum {
 @protocol SVGraphic, SVMedia, SVEnclosure;
 
 
-@interface SVHTMLContext : KSHTMLWriter <SVPlugInContext, SVHTMLWriter, KSMegaBufferedWriterDelegate>
+@interface SVHTMLContext : KSHTMLWriter <SVPlugInContext, KSMegaBufferedWriterDelegate>
 {
   @private
     KSStringWriter  *_output;

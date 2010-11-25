@@ -41,7 +41,7 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
-    [[context HTMLWriter] writeText:@"I like you."];
+    [context writeText:@"I like you."];
 }
 
 @end

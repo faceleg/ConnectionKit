@@ -97,25 +97,25 @@
     NSInteger writeMax = (self.max > 0) ? self.max : 4;
     NSString *host = (nil != [self.feedURL host]) ? [self.feedURL host] : @"example.com";
     
-    [[context HTMLWriter] startElement:@"ul"]; // <ul>
+    [context startElement:@"ul"]; // <ul>
     
     for ( NSInteger i = 1; i <= writeMax; i++ )
     {        
-        [[context HTMLWriter] startElement:@"li"]; // <li>
+        [context startElement:@"li"]; // <li>
         
         NSString *exampleLink = [NSString stringWithFormat:@"<a href=\"#\">%@ %@ %d</a>", host, exampleText, i];
-        [[context HTMLWriter] writeHTMLString:exampleLink];
+        [context writeHTMLString:exampleLink];
                 
         if ( self.summaryChars )
         {
-            [[context HTMLWriter] writeHTMLString:@"<br />"];
-            [[context HTMLWriter] writeText:itemText];
+            [context writeHTMLString:@"<br />"];
+            [context writeText:itemText];
         }
         
-        [[context HTMLWriter] endElement]; // </li>    
+        [context endElement]; // </li>    
     }
     
-    [[context HTMLWriter] endElement]; // </ul>    
+    [context endElement]; // </ul>    
 }
 
 -(BOOL)validateURL:(id *)ioValue error:(NSError **)outError

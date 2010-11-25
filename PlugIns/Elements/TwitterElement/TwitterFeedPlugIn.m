@@ -88,7 +88,7 @@
         if ( [context liveDataFeeds] )
         {
             // write a div with callback script
-            uniqueID = [[context HTMLWriter] startElement:@"div"
+            uniqueID = [context startElement:@"div"
                                           preferredIdName:@"twitter_div"
                                                 className:nil
                                                attributes:nil];
@@ -97,16 +97,16 @@
                                    @"text/javascript", @"type",
                                    callbackURL, @"src",
                                    nil];
-            [[context HTMLWriter] startElement:@"script" attributes:attrs];
-            [[context HTMLWriter] endElement]; // </script>
+            [context startElement:@"script" attributes:attrs];
+            [context endElement]; // </script>
             
-            [[context HTMLWriter] endElement]; // </div>
+            [context endElement]; // </div>
         }
         else
         {
-            [[context HTMLWriter] startElement:@"div" className:@"svx-placeholder"];
-            [[context HTMLWriter] writeText:LocalizedStringInThisBundle(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder")];
-            [[context HTMLWriter] endElement]; // </div>
+            [context startElement:@"div" className:@"svx-placeholder"];
+            [context writeText:LocalizedStringInThisBundle(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder")];
+            [context endElement]; // </div>
         }
         
         if ( [context isForPublishing] || [context isForEditing] )
@@ -117,16 +117,16 @@
     else if ( [context isForEditing] )
     {
         // write placeholder message to sign up for account
-        [[context HTMLWriter] startElement:@"div" className:@"svx-placeholder"];
-        [[context HTMLWriter] writeText:LocalizedStringInThisBundle(@"Please enter your Twitter username or ", "WebView prompt fragment")];
-        [[context HTMLWriter] startAnchorElementWithHref:@"https://twitter.com/signup"
+        [context startElement:@"div" className:@"svx-placeholder"];
+        [context writeText:LocalizedStringInThisBundle(@"Please enter your Twitter username or ", "WebView prompt fragment")];
+        [context startAnchorElementWithHref:@"https://twitter.com/signup"
                                                    title:LocalizedStringInThisBundle(@"Twitter Signup", "WebView link title") 
                                                   target:nil 
                                                      rel:nil];
-        [[context HTMLWriter] writeText:LocalizedStringInThisBundle(@"sign up", "WebView prompt fragment")];
-        [[context HTMLWriter] endElement]; // </a>
-        [[context HTMLWriter] writeText:LocalizedStringInThisBundle(@" for a Twitter account", "WebView prompt fragment")];
-        [[context HTMLWriter] endElement]; // </div>
+        [context writeText:LocalizedStringInThisBundle(@"sign up", "WebView prompt fragment")];
+        [context endElement]; // </a>
+        [context writeText:LocalizedStringInThisBundle(@" for a Twitter account", "WebView prompt fragment")];
+        [context endElement]; // </div>
     }
 }
 

@@ -99,21 +99,21 @@
                                 nil];
     // write iframe
     // width and height attrs are included by writer
-    [[context HTMLWriter] startElement:@"iframe"
+    [context startElement:@"iframe"
                       bindSizeToPlugIn:self
                             attributes:attributes];
 }
-- (void)endIFrameElement; { [[[SVPlugIn currentContext] HTMLWriter] endElement]; }
+- (void)endIFrameElement; { [[SVPlugIn currentContext] endElement]; }
 
 - (void)startPlaceholderElement
 {
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
                                                            forKey:@"class"];
-    [[[SVPlugIn currentContext] HTMLWriter] startElement:@"div" 
+    [[SVPlugIn currentContext] startElement:@"div" 
                                         bindSizeToPlugIn:self 
                                               attributes:attributes];
 }
-- (void)endPlaceholderElement; { [[[SVPlugIn currentContext] HTMLWriter] endElement]; }
+- (void)endPlaceholderElement; { [[SVPlugIn currentContext] endElement]; }
 
 
 #pragma mark Metrics

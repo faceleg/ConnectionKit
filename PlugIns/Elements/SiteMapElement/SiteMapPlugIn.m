@@ -106,9 +106,9 @@
     else
     {
         // emit href + title
-        [[context HTMLWriter] startAnchorElementWithPage:aPage];
+        [context startAnchorElementWithPage:aPage];
         [context writeTitleOfPage:aPage asPlainText:YES enclosingElement:@"span" attributes:nil];
-        [[context HTMLWriter] endElement];            
+        [context endElement];            
     }
 }
 
@@ -136,13 +136,13 @@
         }
         
         // if asSection emit <h3>, else emit <li>
-        [[context HTMLWriter] startElement:(asSection ? @"h3" : @"li") attributes:nil];
+        [context startElement:(asSection ? @"h3" : @"li") attributes:nil];
         
         // process aPage
         [self writeLinkOfPage:aPage toContext:context];
         
         // close h3
-		if ( asSection ) [[context HTMLWriter] endElement];
+		if ( asSection ) [context endElement];
 		
         // process children
 		if ( [children count] )
@@ -150,26 +150,26 @@
             if ( wantsCompact && [self canCompactChildren:children] )
             {
                 // show children inline , no recursion
-                [[context HTMLWriter] startElement:@"ul" attributes:nil];
-                [[context HTMLWriter] startElement:@"li" attributes:nil];
+                [context startElement:@"ul" attributes:nil];
+                [context startElement:@"li" attributes:nil];
                 
                 BOOL firstChild = YES;
                 for ( id<SVPage> child in children )
                 {
                     // on the 2nd pass, emit \n&middot;
-                    if ( !firstChild ) [[context HTMLWriter] writeHTMLString:@"\n&middot; "];
+                    if ( !firstChild ) [context writeHTMLString:@"\n&middot; "];
                     
                     firstChild = NO;                    
                     [self writeLinkOfPage:child toContext:context];
                 }
                 
-                [[context HTMLWriter] endElement]; // </li>
-                [[context HTMLWriter] endElement]; // </ul>
+                [context endElement]; // </li>
+                [context endElement]; // </ul>
             }
             else
             {
                 // a simple list of children, processed recursively
-                [[context HTMLWriter] startElement:@"ul" attributes:nil];
+                [context startElement:@"ul" attributes:nil];
                 
                 for ( id<SVPage> child in children )
                 {
@@ -179,12 +179,12 @@
                             wantsCompact:wantsCompact];
                 }
                 
-                [[context HTMLWriter] endElement]; // </ul>
+                [context endElement]; // </ul>
             }
         }
         
         // close li
-        if ( !asSection ) [[context HTMLWriter] endElement];
+        if ( !asSection ) [context endElement];
     }
 }
 
@@ -206,9 +206,9 @@
         {
             // Note: if site map IS home, it will still be shown regardless of show site map checkbox
             
-            [[context HTMLWriter] startElement:(self.sections ? @"h3" : @"p") attributes:nil];
+            [context startElement:(self.sections ? @"h3" : @"p") attributes:nil];
             [self writeLinkOfPage:rootPage toContext:context];
-            [[context HTMLWriter] endElement];
+            [context endElement];
             
             // observe root's observable keypaths
             id<NSFastEnumeration> keyPaths = [rootPage automaticRearrangementKeyPaths];
@@ -224,7 +224,7 @@
         NSArray *topLevelPages = [rootPage childPages];
         if ( topLevelPages.count > 0 )
         {
-            if ( !self.sections ) [[context HTMLWriter] startElement:@"ul" attributes:nil];
+            if ( !self.sections ) [context startElement:@"ul" attributes:nil];
             
             for ( id<SVPage> page in topLevelPages )
             {
@@ -234,7 +234,7 @@
                         wantsCompact:self.compact];
             }
             
-            if ( !self.sections ) [[context HTMLWriter] endElement];
+            if ( !self.sections ) [context endElement];
         }
     }
 }

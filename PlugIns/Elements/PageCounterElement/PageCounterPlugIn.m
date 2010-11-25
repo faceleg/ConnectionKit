@@ -223,7 +223,7 @@ NSString *PCSampleImageKey = @"sampleImage";
     // make it all happen
     //<div class="page_counter" style="text-align: center;" id="pc-[[=elementID]]">
     NSDictionary *attrs = [NSDictionary dictionaryWithObject:@"text-align: center;" forKey:@"style"];
-    self.divID = [[context HTMLWriter] startElement:@"div"
+    self.divID = [context startElement:@"div"
                                     preferredIdName:@"pc"
                                           className:@"page_counter"
                                          attributes:attrs];
@@ -231,7 +231,7 @@ NSString *PCSampleImageKey = @"sampleImage";
     [super writeHTML:context];
     
     // </div>
-    [[context HTMLWriter] endElement];
+    [context endElement];
 }
 
 

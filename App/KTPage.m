@@ -267,7 +267,7 @@
 
 - (void)writeTitle:(id <SVPlugInContext>)context;   // uses rich txt/html when available
 {
-    [[context HTMLWriter] writeHTMLString:[self titleHTMLString]];
+    [context writeHTMLString:[self titleHTMLString]];
 }
 
 #pragma mark Body

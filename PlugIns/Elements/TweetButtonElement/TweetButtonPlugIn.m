@@ -145,9 +145,9 @@
         }
         
         // write anchor
-        [[context HTMLWriter] startElement:@"a" attributes:attrs]; // <a>
-        [[context HTMLWriter] writeText:@"Tweet"];
-        [[context HTMLWriter] endElement]; // </a>
+        [context startElement:@"a" attributes:attrs]; // <a>
+        [context writeText:@"Tweet"];
+        [context endElement]; // </a>
         
         // write <script> to endBody
         //FIXME: #86407 expose endBodyMarkup or better way to add script to context in protocol
@@ -157,7 +157,7 @@
     {
         //FIXME: phrase this better for user
         NSString *noLiveFeeds = LocalizedStringInThisBundle(@"Tweet Button visible only when loading data from the Internet", "");
-        [[context HTMLWriter] writeText:noLiveFeeds];
+        [context writeText:noLiveFeeds];
     }
     
     // add dependencies

@@ -10,52 +10,46 @@
 
 
 @class SVPlugIn, SVInspectorViewController;
-@protocol SVHTMLWriter, SVPage;
-
-#pragma mark -
-
+@protocol SVPage;
 
 @protocol SVPlugInContext
 
-- (id <SVHTMLWriter>)HTMLWriter;
-
-// Call so Web Editor knows when to update
+#pragma mark Call so Web Editor knows when to update
 - (void)addDependencyForKeyPath:(NSString *)keyPath ofObject:(NSObject *)object;
 
-// element must not be nil. A <SPAN> is often a good choice
+
+#pragma mark element must not be nil. A <SPAN> is often a good choice
 - (void)writeTitleOfPage:(id <SVPage>)page asPlainText:(BOOL)plainText enclosingElement:(NSString *)element attributes:(NSDictionary *)attributes;
 
-// URLs
+
+#pragma mark URLs
 - (NSString *)relativeURLStringOfURL:(NSURL *)URL;
 
-// Resources & Design
+
+#pragma mark Resources & Design
 - (NSURL *)addResourceWithURL:(NSURL *)fileURL;
 - (void)addCSSString:(NSString *)css;
 - (void)addCSSWithURL:(NSURL *)cssURL;
 
-// Extra markup
+
+#pragma mark Extra markup
 - (NSMutableString *)extraHeaderMarkup;
 - (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
 
-// Purpose
+
+#pragma mark Purpose
 - (BOOL)isForEditing; // YES if HTML is intended to be edited directly in a Web Editor
 - (BOOL)isForQuickLookPreview;  // yeah, you get the idea
 - (BOOL)isForPublishing;
 - (BOOL)liveDataFeeds;  // When NO, you should write placeholders instead of loading from the web
 
-// State
+
+#pragma mark State
 - (id <SVPage>)page;
 
 - (NSString *)currentIterationCSSClassName;
 - (id)objectForCurrentTemplateIteration;
 
-@end
-
-
-#pragma mark -
-
-
-@protocol SVHTMLWriter
 
 #pragma mark Basics
 

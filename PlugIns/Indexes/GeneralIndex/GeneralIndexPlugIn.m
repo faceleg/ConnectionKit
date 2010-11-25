@@ -89,15 +89,15 @@
 - (void)writeIndexStart
 {
 	id<SVPlugInContext> context = [SVPlugIn currentContext]; 
-	id<SVHTMLWriter> writer = [context HTMLWriter];
+
 	switch(self.layoutType)
 	{
 		case kLayoutTable:
-			[writer startElement:@"table" attributes:[NSDictionary dictionaryWithObjectsAndKeys:
+			[context startElement:@"table" attributes:[NSDictionary dictionaryWithObjectsAndKeys:
 													   @"1", @"border", nil]];		// TEMPORARY BORDER
 			break;
 		case kLayoutList:
-			[writer startElement:@"ul"];
+			[context startElement:@"ul"];
 			break;
 		case kLayoutSections:
 			break;
@@ -107,14 +107,14 @@
 - (void)writeIndexEnd
 {
 	id<SVPlugInContext> context = [SVPlugIn currentContext]; 
-	id<SVHTMLWriter> writer = [context HTMLWriter];
+
 	switch(self.layoutType)
 	{
 		case kLayoutTable:
-			[writer endElement];
+			[context endElement];
 			break;
 		case kLayoutList:
-			[writer endElement];
+			[context endElement];
 			break;
 		case kLayoutSections:
 			break;
@@ -125,20 +125,19 @@
 - (void)writeInnards
 {
     id<SVPlugInContext> context = [SVPlugIn currentContext];
-	id<SVHTMLWriter> writer = [context HTMLWriter];
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
 	NSString *className = [context currentIterationCSSClassName];
 	
 	switch(self.layoutType)
 	{
 		case kLayoutTable:
-			[writer startElement:@"tr" className:className];
+			[context startElement:@"tr" className:className];
 			break;
 		case kLayoutList:
-			[writer startElement:@"li" className:className];
+			[context startElement:@"li" className:className];
 			break;
 		case kLayoutSections:
-			[writer startElement:@"div" className:className];
+			[context startElement:@"div" className:className];
 			break;
 	}
 	
@@ -147,35 +146,35 @@
 	{
 		if (self.showThumbnails)
 		{
-			[writer startElement:@"td" className:@"dli1"];
+			[context startElement:@"td" className:@"dli1"];
 			[self writeThumbnailImageOfIteratedPage];
-			[writer endElement];
+			[context endElement];
 		}
-		[writer startElement:@"td" className:@"dli2"];
-		[writer startElement:@"h3" className:@"index-title"];
+		[context startElement:@"td" className:@"dli2"];
+		[context startElement:@"h3" className:@"index-title"];
 		[self writeTitleOfIteratedPage];
-		[writer endElement];
-		[writer endElement];
+		[context endElement];
+		[context endElement];
 		
 		if (self.showEntries)
 		{
-			[writer startElement:@"td" className:@"dli3"];
+			[context startElement:@"td" className:@"dli3"];
 			[self writeSummaryOfIteratedPage];
-			[writer endElement];
+			[context endElement];
 		}
 		
 		if (self.showTimestamps)
 		{
-			[writer startElement:@"td" className:@"dli4"];
-			[writer writeText:iteratedPage.timestampDescription];
-			[writer endElement];
+			[context startElement:@"td" className:@"dli4"];
+			[context writeText:iteratedPage.timestampDescription];
+			[context endElement];
 		}
 	}
 	else
 	{
-		[writer startElement:@"h3" className:@"index-title"];
+		[context startElement:@"h3" className:@"index-title"];
 		[self writeTitleOfIteratedPage];
-		[writer endElement];
+		[context endElement];
 
 		if (self.showThumbnails)
 		{
@@ -213,23 +212,22 @@
 	 
 	*/
 
-	[writer endElement];		// li, tr, or div
+	[context endElement];		// li, tr, or div
 }
 
 - (void)writeTitleOfIteratedPage;
 {
     id<SVPlugInContext> context = [SVPlugIn currentContext]; 
-	id<SVHTMLWriter> writer = [context HTMLWriter];
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
-    if ( self.hyperlinkTitles) { [writer startAnchorElementWithPage:iteratedPage]; } // <a>
+    if ( self.hyperlinkTitles) { [context startAnchorElementWithPage:iteratedPage]; } // <a>
     
     [context writeTitleOfPage:iteratedPage
                   asPlainText:NO
              enclosingElement:@"span"
                    attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
     
-    if ( self.hyperlinkTitles ) { [writer endElement]; } // </a> 
+    if ( self.hyperlinkTitles ) { [context endElement]; } // </a> 
 }
 
 
@@ -256,7 +254,6 @@
 - (void)writeThumbnailImageOfIteratedPage;
 {
     id<SVPlugInContext> context = [SVPlugIn currentContext]; 
-	id<SVHTMLWriter> writer = [context HTMLWriter];
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
     // Do a dry-run to see if there's actuall a thumbnail
@@ -266,7 +263,7 @@
                       imageClassName:nil
                               dryRun:YES])
     {
-        [writer startElement:@"div" className:@"article-thumbnail"];
+        [context startElement:@"div" className:@"article-thumbnail"];
         
         [iteratedPage writeThumbnail:context
                             maxWidth:64
@@ -274,7 +271,7 @@
                       imageClassName:nil
                               dryRun:NO];
         
-        [writer endElement];
+        [context endElement];
     }
 }
 

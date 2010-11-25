@@ -166,16 +166,16 @@
         {
             if ( ![self.indexablePagesOfCollection count] )
             {
-                [[context HTMLWriter] startElement:@"p"];
-                [[context HTMLWriter] writeText:NSLocalizedString(@"To see the Index, please add indexable pages to the collection.","add pages to collection")];
-                [[context HTMLWriter] endElement];
+                [context startElement:@"p"];
+                [context writeText:NSLocalizedString(@"To see the Index, please add indexable pages to the collection.","add pages to collection")];
+                [context endElement];
             }
         }
         else
         {
-            [[context HTMLWriter] startElement:@"p"];
-            [[context HTMLWriter] writeText:NSLocalizedString(@"Please specify the collection to index using the PlugIn Inspector.","set index collectionb")];
-            [[context HTMLWriter] endElement];
+            [context startElement:@"p"];
+            [context writeText:NSLocalizedString(@"Please specify the collection to index using the PlugIn Inspector.","set index collectionb")];
+            [context endElement];
         }
     }
 }

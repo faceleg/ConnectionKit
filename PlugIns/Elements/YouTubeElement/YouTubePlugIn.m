@@ -127,7 +127,7 @@
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"application/x-shockwave-flash"
                                                            forKey:@"type"];
-    [[context HTMLWriter] startElement:@"object"
+    [context startElement:@"object"
                       bindSizeToPlugIn:self
                             attributes:attributes];
 }
@@ -170,11 +170,11 @@
                                 @"transparent", @"wmode",
                                 nil];
     
-    [[context HTMLWriter] startElement:@"embed" bindSizeToPlugIn:self attributes:attributes];
-    [[context HTMLWriter] endElement];
+    [context startElement:@"embed" bindSizeToPlugIn:self attributes:attributes];
+    [context endElement];
 }
 
-- (void)endObjectElement; { [[[SVPlugIn currentContext] HTMLWriter] endElement]; }
+- (void)endObjectElement; { [[SVPlugIn currentContext] endElement]; }
 
 
 //<iframe title="YouTube video player" class="youtube-player" type="text/html" width="425" height="349" src="http://www.youtube.com/embed/R-mUh4MOuvk?rel=0" frameborder="0"></iframe>
@@ -197,10 +197,10 @@
                                 embed, @"src",
                                 @"0", @"frameborder",
                                 nil];
-    [[context HTMLWriter] startElement:@"iframe" 
+    [context startElement:@"iframe" 
                       bindSizeToPlugIn:self 
                             attributes:attributes];
-    [[context HTMLWriter] endElement]; // </iframe>
+    [context endElement]; // </iframe>
 }
 
 
@@ -214,25 +214,25 @@
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
                                                            forKey:@"class"];
-    [[context HTMLWriter] startElement:@"div" 
+    [context startElement:@"div" 
                       bindSizeToPlugIn:self 
                             attributes:attributes];
     
     NSString *message = LocalizedStringInThisBundle(@"This is a placeholder for the YouTube video at:", "Live data feeds are disabled");
-    [[context HTMLWriter] writeText:message];
+    [context writeText:message];
     
-    [[context HTMLWriter] startElement:@"p"];
-    [[context HTMLWriter] startAnchorElementWithHref:[self userVideoCode] 
+    [context startElement:@"p"];
+    [context startAnchorElementWithHref:[self userVideoCode] 
                                                title:[self userVideoCode] 
                                               target:nil 
                                                  rel:nil];
-    [[context HTMLWriter] endElement]; // </a>
-    [[context HTMLWriter] endElement]; // </p>
+    [context endElement]; // </a>
+    [context endElement]; // </p>
     
     message = LocalizedStringInThisBundle(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", "Live data feeds are disabled");
-    [[context HTMLWriter] writeText:message];
+    [context writeText:message];
     
-    [[context HTMLWriter] endElement]; // </div>
+    [context endElement]; // </div>
 }
 
 //<div class="svx-placeholder" style="width:[[=elementWidth]]px; height:[[=elementHeight]]px;">[['Sorry, but no YouTube video was found for the code you entered.]]</div>
@@ -243,12 +243,12 @@
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
                                                            forKey:@"class"];
-    [[context HTMLWriter] startElement:@"div" 
+    [context startElement:@"div" 
                       bindSizeToPlugIn:self 
                             attributes:attributes];
     NSString *message = LocalizedStringInThisBundle(@"Sorry, but no YouTube video was found for the code you entered.", "User entered an invalid YouTube code");
-    [[context HTMLWriter] writeText:message];
-    [[context HTMLWriter] endElement];
+    [context writeText:message];
+    [context endElement];
 }
 
 
@@ -260,12 +260,12 @@
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
                                                            forKey:@"class"];
-    [[context HTMLWriter] startElement:@"div" 
+    [context startElement:@"div" 
                       bindSizeToPlugIn:self 
                             attributes:attributes];
     NSString *message = LocalizedStringInThisBundle(@"Please use the Inspector to specify a YouTube video.", "No video code has been entered yet");
-    [[context HTMLWriter] writeText:message];
-    [[context HTMLWriter] endElement];    
+    [context writeText:message];
+    [context endElement];    
 }
 
 
