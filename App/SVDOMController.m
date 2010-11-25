@@ -77,7 +77,7 @@
     return nil;
 }
 
-#pragma mark Content
+#pragma mark DOM Element Loading
 
 - (void)createHTMLElement
 {
@@ -110,19 +110,36 @@
 
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document;
 {
-    DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:[self elementIdName]];
-    
-    if (![[self representedObject] shouldPublishEditingElementID])
+    if ([self hasElementIdName])
     {
-        // Ideally, as we're clearing out value from the DOM, should also stop referencing it ourselves. If an update occurs, the id should be regenerated. This isn't quite working yet though.
-        //[self setElementIdName:nil];
-        [element setIdName:nil];
+        DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:[self elementIdName]];
+        
+        if (![[self representedObject] shouldPublishEditingElementID])
+        {
+            // Ideally, as we're clearing out value from the DOM, should also stop referencing it ourselves. If an update occurs, the id should be regenerated. This isn't quite working yet though.
+            //[self setElementIdName:nil];
+            [element setIdName:nil];
+        }
+        
+        [self setHTMLElement:element];
     }
-    
-    [self setHTMLElement:element];
 }
 
 @synthesize elementIdName = _elementID;
+- (NSString *)elementIdName;
+{
+    if (!_elementID)
+    {
+        _elementID = [[NSString alloc] initWithFormat:
+                      @"%@-%p",
+                      [self className],
+                      [self representedObject]];
+    }
+    
+    return _elementID;
+}
+
+- (BOOL)hasElementIdName; { return _elementID != nil; }
 
 @synthesize HTMLContext = _context;
 
