@@ -294,30 +294,31 @@
 	[context willWriteSummaryOfPage:self];
     [context startElement:@"div" className:@"article-summary"];
 
-	
-	
 	// do we have a custom summary? if so just write it
     if ( nil != [self customSummaryHTML] )
     {
         [context writeHTMLString:[self customSummaryHTML]];
     }
-    else if ( maxCount > 0 )
-    {
-        // take the normally generated HTML for the summary  
-        
-        // complete page markup would be:
-        NSString *markup = [[self article] string];
-        
-		NSString *truncated = [self truncateMarkup:markup truncation:maxCount truncationType:truncationType];
-
-        NSLog(@"truncated = %@", truncated);
-
-    }
     else
-    {
-        // no truncation, just process the complete, normal summary
+	{
+		NSAttributedString *html = nil;
+		
+		if ( maxCount > 0 )
+		{
+			// take the normally generated HTML for the summary  
+			
+			// complete page markup would be:
+			NSString *markup = [[self article] string];
+			
+			NSString *truncated = [self truncateMarkup:markup truncation:maxCount truncationType:truncationType];
 
-        NSAttributedString *html = [[self article] attributedHTMLString];
+			html = [[self article] attributedHTMLStringFromMarkup:truncated];
+		}
+		else
+		{
+			// no truncation, just process the complete, normal summary
+			html = [[self article] attributedHTMLString];
+		}
 		NSMutableAttributedString *summary = [html mutableCopy];
 		
 		NSMutableArray *attachments = [[NSMutableArray alloc] initWithCapacity:
@@ -362,7 +363,7 @@
 			}
 		}
 		
-        
+		
 		// Write it
 		[context writeAttributedHTMLString:summary];
 		
@@ -492,93 +493,108 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 {
 	NSString *result = markup;
 	
-	
-	// Truncate to the specified no. characters.
 	// This is tricky because we want to truncate to number of visible characters, not HTML characters.
-	// Also, this might leave us in the middle of an open tag.  
-// TODO: figure out how to truncate gracefully
-	if (maxCount && [result length] > maxCount)
+	// Also, this might leave us in the middle of an open tag. 
+	// TODO: figure out how to truncate gracefully
+	
+	if (maxCount)	// only do something if we want to actually truncate something
 	{
-//						result = [NSString stringWithFormat:@"%@%C", 
-//							[result substringToIndex:truncateCharacters], 0x2026];
-		
-		// NOTE: I STILL NEED TO TRUNCATE BY CHARACTERS, NOT BY MARKUP
-		// I could do it by making a doc of the whole thing, then scan through the XML doc for text, and 
-		// stop when I reach the Nth character.  Then dump the rest of the tree,
-		// then output the tree and XSLT remove the HTML, HEAD, BODY tags.
-		
-		// Now, tidy this HTML
-		NSError *theError = NULL;
-		NSXMLDocument *xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:result options:NSXMLDocumentTidyHTML error:&theError] autorelease];
-		NSArray *theNodes = [xmlDoc nodesForXPath:@"/html/body" error:&theError];
-		NSXMLNode *node = [theNodes lastObject];
-		NSXMLElement *theBody = [theNodes lastObject];
-		int accumulator = 0;
-		while (nil != node)
+		// Only want run through this if:
+		// 1. We are truncating something other than characters
+		// 2. We are truncating characters, and our maximum [character] count is shorter than the actual length we have.
+		if (truncationType != kTruncateCharactes || maxCount < [result length])
 		{
-			if ([node kind] == NSXMLTextKind)
+			//						result = [NSString stringWithFormat:@"%@%C", 
+			//							[result substringToIndex:truncateCharacters], 0x2026];
+			
+			// NOTE: I STILL NEED TO TRUNCATE BY CHARACTERS, NOT BY MARKUP
+			// I could do it by making a doc of the whole thing, then scan through the XML doc for text, and 
+			// stop when I reach the Nth character.  Then dump the rest of the tree,
+			// then output the tree and XSLT remove the HTML, HEAD, BODY tags.
+			
+			// Now, tidy this HTML
+			NSError *theError = NULL;
+			NSXMLDocument *xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:result options:NSXMLDocumentTidyHTML error:&theError] autorelease];
+			NSArray *theNodes = [xmlDoc nodesForXPath:@"/html/body" error:&theError];
+			NSXMLNode *node = [theNodes lastObject];		// working node we traverse
+			NSXMLElement *theBody = [theNodes lastObject];	// the body that we we will be truncating
+			int accumulator = 0;
+			while (nil != node)
 			{
-				NSString *thisString = [node stringValue];	// renders &amp; etc.
-				int thisLength = [thisString length];
-				unsigned int newAccumulator = accumulator + thisLength;
-				if (newAccumulator >= maxCount)	// will we need to prune?
+				if (truncationType != kTruncateParagraphs && NSXMLTextKind == [node kind])
 				{
-					int truncateIndex = maxCount - accumulator;
-					// Now back up just a few more characters if we can hit whitespace.
-					NSRange whereWhitespace = [thisString rangeOfCharacterFromSet:[NSCharacterSet fullWhitespaceAndNewlineCharacterSet]
-																		  options:NSBackwardsSearch
-																			range:NSMakeRange(0,truncateIndex)];
-					
+					NSString *thisString = [node stringValue];	// renders &amp; etc.
+					int thisLength = [thisString length];
+					unsigned int newAccumulator = accumulator + thisLength;
+					if (newAccumulator >= maxCount)	// will we need to prune?
+					{
+						int truncateIndex = maxCount - accumulator;
+						// Now back up just a few more characters if we can hit whitespace.
+						NSRange whereWhitespace = [thisString rangeOfCharacterFromSet:[NSCharacterSet fullWhitespaceAndNewlineCharacterSet]
+																			  options:NSBackwardsSearch
+																				range:NSMakeRange(0,truncateIndex)];
+						
 #define REASONABLE_WORD_LENGTH 15
-					/*
-					 Might be NSNotFound which means we want to truncate the whole thing?
-					 Perhaps if it's small.  If we have japanese with no spaces, I don't
-					 want to lose anything like that.  Maybe if the length > N and we
-					 couldn't truncate, don't trucate at all. 
-					 */
-					if (NSNotFound == whereWhitespace.location)
-					{
-						if (truncateIndex < REASONABLE_WORD_LENGTH)		truncateIndex = 0;	// remove this segment entirely
-						// else, just truncate at character; this might be no-space text.
-					}
-					else
-					{
-						// Would we truncate a whole bunch extra (meaning a long long word or few/no spaces text?
-						if (truncateIndex - whereWhitespace.location < REASONABLE_WORD_LENGTH)
+						/*
+						 Might be NSNotFound which means we want to truncate the whole thing?
+						 Perhaps if it's small.  If we have japanese with no spaces, I don't
+						 want to lose anything like that.  Maybe if the length > N and we
+						 couldn't truncate, don't trucate at all. 
+						 */
+						if (NSNotFound == whereWhitespace.location)
 						{
-							// only reset the truncate index if we won't chop off TOO much.
-							truncateIndex = whereWhitespace.location;
+							if (truncateIndex < REASONABLE_WORD_LENGTH)		truncateIndex = 0;	// remove this segment entirely
+							// else, just truncate at character; this might be no-space text.
+						}
+						else
+						{
+							// Would we truncate a whole bunch extra (meaning a long long word or few/no spaces text?
+							if (truncateIndex - whereWhitespace.location < REASONABLE_WORD_LENGTH)
+							{
+								// only reset the truncate index if we won't chop off TOO much.
+								truncateIndex = whereWhitespace.location;
+							}
+						}
+						NSString *truncd = [thisString substringToIndex:truncateIndex];
+						// Trucate, plus add on an ellipses
+						NSString *newString = [NSString stringWithFormat:@"%@%C", 
+											   truncd, 0x2026];
+						
+						[node setStringValue:newString];	// re-escapes &amp; etc.
+						
+						break;		// we will now remove everything after "node"
+					}
+					accumulator = newAccumulator;
+				}
+				else if (truncationType == kTruncateParagraphs && [node kind] == NSXMLElementKind)
+				{
+					NSXMLElement *theElement = (NSXMLElement *)node;
+					if ([@"p" isEqualToString:[theElement name]])
+					{
+						if (++accumulator >= maxCount)
+						{
+							break;	// we will now remove everything after "node"
 						}
 					}
-					NSString *truncd = [thisString substringToIndex:truncateIndex];
-					// Trucate, plus add on an ellipses
-					NSString *newString = [NSString stringWithFormat:@"%@%C", 
-						truncd, 0x2026];
-
-					[node setStringValue:newString];	// re-escapes &amp; etc.
-					
-					break;		// we will now remove everything after "node"
 				}
-				accumulator = newAccumulator;
+				node = [node nextNode];
 			}
-			node = [node nextNode];
-		}
-		
-		[theBody removeAllNodesAfter:(NSXMLElement *)node];
-
-		result = [theBody XMLStringWithOptions:NSXMLDocumentTidyXML];
-		// DON'T use NSXMLNodePreserveAll -- it converted " to ' and ' to &apos;  !!!
-							
-		NSRange rangeOfBodyStart = [result rangeOfString:@"<body>" options:0];
-		NSRange rangeOfBodyEnd   = [result rangeOfString:@"</body>" options:NSBackwardsSearch];
-		if (NSNotFound != rangeOfBodyStart.location && NSNotFound != rangeOfBodyEnd.location)
-		{
-			int sPos = NSMaxRange(rangeOfBodyStart);
-			int len  = rangeOfBodyEnd.location - sPos;
-			result = [result substringWithRange:NSMakeRange(sPos,len)];
-		}
+			
+			[theBody removeAllNodesAfter:(NSXMLElement *)node];
+			
+			result = [theBody XMLStringWithOptions:NSXMLDocumentTidyXML];
+			// DON'T use NSXMLNodePreserveAll -- it converted " to ' and ' to &apos;  !!!
+			
+			NSRange rangeOfBodyStart = [result rangeOfString:@"<body>" options:0];
+			NSRange rangeOfBodyEnd   = [result rangeOfString:@"</body>" options:NSBackwardsSearch];
+			if (NSNotFound != rangeOfBodyStart.location && NSNotFound != rangeOfBodyEnd.location)
+			{
+				int sPos = NSMaxRange(rangeOfBodyStart);
+				int len  = rangeOfBodyEnd.location - sPos;
+				result = [result substringWithRange:NSMakeRange(sPos,len)];
+			}
+		}	
 	}
-	
 	
 	return result;
 }
