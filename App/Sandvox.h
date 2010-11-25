@@ -35,7 +35,7 @@
 // Cocoa extensions
 #import "NSBundle+Sandvox.h"
 #import "NSURL+Sandvox.h"
-#import "KSLabel.h"                         // TODO: replace with SVLabel
+#import "SVLabel.h"
 #import "KSTrimFirstLineFormatter.h"        // TODO: Rename as SV…
 #import "SVPasteboardItem.h"
 #import "SVWebLocation.h"
