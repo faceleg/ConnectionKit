@@ -369,14 +369,24 @@
 {
     // Insert copies into sidebar
     SVWebEditorHTMLContext *context = [self HTMLContext];
+    
     SVSidebarPageletsController *sidebarController = [context sidebarPageletsController];
+    if (!sidebarController) // #96989
+    {
+        SVArticle *article = [self representedObject];
+        SVSidebar *sidebar = [[article page] sidebar];
+        sidebarController = [[[SVSidebarPageletsController alloc] initWithSidebar:sidebar] autorelease];
+    }
     if (!sidebarController) return NSBeep();
+    
     
     SVWebEditorViewController *viewController = [self webEditorViewController]; OBASSERT(viewController);
     NSArrayController *graphicsController = [viewController graphicsController];
     
+    
     NSArray *graphics = [graphicsController selectedObjects];
     NSMutableArray *sidebarPagelets = [[NSMutableArray alloc] initWithCapacity:[graphics count]];
+    
     
     for (SVGraphic *aGraphic in graphics)
     {
