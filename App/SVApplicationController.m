@@ -1106,6 +1106,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	if ([inParserClassName isEqualToString:@"IMBGarageBandParser"]) result = NO;		// can't process garage band files
 	if ([inParserClassName isEqualToString:@"IMBImageCaptureParser"]) result = NO;		// NOT READY FOR PRIME TIME YET.
 		
+	if ([inParserClassName isEqualToString:@"IMBFlickrParser"]) result = NO;		// NOT READY FOR PRIME TIME YET.
+	
 	LOG((@"iMediaBrowser: willUseMediaParser:%@ forMediaType:%@ -> %d", inParserClassName, inMediaType, result));
 	return result;
 }
