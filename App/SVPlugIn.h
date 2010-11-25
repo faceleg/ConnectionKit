@@ -127,10 +127,13 @@
 
 
 #pragma mark Pasteboard
+
 // Default is to refuse all items. You should study the location and return a KTSourcePriority to match
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
 + (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 - (BOOL)awakeFromPasteboardItems:(NSArray *)items;
+
+// Default is NO. If you override to return YES, when the user drags multiple items into a page, a single instance of your plug-in will be awoken from the handled items. (The usual behaviour would be to create one plug-in per item). This is great for plug-ins which have a list-like display.
 + (BOOL)supportsMultiplePasteboardItems;
 
 
