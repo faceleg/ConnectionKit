@@ -564,7 +564,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 #pragma mark Moving
 
-- (void)tryToMovePagelet:(SVGraphicDOMController *)pagelet downToPosition:(CGPoint)position;
+- (void)tryToMovePagelet:(SVDOMController *)pagelet downToPosition:(CGPoint)position;
 {
     NSArray *pagelets = [self pageletDOMControllers];
     NSUInteger index = [pagelets indexOfObjectIdenticalTo:pagelet]  + 1;
@@ -597,7 +597,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [pagelet moveToRelativePosition:CGPointMake(0.0f, position.y - startPosition.y)];
 }
 
-- (void)tryToMovePagelet:(SVGraphicDOMController *)pagelet upToPosition:(CGPoint)position;
+- (void)tryToMovePagelet:(SVDOMController *)pagelet upToPosition:(CGPoint)position;
 {
     NSArray *pagelets = [self pageletDOMControllers];
     NSUInteger index = [pagelets indexOfObjectIdenticalTo:pagelet];
