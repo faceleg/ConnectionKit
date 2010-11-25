@@ -35,6 +35,7 @@ typedef enum {
 
 #pragma mark Identifier
 @property(nonatomic, copy, readonly) NSString *uniqueID;
+@property(nonatomic, copy, readonly) NSString *identifier;
 + (SVSiteItem *)siteItemForPreviewPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)context;
 
 
