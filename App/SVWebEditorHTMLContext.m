@@ -163,6 +163,7 @@
 
 - (void)writeGraphic:(SVGraphic *)graphic;
 {
+    OBPRECONDITION(graphic);
     [self willWriteGraphic:graphic];
     
     
