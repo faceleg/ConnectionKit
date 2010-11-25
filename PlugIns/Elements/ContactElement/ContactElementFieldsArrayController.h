@@ -36,7 +36,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "SandvoxPlugin.h"
+#import "Sandvox.h"
 #import <DNDArrayController.h>
 
 

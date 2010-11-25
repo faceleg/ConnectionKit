@@ -8,7 +8,7 @@
 
 #import "AmazonIDFormatter.h"
 
-#import "SandvoxPlugin.h"
+#import "Sandvox.h"
 
 #import "NSURL+AmazonPagelet.h"
 

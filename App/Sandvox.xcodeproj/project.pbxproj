@@ -723,7 +723,7 @@
 		3C682BB10D62347400B4D485 /* NSObject+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BB00D62347400B4D485 /* NSObject+KTExtensions.m */; };
 		3C682BB50D62347E00B4D485 /* NSSet+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BB40D62347E00B4D485 /* NSSet+KTExtensions.m */; };
 		3C682BB90D62348A00B4D485 /* NSString+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BB80D62348A00B4D485 /* NSString+KTExtensions.m */; };
-		3C682BBA0D6234D200B4D485 /* SandvoxPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C682BBA0D6234D200B4D485 /* Sandvox.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C68250E0D622DEB00B4D485 /* Sandvox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BBD0D6234DB00B4D485 /* KTSite.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B100D622F1600B4D485 /* KTSite.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BBE0D6234E200B4D485 /* KTPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B1B0D622F5F00B4D485 /* KTPage.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BC40D6234F500B4D485 /* KTDataSourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B2D0D62300B00B4D485 /* KTDataSourceProtocol.h */; settings = {ATTRIBUTES = (); }; };
@@ -2324,7 +2324,7 @@
 		3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AmazonSupport.xcodeproj; path = ../../Shared/Code/AmazonSupport/AmazonSupport.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C5C0DB10BF820EA003594F8 /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = /usr/lib/libbz2.dylib; sourceTree = "<absolute>"; };
 		3C5C0DB30BF8213E003594F8 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
-		3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandvoxPlugin.h; sourceTree = "<group>"; };
+		3C68250E0D622DEB00B4D485 /* Sandvox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sandvox.h; sourceTree = "<group>"; };
 		3C682B100D622F1600B4D485 /* KTSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSite.h; sourceTree = "<group>"; };
 		3C682B110D622F1D00B4D485 /* KTSite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSite.m; sourceTree = "<group>"; };
 		3C682B130D622F2A00B4D485 /* KTPage+Accessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Accessors.m"; sourceTree = "<group>"; };
@@ -3063,7 +3063,7 @@
 				276AB408125F444C006FED25 /* SVPasteboardItem.h */,
 				2782914410912B30008D0A64 /* SVInspectorViewController.h */,
 				2782914510912B30008D0A64 /* SVInspectorViewController.m */,
-				3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */,
+				3C68250E0D622DEB00B4D485 /* Sandvox.h */,
 				272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */,
 				272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */,
 				272DA588108E6F42007A99D5 /* SVPlugIn.h */,
@@ -5509,7 +5509,7 @@
 				27F63BD40D463F7800FAEB48 /* KTMaster.h in Headers */,
 				272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */,
 				27ACACB60D588F64004732D0 /* KTPlaceholderBindingTextField.h in Headers */,
-				3C682BBA0D6234D200B4D485 /* SandvoxPlugin.h in Headers */,
+				3C682BBA0D6234D200B4D485 /* Sandvox.h in Headers */,
 				3C682BBD0D6234DB00B4D485 /* KTSite.h in Headers */,
 				3C682BBE0D6234E200B4D485 /* KTPage.h in Headers */,
 				3C682BC40D6234F500B4D485 /* KTDataSourceProtocol.h in Headers */,

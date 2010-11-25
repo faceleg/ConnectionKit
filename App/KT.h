@@ -18,7 +18,7 @@
 //
 
 // KT.h lists #defines, enums, and NSStrings that are used throughout Sandvox
-// they can only be #imported once, so they are kept separately from SandvoxPlugin.h
+// they can only be #imported once, so they are kept separately from Sandvox.h
 
 // Which comments provider (corresponds to pop-up tags in Info.nib)
 typedef enum {

@@ -7,7 +7,7 @@
 //
 
 #import "IMStatusImageURLProtocol.h"
-#import "SandvoxPlugin.h"
+#import "Sandvox.h"
 #import "NSURL+Sandvox.h"
 
 

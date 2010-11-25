@@ -9,7 +9,7 @@
 //	storage, and Inspector accessor methods.
 
 
-#import "SandvoxPlugin.h"
+#import "Sandvox.h"
 
 #import <AmazonSupport/AmazonSupport.h>
 

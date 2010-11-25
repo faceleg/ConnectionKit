@@ -8,7 +8,7 @@
 
 #import "AmazonListInspector.h"
 
-#import "SandvoxPlugin.h"
+#import "Sandvox.h"
 #import <AmazonSupport/AmazonSupport.h>
 
 #import "AmazonListPlugIn.h"

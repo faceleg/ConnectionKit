@@ -2,7 +2,7 @@
 //  Sandvox.h
 //  Sandvox
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2010 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -17,7 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-// SandvoxPlugin.h is a convenience header that imports all "public" headers in Sandvox
+// Sandvox.h is a convenience header that imports all "public" headers in Sandvox
 
 
 // Debugging

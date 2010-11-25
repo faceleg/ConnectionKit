@@ -10,7 +10,7 @@
 
 #import "AmazonIDFormatter.h"
 
-#import "SandvoxPlugin.h"
+#import "Sandvox.h"
 
 
 @interface NSURL (AmazonPageletPrivate)

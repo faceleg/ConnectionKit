@@ -8,7 +8,7 @@
 
 #import "DropShadowImageCell.h"
 
-#import "SandvoxPlugin.h"
+#import "Sandvox.h"
 
 
 @interface DropShadowImageCell ()

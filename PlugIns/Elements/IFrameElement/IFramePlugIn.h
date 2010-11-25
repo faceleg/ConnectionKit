@@ -34,7 +34,7 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "SandvoxPlugin.h"
+#import "Sandvox.h"
 
 @interface IFramePlugIn : SVPlugIn 
 {

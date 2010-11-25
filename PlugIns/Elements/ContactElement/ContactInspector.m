@@ -35,7 +35,7 @@
 //
 
 #import "ContactInspector.h"
-#import <SandvoxPlugin.h>
+#import <Sandvox.h>
 
 
 @implementation ContactInspector

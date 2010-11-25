@@ -35,7 +35,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SandvoxPlugin.h"
+#import "Sandvox.h"
 
 
 @interface SiteMapPlugIn : SVPlugIn
