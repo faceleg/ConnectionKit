@@ -197,7 +197,6 @@ typedef enum {
 
 
 #pragma mark Summary
-- (NSString *)summaryHTMLWithTruncation:(unsigned)truncation;
 
 
 #pragma mark Archive

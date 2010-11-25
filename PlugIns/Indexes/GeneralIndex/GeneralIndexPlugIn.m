@@ -242,7 +242,7 @@
 {
     id<SVPlugInContext> context = [SVPlugIn currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
-    [iteratedPage writeSummary:context truncation:self.truncateCount];
+    [iteratedPage writeSummary:context truncation:self.truncateCount truncationType:self.truncationType];
 }
 
 

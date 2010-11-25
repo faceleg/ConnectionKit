@@ -36,7 +36,6 @@
 
 #import "SandvoxPlugin.h"
 
-typedef enum { kTruncateCharactes, kTruncateWords, kTruncateParagraphs } IndexTruncationType;
 typedef enum { kLayoutList, kLayoutSections, kLayoutTable } IndexLayoutType;
 
 	
@@ -51,7 +50,7 @@ typedef enum { kLayoutList, kLayoutSections, kLayoutTable } IndexLayoutType;
     BOOL _shortTitles;
     BOOL _showPermaLinks;
     BOOL _showEntries;
-    IndexTruncationType _truncationType;
+    SVIndexTruncationType _truncationType;
     NSUInteger _truncateCount;
 }
 
@@ -63,7 +62,7 @@ typedef enum { kLayoutList, kLayoutSections, kLayoutTable } IndexLayoutType;
 @property  BOOL showThumbnails;
 @property  BOOL showTimestamps;
 @property  IndexLayoutType layoutType;
-@property  IndexTruncationType truncationType;
+@property  SVIndexTruncationType truncationType;
 @property  NSUInteger truncateCount;
 
 @end

@@ -494,7 +494,7 @@
 
 @dynamic customSummaryHTML;
 
-- (void)writeSummary:(id <SVPlugInContext>)context truncation:(NSUInteger)maxChars; { }
+- (void)writeSummary:(id <SVPlugInContext>)context truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType; { }
 
 #pragma mark UI
 

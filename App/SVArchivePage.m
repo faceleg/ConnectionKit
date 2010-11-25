@@ -56,7 +56,7 @@
 	return result;
 }
 
-- (void)writeSummary:(id <SVPlugInContext>)context truncation:(NSUInteger)maxChars; { }
+- (void)writeSummary:(id <SVPlugInContext>)context truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType; { }
 
 - (NSString *)language; { return [[self collection] language]; }
 

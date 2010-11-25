@@ -30,8 +30,9 @@
 #import "SVWebEditorHTMLContext.h"
 #import "KSStringHTMLEntityUnescaping.h"
 
-@interface KTPage (PathsPrivate)
+@interface KTPage (IndexesPrivate)
 - (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
+- (NSString *)truncateMarkup:(NSString *)markup truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType;
 @end
 
 
@@ -288,7 +289,7 @@
 
 #pragma mark Standard Summary
 
-- (void)writeSummary:(SVHTMLContext *)context truncation:(NSUInteger)maxChars;
+- (void)writeSummary:(SVHTMLContext *)context truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType;
 {
 	[context willWriteSummaryOfPage:self];
     [context startElement:@"div" className:@"article-summary"];
@@ -300,15 +301,16 @@
     {
         [context writeHTMLString:[self customSummaryHTML]];
     }
-    else if ( maxChars > 0 )
+    else if ( maxCount > 0 )
     {
         // take the normally generated HTML for the summary  
         
         // complete page markup would be:
         NSString *markup = [[self article] string];
         
-        
-        
+		NSString *truncated = [self truncateMarkup:markup truncation:maxCount truncationType:truncationType];
+
+        NSLog(@"truncated = %@", truncated);
 
     }
     else
@@ -485,31 +487,17 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 }
 */
 
-- (NSString *)preTruncationSummaryHTML
-{
-	// TODO: Handle collections
-	
-	NSString *result = @"";
-	
-	NSString *summaryHTMLKeyPath = [self summaryHTMLKeyPath];
-	if (summaryHTMLKeyPath)
-	{
-		result = [self valueForKeyPath:summaryHTMLKeyPath];
-	}
 
-	return result;
-}
-
-- (NSString *)summaryHTMLWithTruncation:(unsigned)truncation
+- (NSString *)truncateMarkup:(NSString *)markup truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType;
 {
-	NSString *result = [self preTruncationSummaryHTML];
+	NSString *result = markup;
 	
 	
 	// Truncate to the specified no. characters.
 	// This is tricky because we want to truncate to number of visible characters, not HTML characters.
 	// Also, this might leave us in the middle of an open tag.  
 // TODO: figure out how to truncate gracefully
-	if (truncation && [result length] > truncation)
+	if (maxCount && [result length] > maxCount)
 	{
 //						result = [NSString stringWithFormat:@"%@%C", 
 //							[result substringToIndex:truncateCharacters], 0x2026];
@@ -533,9 +521,9 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 				NSString *thisString = [node stringValue];	// renders &amp; etc.
 				int thisLength = [thisString length];
 				unsigned int newAccumulator = accumulator + thisLength;
-				if (newAccumulator >= truncation)	// will we need to prune?
+				if (newAccumulator >= maxCount)	// will we need to prune?
 				{
-					int truncateIndex = truncation - accumulator;
+					int truncateIndex = maxCount - accumulator;
 					// Now back up just a few more characters if we can hit whitespace.
 					NSRange whereWhitespace = [thisString rangeOfCharacterFromSet:[NSCharacterSet fullWhitespaceAndNewlineCharacterSet]
 																		  options:NSBackwardsSearch

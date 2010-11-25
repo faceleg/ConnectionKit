@@ -9,12 +9,13 @@
 #import <Cocoa/Cocoa.h>
 #import "SVPlugIn.h"
 
+typedef enum { kTruncateCharactes, kTruncateWords, kTruncateParagraphs } SVIndexTruncationType;
 
 @protocol SVPage <NSObject>
 
 #pragma mark Content
 - (NSString *)title;
-- (void)writeSummary:(id <SVPlugInContext>)context truncation:(NSUInteger)maxChars;
+- (void)writeSummary:(id <SVPlugInContext>)context truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType;
 
 
 #pragma mark Properties
