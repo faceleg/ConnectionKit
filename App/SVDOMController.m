@@ -594,6 +594,7 @@
     
     
     // Make the move
+    _moving = YES;
     
     DOMCSSStyleDeclaration *style = [[self relativePositionDOMElement] style];
     [style removeProperty:@"-webkit-transition-duration"];
@@ -735,7 +736,10 @@
     }
     
     // Turn off handles while moving
-    if ([[self enclosingGraphicDOMController] hasRelativePosition]) [result setEditing:YES];
+    if ([[self enclosingGraphicDOMController] hasRelativePosition]) 
+    {
+        [result setEditing:YES];
+    }
     
     return result;
 }
