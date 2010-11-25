@@ -20,45 +20,22 @@
 // Sandvox.h is a convenience header that imports all "public" headers in Sandvox
 
 
-// Debugging
-#import "assertions.h"  // TODO: private
-#import "Macros.h"      // TODO: private
-
 // Core
 #import "SVPlugIn.h"
 #import "SVPlugInContext.h"
-
-// Page composition
-#import "SVPageProtocol.h"
 
 // Indexes
 #import "SVIndexPlugIn.h"
 #import "SVIndexInspectorViewController.h"
 
-// Publishing
-
-// Foundation/AppKit subclasses
-#import "KSEmailAddressComboBox.h"          // TODO: private
-#import "KSLabel.h"                         // TODO: replace with SVLabel
-#import "KSPlaceholderTableView.h"          // TODO: private
-#import "KSTrimFirstLineFormatter.h"        // TODO: Rename as SV…
-#import "KSVerticallyAlignedTextCell.h"     // TODO: private
-#import "SVPasteboardItem.h"
-#import "SVWebLocation.h"
-#import "SVURLFormatter.h"
+// Page composition
+#import "SVPageProtocol.h"
 
 // Foundation extensions
 #import "NSBundle+Karelia.h"  // TODO: Publish -localizedStringForString:language:fallback: only
-#import "NSData+Karelia.h"      // TODO: private
 #import "NSURL+Sandvox.h"
-
-// AppKit extensions
-#import "NSColor+Karelia.h"     // TODO: project
-#import "NSImage+Karelia.h"     // TODO: private
-
-// Value Transformers
-#import "KSContainsObjectValueTransformer.h"    // TODO: project
-#import "KSIsEqualValueTransformer.h"           // TODO: private
-
-// Third Party
-#import "DNDArrayController.h"  // TODO: private
+#import "KSLabel.h"                         // TODO: replace with SVLabel
+#import "KSTrimFirstLineFormatter.h"        // TODO: Rename as SV…
+#import "SVPasteboardItem.h"
+#import "SVWebLocation.h"
+#import "SVURLFormatter.h"

@@ -35,7 +35,11 @@
 //
 
 #import "ContactInspector.h"
+
 #import <Sandvox.h>
+#import "KSEmailAddressComboBox.h"
+#import "KSIsEqualValueTransformer.h"
+#import "NSData+Karelia.h"
 
 
 @implementation ContactInspector

@@ -825,7 +825,7 @@
 		CE01A7360EAFD63600BDF264 /* KSCrashReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6310EAFD63600BDF264 /* KSCrashReporter.m */; };
 		CE01A7370EAFD63600BDF264 /* KSEdgeSnapWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6320EAFD63600BDF264 /* KSEdgeSnapWindow.h */; };
 		CE01A7380EAFD63600BDF264 /* KSEdgeSnapWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6330EAFD63600BDF264 /* KSEdgeSnapWindow.m */; };
-		CE01A7390EAFD63600BDF264 /* KSEmailAddressComboBox.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6340EAFD63600BDF264 /* KSEmailAddressComboBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7390EAFD63600BDF264 /* KSEmailAddressComboBox.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6340EAFD63600BDF264 /* KSEmailAddressComboBox.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE01A73A0EAFD63600BDF264 /* KSEmailAddressComboBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6350EAFD63600BDF264 /* KSEmailAddressComboBox.m */; };
 		CE01A73B0EAFD63600BDF264 /* KSExceptionReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6360EAFD63600BDF264 /* KSExceptionReporter.h */; };
 		CE01A73C0EAFD63600BDF264 /* KSExceptionReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6370EAFD63600BDF264 /* KSExceptionReporter.m */; };
@@ -856,7 +856,7 @@
 		CE01A7550EAFD63600BDF264 /* KSURLInfoField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6500EAFD63600BDF264 /* KSURLInfoField.m */; };
 		CE01A7580EAFD63600BDF264 /* KSPDFViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6530EAFD63600BDF264 /* KSPDFViewController.h */; };
 		CE01A7590EAFD63600BDF264 /* KSPDFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6540EAFD63600BDF264 /* KSPDFViewController.m */; };
-		CE01A75A0EAFD63600BDF264 /* KSPlaceholderTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6550EAFD63600BDF264 /* KSPlaceholderTableView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A75A0EAFD63600BDF264 /* KSPlaceholderTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6550EAFD63600BDF264 /* KSPlaceholderTableView.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE01A75B0EAFD63600BDF264 /* KSPlaceholderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6560EAFD63600BDF264 /* KSPlaceholderTableView.m */; };
 		CE01A75C0EAFD63600BDF264 /* KSPlaceholderTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6570EAFD63600BDF264 /* KSPlaceholderTextView.h */; };
 		CE01A75D0EAFD63600BDF264 /* KSPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6580EAFD63600BDF264 /* KSPlaceholderTextView.m */; };
@@ -888,7 +888,7 @@
 		CE01A77F0EAFD63600BDF264 /* KSTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A67A0EAFD63600BDF264 /* KSTextViewController.m */; };
 		CE01A7800EAFD63600BDF264 /* KSThreadProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A67B0EAFD63600BDF264 /* KSThreadProxy.h */; };
 		CE01A7810EAFD63600BDF264 /* KSThreadProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A67C0EAFD63600BDF264 /* KSThreadProxy.m */; };
-		CE01A7860EAFD63600BDF264 /* KSVerticallyAlignedTextCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6810EAFD63600BDF264 /* KSVerticallyAlignedTextCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7860EAFD63600BDF264 /* KSVerticallyAlignedTextCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6810EAFD63600BDF264 /* KSVerticallyAlignedTextCell.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE01A7870EAFD63600BDF264 /* KSVerticallyAlignedTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6820EAFD63600BDF264 /* KSVerticallyAlignedTextCell.m */; };
 		CE01A7880EAFD63600BDF264 /* KSViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6830EAFD63600BDF264 /* KSViewController.h */; };
 		CE01A7890EAFD63600BDF264 /* KSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6840EAFD63600BDF264 /* KSViewController.m */; };
@@ -908,7 +908,7 @@
 		CE01A79A0EAFD63600BDF264 /* NSBitmapImageRep+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6950EAFD63600BDF264 /* NSBitmapImageRep+Karelia.m */; };
 		CE01A79B0EAFD63600BDF264 /* NSBundle+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6960EAFD63600BDF264 /* NSBundle+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A79C0EAFD63600BDF264 /* NSBundle+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6970EAFD63600BDF264 /* NSBundle+Karelia.m */; };
-		CE01A79D0EAFD63600BDF264 /* NSColor+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6980EAFD63600BDF264 /* NSColor+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A79D0EAFD63600BDF264 /* NSColor+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6980EAFD63600BDF264 /* NSColor+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A79E0EAFD63600BDF264 /* NSColor+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6990EAFD63600BDF264 /* NSColor+Karelia.m */; };
 		CE01A79F0EAFD63600BDF264 /* NSError+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A69A0EAFD63600BDF264 /* NSError+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A7A00EAFD63600BDF264 /* NSError+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A69B0EAFD63600BDF264 /* NSError+Karelia.m */; };
@@ -918,7 +918,7 @@
 		CE01A7A40EAFD63600BDF264 /* NSHelpManager+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A69F0EAFD63600BDF264 /* NSHelpManager+Karelia.m */; };
 		CE01A7A50EAFD63600BDF264 /* NSHTTPCookieStorage+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6A00EAFD63600BDF264 /* NSHTTPCookieStorage+Karelia.h */; };
 		CE01A7A60EAFD63600BDF264 /* NSHTTPCookieStorage+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6A10EAFD63600BDF264 /* NSHTTPCookieStorage+Karelia.m */; };
-		CE01A7A70EAFD63600BDF264 /* NSImage+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6A20EAFD63600BDF264 /* NSImage+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7A70EAFD63600BDF264 /* NSImage+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6A20EAFD63600BDF264 /* NSImage+Karelia.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE01A7A80EAFD63600BDF264 /* NSImage+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6A30EAFD63600BDF264 /* NSImage+Karelia.m */; };
 		CE01A7A90EAFD63600BDF264 /* NSSortDescriptor+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6A40EAFD63600BDF264 /* NSSortDescriptor+Karelia.h */; };
 		CE01A7AA0EAFD63600BDF264 /* NSSortDescriptor+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6A50EAFD63600BDF264 /* NSSortDescriptor+Karelia.m */; };
@@ -949,9 +949,9 @@
 		CE01A7C30EAFD63600BDF264 /* ContainerIsNotEmptyTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6BF0EAFD63600BDF264 /* ContainerIsNotEmptyTransformer.m */; };
 		CE01A7C40EAFD63600BDF264 /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6C00EAFD63600BDF264 /* Debug.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A7C50EAFD63600BDF264 /* Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6C10EAFD63600BDF264 /* Debug.m */; };
-		CE01A7C80EAFD63600BDF264 /* KSContainsObjectValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6C40EAFD63600BDF264 /* KSContainsObjectValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7C80EAFD63600BDF264 /* KSContainsObjectValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6C40EAFD63600BDF264 /* KSContainsObjectValueTransformer.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A7C90EAFD63600BDF264 /* KSContainsObjectValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6C50EAFD63600BDF264 /* KSContainsObjectValueTransformer.m */; };
-		CE01A7CA0EAFD63600BDF264 /* KSIsEqualValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6C60EAFD63600BDF264 /* KSIsEqualValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7CA0EAFD63600BDF264 /* KSIsEqualValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6C60EAFD63600BDF264 /* KSIsEqualValueTransformer.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE01A7CB0EAFD63600BDF264 /* KSIsEqualValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6C70EAFD63600BDF264 /* KSIsEqualValueTransformer.m */; };
 		CE01A7CC0EAFD63600BDF264 /* KSRoundingValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6C80EAFD63600BDF264 /* KSRoundingValueTransformer.h */; };
 		CE01A7CD0EAFD63600BDF264 /* KSRoundingValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6C90EAFD63600BDF264 /* KSRoundingValueTransformer.m */; };
@@ -963,7 +963,7 @@
 		CE01A7D30EAFD63600BDF264 /* KSValidateCharFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6CF0EAFD63600BDF264 /* KSValidateCharFormatter.m */; };
 		CE01A7D80EAFD63600BDF264 /* NSCharacterSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6D40EAFD63600BDF264 /* NSCharacterSet+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A7D90EAFD63600BDF264 /* NSCharacterSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6D50EAFD63600BDF264 /* NSCharacterSet+Karelia.m */; };
-		CE01A7DA0EAFD63600BDF264 /* NSData+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6D60EAFD63600BDF264 /* NSData+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7DA0EAFD63600BDF264 /* NSData+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6D60EAFD63600BDF264 /* NSData+Karelia.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE01A7DB0EAFD63600BDF264 /* NSData+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6D70EAFD63600BDF264 /* NSData+Karelia.m */; };
 		CE01A7DC0EAFD63600BDF264 /* NSDate+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6D80EAFD63600BDF264 /* NSDate+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A7DD0EAFD63600BDF264 /* NSDate+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6D90EAFD63600BDF264 /* NSDate+Karelia.m */; };
@@ -1006,7 +1006,7 @@
 		CE01A80E0EAFD63600BDF264 /* AQDataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A70B0EAFD63600BDF264 /* AQDataExtensions.m */; };
 		CE01A80F0EAFD63600BDF264 /* BDAlias.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70C0EAFD63600BDF264 /* BDAlias.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A8100EAFD63600BDF264 /* BDAlias.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A70D0EAFD63600BDF264 /* BDAlias.m */; };
-		CE01A8110EAFD63600BDF264 /* DNDArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70E0EAFD63600BDF264 /* DNDArrayController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A8110EAFD63600BDF264 /* DNDArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70E0EAFD63600BDF264 /* DNDArrayController.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE01A8120EAFD63600BDF264 /* DNDArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A70F0EAFD63600BDF264 /* DNDArrayController.m */; };
 		CE01A8130EAFD63600BDF264 /* NSBezierPath_AMAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7100EAFD63600BDF264 /* NSBezierPath_AMAdditions.h */; };
 		CE01A8140EAFD63600BDF264 /* NSBezierPath_AMAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7110EAFD63600BDF264 /* NSBezierPath_AMAdditions.m */; };
@@ -1149,7 +1149,7 @@
 		CE5A77FE12135D770085C5EE /* player_flv_maxi.swf in Resources */ = {isa = PBXBuildFile; fileRef = CE5A77FD12135D770085C5EE /* player_flv_maxi.swf */; };
 		CE5B1CB811E54A37005E2C5E /* KTFeedbackReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5B1CB611E54A37005E2C5E /* KTFeedbackReporter.h */; };
 		CE5B1CB911E54A38005E2C5E /* KTFeedbackReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5B1CB711E54A37005E2C5E /* KTFeedbackReporter.m */; };
-		CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5E55FB0EAFE98100A3EDDA /* Macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5E55FB0EAFE98100A3EDDA /* Macros.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE6532591253B5C8003A9AA0 /* down.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE6532571253B5C8003A9AA0 /* down.gif */; };
 		CE65325A1253B5C8003A9AA0 /* right.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE6532581253B5C8003A9AA0 /* right.gif */; };
 		CE65643B1219DAC8006C5B0D /* KSSimpleURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */; };

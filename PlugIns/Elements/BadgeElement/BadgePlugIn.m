@@ -36,6 +36,8 @@
 
 #import "BadgePlugIn.h"
 
+#import "NSData+Karelia.h"
+
 
 static NSArray *sBadgeNames = nil;
 static NSArray *sAltStrings = nil;

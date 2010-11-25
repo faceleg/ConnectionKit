@@ -38,11 +38,11 @@
 #import "RSSBadgeInspector.h"
 #import "RSSBadgePlugIn.h"
 
+#import "KSIsEqualValueTransformer.h"
+
 
 @implementation RSSBadgeInspector
 
-
-#pragma mark -
 #pragma mark Initialization
 
 + (void)initialize

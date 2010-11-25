@@ -39,6 +39,8 @@
 
 #import "SiteMapPlugIn.h"
 
+#import "assertions.h"
+
 
 @implementation SiteMapPlugIn
 

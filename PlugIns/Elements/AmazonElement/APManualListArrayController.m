@@ -11,9 +11,10 @@
 #import "AmazonListPlugIn.h"
 #import "APManualListProduct.h"
 
-#import <AmazonSupport/AmazonSupport.h>
-
 #import "NSURL+AmazonPagelet.h"
+
+#import <AmazonSupport/AmazonSupport.h>
+#import "KSPlaceholderTableView.h"
 
 
 @implementation APManualListArrayController

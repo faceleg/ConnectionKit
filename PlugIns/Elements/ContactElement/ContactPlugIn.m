@@ -41,6 +41,7 @@
 #import "Sandvox.h"
 // defines CONTACT_PASSWORD, not supplied
 #import <ContactPassword.h>
+#import "NSData+Karelia.h"
 
 #include <openssl/blowfish.h>
 #include <zlib.h>

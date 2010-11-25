@@ -35,8 +35,8 @@
 //
 
 #import "FeedPlugIn.h"
-#import <SVURLFormatter.h>
-#import <SVWebLocation.h>
+
+#import "NSData+Karelia.h"
 
 
 //FIXME: is this still needed/valid?

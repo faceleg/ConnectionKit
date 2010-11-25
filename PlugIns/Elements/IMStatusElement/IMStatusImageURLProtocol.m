@@ -7,8 +7,9 @@
 //
 
 #import "IMStatusImageURLProtocol.h"
+
 #import "Sandvox.h"
-#import "NSURL+Sandvox.h"
+#import "NSImage+Karelia.h"
 
 
 @implementation IMStatusImageURLProtocol

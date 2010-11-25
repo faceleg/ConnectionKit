@@ -11,6 +11,8 @@
 #import "AmazonListProduct.h"
 #import "APManualListProduct.h"
 
+#import "KSVerticallyAlignedTextCell.h"
+
 
 @interface APProductAttributesCell ()
 

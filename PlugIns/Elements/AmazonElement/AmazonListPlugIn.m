@@ -10,11 +10,10 @@
 
 #import "APManualListProduct.h"
 #import "AmazonListInspector.h"
+#import "NSURL+AmazonPagelet.h"
 
 #import <AmazonSupport/AmazonSupport.h>
-
-
-#import "NSURL+AmazonPagelet.h"
+#import "KSIsEqualValueTransformer.h"
 
 
 NSString * const APDisplayTabIdentifier = @"display";
