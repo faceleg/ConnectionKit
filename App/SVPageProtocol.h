@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "SVPlugIn.h"
 
-typedef enum { kTruncateCharactes, kTruncateWords, kTruncateParagraphs } SVIndexTruncationType;
+typedef enum { kTruncateCharacters, kTruncateWords, kTruncateParagraphs } SVIndexTruncationType;
 
 @protocol SVPage <NSObject>
 

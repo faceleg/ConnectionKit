@@ -16,6 +16,7 @@
 #import "SVPagesController.h"
 #import "SVTextAttachment.h"
 
+#import "NSString+Karelia.h"
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
@@ -492,27 +493,15 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 - (NSString *)truncateMarkup:(NSString *)markup truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType;
 {
 	NSString *result = markup;
-	
-	// This is tricky because we want to truncate to number of visible characters, not HTML characters.
-	// Also, this might leave us in the middle of an open tag. 
-	// TODO: figure out how to truncate gracefully
-	
+		
 	if (maxCount)	// only do something if we want to actually truncate something
 	{
 		// Only want run through this if:
 		// 1. We are truncating something other than characters
 		// 2. We are truncating characters, and our maximum [character] count is shorter than the actual length we have.
-		if (truncationType != kTruncateCharactes || maxCount < [result length])
-		{
-			//						result = [NSString stringWithFormat:@"%@%C", 
-			//							[result substringToIndex:truncateCharacters], 0x2026];
-			
-			// NOTE: I STILL NEED TO TRUNCATE BY CHARACTERS, NOT BY MARKUP
-			// I could do it by making a doc of the whole thing, then scan through the XML doc for text, and 
-			// stop when I reach the Nth character.  Then dump the rest of the tree,
-			// then output the tree and XSLT remove the HTML, HEAD, BODY tags.
-			
-			// Now, tidy this HTML
+		if (truncationType != kTruncateCharacters || maxCount < [result length])
+		{			
+			// Turn Markup into a tidied XML document
 			NSError *theError = NULL;
 			NSXMLDocument *xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:result options:NSXMLDocumentTidyHTML error:&theError] autorelease];
 			NSArray *theNodes = [xmlDoc nodesForXPath:@"/html/body" error:&theError];
@@ -521,59 +510,59 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 			int accumulator = 0;
 			while (nil != node)
 			{
-				if (truncationType != kTruncateParagraphs && NSXMLTextKind == [node kind])
+				if (NSXMLTextKind == [node kind])
 				{
 					NSString *thisString = [node stringValue];	// renders &amp; etc.
-					int thisLength = [thisString length];
-					unsigned int newAccumulator = accumulator + thisLength;
-					if (newAccumulator >= maxCount)	// will we need to prune?
+					if (kTruncateCharacters == truncationType)
 					{
-						int truncateIndex = maxCount - accumulator;
-						// Now back up just a few more characters if we can hit whitespace.
-						NSRange whereWhitespace = [thisString rangeOfCharacterFromSet:[NSCharacterSet fullWhitespaceAndNewlineCharacterSet]
-																			  options:NSBackwardsSearch
-																				range:NSMakeRange(0,truncateIndex)];
-						
-#define REASONABLE_WORD_LENGTH 15
-						/*
-						 Might be NSNotFound which means we want to truncate the whole thing?
-						 Perhaps if it's small.  If we have japanese with no spaces, I don't
-						 want to lose anything like that.  Maybe if the length > N and we
-						 couldn't truncate, don't trucate at all. 
-						 */
-						if (NSNotFound == whereWhitespace.location)
+						int thisLength = [thisString length];
+						unsigned int newAccumulator = accumulator + thisLength;
+						if (newAccumulator >= maxCount)	// will we need to prune?
 						{
-							if (truncateIndex < REASONABLE_WORD_LENGTH)		truncateIndex = 0;	// remove this segment entirely
-							// else, just truncate at character; this might be no-space text.
+							int truncateIndex = maxCount - accumulator;
+							BOOL didSplitWord = NO;
+							NSString *truncd = [thisString smartSubstringWithMaxLength:truncateIndex didSplitWord:&didSplitWord];
+							
+							
+							// FIX THIS LOGIC... Really I want to insert the ellipsis after everything (or the final item).
+							// Otherwise if we end up with some rare case where we don't have a partial bit of text here,
+							// we will never see the ellipses.
+							
+							// Trucate, plus add on an ellipses.  (Space before ellipses if we didn't break a word up.)
+							NSString *theFormat = (didSplitWord ? @"%@%C" : @"%@ %C");
+							NSString *newString = [NSString stringWithFormat:theFormat,
+												   truncd, 0x2026];
+							
+							[node setStringValue:newString];	// re-escapes &amp; etc.
+							
+							break;		// we will now remove everything after "node"
 						}
-						else
-						{
-							// Would we truncate a whole bunch extra (meaning a long long word or few/no spaces text?
-							if (truncateIndex - whereWhitespace.location < REASONABLE_WORD_LENGTH)
-							{
-								// only reset the truncate index if we won't chop off TOO much.
-								truncateIndex = whereWhitespace.location;
-							}
-						}
-						NSString *truncd = [thisString substringToIndex:truncateIndex];
-						// Trucate, plus add on an ellipses
-						NSString *newString = [NSString stringWithFormat:@"%@%C", 
-											   truncd, 0x2026];
-						
-						[node setStringValue:newString];	// re-escapes &amp; etc.
-						
-						break;		// we will now remove everything after "node"
+						accumulator = newAccumulator;
 					}
-					accumulator = newAccumulator;
-				}
-				else if (truncationType == kTruncateParagraphs && [node kind] == NSXMLElementKind)
-				{
-					NSXMLElement *theElement = (NSXMLElement *)node;
-					if ([@"p" isEqualToString:[theElement name]])
+					else if (kTruncateCharacters == truncationType)
 					{
-						if (++accumulator >= maxCount)
+						// TODO: Scan through text, counting white-space breaks until we hit maximum, then truncate anything
+						// after that in the text, and break.
+						
+						
+						
+						
+						
+						
+						node = nil;		// PREVENT HANG FOR NOW
+					}
+				}
+				else if ([node kind] == NSXMLElementKind)
+				{
+					if (kTruncateParagraphs == truncationType)
+					{
+						NSXMLElement *theElement = (NSXMLElement *)node;
+						if ([@"p" isEqualToString:[theElement name]])
 						{
-							break;	// we will now remove everything after "node"
+							if (++accumulator >= maxCount)
+							{
+								break;	// we will now remove everything after "node"
+							}
 						}
 					}
 				}
