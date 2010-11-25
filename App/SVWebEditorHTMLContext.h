@@ -67,7 +67,7 @@
 #pragma mark Sidebar
 - (void)willBeginWritingSidebar:(SVSidebar *)sidebar; // call -didEndWritingGraphic after
 // The context may provide its own controller for sidebar pagelets (pre-sorted etc.) If so, please use it.
-- (NSArrayController *)cachedSidebarPageletsController;
+- (SVSidebarPageletsController *)cachedSidebarPageletsController;
 
 
 #pragma mark Current Item

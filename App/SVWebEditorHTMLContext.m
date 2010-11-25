@@ -49,6 +49,15 @@
     return self;
 }
 
+- (id)initWithOutputWriter:(id <KSWriter>)output inheritFromContext:(SVHTMLContext *)context;
+{
+    self = [super initWithOutputWriter:output inheritFromContext:context];
+    
+    [self setSidebarPageletsController:[context cachedSidebarPageletsController]];
+    
+    return self;
+}
+
 - (void)dealloc
 {
     [_sidebarPageletsController release];
@@ -442,7 +451,7 @@
 - (void)didEndWritingHTMLTextBlock; { }
 
 - (void)willBeginWritingSidebar:(SVSidebar *)sidebar; { }
-- (NSArrayController *)cachedSidebarPageletsController; { return nil; }
+- (SVSidebarPageletsController *)cachedSidebarPageletsController; { return nil; }
 
 - (WEKWebEditorItem *)currentDOMController; { return nil; }
 
