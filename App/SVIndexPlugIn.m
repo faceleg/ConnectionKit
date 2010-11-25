@@ -13,6 +13,11 @@
 #import "SVHTMLContext.h"
 
 
+@interface SVPlugIn (SVIndexPlugIn)
+- (id <SVPage>)pageWithIdentifier:(NSString *)identifier;
+@end
+
+
 @interface SVIndexPlugIn ()
 @property(nonatomic, retain) NSArrayController *indexablePagesController;
 @end
@@ -112,7 +117,7 @@
 {
     if ([key isEqualToString:@"indexedCollection"])
     {
-        return [[self indexedCollection] identifier];
+        return [[self indexedCollection] performSelector:@selector(identifier)];
     }
     else
     {
