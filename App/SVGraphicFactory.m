@@ -603,7 +603,7 @@ static SVGraphicFactory *sRawHTMLFactory;
             if (priority > minPriority)
             {
                 // Is this a different factory to the one set aside? If so, import items so far
-                if (factory && aFactory != factory)
+                if ([pendingItems count] && factory && aFactory != factory)
                 {
                     SVGraphic *graphic = [factory graphicWithPasteboardItems:pendingItems
                                               insertIntoManagedObjectContext:context];
