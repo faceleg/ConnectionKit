@@ -38,10 +38,7 @@
     // Use the object's own ID if it has one. Otherwise make up our own
     if (self = [self init])
     {
-        NSString *idName = [NSString stringWithFormat:@"%@-%p", [self className], content];
-		[self setElementIdName:idName];
-		
-    	[self setRepresentedObject:content];
+        [self setRepresentedObject:content];
     }
     return self;
 }
