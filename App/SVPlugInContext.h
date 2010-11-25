@@ -33,8 +33,8 @@
 
 
 #pragma mark Extra markup
-- (NSMutableString *)extraHeaderMarkup;
-- (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
+// If the same markup has already been added, goes ignored
+- (void)addMarkupToEndOfBody:(NSString *)markup;
 
 
 #pragma mark Purpose

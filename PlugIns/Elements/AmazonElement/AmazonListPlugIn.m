@@ -338,10 +338,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 		if (script)
 		{
 			// Only append the script if it's not already there (e.g. if there's > 1 element)
-            NSMutableString *ioString = [context endBodyMarkup];
-			if ([ioString rangeOfString:script].location == NSNotFound) {
-				[ioString appendString:script];
-			}
+            [context addMarkupToEndOfBody:script];
 		}
 	}
 }

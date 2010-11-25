@@ -144,12 +144,12 @@
                             @"}\n"
                             @"</script>\n",
                             uniqueID, uniqueID, linksFlag, timestampFlag];
-        [[context endBodyMarkup] appendString:script1];
+        [context addMarkupToEndOfBody:script1];
         
         NSString *script2 = [NSString stringWithFormat:
                              @"<script type=\"text/javascript\" src=\"http://twitter.com/statuses/user_timeline/%@.json?callback=twitterCallback%@&amp;count=%ld\">\n</script>\n",
                              self.username, uniqueID, self.count];
-        [[context endBodyMarkup] appendString:script2];
+        [context addMarkupToEndOfBody:script2];
     }
 }
 

@@ -219,6 +219,9 @@ typedef enum {
 
 #pragma mark Extra markup
 
+- (NSMutableString *)extraHeaderMarkup;
+- (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
+
 - (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should be inside the <head> element
 
 - (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>

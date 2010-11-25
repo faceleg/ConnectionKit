@@ -902,6 +902,14 @@
 
 #pragma mark Extra markup
 
+- (void)addMarkupToEndOfBody:(NSString *)markup;
+{
+    if ([[self endBodyMarkup] rangeOfString:markup].location == NSNotFound)
+    {
+        [[self endBodyMarkup] appendString:markup];
+    }
+}
+
 - (NSMutableString *)extraHeaderMarkup; // can append to, query, as you like while parsing
 {
     return _headerMarkup;
