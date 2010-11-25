@@ -249,21 +249,9 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [context setCurrentHeaderLevel:level];
 }
 
-// This was an experiment with including plug-in's classname up at the highest level, but that ruins sizing
-- (void)XbuildClassName:(SVHTMLContext *)context;
-{
-    [super buildClassName:context];
-    
-    if ([[self placement] intValue] == SVGraphicPlacementInline)
-    {
-        NSString *className = [[self plugIn] inlineGraphicClassName];
-        if (className) [context pushClassName:className];
-    }
-}
-
 - (NSString *)inlineGraphicClassName;
 {
-    return [[self plugIn] inlineGraphicClassName];
+    return [[self plugIn] valueForKey:@"inlineGraphicClassName"];
 }
 
 #pragma mark Metrics
