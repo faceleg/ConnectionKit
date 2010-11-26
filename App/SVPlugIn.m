@@ -332,7 +332,7 @@ static id <SVPlugInContext> sCurrentContext;
 
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard; { return nil; }
 
-+ (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item; { return KTSourcePriorityNone; }
++ (SVPasteboardPriority)priorityForPasteboardItem:(id <SVPasteboardItem>)item; { return SVPasteboardPriorityNone; }
 
 - (BOOL)awakeFromPasteboardItems:(NSArray *)items; { return NO; }
 

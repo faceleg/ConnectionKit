@@ -137,11 +137,11 @@
         {
             if ([[NSWorkspace sharedWorkspace] type:type conformsToType:aType])
             {
-                return KTSourcePriorityTypical;
+                return SVPasteboardPriorityTypical;
             }
         }
     }
-    return KTSourcePriorityNone;
+    return SVPasteboardPriorityNone;
 }
 
 @end
@@ -679,7 +679,7 @@ static SVGraphicFactory *sRawHTMLFactory;
     return result;
 }
 
-- (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item; { return KTSourcePriorityNone; }
+- (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item; { return SVPasteboardPriorityNone; }
 
 /*! returns unionSet of acceptedDragTypes from all known KTDataSources */
 + (NSArray *)graphicPasteboardTypes;
@@ -717,7 +717,7 @@ static SVGraphicFactory *sRawHTMLFactory;
 
 - (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type;
 {
-    return KTSourcePriorityIdeal;
+    return SVPasteboardPriorityIdeal;
 }
 
 @end

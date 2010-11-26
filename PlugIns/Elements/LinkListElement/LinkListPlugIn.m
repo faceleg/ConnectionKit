@@ -109,18 +109,18 @@
     return SVWebLocationGetReadablePasteboardTypes(pasteboard);
 }
 
-+ (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
++ (SVPasteboardPriority)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 {
     NSURL *URL = [item URL];
     if ( URL )
     {
         if ( [URL isFileURL ] )
         {
-            return KTSourcePriorityNone;
+            return SVPasteboardPriorityNone;
         }
         else
         {
-            return KTSourcePriorityReasonable;
+            return SVPasteboardPriorityReasonable;
         }
 
     }

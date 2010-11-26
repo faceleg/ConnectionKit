@@ -11,6 +11,18 @@
 #import "SVPasteboardItem.h"
 
 
+// Priority
+typedef enum { 
+	SVPasteboardPriorityNone = 0,				// Can't handle drag clipboard
+	SVPasteboardPriorityMinimum = 1,			// Bare minimum, for a generic file handler
+	SVPasteboardPriorityFallback = 10,			// Could handle it, but there are probably better handlers
+	SVPasteboardPriorityReasonable = 20,		// Reasonable handler, unless there's a better one
+	SVPasteboardPriorityTypical = 30,			// Relatively specialized handler
+	SVPasteboardPriorityIdeal = 40,				// More specialized, better equipped than lessers.
+	SVPasteboardPrioritySpecialized = 50		// Specialized for these data, e.g. Amazon Books URL
+} SVPasteboardPriority;
+
+
 @protocol SVPage, SVWebLocation;
 
 
@@ -126,9 +138,9 @@
 
 #pragma mark Pasteboard
 
-// Default is to refuse all items. You should study the location and return a KTSourcePriority to match
+// Default is to refuse all items. You should study the location and return a SVPasteboardPriority to match
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
-+ (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
++ (SVPasteboardPriority)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 - (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 
 // Default is NO. If you override to return YES, when the user drags multiple items into a page, a single instance of your plug-in will be awoken from the handled items. (The usual behaviour would be to create one plug-in per item). This is great for plug-ins which have a list-like display.
@@ -142,19 +154,3 @@
 
 
 @end
-
-
-#pragma mark -
-
-
-// Priority
-typedef enum { 
-	KTSourcePriorityNone = 0,				// Can't handle drag clipboard
-	KTSourcePriorityMinimum = 1,			// Bare minimum, for a generic file handler
-	KTSourcePriorityFallback = 10,			// Could handle it, but there are probably better handlers
-	KTSourcePriorityReasonable = 20,		// Reasonable handler, unless there's a better one
-	KTSourcePriorityTypical = 30,			// Relatively specialized handler
-	KTSourcePriorityIdeal = 40,				// More specialized, better equipped than lessers.
-	KTSourcePrioritySpecialized = 50		// Specialized for these data, e.g. Amazon Books URL
-} KTSourcePriority;
-

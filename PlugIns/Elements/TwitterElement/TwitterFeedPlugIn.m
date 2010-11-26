@@ -162,15 +162,15 @@
     return SVWebLocationGetReadablePasteboardTypes(pasteboard);
 }
 
-+ (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
++ (SVPasteboardPriority)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 {
     NSURL *URL = [item URL];
     if ( [URL twitterUsername] )
     {
-        return KTSourcePriorityIdeal;
+        return SVPasteboardPriorityIdeal;
     }
     
-	return KTSourcePriorityNone;
+	return SVPasteboardPriorityNone;
 }
 
 - (BOOL)awakeFromPasteboardItems:(NSArray *)items;

@@ -350,14 +350,14 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
     return SVWebLocationGetReadablePasteboardTypes(pasteboard);
 }
 
-+ (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item
++ (SVPasteboardPriority)priorityForPasteboardItem:(id <SVPasteboardItem>)item
 {
-    KTSourcePriority result = KTSourcePriorityNone;
+    SVPasteboardPriority result = SVPasteboardPriorityNone;
     
 	NSURL *URL = [item URL];
 	if ([URL amazonProductASIN])
 	{
-        result = KTSourcePriorityIdeal;
+        result = SVPasteboardPriorityIdeal;
 	}
 	
 	return result;

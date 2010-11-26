@@ -344,12 +344,12 @@
     return SVWebLocationGetReadablePasteboardTypes(pasteboard);
 }
 
-+ (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
++ (SVPasteboardPriority)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 {
     NSURL *URL = [item URL];
     if ( [URL youTubeVideoID] )
     {
-        return KTSourcePrioritySpecialized;
+        return SVPasteboardPrioritySpecialized;
     }
     return [super priorityForPasteboardItem:item];
 }

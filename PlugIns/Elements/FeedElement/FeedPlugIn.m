@@ -182,7 +182,7 @@
     return SVWebLocationGetReadablePasteboardTypes(pasteboard);
 }
 
-+ (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
++ (SVPasteboardPriority)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 {
     NSURL *URL = [item URL];
     if ( URL )
@@ -192,7 +192,7 @@
         NSString *scheme = [URL scheme];
         if ([scheme isEqualToString:@"feed"])
         {
-            return KTSourcePriorityIdeal;	// Yes, a feed URL is what we want
+            return SVPasteboardPriorityIdeal;	// Yes, a feed URL is what we want
         }
         
         //FIXME: what about https? waiting on answer from Dan (case?)
@@ -205,19 +205,19 @@
                 || [extension isEqualToString:@"rdf"]
                 || [extension isEqualToString:@"atom"])	// we support reading of atom, not generation.
             {
-                return KTSourcePriorityIdeal;
+                return SVPasteboardPriorityIdeal;
             }
             
             // some hostnames indicate this is likely a feed
             NSString *host = [URL host];
             if ( [host isEqualToString:@"feeds.feedburner.com"] )
             {
-                return KTSourcePriorityIdeal;
+                return SVPasteboardPriorityIdeal;
             }
         }
     }
     
-	return KTSourcePriorityNone;
+	return SVPasteboardPriorityNone;
 }
 
 - (BOOL)awakeFromPasteboardItems:(NSArray *)items;

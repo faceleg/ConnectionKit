@@ -540,7 +540,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     {
         SVGraphic *aGraphic = [SVGraphicFactory
                                graphicFromPasteboardItem:anItem
-                               minPriority:KTSourcePriorityReasonable   // don't want stuff like list of links
+                               minPriority:SVPasteboardPriorityReasonable   // don't want stuff like list of links
                                insertIntoManagedObjectContext:[self managedObjectContext]];
     
         if (aGraphic)
