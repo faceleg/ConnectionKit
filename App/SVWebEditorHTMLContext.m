@@ -183,11 +183,6 @@
     else
     {
         if ([[self calloutBuffer] isBuffering]) [[self calloutBuffer] flush];
-        
-        // Create controller for the graphic
-        SVDOMController *controller = [graphic newDOMController];
-        [self startDOMController:controller];
-        [controller release];
     }
     
     
@@ -198,6 +193,17 @@
     // Tidy up
     [self endDOMController];
     // if (callout) [self endDOMController];    // Don't do this, will end it lazily
+}
+
+- (void)writeGraphicIgnoringCallout:(id <SVGraphic, SVDOMControllerRepresentedObject>)graphic;
+{
+    // Create controller for the graphic
+    SVDOMController *controller = [graphic newDOMController];
+    [self startDOMController:controller];
+    [controller release];
+    
+    
+    [super writeGraphicIgnoringCallout:graphic];
 }
 
 - (void)writeGraphic:(SVGraphic *)graphic withDOMController:(SVGraphicDOMController *)controller;
@@ -236,16 +242,6 @@
 
         [self endDOMController];
     }
-}
-
-- (void)startCalloutForGraphic:(SVGraphic *)graphic;
-{
-    [super startCalloutForGraphic:graphic];
-    
-    // Time to make a controller for the graphic
-    SVDOMController *controller = [graphic newDOMController];
-    [self startDOMController:controller];
-    [controller release];
 }
 
 - (void)megaBufferedWriterWillFlush:(KSMegaBufferedWriter *)buffer;
