@@ -232,19 +232,20 @@
 {
     OBPRECONDITION(selector);
     
+    SVWebEditorViewController *viewController = [self webEditorViewController];
+    
+    
     // Ignore such preposterous claims if not even attached to an element yet
     if (![self HTMLElement] && [self hasElementIdName])
     {
         // But this could be because the Web Editor is mid reload. If so, do a full update (nasty, but best option available right now I think). #93345
-        SVWebEditorViewController *viewController = [self webEditorViewController];
         [viewController setNeedsUpdate];
         return;
     }
     
     
     // Try to get hold of the controller in charge of update coalescing
-	SVWebEditorViewController *controller = [self webEditorViewController];
-    if ([controller respondsToSelector:@selector(scheduleUpdate)])
+    if ([viewController respondsToSelector:@selector(scheduleUpdate)])
     {
         NSString *selectorString = NSStringFromSelector(selector);
         if (_updateSelectors)
@@ -256,7 +257,7 @@
             _updateSelectors = [[NSMutableSet alloc] initWithObjects:selectorString, nil];
         }
         
-        [controller performSelector:@selector(scheduleUpdate)];
+        [viewController performSelector:@selector(scheduleUpdate)];
     }
 }
 
