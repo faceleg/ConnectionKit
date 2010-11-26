@@ -109,12 +109,19 @@
 {
     if ([self hasElementIdName])
     {
-        DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:[self elementIdName]];
+        // Load the element
+        NSString *idName = [self elementIdName];
+        DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:idName];
+        
+        
+        // Load descendants since they might share the same element
+        [[self childWebEditorItems] makeObjectsPerformSelector:_cmd withObject:document];
+        
         
         if (![[self representedObject] shouldPublishEditingElementID])
         {
             // Ideally, as we're clearing out value from the DOM, should also stop referencing it ourselves. If an update occurs, the id should be regenerated. This isn't quite working yet though.
-            //[self setElementIdName:nil];
+            [self setElementIdName:nil];
             [element setIdName:nil];
         }
         
@@ -127,10 +134,18 @@
 {
     if (!_elementID)
     {
+        // No ID has been specified by HTML writer, so generate our own
         _elementID = [[NSString alloc] initWithFormat:
                       @"%@-%p",
                       [self className],
                       [self representedObject]];
+        
+        // Are we sharing the same HTML element as parent? If so, assign same ID to it
+        SVDOMController *parent = (id)[self parentWebEditorItem];
+        if (![parent hasElementIdName])
+        {
+            [parent setElementIdName:[self elementIdName]];
+        }
     }
     
     return _elementID;
