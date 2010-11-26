@@ -188,8 +188,6 @@
     [super writeGraphic:graphic];
     
     
-    // Tidy up
-    [self endDOMController];
     // if (callout) [self endDOMController];    // Don't do this, will end it lazily
 }
 
@@ -200,8 +198,10 @@
     [self startDOMController:controller];
     [controller release];
     
-    
     [super writeGraphicIgnoringCallout:graphic];
+    
+    // Tidy up
+    [self endDOMController];
 }
 
 - (void)writeGraphic:(SVGraphic *)graphic withDOMController:(SVGraphicDOMController *)controller;
@@ -214,8 +214,8 @@
     _currentDOMController = controller;
         
     
-    // Generate HTML
-    [self writeGraphicIgnoringCallout:graphic];
+    // Generate HTML. Call super so as not to generate another controller
+    [super writeGraphicIgnoringCallout:graphic];
     
     
     // Reset
