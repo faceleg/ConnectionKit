@@ -490,10 +490,54 @@
 
 #pragma mark Updating
 
+- (void)updateWithHTMLString:(NSString *)html items:(NSArray *)items oldChildItems:(NSArray *)oldChildren;
+{
+    // Update DOM
+    DOMDocument *doc = [[self HTMLElement] ownerDocument];
+    [[self HTMLElement] setOuterHTML:html];
+    
+    
+    // Re-use any existing graphic controllers when possible
+    for (WEKWebEditorItem *aController in items)
+    {
+        for (WEKWebEditorItem *aChildController in [aController childWebEditorItems])
+        {
+            NSObject *object = [aChildController representedObject];
+            if (object)
+            {
+                for (WEKWebEditorItem *anOldController in oldChildren)
+                {
+                    if ([anOldController representedObject] == object)
+                    {
+                        // Bring back the old element!
+                        [aChildController loadHTMLElementFromDocument:doc];
+                        DOMElement *element = [aChildController HTMLElement];
+                        [[element parentNode] replaceChild:[anOldController HTMLElement] oldChild:element];
+                        
+                        // Bring back the old controller!
+                        [aController replaceChildWebEditorItem:aChildController with:anOldController];
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    // Hook up new DOM Controllers
+    [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
+    for (SVDOMController *aController in items)
+    {
+        [aController didUpdateWithSelector:_cmd];
+    }
+}
+
 - (void)update;
 {
     // Tear down dependencies etc.
     [self removeAllDependencies];
+    
+    NSArray *oldChildren = [[self childWebEditorItems] copy];
     [self setChildWebEditorItems:nil];
     
     
@@ -521,22 +565,17 @@
     
     // Bring end body code into the html
     [context writeEndBodyString];
-    [context release];
     
     
-    // Update DOM
-    [[self HTMLElement] setOuterHTML:htmlString];
+    [self updateWithHTMLString:htmlString
+                         items:[[context rootDOMController] childWebEditorItems]
+                 oldChildItems:oldChildren];
+    
+    
+    // Tidy
     [htmlString release];
-    
-    
-    // Hook up new DOM Controller
-    NSArray *replacements = [[context rootDOMController] childWebEditorItems];
-    [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:replacements];
-    
-    for (SVDOMController *replacement in replacements)
-    {
-        [replacement didUpdateWithSelector:_cmd];
-    }
+    [context release];
+    [oldChildren release];
 }
 
 #pragma mark Moving
