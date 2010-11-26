@@ -287,7 +287,7 @@
         BOOL canResizeRight = (mask & kCALayerRightEdge);
         BOOL canResizeBottom = (mask & kCALayerBottomEdge);
         
-        if (canResizeTop || canResizeBottom || canResizeLeft || canResizeRight)
+        if (canResizeTop || canResizeBottom)
         {
             [self drawSelectionHandleAtPoint:NSMakePoint(minX, minY)
                                       inView:view
