@@ -414,8 +414,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
         
         if (itemIsSelected)
         {
-            // If you click an aready selected item quick enough, it will start editing
-            _mouseUpMayBeginEditing = [self ks_followsResponder:[[self window] firstResponder]];
+            // If you click an already selected item quick enough, it will start editing
+            _mouseUpMayBeginEditing = NO;
+            if ([self ks_followsResponder:[[self window] firstResponder]])
+            {
+                float interval = [event timestamp] - [_mouseDownEvent timestamp];
+                if (interval < 0.3) NSLog(@"Event seperation: %f", interval);
+                _mouseUpMayBeginEditing = YES;
+            }
         }
     }
 }
@@ -1464,10 +1470,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     
     
-    // Store the event for a bit (for draging, editing, etc.). Note that we're not interested in it while editing
-    [_mouseDownEvent release];
-    _mouseDownEvent = [event retain];
-    
     
     
     
@@ -1501,6 +1503,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 [self dragImageForEvent:event];
             }
         }
+        
+        
+        // Store the event for a bit (for draging, editing, etc.). Note that we're not interested in it while editing
+        [_mouseDownEvent release];
+        _mouseDownEvent = [event retain];
     }
     else
     {
@@ -1542,27 +1549,24 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
-- (void)mouseUp:(NSEvent *)mouseUpEvent
+- (void)mouseUp:(NSEvent *)theEvent
 {
     if (_mouseDownEvent)
     {
-        NSEvent *mouseDownEvent = [_mouseDownEvent retain];
-        [_mouseDownEvent release],  _mouseDownEvent = nil;
-        
         @try
         {
             // Should this go through to the WebView?
-            NSPoint location = [[self webView] convertPoint:[mouseUpEvent locationInWindow] fromView:nil];
+            NSPoint location = [[self webView] convertPoint:[theEvent locationInWindow] fromView:nil];
             
             WEKWebEditorItem *item = [self selectableItemAtPoint:location];
             if ([item allowsDirectAccessToWebViewWhenSelected])
             {
-                [self forwardMouseEvent:mouseUpEvent selector:_cmd cachedTargetView:nil];
+                [self forwardMouseEvent:theEvent selector:_cmd cachedTargetView:nil];
             }
             
                                       
             // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
-            if (_mouseUpMayBeginEditing && [mouseUpEvent timestamp] - [mouseDownEvent timestamp] < 0.5)
+            if (_mouseUpMayBeginEditing && [theEvent timestamp] - [_mouseDownEvent timestamp] < 0.5)
             {
                 // Is the item at that location supposed to be for editing?
                 // This is true if the clicked child item is either:
@@ -1616,15 +1620,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
                     
                     // Can't call -sendEvent: as that doesn't update -currentEvent.
                     // Post in reverse order since I'm placing onto the front of the queue
-                    [NSApp postEvent:[mouseUpEvent eventWithClickCount:1] atStart:YES];
-                    [NSApp postEvent:[mouseDownEvent eventWithClickCount:1] atStart:YES];
+                    [NSApp postEvent:[theEvent eventWithClickCount:1] atStart:YES];
+                    [NSApp postEvent:[_mouseDownEvent eventWithClickCount:1] atStart:YES];
                 }
             }
         }
         @finally
         {
             // Tidy up
-            [mouseDownEvent release];
             _mouseUpMayBeginEditing = NO;
         }
     }
