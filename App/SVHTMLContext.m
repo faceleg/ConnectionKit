@@ -945,9 +945,12 @@
     [self addDependencyOnObject:object keyPath:keyPath];
 }
 
-- (void)writeTitleOfPage:(id <SVPage>)page asPlainText:(BOOL)plainText enclosingElement:(NSString *)element attributes:(NSDictionary *)attributes;
+- (void)writeElement:(NSString *)elementName
+     withTitleOfPage:(id <SVPage>)page
+         asPlainText:(BOOL)plainText
+          attributes:(NSDictionary *)attributes;
 {
-    [self startElement:element attributes:attributes];
+    [self startElement:elementName attributes:attributes];
     
     if (plainText)
     {

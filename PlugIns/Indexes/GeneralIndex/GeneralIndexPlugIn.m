@@ -222,10 +222,10 @@
     
     if ( self.hyperlinkTitles) { [context startAnchorElementWithPage:iteratedPage]; } // <a>
     
-    [context writeTitleOfPage:iteratedPage
-                  asPlainText:NO
-             enclosingElement:@"span"
-                   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
+    [context writeElement:@"span"
+          withTitleOfPage:iteratedPage
+              asPlainText:NO
+               attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
     
     if ( self.hyperlinkTitles ) { [context endElement]; } // </a> 
 }

@@ -98,7 +98,10 @@
 #pragma mark Page Titles
 // element must not be nil. A <SPAN> is often a good choice
 // Because this is a -write… method (rather than -start…) it calls -endElement internally, so don't do so yourself
-- (void)writeTitleOfPage:(id <SVPage>)page asPlainText:(BOOL)plainText enclosingElement:(NSString *)elementName attributes:(NSDictionary *)attributes;
+- (void)writeElement:(NSString *)elementName
+     withTitleOfPage:(id <SVPage>)page
+         asPlainText:(BOOL)plainText
+          attributes:(NSDictionary *)attributes;
 
 
 #pragma mark Extra markup

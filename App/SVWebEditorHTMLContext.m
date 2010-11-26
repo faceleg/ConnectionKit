@@ -312,12 +312,15 @@
     [super didEndWritingHTMLTextBlock];
 }
 
-- (void)writeTitleOfPage:(id <SVPage>)page asPlainText:(BOOL)plainText enclosingElement:(NSString *)element attributes:(NSDictionary *)attributes;
+- (void)writeElement:(NSString *)elementName
+     withTitleOfPage:(id <SVPage>)page
+         asPlainText:(BOOL)plainText
+          attributes:(NSDictionary *)attributes;
 {
     // Create text-block
     SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
     [textBlock setEditable:NO];
-    [textBlock setTagName:element];
+    [textBlock setTagName:elementName];
     [textBlock setHTMLSourceObject:page];
     [textBlock setHTMLSourceKeyPath:@"title"];
     
@@ -326,7 +329,7 @@
     [self willBeginWritingHTMLTextBlock:textBlock];
     [textBlock release];
     
-    [super writeTitleOfPage:page asPlainText:plainText enclosingElement:element attributes:attributes];
+    [super writeElement:elementName withTitleOfPage:page asPlainText:plainText attributes:attributes];
 
     
     [self didEndWritingHTMLTextBlock];

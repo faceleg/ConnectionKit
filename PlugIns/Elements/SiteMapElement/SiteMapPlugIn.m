@@ -103,13 +103,13 @@
     if ( [aPage isEqual:[context page]] ) // not likely but maybe possible
     {
         // just emit title
-        [context writeTitleOfPage:aPage asPlainText:YES enclosingElement:@"span" attributes:nil];
+        [context writeElement:@"span" withTitleOfPage:aPage asPlainText:YES attributes:nil];
     }
     else
     {
         // emit href + title
         [context startAnchorElementWithPage:aPage];
-        [context writeTitleOfPage:aPage asPlainText:YES enclosingElement:@"span" attributes:nil];
+        [context writeElement:@"span" withTitleOfPage:aPage asPlainText:YES attributes:nil];
         [context endElement];            
     }
 }
