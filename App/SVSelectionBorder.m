@@ -317,16 +317,16 @@
             }
         }
         
-        if (!mask || NSHeight(frameRect) > 16.0f)
-        {
-            [self drawSelectionHandleAtPoint:NSMakePoint(minX, midY)
-                                      inView:view
-                                     enabled:canResizeLeft];
-            
-            [self drawSelectionHandleAtPoint:NSMakePoint(maxX, midY)
-                                      inView:view
-                                     enabled:canResizeRight];
-        }
+        // Want to draw side handles, unless height is adjustable and there isn't enough space
+        if ((canResizeTop || canResizeBottom) && NSHeight(frameRect) <= 16.0f) return;
+        
+        [self drawSelectionHandleAtPoint:NSMakePoint(minX, midY)
+                                  inView:view
+                                 enabled:canResizeLeft];
+        
+        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, midY)
+                                  inView:view
+                                 enabled:canResizeRight];
     }
 }
 
