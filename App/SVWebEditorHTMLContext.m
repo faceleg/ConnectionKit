@@ -117,7 +117,6 @@
     [_currentDOMController addChildWebEditorItem:controller];
     
     _currentDOMController = controller;
-    _needsToWriteElementID = YES;
 }
 
 - (void)endDOMController;
@@ -141,7 +140,6 @@
     // Fake it and don't insert into hierarchy
     SVDOMController *currentController = _currentDOMController;
     _currentDOMController = controller;
-    _needsToWriteElementID = YES;
     
     
     // Generate HTML
@@ -214,7 +212,6 @@
     // Fake it and don't insert into hierarchy
     SVDOMController *currentController = _currentDOMController;
     _currentDOMController = controller;
-    _needsToWriteElementID = YES;
         
     
     // Generate HTML
@@ -410,9 +407,8 @@
     [super pushAttribute:attribute value:value];
     
     // Was this an id attribute, removing our need to write one?
-    if (_needsToWriteElementID && [attribute isEqualToString:@"id"])
+    if (![[self currentDOMController] hasElementIdName] && [attribute isEqualToString:@"id"])
     {
-        _needsToWriteElementID = NO;
         [[self currentDOMController] setElementIdName:value];
     }
 }
@@ -421,10 +417,10 @@
 {
     // First write an id attribute if it's needed
     // DOM Controllers need an ID so they can locate their element in the DOM. If the HTML doesn't normally contain an ID, insert it ourselves
-    if (_needsToWriteElementID)
+    SVDOMController *controller = [self currentDOMController];
+    if (![controller hasElementIdName])
     {
         // Invent an ID for the controller if needed
-        SVDOMController *controller = [self currentDOMController];
         NSString *idName = [controller elementIdName];
         if (!idName)
         {
@@ -433,7 +429,7 @@
         }
         
         [self pushAttribute:@"id" value:idName];
-        OBASSERT(!_needsToWriteElementID);
+        OBASSERT([[self currentDOMController] hasElementIdName]);
     }
     
     [super startElement:elementName writeInline:writeInline];

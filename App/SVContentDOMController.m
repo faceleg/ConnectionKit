@@ -18,4 +18,7 @@
     [[self webEditorViewController] setNeedsUpdate];
 }
 
+// Never want to be hooked up
+- (NSString *) elementIdName; { return nil; }
+
 @end

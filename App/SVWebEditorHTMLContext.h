@@ -21,7 +21,6 @@
   @private
     SVContentDOMController  *_rootController;
     SVDOMController         *_currentDOMController;  // weak ref
-    BOOL                    _needsToWriteElementID;
     NSInteger               _openSizeBindingControllersCount;
         
     NSMutableSet    *_media;
