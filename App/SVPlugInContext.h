@@ -73,7 +73,7 @@
 
 #pragma mark Unique IDs
 // For when you need to guarantee the element's ID is unique within the document. Perfect for hooking up a javascript. Returns the best unique ID available
-- (NSString *)startElement:(NSString *)tagName
+- (NSString *)startElement:(NSString *)elementName
            preferredIdName:(NSString *)preferredID
                  className:(NSString *)className
                 attributes:(NSDictionary *)attributes;
@@ -98,7 +98,7 @@
 #pragma mark Page Titles
 // element must not be nil. A <SPAN> is often a good choice
 // Because this is a -write… method (rather than -start…) it calls -endElement internally, so don't do so yourself
-- (void)writeTitleOfPage:(id <SVPage>)page asPlainText:(BOOL)plainText enclosingElement:(NSString *)element attributes:(NSDictionary *)attributes;
+- (void)writeTitleOfPage:(id <SVPage>)page asPlainText:(BOOL)plainText enclosingElement:(NSString *)elementName attributes:(NSDictionary *)attributes;
 
 
 #pragma mark Extra markup
