@@ -635,7 +635,7 @@ const int kDesignThumbHeight = 65;
 - (NSSize)bannerSize
 {
 	int width = [[self pluginPropertyForKey:@"bannerWidth"] intValue];
-	int height = [[self pluginPropertyForKey:@"bannnerHeight"] intValue];
+	int height = [[self pluginPropertyForKey:@"bannerHeight"] intValue];
 	if (!width) width = 800;
 	if (!height) height = 200;
 	return NSMakeSize(width, height);
