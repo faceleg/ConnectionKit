@@ -221,8 +221,8 @@ static id <SVPlugInContext> sCurrentContext;
     [[self container] setHeight:height];
 }
 
-- (NSUInteger)minWidth; { return 200; }
-- (NSUInteger)minHeight; { return 1; }
+- (NSNumber *)minWidth; { return [NSNumber numberWithInt:200]; }
+- (NSNumber *)minHeight; { return [NSNumber numberWithInt:1]; }
 
 - (void)makeOriginalSize;
 {

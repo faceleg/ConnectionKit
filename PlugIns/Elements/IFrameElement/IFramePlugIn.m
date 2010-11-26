@@ -120,8 +120,8 @@
 
 + (BOOL)isExplicitlySized { return YES; }
 
-- (NSUInteger)minWidth { return 100; }
-- (NSUInteger)minHeight { return 100; }
+- (NSNumber *)minWidth { return [NSNumber numberWithInt:100]; }
+- (NSNumber *)minHeight { return [NSNumber numberWithInt:100]; }
 
 - (void)makeOriginalSize;
 {

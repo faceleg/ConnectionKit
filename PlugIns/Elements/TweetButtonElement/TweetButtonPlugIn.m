@@ -70,7 +70,7 @@
     }
     else 
     {
-        return [NSNumber numberWithUnsignedInteger:[self minWidth]];
+        return [self minWidth];
     }
 }
 
@@ -82,12 +82,12 @@
     }
     else 
     {
-        return [NSNumber numberWithUnsignedInteger:[self minHeight]];
+        return [self minHeight];
     }
 }
 
-- (NSUInteger)minWidth { return 55; }
-- (NSUInteger)minHeight { return 20; }
+- (NSNumber *)minWidth { return [NSNumber numberWithInt:55]; }
+- (NSNumber *)minHeight { return [NSNumber numberWithInt:20]; }
 
 
 #pragma mark Initialization

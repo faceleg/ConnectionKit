@@ -287,11 +287,6 @@
     return [NSNumber numberWithUnsignedInteger:result];
 }
 
-- (NSUInteger)minWidth
-{
-    return 200; // smallest that YouTube supports
-}
-
 - (NSNumber *)constrainedAspectRatio;
 {
     float result = (self.widescreen ? 16.0f/9.0f : 4.0f/3.0f);

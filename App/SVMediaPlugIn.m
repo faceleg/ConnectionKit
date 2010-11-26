@@ -97,8 +97,8 @@
     return result;
 }
 
-- (NSUInteger)minWidth; { return 1; }
-- (NSUInteger)minHeight; { return 1; }
+- (NSNumber *)minWidth; { return [NSNumber numberWithInt:1]; }
+// -minHeight is already 1
 
 - (NSNumber *)constrainedAspectRatio;
 {

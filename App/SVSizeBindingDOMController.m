@@ -145,7 +145,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     
     // If constrained proportions, apply that. Have to enforce min sizes too
     NSNumber *ratio = [graphic constrainedProportionsRatio];
-    NSUInteger minWidth = [[graphic plugIn] minWidth];
+    NSUInteger minWidth = [graphic minWidth];
         
     if (ratio)
     {
@@ -191,7 +191,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
             size.width = size.height * [ratio floatValue];
             
             // Is this too low? If so, bump size back up. #94988
-            NSUInteger minWidth = [[graphic plugIn] minWidth];
+            NSUInteger minWidth = [graphic minWidth];
             if (size.width < minWidth)
             {
                 size.width = minWidth;
