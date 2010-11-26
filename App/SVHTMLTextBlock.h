@@ -11,7 +11,7 @@
 #import "KTDocument.h"
 
 
-@class SVHTMLContext, SVDOMController;
+@class SVHTMLContext, SVDOMController, SVTextDOMController;
 
 
 @interface SVHTMLTextBlock : NSObject
@@ -83,3 +83,9 @@
 
 
 @end
+
+
+@interface NSObject (SVHTMLTextBlock)
+- (SVTextDOMController *)newTextDOMController;
+@end
+

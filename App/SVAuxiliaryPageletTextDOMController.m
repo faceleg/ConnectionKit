@@ -61,6 +61,11 @@
 
 - (SVDOMController *)newDOMController;
 {
+    return [[SVGraphicDOMController alloc] initWithRepresentedObject:self];
+}
+
+- (SVTextDOMController *)newTextDOMController;
+{
     SVTextDOMController *result = [[SVAuxiliaryPageletTextDOMController alloc] initWithRepresentedObject:self];
     [result setRichText:YES];
     

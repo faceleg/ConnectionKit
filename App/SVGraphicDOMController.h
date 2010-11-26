@@ -7,7 +7,10 @@
 //
 
 #import "SVDOMController.h"
+
+#import "SVAuxiliaryPageletText.h"
 #import "SVGraphic.h"
+
 #import "SVOffscreenWebViewController.h"
 
 
@@ -46,6 +49,9 @@
 // And provide a base implementation of the protocol:
 @interface SVGraphic (SVDOMController) <SVDOMControllerRepresentedObject>
 - (SVDOMController *)newBodyDOMController;
+@end
+
+@interface SVAuxiliaryPageletText (SVDOMController) <SVDOMControllerRepresentedObject>
 @end
 
 

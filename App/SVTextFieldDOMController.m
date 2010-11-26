@@ -381,7 +381,7 @@
 
 @implementation SVTitleBox (SVDOMController)
 
-- (SVDOMController *)newDOMController;
+- (SVTextDOMController *)newTextDOMController;
 {
     SVTextDOMController *result = [[SVTextFieldDOMController alloc] initWithRepresentedObject:self];
     [result setRichText:YES];

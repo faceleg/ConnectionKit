@@ -447,11 +447,11 @@
     // Use the right sort of text area
     id value = HTML_VALUE;
     
-    if ([value isKindOfClass:[SVContentObject class]])
+    if ([value respondsToSelector:@selector(newTextDOMController)])
     {
         // Copy basic properties from text block
-        SVDOMController *controller = [value newDOMController];
-        [(SVTextDOMController *)controller setTextBlock:self];
+        SVTextDOMController *controller = [value newTextDOMController];
+        [controller setTextBlock:self];
         return controller;
     }
     

@@ -1137,7 +1137,7 @@
 
 @implementation SVArticle (SVArticleDOMController)
 
-- (SVDOMController *)newDOMController;
+- (SVTextDOMController *)newTextDOMController;
 {
     SVTextDOMController *result = [[SVArticleDOMController alloc] initWithRepresentedObject:self];
     [result setRichText:YES];
