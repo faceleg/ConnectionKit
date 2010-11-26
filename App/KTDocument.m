@@ -291,8 +291,11 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Set the design
-        KTDesign *design = [[KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension] firstObjectKS];
-        [master setDesign:design];
+        NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
+		NSArray *newRangesOfGroups;
+		designs = [KTDesign reorganizeDesigns:designs familyRanges:&newRangesOfGroups];
+		
+        [master setDesign:[designs firstObjectKS]];
         
         
         // Set up root properties that used to come from document defaults
