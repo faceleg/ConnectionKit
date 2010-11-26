@@ -490,7 +490,7 @@
 
 #pragma mark Updating
 
-- (void)updateWithHTMLString:(NSString *)html items:(NSArray *)items oldChildItems:(NSArray *)oldChildren;
+- (void)updateWithHTMLString:(NSString *)html items:(NSArray *)items;
 {
     // Update DOM
     DOMDocument *doc = [[self HTMLElement] ownerDocument];
@@ -505,7 +505,7 @@
             NSObject *object = [aChildController representedObject];
             if (object)
             {
-                for (WEKWebEditorItem *anOldController in oldChildren)
+                for (WEKWebEditorItem *anOldController in [self childWebEditorItems])
                 {
                     if ([anOldController representedObject] == object)
                     {
@@ -537,9 +537,6 @@
     // Tear down dependencies etc.
     [self removeAllDependencies];
     
-    NSArray *oldChildren = [[self childWebEditorItems] copy];
-    [self setChildWebEditorItems:nil];
-    
     
     // Write HTML
     NSMutableString *htmlString = [[NSMutableString alloc] init];
@@ -568,14 +565,12 @@
     
     
     [self updateWithHTMLString:htmlString
-                         items:[[context rootDOMController] childWebEditorItems]
-                 oldChildItems:oldChildren];
+                         items:[[context rootDOMController] childWebEditorItems]];
     
     
     // Tidy
     [htmlString release];
     [context release];
-    [oldChildren release];
 }
 
 #pragma mark Moving
