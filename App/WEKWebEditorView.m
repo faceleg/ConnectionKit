@@ -279,8 +279,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [selection release];
     
     
-    // No longer need to display item
-    [_itemsToDisplay removeObjectIdenticalTo:item];
+    // No longer need to display item or descendants
+    for (WEKWebEditorItem *anItem in [self itemsToDisplay])
+    {
+        if ([anItem isDescendantOfWebEditorItem:item]) [_itemsToDisplay removeObjectIdenticalTo:anItem];
+    }
 }
 
 #pragma mark Text Selection
