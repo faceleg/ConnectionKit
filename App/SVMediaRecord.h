@@ -22,6 +22,8 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 @interface SVMediaRecord : NSManagedObject <SVDocumentFileWrapper>
 {
   @private
+    NSString    *_filename;
+    
     // Updating Files
     NSURL   *_destinationURL;
     BOOL    _moveWhenSaved;

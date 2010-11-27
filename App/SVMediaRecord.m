@@ -24,6 +24,8 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 @interface SVMediaRecord ()
 
+@property(nonatomic, copy) NSString *primitiveFilename;
+
 @property(nonatomic, retain, readwrite) SVMedia *media;
 @property(nonatomic, retain, readwrite) BDAlias *alias;
 
@@ -102,6 +104,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 - (void)dealloc
 {
+    [_filename release];
     [_media release];       _media = nil; // why set to nil?! Mike.
     [_nextObject release];	_nextObject = nil;
     
@@ -202,6 +205,16 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 #pragma mark Location Support
 
 @dynamic filename;
+
+@synthesize primitiveFilename = _filename;
+- (void)setPrimitiveFilename:(NSString *)filename;
+{
+    // Ignore any changes the context might want to make after filename has been fixed
+    if ([self primitiveFilename]) return;
+    
+    OBASSERT(!_filename);
+    _filename = [filename copy];
+}
 
 @dynamic shouldCopyFileIntoDocument;
 
@@ -410,7 +423,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 {
     // YES if we and all following linked objects are marked for deletion.
     // -isDeleted is good enough most of the time, but doesn't catch non-persistent objects marked for deletion (media records added by #62243)
-    BOOL result = [self isDeleted];// || ![self managedObjectContext];
+    BOOL result = [self isDeleted] || ![self managedObjectContext];
     if (result)
     {
         id <SVDocumentFileWrapper> next = [self nextObject];
