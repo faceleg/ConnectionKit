@@ -381,7 +381,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     if (updateFileURL && result)
     {
         [self forceUpdateFromURL:URL];
-        [self setFilename:[URL ks_lastPathComponent]];
+        if (![self filename]) [self setFilename:[URL ks_lastPathComponent]];
     }
     
     

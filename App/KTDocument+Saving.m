@@ -352,53 +352,51 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:requestName];
             NSArray *mediaToWriteIntoDocument = [context executeFetchRequest:request error:NULL];
             
-            // Disable undo as this belongs outside the regular stack
-            NSManagedObjectContext *context = [self managedObjectContext];
-            [context processPendingChanges];
-            [[self undoManager] disableUndoRegistration];
-            
             [self writeMediaRecords:mediaToWriteIntoDocument
                               toURL:inURL
                    forSaveOperation:saveOperation
                               error:NULL];
-                        
-            
-            // Tell deleted media what, if anything, to do. MUST happen after searching for new media. #72736
-            NSURL *deletedMediaDirectory = [[self undoManager] deletedMediaDirectory];
-            NSDictionary *wrappers = [self documentFileWrappers];
-            
-            for (NSString *aKey in wrappers)
+        }
+         
+        
+        // Tell deleted media what, if anything, to do. MUST happen after searching for new media. #72736
+        NSURL *deletedMediaDirectory = [[self undoManager] deletedMediaDirectory];
+        NSDictionary *wrappers = [self documentFileWrappers];
+        
+        for (NSString *aKey in wrappers)
+        {
+            id <SVDocumentFileWrapper> media = [wrappers objectForKey:aKey];
+            if ([media shouldRemoveFromDocument])
             {
-                id <SVDocumentFileWrapper> media = [wrappers objectForKey:aKey];
-                if ([media shouldRemoveFromDocument])
+                NSURL *oldURL = [media fileURL];
+                
+                NSURL *deletionURL = [deletedMediaDirectory ks_URLByAppendingPathComponent:aKey
+                                                                            isDirectory:NO];
+                
+                BOOL written = NO;
+                if (saveOperation != NSAutosaveOperation)
                 {
-                    NSURL *oldURL = [media fileURL];
-                    
-                    NSURL *deletionURL = [deletedMediaDirectory ks_URLByAppendingPathComponent:aKey
-                                                                                isDirectory:NO];
-                    
-                    BOOL written = [(SVMediaRecord *)media writeToURL:deletionURL
+                    written = [(SVMediaRecord *)media writeToURL:deletionURL
                                                         updateFileURL:YES
                                                                 error:NULL];
-                    
-                    if (written)
-                    {
-                        [filesToDelete addObject:oldURL];
-                    }
-                    else
-                    {
-                        // FIXME: Put in a placeholder media record so the file can be deleted in future
-                        [(SVMediaRecord *)media moveToURLWhenDeleted:deletionURL];
-                    }
+                }
+                
+                if (written)
+                {
+                    [filesToDelete addObject:oldURL];
+                }
+                else
+                {
+                    // FIXME: Put in a placeholder media record so the file can be deleted in future
+                    //[(SVMediaRecord *)media moveToURLWhenDeleted:deletionURL];
                 }
             }
-            
-            [context processPendingChanges];
-            [[self undoManager] enableUndoRegistration];
+        }
             
             
             
-            
+        if (saveOperation != NSAutosaveOperation)
+        {
             // Generate Quick Look preview HTML. Do this AFTER processing media so their URLs now point to a file inside the doc
             previewContext = [[SVQuickLookPreviewHTMLContext alloc] init];
             [previewContext setBaseURL:[KTDocument quickLookPreviewURLForDocumentURL:inURL]];
@@ -637,6 +635,12 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     BOOL result = YES;
     
     
+    // Disable undo as this belongs outside the regular stack
+    NSManagedObjectContext *context = [self managedObjectContext];
+    [context processPendingChanges];
+    [[self undoManager] disableUndoRegistration];
+    
+    
     // Process each file
     for (SVMediaRecord *aMediaRecord in media)
     {
@@ -646,6 +650,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                   error:outError];
     }
     
+    
+    [context processPendingChanges];
+    [[self undoManager] enableUndoRegistration];
     
     
     return result;
