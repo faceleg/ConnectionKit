@@ -335,6 +335,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
 	
 	SVHTMLContext *previewContext = nil;
+    NSMutableArray *filesToDelete = [[NSMutableArray alloc] init];
     
     if (result)
     {
@@ -351,6 +352,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:requestName];
             NSArray *mediaToWriteIntoDocument = [context executeFetchRequest:request error:NULL];
             
+            // Disable undo as this belongs outside the regular stack
+            NSManagedObjectContext *context = [self managedObjectContext];
+            [context processPendingChanges];
+            [[self undoManager] disableUndoRegistration];
+            
             [self writeMediaRecords:mediaToWriteIntoDocument
                               toURL:inURL
                    forSaveOperation:saveOperation
@@ -366,11 +372,31 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                 id <SVDocumentFileWrapper> media = [wrappers objectForKey:aKey];
                 if ([media shouldRemoveFromDocument])
                 {
+                    NSURL *oldURL = [media fileURL];
+                    
                     NSURL *deletionURL = [deletedMediaDirectory ks_URLByAppendingPathComponent:aKey
                                                                                 isDirectory:NO];
-                    [(SVMediaRecord *)media moveToURLWhenDeleted:deletionURL];
+                    
+                    BOOL written = [(SVMediaRecord *)media writeToURL:deletionURL
+                                                        updateFileURL:YES
+                                                                error:NULL];
+                    
+                    if (written)
+                    {
+                        [filesToDelete addObject:oldURL];
+                    }
+                    else
+                    {
+                        // FIXME: Put in a placeholder media record so the file can be deleted in future
+                        [(SVMediaRecord *)media moveToURLWhenDeleted:deletionURL];
+                    }
                 }
             }
+            
+            [context processPendingChanges];
+            [[self undoManager] enableUndoRegistration];
+            
+            
             
             
             // Generate Quick Look preview HTML. Do this AFTER processing media so their URLs now point to a file inside the doc
@@ -394,6 +420,18 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
 		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
     }
+    
+    
+    if (result)
+    {
+        // Delete files in package which are no longer needed
+        for (NSURL *aFile in filesToDelete)
+        {
+            // TODO: Log any errors
+            [[NSFileManager defaultManager] removeItemAtPath:[aFile path] error:NULL];
+        }
+    }
+    [filesToDelete release];
     
     
     if (saveOperation != NSAutosaveOperation && result)
@@ -599,12 +637,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     BOOL result = YES;
     
     
-    // Disable undo as this belongs outside the regular stack
-    NSManagedObjectContext *context = [self managedObjectContext];
-    [context processPendingChanges];
-    [[self undoManager] disableUndoRegistration];
-    
-    
     // Process each file
     for (SVMediaRecord *aMediaRecord in media)
     {
@@ -613,9 +645,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                        forSaveOperation:saveOp
                                   error:outError];
     }
-    
-    [context processPendingChanges];
-    [[self undoManager] enableUndoRegistration];
     
     
     
