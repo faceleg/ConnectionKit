@@ -6,6 +6,8 @@
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
+#import <CoreFoundation/CoreFoundation.h>
+
 #import "KTPage+Paths.h"
 
 #import "SVArticle.h"
@@ -515,8 +517,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 					NSString *thisString = [node stringValue];	// renders &amp; etc.
 					if (kTruncateCharacters == truncationType)
 					{
-						int thisLength = [thisString length];
-						unsigned int newAccumulator = accumulator + thisLength;
+						unsigned int newAccumulator = accumulator + [thisString length];
 						if (newAccumulator >= maxCount)	// will we need to prune?
 						{
 							int truncateIndex = maxCount - accumulator;
@@ -539,24 +540,39 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 						}
 						accumulator = newAccumulator;
 					}
-					else if (kTruncateCharacters == truncationType)
+					else if (kTruncateWords == truncationType)
 					{
-						// TODO: Scan through text, counting white-space breaks until we hit maximum, then truncate anything
-						// after that in the text, and break.
+						NSUInteger len = [thisString length];
+						CFStringTokenizerRef tokenRef
+							= CFStringTokenizerCreate (
+													   kCFAllocatorDefault,
+													   (CFStringRef)thisString,
+													   CFRangeMake(0,len),
+													   kCFStringTokenizerUnitWord,
+													   NULL	// Apparently locale is ignored anyhow when doing words?
+													   );
+						
+						CFStringTokenizerTokenType tokenType = kCFStringTokenizerTokenNone;
+						unsigned tokensFound = 0;
+						
+						while(kCFStringTokenizerTokenNone != (tokenType = CFStringTokenizerAdvanceToNextToken(tokenRef)) )
+						{
+							CFRange tokenRange = CFStringTokenizerGetCurrentTokenRange(tokenRef);
+							++tokensFound;
+						}
+						NSLog(@"%d words in '%@'", tokensFound, thisString);
+						
+						CFRelease(tokenRef);
 						
 						
-						
-						
-						
-						
-						node = nil;		// PREVENT HANG FOR NOW
 					}
 				}
 				else if ([node kind] == NSXMLElementKind)
 				{
+					NSXMLElement *theElement = (NSXMLElement *)node;
+					NSLog(@"----------------- <%@>      %@", [theElement name], theElement);
 					if (kTruncateParagraphs == truncationType)
 					{
-						NSXMLElement *theElement = (NSXMLElement *)node;
 						if ([@"p" isEqualToString:[theElement name]])
 						{
 							if (++accumulator >= maxCount)
@@ -564,6 +580,10 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 								break;	// we will now remove everything after "node"
 							}
 						}
+					}
+					else if (kTruncateWords == truncationType)
+					{
+						
 					}
 				}
 				node = [node nextNode];
