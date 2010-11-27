@@ -507,34 +507,28 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 			NSError *theError = NULL;
 			NSXMLDocument *xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:result options:NSXMLDocumentTidyHTML error:&theError] autorelease];
 			NSArray *theNodes = [xmlDoc nodesForXPath:@"/html/body" error:&theError];
-			NSXMLNode *node = [theNodes lastObject];		// working node we traverse
+			NSXMLNode *currentNode = [theNodes lastObject];		// working node we traverse
+			NSXMLNode *lastTextNode = nil;
 			NSXMLElement *theBody = [theNodes lastObject];	// the body that we we will be truncating
 			int accumulator = 0;
-			while (nil != node)
+			BOOL inlineTag = NO;	// for word scanning; if inline, we may count next text as part of previous
+			BOOL endedWithWhitespace = YES;	// for word scanning; if last word ends with whitespace, next token is a word.
+			BOOL didSplitWord = NO;	// for character scanning; this lets us know if a word was truncated midway.  Doesn't really work in cases like abso<i>lutely</i>
+			while (nil != currentNode)
 			{
-				if (NSXMLTextKind == [node kind])
+				if (NSXMLTextKind == [currentNode kind])
 				{
-					NSString *thisString = [node stringValue];	// renders &amp; etc.
+					NSString *thisString = [currentNode stringValue];	// renders &amp; etc.
 					if (kTruncateCharacters == truncationType)
 					{
+						lastTextNode = currentNode;		// when we are done, we will add ellipses
 						unsigned int newAccumulator = accumulator + [thisString length];
 						if (newAccumulator >= maxCount)	// will we need to prune?
 						{
 							int truncateIndex = maxCount - accumulator;
-							BOOL didSplitWord = NO;
 							NSString *truncd = [thisString smartSubstringWithMaxLength:truncateIndex didSplitWord:&didSplitWord];
 							
-							
-							// FIX THIS LOGIC... Really I want to insert the ellipsis after everything (or the final item).
-							// Otherwise if we end up with some rare case where we don't have a partial bit of text here,
-							// we will never see the ellipses.
-							
-							// Trucate, plus add on an ellipses.  (Space before ellipses if we didn't break a word up.)
-							NSString *theFormat = (didSplitWord ? @"%@%C" : @"%@ %C");
-							NSString *newString = [NSString stringWithFormat:theFormat,
-												   truncd, 0x2026];
-							
-							[node setStringValue:newString];	// re-escapes &amp; etc.
+							[currentNode setStringValue:truncd];	// re-escapes &amp; etc.
 							
 							break;		// we will now remove everything after "node"
 						}
@@ -553,24 +547,75 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 													   );
 						
 						CFStringTokenizerTokenType tokenType = kCFStringTokenizerTokenNone;
-						unsigned tokensFound = 0;
+						CFIndex lastWord = 0;
+						BOOL stopWordScan = NO;	// don't use break, since we want breaking out of outer loop
+						BOOL firstWord = YES;
 						
-						while(kCFStringTokenizerTokenNone != (tokenType = CFStringTokenizerAdvanceToNextToken(tokenRef)) )
+						while(!stopWordScan && 
+							  (kCFStringTokenizerTokenNone != (tokenType = CFStringTokenizerAdvanceToNextToken(tokenRef))) )
 						{
 							CFRange tokenRange = CFStringTokenizerGetCurrentTokenRange(tokenRef);
-							++tokensFound;
+							DJW((@"'%@' found at %d+%d", [thisString substringWithRange:NSMakeRange(tokenRange.location, tokenRange.length)], tokenRange.location, tokenRange.length));
+							if (firstWord)
+							{
+								firstWord = NO;
+								// Check for space BEFORE first word - we may need to increment previous counter.
+								if (tokenRange.location > 0 && accumulator >= maxCount)
+								{
+									stopWordScan = YES;
+									DJW((@"String starts with whitespace.  Early exit from word count, accumulator = %d", accumulator));
+								}
+								else if (inlineTag && !endedWithWhitespace && 0 == tokenRange.location)
+								{
+									DJW((@"#### Not incrementing accumulator (%d) since we are still inline.", accumulator));
+								}
+								else
+								{
+									++accumulator;
+									DJW((@"First word; ++accumulator = %d", accumulator));
+								}
+							}
+							else	// other words, just increment the accumulator
+							{
+								++accumulator;
+								DJW((@"++accumulator = %d", accumulator));
+							}
+	
+							if (!stopWordScan)	// don't increment if we early-exited above
+							{
+								lastWord = tokenRange.location + tokenRange.length;
+								lastTextNode = currentNode;		// If this is the last node we are scanning, we will add ellipses to this
+							}
+
+							if (accumulator >= maxCount)
+							{
+								stopWordScan = YES;
+								DJW((@"early exit from word count, accumulator = %d", accumulator));
+							}
 						}
-						NSLog(@"%d words in '%@'", tokensFound, thisString);
-						
 						CFRelease(tokenRef);
-						
-						
+						DJW((@"in '%@' max=%d len=%d", thisString, lastWord, len));
+						endedWithWhitespace = (lastWord < len);
+						if (accumulator >= maxCount)
+						{
+							if (lastWord < len)
+							{
+								NSString *partialString = [thisString substringToIndex:lastWord];
+								DJW((@"accumulator = %d; Truncating to '%@'", accumulator, partialString));
+								[currentNode setStringValue:partialString];	// re-escapes &amp; etc.
+								DJW((@"... and breaking from loop; we're done, since this is really truncating"));
+								break;		// exit outer loop, so we stop scanning
+							}
+							else
+							{
+								DJW((@"We are out of words, but not breaking here in case we hit inline to follow"));
+							}
+						}
 					}
 				}
-				else if ([node kind] == NSXMLElementKind)
+				else if ([currentNode kind] == NSXMLElementKind)
 				{
-					NSXMLElement *theElement = (NSXMLElement *)node;
-					NSLog(@"----------------- <%@>      %@", [theElement name], theElement);
+					NSXMLElement *theElement = (NSXMLElement *)currentNode;
 					if (kTruncateParagraphs == truncationType)
 					{
 						if ([@"p" isEqualToString:[theElement name]])
@@ -583,13 +628,40 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 					}
 					else if (kTruncateWords == truncationType)
 					{
-						
+						DJW((@"<%@>", [theElement name]));
+						static NSSet *sInlineTags = nil;
+						if (!sInlineTags)
+						{
+							// TODO: Unify with -[KSHTMLWriter canWriteElementInline]. Class method?
+							sInlineTags = [[NSSet alloc] initWithObjects:
+								@"a", @"b", @"i", @"br", @"em", @"img", @"sup", @"sub", @"big", @"span", @"font", @"small", @"strong", nil];
+						}
+						inlineTag = [sInlineTags containsObject:[theElement name]];
+						if (!inlineTag)
+						{
+							// Not an inline tag; see if we should just stop now.
+							DJW((@"Not an inline tag, so consider this a word break"));
+							if (accumulator >= maxCount)
+							{
+								DJW((@"accumulator = %d; at following non-inline tag, time to STOP", accumulator));
+								break;
+							}
+						}
 					}
 				}
-				node = [node nextNode];
+				currentNode = [currentNode nextNode];
 			}
 			
-			[theBody removeAllNodesAfter:(NSXMLElement *)node];
+			[theBody removeAllNodesAfter:(NSXMLElement *)currentNode];
+			if (lastTextNode)
+			{
+				// Trucate, plus add on an ellipses.  (Space before ellipses if we didn't break a word up.)
+				NSString *theFormat = (didSplitWord ? @"%@%C" : @"%@ %C");
+				NSString *lastNodeString = [lastTextNode stringValue];
+				NSString *newString = [NSString stringWithFormat:theFormat,
+									   lastNodeString, 0x2026];
+				[lastTextNode setStringValue:newString];
+			}
 			
 			result = [theBody XMLStringWithOptions:NSXMLDocumentTidyXML];
 			// DON'T use NSXMLNodePreserveAll -- it converted " to ' and ' to &apos;  !!!
