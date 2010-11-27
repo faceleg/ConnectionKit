@@ -283,6 +283,7 @@
 	if ([@"arrangedObjects" isEqualToString:aKeyPath])
 	{
 		[[self imageBrowser] reloadData];    // it appears that IKImageBrowserView does not automatically load when setting the data source
+		[self initializeExpandedState];
 	}
 }
 
