@@ -622,7 +622,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     NSUndoManager *undoManager = [self undoManager];
     [undoManager disableUndoRegistration];
     
-    
+    /*
     // Insert media records for any unknown files in the package. #62243
     NSArray *directoryContents = [[NSFileManager defaultManager]
                                   contentsOfDirectoryAtPath:[URL path] error:NULL];
@@ -648,7 +648,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
             [context deleteObject:record];
         }
     }
-    
+    */
     
     // Finish up
     [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
@@ -800,6 +800,18 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
             [filename isEqualToString:@"thumbs"])
         {
             result = NO;
+        }
+    }
+    
+    
+    // Finally, see if there's already an item on disk (such as .svn directory)
+    if (result)
+    {
+        NSURL *docURL = [self fileURL];
+        NSURL *url = [docURL ks_URLByAppendingPathComponent:filename isDirectory:NO];
+        if ([url isFileURL])
+        {
+            result = ![[NSFileManager defaultManager] fileExistsAtPath:[url path]];
         }
     }
     
