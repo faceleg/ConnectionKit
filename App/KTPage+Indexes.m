@@ -496,7 +496,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 {
 	NSString *result = markup;
 		
-	if (maxCount)	// only do something if we want to actually truncate something
+	if ((kTruncateNone != truncationType) && maxCount)	// only do something if we want to actually truncate something
 	{
 		// Only want run through this if:
 		// 1. We are truncating something other than characters
@@ -534,15 +534,22 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 						}
 						accumulator = newAccumulator;
 					}
-					else if (kTruncateWords == truncationType)
+					else if (kTruncateWords == truncationType || kTruncateSentences == truncationType)
 					{
+						// Note: Word truncation is not perfect. :-\  Ideally we would truncate after
+						// the last word, not truncate to include the last word.  Otherwise we lose
+						// punctuation, say, if the truncation happens to happen right after the end of a sentence.
+						// However, it's certainly good enough!
+						
 						NSUInteger len = [thisString length];
 						CFStringTokenizerRef tokenRef
 							= CFStringTokenizerCreate (
 													   kCFAllocatorDefault,
 													   (CFStringRef)thisString,
 													   CFRangeMake(0,len),
-													   kCFStringTokenizerUnitWord,
+													   (kTruncateWords == truncationType
+														? kCFStringTokenizerUnitWord
+													   : kCFStringTokenizerUnitSentence),
 													   NULL	// Apparently locale is ignored anyhow when doing words?
 													   );
 						
@@ -555,7 +562,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 							  (kCFStringTokenizerTokenNone != (tokenType = CFStringTokenizerAdvanceToNextToken(tokenRef))) )
 						{
 							CFRange tokenRange = CFStringTokenizerGetCurrentTokenRange(tokenRef);
-							DJW((@"'%@' found at %d+%d", [thisString substringWithRange:NSMakeRange(tokenRange.location, tokenRange.length)], tokenRange.location, tokenRange.length));
+							OFF((@"'%@' found at %d+%d", [thisString substringWithRange:NSMakeRange(tokenRange.location, tokenRange.length)], tokenRange.location, tokenRange.length));
 							if (firstWord)
 							{
 								firstWord = NO;
@@ -563,22 +570,22 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 								if (tokenRange.location > 0 && accumulator >= maxCount)
 								{
 									stopWordScan = YES;
-									DJW((@"String starts with whitespace.  Early exit from word count, accumulator = %d", accumulator));
+									OFF((@"String starts with whitespace.  Early exit from word count, accumulator = %d", accumulator));
 								}
 								else if (inlineTag && !endedWithWhitespace && 0 == tokenRange.location)
 								{
-									DJW((@"#### Not incrementing accumulator (%d) since we are still inline.", accumulator));
+									OFF((@"#### Not incrementing accumulator (%d) since we are still inline.", accumulator));
 								}
 								else
 								{
 									++accumulator;
-									DJW((@"First word; ++accumulator = %d", accumulator));
+									OFF((@"First word; ++accumulator = %d", accumulator));
 								}
 							}
 							else	// other words, just increment the accumulator
 							{
 								++accumulator;
-								DJW((@"++accumulator = %d", accumulator));
+								OFF((@"++accumulator = %d", accumulator));
 							}
 	
 							if (!stopWordScan)	// don't increment if we early-exited above
@@ -590,25 +597,25 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 							if (accumulator >= maxCount)
 							{
 								stopWordScan = YES;
-								DJW((@"early exit from word count, accumulator = %d", accumulator));
+								OFF((@"early exit from word count, accumulator = %d", accumulator));
 							}
 						}
 						CFRelease(tokenRef);
-						DJW((@"in '%@' max=%d len=%d", thisString, lastWord, len));
+						OFF((@"in '%@' max=%d len=%d", thisString, lastWord, len));
 						endedWithWhitespace = (lastWord < len);
 						if (accumulator >= maxCount)
 						{
 							if (lastWord < len)
 							{
 								NSString *partialString = [thisString substringToIndex:lastWord];
-								DJW((@"accumulator = %d; Truncating to '%@'", accumulator, partialString));
+								OFF((@"accumulator = %d; Truncating to '%@'", accumulator, partialString));
 								[currentNode setStringValue:partialString];	// re-escapes &amp; etc.
-								DJW((@"... and breaking from loop; we're done, since this is really truncating"));
+								OFF((@"... and breaking from loop; we're done, since this is really truncating"));
 								break;		// exit outer loop, so we stop scanning
 							}
 							else
 							{
-								DJW((@"We are out of words, but not breaking here in case we hit inline to follow"));
+								OFF((@"We are out of words, but not breaking here in case we hit inline to follow"));
 							}
 						}
 					}
@@ -626,9 +633,9 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 							}
 						}
 					}
-					else if (kTruncateWords == truncationType)
+					else if (kTruncateWords == truncationType || kTruncateSentences == truncationType)
 					{
-						DJW((@"<%@>", [theElement name]));
+						OFF((@"<%@>", [theElement name]));
 						static NSSet *sInlineTags = nil;
 						if (!sInlineTags)
 						{
@@ -640,10 +647,10 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 						if (!inlineTag)
 						{
 							// Not an inline tag; see if we should just stop now.
-							DJW((@"Not an inline tag, so consider this a word break"));
+							OFF((@"Not an inline tag, so consider this a word break"));
 							if (accumulator >= maxCount)
 							{
-								DJW((@"accumulator = %d; at following non-inline tag, time to STOP", accumulator));
+								OFF((@"accumulator = %d; at following non-inline tag, time to STOP", accumulator));
 								break;
 							}
 						}
@@ -652,8 +659,16 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 				currentNode = [currentNode nextNode];
 			}
 			
-			[theBody removeAllNodesAfter:(NSXMLElement *)currentNode];
-			if (lastTextNode)
+			BOOL removedAnything = [theBody removeAllNodesAfter:(NSXMLElement *)currentNode];
+			if (removedAnything)
+			{
+				OFF((@"Removed some stuff"));
+			}
+			else
+			{
+				OFF((@"Did NOT remove some stuff"));
+			}
+			if (lastTextNode && removedAnything)
 			{
 				// Trucate, plus add on an ellipses.  (Space before ellipses if we didn't break a word up.)
 				NSString *theFormat = (didSplitWord ? @"%@%C" : @"%@ %C");
