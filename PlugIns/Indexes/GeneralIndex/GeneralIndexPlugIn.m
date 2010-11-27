@@ -59,6 +59,7 @@
 						   @"showEntries",
 						   @"showThumbnails",
 						   @"showTimestamps",
+						   @"truncate",
 						   @"truncateCount",
 						   @"truncationType",
                            nil];    
@@ -84,6 +85,7 @@
 	[context addDependencyForKeyPath:@"showTimestamps"		ofObject:self];
 	[context addDependencyForKeyPath:@"truncateCount"		ofObject:self];
 	[context addDependencyForKeyPath:@"truncationType"		ofObject:self];
+	[context addDependencyForKeyPath:@"truncate"			ofObject:self];
 }
 
 - (void)writeIndexStart
@@ -240,7 +242,9 @@
 {
     id<SVPlugInContext> context = [SVPlugIn currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
-    [iteratedPage writeSummary:context truncation:self.truncateCount truncationType:self.truncationType];
+    [iteratedPage writeSummary:context
+					truncation:self.truncateCount
+				truncationType:(self.truncate ? self.truncationType : kTruncateNone)];
 }
 
 
@@ -288,6 +292,7 @@
 @synthesize showTimestamps = _showTimestamps;
 @synthesize truncateCount = _truncateCount;
 @synthesize truncationType = _truncationType;
+@synthesize truncate = _truncate;
 
 
 @end

@@ -50,7 +50,8 @@ typedef enum { kLayoutList, kLayoutSections, kLayoutTable } IndexLayoutType;
     BOOL _shortTitles;
     BOOL _showPermaLinks;
     BOOL _showEntries;
-    SVIndexTruncationType _truncationType;
+	BOOL _truncate;
+   SVIndexTruncationType _truncationType;
     NSUInteger _truncateCount;
 }
 
@@ -61,6 +62,7 @@ typedef enum { kLayoutList, kLayoutSections, kLayoutTable } IndexLayoutType;
 @property  BOOL showEntries;
 @property  BOOL showThumbnails;
 @property  BOOL showTimestamps;
+@property  BOOL truncate;
 @property  IndexLayoutType layoutType;
 @property  SVIndexTruncationType truncationType;
 @property  NSUInteger truncateCount;
