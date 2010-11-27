@@ -423,7 +423,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 {
     // YES if we and all following linked objects are marked for deletion.
     // -isDeleted is good enough most of the time, but doesn't catch non-persistent objects marked for deletion (media records added by #62243)
-    BOOL result = [self isDeleted] || ![self managedObjectContext];
+    BOOL result = [self isDeleted];// || ![self managedObjectContext];
     if (result)
     {
         id <SVDocumentFileWrapper> next = [self nextObject];

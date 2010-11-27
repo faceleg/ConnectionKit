@@ -365,10 +365,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
         for (NSString *aKey in wrappers)
         {
-            id <SVDocumentFileWrapper> media = [wrappers objectForKey:aKey];
-            if ([media shouldRemoveFromDocument])
+            id <SVDocumentFileWrapper> record = [wrappers objectForKey:aKey];
+            if ([record shouldRemoveFromDocument])
             {
-                NSURL *oldURL = [media fileURL];
+                NSURL *oldURL = [record fileURL];
                 
                 NSURL *deletionURL = [deletedMediaDirectory ks_URLByAppendingPathComponent:aKey
                                                                             isDirectory:NO];
@@ -376,7 +376,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                 BOOL written = NO;
                 if (saveOperation != NSAutosaveOperation)
                 {
-                    written = [(SVMediaRecord *)media writeToURL:deletionURL
+                    written = [(SVMediaRecord *)record writeToURL:deletionURL
                                                         updateFileURL:YES
                                                                 error:NULL];
                 }
@@ -388,7 +388,13 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                 else
                 {
                     // FIXME: Put in a placeholder media record so the file can be deleted in future
-                    //[(SVMediaRecord *)media moveToURLWhenDeleted:deletionURL];
+                    SVMediaRecord *newRecord = [SVMediaRecord mediaRecordWithMedia:[record media]
+                                                                        entityName:@"MediaRecord"
+                                                    insertIntoManagedObjectContext:[self managedObjectContext]];
+                    
+                    [newRecord setFilename:aKey];
+                    [newRecord setNextObject:record];
+                    [self setDocumentFileWrapper:newRecord forKey:aKey];
                 }
             }
         }
@@ -625,12 +631,12 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
-- (BOOL)writeMediaRecords:(NSArray *)media
+- (BOOL)writeMediaRecords:(NSArray *)record
                     toURL:(NSURL *)docURL
          forSaveOperation:(NSSaveOperationType)saveOp
                     error:(NSError **)outError;
 {
-    OBPRECONDITION(media);
+    OBPRECONDITION(record);
     
     BOOL result = YES;
     
@@ -642,7 +648,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     // Process each file
-    for (SVMediaRecord *aMediaRecord in media)
+    for (SVMediaRecord *aMediaRecord in record)
     {
         result = [self writeMediaRecord:aMediaRecord
                           toDocumentURL:docURL
