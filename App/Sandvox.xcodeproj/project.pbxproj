@@ -1119,6 +1119,7 @@
 		CE1D6D4311B5BA840087AC1B /* NSMenuItem+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE1D6D4111B5BA840087AC1B /* NSMenuItem+Karelia.h */; };
 		CE1D6D4411B5BA840087AC1B /* NSMenuItem+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1D6D4211B5BA840087AC1B /* NSMenuItem+Karelia.m */; };
 		CE214BFA098060CD006DD2B1 /* Languages.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE214BF9098060CD006DD2B1 /* Languages.plist */; };
+		CE22713C12A086B6002E7795 /* ObjectiveFlickr.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 27BDA74410C5E410008C8199 /* ObjectiveFlickr.framework */; };
 		CE23D84D11E69AD800E43369 /* SVOffscreenWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2E80E30DB534930034E7B8 /* SVOffscreenWebViewController.m */; };
 		CE23D96C11E6E65900E43369 /* KSPlainClipTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE23D96A11E6E65900E43369 /* KSPlainClipTextView.h */; };
 		CE23D96D11E6E65900E43369 /* KSPlainClipTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */; };
@@ -1772,6 +1773,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				CED8650910AA45AF002DF34F /* iMedia.framework in Copy Frameworks */,
+				CE22713C12A086B6002E7795 /* ObjectiveFlickr.framework in Copy Frameworks */,
 				3CE2CA510D6D54B300B2D56B /* AmazonSupport.framework in Copy Frameworks */,
 				3CE2CA6B0D6D54CD00B2D56B /* Connection.framework in Copy Frameworks */,
 			);
