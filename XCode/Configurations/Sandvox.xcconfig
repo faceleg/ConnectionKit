@@ -14,12 +14,12 @@ PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE = ALPHA_19R
 
 
 // expiry for beta
-EXPIRY_TIMESTAMP = '@\"2010-12-15 11:59:59 -0800\"'
+EXPIRY_TIMESTAMP = '@\"2010-12-31 11:59:59 -0800\"'
 
 // Release builds checkout and use these specific revisions
 
 // iMedia
-IMEDIA_REVISION = 1360
+IMEDIA_REVISION = 1398
 
 // Building -- common settings across all configurations
 
