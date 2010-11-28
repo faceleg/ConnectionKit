@@ -126,51 +126,13 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return NO;
 }
 
-- (void)moveToURLWhenDeleted:(NSURL *)URL;
-{
-    [self willMoveToURLWhenDeleted:URL];
-    _moveWhenSaved = YES;
-}
-
-- (void)willMoveToURLWhenDeleted:(NSURL *)URL;
-{
-    OBPRECONDITION(URL);
-    
-    // Shouldn't be possible to schedule twice (so _destinationURL should be nil), but that can happen if first save fails validation
-    URL = [URL copy];
-    [_destinationURL release]; _destinationURL = URL;
-}
-
 - (void)didSave
 {
-    BOOL inserted = [self isInserted];
-    BOOL deleted = [self isDeleted];
-    
-    
     // Post notification
+    BOOL deleted = [self isDeleted];
     if (deleted)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kSVDidDeleteMediaRecordNotification object:self];
-    }
-    
-    
-    // Make the move if requested.
-    // TODO: Be really sure the move isn't from a location outside the document
-    if (_destinationURL && (inserted || deleted))
-    {
-        // In case the deletion is undone, record the original destination. If that's what's happening then we're all done
-        NSURL *oldURL = (inserted) ? nil : [[self fileURL] copy];
-        
-        if (_moveWhenSaved)
-        {
-            [self moveToURL:_destinationURL error:NULL];
-        }
-        else
-        {
-            [self forceUpdateFromURL:_destinationURL];
-        }
-        
-        [_destinationURL release]; _destinationURL = oldURL;
     }
 }
 

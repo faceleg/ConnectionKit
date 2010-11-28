@@ -24,10 +24,6 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
   @private
     NSString    *_filename;
     
-    // Updating Files
-    NSURL   *_destinationURL;
-    BOOL    _moveWhenSaved;
-    
     // Accessing Files
     SVMedia         *_media;
     NSDictionary    *_attributes;
@@ -58,16 +54,6 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 #pragma mark Updating Media Records
 
 - (BOOL)moveToURL:(NSURL *)URL error:(NSError **)error;
-
-// The document will order media about the place as part of its saving routines. No other code should call these directly.
-// When removing a file from the package, it's because all corresponding Media Records are being deleted.
-// One of them is placed in charge of making the move with a -moveToURLWhenDeleted: call
-// If there are any other records referring to the same file, they follow along using the simpler -willMoveToURLWhenDeleted:
-// In either case, it is implicit that, should the media be re-inserted due to an undo operation, the action will be reversed.
-// It doesn't make sense to call either method for media that has never been committed to the store; trying to will raise an exception
-
-- (void)moveToURLWhenDeleted:(NSURL *)URL;
-- (void)willMoveToURLWhenDeleted:(NSURL *)URL;
 
 
 #pragma mark Location
