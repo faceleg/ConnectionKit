@@ -590,6 +590,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
     OBPRECONDITION(item);
     
     
+    // First Responder is going to have be self or a subview (e.g. webview)
+    NSResponder *firstResponder = [[self window] firstResponder];
+    if (!firstResponder || ![self ks_followsResponder:firstResponder])
+    {
+        [[self window] makeFirstResponder:self];
+    }
+    
+    
     // Try to match WebView selection to item when reasonable
     DOMElement *domElement = [item selectableDOMElement];
     
@@ -601,14 +609,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
         
         // Was it a success though?
         if (![[self selectedDOMRange] collapsed]) return;
-    }
-    
-    
-    // …but for block stuff, move focus back to the Web Editor
-    NSResponder *firstResponder = [[self window] firstResponder];
-    if (firstResponder != self && [self ks_followsResponder:firstResponder])
-    {
-        [[self window] makeFirstResponder:self];
     }
 }
 
