@@ -235,6 +235,26 @@
     return result;
 }
 
+#pragma mark NSCoding
+
+- (id)initWithCoder:(NSCoder *)aDecoder;
+{
+    [self init];
+    
+    _fileURL = [[aDecoder decodeObjectForKey:@"fileURL"] copy];
+    _webResource = [[aDecoder decodeObjectForKey:@"webResource"] copy];
+    _preferredFilename = [[aDecoder decodeObjectForKey:@"preferredFilename"] copy];
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder;
+{
+    [aCoder encodeObject:[self fileURL] forKey:@"fileURL"];
+    [aCoder encodeObject:[self webResource] forKey:@"webResource"];
+    [aCoder encodeObject:[self preferredFilename] forKey:@"preferredFilename"];
+}
+
 #pragma mark Deprecated
 
 - (NSString *)typeOfFile

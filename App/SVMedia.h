@@ -11,7 +11,7 @@
 #import "SVMediaProtocol.h"
 
 
-@interface SVMedia : NSObject <SVMedia>
+@interface SVMedia : NSObject <SVMedia, NSCoding>
 {
   @private
     NSURL       *_fileURL;
