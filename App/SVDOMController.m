@@ -609,12 +609,12 @@
 
 #pragma mark Relative Position
 
-- (DOMElement *)relativePositionDOMElement;
+- (NSArray *)relativePositionDOMElements;
 {
     DOMElement *result = [self HTMLElement];
     
     OBPOSTCONDITION(result);
-    return result;
+    return [NSArray arrayWithObject:result];
 }
 
 - (void)moveToRelativePosition:(CGPoint)position;
@@ -625,19 +625,22 @@
     
     // Make the move
     _moving = YES;
-    
-    DOMCSSStyleDeclaration *style = [[self relativePositionDOMElement] style];
-    [style removeProperty:@"-webkit-transition-duration"];
-    
-    [style setPosition:@"relative"];
-    [style setZIndex:@"9999"];
-    
-    
     _relativePosition = position;
-    [style setLeft:[[[NSNumber numberWithFloat:position.x] description]
-                    stringByAppendingString:@"px"]];
-    [style setTop:[[[NSNumber numberWithFloat:position.y] description]
-                   stringByAppendingString:@"px"]];
+    
+    for (DOMElement *anElement in [self relativePositionDOMElements])
+    {
+        DOMCSSStyleDeclaration *style = [anElement style];
+        [style removeProperty:@"-webkit-transition-duration"];
+        
+        [style setPosition:@"relative"];
+        [style setZIndex:@"9999"];
+        
+        
+        [style setLeft:[[[NSNumber numberWithFloat:position.x] description]
+                        stringByAppendingString:@"px"]];
+        [style setTop:[[[NSNumber numberWithFloat:position.y] description]
+                       stringByAppendingString:@"px"]];
+    }
     
     
     // …and also new space
@@ -657,30 +660,33 @@
 
 - (void)removeRelativePosition:(BOOL)animated;
 {
-    DOMCSSStyleDeclaration *style = [[self relativePositionDOMElement] style];
-    
-    // Is there any way we can turn position off after animation?
-    if (animated)
+    for (DOMElement *anElement in [self relativePositionDOMElements])
     {
-        [style setProperty:@"-webkit-transition-property" value:@"left, top" priority:nil];
-        [style setProperty:@"-webkit-transition-duration" value:@"0.25s" priority:nil];
+        DOMCSSStyleDeclaration *style = [anElement style];
         
-        [self performSelector:@selector(removeRelativePositioningAnimationDidEnd)
-                   withObject:nil
-                   afterDelay:0.25];
-    }
-    else
-    {
-        [style setPosition:nil];
-        [style setZIndex:nil];
+        // Is there any way we can turn position off after animation?
+        if (animated)
+        {
+            [style setProperty:@"-webkit-transition-property" value:@"left, top" priority:nil];
+            [style setProperty:@"-webkit-transition-duration" value:@"0.25s" priority:nil];
+            
+            [self performSelector:@selector(removeRelativePositioningAnimationDidEnd)
+                       withObject:nil
+                       afterDelay:0.25];
+        }
+        else
+        {
+            [style setPosition:nil];
+            [style setZIndex:nil];
+            
+            _moving = NO;
+            [self setNeedsDisplay];
+        }
         
-        _moving = NO;
-        [self setNeedsDisplay];
+        _relativePosition = CGPointZero;
+        [style setLeft:nil];
+        [style setTop:nil];
     }
-    
-    _relativePosition = CGPointZero;
-    [style setLeft:nil];
-    [style setTop:nil];
 }
 
 - (BOOL)hasRelativePosition; { return _moving; }
@@ -705,9 +711,12 @@
 
 - (void)removeRelativePositioningAnimationDidEnd;
 {
-    DOMCSSStyleDeclaration *style = [[self relativePositionDOMElement] style];
-    [style setPosition:nil];
-    [style setZIndex:nil];
+    for (DOMElement *anElement in [self relativePositionDOMElements])
+    {
+        DOMCSSStyleDeclaration *style = [anElement style];
+        [style setPosition:nil];
+        [style setZIndex:nil];
+    }
     
     _moving = NO;
     [self setNeedsDisplay];

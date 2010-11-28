@@ -539,13 +539,18 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return CGPointMake(NSMidX(rect), NSMidY(rect));
 }
 
-- (DOMElement *)relativePositionDOMElement;
+- (NSArray *)relativePositionDOMElements;
 {
     DOMElement *result = [self graphicDOMElement];
-    if (!result) result = [super relativePositionDOMElement];
-    
-    OBPOSTCONDITION(result);
-    return result;
+    if (result)
+    {
+        DOMElement *caption = [result nextSiblingOfClass:[DOMElement class]];
+        return NSARRAY(result, caption);    // caption may be nil, so go ignored
+    }
+    else
+    {
+        return [super relativePositionDOMElements];
+    }
 }
 
 - (SVSelectionBorder *)newSelectionBorder;

@@ -118,7 +118,7 @@
 - (BOOL)hasRelativePosition;
 - (CGPoint)positionIgnoringRelativePosition;
 - (NSRect)rectIgnoringRelativePosition;
-- (DOMElement *)relativePositionDOMElement;
+- (NSArray *)relativePositionDOMElements;
 
 
 #pragma mark Dragging
