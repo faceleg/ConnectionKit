@@ -228,6 +228,20 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 	//[[self persistentStoreCoordinator] unlock];
 }
 
+#pragma mark Undo
+
+- (void)disableUndoRegistration;
+{
+    [self processPendingChanges];
+    [[self undoManager] disableUndoRegistration];
+}
+
+- (void)enableUndoRegistration;
+{
+    [self processPendingChanges];
+    [[self undoManager] enableUndoRegistration];
+}
+
 #pragma mark debugging support
 
 /*! returns set of all updated, inserted, and deleted objects in context */

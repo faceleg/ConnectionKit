@@ -54,6 +54,12 @@ extern NSString *SVPageWillBeDeletedNotification;
 // returns array of unique values for aColumnName for all instances of anEntityName
 - (NSArray *)objectsForColumnName:(NSString *)aColumnName entityName:(NSString *)anEntityName;
 
+
+#pragma mark Undo
+- (void)disableUndoRegistration;
+- (void)enableUndoRegistration;
+
+
 #pragma mark methods Sandvox-specific extensions
 
 // return context's Site
