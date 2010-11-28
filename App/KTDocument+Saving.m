@@ -707,7 +707,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     if ([aMediaRecord writeToURL:mediaURL updateFileURL:YES error:outError])
     {
         // I was experimenting with not updating the file URL straight away. I'm not sure why, but I think it was to account for the idea that you might be doing a Save-To op. Unfortunately that breaks Quick Look previews if the home page contains a new image. So I've switched to updating the URL straight off, so it's ready to generate correct preview HTML.
-        //[aMediaRecord setFilename:filename];  // don't need to when updating file URL
+        
+        // Writing does not update filename, so do it here
+        [aMediaRecord setFilename:filename];  // don't need to when updating file URL
     }
     else
     {
