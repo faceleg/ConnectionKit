@@ -356,34 +356,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                               toURL:inURL
                    forSaveOperation:saveOperation
                               error:NULL];
-            
-            
-            // Tell deleted media what, if anything, to do. MUST happen after searching for new media. #72736
-            NSURL *deletedMediaDirectory = [[self undoManager] deletedMediaDirectory];
-            NSDictionary *wrappers = [self documentFileWrappers];
-            
-            for (NSString *aKey in wrappers)
-            {
-                id <SVDocumentFileWrapper> record = [wrappers objectForKey:aKey];
-                if ([record shouldRemoveFromDocument])
-                {
-                    NSURL *oldURL = [record fileURL];
-                    if ([[oldURL path] ks_isSubpathOfPath:[inOriginalContentsURL path]])
-                    {
-                        NSURL *deletionURL = [deletedMediaDirectory ks_URLByAppendingPathComponent:aKey
-                                                                                       isDirectory:NO];
-                        
-                        // Could fail because:
-                        // A)   The destination isn't writeable. Unlikey, but leave the file in the package and a future release will spot the orphaned file and offer to delete it upon opening the doc
-                        // B)   The source isn't readable (probably necause it doesn't exist). Much the same as A)!
-                        BOOL written = [(SVMediaRecord *)record writeToURL:deletionURL
-                                                             updateFileURL:YES
-                                                                     error:NULL];
-                        
-                        if (written) [filesToDelete addObject:oldURL];
-                    }
-                }
-            }
         }
          
             
@@ -414,13 +386,37 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     }
     
     
-    if (result)
+    if (result && saveOperation == NSSaveOperation)
     {
-        // Delete files in package which are no longer needed
-        for (NSURL *aFile in filesToDelete)
+        // Delete media which is no longer needed. MUST happen after searching for new media. #72736
+        NSURL *deletedMediaDirectory = [[self undoManager] deletedMediaDirectory];
+        NSDictionary *wrappers = [self documentFileWrappers];
+        
+        for (NSString *aKey in wrappers)
         {
-            // TODO: Log any errors
-            [[NSFileManager defaultManager] removeItemAtPath:[aFile path] error:NULL];
+            id <SVDocumentFileWrapper> record = [wrappers objectForKey:aKey];
+            if ([record shouldRemoveFromDocument])
+            {
+                NSURL *oldURL = [record fileURL];
+                if ([[oldURL path] ks_isSubpathOfPath:[inOriginalContentsURL path]])
+                {
+                    NSURL *deletionURL = [deletedMediaDirectory ks_URLByAppendingPathComponent:aKey
+                                                                                   isDirectory:NO];
+                    
+                    // Could fail because:
+                    // A)   The destination isn't writeable. Unlikey, but leave the file in the package and a future release will spot the orphaned file and offer to delete it upon opening the doc
+                    // B)   The source isn't readable (probably necause it doesn't exist). Much the same as A)!
+                    BOOL written = [(SVMediaRecord *)record writeToURL:deletionURL
+                                                         updateFileURL:YES
+                                                                 error:NULL];
+                    
+                    if (written)
+                    {
+                        // TODO: Log any error
+                        [[NSFileManager defaultManager] removeItemAtPath:[oldURL path] error:NULL];
+                    }
+                }
+            }
         }
     }
     [filesToDelete release];
