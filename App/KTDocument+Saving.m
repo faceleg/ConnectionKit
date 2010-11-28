@@ -675,15 +675,22 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         SVMediaRecord *dupe = (SVMediaRecord *)[self duplicateOfMediaRecord:aMediaRecord];
         if (dupe)
         {
-            // Don't try to access -[dupe filename] as it may be a deleted object, and therefore unable to fulfil the fault
-            NSURL *fileURL = [dupe fileURL];
-            [aMediaRecord readFromURL:fileURL options:0 error:NULL];
-            [aMediaRecord setFilename:[fileURL ks_lastPathComponent]];
-            
-            NSString *key = [self keyForDocumentFileWrapper:dupe];
-            OBASSERT(key);
-            [aMediaRecord setNextObject:dupe];
-            [self setDocumentFileWrapper:aMediaRecord forKey:key];
+            if (dupe == aMediaRecord)
+            {
+                NSLog(@"Hmm, record is trying to be copied into document twice. This can't be good!");
+            }
+            else
+            {
+                // Don't try to access -[dupe filename] as it may be a deleted object, and therefore unable to fulfil the fault
+                NSURL *fileURL = [dupe fileURL];
+                [aMediaRecord readFromURL:fileURL options:0 error:NULL];
+                [aMediaRecord setFilename:[fileURL ks_lastPathComponent]];
+                
+                NSString *key = [self keyForDocumentFileWrapper:dupe];
+                OBASSERT(key);
+                [aMediaRecord setNextObject:dupe];
+                [self setDocumentFileWrapper:aMediaRecord forKey:key];
+            }
             
             return YES;
         }
@@ -692,6 +699,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             filename = [self addDocumentFileWrapper:aMediaRecord];
         }
     }
+    OBASSERT(filename);
     
     
     // Try write
