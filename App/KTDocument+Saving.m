@@ -368,7 +368,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                 if ([record shouldRemoveFromDocument])
                 {
                     NSURL *oldURL = [record fileURL];
-                    if ([[[oldURL path] stringByDeletingLastPathComponent] ks_isEqualToPath:[inOriginalContentsURL path]])
+                    if ([[oldURL path] ks_isSubpathOfPath:[inOriginalContentsURL path]])
                     {
                         NSURL *deletionURL = [deletedMediaDirectory ks_URLByAppendingPathComponent:aKey
                                                                                        isDirectory:NO];
