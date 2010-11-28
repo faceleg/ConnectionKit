@@ -388,23 +388,24 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     if (result && saveOperation == NSSaveOperation)
     {
-        // Delete media which is no longer needed. MUST happen after searching for new media. #72736
         NSURL *deletedMediaDirectory = [[self undoManager] deletedMediaDirectory];
         NSDictionary *wrappers = [self documentFileWrappers];
         
         for (NSString *aKey in wrappers)
         {
             id <SVDocumentFileWrapper> record = [wrappers objectForKey:aKey];
+            NSURL *mediaURL = [record fileURL];
+            
             if ([record shouldRemoveFromDocument])
             {
-                NSURL *oldURL = [record fileURL];
-                if ([[oldURL path] ks_isSubpathOfPath:[inOriginalContentsURL path]])
+                // Delete media which is no longer needed. MUST happen after searching for new media. #72736
+                if ([[mediaURL path] ks_isSubpathOfPath:[inOriginalContentsURL path]])
                 {
                     NSURL *deletionURL = [deletedMediaDirectory ks_URLByAppendingPathComponent:aKey
                                                                                    isDirectory:NO];
                     
                     // Could fail because:
-                    // A)   The destination isn't writeable. Unlikey, but leave the file in the package and a future release will spot the orphaned file and offer to delete it upon opening the doc
+                    // A)   The destination isn't writeable. Unlikely, but leave the file in the package and a future release will spot the orphaned file and offer to delete it upon opening the doc
                     // B)   The source isn't readable (probably necause it doesn't exist). Much the same as A)!
                     BOOL written = [(SVMediaRecord *)record writeToURL:deletionURL
                                                          updateFileURL:YES
@@ -413,8 +414,20 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                     if (written)
                     {
                         // TODO: Log any error
-                        [[NSFileManager defaultManager] removeItemAtPath:[oldURL path] error:NULL];
+                        [[NSFileManager defaultManager] removeItemAtPath:[mediaURL path] error:NULL];
                     }
+                }
+            }
+            else
+            {
+                // Move undeleted media back into the doc. #97429
+                if (![[mediaURL path] ks_isSubpathOfPath:[inOriginalContentsURL path]])
+                {
+                    NSURL *undeletionURL = [inURL ks_URLByAppendingPathComponent:[record filename]
+                                                                     isDirectory:NO];
+                    [(SVMediaRecord *)record writeToURL:undeletionURL
+                                          updateFileURL:YES
+                                                  error:NULL];
                 }
             }
         }
