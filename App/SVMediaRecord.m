@@ -285,7 +285,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     [_media release]; _media = media;
     
     // Also persist in-memory media for now in case of having to restore from autosave
-    if ([self extensiblePropertyForKey:@"media"])
+    if ([self managedObjectContext] && [self extensiblePropertyForKey:@"media"])
     {
         [self removeExtensiblePropertyForKey:@"media"];
     }
