@@ -254,25 +254,45 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 #pragma mark Contents Cache
 
-@synthesize media = _media;
 - (SVMedia *)media;
 {
     if (!_media)
     {
-        // Get best path we can out of the alias
-        NSString *path = [[self autosaveAlias] fullPath];
-        if (!path) path = [[self alias] fullPath];
-        if (!path) path = [[self autosaveAlias] lastKnownPath];
-        if (!path) path = [[self alias] lastKnownPath];
+        // Maybe it was autosaved as data?
+        _media = [[self extensiblePropertyForKey:@"media"] retain];
         
-        // Ignore files which are in the Trash
-        if ([path rangeOfString:@".Trash"].location != NSNotFound) path = nil;
-        
-        
-        if (path) _media = [[SVMedia alloc] initByReferencingURL:[NSURL fileURLWithPath:path]];
+        if (!_media)
+        {
+            // Get best path we can out of the alias
+            NSString *path = [[self autosaveAlias] fullPath];
+            if (!path) path = [[self alias] fullPath];
+            if (!path) path = [[self autosaveAlias] lastKnownPath];
+            if (!path) path = [[self alias] lastKnownPath];
+            
+            // Ignore files which are in the Trash
+            if ([path rangeOfString:@".Trash"].location != NSNotFound) path = nil;
+            
+            
+            if (path) _media = [[SVMedia alloc] initByReferencingURL:[NSURL fileURLWithPath:path]];
+        }
     }
     
     return _media;
+}
+- (void)setMedia:(SVMedia *)media;
+{
+    [media retain];
+    [_media release]; _media = media;
+    
+    // Also persist in-memory media for now in case of having to restore from autosave
+    if ([self extensiblePropertyForKey:@"media"])
+    {
+        [self removeExtensiblePropertyForKey:@"media"];
+    }
+    if ([media webResource])
+    {
+        [self setExtensibleProperty:media forKey:@"media"];
+    }
 }
 
 @synthesize fileAttributes = _attributes;

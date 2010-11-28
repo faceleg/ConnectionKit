@@ -6,7 +6,7 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import <CoreData/CoreData.h>
+#import "KSExtensibleManagedObject.h"
 #import "SVDocumentFileWrapper.h"
 #import <iMedia/iMedia.h>
 
@@ -19,7 +19,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 @class BDAlias, SVMedia;
 
 
-@interface SVMediaRecord : NSManagedObject <SVDocumentFileWrapper>
+@interface SVMediaRecord : KSExtensibleManagedObject <SVDocumentFileWrapper>
 {
   @private
     NSString    *_filename;
