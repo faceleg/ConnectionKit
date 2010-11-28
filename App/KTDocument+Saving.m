@@ -356,48 +356,36 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                               toURL:inURL
                    forSaveOperation:saveOperation
                               error:NULL];
-        }
-         
-        
-        // Tell deleted media what, if anything, to do. MUST happen after searching for new media. #72736
-        NSURL *deletedMediaDirectory = [[self undoManager] deletedMediaDirectory];
-        NSDictionary *wrappers = [self documentFileWrappers];
-        
-        for (NSString *aKey in wrappers)
-        {
-            id <SVDocumentFileWrapper> record = [wrappers objectForKey:aKey];
-            if ([record shouldRemoveFromDocument])
+            
+            
+            // Tell deleted media what, if anything, to do. MUST happen after searching for new media. #72736
+            NSURL *deletedMediaDirectory = [[self undoManager] deletedMediaDirectory];
+            NSDictionary *wrappers = [self documentFileWrappers];
+            
+            for (NSString *aKey in wrappers)
             {
-                NSURL *oldURL = [record fileURL];
-                
-                NSURL *deletionURL = [deletedMediaDirectory ks_URLByAppendingPathComponent:aKey
-                                                                            isDirectory:NO];
-                
-                BOOL written = NO;
-                if (saveOperation != NSAutosaveOperation)
+                id <SVDocumentFileWrapper> record = [wrappers objectForKey:aKey];
+                if ([record shouldRemoveFromDocument])
                 {
-                    written = [(SVMediaRecord *)record writeToURL:deletionURL
-                                                        updateFileURL:YES
-                                                                error:NULL];
-                }
-                
-                if (written)
-                {
-                    [filesToDelete addObject:oldURL];
-                }
-                else
-                {
-                    // FIXME: Put in a placeholder media record so the file can be deleted in future
-                    SVMediaRecord *newRecord = [SVMediaRecord mediaRecordWithMedia:[record media]
-                                                                        entityName:@"MediaRecord"
-                                                    insertIntoManagedObjectContext:[self managedObjectContext]];
-                    
-                    [newRecord setFilename:aKey];
-                    [newRecord setNextObject:record];
-                    [self setDocumentFileWrapper:newRecord forKey:aKey];
+                    NSURL *oldURL = [record fileURL];
+                    if ([[[oldURL path] stringByDeletingLastPathComponent] ks_isEqualToPath:[inOriginalContentsURL path]])
+                    {
+                        NSURL *deletionURL = [deletedMediaDirectory ks_URLByAppendingPathComponent:aKey
+                                                                                       isDirectory:NO];
+                        
+                        // Could fail because:
+                        // A)   The destination isn't writeable. Unlikey, but leave the file in the package and a future release will spot the orphaned file and offer to delete it upon opening the doc
+                        // B)   The source isn't readable (probably necause it doesn't exist). Much the same as A)!
+                        BOOL written = [(SVMediaRecord *)record writeToURL:deletionURL
+                                                             updateFileURL:YES
+                                                                     error:NULL];
+                        
+                        if (written) [filesToDelete addObject:oldURL];
+                    }
                 }
             }
         }
+         
             
             
             
@@ -643,8 +631,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     // Disable undo as this belongs outside the regular stack
     NSManagedObjectContext *context = [self managedObjectContext];
-    [context processPendingChanges];
-    [[self undoManager] disableUndoRegistration];
+    [context disableUndoRegistration];
     
     
     // Process each file
@@ -657,8 +644,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     }
     
     
-    [context processPendingChanges];
-    [[self undoManager] enableUndoRegistration];
+    [context enableUndoRegistration];
     
     
     return result;
