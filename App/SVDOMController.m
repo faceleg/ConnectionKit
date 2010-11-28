@@ -270,7 +270,7 @@
     for (NSString *aSelectorString in selectorStrings)
     {
         SVWebEditorViewController *controller = [self webEditorViewController];
-        OBASSERT(controller);
+        //OBASSERT(controller); // actually, may well be nil due to an update elsewhere in the hierarchy. #97474
         [controller performSelector:@selector(willUpdate)];
         
         [self performSelector:NSSelectorFromString(aSelectorString)];
