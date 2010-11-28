@@ -211,10 +211,25 @@
     if (!result)
     {
         // Fallback to copying the file
+        NSError *error;
         result = [[NSFileManager defaultManager] copyItemAtPath:[[self fileURL] path]
                                                          toPath:[URL path]
-                                                          error:outError];
+                                                          error:&error];
+        
+        // If it failed because the file already exists, we want to overrite it
+        while (!result && [[error domain] isEqualToString:NSPOSIXErrorDomain] && [error code] == EEXIST)
+        {
+            if (result = [[NSFileManager defaultManager] removeItemAtPath:[URL path] error:&error])
+            {
+                result = [[NSFileManager defaultManager] copyItemAtPath:[[self fileURL] path]
+                                                                 toPath:[URL path]
+                                                                  error:&error];
+            }
+        }
+        
+        if (outError) *outError = error;
     }
+    
     
     
     return result;
