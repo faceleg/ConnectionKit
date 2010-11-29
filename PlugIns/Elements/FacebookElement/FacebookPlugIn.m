@@ -256,7 +256,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 + (BOOL)isExplicitlySized
 {
-    return NO;
+    return YES;
 }
 
 - (void)makeOriginalSize
