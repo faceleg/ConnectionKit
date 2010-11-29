@@ -11,8 +11,8 @@
 		3C4A18240D5E7F67009476BF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A18220D5E7F67009476BF /* Localizable.strings */; };
 		3C4A18330D5E7FC1009476BF /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A18300D5E7FC1009476BF /* Template.html */; };
 		3C4A18BD0D5FA0F0009476BF /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A18BC0D5FA0F0009476BF /* License.rtf */; };
+		3C5D6F6C12A4369000AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F6A12A4369000AAAB18 /* Inspector.xib */; };
 		3C7C2C0A1219E69D005D75B1 /* DeliciousInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7C2C091219E69D005D75B1 /* DeliciousInspector.m */; };
-		3C7C2C191219E6D5005D75B1 /* DeliciousInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C7C2C171219E6D5005D75B1 /* DeliciousInspector.xib */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		CE28032D12432D9E00B00F3D /* toolbar_delicious.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE28032C12432D9E00B00F3D /* toolbar_delicious.tiff */; };
@@ -46,9 +46,9 @@
 		3C4A182D0D5E7FA9009476BF /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C4A18300D5E7FC1009476BF /* Template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Template.html; sourceTree = "<group>"; };
 		3C4A18BC0D5FA0F0009476BF /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
+		3C5D6F6B12A4369000AAAB18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		3C7C2C081219E69D005D75B1 /* DeliciousInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliciousInspector.h; sourceTree = "<group>"; };
 		3C7C2C091219E69D005D75B1 /* DeliciousInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeliciousInspector.m; sourceTree = "<group>"; };
-		3C7C2C181219E6D5005D75B1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DeliciousInspector.xib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Delicious.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Delicious.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE28032C12432D9E00B00F3D /* toolbar_delicious.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_delicious.tiff; sourceTree = "<group>"; };
@@ -95,9 +95,9 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C5D6F6A12A4369000AAAB18 /* Inspector.xib */,
 				CE28032C12432D9E00B00F3D /* toolbar_delicious.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				3C7C2C171219E6D5005D75B1 /* DeliciousInspector.xib */,
 				3C4A18300D5E7FC1009476BF /* Template.html */,
 				CE427D070E6332E7002146D7 /* delicious.16.png */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
@@ -224,8 +224,8 @@
 				3C4A18330D5E7FC1009476BF /* Template.html in Resources */,
 				3C4A18BD0D5FA0F0009476BF /* License.rtf in Resources */,
 				CE427D080E6332E7002146D7 /* delicious.16.png in Resources */,
-				3C7C2C191219E6D5005D75B1 /* DeliciousInspector.xib in Resources */,
 				CE28032D12432D9E00B00F3D /* toolbar_delicious.tiff in Resources */,
+				3C5D6F6C12A4369000AAAB18 /* Inspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,12 +294,12 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		3C7C2C171219E6D5005D75B1 /* DeliciousInspector.xib */ = {
+		3C5D6F6A12A4369000AAAB18 /* Inspector.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3C7C2C181219E6D5005D75B1 /* en */,
+				3C5D6F6B12A4369000AAAB18 /* en */,
 			);
-			name = DeliciousInspector.xib;
+			name = Inspector.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
