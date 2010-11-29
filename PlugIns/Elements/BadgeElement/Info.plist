@@ -30,7 +30,7 @@
 	<string>Sandvox_Badge</string>
 	<key>KTPageletCanHaveTitle</key>
 	<false/>
-	<key>KTPluginIconName</key>
+	<key>SVIconPath</key>
 	<string>toolbar_badge.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>

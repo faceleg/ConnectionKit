@@ -29,8 +29,8 @@
 	<key>KSHelpAnchor</key>
 	<string>External_Page</string>
 	<key>KTPageletCanHaveTitle</key>
-	<true/>
-	<key>KTPluginIconName</key>
+	<false/>
+	<key>SVIconPath</key>
 	<string>toolbar_iframe.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict/>

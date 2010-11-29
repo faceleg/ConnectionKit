@@ -32,7 +32,7 @@
 	<array>
 		<string>rssbadge.css</string>
 	</array>
-	<key>KTPluginIconName</key>
+	<key>SVIconPath</key>
 	<string>toolbar_rss.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>

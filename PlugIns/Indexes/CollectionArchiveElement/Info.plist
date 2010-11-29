@@ -30,7 +30,7 @@
 	<true/>
 	<key>KSHelpAnchor</key>
 	<string>Collection_Archive</string>
-	<key>KTPluginIconName</key>
+	<key>SVIconPath</key>
 	<string>toolbar_archive.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict/>

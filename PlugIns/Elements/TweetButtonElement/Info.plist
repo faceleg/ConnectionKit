@@ -30,7 +30,7 @@
 	<integer>4</integer>
 	<key>KSHelpAnchor</key>
 	<string>TweetButton</string>
-	<key>KTPluginIconName</key>
+	<key>SVIconPath</key>
 	<string>toolbar_tweet.tiff</string>
 	<key>KTPluginName</key>
 	<string>TweetButton</string>

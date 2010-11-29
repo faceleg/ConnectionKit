@@ -36,7 +36,7 @@
 	<string>List_of_Links</string>
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
-	<key>KTPluginIconName</key>
+	<key>SVIconPath</key>
 	<string>toolbar_linklist.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>

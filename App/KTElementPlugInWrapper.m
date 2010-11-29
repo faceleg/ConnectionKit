@@ -118,13 +118,13 @@
 	{
 		return [self pluginPropertyForKey:@"KTPluginUntitledName"];
 	}
-	else if ([key isEqualToString:@"KTPluginDescription"])
+	else if ([key isEqualToString:@"SVPlugInDescription"])
 	{
 		return @"";
 	}
 	else if ([key isEqualToString:@"KTPageDescription"] || [key isEqualToString:@"KTPageletDescription"])
 	{
-		return [self pluginPropertyForKey:@"KTPluginDescription"];
+		return [self pluginPropertyForKey:@"SVPlugInDescription"];
 	}
 	else if ([key isEqualToString:@"KTPageNibFile"])
 	{

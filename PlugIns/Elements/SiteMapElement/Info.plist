@@ -40,7 +40,7 @@
 	<true/>
 	<key>KTPageType</key>
 	<string>site-map</string>
-	<key>KTPluginIconName</key>
+	<key>SVIconPath</key>
 	<string>toolbar_sitemap.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>

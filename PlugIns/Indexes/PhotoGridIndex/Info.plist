@@ -32,7 +32,7 @@
 	<integer>1</integer>
 	<key>KTPageIconName</key>
 	<string>page_grid_sb.tiff</string>
-	<key>KTPluginIconName</key>
+	<key>SVIconPath</key>
 	<string>object_grid.tiff</string>
 	<key>KTPluginName</key>
 	<string>Photo Grid</string>

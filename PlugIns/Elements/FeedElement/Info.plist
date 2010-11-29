@@ -36,7 +36,7 @@
 	<string>RSS_Feed</string>
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
-	<key>KTPluginIconName</key>
+	<key>SVIconPath</key>
 	<string>toolbar_feed.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>

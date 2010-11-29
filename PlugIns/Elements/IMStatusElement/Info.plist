@@ -73,7 +73,7 @@
 	<string></string>
 	<key>KTPageletCanHaveTitle</key>
 	<false/>
-	<key>KTPluginIconName</key>
+	<key>SVIconPath</key>
 	<string>toolbar_imstatus.tiff</string>
 	<key>KTElementAllowsIntroduction</key>
 	<true/>

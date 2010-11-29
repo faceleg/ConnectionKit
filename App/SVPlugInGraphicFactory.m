@@ -51,9 +51,14 @@
 
 @synthesize plugInBundle = _bundle;
 
-- (NSString *)name; { return [[self plugInBundle] objectForInfoDictionaryKey:@"KTPluginName"]; }
+- (NSString *)name;
+{
+    NSString *result = [[self plugInBundle] objectForInfoDictionaryKey:@"KTPluginName"];
+    if (!result) result = [[self plugInBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleNameKey];
+    return result;
+}
 
-- (NSString *)graphicDescription; { return [[self plugInBundle] objectForInfoDictionaryKey:@"KTPluginDescription"]; }
+- (NSString *)graphicDescription; { return [[self plugInBundle] objectForInfoDictionaryKey:@"SVPlugInDescription"]; }
 
 - (NSImage *)iconWithName:(NSString *)aName;
 {
@@ -92,7 +97,7 @@
 	// The icon is cached; load it if not cached yet
 	if (!_icon)
 	{
-		_icon = [[self iconWithName:@"KTPluginIconName"] retain];
+		_icon = [[self iconWithName:@"SVIconPath"] retain];
 	}
 	return _icon;
 }

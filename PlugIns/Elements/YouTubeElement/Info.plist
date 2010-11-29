@@ -38,7 +38,7 @@
 	<string>YouTube</string>
 	<key>KTPageShowSidebar</key>
 	<false/>
-	<key>KTPluginIconName</key>
+	<key>SVIconPath</key>
 	<string>YouTube.icns</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
