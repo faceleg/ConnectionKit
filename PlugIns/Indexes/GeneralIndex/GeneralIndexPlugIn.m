@@ -208,6 +208,7 @@
 			NSString *textToWrite = [format stringByReplacing:@"@@" with:title];
 			[context writeText:textToWrite];
 			[context endElement];	// </a>
+			[context endElement];	// </div> continue-reading-link
 		}
 
 		if (self.showTimestamps || self.showPermaLinks)		// timestamps and/or permanent links need timestamp <div>
