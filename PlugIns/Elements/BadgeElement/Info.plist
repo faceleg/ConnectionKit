@@ -43,8 +43,6 @@
 	<string>Badge</string>
 	<key>KTElementAllowsIntroduction</key>
 	<true/>
-	<key>KTPluginNibFile</key>
-	<string>BadgeInspector</string>
 	<key>KTPluginPriority</key>
 	<integer>8</integer>
 	<key>KTPluginUntitledName</key>

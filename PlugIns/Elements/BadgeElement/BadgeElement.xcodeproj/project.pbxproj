@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C2AB7411191F7FE00CDC944 /* BadgeInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C2AB73F1191F7FE00CDC944 /* BadgeInspector.xib */; };
+		3C5D6F7212A437AA00AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F7012A437AA00AAAB18 /* Inspector.xib */; };
 		3CA9FEA70D63BE8800815310 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEA50D63BE8800815310 /* Localizable.strings */; };
 		3CA9FEC50D63BF2400815310 /* sandvox_bucket.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEBB0D63BF2400815310 /* sandvox_bucket.png */; };
 		3CA9FEC60D63BF2400815310 /* sandvox_bucket_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEBD0D63BF2400815310 /* sandvox_bucket_white.png */; };
@@ -28,7 +28,7 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* BadgeElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BadgeElement_Prefix.pch; sourceTree = "<group>"; };
-		3C2AB7401191F7FE00CDC944 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BadgeInspector.xib; sourceTree = "<group>"; };
+		3C5D6F7112A437AA00AAAB18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		3CA9FE9C0D63BE4400815310 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3CA9FE9E0D63BE5300815310 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3CA9FE9F0D63BE5A00815310 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -136,8 +136,8 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C5D6F7012A437AA00AAAB18 /* Inspector.xib */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				3C2AB73F1191F7FE00CDC944 /* BadgeInspector.xib */,
 				3CA9FEF90D63BFFE00815310 /* Template.html */,
 				3CA9FEEF0D63BF8500815310 /* Badges */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
@@ -280,7 +280,7 @@
 				3CA9FEF80D63BFE600815310 /* sandvox_castle_white.png in Resources */,
 				3CA9FEFB0D63BFFE00815310 /* Template.html in Resources */,
 				3CA9FEFE0D63C00F00815310 /* License.rtf in Resources */,
-				3C2AB7411191F7FE00CDC944 /* BadgeInspector.xib in Resources */,
+				3C5D6F7212A437AA00AAAB18 /* Inspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,12 +331,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		3C2AB73F1191F7FE00CDC944 /* BadgeInspector.xib */ = {
+		3C5D6F7012A437AA00AAAB18 /* Inspector.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3C2AB7401191F7FE00CDC944 /* en */,
+				3C5D6F7112A437AA00AAAB18 /* en */,
 			);
-			name = BadgeInspector.xib;
+			name = Inspector.xib;
 			sourceTree = "<group>";
 		};
 		3CA9FEA50D63BE8800815310 /* Localizable.strings */ = {
