@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3C0951390D5D0DBE00DE6F62 /* PhotoGridIndexPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0951380D5D0DBE00DE6F62 /* PhotoGridIndexPlugIn.m */; };
-		3C0951470D5D0E1700DE6F62 /* PhotoGridIndexTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C0951450D5D0E1700DE6F62 /* PhotoGridIndexTemplate.html */; };
+		3C0951470D5D0E1700DE6F62 /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C0951450D5D0E1700DE6F62 /* Template.html */; };
 		3C0951520D5D0E8100DE6F62 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C0951500D5D0E8100DE6F62 /* Localizable.strings */; };
 		3C09515D0D5D0EE200DE6F62 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C09515C0D5D0EE200DE6F62 /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
@@ -25,7 +25,7 @@
 		3C0951380D5D0DBE00DE6F62 /* PhotoGridIndexPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoGridIndexPlugIn.m; sourceTree = "<group>"; };
 		3C09513D0D5D0DE700DE6F62 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C09513E0D5D0DE700DE6F62 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
-		3C0951450D5D0E1700DE6F62 /* PhotoGridIndexTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = PhotoGridIndexTemplate.html; sourceTree = "<group>"; };
+		3C0951450D5D0E1700DE6F62 /* Template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Template.html; sourceTree = "<group>"; };
 		3C0951480D5D0E3100DE6F62 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C0951490D5D0E3E00DE6F62 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C09514A0D5D0E4400DE6F62 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C09515C0D5D0EE200DE6F62 /* License.rtf */,
 				3C0951500D5D0E8100DE6F62 /* Localizable.strings */,
-				3C0951450D5D0E1700DE6F62 /* PhotoGridIndexTemplate.html */,
+				3C0951450D5D0E1700DE6F62 /* Template.html */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -208,7 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
-				3C0951470D5D0E1700DE6F62 /* PhotoGridIndexTemplate.html in Resources */,
+				3C0951470D5D0E1700DE6F62 /* Template.html in Resources */,
 				3C0951520D5D0E8100DE6F62 /* Localizable.strings in Resources */,
 				3C09515D0D5D0EE200DE6F62 /* License.rtf in Resources */,
 				CE2802A112432BBD00B00F3D /* toolbar_photogrid.tiff in Resources */,
