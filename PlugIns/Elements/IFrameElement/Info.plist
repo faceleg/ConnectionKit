@@ -38,8 +38,6 @@
 	<string>External Page</string>
 	<key>KTPluginUntitledName</key>
 	<string>External Page</string>
-	<key>KTTemplateName</key>
-	<string>IFrameTemplate</string>
 	<key>NSPrincipalClass</key>
 	<string>IFramePlugIn</string>
 </dict>
