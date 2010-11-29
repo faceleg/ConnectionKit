@@ -38,7 +38,7 @@
 
 - (NSString *)minimumAppVersion
 {
-    id retVal = [self objectForInfoDictionaryKey:@"KSMinimumAppVersion"];
+    id retVal = [self objectForInfoDictionaryKey:@"SVMinimumAppVersion"];
     return retVal;
 }
 

@@ -65,7 +65,7 @@
 			<string>Yahoo! Messenger</string>
 		</dict>
 	</array>
-	<key>KSMinimumAppVersion</key>
+	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
 	<key>KSHelpAnchor</key>
 	<string>IM_Status</string>

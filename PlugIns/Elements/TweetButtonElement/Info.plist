@@ -24,7 +24,7 @@
 	<string>${SVN_VERSION}</string>
 	<key>NSPrincipalClass</key>
 	<string>TweetButtonPlugIn</string>
-	<key>KSMinimumAppVersion</key>
+	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
 	<key>KTCategory</key>
 	<integer>4</integer>

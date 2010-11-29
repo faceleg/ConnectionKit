@@ -36,7 +36,7 @@
 	<string>Facebook</string>
 	<key>KTCategory</key>
 	<integer>4</integer>
-	<key>KSMinimumAppVersion</key>
+	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
 </dict>
 </plist>
