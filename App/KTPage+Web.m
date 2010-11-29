@@ -272,6 +272,9 @@
 
 - (void)publish:(id <SVPublisher>)publishingEngine recursively:(BOOL)recursive;
 {
+    if ([publishingEngine isCancelled]) return;
+    
+    
     /*  HTML writing tends to create a lot of temporary objects, so wrap in pools
      */
     

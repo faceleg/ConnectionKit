@@ -66,4 +66,9 @@
 - (NSString *)baseRemotePath;
 
 
+#pragma mark Status
+// If your writing occupies any significant amount of time, please check this and exit as soon as possible when canceled
+- (BOOL)isCancelled;
+
+
 @end

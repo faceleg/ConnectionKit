@@ -77,4 +77,6 @@
 
 - (NSString *)designDirectoryPath; { return nil; }
 
+- (BOOL)isCancelled; { return [[self publishingEngine] isCancelled]; }
+
 @end
