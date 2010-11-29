@@ -49,8 +49,6 @@
 	<integer>8</integer>
 	<key>KTPluginUntitledName</key>
 	<string></string>
-	<key>KTTemplateName</key>
-	<string>BadgeTemplate</string>
 	<key>NSPrincipalClass</key>
 	<string>BadgePlugIn</string>
 </dict>
