@@ -197,15 +197,23 @@
 
 - (void)writeGraphicIgnoringCallout:(id <SVGraphic, SVDOMControllerRepresentedObject>)graphic;
 {
-    // Create controller for the graphic
-    SVDOMController *controller = [graphic newDOMController];
-    [self startDOMController:controller];
-    [controller release];
-    
-    [super writeGraphicIgnoringCallout:graphic];
-    
-    // Tidy up
-    [self endDOMController];
+    if ([graphic shouldWriteHTMLInline])
+    {
+        // The graphic will take care of generating its own controller(s)
+        [super writeGraphicIgnoringCallout:graphic];
+    }
+    else
+    {
+        // Create controller for the graphic
+        SVDOMController *controller = [graphic newDOMController];
+        [self startDOMController:controller];
+        [controller release];
+        
+        [super writeGraphicIgnoringCallout:graphic];
+        
+        // Tidy up
+        [self endDOMController];
+    }
 }
 
 - (void)writeGraphic:(SVGraphic *)graphic withDOMController:(SVGraphicDOMController *)controller;
