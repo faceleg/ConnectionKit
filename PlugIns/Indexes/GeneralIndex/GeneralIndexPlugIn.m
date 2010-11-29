@@ -39,7 +39,7 @@
 @interface GeneralIndexPlugIn ()
 - (void)writeThumbnailImageOfIteratedPage;
 - (void)writeTitleOfIteratedPage;
-- (void)writeSummaryOfIteratedPage;
+- (BOOL)writeSummaryOfIteratedPage;
 @end
 
 
@@ -128,6 +128,7 @@
 
 - (void)writeInnards
 {
+	BOOL truncated = NO;
     id<SVPlugInContext> context = [self currentContext];
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
 	NSString *className = [context currentIterationCSSClassName];
@@ -163,7 +164,7 @@
 		if (self.showEntries || !self.showTitles)	// make sure we show entries if titles not showing
 		{
 			[context startElement:@"td" className:@"dli3"];
-			[self writeSummaryOfIteratedPage];
+			truncated = [self writeSummaryOfIteratedPage];
 			[context endElement];
 		}
 		
@@ -186,8 +187,29 @@
 		}
 		if (self.showEntries || !self.showTitles)	// make sure we show entries if titles not showing
 		{
-			[self writeSummaryOfIteratedPage];
+			truncated = [self writeSummaryOfIteratedPage];
 		}
+		
+		[context startElement:@"div" className:@"article-info"];
+
+		if (truncated)
+		{
+			// Note: Right now we are just writing out the format.  We are not providing a way to edit or customize this.
+			
+			[context startElement:@"div" className:@"continue-reading-link"];
+			[context startAnchorElementWithPage:iteratedPage];
+			
+			NSString *format = [[iteratedPage master] valueForKey:@"continueReadingLinkFormat"];
+			NSString *title = [iteratedPage title];
+			if (nil == title)
+			{
+				title = @"";		// better than nil, which crashes!
+			}
+			NSString *textToWrite = [format stringByReplacing:@"@@" with:title];
+			[context writeText:textToWrite];
+			[context endElement];	// </a>
+		}
+
 		if (self.showTimestamps || self.showPermaLinks)		// timestamps and/or permanent links need timestamp <div>
 		{
 			
@@ -213,8 +235,12 @@
 			{
 				[context endElement];	// </a>
 			}
-			[context endElement];	// </div>
+			[context endElement];	// </div> timestamp
 		}
+		
+		[context endElement];	// </div> article-info
+
+		
 	}
 	
 	/*
@@ -268,13 +294,14 @@
  [[summary item indexedCollection.collectionTruncateCharacters]]
  */
 
-- (void)writeSummaryOfIteratedPage;
+- (BOOL)writeSummaryOfIteratedPage;
 {
     id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
-    [iteratedPage writeSummary:context
-					truncation:self.truncateCount
-				truncationType:(self.truncate ? self.truncationType : kTruncateNone)];
+    BOOL truncated = [iteratedPage writeSummary:context
+									 truncation:self.truncateCount
+								 truncationType:(self.truncate ? self.truncationType : kTruncateNone)];
+	return truncated;
 }
 
 
