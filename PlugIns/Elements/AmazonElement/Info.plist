@@ -65,8 +65,6 @@
 	<string>Inspector</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
-	<key>KTTemplateName</key>
-	<string>template</string>
 	<key>NSPrincipalClass</key>
 	<string>AmazonListPlugIn</string>
 	<key>KTElementSupportsPageUsage</key>
