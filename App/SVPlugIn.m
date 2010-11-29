@@ -81,6 +81,42 @@
 
 static id <SVPlugInContext> sCurrentContext;
 
+- (SVTemplate *)HTMLTemplate;
+{
+    if (!_template)
+    {
+        // Is there already a globally cached template for us to use?
+        NSString *templateName = [self className];
+        _template = [SVTemplate templateNamed:templateName];    // it'll be retained in a mo'
+        if (_template)
+        {
+            [_template retain];
+        }
+        else
+        {
+            // Have to read in from disk directly then
+            NSString *fileName = [[self bundle] objectForInfoDictionaryKey:@"KTTemplateName"];
+            if ( !fileName )
+            {
+                NSString *className = [[self bundle] objectForInfoDictionaryKey:@"NSPrincipalClass"]; OBASSERT(className);
+                fileName = [className stringByReplacing:@"PlugIn" with:@"Template"];
+            }
+            if (!fileName) fileName = @"template";
+            
+            NSString *path = [[self bundle] pathForResource:fileName ofType:@"html"];
+            if (path)
+            {
+                _template = [[SVTemplate alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]];
+                
+                // Add to global cache for benefit of other plug-in instances
+                [(SVTemplate *)_template setName:templateName];
+            }
+        }
+    }
+    
+    return _template;
+}
+
 - (void)writeHTML:(id <SVPlugInContext>)context;
 {
     // add any KTPluginCSSFilesNeeded
@@ -117,42 +153,6 @@ static id <SVPlugInContext> sCurrentContext;
 }
 
 + (id <SVPlugInContext>)currentContext; { return sCurrentContext; }
-
-- (SVTemplate *)HTMLTemplate;
-{
-    if (!_template)
-    {
-        // Is there already a globally cached template for us to use?
-        NSString *templateName = [self className];
-        _template = [SVTemplate templateNamed:templateName];    // it'll be retained in a mo'
-        if (_template)
-        {
-            [_template retain];
-        }
-        else
-        {
-            // Have to read in from disk directly then
-            NSString *fileName = [[self bundle] objectForInfoDictionaryKey:@"KTTemplateName"];
-            if ( !fileName )
-            {
-                NSString *className = [[self bundle] objectForInfoDictionaryKey:@"NSPrincipalClass"]; OBASSERT(className);
-                fileName = [className stringByReplacing:@"PlugIn" with:@"Template"];
-            }
-            if (!fileName) fileName = @"template";
-            
-            NSString *path = [[self bundle] pathForResource:fileName ofType:@"html"];
-            if (path)
-            {
-                _template = [[SVTemplate alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]];
-                
-                // Add to global cache for benefit of other plug-in instances
-                [(SVTemplate *)_template setName:templateName];
-            }
-        }
-    }
-    
-    return _template;
-}
 
 - (NSString *)inlineGraphicClassName;
 {
