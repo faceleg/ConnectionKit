@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		3C4A17F40D5E7C7A009476BF /* DeliciousPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A17F30D5E7C7A009476BF /* DeliciousPlugIn.m */; };
 		3C4A18240D5E7F67009476BF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A18220D5E7F67009476BF /* Localizable.strings */; };
-		3C4A18330D5E7FC1009476BF /* DeliciousTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A18300D5E7FC1009476BF /* DeliciousTemplate.html */; };
+		3C4A18330D5E7FC1009476BF /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A18300D5E7FC1009476BF /* Template.html */; };
 		3C4A18BD0D5FA0F0009476BF /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A18BC0D5FA0F0009476BF /* License.rtf */; };
 		3C7C2C0A1219E69D005D75B1 /* DeliciousInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7C2C091219E69D005D75B1 /* DeliciousInspector.m */; };
 		3C7C2C191219E6D5005D75B1 /* DeliciousInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C7C2C171219E6D5005D75B1 /* DeliciousInspector.xib */; };
@@ -44,7 +44,7 @@
 		3C4A182B0D5E7F9A009476BF /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C4A182C0D5E7FA1009476BF /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C4A182D0D5E7FA9009476BF /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C4A18300D5E7FC1009476BF /* DeliciousTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = DeliciousTemplate.html; sourceTree = "<group>"; };
+		3C4A18300D5E7FC1009476BF /* Template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Template.html; sourceTree = "<group>"; };
 		3C4A18BC0D5FA0F0009476BF /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
 		3C7C2C081219E69D005D75B1 /* DeliciousInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliciousInspector.h; sourceTree = "<group>"; };
 		3C7C2C091219E69D005D75B1 /* DeliciousInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeliciousInspector.m; sourceTree = "<group>"; };
@@ -98,7 +98,7 @@
 				CE28032C12432D9E00B00F3D /* toolbar_delicious.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C7C2C171219E6D5005D75B1 /* DeliciousInspector.xib */,
-				3C4A18300D5E7FC1009476BF /* DeliciousTemplate.html */,
+				3C4A18300D5E7FC1009476BF /* Template.html */,
 				CE427D070E6332E7002146D7 /* delicious.16.png */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C4A18220D5E7F67009476BF /* Localizable.strings */,
@@ -221,7 +221,7 @@
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				3C4A18240D5E7F67009476BF /* Localizable.strings in Resources */,
-				3C4A18330D5E7FC1009476BF /* DeliciousTemplate.html in Resources */,
+				3C4A18330D5E7FC1009476BF /* Template.html in Resources */,
 				3C4A18BD0D5FA0F0009476BF /* License.rtf in Resources */,
 				CE427D080E6332E7002146D7 /* delicious.16.png in Resources */,
 				3C7C2C191219E6D5005D75B1 /* DeliciousInspector.xib in Resources */,
