@@ -84,8 +84,6 @@
 	</dict>
 	<key>KTPluginName</key>
 	<string>IM Status</string>
-	<key>KTPluginNibFile</key>
-	<string>IMStatusInspector</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>

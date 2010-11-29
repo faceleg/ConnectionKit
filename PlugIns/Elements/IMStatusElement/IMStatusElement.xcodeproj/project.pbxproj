@@ -18,7 +18,7 @@
 		3C42E43B0D64FB65004F35FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4380D64FB65004F35FD /* Localizable.strings */; };
 		3C42E4550D64FBCC004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4540D64FBCC004F35FD /* License.rtf */; };
 		3C42E4780D64FCD1004F35FD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C42E4770D64FCD1004F35FD /* AddressBook.framework */; };
-		3CD67924120680AB0011B194 /* IMStatusInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CD67922120680AB0011B194 /* IMStatusInspector.xib */; };
+		3C5D6F5B12A434A200AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F5912A434A200AAAB18 /* Inspector.xib */; };
 		3CFCD655123AF4B1003A635C /* NSString+IMStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFCD654123AF4B1003A635C /* NSString+IMStatus.m */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
@@ -62,7 +62,7 @@
 		3C42E4560D64FBE4004F35FD /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C42E4570D64FBE4004F35FD /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C42E4770D64FCD1004F35FD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = /System/Library/Frameworks/AddressBook.framework; sourceTree = "<absolute>"; };
-		3CD67923120680AB0011B194 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IMStatusInspector.xib; sourceTree = "<group>"; };
+		3C5D6F5A12A434A200AAAB18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		3CFCD653123AF4B1003A635C /* NSString+IMStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IMStatus.h"; sourceTree = "<group>"; };
 		3CFCD654123AF4B1003A635C /* NSString+IMStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IMStatus.m"; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* IMStatus.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IMStatus.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,9 +111,9 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C5D6F5912A434A200AAAB18 /* Inspector.xib */,
 				CEA32AE71283356500648C39 /* toolbar_imstatus.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				3CD67922120680AB0011B194 /* IMStatusInspector.xib */,
 				3C42E42B0D64FB59004F35FD /* offline.png */,
 				3C42E42C0D64FB59004F35FD /* online.png */,
 				3C42E42D0D64FB59004F35FD /* online_skype.png */,
@@ -251,8 +251,8 @@
 				3C42E4340D64FB59004F35FD /* online_yahoo.gif in Resources */,
 				3C42E43B0D64FB65004F35FD /* Localizable.strings in Resources */,
 				3C42E4550D64FBCC004F35FD /* License.rtf in Resources */,
-				3CD67924120680AB0011B194 /* IMStatusInspector.xib in Resources */,
 				CEA32AE81283356500648C39 /* toolbar_imstatus.tiff in Resources */,
+				3C5D6F5B12A434A200AAAB18 /* Inspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,12 +324,12 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		3CD67922120680AB0011B194 /* IMStatusInspector.xib */ = {
+		3C5D6F5912A434A200AAAB18 /* Inspector.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3CD67923120680AB0011B194 /* en */,
+				3C5D6F5A12A434A200AAAB18 /* en */,
 			);
-			name = IMStatusInspector.xib;
+			name = Inspector.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
