@@ -68,7 +68,7 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
 
 - (void)writeThumbnailImageOfIteratedPage
 {
-    id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+    id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
     [iteratedPage writeThumbnail:context

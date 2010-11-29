@@ -90,7 +90,7 @@
 
 - (void)writeIndexStart
 {
-	id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+	id<SVPlugInContext> context = [self currentContext]; 
 
 	switch(self.layoutType)
 	{
@@ -108,7 +108,7 @@
 
 - (void)writeIndexEnd
 {
-	id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+	id<SVPlugInContext> context = [self currentContext]; 
 
 	switch(self.layoutType)
 	{
@@ -126,7 +126,7 @@
 
 - (void)writeInnards
 {
-    id<SVPlugInContext> context = [SVPlugIn currentContext];
+    id<SVPlugInContext> context = [self currentContext];
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
 	NSString *className = [context currentIterationCSSClassName];
 	
@@ -219,7 +219,7 @@
 
 - (void)writeTitleOfIteratedPage;
 {
-    id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+    id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
     if ( self.hyperlinkTitles) { [context startAnchorElementWithPage:iteratedPage]; } // <a>
@@ -240,7 +240,7 @@
 
 - (void)writeSummaryOfIteratedPage;
 {
-    id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+    id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     [iteratedPage writeSummary:context
 					truncation:self.truncateCount
@@ -257,7 +257,7 @@
 
 - (void)writeThumbnailImageOfIteratedPage;
 {
-    id<SVPlugInContext> context = [SVPlugIn currentContext]; 
+    id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
     // Do a dry-run to see if there's actuall a thumbnail

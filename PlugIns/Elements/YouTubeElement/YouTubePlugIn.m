@@ -123,7 +123,7 @@
 
 - (void)startObjectElement;
 {
-    id <SVPlugInContext> context = [SVPlugIn currentContext];
+    id <SVPlugInContext> context = [self currentContext];
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"application/x-shockwave-flash"
                                                            forKey:@"type"];
@@ -134,7 +134,7 @@
 
 - (void)writeEmbedElement;
 {
-    id <SVPlugInContext> context = [SVPlugIn currentContext];
+    id <SVPlugInContext> context = [self currentContext];
     
     // Build src URL parameters
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -174,14 +174,14 @@
     [context endElement];
 }
 
-- (void)endObjectElement; { [[SVPlugIn currentContext] endElement]; }
+- (void)endObjectElement; { [[self currentContext] endElement]; }
 
 
 //<iframe title="YouTube video player" class="youtube-player" type="text/html" width="425" height="349" src="http://www.youtube.com/embed/R-mUh4MOuvk?rel=0" frameborder="0"></iframe>
 
 - (void)writeIFrameCode
 {
-    id <SVPlugInContext> context = [SVPlugIn currentContext];
+    id <SVPlugInContext> context = [self currentContext];
     
     NSString *embedHost = (self.privacy) ? @"www.youtube-nocookie.com" : @"www.youtube.com";
     NSString *embed = [NSString stringWithFormat:@"http://%@/embed/%@", embedHost, [self videoID]];
@@ -210,7 +210,7 @@
 
 - (void)writeNoLiveData
 {
-    id <SVPlugInContext> context = [SVPlugIn currentContext];
+    id <SVPlugInContext> context = [self currentContext];
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
                                                            forKey:@"class"];
@@ -239,7 +239,7 @@
 
 - (void)writeNoVideoFound
 {
-    id <SVPlugInContext> context = [SVPlugIn currentContext];
+    id <SVPlugInContext> context = [self currentContext];
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
                                                            forKey:@"class"];
@@ -256,7 +256,7 @@
 
 - (void)writeNoVideoSpecified
 {
-    id <SVPlugInContext> context = [SVPlugIn currentContext];
+    id <SVPlugInContext> context = [self currentContext];
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
                                                            forKey:@"class"];

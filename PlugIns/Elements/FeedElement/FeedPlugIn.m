@@ -88,7 +88,7 @@
 
 - (void)writeOfflinePreviews
 {
-    id<SVPlugInContext> context = [SVPlugIn currentContext];
+    id<SVPlugInContext> context = [self currentContext];
     
     NSString *exampleText = LocalizedStringInThisBundle(@"example no.", "String_On_Page_Template- followed by a number");
     

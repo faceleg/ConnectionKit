@@ -86,7 +86,7 @@
                                      
 - (void)startIFrameElement
 {
-    id <SVPlugInContext> context = [SVPlugIn currentContext];
+    id <SVPlugInContext> context = [self currentContext];
     
     NSString *class = (self.iFrameIsBordered) ? @"iframe-border" : @"iframe-no-border";
     NSString *frameBorder = (self.iFrameIsBordered) ? @"1" : @"0";
@@ -103,17 +103,17 @@
                       bindSizeToPlugIn:self
                             attributes:attributes];
 }
-- (void)endIFrameElement; { [[SVPlugIn currentContext] endElement]; }
+- (void)endIFrameElement; { [[self currentContext] endElement]; }
 
 - (void)startPlaceholderElement
 {
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
                                                            forKey:@"class"];
-    [[SVPlugIn currentContext] startElement:@"div" 
+    [[self currentContext] startElement:@"div" 
                                         bindSizeToPlugIn:self 
                                               attributes:attributes];
 }
-- (void)endPlaceholderElement; { [[SVPlugIn currentContext] endElement]; }
+- (void)endPlaceholderElement; { [[self currentContext] endElement]; }
 
 
 #pragma mark Metrics
