@@ -43,11 +43,15 @@
     NSUInteger _action;
     NSUInteger _colorscheme;
     NSUInteger _layout;
+    NSUInteger _urlType;
+    NSString *_urlString;
 }
 
 @property(nonatomic) BOOL showFaces;
 @property(nonatomic) NSUInteger action;
 @property(nonatomic) NSUInteger colorscheme;
 @property(nonatomic) NSUInteger layout;
+@property(nonatomic) NSUInteger urlType;
+@property(nonatomic, retain) NSString *urlString;
 
 @end

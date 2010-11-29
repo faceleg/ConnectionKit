@@ -55,9 +55,10 @@
 
 
 // tags in xib, converted to text in iframe
+enum URLTYPES { THIS_URL, OTHER_URL };
 enum ACTIONS { LIKE_ACTION = 0, RECOMMEND_ACTION };
 enum COLORSCHEMES { LIGHT_SCHEME = 0, DARK_SCHEME };
-enum { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
+enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 
 @implementation FacebookPlugIn
@@ -68,6 +69,8 @@ enum { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 + (NSArray *)plugInKeys
 { 
     return [NSArray arrayWithObjects:
+            @"urlType",
+            @"urlString",
             @"showFaces", 
             @"action", 
             @"colorscheme", 
@@ -80,7 +83,6 @@ enum { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 //<iframe src="http://www.facebook.com/plugins/like.php?href=www.karelia.com&amp;layout=standard&amp;show_faces=true&amp;width=250&amp;action=like&amp;font=lucida+grande&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:80px;" allowTransparency="true"></iframe>
 
-
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
     //FIXME: do I need to call super? document answer
@@ -92,9 +94,24 @@ enum { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
         NSMutableString *srcString = [[@"http://www.facebook.com/plugins/like.php?" mutableCopy] autorelease];
         
         // append href
-        id<SVPage> page = [context page];
-        NSURL *pageURL = [page feedURL]; //FIXME: how do we get URL of page? using feedURL for now
-        [srcString appendFormat:@"href=%@", [pageURL absoluteString]];
+        switch ( self.urlType )
+        {
+            case THIS_URL:
+                {
+                    id<SVPage> page = [context page];
+                    NSURL *pageURL = [page feedURL]; //FIXME: how do we get URL of page? using feedURL for now
+                    [srcString appendFormat:@"href=%@", [pageURL absoluteString]];
+                }
+                break;
+            case OTHER_URL:
+                {
+                    NSString *href = (nil != self.urlString) ? self.urlString : @"";
+                    [srcString appendFormat:@"href=%@", href];
+                }
+                break;
+            default:
+                break;
+        }
         
         // append layout
         switch ( self.layout )
@@ -154,7 +171,7 @@ enum { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
         [srcString appendFormat:@"&height=%@", [[self height] stringValue]];
         
         // append locale
-        NSString *language = [page language];
+        NSString *language = [[context page] language];
         if ( language && ![language isEqualToString:@"en"] )
         {
             [srcString appendFormat:@"&locale=%@", language];
@@ -175,7 +192,6 @@ enum { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     else 
     {
         //FIXME: phrase this better for user
-        //FIXME: 
         NSString *noLiveFeeds = LocalizedStringInThisBundle(@"Facebook Like Button visible only when loading data from the Internet", "");
         [context writeText:noLiveFeeds];
     }
@@ -264,5 +280,7 @@ enum { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 @synthesize action = _action;
 @synthesize colorscheme = _colorscheme;
 @synthesize layout = _layout;
+@synthesize urlType = _urlType;
+@synthesize urlString = _urlString;
 
 @end
