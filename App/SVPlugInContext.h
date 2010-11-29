@@ -33,6 +33,7 @@
 
 
 #pragma mark URLs
+// To make markup more flexible, relative string should generally be used instead of full URLs. This method quickly generates the best way to get from the current page to a given URL.
 - (NSString *)relativeURLStringOfURL:(NSURL *)URL;
 
 
