@@ -15,8 +15,9 @@
 @protocol SVPlugInContext
 
 #pragma mark Properties
-- (id <SVPage>)page;    // the page whose HTML is being built
+@property(nonatomic, copy, readonly) NSURL *baseURL;
 - (BOOL)isXHTML;
+- (id <SVPage>)page;    // the page whose HTML is being built
 
 
 #pragma mark Purpose
