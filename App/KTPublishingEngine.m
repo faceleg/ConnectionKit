@@ -234,6 +234,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)cancel
 {
+    [super cancel]; // so -isCancelled returns YES
+    
     // Mark self as finished
     if ([self status] > KTPublishingEngineStatusNotStarted && [self status] < KTPublishingEngineStatusFinished)
     {
