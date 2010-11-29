@@ -85,9 +85,6 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
-    //FIXME: do I need to call super? document answer
-    [super writeHTML:context];
-    
     if ( [context liveDataFeeds] )
     {
         // determine full src
@@ -98,9 +95,15 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
         {
             case THIS_URL:
                 {
-                    id<SVPage> page = [context page];
-                    NSURL *pageURL = [page feedURL]; //FIXME: how do we get URL of page? using feedURL for now
-                    [srcString appendFormat:@"href=%@", [pageURL absoluteString]];
+                    NSURL *pageURL = [context baseURL];
+                    if ( nil != pageURL )
+                    {
+                        [srcString appendFormat:@"href=%@", [pageURL absoluteString]];
+                    }
+                    else
+                    {
+                        [srcString appendFormat:@"href=", [pageURL absoluteString]];
+                    }
                 }
                 break;
             case OTHER_URL:
