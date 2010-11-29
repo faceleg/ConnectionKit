@@ -54,6 +54,7 @@
 - (NSString *)name;
 {
     NSString *result = [[self plugInBundle] objectForInfoDictionaryKey:@"KTPluginName"];
+    if (!result) result = [[self plugInBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     if (!result) result = [[self plugInBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleNameKey];
     return result;
 }
