@@ -142,8 +142,14 @@
 
 - (BOOL)isEqualToMedia:(id <SVMedia>)otherMedia;
 {
-    return ([[self mediaURL] ks_isEqualToURL:[otherMedia mediaURL]] ||
-            [[self mediaData] isEqualToData:[otherMedia mediaData]]);
+    BOOL result = ([[self mediaURL] ks_isEqualToURL:[otherMedia mediaURL]]);
+    if (!result)
+    {
+        NSData *data = [self mediaData];
+        if (data) result = [data isEqualToData:[otherMedia mediaData]];
+    }
+    
+    return result;
 }
 
 - (NSUInteger)hash; { return 0; }
