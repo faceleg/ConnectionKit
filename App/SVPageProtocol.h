@@ -39,7 +39,6 @@ typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSent
 @property(nonatomic, readonly) BOOL isCollection;   // or is it enough to test if childPages is non-nil?
 - (NSArray *)childPages; 
 - (id <SVPage>)rootPage;
-- (id <NSFastEnumeration>)automaticRearrangementKeyPaths;
 
 - (NSArray *)archivePages;
 
