@@ -503,12 +503,8 @@
 		// start the anchor
 		if (siteItem != currentParserPage)
 		{
-			NSString *urlString = [context relativeURLStringOfURL:[siteItem URL]];
-			[context pushAttribute:@"href" value:urlString];
 			[context pushAttribute:@"title" value:[siteItem title]];
-			[context startElement:@"a" writeInline:YES];
-			// WAS [context startAnchorElementWithHref:urlString title: target:nil rel:nil];
-			// TODO: targetStringForPage:targetPage
+			[context startAnchorElementWithPage:siteItem];
 		}
 		
 		// Build a text block
