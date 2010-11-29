@@ -79,8 +79,10 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
+    // call super to parse template
     [super writeHTML:context];
-    [context addDependencyForKeyPath:@"linkURL" ofObject:self];
+    
+    // add dependencies for any ivars not references in html template
     [context addDependencyForKeyPath:@"iFrameIsBordered" ofObject:self];
 }
                                      
