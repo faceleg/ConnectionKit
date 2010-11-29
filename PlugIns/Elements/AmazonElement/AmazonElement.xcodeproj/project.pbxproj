@@ -32,7 +32,7 @@
 		3C4A17380D5E7527009476BF /* gear_idle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A17350D5E7527009476BF /* gear_idle.tiff */; };
 		3C4A173A0D5E7527009476BF /* gear_pressed.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A17370D5E7527009476BF /* gear_pressed.tiff */; };
 		3C4A17460D5E75AC009476BF /* amazonlist.css in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A17420D5E75AC009476BF /* amazonlist.css */; };
-		3C4A17470D5E75AC009476BF /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A17430D5E75AC009476BF /* template.html */; };
+		3C4A17470D5E75AC009476BF /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A17430D5E75AC009476BF /* Template.html */; };
 		3C4A17480D5E75AC009476BF /* Thumbnail placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A17440D5E75AC009476BF /* Thumbnail placeholder.png */; };
 		3C4A17580D5E7701009476BF /* AmazonSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C4A17570D5E7701009476BF /* AmazonSupport.framework */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
@@ -97,7 +97,7 @@
 		3C4A17350D5E7527009476BF /* gear_idle.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = gear_idle.tiff; sourceTree = "<group>"; };
 		3C4A17370D5E7527009476BF /* gear_pressed.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = gear_pressed.tiff; sourceTree = "<group>"; };
 		3C4A17420D5E75AC009476BF /* amazonlist.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = amazonlist.css; sourceTree = "<group>"; };
-		3C4A17430D5E75AC009476BF /* template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = template.html; sourceTree = "<group>"; };
+		3C4A17430D5E75AC009476BF /* Template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Template.html; sourceTree = "<group>"; };
 		3C4A17440D5E75AC009476BF /* Thumbnail placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Thumbnail placeholder.png"; sourceTree = "<group>"; };
 		3C4A17570D5E7701009476BF /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AmazonSupport.framework; path = ../../../../../../Builds/Products/Debug/AmazonSupport.framework; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* Amazon.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amazon.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -283,7 +283,7 @@
 			children = (
 				CE722FA30D85CE9A00E9C592 /* amazon.icns */,
 				3C4A17420D5E75AC009476BF /* amazonlist.css */,
-				3C4A17430D5E75AC009476BF /* template.html */,
+				3C4A17430D5E75AC009476BF /* Template.html */,
 				3C4A17440D5E75AC009476BF /* Thumbnail placeholder.png */,
 			);
 			name = Other;
@@ -357,7 +357,7 @@
 				3C4A17380D5E7527009476BF /* gear_idle.tiff in Resources */,
 				3C4A173A0D5E7527009476BF /* gear_pressed.tiff in Resources */,
 				3C4A17460D5E75AC009476BF /* amazonlist.css in Resources */,
-				3C4A17470D5E75AC009476BF /* template.html in Resources */,
+				3C4A17470D5E75AC009476BF /* Template.html in Resources */,
 				3C4A17480D5E75AC009476BF /* Thumbnail placeholder.png in Resources */,
 				CE722FA40D85CE9A00E9C592 /* amazon.icns in Resources */,
 				CEC1F0231141A69D00D8D0B9 /* Inspector.xib in Resources */,
