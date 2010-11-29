@@ -10,7 +10,7 @@
 		3C0234FA0D5CDA8B00E82E4B /* DownloadIndexPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0234F90D5CDA8B00E82E4B /* DownloadIndexPlugIn.m */; };
 		3C02351C0D5CDB0D00E82E4B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C02351A0D5CDB0D00E82E4B /* Localizable.strings */; };
 		3C023E950D5CDCB900E82E4B /* DownloadIndex.css in Resources */ = {isa = PBXBuildFile; fileRef = 3C023E920D5CDCB900E82E4B /* DownloadIndex.css */; };
-		3C023E970D5CDCB900E82E4B /* DownloadIndexTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C023E940D5CDCB900E82E4B /* DownloadIndexTemplate.html */; };
+		3C023E970D5CDCB900E82E4B /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C023E940D5CDCB900E82E4B /* Template.html */; };
 		3C4241B012383AD500E1C9C4 /* DownloadIndexInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C4241AE12383AD500E1C9C4 /* DownloadIndexInspector.xib */; };
 		3C9700F40D5CF7D70070D4A1 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C9700F30D5CF7D70070D4A1 /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
@@ -42,7 +42,7 @@
 		3C0235300D5CDB7200E82E4B /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C0235330D5CDB7D00E82E4B /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C023E920D5CDCB900E82E4B /* DownloadIndex.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = DownloadIndex.css; sourceTree = "<group>"; };
-		3C023E940D5CDCB900E82E4B /* DownloadIndexTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = DownloadIndexTemplate.html; sourceTree = "<group>"; };
+		3C023E940D5CDCB900E82E4B /* Template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Template.html; sourceTree = "<group>"; };
 		3C023E9A0D5CDCDC00E82E4B /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C023E9B0D5CDCDC00E82E4B /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C4241AF12383AD500E1C9C4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DownloadIndexInspector.xib; sourceTree = "<group>"; };
@@ -92,7 +92,7 @@
 			children = (
 				CE2802D612432C6500B00F3D /* toolbar_download_index.tiff */,
 				3C4241AE12383AD500E1C9C4 /* DownloadIndexInspector.xib */,
-				3C023E940D5CDCB900E82E4B /* DownloadIndexTemplate.html */,
+				3C023E940D5CDCB900E82E4B /* Template.html */,
 				3C023E920D5CDCB900E82E4B /* DownloadIndex.css */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
@@ -211,7 +211,7 @@
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				3C02351C0D5CDB0D00E82E4B /* Localizable.strings in Resources */,
 				3C023E950D5CDCB900E82E4B /* DownloadIndex.css in Resources */,
-				3C023E970D5CDCB900E82E4B /* DownloadIndexTemplate.html in Resources */,
+				3C023E970D5CDCB900E82E4B /* Template.html in Resources */,
 				3C9700F40D5CF7D70070D4A1 /* License.rtf in Resources */,
 				3C4241B012383AD500E1C9C4 /* DownloadIndexInspector.xib in Resources */,
 				CE2802D712432C6500B00F3D /* toolbar_download_index.tiff in Resources */,
