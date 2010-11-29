@@ -36,10 +36,18 @@
 
 #import "Sandvox.h"
 
-
 @interface FacebookPlugIn : SVPlugIn 
 {
-
+  @private
+    BOOL _showFaces;
+    NSUInteger _action;
+    NSUInteger _colorscheme;
+    NSUInteger _layout;
 }
+
+@property(nonatomic) BOOL showFaces;
+@property(nonatomic) NSUInteger action;
+@property(nonatomic) NSUInteger colorscheme;
+@property(nonatomic) NSUInteger layout;
 
 @end
