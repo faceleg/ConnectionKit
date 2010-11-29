@@ -189,7 +189,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
                                     nil];
         
         // write iframe
-        [context startElement:@"iframe" bindSizeToPlugIn:self attributes:attributes];
+        [context startElement:@"iframe" attributes:attributes];
         [context endElement];
     }
     else 
