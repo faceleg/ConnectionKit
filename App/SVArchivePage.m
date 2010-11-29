@@ -60,7 +60,9 @@
 	return result;
 }
 
-- (void)writeSummary:(id <SVPlugInContext>)context truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType; { }
+// Returns YES if truncated.
+
+- (BOOL)writeSummary:(id <SVPlugInContext>)context truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType; { return NO; }
 
 - (NSString *)language; { return [[self collection] language]; }
 

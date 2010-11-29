@@ -35,7 +35,7 @@
 
 @interface KTPage (IndexesPrivate)
 - (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
-- (NSString *)truncateMarkup:(NSString *)markup truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType;
+- (NSString *)truncateMarkup:(NSString *)markup truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType didTruncate:(BOOL *)outDidTruncate;
 @end
 
 
@@ -292,8 +292,12 @@
 
 #pragma mark Standard Summary
 
-- (void)writeSummary:(SVHTMLContext *)context truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType;
+// Returns YES if truncated.
+
+- (BOOL)writeSummary:(SVHTMLContext *)context truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType;
 {
+	BOOL truncated = NO;
+	
 	[context willWriteSummaryOfPage:self];
     [context startElement:@"div" className:@"article-summary"];
 
@@ -301,6 +305,7 @@
     if ( nil != [self customSummaryHTML] )
     {
         [context writeHTMLString:[self customSummaryHTML]];
+		truncated = YES;		// A custom summary means we want to make an obvious link to more
     }
     else
 	{
@@ -313,7 +318,7 @@
 			// complete page markup would be:
 			NSString *markup = [[self article] string];
 			
-			NSString *truncated = [self truncateMarkup:markup truncation:maxCount truncationType:truncationType];
+			NSString *truncated = [self truncateMarkup:markup truncation:maxCount truncationType:truncationType didTruncate:&truncated];
 
 			html = [[self article] attributedHTMLStringFromMarkup:truncated];
 		}
@@ -372,11 +377,15 @@
 		
 		[attachments release];
 		[summary release];
+		
+		return truncated;
 	}
 
 
     [context endElement];
     if ([context respondsToSelector:@selector(endDOMController)]) [((SVWebEditorHTMLContext *)context) endDOMController];
+
+	return truncated;
 }
 
 /*!	Here is the main information about how summaryHTML works.
@@ -492,10 +501,10 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 */
 
 
-- (NSString *)truncateMarkup:(NSString *)markup truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType;
+- (NSString *)truncateMarkup:(NSString *)markup truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType didTruncate:(BOOL *)outDidTruncate;
 {
 	NSString *result = markup;
-		
+	BOOL removedAnything = NO;
 	if ((kTruncateNone != truncationType) && maxCount)	// only do something if we want to actually truncate something
 	{
 		// Only want run through this if:
@@ -659,7 +668,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 				currentNode = [currentNode nextNode];
 			}
 			
-			BOOL removedAnything = [theBody removeAllNodesAfter:(NSXMLElement *)currentNode];
+			removedAnything = [theBody removeAllNodesAfter:(NSXMLElement *)currentNode];
 			if (removedAnything)
 			{
 				OFF((@"Removed some stuff"));
@@ -691,7 +700,10 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 			}
 		}	
 	}
-	
+	if (outDidTruncate)
+	{
+		*outDidTruncate = removedAnything;
+	}
 	return result;
 }
 
