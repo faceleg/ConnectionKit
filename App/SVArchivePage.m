@@ -8,7 +8,9 @@
 
 #import "SVArchivePage.h"
 
+#import "SVGraphicFactory.h"
 #import "SVHTMLTemplateParser.h"
+#import "SVIndexPlugIn.h"
 #import "KTPage+Paths.h"
 #import "SVLink.h"
 
@@ -68,6 +70,16 @@
 - (NSArray *)archivePages; { return nil; }
 
 - (NSString *)timestampDescription; { return nil; }
+
+#pragma mark Being for the benefit of index pages controller
+
+- (NSSet *)childItems; { return [NSSet setWithArray:[self childPages]]; }
+
+- (NSArray *)childItemsSortDescriptors;
+{
+    // Always sort chronologically
+    return [KTPage dateCreatedSortDescriptorsAscending:NO];
+}
 
 #pragma mark Location
 
@@ -129,8 +141,17 @@
 {
     SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
     
+    
+    SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:@"sandvox.GeneralIndex"];
+    SVIndexPlugIn *plugIn = [[[factory plugInClass] alloc] init];
+    
+    [plugIn setIndexedCollection:self];
+    [plugIn writeHTML:context];
+    
+    [plugIn release];
+    
     // Write out custom index
-    [context writeHTMLString:@"<div>Oy, there should be an archive here!</div>"];
+    //[context writeHTMLString:@"<div>Oy, there should be an archive here!</div>"];
 }
 
 @end
