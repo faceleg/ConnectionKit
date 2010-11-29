@@ -287,7 +287,7 @@ static id <SVPlugInContext> sCurrentContext;
     // Make Inspector
     if (nibName || class)
     {
-        result = [[class alloc] initWithNibName:nibName bundle:bundle];
+        result = [[class alloc] initWithNibName:nil bundle:bundle];
         [result setTitle:[[bundle localizedInfoDictionary] objectForKey:@"KTPluginName"]];
         [result autorelease];
     }

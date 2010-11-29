@@ -13,6 +13,8 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 {
+    if (!nibNameOrNil) nibNameOrNil = @"Inspector.nib";
+    
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
     _inspectedObjectsController = [[NSArrayController alloc] init];
