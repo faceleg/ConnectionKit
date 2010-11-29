@@ -150,6 +150,11 @@
     [text setHidden:NSBOOL(YES)];
 }
 
+#pragma mark Resizing
+
+// Right now, no text is resizeable
+- (unsigned int)resizingMask; { return 0; }
+
 #pragma mark Editing
 
 - (void)webEditorTextDidChange;
