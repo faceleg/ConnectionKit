@@ -50,10 +50,9 @@
 	
 	[newField setType:ContactElementTextFieldField];
 	
-	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	NSString *language = nil; // [page language];
-	[newField setLabel:[bundle localizedStringForString:@"New field" language:language fallback:
-		LocalizedStringInThisBundle(@"New field", @"initial name of contact element field")]];
+	// Ideally this would be the target language since it might be published, but it's temporary.
+	// Besides, it's not easy to get to the page to find out its language from here.
+	[newField setLabel:LocalizedStringInThisBundle(@"New field", @"initial name of contact element field")];
 	
 	return newField;
 }
