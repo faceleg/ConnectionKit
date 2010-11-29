@@ -125,7 +125,7 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
 	{
         // Want to localize field labels according to the site‚Ä¶
 		NSString *languageCode = [page language];
-        NSDictionary *localizations = [[NSDictionary alloc] initWithContentsOfFile:[[self bundle] pathForResource:@"ContactStrings" ofType:@"plist"]];
+        NSDictionary *localizations = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"ContactStrings" ofType:@"plist"]];
         NSDictionary *localizedStrings = [localizations objectForKey:languageCode];
         
 		// ‚Ä¶if not found, try the langauge without a region, e.g. fr-CA -> fr

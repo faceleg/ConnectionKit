@@ -169,7 +169,7 @@ static NSArray *sAltStrings = nil;
 - (NSString *)badgeURLString
 {
     // find badge resource
-    NSString *resourcePath = [[self bundle] pathForImageResource:[self currentBadgeName]];
+    NSString *resourcePath = [[NSBundle bundleForClass:[self class]] pathForImageResource:[self currentBadgeName]];
     NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
     
     // add resource to context

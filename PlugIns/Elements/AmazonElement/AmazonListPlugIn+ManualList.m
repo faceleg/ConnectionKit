@@ -308,7 +308,7 @@
 
 - (NSURL *)thumbnailPlaceholderURL
 {
-	NSString *path = [[self bundle] pathForResource:@"Thumbnail placeholder" ofType:@"png"];
+	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"Thumbnail placeholder" ofType:@"png"];
 	return [NSURL fileURLWithPath:path];
 }
 

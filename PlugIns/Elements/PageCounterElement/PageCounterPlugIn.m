@@ -186,7 +186,7 @@ NSString *PCSampleImageKey = @"sampleImage";
 	if (PC_GRAPHICS == self.themeType)
 	{
 		NSString *theme = self.themeTitle;
-		NSBundle *b = [self bundle];
+		NSBundle *b = [NSBundle bundleForClass:[self class]];
 		NSString *imagePath = [self.selectedTheme objectForKey:PCImagesPathKey];	// from default
         
         NSURL *contextResourceURL = nil;
