@@ -95,15 +95,7 @@ static id <SVPlugInContext> sCurrentContext;
         else
         {
             // Have to read in from disk directly then
-            NSString *fileName = [[self bundle] objectForInfoDictionaryKey:@"KTTemplateName"];
-            if ( !fileName )
-            {
-                NSString *className = [[self bundle] objectForInfoDictionaryKey:@"NSPrincipalClass"]; OBASSERT(className);
-                fileName = [className stringByReplacing:@"PlugIn" with:@"Template"];
-            }
-            if (!fileName) fileName = @"template";
-            
-            NSString *path = [[self bundle] pathForResource:fileName ofType:@"html"];
+            NSString *path = [[self bundle] pathForResource:@"Template" ofType:@"html"];
             if (path)
             {
                 _template = [[SVTemplate alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]];
@@ -143,10 +135,6 @@ static id <SVPlugInContext> sCurrentContext;
         
         [parser parseIntoHTMLContext:(SVHTMLContext *)context];
         [parser release];
-    }
-    else if ( [[self bundle] objectForInfoDictionaryKey:@"KTTemplateName"] )
-    {
-        OBPRECONDITION(template); // we're defining a template in Info.plist but there isn't one there!
     }
     
     sCurrentContext = nil;

@@ -134,10 +134,6 @@
 	{
 		return [NSNumber numberWithUnsignedInt:5];
 	}
-	else if ([key isEqualToString:@"KTTemplateName"])
-	{
-		return @"template";
-	}
 	else
 	{
 		return [super defaultPluginPropertyForKey:key];
