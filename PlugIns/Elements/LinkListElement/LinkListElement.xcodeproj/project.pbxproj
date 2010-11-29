@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C91839E11E680AF006417D8 /* LinkListInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C91839C11E680AF006417D8 /* LinkListInspector.xib */; };
+		3C5D6F5512A4341200AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F5312A4341200AAAB18 /* Inspector.xib */; };
 		3CA9008E0D63C89400815310 /* LinkListArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA900890D63C89400815310 /* LinkListArrayController.m */; };
 		3CA900900D63C89400815310 /* LinkListPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9008D0D63C89400815310 /* LinkListPlugIn.m */; };
 		3CA900920D63C8A200815310 /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900910D63C8A200815310 /* Template.html */; };
@@ -23,7 +23,7 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* LinkListElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkListElement_Prefix.pch; sourceTree = "<group>"; };
-		3C91839D11E680AF006417D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LinkListInspector.xib; sourceTree = "<group>"; };
+		3C5D6F5412A4341200AAAB18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		3CA900880D63C89400815310 /* LinkListArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkListArrayController.h; sourceTree = "<group>"; };
 		3CA900890D63C89400815310 /* LinkListArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkListArrayController.m; sourceTree = "<group>"; };
 		3CA9008C0D63C89400815310 /* LinkListPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkListPlugIn.h; sourceTree = "<group>"; };
@@ -91,9 +91,9 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C5D6F5312A4341200AAAB18 /* Inspector.xib */,
 				CE28031312432D1800B00F3D /* toolbar_linklist.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				3C91839C11E680AF006417D8 /* LinkListInspector.xib */,
 				3CA900910D63C8A200815310 /* Template.html */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3CA900960D63C8AC00815310 /* Localizable.strings */,
@@ -215,8 +215,8 @@
 				3CA900920D63C8A200815310 /* Template.html in Resources */,
 				3CA900990D63C8AC00815310 /* Localizable.strings in Resources */,
 				3CA900BB0D63CB2900815310 /* License.rtf in Resources */,
-				3C91839E11E680AF006417D8 /* LinkListInspector.xib in Resources */,
 				CE28031412432D1800B00F3D /* toolbar_linklist.tiff in Resources */,
+				3C5D6F5512A4341200AAAB18 /* Inspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,12 +268,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		3C91839C11E680AF006417D8 /* LinkListInspector.xib */ = {
+		3C5D6F5312A4341200AAAB18 /* Inspector.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3C91839D11E680AF006417D8 /* en */,
+				3C5D6F5412A4341200AAAB18 /* en */,
 			);
-			name = LinkListInspector.xib;
+			name = Inspector.xib;
 			sourceTree = "<group>";
 		};
 		3CA900960D63C8AC00815310 /* Localizable.strings */ = {
