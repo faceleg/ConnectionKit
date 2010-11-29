@@ -105,7 +105,7 @@
 									  @"obidos",
 									  @"ASIN",
 									  [self ASIN],
-									  [AmazonECSOperation associateIDForStore:[self store]],
+									  [AmazonECSOperation associateIDForStore:[self store]],	// May be nil, ending path now
 									  nil]];
 	
 		result = [NSURL URLWithString:path relativeToURL:storeURL];
