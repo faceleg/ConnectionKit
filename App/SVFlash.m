@@ -51,9 +51,9 @@
 
 @synthesize dimensionCalculationConnection = _dimensionCalculationConnection;
 
-//	LocalizedStringInThisBundle(@"This is a placeholder for a Flash file. The full Flash presentation will appear once you publish this website, but to see the Flash in Sandvox, please enable live data feeds in the preferences.", "Live data feeds disabled message.")
+//	NSLocalizedString(@"This is a placeholder for a Flash file. The full Flash presentation will appear once you publish this website, but to see the Flash in Sandvox, please enable live data feeds in the preferences.", "Live data feeds disabled message.")
 
-//	LocalizedStringInThisBundle(@"Please use the Inspector to enter the URL of a Flash.", "URL has not been specified - placeholder message")
+//	NSLocalizedString(@"Please use the Inspector to enter the URL of a Flash.", "URL has not been specified - placeholder message")
 
 #pragma mark -
 #pragma mark Lifetime
