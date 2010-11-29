@@ -14,6 +14,8 @@
 #import "KTPage+Paths.h"
 #import "SVLink.h"
 
+#import "NSObject+Karelia.h"
+
 
 @implementation SVArchivePage
 
@@ -146,12 +148,15 @@
     SVIndexPlugIn *plugIn = [[[factory plugInClass] alloc] init];
     
     [plugIn setIndexedCollection:self];
+    [plugIn setBool:YES forKey:@"hyperlinkTitles"];
+    [plugIn setBool:YES forKey:@"showEntries"];
+    [plugIn setBool:YES forKey:@"showTimestamps"];
+    [plugIn setInteger:1 forKey:@"layoutType"]; // kLayoutSections
+    
+    
     [plugIn writeHTML:context];
     
     [plugIn release];
-    
-    // Write out custom index
-    //[context writeHTMLString:@"<div>Oy, there should be an archive here!</div>"];
 }
 
 @end
