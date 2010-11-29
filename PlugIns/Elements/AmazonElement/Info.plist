@@ -61,8 +61,6 @@
 		<key>store</key>
 		<integer>1</integer>
 	</dict>
-	<key>KTPluginNibFile</key>
-	<string>Inspector</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
 	<key>NSPrincipalClass</key>
