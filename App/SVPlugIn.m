@@ -153,6 +153,7 @@ static id <SVPlugInContext> sCurrentContext;
 }
 
 + (id <SVPlugInContext>)currentContext; { return sCurrentContext; }
+- (id <SVPlugInContext>)currentContext; { return [SVPlugIn currentContext]; }
 
 - (NSString *)inlineGraphicClassName;
 {
