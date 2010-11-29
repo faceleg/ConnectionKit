@@ -13,8 +13,8 @@
 		3C4A185B0D5F9BFB009476BF /* TwitterFeedPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A185A0D5F9BFB009476BF /* TwitterFeedPlugIn.m */; };
 		3C4A187F0D5F9E25009476BF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A187D0D5F9E25009476BF /* Localizable.strings */; };
 		3C4A189B0D5F9F5C009476BF /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A189A0D5F9F5C009476BF /* License.rtf */; };
+		3C5D6F4712A431BF00AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F4512A431BF00AAAB18 /* Inspector.xib */; };
 		3CB768FF126E2F4D008098C6 /* TwitterFeedInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB768FE126E2F4D008098C6 /* TwitterFeedInspector.m */; };
-		3CFEF261122C33DE005A08FC /* TwitterFeedInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CFEF25F122C33DE005A08FC /* TwitterFeedInspector.xib */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		CE2802F012432CA800B00F3D /* toolbar_twitter.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE2802EF12432CA800B00F3D /* toolbar_twitter.tiff */; };
@@ -36,9 +36,9 @@
 		3C4A18740D5F9DD5009476BF /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C4A187E0D5F9E25009476BF /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C4A189A0D5F9F5C009476BF /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
+		3C5D6F4612A431BF00AAAB18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		3CB768FD126E2F4D008098C6 /* TwitterFeedInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFeedInspector.h; sourceTree = "<group>"; };
 		3CB768FE126E2F4D008098C6 /* TwitterFeedInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterFeedInspector.m; sourceTree = "<group>"; };
-		3CFEF260122C33DE005A08FC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TwitterFeedInspector.xib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Twitter.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Twitter.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE2802EF12432CA800B00F3D /* toolbar_twitter.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_twitter.tiff; sourceTree = "<group>"; };
@@ -84,10 +84,10 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C5D6F4512A431BF00AAAB18 /* Inspector.xib */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C4A187D0D5F9E25009476BF /* Localizable.strings */,
-				3CFEF25F122C33DE005A08FC /* TwitterFeedInspector.xib */,
 				3C4A189A0D5F9F5C009476BF /* License.rtf */,
 				2737B0400E9977AB00048D1F /* twittercallbacktemplate.js */,
 				CE2802EF12432CA800B00F3D /* toolbar_twitter.tiff */,
@@ -215,8 +215,8 @@
 				3C4A187F0D5F9E25009476BF /* Localizable.strings in Resources */,
 				3C4A189B0D5F9F5C009476BF /* License.rtf in Resources */,
 				271018410E96708F0095D365 /* twitter_logo.png in Resources */,
-				3CFEF261122C33DE005A08FC /* TwitterFeedInspector.xib in Resources */,
 				CE2802F012432CA800B00F3D /* toolbar_twitter.tiff in Resources */,
+				3C5D6F4712A431BF00AAAB18 /* Inspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,12 +272,12 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		3CFEF25F122C33DE005A08FC /* TwitterFeedInspector.xib */ = {
+		3C5D6F4512A431BF00AAAB18 /* Inspector.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3CFEF260122C33DE005A08FC /* en */,
+				3C5D6F4612A431BF00AAAB18 /* en */,
 			);
-			name = TwitterFeedInspector.xib;
+			name = Inspector.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
