@@ -50,10 +50,10 @@
 	
 	[newField setType:ContactElementTextFieldField];
 	
-    // TODO: Figure out language. Perhaps we could have an API on inspector view controller?
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	NSString *language = nil;//[[pluginDelegate page] valueForKeyPath:@"master.language"];
-	[newField setLabel:[bundle localizedStringForString:@"New field" language:language fallback:@"New field"]];
+	NSString *language = [page language];
+	[newField setLabel:[bundle localizedStringForString:@"New field" language:language fallback:
+		LocalizedStringInThisBundle(@"New field", @"initial name of contact element field")]];
 	
 	return newField;
 }
