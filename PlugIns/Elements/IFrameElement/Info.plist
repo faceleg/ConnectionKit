@@ -30,7 +30,7 @@
 	<string>External_Page</string>
 	<key>KTPageletCanHaveTitle</key>
 	<false/>
-	<key>SVIconPath</key>
+	<key>SVPlugInIconPath</key>
 	<string>toolbar_iframe.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict/>

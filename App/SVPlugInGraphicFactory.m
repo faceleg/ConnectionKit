@@ -98,7 +98,7 @@
 	// The icon is cached; load it if not cached yet
 	if (!_icon)
 	{
-		_icon = [[self iconWithName:@"SVIconPath"] retain];
+		_icon = [[self iconWithName:@"SVPlugInIconPath"] retain];
 	}
 	return _icon;
 }

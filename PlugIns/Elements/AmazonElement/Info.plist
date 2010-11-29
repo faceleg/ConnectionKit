@@ -34,7 +34,7 @@
 	<array>
 		<string>amazonlist.css</string>
 	</array>
-	<key>SVIconPath</key>
+	<key>SVPlugInIconPath</key>
 	<string>amazon</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>

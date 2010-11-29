@@ -30,7 +30,7 @@
 	<string></string>
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
-	<key>SVIconPath</key>
+	<key>SVPlugInIconPath</key>
 	<string>toolbar_delicious.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>

@@ -32,7 +32,7 @@
 	<integer>2</integer>
 	<key>KTPageIconName</key>
 	<string>page_blog_sb.tiff</string>
-	<key>SVIconPath</key>
+	<key>SVPlugInIconPath</key>
 	<string>object_summaries.tiff</string>
 	<key>KTPluginName</key>
 	<string>Tiles &amp; Summaries</string>

@@ -38,7 +38,7 @@
 	<array>
 		<string>ContactElement.css</string>
 	</array>
-	<key>SVIconPath</key>
+	<key>SVPlugInIconPath</key>
 	<string>toolbar_contact.tiff</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
