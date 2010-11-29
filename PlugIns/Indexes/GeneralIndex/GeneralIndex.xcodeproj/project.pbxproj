@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C01DE561248569300B1FF71 /* GeneralIndexInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C01DE541248569300B1FF71 /* GeneralIndexInspector.xib */; };
+		3C5D6F3D12A42EB500AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F3B12A42EB500AAAB18 /* Inspector.xib */; };
 		3C9701050D5CF85C0070D4A1 /* GeneralIndexPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9701040D5CF85C0070D4A1 /* GeneralIndexPlugIn.m */; };
 		3C9701190D5CFA2A0070D4A1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C9701170D5CFA2A0070D4A1 /* Localizable.strings */; };
 		3C9701230D5CFA8E0070D4A1 /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C9701210D5CFA8E0070D4A1 /* Template.html */; };
@@ -22,7 +22,7 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* GeneralIndex_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralIndex_Prefix.pch; sourceTree = "<group>"; };
-		3C01DE551248569300B1FF71 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/GeneralIndexInspector.xib; sourceTree = "<group>"; };
+		3C5D6F3C12A42EB500AAAB18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		3C9701030D5CF85C0070D4A1 /* GeneralIndexPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralIndexPlugIn.h; sourceTree = "<group>"; };
 		3C9701040D5CF85C0070D4A1 /* GeneralIndexPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralIndexPlugIn.m; sourceTree = "<group>"; };
 		3C9701080D5CF8700070D4A1 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -90,9 +90,9 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C5D6F3B12A42EB500AAAB18 /* Inspector.xib */,
 				CE2802C912432C4100B00F3D /* toolbar_general_index.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				3C01DE541248569300B1FF71 /* GeneralIndexInspector.xib */,
 				3C9701210D5CFA8E0070D4A1 /* Template.html */,
 				3C9701170D5CFA2A0070D4A1 /* Localizable.strings */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
@@ -215,7 +215,7 @@
 				3C9701230D5CFA8E0070D4A1 /* Template.html in Resources */,
 				3C970A960D5CFD0F0070D4A1 /* License.rtf in Resources */,
 				CE2802CA12432C4100B00F3D /* toolbar_general_index.tiff in Resources */,
-				3C01DE561248569300B1FF71 /* GeneralIndexInspector.xib in Resources */,
+				3C5D6F3D12A42EB500AAAB18 /* Inspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,12 +249,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		3C01DE541248569300B1FF71 /* GeneralIndexInspector.xib */ = {
+		3C5D6F3B12A42EB500AAAB18 /* Inspector.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3C01DE551248569300B1FF71 /* en */,
+				3C5D6F3C12A42EB500AAAB18 /* en */,
 			);
-			name = GeneralIndexInspector.xib;
+			name = Inspector.xib;
 			sourceTree = "<group>";
 		};
 		3C9701170D5CFA2A0070D4A1 /* Localizable.strings */ = {
