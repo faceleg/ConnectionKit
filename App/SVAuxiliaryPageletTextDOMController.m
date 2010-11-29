@@ -54,6 +54,15 @@
     [self updateDOMWithPlaceholderStringIfNeeded];
 }
 
+#pragma mark Selection
+
+- (DOMElement *)selectableDOMElement;
+{
+    return ([self representedObject] && [self enclosingGraphicDOMController] ?
+            [self HTMLElement] :
+            nil);
+}
+
 @end
 
 

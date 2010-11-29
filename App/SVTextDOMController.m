@@ -137,13 +137,6 @@
     return result;
 }
 
-- (DOMElement *)selectableDOMElement;
-{
-    return ([self representedObject] && [self enclosingGraphicDOMController] ?
-            [self HTMLElement] :
-            nil);
-}
-
 - (void)delete;
 {
     SVTitleBox *text = [self representedObject];

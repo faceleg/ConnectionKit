@@ -78,6 +78,13 @@
     return result;
 }*/
 
+- (DOMElement *)selectableDOMElement;
+{
+    return ([self representedObject] && [self enclosingGraphicDOMController] ?
+            [self HTMLElement] :
+            nil);
+}
+
 #pragma mark Updating
 
 - (void)updateStyle
