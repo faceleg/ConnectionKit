@@ -34,7 +34,7 @@
 	<string>Contact_Form</string>
 	<key>KTPageDisableComments</key>
 	<true/>
-	<key>KTPluginCSSFilesNeeded</key>
+	<key>SVPlugInCSSFiles</key>
 	<array>
 		<string>ContactElement.css</string>
 	</array>

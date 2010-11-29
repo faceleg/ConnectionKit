@@ -28,7 +28,7 @@
 	<string>RSS_Badge</string>
 	<key>KTPageletCanHaveTitle</key>
 	<false/>
-	<key>KTPluginCSSFilesNeeded</key>
+	<key>SVPlugInCSSFiles</key>
 	<array>
 		<string>rssbadge.css</string>
 	</array>

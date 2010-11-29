@@ -30,7 +30,7 @@
 	<string>Amazon_List</string>
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
-	<key>KTPluginCSSFilesNeeded</key>
+	<key>SVPlugInCSSFiles</key>
 	<array>
 		<string>amazonlist.css</string>
 	</array>

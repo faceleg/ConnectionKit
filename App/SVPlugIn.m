@@ -111,8 +111,8 @@ static id <SVPlugInContext> sCurrentContext;
 
 - (void)writeHTML:(id <SVPlugInContext>)context;
 {
-    // add any KTPluginCSSFilesNeeded
-    NSArray *cssFiles = [[[NSBundle bundleForClass:[self class]] infoDictionary] objectForKey:@"KTPluginCSSFilesNeeded"];
+    // add any SVPlugInCSSFiles
+    NSArray *cssFiles = [[[NSBundle bundleForClass:[self class]] infoDictionary] objectForKey:@"SVPlugInCSSFiles"];
     for ( NSString *filename in cssFiles )
     {
         NSString *cssPath = [[NSBundle bundleForClass:[self class]] pathForResource:filename ofType:nil];
