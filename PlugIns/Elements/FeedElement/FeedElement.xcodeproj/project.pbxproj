@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C0AB90F11877E790005584A /* FeedInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C0AB90D11877E790005584A /* FeedInspector.xib */; };
+		3C5D6F6512A4360C00AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F6312A4360C00AAAB18 /* Inspector.xib */; };
 		3CA9FF480D63C31200815310 /* FeedPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9FF470D63C31200815310 /* FeedPlugIn.m */; };
 		3CA9FF4D0D63C31F00815310 /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FF4B0D63C31F00815310 /* Template.html */; };
 		3CA9FF560D63C34000815310 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FF530D63C34000815310 /* Localizable.strings */; };
@@ -22,7 +22,7 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* FeedElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedElement_Prefix.pch; sourceTree = "<group>"; };
-		3C0AB90E11877E790005584A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FeedInspector.xib; sourceTree = "<group>"; };
+		3C5D6F6412A4360C00AAAB18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		3CA9FF460D63C31200815310 /* FeedPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedPlugIn.h; sourceTree = "<group>"; };
 		3CA9FF470D63C31200815310 /* FeedPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedPlugIn.m; sourceTree = "<group>"; };
 		3CA9FF4B0D63C31F00815310 /* Template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Template.html; sourceTree = "<group>"; };
@@ -88,9 +88,9 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C5D6F6312A4360C00AAAB18 /* Inspector.xib */,
 				CE28032712432D8400B00F3D /* toolbar_feed.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				3C0AB90D11877E790005584A /* FeedInspector.xib */,
 				3CA9FF4B0D63C31F00815310 /* Template.html */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3CA9FF530D63C34000815310 /* Localizable.strings */,
@@ -210,8 +210,8 @@
 				3CA9FF4D0D63C31F00815310 /* Template.html in Resources */,
 				3CA9FF560D63C34000815310 /* Localizable.strings in Resources */,
 				3CA9FF6D0D63C3A800815310 /* License.rtf in Resources */,
-				3C0AB90F11877E790005584A /* FeedInspector.xib in Resources */,
 				CE28032812432D8400B00F3D /* toolbar_feed.tiff in Resources */,
+				3C5D6F6512A4360C00AAAB18 /* Inspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,12 +262,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		3C0AB90D11877E790005584A /* FeedInspector.xib */ = {
+		3C5D6F6312A4360C00AAAB18 /* Inspector.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3C0AB90E11877E790005584A /* en */,
+				3C5D6F6412A4360C00AAAB18 /* en */,
 			);
-			name = FeedInspector.xib;
+			name = Inspector.xib;
 			sourceTree = "<group>";
 		};
 		3CA9FF530D63C34000815310 /* Localizable.strings */ = {
