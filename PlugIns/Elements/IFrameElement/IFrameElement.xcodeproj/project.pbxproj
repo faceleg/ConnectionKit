@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C0049711210CDC1006BAD9C /* IFrameInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C00496F1210CDC1006BAD9C /* IFrameInspector.xib */; };
+		3C5D6F5E12A4352100AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F5C12A4352100AAAB18 /* Inspector.xib */; };
 		3CA9003D0D63C61C00815310 /* IFramePlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9003C0D63C61C00815310 /* IFramePlugIn.m */; };
 		3CA900410D63C62400815310 /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900400D63C62400815310 /* Template.html */; };
 		3CA900480D63C63600815310 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900450D63C63600815310 /* Localizable.strings */; };
@@ -22,7 +22,7 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* IFrameElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFrameElement_Prefix.pch; sourceTree = "<group>"; };
-		3C0049701210CDC1006BAD9C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IFrameInspector.xib; sourceTree = "<group>"; };
+		3C5D6F5D12A4352100AAAB18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		3CA9003B0D63C61C00815310 /* IFramePlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFramePlugIn.h; sourceTree = "<group>"; };
 		3CA9003C0D63C61C00815310 /* IFramePlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFramePlugIn.m; sourceTree = "<group>"; };
 		3CA900400D63C62400815310 /* Template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Template.html; sourceTree = "<group>"; };
@@ -88,10 +88,10 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C5D6F5C12A4352100AAAB18 /* Inspector.xib */,
+				3CA900400D63C62400815310 /* Template.html */,
 				CE8EDFC61280828E00974D56 /* toolbar_iframe.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				3C00496F1210CDC1006BAD9C /* IFrameInspector.xib */,
-				3CA900400D63C62400815310 /* Template.html */,
 				3CA900450D63C63600815310 /* Localizable.strings */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3CA9005E0D63C69200815310 /* License.rtf */,
@@ -210,8 +210,8 @@
 				3CA900410D63C62400815310 /* Template.html in Resources */,
 				3CA900480D63C63600815310 /* Localizable.strings in Resources */,
 				3CA9005F0D63C69200815310 /* License.rtf in Resources */,
-				3C0049711210CDC1006BAD9C /* IFrameInspector.xib in Resources */,
 				CE8EDFC71280828E00974D56 /* toolbar_iframe.tiff in Resources */,
+				3C5D6F5E12A4352100AAAB18 /* Inspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,12 +262,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		3C00496F1210CDC1006BAD9C /* IFrameInspector.xib */ = {
+		3C5D6F5C12A4352100AAAB18 /* Inspector.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3C0049701210CDC1006BAD9C /* en */,
+				3C5D6F5D12A4352100AAAB18 /* en */,
 			);
-			name = IFrameInspector.xib;
+			name = Inspector.xib;
 			sourceTree = "<group>";
 		};
 		3CA900450D63C63600815310 /* Localizable.strings */ = {
