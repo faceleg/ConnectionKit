@@ -57,6 +57,7 @@
 						   @"shortTitles",
 						   @"showPermaLinks",
 						   @"showEntries",
+						   @"showTitles",
 						   @"showThumbnails",
 						   @"showTimestamps",
 						   @"truncate",
@@ -81,6 +82,7 @@
 	[context addDependencyForKeyPath:@"shortTitles"			ofObject:self];
 	[context addDependencyForKeyPath:@"showPermaLinks"		ofObject:self];
 	[context addDependencyForKeyPath:@"showEntries"			ofObject:self];
+	[context addDependencyForKeyPath:@"showTitles"			ofObject:self];
 	[context addDependencyForKeyPath:@"showThumbnails"		ofObject:self];
 	[context addDependencyForKeyPath:@"showTimestamps"		ofObject:self];
 	[context addDependencyForKeyPath:@"truncateCount"		ofObject:self];
@@ -158,7 +160,7 @@
 		[context endElement];
 		[context endElement];
 		
-		if (self.showEntries)
+		if (self.showEntries || !self.showTitles)	// make sure we show entries if titles not showing
 		{
 			[context startElement:@"td" className:@"dli3"];
 			[self writeSummaryOfIteratedPage];
@@ -182,32 +184,60 @@
 		{
 			[self writeThumbnailImageOfIteratedPage];
 		}
-		if (self.showEntries)
+		if (self.showEntries || !self.showTitles)	// make sure we show entries if titles not showing
 		{
 			[self writeSummaryOfIteratedPage];
 		}
-		
-		
-		
+		if (self.showTimestamps || self.showPermaLinks)		// timestamps and/or permanent links need timestamp <div>
+		{
+			
+			[context startElement:@"div" className:@"timestamp"];
+
+			if (self.showPermaLinks)		// If we are doing permanent link, start <a>
+			{
+				[context startAnchorElementWithPage:iteratedPage];
+			}
+			if (self.showTimestamps)	// Write out either timestamp ....
+			{
+				[context writeText:iteratedPage.timestampDescription];
+			}
+			else if (self.showPermaLinks)	// ... or permanent link text ..
+			{
+				NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+				NSString *language = [iteratedPage language];
+				NSString *permaLink = [bundle localizedStringForString:@"Permanent Link" language:language fallback:
+									   LocalizedStringInThisBundle(@"Permanent Link", @"Text in website's language to indicate a permanent link to the page")];
+				[context writeText:permaLink];
+			}
+			if ( self.showPermaLinks )
+			{
+				[context endElement];	// </a>
+			}
+			[context endElement];	// </div>
+		}
 	}
 	
 	/*
 	 <div class="article-info">
-	 [[if truncateCount>0]]
-	 <div class="continue-reading-link">
-	 [[if parser.HTMLGenerationPurpose]]<a href="[[path iteratedPage]]">[[endif2]][[continueReadingLink iteratedPage]][[if parser.HTMLGenerationPurpose]]</a>[[endif2]]
-	 </div>
-	 [[endif]]
-	 [[if iteratedPage.includeTimestamp]]
-	 <div class="timestamp">
-	 [[if showPermaLink]]
-	 <a [[target iteratedPage]]href="[[path iteratedPage]]">[[=&iteratedPage.timestamp]]</a>
-	 [[else2]]
-	 [[=&iteratedPage.timestamp]]
-	 [[endif2]]
-	 </div>
-	 [[endif]]
-	 [[COMMENT parsecomponent iteratedPage iteratedPage.commentsTemplate]]
+		 [[if truncateCount>0]]
+		 <div class="continue-reading-link">
+			[[if parser.HTMLGenerationPurpose]]<a href="[[path iteratedPage]]">[[endif2]]
+				[[continueReadingLink iteratedPage]]
+			[[if parser.HTMLGenerationPurpose]]</a>[[endif2]]
+		 </div>
+		 [[endif]]
+		 
+		 [[if iteratedPage.includeTimestamp]]
+			<div class="timestamp">
+				[[if showPermaLink]]
+					<a [[target iteratedPage]]href="[[path iteratedPage]]">[[=&iteratedPage.timestamp]]</a>
+				[[else2]]
+					[[=&iteratedPage.timestamp]]
+				[[endif2]]
+			</div>
+		 [[endif]]
+		 
+		 [[COMMENT parsecomponent iteratedPage iteratedPage.commentsTemplate]]
 	 </div> <!-- article-info -->
 	 </div> <!-- article -->
 	 <div class="clear">
@@ -288,6 +318,7 @@
 @synthesize shortTitles = _shortTitles;
 @synthesize showPermaLinks = _showPermaLinks;
 @synthesize showEntries = _showEntries;
+@synthesize showTitles = _showTitles;
 @synthesize showThumbnails = _showThumbnails;
 @synthesize showTimestamps = _showTimestamps;
 @synthesize truncateCount = _truncateCount;
