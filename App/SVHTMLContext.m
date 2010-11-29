@@ -51,7 +51,11 @@
 
 
 @interface SVHTMLContext ()
+- (void)startCalloutForGraphic:(SVGraphic *)graphic;
 - (void)endCallout;
+- (BOOL)isWritingCallout;
+@property(nonatomic, retain, readonly) KSMegaBufferedWriter *calloutBuffer;
+
 - (void)pushAttributes:(NSDictionary *)attributes;
 
 - (SVHTMLIterator *)currentIterator;

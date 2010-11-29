@@ -169,7 +169,7 @@
     if ([graphic isCallout])
     {
         // Make a controller for the callout, but only if it's not part of an existing callout
-        if (![self isWritingCallout])
+        if (![[self currentDOMController] isKindOfClass:[SVCalloutDOMController class]])
         {
             SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
             [self startDOMController:controller];
@@ -180,7 +180,11 @@
     }
     else
     {
-        if ([[self calloutBuffer] isBuffering]) [[self calloutBuffer] flush];
+        // If writing a regular grapic straight after a callout, our usual cue to end the callout controller comes too later (just after the graphic controller has been started), so force it to end here instead
+        if ([[self currentDOMController] isKindOfClass:[SVCalloutDOMController class]])
+        {
+            [self endDOMController];
+        }
     }
     
     
@@ -243,11 +247,13 @@
 
 - (void)megaBufferedWriterWillFlush:(KSMegaBufferedWriter *)buffer;
 {
-    BOOL writingCallout = [self isWritingCallout];
     [super megaBufferedWriterWillFlush:buffer];
     
     // Only once the callout buffer flushes can we be sure the element ended.
-    if (writingCallout) [self endDOMController];
+    if ([[self currentDOMController] isKindOfClass:[SVCalloutDOMController class]])
+    {
+        [self endDOMController];
+    }
 }
 
 #pragma mark Metrics

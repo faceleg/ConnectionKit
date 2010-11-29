@@ -155,12 +155,6 @@ typedef enum {
 - (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object DOMControllerClass:(Class)controllerClass sizeDelta:(NSSize)sizeDelta;  // support
 
 
-#pragma mark Callouts
-- (void)startCalloutForGraphic:(SVGraphic *)graphic;
-- (BOOL)isWritingCallout;
-@property(nonatomic, retain, readonly) KSMegaBufferedWriter *calloutBuffer;
-
-
 #pragma mark Summaries
 - (void)willWriteSummaryOfPage:(SVSiteItem *)page;
 
