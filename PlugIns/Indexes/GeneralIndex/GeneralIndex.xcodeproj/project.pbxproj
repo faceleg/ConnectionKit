@@ -10,7 +10,7 @@
 		3C01DE561248569300B1FF71 /* GeneralIndexInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C01DE541248569300B1FF71 /* GeneralIndexInspector.xib */; };
 		3C9701050D5CF85C0070D4A1 /* GeneralIndexPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9701040D5CF85C0070D4A1 /* GeneralIndexPlugIn.m */; };
 		3C9701190D5CFA2A0070D4A1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C9701170D5CFA2A0070D4A1 /* Localizable.strings */; };
-		3C9701230D5CFA8E0070D4A1 /* GeneralIndexTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C9701210D5CFA8E0070D4A1 /* GeneralIndexTemplate.html */; };
+		3C9701230D5CFA8E0070D4A1 /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C9701210D5CFA8E0070D4A1 /* Template.html */; };
 		3C970A960D5CFD0F0070D4A1 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C970A950D5CFD0F0070D4A1 /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
@@ -41,7 +41,7 @@
 		3C97011E0D5CFA6D0070D4A1 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C97011F0D5CFA750070D4A1 /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C9701200D5CFA7E0070D4A1 /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C9701210D5CFA8E0070D4A1 /* GeneralIndexTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = GeneralIndexTemplate.html; sourceTree = "<group>"; };
+		3C9701210D5CFA8E0070D4A1 /* Template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Template.html; sourceTree = "<group>"; };
 		3C9701280D5CFAB40070D4A1 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C9701290D5CFAB40070D4A1 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C970A950D5CFD0F0070D4A1 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = License.rtf; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 				CE2802C912432C4100B00F3D /* toolbar_general_index.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C01DE541248569300B1FF71 /* GeneralIndexInspector.xib */,
-				3C9701210D5CFA8E0070D4A1 /* GeneralIndexTemplate.html */,
+				3C9701210D5CFA8E0070D4A1 /* Template.html */,
 				3C9701170D5CFA2A0070D4A1 /* Localizable.strings */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C970A950D5CFD0F0070D4A1 /* License.rtf */,
@@ -212,7 +212,7 @@
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				3C9701190D5CFA2A0070D4A1 /* Localizable.strings in Resources */,
-				3C9701230D5CFA8E0070D4A1 /* GeneralIndexTemplate.html in Resources */,
+				3C9701230D5CFA8E0070D4A1 /* Template.html in Resources */,
 				3C970A960D5CFD0F0070D4A1 /* License.rtf in Resources */,
 				CE2802CA12432C4100B00F3D /* toolbar_general_index.tiff in Resources */,
 				3C01DE561248569300B1FF71 /* GeneralIndexInspector.xib in Resources */,
