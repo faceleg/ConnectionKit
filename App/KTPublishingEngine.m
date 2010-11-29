@@ -383,21 +383,27 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
 {
+    CKTransferRecord *result = nil;
+    
     CKTransferRecord *parent = [self willUploadToPath:remotePath];
     
     // Need to use -setName: otherwise the record will have the full path as its name            
     id <CKConnection> connection = [self connection];
-    OBASSERT(connection);
-    [connection connect];	// Ensure we're connected
+    //OBASSERT(connection); // actually if there's no connection, can't publish, so return nil. Up to client to handle
     
-    CKTransferRecord *result = [connection uploadFile:[localURL path]
-                                               toFile:remotePath
-                                 checkRemoteExistence:NO
-                                             delegate:nil];
-    
-    [result setName:[remotePath lastPathComponent]];
-    
-    [self didEnqueueUpload:result toDirectory:parent];
+    if (connection)
+    {
+        [connection connect];	// Ensure we're connected
+        
+        result = [connection uploadFile:[localURL path]
+                                                   toFile:remotePath
+                                     checkRemoteExistence:NO
+                                                 delegate:nil];
+        
+        [result setName:[remotePath lastPathComponent]];
+        
+        [self didEnqueueUpload:result toDirectory:parent];
+    }
     
     return result;
 }
@@ -406,22 +412,30 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
 {
+    CKTransferRecord *result = nil;
+    
     CKTransferRecord *parent = [self willUploadToPath:remotePath];
     
     id <CKConnection> connection = [self connection];
-    OBASSERT(connection);
-    [connection connect];	// Ensure we're connected
-    CKTransferRecord *result = [connection uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
-    OBASSERT(result);
-    [result setName:[remotePath lastPathComponent]];
+    //OBASSERT(connection); // actually if there's no connection, can't publish, so return nil. Up to client to handle
     
-    if (result)
+    if (connection)
     {
-        [self didEnqueueUpload:result toDirectory:parent];
-    }
-    else
-    {
-        NSLog(@"Unable to create transfer record for path:%@ data:%@", remotePath, data); // case 40520 logging
+        [connection connect];	// ensure we're connected
+        
+        result = [connection uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
+        OBASSERT(result);
+        
+        [result setName:[remotePath lastPathComponent]];
+        
+        if (result)
+        {
+            [self didEnqueueUpload:result toDirectory:parent];
+        }
+        else
+        {
+            NSLog(@"Unable to create transfer record for path:%@ data:%@", remotePath, data); // case 40520 logging
+        }
     }
     
     return result;
