@@ -378,7 +378,6 @@
 		[attachments release];
 		[summary release];
 		
-		return truncated;
 	}
 
 
