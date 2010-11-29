@@ -82,6 +82,11 @@
 {
     if (![self isNativeRepresentation])
     {
+        if ([NSThread isMainThread])
+        {
+            NSLog(@"Evaluating scaled image data on main thread which is inadvisable as generally takes a significant amount of time");
+        }
+        
         NSDictionary *params = [NSURL
                                 sandvoxImageParametersWithSize:NSMakeSize([[self width] floatValue], [[self height] floatValue])
                                 scalingMode:KSImageScalingModeAspectFit
