@@ -51,8 +51,6 @@
 	</dict>
 	<key>KTPluginName</key>
 	<string>Contact Form</string>
-	<key>KTPluginNibFile</key>
-	<string>ContactElement</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
