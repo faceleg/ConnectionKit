@@ -10,7 +10,7 @@
 		3C91839E11E680AF006417D8 /* LinkListInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C91839C11E680AF006417D8 /* LinkListInspector.xib */; };
 		3CA9008E0D63C89400815310 /* LinkListArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA900890D63C89400815310 /* LinkListArrayController.m */; };
 		3CA900900D63C89400815310 /* LinkListPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9008D0D63C89400815310 /* LinkListPlugIn.m */; };
-		3CA900920D63C8A200815310 /* LinkListTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900910D63C8A200815310 /* LinkListTemplate.html */; };
+		3CA900920D63C8A200815310 /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900910D63C8A200815310 /* Template.html */; };
 		3CA900990D63C8AC00815310 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900960D63C8AC00815310 /* Localizable.strings */; };
 		3CA900BB0D63CB2900815310 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900BA0D63CB2900815310 /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
@@ -28,7 +28,7 @@
 		3CA900890D63C89400815310 /* LinkListArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkListArrayController.m; sourceTree = "<group>"; };
 		3CA9008C0D63C89400815310 /* LinkListPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkListPlugIn.h; sourceTree = "<group>"; };
 		3CA9008D0D63C89400815310 /* LinkListPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkListPlugIn.m; sourceTree = "<group>"; };
-		3CA900910D63C8A200815310 /* LinkListTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = LinkListTemplate.html; sourceTree = "<group>"; };
+		3CA900910D63C8A200815310 /* Template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Template.html; sourceTree = "<group>"; };
 		3CA900930D63C8AC00815310 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3CA900970D63C8AC00815310 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3CA9009A0D63C8B600815310 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -94,7 +94,7 @@
 				CE28031312432D1800B00F3D /* toolbar_linklist.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C91839C11E680AF006417D8 /* LinkListInspector.xib */,
-				3CA900910D63C8A200815310 /* LinkListTemplate.html */,
+				3CA900910D63C8A200815310 /* Template.html */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3CA900960D63C8AC00815310 /* Localizable.strings */,
 				3CA900BA0D63CB2900815310 /* License.rtf */,
@@ -212,7 +212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
-				3CA900920D63C8A200815310 /* LinkListTemplate.html in Resources */,
+				3CA900920D63C8A200815310 /* Template.html in Resources */,
 				3CA900990D63C8AC00815310 /* Localizable.strings in Resources */,
 				3CA900BB0D63CB2900815310 /* License.rtf in Resources */,
 				3C91839E11E680AF006417D8 /* LinkListInspector.xib in Resources */,

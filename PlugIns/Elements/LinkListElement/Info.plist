@@ -51,8 +51,6 @@
 	<string>LinkListInspector</string>
 	<key>KTPluginUntitledName</key>
 	<string>External Links</string>
-	<key>KTTemplateName</key>
-	<string>LinkListTemplate</string>
 	<key>NSPrincipalClass</key>
 	<string>LinkListPlugIn</string>
 </dict>
