@@ -135,9 +135,22 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         nextController = controller;
     }
     
+    
+    // Store the new controllers. Ditch any from -childDOMControllers that are no longer present
+    for (SVDOMController *aController in [self pageletDOMControllers])
+    {
+        if (![controllers containsObjectIdenticalTo:aController])
+        {
+            OBASSERT([aController parentWebEditorItem] == self);
+            [aController removeFromParentWebEditorItem];
+        }
+    }
+    
     [self setPageletDOMControllers:controllers];
     [controllers release];
     
+    
+    // Finish
     [self didUpdateWithSelector:_cmd];
 }
 
@@ -146,6 +159,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 #pragma mark Pagelets Controller
 
 @synthesize pageletDOMControllers = _DOMControllers;
+
 @synthesize pageletsController = _pageletsController;
 
 #pragma mark Placement Actions
