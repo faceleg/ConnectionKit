@@ -224,6 +224,15 @@
     return result;
 }
 
+
+// This will be a private API for use by General index
+- (void)writeComments:(SVHTMLContext *)context;
+{
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:self.commentsTemplate component:self];
+    [parser parseIntoHTMLContext:context];
+	[parser release];
+}
+
 - (void)writeRSSFeed:(SVHTMLContext *)context;
 {
     // Find the template
