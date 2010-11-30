@@ -102,15 +102,18 @@ typedef enum {
 #pragma mark Metrics
 
 // Please use integers. Nil values are treated as "auto" size
+
 - (NSNumber *)width;
 - (NSNumber *)height;
+
+// You want to set width and height together.  This might be called from makeOriginalSize or adjustment of the content.
 - (void)setWidth:(NSNumber *)width height:(NSNumber *)height;
 
 // Override these if your plug-in is more liberal than the defaults
 - (NSNumber *)minWidth;    // default is 200
 - (NSNumber *)minHeight;    // default is 1
 
-// Called when plug-in is first inserted, and whenever 'Original Size' button in the Inspector is clicked. Override to call -setWidth:height: if you're not happy with the default size used (200 x 0 for now).
+// Called when plug-in is first inserted, and whenever 'Original Size' button in the Inspector is clicked. Override to call -setWidth:height: if you're not happy with the default size used (200 x 0 [automatic height] for now).
 - (void)makeOriginalSize;
 
 
