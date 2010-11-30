@@ -239,16 +239,7 @@
 			[context endElement];	// </div> timestamp
 		}
 		
-		// Here is where we would insert markup from:  [[parsecomponent iteratedPage iteratedPage.commentsTemplate]]
-		NSString *template = [iteratedPage commentsTemplate];
-		
-		if (template)
-		{
-//			SVTemplateParser *parser = [self newChildParserWithTemplate:template component:iteratedPage];
-//			[parser parseWithOutputWriter:_writer];
-//			[parser release];
-		}
-		
+		[iteratedPage writeComments:context];		// PRIVATE		
 		
 		[context endElement];	// </div> article-info
 
