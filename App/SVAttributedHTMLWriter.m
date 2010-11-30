@@ -77,14 +77,16 @@
 
 - (void)writeDOMRange:(DOMRange *)range graphicControllers:(NSArray *)graphicControllers;
 {
-    KSXMLWriterDOMAdaptor *writer = [[KSXMLWriterDOMAdaptor alloc] initWithOutputWriter:self];
-    [writer setDelegate:self];
+    KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:self];
+    KSXMLWriterDOMAdaptor *adaptor = [[KSXMLWriterDOMAdaptor alloc] initWithXMLWriter:writer];
+    [adaptor setDelegate:self];
     
     _graphicControllers = graphicControllers;
-    [writer writeDOMRange:range];
+    [adaptor writeDOMRange:range];
     _graphicControllers = nil;
     
     [writer release];
+    [adaptor release];
 }
 
 + (void)writeDOMRange:(DOMRange *)range
