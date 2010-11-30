@@ -17,7 +17,8 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-// Sandvox.h is a convenience header that imports all "public" headers in Sandvox
+//  Sandvox.h is a convenience header that imports all "public" headers in Sandvox
+//  Each header is well commented as to its functionality. Further information can be found online at http://wiki2.karelia.com/Sandvox_Developers_Guide
 
 
 // Core
