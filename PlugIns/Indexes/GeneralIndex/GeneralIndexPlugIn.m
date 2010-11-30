@@ -81,15 +81,27 @@
     return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
 }
 
+- (void)awakeFromNew;
+{
+	self.hyperlinkTitles	= YES;
+	self.includeLargeMedia	= NO;
+	self.layoutType			= kLayoutSections;		// It might be nice to know if we are in a callout/sidebar (narrow context) to set
+	self.shortTitles		= YES;
+	self.showPermaLinks		= YES;
+	self.showEntries		= YES;
+	self.showTitles			= YES;
+	self.showThumbnails		= YES;
+	self.showTimestamps		= YES;
+	self.truncate			= NO;
+	self.truncateCount		= 25;
+	self.truncationType		= kTruncateWords;
+}
 
 #pragma mark HTML Generation
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
-    // parse template
-    [super writeHTML:context];
-    
-    // add dependencies
+	// add dependencies
 	[context addDependencyForKeyPath:@"hyperlinkTitles"		ofObject:self];
 	[context addDependencyForKeyPath:@"includeLargeMedia"	ofObject:self];
 	[context addDependencyForKeyPath:@"layoutType"			ofObject:self];
@@ -103,6 +115,10 @@
 	[context addDependencyForKeyPath:@"truncateCount"		ofObject:self];
 	[context addDependencyForKeyPath:@"truncationType"		ofObject:self];
 	[context addDependencyForKeyPath:@"truncate"			ofObject:self];
+
+	// parse template
+    [super writeHTML:context];
+    
 }
 
 - (void)writeIndexStart
