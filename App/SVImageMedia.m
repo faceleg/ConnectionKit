@@ -24,14 +24,23 @@
                      type:(NSString *)type
       preferredUploadPath:(NSString *)path;
 {
-    // Warn if trying a non-standard format
     if (type)
     {
+        // Warn if trying a non-standard format
         if (![type isEqualToUTI:(NSString *)kUTTypeJPEG] &&
             ![type isEqualToUTI:(NSString *)kUTTypePNG] &&
             ![type isEqualToUTI:(NSString *)kUTTypeGIF])
         {
             NSLog(@"Warning: Request for non-standard image format: %@", type);
+        }
+        
+        // Warn if path doesn't match type
+        if (path)
+        {
+            if (![[NSString UTIForFilenameExtension:[path pathExtension]] isEqualToUTI:type])
+            {
+                NSLog(@"Warning: Request for image whose filename does not match format: %@", type);
+            }
         }
     }
     
