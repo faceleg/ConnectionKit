@@ -230,6 +230,30 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
                                   ofType:typeName 
                         forSaveOperation:saveOperation 
                                    error:outError];
+		
+		
+		/*
+		 
+		 Strange problem being logged here....
+		 
+		 Downstream from the above method, the following methods get called.
+		 #1	0x9115dc6b in +[NSFileWrapper(NSInternal) _removeTemporaryDirectoryAtURL:]
+		 #2	0x91130bcb in -[NSDocument _writeSafelyToURL:ofType:forSaveOperation:error:]
+		 #3	0x9112f916 in -[NSDocument writeSafelyToURL:ofType:forSaveOperation:error:]
+		 #4	0x70067614 in -[KTDocument(Saving) writeSafelyToURL:ofType:forSaveOperation:error:] at KTDocument+Saving.m:229
+		 
+		 And the URL that _removeTemporaryDirectoryAtURL apparently trying to remove is:
+		 file://localhost/Volumes/dwood/.TemporaryItems/folders.502/TemporaryItems/(A%20Document%20Being%20Saved%20By%20Sandvox)/
+		 
+		 However I think that there is still a file in that directory: Unsaved Sandvox Document.svxSite
+		 
+		 We get the following NSLog message:
+		 
+		 AppKit called rmdir("/Volumes/dwood/.TemporaryItems/folders.502/TemporaryItems/(A Document Being Saved By Sandvox)"), it didn't return 0, and errno was set to 66.
+		 
+		 66 means directory not empty.  So I think that what is happening is that internally, it's supposed to be deleting the Sandvox first!
+		 
+		 */
     }
     
     OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
