@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleGetInfoString</key>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2004–2010 Karelia Software</string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.${PROJECT_NAME}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${SANDVOX_VERSION}</string>
+	<key>CFBundleSignature</key>
+	<string>Svox</string>
+	<key>CFBundleVersion</key>
+	<string>${SVN_VERSION}</string>
+	<key>SVMinimumAppVersion</key>
+	<string>2.0</string>
+	<key>KTCategory</key>
+	<integer>4</integer>
+	<key>KSHelpAnchor</key>
+	<string>Flickr_Badge</string>
+	<key>KTMainElement</key>
+	<string></string>
+	<key>KTPageletCanHaveTitle</key>
+	<true/>
+	<key>SVPlugInIconPath</key>
+	<string>toolbar_flickr.tiff</string>
+	<key>KTPluginInitialProperties</key>
+	<dict>
+		<key>number</key>
+		<integer>10</integer>
+		<key>showInfo</key>
+		<true/>
+		<key>tag</key>
+		<string>clouds</string>
+	</dict>
+	<key>KTPluginName</key>
+	<string>Flickr Thumbnails</string>
+	<key>KTPluginPriority</key>
+	<integer>5</integer>
+	<key>KTPluginUntitledName</key>
+	<string>Flickr Thumbnails</string>
+	<key>NSPrincipalClass</key>
+	<string>FlickrPlugIn</string>
+</dict>
+</plist>
