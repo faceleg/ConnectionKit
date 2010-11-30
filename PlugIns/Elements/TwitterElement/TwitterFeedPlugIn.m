@@ -77,7 +77,7 @@
     [context addDependencyForKeyPath:@"openLinksInNewWindow" ofObject:self];
     
     // add resources
-    NSString *resourcePath = [[self bundle] pathForResource:@"twittercallbacktemplate" ofType:@"js"];
+    NSString *resourcePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"twittercallbacktemplate" ofType:@"js"];
     NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
     NSURL *callbackURL = [context addResourceWithURL:resourceURL];
     

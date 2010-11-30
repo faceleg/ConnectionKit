@@ -108,7 +108,7 @@
         [context addResourceWithURL:feedIconURL];
     }
     
-    path = [[self bundle] pathForResource:@"rssbadge" ofType:@"css"];
+    path = [[NSBundle bundleForClass:[self class]] pathForResource:@"rssbadge" ofType:@"css"];
     if (path && ![path isEqualToString:@""]) 
     {
         NSURL *cssURL = [NSURL fileURLWithPath:path];
@@ -161,7 +161,7 @@
             break;
 	}
 	
-	NSString *path = [[self bundle] pathForImageResource:iconName];
+	NSString *path = [[NSBundle bundleForClass:[self class]] pathForImageResource:iconName];
 	return path;
 }
 
