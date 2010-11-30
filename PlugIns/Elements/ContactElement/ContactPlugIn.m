@@ -184,7 +184,6 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
 		[aField release];
 		
 		[self setFields:fields];
-        [localizedStrings release];
 	}
 }
 
