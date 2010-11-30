@@ -1587,6 +1587,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         if (expanded) [[self outlineView] expandItem:anItem];
     }
     
+    [expansion release];
 	return YES;
 }
 
