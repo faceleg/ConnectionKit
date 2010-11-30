@@ -143,6 +143,13 @@
     [text setHidden:NSBOOL(YES)];
 }
 
+- (SVSelectionBorder *)newSelectionBorder;
+{
+    SVSelectionBorder *result = [super newSelectionBorder];
+    [result setBorderColor:[NSColor grayColor]];
+    return result;
+}
+
 #pragma mark Resizing
 
 // Right now, no text is resizeable
