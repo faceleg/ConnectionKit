@@ -83,18 +83,14 @@
 
 - (void)awakeFromNew;
 {
-	self.hyperlinkTitles	= YES;
-	self.includeLargeMedia	= NO;
-	self.layoutType			= kLayoutSections;		// It might be nice to know if we are in a callout/sidebar (narrow context) to set
-	self.shortTitles		= YES;
-	self.showPermaLinks		= YES;
-	self.showEntries		= YES;
-	self.showTitles			= YES;
-	self.showThumbnails		= YES;
-	self.showTimestamps		= YES;
-	self.truncate			= NO;
-	self.truncateCount		= 25;
-	self.truncationType		= kTruncateWords;
+	[super awakeFromNew];
+	
+	NSNumber *isPagelet = [self valueForKeyPath:@"container.isPagelet"];	// Private. If creating in sidebar, make it more minimal
+	if (isPagelet && [isPagelet boolValue])
+	{
+		self.layoutType			= kLayoutList;
+		self.showEntries		= NO;
+	}
 }
 
 #pragma mark HTML Generation
@@ -205,7 +201,7 @@
 		
 		// Do another column if we want to show some meta info
 		
-		if ([self hasArticleInfo])
+		if (self.showEntries && [self hasArticleInfo])
 		{
 			[context startElement:@"td" className:@"dli4"];
 			[self writeArticleInfoWithContinueReadingLink:NO];
@@ -227,7 +223,10 @@
 			truncated = [self writeSummaryOfIteratedPage];
 		}
 		
-		[self writeArticleInfoWithContinueReadingLink:truncated];
+		if (self.showEntries)	// We will only show article info if we are showing entries
+		{
+			[self writeArticleInfoWithContinueReadingLink:truncated];
+		}
 
 	}
 	
