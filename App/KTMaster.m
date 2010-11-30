@@ -448,12 +448,12 @@
 	//return (KTCommentsProviderDisqus == [[self commentsProvider] unsignedIntValue]);
 	if (KTCommentsProviderDisqus == [[self commentsProvider] unsignedIntValue])
     {
-        LOG((@"wantsDisqus is YES"));
+        TJT((@"wantsDisqus is YES"));
         return YES;
     }
     else
     {
-        LOG((@"wantsDisqus is NO"));
+        TJT((@"wantsDisqus is NO"));
         return NO;
     }
 }
