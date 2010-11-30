@@ -410,9 +410,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
                                                object:nil];
     
     
-    // If the timer did fire, need to bring ourselves back into view
-    if ([_contentAreaController selectedViewController] != self &&
-        [_contentAreaController selectedViewControllerWhenReady] == self)
+    // Make sure we're in view if desired
+    if ([_contentAreaController selectedViewControllerWhenReady] == self)
     {
         [_contentAreaController setSelectedViewController:self];
     }
