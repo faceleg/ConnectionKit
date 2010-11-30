@@ -294,7 +294,7 @@
 
 // Returns YES if truncated.
 
-- (BOOL)writeSummary:(SVHTMLContext *)context truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType;
+- (BOOL)writeSummary:(SVHTMLContext *)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType;
 {
 	BOOL truncated = NO;
 	
@@ -333,27 +333,29 @@
 									   [[[self article] attachments] count]];
 		
 		
-		// Strip out large attachments .... WHY?
-		NSUInteger location = 0;
-		
-		while (location < summary.length)
+		if (!includeLargeMedia)
 		{
-			NSRange effectiveRange;
-			SVTextAttachment *attachment = [summary attribute:@"SVAttachment"
-													  atIndex:location
-											   effectiveRange:&effectiveRange];
+			// Strip out large attachments .... WHY?
+			NSUInteger location = 0;
 			
-			if (attachment && [[attachment causesWrap] boolValue])
+			while (location < summary.length)
 			{
-				[attachments addObject:[attachment graphic]];
-				[summary deleteCharactersInRange:effectiveRange];
-			}
-			else
-			{
-				location = location + effectiveRange.length;
+				NSRange effectiveRange;
+				SVTextAttachment *attachment = [summary attribute:@"SVAttachment"
+														  atIndex:location
+												   effectiveRange:&effectiveRange];
+				
+				if (attachment && [[attachment causesWrap] boolValue])
+				{
+					[attachments addObject:[attachment graphic]];
+					[summary deleteCharactersInRange:effectiveRange];
+				}
+				else
+				{
+					location = location + effectiveRange.length;
+				}
 			}
 		}
-		
 		
 		// Are we left with only whitespace? If so, fallback to graphic captions
 		NSString *text = [[summary string] stringByConvertingHTMLToPlainText];
