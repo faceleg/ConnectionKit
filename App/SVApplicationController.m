@@ -542,7 +542,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	NSString *feedType = [[defaults objectForKey:@"KSFeedType"] lowercaseString];
 	if (nil == feedType || [feedType isEqualToString:@""])		// 'beta' or 'release' or 'alpha...' or '' (empty string) for none
 	{
-		NSString *feedType = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"KSFeedType"] lowercaseString];	// default feed type
+		feedType = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"KSFeedType"] lowercaseString];	// default feed type
 		[defaults setObject:feedType forKey:@"KSFeedType"];
 	}
 	

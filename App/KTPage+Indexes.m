@@ -318,9 +318,9 @@
 			// complete page markup would be:
 			NSString *markup = [[self article] string];
 			
-			NSString *truncated = [self truncateMarkup:markup truncation:maxCount truncationType:truncationType didTruncate:&truncated];
+			NSString *truncatedMarkup = [self truncateMarkup:markup truncation:maxCount truncationType:truncationType didTruncate:&truncated];
 
-			html = [[self article] attributedHTMLStringFromMarkup:truncated];
+			html = [[self article] attributedHTMLStringFromMarkup:truncatedMarkup];
 		}
 		else
 		{

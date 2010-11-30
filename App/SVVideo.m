@@ -234,7 +234,6 @@
 												   path:newPath]
 						  autorelease];
 		
-        SVMedia *media = nil;
 		if (jpegData)
 		{
             media = [[SVMedia alloc] initWithData:jpegData URL:fakeURL];

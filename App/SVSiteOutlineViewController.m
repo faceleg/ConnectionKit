@@ -1094,8 +1094,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	}
 	else
 	{
-		id result = [NSString stringWithFormat:@"%i:%i", [[self outlineView] rowForItem:item], [[item wrappedValueForKey:@"childIndex"] intValue]];
-		return result;
+		result = [NSString stringWithFormat:@"%i:%i", [[self outlineView] rowForItem:item], [[item wrappedValueForKey:@"childIndex"] intValue]];
 	}
 	
 	

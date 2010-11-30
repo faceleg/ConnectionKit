@@ -1056,7 +1056,7 @@
         {
             // Remove source too?
             NSDragOperation mask = [dragInfo draggingSourceOperationMask];
-            if (mask & NSDragOperationMove | mask & NSDragOperationGeneric)
+            if ((mask & NSDragOperationMove) | (mask & NSDragOperationGeneric))
             {
                 [[self webEditor] removeDraggedItems];
             }

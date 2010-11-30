@@ -1174,12 +1174,12 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     
     if (!controller)
     {
-        NSSet *selection = [[NSSet alloc] initWithArray:[webEditor selectedItems]];
-        NSSet *containerControllers = [selection valueForKey:@"textDOMController"];
+        NSSet *selectionSet = [[NSSet alloc] initWithArray:[webEditor selectedItems]];
+        NSSet *containerControllers = [selectionSet valueForKey:@"textDOMController"];
         
         if ([containerControllers count] == 0)  // fallback to sidebar DOM controller
         {
-            containerControllers = [selection valueForKey:@"sidebarDOMController"];
+            containerControllers = [selectionSet valueForKey:@"sidebarDOMController"];
         }
         
         if ([containerControllers count] == 1)
@@ -1187,7 +1187,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
             controller = [containerControllers anyObject];
         }
         
-        [selection release];
+        [selectionSet release];
     }
     [self setFirstResponderItem:controller];
 }

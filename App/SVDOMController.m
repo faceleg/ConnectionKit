@@ -478,12 +478,12 @@
     for (int i = 0; i < [rules length]; i++)
     {
         DOMCSSRule *aRule = [rules item:i];
-        DOMCSSStyleDeclaration *style = [(DOMElement *)aRule style];  // not published in our version of WebKit
+        DOMCSSStyleDeclaration *ruleStyle = [(DOMElement *)aRule style];  // not published in our version of WebKit
         
-        if ([[style marginLeft] isEqualToString:@"auto"])
+        if ([[ruleStyle marginLeft] isEqualToString:@"auto"])
         {
             result = kCALayerLeftEdge;
-            if ([[style marginRight] isEqualToString:@"auto"]) result = result | kCALayerRightEdge;
+            if ([[ruleStyle marginRight] isEqualToString:@"auto"]) result = result | kCALayerRightEdge;
             return result;
         }
     }

@@ -533,18 +533,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     {
         if ([someCSS isKindOfClass:[NSURL class]])
         {
-            NSString *css = [NSString stringWithContentsOfURL:someCSS
-                                             fallbackEncoding:NSUTF8StringEncoding
-                                                        error:NULL];
+            NSString *cssFromURL = [NSString stringWithContentsOfURL:someCSS
+													fallbackEncoding:NSUTF8StringEncoding
+															   error:NULL];
             
-            if (css)
+            if (cssFromURL)
 			{
 #ifndef VARIANT_RELEASE
 				[cssWriter writeCSSString:
 				 [NSString stringWithFormat:@"/* ----------- Source: %@ ----------- */",
 				  [[someCSS path] lastPathComponent]]];
 #endif
-				[cssWriter writeCSSString:css];
+				[cssWriter writeCSSString:cssFromURL];
 
 #ifndef VARIANT_RELEASE
 				[cssWriter writeCSSString:

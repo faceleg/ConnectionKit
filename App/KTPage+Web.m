@@ -297,9 +297,9 @@
 		NSString *RSSFilename = [self RSSFileName];
         NSString *RSSUploadPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
         
-        SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:RSSUploadPath];
-        [self writeRSSFeed:context];
-        [context close];
+        SVHTMLContext *context2 = [publishingEngine beginPublishingHTMLToPath:RSSUploadPath];
+        [self writeRSSFeed:context2];
+        [context2 close];
         
         [pool2 release];
 	}
@@ -310,11 +310,11 @@
     {
         pool2 = [[NSAutoreleasePool alloc] init];
         
-        SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:
+        SVHTMLContext *context3 = [publishingEngine beginPublishingHTMLToPath:
                                   [anArchivePage uploadPath]];
         
-        [context writeDocumentWithArchivePage:anArchivePage];
-        [context close];
+        [context3 writeDocumentWithArchivePage:anArchivePage];
+        [context3 close];
         
         [pool2 release];
     }

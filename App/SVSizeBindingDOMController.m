@@ -191,10 +191,10 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
             size.width = size.height * [ratio floatValue];
             
             // Is this too low? If so, bump size back up. #94988
-            NSUInteger minWidth = [graphic minWidth];
-            if (size.width < minWidth)
+            NSUInteger minWidthForGraphic = [graphic minWidth];
+            if (size.width < minWidthForGraphic)
             {
-                size.width = minWidth;
+                size.width = minWidthForGraphic;
                 size.height = size.width / [ratio floatValue];
             }
         }

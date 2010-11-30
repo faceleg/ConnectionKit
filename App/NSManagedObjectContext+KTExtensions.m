@@ -39,7 +39,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 	NSManagedObjectContext *result = nil;
     if (store)
 	{
-		NSManagedObjectContext *result = [[[NSManagedObjectContext alloc] init] autorelease];
+		result = [[[NSManagedObjectContext alloc] init] autorelease];
         [result setPersistentStoreCoordinator:coordinator];
 	}
     

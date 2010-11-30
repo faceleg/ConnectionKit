@@ -961,9 +961,11 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		
 		([NSUserName() isEqualToString:DEBUG_THIS_USER]) || 
 		
+			(
 		localizedStringsTablePath
 		&& ![[[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"English.lproj"]
 		&& ![[[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"en.lproj"]
+			 )
 		)
 	{
         NSNib *nib = [[NSNib alloc] initWithNibNamed:[fileName lastPathComponent] bundle:aBundle];

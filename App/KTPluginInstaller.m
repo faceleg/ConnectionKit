@@ -74,7 +74,7 @@ NSLog(@"%@", aURL);
 		// we are going to copy directly into the app's app support folder, but if the file already
 		// exists there, or in a subfolder of this app support folder, then we won't.
 	
-	NSURL *url;
+	NSURL *url = nil;
 	NSMutableArray *errorURLs   = [NSMutableArray array];		// queue up BAD copies
 	NSMutableArray *successURLs = [NSMutableArray array];		// queue up GOOD copies.  URLs of *destination* now.
 
@@ -172,7 +172,7 @@ NSLog(@"%@", aURL);
 			
 		}
 		NSMutableString *pluginList = [NSMutableString string];
-		NSURL *url;
+		NSURL *url = nil;
 		
 		for (url in errorURLs)
 		{

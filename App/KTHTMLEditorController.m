@@ -303,8 +303,8 @@ initial syntax coloring.
 			if (thisTag > 0)
 			{
 				// Turn everything off except for the selected one.
-				NSCellStateValue newState = (thisTag == tag) ? NSOnState : NSOffState;
-				[thisMenuItem setState:newState];
+				NSCellStateValue isNewState = (thisTag == tag) ? NSOnState : NSOffState;
+				[thisMenuItem setState:isNewState];
 			}
 		}
 		self.docType = tag -1;	// need to convert from 1-based tags to zero-based docTypes.
