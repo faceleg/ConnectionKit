@@ -44,7 +44,7 @@
     [self setPageProperties:[presetDict ks_dictionaryBySettingObject:[NSNumber numberWithBool:YES]
                                                               forKey:@"isCollection"]];
     
-    NSString *presetTitle = [presetDict objectForKey:@"KTPresetTitle"];
+    NSString *presetTitle = [presetDict objectForKey:@"SVMasterDisplayName"];
     if (plugin) presetTitle = [[plugin bundle] localizedStringForKey:presetTitle
                                                                value:presetTitle
                                                                table:nil];
@@ -111,7 +111,7 @@
     //NSSortDescriptor *prioritySort = [[NSSortDescriptor alloc] initWithKey:@"priority"
     //                                                             ascending:YES];
     NSSortDescriptor *nameSort = [[NSSortDescriptor alloc]
-                                  initWithKey:@"KTPresetTitle"
+                                  initWithKey:@"SVMasterDisplayName"
                                   ascending:YES
                                   selector:@selector(caseInsensitiveCompare:)];
     

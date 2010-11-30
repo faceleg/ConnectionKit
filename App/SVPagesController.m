@@ -310,7 +310,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     
     // Now re-set title of page to be the appropriate untitled name
-    NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetUntitled"];
+    NSString *englishPresetTitle = [presetDict objectForKey:@"SVMasterPageTitle"];
     if (englishPresetTitle)
     {
         NSString *presetTitle = [indexBundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
@@ -320,16 +320,16 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     
     // Other settings
-    NSDictionary *pageSettings = [presetDict objectForKey:@"KTPageSettings"];
+    NSDictionary *pageSettings = [presetDict objectForKey:@"SVPageProperties"];
     [collection setValuesForKeysWithDictionary:pageSettings];
     
     
     // Generate a first child page if desired
-    NSString *firstChildIdentifier = [presetDict valueForKeyPath:@"KTFirstChildSettings.pluginIdentifier"];
+    NSString *firstChildIdentifier = [presetDict valueForKeyPath:@"SVIndexFirstPageProperties.pluginIdentifier"];
     if (firstChildIdentifier && [firstChildIdentifier isKindOfClass:[NSString class]])
     {
         NSMutableDictionary *firstChildProperties =
-        [NSMutableDictionary dictionaryWithDictionary:[presetDict objectForKey:@"KTFirstChildSettings"]];
+        [NSMutableDictionary dictionaryWithDictionary:[presetDict objectForKey:@"SVIndexFirstPageProperties"]];
         [firstChildProperties removeObjectForKey:@"pluginIdentifier"];
         
         // Create first child

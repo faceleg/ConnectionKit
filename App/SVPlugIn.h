@@ -37,7 +37,7 @@ typedef enum {
 #pragma mark Initialization
 
 /*  Called when inserting a fresh new plug-in (e.g. the insert menu), but not from drag 'n' drop etc.
- *  Retrieves KTPluginInitialProperties from the bundle and calls -setSerializedValue:forKey: with them. Finally, calls -makeOriginalSize
+ *  Calls -makeOriginalSize. You can override this method to also set any initial properties. It's also handy to grab the current URL from user's web browser if your plug-in can make use of it.
  */
 - (void)awakeFromNew;
 

@@ -28,8 +28,6 @@
 	<string>photogrid-index</string>
 	<key>KTCategory</key>
 	<string>2</string>
-	<key>KTIndexNavigationArrowsStyle</key>
-	<integer>1</integer>
 	<key>KTPageIconName</key>
 	<string>page_grid_sb.tiff</string>
 	<key>SVPlugInIconPath</key>
@@ -38,12 +36,10 @@
 	<string>Photo Grid</string>
 	<key>KTPluginPriority</key>
 	<integer>3</integer>
-	<key>KTPreferredPageBundleIdentifier</key>
-	<string>sandvox.RichTextElement</string>
-	<key>KTPresets</key>
+	<key>SVIndexMasters</key>
 	<array>
 		<dict>
-			<key>KTPageSettings</key>
+			<key>SVPageProperties</key>
 			<dict>
 				<key>navigationArrowsStyle</key>
 				<integer>1</integer>
@@ -56,9 +52,9 @@
 			</dict>
 			<key>KTIncludeRSSBadge</key>
 			<false/>
-			<key>KTPresetTitle</key>
+			<key>SVMasterDisplayName</key>
 			<string>Photo Album</string>
-			<key>KTPresetUntitled</key>
+			<key>SVMasterPageTitle</key>
 			<string>Photo Album</string>
 		</dict>
 	</array>

@@ -28,8 +28,6 @@
 	<integer>2</integer>
 	<key>KTCSSClassName</key>
 	<string>general-index</string>
-	<key>KTIndexNavigationArrowsStyle</key>
-	<integer>2</integer>
 	<key>KTPageIconName</key>
 	<string>page_blog_sb.tiff</string>
 	<key>SVPlugInIconPath</key>
@@ -40,10 +38,10 @@
 	<integer>1</integer>
 	<key>KTPreferredPageBundleIdentifier</key>
 	<string>sandvox.RichTextElement</string>
-	<key>KTPresets</key>
+	<key>SVIndexMasters</key>
 	<array>
 		<dict>
-			<key>KTFirstChildSettings</key>
+			<key>SVIndexFirstPageProperties</key>
 			<dict>
 				<key>allowComments</key>
 				<true/>
@@ -56,7 +54,7 @@
 				<key>title</key>
 				<string>First Post</string>
 			</dict>
-			<key>KTPageSettings</key>
+			<key>SVPageProperties</key>
 			<dict>
 				<key>navigationArrowsStyle</key>
 				<integer>2</integer>
@@ -67,9 +65,9 @@
 				<key>collectionSyndicationType</key>
 				<true/>
 			</dict>
-			<key>KTPresetTitle</key>
+			<key>SVMasterDisplayName</key>
 			<string>Blog</string>
-			<key>KTPresetUntitled</key>
+			<key>SVMasterPageTitle</key>
 			<string>Blog</string>
 		</dict>
 	</array>

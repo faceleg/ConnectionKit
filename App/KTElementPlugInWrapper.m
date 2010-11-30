@@ -215,7 +215,7 @@
 	{
 		NSBundle *bundle = [plugin bundle];
 		
-		NSArray *presets = [bundle objectForInfoDictionaryKey:@"KTPresets"];
+		NSArray *presets = [bundle objectForInfoDictionaryKey:@"SVIndexMasters"];
 		NSEnumerator *presetEnum = [presets objectEnumerator];
 		NSDictionary *presetDict;
 		
