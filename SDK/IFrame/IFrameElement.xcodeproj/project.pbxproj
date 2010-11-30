@@ -279,12 +279,15 @@
 		1DEB913B08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = /Applications/Sandvox.app/Contents/MacOS/Sandvox;
 				INFOPLIST_FILE = Info.plist;
 				OTHER_LDFLAGS = (
 					"-seg1addr",
 					0x50440000,
 				);
 				PRODUCT_NAME = IFrame;
+				USER_HEADER_SEARCH_PATHS = /Applications/Sandvox.app/Contents/Headers;
+				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970";
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Debug;
@@ -292,12 +295,15 @@
 		1DEB913C08733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = /Applications/Sandvox.app/Contents/MacOS/Sandvox;
 				INFOPLIST_FILE = Info.plist;
 				OTHER_LDFLAGS = (
 					"-seg1addr",
 					0x50440000,
 				);
 				PRODUCT_NAME = IFrame;
+				USER_HEADER_SEARCH_PATHS = /Applications/Sandvox.app/Contents/Headers;
+				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970";
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
