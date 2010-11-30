@@ -286,7 +286,9 @@
     SVMedia *media = [self media];
     if (media)
     {
-        NSString *filename = [[[media preferredUploadPath] lastPathComponent] ks_stringWithPathSuffix:@"_med"];
+        NSString *filename = [[[media preferredUploadPath] lastPathComponent] stringByDeletingPathExtension];
+        filename = [filename stringByAppendingString:@"_med"];
+        filename = [filename stringByAppendingPathExtension:[NSString filenameExtensionForUTI:[self typeToPublish]]];
         
         NSURL *URL = [context addImageMedia:media
                                       width:[self width]
