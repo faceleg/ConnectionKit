@@ -94,6 +94,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
             NSUInteger elementWidth = [width unsignedIntegerValue] + [[[self plugIn] elementWidthPadding] unsignedIntegerValue];
             if (elementWidth > maxWidth)
             {
+                maxWidth = MAX(maxWidth, [self minWidth]);
                 [self setContentWidth:[NSNumber numberWithUnsignedInteger:maxWidth]];
             }
         }
