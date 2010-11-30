@@ -11,7 +11,6 @@
 		3C42E4A00D6502CD004F35FD /* FlickrPlugIn.css in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E49D0D6502CD004F35FD /* FlickrPlugIn.css */; };
 		3C42E4A10D6502CD004F35FD /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E49E0D6502CD004F35FD /* Template.html */; };
 		3C42E4A80D6502D7004F35FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4A50D6502D7004F35FD /* Localizable.strings */; };
-		3C42E4C20D65033F004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4C10D65033F004F35FD /* License.rtf */; };
 		3C5ACD93119226DE00A644AB /* FlickrInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5ACD92119226DE00A644AB /* FlickrInspector.m */; };
 		3C5D6F6212A4359700AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F6012A4359700AAAB18 /* Inspector.xib */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
@@ -44,7 +43,6 @@
 		3C42E4BB0D650318004F35FD /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C42E4BD0D650321004F35FD /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E4BE0D650321004F35FD /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C42E4C10D65033F004F35FD /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = License.rtf; sourceTree = "<group>"; };
 		3C5ACD91119226DE00A644AB /* FlickrInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrInspector.h; sourceTree = "<group>"; };
 		3C5ACD92119226DE00A644AB /* FlickrInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrInspector.m; sourceTree = "<group>"; };
 		3C5D6F6112A4359700AAAB18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
@@ -97,7 +95,6 @@
 				3C42E49D0D6502CD004F35FD /* FlickrPlugIn.css */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C42E4A50D6502D7004F35FD /* Localizable.strings */,
-				3C42E4C10D65033F004F35FD /* License.rtf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -206,7 +203,6 @@
 				3C42E4A00D6502CD004F35FD /* FlickrPlugIn.css in Resources */,
 				3C42E4A10D6502CD004F35FD /* Template.html in Resources */,
 				3C42E4A80D6502D7004F35FD /* Localizable.strings in Resources */,
-				3C42E4C20D65033F004F35FD /* License.rtf in Resources */,
 				CE28032012432D5C00B00F3D /* toolbar_flickr.tiff in Resources */,
 				3C5D6F6212A4359700AAAB18 /* Inspector.xib in Resources */,
 			);
