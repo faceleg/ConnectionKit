@@ -240,6 +240,14 @@
 		}
 		
 		// Here is where we would insert markup from:  [[parsecomponent iteratedPage iteratedPage.commentsTemplate]]
+		NSString *template = [iteratedPage commentsTemplate];
+		
+		if (template)
+		{
+//			SVTemplateParser *parser = [self newChildParserWithTemplate:template component:iteratedPage];
+//			[parser parseWithOutputWriter:_writer];
+//			[parser release];
+		}
 		
 		
 		[context endElement];	// </div> article-info
@@ -271,6 +279,15 @@
 	 </div> <!-- article-info -->
 	 </div> <!-- article -->
 	 <div class="clear">
+	 
+	 
+	 NOTE
+	 
+	 
+	 when you see something like this
+	 [[if parser.HTMLGenerationPurpose==0]]
+	 you need to change it to
+	 [[if currentContext.isForEditing]]
 	 
 	*/
 
