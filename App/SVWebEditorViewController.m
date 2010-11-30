@@ -491,7 +491,11 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     }
     else
     {
+        // Bracket -updateIfNeeded so final -didUpdate call happens at least after all controllers have been given a chance to update. #95683
+        [self willUpdate];
         [[[self webEditor] contentItem] updateIfNeeded];    // will call -didUpdate if anything did
+        [self didUpdate];
+        
         _willUpdate = NO;
     }
 }
