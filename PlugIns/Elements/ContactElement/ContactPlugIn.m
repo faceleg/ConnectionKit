@@ -128,7 +128,7 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
         NSDictionary *localizations = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"ContactStrings" ofType:@"plist"]];
         NSDictionary *localizedStrings = [localizations objectForKey:languageCode];
         
-		// ‚Ä¶if not found, try the langauge without a region, e.g. fr-CA -> fr
+		//  if not found, try the langauge without a region, e.g. fr-CA -> fr
         if (!localizedStrings)
         {
             unsigned int whereDash = [languageCode rangeOfString:@"-"].location;
@@ -141,7 +141,7 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
         
         // TO DO ... try the current langauge
         
-        // ‚Ä¶last resort, try English
+        //  last resort, try English
         if (!localizedStrings) localizedStrings = [localizations objectForKey:@"en"];
         
         
