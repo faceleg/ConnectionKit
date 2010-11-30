@@ -10,7 +10,7 @@
 
 #import "KTHostProperties.h"
 #import "SVImageMedia.h"
-#import "KTPage.h"
+#import "KTPage+Paths.h"
 #import "SVPublisher.h"
 #import "KTSite.h"
 
@@ -81,10 +81,10 @@
 
 - (NSURL *)addMedia:(id <SVMedia>)media;
 {
-    NSString *path = [_publisher publishMedia:media];
+    NSString *mediaPath = [_publisher publishMedia:media];
+    NSString *pagePath = [[_publisher baseRemotePath] stringByAppendingPathComponent:[[self page] uploadPath]];
     
-    NSString *basePath = [_publisher baseRemotePath];
-    NSString *relPath = [path ks_pathRelativeToDirectory:basePath];
+    NSString *relPath = [mediaPath ks_pathRelativeToDirectory:[pagePath stringByDeletingLastPathComponent]];
     
     if (relPath)
     {
