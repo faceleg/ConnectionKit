@@ -15,7 +15,7 @@ then
 	exit 1
 fi
 
-# the script phase itself brings in APPNAME
+# the script phase itself brings in APPNAME (should be SandvoxSDK)
 echo "APPNAME is ${APPNAME}"
 
 APPNAMENOSPACES=`echo "$APPNAME" | sed 's/ //g'`
@@ -75,9 +75,24 @@ then
 fi
 mkdir -p ${SCRATCH_DIR}
 
-echo "Packaging ${APPNAME}-SDK..."
+echo "Packaging ${APPNAME}..."
 pushd ${SCRATCH_DIR}
 
+# ------------------------------------------------
+echo "SDK_DIR = ${SDK_DIR}"
+echo "PLUGINS_DIR = ${PLUGINS_DIR}"
+echo "APPNAMENOSPACES = ${APPNAMENOSPACES}"
+echo "APPNAMELOWER = ${APPNAMELOWER}"
+echo "SLA_FILE = ${SLA_FILE}"
+echo "VARIANTLOWER = ${VARIANTLOWER}"
+echo "VARIANTTAG = ${VARIANTTAG}"
+echo "SLA file =  ${SLA_FILE}"
+echo "VOLUME_NAME = ${VOLUME_NAME}"
+echo "DMG_TEMP_NAME = ${DMG_TEMP_NAME}"
+echo "DMG_FINAL_NAME = ${DMG_FINAL_NAME}"
+echo "SDK_DIR_NAME = ${SDK_DIR_NAME}"
+echo "DMG_DIR = ${DMG_DIR}"
+echo "SCRATCH_DIR = ${SCRATCH_DIR}"
 # ------------------------------------------------
 
 # .dmg creation
@@ -91,8 +106,8 @@ hdiutil attach ${DMG_TEMP_NAME}.dmg
 
 # create directory on dmg to hold sdk
 echo "DMG_DIR is ${DMG_DIR}"
-pushd /Volumes/${VOLUME_NAME}
-mkdir ${SDK_DIR_NAME}
+pushd "/Volumes/${VOLUME_NAME}"
+mkdir "${SDK_DIR_NAME}"
 popd
 
 # ------------------------------------------------
@@ -122,20 +137,20 @@ ${PBXCP} \
 echo "Setting ${LICENSE_RTF} extension to be hidden..."
 /Developer/Tools/SetFile -a E "${DMG_DIR}/${LICENSE_RTF}"
 
-# add Sparky .webloc file to dmg
-SPARKY_WEBLOC_PATH="${DMG_DIR}/Check for Updates.webloc"
+#### add Sparky .webloc file to dmg
+###SPARKY_WEBLOC_PATH="${DMG_DIR}/Check for Updates.webloc"
 
-echo '<?xml version="1.0" encoding="UTF-8"?>' > "$SPARKY_WEBLOC_PATH"
-echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> "$SPARKY_WEBLOC_PATH"
-echo '<plist version="1.0">' >> "$SPARKY_WEBLOC_PATH"
-echo '<dict>' >> "$SPARKY_WEBLOC_PATH"
-echo '    <key>URL</key>' >> "$SPARKY_WEBLOC_PATH"
-echo "    <string>http://launch.karelia.com/changelog.php?rn=1&amp;version=${SVN_VERSION}&amp;product=5&amp;check=1</string>" >> "$SPARKY_WEBLOC_PATH"
-echo '</dict>' >> "$SPARKY_WEBLOC_PATH"
-echo '</plist>' >> "$SPARKY_WEBLOC_PATH"
+###echo '<?xml version="1.0" encoding="UTF-8"?>' > "$SPARKY_WEBLOC_PATH"
+###echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> "$SPARKY_WEBLOC_PATH"
+###echo '<plist version="1.0">' >> "$SPARKY_WEBLOC_PATH"
+###echo '<dict>' >> "$SPARKY_WEBLOC_PATH"
+###echo '    <key>URL</key>' >> "$SPARKY_WEBLOC_PATH"
+###echo "    <string>http://launch.karelia.com/changelog.php?rn=1&amp;version=${SVN_VERSION}&amp;product=5&amp;check=1</string>" >> "$SPARKY_WEBLOC_PATH"
+###echo '</dict>' >> "$SPARKY_WEBLOC_PATH"
+###echo '</plist>' >> "$SPARKY_WEBLOC_PATH"
 
 # add Docs .webloc file to dmg
-DOCS_WEBLOC_PATH="${DMG_DIR}/Sandvox Developers Guide.webloc"
+DOCS_WEBLOC_PATH="${DMG_DIR}/Developers Guide.webloc"
 
 echo '<?xml version="1.0" encoding="UTF-8"?>' > "$DOCS_WEBLOC_PATH"
 echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> "$DOCS_WEBLOC_PATH"
@@ -147,7 +162,7 @@ echo '</dict>' >> "$DOCS_WEBLOC_PATH"
 echo '</plist>' >> "$DOCS_WEBLOC_PATH"
 
 # add Forum .webloc file to dmg
-FORUM_WEBLOC_PATH="${DMG_DIR}/Sandvox Developer Forum.webloc"
+FORUM_WEBLOC_PATH="${DMG_DIR}/Developers Forum.webloc"
 
 echo '<?xml version="1.0" encoding="UTF-8"?>' > "$FORUM_WEBLOC_PATH"
 echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> "$FORUM_WEBLOC_PATH"
@@ -159,7 +174,7 @@ echo '</dict>' >> "$FORUM_WEBLOC_PATH"
 echo '</plist>' >> "$FORUM_WEBLOC_PATH"
 
 # copy Examples to dmg
-EXAMPLES_DIR={$SDK_DIR}/Examples
+EXAMPLES_DIR="${SDK_DIR}/Examples"
 echo "Copying ${EXAMPLES_DIR} to disk image..."
 mkdir -p "${DMG_DIR}/Examples"
 pushd "${EXAMPLES_DIR}"
@@ -180,11 +195,11 @@ do
 			-resolve-src-symlinks \
 			"${PWD}/${i}" "${DMG_DIR}/Examples"
 
-		/usr/bin/gcc -E -P -x c -Wno-trigraphs \
-			-D SANDVOX_VERSION=${SANDVOX_VERSION} \
-			-D SVN_VERSION=${SVN_VERSION} \
-			-C "${PWD}/${i}/Info.plist" \
-			-o "${DMG_DIR}/Examples/${i}/Info.plist"
+###		/usr/bin/gcc -E -P -x c -Wno-trigraphs \
+###			-D SANDVOX_VERSION=${SANDVOX_VERSION} \
+###			-D SVN_VERSION=${SVN_VERSION} \
+###			-C "${PWD}/${i}/Info.plist" \
+###			-o "${DMG_DIR}/Examples/${i}/Info.plist"
 
    	else
         	echo "--------------  Not including $i"
@@ -217,12 +232,9 @@ hdiutil internet-enable -yes "${DMG_FINAL_NAME}.dmg"
 # install license agreement
 echo "Installing License Agreement..."
 hdiutil unflatten ${DMG_FINAL_NAME}.dmg
-###/Developer/Tools/DeRez ${SLA_FILE} > sla.r
 ${SRCROOT}/../../Shared/Tools/RichTextToResource ${SLA_FILE} > sla.r
-###/Developer/Tools/Rez -a sla.r -o ${DMG_FINAL_NAME}.dmg
 /Developer/Tools/Rez ${SRCROOT}/../Other/for_SLA.r sla.r -a -o ${DMG_FINAL_NAME}.dmg
 hdiutil flatten ${DMG_FINAL_NAME}.dmg
-###rm sla.r
 
 popd
 
