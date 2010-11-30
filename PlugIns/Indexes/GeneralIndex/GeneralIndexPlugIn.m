@@ -40,8 +40,22 @@
 - (void)writeThumbnailImageOfIteratedPage;
 - (void)writeTitleOfIteratedPage;
 - (BOOL)writeSummaryOfIteratedPage;
+- (void)writeArticleInfoWithContinueReadingLink:(BOOL)continueReading;
+- (void)writeContinueReadingLink;
+- (BOOL) hasArticleInfo;
+
 @end
 
+@protocol PagePrivate
+
+- (id) master;
+- (void)writeComments:(id<SVPlugInContext>)context;
+
+@end
+
+@interface NSString (KareliaPrivate)
+- (NSString*)stringByReplacing:(NSString *)value with:(NSString *)newValue;
+@end
 
 @implementation GeneralIndexPlugIn
 
@@ -84,6 +98,7 @@
 	[context addDependencyForKeyPath:@"showEntries"			ofObject:self];
 	[context addDependencyForKeyPath:@"showTitles"			ofObject:self];
 	[context addDependencyForKeyPath:@"showThumbnails"		ofObject:self];
+	[context addDependencyForKeyPath:@"showComments"		ofObject:self];
 	[context addDependencyForKeyPath:@"showTimestamps"		ofObject:self];
 	[context addDependencyForKeyPath:@"truncateCount"		ofObject:self];
 	[context addDependencyForKeyPath:@"truncationType"		ofObject:self];
@@ -130,7 +145,6 @@
 {
 	BOOL truncated = NO;
     id<SVPlugInContext> context = [self currentContext];
-    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
 	NSString *className = [context currentIterationCSSClassName];
 	
 	switch(self.layoutType)
@@ -165,13 +179,20 @@
 		{
 			[context startElement:@"td" className:@"dli3"];
 			truncated = [self writeSummaryOfIteratedPage];
+			
+			if (truncated)	// put the continue reading link directly below the text
+			{
+				[self writeContinueReadingLink];
+			}
 			[context endElement];
 		}
 		
-		if (self.showTimestamps)
+		// Do another column if we want to show some meta info
+		
+		if ([self hasArticleInfo])
 		{
 			[context startElement:@"td" className:@"dli4"];
-			[context writeText:iteratedPage.timestampDescription];
+			[self writeArticleInfoWithContinueReadingLink:NO];
 			[context endElement];
 		}
 	}
@@ -190,60 +211,8 @@
 			truncated = [self writeSummaryOfIteratedPage];
 		}
 		
-		[context startElement:@"div" className:@"article-info"];
+		[self writeArticleInfoWithContinueReadingLink:truncated];
 
-		if (truncated)
-		{
-			// Note: Right now we are just writing out the format.  We are not providing a way to edit or customize this.
-			
-			[context startElement:@"div" className:@"continue-reading-link"];
-			[context startAnchorElementWithPage:iteratedPage];
-			
-			NSString *format = [[iteratedPage master] valueForKey:@"continueReadingLinkFormat"];
-			NSString *title = [iteratedPage title];
-			if (nil == title)
-			{
-				title = @"";		// better than nil, which crashes!
-			}
-			NSString *textToWrite = [format stringByReplacing:@"@@" with:title];
-			[context writeText:textToWrite];
-			[context endElement];	// </a>
-			[context endElement];	// </div> continue-reading-link
-		}
-
-		if (self.showTimestamps || self.showPermaLinks)		// timestamps and/or permanent links need timestamp <div>
-		{
-			
-			[context startElement:@"div" className:@"timestamp"];
-
-			if (self.showPermaLinks)		// If we are doing permanent link, start <a>
-			{
-				[context startAnchorElementWithPage:iteratedPage];
-			}
-			if (self.showTimestamps)	// Write out either timestamp ....
-			{
-				[context writeText:iteratedPage.timestampDescription];
-			}
-			else if (self.showPermaLinks)	// ... or permanent link text ..
-			{
-				NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-				NSString *language = [iteratedPage language];
-				NSString *permaLink = [bundle localizedStringForString:@"Permanent Link" language:language fallback:
-									   LocalizedStringInThisBundle(@"Permanent Link", @"Text in website's language to indicate a permanent link to the page")];
-				[context writeText:permaLink];
-			}
-			if ( self.showPermaLinks )
-			{
-				[context endElement];	// </a>
-			}
-			[context endElement];	// </div> timestamp
-		}
-		
-		[iteratedPage writeComments:context];		// PRIVATE		
-		
-		[context endElement];	// </div> article-info
-
-		
 	}
 	
 	/*
@@ -283,6 +252,81 @@
 	*/
 
 	[context endElement];		// li, tr, or div
+}
+
+- (void)writeContinueReadingLink;
+{
+    id<SVPlugInContext> context = [self currentContext]; 
+    id<SVPage,PagePrivate> iteratedPage = [context objectForCurrentTemplateIteration];
+
+	// Note: Right now we are just writing out the format.  We are not providing a way to edit or customize this.
+	
+	[context startElement:@"div" className:@"continue-reading-link"];
+	[context startAnchorElementWithPage:iteratedPage];
+	
+	NSString *format = [[iteratedPage master] valueForKey:@"continueReadingLinkFormat"];
+	NSString *title = [iteratedPage title];
+	if (nil == title)
+	{
+		title = @"";		// better than nil, which crashes!
+	}
+	NSString *textToWrite = [format stringByReplacing:@"@@" with:title];
+	[context writeText:textToWrite];
+	[context endElement];	// </a>
+	[context endElement];	// </div> continue-reading-link
+}
+
+- (BOOL) hasArticleInfo;		// Do we have settings to show an article info column or section?
+{
+	return self.showTimestamps || self.showPermaLinks || self.showComments;
+}
+
+- (void)writeArticleInfoWithContinueReadingLink:(BOOL)continueReading;
+{
+    id<SVPlugInContext> context = [self currentContext]; 
+    id<SVPage,PagePrivate> iteratedPage = [context objectForCurrentTemplateIteration];
+
+	[context startElement:@"div" className:@"article-info"];
+	
+	if (continueReading)	// put the continue reading link along with the article info
+	{
+		[self writeContinueReadingLink];
+	}
+	
+	if (self.showTimestamps || self.showPermaLinks)		// timestamps and/or permanent links need timestamp <div>
+	{
+		
+		[context startElement:@"div" className:@"timestamp"];
+		
+		if (self.showPermaLinks)		// If we are doing permanent link, start <a>
+		{
+			[context startAnchorElementWithPage:iteratedPage];
+		}
+		if (self.showTimestamps)	// Write out either timestamp ....
+		{
+			[context writeText:iteratedPage.timestampDescription];
+		}
+		else if (self.showPermaLinks)	// ... or permanent link text ..
+		{
+			NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+			NSString *language = [iteratedPage language];
+			NSString *permaLink = [bundle localizedStringForString:@"Permanent Link" language:language fallback:
+								   LocalizedStringInThisBundle(@"Permanent Link", @"Text in website's language to indicate a permanent link to the page")];
+			[context writeText:permaLink];
+		}
+		if ( self.showPermaLinks )
+		{
+			[context endElement];	// </a>
+		}
+		[context endElement];	// </div> timestamp
+	}
+	
+	if (self.showComments)
+	{
+		[iteratedPage writeComments:context];		// PRIVATE		
+	}
+	
+	[context endElement];	// </div> article-info	
 }
 
 - (void)writeTitleOfIteratedPage;
@@ -359,6 +403,7 @@
 @synthesize showPermaLinks = _showPermaLinks;
 @synthesize showEntries = _showEntries;
 @synthesize showTitles = _showTitles;
+@synthesize showComments = _showComments;
 @synthesize showThumbnails = _showThumbnails;
 @synthesize showTimestamps = _showTimestamps;
 @synthesize truncateCount = _truncateCount;
