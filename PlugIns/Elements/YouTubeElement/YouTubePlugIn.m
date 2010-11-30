@@ -326,7 +326,7 @@
 
 - (NSURL *)thumbnailURL
 {
-	NSString *path = [[self bundle] pathForImageResource:@"YouTube"];
+	NSString *path = [[NSBundle bundleForClass:[self class]] pathForImageResource:@"YouTube"];
 	NSURL *URL = [NSURL fileURLWithPath:path];
     return URL;
 }
