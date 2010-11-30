@@ -57,6 +57,8 @@ echo "SLA file =  ${SLA_FILE}"
 # the dmg names that we'll use
 VOLUME_NAME="${APPNAMENOSPACES}"
 DMG_TEMP_NAME="temp"
+
+# prepend _ to the filename to avoid URL rewrite rules
 DMG_FINAL_NAME="_${APPNAMENOSPACES}${VARIANTTAG}-${SVN_VERSION}"
 
 # the directory that will appear on ~/Desktop after download
@@ -237,5 +239,71 @@ echo ""
 echo "Your ${APPNAME}-SDK is waiting for you at ${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg."
 echo ""
 
+# ------------------------------------------------
+
+echo "Deploying..."
+echo ""
+
+# ------- Source Paths
+
+SERVER_PATH="/home/karelia.com/MANUAL/${VARIANTLOWER}"
+UPLOAD_PATH="${SERVER_PATH}/${DMG_FINAL_NAME}.dmg"
+DISTRO_PATH="${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg"
+EMAIL_PATH="${SCRATCH_DIR}/${DMG_FINAL_NAME}-msg.txt"
+DSA_FILE_PATH="${SCRATCH_DIR}/${APPNAMENOSPACES}-${SVN_VERSION}.dsa"
+
+# ------- DSA File Creation
+
+SIGN_UPDATE_PATH="${SRCROOT}/../../Shared/Security/sign_update.rb"
+DSA_PRIV_PEM_PATH="${SRCROOT}/../../Shared/Security/dsa_priv.pem"
+
+DSA=`ruby "${SIGN_UPDATE_PATH}" "${DISTRO_PATH}" "${DSA_PRIV_PEM_PATH}"`
+echo "$DSA" > $DSA_FILE_PATH
+DSA_UPLOAD_PATH="/home/karelia.com/DSA"
+
+# ------- Server Info
+
+# SCP assumes public key login through Karelia's slicehost account
+SCP_LOGIN="karelia.com@secure.karelia.com"
+
+# if we don't have a distro ready, exit
+if test -r ${DISTRO_PATH}
+then
+	echo "Uploading ${DSA_FILE_PATH} ..."
+	echo "... to ${DSA_UPLOAD_PATH}"
+	scp "${DSA_FILE_PATH}" "${SCP_LOGIN}:${DSA_UPLOAD_PATH}"
+	echo ""
+	echo "Uploading ${DISTRO_PATH} ..."
+	echo "... to ${UPLOAD_PATH}"
+	scp "${DISTRO_PATH}" "${SCP_LOGIN}:${UPLOAD_PATH}"
+else
+	echo ""
+	echo "Nothing to upload at ${DISTRO_PATH}. Exiting..."
+	exit 1
+fi
+
+# email engineering
+echo ""
+echo "Emailing URL to engineering ..."
+
+echo "" > $EMAIL_PATH
+echo "Greetings!" >> $EMAIL_PATH
+echo "" >> $EMAIL_PATH
+echo "A new ${APPNAME} build ${SVN_VERSION} is now available at:" >> $EMAIL_PATH
+echo "" >> $EMAIL_PATH
+
+echo "<http://karelia.com/${VARIANTLOWER}/${DMG_FINAL_NAME}.dmg>" >> $EMAIL_PATH
+
+echo "" >> $EMAIL_PATH
+echo "If requested, please download and verify this release." >> $EMAIL_PATH
+echo "" >> $EMAIL_PATH
+echo "Thanks! (build by ${USER})" >> $EMAIL_PATH
+echo "" >> $EMAIL_PATH
+
+MAIL="${SRCROOT}/../../Shared/Tools/mail_build"
+${MAIL} "${APPNAME}" "${SVN_VERSION}" "${EMAIL_PATH}"
+
+echo ""
+echo "${APPNAME} deployment completed."
 
 exit 0
