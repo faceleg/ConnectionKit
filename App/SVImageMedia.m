@@ -24,6 +24,17 @@
                      type:(NSString *)type
       preferredUploadPath:(NSString *)path;
 {
+    // Warn if trying a non-standard format
+    if (type)
+    {
+        if (![type isEqualToUTI:(NSString *)kUTTypeJPEG] &&
+            ![type isEqualToUTI:(NSString *)kUTTypePNG] &&
+            ![type isEqualToUTI:(NSString *)kUTTypeGIF])
+        {
+            NSLog(@"Warning: Request for non-standard image format: %@", type);
+        }
+    }
+    
     self = [self init];
     
     _mediaRecord = [mediaRecord retain];
