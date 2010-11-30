@@ -13,6 +13,8 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
 	<string>Flickr Thumbnails</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
