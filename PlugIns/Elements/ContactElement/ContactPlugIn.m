@@ -204,7 +204,7 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
 
 - (NSString *)CSSURLs
 {
-    return [[[self currentContext] mainCSSURL] absoluteString];
+    return [[(NSObject *)[self currentContext] performSelector:@selector(mainCSSURL)] absoluteString];
 }
 
 - (NSString *)subjectPrompt
