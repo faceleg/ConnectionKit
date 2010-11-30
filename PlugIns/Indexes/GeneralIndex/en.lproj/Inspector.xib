@@ -129,6 +129,7 @@
 									<string key="NSResourceName">NSMenuMixedState</string>
 								</object>
 								<string key="NSAction">_popUpItemAction:</string>
+								<int key="NSTag">1</int>
 								<reference key="NSTarget" ref="622066014"/>
 							</object>
 							<bool key="NSMenuItemRespectAlignment">YES</bool>
@@ -136,7 +137,6 @@
 								<string key="NSTitle">OtherViews</string>
 								<object class="NSMutableArray" key="NSMenuItems">
 									<bool key="EncodedWithXMLCoder">YES</bool>
-									<reference ref="16061001"/>
 									<object class="NSMenuItem" id="422468555">
 										<reference key="NSMenu" ref="188762379"/>
 										<string key="NSTitle">Sections</string>
@@ -146,9 +146,9 @@
 										<reference key="NSOnImage" ref="554728545"/>
 										<reference key="NSMixedImage" ref="463220448"/>
 										<string key="NSAction">_popUpItemAction:</string>
-										<int key="NSTag">1</int>
 										<reference key="NSTarget" ref="622066014"/>
 									</object>
+									<reference ref="16061001"/>
 									<object class="NSMenuItem" id="225263843">
 										<reference key="NSMenu" ref="188762379"/>
 										<string key="NSTitle">Table</string>
@@ -168,6 +168,7 @@
 									<int key="NSfFlags">1044</int>
 								</object>
 							</object>
+							<int key="NSSelectedIndex">1</int>
 							<int key="NSPreferredEdge">1</int>
 							<bool key="NSUsesItemFromMenu">YES</bool>
 							<bool key="NSAltersState">YES</bool>
@@ -1298,8 +1299,8 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="225263843"/>
-							<reference ref="422468555"/>
 							<reference ref="16061001"/>
+							<reference ref="422468555"/>
 						</object>
 						<reference key="parent" ref="622066014"/>
 					</object>
