@@ -256,11 +256,9 @@ static id <SVPlugInContext> sCurrentContext;
     
     // Take a stab at Inspector nib
     NSBundle *bundle = [NSBundle bundleForClass:self];
-    NSString *nibName = [bundle objectForInfoDictionaryKey:@"KTPluginNibFile"];
-    if ( !nibName ) nibName = className;
     
     Class class = NSClassFromString(className);
-    if (!class && nibName)
+    if (!class)
     {
         // are we an Index?
         Class PrincipalClass = [bundle principalClass];
@@ -278,14 +276,9 @@ static id <SVPlugInContext> sCurrentContext;
         class = nil;
     }
     
-    if ( nil == [bundle pathForResource:nibName ofType:@"nib"] )
-    {
-        nibName = nil;
-    }
-    
     
     // Make Inspector
-    if (nibName || class)
+    if (class)
     {
         result = [[class alloc] initWithNibName:nil bundle:bundle];
         [result setTitle:[[bundle localizedInfoDictionary] objectForKey:@"KTPluginName"]];
