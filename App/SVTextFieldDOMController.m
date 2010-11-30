@@ -13,6 +13,7 @@
 #import "SVWebEditorHTMLContext.h"
 
 #import "DOMNode+Karelia.h"
+#import "NSString+Karelia.h"
 
 
 @interface SVTextFieldDOMController ()
@@ -24,6 +25,13 @@
 
 
 @implementation SVTextFieldDOMController
+
+- (id)init;
+{
+    [super init];
+    [self setPlaceholderString:NSLocalizedString(@"Title", "placeholder")];
+    return self;
+}
 
 - (void)dealloc
 {
@@ -302,7 +310,7 @@
     [super setTextHTMLElement:element];
     
     // Once attached to our DOM node, give it the placeholder text if needed
-    if ([self placeholderString] && [[self HTMLString] length] == 0)
+    if ([self placeholderString] && [[[self innerTextHTMLElement] innerText] isWhitespace])
     {
         [[self innerTextHTMLElement] setInnerText:[self placeholderString]];
     }
