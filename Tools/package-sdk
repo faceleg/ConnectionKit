@@ -79,20 +79,20 @@ echo "Packaging ${APPNAME}..."
 pushd ${SCRATCH_DIR}
 
 # ------------------------------------------------
-echo "SDK_DIR = ${SDK_DIR}"
-echo "PLUGINS_DIR = ${PLUGINS_DIR}"
-echo "APPNAMENOSPACES = ${APPNAMENOSPACES}"
-echo "APPNAMELOWER = ${APPNAMELOWER}"
-echo "SLA_FILE = ${SLA_FILE}"
-echo "VARIANTLOWER = ${VARIANTLOWER}"
-echo "VARIANTTAG = ${VARIANTTAG}"
-echo "SLA file =  ${SLA_FILE}"
-echo "VOLUME_NAME = ${VOLUME_NAME}"
-echo "DMG_TEMP_NAME = ${DMG_TEMP_NAME}"
-echo "DMG_FINAL_NAME = ${DMG_FINAL_NAME}"
-echo "SDK_DIR_NAME = ${SDK_DIR_NAME}"
-echo "DMG_DIR = ${DMG_DIR}"
-echo "SCRATCH_DIR = ${SCRATCH_DIR}"
+#echo "SDK_DIR = ${SDK_DIR}"
+#echo "PLUGINS_DIR = ${PLUGINS_DIR}"
+#echo "APPNAMENOSPACES = ${APPNAMENOSPACES}"
+#echo "APPNAMELOWER = ${APPNAMELOWER}"
+#echo "SLA_FILE = ${SLA_FILE}"
+#echo "VARIANTLOWER = ${VARIANTLOWER}"
+#echo "VARIANTTAG = ${VARIANTTAG}"
+#echo "SLA file =  ${SLA_FILE}"
+#echo "VOLUME_NAME = ${VOLUME_NAME}"
+#echo "DMG_TEMP_NAME = ${DMG_TEMP_NAME}"
+#echo "DMG_FINAL_NAME = ${DMG_FINAL_NAME}"
+#echo "SDK_DIR_NAME = ${SDK_DIR_NAME}"
+#echo "DMG_DIR = ${DMG_DIR}"
+#echo "SCRATCH_DIR = ${SCRATCH_DIR}"
 # ------------------------------------------------
 
 # .dmg creation
@@ -137,17 +137,17 @@ ${PBXCP} \
 echo "Setting ${LICENSE_RTF} extension to be hidden..."
 /Developer/Tools/SetFile -a E "${DMG_DIR}/${LICENSE_RTF}"
 
-#### add Sparky .webloc file to dmg
-###SPARKY_WEBLOC_PATH="${DMG_DIR}/Check for Updates.webloc"
+## add Sparky .webloc file to dmg
+#SPARKY_WEBLOC_PATH="${DMG_DIR}/Check for Updates.webloc"
 
-###echo '<?xml version="1.0" encoding="UTF-8"?>' > "$SPARKY_WEBLOC_PATH"
-###echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> "$SPARKY_WEBLOC_PATH"
-###echo '<plist version="1.0">' >> "$SPARKY_WEBLOC_PATH"
-###echo '<dict>' >> "$SPARKY_WEBLOC_PATH"
-###echo '    <key>URL</key>' >> "$SPARKY_WEBLOC_PATH"
-###echo "    <string>http://launch.karelia.com/changelog.php?rn=1&amp;version=${SVN_VERSION}&amp;product=5&amp;check=1</string>" >> "$SPARKY_WEBLOC_PATH"
-###echo '</dict>' >> "$SPARKY_WEBLOC_PATH"
-###echo '</plist>' >> "$SPARKY_WEBLOC_PATH"
+#echo '<?xml version="1.0" encoding="UTF-8"?>' > "$SPARKY_WEBLOC_PATH"
+#echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> "$SPARKY_WEBLOC_PATH"
+#echo '<plist version="1.0">' >> "$SPARKY_WEBLOC_PATH"
+#echo '<dict>' >> "$SPARKY_WEBLOC_PATH"
+#echo '    <key>URL</key>' >> "$SPARKY_WEBLOC_PATH"
+#echo "    <string>http://launch.karelia.com/changelog.php?rn=1&amp;version=${SVN_VERSION}&amp;product=5&amp;check=1</string>" >> "$SPARKY_WEBLOC_PATH"
+#echo '</dict>' >> "$SPARKY_WEBLOC_PATH"
+#echo '</plist>' >> "$SPARKY_WEBLOC_PATH"
 
 # add Docs .webloc file to dmg
 DOCS_WEBLOC_PATH="${DMG_DIR}/Developers Guide.webloc"
@@ -194,12 +194,6 @@ do
 			-exclude BUNDLED_SDK \
 			-resolve-src-symlinks \
 			"${PWD}/${i}" "${DMG_DIR}/Examples"
-
-###		/usr/bin/gcc -E -P -x c -Wno-trigraphs \
-###			-D SANDVOX_VERSION=${SANDVOX_VERSION} \
-###			-D SVN_VERSION=${SVN_VERSION} \
-###			-C "${PWD}/${i}/Info.plist" \
-###			-o "${DMG_DIR}/Examples/${i}/Info.plist"
 
    	else
         	echo "--------------  Not including $i"
