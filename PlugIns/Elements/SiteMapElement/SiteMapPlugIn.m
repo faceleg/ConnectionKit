@@ -122,7 +122,7 @@
     if ( [aPage shouldIncludeInSiteMaps] ) // we must check this since we're recursive
 	{
         // observe observable keypaths for aPage
-        id<NSFastEnumeration> keyPaths = [aPage automaticRearrangementKeyPaths];
+        id<NSFastEnumeration> keyPaths = [(NSArrayController *)aPage automaticRearrangementKeyPaths];
         for ( NSString *keyPath in keyPaths )
         {
             //FIXME: 75490: replace NOT watching title of thisPage with a DOM controller
@@ -212,8 +212,8 @@
             [self writeLinkOfPage:rootPage toContext:context];
             [context endElement];
             
-            // observe root's observable keypaths
-            id<NSFastEnumeration> keyPaths = [rootPage automaticRearrangementKeyPaths];
+            // observe root's observable keypaths. Typecast to shut compiler up as it's private Sandvox API
+            id<NSFastEnumeration> keyPaths = [(NSArrayController *)rootPage automaticRearrangementKeyPaths];
             for ( NSString *keyPath in keyPaths )
             {
                 //FIXME: 75490: replace NOT watching title of thisPage with a DOM controller
