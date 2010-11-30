@@ -239,6 +239,9 @@
 			[context endElement];	// </div> timestamp
 		}
 		
+		// Here is where we would insert markup from:  [[parsecomponent iteratedPage iteratedPage.commentsTemplate]]
+		
+		
 		[context endElement];	// </div> article-info
 
 		
@@ -300,6 +303,7 @@
     id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     BOOL truncated = [iteratedPage writeSummary:context
+							  includeLargeMedia:self.includeLargeMedia 
 									 truncation:self.truncateCount
 								 truncationType:(self.truncate ? self.truncationType : kTruncateNone)];
 	return truncated;

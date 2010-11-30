@@ -36,7 +36,7 @@
 
 #import "Sandvox.h"
 
-typedef enum { kLayoutList, kLayoutSections, kLayoutTable } IndexLayoutType;
+typedef enum { kLayoutSections, kLayoutList, kLayoutTable } IndexLayoutType;
 
 	
 	
