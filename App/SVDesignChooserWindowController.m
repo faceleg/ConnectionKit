@@ -199,6 +199,14 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
     //[oViewController setupTrackingRects];
 }
 
+- (void)beginWithDelegate:(id)aTarget didEndSelector:(SEL)aSelector;
+{
+    self.selectorWhenChosen = aSelector;
+	self.targetWhenChosen = aTarget;
+    
+	[self showWindow:self];
+}
+
 - (IBAction)chooseDesign:(id)sender		// Design was chosen.  Now call back to notify of change.
 {
     [self.targetWhenChosen performSelector:self.selectorWhenChosen withObject:self];
