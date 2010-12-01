@@ -314,64 +314,7 @@ initial syntax coloring.
 
 - (void)calculateCachedPreludes;
 {
-	NSString *title			= @"<title>This is a piece of HTML, wrapped in some markup to help the validator</title>";
-	NSString *commentStart	= @"<!-- BELOW IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->";
 	
-	NSString *localDTD  = [KTPage stringFromDocType:[self docType] local:YES];
-	NSString *remoteDTD = [KTPage stringFromDocType:[self docType] local:NO];
-
-	// Special adjustments for local validation on HTML4.
-	// Don't use the DTD if It's HTML 4 ... I was getting an error on local validation.
-	// With no DTD, validation seems OK in the local validation.
-	// And close the meta tag, too.
-	if (KTHTML401DocType == [self docType])
-	{
-		localDTD = @"";
-	}
-	// NOTE: If we change the line count of the prelude, we will have to adjust the start= value in -[SVValidatorWindowController validateSource:...]
-
-	NSString *metaCharset = nil;
-	NSString *htmlStart = nil;
-	switch([self docType])
-	{
-		case KTHTML401DocType:
-			htmlStart	= @"<html lang=\"en\">";
-			metaCharset = @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">";
-			break;
-		case KTHTML5DocType:
-			htmlStart	= @"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">";	// same as XHTML ?
-			metaCharset = @"<meta charset=\"UTF-8\" />";
-			break;
-		default:
-			htmlStart	= @"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">";
-			metaCharset = @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />";
-			break;
-	}
-	
-	self.cachedLocalPrelude = [NSString stringWithFormat:
-							   @"%@\n%@\n<head>\n%@\n%@\n</head>\n<body>\n%@\n",
-							   localDTD,
-							   htmlStart,
-							   metaCharset,
-							   title,
-							   commentStart];
-	self.cachedRemotePrelude = [NSString stringWithFormat:
-							   @"%@\n%@\n<head>\n%@\n%@\n</head>\n<body>\n%@\n",
-							   remoteDTD,
-							   htmlStart,
-							   metaCharset,
-							   title,
-							   commentStart];
-}
-
-- (NSString *)wrapFragment:(NSString *)aFragment local:(BOOL)isLocalDTD;
-{
-	NSString *postlude = @"\n<!-- ABOVE IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->\n</body>\n</html>\n";
-	
-	NSMutableString *result = [NSMutableString stringWithString:(isLocalDTD ? _cachedLocalPrelude : _cachedRemotePrelude)];
-	[result appendString:aFragment];
-	[result appendString:postlude];
-	return result;
 }
 
 - (void) autoValidate;	// check validity while the user is typing
@@ -398,41 +341,7 @@ initial syntax coloring.
 	}
 	else
 	{
-		NSString *wrappedPage = [self wrapFragment:fragment local:YES];
-		
-		NSXMLDocument *xmlDoc;
-		NSError *err = nil;
-		xmlDoc = [[NSXMLDocument alloc] initWithXMLString:wrappedPage
-				  // Don't try to actually validate HTML; it's not XML
-												  options:(KTHTML401DocType == [self docType]) ? NSXMLDocumentTidyHTML|NSXMLNodePreserveAll : NSXMLNodePreserveAll
-													error:&err];
-		
-		if (xmlDoc)
-		{
-			// Don't really try to validate if it's HTML 5.  Don't have a DTD!
-			// Don't really validate if it's HTML  ... We were having problems loading the DTD.
-			if (KTHTML5DocType != [self docType] && KTHTML401DocType != [self docType])
-			{
-				// Further check for validation if we can
-				BOOL valid = [xmlDoc validateAndReturnError:&err];
-				self.validationState = valid ? kValidationStateLocallyValid : kValidationStateValidationError;
-			}
-			else	// no ability to validate further, so assume it's locally valid.
-			{
-				self.validationState = kValidationStateLocallyValid;
-			}
-			[xmlDoc release];
-		}
-		else
-		{
-			self.validationState = kValidationStateUnparseable;
-		}
-		
-		
-		if (err)	// This might a warning or diagnosis for HTML 4.01
-		{
-			NSLog(@"validation Error: %@", [err localizedDescription]);
-		}
+		self.validationState = [SVHTMLValidator validateFragment:fragment docType:[self docType] error:NULL];
 	}
 }
 
@@ -465,7 +374,7 @@ initial syntax coloring.
 	NSMutableAttributedString*  textStore = [textView textStorage];
 	NSString *fragment = [textStore string];
 
-	NSString *wrappedPage = [self wrapFragment:fragment local:NO];
+	NSString *wrappedPage = [SVRemoteHTMLValidator HTMLStringWithFragment:fragment docType:[self docType]];
 	
 	NSString *docTypeName = [SVHTMLContext titleOfDocType:[self docType] localize:NO];
 	BOOL isValid = [[SVValidatorWindowController sharedController]

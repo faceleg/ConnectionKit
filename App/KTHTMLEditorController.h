@@ -13,18 +13,8 @@
 #import <Cocoa/Cocoa.h>
 
 #import "SVOffscreenWebViewController.h"
-#import "KT.h"
+#import "SVHTMLValidator.h"
 #import "KSNoCascadeWindow.h"
-
-
-typedef enum { 
-	kValidationStateUnknown = 0,		// or empty string
-	kValidationStateDisabled,			// for when we are not previewing, therefore no validation
-	kValidationStateUnparseable, 
-	kValidationStateValidationError, 
-	kValidationStateLocallyValid, 
-	kValidationStateVerifiedGood,
-} ValidationState;
 
 
 @class KTAbstractElement, SVRawHTMLGraphic;
