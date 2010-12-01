@@ -280,9 +280,13 @@ static id <SVPlugInContext> sCurrentContext;
     // Make Inspector
     if (class)
     {
-        result = [[class alloc] initWithNibName:nil bundle:bundle];
-        [result setTitle:[[bundle localizedInfoDictionary] objectForKey:@"KTPluginName"]];
-        [result autorelease];
+        NSString *nibPath = [bundle pathForResource:@"Inspector" ofType:@"nib"];
+        if (nibPath)
+        {
+            result = [[class alloc] initWithNibName:@"Inspector.nib" bundle:bundle];
+            [result setTitle:[[bundle localizedInfoDictionary] objectForKey:@"KTPluginName"]];
+            [result autorelease];
+        }
     }
     
     return result;
