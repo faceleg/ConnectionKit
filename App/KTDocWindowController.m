@@ -449,7 +449,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     // Private support method that only handles getting the sheet onscreen
     [self.designChooserWindowController beginDesignChooserForWindow:[self window]
 													   delegate:self
-												 didEndSelector:@selector(designChooserDidEnd:)];
+                                                     didEndSelector:@selector(designChooserDidEnd:returnCode:)];
 }
 
 - (void)changeDesignTo:(KTDesign *)aDesign;
@@ -480,8 +480,14 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		}
 	}
 }
-- (void)designChooserDidEnd:(SVDesignChooserWindowController *)designChooser
+- (void)designChooserDidEnd:(SVDesignChooserWindowController *)designChooser returnCode:(NSInteger)returnCode;
 {
+    if (returnCode == NSAlertAlternateReturn)
+    {
+        [NSApp endSheet:[designChooser window]];
+        return;
+    }
+
     KTDesign *aDesign = [designChooser design];
     
 	OFF((@"%s %p",__FUNCTION__, aDesign));
