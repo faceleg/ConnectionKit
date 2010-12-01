@@ -409,7 +409,7 @@
         {
             // Grab thumbnail from appropriate graphic and write that
             SVGraphic *source = [self thumbnailSourceGraphic];
-            if ([source thumbnailMedia])
+            if ([source imageRepresentation])
             {
                 if (!dryRun)
                 {

@@ -398,8 +398,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     // Default is for no thumbnail!
 }
 
-- (id <SVMedia>)thumbnailMedia { return nil; }
-
 - (id)imageRepresentation; { return nil; }
 - (NSString *)imageRepresentationType; { return nil; }
 
