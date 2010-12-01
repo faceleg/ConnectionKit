@@ -36,11 +36,6 @@
             // Further check for validation if we can
             BOOL valid = [xmlDoc validateAndReturnError:&err];
             result = valid ? kValidationStateLocallyValid : kValidationStateValidationError;
-            
-            if (!valid && err)	// This might a warning or diagnosis for HTML 4.01
-            {
-                NSLog(@"validation Error: %@", [err localizedDescription]);
-            }
         }
         else	// no ability to validate further, so assume it's locally valid.
         {
@@ -51,11 +46,12 @@
     else
     {
         result = kValidationStateUnparseable;
-        
-        if (err)	// This might a warning or diagnosis for HTML 4.01
-        {
-            NSLog(@"validation Error: %@", [err localizedDescription]);
-        }
+    }
+    
+    // Going by the docs, NSXMLDocument doesn't follow usual error handling rules. Instead it can use err to indicate warnings etc. even when parsing succeeded
+    if (err)	// This might a warning or diagnosis for HTML 4.01
+    {
+        NSLog(@"validation Error: %@", [err localizedDescription]);
     }
     
     
