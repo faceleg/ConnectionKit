@@ -543,22 +543,6 @@
 	return [[self plugIn] imageRepresentationType];
 }
 
-- (CGFloat)thumbnailAspectRatio;
-{
-    CGFloat result;
-    
-    if ([self constrainedAspectRatio])
-    {
-        result = [[self constrainedAspectRatio] floatValue];
-    }
-    else
-    {
-        result = [[self width] floatValue] / [[self height] floatValue];
-    }
-    
-    return result;
-}
-
 + (NSSet *)keyPathsForValuesAffectingImageRepresentation { return [NSSet setWithObject:@"media"]; }
 
 #pragma mark RSS Enclosure

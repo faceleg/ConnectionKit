@@ -366,15 +366,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     return nil;//return ([[self plugIn] thumbnailURL] ? self : nil);
 }
 
-- (CGFloat)thumbnailAspectRatio;
-{
-    CIImage *image = [[CIImage alloc] initWithContentsOfURL:[self mediaURL]];
-    CGSize size = [image extent].size;
-    CGFloat result = size.width / size.height;
-    [image release];
-    return result;
-}
-
 - (NSURL *)mediaURL; { return nil; }//[[self plugIn] thumbnailURL]; }
 - (NSData *)mediaData; { return nil; }
 - (NSString *)preferredFilename; { return [[self mediaURL] ks_lastPathComponent]; }
