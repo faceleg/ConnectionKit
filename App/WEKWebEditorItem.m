@@ -516,6 +516,17 @@
 		
         SVSelectionBorder *border = [self newSelectionBorder];
         
+        // Don't need stroke if graphic provides its own
+        //DOMElement *element = [self selectableDOMElement];
+        DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element pseudoElement:nil];
+        if ([[style borderTopWidth] floatValue] > 0.0f &&
+            [[style borderLeftWidth] floatValue] > 0.0f &&
+            [[style borderRightWidth] floatValue] > 0.0f &&
+            [[style borderBottomWidth] floatValue] > 0.0f)
+        {
+            [border setBorderColor:nil];
+        }
+        
         NSRect borderDrawingRect = [border drawingRectForGraphicBounds:frameRect];
         if ([view needsToDrawRect:borderDrawingRect])
         {
@@ -546,7 +557,9 @@
 {
     SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
     [border setMinSize:NSMakeSize(5.0f, 5.0f)];
-    [border setEditing:([self isEditing] || [[self webEditor] inLiveGraphicResize])];
+    
+    BOOL editing = ([self isEditing] || [[self webEditor] inLiveGraphicResize]);
+    [border setEditing:editing];
     
     return border;
 }
