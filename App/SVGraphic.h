@@ -172,8 +172,12 @@ extern NSString *kSVGraphicPboardType;
    
 
 #pragma mark Thumbnail
-@property(nonatomic, readonly) id <SVMedia> thumbnailMedia; // MUST be KVO-compliant
-- (CGFloat)thumbnailAspectRatio;
+
+- (void)writeThumbnailImage:(SVHTMLContext *)context
+                   maxWidth:(NSUInteger)width
+                  maxHeight:(NSUInteger)height;
+
+//@property(nonatomic, readonly) id <SVMedia> thumbnailMedia; // MUST be KVO-compliant
 
 
 #pragma mark RSS

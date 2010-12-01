@@ -478,6 +478,47 @@
 
 #pragma mark Thumbnail
 
+- (void)writeThumbnailImage:(SVHTMLContext *)context
+                   maxWidth:(NSUInteger)width
+                  maxHeight:(NSUInteger)height;
+{
+    id <SVMedia> media = [[self plugIn] thumbnailMedia];
+    if (media)
+    {
+        // Calculate dimensions
+        CGFloat aspectRatio;
+        NSNumber *aspectRatioNumber = [self constrainedAspectRatio];
+        if (aspectRatioNumber)
+        {
+            aspectRatio = [aspectRatioNumber floatValue];
+        }
+        else
+        {
+            aspectRatio = [[self width] floatValue] / [[self height] floatValue];
+        }
+        
+        if (aspectRatio > 1.0f)
+        {
+            height = width / aspectRatio;
+        }
+        else if (aspectRatio < 1.0f)
+        {
+            width = height * aspectRatio;
+        }
+        
+        NSString *title = [[[media preferredUploadPath] lastPathComponent]stringByDeletingPathExtension];
+        title = [title stringByAppendingFormat:@"_%u", width];
+        NSString *filename = [title stringByAppendingPathExtension:@"jpg"];
+        
+        [context writeImageWithSourceMedia:media
+                                       alt:@""
+                                     width:[NSNumber numberWithUnsignedInteger:width]
+                                    height:[NSNumber numberWithUnsignedInteger:height]
+                                      type:(NSString *)kUTTypeJPEG
+                         preferredFilename:filename];
+    }
+}
+
 - (id <SVMedia>)thumbnailMedia;
 {
     return [[self plugIn] thumbnailMedia];	// video may want to return poster frame

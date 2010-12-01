@@ -413,30 +413,7 @@
             {
                 if (!dryRun)
                 {
-                    // Write image itself
-                    CGFloat aspectRatio = [source thumbnailAspectRatio];
-                    if (aspectRatio > 1.0f)
-                    {
-                        height = width / aspectRatio;
-                    }
-                    else if (aspectRatio < 1.0f)
-                    {
-                        width = height * aspectRatio;
-                    }
-                    
-                    id <SVMedia> media = [source thumbnailMedia];
-                    NSString *type = [(SVMediaRecord *)media typeOfFile];
-                    
-                    NSString *title = [[[media preferredUploadPath] lastPathComponent]stringByDeletingPathExtension];
-                    title = [title stringByAppendingFormat:@"_%u", width];
-                    NSString *filename = [title stringByAppendingPathExtension:[NSString filenameExtensionForUTI:type]];
-                    
-                    [context writeImageWithSourceMedia:media
-                                                   alt:@""
-                                                 width:[NSNumber numberWithUnsignedInteger:width]
-                                                height:[NSNumber numberWithUnsignedInteger:height]
-                                                  type:type
-                                     preferredFilename:filename];
+                    [source writeThumbnailImage:context maxWidth:width maxHeight:height];
                 }
                 return YES;
             }
