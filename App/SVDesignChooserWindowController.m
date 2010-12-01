@@ -31,6 +31,11 @@
 
 @implementation SVDesignChooserWindowController
 
+- (id)init;
+{
+    return [self initWithWindowNibName:@"SVDesignChooser"];
+}
+
 #pragma mark Properties
 
 - (KTDesign *)design;

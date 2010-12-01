@@ -370,7 +370,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 {
 	if ( !_designChooserWindowController )
     {
-        _designChooserWindowController = [[SVDesignChooserWindowController alloc] initWithWindowNibName:@"SVDesignChooser"];
+        _designChooserWindowController = [[SVDesignChooserWindowController alloc] init];
 		[_designChooserWindowController window];  // make sure nib is loaded
 
 	}
