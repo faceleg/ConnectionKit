@@ -108,9 +108,6 @@
     
     [doc makeWindowControllers];
     [doc showWindows];
-    
-    
-    [designChooser release];
 }
 
 - (id)makeUntitledDocumentOfType:(NSString *)typeName error:(NSError **)outError
