@@ -20,6 +20,7 @@
 @property(nonatomic, copy) NSNumber *shouldPreviewWhenEditing;    // BOOL, mandatory
 
 + (SVTemplate *)placeholderTemplate;
++ (SVTemplate *)invalidHTMLPlaceholderTemplate;
 
 @end
 

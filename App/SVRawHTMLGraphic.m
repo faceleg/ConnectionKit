@@ -62,7 +62,7 @@
         }
         else
         {
-            [context writeText:@"ERROR!!!"];
+            [context writeHTMLString:[[[self class] invalidHTMLPlaceholderTemplate] templateString]];
         }
     }
     else
@@ -83,6 +83,17 @@
     if (!result)
     {
         result = [[SVTemplate templateNamed:@"RawHTMLPlaceholder.html"] retain];
+    }
+    
+    return result;
+}
+
++ (SVTemplate *)invalidHTMLPlaceholderTemplate;
+{
+    static SVTemplate *result;
+    if (!result)
+    {
+        result = [[SVTemplate templateNamed:@"InvalidHTMLPlaceholder.html"] retain];
     }
     
     return result;
