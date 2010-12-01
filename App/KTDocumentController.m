@@ -89,7 +89,11 @@
     
     [designChooser hideWindow:self];
     [_designChooser autorelease]; _designChooser = nil;
-    if (returnCode == NSAlertAlternateReturn) return;
+    if (returnCode == NSAlertAlternateReturn)
+    {
+        [self showDocumentPlaceholderWindowInitial:NO];
+        return;
+    }
     
     
     // Create doc

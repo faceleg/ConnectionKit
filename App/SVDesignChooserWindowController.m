@@ -21,6 +21,7 @@
 #import "MGScopeBar.h"
 
 #import "NSArray+Karelia.h"
+#import "NSInvocation+Karelia.h"
 #import "NSString+Karelia.h"
 
 
@@ -224,7 +225,19 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 
 - (IBAction)cancelSheet:(id)sender
 {
-    [NSApp endSheet:[self window]];
+    if ([self targetWhenChosen])
+    {
+        NSInteger returnCode = NSAlertAlternateReturn;
+        
+        NSInvocation *invocation = [NSInvocation invocationWithSelector:[self selectorWhenChosen] target:[self targetWhenChosen]];
+        [invocation setArgument:&self atIndex:2];
+        [invocation setArgument:&returnCode atIndex:3];
+        [invocation invoke];
+    }
+    else
+    {
+        [NSApp endSheet:[self window]];
+    }
 }
 
 - (void)designChooserDidEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo

@@ -518,6 +518,9 @@
 {
 	[[self window] orderOut:self];
 	
+    return [[NSDocumentController sharedDocumentController] newDocument:sender];
+    
+    
     NSError *error;
     if (![[NSDocumentController sharedDocumentController] openUntitledDocumentAndDisplay:YES error:&error])
     {
