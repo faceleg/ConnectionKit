@@ -9,7 +9,9 @@
 #import "SVRawHTMLGraphic.h"
 
 #import "SVHTMLContext.h"
+#import "SVHTMLValidator.h"
 #import "SVTemplate.h"
+
 #import "Registration.h"
 
 
@@ -36,9 +38,13 @@
 	// Show the real HTML if it's the pro-licensed edition publishing
 	// OR we are previewing and the SVRawHTMLGraphic is marked as being OK for preview
 	
-    if ( ([context shouldWriteServerSideScripts] && [context isForPublishingProOnly])
-			|| ([context isForEditing] && [[self shouldPreviewWhenEditing] boolValue])
-		)
+    NSString *html = [self HTMLString];
+    
+    if (([context shouldWriteServerSideScripts] &&
+         [context isForPublishingProOnly]) ||
+        ([context isForEditing] &&
+         [[self shouldPreviewWhenEditing] boolValue] &&
+         [SVHTMLValidator validateFragment:html docType:[[self docType] intValue] error:NULL] >= kValidationStateLocallyValid))
     {
         [context writeHTMLString:[self HTMLString]];
         [context addDependencyOnObject:self keyPath:@"HTMLString"];
