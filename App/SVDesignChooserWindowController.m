@@ -250,7 +250,22 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 
 @synthesize viewController = oViewController;
 
-#pragma mark -
+#pragma mark NSWindowDelegate
+
+- (void)windowWillClose:(NSNotification *)notification;
+{
+    // User clicked close button, alert delegate
+    if ([self targetWhenChosen])
+    {
+        NSInteger returnCode = NSAlertAlternateReturn;
+        
+        NSInvocation *invocation = [NSInvocation invocationWithSelector:[self selectorWhenChosen] target:[self targetWhenChosen]];
+        [invocation setArgument:&self atIndex:2];
+        [invocation setArgument:&returnCode atIndex:3];
+        [invocation invoke];
+    }
+}
+
 #pragma mark MGScopeBarDelegate
 
 
