@@ -514,24 +514,6 @@
 	[self updateLicenseStatus:nil];
 }
 
-- (IBAction)newDocument:(id)sender
-{
-	[[self window] orderOut:self];
-	
-    return [[NSDocumentController sharedDocumentController] newDocument:sender];
-    
-    
-    NSError *error;
-    if (![[NSDocumentController sharedDocumentController] openUntitledDocumentAndDisplay:YES error:&error])
-    {
-        [[NSDocumentController sharedDocumentController] presentError:error
-                                                       modalForWindow:[self window]
-                                                             delegate:nil
-                                                   didPresentSelector:nil
-                                                          contextInfo:NULL];
-    }
-}
-
 - (IBAction)openDocument:(id)sender
 {
 	[[self window] orderOut:self];

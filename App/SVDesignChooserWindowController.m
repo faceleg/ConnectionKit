@@ -212,10 +212,10 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 
 - (IBAction)chooseDesign:(id)sender		// Design was chosen.  Now call back to notify of change.
 {
-    [self.targetWhenChosen performSelector:self.selectorWhenChosen withObject:self];
-    
     // close up shop, we're done
-    [NSApp endSheet:[self window]];    
+    [NSApp endSheet:[self window]];
+    
+    [self.targetWhenChosen performSelector:self.selectorWhenChosen withObject:self];    
 }
 
 - (void)terminate:(id)sender
@@ -227,6 +227,8 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 
 - (IBAction)cancelSheet:(id)sender
 {
+    [NSApp endSheet:[self window]];
+    
     if ([self targetWhenChosen])
     {
         NSInteger returnCode = NSAlertAlternateReturn;
@@ -235,10 +237,6 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
         [invocation setArgument:&self atIndex:2];
         [invocation setArgument:&returnCode atIndex:3];
         [invocation invoke];
-    }
-    else
-    {
-        [NSApp endSheet:[self window]];
     }
 }
 

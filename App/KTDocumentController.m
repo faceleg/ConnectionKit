@@ -79,7 +79,18 @@
         designs = [KTDesign reorganizeDesigns:designs familyRanges:&newRangesOfGroups];
         [_designChooser setDesign:[designs firstObjectKS]];
         
-        [_designChooser beginWithDelegate:self didEndSelector:@selector(designChooserDidEnd:returnCode:)];
+        SVWelcomeController *welcomeWindow = [SVWelcomeController sharedController];
+        if ([[welcomeWindow window] isVisible])
+        {
+            [_designChooser beginDesignChooserForWindow:[welcomeWindow window]
+                                               delegate:self
+                                         didEndSelector:@selector(designChooserDidEnd:returnCode:)];
+        }
+        else
+        {
+            [_designChooser beginWithDelegate:self
+                               didEndSelector:@selector(designChooserDidEnd:returnCode:)];
+        }
     }
 }
 
@@ -87,13 +98,9 @@
 {
     OBPRECONDITION(designChooser == _designChooser);
     
-    [designChooser hideWindow:self];
+    
     [_designChooser autorelease]; _designChooser = nil;
-    if (returnCode == NSAlertAlternateReturn)
-    {
-        [self showDocumentPlaceholderWindowInitial:NO];
-        return;
-    }
+    if (returnCode == NSAlertAlternateReturn) return;
     
     
     // Create doc
