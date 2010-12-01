@@ -38,6 +38,7 @@
 {
     // Start with iMedia
     IMBObjectsPromise *promise = [IMBObjectsPromise promiseFromPasteboard:self];
+    [promise setDestinationDirectoryPath:NSTemporaryDirectory()];
     [promise start];
     [promise waitUntilFinished];
     NSArray *URLs = [promise fileURLs];
