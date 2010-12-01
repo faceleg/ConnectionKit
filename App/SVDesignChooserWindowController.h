@@ -35,8 +35,6 @@
 
 @property(nonatomic, retain) KTDesign *design;
 
-@property(assign) SEL selectorWhenChosen;
-@property(assign) id  targetWhenChosen;
 @property(nonatomic, retain) SVDesignChooserViewController *viewController;
 @property(nonatomic, retain) IBOutlet NSArrayController *designsController;
 @property (copy) NSString *genre;

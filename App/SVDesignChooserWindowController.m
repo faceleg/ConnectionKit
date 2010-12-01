@@ -27,6 +27,8 @@
 
 @interface SVDesignChooserWindowController ()
 - (NSString *)scopeBar:(MGScopeBar *)theScopeBar AXDescriptionForItem:(NSString *)identifier inGroup:(NSInteger)groupNumber;
+@property(assign) SEL selectorWhenChosen;
+@property(assign) id  targetWhenChosen;
 @end
 
 
