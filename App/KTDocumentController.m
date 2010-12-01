@@ -66,35 +66,34 @@
 - (IBAction)newDocument:(id)sender
 {
     // Display design chooser
-    SVDesignChooserWindowController *designChooser = [[SVDesignChooserWindowController alloc] init];
-    
-    NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
-    NSArray *newRangesOfGroups;
-    designs = [KTDesign reorganizeDesigns:designs familyRanges:&newRangesOfGroups];
-    [designChooser setDesign:[designs firstObjectKS]];
-    
-    [designChooser beginWithDelegate:self didEndSelector:@selector(designChooserDidEnd:returnCode:)];
-}
-
-- (id)XopenUntitledDocumentAndDisplay:(BOOL)displayDocument error:(NSError **)outError
-{
-    KTDocument *doc = [super openUntitledDocumentAndDisplay:NO error:outError];
-    
-    // Start by showing Design Chooser
-    if (doc && displayDocument) 
+    if (_designChooser)
     {
-        //[[doc windowForSheet] doCommandBySelector:@selector(chooseDesign:)];
+        [_designChooser showWindow:self];
     }
-    
-    return doc;
+    else
+    {
+        _designChooser = [[SVDesignChooserWindowController alloc] init];
+        
+        NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
+        NSArray *newRangesOfGroups;
+        designs = [KTDesign reorganizeDesigns:designs familyRanges:&newRangesOfGroups];
+        [_designChooser setDesign:[designs firstObjectKS]];
+        
+        [_designChooser beginWithDelegate:self didEndSelector:@selector(designChooserDidEnd:returnCode:)];
+    }
 }
 
 - (void)designChooserDidEnd:(SVDesignChooserWindowController *)designChooser returnCode:(NSInteger)returnCode;
 {
+    OBPRECONDITION(designChooser == _designChooser);
+    
     [designChooser hideWindow:self];
+    [_designChooser autorelease]; _designChooser = nil;
+    if (returnCode == NSAlertAlternateReturn) return;
     
+    
+    // Create doc
     KTDesign *design = [designChooser design];
-    
     KTDocument *doc = [self openUntitledDocumentAndDisplay:NO error:NULL];
     [[[[doc site] rootPage] master] setDesign:design];
     
