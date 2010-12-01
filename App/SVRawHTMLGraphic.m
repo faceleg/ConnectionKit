@@ -40,14 +40,30 @@
 	
     NSString *html = [self HTMLString];
     
-    if (([context shouldWriteServerSideScripts] &&
-         [context isForPublishingProOnly]) ||
-        ([context isForEditing] &&
-         [[self shouldPreviewWhenEditing] boolValue] &&
-         [SVHTMLValidator validateFragment:html docType:[[self docType] intValue] error:NULL] >= kValidationStateLocallyValid))
+    if (([context shouldWriteServerSideScripts] && [context isForPublishingProOnly]) ||
+        ([context isForEditing] && [[self shouldPreviewWhenEditing] boolValue]))
     {
-        [context writeHTMLString:[self HTMLString]];
-        [context addDependencyOnObject:self keyPath:@"HTMLString"];
+        // Is the preview going to be understandable by WebKit? Judge this by making sure there's no problem with close tags
+        NSError *error = nil;
+        ValidationState validation = [SVHTMLValidator validateFragment:html docType:KTHTML401DocType error:&error];
+        if (validation >= kValidationStateLocallyValid)
+        {
+            NSString *description = [error localizedDescription];
+            if (description)
+            {
+                if ([description rangeOfString:@" </"].location != NSNotFound) validation = kValidationStateUnparseable;
+            }
+        }
+        
+        if (validation >= kValidationStateLocallyValid)
+        {
+            [context writeHTMLString:[self HTMLString]];
+            [context addDependencyOnObject:self keyPath:@"HTMLString"];
+        }
+        else
+        {
+            [context writeText:@"ERROR!!!"];
+        }
     }
     else
     {
