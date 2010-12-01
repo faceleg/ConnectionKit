@@ -4,12 +4,17 @@
 [[if master.disqusShortName]]
 									[[if parser.isPublishing]]
 									[[if self==parser.currentPage]]
-									<div id="disqus_thread">
-										<script type="text/javascript" src="http://disqus.com/forums/[[=&%master.disqusShortName]]/embed.js">
-											var disqus_url = "[[=&URL]]"; 
-											var disqus_title = "[[=&title]]";
-										</script>
-									</div>
+                                    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = '[[=&%master.disqusShortName]]';
+    var disqus_url = '[[=&URL]]'; 
+    var disqus_title = '[[=&title]]';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
 									[[else5]]
 									<div class="comments">
 										<p><a href="[[=&URL]]#disqus_thread">View Comments</a></p>
@@ -23,7 +28,7 @@
 [[else3]]
 [[if parser.HTMLGenerationPurpose==0]]
 									<div class="comments">
-										<p style="color:red;">[[`To enable Disqus comments, enter the Disqus short name of this site into the Site Inspector]]</p>
+										<p style="color:red;">[[`To enable Disqus comments, enter the Disqus short name of this site into the Document Inspector]]</p>
 									</div>
 [[endif4]]
 [[endif3]]
@@ -56,7 +61,7 @@
 [[else3]]
 [[if parser.HTMLGenerationPurpose==0]]
 									<div class="comments">
-										<p style="color:red;">[[`To enable IntenseDebate comments, enter the Account ID of this site into the Site Inspector]]</p>
+										<p style="color:red;">[[`To enable IntenseDebate comments, enter the Account ID of this site into the Document Inspector]]</p>
 									</div>
 [[endif4]]
 [[endif3]]
@@ -68,7 +73,7 @@
 [[if master.commentsProvider==0]]
 [[if parser.HTMLGenerationPurpose==0]]
 									<div class="comments">
-										<p style="color:red;">[[`To enable comments, please choose a Weblog Comments provider in the Site Inspector]]</p>
+										<p style="color:red;">[[`To enable comments, please choose a Weblog Comments provider in the Document Inspector]]</p>
 									</div>
 [[endif3]]
 [[endif2]]
