@@ -150,7 +150,6 @@
         [context endElement]; // </a>
         
         // write <script> to endBody
-        //FIXME: #86407 expose endBodyMarkup or better way to add script to context in protocol
         [context addMarkupToEndOfBody:@"<script type=\"text/javascript\" src=\"http://platform.twitter.com/widgets.js\"></script>"];
     }
     else 
