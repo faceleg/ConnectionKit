@@ -510,15 +510,20 @@
             width = height * aspectRatio;
         }
         
-        NSString *title = [[[media preferredUploadPath] lastPathComponent]stringByDeletingPathExtension];
-        title = [title stringByAppendingFormat:@"_%u", width];
-        NSString *filename = [title stringByAppendingPathExtension:@"jpg"];
+        // How should the image be published?
+        NSString *type = [self typeToPublish];
         
+        // Where to publish?
+        NSString *filename = [[[media preferredUploadPath] lastPathComponent] stringByDeletingPathExtension];
+        filename = [filename stringByAppendingFormat:@"_%u", width];
+        filename = [filename stringByAppendingPathExtension:[NSString filenameExtensionForUTI:type]];
+        
+        // Write out the image
         [context writeImageWithSourceMedia:media
                                        alt:@""
                                      width:[NSNumber numberWithUnsignedInteger:width]
                                     height:[NSNumber numberWithUnsignedInteger:height]
-                                      type:(NSString *)kUTTypeJPEG
+                                      type:type
                          preferredFilename:filename];
     }
 }
