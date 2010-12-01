@@ -11,6 +11,8 @@
 #import "KT.h"
 #import "KTDataMigrator.h"
 #import "KTDataMigrationDocument.h"
+#import "SVDesignChooserWindowController.h"
+#import "KTDesign.h"
 #import "KTDocument.h"
 #import "KTSite.h"
 #import "KTElementPlugInWrapper.h"
@@ -63,27 +65,49 @@
 
 - (IBAction)newDocument:(id)sender
 {
-    NSError *error = nil;
-    if (![self openUntitledDocumentAndDisplay:YES error:&error])
-    {
-        if (![[error domain] isEqualToString:NSCocoaErrorDomain] || [error code] != NSUserCancelledError)
-        {
-            [self presentError:error];
-        }
-    }
+    // Display design chooser
+    SVDesignChooserWindowController *designChooser = [[SVDesignChooserWindowController alloc] init];
+    
+    NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
+    NSArray *newRangesOfGroups;
+    designs = [KTDesign reorganizeDesigns:designs familyRanges:&newRangesOfGroups];
+    [designChooser setDesign:[designs firstObjectKS]];
+    
+    [designChooser beginWithDelegate:self didEndSelector:@selector(designChooserDidEnd:returnCode:)];
 }
 
-- (id)openUntitledDocumentAndDisplay:(BOOL)displayDocument error:(NSError **)outError
+- (id)XopenUntitledDocumentAndDisplay:(BOOL)displayDocument error:(NSError **)outError
 {
-    KTDocument *doc = [super openUntitledDocumentAndDisplay:displayDocument error:outError];
+    KTDocument *doc = [super openUntitledDocumentAndDisplay:NO error:outError];
     
     // Start by showing Design Chooser
     if (doc && displayDocument) 
     {
-        [[doc windowForSheet] doCommandBySelector:@selector(chooseDesign:)];
+        //[[doc windowForSheet] doCommandBySelector:@selector(chooseDesign:)];
     }
     
     return doc;
+}
+
+- (void)designChooserDidEnd:(SVDesignChooserWindowController *)designChooser returnCode:(NSInteger)returnCode;
+{
+    [designChooser hideWindow:self];
+    
+    KTDesign *design = [designChooser design];
+    
+    KTDocument *doc = [self openUntitledDocumentAndDisplay:NO error:NULL];
+    [[[[doc site] rootPage] master] setDesign:design];
+    
+    
+    // Present the doc as if new
+    [[doc managedObjectContext] processPendingChanges];
+    [[doc undoManager] removeAllActions];
+    
+    [doc makeWindowControllers];
+    [doc showWindows];
+    
+    
+    [designChooser release];
 }
 
 - (id)makeUntitledDocumentOfType:(NSString *)typeName error:(NSError **)outError
