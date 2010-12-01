@@ -86,19 +86,15 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 
 // Triggers to localize for the Comment/trackback stuff
-// NSLocalizedString(@"To enable comments, please choose a Weblog Comments provider in the Site Inspector", "Prompt in webview")
+// NSLocalizedString(@"To enable comments, please choose a Weblog Comments provider in the Document Inspector", "Prompt in webview")
 // NSLocalizedString(@"Comments", "String_On_Page_Template -- text for link on a blog posting")
 
-// JS-Kit
-// NSLocalizedString(@"To enable JS-Kit comments, enter your moderator email address into the Site Inspector", "Prompt in webview")
-// NSLocalizedString(@"JS-Kit Comments", "String_On_Page_Template -- text for link on a blog posting")
-
 // Disqus
-// NSLocalizedString(@"To enable Disqus comments, enter the Disqus short name of this site into the Site Inspector", "Prompt in webview")
+// NSLocalizedString(@"To enable Disqus comments, enter the Disqus short name of this site into the Document Inspector", "Prompt in webview")
 // NSLocalizedString(@"Disqus Comments", "String_On_Page_Template -- text for link on a blog posting")
 
 // Intense Debtate
-// NSLocalizedString(@"To enable IntenseDebate comments, enter the Account ID of this site into the Site Inspector", "Prompt in webview")
+// NSLocalizedString(@"To enable IntenseDebate comments, enter the Account ID of this site into the Document Inspector", "Prompt in webview")
 // NSLocalizedString(@"IntenseDebate Comments", "String_On_Page_Template -- text for link on a blog posting")
 
 
