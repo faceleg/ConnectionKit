@@ -486,8 +486,10 @@
     if (media)
     {
         // Calculate dimensions
-        CGFloat aspectRatio;
         NSNumber *aspectRatioNumber = [self constrainedAspectRatio];
+        [context addDependencyOnObject:self keyPath:@"constrainedAspectRatio"];
+        
+        CGFloat aspectRatio;
         if (aspectRatioNumber)
         {
             aspectRatio = [aspectRatioNumber floatValue];
@@ -495,6 +497,8 @@
         else
         {
             aspectRatio = [[self width] floatValue] / [[self height] floatValue];
+            [context addDependencyOnObject:self keyPath:@"width"];
+            [context addDependencyOnObject:self keyPath:@"height"];
         }
         
         if (aspectRatio > 1.0f)
