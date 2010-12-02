@@ -67,7 +67,8 @@
     NSArray *plugInKeys = [NSArray arrayWithObjects:
 						   @"hyperlinkTitles",
 						   @"includeLargeMedia",
-						   @"layoutType",
+						   @"indexLayoutType",
+						   @"mediaLayoutType",
 						   @"shortTitles",
 						   @"showPermaLinks",
 						   @"showEntries",
@@ -88,8 +89,7 @@
 	NSNumber *isPagelet = [self valueForKeyPath:@"container.isPagelet"];	// Private. If creating in sidebar, make it more minimal
 	if (isPagelet && [isPagelet boolValue])
 	{
-		self.layoutType			= kLayoutList;
-		self.showEntries		= NO;
+		self.indexLayoutType			= kLayoutTitlesList;
 	}
 }
 
@@ -100,7 +100,8 @@
 	// add dependencies
 	[context addDependencyForKeyPath:@"hyperlinkTitles"		ofObject:self];
 	[context addDependencyForKeyPath:@"includeLargeMedia"	ofObject:self];
-	[context addDependencyForKeyPath:@"layoutType"			ofObject:self];
+	[context addDependencyForKeyPath:@"indexLayoutType"		ofObject:self];
+	[context addDependencyForKeyPath:@"mediaLayoutType"		ofObject:self];
 	[context addDependencyForKeyPath:@"shortTitles"			ofObject:self];
 	[context addDependencyForKeyPath:@"showPermaLinks"		ofObject:self];
 	[context addDependencyForKeyPath:@"showEntries"			ofObject:self];
@@ -121,17 +122,14 @@
 {
 	id<SVPlugInContext> context = [self currentContext]; 
 
-	switch(self.layoutType)
+	if (self.indexLayoutType & kTableMask)
 	{
-		case kLayoutTable:
-			[context startElement:@"table" attributes:[NSDictionary dictionaryWithObjectsAndKeys:
-													   @"1", @"border", nil]];		// TEMPORARY BORDER
-			break;
-		case kLayoutList:
-			[context startElement:@"ul"];
-			break;
-		case kLayoutSections:
-			break;
+		[context startElement:@"table" attributes:[NSDictionary dictionaryWithObjectsAndKeys:
+												   @"1", @"border", nil]];		// TEMPORARY BORDER
+	}
+	else if (self.indexLayoutType & kListMask)
+	{
+		[context startElement:@"ul"];
 	}
 }
 
@@ -139,16 +137,13 @@
 {
 	id<SVPlugInContext> context = [self currentContext]; 
 
-	switch(self.layoutType)
+	if (self.indexLayoutType & kTableMask)
 	{
-		case kLayoutTable:
-			[context endElement];
-			break;
-		case kLayoutList:
-			[context endElement];
-			break;
-		case kLayoutSections:
-			break;
+		[context endElement];
+	}
+	else if (self.indexLayoutType & kListMask)
+	{
+		[context endElement];
 	}
 }
 
@@ -159,21 +154,21 @@
     id<SVPlugInContext> context = [self currentContext];
 	NSString *className = [context currentIterationCSSClassName];
 	
-	switch(self.layoutType)
+	if (self.indexLayoutType & kTableMask)
 	{
-		case kLayoutTable:
-			[context startElement:@"tr" className:className];
-			break;
-		case kLayoutList:
-			[context startElement:@"li" className:className];
-			break;
-		case kLayoutSections:
-			[context startElement:@"div" className:className];
-			break;
+		[context startElement:@"tr" className:className];
 	}
-	
+	else if (self.indexLayoutType & kListMask)
+	{
+		[context startElement:@"li" className:className];
+	}
+	else
+	{
+		[context startElement:@"div" className:className];
+	}
+		
 	// Table: We write Thumb, then title....
-	if (kLayoutTable == self.layoutType)
+	if (self.indexLayoutType & kTableMask)
 	{
 		if (self.showThumbnails)
 		{
@@ -362,7 +357,6 @@
 
 + (NSUInteger) truncationCountFromChars:(NSUInteger)chars forType:(SVIndexTruncationType)truncType
 {
-	NSLog(@"from %d log = %.2f  and exp = %.2f", chars, logf(chars), expf(chars));
 	NSUInteger result = 0;
 	float divided = 0.0;
 	switch(truncType)
@@ -486,7 +480,8 @@
 
 @synthesize hyperlinkTitles = _hyperlinkTitles;
 @synthesize includeLargeMedia = _includeLargeMedia;
-@synthesize layoutType = _layoutType;
+@synthesize indexLayoutType = _indexLayoutType;
+@synthesize mediaLayoutType = _mediaLayoutType;
 @synthesize shortTitles = _shortTitles;
 @synthesize showPermaLinks = _showPermaLinks;
 @synthesize showEntries = _showEntries;
@@ -497,6 +492,13 @@
 @synthesize truncateCount = _truncateCount;
 @synthesize truncationType = _truncationType;
 @synthesize truncate = _truncate;
+
+- (void) setIndexLayoutType:(IndexLayoutType)aType	// custom setter to also set dependent flags
+{
+	_indexLayoutType = aType;
+	self.showTitles = 0 != (aType && kTitleMask);
+	self.showEntries = 0 != (aType && kArticleMask);
+}
 
 
 @end

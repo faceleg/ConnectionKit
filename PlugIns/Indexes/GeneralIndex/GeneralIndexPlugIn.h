@@ -36,7 +36,29 @@
 
 #import "Sandvox.h"
 
-typedef enum { kLayoutSections, kLayoutList, kLayoutTable } IndexLayoutType;
+#define kArticleMask 1
+#define kTitleMask 2
+#define kListMask 4
+#define kTableMask 8
+typedef enum {	kLayoutNone = 0,
+				kLayoutArticlesOnly = kArticleMask,
+				kLayoutTitlesOnly = kTitleMask,
+				kLayoutTitlesAndArticles = kArticleMask | kTitleMask,
+				kLayoutTitlesList = kTitleMask | kListMask,
+				kLayoutTable = kArticleMask | kTitleMask | kTableMask
+} IndexLayoutType;
+
+#define kLargeMediaMask 1
+#define kThumbMask 2
+#define kFloatThumbMask 4
+#define kInsetThumbMask 8
+typedef enum {	kMediaNoLargeNoThumbs = 0,
+				kMediaLargeNoThumbs = kLargeMediaMask,
+				kMediaLargeFloatThumbs = kLargeMediaMask | kThumbMask | kFloatThumbMask,
+				kMediaLargeInsetThumbs = kLargeMediaMask | kThumbMask | kInsetThumbMask,
+				kMediaNoLargeFloatThumbs = kThumbMask | kFloatThumbMask,
+				kMediaNoLargeInsetThumbs = kThumbMask | kInsetThumbMask
+} MediaLayoutType;
 
 #define kCharsPerWord 5
 #define kWordsPerSentence 10
@@ -50,7 +72,8 @@ typedef enum { kLayoutSections, kLayoutList, kLayoutTable } IndexLayoutType;
 	BOOL _includeLargeMedia;
 	BOOL _showThumbnails;
 	BOOL _showTimestamps;
-	IndexLayoutType _layoutType;
+	IndexLayoutType _indexLayoutType;
+	MediaLayoutType _mediaLayoutType;
     BOOL _hyperlinkTitles;
     BOOL _shortTitles;
     BOOL _showPermaLinks;
@@ -72,7 +95,8 @@ typedef enum { kLayoutSections, kLayoutList, kLayoutTable } IndexLayoutType;
 @property  BOOL showTimestamps;
 @property  BOOL showComments;
 @property  BOOL truncate;
-@property  IndexLayoutType layoutType;
+@property  IndexLayoutType indexLayoutType;
+@property  MediaLayoutType mediaLayoutType;
 @property  SVIndexTruncationType truncationType;
 @property  NSUInteger truncateCount;
 
