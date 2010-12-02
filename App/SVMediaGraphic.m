@@ -11,6 +11,7 @@
 #import "SVAudio.h"
 #import "SVFlash.h"
 #import "SVGraphicFactory.h"
+#import "KTImageScalingURLProtocol.h"
 #import "KTMaster.h"
 #import "SVMediaGraphicInspector.h"
 #import "SVMediaRecord.h"
@@ -510,21 +511,39 @@
             width = height * aspectRatio;
         }
         
-        // How should the image be published?
-        NSString *type = [self typeToPublish];
-        
-        // Where to publish?
-        NSString *filename = [[[media preferredUploadPath] lastPathComponent] stringByDeletingPathExtension];
-        filename = [filename stringByAppendingFormat:@"_%u", width];
-        filename = [filename stringByAppendingPathExtension:[NSString filenameExtensionForUTI:type]];
-        
-        // Write out the image
-        [context writeImageWithSourceMedia:media
-                                       alt:@""
-                                     width:[NSNumber numberWithUnsignedInteger:width]
-                                    height:[NSNumber numberWithUnsignedInteger:height]
-                                      type:type
-                         preferredFilename:filename];
+        // During editing, cheat and use special URL if possible. #98041
+        if ([context isForEditing] && ![media mediaData])
+        {
+            NSURL *url = [NSURL sandvoxImageURLWithFileURL:[media mediaURL]
+                                                      size:NSMakeSize(width, height)
+                                               scalingMode:0
+                                                sharpening:0.0f
+                                         compressionFactor:1.0f
+                                                  fileType:[self typeToPublish]];
+            
+            [context writeImageWithSrc:[context relativeURLStringOfURL:url]
+                                   alt:@""
+                                 width:[NSNumber numberWithUnsignedInteger:width]
+                                height:[NSNumber numberWithUnsignedInteger:height]];
+        }
+        else
+        {
+            // How should the image be published?
+            NSString *type = [self typeToPublish];
+            
+            // Where to publish?
+            NSString *filename = [[[media preferredUploadPath] lastPathComponent] stringByDeletingPathExtension];
+            filename = [filename stringByAppendingFormat:@"_%u", width];
+            filename = [filename stringByAppendingPathExtension:[NSString filenameExtensionForUTI:type]];
+            
+            // Write out the image
+            [context writeImageWithSourceMedia:media
+                                           alt:@""
+                                         width:[NSNumber numberWithUnsignedInteger:width]
+                                        height:[NSNumber numberWithUnsignedInteger:height]
+                                          type:type
+                             preferredFilename:filename];
+        }
     }
 }
 
