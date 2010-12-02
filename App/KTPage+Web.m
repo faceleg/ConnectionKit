@@ -63,6 +63,14 @@
 	return self;
 }
 
+- (void)dealloc
+{
+    [_siteItem release];
+    [_childItems release];
+    
+    [super dealloc];
+}
+
 - (BOOL)containsSiteItem:(SVSiteItem *)aSiteItem;
 {
 	if (self.siteItem == aSiteItem)
