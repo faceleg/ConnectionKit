@@ -262,9 +262,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     return [[self webContentAreaController] objectsController];
 }
 
-#pragma mark -
 #pragma mark Missing Media
 
+/*
 - (void)checkForMissingMedia
 {
     return;
@@ -306,6 +306,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		[[self window] performClose:self]; 
 	}
 }
+*/
 
 #pragma mark IBActions
 
