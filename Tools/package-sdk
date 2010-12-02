@@ -3,6 +3,9 @@
 # we base the PackageAndDeploySDK target on Sandvox.xcconfig through the Xcode UI
 # this brings in SVN_VERSION and PRODUCT_VARIANT
 
+# hard code PRODUCT_VARIANT as VARIANT_RELEASE so SDK is always put into MANUAL/files
+PRODUCT_VARIANT=VARIANT_RELEASE
+
 echo ""
 echo "Gathering resources for packaging Sandvox SDK ..."
 echo "SVN_VERSION is ${SVN_VERSION}"
