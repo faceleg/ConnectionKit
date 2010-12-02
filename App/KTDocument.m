@@ -413,6 +413,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     [_store release];
     [_filenameReservations release];
     [_deletedMediaDirectoryName release];
+    [_lastExportDirectory release];
 	
 	// release context
 	[_managedObjectContext release];
