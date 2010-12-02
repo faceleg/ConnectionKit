@@ -197,6 +197,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [_rootItem release];
     
     [_selectedItems release];
+    [_itemsToDisplay release];
     [_changingTextControllers release];
     
     [_webView close];
