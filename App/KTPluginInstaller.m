@@ -90,6 +90,14 @@ NSLog(@"%@", aURL);
 		NSString *destPath = [destFolder stringByAppendingPathComponent:[sourcePath lastPathComponent]];
 		NSString *altDestPath = [altDestFolder stringByAppendingPathComponent:[sourcePath lastPathComponent]];
 
+		NSString *appPath = [[NSBundle mainBundle] bundlePath];	// so we can recognize if we are copying a plugin already in app
+		appPath = [[appPath stringByResolvingSymlinksInPath] stringByStandardizingPath];
+		
+		if ([sourcePath hasPrefix:appPath])
+		{
+			NSLog(@"Installing a COPY of a plugin that is in the application bundle.");
+		}
+		
 		if ([sourcePath isEqualToString:destPath] || [sourcePath isEqualToString:altDestPath])
 		{
 			NSLog(@"Not moving; already %@ is already installed.", sourcePath);
@@ -107,7 +115,8 @@ NSLog(@"%@", aURL);
 				(void) [fm removeFileAtPath:destPath handler:nil];
 			}
 			
-			BOOL shouldMove = [fm isDeletableFileAtPath:sourcePath];
+			// Move if we can delete the source file, and if the source path is not within the application path
+			BOOL shouldMove = [fm isDeletableFileAtPath:sourcePath] && ![sourcePath hasPrefix:appPath];
 
 			BOOL copiedOrMoved = shouldMove ? [fm movePath:sourcePath toPath:destPath handler:nil] : [fm copyPath:sourcePath toPath:destPath handler:nil];
 			if (copiedOrMoved)
