@@ -243,6 +243,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     SVGraphic *graphic = [self representedObject];
     DOMElement *element = [self graphicDOMElement];
     
+    [self setNeedsDisplay];
+    
     NSNumber *width = [graphic containerWidth];
     if (width && ![graphic isExplicitlySized])
     {
@@ -254,6 +256,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
     
     [self didUpdateWithSelector:_cmd];
+    [self setNeedsDisplay];
 }
 
 - (void)updateWrap;
