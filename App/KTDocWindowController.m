@@ -177,7 +177,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
     
 	// Check for missing media
-	[self performSelector:@selector(checkForMissingMedia) withObject:nil afterDelay:0.0];
+	//[self performSelector:@selector(checkForMissingMedia) withObject:nil afterDelay:0.0];
 }
 
 #pragma mark Controllers
