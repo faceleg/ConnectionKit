@@ -38,20 +38,31 @@
 	<integer>1</integer>
 	<key>KTPluginInitialProperties</key>
 	<dict>
-		<key>hyperlinkTitles</key><true/>
-		<key>includeLargeMedia</key><false/>
-		<key>shortTitles</key><true/>
-		<key>showPermaLinks</key><true/>
-		<key>showEntries</key><true/>
-		<key>showTitles</key><true/>
-		<key>showThumbnails</key><true/>
-		<key>showTimestamps</key><true/>
-		<key>truncate</key><false/>
-		<key>truncateCount</key><integer>25</integer>
-		<key>truncationType</key><integer>2</integer>
-		<key>layoutType</key><integer>0</integer>
+		<key>hyperlinkTitles</key>
+		<true/>
+		<key>includeLargeMedia</key>
+		<false/>
+		<key>shortTitles</key>
+		<true/>
+		<key>showPermaLinks</key>
+		<true/>
+		<key>showEntries</key>
+		<true/>
+		<key>showTitles</key>
+		<true/>
+		<key>showThumbnails</key>
+		<true/>
+		<key>showTimestamps</key>
+		<true/>
+		<key>truncate</key>
+		<false/>
+		<key>truncateCount</key>
+		<integer>20</integer>
+		<key>truncationType</key>
+		<integer>3</integer>
+		<key>layoutType</key>
+		<integer>0</integer>
 	</dict>
-
 	<key>SVIndexMasters</key>
 	<array>
 		<dict>

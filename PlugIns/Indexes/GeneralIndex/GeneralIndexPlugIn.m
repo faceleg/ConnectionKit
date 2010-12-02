@@ -232,7 +232,7 @@
 	
 	/*
 	 <div class="article-info">
-		 [[if truncateCount>0]]
+		 [[if truncateChars>0]]
 		 <div class="continue-reading-link">
 			[[if parser.HTMLGenerationPurpose]]<a href="[[path iteratedPage]]">[[endif2]]
 				[[continueReadingLink iteratedPage]]
@@ -360,6 +360,80 @@
 }
 
 
++ (NSUInteger) truncationCountFromChars:(NSUInteger)chars forType:(SVIndexTruncationType)truncType
+{
+	NSLog(@"from %d log = %.2f  and exp = %.2f", chars, logf(chars), expf(chars));
+	NSUInteger result = 0;
+	float divided = 0.0;
+	switch(truncType)
+	{
+		case kTruncateCharacters:
+			divided = (float)chars;
+			break;
+		case kTruncateWords:
+			divided = (float)chars / (kCharsPerWord);
+			break;
+		case kTruncateSentences:
+			divided = (float)chars / (kCharsPerWord * kWordsPerSentence);
+			break;
+		case kTruncateParagraphs:
+			divided = (float)chars / (kCharsPerWord * kWordsPerSentence * kSentencesPerParagraph);
+			break;
+		default:
+			break;
+	}
+	
+	// Not sure if there is any sophisticated mathematical way to do this.  Basically,
+	// show nice rounded numbers approximately corresponding to the order of magnitude
+	if (divided >= 1000.0)
+	{
+		result = 100 * roundf(divided / 100);
+	}
+	else if (divided >= 200)
+	{
+		result = 50 * roundf(divided / 50);
+	}
+	else if (divided >= 100)
+	{
+		result = 10 * roundf(divided / 10);
+	}
+	else if (divided >= 20)
+	{
+		result = 5 * roundf(divided / 5);
+	}
+	else result = round(divided);
+	
+	if (0 == result) result = 1;		// do not let result go to zero
+
+	return result;
+}
+
++ (NSUInteger) charsFromTruncationCount:(NSUInteger)count forType:(SVIndexTruncationType)truncType
+{
+	NSUInteger result = 0;
+	switch(truncType)
+	{
+		case kTruncateCharacters:
+			result = count;
+			break;
+		case kTruncateWords:
+			result = count * kCharsPerWord;
+			break;
+		case kTruncateSentences:
+			result = count * kCharsPerWord * kWordsPerSentence;
+			break;
+		case kTruncateParagraphs:
+			result = count * kCharsPerWord * kWordsPerSentence * kSentencesPerParagraph;
+			break;
+		default:
+			break;
+	}
+	return result;
+}
+
+
+
+
 
 /*
  [[summary item indexedCollection.collectionTruncateCharacters]]
@@ -407,7 +481,6 @@
         [context endElement];
     }
 }
-
 
 #pragma mark Properties
 

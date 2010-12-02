@@ -38,7 +38,12 @@
 
 typedef enum { kLayoutSections, kLayoutList, kLayoutTable } IndexLayoutType;
 
-	
+#define kCharsPerWord 5
+#define kWordsPerSentence 10
+#define kSentencesPerParagraph 5
+#define kMaxTruncationParagraphs 20
+// 5 * 10 * 5 * 20 = 5000 characters in 20 paragraphs, so this is our range
+
 	
 @interface GeneralIndexPlugIn : SVIndexPlugIn 
 {
@@ -53,7 +58,7 @@ typedef enum { kLayoutSections, kLayoutList, kLayoutTable } IndexLayoutType;
     BOOL _showTitles;
     BOOL _showComments;
 	BOOL _truncate;
-   SVIndexTruncationType _truncationType;
+	SVIndexTruncationType _truncationType;
     NSUInteger _truncateCount;
 }
 
@@ -70,5 +75,9 @@ typedef enum { kLayoutSections, kLayoutList, kLayoutTable } IndexLayoutType;
 @property  IndexLayoutType layoutType;
 @property  SVIndexTruncationType truncationType;
 @property  NSUInteger truncateCount;
+
+
++ (NSUInteger) truncationCountFromChars:(NSUInteger)chars forType:(SVIndexTruncationType)truncType;
++ (NSUInteger) charsFromTruncationCount:(NSUInteger)count forType:(SVIndexTruncationType)truncType;
 
 @end
