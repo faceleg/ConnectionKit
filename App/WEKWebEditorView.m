@@ -201,6 +201,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     [_webView close];
     [_webView release];
+    [_undoManager release];
         
     [super dealloc];
 }
