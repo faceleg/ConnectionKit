@@ -36,7 +36,6 @@
 @property (assign) BOOL networkAvailable;
 
 // Match the selectors used by NSDocumentController when possible so that actions from menu bar items gets directed to us if the panel is main/key
-- (IBAction)newDocument:(id)sender;
 - (IBAction)openDocument:(id)sender;
 - (IBAction)openSelectedRecentDocument:(id)sender;
 - (IBAction)openLicensing:(id)sender;
