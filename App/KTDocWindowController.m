@@ -99,6 +99,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[self setDesignChooserWindowController:nil];
 	self.rawHTMLMenuItem = nil;
 	self.HTMLTextPageMenuItem = nil;
+    [self setPagesController:nil];
 	
     // stop observing
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
