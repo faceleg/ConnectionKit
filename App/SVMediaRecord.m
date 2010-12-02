@@ -317,16 +317,16 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return ([_media webResource] != nil);
 }
 
-- (void)willTurnIntoFault
+/*- (void)willTurnIntoFault
 {
     [super willTurnIntoFault];
     
     // Only throw away data if it can be reloaded
     if ([self fileURL])
     {
-        //[_webResource release]; _webResource = nil;
+        [_webResource release]; _webResource = nil;
     }
-}
+}*/
 
 #pragma mark File Management
 
