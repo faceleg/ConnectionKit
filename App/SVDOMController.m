@@ -193,11 +193,11 @@
     
     if ([self isEditing])
     {
-        [[element style] setProperty:@"-webkit-user-modify" value:@"read-only" priority:@"!important"];
+        [element removeAttribute:@"contenteditable"];
     }
     else
     {
-        [[element style] removeProperty:@"-webkit-user-modify"];
+        if ([textController isEditable]) [element setContentEditable:@"true"];
     }
 }
 
