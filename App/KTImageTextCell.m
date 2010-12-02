@@ -75,7 +75,9 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 
 - (void)dealloc
 {
+    [myImageCell release];
     [myImage release];
+    
     [super dealloc];
 }
 
