@@ -32,8 +32,6 @@ img { -webkit-user-select:none; }
 [contenteditable] .callout-container * {
     -webkit-user-select: none;
 }
-div[contenteditable] { -webkit-user-select: text; }
-
 
 /*  Flickr (and potentially other code) uses an offscreen invisible image. This can ruin dragging */
 img[width="0"], img[height="0"] { display:none; }
