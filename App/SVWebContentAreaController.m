@@ -64,6 +64,7 @@
 - (void)dealloc
 {
     [_webEditorViewController release];
+    [_webPreviewController release];
     [_sourceViewController release];
     [_placeholderViewController release];
     [_multipleSelectionPlaceholder release];
