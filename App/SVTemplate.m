@@ -39,6 +39,8 @@ static NSMapTable *sNamedImages;
     [self setName:nil];
     OBASSERT(!_name);
     
+    [_templateString release];
+    
     [super dealloc];
 }
 
