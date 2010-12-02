@@ -84,6 +84,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 #import "Debug.h"
 
+// The second line of these pairs really should be equivalent to LocalizedStringForString since they
+// are in the target language.
 
 // Triggers to localize for the Comment/trackback stuff
 // NSLocalizedString(@"To enable comments, please choose a Weblog Comments provider in the Document Inspector", "Prompt in webview")

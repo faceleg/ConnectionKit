@@ -55,6 +55,7 @@
 	
 	
 	// Prepare our continue reading link
+	// This should probably use LocalizedStringForString, though, since it's in the target language
 	NSString *continueReadingLink =
 		NSLocalizedString(@"Continue reading @@", "Link to read a full article. @@ is replaced with the page title");
 	[self setPrimitiveValue:continueReadingLink forKey:@"continueReadingLinkFormat"];

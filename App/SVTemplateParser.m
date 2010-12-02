@@ -59,8 +59,8 @@ static NSString *kSpacesToUnderscoreIndicator = @"_";
 
 static NSString *kEncodeURLIndicator = @"%";
 static NSString *kEncodeURLIncludingDashesIndicator = @"-";
-static NSString *kTargetStringIndicator = @"\"";			// [[" String to localized in TARGET language Doesn't want a closing delimeter.
-static NSString *kTargetMainBundleStringIndicator = @"`";	// [[` String to localized in TARGET language -- but stored in Main Bundle ...  Doesn't want a closing delimeter.
+static NSString *kTargetStringIndicator = @"\"";			// [[" String to localized in TARGET language Doesn't want a closing delimeter.  Like LocalizedStringForString.
+static NSString *kTargetMainBundleStringIndicator = @"`";	// [[` String to localized in TARGET language -- but stored in Main Bundle ...  Doesn't want a closing delimeter. Like LocalizedStringForString.
 static NSString *kStringIndicator = @"'";					// [[' String to localize in current language. Doesn't want a closing delimeter.
 
 
