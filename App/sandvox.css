@@ -25,9 +25,6 @@ div.text-navigation div { display:inline; margin:0px 0.5em; }
 .callout-container, .graphic-container { clear:both; }
 .callout-container.first, .graphic-container.first { clear:none; }
 
-.callout-container.left { xfloat:left; }
-.callout-container.right { xfloat:right; }
-
 /* 2.0 wrap compatibility. 2.0-compatible designs can further adjust these if they need */
 .wide, .graphic { display:block; }
 img.narrow.left { float:left!important; }   /* Some designs won't respect without !important */
