@@ -273,7 +273,10 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
             if ([path rangeOfString:@".Trash"].location != NSNotFound) path = nil;
             
             
-            if (path) _media = [[SVMedia alloc] initByReferencingURL:[NSURL fileURLWithPath:path]];
+            if (path)
+            {
+                _media = [[SVMedia alloc] initByReferencingURL:[NSURL fileURLWithPath:path]];
+            }
         }
     }
     
