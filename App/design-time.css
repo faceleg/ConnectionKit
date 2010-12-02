@@ -5,31 +5,34 @@
 }
 
 .kLine[contenteditable=true]:hover {
-    outline-color:rgba(127,127,127,1);
+    outline-color: rgba(127,127,127,1);
 }
 
 .kLine:focus {
-    outline-color:rgba(127,127,127,1);
-    -webkit-transition:none;
+    outline-color: rgba(127,127,127,1);
+    -webkit-transition: none;
 }
 
 
 /*  Drop zones should have blue border */
 .svx-dragging-destination-active {
-    border-style:solid;
-    border-color:rgba(0,127,255,1);
+    border-style: solid;
+    border-color: rgba(0,127,255,1);
 }
 
-#sidebar { min-height:190px; }
+#sidebar { min-height: 190px; }
 
 
 img { -webkit-user-select:none; }
 
-/*  By default, <DIV>s in article is selectable… */
-.article .kBlock[contenteditable=true] > div {
-    -webkit-user-select:none;
+/*  By default, graphics & callouts in article aren't selectable… */
+[contenteditable] .graphic-container,
+[contenteditable] .graphic-container *,
+[contenteditable] .callout-container,
+[contenteditable] .callout-container * {
+    -webkit-user-select: none;
 }
-div[contenteditable] { -webkit-user-select:text; }
+div[contenteditable] { -webkit-user-select: text; }
 
 
 /*  Flickr (and potentially other code) uses an offscreen invisible image. This can ruin dragging */
@@ -46,9 +49,9 @@ img[width="0"], img[height="0"] { display:none; }
 
 div.svx-placeholder
 {
-	width:63%;
-	min-height:50px;
-	background:rgba(0,0,0,0.25);
-	margin:auto;
-	text-align:center;
+	width: 63%;
+	min-height: 50px;
+	background: rgba(0,0,0,0.25);
+	margin: auto;
+	text-align: center;
 }
