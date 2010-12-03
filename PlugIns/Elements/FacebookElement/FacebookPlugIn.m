@@ -58,6 +58,8 @@
 enum URLTYPES { THIS_URL, OTHER_URL };
 enum ACTIONS { LIKE_ACTION = 0, RECOMMEND_ACTION };
 enum COLORSCHEMES { LIGHT_SCHEME = 0, DARK_SCHEME };
+
+// standard layout includes text, faces; box_count is button only, tall; button_count is button only, wide
 enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 
@@ -195,7 +197,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     else 
     {
         //FIXME: phrase this better for user
-        NSString *noLiveFeeds = LocalizedStringInThisBundle(@"Facebook Like Button visible only when loading data from the Internet", "");
+        NSString *noLiveFeeds = LocalizedStringInThisBundle(@"Facebook Button visible only when loading data from the Internet", "");
         [context writeText:noLiveFeeds];
     }
     
