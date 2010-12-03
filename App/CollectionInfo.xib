@@ -79,7 +79,7 @@
 							<int key="NSCellFlags2">131072</int>
 							<string key="NSContents"/>
 							<reference key="NSControlView" ref="706244724"/>
-							<double key="NSMaxValue">100</double>
+							<double key="NSMaxValue">20</double>
 							<double key="NSMinValue">1</double>
 							<double key="NSValue">10</double>
 							<double key="NSAltIncValue">0.0</double>
