@@ -40,8 +40,6 @@
 	<dict>
 		<key>hyperlinkTitles</key>
 		<true/>
-		<key>shortTitles</key>
-		<true/>
 		<key>showPermaLinks</key>
 		<true/>
 		<key>showTimestamps</key>

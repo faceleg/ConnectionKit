@@ -73,7 +73,6 @@ typedef enum {	kMediaNoLargeNoThumbs = 0,
 	IndexLayoutType _indexLayoutType;
 	MediaLayoutType _mediaLayoutType;
     BOOL _hyperlinkTitles;
-    BOOL _shortTitles;
     BOOL _showPermaLinks;
     BOOL _showEntries;			// transient only, for bindings
     BOOL _showTitles;			// transient only, for bindings
@@ -84,7 +83,6 @@ typedef enum {	kMediaNoLargeNoThumbs = 0,
 }
 
 @property  BOOL hyperlinkTitles;
-@property  BOOL shortTitles;
 @property  BOOL showPermaLinks;
 @property  BOOL showEntries;
 @property  BOOL showTitles;

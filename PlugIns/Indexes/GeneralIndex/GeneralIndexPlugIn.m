@@ -68,7 +68,6 @@
 						   @"hyperlinkTitles",
 						   @"indexLayoutType",
 						   @"mediaLayoutType",
-						   @"shortTitles",
 						   @"showPermaLinks",
 						   @"showTimestamps",
 						   @"truncate",
@@ -97,7 +96,6 @@
 	[context addDependencyForKeyPath:@"hyperlinkTitles"		ofObject:self];
 	[context addDependencyForKeyPath:@"indexLayoutType"		ofObject:self];
 	[context addDependencyForKeyPath:@"mediaLayoutType"		ofObject:self];
-	[context addDependencyForKeyPath:@"shortTitles"			ofObject:self];
 	[context addDependencyForKeyPath:@"showPermaLinks"		ofObject:self];
 	[context addDependencyForKeyPath:@"showComments"		ofObject:self];
 	[context addDependencyForKeyPath:@"showTimestamps"		ofObject:self];
@@ -476,7 +474,6 @@
 @synthesize hyperlinkTitles = _hyperlinkTitles;
 @synthesize indexLayoutType = _indexLayoutType;
 @synthesize mediaLayoutType = _mediaLayoutType;
-@synthesize shortTitles		= _shortTitles;
 @synthesize showPermaLinks	= _showPermaLinks;
 @synthesize showEntries = _showEntries;
 @synthesize showTitles = _showTitles;
