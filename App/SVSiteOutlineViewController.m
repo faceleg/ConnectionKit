@@ -154,10 +154,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     [outlineView setAutoresizesOutlineColumn:NO];   // used to do this in the nib, but IB seems determined to turn on back on occasionally
     
 	NSTableColumn *tableColumn = [outlineView tableColumnWithIdentifier:@"displayName"];
-	KTImageTextCell *imageTextCell = [[[KTImageTextCell alloc] init] autorelease];
+	KTImageTextCell *imageTextCell = [[KTImageTextCell alloc] init];
 	[imageTextCell setEditable:YES];
 	[imageTextCell setLineBreakMode:NSLineBreakByTruncatingTail];
     [tableColumn setDataCell:imageTextCell];
+    [imageTextCell release];
 	
 	[outlineView setIntercellSpacing:NSMakeSize(3.0, 1.0)];
 	
