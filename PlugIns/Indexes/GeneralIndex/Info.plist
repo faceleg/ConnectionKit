@@ -40,17 +40,9 @@
 	<dict>
 		<key>hyperlinkTitles</key>
 		<true/>
-		<key>includeLargeMedia</key>
-		<false/>
 		<key>shortTitles</key>
 		<true/>
 		<key>showPermaLinks</key>
-		<true/>
-		<key>showEntries</key>
-		<true/>
-		<key>showTitles</key>
-		<true/>
-		<key>showThumbnails</key>
 		<true/>
 		<key>showTimestamps</key>
 		<true/>

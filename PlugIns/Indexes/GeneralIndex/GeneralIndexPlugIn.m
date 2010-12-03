@@ -66,14 +66,10 @@
 { 
     NSArray *plugInKeys = [NSArray arrayWithObjects:
 						   @"hyperlinkTitles",
-						   @"includeLargeMedia",
 						   @"indexLayoutType",
 						   @"mediaLayoutType",
 						   @"shortTitles",
 						   @"showPermaLinks",
-						   @"showEntries",
-						   @"showTitles",
-						   @"showThumbnails",
 						   @"showTimestamps",
 						   @"truncate",
 						   @"truncateCount",
@@ -99,14 +95,10 @@
 {
 	// add dependencies
 	[context addDependencyForKeyPath:@"hyperlinkTitles"		ofObject:self];
-	[context addDependencyForKeyPath:@"includeLargeMedia"	ofObject:self];
 	[context addDependencyForKeyPath:@"indexLayoutType"		ofObject:self];
 	[context addDependencyForKeyPath:@"mediaLayoutType"		ofObject:self];
 	[context addDependencyForKeyPath:@"shortTitles"			ofObject:self];
 	[context addDependencyForKeyPath:@"showPermaLinks"		ofObject:self];
-	[context addDependencyForKeyPath:@"showEntries"			ofObject:self];
-	[context addDependencyForKeyPath:@"showTitles"			ofObject:self];
-	[context addDependencyForKeyPath:@"showThumbnails"		ofObject:self];
 	[context addDependencyForKeyPath:@"showComments"		ofObject:self];
 	[context addDependencyForKeyPath:@"showTimestamps"		ofObject:self];
 	[context addDependencyForKeyPath:@"truncateCount"		ofObject:self];
@@ -125,7 +117,7 @@
 	if (self.indexLayoutType & kTableMask)
 	{
 		[context startElement:@"table" attributes:[NSDictionary dictionaryWithObjectsAndKeys:
-												   @"1", @"border", nil]];		// TEMPORARY BORDER
+												   @"0", @"border", nil]];		// TEMPORARY BORDER
 	}
 	else if (self.indexLayoutType & kListMask)
 	{
@@ -170,19 +162,22 @@
 	// Table: We write Thumb, then title....
 	if (self.indexLayoutType & kTableMask)
 	{
-		if (self.showThumbnails)
+		if (self.mediaLayoutType & kThumbMask)
 		{
 			[context startElement:@"td" className:@"dli1"];
 			[self writeThumbnailImageOfIteratedPage];
 			[context endElement];
 		}
-		[context startElement:@"td" className:@"dli2"];
-		[context startElement:@"h3" className:@"index-title"];
-		[self writeTitleOfIteratedPage];
-		[context endElement];
-		[context endElement];
+		if (self.indexLayoutType & kTitleMask)
+		{
+			[context startElement:@"td" className:@"dli2"];
+			[context startElement:@"h3" className:@"index-title"];
+			[self writeTitleOfIteratedPage];
+			[context endElement];
+			[context endElement];
+		}
 		
-		if (self.showEntries || !self.showTitles)	// make sure we show entries if titles not showing
+		if (self.indexLayoutType & kArticleMask)
 		{
 			[context startElement:@"td" className:@"dli3"];
 			truncated = [self writeSummaryOfIteratedPage];
@@ -196,7 +191,7 @@
 		
 		// Do another column if we want to show some meta info
 		
-		if (self.showEntries && [self hasArticleInfo])
+		if ((self.indexLayoutType & kArticleMask) && [self hasArticleInfo])
 		{
 			[context startElement:@"td" className:@"dli4"];
 			[self writeArticleInfoWithContinueReadingLink:NO];
@@ -205,24 +200,21 @@
 	}
 	else
 	{
-		[context startElement:@"h3" className:@"index-title"];
-		[self writeTitleOfIteratedPage];
-		[context endElement];
-
-		if (self.showThumbnails)
+		if (self.indexLayoutType & kTitleMask)
+		{
+			[context startElement:@"h3" className:@"index-title"];
+			[self writeTitleOfIteratedPage];
+			[context endElement];
+		}
+		if (self.mediaLayoutType & kThumbMask)
 		{
 			[self writeThumbnailImageOfIteratedPage];
 		}
-		if (self.showEntries || !self.showTitles)	// make sure we show entries if titles not showing
+		if (self.indexLayoutType & kArticleMask)
 		{
 			truncated = [self writeSummaryOfIteratedPage];
-		}
-		
-		if (self.showEntries)	// We will only show article info if we are showing entries
-		{
 			[self writeArticleInfoWithContinueReadingLink:truncated];
 		}
-
 	}
 	
 	/*
@@ -432,10 +424,6 @@
 	return result;
 }
 
-
-
-
-
 /*
  [[summary item indexedCollection.collectionTruncateCharacters]]
  */
@@ -445,7 +433,7 @@
     id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     BOOL truncated = [iteratedPage writeSummary:context
-							  includeLargeMedia:self.includeLargeMedia 
+							  includeLargeMedia:(self.mediaLayoutType & kLargeMediaMask) 
 									 truncation:self.truncateCount
 								 truncationType:(self.truncate ? self.truncationType : kTruncateNone)];
 	return truncated;
@@ -486,19 +474,17 @@
 #pragma mark Properties
 
 @synthesize hyperlinkTitles = _hyperlinkTitles;
-@synthesize includeLargeMedia = _includeLargeMedia;
 @synthesize indexLayoutType = _indexLayoutType;
 @synthesize mediaLayoutType = _mediaLayoutType;
-@synthesize shortTitles = _shortTitles;
-@synthesize showPermaLinks = _showPermaLinks;
+@synthesize shortTitles		= _shortTitles;
+@synthesize showPermaLinks	= _showPermaLinks;
 @synthesize showEntries = _showEntries;
 @synthesize showTitles = _showTitles;
-@synthesize showComments = _showComments;
-@synthesize showThumbnails = _showThumbnails;
-@synthesize showTimestamps = _showTimestamps;
-@synthesize truncateCount = _truncateCount;
-@synthesize truncationType = _truncationType;
-@synthesize truncate = _truncate;
+@synthesize showComments	= _showComments;
+@synthesize showTimestamps	= _showTimestamps;
+@synthesize truncateCount	= _truncateCount;
+@synthesize truncationType	= _truncationType;
+@synthesize truncate		= _truncate;
 
 - (void) setIndexLayoutType:(IndexLayoutType)aType	// custom setter to also set dependent flags
 {

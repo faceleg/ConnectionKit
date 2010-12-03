@@ -57,7 +57,7 @@ typedef enum {	kMediaNoLargeNoThumbs = 0,
 				kMediaLargeFloatThumbs = kLargeMediaMask | kThumbMask | kFloatThumbMask,
 				kMediaLargeInsetThumbs = kLargeMediaMask | kThumbMask | kInsetThumbMask,
 				kMediaNoLargeFloatThumbs = kThumbMask | kFloatThumbMask,
-				kMediaNoLargeInsetThumbs = kThumbMask | kInsetThumbMask
+				kMediaNoLargeInsetThumbs = kThumbMask | kInsetThumbMask		// NOT ACTUALLY IMPLEMENTED, just started upon.
 } MediaLayoutType;
 
 #define kCharsPerWord 5
@@ -69,16 +69,14 @@ typedef enum {	kMediaNoLargeNoThumbs = 0,
 	
 @interface GeneralIndexPlugIn : SVIndexPlugIn 
 {
-	BOOL _includeLargeMedia;
-	BOOL _showThumbnails;
 	BOOL _showTimestamps;
 	IndexLayoutType _indexLayoutType;
 	MediaLayoutType _mediaLayoutType;
     BOOL _hyperlinkTitles;
     BOOL _shortTitles;
     BOOL _showPermaLinks;
-    BOOL _showEntries;
-    BOOL _showTitles;
+    BOOL _showEntries;			// transient only, for bindings
+    BOOL _showTitles;			// transient only, for bindings
     BOOL _showComments;
 	BOOL _truncate;
 	SVIndexTruncationType _truncationType;
@@ -86,12 +84,10 @@ typedef enum {	kMediaNoLargeNoThumbs = 0,
 }
 
 @property  BOOL hyperlinkTitles;
-@property  BOOL includeLargeMedia;
 @property  BOOL shortTitles;
 @property  BOOL showPermaLinks;
 @property  BOOL showEntries;
 @property  BOOL showTitles;
-@property  BOOL showThumbnails;
 @property  BOOL showTimestamps;
 @property  BOOL showComments;
 @property  BOOL truncate;
