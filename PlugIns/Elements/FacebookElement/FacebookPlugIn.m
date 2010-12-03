@@ -281,7 +281,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     switch ( self.layout )
     {
         case STANDARD_LAYOUT:
-            [self setWidth:[NSNumber numberWithInt:450]
+            [self setWidth:[NSNumber numberWithInt:255] // could be 450 
                     height:((self.showFaces) ? [NSNumber numberWithInt:80] : [NSNumber numberWithInt:35])];
             break;
         case BUTTON_COUNT_LAYOUT:
