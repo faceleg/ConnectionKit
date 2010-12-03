@@ -26,8 +26,7 @@
     [super awakeFromHTMLContext:context];
     
     SVMediaGraphicDOMController *parent = (SVMediaGraphicDOMController *)[self parentWebEditorItem];
-    OBASSERT([parent isKindOfClass:[SVMediaGraphicDOMController class]]);
-    [parent setImageDOMController:self];
+    if([parent isKindOfClass:[SVMediaGraphicDOMController class]]) [parent setImageDOMController:self];
 }
 
 #pragma mark Selection
