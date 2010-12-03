@@ -288,7 +288,7 @@
 									<reference ref="244989336"/>
 									<object class="NSMenuItem" id="418820946">
 										<reference key="NSMenu" ref="224111449"/>
-										<string key="NSTitle">Compact</string>
+										<string key="NSTitle">Button-only, Tall</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
@@ -300,7 +300,7 @@
 									</object>
 									<object class="NSMenuItem" id="399064439">
 										<reference key="NSMenu" ref="224111449"/>
-										<string key="NSTitle">Vertical</string>
+										<string key="NSTitle">Button-only, Wide</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
@@ -899,7 +899,7 @@
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
-				<string key="1.IBEditorWindowLastContentRect">{{1018, 822}, {230, 219}}</string>
+				<string key="1.IBEditorWindowLastContentRect">{{805, 822}, {230, 219}}</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1.WindowOrigin">{628, 654}</string>
 				<string key="1.editorWindowContentRectSynchronizationRect">{{217, 442}, {480, 272}}</string>
@@ -919,7 +919,7 @@
 					<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAwr4AAA</bytes>
 				</object>
 				<string key="20.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="21.IBEditorWindowLastContentRect">{{873, 799}, {121, 54}}</string>
+				<string key="21.IBEditorWindowLastContentRect">{{845, 868}, {172, 54}}</string>
 				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="22.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="23.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
