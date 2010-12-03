@@ -134,13 +134,16 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
         }
         
         // append show_faces
-        if ( self.showFaces )
+        if ( STANDARD_LAYOUT == self.layout )
         {
-            [srcString appendString:@"&show_faces=true"];
-        }
-        else
-        {
-            [srcString appendString:@"&show_faces=false"];
+            if ( self.showFaces )
+            {
+                [srcString appendString:@"&show_faces=true"];
+            }
+            else
+            {
+                [srcString appendString:@"&show_faces=false"];
+            }
         }
         
         // append width?
