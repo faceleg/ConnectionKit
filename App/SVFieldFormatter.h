@@ -7,7 +7,7 @@
 //
 
 //  
-//	Limits input to a single line. Trims whitespace from string when ending editing. NOT for subclassing
+//	Limits input to a single line. Trims whitespace from string when ending editing. Suitable for subclassing
 
 
 #import <Cocoa/Cocoa.h>
@@ -15,7 +15,8 @@
 
 @interface SVFieldFormatter : NSFormatter
 {
-
+  @private
+    NSFormatter *_formatter;
 }
 
 @end
