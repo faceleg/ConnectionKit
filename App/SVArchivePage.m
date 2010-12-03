@@ -154,7 +154,7 @@
     [plugIn setBool:YES forKey:@"showEntries"];
     [plugIn setBool:YES forKey:@"showTitles"];
     [plugIn setBool:YES forKey:@"showTimestamps"];
-    [plugIn setInteger:1 forKey:@"layoutType"]; // kLayoutSections
+    [plugIn setInteger:3 forKey:@"indexLayoutType"]; // kLayoutTitlesAndArticles
     
     
     [plugIn writeHTML:context];
