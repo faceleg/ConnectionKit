@@ -50,8 +50,6 @@
 //  3.  Set content as .representedObject
 - (id)initWithRepresentedObject:(id <SVDOMControllerRepresentedObject>)content;
 
-- (SVSizeBindingDOMController *)newSizeBindingControllerWithRepresentedObject:(id)object;
-
 
 #pragma mark Hierarchy
 - (WEKWebEditorItem *)itemForDOMNode:(DOMNode *)node;

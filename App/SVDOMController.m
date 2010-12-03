@@ -43,11 +43,6 @@
     return self;
 }
 
-- (SVSizeBindingDOMController *)newSizeBindingControllerWithRepresentedObject:(id)object;
-{
-    return [[SVSizeBindingDOMController alloc] initWithRepresentedObject:object];
-}
-
 - (void)dealloc
 {
     [self removeAllDependencies];

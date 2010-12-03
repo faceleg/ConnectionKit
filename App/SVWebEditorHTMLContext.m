@@ -114,6 +114,7 @@
 
 - (void)startDOMController:(SVDOMController *)controller; // call one of the -didEndWriting… methods after
 {
+    OBPRECONDITION(_currentDOMController);
     [_currentDOMController addChildWebEditorItem:controller];
     
     _currentDOMController = controller;

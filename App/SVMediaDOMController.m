@@ -34,6 +34,22 @@
     return result;
 }
 
+#pragma mark Selection
+
+- (BOOL)allowsDirectAccessToWebViewWhenSelected;
+{
+    // Generally, no. EXCEPT for inline, non-wrap-causing images
+    BOOL result = NO;
+    
+    SVMediaGraphic *image = [self representedObject];
+    if ([image shouldWriteHTMLInline])
+    {
+        result = YES;
+    }
+    
+    return result;
+}
+
 #pragma mark Resize
 
 - (NSSize)minSize;
@@ -144,11 +160,6 @@
 
 
 @implementation SVMediaGraphicDOMController
-
-- (SVSizeBindingDOMController *)newSizeBindingControllerWithRepresentedObject:(id)object;
-{
-    return [[SVImageDOMController alloc] initWithRepresentedObject:object];
-}
 
 - (void)dealloc
 {

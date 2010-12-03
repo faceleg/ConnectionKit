@@ -29,21 +29,5 @@
     if([parent isKindOfClass:[SVMediaGraphicDOMController class]]) [parent setImageDOMController:self];
 }
 
-#pragma mark Selection
-
-- (BOOL)allowsDirectAccessToWebViewWhenSelected;
-{
-    // Generally, no. EXCEPT for inline, non-wrap-causing images
-    BOOL result = NO;
-    
-    SVMediaGraphic *image = [self representedObject];
-    if ([image shouldWriteHTMLInline])
-    {
-        result = YES;
-    }
-    
-    return result;
-}
-
 @end
 
