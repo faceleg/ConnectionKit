@@ -9,8 +9,8 @@
 #import "SVImage.h"
 
 #import "SVApplicationController.h"
-#import "SVImageDOMController.h"
 #import "SVLink.h"
+#import "SVMediaDOMController.h"
 #import "SVMediaGraphicInspector.h"
 #import "SVMediaRecord.h"
 #import "SVSiteItem.h"

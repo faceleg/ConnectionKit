@@ -8,7 +8,6 @@
 
 #import "SVMediaDOMController.h"
 
-#import "SVImageDOMController.h"
 #import "SVPasteboardItemInternal.h"
 #import "SVTextAttachment.h"
 

@@ -14,7 +14,7 @@
 #import "SVGraphicDOMController.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
-#import "SVImageDOMController.h"
+#import "SVMediaDOMController.h"
 #import "SVIndexDOMController.h"
 #import "SVMediaPlugIn.h"
 #import "SVRichText.h"
