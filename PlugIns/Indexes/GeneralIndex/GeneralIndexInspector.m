@@ -76,7 +76,7 @@
 		{
 			NSUInteger truncCount = [truncCountNum intValue];
 			self.truncateCountLive = truncCount;			// this will populate field and slider
-#FIXME: It also calls through to [self setValue:countNum forKeyPath:@"inspectedObjectsController.selection.truncateCount"] in -slideDone: thereby marking the document as edited even though nothing happened
+#warning FIXME:It also calls through to [self setValue:countNum forKeyPath:@"inspectedObjectsController.selection.truncateCount"] in -slideDone: thereby marking the document as edited even though nothing happened
 		}
 	}
 	else if ([keyPath isEqualToString:@"inspectedObjectsController.selection.truncationType"])
