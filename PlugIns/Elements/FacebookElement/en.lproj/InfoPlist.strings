@@ -1,3 +1,2 @@
-﻿KTPluginName = "Facebook";
-KTPluginUntitledName = "Facebook";
+﻿CFBundleDisplayName = "Facebook Button";
 SVPlugInDescription = "Add a Facebook Like button to your site";

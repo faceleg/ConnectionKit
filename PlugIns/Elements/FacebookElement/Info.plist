@@ -20,6 +20,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>Facebook Button</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -30,12 +32,6 @@
 	<string>${SVN_VERSION}</string>
 	<key>NSPrincipalClass</key>
 	<string>FacebookPlugIn</string>
-	<key>KTPluginName</key>
-	<string>Facebook</string>
-	<key>KSHelpAnchor</key>
-	<string>Facebook</string>
-	<key>KTCategory</key>
-	<integer>4</integer>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
 </dict>

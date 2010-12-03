@@ -34,6 +34,13 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
+/*
+ The Like button lets a user share your content with friends on Facebook.
+ When the user clicks the Like button on your site, a story appears in the 
+ user's friends' News Feed with a link back to your website.
+ <http://developers.facebook.com/docs/reference/plugins/like#>
+ */
+
 #import "Sandvox.h"
 
 @interface FacebookPlugIn : SVPlugIn 
