@@ -156,6 +156,21 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 - (SVSidebarDOMController *)sidebarDOMController; { return self; }
 
+- (void)replaceChildWebEditorItem:(WEKWebEditorItem *)oldItem withItems:(NSArray *)newItems;
+{
+    [super replaceChildWebEditorItem:oldItem withItems:newItems];
+    
+    // Graphics might call this while updating. If so we want to reflect the change in our own items
+    NSUInteger index = [[self pageletDOMControllers] indexOfObjectIdenticalTo:oldItem];
+    if (index != NSNotFound)
+    {
+        NSMutableArray *controllers = [[self pageletDOMControllers] mutableCopy];
+        [controllers replaceObjectsInRange:NSMakeRange(index, 1) withObjectsFromArray:newItems];
+        [self setPageletDOMControllers:controllers];
+        [controllers release];
+    }
+}
+
 #pragma mark Pagelets Controller
 
 @synthesize pageletDOMControllers = _DOMControllers;
