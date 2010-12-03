@@ -37,7 +37,7 @@
 #import "RSSBadgePlugIn.h"
 
 
-// LocalizedStringInThisBundle(@"Please use the Inspector to connect this pagelet to a suitable collection in your site.", "RSSBadge")
+// LocalizedStringInThisBundle(@"Please use the Inspector to connect this object to a suitable collection in your site.", "RSSBadge")
 // LocalizedStringInThisBundle(@"To subscribe to this feed, drag or copy/paste this link to an RSS reader application.", @"RSS Badge")
 // LocalizedStringInThisBundle(@"The chosen collection has no RSS feed. Please use the Inspector to set it to generate an RSS feed.", @"RSS Badge")
 
