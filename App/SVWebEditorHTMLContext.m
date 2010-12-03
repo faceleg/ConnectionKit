@@ -198,9 +198,9 @@
 
 - (void)writeGraphicIgnoringCallout:(id <SVGraphic, SVDOMControllerRepresentedObject>)graphic;
 {
-    if ([graphic shouldWriteHTMLInline])
+    if ([graphic shouldWriteHTMLInline] && ![graphic isKindOfClass:[SVGraphic class]])
     {
-        // The graphic will take care of generating its own controller(s)
+        // The graphic will take care of generating its own controller(s). Unfortunately inline images cock this up at the moment, so don't apply to things like that!
         [super writeGraphicIgnoringCallout:graphic];
     }
     else
