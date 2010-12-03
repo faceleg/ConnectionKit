@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10F2521</string>
-		<string key="IBDocument.InterfaceBuilderVersion">804</string>
-		<string key="IBDocument.AppKitVersion">1038.29</string>
+		<string key="IBDocument.SystemVersion">10H574</string>
+		<string key="IBDocument.InterfaceBuilderVersion">823</string>
+		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -15,13 +15,13 @@
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>804</string>
+				<string>823</string>
 				<string>1.2.5</string>
 			</object>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="5"/>
+			<integer value="138"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1105,6 +1105,9 @@
 				<bool key="NSFilterRestrictsInsertion">YES</bool>
 				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
 			</object>
+			<object class="NSCustomObject" id="242945055">
+				<string key="NSClassName">SVFieldFormatter</string>
+			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
@@ -1781,6 +1784,38 @@
 						<reference key="destination" ref="915733394"/>
 					</object>
 					<int key="connectionID">581</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">formatter</string>
+						<reference key="source" ref="998143566"/>
+						<reference key="destination" ref="242945055"/>
+					</object>
+					<int key="connectionID">583</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">formatter</string>
+						<reference key="source" ref="23704409"/>
+						<reference key="destination" ref="242945055"/>
+					</object>
+					<int key="connectionID">584</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">formatter</string>
+						<reference key="source" ref="658264174"/>
+						<reference key="destination" ref="242945055"/>
+					</object>
+					<int key="connectionID">585</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">formatter</string>
+						<reference key="source" ref="746069259"/>
+						<reference key="destination" ref="242945055"/>
+					</object>
+					<int key="connectionID">586</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2466,6 +2501,11 @@
 						<reference key="object" ref="178698534"/>
 						<reference key="parent" ref="404288441"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">582</int>
+						<reference key="object" ref="242945055"/>
+						<reference key="parent" ref="0"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -2613,6 +2653,7 @@
 					<string>567.IBPluginDependency</string>
 					<string>568.IBPluginDependency</string>
 					<string>569.IBPluginDependency</string>
+					<string>582.IBPluginDependency</string>
 					<string>6.IBPluginDependency</string>
 					<string>6.ImportedFromIB2</string>
 					<string>80.IBAttributePlaceholdersKey</string>
@@ -2774,6 +2815,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<object class="NSMutableDictionary">
 						<string key="NS.key.0">InitialTabViewItem</string>
@@ -2807,7 +2849,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">581</int>
+			<int key="maxID">586</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2969,6 +3011,25 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
+					</object>
+				</object>
+			</object>
+			<object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.1+">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVFieldFormatter</string>
+					<string key="superclassName">NSFormatter</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBDocumentRelativeSource</string>
+						<string key="minorKey">../../../../../../../Developer/Builds/Products/Debug/Sandvox.app/Contents/Headers/SVFieldFormatter.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVInspectorViewController</string>
+					<string key="superclassName">NSViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBDocumentRelativeSource</string>
+						<string key="minorKey">../../../../../../../Developer/Builds/Products/Debug/Sandvox.app/Contents/Headers/SVInspectorViewController.h</string>
 					</object>
 				</object>
 			</object>
@@ -3560,7 +3621,7 @@
 			<integer value="3000" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-		<string key="IBDocument.LastKnownRelativeProjectPath">ContactElement.xcodeproj</string>
+		<string key="IBDocument.LastKnownRelativeProjectPath">../ContactElement.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<bool key="EncodedWithXMLCoder">YES</bool>
