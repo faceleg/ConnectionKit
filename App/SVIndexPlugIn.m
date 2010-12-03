@@ -187,11 +187,6 @@
 @synthesize enableMaxItems = _enableMaxItems;
 
 @synthesize maxItems = _maxItems;
-- (NSUInteger)maxItems
-{
-    // return 0 if user has disabled maximum
-    return (self.enableMaxItems) ? _maxItems : 0;
-}
 
 @synthesize indexablePagesController = _indexablePagesController;
 
