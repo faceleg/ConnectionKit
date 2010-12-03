@@ -20,6 +20,7 @@
     DOMHTMLElement  *_bodyElement;
     
     SVOffscreenWebViewController    *_offscreenWebViewController;
+    NSArray                         *_offscreenDOMControllers;
 }
 
 + (SVGraphicDOMController *)graphicPlaceholderDOMController;

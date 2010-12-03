@@ -54,6 +54,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     [_offscreenWebViewController setDelegate:nil];
     [_offscreenWebViewController release];  // dealloc-ing mid-update
+    [_offscreenDOMControllers release];
     
     [self setRepresentedObject:nil];
     
@@ -121,8 +122,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 - (void)update;
 {
     // Tear down dependencies etc.
-    [self removeAllDependencies];
-    [self setChildWebEditorItems:nil];
+    [self stopObservingDependencies];
+    //[self setChildWebEditorItems:nil];
     
     
     // Write HTML
@@ -132,7 +133,12 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
                                        initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
     
     [[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
-    [context writeGraphic:[self representedObject] withDOMController:self];
+    [context writeGraphicIgnoringCallout:[self representedObject]];
+    
+    
+    // Copy out controllers
+    [_offscreenDOMControllers release];
+    _offscreenDOMControllers = [[[context rootDOMController] childWebEditorItems] copy];
     
     
     // Copy top-level dependencies across to parent. #79396
@@ -141,10 +147,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     {
         [(SVDOMController *)[self parentWebEditorItem] addDependency:aDependency];
     }
-    
-    
-    // Turn observation back on. #92124
-    [self startObservingDependencies];
     
     
     // Copy across data resources
@@ -177,6 +179,22 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     [_offscreenWebViewController loadHTMLFragment:htmlString];
     [htmlString release];
+}
+
+- (void)updateWithDOMNode:(DOMNode *)node items:(NSArray *)items;
+{
+    // Swap in updated node. Then get the Web Editor to hook new descendant controllers up to the new nodes
+    [[[self HTMLElement] parentNode] replaceChild:node oldChild:[self HTMLElement]];
+    //[self setHTMLElement:nil];  // so Web Editor will endeavour to hook us up again
+    
+    
+    // Hook up new DOM Controllers
+    [[self retain] autorelease];    // replacement is likely to deallocate us
+    [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
+    for (SVDOMController *aController in items)
+    {
+        [aController didUpdateWithSelector:_cmd];
+    }
 }
 
 - (void)offscreenWebViewController:(SVOffscreenWebViewController *)controller
@@ -221,16 +239,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
     
     
-    // Swap in updated node. Then get the Web Editor to hook new descendant controllers up to the new nodes
-    [[[self HTMLElement] parentNode] replaceChild:imported oldChild:[self HTMLElement]];
-    [self setHTMLElement:nil];  // so Web Editor will endeavour to hook us up again
-    
-    [[[self webEditor] delegate] webEditor:[self webEditor] // pretend we were just inserted
-                                didAddItem:self];
-    
-    
-    // Finish
-    [self didUpdateWithSelector:@selector(update)];
+    // Update
+    [self updateWithDOMNode:imported items:_offscreenDOMControllers];
     
     
     // Teardown
