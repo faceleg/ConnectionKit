@@ -435,8 +435,6 @@
 		277E4E8811104CF4005AF346 /* SVImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E4E8611104CF4005AF346 /* SVImage.h */; };
 		277E4E8911104CF4005AF346 /* SVImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E4E8711104CF4005AF346 /* SVImage.m */; };
 		277E4F7A11108847005AF346 /* MetricsInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 277E4F7911108847005AF346 /* MetricsInspector.xib */; };
-		277E4FBC11109946005AF346 /* SVImageDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E4FBA11109946005AF346 /* SVImageDOMController.h */; };
-		277E4FBD11109946005AF346 /* SVImageDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E4FBB11109946005AF346 /* SVImageDOMController.m */; };
 		277E55A011133051005AF346 /* KTPage+Serialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C58AE7110204EE00F42306 /* KTPage+Serialization.m */; };
 		277E6EE6112EB4830081389F /* SVDirectoryPublishingRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E6EE0112EB4830081389F /* SVDirectoryPublishingRecord.h */; };
 		277E6EE7112EB4830081389F /* SVDirectoryPublishingRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E6EE1112EB4830081389F /* SVDirectoryPublishingRecord.m */; };
@@ -2004,8 +2002,6 @@
 		277E4E8611104CF4005AF346 /* SVImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVImage.h; sourceTree = "<group>"; };
 		277E4E8711104CF4005AF346 /* SVImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVImage.m; sourceTree = "<group>"; };
 		277E4F7911108847005AF346 /* MetricsInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MetricsInspector.xib; sourceTree = "<group>"; };
-		277E4FBA11109946005AF346 /* SVImageDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVImageDOMController.h; sourceTree = "<group>"; };
-		277E4FBB11109946005AF346 /* SVImageDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVImageDOMController.m; sourceTree = "<group>"; };
 		277E6EE0112EB4830081389F /* SVDirectoryPublishingRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDirectoryPublishingRecord.h; sourceTree = "<group>"; };
 		277E6EE1112EB4830081389F /* SVDirectoryPublishingRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDirectoryPublishingRecord.m; sourceTree = "<group>"; };
 		277E6EE2112EB4830081389F /* SVPublishingRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPublishingRecord.h; sourceTree = "<group>"; };
@@ -3262,8 +3258,6 @@
 				CE733AAC1113B952009582EA /* SVBlogSummaryDOMController.m */,
 				273D705810E8ECB4003F5BA8 /* SVCalloutDOMController.h */,
 				273D705910E8ECB4003F5BA8 /* SVCalloutDOMController.m */,
-				277E4FBA11109946005AF346 /* SVImageDOMController.h */,
-				277E4FBB11109946005AF346 /* SVImageDOMController.m */,
 				277E724B1133595A0081389F /* SVGraphicDOMController.h */,
 				277E724C1133595A0081389F /* SVGraphicDOMController.m */,
 				27FA98831194BC0C003B8308 /* SVSidebarDOMController.h */,
@@ -5770,7 +5764,6 @@
 				276A6E8F110B4312006FD9F7 /* SVMediaRecord.h in Headers */,
 				276A6F74110B5B7B006FD9F7 /* SVDownloadSiteItem.h in Headers */,
 				277E4E8811104CF4005AF346 /* SVImage.h in Headers */,
-				277E4FBC11109946005AF346 /* SVImageDOMController.h in Headers */,
 				CE733A611113A6F5009582EA /* SVBlogEntryBorderView.h in Headers */,
 				CE733AAD1113B952009582EA /* SVBlogSummaryDOMController.h in Headers */,
 				CE75EA95111A550600474753 /* ESCursors.h in Headers */,
@@ -7285,7 +7278,6 @@
 				276A6E90110B4312006FD9F7 /* SVMediaRecord.m in Sources */,
 				276A6F75110B5B7B006FD9F7 /* SVDownloadSiteItem.m in Sources */,
 				277E4E8911104CF4005AF346 /* SVImage.m in Sources */,
-				277E4FBD11109946005AF346 /* SVImageDOMController.m in Sources */,
 				277E55A011133051005AF346 /* KTPage+Serialization.m in Sources */,
 				CE733A621113A6F5009582EA /* SVBlogEntryBorderView.m in Sources */,
 				CE733AAE1113B952009582EA /* SVBlogSummaryDOMController.m in Sources */,
