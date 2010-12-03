@@ -216,15 +216,15 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 #pragma mark Metrics
 
-//- (NSNumber *)width
-//{
-//    return [self minWidth];
-//}
-//
-//- (NSNumber *)height
-//{
-//    return [self minHeight];
-//}
+- (NSNumber *)width
+{
+    return [self minWidth];
+}
+
+- (NSNumber *)height
+{
+    return [self minHeight];
+}
 
 - (NSNumber *)minWidth
 {
