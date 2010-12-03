@@ -1,5 +1,2 @@
-﻿/* Localized versions of Info.plist keys */
-
-CFBundleDisplayName = "Tweet Button";
-"SVPlugInDescription" = "Tweet a shortened link to your page";
-
+﻿CFBundleDisplayName = "Tweet Button";
+SVPlugInDescription = "Help visitors tweet about your site";
