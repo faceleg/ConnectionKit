@@ -355,7 +355,7 @@
 }
 
 
-+ (NSUInteger) truncationCountFromChars:(NSUInteger)chars forType:(SVIndexTruncationType)truncType
++ (NSUInteger) truncationCountFromChars:(NSUInteger)chars forType:(SVIndexTruncationType)truncType round:(BOOL)wantRound;
 {
 	NSUInteger result = 0;
 	float divided = 0.0;
@@ -377,25 +377,32 @@
 			break;
 	}
 	
-	// Not sure if there is any sophisticated mathematical way to do this.  Basically,
-	// show nice rounded numbers approximately corresponding to the order of magnitude
-	if (divided >= 1000.0)
+	if (wantRound)
 	{
-		result = 100 * roundf(divided / 100);
+		// Not sure if there is any sophisticated mathematical way to do this.  Basically,
+		// show nice rounded numbers approximately corresponding to the order of magnitude
+		if (divided >= 800)
+		{
+			result = 100 * roundf(divided / 100);
+		}
+		else if (divided >= 200)
+		{
+			result = 50 * roundf(divided / 50);
+		}
+		else if (divided >= 80)
+		{
+			result = 10 * roundf(divided / 10);
+		}
+		else if (divided >= 20)
+		{
+			result = 5 * roundf(divided / 5);
+		}
+		else result = round(divided);
 	}
-	else if (divided >= 200)
+	else
 	{
-		result = 50 * roundf(divided / 50);
+		result = round(divided);
 	}
-	else if (divided >= 100)
-	{
-		result = 10 * roundf(divided / 10);
-	}
-	else if (divided >= 20)
-	{
-		result = 5 * roundf(divided / 5);
-	}
-	else result = round(divided);
 	
 	if (0 == result) result = 1;		// do not let result go to zero
 
@@ -496,8 +503,8 @@
 - (void) setIndexLayoutType:(IndexLayoutType)aType	// custom setter to also set dependent flags
 {
 	_indexLayoutType = aType;
-	self.showTitles = 0 != (aType && kTitleMask);
-	self.showEntries = 0 != (aType && kArticleMask);
+	self.showTitles = 0 != (aType & kTitleMask);
+	self.showEntries = 0 != (aType & kArticleMask);
 }
 
 

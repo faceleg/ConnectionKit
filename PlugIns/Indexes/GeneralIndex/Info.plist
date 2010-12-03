@@ -60,8 +60,10 @@
 		<integer>20</integer>
 		<key>truncationType</key>
 		<integer>3</integer>
-		<key>layoutType</key>
-		<integer>0</integer>
+		<key>indexLayoutType</key>
+		<integer>3</integer>
+		<key>mediaLayoutType</key>
+		<integer>1</integer>
 	</dict>
 	<key>SVIndexMasters</key>
 	<array>

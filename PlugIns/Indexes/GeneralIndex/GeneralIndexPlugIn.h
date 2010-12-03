@@ -101,7 +101,7 @@ typedef enum {	kMediaNoLargeNoThumbs = 0,
 @property  NSUInteger truncateCount;
 
 
-+ (NSUInteger) truncationCountFromChars:(NSUInteger)chars forType:(SVIndexTruncationType)truncType;
++ (NSUInteger) truncationCountFromChars:(NSUInteger)chars forType:(SVIndexTruncationType)truncType round:(BOOL)wantRound;
 + (NSUInteger) charsFromTruncationCount:(NSUInteger)count forType:(SVIndexTruncationType)truncType;
 
 @end
