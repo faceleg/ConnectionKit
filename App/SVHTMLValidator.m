@@ -47,12 +47,6 @@
         result = kValidationStateUnparseable;
     }
     
-    // Going by the docs, NSXMLDocument doesn't follow usual error handling rules. Instead it can use err to indicate warnings etc. even when parsing succeeded
-    if (outError && *outError)	// This might a warning or diagnosis for HTML 4.01
-    {
-        NSLog(@"validation Error: %@", [*outError localizedDescription]);
-    }
-    
     
     return result;
 }
