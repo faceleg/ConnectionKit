@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>Tweet Button</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -26,17 +28,7 @@
 	<string>TweetButtonPlugIn</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KTCategory</key>
-	<integer>4</integer>
-	<key>KSHelpAnchor</key>
-	<string>TweetButton</string>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_tweet.tiff</string>
-	<key>KTPluginName</key>
-	<string>TweetButton</string>
-	<key>KTPluginUntitledName</key>
-	<string>Tweet Button</string>
-	<key>KTPluginPriority</key>
-	<integer>5</integer>
 </dict>
 </plist>
