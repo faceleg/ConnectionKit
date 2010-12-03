@@ -209,10 +209,22 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     [context addDependencyForKeyPath:@"action" ofObject:self];
     [context addDependencyForKeyPath:@"colorscheme" ofObject:self];
     [context addDependencyForKeyPath:@"layout" ofObject:self];
+    [context addDependencyForKeyPath:@"urlType" ofObject:self];
+    [context addDependencyForKeyPath:@"urlString" ofObject:self];
 }
 
 
 #pragma mark Metrics
+
+//- (NSNumber *)width
+//{
+//    return [self minWidth];
+//}
+//
+//- (NSNumber *)height
+//{
+//    return [self minHeight];
+//}
 
 - (NSNumber *)minWidth
 {
@@ -223,11 +235,11 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
         case STANDARD_LAYOUT:
             result = [NSNumber numberWithInt:225];
             break;
+        case BUTTON_COUNT_LAYOUT:
+            result = [NSNumber numberWithInt:90];
         case BOX_COUNT_LAYOUT:
             result = [NSNumber numberWithInt:55];
             break;
-        case BUTTON_COUNT_LAYOUT:
-            result = [NSNumber numberWithInt:90];
         default:
             break;
     }
@@ -261,7 +273,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 + (BOOL)isExplicitlySized
 {
-    return YES;
+    return YES; // must return YES since minWidth < 200
 }
 
 - (void)makeOriginalSize
@@ -272,11 +284,11 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
             [self setWidth:[NSNumber numberWithInt:450]
                     height:((self.showFaces) ? [NSNumber numberWithInt:80] : [NSNumber numberWithInt:35])];
             break;
+        case BUTTON_COUNT_LAYOUT:
+            [self setWidth:[NSNumber numberWithInt:90] height:[NSNumber numberWithInt:20]];
         case BOX_COUNT_LAYOUT:
             [self setWidth:[NSNumber numberWithInt:55] height:[NSNumber numberWithInt:65]];
             break;
-        case BUTTON_COUNT_LAYOUT:
-            [self setWidth:[NSNumber numberWithInt:90] height:[NSNumber numberWithInt:20]];
         default:
             break;
     }
