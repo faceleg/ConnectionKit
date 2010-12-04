@@ -63,6 +63,12 @@ enum COLORSCHEMES { LIGHT_SCHEME = 0, DARK_SCHEME };
 enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 
+@interface FacebookPlugIn ()
+- (NSNumber *)srcWidth;
+- (NSNumber *)srcHeight;
+@end
+
+
 @implementation FacebookPlugIn
 
 
@@ -89,46 +95,49 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 {
     if ( [context liveDataFeeds] )
     {
-        // determine full src
-        NSMutableString *srcString = [[@"http://www.facebook.com/plugins/like.php?" mutableCopy] autorelease];
+        // determine size that we tell Facebook
+        NSString *widthString = [[self srcWidth] stringValue];
+        NSString *heightString = [[self srcHeight] stringValue];
         
-        // append href
+        // determine src query parameters
+        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+        
+        // href
         switch ( self.urlType )
         {
             case THIS_URL:
+            {
+                NSURL *pageURL = [context baseURL];
+                if ( nil != pageURL )
                 {
-                    NSURL *pageURL = [context baseURL];
-                    if ( nil != pageURL )
-                    {
-                        [srcString appendFormat:@"href=%@", [pageURL absoluteString]];
-                    }
-                    else
-                    {
-                        [srcString appendFormat:@"href=", [pageURL absoluteString]];
-                    }
+                    [parameters setObject:pageURL forKey:@"href"];
                 }
+            }
                 break;
             case OTHER_URL:
+            {
+                if ( nil != self.urlString )
                 {
-                    NSString *href = (nil != self.urlString) ? self.urlString : @"";
-                    [srcString appendFormat:@"href=%@", href];
+                    [parameters setObject:self.urlString forKey:@"href"];
                 }
+            }
                 break;
             default:
                 break;
         }
         
-        // append layout
+        // layout
         switch ( self.layout )
         {
             case STANDARD_LAYOUT:
-                [srcString appendString:@"&layout=standard"];
+                [parameters setObject:@"standard" forKey:@"layout"];
                 break;
             case BOX_COUNT_LAYOUT:
-                [srcString appendString:@"&layout=box_count"];
+                [parameters setObject:@"box_count" forKey:@"layout"];
                 break;
             case BUTTON_COUNT_LAYOUT:
-                [srcString appendString:@"&layout=button_count"];
+                [parameters setObject:@"button_count" forKey:@"layout"];
+                break;
             default:
                 break;
         }
@@ -138,59 +147,72 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
         {
             if ( self.showFaces )
             {
-                [srcString appendString:@"&show_faces=true"];
+                [parameters setObject:@"true" forKey:@"show_faces"];
             }
             else
             {
-                [srcString appendString:@"&show_faces=false"];
+                [parameters setObject:@"false" forKey:@"show_faces"];
             }
         }
         
-        // append width?
-        [srcString appendFormat:@"&width=%@", [[self width] stringValue]];
+        // width
+        [parameters setObject:widthString forKey:@"width"];
 
-        // append action
+        // action
         switch ( self.action )
         {
             case LIKE_ACTION:
-                [srcString appendString:@"&action=like"];
+                [parameters setObject:@"like" forKey:@"action"];
                 break;
             case RECOMMEND_ACTION:
-                [srcString appendString:@"&action=recommend"];
+                [parameters setObject:@"recommend" forKey:@"action"];
                 break;
             default:
                 break;
         }
         
-        // append colorscheme
+        // colorscheme
         switch ( self.colorscheme )
         {
             case LIGHT_SCHEME:
-                [srcString appendString:@"&colorscheme=light"];
+                [parameters setObject:@"light" forKey:@"colorscheme"];
                 break;
             case DARK_SCHEME:
-                [srcString appendString:@"&colorscheme=dark"];
+                [parameters setObject:@"dark" forKey:@"colorscheme"];
                 break;
             default:
                 break;
         }
         
-        // append height?
-        [srcString appendFormat:@"&height=%@", [[self height] stringValue]];
+        // height
+        [parameters setObject:heightString forKey:@"height"];
         
         // append locale
         NSString *language = [[context page] language];
         if ( language && ![language isEqualToString:@"en"] )
         {
-            [srcString appendFormat:@"&locale=%@", language];
+            [parameters setObject:language forKey:@"locale"];
         }
+        
+        // turn it all into a URL
+        NSURL *src = [NSURL svURLWithScheme:@"http"
+                                       host:@"www.facebook.com"
+                                       path:@"/plugins/like.php"
+                            queryParameters:parameters];                      
+        
+        
+        // style attribute
+        NSString *style = [NSString stringWithFormat:@"border:none; overflow:hidden; width:%@px; height:%@px;", widthString, heightString];
         
         // package attributes
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    srcString, @"src",
+                                    [src absoluteString], @"src",
                                     @"no", @"scrolling",
                                     @"0", @"frameborder",
+                                    style, @"style",
                                     @"true", @"allowTransparency",
+                                    widthString, @"width",
+                                    heightString, @"height",
                                     nil];
         
         // write iframe
@@ -216,24 +238,17 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 #pragma mark Metrics
 
-- (NSNumber *)width
-{
-    return [self minWidth];
-}
+// facebook wants width and height, so we calculate those explicitly
 
-- (NSNumber *)height
-{
-    return [self minHeight];
-}
-
-- (NSNumber *)minWidth
+- (NSNumber *)srcWidth
 {
     NSNumber *result = nil;
     
     switch ( self.layout )
     {
         case STANDARD_LAYOUT:
-            result = [NSNumber numberWithInt:225];
+            //result = [NSNumber numberWithInt:225]; // could be 450
+            result = [self width];
             break;
         case BUTTON_COUNT_LAYOUT:
             result = [NSNumber numberWithInt:90];
@@ -247,7 +262,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     return result;
 }
 
-- (NSNumber *)minHeight
+- (NSNumber *)srcHeight
 {
     NSNumber *result = nil;
     
@@ -268,6 +283,10 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     return result;
 }
 
+- (NSNumber *)minWidth
+{
+    return [self srcWidth];
+}
 
 #pragma mark Resizing
 
@@ -278,20 +297,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 - (void)makeOriginalSize
 {
-    switch ( self.layout )
-    {
-        case STANDARD_LAYOUT:
-            [self setWidth:[NSNumber numberWithInt:255] // could be 450 
-                    height:((self.showFaces) ? [NSNumber numberWithInt:80] : [NSNumber numberWithInt:35])];
-            break;
-        case BUTTON_COUNT_LAYOUT:
-            [self setWidth:[NSNumber numberWithInt:90] height:[NSNumber numberWithInt:20]];
-        case BOX_COUNT_LAYOUT:
-            [self setWidth:[NSNumber numberWithInt:55] height:[NSNumber numberWithInt:65]];
-            break;
-        default:
-            break;
-    }
+    [self setWidth:[NSNumber numberWithInt:450] height:nil];
 }
 
 #pragma mark Properties
@@ -299,8 +305,26 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 @synthesize showFaces = _showFaces;
 @synthesize action = _action;
 @synthesize colorscheme = _colorscheme;
-@synthesize layout = _layout;
 @synthesize urlType = _urlType;
 @synthesize urlString = _urlString;
+
+@synthesize layout = _layout;
+- (void)setLayout:(NSUInteger)layoutTag
+{
+    [self willChangeValueForKey:@"layout"];
+    _layout = layoutTag;
+    [self didChangeValueForKey:@"layout"];
+    
+//    switch ( self.layout )
+//    {
+//        case BUTTON_COUNT_LAYOUT:
+//            [self setWidth:[NSNumber numberWithInt:90] height:nil];
+//        case BOX_COUNT_LAYOUT:
+//            [self setWidth:[NSNumber numberWithInt:55] height:nil];
+//            break;
+//        default:
+//            break;
+//    }
+}
 
 @end
