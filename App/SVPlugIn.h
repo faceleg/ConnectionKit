@@ -101,12 +101,13 @@ typedef enum {
 
 #pragma mark Metrics
 
-// Please use integers. Nil values are treated as "auto" size
-
+// The values reported in the Metrics Inspector. A value of nil appears as "auto" in the Inspector.
+// It is important to remember that this is the size of your plug-in's *content* as far as users are concerned. Thus, Sandvox will generally NOT generate HTML that enforces these sizes; that is your responsibility. (The exception being that when placed inline, if your plug-in returns NO from +isExplicitlySized, a resizeable containing <DIV> will be generated to match -width)
 - (NSNumber *)width;
 - (NSNumber *)height;
 
-// You want to set width and height together.  This might be called from makeOriginalSize or adjustment of the content.
+// Normally, sizing is left to the user's control, but call this method if you want to customize (e.g. when overriding -makeOriginalSize)
+// Please use integer values. A value of nil appears as "auto" in the Inspector.
 - (void)setWidth:(NSNumber *)width height:(NSNumber *)height;
 
 // Override these if your plug-in is more liberal than the defaults
