@@ -138,12 +138,12 @@ typedef enum {
 
 #pragma mark Graphics
 
-- (void)writeGraphic:(SVGraphic *)graphic;  // takes care of callout stuff for you
-- (void)writeGraphics:(NSArray *)graphics;  // convenience
+- (void)writeGraphic:(id <SVGraphic>)graphic;
+- (void)writeGraphics:(NSArray *)graphics;  // uses Iterations to process each graphic
 
 // For subclassers:
-- (void)writeGraphicIgnoringCallout:(id <SVGraphic>)graphic;
 - (void)writeGraphicBody:(id <SVGraphic>)graphic;
+- (void)startCalloutForGraphic:(SVGraphic *)graphic;
 
 - (NSUInteger)numberOfGraphicsOnPage; // incremented for each call to -writeGraphic:
 

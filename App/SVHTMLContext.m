@@ -51,7 +51,6 @@
 
 
 @interface SVHTMLContext ()
-- (void)startCalloutForGraphic:(SVGraphic *)graphic;
 - (void)endCallout;
 - (BOOL)isWritingCallout;
 @property(nonatomic, retain, readonly) KSMegaBufferedWriter *calloutBuffer;
@@ -458,7 +457,7 @@
     [parser release];
 }
 
-- (void)writeGraphicIgnoringCallout:(id <SVGraphic>)graphic;
+- (void)writeGraphic:(id <SVGraphic>)graphic;
 {
     // Update number of graphics
     _numberOfGraphics++;
@@ -518,7 +517,7 @@
         id <SVGraphic> caption = [graphic captionGraphic];
         if (caption) // was registered as dependecy at start of if block
         {
-            [self writeGraphicIgnoringCallout:caption];
+            [self writeGraphic:caption];
         }
         
         
@@ -526,31 +525,6 @@
         [self endElement];
 
     }
-}
-
-- (void)writeGraphic:(SVGraphic *)graphic;  // takes care of callout stuff for you
-{
-    // If the placement changes, want whole Text Area to update. Seems this is already covered elsewhere now, as everything works fine with this line commented out, and re-enabling triggers a KVO zombie when moving from inline
-    //[self addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
-    if ([graphic isPagelet])    // #83929
-    {
-        [self addDependencyForKeyPath:@"showsTitle" ofObject:graphic];
-        [self addDependencyForKeyPath:@"showsIntroduction" ofObject:graphic];
-    }
-    [self addDependencyForKeyPath:@"showsCaption" ofObject:graphic];
-    
-    
-    // Possible callout.
-    BOOL callout;
-    if (callout = [graphic isCallout]) [self startCalloutForGraphic:graphic];
-    
-    
-    [self writeGraphicIgnoringCallout: graphic];
-
-    
-    
-    // Finish up
-    if (callout) [self endCallout];
 }
 
 - (void)writeGraphicBody:(id <SVGraphic>)graphic;
@@ -992,7 +966,27 @@
         {
             // Write the graphic
             [self pushClassName:(firstItem ? @"first" : @"not-first-item")];
-            [self writeGraphic:[attachment graphic]];
+            
+            SVGraphic *graphic = [attachment graphic];
+            
+            
+            
+            // If the placement changes, want whole Text Area to update. Seems this is already covered elsewhere now, as everything works fine with this line commented out, and re-enabling triggers a KVO zombie when moving from inline
+            //[self addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
+            if ([graphic isPagelet])    // #83929
+            {
+                [self addDependencyForKeyPath:@"showsTitle" ofObject:graphic];
+                [self addDependencyForKeyPath:@"showsIntroduction" ofObject:graphic];
+            }
+            [self addDependencyForKeyPath:@"showsCaption" ofObject:graphic];
+            
+            
+            // Possible callout.
+            BOOL callout = [graphic isCallout];
+            if (callout) [self startCalloutForGraphic:graphic];
+            [self writeGraphic:graphic];
+            if (callout) [self endCallout];
+            
             
             // Having written the first bit of content, it's time to start marking that
             firstItem = NO;

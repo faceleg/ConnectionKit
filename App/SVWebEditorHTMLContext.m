@@ -160,48 +160,39 @@
     if ([graphic textAttachment]) [self addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
 }
 
-- (void)writeGraphic:(SVGraphic *)graphic;
+- (void)startCalloutForGraphic:(SVGraphic *)graphic;
 {
     OBPRECONDITION(graphic);
     [self willWriteGraphic:graphic];
     
     
-    // Handle callouts specially
-    if ([graphic isCallout])
+    // Make a controller for the callout, but only if it's not part of an existing callout
+    if (![[self currentDOMController] isKindOfClass:[SVCalloutDOMController class]])
     {
-        // Make a controller for the callout, but only if it's not part of an existing callout
-        if (![[self currentDOMController] isKindOfClass:[SVCalloutDOMController class]])
-        {
-            SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
-            [self startDOMController:controller];
-            [controller release];
-        }
-        
-        // We will create a controller for the graphic shortly, after the callout opening has been written
-    }
-    else
-    {
-        // If writing a regular grapic straight after a callout, our usual cue to end the callout controller comes too later (just after the graphic controller has been started), so force it to end here instead
-        if ([[self currentDOMController] isKindOfClass:[SVCalloutDOMController class]])
-        {
-            [self endDOMController];
-        }
+        SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
+        [self startDOMController:controller];
+        [controller release];
     }
     
+    // We will create a controller for the graphic shortly, after the callout opening has been written
     
-    // Do normal writing
-    [super writeGraphic:graphic];
-    
-    
-    // if (callout) [self endDOMController];    // Don't do this, will end it lazily
+    [super startCalloutForGraphic:graphic];
 }
 
-- (void)writeGraphicIgnoringCallout:(id <SVGraphic, SVDOMControllerRepresentedObject>)graphic;
+- (void)writeGraphic:(id <SVGraphic, SVDOMControllerRepresentedObject>)graphic;
 {
+    // If writing a regular grapic straight after a callout, our usual cue to end the callout controller comes too late (just after the graphic controller has been started), so force it to end here instead
+    if ([[self currentDOMController] isKindOfClass:[SVCalloutDOMController class]] &&
+        ![graphic isPagelet])
+    {
+        [self endDOMController];
+    }
+    
+    
     if ([graphic shouldWriteHTMLInline] && ![graphic isKindOfClass:[SVGraphic class]])
     {
         // The graphic will take care of generating its own controller(s). Unfortunately inline images cock this up at the moment, so don't apply to things like that!
-        [super writeGraphicIgnoringCallout:graphic];
+        [super writeGraphic:graphic];
     }
     else
     {
@@ -210,7 +201,7 @@
         [self startDOMController:controller];
         [controller release];
         
-        [super writeGraphicIgnoringCallout:graphic];
+        [super writeGraphic:graphic];
         
         // Tidy up
         [self endDOMController];
@@ -228,7 +219,7 @@
         
     
     // Generate HTML. Call super so as not to generate another controller
-    [super writeGraphicIgnoringCallout:graphic];
+    [super writeGraphic:graphic];
     
     
     // Reset

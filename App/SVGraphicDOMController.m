@@ -133,7 +133,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
                                        initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
     
     [[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
-    [context writeGraphicIgnoringCallout:[self representedObject]];
+    [context writeGraphic:[self representedObject]];
     
     
     // Copy out controllers
