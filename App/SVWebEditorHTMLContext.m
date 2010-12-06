@@ -60,6 +60,7 @@
 
 - (void)dealloc
 {
+    [_DOMControllerPoints release];
     [_sidebarPageletsController release];
     
     [super dealloc];
@@ -76,6 +77,8 @@
     
     [_rootController release];
     _currentDOMController = _rootController = [[SVContentDOMController alloc] init];
+    
+    [_DOMControllerPoints release]; _DOMControllerPoints = [[NSIndexPath alloc] init];
     
     [[self rootDOMController] awakeFromHTMLContext:self];   // so it stores ref to us
     
@@ -117,13 +120,22 @@
     OBPRECONDITION(_currentDOMController);
     [_currentDOMController addChildWebEditorItem:controller];
     
+    // Record the start. When open elements count gets back to its present value, current controller will be automatically ended
     _currentDOMController = controller;
+    
+    [_DOMControllerPoints autorelease];
+    _DOMControllerPoints = [[_DOMControllerPoints indexPathByAddingIndex:[self openElementsCount]] copy];
 }
 
 - (void)endDOMController;
 {
+    // Adjust controller stack back up to parent controller
+    
     SVDOMController *controller = _currentDOMController;
     _currentDOMController = (SVDOMController *)[_currentDOMController parentWebEditorItem];
+    
+    [_DOMControllerPoints autorelease];
+    _DOMControllerPoints = [[_DOMControllerPoints indexPathByRemovingLastIndex] copy];
     
     [controller awakeFromHTMLContext:self];
 }
@@ -132,6 +144,24 @@
 {
     [self startDOMController:controller];
     [self endDOMController];
+}
+
+- (void)endElement;
+{
+    [super endElement];
+    
+    // End current DOM Controller if appropriate
+    NSInteger index = [_DOMControllerPoints lastIndex];
+    if (index == [self openElementsCount])
+    {
+        [self endDOMController];
+    }
+    /*
+    if (_openSizeBindingControllersCount)
+    {
+        [self endDOMController];
+        _openSizeBindingControllersCount--;
+    }*/
 }
 
 #pragma mark Text
@@ -196,8 +226,8 @@
         
         [super writeGraphic:graphic];
         
-        // Tidy up
-        [self endDOMController];
+        // Tidy up. Only pagelets need to be ended explicitly since they're written with a template
+        if ([graphic isPagelet]) [self endDOMController];
     }
 }
 
@@ -231,7 +261,7 @@
 
         [super writeGraphicBody:graphic];
 
-        [self endDOMController];
+        //[self endDOMController]; Should be called automatically now
     }
 }
 
@@ -276,17 +306,6 @@
     [super buildAttributesForElement:elementName bindSizeToObject:object DOMControllerClass:controllerClass sizeDelta:sizeDelta];
 }
 
-- (void)endElement;
-{
-    [super endElement];
-    
-    if (_openSizeBindingControllersCount)
-    {
-        [self endDOMController];
-        _openSizeBindingControllersCount--;
-    }
-}
-
 #pragma mark Text Blocks
 
 - (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)textBlock;
@@ -301,7 +320,7 @@
 
 - (void)didEndWritingHTMLTextBlock;
 {
-    [self endDOMController];
+    //[self endDOMController];   // should be automatically called now
     [super didEndWritingHTMLTextBlock];
 }
 

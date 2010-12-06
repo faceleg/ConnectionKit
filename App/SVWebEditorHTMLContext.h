@@ -21,6 +21,7 @@
   @private
     SVContentDOMController  *_rootController;
     SVDOMController         *_currentDOMController;  // weak ref
+    NSIndexPath             *_DOMControllerPoints;
     NSInteger               _openSizeBindingControllersCount;
         
     NSMutableSet    *_media;
