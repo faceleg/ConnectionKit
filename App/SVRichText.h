@@ -23,7 +23,6 @@
 #pragma mark Text
 
 - (NSAttributedString *)attributedHTMLString;
-- (NSAttributedString *)attributedHTMLStringFromMarkup:(NSString *)markup;
 - (void)setAttributedHTMLString:(NSAttributedString *)attributedHTML;
 
 @property(nonatomic, copy) NSString *string;

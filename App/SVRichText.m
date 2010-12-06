@@ -56,14 +56,8 @@
 
 - (NSAttributedString *)attributedHTMLString;
 {
-	return [self attributedHTMLStringFromMarkup:[self string]];
-}
-
-// Same as above, but for partial markup
-- (NSAttributedString *)attributedHTMLStringFromMarkup:(NSString *)markup;
-{
     NSMutableAttributedString *result = [[NSMutableAttributedString alloc]
-                                         initWithString:markup];
+                                         initWithString:[self string]];
     
     for (SVTextAttachment *anAttachment in [self attachments])
     {
@@ -74,7 +68,6 @@
     
     return [result autorelease];
 }
-
 
 - (void)setAttributedHTMLString:(NSAttributedString *)attributedHTML;
 {

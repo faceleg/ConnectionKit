@@ -267,8 +267,18 @@
     
     NSString *truncatedMarkup = [self truncateMarkup:markup truncation:maxCount truncationType:truncationType didTruncate:truncated];
     
-    NSAttributedString *result = [self attributedHTMLStringFromMarkup:truncatedMarkup];
-    return result;
+    
+    NSMutableAttributedString *result = [[NSMutableAttributedString alloc]
+                                         initWithString:truncatedMarkup];
+    
+    for (SVTextAttachment *anAttachment in [self attachments])
+    {
+        [result addAttribute:@"SVAttachment"
+                       value:anAttachment
+                       range:[anAttachment range]];
+    }
+    
+    return [result autorelease];
 }
 
 #pragma mark HTML
