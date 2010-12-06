@@ -29,7 +29,6 @@
 
 
 @interface SVWebEditorHTMLContext ()
-- (void)endDOMController;
 @end
 
 
@@ -141,12 +140,6 @@
     [controller awakeFromHTMLContext:self];
 }
 
-- (void)addDOMController:(SVDOMController *)controller;
-{
-    [self startDOMController:controller];
-    [self endDOMController];
-}
-
 - (void)endElement;
 {
     [super endElement];
@@ -157,6 +150,12 @@
     {
         [self endDOMController];
     }
+}
+
+- (void)addDOMController:(SVDOMController *)controller;
+{
+    [self startDOMController:controller];
+    [self endDOMController];
 }
 
 #pragma mark Text
