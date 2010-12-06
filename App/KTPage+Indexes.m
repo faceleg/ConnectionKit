@@ -387,7 +387,6 @@
 
 
     [context endElement];
-    //if ([context respondsToSelector:@selector(endDOMController)]) [((SVWebEditorHTMLContext *)context) endDOMController];
 
 	return truncated;
 }
