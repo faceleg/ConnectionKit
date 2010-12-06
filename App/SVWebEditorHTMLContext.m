@@ -159,24 +159,6 @@
     [self endDOMController];
 }
 
-#pragma mark Text
-
-- (void)writeText:(SVRichText *)text withDOMController:(SVDOMController *)controller;
-{
-    // Fake it and don't insert into hierarchy
-    SVDOMController *currentController = _currentDOMController;
-    _currentDOMController = controller;
-    
-    
-    // Generate HTML
-    [text writeHTML:self];
-    
-    
-    // Reset
-    [self endDOMController];
-    _currentDOMController = currentController;
-}
-
 #pragma mark Graphics
 
 - (void)startCalloutForGraphic:(SVGraphic *)graphic;
@@ -224,22 +206,6 @@
         // Tidy up. Only pagelets need to be ended explicitly since they're written with a template
         if ([graphic isPagelet]) [self endDOMController];
     }
-}
-
-- (void)writeGraphic:(SVGraphic *)graphic withDOMController:(SVGraphicDOMController *)controller;
-{
-    // Fake it and don't insert into hierarchy
-    SVDOMController *currentController = _currentDOMController;
-    _currentDOMController = controller;
-        
-    
-    // Generate HTML. Call super so as not to generate another controller
-    [super writeGraphic:graphic];
-    
-    
-    // Reset
-    [self endDOMController];
-    _currentDOMController = currentController;
 }
 
 - (void)writeGraphicBody:(id <SVGraphic>)graphic;

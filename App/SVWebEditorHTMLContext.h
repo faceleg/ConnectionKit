@@ -38,14 +38,6 @@
 - (NSSet *)media;
 
 
-#pragma mark Text
-- (void)writeText:(SVRichText *)text withDOMController:(SVDOMController *)controller;
-
-
-#pragma mark Graphics
-- (void)writeGraphic:(SVGraphic *)graphic withDOMController:(SVGraphicDOMController *)controller;
-
-
 #pragma mark Sidebar
 @property(nonatomic, retain) SVSidebarPageletsController *sidebarPageletsController;
 

@@ -559,7 +559,7 @@
                                        initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
     
     [[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
-    [[self representedObject] writeHTML:context];//[context writeText:[self representedObject] withDOMController:self];
+    [[self representedObject] writeHTML:context];
     
     
     // Copy top-level dependencies across to parent. #79396
