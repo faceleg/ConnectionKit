@@ -277,9 +277,4 @@
     return [[SVMediaGraphicDOMController alloc] initWithRepresentedObject:self];
 }
 
-- (SVDOMController *)newBodyDOMController;
-{
-    return [[SVMediaDOMController alloc] initWithRepresentedObject:self];
-}
-
 @end
