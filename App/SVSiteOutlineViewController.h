@@ -25,7 +25,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 {
 	IBOutlet BWSplitView *oSplitView;
     
-    IBOutlet NSView             *oToggleIsCollectionConfirmationAccessoryView;
+    IBOutlet NSView             *oToggleIsCollectionAlertAccessoryView;
     IBOutlet BWHyperlinkButton  *oCurrentPageURLLink;
     IBOutlet NSTextField        *oNewPageURLLabel;
     

@@ -12,7 +12,6 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -34,7 +33,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="58454268">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">266</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -74,7 +73,7 @@
 													<string key="NSColorName">controlColor</string>
 													<object class="NSColor" key="NSColor" id="514712999">
 														<int key="NSColorSpace">3</int>
-														<bytes key="NSWhite">MC42NjY2NjY2ODY1AA</bytes>
+														<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 													</object>
 												</object>
 												<object class="NSColor" key="NSTextColor" id="422175849">
@@ -600,7 +599,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 													<string key="NSColorName">disabledControlTextColor</string>
 													<object class="NSColor" key="NSColor">
 														<int key="NSColorSpace">3</int>
-														<bytes key="NSWhite">MC4zMzMzMzMzNDMzAA</bytes>
+														<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
 													</object>
 												</object>
 											</object>
@@ -2272,7 +2271,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					</object>
 				</object>
 				<string key="NSFrameSize">{230, 480}</string>
-				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 				<string key="NSExtension">NSResponder</string>
 			</object>
@@ -6295,7 +6293,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<string>oCurrentPageURLLink</string>
 							<string>oNewPageURLLabel</string>
 							<string>oSplitView</string>
-							<string>oToggleIsCollectionConfirmationAccessoryView</string>
+							<string>oToggleIsCollectionAlertAccessoryView</string>
 							<string>outlineView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -6314,7 +6312,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<string>oCurrentPageURLLink</string>
 							<string>oNewPageURLLabel</string>
 							<string>oSplitView</string>
-							<string>oToggleIsCollectionConfirmationAccessoryView</string>
+							<string>oToggleIsCollectionAlertAccessoryView</string>
 							<string>outlineView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -6332,7 +6330,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 								<string key="candidateClassName">BWSplitView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">oToggleIsCollectionConfirmationAccessoryView</string>
+								<string key="name">oToggleIsCollectionAlertAccessoryView</string>
 								<string key="candidateClassName">NSView</string>
 							</object>
 							<object class="IBToOneOutletInfo">

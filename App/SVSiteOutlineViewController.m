@@ -974,7 +974,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         
         [oNewPageURLLabel setStringValue:[[page URLAsCollection:makeCollection] absoluteString]];
         
-        [alert setAccessoryView:oToggleIsCollectionConfirmationAccessoryView];
+        [alert setAccessoryView:oToggleIsCollectionAlertAccessoryView];
         
         
         // Buttons
