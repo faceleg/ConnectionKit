@@ -1091,24 +1091,24 @@
 				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
-			<object class="NSCustomView" id="805002296">
+			<object class="NSCustomView" id="1054972461">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="BWHyperlinkButton" id="341315529">
-						<reference key="NSNextResponder" ref="805002296"/>
+					<object class="BWHyperlinkButton" id="1035959453">
+						<reference key="NSNextResponder" ref="1054972461"/>
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{2, 31}, {373, 20}}</string>
-						<reference key="NSSuperview" ref="805002296"/>
+						<reference key="NSSuperview" ref="1054972461"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="BWHyperlinkButtonCell" key="NSCell" id="395391471">
+						<object class="BWHyperlinkButtonCell" key="NSCell" id="282348949">
 							<int key="NSCellFlags">67239488</int>
 							<int key="NSCellFlags2">134350336</int>
 							<string key="NSContents">http://example.com/foo.html</string>
 							<reference key="NSSupport" ref="26"/>
-							<reference key="NSControlView" ref="341315529"/>
+							<reference key="NSControlView" ref="1035959453"/>
 							<string key="NSAction">openURLInBrowser:</string>
-							<reference key="NSTarget" ref="341315529"/>
+							<reference key="NSTarget" ref="1035959453"/>
 							<int key="NSButtonFlags">-2033434369</int>
 							<int key="NSButtonFlags2">162</int>
 							<string key="NSAlternateContents"/>
@@ -1118,18 +1118,18 @@
 						</object>
 						<nil key="BWHBUrlString"/>
 					</object>
-					<object class="NSTextField" id="191412041">
-						<reference key="NSNextResponder" ref="805002296"/>
+					<object class="NSTextField" id="626461235">
+						<reference key="NSNextResponder" ref="1054972461"/>
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{-1, 2}, {379, 14}}</string>
-						<reference key="NSSuperview" ref="805002296"/>
+						<reference key="NSSuperview" ref="1054972461"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="320133318">
+						<object class="NSTextFieldCell" key="NSCell" id="330586624">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272761856</int>
 							<string key="NSContents">The published page will be left in place, but will no longer be updated</string>
 							<reference key="NSSupport" ref="26"/>
-							<reference key="NSControlView" ref="191412041"/>
+							<reference key="NSControlView" ref="626461235"/>
 							<reference key="NSBackgroundColor" ref="97692237"/>
 							<reference key="NSTextColor" ref="801130899"/>
 						</object>
@@ -1760,14 +1760,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">oToggleIsCollectionConfirmationAccessoryView</string>
-						<reference key="source" ref="363902086"/>
-						<reference key="destination" ref="782832620"/>
-					</object>
-					<int key="connectionID">2139</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">oCurrentPageURLLink</string>
 						<reference key="source" ref="363902086"/>
 						<reference key="destination" ref="936064823"/>
@@ -1906,7 +1898,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oDeletePublishedPageURLLink</string>
 						<reference key="source" ref="363902086"/>
-						<reference key="destination" ref="341315529"/>
+						<reference key="destination" ref="1035959453"/>
 					</object>
 					<int key="connectionID">2192</int>
 				</object>
@@ -1914,9 +1906,17 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oDeletePublishedPageAlertAccessoryView</string>
 						<reference key="source" ref="363902086"/>
-						<reference key="destination" ref="805002296"/>
+						<reference key="destination" ref="1054972461"/>
 					</object>
 					<int key="connectionID">2193</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oToggleIsCollectionAlertAccessoryView</string>
+						<reference key="source" ref="363902086"/>
+						<reference key="destination" ref="782832620"/>
+					</object>
+					<int key="connectionID">2194</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2561,39 +2561,39 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2183</int>
-						<reference key="object" ref="805002296"/>
+						<reference key="object" ref="1054972461"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="341315529"/>
-							<reference ref="191412041"/>
+							<reference ref="1035959453"/>
+							<reference ref="626461235"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Delete published page</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2184</int>
-						<reference key="object" ref="341315529"/>
+						<reference key="object" ref="1035959453"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="395391471"/>
+							<reference ref="282348949"/>
 						</array>
-						<reference key="parent" ref="805002296"/>
+						<reference key="parent" ref="1054972461"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2186</int>
-						<reference key="object" ref="191412041"/>
+						<reference key="object" ref="626461235"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="320133318"/>
+							<reference ref="330586624"/>
 						</array>
-						<reference key="parent" ref="805002296"/>
+						<reference key="parent" ref="1054972461"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2189</int>
-						<reference key="object" ref="320133318"/>
-						<reference key="parent" ref="191412041"/>
+						<reference key="object" ref="330586624"/>
+						<reference key="parent" ref="626461235"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2191</int>
-						<reference key="object" ref="395391471"/>
-						<reference key="parent" ref="341315529"/>
+						<reference key="object" ref="282348949"/>
+						<reference key="parent" ref="1035959453"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2127</int>
@@ -2788,7 +2788,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2193</int>
+			<int key="maxID">2194</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3764,7 +3764,7 @@
 						<string key="oDeletePublishedPageURLLink">BWHyperlinkButton</string>
 						<string key="oNewPageURLLabel">NSTextField</string>
 						<string key="oSplitView">BWSplitView</string>
-						<string key="oToggleIsCollectionConfirmationAccessoryView">NSView</string>
+						<string key="oToggleIsCollectionAlertAccessoryView">NSView</string>
 						<string key="outlineView">NSOutlineView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -3788,8 +3788,8 @@
 							<string key="name">oSplitView</string>
 							<string key="candidateClassName">BWSplitView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="oToggleIsCollectionConfirmationAccessoryView">
-							<string key="name">oToggleIsCollectionConfirmationAccessoryView</string>
+						<object class="IBToOneOutletInfo" key="oToggleIsCollectionAlertAccessoryView">
+							<string key="name">oToggleIsCollectionAlertAccessoryView</string>
 							<string key="candidateClassName">NSView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="outlineView">
