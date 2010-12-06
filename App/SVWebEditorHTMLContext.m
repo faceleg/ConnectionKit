@@ -154,16 +154,9 @@
 
 #pragma mark Graphics
 
-- (void)willWriteGraphic:(SVGraphic *)graphic;
-{
-    // Register placement dependency early so it causes article to update, not graphic/callout
-    if ([graphic textAttachment]) [self addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
-}
-
 - (void)startCalloutForGraphic:(SVGraphic *)graphic;
 {
     OBPRECONDITION(graphic);
-    [self willWriteGraphic:graphic];
     
     
     // Make a controller for the callout, but only if it's not part of an existing callout
@@ -210,9 +203,6 @@
 
 - (void)writeGraphic:(SVGraphic *)graphic withDOMController:(SVGraphicDOMController *)controller;
 {
-    [self willWriteGraphic:graphic];
-    
-    
     // Fake it and don't insert into hierarchy
     SVDOMController *currentController = _currentDOMController;
     _currentDOMController = controller;
