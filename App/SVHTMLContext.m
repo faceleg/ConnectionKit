@@ -503,14 +503,8 @@
             }
         }
         
-        [self startElement:@"div"];
-        
-        
-        [self writeGraphicBody:graphic];
-        
-        
-        // Finish up
-        [self endElement];
+        [self writeGraphicBody:graphic];    // starts the element
+        [self endElement];                  // and then closes it
         
         
         // Caption if requested
@@ -530,7 +524,13 @@
 - (void)writeGraphicBody:(id <SVGraphic>)graphic;
 {
     // Graphic body
-    if (![graphic isPagelet]) [self pushClassName:@"figure-content"];  // identifies for #84956
+    if (![graphic isPagelet])
+    {
+        [self startElement:@"div"]; // <div class="graphic">, will be closed by caller
+        
+        
+        [self pushClassName:@"figure-content"];  // identifies for #84956
+    }
     
     if ([graphic isKindOfClass:[SVMediaGraphic class]] || [graphic isKindOfClass:[SVTextBox class]])
     {
