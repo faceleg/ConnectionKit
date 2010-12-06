@@ -767,10 +767,70 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     [newItems release];
 }
 
+- (BOOL)canCopy
+{
+    BOOL result = ([[[self content] selectedObjects] count] > 0);
+    return result;
+}
+
+- (BOOL)canRename;
+{
+    // Can only edit if there is a single item selected, and its not root
+    NSIndexSet *selection = [[self outlineView] selectedRowIndexes];
+    BOOL result = ([selection count] == 1 && ![selection containsIndex:0]);
+    return result;
+}
+
+#pragma mark Deleting Pages
+
+- (void)warnBeforeDeletingPage:(KTPage *)page;
+{
+    NSAlert *alert = [[NSAlert alloc] init];
+    
+    
+    // Main text
+    [alert setMessageText:[NSString stringWithFormat:
+                           NSLocalizedString(@"Are you sure you want to delete “%@”?", "alert title"),
+                           [page title]]];
+    
+    [alert setInformativeText:
+     NSLocalizedString(@"It has already been published at:",
+                       "alert subtitle")];
+    
+    
+    // Accessory View
+    NSString *currentLink = [[page URL] absoluteString];
+    [oDeletePublishedPageURLLink setUrlString:currentLink];
+    [oDeletePublishedPageURLLink setTitle:currentLink];
+    
+    [oNewPageURLLabel setStringValue:[[page URL] absoluteString]];
+    
+    [alert setAccessoryView:oDeletePublishedPageAlertAccessoryView];
+    
+    
+    // Buttons
+    [alert addButtonWithTitle:NSLocalizedString(@"Delete", "button title")];
+    [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button title")];
+    
+    
+    // Present
+    [alert beginSheetModalForWindow:[[self view] window]
+                      modalDelegate:self
+                     didEndSelector:@selector(deletePublishedPageAlertDidEnd:returnCode:contextInfo:)
+                        contextInfo:NULL];
+    
+    [alert release];
+}
+
+- (void)deletePublishedPageAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)context;
+{
+    if (returnCode == NSAlertFirstButtonReturn) [[self content] remove:self];
+}
+
 - (void)delete:(id)sender
 {
     /// Old code did a -processPendingChanges here but haven't a clue why. Mike.
-        
+    
     
     if ([self canDelete])
     {
@@ -778,6 +838,13 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         if ([controller canRemove])
         {
             NSSet *selection = [[[NSSet alloc] initWithArray:[[self content] selectedObjects]] autorelease];
+            
+            // Warn before deleting a published page
+            if ([selection count] == 1)
+            {
+                [self warnBeforeDeletingPage:[selection anyObject]];
+                return;
+            }
             
             [controller remove:sender];
             
@@ -812,20 +879,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         // There shouldn't be another responder up the chain that handles this so it will beep. But you never know, somebody else might like to handle it.
         [self makeNextResponderDoCommandBySelector:_cmd];
     }
-}
-
-- (BOOL)canCopy
-{
-    BOOL result = ([[[self content] selectedObjects] count] > 0);
-    return result;
-}
-
-- (BOOL)canRename;
-{
-    // Can only edit if there is a single item selected, and its not root
-    NSIndexSet *selection = [[self outlineView] selectedRowIndexes];
-    BOOL result = ([selection count] == 1 && ![selection containsIndex:0]);
-    return result;
 }
 
 // Can only delete a page if there's a selection and that selection doesn't include the root page

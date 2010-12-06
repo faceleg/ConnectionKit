@@ -28,6 +28,9 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
     IBOutlet NSView             *oToggleIsCollectionConfirmationAccessoryView;
     IBOutlet BWHyperlinkButton  *oCurrentPageURLLink;
     IBOutlet NSTextField        *oNewPageURLLabel;
+    
+    IBOutlet NSView             *oDeletePublishedPageAlertAccessoryView;
+    IBOutlet BWHyperlinkButton  *oDeletePublishedPageURLLink;
 	
   @private
     NSOutlineView       *_outlineView;
