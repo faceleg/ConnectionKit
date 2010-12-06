@@ -275,31 +275,34 @@
 - (void)writeBannerCSS:(SVHTMLContext *)context;
 {	
 	// If the user has specified a custom banner and the design supports it, load it in
-	if ([[self bannerType] boolValue] && [[self banner] fileURL])
-	{
-		NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
-        if (bannerCSSSelector)
+	if ([[self bannerType] boolValue])
+    {
+        if ([[self banner] fileURL])
         {
-            NSMutableDictionary *scalingProperties = [[[self design] imageScalingPropertiesForUse:@"bannerImage"] mutableCopy];
-            OBASSERT(scalingProperties);
-            [scalingProperties setObject:(NSString *)kUTTypeJPEG forKey:@"fileType"];
-            
-            SVMediaRecord *banner = [self banner];
-            
-            NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[banner fileURL]
-                                         scalingProperties:scalingProperties];
-            [scalingProperties release];
-            
-            URL = [context addBannerWithURL:URL];
-            
-            
-            NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", [URL absoluteString]];
-            
-            
-            [context addCSSString:css];
+            NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
+            if (bannerCSSSelector)
+            {
+                NSMutableDictionary *scalingProperties = [[[self design] imageScalingPropertiesForUse:@"bannerImage"] mutableCopy];
+                OBASSERT(scalingProperties);
+                [scalingProperties setObject:(NSString *)kUTTypeJPEG forKey:@"fileType"];
+                
+                SVMediaRecord *banner = [self banner];
+                
+                NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[banner fileURL]
+                                             scalingProperties:scalingProperties];
+                [scalingProperties release];
+                
+                URL = [context addBannerWithURL:URL];
+                
+                
+                NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", [URL absoluteString]];
+                
+                
+                [context addCSSString:css];
+            }
         }
+        [context addDependencyOnObject:self keyPath:@"banner"];
 	}
-    
     [context addDependencyOnObject:self keyPath:@"bannerType"];
 }
 
