@@ -272,12 +272,6 @@
     [controller release];
 }
 
-- (void)didEndWritingHTMLTextBlock;
-{
-    //[self endDOMController];   // should be automatically called now
-    [super didEndWritingHTMLTextBlock];
-}
-
 - (void)writeElement:(NSString *)elementName
      withTitleOfPage:(id <SVPage>)page
          asPlainText:(BOOL)plainText
