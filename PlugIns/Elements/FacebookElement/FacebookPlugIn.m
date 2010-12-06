@@ -216,8 +216,10 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
                                     nil];
         
         // write iframe
+        [context startElement:@"p" attributes:[NSDictionary dictionaryWithObject:@"center" forKey:@"align"]];
         [context startElement:@"iframe" attributes:attributes];
-        [context endElement];
+        [context endElement]; // </iframe>
+        [context endElement]; // </p>
     }
     else 
     {
@@ -251,9 +253,11 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
             result = [self width];
             break;
         case BUTTON_COUNT_LAYOUT:
-            result = [NSNumber numberWithInt:90];
+            result = (self.action == RECOMMEND_ACTION) ? [NSNumber numberWithInt:140] : [NSNumber numberWithInt:90];
+            //result = [self width];
         case BOX_COUNT_LAYOUT:
-            result = [NSNumber numberWithInt:55];
+            result = (self.action == RECOMMEND_ACTION) ? [NSNumber numberWithInt:110] : [NSNumber numberWithInt:55];
+            //result = [self width];
             break;
         default:
             break;
