@@ -17,17 +17,18 @@
 #import "SVTextAttachment.h"
 #import "SVWebEditorViewController.h"
 
-#import "KSWebLocation.h"
-
 #import "NSArray+Karelia.h"
 #import "NSColor+Karelia.h"
 #import "NSResponder+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
+#import "KSObjectKeyPathPair.h"
 
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
 #import "DOMTreeWalker+Karelia.h"
+
+#import "KSWebLocation.h"
 
 
 @interface DOMNode (KSHTMLWriter)
@@ -210,6 +211,19 @@
     
     
     return result;
+}
+
+- (void)insertGraphic:(SVGraphic *)graphic range:(DOMRange *)insertionRange;
+{
+    // Since the graphic's not generated as part of text, register placement as a dependency
+    KSObjectKeyPathPair *dependency = [[KSObjectKeyPathPair alloc]
+                                       initWithObject:graphic
+                                       keyPath:@"textAttachment.placement"];
+    [self addDependency:dependency];
+    [dependency release];
+    
+    
+    [super insertGraphic:graphic range:insertionRange];
 }
 
 - (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node
