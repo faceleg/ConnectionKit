@@ -404,7 +404,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     return result;
 }
 
-#pragma mark Adding and Removing Objects
+#pragma mark Adding Objects
 
 - (void) insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
 {
@@ -659,6 +659,31 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
             NSString *suggestedFilename = [object suggestedFilename];
             [object setFileName:[suggestedFilename stringByDeletingPathExtension]];
         }
+    }
+}
+
+#pragma mark Removing Objects
+
+- (void)remove:(id)sender;
+{
+    [super remove:sender];
+    
+    // Label undo menu
+    NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
+    if ([[self selectionIndexes] count] == 1)
+    {
+        if ([[[self selectedObjects] objectAtIndex:0] isCollection])
+        {
+            [undoManager setActionName:NSLocalizedString(@"Delete Collection", "Delete Collection MenuItem")];
+        }
+        else
+        {
+            [undoManager setActionName:NSLocalizedString(@"Delete Page", "Delete Page MenuItem")];
+        }
+    }
+    else
+    {
+        [undoManager setActionName:NSLocalizedString(@"Delete Pages", "Delete Pages MenuItem")];
     }
 }
 

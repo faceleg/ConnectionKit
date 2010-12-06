@@ -847,24 +847,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
             }
             
             [controller remove:sender];
-            
-            // Label undo menu
-            NSUndoManager *undoManager = [[[self rootPage] managedObjectContext] undoManager];
-            if ([selection count] == 1)
-            {
-                if ([[selection anyObject] isCollection])
-                {
-                    [undoManager setActionName:NSLocalizedString(@"Delete Collection", "Delete Collection MenuItem")];
-                }
-                else
-                {
-                    [undoManager setActionName:NSLocalizedString(@"Delete Page", "Delete Page MenuItem")];
-                }
-            }
-            else
-            {
-                [undoManager setActionName:NSLocalizedString(@"Delete Pages", "Delete Pages MenuItem")];
-            }
         }
         
         // Remove the pages from their parents
