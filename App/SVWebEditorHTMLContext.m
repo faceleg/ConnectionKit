@@ -395,10 +395,8 @@
 
 #pragma mark Sidebar
 
-- (void)willBeginWritingSidebar:(SVSidebar *)sidebar;
+- (void)startSidebar:(SVSidebar *)sidebar;
 {
-    [super willBeginWritingSidebar:sidebar];
-    
     // Create controller
     SVSidebarDOMController *controller = [[SVSidebarDOMController alloc]
                                           initWithPageletsController:[self sidebarPageletsController]];
@@ -408,6 +406,8 @@
     // Store controller
     [self startDOMController:controller];    
     
+    
+    [super startSidebar:sidebar];
     
     // Finish up
     [controller release];
@@ -459,7 +459,11 @@
 
 @implementation SVHTMLContext (SVEditing)
 
-- (void)willBeginWritingSidebar:(SVSidebar *)sidebar; { }
+- (void)startSidebar:(SVSidebar *)sidebar;
+{
+    [self startElement:@"div" idName:@"sidebar-container" className:nil];
+}
+
 - (SVSidebarPageletsController *)cachedSidebarPageletsController; { return nil; }
 
 - (WEKWebEditorItem *)currentDOMController; { return nil; }

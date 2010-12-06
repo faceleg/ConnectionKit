@@ -60,7 +60,9 @@
 @interface SVHTMLContext (SVEditing)
 
 #pragma mark Sidebar
-- (void)willBeginWritingSidebar:(SVSidebar *)sidebar; // call -endDOMController after
+
+- (void)startSidebar:(SVSidebar *)sidebar; // call -endElement after writing contents
+
 // The context may provide its own controller for sidebar pagelets (pre-sorted etc.) If so, please use it.
 - (SVSidebarPageletsController *)cachedSidebarPageletsController;
 

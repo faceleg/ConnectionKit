@@ -35,22 +35,18 @@
 
 - (void)writeHTML:(SVHTMLContext *)context;
 {
-    [context willBeginWritingSidebar:self];
-    
-    SVTemplate *template = [SVTemplate templateNamed:@"SidebarTemplate.html"];
-    
-    SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc]
-                                    initWithTemplate:[template templateString]
-                                    component:self];
-    
-    [parser parseIntoHTMLContext:context];
-    [parser release];
-    
-    // HACK!
-    if ([context respondsToSelector:@selector(endDOMController)])
+    [context startSidebar:self];
     {
-        [context performSelector:@selector(endDOMController)];
+        SVTemplate *template = [SVTemplate templateNamed:@"SidebarTemplate.html"];
+        
+        SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc]
+                                        initWithTemplate:[template templateString]
+                                        component:self];
+        
+        [parser parseIntoHTMLContext:context];
+        [parser release];
     }
+    [context writeEndTagWithComment:@"sidebar-container"];
 }
 
 - (void)writeHTML; { [self writeHTML:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
