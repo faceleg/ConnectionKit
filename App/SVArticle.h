@@ -15,6 +15,8 @@
 
 @interface SVArticle : SVRichText
 
++ (SVArticle *)insertPageBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
+
 @property (nonatomic, retain, readonly) KTPage *page;
 
 

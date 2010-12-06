@@ -26,6 +26,12 @@
 
 @implementation SVArticle 
 
++ (SVArticle *)insertPageBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    return [NSEntityDescription insertNewObjectForEntityForName:@"Article"
+                                         inManagedObjectContext:context];
+}
+
 @dynamic page;
 
 - (void)setString:(NSString *)string attachments:(NSSet *)attachments;

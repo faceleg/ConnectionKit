@@ -33,12 +33,6 @@
 
 #pragma mark Init
 
-+ (SVRichText *)insertPageBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    return [NSEntityDescription insertNewObjectForEntityForName:@"Article"
-                                         inManagedObjectContext:context];
-}
-
 + (SVRichText *)insertPageletBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     return [NSEntityDescription insertNewObjectForEntityForName:@"TextBoxBody"

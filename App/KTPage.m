@@ -8,9 +8,7 @@
 
 #import "KTPage+Paths.h"
 
-#import "KSContainsObjectValueTransformer.h"
-#import "Debug.h"
-#import "SVRichText.h"
+#import "SVArticle.h"
 #import "KTDesign.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
@@ -34,11 +32,14 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
+#import "KSContainsObjectValueTransformer.h"
+
+#import "Debug.h"
 
 
 @interface KTPage ()
 @property(nonatomic, retain, readwrite) SVSidebar *sidebar;
-@property(nonatomic, retain, readwrite) SVRichText *article;
+@property(nonatomic, retain, readwrite) SVArticle *article;
 @end
 
 
@@ -171,7 +172,7 @@
 	
     
     // Body text. Give it a starting paragraph
-    SVRichText *body = [SVRichText insertPageBodyIntoManagedObjectContext:[self managedObjectContext]];
+    SVArticle *body = [SVArticle insertPageBodyIntoManagedObjectContext:[self managedObjectContext]];
     [body setString:@"<p><br /></p>"];
     [self setArticle:body];
     

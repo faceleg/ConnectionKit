@@ -16,7 +16,6 @@
 
 @interface SVRichText : SVContentObject  
 
-+ (SVRichText *)insertPageBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
 + (SVRichText *)insertPageletBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
