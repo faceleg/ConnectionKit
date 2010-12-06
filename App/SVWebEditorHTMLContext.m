@@ -24,6 +24,7 @@
 #import "SVTextFieldDOMController.h"
 #import "SVTitleBox.h"
 
+#import "NSIndexPath+Karelia.h"
 #import "KSObjectKeyPathPair.h"
 
 
