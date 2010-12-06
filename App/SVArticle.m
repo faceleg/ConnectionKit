@@ -273,9 +273,16 @@
     
     for (SVTextAttachment *anAttachment in [self attachments])
     {
-        [result addAttribute:@"SVAttachment"
-                       value:anAttachment
-                       range:[anAttachment range]];
+        // Unlike when normally building an attributed string, some attachments might come after the truncation point, so we need to test for that
+        
+        NSRange range = [anAttachment range];
+        if (range.location < [result length])
+        {
+            if ([[result string] characterAtIndex:range.location] == NSAttachmentCharacter)
+            {
+                [result addAttribute:@"SVAttachment" value:anAttachment range:range];
+            }
+        }
     }
     
     return [result autorelease];
