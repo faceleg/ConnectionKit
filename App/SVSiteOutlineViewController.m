@@ -842,8 +842,12 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
             // Warn before deleting a published page
             if ([selection count] == 1)
             {
-                [self warnBeforeDeletingPage:[selection anyObject]];
-                return;
+                KTPage *page = [selection anyObject];
+                if ([page datePublished])
+                {
+                    [self warnBeforeDeletingPage:page];
+                    return;
+                }
             }
             
             [controller remove:sender];
