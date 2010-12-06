@@ -21,6 +21,7 @@
 #import "SVSidebarDOMController.h"
 #import "SVSummaryDOMController.h"
 #import "SVTemplateParser.h"
+#import "SVTextBox.h"
 #import "SVTextFieldDOMController.h"
 #import "SVTitleBox.h"
 
@@ -243,20 +244,14 @@
 
 - (void)writeGraphicBody:(id <SVGraphic>)graphic;
 {
-    if ([graphic isKindOfClass:[SVMediaGraphic class]])
-    {
-        [super writeGraphicBody:graphic];
-    }
-    else
-    {
-        SVDOMController *controller = [(SVGraphic *)graphic newBodyDOMController];
-        [self startDOMController:controller];
-        [controller release];
+    SVDOMController *controller = [(SVGraphic *)graphic newBodyDOMController];
+    [self startDOMController:controller];
+    [controller release];
 
-        [super writeGraphicBody:graphic];
-
-        //[self endDOMController]; Should be called automatically now
-    }
+    [super writeGraphicBody:graphic];
+    
+    // Graphics should automatically end their controller except text boxes which need some nudging
+    if ([graphic isKindOfClass:[SVTextBox class]]) [self endDOMController];
 }
 
 - (void)megaBufferedWriterWillFlush:(KSMegaBufferedWriter *)buffer;
