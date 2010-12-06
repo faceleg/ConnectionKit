@@ -681,8 +681,10 @@
     [self startElement:elementName];
 }
 
-#pragma mark Summaries
+#pragma mark Text Blocks
 
+- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)sidebar; { }
+- (void)didEndWritingHTMLTextBlock; { }
 - (void)willWriteSummaryOfPage:(SVSiteItem *)page; { }
 
 #pragma mark URLs/Paths

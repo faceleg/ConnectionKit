@@ -8,9 +8,9 @@
 
 #import "SVLogoImage.h"
 
+#import "SVHTMLContext.h"
 #import "SVMediaRecord.h"
 #import "KTPage.h"
-#import "SVWebEditorHTMLContext.h"
 
 #import "NSManagedObject+KTExtensions.h"
 

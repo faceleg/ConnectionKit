@@ -155,7 +155,9 @@ typedef enum {
 - (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object DOMControllerClass:(Class)controllerClass sizeDelta:(NSSize)sizeDelta;  // support
 
 
-#pragma mark Summaries
+#pragma mark Text Blocks
+- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)textBlock;
+- (void)didEndWritingHTMLTextBlock;
 - (void)willWriteSummaryOfPage:(SVSiteItem *)page;
 
 

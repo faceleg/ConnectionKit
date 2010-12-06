@@ -9,7 +9,7 @@
 #import "SVArticle.h"
 
 #import "SVGraphic.h"
-#import "SVWebEditorHTMLContext.h"
+#import "SVHTMLContext.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
 #import "KTPage.h"

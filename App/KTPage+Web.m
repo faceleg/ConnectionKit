@@ -15,7 +15,6 @@
 #import "KTDesign.h"
 #import "KTDocument.h"
 #import "KTElementPlugInWrapper.h"
-#import "SVHTMLContext.h"
 #import "SVHTMLTextBlock.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTMaster.h"

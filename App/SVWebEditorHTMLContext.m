@@ -439,9 +439,6 @@
 
 @implementation SVHTMLContext (SVEditing)
 
-- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)sidebar; { }
-- (void)didEndWritingHTMLTextBlock; { }
-
 - (void)willBeginWritingSidebar:(SVSidebar *)sidebar; { }
 - (SVSidebarPageletsController *)cachedSidebarPageletsController; { return nil; }
 

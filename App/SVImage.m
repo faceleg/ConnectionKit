@@ -14,7 +14,7 @@
 #import "SVMediaGraphicInspector.h"
 #import "SVMediaRecord.h"
 #import "SVSiteItem.h"
-#import "SVWebEditorHTMLContext.h"
+#import "SVHTMLContext.h"
 #import "NSManagedObject+KTExtensions.h"
 
 #import "NSBitmapImageRep+Karelia.h"

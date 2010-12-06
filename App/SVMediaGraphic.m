@@ -11,6 +11,7 @@
 #import "SVAudio.h"
 #import "SVFlash.h"
 #import "SVGraphicFactory.h"
+#import "SVHTMLContext.h"
 #import "KTImageScalingURLProtocol.h"
 #import "KTMaster.h"
 #import "SVMediaGraphicInspector.h"
@@ -18,7 +19,6 @@
 #import "SVImage.h"
 #import "KTPage.h"
 #import "SVTextAttachment.h"
-#import "SVWebEditorHTMLContext.h"
 #import "KSWebLocation.h"
 #import "SVVideo.h"
 

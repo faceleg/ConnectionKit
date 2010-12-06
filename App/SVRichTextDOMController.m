@@ -16,6 +16,7 @@
 #import "KTPage.h"
 #import "SVGraphicDOMController.h"
 #import "SVGraphicFactory.h"
+#import "SVHTMLContext.h"
 #import "SVImage.h"
 #import "SVLinkManager.h"
 #import "SVLink.h"
@@ -25,7 +26,6 @@
 #import "SVTextAttachment.h"
 #import "SVTextBox.h"
 #import "SVWebContentObjectsController.h"
-#import "SVWebEditorHTMLContext.h"
 #import "WebEditingKit.h"
 #import "SVWebEditorViewController.h"
 

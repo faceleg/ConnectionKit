@@ -58,11 +58,6 @@
 
 @interface SVHTMLContext (SVEditing)
 
-#pragma mark Text Blocks
-- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)textBlock;
-- (void)didEndWritingHTMLTextBlock;
-
-
 #pragma mark Sidebar
 - (void)willBeginWritingSidebar:(SVSidebar *)sidebar; // call -didEndWritingGraphic after
 // The context may provide its own controller for sidebar pagelets (pre-sorted etc.) If so, please use it.
