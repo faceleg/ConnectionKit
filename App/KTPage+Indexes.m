@@ -29,13 +29,11 @@
 #import "NSSortDescriptor+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "KSURLUtilities.h"
-#import "NSXMLElement+Karelia.h"
 #import "SVWebEditorHTMLContext.h"
 #import "KSStringHTMLEntityUnescaping.h"
 
 @interface KTPage (IndexesPrivate)
 - (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
-- (NSString *)truncateMarkup:(NSString *)markup truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType didTruncate:(BOOL *)outDidTruncate;
 @end
 
 
@@ -322,14 +320,10 @@
 		
 		if ( maxCount > 0 )
 		{
-			// take the normally generated HTML for the summary  
-			
-			// complete page markup would be:
-			NSString *markup = [[self article] string];
-			
-			NSString *truncatedMarkup = [self truncateMarkup:markup truncation:maxCount truncationType:truncationType didTruncate:&truncated];
-
-			html = [[self article] attributedHTMLStringFromMarkup:truncatedMarkup];
+			html = [[self article] attributedHTMLStringWithTruncation:maxCount
+                                                                 type:truncationType
+                                                    includeLargeMedia:includeLargeMedia
+                                                          didTruncate:&truncated];
 		}
 		else
 		{
@@ -510,212 +504,6 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 }
 */
 
-
-- (NSString *)truncateMarkup:(NSString *)markup truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType didTruncate:(BOOL *)outDidTruncate;
-{
-	NSString *result = markup;
-	BOOL removedAnything = NO;
-	if ((kTruncateNone != truncationType) && maxCount)	// only do something if we want to actually truncate something
-	{
-		// Only want run through this if:
-		// 1. We are truncating something other than characters
-		// 2. We are truncating characters, and our maximum [character] count is shorter than the actual length we have.
-		if (truncationType != kTruncateCharacters || maxCount < [result length])
-		{			
-			// Turn Markup into a tidied XML document
-			NSError *theError = NULL;
-			NSXMLDocument *xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:result options:NSXMLDocumentTidyHTML error:&theError] autorelease];
-			NSArray *theNodes = [xmlDoc nodesForXPath:@"/html/body" error:&theError];
-			NSXMLNode *currentNode = [theNodes lastObject];		// working node we traverse
-			NSXMLNode *lastTextNode = nil;
-			NSXMLElement *theBody = [theNodes lastObject];	// the body that we we will be truncating
-			int accumulator = 0;
-			BOOL inlineTag = NO;	// for word scanning; if inline, we may count next text as part of previous
-			BOOL endedWithWhitespace = YES;	// for word scanning; if last word ends with whitespace, next token is a word.
-			BOOL didSplitWord = NO;	// for character scanning; this lets us know if a word was truncated midway.  Doesn't really work in cases like abso<i>lutely</i>
-			while (nil != currentNode)
-			{
-				if (NSXMLTextKind == [currentNode kind])
-				{
-					NSString *thisString = [currentNode stringValue];	// renders &amp; etc.
-					if (kTruncateCharacters == truncationType)
-					{
-						lastTextNode = currentNode;		// when we are done, we will add ellipses
-						unsigned int newAccumulator = accumulator + [thisString length];
-						if (newAccumulator >= maxCount)	// will we need to prune?
-						{
-							int truncateIndex = maxCount - accumulator;
-							NSString *truncd = [thisString smartSubstringWithMaxLength:truncateIndex didSplitWord:&didSplitWord];
-							
-							[currentNode setStringValue:truncd];	// re-escapes &amp; etc.
-							
-							break;		// we will now remove everything after "node"
-						}
-						accumulator = newAccumulator;
-					}
-					else if (kTruncateWords == truncationType || kTruncateSentences == truncationType)
-					{
-						// Note: Word truncation is not perfect. :-\  Ideally we would truncate after
-						// the last word, not truncate to include the last word.  Otherwise we lose
-						// punctuation, say, if the truncation happens to happen right after the end of a sentence.
-						// However, it's certainly good enough!
-						
-						NSUInteger len = [thisString length];
-						CFStringTokenizerRef tokenRef
-							= CFStringTokenizerCreate (
-													   kCFAllocatorDefault,
-													   (CFStringRef)thisString,
-													   CFRangeMake(0,len),
-													   (kTruncateWords == truncationType
-														? kCFStringTokenizerUnitWord
-													   : kCFStringTokenizerUnitSentence),
-													   NULL	// Apparently locale is ignored anyhow when doing words?
-													   );
-						
-						CFStringTokenizerTokenType tokenType = kCFStringTokenizerTokenNone;
-						CFIndex lastWord = 0;
-						BOOL stopWordScan = NO;	// don't use break, since we want breaking out of outer loop
-						BOOL firstWord = YES;
-						
-						while(!stopWordScan && 
-							  (kCFStringTokenizerTokenNone != (tokenType = CFStringTokenizerAdvanceToNextToken(tokenRef))) )
-						{
-							CFRange tokenRange = CFStringTokenizerGetCurrentTokenRange(tokenRef);
-							OFF((@"'%@' found at %d+%d", [thisString substringWithRange:NSMakeRange(tokenRange.location, tokenRange.length)], tokenRange.location, tokenRange.length));
-							if (firstWord)
-							{
-								firstWord = NO;
-								// Check for space BEFORE first word - we may need to increment previous counter.
-								if (tokenRange.location > 0 && accumulator >= maxCount)
-								{
-									stopWordScan = YES;
-									OFF((@"String starts with whitespace.  Early exit from word count, accumulator = %d", accumulator));
-								}
-								else if (inlineTag && !endedWithWhitespace && 0 == tokenRange.location)
-								{
-									OFF((@"#### Not incrementing accumulator (%d) since we are still inline.", accumulator));
-								}
-								else
-								{
-									++accumulator;
-									OFF((@"First word; ++accumulator = %d", accumulator));
-								}
-							}
-							else	// other words, just increment the accumulator
-							{
-								++accumulator;
-								OFF((@"++accumulator = %d", accumulator));
-							}
-	
-							if (!stopWordScan)	// don't increment if we early-exited above
-							{
-								lastWord = tokenRange.location + tokenRange.length;
-								lastTextNode = currentNode;		// If this is the last node we are scanning, we will add ellipses to this
-							}
-
-							if (accumulator >= maxCount)
-							{
-								stopWordScan = YES;
-								OFF((@"early exit from word count, accumulator = %d", accumulator));
-							}
-						}
-						CFRelease(tokenRef);
-						OFF((@"in '%@' max=%d len=%d", thisString, lastWord, len));
-						endedWithWhitespace = (lastWord < len);
-						if (accumulator >= maxCount)
-						{
-							if (lastWord < len)
-							{
-								NSString *partialString = [thisString substringToIndex:lastWord];
-								OFF((@"accumulator = %d; Truncating to '%@'", accumulator, partialString));
-								[currentNode setStringValue:partialString];	// re-escapes &amp; etc.
-								OFF((@"... and breaking from loop; we're done, since this is really truncating"));
-								break;		// exit outer loop, so we stop scanning
-							}
-							else
-							{
-								OFF((@"We are out of words, but not breaking here in case we hit inline to follow"));
-							}
-						}
-					}
-				}
-				else if ([currentNode kind] == NSXMLElementKind)
-				{
-					NSXMLElement *theElement = (NSXMLElement *)currentNode;
-					if (kTruncateParagraphs == truncationType)
-					{
-						if ([@"p" isEqualToString:[theElement name]])
-						{
-							if (++accumulator >= maxCount)
-							{
-								break;	// we will now remove everything after "node"
-							}
-						}
-					}
-					else if (kTruncateWords == truncationType || kTruncateSentences == truncationType)
-					{
-						OFF((@"<%@>", [theElement name]));
-						static NSSet *sInlineTags = nil;
-						if (!sInlineTags)
-						{
-							// TODO: Unify with -[KSHTMLWriter canWriteElementInline]. Class method?
-							sInlineTags = [[NSSet alloc] initWithObjects:
-								@"a", @"b", @"i", @"br", @"em", @"img", @"sup", @"sub", @"big", @"span", @"font", @"small", @"strong", nil];
-						}
-						inlineTag = [sInlineTags containsObject:[theElement name]];
-						if (!inlineTag)
-						{
-							// Not an inline tag; see if we should just stop now.
-							OFF((@"Not an inline tag, so consider this a word break"));
-							if (accumulator >= maxCount)
-							{
-								OFF((@"accumulator = %d; at following non-inline tag, time to STOP", accumulator));
-								break;
-							}
-						}
-					}
-				}
-				currentNode = [currentNode nextNode];
-			}
-			
-			removedAnything = [theBody removeAllNodesAfter:(NSXMLElement *)currentNode];
-			if (removedAnything)
-			{
-				OFF((@"Removed some stuff"));
-			}
-			else
-			{
-				OFF((@"Did NOT remove some stuff"));
-			}
-			if (lastTextNode && removedAnything)
-			{
-				// Trucate, plus add on an ellipses.  (Space before ellipses if we didn't break a word up.)
-				NSString *theFormat = (didSplitWord ? @"%@%C" : @"%@ %C");
-				NSString *lastNodeString = [lastTextNode stringValue];
-				NSString *newString = [NSString stringWithFormat:theFormat,
-									   lastNodeString, 0x2026];
-				[lastTextNode setStringValue:newString];
-			}
-			
-			result = [theBody XMLStringWithOptions:NSXMLDocumentTidyXML];
-			// DON'T use NSXMLNodePreserveAll -- it converted " to ' and ' to &apos;  !!!
-			
-			NSRange rangeOfBodyStart = [result rangeOfString:@"<body>" options:0];
-			NSRange rangeOfBodyEnd   = [result rangeOfString:@"</body>" options:NSBackwardsSearch];
-			if (NSNotFound != rangeOfBodyStart.location && NSNotFound != rangeOfBodyEnd.location)
-			{
-				int sPos = NSMaxRange(rangeOfBodyStart);
-				int len  = rangeOfBodyEnd.location - sPos;
-				result = [result substringWithRange:NSMakeRange(sPos,len)];
-			}
-		}	
-	}
-	if (outDidTruncate)
-	{
-		*outDidTruncate = removedAnything;
-	}
-	return result;
-}
 
 /*	The key path to generate a summary from. If the delegate does not implement this we return nil
  */

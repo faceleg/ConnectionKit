@@ -32,7 +32,7 @@ typedef enum {
 } SVCollectionSortOrder;
 
 
-@class KTMaster, SVSidebar, SVPageTitle, SVRichText, SVGraphic, SVMediaRecord, KTCodeInjection, SVHTMLContext;
+@class SVArticle, KTMaster, SVSidebar, SVPageTitle, SVRichText, SVGraphic, SVMediaRecord, KTCodeInjection, SVHTMLContext;
 
 
 @interface KTPage : SVSiteItem
@@ -43,7 +43,7 @@ typedef enum {
 
 
 #pragma mark Body
-@property(nonatomic, retain, readonly) SVRichText *article;
+@property(nonatomic, retain, readonly) SVArticle *article;
 @property(nonatomic, copy) NSString *masterIdentifier;
 
 
