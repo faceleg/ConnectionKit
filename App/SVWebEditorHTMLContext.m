@@ -157,12 +157,6 @@
     {
         [self endDOMController];
     }
-    /*
-    if (_openSizeBindingControllersCount)
-    {
-        [self endDOMController];
-        _openSizeBindingControllersCount--;
-    }*/
 }
 
 #pragma mark Text
@@ -301,7 +295,6 @@
     [controller setSizeDelta:sizeDelta];
     
     [self startDOMController:controller];
-    _openSizeBindingControllersCount++;
     [controller release];
     
     [super buildAttributesForElement:elementName bindSizeToObject:object DOMControllerClass:controllerClass sizeDelta:sizeDelta];
