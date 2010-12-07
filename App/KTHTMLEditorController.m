@@ -239,7 +239,7 @@ initial syntax coloring.
 
 - (void)windowDidBecomeKey:(NSNotification *)notification;
 {
-	if (_HTMLSourceObject)
+	if ([self HTMLSourceObject])
 	{
 		[NSTextView startRecordingFontChanges];
 		[textView setUsesFontPanel:YES];
@@ -407,22 +407,22 @@ initial syntax coloring.
 
 - (void)saveBackToSource:(NSNumber *)disableUndoRegistration
 {
-	if (_HTMLSourceObject)
+	if ([self HTMLSourceObject])
 	{
         // Disable undo registration if requested
         NSManagedObjectContext *MOC = nil;
-        if (disableUndoRegistration && [_HTMLSourceObject isKindOfClass:[NSManagedObject class]])
+        if (disableUndoRegistration && [[self HTMLSourceObject] isKindOfClass:[NSManagedObject class]])
         {
-            MOC = [(NSManagedObject *)_HTMLSourceObject managedObjectContext];
+            MOC = [[self HTMLSourceObject] managedObjectContext];
             [MOC processPendingChanges];
             [[MOC undoManager] disableUndoRegistration];
         }
         
         // Store the HTML etc.
-		_HTMLSourceObject.docType = [NSNumber numberWithInt:self.docType];
-		_HTMLSourceObject.HTMLString = [[textView textStorage] string];
-		_HTMLSourceObject.lastValidMarkupDigest = self.hashOfLastValidation;
-		_HTMLSourceObject.shouldPreviewWhenEditing = [NSNumber numberWithBool:!self.preventPreview];
+		[self HTMLSourceObject].docType = [NSNumber numberWithInt:self.docType];
+		[self HTMLSourceObject].HTMLString = [[textView textStorage] string];
+		[self HTMLSourceObject].lastValidMarkupDigest = self.hashOfLastValidation;
+		[self HTMLSourceObject].shouldPreviewWhenEditing = [NSNumber numberWithBool:!self.preventPreview];
 		
         // Re-enable undo registration
         if (MOC)
