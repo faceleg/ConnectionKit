@@ -183,8 +183,9 @@
 - (void)writeText:(SVHTMLContext *)context range:(NSRange)range;
 {
     NSAttributedString *html = [[self attributedHTMLString] attributedSubstringFromRange:range];
-    
     [context writeAttributedHTMLString:html];
+    
+    [context addDependencyOnObject:self keyPath:@"string"];
 }
 
 - (void)writeText; { [self writeText:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
