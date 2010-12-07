@@ -107,4 +107,33 @@
 
 - (KTMaster *)master; { return [[self parentPage] master]; }
 
+#pragma mark KTHTMLSourceObject
+
+- (NSString *)HTMLString;
+{
+    SVMedia *media = [[self media] media];
+    
+    WebResource *webResource = [media webResource];
+    if (webResource)
+    {
+        CFStringEncoding encoding = CFStringConvertIANACharSetNameToEncoding((CFStringRef)[webResource textEncodingName]);
+        
+        return [NSString stringWithData:[webResource data]
+                               encoding:CFStringConvertEncodingToNSStringEncoding(encoding)];
+    }
+    
+    return [NSString stringWithContentsOfURL:[media mediaURL]
+                            fallbackEncoding:NSUTF8StringEncoding
+                                       error:NULL];
+}
+
+- (NSNumber *)docType;
+{
+    return nil;
+}
+
+- (NSData *) lastValidMarkupDigest; { return nil; }
+
+- (NSNumber *)shouldPreviewWhenEditing; { return NSBOOL(YES); }
+
 @end

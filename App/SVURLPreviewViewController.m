@@ -8,20 +8,22 @@
 
 #import "SVURLPreviewViewController.h"
 
-#import "SVMediaRecord.h"
+#import "KTDocWindowController.h"
 #import "SVHTMLContext.h"
+#import "KTHTMLEditorController.h"
+#import "SVMediaRecord.h"
 #import "SVSiteItem.h"
 #import "SVTemplate.h"
 #import "SVTemplateParser.h"
 #import "SVExternalLink.h"
 #import "SVWebContentAreaController.h"
 
-#import <BWToolkitFramework/BWToolkitFramework.h>
-
 #import "NSString+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 
 #import "KSURLUtilities.h"
+
+#import <BWToolkitFramework/BWToolkitFramework.h>
 
 
 static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewViewControllerURLObservation";
@@ -66,6 +68,21 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     
     if (outURL) *outURL = URL;
     return [template templateString];
+}
+
+#pragma mark Actions
+
+- (IBAction)editRawHTMLInSelectedBlock:(id)sender
+{
+    SVSiteItem *item = [self siteItem];
+    if ([item conformsToProtocol:@protocol(KTHTMLSourceObject)])
+    {
+        KTHTMLEditorController *controller = [[[[self view] window] windowController] HTMLEditorController];
+        
+        [controller setHTMLSourceObject:(id <KTHTMLSourceObject>)item];
+        
+        [controller showWindow:self];
+    }
 }
 
 #pragma mark WebFrameLoadDelegate

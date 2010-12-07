@@ -7,12 +7,13 @@
 //
 
 #import "SVSiteItem.h"
+#import "KTHTMLEditorController.h"
 
 
 @class SVMediaRecord;
 
 
-@interface SVDownloadSiteItem : SVSiteItem
+@interface SVDownloadSiteItem : SVSiteItem <KTHTMLSourceObject>
 
 @property(nonatomic, retain) SVMediaRecord *media;
 @property(nonatomic, copy) NSString *fileName;
