@@ -26,7 +26,8 @@ typedef enum {
 
 }
 
-+ (ValidationState)validateFragment:(NSString *)fragment docType:(KTDocType)docType error:(NSError **)outError;
+// Call +HTMLStringWithFragment:docType: first if you only have a fragment of HTML
++ (ValidationState)validateHTMLString:(NSString *)html docType:(KTDocType)docType error:(NSError **)outError;
 
 // Support
 + (NSString *)HTMLStringWithFragment:(NSString *)fragment docType:(KTDocType)docType;

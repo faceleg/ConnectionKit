@@ -22,6 +22,8 @@
 @dynamic lastValidMarkupDigest;
 @dynamic shouldPreviewWhenEditing;
 
+- (BOOL)shouldValidateAsFragment; { return YES; }
+
 #pragma mark Metrics
 
 - (void)makeOriginalSize;
@@ -44,8 +46,10 @@
         ([context isForEditing] && [[self shouldPreviewWhenEditing] boolValue]))
     {
         // Is the preview going to be understandable by WebKit? Judge this by making sure there's no problem with close tags
+        html = [SVHTMLValidator HTMLStringWithFragment:html docType:KTHTML401DocType];
+        
         NSError *error = nil;
-        ValidationState validation = [SVHTMLValidator validateFragment:html docType:KTHTML401DocType error:&error];
+        ValidationState validation = [SVHTMLValidator validateHTMLString:html docType:KTHTML401DocType error:&error];
         if (validation >= kValidationStateLocallyValid)
         {
             NSString *description = [error localizedDescription];

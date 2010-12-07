@@ -327,8 +327,8 @@ initial syntax coloring.
 {
 	// Use NSXMLDocument -- not useful for errors, but it's quick.
 	NSMutableAttributedString*  textStore = [textView textStorage];
-	NSString *fragment = [textStore string];
-	NSData *currentHash = [self generateHashFromFragment:fragment];
+	NSString *html = [textStore string];
+	NSData *currentHash = [self generateHashFromFragment:html];
 	
 	if (self.preventPreview)
 	{
@@ -347,8 +347,13 @@ initial syntax coloring.
 	}
 	else
 	{
+        if ([[self HTMLSourceObject] shouldValidateAsFragment])
+        {
+            html = [SVHTMLValidator HTMLStringWithFragment:html docType:[self docType]];
+        }
+        
         NSError *error = nil;
-		self.validationState = [SVHTMLValidator validateFragment:fragment docType:[self docType] error:&error];
+		self.validationState = [SVHTMLValidator validateHTMLString:html docType:[self docType] error:&error];
         
         
         // Going by the docs, NSXMLDocument doesn't follow usual error handling rules. Instead it can use err to indicate warnings etc. even when parsing succeeded
@@ -388,11 +393,15 @@ initial syntax coloring.
 	NSMutableAttributedString*  textStore = [textView textStorage];
 	NSString *fragment = [textStore string];
 
-	NSString *wrappedPage = [SVRemoteHTMLValidator HTMLStringWithFragment:fragment docType:[self docType]];
+	NSString *html = fragment;
+    if ([[self HTMLSourceObject] shouldValidateAsFragment])
+    {
+        html = [SVRemoteHTMLValidator HTMLStringWithFragment:fragment docType:[self docType]];
+    }
 	
 	NSString *docTypeName = [SVHTMLContext titleOfDocType:[self docType] localize:NO];
 	BOOL isValid = [[SVValidatorWindowController sharedController]
-					validateSource:wrappedPage
+					validateSource:html
 					isFullPage:NO
 					disabledPreviewObjectsCount:0
 					charset:@"UTF-8"

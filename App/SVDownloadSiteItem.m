@@ -167,6 +167,8 @@
 - (NSNumber *)shouldPreviewWhenEditing; { return NSBOOL(YES); }
 - (void)setShouldPreviewWhenEditing:(NSNumber *)preview; { }
 
+- (BOOL)shouldValidateAsFragment; { return NO; }
+
 - (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key;
 {
     return ([key isEqualToString:@"docType"] || [key isEqualToString:@"lastValidMarkupDigest"] ?

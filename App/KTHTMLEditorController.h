@@ -23,8 +23,10 @@
 @property(nonatomic, copy) NSString *HTMLString;
 @property(nonatomic, copy) NSNumber *shouldPreviewWhenEditing;    // BOOL, mandatory
 
+#pragma mark Validation
 // The digest of the last string to be successfully validated with W3C
 @property(nonatomic, copy) NSData *lastValidMarkupDigest;
+- (BOOL)shouldValidateAsFragment;   // YES if the HTML is not expected to be a complete doc
 
 @end
 

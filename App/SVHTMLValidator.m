@@ -13,15 +13,13 @@
 
 @implementation SVHTMLValidator
 
-+ (ValidationState)validateFragment:(NSString *)fragment docType:(KTDocType)docType error:(NSError **)outError;
++ (ValidationState)validateHTMLString:(NSString *)html docType:(KTDocType)docType error:(NSError **)outError;
 {
     ValidationState result;
     
     
-    NSString *wrappedPage = [self HTMLStringWithFragment:fragment docType:docType];
-    
     // Use NSXMLDocument -- not useful for errors, but it's quick.
-    NSXMLDocument *xmlDoc = [[NSXMLDocument alloc] initWithXMLString:wrappedPage
+    NSXMLDocument *xmlDoc = [[NSXMLDocument alloc] initWithXMLString:html
                              // Don't try to actually validate HTML; it's not XML
                                                              options:(KTHTML401DocType == docType) ? NSXMLDocumentTidyHTML|NSXMLNodePreserveAll : NSXMLNodePreserveAll
                                                                error:outError];
