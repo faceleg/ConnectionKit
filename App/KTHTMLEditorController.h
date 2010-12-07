@@ -66,6 +66,9 @@
 
 - (BOOL) canValidate;	// for bindings
 
+@property (nonatomic, retain) SVRawHTMLGraphic *HTMLSourceObject;
+@property (assign) SEL completionSelector;  // TODO: appears to be unused
+
 @property (nonatomic) BOOL hasRemoteLoads;
 @property (nonatomic, retain) NSUndoManager *undoManager;
 @property (nonatomic) BOOL autoSyntaxColoring;
@@ -74,7 +77,6 @@
 @property (nonatomic) BOOL syntaxColoringBusy;
 @property (nonatomic) NSRange affectedCharRange;
 @property (nonatomic, copy) NSString *replacementString;
-@property (nonatomic, retain) SVRawHTMLGraphic *HTMLSourceObject;
 @property (nonatomic, copy) NSString *sourceCodeTemp;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic) KTDocType docType;
@@ -83,7 +85,6 @@
 @property (nonatomic) ValidationState validationState;
 @property (nonatomic) BOOL preventPreview;
 @property (nonatomic, copy) NSData *hashOfLastValidation;
-@property (assign) SEL completionSelector;
 @property (nonatomic, retain) SVOffscreenWebViewController *asyncOffscreenWebViewController;
 
 @end

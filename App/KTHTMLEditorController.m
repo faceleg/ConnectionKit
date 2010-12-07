@@ -57,7 +57,6 @@
 @synthesize syntaxColoringBusy = _syntaxColoringBusy;
 @synthesize affectedCharRange = _affectedCharRange;
 @synthesize replacementString = _replacementString;
-@synthesize sourceCodeTemp = _sourceCodeTemp;
 @synthesize title = _title;
 @synthesize docType = _docType;
 @synthesize cachedLocalPrelude = _cachedLocalPrelude;
@@ -65,7 +64,6 @@
 @synthesize validationState = _validationState;
 @synthesize preventPreview = _preventPreview;
 @synthesize hashOfLastValidation = _hashOfLastValidation;
-@synthesize completionSelector = _completionSelector;
 @synthesize hasRemoteLoads = _hasRemoteLoads;
 @synthesize asyncOffscreenWebViewController = _asyncOffscreenWebViewController;
 
@@ -746,11 +744,9 @@ initial syntax coloring.
 	}	
 }
 
-#pragma mark -
 #pragma mark Accessors
 
-
-
+@synthesize sourceCodeTemp = _sourceCodeTemp;
 - (void)setSourceCodeTemp:(NSString *)aSourceCode
 {
 	[_sourceCodeTemp release];
@@ -783,7 +779,8 @@ initial syntax coloring.
 	[self loadFragment:graphic.HTMLString];
 }
 
-#pragma mark -
+@synthesize completionSelector = _completionSelector;
+
 #pragma mark Other
 
 + (NSSet *)keyPathsForValuesAffectingValidationIcon;
