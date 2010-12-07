@@ -110,8 +110,7 @@
 - (NSArray *)orderedAttachments;
 {
     NSArray *attachments = [[self attachments] KS_sortedArrayUsingDescriptors:
-                            [NSSortDescriptor sortDescriptorArrayWithKey:@"location"
-                                                               ascending:YES]];
+                            [[self class] attachmentSortDescriptors]];
     
     return attachments;
 }
@@ -129,6 +128,12 @@
     }
     
     return result;
+}
+
++ (NSArray *)attachmentSortDescriptors;
+{
+    return [NSSortDescriptor sortDescriptorArrayWithKey:@"location"
+                                              ascending:YES];
 }
 
 - (BOOL)isEmpty;
