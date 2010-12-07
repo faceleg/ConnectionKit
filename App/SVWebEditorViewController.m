@@ -225,7 +225,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     [self setViewIsReadyToAppear:NO];
 	
 	// Close out the HTML editor
-	//self.HTMLEditorController = nil;
+	[self.parentViewController.view.window.windowController setHTMLEditorController:nil];
 }
 
 #pragma mark Loading
