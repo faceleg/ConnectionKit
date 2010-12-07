@@ -74,12 +74,23 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 
 - (BOOL)canEditHTML;
 {
-    SVMediaRecord *media = [[self siteItem] mediaRepresentation];
-    NSString *type = [media typeOfFile];
+    SVSiteItem *item = [self siteItem];
+    SVMediaRecord *media = [item mediaRepresentation];
     
-    return ([type conformsToUTI:(NSString *)kUTTypePlainText] ||
-            [type conformsToUTI:(NSString *)kUTTypeHTML] ||
-            [type conformsToUTI:(NSString *)kUTTypeXML]);
+    if (media)
+    {
+        if ([(id)item docType]) return YES; // once assigned a doctype, remain editable. #87240
+        
+        
+        SVMediaRecord *media = [item mediaRepresentation];
+        NSString *type = [media typeOfFile];
+        
+        return ([type conformsToUTI:(NSString *)kUTTypePlainText] ||
+                [type conformsToUTI:(NSString *)kUTTypeHTML] ||
+                [type conformsToUTI:(NSString *)kUTTypeXML]);
+    }
+    
+    return NO;
 }
 
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender
