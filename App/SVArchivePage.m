@@ -8,13 +8,16 @@
 
 #import "SVArchivePage.h"
 
+#import "KTPage+Paths.h"
+#import "NSObject+Karelia.h"
 #import "SVGraphicFactory.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVIndexPlugIn.h"
-#import "KTPage+Paths.h"
+#import "SVIndexPlugIn.h"
 #import "SVLink.h"
-
-#import "NSObject+Karelia.h"
+#import "SVPlugInGraphic.h"
+#import "SVRichText.h"
+#import "SVTextAttachment.h"
 
 
 @implementation SVArchivePage
@@ -145,21 +148,59 @@
 {
     SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
     
+	// get this archive page's collection, and then look at what indexes it has if possible
+	// With found one, make sure collection == plugIn.indexedCollection
+	NSArray *attachments = [[self.collection article] orderedAttachments];
+	SVIndexPlugIn *foundIndexPlugIn = nil;
+	NSString *foundIndexPlugInIdentifier = nil;
+	for (SVTextAttachment *attachment in attachments)
+	{
+		SVGraphic *graphic = [attachment graphic];
+		if ([graphic respondsToSelector:@selector(plugIn)])
+		{
+			SVPlugInGraphic *pluginGraphic = (SVPlugInGraphic *)graphic;
+			SVPlugIn *plugIn = [pluginGraphic plugIn];
+			NSString *plugInIdentifier = [pluginGraphic plugInIdentifier];
+			
+			// Is it an index, but NOT  a collection archive :-)
+			if ([plugIn isKindOfClass:[SVIndexPlugIn class]] && ![plugInIdentifier isEqualToString:@"sandvox.CollectionArchiveElement"])
+			{
+				foundIndexPlugIn = (SVIndexPlugIn *)plugIn;
+				foundIndexPlugInIdentifier = plugInIdentifier;
+				break;
+			}
+		}
+	}
+	
+	// NSLog(@"I want to make a copy of this SVIndexPlugIn: %@", foundIndexPlugIn);
+	NSString *identifier = foundIndexPlugIn ? foundIndexPlugInIdentifier : @"sandvox.GeneralIndex";
     
-    SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:@"sandvox.GeneralIndex"];
+    SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
     SVIndexPlugIn *plugIn = [[[factory plugInClass] alloc] init];
     
-    [plugIn setIndexedCollection:self];
-    [plugIn setBool:YES forKey:@"hyperlinkTitles"];
-    [plugIn setBool:YES forKey:@"showEntries"];
-    [plugIn setBool:YES forKey:@"showTitles"];
-    [plugIn setBool:YES forKey:@"showTimestamps"];
-    [plugIn setInteger:3 forKey:@"indexLayoutType"]; // kLayoutTitlesAndArticles
-    
+	if (foundIndexPlugIn)
+	{
+		for (NSString *aKey in [[plugIn class] plugInKeys])
+		{
+			id sourceValue = [foundIndexPlugIn valueForKey:aKey];
+			// DJW((@"Key: %@ Value: %@ [%@]", aKey, sourceValue, [sourceValue class]));
+			[plugIn setSerializedValue:sourceValue forKey:aKey];
+		}
+	}
+	else	// don't have a source index; make our own settings
+	{
+		[plugIn setBool:YES forKey:@"hyperlinkTitles"];
+		[plugIn setBool:YES forKey:@"showEntries"];
+		[plugIn setBool:YES forKey:@"showTitles"];
+		[plugIn setBool:YES forKey:@"showTimestamps"];
+		[plugIn setInteger:3 forKey:@"indexLayoutType"]; // kLayoutTitlesAndArticles
+	}
+	
+    [plugIn setIndexedCollection:self];	// Obviously this has to change from what got copied over
     
     [plugIn writeHTML:context];
     
-    [plugIn release];
+    [plugIn release];		// don't need this temporary one any more
 }
 
 @end
