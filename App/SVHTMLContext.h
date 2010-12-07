@@ -35,7 +35,7 @@ typedef enum {
 @protocol SVGraphic, SVMedia, SVEnclosure;
 
 
-@interface SVHTMLContext : KSHTMLWriter <SVPlugInContext, KSMegaBufferedWriterDelegate>
+@interface SVHTMLContext : KSHTMLWriter <SVPlugInContext>
 {
   @private
     KSStringWriter  *_output;
@@ -57,9 +57,6 @@ typedef enum {
     
     NSUInteger      _headerLevel;
 	
-    NSString                *_calloutAlignment;
-    KSMegaBufferedWriter    *_calloutBuffer;
-    
     NSMutableString         *_headerMarkup;
     NSMutableString         *_endBodyMarkup;
     NSUInteger              _headerMarkupIndex;

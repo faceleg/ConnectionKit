@@ -173,14 +173,6 @@
 
 - (void)writeGraphic:(id <SVGraphic, SVDOMControllerRepresentedObject>)graphic;
 {
-    // If writing a regular grapic straight after a callout, our usual cue to end the callout controller comes too late (just after the graphic controller has been started), so force it to end here instead
-    if ([[self currentDOMController] isKindOfClass:[SVCalloutDOMController class]] &&
-        ![graphic isPagelet])
-    {
-        [self endDOMController];
-    }
-    
-    
     if ([graphic shouldWriteHTMLInline] && ![graphic isKindOfClass:[SVGraphic class]])
     {
         // The graphic will take care of generating its own controller(s). Unfortunately inline images cock this up at the moment, so don't apply to things like that!
@@ -210,17 +202,6 @@
     
     // Graphics should automatically end their controller except text boxes which need some nudging
     if ([graphic isKindOfClass:[SVTextBox class]]) [self endDOMController];
-}
-
-- (void)megaBufferedWriterWillFlush:(KSMegaBufferedWriter *)buffer;
-{
-    [super megaBufferedWriterWillFlush:buffer];
-    
-    // Only once the callout buffer flushes can we be sure the element ended.
-    if ([[self currentDOMController] isKindOfClass:[SVCalloutDOMController class]])
-    {
-        [self endDOMController];
-    }
 }
 
 #pragma mark Metrics

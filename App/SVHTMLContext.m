@@ -51,9 +51,6 @@
 
 
 @interface SVHTMLContext ()
-- (BOOL)isWritingCallout;
-@property(nonatomic, retain, readonly) KSMegaBufferedWriter *calloutBuffer;
-
 - (void)pushAttributes:(NSDictionary *)attributes;
 
 - (SVHTMLIterator *)currentIterator;
@@ -69,12 +66,7 @@
 
 - (id)initWithOutputWriter:(id <KSWriter>)output; // designated initializer
 {
-    // Buffer for grouping callouts
-    _calloutBuffer = [[KSMegaBufferedWriter alloc] initWithOutputWriter:output];
-    [_calloutBuffer setDelegate:self];
-    
-    
-    [super initWithOutputWriter:_calloutBuffer];
+    [super initWithOutputWriter:output];
     
     
     _includeStyling = YES;
@@ -143,7 +135,6 @@
     
     [super dealloc];
     
-    OBASSERT(!_calloutBuffer);
     OBASSERT(!_output);
 }
 
@@ -565,19 +556,6 @@
 
 - (NSUInteger)numberOfGraphicsOnPage; { return _numberOfGraphics; }
 
-- (BOOL)isWritingCallout;
-{
-    return (_calloutAlignment != nil);
-}
-
-@synthesize calloutBuffer = _calloutBuffer;
-
-- (void)megaBufferedWriterWillFlush:(KSMegaBufferedWriter *)buffer;
-{
-    OBASSERT(buffer == _calloutBuffer);
-    [_calloutAlignment release]; _calloutAlignment = nil;
-}
-
 #pragma mark Metrics
 
 - (void)startElement:(NSString *)elementName bindSizeToObject:(NSObject *)object;
@@ -896,43 +874,14 @@
 
 - (void)writeCalloutWithGraphics:(NSArray *)pagelets;
 {
-    NSString *alignment = @"";  // placeholder until we support callouts on both sides
-    
-    
-    BOOL isSameCallout = [self isWritingCallout];
-    if (isSameCallout)
-    {
-        // Suitable div is already open, so cancel the buffer…
-        [_calloutBuffer discardBuffer];
-        
-        // …open elements as usual, but throw away too
-        [_calloutBuffer beginBuffering];
-    }
-    else
-    {
-        OBASSERT(!_calloutAlignment);
-        _calloutAlignment = [alignment copy];
-    }
-    
-    
     // Write the opening tags
     [self startElement:@"div"
                 idName:[[self currentDOMController] elementIdName]
-             className:[@"callout-container " stringByAppendingString:alignment]];
+             className:@"callout-container"];
     
     [self startElement:@"div" className:@"callout"];
     
     [self startElement:@"div" className:@"callout-content"];
-    
-    
-    // throw away buffered writing from before
-    if (isSameCallout)
-    {
-        [self flush];
-        [_calloutBuffer discardBuffer];
-    }
-    
-    
     
     
     
@@ -940,15 +889,9 @@
     
     
     
-    
-    // Buffer this call so consecutive matching callouts can be blended into one
-    [_calloutBuffer beginBuffering];
-    
     [self endElement]; // callout-content
     [self endElement]; // callout
     [self endElement]; // callout-container
-    
-    [_calloutBuffer flushOnNextWrite];
 }
 
 - (void)writeAttributedHTMLString:(NSAttributedString *)attributedHTML;
@@ -1056,7 +999,6 @@
 {
     [super close];
     
-    [_calloutBuffer release]; _calloutBuffer = nil;
     [_output release]; _output = nil;
 }
 
