@@ -31,7 +31,7 @@ typedef enum {
 
 
 @class KSStringWriter;
-@class KTPage, SVSiteItem, SVArchivePage, SVGraphic, SVHTMLTextBlock, SVLink, SVMediaRecord;
+@class KTPage, SVSiteItem, SVArchivePage, SVGraphic, SVHTMLTextBlock, SVLink, SVMediaRecord, SVSidebarPageletsController;
 @protocol SVGraphic, SVMedia, SVEnclosure;
 
 
@@ -64,6 +64,8 @@ typedef enum {
     NSMutableArray  *_iteratorsStack;
     
     NSUInteger      _numberOfGraphics;
+    
+    SVSidebarPageletsController *_sidebarPageletsController;
 }
 
 #pragma mark Init
@@ -155,6 +157,11 @@ typedef enum {
 - (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)textBlock;
 - (void)didEndWritingHTMLTextBlock;
 - (void)willWriteSummaryOfPage:(SVSiteItem *)page;
+
+
+#pragma mark Sidebar
+// The context will provide a single controller for sidebar pagelets (pre-sorted etc.)
+@property(nonatomic, retain) SVSidebarPageletsController *sidebarPageletsController;
 
 
 #pragma mark Iterations

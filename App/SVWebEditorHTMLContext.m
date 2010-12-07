@@ -50,19 +50,9 @@
     return self;
 }
 
-- (id)initWithOutputWriter:(id <KSWriter>)output inheritFromContext:(SVHTMLContext *)context;
-{
-    self = [super initWithOutputWriter:output inheritFromContext:context];
-    
-    [self setSidebarPageletsController:[context cachedSidebarPageletsController]];
-    
-    return self;
-}
-
 - (void)dealloc
 {
     [_DOMControllerPoints release];
-    [_sidebarPageletsController release];
     
     [super dealloc];
     OBASSERT(!_rootController);
@@ -333,9 +323,6 @@
     [controller release];
 }
 
-@synthesize sidebarPageletsController = _sidebarPageletsController;
-- (NSArrayController *)cachedSidebarPageletsController; { return [self sidebarPageletsController]; }
-
 #pragma mark Element Primitives
 
 - (void)pushAttribute:(NSString *)attribute value:(id)value;
@@ -383,8 +370,6 @@
 {
     [self startElement:@"div" idName:@"sidebar-container" className:nil];
 }
-
-- (SVSidebarPageletsController *)cachedSidebarPageletsController; { return nil; }
 
 - (WEKWebEditorItem *)currentDOMController; { return nil; }
 

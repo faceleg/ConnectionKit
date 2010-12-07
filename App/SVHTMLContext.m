@@ -16,6 +16,7 @@
 #import "KTMaster.h"
 #import "SVMediaGraphic.h"
 #import "KTPage.h"
+#import "SVSidebarDOMController.h"
 #import "KTSite.h"
 #import "SVTemplate.h"
 #import "SVTextAttachment.h"
@@ -116,6 +117,7 @@
         [self setIncludeStyling:[context includeStyling]];
         [self setLiveDataFeeds:[context liveDataFeeds]];
         [self setDocType:[context docType]];
+        _sidebarPageletsController = [context->_sidebarPageletsController retain];
     }
     
     return self;
@@ -132,6 +134,8 @@
     [_headerMarkup release];
     [_endBodyMarkup release];
     [_iteratorsStack release];
+    
+    [_sidebarPageletsController release];
     
     [super dealloc];
     
@@ -612,6 +616,20 @@
 - (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)sidebar; { }
 - (void)didEndWritingHTMLTextBlock; { }
 - (void)willWriteSummaryOfPage:(SVSiteItem *)page; { }
+
+#pragma mark Sidebar
+
+@synthesize sidebarPageletsController = _sidebarPageletsController;
+- (SVSidebarPageletsController *)sidebarPageletsController;
+{
+    if (!_sidebarPageletsController)
+    {
+        _sidebarPageletsController = [[SVSidebarPageletsController alloc] initWithSidebar:
+                                      [[self page] sidebar]];
+    }
+    
+    return _sidebarPageletsController;
+}
 
 #pragma mark URLs/Paths
 

@@ -54,12 +54,8 @@
 - (void)writePageletsHTML:(SVHTMLContext *)context;
 {
     // Use the best controller available to give us an ordered list of pagelets
-    NSArrayController *controller = [context cachedSidebarPageletsController];
-    if (!controller)
-    {
-        controller = [[SVSidebarPageletsController alloc] initWithSidebar:self];
-        [controller autorelease];
-    }
+    NSArrayController *controller = [context sidebarPageletsController];
+    OBASSERT(controller);
     
     //[context addDependencyOnObject:controller keyPath:@"arrangedObjects"];    // taken care of by SVSidebarDOMController now
     

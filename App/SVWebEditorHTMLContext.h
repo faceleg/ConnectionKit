@@ -12,7 +12,7 @@
 
 
 @class SVWebEditorViewController, SVContentDOMController, SVSidebarDOMController;
-@class SVContentObject, SVRichText, SVSidebar, SVSidebarPageletsController;
+@class SVContentObject, SVRichText, SVSidebar;
 @class SVMediaRecord;
 
 
@@ -26,7 +26,6 @@
     NSMutableSet    *_media;
     
     SVSidebarDOMController      *_sidebarDOMController;
-    SVSidebarPageletsController *_sidebarPageletsController;
 }
 
 #pragma mark Root
@@ -36,10 +35,6 @@
 
 #pragma mark Media
 - (NSSet *)media;
-
-
-#pragma mark Sidebar
-@property(nonatomic, retain) SVSidebarPageletsController *sidebarPageletsController;
 
 
 @end
@@ -53,9 +48,6 @@
 #pragma mark Sidebar
 
 - (void)startSidebar:(SVSidebar *)sidebar; // call -endElement after writing contents
-
-// The context may provide its own controller for sidebar pagelets (pre-sorted etc.) If so, please use it.
-- (SVSidebarPageletsController *)cachedSidebarPageletsController;
 
 
 #pragma mark Current Item
