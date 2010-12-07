@@ -11,7 +11,7 @@
 			<string key="NS.object.0">823</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="2"/>
+			<integer value="48"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -77,7 +77,7 @@
 								<object class="NSTabViewItem" id="117311597">
 									<string key="NSIdentifier">1</string>
 									<object class="NSView" key="NSView" id="885603463">
-										<reference key="NSNextResponder" ref="1025076104"/>
+										<nil key="NSNextResponder"/>
 										<int key="NSvFlags">256</int>
 										<array class="NSMutableArray" key="NSSubviews">
 											<object class="NSButton" id="131746322">
@@ -158,7 +158,6 @@
 											</object>
 										</array>
 										<string key="NSFrame">{{10, 33}, {571, 156}}</string>
-										<reference key="NSSuperview" ref="1025076104"/>
 									</object>
 									<string key="NSLabel">Sitemap</string>
 									<reference key="NSColor" ref="897300439"/>
@@ -167,7 +166,7 @@
 								<object class="NSTabViewItem" id="33900136">
 									<string key="NSIdentifier">2</string>
 									<object class="NSView" key="NSView" id="314415495">
-										<nil key="NSNextResponder"/>
+										<reference key="NSNextResponder" ref="1025076104"/>
 										<int key="NSvFlags">256</int>
 										<array class="NSMutableArray" key="NSSubviews">
 											<object class="NSTextField" id="240678307">
@@ -178,7 +177,7 @@
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="766657121">
 													<int key="NSCellFlags">-1805517311</int>
-													<int key="NSCellFlags2">272760832</int>
+													<int key="NSCellFlags2">272793600</int>
 													<string key="NSContents"/>
 													<object class="NSFont" key="NSSupport">
 														<string key="NSName">LucidaGrande</string>
@@ -377,19 +376,20 @@
 											</object>
 										</array>
 										<string key="NSFrame">{{10, 33}, {571, 156}}</string>
+										<reference key="NSSuperview" ref="1025076104"/>
 									</object>
 									<string key="NSLabel">Google Analytics</string>
 									<reference key="NSColor" ref="897300439"/>
 									<reference key="NSTabView" ref="1025076104"/>
 								</object>
 							</array>
-							<reference key="NSSelectedTabViewItem" ref="117311597"/>
+							<reference key="NSSelectedTabViewItem" ref="33900136"/>
 							<reference key="NSFont" ref="95827749"/>
 							<int key="NSTvFlags">0</int>
 							<bool key="NSAllowTruncatedLabels">YES</bool>
 							<bool key="NSDrawsBackground">YES</bool>
 							<array class="NSMutableArray" key="NSSubviews">
-								<reference ref="885603463"/>
+								<reference ref="314415495"/>
 							</array>
 						</object>
 						<object class="NSTextField" id="127488005">
