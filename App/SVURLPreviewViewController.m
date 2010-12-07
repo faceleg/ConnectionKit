@@ -181,7 +181,10 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     [super viewDidDisappear:animated];
     
     // Did we move because of an in-progress load?
-    if (![[self webView] isLoading]) [self setSiteItem:nil];
+    if (![[self webView] isLoading])
+    {
+        [self setSiteItem:nil];
+    }
     
     // clear title, meta description, since they are not applicable anymore
 	self.title = nil;
@@ -205,12 +208,26 @@ webContentAreaController:(SVWebContentAreaController *)controller;
 @synthesize siteItem = _siteItem;
 - (void)setSiteItem:(SVSiteItem *)item
 {
+    // Close HTML editor
+    if ([self siteItem])
+    {
+        KTDocWindowController *windowController = [[[[self parentViewController] view] window] windowController];
+        KTHTMLEditorController *editor = [windowController HTMLEditorController];
+        
+        if ((id)[editor HTMLSourceObject] == [self siteItem])
+        {
+            [windowController setHTMLEditorController:nil];
+        }
+    }
+    
+    
     // teardown
     [_siteItem removeObserver:self forKeyPath:@"URL"];
     [_siteItem removeObserver:self forKeyPath:@"mediaRepresentation"];
     
     item = [item retain];
     [_siteItem release]; _siteItem = item;
+    
     
     // observe new
     if (item)
