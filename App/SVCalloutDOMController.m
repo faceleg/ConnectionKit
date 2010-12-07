@@ -159,7 +159,21 @@
     }
     
     
-    [super moveItemUp:item];
+    // Guess not; split the callout in two
+    DOMElement *myElement = [self HTMLElement];
+    SVCalloutDOMController *calloutController = [[[self class] alloc] initWithHTMLDocument:
+                                                 (id)[myElement ownerDocument]];
+    
+    [calloutController createHTMLElement];  // hopefully -HTMLElement will call this internally one day
+    DOMElement *calloutElement = [calloutController HTMLElement];
+    [[myElement parentNode] insertBefore:calloutElement refChild:myElement];
+    [[self parentWebEditorItem] addChildWebEditorItem:calloutController];
+    
+    [[calloutController calloutContentElement] appendChild:[item HTMLElement]];
+    [calloutController addChildWebEditorItem:item];
+    
+    [calloutController moveItemUp:item];
+    [calloutController release];
 }
 
 - (void)moveItemDown:(WEKWebEditorItem *)item;
