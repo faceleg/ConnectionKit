@@ -10,7 +10,9 @@
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">823</string>
 		</object>
-		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs"/>
+		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
+			<integer value="81"/>
+		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 		</array>
@@ -356,25 +358,6 @@
 									<reference key="NSMixedImage" ref="49718828"/>
 								</object>
 								<object class="NSMenuItem" id="262340293">
-									<reference key="NSMenu" ref="686301075"/>
-									<bool key="NSIsDisabled">YES</bool>
-									<bool key="NSIsSeparator">YES</bool>
-									<string key="NSTitle"/>
-									<string key="NSKeyEquiv"/>
-									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="73959282"/>
-									<reference key="NSMixedImage" ref="49718828"/>
-								</object>
-								<object class="NSMenuItem" id="515783852">
-									<reference key="NSMenu" ref="686301075"/>
-									<string key="NSTitle">Configure Google…</string>
-									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="73959282"/>
-									<reference key="NSMixedImage" ref="49718828"/>
-								</object>
-								<object class="NSMenuItem" id="932084878">
 									<reference key="NSMenu" ref="686301075"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
@@ -2839,22 +2822,6 @@
 					<int key="connectionID">1318</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">oConfigureGoogleMenuItem</string>
-						<reference key="source" ref="205882656"/>
-						<reference key="destination" ref="515783852"/>
-					</object>
-					<int key="connectionID">1321</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">configureGoogle:</string>
-						<reference key="source" ref="464856506"/>
-						<reference key="destination" ref="515783852"/>
-					</object>
-					<int key="connectionID">1322</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">insertPagelet:</string>
 						<reference key="source" ref="464856506"/>
@@ -3182,9 +3149,7 @@
 							<reference ref="968348270"/>
 							<reference ref="890863307"/>
 							<reference ref="808072446"/>
-							<reference ref="932084878"/>
 							<reference ref="18956098"/>
-							<reference ref="515783852"/>
 							<reference ref="262340293"/>
 							<reference ref="373659161"/>
 							<reference ref="920519804"/>
@@ -3199,11 +3164,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">73</int>
 						<reference key="object" ref="627736855"/>
-						<reference key="parent" ref="686301075"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">79</int>
-						<reference key="object" ref="932084878"/>
 						<reference key="parent" ref="686301075"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -4234,11 +4194,6 @@
 						<reference key="parent" ref="686301075"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">1319</int>
-						<reference key="object" ref="515783852"/>
-						<reference key="parent" ref="686301075"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">1355</int>
 						<reference key="object" ref="373659161"/>
 						<reference key="parent" ref="686301075"/>
@@ -4384,8 +4339,6 @@
 				<boolean value="YES" key="131.ImportedFromIB2"/>
 				<string key="1315.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1316.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1319.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="1319.ImportedFromIB2"/>
 				<string key="134.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="134.ImportedFromIB2"/>
 				<string key="1341.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4535,8 +4488,6 @@
 				<string key="783.IBEditorWindowLastContentRect">{{898, 478}, {233, 83}}</string>
 				<string key="783.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="783.ImportedFromIB2"/>
-				<string key="79.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="79.ImportedFromIB2"/>
 				<string key="795.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="795.ImportedFromIB2"/>
 				<string key="799.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4547,7 +4498,7 @@
 				<boolean value="YES" key="803.ImportedFromIB2"/>
 				<string key="809.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="809.ImportedFromIB2"/>
-				<string key="81.IBEditorWindowLastContentRect">{{420, 428}, {225, 253}}</string>
+				<string key="81.IBEditorWindowLastContentRect">{{420, 458}, {207, 223}}</string>
 				<string key="81.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="81.ImportedFromIB2"/>
 				<string key="817.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6414,6 +6365,13 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVHTMLTextBlock.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="createLink:">SVLinkManager</string>
 						<string key="unlink:">id</string>
@@ -7057,28 +7015,6 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">SVGoogleWindowController</string>
-					<string key="superclassName">NSWindowController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="closeSheet:">id</string>
-						<string key="configureGoogle:">NSWindowController</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="closeSheet:">
-							<string key="name">closeSheet:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="configureGoogle:">
-							<string key="name">configureGoogle:</string>
-							<string key="candidateClassName">NSWindowController</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">SVGoogleWindowController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">SVLinkManager</string>
 					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
@@ -7193,6 +7129,8 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="oCurrentPageURLLink">BWHyperlinkButton</string>
+						<string key="oDeletePublishedPageAlertAccessoryView">NSView</string>
+						<string key="oDeletePublishedPageURLLink">BWHyperlinkButton</string>
 						<string key="oNewPageURLLabel">NSTextField</string>
 						<string key="oSplitView">BWSplitView</string>
 						<string key="oToggleIsCollectionAlertAccessoryView">NSView</string>
@@ -7201,6 +7139,14 @@
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="oCurrentPageURLLink">
 							<string key="name">oCurrentPageURLLink</string>
+							<string key="candidateClassName">BWHyperlinkButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="oDeletePublishedPageAlertAccessoryView">
+							<string key="name">oDeletePublishedPageAlertAccessoryView</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="oDeletePublishedPageURLLink">
+							<string key="name">oDeletePublishedPageURLLink</string>
 							<string key="candidateClassName">BWHyperlinkButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="oNewPageURLLabel">
@@ -7303,7 +7249,6 @@
 					<string key="className">SVWelcomeController</string>
 					<string key="superclassName">KSSingletonWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="newDocument:">id</string>
 						<string key="openDocument:">id</string>
 						<string key="openLicensing:">id</string>
 						<string key="openScreencast:">id</string>
@@ -7311,10 +7256,6 @@
 						<string key="showHelp:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="newDocument:">
-							<string key="name">newDocument:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="openDocument:">
 							<string key="name">openDocument:</string>
 							<string key="candidateClassName">id</string>
@@ -7384,6 +7325,10 @@
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVWelcomeController.h</string>
 					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WEKDOMController</string>
+					<reference key="sourceIdentifier" ref="984033952"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WEKDOMController</string>
@@ -8760,6 +8705,33 @@
 						</object>
 					</dictionary>
 					<reference key="sourceIdentifier" ref="212208552"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">QCView</string>
+					<string key="superclassName">NSView</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="play:">id</string>
+						<string key="start:">id</string>
+						<string key="stop:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="play:">
+							<string key="name">play:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="start:">
+							<string key="name">start:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stop:">
+							<string key="name">stop:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">QuartzComposer.framework/Headers/QCView.h</string>
+					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">QTMovieView</string>
