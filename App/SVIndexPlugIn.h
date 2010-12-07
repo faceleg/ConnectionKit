@@ -17,11 +17,15 @@
 @interface SVIndexPlugIn : SVPlugIn
 {
   @private
-    id <SVPage> _collection;
-    BOOL _enableMaxItems;
-    NSUInteger _maxItems;
+    id <SVPage>         _collection;
+    NSArrayController   *_indexablePagesController;
+    id                  _reserved3;
+    id                  _reserved4;
+    id                  _reserved5;
+    id                  _reserved6;
+    NSUInteger          _maxItems;
+    BOOL                _enableMaxItems;
     
-    NSArrayController *_indexablePagesController;
 }
 
 - (void)makeOriginalSize;   // indexes use this to set their width to nil

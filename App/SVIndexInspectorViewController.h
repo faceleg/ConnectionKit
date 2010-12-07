@@ -12,6 +12,10 @@
 @interface SVIndexInspectorViewController : SVInspectorViewController 
 {
 	IBOutlet KTLinkSourceView	*collectionLinkSourceView;
+  @private
+    id  _reserved6;
+    id  _reserved7;
+    id  _reserved8;
 }
 
 @end

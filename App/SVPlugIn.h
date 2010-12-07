@@ -31,6 +31,8 @@ typedef enum {
   @private
     id  _container;
     id  _template;
+    id  _reserved;
+    id  _reserved2;
 }
 
 

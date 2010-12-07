@@ -13,8 +13,12 @@
 @interface SVInspectorViewController : NSViewController
 {
   @private
-    CGFloat             _tabHeight;
     NSArrayController   *_inspectedObjectsController;
+    id                  _reserved2;
+    id                  _reserved3;
+    id                  _reserved4;
+    id                  _reserved5;
+    CGFloat             _tabHeight;
 }
 
 #pragma mark Inspected Objects
