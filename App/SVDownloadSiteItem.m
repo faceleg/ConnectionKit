@@ -12,6 +12,7 @@
 #import "KTPage+Paths.h"
 #import "SVPublisher.h"
 
+#import "NSData+Karelia.h"
 #import "NSString+Karelia.h"
 
 
@@ -127,13 +128,42 @@
                                        error:NULL];
 }
 
+- (void)setHTMLString:(NSString *)html;
+{
+    /*
+    WebResource *webResource = [[WebResource alloc]
+                                initWithData:[html dataUsingEncoding:NSUTF8StringEncoding]
+                                URL:[NSURL URLWithString:@"x-sandvox://foogly.boo"]
+                                MIMEType:[NSString MIMETypeForUTI:(NSString *)kUTTypePlainText]
+                                textEncodingName:<#(NSString *)textEncodingName#> frameName:<#(NSString *)frameName#>]*/
+    
+    NSData *data = [html dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:
+                                    @"x-sandvox-fake-url:///%@.html",
+                                    [data sha1DigestString]]];
+    
+    SVMedia *media = [[SVMedia alloc] initWithData:data URL:url];
+    [media setPreferredFilename:[self filename]];
+    
+    SVMediaRecord *record = [SVMediaRecord mediaRecordWithMedia:media
+                                                     entityName:@"FileMedia"
+                                 insertIntoManagedObjectContext:[self managedObjectContext]];
+    
+    [self replaceMedia:record forKeyPath:@"media"];
+    [media release];
+}
+
 - (NSNumber *)docType;
 {
     return nil;
 }
+- (void) setDocType:(NSNumber *)docType; { }
 
 - (NSData *) lastValidMarkupDigest; { return nil; }
+- (void) setLastValidMarkupDigest:(NSData *)digest; { }
 
 - (NSNumber *)shouldPreviewWhenEditing; { return NSBOOL(YES); }
+- (void) setShouldPreviewWhenEditing:(NSNumber *)preview; { }
 
 @end
