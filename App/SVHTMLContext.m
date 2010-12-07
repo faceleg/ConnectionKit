@@ -964,24 +964,29 @@
                     [scanner scanCharactersFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]
                                         intoString:NULL];
                     
-                    attachment = [attributedHTML attribute:@"SVAttachment"
-                                                   atIndex:[scanner scanLocation]
-                                     longestEffectiveRange:&effectiveRange
-                                                   inRange:range];
-                    
-                    if (attachment)
+                    attachment = nil;
+                    location = [scanner scanLocation];
+                    if (location < range.location + range.length)
                     {
-                        if ([[attachment placement] intValue] == SVGraphicPlacementCallout)
+                        attachment = [attributedHTML attribute:@"SVAttachment"
+                                                       atIndex:location
+                                         longestEffectiveRange:&effectiveRange
+                                                       inRange:range];
+                        
+                        if (attachment)
                         {
-                            [pagelets addObject:[attachment graphic]];
+                            if ([[attachment placement] intValue] == SVGraphicPlacementCallout)
+                            {
+                                [pagelets addObject:[attachment graphic]];
+                            }
+                            else
+                            {
+                                attachment = nil;
+                            }
                         }
-                        else
-                        {
-                            attachment = nil;
-                        }
+                        
+                        if (!attachment) effectiveRange.length = 0; // reset search
                     }
-                    
-                    if (!attachment) effectiveRange.length = 0; // reset search
                 }
                 [scanner release];
                 
