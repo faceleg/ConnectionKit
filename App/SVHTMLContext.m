@@ -51,7 +51,6 @@
 
 
 @interface SVHTMLContext ()
-- (void)endCallout;
 - (BOOL)isWritingCallout;
 @property(nonatomic, retain, readonly) KSMegaBufferedWriter *calloutBuffer;
 
@@ -566,57 +565,6 @@
 
 - (NSUInteger)numberOfGraphicsOnPage; { return _numberOfGraphics; }
 
-- (void)startCalloutForGraphic:(SVGraphic *)graphic;
-{
-    NSString *alignment = @"";  // placeholder until we support callouts on both sides
-    
-    
-    BOOL isSameCallout = [self isWritingCallout];
-    if (isSameCallout)
-    {
-        // Suitable div is already open, so cancel the buffer…
-        [_calloutBuffer discardBuffer];
-        
-        // …open elements as usual, but throw away too
-        [_calloutBuffer beginBuffering];
-    }
-    else
-    {
-        OBASSERT(!_calloutAlignment);
-        _calloutAlignment = [alignment copy];
-    }
-    
-    
-    // Write the opening tags
-    [self startElement:@"div"
-                idName:[[self currentDOMController] elementIdName]
-             className:[@"callout-container " stringByAppendingString:alignment]];
-    
-    [self startElement:@"div" className:@"callout"];
-    
-    [self startElement:@"div" className:@"callout-content"];
-    
-    
-    // throw away buffered writing from before
-    if (isSameCallout)
-    {
-        [self flush];
-        [_calloutBuffer discardBuffer];
-    }
-}
-
-- (void)endCallout;
-{
-    // Buffer this call so consecutive matching callouts can be blended into one
-    [_calloutBuffer beginBuffering];
-    
-    [self endElement]; // callout-content
-    [self endElement]; // callout
-    [self endElement]; // callout-container
-    
-    [_calloutBuffer flushOnNextWrite];
-}
-
 - (BOOL)isWritingCallout;
 {
     return (_calloutAlignment != nil);
@@ -944,7 +892,64 @@
     [self endElement];
 }
 
-#pragma mark Raw Writing
+#pragma mark Rich Text
+
+- (void)writeCalloutWithGraphics:(NSArray *)pagelets;
+{
+    NSString *alignment = @"";  // placeholder until we support callouts on both sides
+    
+    
+    BOOL isSameCallout = [self isWritingCallout];
+    if (isSameCallout)
+    {
+        // Suitable div is already open, so cancel the buffer…
+        [_calloutBuffer discardBuffer];
+        
+        // …open elements as usual, but throw away too
+        [_calloutBuffer beginBuffering];
+    }
+    else
+    {
+        OBASSERT(!_calloutAlignment);
+        _calloutAlignment = [alignment copy];
+    }
+    
+    
+    // Write the opening tags
+    [self startElement:@"div"
+                idName:[[self currentDOMController] elementIdName]
+             className:[@"callout-container " stringByAppendingString:alignment]];
+    
+    [self startElement:@"div" className:@"callout"];
+    
+    [self startElement:@"div" className:@"callout-content"];
+    
+    
+    // throw away buffered writing from before
+    if (isSameCallout)
+    {
+        [self flush];
+        [_calloutBuffer discardBuffer];
+    }
+    
+    
+    
+    
+    
+    [self writeGraphics:pagelets];    
+    
+    
+    
+    
+    // Buffer this call so consecutive matching callouts can be blended into one
+    [_calloutBuffer beginBuffering];
+    
+    [self endElement]; // callout-content
+    [self endElement]; // callout
+    [self endElement]; // callout-container
+    
+    [_calloutBuffer flushOnNextWrite];
+}
 
 - (void)writeAttributedHTMLString:(NSAttributedString *)attributedHTML;
 {
@@ -985,9 +990,44 @@
             
             // Possible callout.
             BOOL callout = [graphic isCallout];
-            if (callout) [self startCalloutForGraphic:graphic];
-            [self writeGraphic:graphic];
-            if (callout) [self endCallout];
+            if (callout)
+            {
+                // Look for other graphics that are part of the same callout
+                NSMutableArray *pagelets = [NSMutableArray arrayWithObject:graphic];
+                
+                NSScanner *scanner = [[NSScanner alloc] initWithString:[attributedHTML string]];
+                
+                while (attachment)
+                {
+                    [scanner setScanLocation:(effectiveRange.location + effectiveRange.length)];
+                    [scanner scanCharactersFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]
+                                        intoString:NULL];
+                    
+                    attachment = [attributedHTML attribute:@"SVAttachment"
+                                                   atIndex:[scanner scanLocation]
+                                     longestEffectiveRange:&effectiveRange
+                                                   inRange:range];
+                    
+                    if (attachment)
+                    {
+                        if ([[attachment placement] intValue] == SVGraphicPlacementCallout)
+                        {
+                            [pagelets addObject:[attachment graphic]];
+                        }
+                        else
+                        {
+                            attachment = nil;
+                        }
+                    }
+                }
+                [scanner release];
+                
+                [self writeCalloutWithGraphics:pagelets];
+            }
+            else
+            {
+                [self writeGraphic:graphic];
+            }
             
             
             // Having written the first bit of content, it's time to start marking that

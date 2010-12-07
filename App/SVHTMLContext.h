@@ -143,7 +143,6 @@ typedef enum {
 
 // For subclassers:
 - (void)writeGraphicBody:(id <SVGraphic>)graphic;
-- (void)startCalloutForGraphic:(SVGraphic *)graphic;
 
 - (NSUInteger)numberOfGraphicsOnPage; // incremented for each call to -writeGraphic:
 
@@ -228,8 +227,9 @@ typedef enum {
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;
 
 
-#pragma mark Raw Writing
+#pragma mark Rich Text
 - (void)writeAttributedHTMLString:(NSAttributedString *)attributedHTML;
+- (void)writeCalloutWithGraphics:(NSArray *)pagelets;
 
 
 #pragma mark RSS

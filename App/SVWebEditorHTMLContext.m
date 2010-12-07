@@ -161,22 +161,14 @@
 
 #pragma mark Graphics
 
-- (void)startCalloutForGraphic:(SVGraphic *)graphic;
+- (void)writeCalloutWithGraphics:(NSArray *)pagelets;
 {
-    OBPRECONDITION(graphic);
+    // Make a controller for the callout. Will be auto-closed
+    SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
+    [self startDOMController:controller];
+    [controller release];
     
-    
-    // Make a controller for the callout, but only if it's not part of an existing callout
-    if (![[self currentDOMController] isKindOfClass:[SVCalloutDOMController class]])
-    {
-        SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
-        [self startDOMController:controller];
-        [controller release];
-    }
-    
-    // We will create a controller for the graphic shortly, after the callout opening has been written
-    
-    [super startCalloutForGraphic:graphic];
+    [super writeCalloutWithGraphics:pagelets];
 }
 
 - (void)writeGraphic:(id <SVGraphic, SVDOMControllerRepresentedObject>)graphic;
