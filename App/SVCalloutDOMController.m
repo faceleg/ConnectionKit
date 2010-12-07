@@ -133,6 +133,7 @@
  */
 - (void)moveItemUp:(WEKWebEditorItem *)item;
 {
+    // Most of the time, want to move the whole callout
     if ([[self childWebEditorItems] count] <= 1) return [super moveItemUp:item];
     
     
@@ -163,6 +164,7 @@
 
 - (void)moveItemDown:(WEKWebEditorItem *)item;
 {
+    // Most of the time, want to move the whole callout
     if ([[self childWebEditorItems] count] <= 1) return [super moveItemDown:item];
     
     
