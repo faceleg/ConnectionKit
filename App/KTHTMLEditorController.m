@@ -94,6 +94,17 @@
     return self;
 }
 
+- (id)initWithWindow:(NSWindow *)window;		// designated initializer
+{
+	if ((self = [super initWithWindow:window]) != nil)
+	{
+		// Put this in designated initializer so that when dealloc happens we are guaranteed observation was happening
+		[self addObserver:self forKeyPath:@"docType" options:0 context:@"synchronizeUIContext"];
+		[self addObserver:self forKeyPath:@"preventPreview" options:0 context:@"synchronizeUIContext"];
+	}
+	return self;
+}
+
 - (void)synchronizeUI
 {
 	[[[docTypePopUp menu] itemWithTag:self.docType+1] setState:NSOnState];	// Check initially chosen one.
@@ -163,8 +174,6 @@ initial syntax coloring.
 {
     [super windowDidLoad];
  
-	[self addObserver:self forKeyPath:@"docType" options:0 context:@"synchronizeUIContext"];
-	[self addObserver:self forKeyPath:@"preventPreview" options:0 context:@"synchronizeUIContext"];
 	// Kick start
 	[self synchronizeUI];
 	
