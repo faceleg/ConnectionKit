@@ -62,6 +62,8 @@
 
 - (id)initWithData:(NSData *)data URL:(NSURL *)url;
 {
+    OBPRECONDITION(url);
+    
     NSString *type = [NSString MIMETypeForUTI:
                       [NSString UTIForFilenameExtension:[url ks_pathExtension]]];
     
