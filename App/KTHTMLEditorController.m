@@ -57,7 +57,6 @@
 @synthesize syntaxColoringBusy = _syntaxColoringBusy;
 @synthesize affectedCharRange = _affectedCharRange;
 @synthesize replacementString = _replacementString;
-@synthesize HTMLSourceObject = _HTMLSourceObject;
 @synthesize sourceCodeTemp = _sourceCodeTemp;
 @synthesize title = _title;
 @synthesize docType = _docType;
@@ -768,6 +767,7 @@ initial syntax coloring.
 	
 }
 
+@synthesize HTMLSourceObject = _HTMLSourceObject;
 - (void) setHTMLSourceObject:(SVRawHTMLGraphic *)graphic;
 {
 	[_HTMLSourceObject release];
