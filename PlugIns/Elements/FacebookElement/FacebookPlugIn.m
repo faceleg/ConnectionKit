@@ -216,7 +216,8 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
                                     nil];
         
         // write iframe
-        [context startElement:@"p" attributes:[NSDictionary dictionaryWithObject:@"center" forKey:@"align"]];
+        style = @"text-align:center; padding-top:10px; padding-bottom:10px;";
+        [context startElement:@"p" attributes:[NSDictionary dictionaryWithObject:style forKey:@"style"]];
         [context startElement:@"iframe" attributes:attributes];
         [context endElement]; // </iframe>
         [context endElement]; // </p>
@@ -249,6 +250,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     switch ( self.layout )
     {
         case STANDARD_LAYOUT:
+            // this is tricky since this layout style includes text
             //result = [NSNumber numberWithInt:225]; // could be 450
             result = [self width];
             break;
