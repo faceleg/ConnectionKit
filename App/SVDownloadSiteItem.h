@@ -24,4 +24,7 @@
 // Nil if the doc type is not yet known. Once text has been edited in any way, should be filled in with some value. Back by extensible properties
 @property(nonatomic, copy) NSNumber *docType;
 
+@property(nonatomic, copy) NSData *lastValidMarkupDigest;   // extensible property backed
+
+
 @end

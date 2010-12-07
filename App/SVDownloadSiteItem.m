@@ -157,15 +157,18 @@
 - (NSNumber *)docType; { return [self valueForUndefinedKey:@"docType"]; }
 - (void)setDocType:(NSNumber *)docType; { [self setValue:docType forUndefinedKey:@"docType"]; }
 
-- (NSData *)lastValidMarkupDigest; { return nil; }
-- (void)setLastValidMarkupDigest:(NSData *)digest; { }
+- (NSData *)lastValidMarkupDigest; { return [self valueForUndefinedKey:@"lastValidMarkupDigest"]; }
+- (void)setLastValidMarkupDigest:(NSData *)digest;
+{
+    [self setValue:digest forUndefinedKey:@"lastValidMarkupDigest"]; 
+}
 
 - (NSNumber *)shouldPreviewWhenEditing; { return NSBOOL(YES); }
 - (void)setShouldPreviewWhenEditing:(NSNumber *)preview; { }
 
 - (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key;
 {
-    return ([key isEqualToString:@"docType"] ?
+    return ([key isEqualToString:@"docType"] || [key isEqualToString:@"lastValidMarkupDigest"] ?
             YES :
             [super usesExtensiblePropertiesForUndefinedKey:key]);
 }
