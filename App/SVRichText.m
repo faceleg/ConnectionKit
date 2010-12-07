@@ -185,7 +185,8 @@
     NSAttributedString *html = [[self attributedHTMLString] attributedSubstringFromRange:range];
     [context writeAttributedHTMLString:html];
     
-    [context addDependencyOnObject:self keyPath:@"string"];
+    //[context addDependencyOnObject:self keyPath:@"string"];
+    // Don't register this dependency as SVRichTextDOMController will handle its own dependencies
 }
 
 - (void)writeText; { [self writeText:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
