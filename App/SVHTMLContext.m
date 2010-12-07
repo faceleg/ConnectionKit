@@ -1019,6 +1019,8 @@
                             attachment = nil;
                         }
                     }
+                    
+                    if (!attachment) effectiveRange.length = 0; // reset search
                 }
                 [scanner release];
                 
@@ -1040,7 +1042,7 @@
         }
         
         // Advance the search
-        location = location + effectiveRange.length;
+        location = effectiveRange.location + effectiveRange.length;
     }
 }
 
