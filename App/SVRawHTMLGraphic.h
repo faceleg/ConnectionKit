@@ -7,12 +7,13 @@
 //
 
 #import "SVGraphic.h"
+#import "KTHTMLEditorController.h"
 
 
 @class SVTemplate;
 
 
-@interface SVRawHTMLGraphic : SVGraphic  
+@interface SVRawHTMLGraphic : SVGraphic <KTHTMLSourceObject> 
 
 @property(nonatomic, copy) NSNumber *docType;
 @property(nonatomic, copy) NSString *HTMLString;

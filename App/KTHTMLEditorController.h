@@ -17,7 +17,20 @@
 #import "KSNoCascadeWindow.h"
 
 
-@class KTAbstractElement, SVRawHTMLGraphic;
+@protocol KTHTMLSourceObject <NSObject>
+
+@property(nonatomic, copy) NSNumber *docType;
+@property(nonatomic, copy) NSString *HTMLString;
+@property(nonatomic, copy) NSData *lastValidMarkupDigest;
+@property(nonatomic, copy) NSNumber *shouldPreviewWhenEditing;    // BOOL, mandatory
+
+@end
+
+
+#pragma mark -
+
+
+@class KTAbstractElement;
 
 // Syntax-colored text file viewer:
 @interface KTHTMLEditorController : NSWindowController <SVOffscreenWebViewControllerDelegate>
@@ -41,8 +54,8 @@
 	BOOL							_hasRemoteLoads;
 
 	// ivar of what to send the information back to
-	SVRawHTMLGraphic				*_HTMLSourceObject;
-	SEL								_completionSelector;
+	id <KTHTMLSourceObject> _HTMLSourceObject;
+	SEL						_completionSelector;
 	
 	NSString						*_sourceCodeTemp;				// Temp. storage for data from file until NIB has been read.
 	NSString						*_title;
@@ -66,7 +79,7 @@
 
 - (BOOL) canValidate;	// for bindings
 
-@property (nonatomic, retain) SVRawHTMLGraphic *HTMLSourceObject;
+@property (nonatomic, retain) id <KTHTMLSourceObject> HTMLSourceObject;
 @property (assign) SEL completionSelector;  // TODO: appears to be unused
 
 @property (nonatomic) BOOL hasRemoteLoads;

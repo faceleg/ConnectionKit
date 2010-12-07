@@ -764,7 +764,7 @@ initial syntax coloring.
 }
 
 @synthesize HTMLSourceObject = _HTMLSourceObject;
-- (void) setHTMLSourceObject:(SVRawHTMLGraphic *)graphic;
+- (void) setHTMLSourceObject:(id <KTHTMLSourceObject>)graphic;
 {
 	[_HTMLSourceObject release];
 	_HTMLSourceObject = [graphic retain];
