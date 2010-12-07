@@ -140,8 +140,9 @@
     NSData *data = [html dataUsingEncoding:NSUTF8StringEncoding];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:
-                                    @"x-sandvox-fake-url:///%@.html",
-                                    [data sha1DigestString]]];
+                                       @"x-sandvox-fake-url:///%@.%@",
+                                       [data sha1DigestString],
+                                       [[self filename] pathExtension]]];
     
     SVMedia *media = [[SVMedia alloc] initWithData:data URL:url];
     [media setPreferredFilename:[self filename]];
