@@ -11,7 +11,7 @@
 			<string key="NS.object.0">823</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="48"/>
+			<integer value="46"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -77,7 +77,7 @@
 								<object class="NSTabViewItem" id="117311597">
 									<string key="NSIdentifier">1</string>
 									<object class="NSView" key="NSView" id="885603463">
-										<nil key="NSNextResponder"/>
+										<reference key="NSNextResponder" ref="1025076104"/>
 										<int key="NSvFlags">256</int>
 										<array class="NSMutableArray" key="NSSubviews">
 											<object class="NSButton" id="131746322">
@@ -158,6 +158,7 @@
 											</object>
 										</array>
 										<string key="NSFrame">{{10, 33}, {571, 156}}</string>
+										<reference key="NSSuperview" ref="1025076104"/>
 									</object>
 									<string key="NSLabel">Sitemap</string>
 									<reference key="NSColor" ref="897300439"/>
@@ -166,7 +167,7 @@
 								<object class="NSTabViewItem" id="33900136">
 									<string key="NSIdentifier">2</string>
 									<object class="NSView" key="NSView" id="314415495">
-										<reference key="NSNextResponder" ref="1025076104"/>
+										<nil key="NSNextResponder"/>
 										<int key="NSvFlags">256</int>
 										<array class="NSMutableArray" key="NSSubviews">
 											<object class="NSTextField" id="240678307">
@@ -179,10 +180,10 @@
 													<int key="NSCellFlags">-1805517311</int>
 													<int key="NSCellFlags2">272793600</int>
 													<string key="NSContents"/>
-													<object class="NSFont" key="NSSupport">
-														<string key="NSName">LucidaGrande</string>
+													<object class="NSFont" key="NSSupport" id="1042806805">
+														<string key="NSName">Courier</string>
 														<double key="NSSize">11</double>
-														<int key="NSfFlags">3100</int>
+														<int key="NSfFlags">16</int>
 													</object>
 													<reference key="NSControlView" ref="240678307"/>
 													<bool key="NSDrawsBackground">YES</bool>
@@ -296,7 +297,7 @@
 																	<int key="NSTCFlags">1</int>
 																</object>
 																<object class="NSTextViewSharedData" key="NSSharedData">
-																	<int key="NSFlags">12004</int>
+																	<int key="NSFlags">2053</int>
 																	<int key="NSTextCheckingTypes">0</int>
 																	<nil key="NSMarkedAttributes"/>
 																	<reference key="NSBackgroundColor" ref="709411300"/>
@@ -339,9 +340,9 @@
 														<reference key="NSNextKeyView" ref="33104557"/>
 														<reference key="NSDocView" ref="33104557"/>
 														<reference key="NSBGColor" ref="709411300"/>
-														<object class="NSCursor" key="NSCursor">
-															<string key="NSHotSpot">{4, 4}</string>
-															<int key="NSCursorType">0</int>
+														<object class="NSCursor" key="NSCursor" id="239228169">
+															<string key="NSHotSpot">{4, -5}</string>
+															<int key="NSCursorType">1</int>
 														</object>
 														<int key="NScvFlags">2</int>
 													</object>
@@ -376,20 +377,19 @@
 											</object>
 										</array>
 										<string key="NSFrame">{{10, 33}, {571, 156}}</string>
-										<reference key="NSSuperview" ref="1025076104"/>
 									</object>
 									<string key="NSLabel">Google Analytics</string>
 									<reference key="NSColor" ref="897300439"/>
 									<reference key="NSTabView" ref="1025076104"/>
 								</object>
 							</array>
-							<reference key="NSSelectedTabViewItem" ref="33900136"/>
+							<reference key="NSSelectedTabViewItem" ref="117311597"/>
 							<reference key="NSFont" ref="95827749"/>
 							<int key="NSTvFlags">0</int>
 							<bool key="NSAllowTruncatedLabels">YES</bool>
 							<bool key="NSDrawsBackground">YES</bool>
 							<array class="NSMutableArray" key="NSSubviews">
-								<reference ref="314415495"/>
+								<reference ref="885603463"/>
 							</array>
 						</object>
 						<object class="NSTextField" id="127488005">
@@ -505,10 +505,7 @@ ZWJzaXRlIHRvIGNvbmZpcm0gdmVyaWZpY2F0aW9uLg</bytes>
 										<string key="NSColorName">controlBackgroundColor</string>
 										<reference key="NSColor" ref="11824007"/>
 									</object>
-									<object class="NSCursor" key="NSCursor">
-										<string key="NSHotSpot">{4, -5}</string>
-										<int key="NSCursorType">1</int>
-									</object>
+									<reference key="NSCursor" ref="239228169"/>
 									<int key="NScvFlags">2</int>
 								</object>
 								<object class="NSScroller" id="556538487">
@@ -550,11 +547,7 @@ ZWJzaXRlIHRvIGNvbmZpcm0gdmVyaWZpY2F0aW9uLg</bytes>
 								<int key="NSCellFlags">-1805517311</int>
 								<int key="NSCellFlags2">272761344</int>
 								<string key="NSContents"/>
-								<object class="NSFont" key="NSSupport">
-									<string key="NSName">Courier</string>
-									<double key="NSSize">11</double>
-									<int key="NSfFlags">16</int>
-								</object>
+								<reference key="NSSupport" ref="1042806805"/>
 								<reference key="NSControlView" ref="177887969"/>
 								<bool key="NSDrawsBackground">YES</bool>
 								<reference key="NSBackgroundColor" ref="574621344"/>
@@ -650,26 +643,6 @@ ZWJzaXRlIHRvIGNvbmZpcm0gdmVyaWZpY2F0aW9uLg</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.googleAnalyticsCode</string>
-						<reference key="source" ref="240678307"/>
-						<reference key="destination" ref="604907488"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="240678307"/>
-							<reference key="NSDestination" ref="604907488"/>
-							<string key="NSLabel">value: selection.googleAnalyticsCode</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.googleAnalyticsCode</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSNullPlaceholder</string>
-								<string key="NS.object.0">&lt;script type="text/javascript"&gt;</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">66</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: selection.googleSiteVerification</string>
 						<reference key="source" ref="177887969"/>
 						<reference key="destination" ref="604907488"/>
@@ -687,6 +660,33 @@ ZWJzaXRlIHRvIGNvbmZpcm0gdmVyaWZpY2F0aW9uLg</bytes>
 						</object>
 					</object>
 					<int key="connectionID">88</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.googleAnalyticsCode</string>
+						<reference key="source" ref="240678307"/>
+						<reference key="destination" ref="604907488"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="240678307"/>
+							<reference key="NSDestination" ref="604907488"/>
+							<string key="NSLabel">value: selection.googleAnalyticsCode</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.googleAnalyticsCode</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSNullPlaceholder</string>
+								<string type="base64-UTF8" key="NS.object.0">PHNjcmlwdCB0eXBlPSJ0ZXh0L2phdmFzY3JpcHQiPgoKICB2YXIgX2dhcSA9IF9nYXEgfHwgW107CiAg
+X2dhcS5wdXNoKFsnX3NldEFjY291bnQnLCAnVUEtWFhYWFhYWFgtWCddKTsKICBfZ2FxLnB1c2goWydf
+dHJhY2tQYWdldmlldyddKTsKCiAgKGZ1bmN0aW9uKCkgewogICAgdmFyIGdhID0gZG9jdW1lbnQuY3Jl
+YXRlRWxlbWVudCgnc2NyaXB0Jyk7IGdhLnR5cGUgPSAndGV4dC9qYXZhc2NyaXB0JzsgZ2EuYXN5bmMg
+PSB0cnVlOwogICAgZ2Euc3JjID0gKCdodHRwczonID09IGRvY3VtZW50LmxvY2F0aW9uLnByb3RvY29s
+ID8gJ2h0dHBzOi8vc3NsJyA6ICdodHRwOi8vd3d3JykgKyAnLmdvb2dsZS1hbmFseXRpY3MuY29tL2dh
+LmpzJzsKICAgIHZhciBzID0gZG9jdW1lbnQuZ2V0RWxlbWVudHNCeVRhZ05hbWUoJ3NjcmlwdCcpWzBd
+OyBzLnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGdhLCBzKTsKICB9KSgpOwoKPC9zY3JpcHQ+A</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">90</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1006,7 +1006,7 @@ ZWJzaXRlIHRvIGNvbmZpcm0gdmVyaWZpY2F0aW9uLg</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">88</int>
+			<int key="maxID">90</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
