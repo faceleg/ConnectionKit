@@ -141,7 +141,7 @@
 	[imageBrowser addTrackingArea:_trackingArea];
 	
 	// a register for those notifications on the synchronized content view.
-	[[NSNotificationCenter defaultCenter] removeObserver:self];	// in case we are changing to a new view?
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewBoundsDidChangeNotification object:imageBrowser];	// in case we are changing to a new view?
     if (imageBrowser)
     {
         [[NSNotificationCenter defaultCenter] addObserver:self
