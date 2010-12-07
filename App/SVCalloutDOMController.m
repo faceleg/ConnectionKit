@@ -47,7 +47,7 @@
 {
     DOMHTMLDocument *document = [self HTMLDocument];
     
-    // This logic is vry similar to SVHTMLContext. Wonder if there's a way to bring them together
+    // This logic is very similar to SVHTMLContext. Should be a way to bring them together
     
     DOMElement *calloutContainer = [document createElement:@"DIV"];
     [calloutContainer setAttribute:@"class" value:@"callout-container"];
@@ -190,8 +190,21 @@
     }
     
     
-    // Guess not; do a normal move instead
-    [super moveItemDown:item];
+    // Guess not; split the callout in two
+    DOMElement *myElement = [self HTMLElement];
+    SVCalloutDOMController *calloutController = [[[self class] alloc] initWithHTMLDocument:
+                                                 (id)[myElement ownerDocument]];
+    
+    [calloutController createHTMLElement];  // hopefully -HTMLElement will call this internally one day
+    DOMElement *calloutElement = [calloutController HTMLElement];
+    [[myElement parentNode] insertBefore:calloutElement refChild:[myElement nextSibling]];
+    [[self parentWebEditorItem] addChildWebEditorItem:calloutController];
+    
+    [[calloutController calloutContentElement] appendChild:[item HTMLElement]];
+    [calloutController addChildWebEditorItem:item];
+    
+    [calloutController moveItemDown:item];
+    [calloutController release];
 }
 
 #pragma mark Other
