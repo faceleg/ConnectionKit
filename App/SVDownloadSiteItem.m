@@ -155,15 +155,15 @@
 }
 
 - (NSNumber *)docType; { return [self valueForUndefinedKey:@"docType"]; }
-- (void) setDocType:(NSNumber *)docType; { [self setValue:docType forUndefinedKey:@"docType"]; }
+- (void)setDocType:(NSNumber *)docType; { [self setValue:docType forUndefinedKey:@"docType"]; }
 
-- (NSData *) lastValidMarkupDigest; { return nil; }
-- (void) setLastValidMarkupDigest:(NSData *)digest; { }
+- (NSData *)lastValidMarkupDigest; { return nil; }
+- (void)setLastValidMarkupDigest:(NSData *)digest; { }
 
 - (NSNumber *)shouldPreviewWhenEditing; { return NSBOOL(YES); }
-- (void) setShouldPreviewWhenEditing:(NSNumber *)preview; { }
+- (void)setShouldPreviewWhenEditing:(NSNumber *)preview; { }
 
-- (BOOL) usesExtensiblePropertiesForUndefinedKey:(NSString *)key;
+- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key;
 {
     return ([key isEqualToString:@"docType"] ?
             YES :
