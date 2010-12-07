@@ -63,6 +63,18 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // Keep an eye on model
     [self addObserver:self forKeyPath:@"representedObject.string" options:0 context:sBodyTextObservationContext];    
     
+    _graphicsController = [[NSArrayController alloc] init];
+    [_graphicsController setSortDescriptors:[SVRichText attachmentSortDescriptors]];
+    [_graphicsController setAutomaticallyRearrangesObjects:YES];
+    
+    [_graphicsController bind:NSContentSetBinding
+                     toObject:self
+                  withKeyPath:@"representedObject.attachments"
+                      options:nil];
+    
+    [_graphicsController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:sBodyTextObservationContext];
+    
+    
     // Finish up
     return self;
 }
@@ -73,6 +85,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     // Release ivars
     [_changeHTMLContext release];//OBASSERT(!_changeHTMLContext);
+    [_graphicsController release];
     
     [super dealloc];
 }
@@ -169,6 +182,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     [self willWriteText:writer];
+    _isUpdating = YES;
     
     
     // Top-level nodes can only be: paragraph, newline, or graphic. Custom DOMNode addition handles this
@@ -180,33 +194,30 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     }
     
     
+    // Push HTML into the model
     SVRichText *textObject = [self representedObject];
     NSString *html = [stringWriter string];
     
-    if (![html isEqualToString:[textObject string]])
+    [textObject setString:html
+              attachments:[writer textAttachments]];
+    
+    // Wait, is the last thing an attachment? If so, should account for that…
+    if ([textObject endsOnAttachment])
     {
-        _isUpdating = YES;
+        // …by adding a line break
+        DOMElement *lineBreak = [[textElement ownerDocument] createElement:@"BR"];
+        [textElement appendChild:lineBreak];
+        
+        // Continue writing from the line break…
+        [lineBreak writeTopLevelParagraph:writer];
+        
+        // …and store the updated HTML
         [textObject setString:html
                   attachments:[writer textAttachments]];
         
-        // Wait, is the last thing an attachment? If so, should account for that…
-        if ([textObject endsOnAttachment])
-        {
-            // …by adding a line break
-            DOMElement *lineBreak = [[textElement ownerDocument] createElement:@"BR"];
-            [textElement appendChild:lineBreak];
-            
-            // Continue writing from the line break…
-            [lineBreak writeTopLevelParagraph:writer];
-            
-            // …and store the updated HTML
-            [textObject setString:html
-                      attachments:[writer textAttachments]];
-            
-        }
-        
-        _isUpdating = NO;
     }
+    
+    _isUpdating = NO;
     
     
     // Finish up

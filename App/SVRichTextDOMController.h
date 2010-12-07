@@ -21,6 +21,7 @@
   @private
     BOOL    _isUpdating;
     
+    NSArrayController       *_graphicsController;
     DOMHTMLAnchorElement    *_selectedLink;
 }
 
