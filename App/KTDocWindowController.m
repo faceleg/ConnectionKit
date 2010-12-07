@@ -313,7 +313,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender
 {
-	[[[self webContentAreaController] webEditorViewController] ks_doCommandBySelector:_cmd with:sender];
+	[[[self webContentAreaController] selectedViewControllerWhenReady] ks_doCommandBySelector:_cmd with:sender];
 }
 
 /*  The controller which is the real target of these actions may not be in the responder chain, so take care of passing the message on.
@@ -602,12 +602,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 	
 	// Insert menu
-    else if (itemAction == @selector(editRawHTMLInSelectedBlock:) ||
-		itemAction == @selector(insertSiteTitle:) ||
-        itemAction == @selector(insertSiteSubtitle:) ||
-        itemAction == @selector(insertPageTitle:) ||
-        itemAction == @selector(insertPageletTitle:) ||
-        itemAction == @selector(insertFooter:))
+    else if (itemAction == @selector(insertSiteTitle:) ||
+             itemAction == @selector(insertSiteSubtitle:) ||
+             itemAction == @selector(insertPageTitle:) ||
+             itemAction == @selector(insertPageletTitle:) ||
+             itemAction == @selector(insertFooter:))
     {
         result = [[[self webContentAreaController] webEditorViewController] validateMenuItem:menuItem];
     }
@@ -615,7 +614,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	// View menu
     
-    else if (itemAction == @selector(paste:) ||
+    else if (itemAction == @selector(editRawHTMLInSelectedBlock:) ||
+             itemAction == @selector(paste:) ||
              itemAction == @selector(insertPagelet:) ||
              itemAction == @selector(makeTextLarger:) ||
              itemAction == @selector(makeTextSmaller:) ||
