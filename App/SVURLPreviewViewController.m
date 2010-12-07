@@ -72,17 +72,40 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 
 #pragma mark Actions
 
+- (BOOL)canEditHTML;
+{
+    SVMediaRecord *media = [[self siteItem] mediaRepresentation];
+    NSString *type = [media typeOfFile];
+    
+    return ([type conformsToUTI:(NSString *)kUTTypePlainText] ||
+            [type conformsToUTI:(NSString *)kUTTypeHTML] ||
+            [type conformsToUTI:(NSString *)kUTTypeXML]);
+}
+
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender
 {
-    SVSiteItem *item = [self siteItem];
-    if ([item conformsToProtocol:@protocol(KTHTMLSourceObject)])
+    if ([self canEditHTML])
     {
+        SVSiteItem *item = [self siteItem];
+        
         KTHTMLEditorController *controller = [[[[self view] window] windowController] HTMLEditorController];
         
         [controller setHTMLSourceObject:(id <KTHTMLSourceObject>)item];
         
         [controller showWindow:self];
     }
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem;
+{
+    BOOL result = YES;
+    
+    if ([menuItem action] == @selector(editRawHTMLInSelectedBlock:))
+    {
+        result = [self canEditHTML];
+    }
+    
+    return result;
 }
 
 #pragma mark WebFrameLoadDelegate
