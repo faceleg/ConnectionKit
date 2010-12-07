@@ -11,7 +11,7 @@
 			<string key="NS.object.0">823</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="2"/>
+			<integer value="78"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -215,7 +215,7 @@
 															<object class="NSTextView" id="33104557">
 																<reference key="NSNextResponder" ref="549004473"/>
 																<int key="NSvFlags">2322</int>
-																<string key="NSFrameSize">{529, 32}</string>
+																<string key="NSFrame">{{0, -10}, {529, 42}}</string>
 																<reference key="NSSuperview" ref="549004473"/>
 																<object class="NSTextContainer" key="NSTextContainer" id="128945786">
 																	<object class="NSLayoutManager" key="NSLayoutManager">
@@ -340,7 +340,7 @@
 														<reference key="NSNextKeyView" ref="33104557"/>
 														<reference key="NSDocView" ref="33104557"/>
 														<reference key="NSBGColor" ref="709411300"/>
-														<object class="NSCursor" key="NSCursor" id="1010953485">
+														<object class="NSCursor" key="NSCursor">
 															<string key="NSHotSpot">{1, -1}</string>
 															<int key="NSCursorType">0</int>
 														</object>
@@ -426,8 +426,9 @@
 													<object class="NSTextStorage" key="NSTextStorage">
 														<object class="NSMutableString" key="NSString">
 															<bytes key="NS.bytes">VmlzaXQgR29vZ2xlIFdlYm1hc3RlciBUb29scyB0byByZWdpc3RlciBhbmQgdmVyaWZ5IHlvdXIgc2l0
-ZSB1c2luZyB0aGUgQWRkIGEgTUVUQSB0YWciIG9wdGlvbi4gUGFzdGUgdGhlIHByb3ZpZGVkIHRhZyBi
-ZWxvdyBhbmQgdGhlbiBwdWJsaXNoIHlvdXIgd2Vic2l0ZSB0byBjb25maXJtIHZlcmlmaWNhdGlvbi4</bytes>
+ZSB1c2luZyB0aGUg4oCcQWRkIGEgTUVUQSB0YWfigJ0gb3B0aW9uLiBQYXN0ZSB0aGUgcHJvdmlkZWQg
+dGFnIGJlbG93IGFuZCB0aGVuIHB1Ymxpc2ggeW91ciB3ZWJzaXRlIHRvIGNvbmZpcm0gdmVyaWZpY2F0
+aW9uLg</bytes>
 														</object>
 														<array class="NSMutableArray" key="NSAttributes">
 															<reference ref="558505944"/>
@@ -457,7 +458,7 @@ ZWxvdyBhbmQgdGhlbiBwdWJsaXNoIHlvdXIgd2Vic2l0ZSB0byBjb25maXJtIHZlcmlmaWNhdGlvbi4<
 															</dictionary>
 														</array>
 														<object class="NSMutableData" key="NSAttributeInfo">
-															<bytes key="NS.bytes">BgAWAZcBAA</bytes>
+															<bytes key="NS.bytes">BgAWAZgBAA</bytes>
 														</object>
 														<nil key="NSDelegate"/>
 													</object>
@@ -472,7 +473,7 @@ ZWxvdyBhbmQgdGhlbiBwdWJsaXNoIHlvdXIgd2Vic2l0ZSB0byBjb25maXJtIHZlcmlmaWNhdGlvbi4<
 												<int key="NSTCFlags">1</int>
 											</object>
 											<object class="NSTextViewSharedData" key="NSSharedData">
-												<int key="NSFlags">12004</int>
+												<int key="NSFlags">12005</int>
 												<int key="NSTextCheckingTypes">0</int>
 												<nil key="NSMarkedAttributes"/>
 												<reference key="NSBackgroundColor" ref="709411300"/>
@@ -504,7 +505,10 @@ ZWxvdyBhbmQgdGhlbiBwdWJsaXNoIHlvdXIgd2Vic2l0ZSB0byBjb25maXJtIHZlcmlmaWNhdGlvbi4<
 										<string key="NSColorName">controlBackgroundColor</string>
 										<reference key="NSColor" ref="11824007"/>
 									</object>
-									<reference key="NSCursor" ref="1010953485"/>
+									<object class="NSCursor" key="NSCursor">
+										<string key="NSHotSpot">{4, -5}</string>
+										<int key="NSCursorType">1</int>
+									</object>
 									<int key="NScvFlags">2</int>
 								</object>
 								<object class="NSScroller" id="556538487">
@@ -1119,6 +1123,13 @@ ZWxvdyBhbmQgdGhlbiBwdWJsaXNoIHlvdXIgd2Vic2l0ZSB0byBjb25maXJtIHZlcmlmaWNhdGlvbi4<
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">NSOutlineView+KTExtensions.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVHTMLTextBlock.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
