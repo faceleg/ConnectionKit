@@ -15,10 +15,11 @@
 
 
 @interface SVRichTextDOMController : SVTextDOMController <KSXMLWriterDOMAdaptorDelegate>
-{        
-    BOOL    _isUpdating;
-    
+{
     SVWebEditorHTMLContext  *_changeHTMLContext;
+    
+  @private
+    BOOL    _isUpdating;
     
     DOMHTMLAnchorElement    *_selectedLink;
 }
