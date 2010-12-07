@@ -13,6 +13,7 @@
 #import "SVAttributedHTML.h"
 #import "SVContentDOMController.h"
 #import "KTDocument.h"
+#import "KTDocWindowController.h"
 #import "SVImage.h"
 #import "SVLogoImage.h"
 #import "KTMaster.h"
@@ -126,7 +127,6 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     [_context release];
     [_graphicsController release];
     [_loadedPage release];
-	self.HTMLEditorController = nil;
     
     [super dealloc];
 }
@@ -225,8 +225,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     [self setViewIsReadyToAppear:NO];
 	
 	// Close out the HTML editor
-	self.HTMLEditorController = nil;
-
+	//self.HTMLEditorController = nil;
 }
 
 #pragma mark Loading
@@ -979,26 +978,13 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 #pragma mark HTMLEditorController
 
-@synthesize HTMLEditorController = _HTMLEditorController;
-
-- (KTHTMLEditorController *)HTMLEditorController	// lazily instantiate
-{
-	if ( nil == _HTMLEditorController )
-	{
-		KTHTMLEditorController *controller = [[[KTHTMLEditorController alloc] init] autorelease];
-		[self setHTMLEditorController:controller];
-//		[self addWindowController:controller];
-	}
-	return _HTMLEditorController;
-}
-
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender
 {
 	for (id selection in [self.graphicsController selectedObjects])
 	{
 		if ([selection isKindOfClass:[SVRawHTMLGraphic class]])
 		{
-			KTHTMLEditorController *controller = [self HTMLEditorController];
+			KTHTMLEditorController *controller = [[[[self view] window] windowController] HTMLEditorController];
 			SVRawHTMLGraphic *graphic = (SVRawHTMLGraphic *) selection;
 						
 			SVTitleBox *titleBox = [graphic titleBox];
@@ -1035,7 +1021,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
         
         // UI-wise it might be better to test if the page contains the HTML loaded into the editor
         // e.g. while editing pagelet in sidebar, it makes sense to leave the editor open
-        self.HTMLEditorController = nil;
+        //self.HTMLEditorController = nil;
     }
     
     return [self viewIsReadyToAppear];

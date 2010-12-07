@@ -75,8 +75,9 @@ extern NSString *gInfoWindowAutoSaveName;
 	SVSiteOutlineViewController *_siteOutlineViewController;
     SVPagesController           *_pagesController;
 		
-	// Code Injection
-	KTCodeInjectionController	*myMasterCodeInjectionController;
+	// Raw HTML
+	KTHTMLEditorController      *_HTMLEditorController;
+    KTCodeInjectionController	*myMasterCodeInjectionController;
 	KTCodeInjectionController	*myPageCodeInjectionController;
     
     // Design Chooser
@@ -101,6 +102,9 @@ extern NSString *gInfoWindowAutoSaveName;
 @property(nonatomic, retain) IBOutlet SVSiteOutlineViewController *siteOutlineViewController;
 @property(nonatomic, retain, readonly) IBOutlet SVWebContentAreaController *webContentAreaController;
 @property(nonatomic, retain) IBOutlet SVPagesController *pagesController;
+
+#pragma mark Raw HTML
+@property (nonatomic, retain) KTHTMLEditorController *HTMLEditorController;
 @property(nonatomic, retain) NSMenuItem *rawHTMLMenuItem;
 @property(nonatomic, retain) NSMenuItem *HTMLTextPageMenuItem;
 

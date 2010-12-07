@@ -100,7 +100,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	self.rawHTMLMenuItem = nil;
 	self.HTMLTextPageMenuItem = nil;
     [self setPagesController:nil];
-	
+    self.HTMLEditorController = nil;
+
     // stop observing
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
@@ -798,6 +799,17 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 }
 
 #pragma mark Code Injection & other pro stuff
+
+@synthesize HTMLEditorController = _HTMLEditorController;
+- (KTHTMLEditorController *)HTMLEditorController	// lazily instantiate
+{
+	if (!_HTMLEditorController)
+	{
+		_HTMLEditorController = [[KTHTMLEditorController alloc] init];
+        //		[self addWindowController:controller];
+	}
+	return _HTMLEditorController;
+}
 
 - (KTCodeInjectionController *)masterCodeInjectionController
 {
