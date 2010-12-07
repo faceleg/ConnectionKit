@@ -21,8 +21,10 @@
 
 @property(nonatomic, copy) NSNumber *docType;
 @property(nonatomic, copy) NSString *HTMLString;
-@property(nonatomic, copy) NSData *lastValidMarkupDigest;
 @property(nonatomic, copy) NSNumber *shouldPreviewWhenEditing;    // BOOL, mandatory
+
+// The digest of the last string to be successfully validated with W3C
+@property(nonatomic, copy) NSData *lastValidMarkupDigest;
 
 @end
 
