@@ -505,7 +505,9 @@
 
 - (id)valueForUndefinedKey:(NSString *)key
 {
-    return NSNotApplicableMarker;
+    return ([self usesExtensiblePropertiesForUndefinedKey:key] ?
+            [super valueForUndefinedKey:key] :
+            NSNotApplicableMarker);
 }
 
 #pragma mark SVPage
