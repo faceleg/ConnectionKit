@@ -116,7 +116,7 @@
 												<object class="NSTextFieldCell" key="NSCell" id="162844923">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">272629760</int>
-													<string key="NSContents">Be sure to provide Google with the following Sitemap URL:</string>
+													<string key="NSContents">Be sure to submit a Sitemap to Google with the following URL:</string>
 													<reference key="NSSupport" ref="95827749"/>
 													<reference key="NSControlView" ref="408123332"/>
 													<object class="NSColor" key="NSBackgroundColor" id="897300439">
