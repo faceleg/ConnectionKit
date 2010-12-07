@@ -410,7 +410,7 @@ initial syntax coloring.
         NSManagedObjectContext *MOC = nil;
         if (disableUndoRegistration && [[self HTMLSourceObject] isKindOfClass:[NSManagedObject class]])
         {
-            MOC = [[self HTMLSourceObject] managedObjectContext];
+            MOC = [(NSManagedObject *)[self HTMLSourceObject] managedObjectContext];
             [MOC processPendingChanges];
             [[MOC undoManager] disableUndoRegistration];
         }
