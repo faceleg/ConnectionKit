@@ -30,6 +30,7 @@
 
 
 @interface SVWebEditorHTMLContext ()
+- (void)endDOMController;
 @end
 
 
@@ -81,7 +82,15 @@
     [super close];
     
     // Also ditch controllers
+    while ([self currentDOMController] != [self rootDOMController]) // #98822
+    {
+        [self endDOMController];
+    }
+    
+    _currentDOMController = nil;
     [_rootController release]; _rootController = nil;
+    
+    // Ditch media
     [_media release]; _media = nil;
 }
 
