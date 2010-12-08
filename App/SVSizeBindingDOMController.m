@@ -87,6 +87,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     [element setAttribute:@"height" value:[attributes objectForKey:@"height"]];
     [element setAttribute:@"style" value:[attributes objectForKey:@"style"]];
     
+    [context close];
     [context release];
     
     

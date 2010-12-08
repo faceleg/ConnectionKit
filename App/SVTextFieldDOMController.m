@@ -105,6 +105,8 @@
     
     NSString *style = [[[context currentElementInfo] attributesAsDictionary] objectForKey:@"style"];
     [[[self textHTMLElement] style] setCssText:style];
+    
+    [context close];
     [context release];
 }
 

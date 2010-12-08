@@ -86,6 +86,7 @@
     DOMDocumentFragment *fragment = [[self HTMLDocument]
                                      createDocumentFragmentWithMarkupString:htmlString
                                      baseURL:[[self HTMLContext] baseURL]];
+    
     [htmlString release];
     
     DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
@@ -97,6 +98,8 @@
     {
         [self addChildWebEditorItem:aController];
     }
+    
+    [context close];
     [context release];
 }
 

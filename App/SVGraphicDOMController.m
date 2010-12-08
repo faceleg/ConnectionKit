@@ -162,6 +162,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     // Bring end body code into the html
     [context writeEndBodyString];
+    [context close];
     [context release];
     
     

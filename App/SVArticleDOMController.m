@@ -583,6 +583,7 @@
     
     
     // Tidy
+    [context close];
     [htmlString release];
     [context release];
 }
