@@ -270,10 +270,23 @@
     
     // complete page markup would be:
     NSString *markup = [self string];
+	
     
     NSString *truncatedMarkup = [self truncateMarkup:markup truncation:maxCount truncationType:truncationType didTruncate:truncated];
-    
-    
+  
+#ifdef DEBUG
+	int offset = 0;
+	NSRange whereAttachment = NSMakeRange(0,0);
+	while (whereAttachment.location != NSNotFound)
+	{
+		whereAttachment = [markup rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(NSAttachmentCharacter, 0)] options:0 range:NSMakeRange(offset, [markup length] - 1) ];
+		if (NSNotFound != whereAttachment.location)
+		{
+			NSLog(@"Source: Attachment at offset %d", whereAttachment.location);
+			offset = whereAttachment.location + 1;
+		}
+	}
+#endif
     NSMutableAttributedString *result = [[NSMutableAttributedString alloc]
                                          initWithString:truncatedMarkup];
     
@@ -288,6 +301,10 @@
             {
                 [result addAttribute:@"SVAttachment" value:anAttachment range:range];
             }
+			else
+			{
+				DJW((@"Expecting an attachment character at %d", range.location));
+			}
         }
     }
     
