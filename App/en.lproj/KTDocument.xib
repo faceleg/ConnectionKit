@@ -307,7 +307,7 @@
 																	<string key="NSAction">_popUpItemAction:</string>
 																	<reference key="NSTarget" ref="839119408"/>
 																</object>
-																<object class="NSMenuItem" id="6341067">
+																<object class="NSMenuItem" id="875646004">
 																	<reference key="NSMenu" ref="272058959"/>
 																	<string key="NSTitle">Page Code Injection…</string>
 																	<string key="NSKeyEquiv"/>
@@ -373,9 +373,19 @@
 																	<string key="NSAction">_popUpItemAction:</string>
 																	<reference key="NSTarget" ref="839119408"/>
 																</object>
+																<object class="NSMenuItem" id="1061351507">
+																	<reference key="NSMenu" ref="272058959"/>
+																	<string key="NSTitle">Site Code Injection…</string>
+																	<string key="NSKeyEquiv"/>
+																	<int key="NSMnemonicLoc">2147483647</int>
+																	<reference key="NSOnImage" ref="439133155"/>
+																	<reference key="NSMixedImage" ref="598599151"/>
+																	<string key="NSAction">_popUpItemAction:</string>
+																	<reference key="NSTarget" ref="839119408"/>
+																</object>
 															</array>
 														</object>
-														<int key="NSSelectedIndex">5</int>
+														<int key="NSSelectedIndex">11</int>
 														<bool key="NSPullDown">YES</bool>
 														<int key="NSPreferredEdge">1</int>
 														<bool key="NSUsesItemFromMenu">YES</bool>
@@ -1933,9 +1943,17 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">showPageCodeInjection:</string>
 						<reference key="source" ref="496514088"/>
-						<reference key="destination" ref="6341067"/>
+						<reference key="destination" ref="875646004"/>
 					</object>
 					<int key="connectionID">2196</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showSiteCodeInjection:</string>
+						<reference key="source" ref="496514088"/>
+						<reference key="destination" ref="1061351507"/>
+					</object>
+					<int key="connectionID">2199</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2114,7 +2132,8 @@
 							<reference ref="876363173"/>
 							<reference ref="722112553"/>
 							<reference ref="27226798"/>
-							<reference ref="6341067"/>
+							<reference ref="875646004"/>
+							<reference ref="1061351507"/>
 						</array>
 						<reference key="parent" ref="839119408"/>
 					</object>
@@ -2630,7 +2649,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2195</int>
-						<reference key="object" ref="6341067"/>
+						<reference key="object" ref="875646004"/>
+						<reference key="parent" ref="272058959"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2197</int>
+						<reference key="object" ref="1061351507"/>
 						<reference key="parent" ref="272058959"/>
 					</object>
 				</array>
@@ -2674,7 +2698,7 @@
 				<string key="1694.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1699.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
 				<string key="1700.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
-				<string key="1701.IBEditorWindowLastContentRect">{{16, 462}, {333, 169}}</string>
+				<string key="1701.IBEditorWindowLastContentRect">{{16, 445}, {333, 186}}</string>
 				<string key="1701.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
 				<string key="1702.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
 				<string key="1703.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
@@ -2809,12 +2833,13 @@
 				<string key="2189.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2191.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
 				<string key="2195.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2197.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2196</int>
+			<int key="maxID">2199</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2953,6 +2978,7 @@
 						<string key="reload:">id</string>
 						<string key="showChooseDesignSheet:">id</string>
 						<string key="showPageCodeInjection:">id</string>
+						<string key="showSiteCodeInjection:">id</string>
 						<string key="submitSiteToDirectory:">id</string>
 						<string key="toggleSmallPageIcons:">id</string>
 						<string key="visitPublishedPage:">id</string>
@@ -3002,6 +3028,10 @@
 						</object>
 						<object class="IBActionInfo" key="showPageCodeInjection:">
 							<string key="name">showPageCodeInjection:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="showSiteCodeInjection:">
+							<string key="name">showSiteCodeInjection:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="submitSiteToDirectory:">
