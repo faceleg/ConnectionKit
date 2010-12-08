@@ -232,29 +232,6 @@
         }
         
         
-        // ping JS-Kit
-        KTMaster *master = [[[self site] rootPage] master];
-        if ( nil != master )
-        {
-            if ( [master wantsJSKit] && (nil != [master JSKitModeratorEmail]) )
-            {
-                NSURL *siteURL = [[[self site] hostProperties] siteURL];
-                
-                NSString *pingURLString = [[NSString alloc] initWithFormat:
-                                           @"http://js-kit.com/api/isv/site-bind?email=%@&site=%@&confirmviaemail=%@",
-                                           [[master JSKitModeratorEmail] ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES],
-                                           [[siteURL absoluteString] ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES],
-										   ([[NSUserDefaults standardUserDefaults] boolForKey:@"JSKitConfirmModeratorViaEmail"] ? @"YES" : @"NO")];
-                
-                NSURL *pingURL = [[NSURL alloc] initWithString:pingURLString];
-                [pingURLString release];
-                
-                [self pingURL:pingURL];
-                [pingURL release];
-            }
-        }
-        
-        
         // Record the app version published with
         NSManagedObject *hostProperties = [[self site] hostProperties];
         [hostProperties setValue:[[NSBundle mainBundle] marketingVersion] forKey:@"publishedAppVersion"];
