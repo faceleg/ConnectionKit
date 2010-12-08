@@ -564,7 +564,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     }
     return result;
 }
-- (void)setShowsIntroduction:(BOOL)show { [[self introduction] setHidden:[NSNumber numberWithBool:!show]]; }
+- (void)setShowsIntroduction:(BOOL)show { [[self introduction] setHidden:NSBOOL(!show)]; }
 + (NSSet *)keyPathsForValuesAffectingShowsIntroduction; { return [NSSet setWithObject:@"introduction.hidden"]; }
 
 - (BOOL)showsCaption
@@ -572,7 +572,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     NSNumber *hidden = [[self caption] hidden];
     return (hidden && ![hidden boolValue]);
 }
-- (void)setShowsCaption:(BOOL)show { [[self caption] setHidden:[NSNumber numberWithBool:!show]]; }
+- (void)setShowsCaption:(BOOL)show { [[self caption] setHidden:NSBOOL(!show)]; }
 + (NSSet *)keyPathsForValuesAffectingShowsCaption; { return [NSSet setWithObject:@"caption.hidden"]; }
 
 - (NSNumber *)containerWidth;
