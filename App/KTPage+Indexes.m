@@ -531,6 +531,9 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 
 - (NSArray *)archivePages;
 {
+    if (![[self collectionGenerateArchives] boolValue]) return nil;
+    
+    
     NSMutableArray *result = [NSMutableArray array];
     NSMutableArray *currentPages = [NSMutableArray array];
     NSDateComponents *currentMonth = nil;
