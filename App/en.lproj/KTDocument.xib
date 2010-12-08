@@ -285,6 +285,16 @@
 																	<string key="NSAction">_popUpItemAction:</string>
 																	<reference key="NSTarget" ref="839119408"/>
 																</object>
+																<object class="NSMenuItem" id="400506221">
+																	<reference key="NSMenu" ref="272058959"/>
+																	<string key="NSTitle">Visit Published Page</string>
+																	<string key="NSKeyEquiv"/>
+																	<int key="NSMnemonicLoc">2147483647</int>
+																	<reference key="NSOnImage" ref="439133155"/>
+																	<reference key="NSMixedImage" ref="598599151"/>
+																	<string key="NSAction">_popUpItemAction:</string>
+																	<reference key="NSTarget" ref="839119408"/>
+																</object>
 																<object class="NSMenuItem" id="876363173">
 																	<reference key="NSMenu" ref="272058959"/>
 																	<bool key="NSIsDisabled">YES</bool>
@@ -307,7 +317,7 @@
 																	<string key="NSAction">_popUpItemAction:</string>
 																	<reference key="NSTarget" ref="839119408"/>
 																</object>
-																<object class="NSMenuItem" id="875646004">
+																<object class="NSMenuItem" id="291353639">
 																	<reference key="NSMenu" ref="272058959"/>
 																	<string key="NSTitle">Page Code Injection…</string>
 																	<string key="NSKeyEquiv"/>
@@ -340,9 +350,9 @@
 																	<string key="NSAction">_popUpItemAction:</string>
 																	<reference key="NSTarget" ref="839119408"/>
 																</object>
-																<object class="NSMenuItem" id="400506221">
+																<object class="NSMenuItem" id="376139079">
 																	<reference key="NSMenu" ref="272058959"/>
-																	<string key="NSTitle">Visit Published Page</string>
+																	<string key="NSTitle">Site Code Injection…</string>
 																	<string key="NSKeyEquiv"/>
 																	<int key="NSMnemonicLoc">2147483647</int>
 																	<reference key="NSOnImage" ref="439133155"/>
@@ -373,19 +383,9 @@
 																	<string key="NSAction">_popUpItemAction:</string>
 																	<reference key="NSTarget" ref="839119408"/>
 																</object>
-																<object class="NSMenuItem" id="1061351507">
-																	<reference key="NSMenu" ref="272058959"/>
-																	<string key="NSTitle">Site Code Injection…</string>
-																	<string key="NSKeyEquiv"/>
-																	<int key="NSMnemonicLoc">2147483647</int>
-																	<reference key="NSOnImage" ref="439133155"/>
-																	<reference key="NSMixedImage" ref="598599151"/>
-																	<string key="NSAction">_popUpItemAction:</string>
-																	<reference key="NSTarget" ref="839119408"/>
-																</object>
 															</array>
 														</object>
-														<int key="NSSelectedIndex">11</int>
+														<int key="NSSelectedIndex">9</int>
 														<bool key="NSPullDown">YES</bool>
 														<int key="NSPreferredEdge">1</int>
 														<bool key="NSUsesItemFromMenu">YES</bool>
@@ -1943,7 +1943,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">showPageCodeInjection:</string>
 						<reference key="source" ref="496514088"/>
-						<reference key="destination" ref="875646004"/>
+						<reference key="destination" ref="291353639"/>
 					</object>
 					<int key="connectionID">2196</int>
 				</object>
@@ -1951,7 +1951,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">showSiteCodeInjection:</string>
 						<reference key="source" ref="496514088"/>
-						<reference key="destination" ref="1061351507"/>
+						<reference key="destination" ref="376139079"/>
 					</object>
 					<int key="connectionID">2199</int>
 				</object>
@@ -2128,12 +2128,12 @@
 							<reference ref="970451841"/>
 							<reference ref="548919124"/>
 							<reference ref="767188467"/>
-							<reference ref="400506221"/>
 							<reference ref="876363173"/>
 							<reference ref="722112553"/>
 							<reference ref="27226798"/>
-							<reference ref="875646004"/>
-							<reference ref="1061351507"/>
+							<reference ref="291353639"/>
+							<reference ref="400506221"/>
+							<reference ref="376139079"/>
 						</array>
 						<reference key="parent" ref="839119408"/>
 					</object>
@@ -2649,12 +2649,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2195</int>
-						<reference key="object" ref="875646004"/>
+						<reference key="object" ref="291353639"/>
 						<reference key="parent" ref="272058959"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2197</int>
-						<reference key="object" ref="1061351507"/>
+						<reference key="object" ref="376139079"/>
 						<reference key="parent" ref="272058959"/>
 					</object>
 				</array>
