@@ -72,6 +72,8 @@ typedef enum {
     
     NSOperationQueue    *_operationQueue;
     NSOperationQueue    *_coreImageQueue;
+    
+    id<SVPublishedObject> _sitemapPinger;   
 }
 
 - (id)initWithSite:(KTSite *)site
@@ -118,7 +120,7 @@ typedef enum {
 #pragma mark 
 @property(retain, readonly) NSOperationQueue *defaultQueue; // want this to be threadsafe
 
-
+@property(retain) id<SVPublishedObject> sitemapPinger;
 @end
 
 

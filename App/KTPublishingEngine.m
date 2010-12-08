@@ -19,6 +19,8 @@
 #import "SVPublishingRecord.h"
 #import "KTTranscriptController.h"
 
+#import "SVGoogleSitemapPinger.h"
+
 #import "KTMediaFileUpload.h"
 #import "KTImageScalingURLProtocol.h"
 
@@ -767,6 +769,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 @synthesize defaultQueue = _operationQueue;
 
+@synthesize sitemapPinger = _sitemapPinger;
+
 #pragma mark Delegate
 
 - (id <KTPublishingEngineDelegate>)delegate { return _delegate; }
@@ -938,6 +942,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 #pragma mark Pages
 
+
 /*  Uploads the site map if the site has the option enabled
  */
 - (void)uploadGoogleSiteMapIfNeeded
@@ -949,7 +954,13 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSData *gzipped = [siteMapData compressGzip];
         
         NSString *siteMapPath = [[self baseRemotePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
-        [self publishData:gzipped toPath:siteMapPath];
+        //[self publishData:gzipped toPath:siteMapPath];
+        self.sitemapPinger = [[[SVGoogleSitemapPinger alloc] init] autorelease];
+        [self publishData:gzipped
+                   toPath:siteMapPath
+         cachedSHA1Digest:nil
+              contentHash:nil
+                   object:self.sitemapPinger];
     }
 }
 
