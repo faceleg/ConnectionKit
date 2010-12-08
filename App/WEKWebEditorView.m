@@ -1582,6 +1582,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
             
             NSDictionary *elementInfo = [[self webView] elementAtPoint:location];
             DOMElement *element = [elementInfo objectForKey:WebElementDOMNodeKey];
+            if (!element) return;   // happens if mouse up was somehow outside doc rect
             
             /*
             if (([item isSelectable] && item != [self selectedItem]) ||
