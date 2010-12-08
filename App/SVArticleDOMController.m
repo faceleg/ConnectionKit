@@ -1057,6 +1057,14 @@
         for (SVGraphic *aPagelet in pagelets)
         {
             [aPagelet setShowsTitle:NO];
+            
+            // Create text attachment for the graphic
+            SVTextAttachment *textAttachment = [SVTextAttachment textAttachmentWithGraphic:aPagelet
+                                                            insertIntoManagedObjectContext:[aPagelet managedObjectContext]];
+            
+            [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
+            [textAttachment setCausesWrap:NSBOOL(YES)];
+            //[textAttachment setBody:[self representedObject]];
         }
     }
     
