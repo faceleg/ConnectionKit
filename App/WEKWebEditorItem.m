@@ -417,7 +417,7 @@
 
 - (CGPoint)position;    // center point (for moving) in doc view coordinates
 {
-    NSRect rect = [self rect];
+    NSRect rect = [self selectionFrame];
     return CGPointMake(NSMidX(rect), NSMidY(rect));
 }
 
@@ -459,7 +459,7 @@
     return result;
 }
 
-- (NSRect)rect;
+- (NSRect)selectionFrame;
 {
     NSRect result = NSZeroRect;
     
@@ -489,7 +489,7 @@
     else if ([self isSelected])
     {
         SVSelectionBorder *border = [self newSelectionBorder];
-        NSRect outline = [border drawingRectForGraphicBounds:[self rect]];
+        NSRect outline = [border drawingRectForGraphicBounds:[self selectionFrame]];
         [border release];
         
         result = NSUnionRect(result, outline);
@@ -513,7 +513,7 @@
     {
         // Draw if we're in the dirty rect (otherwise drawing can get pretty pricey)
         DOMElement *element = [self HTMLElement];
-        NSRect frameRect = [view convertRect:[self rect]
+        NSRect frameRect = [view convertRect:[self selectionFrame]
                                     fromView:[element documentView]];
 
 		

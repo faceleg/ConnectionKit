@@ -644,7 +644,7 @@
    
     // Restrict position to bounds of text
     CGPoint currentPosition = [graphicController position];
-    NSRect frame = [graphicController rect];
+    NSRect frame = [graphicController selectionFrame];
     frame.origin.x += position.x - currentPosition.x;
     frame.origin.y += position.y - currentPosition.y;
     
@@ -792,7 +792,7 @@
     return;
 }
 
-/*  We'll leave it up to the indivdual graphics
+/*  We'll leave it up to the individual graphics
  */
 - (void)moveObjectUp:(id)sender;
 {

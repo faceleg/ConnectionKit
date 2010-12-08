@@ -235,7 +235,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Layout
 
-- (NSRect)rect;
+- (NSRect)selectionFrame;
 {
     NSRect result = NSZeroRect;
     

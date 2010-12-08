@@ -1089,7 +1089,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         [border setResizingMask:[result resizingMask]];
         
         NSView *docView = [[result HTMLElement] documentView];
-        NSRect frame = [border frameRectForGraphicBounds:[result rect]];
+        NSRect frame = [border frameRectForGraphicBounds:[result selectionFrame]];
         
         if ([border mouse:[docView convertPoint:point fromView:self]
                 isInFrame:frame

@@ -415,9 +415,26 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
 }
 
-- (NSRect)rect;
+- (NSRect)selectionFrame;
 {
-    DOMElement *element = [self graphicDOMElement];
+    DOMElement *element = [self selectableDOMElement];
+    if (element)
+    {
+        return [element boundingBox];
+    }
+    else
+    {
+        // Union together children
+        NSRect result = NSZeroRect;
+        for (WEKWebEditorItem *anItem in [self selectableTopLevelDescendants])
+        {
+            result = NSUnionRect(result, [anItem selectionFrame]);
+        }
+        
+        return result;
+    }
+    
+    //DOMElement *element = [self graphicDOMElement];
     if (!element) element = [self HTMLElement];
     return [element boundingBox];
 }
@@ -548,7 +565,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
  */
 - (CGPoint)position;
 {
-    NSRect rect = [self rect];
+    NSRect rect = [self selectionFrame];
     return CGPointMake(NSMidX(rect), NSMidY(rect));
 }
 
@@ -837,7 +854,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
         CGContextSaveGState(context);
         
-        CGRect unclippedRect = NSRectToCGRect([self rect]);
+        CGRect unclippedRect = NSRectToCGRect([self selectionFrame]);
         
         CGContextBeginPath(context);
         CGContextAddRect(context, CGRectInfinite); 
