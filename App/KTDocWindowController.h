@@ -126,6 +126,8 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)previousDesign:(id)sender;
 - (IBAction)showChooseDesignSheet:(id)sender;
 
+- (IBAction)showPageCodeInjection:(id)sender;
+
 - (IBAction)reload:(id)sender;
 
 
