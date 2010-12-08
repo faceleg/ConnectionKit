@@ -203,8 +203,8 @@
     OBPRECONDITION(graphic);
     
     // Create attachment for the graphic
-    SVTextAttachment *textAttachment = [SVTextAttachment insertNewTextAttachmentInManagedObjectContext:[graphic managedObjectContext]];
-    [textAttachment setGraphic:graphic];
+    SVTextAttachment *textAttachment = [SVTextAttachment textAttachmentWithGraphic:graphic
+                                                    insertIntoManagedObjectContext:[graphic managedObjectContext]];
     //[textAttachment setBody:text];
     
     

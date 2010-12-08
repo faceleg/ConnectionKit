@@ -20,6 +20,14 @@
 
 @implementation SVTextAttachment 
 
++ (SVTextAttachment *)textAttachmentWithGraphic:(SVGraphic *)graphic
+                 insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVTextAttachment *result = [self insertNewTextAttachmentInManagedObjectContext:context];
+    [result setGraphic:graphic];
+    return result;
+}
+
 + (SVTextAttachment *)insertNewTextAttachmentInManagedObjectContext:(NSManagedObjectContext *)context;
 {
     return [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"

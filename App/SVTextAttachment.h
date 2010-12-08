@@ -16,6 +16,9 @@
 
 @interface SVTextAttachment : NSManagedObject
 
++ (SVTextAttachment *)textAttachmentWithGraphic:(SVGraphic *)graphic
+                 insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+
 + (SVTextAttachment *)insertNewTextAttachmentInManagedObjectContext:(NSManagedObjectContext *)context;
 
 //  An attribute may write pretty much whatever it likes.
@@ -23,7 +26,7 @@
 
 
 @property(nonatomic, retain) SVRichText *body;
-@property(nonatomic, retain) SVGraphic *graphic;
+@property(nonatomic, retain) SVGraphic *graphic; // probably have little reason to change
 
 
 - (NSRange)range;               // NOT KVO-compliant
