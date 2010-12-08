@@ -279,7 +279,7 @@
 	NSRange whereAttachment = NSMakeRange(0,0);
 	while (whereAttachment.location != NSNotFound)
 	{
-		whereAttachment = [markup rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(NSAttachmentCharacter, 0)] options:0 range:NSMakeRange(offset, [markup length] - 1) ];
+		whereAttachment = [markup rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(NSAttachmentCharacter, 1)] options:0 range:NSMakeRange(offset, [markup length] - offset) ];
 		if (NSNotFound != whereAttachment.location)
 		{
 			NSLog(@"Source: Attachment at offset %d", whereAttachment.location);
