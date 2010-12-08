@@ -148,7 +148,19 @@
     NSInteger index = [_DOMControllerPoints lastIndex];
     if (index == [self openElementsCount])
     {
+        SVDOMController *controller = [self currentDOMController];
         [self endDOMController];
+        
+        // Does this controller share the same element as its parent? If so, close the parent too
+        if ([controller hasElementIdName])
+        {
+            while ([_DOMControllerPoints lastIndex] == [self openElementsCount] &&
+                   [[self currentDOMController] hasElementIdName] &&
+                   [[[self currentDOMController] elementIdName] isEqualToString:[controller elementIdName]])
+            {
+                [self endDOMController];
+            }
+        }
     }
 }
 
@@ -198,9 +210,6 @@
     [controller release];
 
     [super writeGraphicBody:graphic];
-    
-    // Graphics should automatically end their controller except text boxes which need some nudging
-    if ([graphic isKindOfClass:[SVTextBox class]]) [self endDOMController];
 }
 
 #pragma mark Metrics
