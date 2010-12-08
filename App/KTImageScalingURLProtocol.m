@@ -34,8 +34,11 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
                     compressionFactor:(CGFloat)compression
                              fileType:(NSString *)UTI;
 {
+    NSString *host = [fileURL host];
+    if (!host) host = @"";
+    
     NSURL *baseURL = [[NSURL alloc] initWithScheme:KTImageScalingURLProtocolScheme
-											  host:[fileURL host]
+											  host:@""
 											  path:[fileURL path]];
 	
 	OBASSERT(baseURL);
