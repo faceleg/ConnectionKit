@@ -483,8 +483,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     // Newly inserted graphics tend not to have a corresponding text attachment yet. If so, create one
     if (!attachment)
     {
-        attachment = [SVTextAttachment textAttachmentWithGraphic:graphic
-                                  insertIntoManagedObjectContext:[graphic managedObjectContext]];
+        attachment = [SVTextAttachment textAttachmentWithGraphic:graphic];
         
         // Guess placement from controller hierarchy
         SVGraphicPlacement placement = ([self calloutDOMController] ?

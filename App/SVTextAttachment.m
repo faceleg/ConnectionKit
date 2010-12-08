@@ -20,11 +20,15 @@
 
 @implementation SVTextAttachment 
 
-+ (SVTextAttachment *)textAttachmentWithGraphic:(SVGraphic *)graphic
-                 insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVTextAttachment *)textAttachmentWithGraphic:(SVGraphic *)graphic;
 {
-    SVTextAttachment *result = [self insertNewTextAttachmentInManagedObjectContext:context];
+    OBPRECONDITION(graphic);
+    
+    SVTextAttachment *result = [self insertNewTextAttachmentInManagedObjectContext:
+                                [graphic managedObjectContext]];
+    
     [result setGraphic:graphic];
+    
     return result;
 }
 

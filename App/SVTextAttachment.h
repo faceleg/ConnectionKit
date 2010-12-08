@@ -16,8 +16,7 @@
 
 @interface SVTextAttachment : NSManagedObject
 
-+ (SVTextAttachment *)textAttachmentWithGraphic:(SVGraphic *)graphic
-                 insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVTextAttachment *)textAttachmentWithGraphic:(SVGraphic *)graphic;
 
 + (SVTextAttachment *)insertNewTextAttachmentInManagedObjectContext:(NSManagedObjectContext *)context;
 
