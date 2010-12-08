@@ -504,7 +504,7 @@
         
         // Caption if requested
         id <SVGraphic> caption = [graphic captionGraphic];
-        if (caption) // was registered as dependecy at start of if block
+        if (caption) // was registered as dependency at start of if block
         {
             [self writeGraphic:caption];
         }
@@ -942,12 +942,7 @@
             
             // If the placement changes, want whole Text Area to update
             [self addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
-            if ([graphic isPagelet])    // #83929
-            {
-                [self addDependencyForKeyPath:@"showsTitle" ofObject:graphic];
-                [self addDependencyForKeyPath:@"showsIntroduction" ofObject:graphic];
-            }
-            [self addDependencyForKeyPath:@"showsCaption" ofObject:graphic];
+            // Used to register title, intro etc. as dependencies here, but that shouldn't be necessary any more
             
             
             // Possible callout.
