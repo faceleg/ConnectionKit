@@ -36,9 +36,12 @@
 - (id)initWithURL:(NSURL *)URL;
 {
     [self init];
-    
+ 
+	NSString *host = [URL host];
+    if (!host) host = @"";
+
     _sourceMedia = [[SVMedia alloc] initByReferencingURL:
-                    [NSURL URLWithScheme:@"file" host:[URL host] path:[URL path]]];
+                    [NSURL URLWithScheme:@"file" host:host path:[URL path]]];
     
     _parameters = [[URL ks_queryParameters] copy];
     

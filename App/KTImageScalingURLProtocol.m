@@ -49,7 +49,7 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
                                                       fileType:UTI];
 	
 	NSURL *result = [NSURL ks_URLWithScheme:KTImageScalingURLProtocolScheme
-                                       host:[fileURL host]
+                                       host:host
                                        path:[fileURL path]
                             queryParameters:query];
     
