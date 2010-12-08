@@ -215,7 +215,7 @@
     if (didPublish)
     {
         // Ping google about the sitemap if there is one
-        if ([[self site] boolForKey:@"generateGoogleSitemap"])
+        if ( nil != self.sitemapPinger )
         {
             NSURL *siteURL = [[[self site] hostProperties] siteURL];
             NSURL *sitemapURL = [siteURL ks_URLByAppendingPathComponent:@"sitemap.xml.gz" isDirectory:NO];
@@ -229,6 +229,8 @@
             
             [self pingURL:pingURL];
             [pingURL release];
+            
+            self.sitemapPinger = nil;
         }
         
         
