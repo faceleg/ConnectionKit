@@ -106,6 +106,7 @@
 
 - (id)initWithOutputWriter:(id <KSWriter>)output inheritFromContext:(SVHTMLContext *)context;
 {
+	OBPRECONDITION(context);
     NSStringEncoding encoding = (context ? [context encoding] : NSUTF8StringEncoding);
     
     if (self = [self initWithOutputWriter:output encoding:encoding])
