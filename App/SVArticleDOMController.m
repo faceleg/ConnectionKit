@@ -590,18 +590,6 @@
 
 #pragma mark Moving
 
-// Like -insertBefore:refChild: but asks before making change. Caller should send -didChange… message after
-- (BOOL)moveDOMElement:(DOMElement *)element beforeChild:(DOMNode *)refNode;
-{
-    if ([[self webEditor] shouldChangeText:self])
-    {
-        [[self textHTMLElement] insertBefore:element refChild:refNode];
-        return YES;
-    }
-    
-    return NO;
-}
-
 - (DOMNode *)nodeToMoveControllerBefore:(SVDOMController *)controller;
 {
     DOMElement *element = [controller HTMLElement];
