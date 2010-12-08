@@ -76,7 +76,8 @@
 		{
 			NSUInteger truncCount = [truncCountNum intValue];
 			self.truncateCountLive = truncCount;			// this will populate field and slider
-#warning FIXME:It also calls through to [self setValue:countNum forKeyPath:@"inspectedObjectsController.selection.truncateCount"] in -slideDone: thereby marking the document as edited even though nothing happened
+#warning FIXME:It also calls through to [self setValue:countNum forKeyPath:@"inspectedObjectsController.selection.truncateCount"] in -sliderDone: thereby marking the document as edited even though nothing happened
+#warning FIXME - I think it is because we are observing the initial value setting, which is triggering other stuff. Need to bypass observersion in initial population.
 		}
 	}
 	else if ([keyPath isEqualToString:@"inspectedObjectsController.selection.truncationType"])
