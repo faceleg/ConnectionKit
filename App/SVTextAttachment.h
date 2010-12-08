@@ -16,6 +16,8 @@
 
 @interface SVTextAttachment : NSManagedObject
 
++ (SVTextAttachment *)insertNewTextAttachmentInManagedObjectContext:(NSManagedObjectContext *)context;
+
 //  An attribute may write pretty much whatever it likes.
 //  For example, an inline graphic should just ask its graphic to write. Other attributes could write some start tags, then the usual string content, then end tags.
 

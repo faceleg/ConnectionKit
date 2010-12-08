@@ -123,9 +123,7 @@
         if (serializedProperties)
         {
             // Replace the attachment
-            SVTextAttachment *attachment = [NSEntityDescription
-                                            insertNewObjectForEntityForName:@"TextAttachment"
-                                            inManagedObjectContext:context];
+            SVTextAttachment *attachment = [SVTextAttachment insertNewTextAttachmentInManagedObjectContext:context];
             [attachment awakeFromPropertyList:serializedProperties];
             
             [result removeAttribute:@"Serialized SVAttachment"
@@ -205,9 +203,7 @@
     OBPRECONDITION(graphic);
     
     // Create attachment for the graphic
-    SVTextAttachment *textAttachment = [NSEntityDescription
-                                        insertNewObjectForEntityForName:@"TextAttachment"
-                                        inManagedObjectContext:[graphic managedObjectContext]];
+    SVTextAttachment *textAttachment = [SVTextAttachment insertNewTextAttachmentInManagedObjectContext:[graphic managedObjectContext]];
     [textAttachment setGraphic:graphic];
     //[textAttachment setBody:text];
     

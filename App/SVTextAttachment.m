@@ -20,6 +20,12 @@
 
 @implementation SVTextAttachment 
 
++ (SVTextAttachment *)insertNewTextAttachmentInManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    return [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
+                                         inManagedObjectContext:context];
+}
+
 #pragma mark Range
 
 @dynamic body;
@@ -237,8 +243,7 @@
             
             
             // Create attachment
-            SVTextAttachment *attachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
-                                                                         inManagedObjectContext:context];
+            SVTextAttachment *attachment = [self insertNewTextAttachmentInManagedObjectContext:context];
             [attachment setGraphic:graphic];
             
             

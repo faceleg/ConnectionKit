@@ -488,8 +488,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
                                         SVGraphicPlacementCallout :
                                         SVGraphicPlacementInline);
         
-        attachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
-                                                   inManagedObjectContext:[graphic managedObjectContext]];
+        attachment = [SVTextAttachment insertNewTextAttachmentInManagedObjectContext:[graphic managedObjectContext]];
         [attachment setGraphic:graphic];
         [attachment setPlacement:[NSNumber numberWithInteger:placement]];
         //[attachment setWrap:[NSNumber numberWithInteger:SVGraphicWrapRightSplit]];

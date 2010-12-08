@@ -338,9 +338,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Make corresponding text attachment
-    SVTextAttachment *textAttachment = [NSEntityDescription
-                                        insertNewObjectForEntityForName:@"TextAttachment"
-                                        inManagedObjectContext:context];
+    SVTextAttachment *textAttachment = [SVTextAttachment insertNewTextAttachmentInManagedObjectContext:context];
     [textAttachment setGraphic:image];
     [textAttachment setBody:text];
     [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
@@ -533,8 +531,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 - (void)addGraphic:(SVGraphic *)graphic placeInline:(BOOL)placeInline;
 {
     // Create text attachment for the graphic
-    SVTextAttachment *textAttachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
-                                                                     inManagedObjectContext:[graphic managedObjectContext]];
+    SVTextAttachment *textAttachment = [SVTextAttachment insertNewTextAttachmentInManagedObjectContext:[graphic managedObjectContext]];
     [textAttachment setGraphic:graphic];
     
     SVGraphicPlacement placement = ([graphic isKindOfClass:[SVTextBox class]] ? // #93281
