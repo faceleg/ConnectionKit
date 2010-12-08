@@ -1544,7 +1544,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     if (item)
     {
-        [item mouseDown:event];
+        [item mouseDown:event]; // calls through to -mouseDown2: if no item handles it
     }
     else
     {
@@ -1685,6 +1685,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         [super mouseMoved:theEvent];
     }
+}
+
+- (void)mouseDragged:(NSEvent *)theEvent;
+{
+    // Send on to WebView. #98886
+    [self forwardMouseEvent:theEvent selector:_cmd cachedTargetView:nil];
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent
