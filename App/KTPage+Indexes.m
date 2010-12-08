@@ -55,9 +55,9 @@
 	if ([self isCollection])
 	{
 		NSArray *pages = [[SVPagesController controllerWithPagesToIndexInCollection:self] arrangedObjects];
-		for ( KTPage *page in pages )
+		for ( SVSiteItem *page in pages )
 		{
-			if ( [page wrappedBoolForKey:@"allowComments"] )
+			if ( [page allowComments] )
 			{
 				result = YES;
 				break;
