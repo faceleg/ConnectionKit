@@ -318,7 +318,7 @@
 	{
 		NSAttributedString *html = nil;
 		
-		if ( maxCount > 0 )
+		if ( maxCount > 0 && kTruncateNone != truncationType )
 		{
 			html = [[self article] attributedHTMLStringWithTruncation:maxCount
                                                                  type:truncationType
@@ -332,12 +332,12 @@
 		}
 		NSMutableAttributedString *summary = [html mutableCopy];
 		
-		NSMutableArray *attachments = [[NSMutableArray alloc] initWithCapacity:
-									   [[[self article] attachments] count]];
-		
-		
 		if (!includeLargeMedia)
 		{
+			
+			NSMutableArray *attachments = [[NSMutableArray alloc] initWithCapacity:
+										   [[[self article] attachments] count]];
+
 			// Strip out large attachments .... WHY?
 			NSUInteger location = 0;
 			
@@ -358,29 +358,30 @@
 					location = location + effectiveRange.length;
 				}
 			}
-		}
-		
-		// Are we left with only whitespace? If so, fallback to graphic captions
-		NSString *text = [[summary string] stringByConvertingHTMLToPlainText];
-		if ([text isWhitespace])
-		{
-			[summary release]; summary = nil;
-			
-			for (SVGraphic *aGraphic in attachments)
+
+			// Are we left with only whitespace? If so, fallback to graphic captions
+			NSString *text = [[summary string] stringByConvertingHTMLToPlainText];
+			if ([text isWhitespace])
 			{
-				if ([aGraphic showsCaption])
+				[summary release]; summary = nil;
+				
+				for (SVGraphic *aGraphic in attachments)
 				{
-					summary = [[[aGraphic caption] attributedHTMLString] retain];
-					break;
+					if ([aGraphic showsCaption])
+					{
+						summary = [[[aGraphic caption] attributedHTMLString] retain];
+						break;
+					}
 				}
 			}
+			[attachments release];
 		}
+		
 		
 		
 		// Write it
 		[context writeAttributedHTMLString:summary];
 		
-		[attachments release];
 		[summary release];
 		
 	}
