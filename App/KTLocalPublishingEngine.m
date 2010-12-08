@@ -15,6 +15,7 @@
 #import "KTPage.h"
 #import "SVPublishingRecord.h"
 #import "KTURLCredentialStorage.h"
+#import "SVGoogleSitemapPinger.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
@@ -215,7 +216,7 @@
     if (didPublish)
     {
         // Ping google about the sitemap if there is one
-        if ( nil != self.sitemapPinger )
+        if ( nil != [(SVGoogleSitemapPinger *)[self sitemapPinger] datePublished] )
         {
             NSURL *siteURL = [[[self site] hostProperties] siteURL];
             NSURL *sitemapURL = [siteURL ks_URLByAppendingPathComponent:@"sitemap.xml.gz" isDirectory:NO];

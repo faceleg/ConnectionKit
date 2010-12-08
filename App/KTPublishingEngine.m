@@ -954,7 +954,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSData *gzipped = [siteMapData compressGzip];
         
         NSString *siteMapPath = [[self baseRemotePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
-        //[self publishData:gzipped toPath:siteMapPath];
         self.sitemapPinger = [[[SVGoogleSitemapPinger alloc] init] autorelease];
         [self publishData:gzipped
                    toPath:siteMapPath
