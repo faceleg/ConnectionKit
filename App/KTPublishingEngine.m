@@ -978,8 +978,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     _status = KTPublishingEngineStatusUploading;
     [[self delegate] publishingEngineDidFinishGeneratingContent:self];
     
+    
+    // Once everything is uploaded, disconnect. Mayb be that nothing was published, so end immediately
     [[self connection] disconnect];
-    // Once everything is uploaded, disconnect
+    if (![[self connection] isConnected]) [self engineDidPublish:YES error:NULL];
 }
 
 #pragma mark Uploading Support
