@@ -72,7 +72,7 @@ typedef enum {
 @interface KTPage (Accessors)
 
 #pragma mark Comments
-@property(nonatomic, copy) NSNumber *allowComments;
+@property(nonatomic, copy, readwrite) NSNumber *allowComments;
 
 
 #pragma mark Title

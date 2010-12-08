@@ -59,6 +59,8 @@
 	return (nil != [self URL]);		// Maybe be even smarter about having a real URL?
 }
 
+- (NSNumber *) allowComments; { return NO; }
+
 #pragma mark Other properties
 
 - (KTMaster *)master; { return [[self parentPage] master]; }

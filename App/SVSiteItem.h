@@ -53,6 +53,10 @@ typedef enum {
 @property(nonatomic, copy) NSArray *keywords;
 
 
+#pragma mark Comments
+@property(nonatomic, copy, readonly) NSNumber *allowComments;
+
+
 #pragma mark Navigation
 
 @property(nonatomic, copy) NSNumber *includeInSiteMenu; // setting in GUI
