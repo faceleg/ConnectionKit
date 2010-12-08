@@ -196,6 +196,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 - (CGFloat)maxWidthOnPage:(KTPage *)page;
 {
     KTDesign *design = [[page master] design];
+    OBPRECONDITION(design);
     
     SVGraphicPlacement placement = [[self placement] intValue];
     
