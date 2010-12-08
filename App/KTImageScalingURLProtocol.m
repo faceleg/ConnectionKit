@@ -38,6 +38,7 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 											  host:[fileURL host]
 											  path:[fileURL path]];
 	
+	OBASSERT(baseURL);
 	NSDictionary *query = [self sandvoxImageParametersWithSize:size
                                                    scalingMode:scalingMode
                                                     sharpening:sharpening
@@ -51,6 +52,7 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
     
 	[baseURL release];
 	
+	OBPOSTCONDITION(result);
 	return result;
 }
 
