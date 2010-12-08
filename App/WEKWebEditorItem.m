@@ -138,6 +138,11 @@
 
 - (void)replaceChildWebEditorItem:(WEKWebEditorItem *)oldItem withItems:(NSArray *)newItems
 {
+    // Remove from existing parent. Most items already have no parent so this will have no effect
+    [newItems makeObjectsPerformSelector:@selector(removeFromParentWebEditorItem)];
+    
+    
+    
     NSMutableArray *children = [[self childWebEditorItems] mutableCopy];
     NSUInteger index = [children indexOfObject:oldItem];
     
