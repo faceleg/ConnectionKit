@@ -10,6 +10,7 @@
 
 #import "KTPage+Internal.h"
 #import "KTDesign.h"
+#import "KTHostProperties.h"
 #import "KTSite.h"
 #import "KTMaster.h"
 #import "SVMediaGatheringPublisher.h"
@@ -759,7 +760,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         SVPublishingRecord *publishingRecord = [[[self site] hostProperties]
                                                 publishingRecordForSHA1Digest:digest];
         
-        result = [publishingRecord path];
+        NSString *publishedPath = [publishingRecord path];
+        if (publishedPath)
+        {
+            // The record's path is for the published site. Correct to account for current pub location
+            
+            KTHostProperties *hostProperties = [[self site] hostProperties];
+            NSString *base = [[hostProperties documentRoot]
+                              stringByAppendingPathComponent:[hostProperties subfolder]];
+            
+            NSString *relativePath = [publishedPath ks_pathRelativeToDirectory:base];
+            result = [[self baseRemotePath] stringByAppendingPathComponent:relativePath];
+        }
     }
     
     return result;
