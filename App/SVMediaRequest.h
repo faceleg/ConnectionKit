@@ -1,5 +1,5 @@
 //
-//  SVImageMedia.h
+//  SVMediaRequest.h
 //  Sandvox
 //
 //  Created by Mike on 12/04/2010.
@@ -11,23 +11,25 @@
 #import "SVMediaProtocol.h"
 
 
-@interface SVImageMedia : NSObject <SVMedia, NSCopying>
+@class SVMedia;
+
+@interface SVMediaRequest : NSObject <NSCopying>
 {
   @private
-    id <SVMedia>    _mediaRecord;
+    SVMedia         *_media;
     NSNumber        *_width;
     NSNumber        *_height;
     NSString        *_type;
     NSString        *_uploadPath;
 }
 
-- (id)initWithSourceMedia:(id <SVMedia>)mediaRecord
+- (id)initWithMedia:(SVMedia *)mediaRecord
                     width:(NSNumber *)width
                    height:(NSNumber *)height
                      type:(NSString *)type
       preferredUploadPath:(NSString *)path;
 
-@property(nonatomic, retain, readonly) id <SVMedia> mediaRecord;
+@property(nonatomic, retain, readonly) SVMedia *media;
 @property(nonatomic, copy, readonly) NSNumber *width;
 @property(nonatomic, copy, readonly) NSNumber *height;
 @property(nonatomic, copy, readonly) NSString *type;

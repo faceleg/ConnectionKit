@@ -14,7 +14,7 @@
 #import "KTSite.h"
 #import "KTMaster.h"
 #import "SVMediaGatheringPublisher.h"
-#import "SVImageMedia.h"
+#import "SVMediaRequest.h"
 #import "KTPage+Internal.h"
 #import "SVPublishingHTMLContext.h"
 #import "SVPublishingRecord.h"

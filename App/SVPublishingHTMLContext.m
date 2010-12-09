@@ -9,7 +9,7 @@
 #import "SVPublishingHTMLContext.h"
 
 #import "KTHostProperties.h"
-#import "SVImageMedia.h"
+#import "SVMediaRequest.h"
 #import "KTPage+Paths.h"
 #import "SVPublisher.h"
 #import "KTSite.h"
@@ -129,7 +129,7 @@
                 stringByAppendingPathComponent:preferredFilename];
     }
     
-    id <SVMedia> scaledMedia = [[SVImageMedia alloc] initWithSourceMedia:media
+    id <SVMedia> scaledMedia = [[SVMediaRequest alloc] initWithMedia:media
                                                                    width:width
                                                                   height:height
                                                                     type:type

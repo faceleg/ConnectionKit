@@ -1,12 +1,13 @@
 //
-//  SVImageMedia.m
+//  SVMediaRequest.m
 //  Sandvox
 //
 //  Created by Mike on 12/04/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVImageMedia.h"
+#import "SVMediaRequest.h"
+#import "SVMedia.h"
 
 #import "SVImageScalingOperation.h"
 #import "KTImageScalingURLProtocol.h"
@@ -16,13 +17,13 @@
 #import "KSURLUtilities.h"
 
 
-@implementation SVImageMedia
+@implementation SVMediaRequest
 
-- (id)initWithSourceMedia:(id <SVMedia>)mediaRecord
-                    width:(NSNumber *)width
-                   height:(NSNumber *)height
-                     type:(NSString *)type
-      preferredUploadPath:(NSString *)path;
+- (id)initWithMedia:(SVMedia *)mediaRecord
+              width:(NSNumber *)width
+             height:(NSNumber *)height
+               type:(NSString *)type
+preferredUploadPath:(NSString *)path;
 {
     if (type)
     {
@@ -46,7 +47,7 @@
     
     self = [self init];
     
-    _mediaRecord = [mediaRecord retain];
+    _media = [mediaRecord retain];
     _width = [width copy];
     _height = [height copy];
     _type = [type copy];
@@ -57,7 +58,7 @@
 
 - (void)dealloc
 {
-    [_mediaRecord release];
+    [_media release];
     [_width release];
     [_height release];
     [_type release];
@@ -66,7 +67,7 @@
     [super dealloc];
 }
 
-@synthesize mediaRecord = _mediaRecord;
+@synthesize media = _media;
 @synthesize width = _width;
 @synthesize height = _height;
 @synthesize type = _type;
@@ -83,7 +84,7 @@
     {
         if ([self type])
         {
-            NSString *name = [[[self mediaRecord] preferredUploadPath] stringByDeletingPathExtension];
+            NSString *name = [[[self media] preferredUploadPath] stringByDeletingPathExtension];
             
             _uploadPath = [name stringByAppendingPathExtension:
                            [NSString filenameExtensionForUTI:[self type]]];
@@ -91,7 +92,7 @@
         }
         else
         {
-            _uploadPath = [[[self mediaRecord] preferredUploadPath] copy];
+            _uploadPath = [[[self media] preferredUploadPath] copy];
         }
     }
     
@@ -114,7 +115,7 @@
                                 compressionFactor:1.0f
                                 fileType:[self type]];
         
-        SVImageScalingOperation *op = [[SVImageScalingOperation alloc] initWithMedia:[self mediaRecord] parameters:params];
+        SVImageScalingOperation *op = [[SVImageScalingOperation alloc] initWithMedia:[self media] parameters:params];
         [op start];
         
         NSData *result = [[[op result] copy] autorelease];
@@ -124,13 +125,32 @@
     }
     else
     {
-        return [[self mediaRecord] mediaData];
+        return [[self media] mediaData];
     }
     
     return nil;
 }
 
 - (NSURL *)mediaURL; { return nil; }
+
+- (BOOL)isEqualToMedia:(id <SVMedia>)otherMedia;
+{
+    if ([[self mediaURL] ks_isEqualToURL:[otherMedia mediaURL]])
+    {
+        return YES;
+    }
+    else if ([otherMedia isKindOfClass:[SVMediaRequest class]])
+    {
+        // Evalutating -mediaData is expensive, so compare "recipes"
+        SVMediaRequest *otherImage = (SVMediaRequest *)otherMedia;
+        return ([otherImage.media isEqualToMedia:self.media] &&
+                [otherImage.width isEqualToNumber:self.width] &&
+                [otherImage.height isEqualToNumber:self.height] &&
+                [otherImage.type isEqualToString:self.type]);
+    }
+    
+    return NO;
+}
 
 - (BOOL)isEqual:(id)object;
 {
@@ -142,26 +162,7 @@
     return NO;
 }
 
-- (BOOL)isEqualToMedia:(id <SVMedia>)otherMedia;
-{
-    if ([[self mediaURL] ks_isEqualToURL:[otherMedia mediaURL]])
-    {
-        return YES;
-    }
-    else if ([otherMedia isKindOfClass:[SVImageMedia class]])
-    {
-        // Evalutating -mediaData is expensive, so compare "recipes"
-        SVImageMedia *otherImage = (SVImageMedia *)otherMedia;
-        return ([otherImage.mediaRecord isEqualToMedia:self.mediaRecord] &&
-                [otherImage.width isEqualToNumber:self.width] &&
-                [otherImage.height isEqualToNumber:self.height] &&
-                [otherImage.type isEqualToString:self.type]);
-    }
-    
-    return NO;
-}
-
-- (NSUInteger)hash { return [[self mediaRecord] hash]; }
+- (NSUInteger)hash { return [[self media] hash]; }
 
 #pragma mark NSCopying
 
