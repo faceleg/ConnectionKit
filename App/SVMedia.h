@@ -43,8 +43,4 @@
 - (BOOL)writeToURL:(NSURL *)URL error:(NSError **)outError;
 
 
-#pragma mark Deprecated
-- (CGSize)originalSize;
-
-
 @end
