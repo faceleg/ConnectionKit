@@ -28,7 +28,6 @@
 #import "NSString+KTExtensions.h"
 
 #import "NSData+Karelia.h"
-#import "NSDictionary+Karelia.h"
 #import "NSError+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
@@ -607,7 +606,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     // Put placeholder in dictionary so we don't start calculating digest/data twice while equivalent operation is already queued
-    [_publishedMediaDigests setObject:[NSNull null] forKey:request copyKeyFirst:NO];
+    [_publishedMediaDigests setObject:[NSNull null] forKey:request];
     
     
     // Do the calculation on a background thread
@@ -626,7 +625,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(request);
     OBPRECONDITION(digest);
     
-    [_publishedMediaDigests setObject:digest forKey:request copyKeyFirst:NO];
+    [_publishedMediaDigests setObject:digest forKey:request];
     
     // Is there already an existing file on the server? If so, use that
     NSString *result = [self pathForFileWithSHA1Digest:digest];
