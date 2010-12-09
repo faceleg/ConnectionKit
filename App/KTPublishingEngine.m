@@ -22,7 +22,6 @@
 
 #import "SVGoogleSitemapPinger.h"
 
-#import "KTMediaFileUpload.h"
 #import "KTImageScalingURLProtocol.h"
 
 #import "NSBundle+KTExtensions.h"
@@ -603,6 +602,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)startPublishingMedia:(SVMediaRequest *)request;
 {
+    OBPRECONDITION(request);
+    OBPRECONDITION([request isKindOfClass:[SVMediaRequest class]]); // shouldn't need this!
+    
+    
     // Put placeholder in dictionary so we don't start calculating digest/data twice while equivalent operation is already queued
     [_publishedMediaDigests setObject:[NSNull null] forKey:request copyKeyFirst:NO];
     
