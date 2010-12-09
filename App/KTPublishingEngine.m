@@ -612,14 +612,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [pubContext release];
 }
 
-- (void)startPublishingMedia:(SVMediaRequest *)request;
+- (void)startPublishingMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)cachedDigest;
 {
     OBPRECONDITION(request);
-    OBPRECONDITION([request isKindOfClass:[SVMediaRequest class]]); // shouldn't need this!
     
     
     // Put placeholder in dictionary so we don't start calculating digest/data twice while equivalent operation is already queued
-    [_publishedMediaDigests setObject:[NSNull null] forKey:request];
+    [_publishedMediaDigests setObject:(cachedDigest ? cachedDigest : (id)[NSNull null])
+                               forKey:request];
     
     
     // Do the calculation on a background thread. Which one depends on the task needed
@@ -629,10 +629,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSData *data = [[request media] mediaData];
         if (data)
         {
-            // It just needs hashing on a CPU-bound queue
-            NSInvocation *invocation = [NSInvocation invocationWithSelector:@selector(threadedPublishData:forMedia:)
-                                                                     target:self
-                                                                  arguments:NSARRAY(data, request)];
+            // This point shouldn't logically be reached if hash is already known, so it just needs hashing on a CPU-bound queue
+            NSInvocation *invocation = [NSInvocation
+                                        invocationWithSelector:@selector(threadedPublishData:forMedia:)
+                                        target:self
+                                        arguments:NSARRAY(data, request)];
             
             op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
             [[self defaultQueue] addOperation:op];
@@ -640,21 +641,23 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         else
         {
             // Read data from disk for hashing
-            op = [[NSInvocationOperation alloc]
-                  initWithTarget:self
-                  selector:@selector(threadedPublishMedia:)
-                  object:request];
+            NSInvocation *invocation = [NSInvocation
+                                        invocationWithSelector:@selector(threadedPublishMedia:cachedSHA1Digest:)
+                                        target:self
+                                        arguments:NSARRAY(request, cachedDigest)];
             
+            op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
             [_diskQueue addOperation:op];
         }
     }
     else
     {
-        op = [[NSInvocationOperation alloc]
-                           initWithTarget:self
-                           selector:@selector(threadedPublishMedia:)
-                           object:request];
+        NSInvocation *invocation = [NSInvocation
+                                    invocationWithSelector:@selector(threadedPublishMedia:cachedSHA1Digest:)
+                                    target:self
+                                    arguments:NSARRAY(request, cachedDigest)];
         
+        op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
         [_coreImageQueue addOperation:op];  // most of the work should be Core Image's
     }
     [self addDependencyForNextPhase:op];
@@ -665,6 +668,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 {
     OBPRECONDITION(request);
     OBPRECONDITION(digest);
+    
+    // We pop NSNull in as a placeholder while generating hash, so make sure it doesn't cree into other bits of the system
+    OBPRECONDITION([digest isKindOfClass:[NSData class]]);
+
     
     [_publishedMediaDigests setObject:digest forKey:request];
     
@@ -710,8 +717,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             else
             {
                 // Fetching the data is potentially expensive, so do on worker thread again
-                // TODO: If digest is already known, save time by not recalculating
-                [self startPublishingMedia:request];
+                [self startPublishingMedia:request cachedSHA1Digest:digest];
             }    
         }
     }
@@ -730,18 +736,21 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSData *cachedDigest = [_publishedMediaDigests objectForKey:media];
     if (cachedDigest)
     {
-        result = [self publishMediaWithRequest:media cachedData:nil SHA1Digest:cachedDigest];
+        if (cachedDigest != (id)[NSNull null])  // nothing to do yet while hash is being calculated
+        {
+            result = [self publishMediaWithRequest:media cachedData:nil SHA1Digest:cachedDigest];
+        }
     }
     else
     {
         // Calculating where to publish media is actually quite time-consuming, so do on a background thread
-        [self startPublishingMedia:media];
+        [self startPublishingMedia:media cachedSHA1Digest:nil];
     }
     
     return result;
 }
 
-- (void)threadedPublishMedia:(SVMediaRequest *)request;
+- (void)threadedPublishMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)cachedDigest;
 {
     /*  It is presumed that the call to this method will have been scheduled on an appropriate queue.
      */
@@ -751,23 +760,34 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Calculate hash of media so can decide where to place it
     NSData *fileContents = [SVImageScalingOperation dataWithMediaRequest:request];
     
-    // Hash on a different worker thread, since this is expected to be the Core Image queue (presently)
     if (fileContents)    // TODO: would be nice if we could report an error
     {
-        NSInvocation *invocation = [NSInvocation
-                                    invocationWithSelector:@selector(threadedPublishData:forMedia:)
-                                    target:self
-                                    arguments:[NSArray arrayWithObjects:fileContents, request, nil]];
-        
-        NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-        [self addDependencyForNextPhase:op];
-        [[self defaultQueue] addOperation:op];
-        [op release];
+        if (cachedDigest)
+        {
+            // Hashing was done in a previous iteration, so recycle
+            [[self ks_proxyOnThread:nil waitUntilDone:YES]  // wait before reporting op as finished
+             publishMediaWithRequest:request cachedData:fileContents SHA1Digest:cachedDigest];
+        }
+        else
+        {
+            // Hash on a separate thread so this queue is ready to go again quickly
+            NSInvocation *invocation = [NSInvocation
+                                        invocationWithSelector:@selector(threadedPublishData:forMedia:)
+                                        target:self
+                                        arguments:[NSArray arrayWithObjects:fileContents, request, nil]];
+            
+            NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [self addDependencyForNextPhase:op];
+            [[self defaultQueue] addOperation:op];
+            [op release];
+        }
     }
 }
 
 - (void)threadedPublishData:(NSData *)data forMedia:(SVMediaRequest *)request;
 {
+    /*  Since all that's needed is to hash the data, presumed you'll call this using -defaultQueue
+     */
     OBPRECONDITION(data);
     OBPRECONDITION(request);
     
