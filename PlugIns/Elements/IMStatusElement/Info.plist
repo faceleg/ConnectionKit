@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>IM Status</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -67,27 +69,8 @@
 	</array>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KSHelpAnchor</key>
-	<string>IM_Status</string>
-	<key>KTMainElement</key>
-	<string></string>
-	<key>KTPageletCanHaveTitle</key>
-	<false/>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_imstatus.tiff</string>
-	<key>KTElementAllowsIntroduction</key>
-	<true/>
-	<key>KTPluginInitialProperties</key>
-	<dict>
-		<key>selectedServiceIndex</key>
-		<integer>0</integer>
-	</dict>
-	<key>KTPluginName</key>
-	<string>IM Status</string>
-	<key>KTPluginPriority</key>
-	<integer>5</integer>
-	<key>KTPluginUntitledName</key>
-	<string>Contact Me</string>
 	<key>NSPrincipalClass</key>
 	<string>IMStatusPlugIn</string>
 </dict>
