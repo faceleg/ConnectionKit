@@ -149,7 +149,7 @@
     if ([self media])
     {
         // Store natural size
-        CGSize size = [[self media] originalSize];
+        CGSize size = IMBImageItemGetSize((id <IMBImageItem>)[self media]);
         [self setNaturalWidth:[NSNumber numberWithUnsignedInt:size.width]
                        height:[NSNumber numberWithUnsignedInt:size.height]];
     }
