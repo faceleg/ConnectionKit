@@ -57,6 +57,7 @@
 
 - (NSString *)truncateMarkup:(NSString *)markup truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType didTruncate:(BOOL *)outDidTruncate;
 {
+	OBPRECONDITION(markup);
 	NSString *result = markup;
 	BOOL removedAnything = NO;
 	if ((kTruncateNone != truncationType) && maxCount)	// only do something if we want to actually truncate something
@@ -68,7 +69,30 @@
 		{			
 			// Turn Markup into a tidied XML document
 			NSError *theError = NULL;
-			NSXMLDocument *xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:result options:NSXMLDocumentTidyHTML error:&theError] autorelease];
+			
+			NSString *prelude = [KTPage stringFromDocType:KTXHTMLTransitionalDocType local:YES];
+
+			NSString *wrapper = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n%@\n<html xmlns=\"http://www.w3.org/1999/xhtml\"><head><title></title></head><body>%@</body></html>", prelude, result];
+			
+			NSUInteger mask = 
+			NSXMLNodePreserveAll 
+			
+			// Something in here is causing errors ... need to figure out which when I can find a test pattern
+//			& ~NSXMLNodePreserveNamespaceOrder 
+//			& ~NSXMLNodePreserveAttributeOrder 
+//			& ~NSXMLNodePreserveEntities 
+//			& ~NSXMLNodePreservePrefixes 
+//			& ~NSXMLNodePreserveCDATA 
+//			& ~NSXMLNodePreserveEmptyElements 
+//			& ~NSXMLNodePreserveQuotes 
+//			& ~NSXMLNodePreserveWhitespace
+//			& ~NSXMLNodePreserveDTD
+//			& ~NSXMLNodePreserveCharacterReferences
+//			& ~(0xFFF00000)
+			;
+						
+			NSXMLDocument *xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:wrapper options:mask error:&theError] autorelease];
+			if (theError) NSLog(@"NSXMLDocument from truncation: %@", theError);
 			NSArray *theNodes = [xmlDoc nodesForXPath:@"/html/body" error:&theError];
 			NSXMLNode *currentNode = [theNodes lastObject];		// working node we traverse
 			NSXMLNode *lastTextNode = nil;
@@ -258,6 +282,7 @@
 	{
 		*outDidTruncate = removedAnything;
 	}
+	OBPRECONDITION(result);
 	return result;
 }
 
@@ -275,15 +300,31 @@
     NSString *truncatedMarkup = [self truncateMarkup:markup truncation:maxCount truncationType:truncationType didTruncate:truncated];
   
 #ifdef DEBUG
-	int offset = 0;
-	NSRange whereAttachment = NSMakeRange(0,0);
-	while (whereAttachment.location != NSNotFound)
+	if ([NSUserName() isEqualToString:@"dwood"])			// DEBUGGGING OF TRUNCATION FOR DAN.
 	{
-		whereAttachment = [markup rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(NSAttachmentCharacter, 1)] options:0 range:NSMakeRange(offset, [markup length] - offset) ];
-		if (NSNotFound != whereAttachment.location)
+		int offset = 0;
+		NSRange whereAttachment = NSMakeRange(0,0);
+		while (whereAttachment.location != NSNotFound)
 		{
-			NSLog(@"Source: Attachment at offset %d", whereAttachment.location);
-			offset = whereAttachment.location + 1;
+			whereAttachment = [markup rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(NSAttachmentCharacter, 1)] options:0 range:NSMakeRange(offset, [markup length] - offset) ];
+			if (NSNotFound != whereAttachment.location)
+			{
+				NSLog(@"Source: Attachment at offset %d", whereAttachment.location);
+				offset = whereAttachment.location + 1;
+			}
+		}
+		
+		// Now do the same with the Trunc'd
+		offset = 0;
+		whereAttachment = NSMakeRange(0,0);
+		while (whereAttachment.location != NSNotFound)
+		{
+			whereAttachment = [truncatedMarkup rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(NSAttachmentCharacter, 1)] options:0 range:NSMakeRange(offset, [truncatedMarkup length] - offset) ];
+			if (NSNotFound != whereAttachment.location)
+			{
+				NSLog(@"Truncd: Attachment at offset %d", whereAttachment.location);
+				offset = whereAttachment.location + 1;
+			}
 		}
 	}
 #endif
