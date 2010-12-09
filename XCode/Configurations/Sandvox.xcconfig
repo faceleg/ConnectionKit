@@ -40,10 +40,6 @@ IMEDIA_REVISION = 1399
 
 GCC_C_LANGUAGE_STANDARD = c99
 
-// Debugging -- should be OMNI_FORCE_ASSERTIONS for beta, DONT_FORCE_ASSERTIONS (an ad-hoc replacement) for release
-
-// note:  RIGHT NOW WE HAVE BAD PROBLEMS RUNNING A RELEASE BUILD IF IT IS != OMNI_FORCE_ASSERTIONS
-OMNI_DEBUG_CURRENT_SETTING = DONT_FORCE_ASSERTIONS
 
 // For betas that are to be localized, be sure to set IBC_FLATTEN_NIBS to NO (which, apparently, gets echoed to IBC_STRIP_NIBS)
 IBC_FLATTEN_NIBS = YES
