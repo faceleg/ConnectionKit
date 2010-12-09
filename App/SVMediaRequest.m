@@ -56,6 +56,15 @@ preferredUploadPath:(NSString *)path;
     return self;
 }
 
+- (id)initWithMedia:(SVMedia *)media;   // convenience
+{
+    return [self initWithMedia:media
+                         width:nil
+                        height:nil
+                          type:nil
+           preferredUploadPath:[media preferredUploadPath]];
+}
+
 - (void)dealloc
 {
     [_media release];

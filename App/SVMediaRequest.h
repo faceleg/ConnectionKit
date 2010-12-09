@@ -23,11 +23,13 @@
     NSString        *_uploadPath;
 }
 
-- (id)initWithMedia:(SVMedia *)mediaRecord
-                    width:(NSNumber *)width
-                   height:(NSNumber *)height
-                     type:(NSString *)type
-      preferredUploadPath:(NSString *)path;
+- (id)initWithMedia:(SVMedia *)media
+              width:(NSNumber *)width
+             height:(NSNumber *)height
+               type:(NSString *)type
+preferredUploadPath:(NSString *)path;
+
+- (id)initWithMedia:(SVMedia *)media;   // convenience
 
 @property(nonatomic, retain, readonly) SVMedia *media;
 @property(nonatomic, copy, readonly) NSNumber *width;
