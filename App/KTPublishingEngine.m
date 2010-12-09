@@ -601,29 +601,29 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [pubContext release];
 }
 
-- (void)startPublishingMedia:(id <SVMedia>)media;
+- (void)startPublishingMedia:(SVMediaRequest *)request;
 {
     // Put placeholder in dictionary so we don't start calculating digest/data twice while equivalent operation is already queued
-    [_publishedMediaDigests setObject:[NSNull null] forKey:media copyKeyFirst:NO];
+    [_publishedMediaDigests setObject:[NSNull null] forKey:request copyKeyFirst:NO];
     
     
     // Do the calculation on a background thread
     NSOperation *op = [[NSInvocationOperation alloc]
                        initWithTarget:self
                        selector:@selector(threadedPublishMedia:)
-                       object:media];
+                       object:request];
     
     [self addDependencyForNextPhase:op];
     [_coreImageQueue addOperation:op];
     [op release];
 }
 
-- (NSString *)publishMedia:(id <SVMedia>)media cachedData:(NSData *)data SHA1Digest:(NSData *)digest
+- (NSString *)publishMediaWithRequest:(SVMediaRequest *)request cachedData:(NSData *)data SHA1Digest:(NSData *)digest
 {
-    OBPRECONDITION(media);
+    OBPRECONDITION(request);
     OBPRECONDITION(digest);
     
-    [_publishedMediaDigests setObject:digest forKey:media copyKeyFirst:NO];
+    [_publishedMediaDigests setObject:digest forKey:request copyKeyFirst:NO];
     
     // Is there already an existing file on the server? If so, use that
     NSString *result = [self pathForFileWithSHA1Digest:digest];
@@ -633,7 +633,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         if ([self status] > KTPublishingEngineStatusGatheringMedia)
         {
             //  The media rep does not already exist on the server, so need to assign it a new path
-            result = [[self baseRemotePath] stringByAppendingPathComponent:[media preferredUploadPath]];
+            result = [[self baseRemotePath] stringByAppendingPathComponent:[request preferredUploadPath]];
                        
             NSUInteger count = 1;
             while (![self shouldPublishToPath:result])
@@ -668,7 +668,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             {
                 // Fetching the data is potentially expensive, so do on worker thread again
                 // TODO: If digest is already known, save time by not recalculating
-                [self startPublishingMedia:media];
+                [self startPublishingMedia:request];
             }    
         }
     }
@@ -676,7 +676,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-- (NSString *)publishMedia:(id <SVMedia>)media;
+- (NSString *)publishMediaWithRequest:(SVMediaRequest *)media;
 {
     NSString *result = nil;
     
@@ -687,7 +687,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSData *digest = [_publishedMediaDigests objectForKey:media];
     if (digest)
     {
-        result = [self publishMedia:media cachedData:nil SHA1Digest:digest];
+        result = [self publishMediaWithRequest:media cachedData:nil SHA1Digest:digest];
     }
     else
     {
@@ -724,14 +724,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
 
-- (void)threadedPublishData:(NSData *)data forMedia:(id <SVMedia>)media;
+- (void)threadedPublishData:(NSData *)data forMedia:(SVMediaRequest *)request;
 {
     OBPRECONDITION(data);
-    OBPRECONDITION(media);
+    OBPRECONDITION(request);
     
     NSData *digest = [data SHA1Digest];
     [[self ks_proxyOnThread:nil waitUntilDone:YES]  // wait before reporting op as finished
-     publishMedia:media cachedData:data SHA1Digest:digest];
+     publishMediaWithRequest:request cachedData:data SHA1Digest:digest];
 }
 
 #pragma mark Resource Files

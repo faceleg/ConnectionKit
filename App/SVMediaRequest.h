@@ -35,4 +35,6 @@
 @property(nonatomic, copy, readonly) NSString *type;
 - (BOOL)isNativeRepresentation;
 
+- (NSString *)preferredUploadPath;    // what the media would like to be placed given the chance
+
 @end

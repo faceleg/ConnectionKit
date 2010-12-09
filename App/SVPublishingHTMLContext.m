@@ -81,7 +81,7 @@
 
 - (NSURL *)addMedia:(id <SVMedia>)media;
 {
-    NSString *mediaPath = [_publisher publishMedia:media];
+    NSString *mediaPath = [_publisher publishMediaWithRequest:media];
     
     KTPage *page = [self page];
     NSString *pagePath = [[_publisher baseRemotePath] stringByAppendingPathComponent:[page uploadPath]];
