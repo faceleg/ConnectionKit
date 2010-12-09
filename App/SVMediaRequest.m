@@ -81,11 +81,27 @@ preferredUploadPath:(NSString *)path;
 @synthesize height = _height;
 @synthesize type = _type;
 
+#pragma mark Image Scaling
+
 - (BOOL)isNativeRepresentation;
 {
     BOOL result = !([self width] || [self height]);
     return result;
 }
+
+- (NSDictionary *)imageScalingParameters;
+{
+    NSDictionary *result = [NSURL
+                            sandvoxImageParametersWithSize:NSMakeSize([[self width] floatValue], [[self height] floatValue])
+                            scalingMode:KSImageScalingModeAspectFit
+                            sharpening:0.0f
+                            compressionFactor:1.0f
+                            fileType:[self type]];
+    
+    return result;
+}
+
+#pragma mark Publishing
 
 - (NSString *)preferredUploadPath;
 {
@@ -107,40 +123,6 @@ preferredUploadPath:(NSString *)path;
     
     return _uploadPath;
 }
-
-- (NSData *)mediaData;
-{
-    if (![self isNativeRepresentation])
-    {
-        if ([NSThread isMainThread])
-        {
-            NSLog(@"Evaluating scaled image data on main thread which is inadvisable as generally takes a significant amount of time");
-        }
-        
-        NSDictionary *params = [NSURL
-                                sandvoxImageParametersWithSize:NSMakeSize([[self width] floatValue], [[self height] floatValue])
-                                scalingMode:KSImageScalingModeAspectFit
-                                sharpening:0.0f
-                                compressionFactor:1.0f
-                                fileType:[self type]];
-        
-        SVImageScalingOperation *op = [[SVImageScalingOperation alloc] initWithMedia:[self media] parameters:params];
-        [op start];
-        
-        NSData *result = [[[op result] copy] autorelease];
-        [op release];
-        
-        return result;
-    }
-    else
-    {
-        return [[self media] mediaData];
-    }
-    
-    return nil;
-}
-
-- (NSURL *)mediaURL; { return nil; }
 
 - (BOOL)isEqualToMedia:(id <SVMedia>)otherMedia;
 {

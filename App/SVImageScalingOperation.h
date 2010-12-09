@@ -10,6 +10,8 @@
 #import "SVMediaProtocol.h"
 
 
+@class SVMediaRequest;
+
 @interface SVImageScalingOperation : NSOperation
 {
   @private
@@ -24,5 +26,8 @@
 
 @property(nonatomic, copy, readonly) NSData *result;
 @property(nonatomic, copy, readonly) NSURLResponse *returnedResponse;
+
+// Convenience
++ (NSData *)dataWithMediaRequest:(SVMediaRequest *)request;
 
 @end

@@ -35,7 +35,12 @@ preferredUploadPath:(NSString *)path;
 @property(nonatomic, copy, readonly) NSNumber *width;
 @property(nonatomic, copy, readonly) NSNumber *height;
 @property(nonatomic, copy, readonly) NSString *type;
+
+
+#pragma mark Scaling
 - (BOOL)isNativeRepresentation;
+- (NSDictionary *)imageScalingParameters;
+
 
 - (NSString *)preferredUploadPath;    // what the media would like to be placed given the chance
 

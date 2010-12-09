@@ -22,6 +22,7 @@
 
 #import "SVGoogleSitemapPinger.h"
 
+#import "SVImageScalingOperation.h"
 #import "KTImageScalingURLProtocol.h"
 
 #import "NSBundle+KTExtensions.h"
@@ -742,14 +743,13 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)threadedPublishMedia:(SVMediaRequest *)request;
 {
+    /*  It is presumed that the call to this method will have been scheduled on an appropriate queue.
+     */
     OBPRECONDITION(request);
     
+    
     // Calculate hash of media so can decide where to place it
-    NSData *fileContents = [request mediaData];
-    
-    // TODO: grab data from file and hash on a different worker thread, since this is expected to be the Core Image queue (presently)
-    if (!fileContents) fileContents = [NSData dataWithContentsOfURL:[[request media] mediaURL]];
-    
+    NSData *fileContents = [SVImageScalingOperation dataWithMediaRequest:request];
     
     // Hash on a different worker thread, since this is expected to be the Core Image queue (presently)
     if (fileContents)    // TODO: would be nice if we could report an error

@@ -10,6 +10,7 @@
 
 #import "KTImageScalingSettings.h"
 #import "SVMedia.h"
+#import "SVMediaRequest.h"
 
 #import "NSImage+KTExtensions.h"
 
@@ -291,6 +292,33 @@
     @catch (NSException *exception)
     {
         [NSApp performSelectorOnMainThread:@selector(reportException:) withObject:exception waitUntilDone:NO];
+    }
+}
+
++ (NSData *)dataWithMediaRequest:(SVMediaRequest *)request;
+{
+    if ([request isNativeRepresentation])
+    {
+        NSData *result = [[request media] mediaData];
+        if (!result) result = [NSData dataWithContentsOfURL:[[request media] mediaURL]];
+        return result;
+    }
+    else
+    {
+        if ([NSThread isMainThread])
+        {
+            NSLog(@"Evaluating scaled image data on main thread which is inadvisable as generally takes a significant amount of time");
+        }
+        
+        SVImageScalingOperation *op = [[SVImageScalingOperation alloc]
+                                       initWithMedia:[request media]
+                                       parameters:[request imageScalingParameters]];
+        [op start];
+        
+        NSData *result = [[[op result] copy] autorelease];
+        [op release];
+        
+        return result;
     }
 }
 
