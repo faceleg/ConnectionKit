@@ -825,6 +825,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
 		const int rightMargin = 20;
 		int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft - [oFollowButton frame].size.width - 8;
+#pragma unused (availableForAll)
 		NSRect frame = [oExternalURLField frame];
 		frame.origin.x = newLeft;
 		

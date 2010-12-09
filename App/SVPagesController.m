@@ -698,7 +698,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     // Should we avoid empty selection after this removal?
     BOOL avoidsEmptySelection = [self avoidsEmptySelection];
     KTPage *nextSelectionParent = nil;
-    NSUInteger nextSelectionIndex;
+    NSUInteger nextSelectionIndex = 0;
 
     if (avoidsEmptySelection)
     {

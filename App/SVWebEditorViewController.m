@@ -301,6 +301,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 {
     WEKWebEditorView *webEditor = [self webEditor];
     DOMDocument *domDoc = [webEditor HTMLDocument];
+	#pragma unused (domDoc)
     OBASSERT(domDoc);
     
     

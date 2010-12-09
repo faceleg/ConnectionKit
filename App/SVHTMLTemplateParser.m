@@ -382,6 +382,7 @@
 	
 	// Mark for image replacement ONLY if QC supported.
 	KTPage *page = [[self HTMLContext] page];
+#pragma unused (page)
 	OBASSERT([page isKindOfClass:[KTPage class]]);
 
 	//OBASSERT([self document]);

@@ -400,7 +400,8 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 - (void)forceUpdateFromURL:(NSURL *)URL;
 {
     BOOL result = [self readFromURL:URL options:0 error:NULL];
-    OBPOSTCONDITION(result);
+#pragma unused (result)
+   OBPOSTCONDITION(result);
 }
 
 - (BOOL)shouldRemoveFromDocument;

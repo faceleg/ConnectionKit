@@ -183,7 +183,7 @@
 
 - (NSPoint)locationOfHandle:(SVGraphicHandle)handle frameRect:(NSRect)bounds;
 {
-    NSPoint result;
+    NSPoint result = NSZeroPoint;
     
     switch (handle)
     {

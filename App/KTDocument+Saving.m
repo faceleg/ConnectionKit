@@ -558,7 +558,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     if (!result)
     {
         NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL type:nil];
-        OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+#pragma unused (persistentStoreURL)
+       OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
         LOG((@"error: wants to setMetadata during save but no persistent store at %@", persistentStoreURL));
     }
     

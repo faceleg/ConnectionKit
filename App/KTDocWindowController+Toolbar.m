@@ -415,6 +415,7 @@
 - (void)toolbarWillAddItem:(NSNotification *)notification
 {
 	NSToolbar *toolbar = [notification object];
+#pragma unused (toolbar)
 	OBPRECONDITION(toolbar == [[self window] toolbar]);
 	
 	NSToolbarItem *item = [[notification userInfo] objectForKey:@"item"];

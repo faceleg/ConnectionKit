@@ -113,6 +113,7 @@ const int kDesignThumbHeight = 65;
 		[categoryProblems appendFormat:@"width = %@: must be %@", width, [[[KTDesign widthValues] description] condenseWhiteSpace]];
 	}
 	NSString *identifier = [aCandidateBundle bundleIdentifier];
+#pragma unused (identifier)
 	if (![categoryProblems isEqualToString:@""]
 #ifdef DEBUG
 		&& [identifier hasPrefix:@"sandvox."]	// Don't bother logging 3rd-party issues for debug builds.
