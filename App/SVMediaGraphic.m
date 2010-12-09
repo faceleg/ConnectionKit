@@ -511,6 +511,14 @@
             width = height * aspectRatio;
         }
         
+        
+        // Type? Images want to pick their own, but movies etc. must be converted to JPEG
+        NSString *type = [self typeToPublish];
+        CFArrayRef types = CGImageDestinationCopyTypeIdentifiers();
+        if (![(NSArray *)types containsObject:type]) type = (NSString *)kUTTypeJPEG;
+        CFRelease(types);
+        
+        
         // During editing, cheat and use special URL if possible. #98041
         if ([context isForEditing] && ![media mediaData])
         {
@@ -519,7 +527,7 @@
                                                scalingMode:0
                                                 sharpening:0.0f
                                          compressionFactor:1.0f
-                                                  fileType:[self typeToPublish]];
+                                                  fileType:type];
             
             [context writeImageWithSrc:[context relativeURLStringOfURL:url]
                                    alt:@""
@@ -528,9 +536,6 @@
         }
         else
         {
-            // How should the image be published?
-            NSString *type = [self typeToPublish];
-            
             // Where to publish?
             NSString *filename = [[[media preferredUploadPath] lastPathComponent] stringByDeletingPathExtension];
             filename = [filename stringByAppendingFormat:@"_%u", width];
