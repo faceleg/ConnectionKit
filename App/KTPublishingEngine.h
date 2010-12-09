@@ -70,8 +70,10 @@ typedef enum {
     
     NSMutableArray      *_plugInCSS;    // mixture of string CSS snippets, and CSS URLs
     
-    NSOperationQueue    *_operationQueue;
+    // Worker queues
+    NSOperationQueue    *_defaultQueue;
     NSOperationQueue    *_coreImageQueue;
+    NSOperationQueue    *_diskQueue;
     
     id<SVPublishedObject> _sitemapPinger;   
 }
@@ -117,7 +119,8 @@ typedef enum {
 - (NSString *)pathForFileWithSHA1Digest:(NSData *)digest;
 
 
-#pragma mark 
+#pragma mark
+// A standard operation queue that will run as many operations as the system sees fit. Generally, use for CPU-bound operations (e.g. hashing)
 @property(retain, readonly) NSOperationQueue *defaultQueue; // want this to be threadsafe
 
 @property(retain) id<SVPublishedObject> sitemapPinger;

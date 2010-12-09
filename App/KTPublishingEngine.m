@@ -117,7 +117,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         _coreImageQueue = [[NSOperationQueue alloc] init];
         [_coreImageQueue setMaxConcurrentOperationCount:1];
         
-        _operationQueue = [[NSOperationQueue alloc] init];
+        _diskQueue = [[NSOperationQueue alloc] init];
+        [_diskQueue setMaxConcurrentOperationCount:1];
+        
+        _defaultQueue = [[NSOperationQueue alloc] init];
+        
+        // Name them for debugging
+        if ([NSOperationQueue instancesRespondToSelector:@selector(setName:)])
+        {
+            [_coreImageQueue performSelector:@selector(setName:) withObject:@"KTPublishingEngine: Core Image Queue"];
+            [_diskQueue performSelector:@selector(setName:) withObject:@"KTPublishingEngine: Disk Access Queue"];
+            [_defaultQueue performSelector:@selector(setName:) withObject:@"KTPublishingEngine: Default Queue"];
+        }
 	}
 	
 	return self;
@@ -141,7 +152,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [_plugInCSS release];
     
     [_coreImageQueue release];
-    [_operationQueue release];
+    [_defaultQueue release];
+    [_diskQueue release];
     [_nextOp release];
 	
 	[super dealloc];
@@ -609,14 +621,42 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [_publishedMediaDigests setObject:[NSNull null] forKey:request];
     
     
-    // Do the calculation on a background thread
-    NSOperation *op = [[NSInvocationOperation alloc]
-                       initWithTarget:self
-                       selector:@selector(threadedPublishMedia:)
-                       object:request];
-    
+    // Do the calculation on a background thread. Which one depends on the task needed
+    NSOperation *op;
+    if ([request isNativeRepresentation])
+    {
+        NSData *data = [[request media] mediaData];
+        if (data)
+        {
+            // It just needs hashing on a CPU-bound queue
+            NSInvocation *invocation = [NSInvocation invocationWithSelector:@selector(threadedPublishData:forMedia:)
+                                                                     target:self
+                                                                  arguments:NSARRAY(data, request)];
+            
+            op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [[self defaultQueue] addOperation:op];
+        }
+        else
+        {
+            // Read data from disk for hashing
+            op = [[NSInvocationOperation alloc]
+                  initWithTarget:self
+                  selector:@selector(threadedPublishMedia:)
+                  object:request];
+            
+            [_diskQueue addOperation:op];
+        }
+    }
+    else
+    {
+        op = [[NSInvocationOperation alloc]
+                           initWithTarget:self
+                           selector:@selector(threadedPublishMedia:)
+                           object:request];
+        
+        [_coreImageQueue addOperation:op];  // most of the work should be Core Image's
+    }
     [self addDependencyForNextPhase:op];
-    [_coreImageQueue addOperation:op];
     [op release];
 }
 
@@ -700,15 +740,15 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-- (void)threadedPublishMedia:(id <SVMedia>)media;
+- (void)threadedPublishMedia:(SVMediaRequest *)request;
 {
-    OBPRECONDITION(media);
+    OBPRECONDITION(request);
     
     // Calculate hash of media so can decide where to place it
-    NSData *fileContents = [media mediaData];
+    NSData *fileContents = [request mediaData];
     
     // TODO: grab data from file and hash on a different worker thread, since this is expected to be the Core Image queue (presently)
-    if (!fileContents) fileContents = [NSData dataWithContentsOfURL:[media mediaURL]];
+    if (!fileContents) fileContents = [NSData dataWithContentsOfURL:[[request media] mediaURL]];
     
     
     // Hash on a different worker thread, since this is expected to be the Core Image queue (presently)
@@ -717,7 +757,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSInvocation *invocation = [NSInvocation
                                     invocationWithSelector:@selector(threadedPublishData:forMedia:)
                                     target:self
-                                    arguments:[NSArray arrayWithObjects:fileContents, media, nil]];
+                                    arguments:[NSArray arrayWithObjects:fileContents, request, nil]];
         
         NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
         [self addDependencyForNextPhase:op];
@@ -781,7 +821,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 #pragma mark Util
 
-@synthesize defaultQueue = _operationQueue;
+@synthesize defaultQueue = _defaultQueue;
 
 @synthesize sitemapPinger = _sitemapPinger;
 
