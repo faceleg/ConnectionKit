@@ -9,6 +9,7 @@
 #import "SVHTMLContext.h"
 
 
+@class SVMediaRequest;
 @protocol SVPublisher;
 
 @interface SVPublishingHTMLContext : SVHTMLContext
@@ -20,5 +21,7 @@
 
 - (id)initWithUploadPath:(NSString *)path
                publisher:(id <SVPublisher>)publisher;
+
+- (NSURL *)addMediaWithRequest:(SVMediaRequest *)request;
 
 @end

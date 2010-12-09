@@ -9,6 +9,7 @@
 #import "SVPublishingHTMLContext.h"
 
 #import "KTHostProperties.h"
+#import "SVMedia.h"
 #import "SVMediaRequest.h"
 #import "KTPage+Paths.h"
 #import "SVPublisher.h"
@@ -79,26 +80,15 @@
     [_path release]; _path = nil;
 }
 
-- (NSURL *)addMedia:(id <SVMedia>)media;
+- (NSURL *)addMedia:(SVMedia *)media;
 {
-    NSString *mediaPath = [_publisher publishMediaWithRequest:media];
-    
-    KTPage *page = [self page];
-    NSString *pagePath = [[_publisher baseRemotePath] stringByAppendingPathComponent:[page uploadPath]];
-    
-    NSString *relPath = [mediaPath ks_pathRelativeToDirectory:[pagePath stringByDeletingLastPathComponent]];
-    
-    if (relPath)
-    {
-        // Can't use -baseURL here as it may differ to [page URL] (e.g. archive pages) #98791
-        NSURL *result = [NSURL URLWithString:relPath relativeToURL:[page URL]];
-        return result;
-    }
-    
-    return nil;
+    SVMediaRequest *request = [[SVMediaRequest alloc] initWithMedia:media];
+    NSURL *result = [self addMediaWithRequest:request];
+    [request release];
+    return result;
 }
 
-- (NSURL *)addImageMedia:(id <SVMedia, IMBImageItem>)media
+- (NSURL *)addImageMedia:(SVMedia *)media
                    width:(NSNumber *)width
                   height:(NSNumber *)height
                     type:(NSString *)type
@@ -129,16 +119,35 @@
                 stringByAppendingPathComponent:preferredFilename];
     }
     
-    id <SVMedia> scaledMedia = [[SVMediaRequest alloc] initWithMedia:media
-                                                                   width:width
-                                                                  height:height
-                                                                    type:type
-                                                     preferredUploadPath:path];
+    SVMediaRequest *request = [[SVMediaRequest alloc] initWithMedia:media
+                                                              width:width
+                                                             height:height
+                                                               type:type
+                                                preferredUploadPath:path];
     
-    NSURL *result = [self addMedia:scaledMedia];
-    [scaledMedia release];
+    NSURL *result = [self addMediaWithRequest:request];
+    [request release];
     
     return result;
+}
+
+- (NSURL *)addMediaWithRequest:(SVMediaRequest *)request;
+{
+    NSString *mediaPath = [_publisher publishMediaWithRequest:request];
+    
+    KTPage *page = [self page];
+    NSString *pagePath = [[_publisher baseRemotePath] stringByAppendingPathComponent:[page uploadPath]];
+    
+    NSString *relPath = [mediaPath ks_pathRelativeToDirectory:[pagePath stringByDeletingLastPathComponent]];
+    
+    if (relPath)
+    {
+        // Can't use -baseURL here as it may differ to [page URL] (e.g. archive pages) #98791
+        NSURL *result = [NSURL URLWithString:relPath relativeToURL:[page URL]];
+        return result;
+    }
+    
+    return nil;
 }
 
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;

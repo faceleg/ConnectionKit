@@ -684,10 +684,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     //  A)  Collect digests of all media (e.g. for dupe identification)
     //  B)  As a head start, queue for upload any media that has previously been published, thus reserving path
     
-    NSData *digest = [_publishedMediaDigests objectForKey:media];
-    if (digest)
+    NSData *cachedDigest = [_publishedMediaDigests objectForKey:media];
+    if (cachedDigest)
     {
-        result = [self publishMediaWithRequest:media cachedData:nil SHA1Digest:digest];
+        result = [self publishMediaWithRequest:media cachedData:nil SHA1Digest:cachedDigest];
     }
     else
     {
