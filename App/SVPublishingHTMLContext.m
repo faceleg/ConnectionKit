@@ -82,13 +82,16 @@
 - (NSURL *)addMedia:(id <SVMedia>)media;
 {
     NSString *mediaPath = [_publisher publishMedia:media];
-    NSString *pagePath = [[_publisher baseRemotePath] stringByAppendingPathComponent:[[self page] uploadPath]];
+    
+    KTPage *page = [self page];
+    NSString *pagePath = [[_publisher baseRemotePath] stringByAppendingPathComponent:[page uploadPath]];
     
     NSString *relPath = [mediaPath ks_pathRelativeToDirectory:[pagePath stringByDeletingLastPathComponent]];
     
     if (relPath)
     {
-        NSURL *result = [NSURL URLWithString:relPath relativeToURL:[self baseURL]];
+        // Can't use -baseURL here as it may differ to [page URL] (e.g. archive pages) #98791
+        NSURL *result = [NSURL URLWithString:relPath relativeToURL:[page URL]];
         return result;
     }
     
