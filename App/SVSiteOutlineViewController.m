@@ -1382,24 +1382,24 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 #pragma mark Validating a Drop
 
 - (NSDragOperation)validateNonLinkDrop:(id <NSDraggingInfo>)info
-                    proposedCollection:(KTPage *)collection
+                    proposedCollection:(KTPage *)page
                     proposedChildIndex:(NSInteger)index;
 {
     //  Rather like the Outline View datasource method, but has already taken into account the layout of root
     
     
-    OBPRECONDITION(collection);
+    OBPRECONDITION(page);
 #ifndef CAN_CONVERT_TO_COLLECTIONS
-    OBPRECONDITION([collection isCollection]);
+    OBPRECONDITION([page isCollection]);
 #endif
     
     
     // Rule 2.
     if (index != NSOutlineViewDropOnItemIndex &&
-        [[collection collectionSortOrder] integerValue] != SVCollectionSortManually)
+        [[page collectionSortOrder] integerValue] != SVCollectionSortManually)
     {
         index = NSOutlineViewDropOnItemIndex;
-        [self setDropSiteItem:collection dropChildIndex:index];
+        [self setDropSiteItem:page dropChildIndex:index];
     }
     
     
@@ -1413,7 +1413,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         // Rule 4. Don't allow a collection to become a descendant of itself
         for (SVSiteItem *aDraggedItem in draggedItems)
         {
-            if ([collection isDescendantOfItem:aDraggedItem]) return NSDragOperationNone;
+            if ([page isDescendantOfItem:aDraggedItem]) return NSDragOperationNone;
         }
         
         
@@ -1421,9 +1421,13 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     }
     
     
-    // Pretend we're going to do the preferred operation
-    if ([info draggingSourceOperationMask] & NSDragOperationCopy) return NSDragOperationCopy;
-    if ([info draggingSourceOperationMask] & NSDragOperationMove) return NSDragOperationMove;
+    // Outside files can only be dropped into collections
+    if ([page isCollection])
+    {
+        // Pretend we're going to do the preferred operation
+        if ([info draggingSourceOperationMask] & NSDragOperationCopy) return NSDragOperationCopy;
+        if ([info draggingSourceOperationMask] & NSDragOperationMove) return NSDragOperationMove;
+    }
     return NSDragOperationNone;
 }
 
