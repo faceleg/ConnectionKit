@@ -319,6 +319,7 @@
         
         SVHTMLContext *context3 = [publishingEngine beginPublishingHTMLToPath:
                                   [anArchivePage uploadPath]];
+        [context setBaseURL:[anArchivePage URL]]; // have to set manually. #98791
         
         [context3 writeDocumentWithArchivePage:anArchivePage];
         [context3 close];
