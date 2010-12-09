@@ -124,33 +124,26 @@ preferredUploadPath:(NSString *)path;
     return _uploadPath;
 }
 
-- (BOOL)isEqualToMedia:(id <SVMedia>)otherMedia;
+- (BOOL)isEqualToMediaRequest:(SVMediaRequest *)otherMedia;
 {
-    if ([[self mediaURL] ks_isEqualToURL:[otherMedia mediaURL]])
-    {
-        return YES;
-    }
-    else if ([otherMedia isKindOfClass:[SVMediaRequest class]])
-    {
-        // Evalutating -mediaData is expensive, so compare "recipes"
-        SVMediaRequest *otherImage = (SVMediaRequest *)otherMedia;
-        return ([otherImage.media isEqualToMedia:self.media] &&
-                [otherImage.width isEqualToNumber:self.width] &&
-                [otherImage.height isEqualToNumber:self.height] &&
-                [otherImage.type isEqualToString:self.type]);
-    }
+    if (otherMedia == self) return YES;
     
-    return NO;
+    // Evalutating -mediaData is expensive, so compare "recipes"
+    return ([otherMedia.media isEqualToMedia:self.media] &&
+            KSISEQUAL(otherMedia.width, self.width) &&
+            KSISEQUAL(otherMedia.height, self.height) &&
+            KSISEQUAL(otherMedia.type, self.type));
 }
 
 - (BOOL)isEqual:(id)object;
 {
-    if ([object conformsToProtocol:@protocol(SVMedia)])
+    BOOL result = [super isEqual:object];
+    if (!result && [object isKindOfClass:[SVMediaRequest class]])
     {
-        return [self isEqualToMedia:object];
+        result = [self isEqualToMediaRequest:object];
     }   
     
-    return NO;
+    return result;
 }
 
 - (NSUInteger)hash { return [[self media] hash]; }
