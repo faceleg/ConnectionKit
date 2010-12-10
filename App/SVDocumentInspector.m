@@ -102,21 +102,6 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
 	
 }
 
-- (IBAction)chooseFavicon:(id)sender;
-{
-	KTDocument *document = [self representedObject];
-    NSOpenPanel *panel = [document makeChooseDialog];
- 	[panel setAllowedFileTypes:[NSArray arrayWithObject:(NSString *)kUTTypeImage]];
-   
-    if ([panel runModalForTypes:[panel allowedFileTypes]] == NSFileHandlingPanelOKButton)
-    {
-        NSURL *URL = [panel URL];
-        
-        KTMaster *master = [[[self inspectedObjectsController] selection] valueForKey:@"master"];
-        [master setFaviconWithContentsOfURL:URL];
-    }
-}
-
 #pragma mark Presentation
 
 - (CGFloat)contentHeightForViewInInspectorForTabViewItem:(NSTabViewItem *)tabViewItem;

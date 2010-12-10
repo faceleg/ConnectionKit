@@ -25,8 +25,6 @@
 	IBOutlet NSImageView *oProBadge;
 }
 
-- (IBAction)chooseFavicon:(id)sender;
-
 - (NSArray *)languages;
 - (IBAction)languageChosen:(id)sender;
 
