@@ -23,7 +23,9 @@
 		<meta name="robots" content="[[=&userDefaults.metaRobots]]" />
 		<meta name="generator" content="[[=&site.appNameVersion]]" />
 		<meta name="viewport" content="width=[[=master.design.viewport]]" />
-[[if currentContext.canWriteProMarkup]][[if site.googleSiteVerification]]		[[=site.googleSiteVerification]][[endif2]][[endif]]
+[[if parser.HTMLContext.isForPublishing]][[if currentContext.canWriteProMarkup]][[if site.googleSiteVerification]]
+		[[=site.googleSiteVerification]]
+[[endif3]][[endif2]][[endif]]
 [[if parser.HTMLGenerationPurpose]][[if master.faviconMedia]]
 		<link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
 [[endif2]][[endif]]
@@ -44,10 +46,9 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 -->
 [[=parser.outputWriter.writeExtraHeaders]]
 [[=writeCodeInjectionHeadArea]]
-[[if parser.isPublishing]]
-[[if currentContext.canWriteProMarkup]][[if site.googleAnalyticsCode]][[=site.googleAnalyticsCode]][[endif3]]
-[[endif2]]
-[[endif]]
+[[if parser.HTMLContext.isForPublishing]][[if currentContext.canWriteProMarkup]][[if site.googleAnalyticsCode]]
+[[=site.googleAnalyticsCode]]
+[[endif3]][[endif2]][[endif]]
 	</head>
 	<body class="sandvox [[if !titleBox.hidden]]has-page-title[[else]]no-page-title[[endif]] [[if showSidebar]]allow-sidebar[[else]]no-sidebar[[endif]] [[if master.bannerType]]has-custom-banner[[else]]no-custom-banner[[endif]] [[if showNavigationArrows]][[if parentPage.navigationArrowsStyle==1]]has-photo-navigation[[else2]]has-text-navigation[[endif2]][[else]]no-navigation[[endif]][[if isRootPage]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[=writeCodeInjectionBodyTag]]>
 [[=writeCodeInjectionBodyTagStart]]
