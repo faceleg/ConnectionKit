@@ -169,7 +169,7 @@
 		if (self.indexLayoutType & kTitleMask)
 		{
 			[context startElement:@"td" className:@"dli2"];
-			[context startElement:@"h3" className:@"index-title"];
+			[context startElement:[context currentHeaderLevelTagName] className:@"index-title"];
 			[self writeTitleOfIteratedPage];
 			[context endElement];
 			[context endElement];
@@ -200,7 +200,7 @@
 	{
 		if (self.indexLayoutType & kTitleMask)
 		{
-			[context startElement:@"h3" className:@"index-title"];
+			[context startElement:[context currentHeaderLevelTagName] className:@"index-title"];
 			[self writeTitleOfIteratedPage];
 			[context endElement];
 		}
