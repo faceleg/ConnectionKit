@@ -386,6 +386,16 @@
     return result;
 }
 
+- (void)incrementHeaderLevel;
+{
+    [self setCurrentHeaderLevel:[self currentHeaderLevel] + 1];
+}
+
+- (void)decrementHeaderLevel;
+{
+    [self setCurrentHeaderLevel:[self currentHeaderLevel] - 1];
+}
+
 #pragma mark Elements/Comments
 
 // Override to sort the keys so that they are always consistently written.
@@ -518,32 +528,40 @@
 
 - (void)writeGraphicBody:(id <SVGraphic>)graphic;
 {
-    // Graphic body
-    if (![graphic isPagelet])
+    [self incrementHeaderLevel];
+    @try
     {
-        [self startElement:@"div"]; // <div class="graphic">, will be closed by caller
-        
-        
-        [self pushClassName:@"figure-content"];  // identifies for #84956
-    }
-    
-    if ([graphic isKindOfClass:[SVMediaGraphic class]] || [graphic isKindOfClass:[SVTextBox class]])
-    {
-        // It's almost certainly media, generate DOM controller to match
-        [graphic writeBody:self];
-    }
-    else
-    {
-        @try
+        // Graphic body
+        if (![graphic isPagelet])
         {
-            [[self writeElement:@"div" contentsInvocationTarget:graphic]
-             writeBody:self];
+            [self startElement:@"div"]; // <div class="graphic">, will be closed by caller
+            
+            
+            [self pushClassName:@"figure-content"];  // identifies for #84956
         }
-        @catch (NSException *exception)
+        
+        if ([graphic isKindOfClass:[SVMediaGraphic class]] || [graphic isKindOfClass:[SVTextBox class]])
         {
-            // Was probably caused by a plug-in. Log and soldier on. #88083
-            NSLog(@"Writing graphic body raised exception, probably due to incorrect use of HTML Writer");
+            // It's almost certainly media, generate DOM controller to match
+            [graphic writeBody:self];
         }
+        else
+        {
+            @try
+            {
+                [[self writeElement:@"div" contentsInvocationTarget:graphic]
+                 writeBody:self];
+            }
+            @catch (NSException *exception)
+            {
+                // Was probably caused by a plug-in. Log and soldier on. #88083
+                NSLog(@"Writing graphic body raised exception, probably due to incorrect use of HTML Writer");
+            }
+        }
+    }
+    @finally
+    {
+        [self decrementHeaderLevel];
     }
 }
 
