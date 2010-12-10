@@ -53,6 +53,7 @@
 
 - (void)writePageletsHTML:(SVHTMLContext *)context;
 {
+	int savedHeaderLevel = [context currentHeaderLevel];	// probably don't need to save level, but we might as well
     [context setCurrentHeaderLevel:4];
     @try
     {
@@ -68,7 +69,7 @@
     }
     @finally
     {
-        [context decrementHeaderLevel];
+        [context setCurrentHeaderLevel:savedHeaderLevel];
     }
 }
 
