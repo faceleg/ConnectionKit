@@ -30,7 +30,12 @@
         if (![self chooseFile])
         {
             // Reset fill type
-            [self setFillType:[NSNumber numberWithBool:NO]];
+            NSDictionary *info = [self infoForBinding:@"fillType"];
+            
+            NSNumber *value = [[info objectForKey:NSObservedObjectKey]
+                               valueForKeyPath:[info objectForKey:NSObservedKeyPathKey]];
+            
+            [self setFillType:value];
             return;
         }
     }
