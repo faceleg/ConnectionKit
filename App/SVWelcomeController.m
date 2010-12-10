@@ -30,6 +30,7 @@
 #import "SVApplicationController.h"
 #import "NSError+Karelia.h"
 #import "KTPublishingEngine.h"
+#import "KTImageTextCell.h"
 
 @interface SVWelcomeController ()
 
@@ -568,6 +569,14 @@
 	return displayPath;
 }
 
+- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row;
+{
+	if ([cell isKindOfClass:[SVShadowingImageCell class]])	// Fail gracefully if not the image kind of cell
+	{
+		KSRecentDocument *doc = [[oRecentDocsController arrangedObjects] objectAtIndex:row];
+		[cell setHasShadow:[doc shouldDrawShadow]];
+	}
+}
 
 - (void)observeValueForKeyPath:(NSString *)aKeyPath
                       ofObject:(id)anObject
