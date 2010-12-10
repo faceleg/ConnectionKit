@@ -160,7 +160,7 @@
     SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[[self class] pageMainContentTemplate]
                                                                         component:[context page]];
     
-    [context setCurrentHeaderLevel:3];
+    [context setCurrentHeaderLevel:2];		// this will let elements increment level so H3 is seen in main body
     [parser parseIntoHTMLContext:context];
     [parser release];
 }
