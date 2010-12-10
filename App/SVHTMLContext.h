@@ -132,6 +132,8 @@ typedef enum {
 
 #pragma mark Header Tags
 @property (nonatomic) NSUInteger currentHeaderLevel;    // if you need to write a header tag, use this level
+- (void)incrementHeaderLevel;
+- (void)decrementHeaderLevel;
 - (NSString *)currentHeaderLevelTagName;                // takes, .currentHeaderLevel and produces h3 etc.
 
 
