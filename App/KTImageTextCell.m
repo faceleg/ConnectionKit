@@ -156,6 +156,24 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 	return result;
 }
 
+/*  Default implementation calls -cellSize and then passes that to -titleRectForBounds:
+ *  Problem is title rect ignores the cell, so you end with an expansion frame that's too small and oddly offset
+ */
+- (NSRect)expansionFrameWithFrame:(NSRect)cellFrame inView:(NSView *)view
+{
+    NSRect result = NSZeroRect;
+    
+    // Show expansion if the desired width is greater than frame
+    CGFloat width = [self cellSize].width;
+    if (width > cellFrame.size.width)
+    {
+        result = cellFrame;
+        result.size.width = width;
+    }
+    
+    return result;
+}
+
 #pragma mark Drawing
 
 - (void)drawNotPublishableMarkersWithFrame:(NSRect)cellFrame
