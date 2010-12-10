@@ -26,10 +26,10 @@
 [[if parser.HTMLContext.isForPublishing]][[if currentContext.canWriteProMarkup]][[if site.googleSiteVerification]]
 		[[=site.googleSiteVerification]]
 [[endif3]][[endif2]][[endif]]
-[[if parser.HTMLGenerationPurpose]][[if master.faviconMedia]]
+[[if !parser.HTMLContext.isForEditing]][[if master.faviconMedia]]
 		<link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
 [[endif2]][[endif]]
-[[if parser.HTMLGenerationPurpose]][[if feedURL]]
+[[if !parser.HTMLContext.isForEditing]][[if feedURL]]
 		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&title]]" href="[[=&feedURL]]" charset="UTF-8" />
 [[endif2]][[endif]]
 		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
