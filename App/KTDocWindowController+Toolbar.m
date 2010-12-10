@@ -169,9 +169,20 @@
     [menu addItemWithTitle:NSLocalizedString(@"External Link", "New page pulldown button menu item title")
                     action:@selector(addExternalLinkPage:)
              keyEquivalent:@""];
-	NSImage *genericLink = [NSImage imageFromOSType:kGenericURLIcon];
-	[[pulldownButton lastItem] setLargerIconImage:genericLink];
 	
+	NSImage *genericLink = nil;
+	// Alas, the kGenericURLIcon is only 32x32 maximum, so fudge and get a larger version
+	NSString *coreTypesImagePath = @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericURLIcon.icns";
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	if ([fileManager fileExistsAtPath:coreTypesImagePath])
+	{
+		genericLink = [[[NSImage alloc] initWithContentsOfFile:coreTypesImagePath] autorelease];
+	}
+	else	// fallback in case something is not as expected
+	{
+		genericLink = [NSImage imageFromOSType:kGenericURLIcon];
+	}
+	[[pulldownButton lastItem] setLargerIconImage:genericLink];
 	
 	[menu addItemWithTitle:NSLocalizedString(@"Raw HTML/Text", "New page pulldown button menu item title")
 					action:@selector(addRawTextPage:) keyEquivalent:@""];
