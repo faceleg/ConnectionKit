@@ -97,10 +97,20 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 
 - (NSSize)cellSize
 {
-	// expand cellSize my width of myImage + padding
-    NSSize cellSize = [super cellSize];
-    cellSize.width += (myImage ? [myImage size].width : 0) + myPadding;
-    return cellSize;
+	// expand cellSize by width of myImage + padding
+    NSSize result = [super cellSize];
+    result.width += [self padding];
+    
+    if ([self image])
+    {
+        NSSize imageSize = [self image].size;
+        result.width += imageSize.width;
+    
+        // Generally image is taller than text, so accomodate that
+        if ([self maxImageSize] > result.height) result.height = [self maxImageSize];
+    }
+    
+    return result;
 }
 
 /*	The rect to fit the text in
