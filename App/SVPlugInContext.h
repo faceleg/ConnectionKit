@@ -28,6 +28,7 @@
 
 
 #pragma mark State
+- (BOOL)isWritingPagelet;   // YES if currently writing a plug-in for the sidebar or callout
 - (NSString *)currentIterationCSSClassName;
 - (id)objectForCurrentTemplateIteration;
 

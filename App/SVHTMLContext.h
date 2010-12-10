@@ -62,6 +62,7 @@ typedef enum {
     NSUInteger              _headerMarkupIndex;
     
     NSMutableArray  *_iteratorsStack;
+    BOOL            _writingPagelet;
     
     NSUInteger      _numberOfGraphics;
     

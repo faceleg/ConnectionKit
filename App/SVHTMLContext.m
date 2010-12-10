@@ -150,6 +150,8 @@
     [[self outputStringWriter] removeAllCharacters];
 }
 
+- (BOOL)isWritingPagelet; { return _writingPagelet; }
+
 #pragma mark Document
 
 - (void)startDocumentWithPage:(KTPage *)page
@@ -470,7 +472,15 @@
     
     if ([graphic isPagelet])
     {
-        [self writePagelet:(SVGraphic *)graphic];
+        _writingPagelet = YES;
+        @try
+        {
+            [self writePagelet:(SVGraphic *)graphic];
+        }
+        @finally
+        {
+            _writingPagelet = NO;
+        }
     }
     else if ([graphic shouldWriteHTMLInline])
     {
