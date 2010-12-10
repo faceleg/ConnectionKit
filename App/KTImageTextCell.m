@@ -15,15 +15,6 @@
 #define DEFAULT_PADDING 4   // eyeball guess, 4 is a standard Aqua spacing
 
 
-@interface SVSiteOutlineImageCell : NSImageCell
-{
-  @private
-    BOOL    _shadow;
-}
-@property(nonatomic) BOOL hasShadow;
-@end
-
-
 #pragma mark -
 
 
@@ -65,7 +56,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
         [self setPadding:DEFAULT_PADDING];
 //		[self setStaleness:kNotStale]; // enum removed, staleness flag has changed
         
-		myImageCell = [[SVSiteOutlineImageCell alloc] initImageCell:nil];
+		myImageCell = [[SVShadowingImageCell alloc] initImageCell:nil];
 		[myImageCell setImageAlignment:NSImageAlignCenter];
 		[myImageCell setImageScaling:NSImageScaleNone]; // we are supplied correct size images
     }
@@ -521,7 +512,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 #pragma mark -
 
 
-@implementation SVSiteOutlineImageCell
+@implementation SVShadowingImageCell
 
 @synthesize hasShadow = _shadow;
 

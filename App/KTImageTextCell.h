@@ -9,7 +9,13 @@
 #import <AppKit/AppKit.h>
 
 
-@class SVSiteOutlineImageCell;
+@interface SVShadowingImageCell : NSImageCell
+{
+@private
+    BOOL    _shadow;
+}
+@property(nonatomic) BOOL hasShadow;
+@end
 
 
 @interface KTImageTextCell : NSTextFieldCell
@@ -17,7 +23,7 @@
   @private
     NSImage                 *myImage;
     BOOL                    _thumbnail;
-    SVSiteOutlineImageCell	*myImageCell;
+    SVShadowingImageCell	*myImageCell;
 	float                   myMaxImageSize;
     int                     myPadding;
 	int                     myStaleness;
