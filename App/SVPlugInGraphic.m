@@ -224,10 +224,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     NSString *identifier = [self plugInIdentifier];
     
     NSUInteger openElements = [context openElementsCount];
-    
-    NSUInteger level = [context currentHeaderLevel];
-    [context setCurrentHeaderLevel:4];
-    
+        
     [context writeComment:[NSString stringWithFormat:@" %@ ", identifier]];
     
     @try
@@ -246,8 +243,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     }
     
     [context writeComment:[NSString stringWithFormat:@" /%@ ", identifier]];
-    
-    [context setCurrentHeaderLevel:level];
 }
 
 - (NSString *)inlineGraphicClassName;
