@@ -118,40 +118,6 @@
     [context endElement]; // </ul>    
 }
 
--(BOOL)validateURL:(id *)ioValue error:(NSError **)outError
-{
-    BOOL result = YES;
-    NSURL *URL = *ioValue;
-    
-    if ( URL )
-    {
-        //FIXME: do we need to convert all schemes to feed? waiting for info from Dan...
-        
-        //    // If there is no URL prefix, use feed://
-        //    if (*ioValue && ![*ioValue isEqualToString:@""] && [*ioValue rangeOfString:@"://"].location == NSNotFound)
-        //    {
-        //        *ioValue = [@"feed://" stringByAppendingString:*ioValue];
-        //    }
-        //    // Convert http:// to feed://
-        //    else if ([*ioValue hasPrefix:@"http://"])
-        //    {
-        //        *ioValue = [NSString stringWithFormat:@"feed://%@", [*ioValue substringFromIndex:7]];
-        //    }
-        
-        // we're now using KSURLFormatter to make sure that we're passed a valid URL,
-        // so the top half of the original code is no longer applicable
-        
-        // but, do we need to switch any other scheme to feed:// ?
-        NSString *scheme = [URL scheme];
-        if ( ![scheme isEqualToString:@"feed"] )
-        {
-            
-        }
-    }
-
-    return result;
-}
-
 - (NSURL *)URLAsHTTP		// server requires http:// scheme
 {
     NSURL *result = self.feedURL;
