@@ -95,7 +95,7 @@
             
             NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @"text/javascript", @"type",
-                                   [callbackURL absoluteURL], @"src",
+                                   [context relativeURLStringOfURL:callbackURL], @"src",
                                    nil];
             [context startElement:@"script" attributes:attrs];
             [context endElement]; // </script>
