@@ -53,15 +53,23 @@
 
 - (void)writePageletsHTML:(SVHTMLContext *)context;
 {
-    // Use the best controller available to give us an ordered list of pagelets
-    NSArrayController *controller = [context sidebarPageletsController];
-    OBASSERT(controller);
-    
-    //[context addDependencyOnObject:controller keyPath:@"arrangedObjects"];    // taken care of by SVSidebarDOMController now
-    
-    
-    // Write HTML
-    [context writeGraphics:[controller arrangedObjects]];
+    [context setCurrentHeaderLevel:4];
+    @try
+    {
+        // Use the best controller available to give us an ordered list of pagelets
+        NSArrayController *controller = [context sidebarPageletsController];
+        OBASSERT(controller);
+        
+        //[context addDependencyOnObject:controller keyPath:@"arrangedObjects"];    // taken care of by SVSidebarDOMController now
+        
+        
+        // Write HTML
+        [context writeGraphics:[controller arrangedObjects]];
+    }
+    @finally
+    {
+        [context decrementHeaderLevel];
+    }
 }
 
 - (void)writePageletsHTML;
