@@ -26,7 +26,7 @@
 									</div>
 									[[endif4]]
 [[else3]]
-[[if parser.HTMLGenerationPurpose==0]]
+[[if parser.HTMLContext.isForEditing]]
 									<div class="comments">
 										<p style="color:red;">[['To enable DISQUS, enter the shortname of this site into the Comments Inspector]]</p>
 									</div>
@@ -59,7 +59,7 @@
 									</div>
 									[[endif4]]
 [[else3]]
-[[if parser.HTMLGenerationPurpose==0]]
+[[if parser.HTMLContext.isForEditing]]
 									<div class="comments">
 										<p style="color:red;">[['To enable IntenseDebate, enter the Account ID of this site into the Comments Inspector]]</p>
 									</div>
@@ -71,7 +71,7 @@
 
 [[if allowComments]]
 [[if master.commentsProvider==0]]
-[[if parser.HTMLGenerationPurpose==0]]
+[[if parser.HTMLContext.isForEditing]]
 									<div class="comments">
 										<p style="color:red;">[['To enable comments, please choose a provider in the Comments Inspector]]</p>
 									</div>
