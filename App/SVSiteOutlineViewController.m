@@ -1408,6 +1408,10 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     if ([info draggingSource] == [self outlineView] &&
         [info draggingSourceOperationMask] & NSDragOperationMove)
     {
+        // Don't allow drops onto a published non-collection, as they're unsuitable for conversion. #98962
+        if (![page isCollection] && [page datePublished]) return NSDragOperationNone;
+        
+        
         NSArray *draggedItems = [self lastItemsWrittenToPasteboard];
         
         // Rule 4. Don't allow a collection to become a descendant of itself
@@ -1485,7 +1489,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	
     
     // THE RULES:
-    //  (1.  The drop item can only be a collection) – ditching for 2.0
+    //  (1.  The drop item can only be a collection) – ditching partly for 2.0
     //  2.  You can only drop at a specific index if the collection is manually sorted
     //  3.  You can't drop above the root page
     //  4.  When moving an existing page, can't drop it as a descendant of itself
