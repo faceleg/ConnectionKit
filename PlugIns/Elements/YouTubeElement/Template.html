@@ -1,7 +1,7 @@
 [[if videoID]]
 <div class="VideoElement">
     <div class="video">
-        [[if parser.liveDataFeeds]]
+        [[if currentContext.liveDataFeeds]]
             [[if useIFrame]]
                 [[=writeIFrameCode]]
             [[else3]]

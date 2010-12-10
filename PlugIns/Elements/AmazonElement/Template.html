@@ -25,7 +25,7 @@
 [[foreach productsSuitableForPublishing aProduct]]
 <div class="amazonListRow [[eo]]">
 [[if layout==7]]
-[[if HTMLGenerationPurpose||parser.liveDataFeeds]]
+[[if currentContext.liveDataFeeds]]
 <iframe	src="[[=&aProduct.enhancedDisplayIFrameURL]][[if showPrices]][[if showNewPricesOnly]]&nou=1[[endif8]][[else7]]&npa=1[[endif7]]"
 	style="width:120px; height:240px;"
 	scrolling="no"
@@ -42,7 +42,7 @@
 [[if showThumbnails&&aProduct.publishingThumbnailURLString]]
 <a class="imageLink" href="[[=&aProduct.URL]]"><img
 	class="amazonProductThumbnail[[if frame==2]] amazonProductThumbnailFrame[[endif7]]"
-	src="[[if HTMLGenerationPurpose||parser.liveDataFeeds]][[=&aProduct.publishingThumbnailURLString]][[else7]][[=&thumbnailPlaceholderURL]][[endif7]]"
+	src="[[if currentContext.liveDataFeeds]][[=&aProduct.publishingThumbnailURLString]][[else7]][[=&thumbnailPlaceholderURL]][[endif7]]"
 	alt="[[=&aProduct.title]]"
 	width="[[=&thumbnailWidthsString]]" /></a>
 [[endif6]]

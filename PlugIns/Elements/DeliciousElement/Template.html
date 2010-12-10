@@ -1,6 +1,6 @@
 [[if deliciousID]]
 
-[[if parser.HTMLGenerationPurpose||parser.liveDataFeeds]]
+[[if currentContext.liveDataFeeds]]
 
 <div id="delicious-container-[[=container.elementID]]">
 <script type="text/javascript" src="http://delicious.com/feeds/json/[[=&deliciousID]][[if restrictedTags]]/[[=&%restrictedTags]][[endif3]][[if maxEntries]]?count=[[=maxEntries]][[endif3]]"></script>
