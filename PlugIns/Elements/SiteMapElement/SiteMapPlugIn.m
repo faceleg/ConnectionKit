@@ -137,13 +137,13 @@
             if ( [childPage shouldIncludeInSiteMaps] ) [children addObject:childPage];
         }
         
-        // if asSection emit <h3>, else emit <li>
-        [context startElement:(asSection ? @"h3" : @"li") attributes:nil];
+        // if asSection emit <h3>/<h4>, else emit <li>
+        [context startElement:(asSection ? [context currentHeaderLevelTagName] : @"li") attributes:nil];
         
         // process aPage
         [self writeLinkOfPage:aPage toContext:context];
         
-        // close h3
+        // close h3 (or h4)
 		if ( asSection ) [context endElement];
 		
         // process children
@@ -208,7 +208,7 @@
         {
             // Note: if site map IS home, it will still be shown regardless of show site map checkbox
             
-            [context startElement:(self.sections ? @"h3" : @"p") attributes:nil];
+            [context startElement:(self.sections ? [context currentHeaderLevelTagName] : @"p") attributes:nil];
             [self writeLinkOfPage:rootPage toContext:context];
             [context endElement];
             
