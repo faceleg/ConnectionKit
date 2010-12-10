@@ -482,6 +482,8 @@
 		2792197D10BC631D00E590D5 /* WEKDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2792197B10BC631D00E590D5 /* WEKDOMController.h */; };
 		2792197E10BC631D00E590D5 /* WEKDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2792197C10BC631D00E590D5 /* WEKDOMController.m */; };
 		27939A7E1196264E0091B5B4 /* WebEditingKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 27939A7D1196264E0091B5B4 /* WebEditingKit.h */; };
+		2794A45412B235B40077A291 /* SVFaviconPickerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2794A45212B235B40077A291 /* SVFaviconPickerController.h */; };
+		2794A45512B235B40077A291 /* SVFaviconPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2794A45312B235B40077A291 /* SVFaviconPickerController.m */; };
 		2796DEE311733440000DD6EC /* SVMediaGatheringHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 2796DEE111733440000DD6EC /* SVMediaGatheringHTMLContext.h */; };
 		2796DEE411733440000DD6EC /* SVMediaGatheringHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2796DEE211733440000DD6EC /* SVMediaGatheringHTMLContext.m */; };
 		2796DF0A11733C4D000DD6EC /* SVMediaRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 2796DF0811733C4D000DD6EC /* SVMediaRequest.h */; };
@@ -2055,6 +2057,8 @@
 		2792197B10BC631D00E590D5 /* WEKDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKDOMController.h; sourceTree = "<group>"; };
 		2792197C10BC631D00E590D5 /* WEKDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEKDOMController.m; sourceTree = "<group>"; };
 		27939A7D1196264E0091B5B4 /* WebEditingKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebEditingKit.h; sourceTree = "<group>"; };
+		2794A45212B235B40077A291 /* SVFaviconPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVFaviconPickerController.h; sourceTree = "<group>"; };
+		2794A45312B235B40077A291 /* SVFaviconPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFaviconPickerController.m; sourceTree = "<group>"; };
 		2796DEE111733440000DD6EC /* SVMediaGatheringHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaGatheringHTMLContext.h; sourceTree = "<group>"; };
 		2796DEE211733440000DD6EC /* SVMediaGatheringHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaGatheringHTMLContext.m; sourceTree = "<group>"; };
 		2796DF0811733C4D000DD6EC /* SVMediaRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaRequest.h; sourceTree = "<group>"; };
@@ -3900,6 +3904,8 @@
 				2782918E10912D5D008D0A64 /* DocumentInspector.xib */,
 				27F2790811F9F29400B7F8FA /* SVBannerPickerController.h */,
 				27F2790911F9F29400B7F8FA /* SVBannerPickerController.m */,
+				2794A45212B235B40077A291 /* SVFaviconPickerController.h */,
+				2794A45312B235B40077A291 /* SVFaviconPickerController.m */,
 			);
 			name = "Document Inspector";
 			sourceTree = "<group>";
@@ -5890,6 +5896,7 @@
 				27758712129E8A740027C7FF /* SVFieldFormatter.h in Headers */,
 				270228E712A5C3CB00873AF4 /* SVHTMLValidator.h in Headers */,
 				3C11079512AF122800FB34E8 /* SVGoogleSitemapPinger.h in Headers */,
+				2794A45412B235B40077A291 /* SVFaviconPickerController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7404,6 +7411,7 @@
 				27758713129E8A740027C7FF /* SVFieldFormatter.m in Sources */,
 				270228E812A5C3CB00873AF4 /* SVHTMLValidator.m in Sources */,
 				3C11079612AF122800FB34E8 /* SVGoogleSitemapPinger.m in Sources */,
+				2794A45512B235B40077A291 /* SVFaviconPickerController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

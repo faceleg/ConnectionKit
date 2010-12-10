@@ -2,17 +2,17 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">804</string>
-		<string key="IBDocument.AppKitVersion">1038.29</string>
+		<string key="IBDocument.SystemVersion">10H574</string>
+		<string key="IBDocument.InterfaceBuilderVersion">823</string>
+		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">804</string>
+			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="2"/>
+			<integer value="171"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1478,6 +1478,9 @@
 			<object class="NSCustomObject" id="640077614">
 				<string key="NSClassName">KSTrimFirstLineFormatter</string>
 			</object>
+			<object class="NSCustomObject" id="678605035">
+				<string key="NSClassName">SVFillController</string>
+			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
@@ -1754,14 +1757,6 @@
 					<int key="connectionID">539</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">chooseFavicon:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="708103651"/>
-					</object>
-					<int key="connectionID">605</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">valueURL: inspectedObjectsController.selection.master.faviconMedia.fileURL</string>
 						<reference key="source" ref="970766255"/>
@@ -1832,22 +1827,6 @@
 						</object>
 					</object>
 					<int key="connectionID">661</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: inspectedObjectsController.selection.master.faviconType</string>
-						<reference key="source" ref="396803696"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="396803696"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">selectedTag: inspectedObjectsController.selection.master.faviconType</string>
-							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.master.faviconType</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">663</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2148,6 +2127,62 @@
 						</object>
 					</object>
 					<int key="connectionID">722</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oInspectorViewController</string>
+						<reference key="source" ref="678605035"/>
+						<reference key="destination" ref="1001"/>
+					</object>
+					<int key="connectionID">724</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oPopUpButton</string>
+						<reference key="source" ref="678605035"/>
+						<reference key="destination" ref="396803696"/>
+					</object>
+					<int key="connectionID">726</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">fillTypeChosen:</string>
+						<reference key="source" ref="678605035"/>
+						<reference key="destination" ref="396803696"/>
+					</object>
+					<int key="connectionID">727</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oFaviconPickerController</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="678605035"/>
+					</object>
+					<int key="connectionID">728</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedTag: fillType</string>
+						<reference key="source" ref="396803696"/>
+						<reference key="destination" ref="678605035"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="396803696"/>
+							<reference key="NSDestination" ref="678605035"/>
+							<string key="NSLabel">selectedTag: fillType</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">fillType</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">730</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">chooseFile:</string>
+						<reference key="source" ref="678605035"/>
+						<reference key="destination" ref="708103651"/>
+					</object>
+					<int key="connectionID">731</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3221,6 +3256,12 @@
 						<reference key="parent" ref="0"/>
 						<string key="objectName">KSTrimFirstLineFormatter</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">723</int>
+						<reference key="object" ref="678605035"/>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">Favicon Picker Controller</string>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -3429,7 +3470,7 @@
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{974, 250}, {230, 501}}</string>
+					<string>{{800, 250}, {230, 501}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3651,7 +3692,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">722</int>
+			<int key="maxID">731</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3959,6 +4000,13 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVHTMLTextBlock.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
@@ -4156,6 +4204,17 @@
 							</object>
 						</object>
 					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">objectController</string>
+						<string key="NS.object.0">NSObjectController</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">objectController</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">objectController</string>
+							<string key="candidateClassName">NSObjectController</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVCommentsWindowController.h</string>
@@ -4169,12 +4228,10 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>chooseFavicon:</string>
-							<string>configureComments:</string>
 							<string>languageChosen:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 						</object>
@@ -4184,17 +4241,12 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>chooseFavicon:</string>
-							<string>configureComments:</string>
 							<string>languageChosen:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">chooseFavicon:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">configureComments:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -4208,6 +4260,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>oBannerPickerController</string>
+							<string>oFaviconPickerController</string>
 							<string>oLanguageCodeField</string>
 							<string>oLanguagePopup</string>
 							<string>oProBadge</string>
@@ -4216,6 +4269,7 @@
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>SVBannerPickerController</string>
+							<string>SVFillController</string>
 							<string>NSTextField</string>
 							<string>NSPopUpButton</string>
 							<string>NSImageView</string>
@@ -4227,6 +4281,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>oBannerPickerController</string>
+							<string>oFaviconPickerController</string>
 							<string>oLanguageCodeField</string>
 							<string>oLanguagePopup</string>
 							<string>oProBadge</string>
@@ -4237,6 +4292,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">oBannerPickerController</string>
 								<string key="candidateClassName">SVBannerPickerController</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">oFaviconPickerController</string>
+								<string key="candidateClassName">SVFillController</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oLanguageCodeField</string>
@@ -4366,6 +4425,17 @@
 								<string key="name">configureGoogle:</string>
 								<string key="candidateClassName">NSWindowController</string>
 							</object>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">objectController</string>
+						<string key="NS.object.0">NSObjectController</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">objectController</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">objectController</string>
+							<string key="candidateClassName">NSObjectController</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

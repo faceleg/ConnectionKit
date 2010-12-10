@@ -10,7 +10,7 @@
 #import "KSInspectorViewController.h"
 
 
-@class SVBannerPickerController;
+@class SVFillController, SVBannerPickerController;
 
 
 @interface SVDocumentInspector : KSInspectorViewController
@@ -19,6 +19,7 @@
 	IBOutlet NSTextField		*oLanguageCodeField;
     
     IBOutlet SVBannerPickerController   *oBannerPickerController;
+    IBOutlet SVFillController           *oFaviconPickerController;
 	
 	IBOutlet NSButton *oProButton;	// Really just a button for Google integration ... Equivalent to menu
 	IBOutlet NSImageView *oProBadge;

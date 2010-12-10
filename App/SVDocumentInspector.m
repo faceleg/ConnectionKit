@@ -89,6 +89,10 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
     [oBannerPickerController bind:@"canChooseBannerType" toObject:self withKeyPath:@"inspectedObjectsController.selection.master.design.allowsBannerSubstitution" options:nil];
     
     
+    // Bind Favicon
+    [oFaviconPickerController bind:@"fillType" toObject:self withKeyPath:@"inspectedObjectsController.selection.master.faviconType" options:nil];
+    
+    
     // Observe & update pro stuff
     [[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateProView:)
