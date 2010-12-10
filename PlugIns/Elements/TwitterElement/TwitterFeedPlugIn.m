@@ -89,13 +89,13 @@
         {
             // write a div with callback script
             uniqueID = [context startElement:@"div"
-                                          preferredIdName:@"twitter_div"
-                                                className:nil
-                                               attributes:nil];
+                             preferredIdName:@"twitter_div"
+                                   className:nil
+                                  attributes:nil];
             
             NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @"text/javascript", @"type",
-                                   callbackURL, @"src",
+                                   [callbackURL absoluteURL], @"src",
                                    nil];
             [context startElement:@"script" attributes:attrs];
             [context endElement]; // </script>
