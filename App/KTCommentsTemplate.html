@@ -70,7 +70,7 @@
 [[endif]]
 
 [[if allowComments]]
-[[if master.commentsProvider==0]]
+[[if !master.commentsProvider]]
 [[if parser.HTMLContext.isForEditing]]
 									<div class="comments">
 										<p style="color:red;">[['To enable comments, please choose a provider in the Comments Inspector]]</p>
