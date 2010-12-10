@@ -11,8 +11,10 @@
 
 #import "NSFileManager+Karelia.h"
 #import "NSString+Karelia.h"
-#import "KSURLUtilities.h"
 #import "QTMovie+Karelia.h"
+
+#import "KSThreadProxy.h"
+#import "KSURLUtilities.h"
 
 
 @implementation SVMedia
@@ -100,7 +102,8 @@
 }
 - (NSData *)mediaData;
 {
-    return [_webResource data];
+    // Despite being immutable, web resources fail assertion if accessed on background thread. #99174
+    return [[_webResource ks_proxyOnThread:nil] data];
 }
 
 @synthesize preferredFilename = _preferredFilename;
