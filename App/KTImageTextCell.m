@@ -95,20 +95,19 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 
 #pragma mark Layout
 
-- (NSSize)cellSize
+/*  -cellSize is an NSCell convenience method that calls through to this one
+ */
+- (NSSize)cellSizeForBounds:(NSRect)aRect;
 {
-	// expand cellSize by width of myImage + padding
-    NSSize result = [super cellSize];
-    result.width += [self padding];
+    // Add in width of image and its padding
+    CGFloat imageWidthWithPadding = [self padding] + [self maxImageSize];
+    aRect.size.width -= imageWidthWithPadding;
+    NSSize result = [super cellSizeForBounds:aRect];
+    result.width += imageWidthWithPadding;
     
-    if ([self image])
-    {
-        NSSize imageSize = [self image].size;
-        result.width += imageSize.width;
+    // Generally image is taller than text, so accomodate that
+    if ([self maxImageSize] > result.height) result.height = [self maxImageSize];
     
-        // Generally image is taller than text, so accomodate that
-        if ([self maxImageSize] > result.height) result.height = [self maxImageSize];
-    }
     
     return result;
 }
