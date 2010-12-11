@@ -290,12 +290,14 @@
 
 #pragma mark Dependencies
 
-- (void)addDependency:(KSObjectKeyPathPair *)pair;
+- (void)addDependency:(KSObjectKeyPathPair *)dependency;
 {
-    // Ignore parser properties – why? Mike.
-    if (![[pair object] isKindOfClass:[SVTemplateParser class]])
+    // Ignore parser properties. And now context too
+    // I think my original reason is that those properties aren't really going to change, but we're interested in depending on the original source of that property. e.g. reload when user turns on/off live data feeds, but do so with a fresh context
+    if (![[dependency object] isKindOfClass:[SVTemplateParser class]] &&
+        ![[dependency keyPath] hasPrefix:@"currentContext."])
     {
-        [[self currentDOMController] addDependency:pair];
+        [[self currentDOMController] addDependency:dependency];
     }
 }
 
