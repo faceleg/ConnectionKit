@@ -143,6 +143,14 @@ static id <SVPlugInContext> sCurrentContext;
 + (id <SVPlugInContext>)currentContext; { return sCurrentContext; }
 - (id <SVPlugInContext>)currentContext; { return [SVPlugIn currentContext]; }
 
+- (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
+{
+    // You really shouldn't try to observe currentContext as it's not KVO-compliant. #99304
+    OBASSERT(![keyPath hasPrefix:@"currentContext."]);
+    
+    [super addObserver:observer forKeyPath:keyPath options:options context:context];
+}
+
 - (NSString *)inlineGraphicClassName;
 {
     NSString *result = [[self bundle] objectForInfoDictionaryKey:@"KTCSSClassName"];
