@@ -96,6 +96,10 @@
 - (void)startAnchorElementWithPage:(id <SVPage>)page;
 
 
+#pragma mark Scripts
+- (void)writeJavascriptWithSrc:(NSString *)src;
+
+
 #pragma mark Metrics
 // The element's size will be taken from plug-in's .width and .height properties. When editing, that will be kept up-to-date, with resize handles if appropriate
 - (void)startElement:(NSString *)elementName
