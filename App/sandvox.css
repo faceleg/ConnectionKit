@@ -44,6 +44,12 @@ img.narrow.right { float:right!important; }
     max-width:none;
 }*/
 
+/* For content like amazon which forces white background. Design SHOULD set color for A tag and text color. */
+.whiteBackground
+{
+	background-color:white;
+}
+
  
 /* Firefox reduce dotted lines on links */
 .photo-navigation a:focus, .replaced a:focus {overflow:hidden;}
