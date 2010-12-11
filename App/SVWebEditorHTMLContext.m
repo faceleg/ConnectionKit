@@ -292,7 +292,7 @@
 
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 {
-    // Ignore parser properties – why? Mike.
+    // Ignore parser properties – why? Mike.
     if (![[pair object] isKindOfClass:[SVTemplateParser class]])
     {
         [[self currentDOMController] addDependency:pair];

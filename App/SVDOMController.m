@@ -326,14 +326,10 @@
 {
     OBASSERT(_dependencies);
     
-    // Ignore parser properties
-    if (![[pair object] isKindOfClass:[SVTemplateParser class]])
+    if (![_dependencies containsObject:pair])
     {
-        if (![_dependencies containsObject:pair])
-        {
-            [_dependencies addObject:pair];
-            if ([self isObservingDependencies]) [self beginObservingDependency:pair];
-        }
+        [_dependencies addObject:pair];
+        if ([self isObservingDependencies]) [self beginObservingDependency:pair];
     }
 }
 
