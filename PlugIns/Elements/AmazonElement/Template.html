@@ -12,7 +12,7 @@
 [[endForEach]]
 </ul>
 [[else3]]
-<div class="amazonList [[=layoutCSSClassName]][[if frame==1]] amazonListWhiteBackground[[endif4]]">
+<div class="amazonList [[=layoutCSSClassName]][[if frame==1]] amazonListWhiteBackground whiteBackground[[endif4]]">
 [[if layout==8]]
 <iframe	src="[[=randomLayoutIFrameURL]][[if showPrices]][[if showNewPricesOnly]]&nou=1[[endif6]][[else5]]&npa=1[[endif5]]"
 	style="width:120px; height:240px;"
@@ -41,7 +41,7 @@
 [[else5]]
 [[if showThumbnails&&aProduct.publishingThumbnailURLString]]
 <a class="imageLink" href="[[=&aProduct.URL]]"><img
-	class="amazonProductThumbnail[[if frame==2]] amazonProductThumbnailFrame[[endif7]]"
+	class="amazonProductThumbnail[[if frame==2]] amazonProductThumbnailFrame[[endif7]][[if frame==0]] amazonProductThumbnailNoFrame[[endif7]]"
 	src="[[if currentContext.liveDataFeeds]][[=&aProduct.publishingThumbnailURLString]][[else7]][[=&thumbnailPlaceholderURL]][[endif7]]"
 	alt="[[=&aProduct.title]]"
 	width="[[=&thumbnailWidthsString]]" /></a>
