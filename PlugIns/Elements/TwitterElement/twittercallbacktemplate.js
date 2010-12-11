@@ -29,7 +29,7 @@ function twitterCallback_withOptions(obj, divid, linksinnewwindows, includetimes
 		username = twitters[i].user.screen_name
 		statusHTML += ('<li><span>'+posttext+'</span>');
 		if (includetimestamp) {
-			statusHTML += (' <a style="font-size:85%" href="http://twitter.com/'+username+'/statuses/'+twitters[i].id+'" title="Tweet Permalink">'+relative_time(twitters[i].created_at)+'</a>');
+			statusHTML += (' <a style="font-size:85%" href="http://twitter.com/'+username+'/statuses/'+twitters[i].id+'" title="[[`Tweet Permalink]]">'+relative_time(twitters[i].created_at)+'</a>');
 		}
 		statusHTML += ('</li>');
 	}
@@ -58,18 +58,18 @@ function relative_time(time_value) {
 	delta = delta + (relative_to.getTimezoneOffset() * 60);
 	
 	if (delta < 60) {
-		return 'less than a minute ago';
+		return '[[`less than a minute ago]]';
 	} else if(delta < 120) {
-		return 'about a minute ago';
+		return '[[`about a minute ago]]';
 	} else if(delta < (60*60)) {
-		return (parseInt(delta / 60)).toString() + ' minutes ago';
+		return (parseInt(delta / 60)).toString() + '[[` minutes ago]]';
 	} else if(delta < (120*60)) {
-		return 'about an hour ago';
+		return '[[`about an hour ago]]';
 	} else if(delta < (24*60*60)) {
-		return 'about ' + (parseInt(delta / 3600)).toString() + ' hours ago';
+		return '[[`about ]]' + (parseInt(delta / 3600)).toString() + '[[` hours ago]]';
 	} else if(delta < (48*60*60)) {
-		return '1 day ago';
+		return '[[`1 day ago]]';
 	} else {
-		return (parseInt(delta / 86400)).toString() + ' days ago';
+		return (parseInt(delta / 86400)).toString() + '[[` days ago]]';
 	}
 }
