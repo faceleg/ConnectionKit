@@ -19,7 +19,7 @@ EXPIRY_TIMESTAMP = '@\"2010-12-31 11:59:59 -0800\"'
 // Release builds checkout and use these specific revisions
 
 // iMedia
-IMEDIA_REVISION = 1399
+IMEDIA_REVISION = 1402
 
 // Building -- common settings across all configurations
 
