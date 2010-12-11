@@ -59,17 +59,21 @@ function relative_time(time_value) {
 	
 	if (delta < 60) {
 		return '[[`less than a minute ago]]';
-	} else if(delta < 120) {
+	} else if(delta < 90) {
 		return '[[`about a minute ago]]';
 	} else if(delta < (60*60)) {
-		return (parseInt(delta / 60)).toString() + '[[` minutes ago]]';
-	} else if(delta < (120*60)) {
+		var d = (parseInt(delta / 60)).toString();
+		return  + '[[`%d minutes ago]]'.replace('%d', d);
+	} else if(delta < (90*60)) {
 		return '[[`about an hour ago]]';
 	} else if(delta < (24*60*60)) {
-		return '[[`about ]]' + (parseInt(delta / 3600)).toString() + '[[` hours ago]]';
-	} else if(delta < (48*60*60)) {
+		var d = (parseInt(delta / 3600)).toString();
+		return '[[`about %d hours ago]]'.replace('%d', d);
+	} else if(delta < (36*60*60)) {
 		return '[[`1 day ago]]';
 	} else {
-		return (parseInt(delta / 86400)).toString() + '[[` days ago]]';
+		var d = (parseInt(delta / 86400)).toString();
+		return  '[[`%d days ago]]'.replace('%d', d);
+
 	}
 }

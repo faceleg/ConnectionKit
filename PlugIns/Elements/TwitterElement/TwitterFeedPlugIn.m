@@ -41,12 +41,11 @@
 // LocalizedStringInThisBundle(@"Tweet Permalink", "String_On_JavaScript_Template")
 // LocalizedStringInThisBundle(@"less than a minute ago", "String_On_JavaScript_Template")
 // LocalizedStringInThisBundle(@"about a minute ago", "String_On_JavaScript_Template")
-// LocalizedStringInThisBundle(@" minutes ago", "String_On_JavaScript_Template--has a leading space")
+// LocalizedStringInThisBundle(@"%d minutes ago", "String_On_JavaScript_Template")
 // LocalizedStringInThisBundle(@"about an hour ago", "String_On_JavaScript_Template")
-// LocalizedStringInThisBundle(@"about ", "String_On_JavaScript_Template--has a trailing space")
-// LocalizedStringInThisBundle(@" hours ago", "String_On_JavaScript_Template--has a leading space")
+// LocalizedStringInThisBundle(@"about %d hours ago", "String_On_JavaScript_Template")
 // LocalizedStringInThisBundle(@"1 day ago", "String_On_JavaScript_Template")
-// LocalizedStringInThisBundle(@" days ago", "String_On_JavaScript_Template--has a leading space")
+// LocalizedStringInThisBundle(@"%d days ago", "String_On_JavaScript_Template")
 
 
 @interface TwitterFeedPlugIn ()
