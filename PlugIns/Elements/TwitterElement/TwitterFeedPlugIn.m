@@ -79,7 +79,7 @@
     // add resources
     NSString *resourcePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"twittercallbacktemplate" ofType:@"js"];
     NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
-    NSURL *callbackURL = [context addResourceWithURL:resourceURL];
+    NSURL *callbackURL = [context addResourceWithTemplateAtURL:resourceURL];
     
     NSString *uniqueID = @"twitter_div";
     
