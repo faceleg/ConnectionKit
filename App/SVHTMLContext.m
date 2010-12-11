@@ -450,18 +450,28 @@
 
 - (void)writePagelet:(SVGraphic *)graphic
 {
-    // Pagelet
-    [self startNewline];        // needed to simulate a call to -startElement:
-    [self stopWritingInline];
-    
-    SVTemplate *template = [[graphic class] template];
-    
-    SVHTMLTemplateParser *parser =
-    [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
-                                         component:graphic];
-    
-    [parser parseIntoHTMLContext:self];
-    [parser release];
+    // Pagelets are expected to have <H4> titles. #67430
+    NSUInteger level = [self currentHeaderLevel];
+    [self setCurrentHeaderLevel:4];
+    @try
+    {
+        // Pagelet
+        [self startNewline];        // needed to simulate a call to -startElement:
+        [self stopWritingInline];
+        
+        SVTemplate *template = [[graphic class] template];
+        
+        SVHTMLTemplateParser *parser =
+        [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
+                                             component:graphic];
+        
+        [parser parseIntoHTMLContext:self];
+        [parser release];
+    }
+    @finally
+    {
+        [self setCurrentHeaderLevel:level];
+    }
 }
 
 - (void)writeGraphic:(id <SVGraphic>)graphic;
