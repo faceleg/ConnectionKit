@@ -29,6 +29,8 @@
 		27DB7FA90EA696C60099ED9E /* NSURL+Twitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Twitter.h"; sourceTree = "<group>"; };
 		27DB7FAA0EA696C60099ED9E /* NSURL+Twitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Twitter.m"; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* TwitterElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterElement_Prefix.pch; sourceTree = "<group>"; };
+		3C110ABA12B3077A00FB34E8 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C110ABC12B307B600FB34E8 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C4A18590D5F9BFB009476BF /* TwitterFeedPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFeedPlugIn.h; sourceTree = "<group>"; };
 		3C4A185A0D5F9BFB009476BF /* TwitterFeedPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterFeedPlugIn.m; sourceTree = "<group>"; };
 		3C4A18620D5F9D67009476BF /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -259,6 +261,7 @@
 			children = (
 				3C4A18740D5F9DD5009476BF /* en */,
 				CEB4FDD010309E320054C9BE /* pt_BR */,
+				3C110ABA12B3077A00FB34E8 /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 			children = (
 				3C4A187E0D5F9E25009476BF /* en */,
 				CEB4FDD110309E320054C9BE /* pt_BR */,
+				3C110ABC12B307B600FB34E8 /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
