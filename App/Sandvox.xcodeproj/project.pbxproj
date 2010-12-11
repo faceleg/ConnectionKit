@@ -305,8 +305,6 @@
 		2726D9CD11E5D3230000257D /* KSSortedMutableArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */; };
 		2726D9CE11E5D3230000257D /* KSSortedMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */; };
 		2726DE8E11E699720000257D /* RawHTMLPlaceholder.html in Resources */ = {isa = PBXBuildFile; fileRef = 2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */; };
-		2726DEAA11E69CA80000257D /* SVRawHTMLDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2726DEA811E69CA80000257D /* SVRawHTMLDOMController.h */; };
-		2726DEAB11E69CA80000257D /* SVRawHTMLDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2726DEA911E69CA80000257D /* SVRawHTMLDOMController.m */; };
 		2727551212410C010043C223 /* SVPlugInGraphicFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 2727551012410C010043C223 /* SVPlugInGraphicFactory.h */; };
 		2727551312410C010043C223 /* SVPlugInGraphicFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 2727551112410C010043C223 /* SVPlugInGraphicFactory.m */; };
 		272B38CD10B18FB60056B4CA /* SVPlugInGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */; };
@@ -1869,8 +1867,6 @@
 		2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSortedMutableArray.h; sourceTree = "<group>"; };
 		2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSortedMutableArray.m; sourceTree = "<group>"; };
 		2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = RawHTMLPlaceholder.html; sourceTree = "<group>"; };
-		2726DEA811E69CA80000257D /* SVRawHTMLDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRawHTMLDOMController.h; sourceTree = "<group>"; };
-		2726DEA911E69CA80000257D /* SVRawHTMLDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRawHTMLDOMController.m; sourceTree = "<group>"; };
 		2727551012410C010043C223 /* SVPlugInGraphicFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInGraphicFactory.h; sourceTree = "<group>"; };
 		2727551112410C010043C223 /* SVPlugInGraphicFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInGraphicFactory.m; sourceTree = "<group>"; };
 		272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInGraphic.h; sourceTree = "<group>"; };
@@ -3272,8 +3268,6 @@
 				277E724C1133595A0081389F /* SVGraphicDOMController.m */,
 				27FA98831194BC0C003B8308 /* SVSidebarDOMController.h */,
 				27FA98841194BC0C003B8308 /* SVSidebarDOMController.m */,
-				2726DEA811E69CA80000257D /* SVRawHTMLDOMController.h */,
-				2726DEA911E69CA80000257D /* SVRawHTMLDOMController.m */,
 				2704227F12142F710077298A /* SVSizeBindingDOMController.h */,
 				2704228012142F710077298A /* SVSizeBindingDOMController.m */,
 				27503418126C6BCF006F87ED /* SVMediaDOMController.h */,
@@ -5841,7 +5835,6 @@
 				27B82F1B11D50F260086CB6E /* KSXMLWriterDOMAdaptor.h in Headers */,
 				CE5B1CB811E54A37005E2C5E /* KTFeedbackReporter.h in Headers */,
 				2726D9CD11E5D3230000257D /* KSSortedMutableArray.h in Headers */,
-				2726DEAA11E69CA80000257D /* SVRawHTMLDOMController.h in Headers */,
 				CE23D96C11E6E65900E43369 /* KSPlainClipTextView.h in Headers */,
 				27CC249D11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h in Headers */,
 				27A1892D11F864F0004BEFC2 /* SVPublisher.h in Headers */,
@@ -7355,7 +7348,6 @@
 				27B82F1D11D50F260086CB6E /* KSXMLWriterDOMAdaptor.m in Sources */,
 				CE5B1CB911E54A38005E2C5E /* KTFeedbackReporter.m in Sources */,
 				2726D9CE11E5D3230000257D /* KSSortedMutableArray.m in Sources */,
-				2726DEAB11E69CA80000257D /* SVRawHTMLDOMController.m in Sources */,
 				CE23D84D11E69AD800E43369 /* SVOffscreenWebViewController.m in Sources */,
 				CE23D96D11E6E65900E43369 /* KSPlainClipTextView.m in Sources */,
 				27DBBD5B11EF39AE00910BE7 /* WebViewEditingHelperClasses.m in Sources */,

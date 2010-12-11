@@ -15,8 +15,10 @@
 #import "KTPage.h"
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 #import "SVPasteboardItemInternal.h"
+#import "SVRawHTMLGraphic.h"
 #import "SVRichTextDOMController.h"
 #import "SVSidebarDOMController.h"
+#import "SVTemplate.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
 
@@ -723,6 +725,21 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 
 @implementation SVGraphicBodyDOMController
+
+#pragma mark DOM
+
+- (void)loadHTMLElementFromDocument:(DOMDocument *)document
+{
+    [super loadHTMLElementFromDocument:document];
+    
+    NSRect box = [[self HTMLElement] boundingBox];
+    if (box.size.width <= 0.0f || box.size.height <= 0.0f)
+    {
+        // Replace with placeholder
+        NSString *placeholderHTML = [[SVRawHTMLGraphic placeholderTemplate] templateString];
+        [[self HTMLElement] setInnerHTML:placeholderHTML];
+    }
+}
 
 #pragma mark Selection
 
