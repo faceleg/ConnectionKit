@@ -38,6 +38,17 @@
 #import "NSURL+Twitter.h"
 
 
+// LocalizedStringInThisBundle(@"Tweet Permalink", "String_On_JavaScript_Template")
+// LocalizedStringInThisBundle(@"less than a minute ago", "String_On_JavaScript_Template")
+// LocalizedStringInThisBundle(@"about a minute ago", "String_On_JavaScript_Template")
+// LocalizedStringInThisBundle(@" minutes ago", "String_On_JavaScript_Template--has a leading space")
+// LocalizedStringInThisBundle(@"about an hour ago", "String_On_JavaScript_Template")
+// LocalizedStringInThisBundle(@"about ", "String_On_JavaScript_Template--has a trailing space")
+// LocalizedStringInThisBundle(@" hours ago", "String_On_JavaScript_Template--has a leading space")
+// LocalizedStringInThisBundle(@"1 day ago", "String_On_JavaScript_Template")
+// LocalizedStringInThisBundle(@" days ago", "String_On_JavaScript_Template--has a leading space")
+
+
 @interface TwitterFeedPlugIn ()
 - (void)writeScriptToEndBodyMarkup:(NSString *)uniqueID context:(id<SVPlugInContext>)context;
 @end
