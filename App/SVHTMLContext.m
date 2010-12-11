@@ -790,6 +790,11 @@
     return resourceURL; // subclasses will correct for publishing
 }
 
+- (NSURL *)addResourceWithTemplateAtURL:(NSURL *)templateURL;
+{
+    return [self addResourceWithURL:templateURL];
+}
+
 #pragma mark Design
 
 - (NSURL *)addBannerWithURL:(NSURL *)sourceURL;
