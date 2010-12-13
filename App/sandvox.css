@@ -50,6 +50,10 @@ img.narrow.right { float:right!important; }
 	background-color:white;
 }
 
+.article-info
+{
+	margin-bottom:1em;
+}
  
 /* Firefox reduce dotted lines on links */
 .photo-navigation a:focus, .replaced a:focus {overflow:hidden;}
