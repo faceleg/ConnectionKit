@@ -2065,6 +2065,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
  stillSelecting:(BOOL)stillSelecting;
 {
     BOOL result = YES;
+    BOOL rangeEdited = NO;
     DOMRange *range = proposedRange;
     
     
@@ -2106,9 +2107,12 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     {
         // When editing, constrain range to that item. #98052
         WEKWebEditorItem *editedItem = [[self editingItems] lastObject];
-        DOMRange *editRange = [editedItem DOMRange];
-        if (editRange)
+        if (editedItem)
         {
+            DOMElement *element = [editedItem HTMLElement]; // -[editedItem DOMRange] is undesireable as we only want contents
+            DOMRange *editRange = [[element ownerDocument] createRange];
+            [editRange selectNodeContents:element];
+            
             if ([editRange compareBoundaryPoints:DOM_END_TO_END sourceRange:range] >= 0)    // selection ends before/with item
             {
                 if ([editRange compareBoundaryPoints:DOM_START_TO_START sourceRange:range] <= 0)    // item encloses range
@@ -2131,7 +2135,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             {
                 if ([editRange compareBoundaryPoints:DOM_START_TO_END sourceRange:range] > 0)   // two non-intersecting ranges
                 {
-                    result = NO;
+                    // Constrain range to start with item
+                    [range setEnd:[editRange endContainer] offset:[editRange endOffset]];
+                    rangeEdited = YES;
                 }
             }
         }
@@ -2156,7 +2162,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     if (result)
     {
         // Did we adjust the range? If so, make that the one actually selected
-        if (range != proposedRange)
+        if (rangeEdited || range != proposedRange)
         {
             [self setSelectedDOMRange:range affinity:selectionAffinity];
             return NO;
