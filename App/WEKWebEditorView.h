@@ -14,6 +14,9 @@
 #import "SVWebEditorTextProtocol.h"
 
 
+#define ACCEPTS_FIRST_MOUSE // #94614
+
+
 extern NSString *kSVWebEditorViewWillChangeNotification;
 extern NSString *kSVWebEditorViewDidChangeNotification;
 

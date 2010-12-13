@@ -419,7 +419,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
         {
             // If you click an already selected item quick enough, it will start editing
             _mouseUpMayBeginEditing = NO;
+#ifdef ACCEPTS_FIRST_MOUSE
             if ([self ks_followsResponder:[[self window] firstResponder]])
+#endif
             {
                 float interval = [event timestamp] - [_mouseDownEvent timestamp];
                 if (interval < 0.3) NSLog(@"Event seperation: %f", interval);
@@ -1199,6 +1201,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 // Will simulate this returning YES when clicking on a non-inline item
 - (BOOL)acceptsFirstResponder { return NO; }
+
+#ifdef ACCEPTS_FIRST_MOUSE
+- (BOOL)acceptsFirstMouse:(NSEvent *)theEvent { return YES; }
+#endif
 
 /*  AppKit uses hit-testing to drill down into the view hierarchy and figure out just which view it needs to target with a mouse event. We can exploit this to effectively "hide" some portions of the webview from the standard event handling mechanisms; all such events will come straight to us instead. We have 2 different behaviours depending on current mode:
  *
