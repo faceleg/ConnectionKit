@@ -736,7 +736,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     if (box.size.width <= 0.0f || box.size.height <= 0.0f)
     {
         // Replace with placeholder
-        NSString *placeholderHTML = [[SVRawHTMLGraphic placeholderTemplate] templateString];
+        NSString *placeholderHTML = [[self representedObject] placeholderHTMLString];
         [[self HTMLElement] setInnerHTML:placeholderHTML];
     }
 }

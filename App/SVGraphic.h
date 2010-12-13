@@ -169,7 +169,9 @@ extern NSString *kSVGraphicPboardType;
 - (NSString *)inlineGraphicClassName;
 
 + (SVTemplate *)template;
-   
+
+- (NSString *)placeholderHTMLString;
+
 
 #pragma mark Thumbnail
 - (void)writeThumbnailImage:(SVHTMLContext *)context

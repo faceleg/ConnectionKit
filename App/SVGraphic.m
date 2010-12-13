@@ -390,6 +390,22 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [[[SVHTMLTemplateParser currentTemplateParser] HTMLContext] writeGraphic:self];
 }
 
++ (SVTemplate *)placeholderTemplate;
+{
+    static SVTemplate *result;
+    if (!result)
+    {
+        result = [[SVTemplate templateNamed:@"GraphicPlaceholder.html"] retain];
+    }
+    
+    return result;
+}
+
+- (NSString *)placeholderHTMLString;
+{
+    return [[[self class] placeholderTemplate] templateString];
+}
+
 #pragma mark Thumbnail
 
 - (void)writeThumbnailImage:(SVHTMLContext *)context
