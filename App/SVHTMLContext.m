@@ -843,7 +843,7 @@
     {
         SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc]
                                         initWithTemplate:[template templateString]
-                                        component:self];
+                                        component:[[SVHTMLTemplateParser currentTemplateParser] component]];
         
         NSMutableString *result = [NSMutableString string];
         
