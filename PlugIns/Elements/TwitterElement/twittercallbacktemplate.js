@@ -58,21 +58,21 @@ function relative_time(time_value) {
 	delta = delta + (relative_to.getTimezoneOffset() * 60);
 	    
 	if (delta < 60) {
-		return '[[`less than a minute ago]]';
+		return '[["less than a minute ago]]';
 	} else if(delta < 90) {
-		return '[[`about a minute ago]]';
+		return '[["about a minute ago]]';
 	} else if(delta < (60*60)) {
 		var d = Math.round(parseFloat(delta / 60)).toString();
-		return  '[[`%d minutes ago]]'.replace('%d', d);
+		return  '[["%d minutes ago]]'.replace('%d', d);
 	} else if(delta < (90*60)) {
-		return '[[`about an hour ago]]';
+		return '[["about an hour ago]]';
 	} else if(delta < (24*60*60)) {
 		var d = Math.round(parseFloat(delta / 3600)).toString();
-		return '[[`about %d hours ago]]'.replace('%d', d);
+		return '[["about %d hours ago]]'.replace('%d', d);
 	} else if(delta < (36*60*60)) {
-		return '[[`1 day ago]]';
+		return '[["1 day ago]]';
 	} else {
 		var d = Math.round(parseFloat(delta / 86400)).toString();
-		return  '[[`%d days ago]]'.replace('%d', d);
+		return  '[["%d days ago]]'.replace('%d', d);
 	}
 }
