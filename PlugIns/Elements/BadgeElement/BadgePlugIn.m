@@ -176,7 +176,7 @@ static NSArray *sAltStrings = nil;
     NSURL *contextURL = [[self currentContext] addResourceWithURL:resourceURL];
     
     // generate relative string for template
-    NSString *result = [[self currentContext] relativeURLStringOfURL:contextURL];    
+    NSString *result = [[self currentContext] relativeStringFromURL:contextURL];    
     return result;
 }
 

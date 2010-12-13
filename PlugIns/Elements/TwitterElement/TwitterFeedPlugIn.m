@@ -103,7 +103,7 @@
                                    className:nil
                                   attributes:nil];
             
-            [context writeJavascriptWithResourceAtURL:resourceURL isTemplate:YES];//Src:[context relativeURLStringOfURL:callbackURL]];
+            [context writeJavascriptWithResourceAtURL:resourceURL isTemplate:YES];//Src:[context relativeStringFromURL:callbackURL]];
             
             [context endElement]; // </div>
         }

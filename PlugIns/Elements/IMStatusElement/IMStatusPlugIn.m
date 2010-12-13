@@ -171,7 +171,7 @@ NSString *IMWantBorderKey = @"wantBorder";
             NSURL *contextURL = [context addResourceWithURL:onlineImageURL];
             
             // generate relative string
-            NSString *onlineImagePath = [context relativeURLStringOfURL:contextURL];    
+            NSString *onlineImagePath = [context relativeStringFromURL:contextURL];    
             onlineImagePath = NSMakeCollectable(CFXMLCreateStringByEscapingEntities(NULL,
                                                                                     (CFStringRef)onlineImagePath,
                                                                                     NULL));
@@ -191,7 +191,7 @@ NSString *IMWantBorderKey = @"wantBorder";
             NSURL *contextURL = [context addResourceWithURL:offlineImageURL];
             
             // generate relative string
-            NSString *offlineImagePath = [context relativeURLStringOfURL:contextURL];    
+            NSString *offlineImagePath = [context relativeStringFromURL:contextURL];    
             offlineImagePath = NSMakeCollectable(CFXMLCreateStringByEscapingEntities(NULL,
                                                                                      (CFStringRef)offlineImagePath,
                                                                                      NULL));
