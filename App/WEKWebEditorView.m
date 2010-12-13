@@ -2102,6 +2102,40 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             }
         }
     }
+    else
+    {
+        // When editing, constrain range to that item. #98052
+        WEKWebEditorItem *editedItem = [[self editingItems] lastObject];
+        DOMRange *editRange = [editedItem DOMRange];
+        if (editRange)
+        {
+            if ([editRange compareBoundaryPoints:DOM_END_TO_END sourceRange:range] >= 0)    // selection ends before/with item
+            {
+                if ([editRange compareBoundaryPoints:DOM_START_TO_START sourceRange:range] <= 0)    // item encloses range
+                {
+                    
+                }
+                else
+                {
+                    if ([editRange compareBoundaryPoints:DOM_END_TO_START sourceRange:range] > 0)   // two non-intersecting ranges
+                    {
+                        
+                    }
+                    else
+                    {
+                        result = NO;
+                    }
+                }
+            }
+            else
+            {
+                if ([editRange compareBoundaryPoints:DOM_START_TO_END sourceRange:range] > 0)   // two non-intersecting ranges
+                {
+                    result = NO;
+                }
+            }
+        }
+    }
     
         
     
