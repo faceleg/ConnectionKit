@@ -817,23 +817,9 @@
         else
         {
             // Run through template
-            SVTemplate *template = [[SVTemplate alloc] initWithContentsOfURL:resource];
-            if (template)
+            NSString *parsedResource = [self stringWithResourceTemplateAtURL:resource];
+            if (parsedResource)
             {
-                SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc]
-                                                initWithTemplate:[template templateString]
-                                                component:self];
-                
-                NSMutableString *parsedResource = [[NSMutableString alloc] init];
-                
-                SVHTMLContext *fakeContext = [[SVHTMLContext alloc] initWithOutputWriter:parsedResource
-                                                                      inheritFromContext:self];
-                
-                [parser parseIntoHTMLContext:fakeContext];
-                [parser release];
-                [fakeContext release];
-                
-                
                 // Publish
                 [self writeJavascript:parsedResource useCDATA:YES];
             }
@@ -844,6 +830,31 @@
         NSURL *url = [self addResourceWithURL:resource];
         [self writeJavascriptWithSrc:[self relativeStringFromURL:url]];
     }
+}
+
+- (NSString *)stringWithResourceTemplateAtURL:(NSURL *)resource;
+{
+    // Run through template
+    SVTemplate *template = [[SVTemplate alloc] initWithContentsOfURL:resource];
+    if (template)
+    {
+        SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc]
+                                        initWithTemplate:[template templateString]
+                                        component:self];
+        
+        NSMutableString *result = [NSMutableString string];
+        
+        SVHTMLContext *fakeContext = [[SVHTMLContext alloc] initWithOutputWriter:result
+                                                              inheritFromContext:self];
+        
+        [parser parseIntoHTMLContext:fakeContext];
+        [parser release];
+        [fakeContext release];
+        
+        return result;
+    }
+    
+    return nil;
 }
 
 #pragma mark Design

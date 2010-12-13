@@ -163,23 +163,10 @@
 - (NSURL *)addResourceWithTemplateAtURL:(NSURL *)templateURL;
 {
     // Run through template
-    SVTemplate *template = [[SVTemplate alloc] initWithContentsOfURL:templateURL];
-    if (template)
-    {
-        SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc]
-                                        initWithTemplate:[template templateString]
-                                        component:self];
+    NSString *parsedResource = [self stringWithResourceTemplateAtURL:templateURL];
+    if (parsedResource)
         
-        NSMutableString *parsedResource = [[NSMutableString alloc] init];
-        
-        SVHTMLContext *fakeContext = [[SVHTMLContext alloc] initWithOutputWriter:parsedResource
-                                                              inheritFromContext:self];
-        
-        [parser parseIntoHTMLContext:fakeContext];
-        [parser release];
-        [fakeContext release];
-        
-        
+    {        
         // Figure path
         NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
         NSString *resourcesDirectoryPath = [[_publisher baseRemotePath] stringByAppendingPathComponent:resourcesDirectoryName];
@@ -189,7 +176,6 @@
         // Publish
         [_publisher publishData:[parsedResource dataUsingEncoding:NSUTF8StringEncoding]
                          toPath:resourceRemotePath];
-        [parsedResource release];
         
         return [[[[self page] site] hostProperties] URLForResourceFile:[resourceRemotePath lastPathComponent]];
     }
