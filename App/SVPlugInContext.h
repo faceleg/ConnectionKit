@@ -9,6 +9,12 @@
 #import <Cocoa/Cocoa.h>
 
 
+enum {
+    SVJavascriptResourceIsTemplate = 1UL << 0   // parses like Template.html before adding
+};
+typedef NSUInteger SVJavascriptResourceOptions;
+
+
 @class SVPlugIn, SVInspectorViewController;
 @protocol SVPage;
 
@@ -97,8 +103,8 @@
 
 
 #pragma mark Scripts
-- (void)writeJavascriptWithSrc:(NSString *)src;
-- (void)writeJavascriptWithResourceAtURL:(NSURL *)resource isTemplate:(BOOL)isTemplate;
+- (void)addJavascriptWithResourceAtURL:(NSURL *)resourceURL
+                               options:(SVJavascriptResourceOptions)options;
 
 
 #pragma mark Metrics

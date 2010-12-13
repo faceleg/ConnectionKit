@@ -805,19 +805,20 @@
     return [self addResourceWithURL:templateURL];
 }
 
-- (void)writeJavascriptWithResourceAtURL:(NSURL *)resource isTemplate:(BOOL)isTemplate;
+- (void)addJavascriptWithResourceAtURL:(NSURL *)resourceURL
+                               options:(SVJavascriptResourceOptions)options;
 {
-    if (isTemplate)
+    if (options & SVJavascriptResourceIsTemplate)
     {
         if ([self isForPublishing])
         {
-            NSURL *url = [self addResourceWithTemplateAtURL:resource];
+            NSURL *url = [self addResourceWithTemplateAtURL:resourceURL];
             [self writeJavascriptWithSrc:[self relativeStringFromURL:url]];
         }
         else
         {
             // Run through template
-            NSString *parsedResource = [self stringWithResourceTemplateAtURL:resource];
+            NSString *parsedResource = [self stringWithResourceTemplateAtURL:resourceURL];
             if (parsedResource)
             {
                 // Publish
@@ -827,7 +828,7 @@
     }
     else
     {
-        NSURL *url = [self addResourceWithURL:resource];
+        NSURL *url = [self addResourceWithURL:resourceURL];
         [self writeJavascriptWithSrc:[self relativeStringFromURL:url]];
     }
 }
