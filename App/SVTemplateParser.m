@@ -24,6 +24,7 @@
 #import "KSStringXMLEntityEscaping.h"
 
 #import "Debug.h"
+#import "SVPlugInGraphic.h"
 
 
 @interface SVTemplateParser ()
@@ -506,7 +507,13 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 {
 	NSString *theString = [tag substringFromIndex:1];			// String to localize in TARGET language
 	
-	NSBundle *theBundle = [NSBundle bundleForClass:[[self component] class]];
+    id component = [self component];
+	NSBundle *theBundle = [NSBundle bundleForClass:[component class]];
+    if (theBundle == [NSBundle mainBundle])
+    {
+        theBundle = [NSBundle bundleForClass:[[component plugIn] class]];
+    }
+    
 	NSString *language = [[self cache] valueForKeyPath:@"parser.currentPage.master.language"];
 	if (!language) language = @"en";	// fallback just in case
 	NSString *theNewString = [theBundle localizedStringForString:theString language:language];
