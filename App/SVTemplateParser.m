@@ -509,7 +509,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	
     id component = [self component];
 	NSBundle *theBundle = [NSBundle bundleForClass:[component class]];
-    if (theBundle == [NSBundle mainBundle])
+    if ([component isKindOfClass:[SVPlugInGraphic class]])
     {
         theBundle = [NSBundle bundleForClass:[[component plugIn] class]];
     }
