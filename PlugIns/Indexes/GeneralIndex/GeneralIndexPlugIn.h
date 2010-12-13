@@ -36,29 +36,28 @@
 
 #import "Sandvox.h"
 
-#define kArticleMask 1
-#define kTitleMask 2
-#define kListMask 4
-#define kTableMask 8
-typedef enum {	kLayoutNone = 0,
-				kLayoutArticlesOnly = kArticleMask,
-				kLayoutTitlesOnly = kTitleMask,
-				kLayoutTitlesAndArticles = kArticleMask | kTitleMask,
-				kLayoutTitlesList = kTitleMask | kListMask,
-				kLayoutTable = kArticleMask | kTitleMask | kTableMask
+enum {
+	kArticleMask	= 1UL << 0,		// 1
+	kTitleMask		= 1UL << 1,		// 2
+	kListMask		= 1UL << 2,		// 4
+	kTableMask		= 1UL << 3,		// 8
+	kLargeMediaMask	= 1UL << 4,		// 16
+	kThumbMask		= 1UL << 5,		// 32
+	kFloatThumbMask	= 1UL << 6,		// 64
+	kInsetThumbMask	= 1UL << 7		// Not implemented yet
+};
+
+typedef enum {
+	kLayoutNone					= 0,
+	kLayoutTitles				= kTitleMask,
+	kLayoutTitlesList			= kTitleMask | kListMask,
+	kLayoutTable				= kTitleMask | kArticleMask | kThumbMask		| kTableMask,
+	kLayoutArticlesOnly			= kTitleMask | kArticleMask,
+	kLayoutArticlesAndThumbs	= kTitleMask | kArticleMask | kThumbMask | kFloatThumbMask,
+	kLayoutArticlesAndMedia		= kTitleMask | kArticleMask | kLargeMediaMask
+
 } IndexLayoutType;
 
-#define kLargeMediaMask 1
-#define kThumbMask 2
-#define kFloatThumbMask 4
-#define kInsetThumbMask 8
-typedef enum {	kMediaNoLargeNoThumbs = 0,
-				kMediaLargeNoThumbs = kLargeMediaMask,
-				kMediaLargeFloatThumbs = kLargeMediaMask | kThumbMask | kFloatThumbMask,
-				kMediaLargeInsetThumbs = kLargeMediaMask | kThumbMask | kInsetThumbMask,
-				kMediaNoLargeFloatThumbs = kThumbMask | kFloatThumbMask,
-				kMediaNoLargeInsetThumbs = kThumbMask | kInsetThumbMask		// NOT ACTUALLY IMPLEMENTED, just started upon.
-} MediaLayoutType;
 
 #define kCharsPerWord 5
 #define kWordsPerSentence 10
@@ -71,7 +70,6 @@ typedef enum {	kMediaNoLargeNoThumbs = 0,
 {
 	BOOL _showTimestamps;
 	IndexLayoutType _indexLayoutType;
-	MediaLayoutType _mediaLayoutType;
     BOOL _hyperlinkTitles;
     BOOL _showPermaLinks;
     BOOL _showEntries;			// transient only, for bindings
@@ -90,7 +88,6 @@ typedef enum {	kMediaNoLargeNoThumbs = 0,
 @property  BOOL showComments;
 @property  BOOL truncate;
 @property  IndexLayoutType indexLayoutType;
-@property  MediaLayoutType mediaLayoutType;
 @property  SVIndexTruncationType truncationType;
 @property  NSUInteger truncateCount;
 

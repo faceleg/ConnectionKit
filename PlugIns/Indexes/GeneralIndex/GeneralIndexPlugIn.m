@@ -50,7 +50,11 @@
 
 - (id) master;
 - (void)writeComments:(id<SVPlugInContext>)context;
+- (NSObject *)titleBox;
+@end
 
+@protocol PlugInContextPrivate
+- (NSString *)currentHeaderLevelTagName;
 @end
 
 @interface NSString (KareliaPrivate)
@@ -67,7 +71,6 @@
     NSArray *plugInKeys = [NSArray arrayWithObjects:
 						   @"hyperlinkTitles",
 						   @"indexLayoutType",
-						   @"mediaLayoutType",
 						   @"showPermaLinks",
 						   @"showTimestamps",
 						   @"truncate",
@@ -95,7 +98,6 @@
 	// add dependencies
 	[context addDependencyForKeyPath:@"hyperlinkTitles"		ofObject:self];
 	[context addDependencyForKeyPath:@"indexLayoutType"		ofObject:self];
-	[context addDependencyForKeyPath:@"mediaLayoutType"		ofObject:self];
 	[context addDependencyForKeyPath:@"showPermaLinks"		ofObject:self];
 	[context addDependencyForKeyPath:@"showComments"		ofObject:self];
 	[context addDependencyForKeyPath:@"showTimestamps"		ofObject:self];
@@ -141,7 +143,8 @@
 - (void)writeInnards
 {
 	BOOL truncated = NO;
-    id<SVPlugInContext> context = [self currentContext];
+    id<SVPlugInContext, PlugInContextPrivate> context
+	= (id<SVPlugInContext, PlugInContextPrivate>) [self currentContext];
 	NSString *className = [context currentIterationCSSClassName];
 	
 	if (self.indexLayoutType & kTableMask)
@@ -160,7 +163,7 @@
 	// Table: We write Thumb, then title....
 	if (self.indexLayoutType & kTableMask)
 	{
-		if (self.mediaLayoutType & kThumbMask)
+		if (self.indexLayoutType & kThumbMask)
 		{
 			[context startElement:@"td" className:@"dli1"];
 			[self writeThumbnailImageOfIteratedPage];
@@ -204,7 +207,7 @@
 			[self writeTitleOfIteratedPage];
 			[context endElement];
 		}
-		if (self.mediaLayoutType & kThumbMask)
+		if (self.indexLayoutType & kThumbMask)
 		{
 			[self writeThumbnailImageOfIteratedPage];
 		}
@@ -332,16 +335,19 @@
 - (void)writeTitleOfIteratedPage;
 {
     id<SVPlugInContext> context = [self currentContext]; 
-    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
-    
-    if ( self.hyperlinkTitles) { [context startAnchorElementWithPage:iteratedPage]; } // <a>
-    
-    [context writeElement:@"span"
-          withTitleOfPage:iteratedPage
-              asPlainText:NO
-               attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
-    
-    if ( self.hyperlinkTitles ) { [context endElement]; } // </a> 
+    id<SVPage, PagePrivate> iteratedPage = [context objectForCurrentTemplateIteration];
+	
+	if (![[[iteratedPage titleBox] valueForKey:@"hidden"] boolValue])		// Do not show title if it is hidden!
+	{
+		if ( self.hyperlinkTitles) { [context startAnchorElementWithPage:iteratedPage]; } // <a>
+		
+		[context writeElement:@"span"
+			  withTitleOfPage:iteratedPage
+				  asPlainText:NO
+				   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
+		
+		if ( self.hyperlinkTitles ) { [context endElement]; } // </a> 
+	}
 }
 
 
@@ -431,7 +437,7 @@
     id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     BOOL truncated = [iteratedPage writeSummary:context
-							  includeLargeMedia:(self.mediaLayoutType & kLargeMediaMask) 
+							  includeLargeMedia:(self.indexLayoutType & kLargeMediaMask) 
 									 truncation:self.truncateCount
 								 truncationType:(self.truncate ? self.truncationType : kTruncateNone)];
 	return truncated;
@@ -473,7 +479,6 @@
 
 @synthesize hyperlinkTitles = _hyperlinkTitles;
 @synthesize indexLayoutType = _indexLayoutType;
-@synthesize mediaLayoutType = _mediaLayoutType;
 @synthesize showPermaLinks	= _showPermaLinks;
 @synthesize showEntries = _showEntries;
 @synthesize showTitles = _showTitles;
