@@ -98,6 +98,7 @@
 
 #pragma mark Scripts
 - (void)writeJavascriptWithSrc:(NSString *)src;
+- (void)writeJavascriptWithResourceAtURL:(NSURL *)resource isTemplate:(BOOL)isTemplate;
 
 
 #pragma mark Metrics

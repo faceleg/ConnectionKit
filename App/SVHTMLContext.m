@@ -805,6 +805,47 @@
     return [self addResourceWithURL:templateURL];
 }
 
+- (void)writeJavascriptWithResourceAtURL:(NSURL *)resource isTemplate:(BOOL)isTemplate;
+{
+    if (isTemplate)
+    {
+        if ([self isForPublishing])
+        {
+            NSURL *url = [self addResourceWithTemplateAtURL:resource];
+            [self writeJavascriptWithSrc:[self relativeURLStringOfURL:url]];
+        }
+        else
+        {
+            // Run through template
+            SVTemplate *template = [[SVTemplate alloc] initWithContentsOfURL:resource];
+            if (template)
+            {
+                SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc]
+                                                initWithTemplate:[template templateString]
+                                                component:self];
+                
+                NSMutableString *parsedResource = [[NSMutableString alloc] init];
+                
+                SVHTMLContext *fakeContext = [[SVHTMLContext alloc] initWithOutputWriter:parsedResource
+                                                                      inheritFromContext:self];
+                
+                [parser parseIntoHTMLContext:fakeContext];
+                [parser release];
+                [fakeContext release];
+                
+                
+                // Publish
+                [self writeJavascript:parsedResource useCDATA:YES];
+            }
+        }
+    }
+    else
+    {
+        NSURL *url = [self addResourceWithURL:resource];
+        [self writeJavascriptWithSrc:[self relativeURLStringOfURL:url]];
+    }
+}
+
 #pragma mark Design
 
 - (NSURL *)addBannerWithURL:(NSURL *)sourceURL;
