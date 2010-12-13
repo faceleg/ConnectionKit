@@ -800,11 +800,6 @@
     return resourceURL; // subclasses will correct for publishing
 }
 
-- (NSURL *)addResourceWithTemplateAtURL:(NSURL *)templateURL;
-{
-    return [self addResourceWithURL:templateURL];
-}
-
 - (void)addJavascriptWithResourceAtURL:(NSURL *)resourceURL
                                options:(SVJavascriptResourceOptions)options;
 {
@@ -815,7 +810,7 @@
     {
         if ([self isForPublishing])
         {
-            NSURL *url = [self addResourceWithTemplateAtURL:resourceURL];
+            NSURL *url = [self addResourceWithURL:resourceURL]; // assume publishing subclass will override to publish parsed data
             [context writeJavascriptWithSrc:[self relativeStringFromURL:url]];
         }
         else

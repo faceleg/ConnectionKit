@@ -47,9 +47,7 @@ typedef NSUInteger SVJavascriptResourceOptions;
 #pragma mark Resources
 
 // Resources get published to the _Resources directory. These methods return the URL to use for the resource in relation to this context. You can then pass it to -relativeStringFromURL: for example.
-// -addResourceWithTemplateAtURL: assumes the file is a template (like Template.html used by most plug-ins), and parses it before uploading
 - (NSURL *)addResourceWithURL:(NSURL *)fileURL;
-- (NSURL *)addResourceWithTemplateAtURL:(NSURL *)templateURL;
 
 - (void)addCSSString:(NSString *)css;
 - (void)addCSSWithURL:(NSURL *)cssURL;

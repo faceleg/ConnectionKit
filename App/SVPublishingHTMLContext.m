@@ -160,27 +160,30 @@
     return [[[[self page] site] hostProperties] URLForResourceFile:[resourceURL ks_lastPathComponent]];
 }
 
-- (NSURL *)addResourceWithTemplateAtURL:(NSURL *)templateURL;
+- (void)addJavascriptWithResourceAtURL:(NSURL *)resourceURL
+                               options:(SVJavascriptResourceOptions)options;
 {
-    // Run through template
-    NSString *parsedResource = [self stringWithResourceTemplateAtURL:templateURL];
-    if (parsedResource)
-        
-    {        
-        // Figure path
-        NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
-        NSString *resourcesDirectoryPath = [[_publisher baseRemotePath] stringByAppendingPathComponent:resourcesDirectoryName];
-        NSString *resourceRemotePath = [resourcesDirectoryPath stringByAppendingPathComponent:[templateURL ks_lastPathComponent]];
-        
-        
-        // Publish
-        [_publisher publishData:[parsedResource dataUsingEncoding:NSUTF8StringEncoding]
-                         toPath:resourceRemotePath];
-        
-        return [[[[self page] site] hostProperties] URLForResourceFile:[resourceRemotePath lastPathComponent]];
+    if (options & SVJavascriptResourceIsTemplate)
+    {
+        // Run through template parser
+        NSString *parsedResource = [self stringWithResourceTemplateAtURL:resourceURL];
+        if (parsedResource)
+        {        
+            // Figure path
+            NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
+            NSString *resourcesDirectoryPath = [[_publisher baseRemotePath] stringByAppendingPathComponent:resourcesDirectoryName];
+            NSString *resourceRemotePath = [resourcesDirectoryPath stringByAppendingPathComponent:[resourceURL ks_lastPathComponent]];
+            
+            
+            // Publish
+            [_publisher publishData:[parsedResource dataUsingEncoding:NSUTF8StringEncoding]
+                             toPath:resourceRemotePath];
+            
+            [[[[self page] site] hostProperties] URLForResourceFile:[resourceRemotePath lastPathComponent]];
+        }
     }
     
-    return nil;
+    [super addJavascriptWithResourceAtURL:resourceURL options:options];
 }
 
 - (NSURL *)addGraphicalTextData:(NSData *)imageData idName:(NSString *)idName;
