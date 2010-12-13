@@ -808,12 +808,15 @@
 - (void)addJavascriptWithResourceAtURL:(NSURL *)resourceURL
                                options:(SVJavascriptResourceOptions)options;
 {
+    NSMutableString *script = [[NSMutableString alloc] init];
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:script inheritFromContext:self];
+    
     if (options & SVJavascriptResourceIsTemplate)
     {
         if ([self isForPublishing])
         {
             NSURL *url = [self addResourceWithTemplateAtURL:resourceURL];
-            [self writeJavascriptWithSrc:[self relativeStringFromURL:url]];
+            [context writeJavascriptWithSrc:[self relativeStringFromURL:url]];
         }
         else
         {
@@ -822,15 +825,19 @@
             if (parsedResource)
             {
                 // Publish
-                [self writeJavascript:parsedResource useCDATA:YES];
+                [context writeJavascript:parsedResource useCDATA:YES];
             }
         }
     }
     else
     {
         NSURL *url = [self addResourceWithURL:resourceURL];
-        [self writeJavascriptWithSrc:[self relativeStringFromURL:url]];
+        [context writeJavascriptWithSrc:[self relativeStringFromURL:url]];
     }
+    
+    [self addMarkupToEndOfBody:script];
+    [context release];
+    [script release];
 }
 
 - (NSString *)stringWithResourceTemplateAtURL:(NSURL *)resource;
