@@ -174,7 +174,7 @@
 - (NSString *)startQuickTimeObject:(SVHTMLContext *)context
 					audioSourceURL:(NSURL *)audioSourceURL;
 {
-	NSString *audioSourcePath  = audioSourceURL ? [context relativeURLStringOfURL:audioSourceURL] : @"";
+	NSString *audioSourcePath  = audioSourceURL ? [context relativeStringFromURL:audioSourceURL] : @"";
 	
 	NSUInteger heightWithBar = self.controller ? 16 : 0;
 	
@@ -201,7 +201,7 @@
 - (NSString *)startMicrosoftObject:(SVHTMLContext *)context
 					audioSourceURL:(NSURL *)audioSourceURL;
 {
-	NSString *audioSourcePath = audioSourceURL ? [context relativeURLStringOfURL:audioSourceURL] : @"";
+	NSString *audioSourcePath = audioSourceURL ? [context relativeStringFromURL:audioSourceURL] : @"";
 	
 	NSUInteger heightWithBar = self.controller ? 46 : 0;		// Windows media controller is 46 pixels (on windows; adjusted on macs)
 	
@@ -226,7 +226,7 @@
 - (NSString *)startAudio:(SVHTMLContext *)context
 		  audioSourceURL:(NSURL *)audioSourceURL;			// returns element ID
 {
-	NSString *audioSourcePath  = audioSourceURL ? [context relativeURLStringOfURL:audioSourceURL] : @"";
+	NSString *audioSourcePath  = audioSourceURL ? [context relativeStringFromURL:audioSourceURL] : @"";
 	
 	// Actually write the audio
 	if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context];
@@ -308,7 +308,7 @@
 	}
 	else
 	{
-		if (audioSourceURL)  audioSourcePath  = [context relativeURLStringOfURL:audioSourceURL];
+		if (audioSourceURL)  audioSourcePath  = [context relativeStringFromURL:audioSourceURL];
 		}
 	
 	NSString *audioFlashPlayer	= [defaults objectForKey:@"audioFlashPlayer"];	// to override player type
@@ -394,7 +394,7 @@
 	{
 		NSString *localPlayerPath = [[NSBundle mainBundle] pathForResource:@"player_mp3_maxi" ofType:@"swf"];
 		NSURL *playerURL = [context addResourceWithURL:[NSURL fileURLWithPath:localPlayerPath]];
-		playerPath = [context relativeURLStringOfURL:playerURL];
+		playerPath = [context relativeStringFromURL:playerURL];
 	}
 	
 	if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context];

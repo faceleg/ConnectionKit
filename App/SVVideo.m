@@ -429,8 +429,8 @@
 					movieSourceURL:(NSURL *)movieSourceURL
 				   posterSourceURL:(NSURL *)posterSourceURL;
 {
-	NSString *movieSourcePath  = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
-	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
+	NSString *movieSourcePath  = movieSourceURL ? [context relativeStringFromURL:movieSourceURL] : @"";
+	NSString *posterSourcePath = posterSourceURL ? [context relativeStringFromURL:posterSourceURL] : @"";
 
 	NSUInteger barHeight = self.controller ? 16 : 0;
 	
@@ -469,7 +469,7 @@
 					movieSourceURL:(NSURL *)movieSourceURL;
 {
 	// I don't think there is any way to use the poster frame for a click to play
-	NSString *movieSourcePath = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
+	NSString *movieSourcePath = movieSourceURL ? [context relativeStringFromURL:movieSourceURL] : @"";
 	
 	NSUInteger barHeight = self.controller ? 46 : 0;		// Windows media controller is 46 pixels (on windows; adjusted on macs)
 
@@ -495,8 +495,8 @@
 		  movieSourceURL:(NSURL *)movieSourceURL
 		 posterSourceURL:(NSURL *)posterSourceURL;
 {
-	NSString *movieSourcePath  = movieSourceURL ? [context relativeURLStringOfURL:movieSourceURL] : @"";
-	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
+	NSString *movieSourcePath  = movieSourceURL ? [context relativeStringFromURL:movieSourceURL] : @"";
+	NSString *posterSourcePath = posterSourceURL ? [context relativeStringFromURL:posterSourceURL] : @"";
 
 	// Actually write the video
 	if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context];
@@ -588,8 +588,8 @@
 	}
 	else
 	{
-		if (movieSourceURL)  movieSourcePath  = [context relativeURLStringOfURL:movieSourceURL];
-		if (posterSourceURL) posterSourcePath = [context relativeURLStringOfURL:posterSourceURL];
+		if (movieSourceURL)  movieSourcePath  = [context relativeStringFromURL:movieSourceURL];
+		if (posterSourceURL) posterSourcePath = [context relativeStringFromURL:posterSourceURL];
 	}
 	// Ordering string arguments:
 	// http://developer.apple.com/library/ios/#documentation/cocoa/Conceptual/LoadingResources/Strings/Strings.html%23//apple_ref/doc/uid/10000051i-CH6-99832
@@ -671,7 +671,7 @@
 	{
 		NSString *localPlayerPath = [[NSBundle mainBundle] pathForResource:@"player_flv_maxi" ofType:@"swf"];
 		NSURL *playerURL = [context addResourceWithURL:[NSURL fileURLWithPath:localPlayerPath]];
-		playerPath = [context relativeURLStringOfURL:playerURL];
+		playerPath = [context relativeStringFromURL:playerURL];
 	}
 	
 	if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context];
@@ -718,7 +718,7 @@
 - (void)writePosterImage:(SVHTMLContext *)context
 	posterSourceURL:(NSURL *)posterSourceURL;
 {
-	NSString *posterSourcePath = posterSourceURL ? [context relativeURLStringOfURL:posterSourceURL] : @"";
+	NSString *posterSourcePath = posterSourceURL ? [context relativeStringFromURL:posterSourceURL] : @"";
 
 	NSString *altForMovieFallback = [[posterSourcePath lastPathComponent] stringByDeletingPathExtension];// Cheating ... What would be a good alt ?
 	

@@ -296,7 +296,7 @@
                                        type:[self typeToPublish]
                           preferredFilename:filename];
         
-        [context writeImageWithSrc:(URL ? [context relativeURLStringOfURL:URL] : @"")
+        [context writeImageWithSrc:(URL ? [context relativeStringFromURL:URL] : @"")
                                alt:alt
                              width:nil height:nil];// nil sizing because bindSizeToObject: takes care
         
@@ -306,7 +306,7 @@
     {
         NSURL *URL = [self externalSourceURL];
         
-        [context writeImageWithSrc:(URL ? [context relativeURLStringOfURL:URL] : @"")
+        [context writeImageWithSrc:(URL ? [context relativeStringFromURL:URL] : @"")
                                alt:alt
                              width:self.container.width
                             height:self.container.height];
@@ -324,7 +324,7 @@
         if ([link linkType] == SVLinkToFullSizeImage)
         {
             NSURL *URL = [context addMedia:[self media]];
-            if (URL) href = [context relativeURLStringOfURL:URL];
+            if (URL) href = [context relativeStringFromURL:URL];
         }
         else
         {

@@ -186,7 +186,7 @@ typedef enum {
 
 #pragma mark Media
 
-// Returns the URL to find the media at. It can be passed on to -relativeURLStringOfURL: etc.
+// Returns the URL to find the media at. It can be passed on to -relativeStringFromURL: etc.
 - (NSURL *)addMedia:(id <SVMedia>)media;
 
 // When dealing with images specifically, you probably want this method. Rules:

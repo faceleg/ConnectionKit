@@ -536,7 +536,7 @@
 	// Tell the delegate
 	[self didEncounterResourceFile:resourceURL];
     
-	return [context relativeURLStringOfURL:result];
+	return [context relativeStringFromURL:result];
 }
 
 - (NSString *)rsspathWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
@@ -575,11 +575,11 @@
     
     if ([anObject isKindOfClass:[KTPage class]])
     {
-        result = [[self HTMLContext] relativeURLStringOfURL:[anObject URL]];
+        result = [[self HTMLContext] relativeStringFromURL:[anObject URL]];
     }
     else if ([anObject isKindOfClass:[NSURL class]])
     {
-        result = [[self HTMLContext] relativeURLStringOfURL:anObject];
+        result = [[self HTMLContext] relativeStringFromURL:anObject];
     }
         
 	return result;

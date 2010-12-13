@@ -150,7 +150,7 @@
 - (NSString *)writeFlash:(SVHTMLContext *)context
 		  flashSourceURL:(NSURL *)flashSourceURL;
 {
-	NSString *flashSourcePath  = flashSourceURL ? [context relativeURLStringOfURL:flashSourceURL] : @"";
+	NSString *flashSourcePath  = flashSourceURL ? [context relativeStringFromURL:flashSourceURL] : @"";
 	
 	[context pushAttribute:@"classid" value:@"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"];	// Proper value?
 	[context pushAttribute:@"codebase" value:@"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"];

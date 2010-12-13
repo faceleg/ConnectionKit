@@ -372,7 +372,7 @@
 {
     if (![self isForPublishing])
     {
-        [self writeLinkToStylesheet:[self relativeURLStringOfURL:cssURL]
+        [self writeLinkToStylesheet:[self relativeStringFromURL:cssURL]
                               title:nil
                               media:nil];
     }
@@ -679,7 +679,7 @@
 
 #pragma mark URLs/Paths
 
-- (NSString *)relativeURLStringOfURL:(NSURL *)URL;
+- (NSString *)relativeStringFromURL:(NSURL *)URL;
 {
     OBPRECONDITION(URL);
     
@@ -717,7 +717,7 @@
     else
     {
         NSURL *URL = [page URL];
-        if (URL) result = [self relativeURLStringOfURL:URL];
+        if (URL) result = [self relativeStringFromURL:URL];
     }
     
     return result;
@@ -785,7 +785,7 @@
                 preferredFilename:(NSString *)filename;
 {
     NSURL *URL = [self addImageMedia:media width:width height:height type:type preferredFilename:filename];
-    NSString *src = (URL ? [self relativeURLStringOfURL:URL] : @"");
+    NSString *src = (URL ? [self relativeStringFromURL:URL] : @"");
     
     [self writeImageWithSrc:src
                         alt:altText
@@ -812,7 +812,7 @@
         if ([self isForPublishing])
         {
             NSURL *url = [self addResourceWithTemplateAtURL:resource];
-            [self writeJavascriptWithSrc:[self relativeURLStringOfURL:url]];
+            [self writeJavascriptWithSrc:[self relativeStringFromURL:url]];
         }
         else
         {
@@ -842,7 +842,7 @@
     else
     {
         NSURL *url = [self addResourceWithURL:resource];
-        [self writeJavascriptWithSrc:[self relativeURLStringOfURL:url]];
+        [self writeJavascriptWithSrc:[self relativeStringFromURL:url]];
     }
 }
 
@@ -1137,7 +1137,7 @@
     // Write
     if (URL)
     {
-        [self pushAttribute:@"url" value:[self relativeURLStringOfURL:URL]];
+        [self pushAttribute:@"url" value:[self relativeStringFromURL:URL]];
         
         if ([enclosure length])
         {

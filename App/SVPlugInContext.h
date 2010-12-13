@@ -35,12 +35,12 @@
 
 #pragma mark URLs
 // To make markup more flexible, relative string should generally be used instead of full URLs. This method quickly generates the best way to get from the current page to a given URL.
-- (NSString *)relativeURLStringOfURL:(NSURL *)URL;
+- (NSString *)relativeStringFromURL:(NSURL *)URL;
 
 
 #pragma mark Resources
 
-// Resources get published to the _Resources directory. These methods return the URL to use for the resource in relation to this context. You can then pass it to -relativeURLStringOfURL: for example.
+// Resources get published to the _Resources directory. These methods return the URL to use for the resource in relation to this context. You can then pass it to -relativeStringFromURL: for example.
 // -addResourceWithTemplateAtURL: assumes the file is a template (like Template.html used by most plug-ins), and parses it before uploading
 - (NSURL *)addResourceWithURL:(NSURL *)fileURL;
 - (NSURL *)addResourceWithTemplateAtURL:(NSURL *)templateURL;

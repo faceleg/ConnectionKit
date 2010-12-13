@@ -529,7 +529,7 @@
                                          compressionFactor:1.0f
                                                   fileType:type];
             
-            [context writeImageWithSrc:[context relativeURLStringOfURL:url]
+            [context writeImageWithSrc:[context relativeStringFromURL:url]
                                    alt:@""
                                  width:[NSNumber numberWithUnsignedInteger:width]
                                 height:[NSNumber numberWithUnsignedInteger:height]];

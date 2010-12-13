@@ -240,7 +240,7 @@
     NSURL *mainCSSURL = [context mainCSSURL];
     if (mainCSSURL)
     {
-        [context writeLinkToStylesheet:[context relativeURLStringOfURL:mainCSSURL]
+        [context writeLinkToStylesheet:[context relativeStringFromURL:mainCSSURL]
                                  title:[[[self master] design] title]
                                  media:nil];
     }
@@ -252,7 +252,7 @@
         NSURL *printCSSURL = [context URLOfDesignFile:@"print.css"];
         if ( printCSSURL )
         {
-            path = [context relativeURLStringOfURL:printCSSURL];
+            path = [context relativeStringFromURL:printCSSURL];
             if (path)
             {
                 [context writeLinkToStylesheet:path title:nil media:@"print"];
@@ -655,13 +655,13 @@
 			// Note: We want to add the CSS as a separate link; *not* merging it into main.css, so that it can access the arrow images in _Resources.
 			path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"css"];
 			src = [context addResourceWithURL:[NSURL fileURLWithPath:path]];
-			srcPath = [context relativeURLStringOfURL:src];
+			srcPath = [context relativeStringFromURL:src];
 			
 			[context writeLinkToStylesheet:srcPath title:nil media:nil];	// nil title; we don't want a title! https://bugs.webkit.org/show_bug.cgi?id=43870
 			
 			path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"js"];
 			src = [context addResourceWithURL:[NSURL fileURLWithPath:path]];
-			srcPath = [context relativeURLStringOfURL:src];
+			srcPath = [context relativeStringFromURL:src];
 			
 			NSString *prelude = [NSString stringWithFormat:@"\n%@\n%@\n%@\n%@\n%@", 
 @"/***********************************************",
@@ -700,7 +700,7 @@
 			// [context startJavascriptCDATA];		// probably not needed
 			[context writeString:[NSString stringWithFormat:
 								  @"ddsmoothmenu.arrowimages = {down:['downarrowclass', '%@', 23], right:['rightarrowclass', '%@']}",
-								  [context relativeURLStringOfURL:arrowDownSrc], [context relativeURLStringOfURL:arrowRightSrc]]];
+								  [context relativeStringFromURL:arrowDownSrc], [context relativeStringFromURL:arrowRightSrc]]];
 			[context writeString:@"\n"];
 			
 			BOOL isVertical = hierMenuType == HIER_MENU_VERTICAL || (hierMenuType == HIER_MENU_VERTICAL_IF_SIDEBAR && [[self showSidebar] boolValue]);

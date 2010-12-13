@@ -25,7 +25,7 @@
 
 - (BOOL)isForQuickLook; { return YES; }
 
-- (NSString *)relativeURLStringOfURL:(NSURL *)URL;
+- (NSString *)relativeStringFromURL:(NSURL *)URL;
 {
     if ([URL isFileURL])
     {
@@ -43,7 +43,7 @@
         }
     }
     
-    return [super relativeURLStringOfURL:URL];
+    return [super relativeStringFromURL:URL];
 }
 
 #pragma mark CSS
