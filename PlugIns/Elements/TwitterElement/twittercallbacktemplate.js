@@ -29,7 +29,7 @@ function twitterCallback_withOptions(obj, divid, linksinnewwindows, includetimes
 		username = twitters[i].user.screen_name
 		statusHTML += ('<li><span>'+posttext+'</span>');
 		if (includetimestamp) {
-			statusHTML += (' <a style="font-size:85%" href="http://twitter.com/'+username+'/statuses/'+twitters[i].id+'" title="[[`Tweet Permalink]]">'+relative_time(twitters[i].created_at)+'</a>');
+			statusHTML += (' <a style="font-size:85%" href="http://twitter.com/'+username+'/statuses/'+twitters[i].id+'" title="[["Tweet Permalink]]">'+relative_time(twitters[i].created_at)+'</a>');
 		}
 		statusHTML += ('</li>');
 	}
