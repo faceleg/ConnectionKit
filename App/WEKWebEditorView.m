@@ -2127,7 +2127,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                     }
                     else
                     {
-                        result = NO;
+                        // Constrain range to start with item
+                        [range setStart:[editRange startContainer] offset:[editRange startOffset]];
+                        rangeEdited = YES;
                     }
                 }
             }
