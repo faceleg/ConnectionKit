@@ -165,4 +165,16 @@
 	}
 }
 
+
+- (IBAction)makeShortest:(id)sender;	// click on icon to make truncation the shortest
+{
+	
+}
+
+- (IBAction)makeLongest:(id)sender;		// click on icon to make truncation the longest (remove truncation)
+{
+	
+}
+
+
 @end
