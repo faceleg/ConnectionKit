@@ -103,12 +103,7 @@
                                    className:nil
                                   attributes:nil];
             
-            NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   @"text/javascript", @"type",
-                                   [context relativeURLStringOfURL:callbackURL], @"src",
-                                   nil];
-            [context startElement:@"script" attributes:attrs];
-            [context endElement]; // </script>
+            [context writeJavascriptWithSrc:[context relativeURLStringOfURL:callbackURL]];
             
             [context endElement]; // </div>
         }
