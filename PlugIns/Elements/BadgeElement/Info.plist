@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>Badge</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -28,25 +30,8 @@
 	<integer>3</integer>
 	<key>KSHelpAnchor</key>
 	<string>Sandvox_Badge</string>
-	<key>KTPageletCanHaveTitle</key>
-	<false/>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_badge.tiff</string>
-	<key>KTPluginInitialProperties</key>
-	<dict>
-		<key>badgeTypeTag</key>
-		<integer>1</integer>
-		<key>includeReferralCode</key>
-		<true/>
-	</dict>
-	<key>KTPluginName</key>
-	<string>Badge</string>
-	<key>KTElementAllowsIntroduction</key>
-	<true/>
-	<key>KTPluginPriority</key>
-	<integer>8</integer>
-	<key>KTPluginUntitledName</key>
-	<string></string>
 	<key>NSPrincipalClass</key>
 	<string>BadgePlugIn</string>
 </dict>

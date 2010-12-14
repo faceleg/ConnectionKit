@@ -56,6 +56,8 @@ static NSArray *sAltStrings = nil;
 {
     [super awakeFromNew];
     [self setShowsTitle:NO];
+    [self setBadgeTypeTag:1];
+    [self setIncludeReferralCode:YES];
 }
 
 
@@ -164,7 +166,7 @@ static NSArray *sAltStrings = nil;
 	return result;
 }
 
-// returns relatice URL for current badge, suitable for use in HTML template
+// returns relative URL for current badge, suitable for use in HTML template
 // alternatively, in template, could do <img src="[[=writeBadgeSrc]]"…
 - (NSString *)badgeURLString
 {
