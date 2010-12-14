@@ -1169,7 +1169,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 							  nil];
 	NSArray *separatorsAfter = [NSArray arrayWithObjects:
 								oAfterValidateSourceViewMenuItem, oAfterEditRawHTMLMenuItem,
-								oAfterConfigureGoogleMenuItem,
+//								oAfterConfigureGoogleMenuItem,
 								nil];
 	
 	if ((nil != gRegistrationString) && gIsPro)		// licensed for pro
