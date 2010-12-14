@@ -15,4 +15,7 @@
                               language:(NSString *)aLocalization
                               fallback:(NSString *)aFallbackString;
 
+- (NSString *)pathForImageResource:(NSString *)name
+                          language:(NSString *)preferredLanguage;
+
 @end
