@@ -72,6 +72,7 @@
 						   @"hyperlinkTitles",
 						   @"indexLayoutType",
 						   @"showPermaLinks",
+                           @"showComments",
 						   @"showTimestamps",
 						   @"truncate",
 						   @"truncateCount",
