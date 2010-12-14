@@ -8,29 +8,34 @@
 
 #import "SVWelcomeController.h"
 
-#import "NSColor+Karelia.h"
-#import "NSObject+Karelia.h"
-#import <QTKit/QTKit.h>
+#import "SVApplicationController.h"
 #import "KSLicensedAppDelegate.h"
 #import "KSNetworkNotifier.h"
 #import "KSYellowStickyWindow.h"
-#import "Registration.h"
+#import "KTDocument.h"
+#import "KSRecentDocument.h"
+#import "KSProgressPanel.h"
+#import "KTDocumentController.h"
+#import "KTPublishingEngine.h"
+#import "KTImageTextCell.h"
+
 #import "NSDate+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSFileManager+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "NSArray+Karelia.h"
 #import "CIImage+Karelia.h"
-#import <QuartzCore/QuartzCore.h>
-#import "KTDocument.h"
-#import "KSRecentDocument.h"
-#import "KSProgressPanel.h"
-#import "BDAlias.h"
-#import "KTDocumentController.h"
-#import "SVApplicationController.h"
 #import "NSError+Karelia.h"
-#import "KTPublishingEngine.h"
-#import "KTImageTextCell.h"
+#import "NSColor+Karelia.h"
+#import "NSObject+Karelia.h"
+
+#import "BDAlias.h"
+
+#import <QTKit/QTKit.h>
+#import <QuartzCore/QuartzCore.h>
+
+#import "Registration.h"
+
 
 @interface SVWelcomeController ()
 
