@@ -171,7 +171,9 @@ static NSArray *sAltStrings = nil;
 - (NSString *)badgeURLString
 {
     // find badge resource
-    NSString *resourcePath = [[NSBundle bundleForClass:[self class]] pathForImageResource:[self currentBadgeName]];
+    id<SVPlugInContext> context = [self currentContext]; 
+    NSString *language = [[context page] language];
+    NSString *resourcePath = [[NSBundle bundleForClass:[self class]] pathForImageResource:[self currentBadgeName] language:language];
     NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
     
     // add resource to context
