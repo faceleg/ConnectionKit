@@ -10,8 +10,18 @@
 
 #import "KTDocument.h"
 #import "KTImageView.h"
-
+#import "SVMedia.h"
 #import "SVPasteboardItemInternal.h"
+
+#import "NSImage+Karelia.h"
+
+
+@interface SVFillController ()
+@property(nonatomic, retain, readwrite) NSImage *image;  // bind UI to this
+@end
+
+
+#pragma mark -
 
 
 @implementation SVFillController
@@ -19,6 +29,8 @@
 - (void)dealloc
 {
     [_bannerType release];
+    [_imageMedia release];
+    [_image release];
     
     [super dealloc];
 }
@@ -54,6 +66,17 @@
 
 #pragma mark Custom Banner
 
+@synthesize imageMedia = _imageMedia;
+- (void)setImageMedia:(SVMedia *)media;
+{
+    [media retain];
+    [_imageMedia release]; _imageMedia = media;
+    
+    NSImage *thumb = [[NSImage alloc] initWithThumbnailOfURL:[media mediaURL] maxPixelSize:128];
+    [self setImage:thumb];
+    [thumb release];
+}
+
 - (IBAction)chooseFile:(id)sender;
 {
     [self chooseFile];
@@ -85,5 +108,7 @@
     
     [self setImageFromPasteboardItem:pboard];
 }
+
+@synthesize image = _image;
 
 @end
