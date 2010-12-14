@@ -160,31 +160,19 @@
 
 #pragma mark Dragging
 
-- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)draggingInfo
+- (NSPasteboard *)editPasteboard; { return _pasteboard; }
+
+- (BOOL) prepareForDragOperation:(id <NSDraggingInfo>)sender;
 {
-	NSDragOperation result = NSDragOperationNone;
-	
-	if ([self isEnabled])	// If we are enabled, have a look to see if the drag source is suitable
-	{
-		NSArray *acceptedTypes = [NSArray arrayWithObjects:
-			WebArchivePboardType,	// drags from safari, includes links and such
-			NSFilenamesPboardType,
-			NSTIFFPboardType,
-			NSPICTPboardType,
-			NSPDFPboardType,
-			//		@"Apple PNG pasteboard type",		// not defined in headers, but it's on screenshots!
-			nil];
-		
-		NSPasteboard *pboard = [draggingInfo draggingPasteboard];
-		if ([pboard availableTypeFromArray:acceptedTypes]) {
-			result = NSDragOperationCopy;
-		}
-	}
-	
-	return result;
+    BOOL result = [super prepareForDragOperation:sender];
+    if (result)
+    {
+        _pasteboard = [sender draggingPasteboard];
+    }
+    return result;
 }
 
-- (void)concludeDragOperation:(id <NSDraggingInfo>)draggingInfo
+- (void)XconcludeDragOperation:(id <NSDraggingInfo>)draggingInfo
 {
     NSPasteboard *pboard = [draggingInfo draggingPasteboard];
     (void)[pboard types]; // we always have to call types

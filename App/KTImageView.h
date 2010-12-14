@@ -35,8 +35,13 @@
 	
 //	ImageCropperController *myImageCropperController;
 //	NSImagePickerController *myPickController;
+
+  @private
+    NSPasteboard    *_pasteboard;   // weak ref
 }
 
+// During a paste or drop, this will return the pasteboard it's sourced from
+- (NSPasteboard *)editPasteboard;
 
 // Accessors
 - (NSDictionary *)dataSourceDictionary;
