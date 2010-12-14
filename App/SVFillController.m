@@ -72,11 +72,10 @@
     [media retain];
     [_imageMedia release]; _imageMedia = media;
     
-    NSImage *thumb = ([media mediaURL] ?
-                      [[NSImage alloc] initWithThumbnailOfURL:[media mediaURL] maxPixelSize:128] :
+    NSImage *thumb = (media ?
+                      [NSImage imageWithIMBImageItem:(id)media] :
                       nil);
     [self setImage:thumb];
-    [thumb release];
 }
 
 - (IBAction)chooseFile:(id)sender;
