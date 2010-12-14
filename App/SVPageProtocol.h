@@ -9,13 +9,13 @@
 #import <Cocoa/Cocoa.h>
 #import "SVPlugIn.h"
 
-typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSentences, kTruncateParagraphs } SVIndexTruncationType;
+typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSentences, kTruncateParagraphs } SVTruncationType;
 
 @protocol SVPage <NSObject>
 
 #pragma mark Content
 - (NSString *)title;
-- (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType;
+- (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount truncationType:(SVTruncationType)truncationType;
 
 
 #pragma mark Properties

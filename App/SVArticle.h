@@ -23,7 +23,7 @@
 #pragma mark HTML
 
 - (NSAttributedString *)attributedHTMLStringWithTruncation:(NSUInteger)maxCount
-                                                      type:(SVIndexTruncationType)truncationType
+                                                      type:(SVTruncationType)truncationType
                                          includeLargeMedia:(BOOL)includeLargeMedia
                                                didTruncate:(BOOL *)truncated;
 

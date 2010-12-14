@@ -65,7 +65,7 @@
 
 // Returns YES if truncated.
 
-- (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType; { return NO; }
+- (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount truncationType:(SVTruncationType)truncationType; { return NO; }
 
 - (NSString *)language; { return [[self collection] language]; }
 

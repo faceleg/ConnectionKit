@@ -301,7 +301,7 @@
 
 // Returns YES if truncated.
 
-- (BOOL)writeSummary:(SVHTMLContext *)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType;
+- (BOOL)writeSummary:(SVHTMLContext *)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount truncationType:(SVTruncationType)truncationType;
 {
 	BOOL truncated = NO;
 	

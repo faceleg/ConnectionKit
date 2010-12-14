@@ -59,12 +59,6 @@ typedef enum {
 } IndexLayoutType;
 
 
-#define kCharsPerWord 5
-#define kWordsPerSentence 10
-#define kSentencesPerParagraph 5
-#define kMaxTruncationParagraphs 10
-// 5 * 10 * 5 * 20 = 5000 characters in 20 paragraphs, so this is our range
-
 	
 @interface GeneralIndexPlugIn : SVIndexPlugIn 
 {
@@ -76,7 +70,7 @@ typedef enum {
     BOOL _showTitles;			// transient only, for bindings
     BOOL _showComments;
 	BOOL _truncate;
-	SVIndexTruncationType _truncationType;
+	SVTruncationType _truncationType;
     NSUInteger _truncateCount;
 }
 
@@ -88,11 +82,9 @@ typedef enum {
 @property  BOOL showComments;
 @property  BOOL truncate;
 @property  IndexLayoutType indexLayoutType;
-@property  SVIndexTruncationType truncationType;
+@property  SVTruncationType truncationType;
 @property  NSUInteger truncateCount;
 
 
-+ (NSUInteger) truncationCountFromChars:(NSUInteger)chars forType:(SVIndexTruncationType)truncType round:(BOOL)wantRound;
-+ (NSUInteger) charsFromTruncationCount:(NSUInteger)count forType:(SVIndexTruncationType)truncType;
 
 @end

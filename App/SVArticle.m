@@ -55,7 +55,7 @@
 
 #pragma mark Truncation
 
-- (NSString *)truncateMarkup:(NSString *)markup truncation:(NSUInteger)maxCount truncationType:(SVIndexTruncationType)truncationType didTruncate:(BOOL *)outDidTruncate;
+- (NSString *)truncateMarkup:(NSString *)markup truncation:(NSUInteger)maxCount truncationType:(SVTruncationType)truncationType didTruncate:(BOOL *)outDidTruncate;
 {
 	OBPRECONDITION(markup);
 	NSString *result = markup;
@@ -287,7 +287,7 @@
 }
 
 - (NSAttributedString *)attributedHTMLStringWithTruncation:(NSUInteger)maxCount
-                                                      type:(SVIndexTruncationType)truncationType
+                                                      type:(SVTruncationType)truncationType
                                          includeLargeMedia:(BOOL)includeLargeMedia
                                                didTruncate:(BOOL *)truncated;
 {
