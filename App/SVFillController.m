@@ -10,6 +10,8 @@
 
 #import "KTDocument.h"
 
+#import "SVPasteboardItemInternal.h"
+
 
 @implementation SVFillController
 
@@ -65,12 +67,12 @@
     if ([panel runModalForTypes:[panel allowedFileTypes]] == NSFileHandlingPanelOKButton)
     {
         NSURL *URL = [panel URL];
-        return [self setFileWithURL:URL];
+        return [self setImageFromPasteboardItem:[KSWebLocation webLocationWithURL:URL]];
     }
     
     return NO;
 }
 
-- (BOOL)setFileWithURL:(NSURL *)URL; { return NO; }
+- (BOOL)setImageFromPasteboardItem:(id <SVPasteboardItem>)item; { return NO; }
 
 @end

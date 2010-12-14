@@ -61,12 +61,12 @@
     return result;
 }
 
-- (BOOL)setFileWithURL:(NSURL *)URL;
+- (BOOL)setImageFromPasteboardItem:(id <SVPasteboardItem>)item;
 {
     KTMaster *master = [[oInspectorViewController inspectedObjectsController]
                         valueForKeyPath:@"selection.master"];
     
-    [master setBannerWithContentsOfURL:URL];
+    [master setBannerWithContentsOfURL:[item URL]];
     
     return YES;
 }

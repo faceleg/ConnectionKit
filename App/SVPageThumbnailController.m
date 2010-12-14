@@ -27,11 +27,11 @@
     return result;
 }
 
-- (BOOL)setFileWithURL:(NSURL *)URL;
+- (BOOL)setImageFromPasteboardItem:(id <SVPasteboardItem>)item;
 {
     NSManagedObjectContext *context = [[oInspectorViewController representedObject] managedObjectContext];
     
-    SVMediaRecord *media = [SVMediaRecord mediaByReferencingURL:URL
+    SVMediaRecord *media = [SVMediaRecord mediaByReferencingURL:[item URL]
                                             entityName:@"Thumbnail"
                         insertIntoManagedObjectContext:context
                                                  error:NULL];

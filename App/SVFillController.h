@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "SVPasteboardItem.h"
+
 
 @class KSInspectorViewController;
 
@@ -27,6 +29,8 @@
 
 - (IBAction)chooseFile:(id)sender;
 - (BOOL)chooseFile;
-- (BOOL)setFileWithURL:(NSURL *)URL;    // subclasses MUST implement
+- (BOOL)setImageFromPasteboardItem:(id <SVPasteboardItem>)item;    // subclasses MUST implement
+
+- (IBAction)imageEdited:(id)sender;
 
 @end

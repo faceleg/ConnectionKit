@@ -15,12 +15,12 @@
 
 @implementation SVFaviconPickerController
 
-- (BOOL)setFileWithURL:(NSURL *)URL;
+- (BOOL)setImageFromPasteboardItem:(id <SVPasteboardItem>)item;
 {
     KTMaster *master = [[oInspectorViewController inspectedObjectsController]
                         valueForKeyPath:@"selection.master"];
     
-    [master setFaviconWithContentsOfURL:URL];
+    [master setFaviconWithContentsOfURL:[item URL]];
     
     return YES;
 }
