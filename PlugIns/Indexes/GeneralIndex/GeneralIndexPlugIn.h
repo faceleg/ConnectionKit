@@ -62,7 +62,7 @@ typedef enum {
 #define kCharsPerWord 5
 #define kWordsPerSentence 10
 #define kSentencesPerParagraph 5
-#define kMaxTruncationParagraphs 20
+#define kMaxTruncationParagraphs 10
 // 5 * 10 * 5 * 20 = 5000 characters in 20 paragraphs, so this is our range
 
 	
