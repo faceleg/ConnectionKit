@@ -426,8 +426,7 @@
     
     
     // Bring back down to take into account margin/border/padding. #94079
-    DOMElement *graphic = [self graphicDOMElement];
-    if (!graphic) graphic = [self HTMLElement];
+    DOMElement *graphic = [self HTMLElement];
         
     style = [[[self HTMLElement] ownerDocument] getComputedStyle:graphic
                                                    pseudoElement:@""];
