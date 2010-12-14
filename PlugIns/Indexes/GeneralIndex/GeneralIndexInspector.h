@@ -4,9 +4,9 @@
 
 
 
-
 @interface GeneralIndexInspector : SVIndexInspectorViewController 
 {
+	IBOutlet id oTruncationController;
 }
 
 

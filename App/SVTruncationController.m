@@ -8,7 +8,8 @@
 
 #import "SVTruncationController.h"
 
-
+// Not used, but we may want to try activating it again if we wanted to some sort of live feedback with
+// the action sent only when the slider was released.
 @implementation SVActionWhenDoneSliderCell
 
 - (void)stopTracking:(NSPoint)lastPoint at:(NSPoint)stopPoint inView:(NSView *)controlView mouseIsUp:(BOOL)flag
@@ -38,149 +39,48 @@
 	[self setKeys:[NSArray arrayWithObjects:
 				   @"truncateSliderValue",
 				   nil]
-triggerChangeNotificationsForDependentKey:@"truncateDescription"];
+	triggerChangeNotificationsForDependentKey:@"truncateDescription"];
+
+	[self setKeys:[NSArray arrayWithObjects:
+				   @"truncateCount",
+				   @"truncationType",
+				   nil]
+triggerChangeNotificationsForDependentKey:@"truncateSliderValue"];
 }
 
+@synthesize truncateSliderValue = _truncateSliderValue;		// bound to the slider; it's LOGFUNCTION of char count
+@synthesize truncateCount = _truncateCount;
+@synthesize truncationType = _truncationType;
 
-// Will a different function make the "slope" a bit closer to linear?
+#pragma mark -
+#pragma mark Log Function Min/Max
+
 #define LOGFUNCTION log2
 #define EXPFUNCTION(x) exp2(x)
+
+- (double)sliderMin
+{
+	return LOGFUNCTION(kWordsPerSentence * kCharsPerWord);
+}
+- (double)sliderMax
+{
+	return LOGFUNCTION(kMaxTruncationParagraphs * kSentencesPerParagraph * kWordsPerSentence * kCharsPerWord);
+}
 
 -(void)awakeFromNib;
 {
 	[oTruncationSlider setTarget:self];
-	[oTruncationSlider setMinValue:LOGFUNCTION(kWordsPerSentence * kCharsPerWord)];	// reasonable minimum
-	[oTruncationSlider setMaxValue:LOGFUNCTION(
-											   kMaxTruncationParagraphs * kSentencesPerParagraph * kWordsPerSentence * kCharsPerWord )];
-	[oTruncationSlider setDoubleValue:[oTruncationSlider maxValue]];
-}
-
-// Convert slider 0.0 to 1.0 range to approprate truncation types.
-// Depending on which third the value is in, we round to a count of words, sentence, or paragraphs.
-
-- (NSUInteger) truncCountFromSliderValueChoosingTruncType:(SVTruncationType *)outTruncType
-{
-	double sliderValue = [oTruncationSlider doubleValue];
-	double minValue = [oTruncationSlider minValue];
-	double maxValue = [oTruncationSlider maxValue];
-	double linearFraction = (sliderValue - minValue) / (maxValue - minValue);
-	
-	SVTruncationType type = 0;
-	if (linearFraction < 0.333333333)
-	{
-		type = kTruncateWords;			// First third: truncate words
-	}
-	else if (linearFraction < 0.66666666666)
-	{
-		type = kTruncateSentences;		// Second third: truncate sentences
-	}
-	else if (linearFraction > 0.99)		// If at the end, 99th percentile, 
-	{
-		type = kTruncateNone;
-	}
-	else
-	{
-		type = kTruncateParagraphs;		// Third third, truncate paragraphs.
-	}
-	
-	NSUInteger exponentTransformed = round(EXPFUNCTION(sliderValue));
-	NSUInteger truncCount = [SVTruncationController
-							 truncationCountFromChars:exponentTransformed
-							 forType:type
-							 round:YES];		// nice rounded number
-	
-	if (outTruncType)
-	{
-		*outTruncType = type;
-	}
-	return truncCount;
-}
-
-- (IBAction)sliderDone:(id)sender;		// Slider done dragging.  Move the final value into the model
-{
-	SVTruncationType truncType = kTruncateNone;
-	NSUInteger truncCount = [self truncCountFromSliderValueChoosingTruncType:&truncType];
-
-	NSNumber *oldValue = [[oInspectorViewController inspectedObjectsController] valueForKeyPath:@"selection.truncateCount"];
-	if ([oldValue intValue] != truncCount)
-	{
-		// Don't record a change unless it has actually changed.
-		[[oInspectorViewController inspectedObjectsController] setValue:[NSNumber numberWithInt:truncCount] forKeyPath:@"selection.truncateCount"];
-	}
-	
-	oldValue = [[oInspectorViewController inspectedObjectsController] valueForKeyPath:@"selection.truncationType"];
-	if ([oldValue intValue] != truncType)
-	{
-		// Don't record a change unless it has actually changed.
-		[[oInspectorViewController inspectedObjectsController] setValue:[NSNumber numberWithInt:truncType] forKeyPath:@"selection.truncationType"];
-	}
+	[oTruncationSlider setMinValue:self.sliderMin];
+	[oTruncationSlider setMaxValue:self.sliderMax];
 }
 
 
-
-@synthesize truncateSliderValue = _truncateSliderValue;		// bound to the slider; it's LOGFUNCTION of char count
-
-
-- (NSString *)truncateDescription
-{
-	NSString *result;
-	SVTruncationType truncType = kTruncateNone;
-	NSUInteger count = [self truncCountFromSliderValueChoosingTruncType:&truncType];
-	
-	switch(truncType)
-	{
-		case kTruncateWords: 
-			if (count < 2)
-			{
-				result = LocalizedStringInThisBundle(@"1 word", @"singular for number of words");
-			}
-			else
-			{
-				result = [NSString stringWithFormat:LocalizedStringInThisBundle(@"%d words", @"plural for number of words"), count];
-			}
-			break;
-		case kTruncateSentences: 
-			if (count < 2)
-			{
-				result = LocalizedStringInThisBundle(@"1 sentence", @"singular for number of sentences");
-			}
-			else
-			{
-				result = [NSString stringWithFormat:LocalizedStringInThisBundle(@"%d sentences", @"plural for number of sentences"), count];
-			}
-			break;
-		case kTruncateParagraphs: 
-			if (count < 2)
-			{
-				result = LocalizedStringInThisBundle(@"1 paragraph", @"singular for number of paragraphs");
-			}
-			else
-			{
-				result = [NSString stringWithFormat:LocalizedStringInThisBundle(@"%d paragraphs", @"plural for number ofparagraphswords"), count];
-			}
-			break;
-		default:
-			result = LocalizedStringInThisBundle(@"No truncation", @"indication that text will not be truncated");
-			break;
-	}
-	return result;
-}
+#pragma mark -
+#pragma mark Raw Char Count (exp of slider) <--> Truncate Count & Units
 
 
-- (IBAction)makeShortest:(id)sender;	// click on icon to make truncation the shortest
-{
-	[oTruncationSlider setDoubleValue:[oTruncationSlider minValue]];
-	[self sliderDone:sender];
-}
-
-- (IBAction)makeLongest:(id)sender;		// click on icon to make truncation the longest (remove truncation)
-{
-	[oTruncationSlider setDoubleValue:[oTruncationSlider maxValue]];
-	[self sliderDone:sender];
-}
-
-
-+ (NSUInteger) truncationCountFromChars:(NSUInteger)chars forType:(SVTruncationType)truncType round:(BOOL)wantRound;
+// Based on raw number of characters (derived from slider value) and decsired truncation type, figure out an appropriate value in those units.
++ (NSUInteger) truncateCountFromRawCharCount:(NSUInteger)chars forType:(SVTruncationType)truncType round:(BOOL)wantRound;
 {
 	NSUInteger result = 0;
 	float divided = 0.0;
@@ -234,7 +134,51 @@ triggerChangeNotificationsForDependentKey:@"truncateDescription"];
 	return result;
 }
 
-+ (NSUInteger) charsFromTruncationCount:(NSUInteger)count forType:(SVTruncationType)truncType
+// Even smarter than above, it figures out units based on which third of the slider is in range.
+// Convert slider floating value to approprate truncation types.
+// Depending on which third the value is in, we round to a count of words, sentence, or paragraphs.
+
+- (NSUInteger) truncCountFromSliderValueChoosingTruncType:(SVTruncationType *)outTruncType
+{
+	double sliderValue = self.truncateSliderValue;
+	double minValue = self.sliderMin;
+	double maxValue = self.sliderMax;
+	double linearFraction = (sliderValue - minValue) / (maxValue - minValue);
+	
+	SVTruncationType type = 0;
+	if (linearFraction < 0.333333333)
+	{
+		type = kTruncateWords;			// First third: truncate words
+	}
+	else if (linearFraction < 0.66666666666)
+	{
+		type = kTruncateSentences;		// Second third: truncate sentences
+	}
+	else if (linearFraction > 0.99)		// If at the end, 99th percentile, 
+	{
+		type = kTruncateNone;
+	}
+	else
+	{
+		type = kTruncateParagraphs;		// Third third, truncate paragraphs.
+	}
+	
+	NSUInteger exponentTransformed = round(EXPFUNCTION(sliderValue));
+	NSUInteger truncCount = [SVTruncationController
+							 truncateCountFromRawCharCount:exponentTransformed
+							 forType:type
+							 round:YES];		// nice rounded number
+	
+	if (outTruncType)
+	{
+		*outTruncType = type;
+	}
+	return truncCount;
+}
+
+
+// From count and truncation type stored in models, figure out raw character count, which we can use to set the slider value.
++ (NSUInteger) rawCharCountFromTruncateCount:(NSUInteger)count forType:(SVTruncationType)truncType
 {
 	NSUInteger result = 0;
 	switch(truncType)
@@ -256,6 +200,98 @@ triggerChangeNotificationsForDependentKey:@"truncateDescription"];
 	}
 	return result;
 }
+
+#pragma mark -
+#pragma mark Slider Actions
+
+- (IBAction)sliderDone:(id)sender;		// Slider done dragging.  Move the final value into the model
+{
+	SVTruncationType truncType = kTruncateNone;
+	NSUInteger truncCount = [self truncCountFromSliderValueChoosingTruncType:&truncType];
+	self.truncateCount = truncCount;
+	self.truncationType = truncType;
+}
+
+- (IBAction)makeShortest:(id)sender;	// click on icon to make truncation the shortest
+{
+	self.truncateSliderValue = self.sliderMin;
+}
+
+- (IBAction)makeLongest:(id)sender;		// click on icon to make truncation the longest (remove truncation)
+{
+	self.truncateSliderValue = self.sliderMin;
+}
+
+#pragma mark -
+#pragma mark Setters
+
+
+// Called from custom setters for truncation count or type.  
+- (void) updateSliderValue
+{
+	NSUInteger rawCharCount = [SVTruncationController rawCharCountFromTruncateCount:_truncateCount forType:_truncationType];
+	self.truncateSliderValue = LOGFUNCTION(rawCharCount);
+}
+
+- (void) setTruncateCount: (NSUInteger) aTruncateCount
+{
+    _truncateCount = aTruncateCount;
+	[self updateSliderValue];
+}
+- (void) setTruncationType: (SVTruncationType) aTruncationType
+{
+    _truncationType = aTruncationType;
+	[self updateSliderValue];
+}
+
+#pragma mark -
+#pragma mark Slider to text description
+
+- (NSString *)truncateDescription
+{
+	NSString *result;
+	SVTruncationType truncType = kTruncateNone;
+	NSUInteger count = [self truncCountFromSliderValueChoosingTruncType:&truncType];
+	
+	switch(truncType)
+	{
+		case kTruncateWords: 
+			if (count < 2)
+			{
+				result = LocalizedStringInThisBundle(@"1 word", @"singular for number of words");
+			}
+			else
+			{
+				result = [NSString stringWithFormat:LocalizedStringInThisBundle(@"%d words", @"plural for number of words"), count];
+			}
+			break;
+		case kTruncateSentences: 
+			if (count < 2)
+			{
+				result = LocalizedStringInThisBundle(@"1 sentence", @"singular for number of sentences");
+			}
+			else
+			{
+				result = [NSString stringWithFormat:LocalizedStringInThisBundle(@"%d sentences", @"plural for number of sentences"), count];
+			}
+			break;
+		case kTruncateParagraphs: 
+			if (count < 2)
+			{
+				result = LocalizedStringInThisBundle(@"1 paragraph", @"singular for number of paragraphs");
+			}
+			else
+			{
+				result = [NSString stringWithFormat:LocalizedStringInThisBundle(@"%d paragraphs", @"plural for number ofparagraphswords"), count];
+			}
+			break;
+		default:
+			result = LocalizedStringInThisBundle(@"No truncation", @"indication that text will not be truncated");
+			break;
+	}
+	return result;
+}
+
 
 
 
