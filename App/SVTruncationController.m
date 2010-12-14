@@ -100,19 +100,19 @@ triggerChangeNotificationsForDependentKey:@"truncateDescription"];
 {
 	SVTruncationType truncType = kTruncateNone;
 	NSUInteger truncCount = [self truncCountFromSliderValueChoosingTruncType:&truncType];
-	
-	NSNumber *oldValue = [self valueForKeyPath:@"inspectedObjectsController.selection.truncateCount"];
+
+	NSNumber *oldValue = [[oInspectorViewController inspectedObjectsController] valueForKeyPath:@"selection.truncateCount"];
 	if ([oldValue intValue] != truncCount)
 	{
 		// Don't record a change unless it has actually changed.
-		[self setValue:[NSNumber numberWithInt:truncCount] forKeyPath:@"inspectedObjectsController.selection.truncateCount"];
+		[[oInspectorViewController inspectedObjectsController] setValue:[NSNumber numberWithInt:truncCount] forKeyPath:@"selection.truncateCount"];
 	}
 	
-	oldValue = [self valueForKeyPath:@"inspectedObjectsController.selection.truncationType"];
+	oldValue = [[oInspectorViewController inspectedObjectsController] valueForKeyPath:@"selection.truncationType"];
 	if ([oldValue intValue] != truncType)
 	{
 		// Don't record a change unless it has actually changed.
-		[self setValue:[NSNumber numberWithInt:truncType] forKeyPath:@"inspectedObjectsController.selection.truncationType"];
+		[[oInspectorViewController inspectedObjectsController] setValue:[NSNumber numberWithInt:truncType] forKeyPath:@"selection.truncationType"];
 	}
 }
 

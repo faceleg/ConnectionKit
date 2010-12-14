@@ -22,9 +22,11 @@
 
 @interface SVTruncationController : NSObject
 {
+    IBOutlet NSViewController  *oInspectorViewController;
+	IBOutlet NSSlider *oTruncationSlider;
+
 	double _truncateSliderValue;
 	
-	IBOutlet NSSlider *oTruncationSlider;
 }
 
 @property double truncateSliderValue;		// "transient" version of truncate chars for instant feedback. Bound to slider itself.
