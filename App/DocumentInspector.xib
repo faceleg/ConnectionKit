@@ -905,8 +905,8 @@
 											<reference key="NSSuperview" ref="865099582"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSImageCell" key="NSCell" id="526674149">
-												<int key="NSCellFlags">67239424</int>
-												<int key="NSCellFlags2">33685504</int>
+												<int key="NSCellFlags">337772032</int>
+												<int key="NSCellFlags2">131072</int>
 												<reference key="NSSupport" ref="26"/>
 												<int key="NSAlign">0</int>
 												<int key="NSScale">0</int>
@@ -1189,8 +1189,8 @@
 											<reference key="NSSuperview" ref="865099582"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSImageCell" key="NSCell" id="815074124">
-												<int key="NSCellFlags">337772032</int>
-												<int key="NSCellFlags2">0</int>
+												<int key="NSCellFlags">67239424</int>
+												<int key="NSCellFlags2">33554432</int>
 												<object class="NSCustomResource" key="NSContents">
 													<string key="NSClassName">NSImage</string>
 													<string key="NSResourceName">32favicon</string>
@@ -1222,8 +1222,8 @@
 											<reference key="NSSuperview" ref="865099582"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSImageCell" key="NSCell" id="279303934">
-												<int key="NSCellFlags">67239424</int>
-												<int key="NSCellFlags2">33554432</int>
+												<int key="NSCellFlags">337772032</int>
+												<int key="NSCellFlags2">0</int>
 												<reference key="NSSupport" ref="465775848"/>
 												<int key="NSAlign">0</int>
 												<int key="NSScale">0</int>
@@ -1709,22 +1709,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">valueURL: inspectedObjectsController.selection.master.banner.fileURL</string>
-						<reference key="source" ref="283746977"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="283746977"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">valueURL: inspectedObjectsController.selection.master.banner.fileURL</string>
-							<string key="NSBinding">valueURL</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.master.banner.fileURL</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">534</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: inspectedObjectsController.selection.site.imageSharpeningFactor</string>
 						<reference key="source" ref="845595993"/>
 						<reference key="destination" ref="1001"/>
@@ -1754,22 +1738,6 @@
 						</object>
 					</object>
 					<int key="connectionID">539</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">valueURL: inspectedObjectsController.selection.master.faviconMedia.fileURL</string>
-						<reference key="source" ref="970766255"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="970766255"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">valueURL: inspectedObjectsController.selection.master.faviconMedia.fileURL</string>
-							<string key="NSBinding">valueURL</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.master.faviconMedia.fileURL</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">606</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -2182,6 +2150,54 @@
 						</object>
 					</object>
 					<int key="connectionID">735</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">imageEdited:</string>
+						<reference key="source" ref="305345016"/>
+						<reference key="destination" ref="283746977"/>
+					</object>
+					<int key="connectionID">736</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: image</string>
+						<reference key="source" ref="283746977"/>
+						<reference key="destination" ref="305345016"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="283746977"/>
+							<reference key="NSDestination" ref="305345016"/>
+							<string key="NSLabel">value: image</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">image</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">739</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: image</string>
+						<reference key="source" ref="970766255"/>
+						<reference key="destination" ref="386048284"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="970766255"/>
+							<reference key="NSDestination" ref="386048284"/>
+							<string key="NSLabel">value: image</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">image</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">740</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">imageEdited:</string>
+						<reference key="source" ref="386048284"/>
+						<reference key="destination" ref="970766255"/>
+					</object>
+					<int key="connectionID">741</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3310,6 +3326,7 @@
 					<string>318.IBPluginDependency</string>
 					<string>319.IBPluginDependency</string>
 					<string>320.IBPluginDependency</string>
+					<string>322.CustomClassName</string>
 					<string>322.IBPluginDependency</string>
 					<string>323.IBPluginDependency</string>
 					<string>332.IBPluginDependency</string>
@@ -3382,6 +3399,7 @@
 					<string>593.ImportedFromIB2</string>
 					<string>594.CustomClassName</string>
 					<string>594.IBPluginDependency</string>
+					<string>594.IBViewBoundsToFrameTransform</string>
 					<string>594.ImportedFromIB2</string>
 					<string>595.IBPluginDependency</string>
 					<string>595.ImportedFromIB2</string>
@@ -3518,6 +3536,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>KTImageView</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3590,6 +3609,9 @@
 					<boolean value="YES"/>
 					<string>KTImageView</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">AUFgAABDTwAAA</bytes>
+					</object>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -3691,7 +3713,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">735</int>
+			<int key="maxID">741</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4315,11 +4337,13 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>chooseFile:</string>
 							<string>fillTypeChosen:</string>
+							<string>imageEdited:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
 							<string>NSPopUpButton</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -4328,6 +4352,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>chooseFile:</string>
 							<string>fillTypeChosen:</string>
+							<string>imageEdited:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -4338,6 +4363,10 @@
 							<object class="IBActionInfo">
 								<string key="name">fillTypeChosen:</string>
 								<string key="candidateClassName">NSPopUpButton</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">imageEdited:</string>
+								<string key="candidateClassName">id</string>
 							</object>
 						</object>
 					</object>
