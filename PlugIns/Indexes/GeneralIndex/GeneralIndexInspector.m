@@ -42,6 +42,12 @@
 				   @"truncateSliderValue",
 				   nil]
 	triggerChangeNotificationsForDependentKey:@"truncateCountLive"];
+	
+	[self setKeys:[NSArray arrayWithObjects:
+				   @"inspectedObjectsController.selection.truncationType",
+				   @"truncateSliderValue",
+				   nil]
+triggerChangeNotificationsForDependentKey:@"truncateCountLive"];
 }
 
 // Will a different function make the "slope" a bit closer to linear?
@@ -107,9 +113,6 @@
 -(void)awakeFromNib;
 {
 	[oTruncationSlider setTarget:self];
-	[oTruncationSlider setMinValue:LOGFUNCTION(kWordsPerSentence * kCharsPerWord)];	// reasonable minimum
-	[oTruncationSlider setMaxValue:LOGFUNCTION(
-	 kMaxTruncationParagraphs * kSentencesPerParagraph * kWordsPerSentence * kCharsPerWord )];
 }
 
 - (IBAction)sliderDone:(id)sender;		// Slider done dragging.  Move the final value into the model
@@ -137,7 +140,25 @@
 	}
 }
 
+// Convert slider 0.0 to 1.0 range to approprate truncation types.
+- (int) truncCountFromSliderValueWithTrucType:(SVIndexTruncationType *)outTruncType
+{
+	
+	
+	
+	return 0;
+}
+
+
 @synthesize truncateSliderValue = _truncateSliderValue;		// bound to the slider; it's LOGFUNCTION of char count
+
+- (void) setTruncateSliderValue:(double)aValue
+{
+	_truncateSliderValue = aValue;
+	
+	SVIndexTruncationType truncType = 0;
+	NSLog(@"slider %.2f -> %@ %@", [self truncCountFromSliderValueWithTrucType:&truncType]);
+}
 
 - (NSUInteger)truncateCountLive	// bound to the text field. update text field when slider changes
 {
@@ -168,12 +189,12 @@
 
 - (IBAction)makeShortest:(id)sender;	// click on icon to make truncation the shortest
 {
-	
+	[oTruncationSlider setDoubleValue:[oTruncationSlider minValue]];
 }
 
 - (IBAction)makeLongest:(id)sender;		// click on icon to make truncation the longest (remove truncation)
 {
-	
+	[oTruncationSlider setDoubleValue:[oTruncationSlider maxValue]];
 }
 
 
