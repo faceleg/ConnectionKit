@@ -21,6 +21,11 @@
 #import <WebKit/WebKit.h>
 
 
+@interface NSImageView (KTImageView)
+- (IBAction)paste:(id)sender;
+@end
+
+
 @interface KTImageView ()
 //- (void)setFileName:(NSString *)aPath;
 //- (void)pickSomeoneWithNewCropper:(id)sender;
@@ -31,14 +36,9 @@
 
 @implementation KTImageView
 
-#pragma mark awake
-
-- (void)awakeFromNib
-{
-	[self setAllowsCutCopyPaste:NO];
-}
-
 #pragma mark accessors
+
+- (NSPasteboard *)editPasteboard; { return _pasteboard; }
 
 - (NSDictionary *)dataSourceDictionary
 {
@@ -158,9 +158,7 @@
 	[dataSourceDelegate imageView:self setWithDataSourceDictionary:myDataSourceDictionary];	
 }
 
-#pragma mark Dragging
-
-- (NSPasteboard *)editPasteboard; { return _pasteboard; }
+#pragma mark Dragging Destination
 
 - (BOOL) prepareForDragOperation:(id <NSDraggingInfo>)sender;
 {
@@ -224,6 +222,15 @@
 	}
 	
     //[super concludeDragOperation:draggingInfo];
+}
+
+#pragma mark Paste
+
+- (void)paste:(id)sender;
+{
+    _pasteboard = [NSPasteboard generalPasteboard];
+    [super paste:(id)sender];
+    _pasteboard = nil;
 }
 
 @end
