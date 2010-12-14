@@ -184,6 +184,12 @@ static NSArray *sAltStrings = nil;
     return result;
 }
 
+- (void)writeHTML:(id <SVPlugInContext>)context
+{
+    [super writeHTML:context];
+    [context addDependencyForKeyPath:@"language" ofObject:[context page]];
+}
+
 
 #pragma mark -
 #pragma mark Properties
