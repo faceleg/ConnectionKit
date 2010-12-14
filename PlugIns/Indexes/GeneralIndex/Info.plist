@@ -52,8 +52,6 @@
 		<integer>3</integer>
 		<key>indexLayoutType</key>
 		<integer>3</integer>
-		<key>mediaLayoutType</key>
-		<integer>1</integer>
 	</dict>
 	<key>SVIndexMasters</key>
 	<array>
