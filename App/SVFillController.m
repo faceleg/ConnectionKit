@@ -9,6 +9,7 @@
 #import "SVFillController.h"
 
 #import "KTDocument.h"
+#import "KTImageView.h"
 
 #import "SVPasteboardItemInternal.h"
 
@@ -74,5 +75,15 @@
 }
 
 - (BOOL)setImageFromPasteboardItem:(id <SVPasteboardItem>)item; { return NO; }
+
+- (void)imageEdited:(id)sender;
+{
+    // Push the image down into model
+    NSPasteboard *pboard = ([sender respondsToSelector:@selector(editPasteboard)] ?
+                            [sender editPasteboard] :
+                            nil);
+    
+    [self setImageFromPasteboardItem:pboard];
+}
 
 @end
