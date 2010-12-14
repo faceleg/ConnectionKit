@@ -2951,6 +2951,14 @@
 					</object>
 					<int key="connectionID">1364</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oAfterConfigureGoogleMenuItem</string>
+						<reference key="source" ref="205882656"/>
+						<reference key="destination" ref="605654863"/>
+					</object>
+					<int key="connectionID">1365</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -4640,7 +4648,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1364</int>
+			<int key="maxID">1365</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
