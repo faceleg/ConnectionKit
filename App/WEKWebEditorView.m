@@ -1878,6 +1878,12 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                        fromDataSource:dataSource];
 }
 
+- (void)webView:(WebView *)sender resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource
+{
+    // Don't ever want to prompt user for password. #99710
+    [[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
+}
+
 #pragma mark WebUIDelegate
 
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
