@@ -59,11 +59,6 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeObserver:self forKeyPath:@"inspectedObjectsController.selection.thumbnailSourceGraphic.imageRepresentation"];
-    
-	
-	[self unbind:@"maxItemLength"];
-	[self unbind:@"fillType"];
-	[oSiteItemController unbind:@"imageMedia"];
 
     [super dealloc];
 }
