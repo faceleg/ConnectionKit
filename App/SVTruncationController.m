@@ -50,6 +50,13 @@
 
 @implementation SVTruncationController
 
+- (void)dealloc;
+{
+    [self unbind:@"maxItemLength"];
+    
+    [super dealloc];
+}
+
 @synthesize maxItemLength = _maxItemLength;
 
 extern const NSUInteger kTruncationMin;

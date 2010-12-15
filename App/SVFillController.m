@@ -28,6 +28,9 @@
 
 - (void)dealloc
 {
+    [self unbind:@"fillType"];
+    [self unbind:@"imageMedia"];
+    
     [_bannerType release];
     [_imageMedia release];
     [_image release];

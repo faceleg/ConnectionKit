@@ -193,6 +193,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)dealloc
 {
+    [self unbind:@"liveEditableAndSelectableLinks"];
+    
     [_rootItem setWebEditor:nil];
     [_rootItem release];
     

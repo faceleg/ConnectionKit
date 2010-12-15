@@ -15,6 +15,13 @@
 
 @implementation SVBannerPickerController
 
+- (void)dealloc;
+{
+    [self unbind:@"canChooseBannerType"];
+    
+    [super dealloc];
+}
+
 #pragma mark Banner Type
 
 - (NSNumber *)fillType;

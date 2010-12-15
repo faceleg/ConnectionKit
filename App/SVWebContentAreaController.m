@@ -63,6 +63,8 @@
 
 - (void)dealloc
 {
+    [self unbind:@"selectedPages"];
+    
     [_webEditorViewController release];
     [_webPreviewController release];
     [_sourceViewController release];

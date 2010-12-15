@@ -27,6 +27,7 @@
 {
     [self setContent:nil];  // make sure bindings etc. are torn down
     [self unbind:@"childPagesToIndex"];
+    [self unbind:@"thumbnailType"];
     
     [_thumbnail release];
     [_pagesController release];
