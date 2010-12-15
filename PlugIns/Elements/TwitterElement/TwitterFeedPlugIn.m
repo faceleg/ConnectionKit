@@ -76,6 +76,35 @@
 
 
 #pragma mark -
+#pragma mark Initialization
+
+- (void)awakeFromNew;
+{
+    [super awakeFromNew];
+    
+    // check for a location
+    id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
+    NSURL *URL = [location URL];
+    if ( URL  )
+    {
+        if ( [URL twitterUsername] )
+        {
+            self.username = [URL twitterUsername];
+            if ( [location title] )
+            {
+                self.title = [location title];
+            }
+        }
+    }
+    
+    // initial properties
+    self.openLinksInNewWindow = NO;
+    self.includeTimestamp = YES;
+    self.count = 5;
+}
+
+
+#pragma mark -
 #pragma mark HTML Generation
 
 - (void)writeHTML:(id <SVPlugInContext>)context
@@ -202,6 +231,5 @@
     
     return NO;    
 }
-
 
 @end
