@@ -73,7 +73,10 @@
                  toObject:self
               withKeyPath:@"inspectedObjectsController.selection.menuTitle"
                   options:nil];
-    
+ 
+		
+	// Truncation slider
+	[oTruncationController bind:@"maxItemLength" toObject:self withKeyPath:@"inspectedObjectsController.selection.maxItemLength" options:nil];	
     
     // Setup thumbnail picker
     [oThumbnailController bind:@"fillType" toObject:self withKeyPath:@"inspectedObjectsController.selection.thumbnailType" options:nil];

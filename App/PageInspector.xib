@@ -2024,7 +2024,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																		<reference key="NSSuperview" ref="72275822"/>
 																		<bool key="NSEnabled">YES</bool>
 																		<object class="NSSliderCell" key="NSCell" id="335510366">
-																			<int key="NSCellFlags">67239424</int>
+																			<int key="NSCellFlags">67501824</int>
 																			<int key="NSCellFlags2">131072</int>
 																			<string key="NSContents"/>
 																			<reference key="NSControlView" ref="1069703147"/>
@@ -3386,14 +3386,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					<int key="connectionID">519</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">sliderDone:</string>
-						<reference key="source" ref="518241507"/>
-						<reference key="destination" ref="1069703147"/>
-					</object>
-					<int key="connectionID">520</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oTruncationSlider</string>
 						<reference key="source" ref="518241507"/>
@@ -3426,6 +3418,55 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					<int key="connectionID">526</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">sliderChanged:</string>
+						<reference key="source" ref="518241507"/>
+						<reference key="destination" ref="1069703147"/>
+					</object>
+					<int key="connectionID">528</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">maxValue: itemLengthMaximumValue</string>
+						<reference key="source" ref="1069703147"/>
+						<reference key="destination" ref="518241507"/>
+						<object class="NSNibBindingConnector" key="connector" id="846365783">
+							<reference key="NSSource" ref="1069703147"/>
+							<reference key="NSDestination" ref="518241507"/>
+							<string key="NSLabel">maxValue: itemLengthMaximumValue</string>
+							<string key="NSBinding">maxValue</string>
+							<string key="NSKeyPath">itemLengthMaximumValue</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">LogValueTransformer</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">537</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">minValue: itemLengthMinimumValue</string>
+						<reference key="source" ref="1069703147"/>
+						<reference key="destination" ref="518241507"/>
+						<object class="NSNibBindingConnector" key="connector" id="155261112">
+							<reference key="NSSource" ref="1069703147"/>
+							<reference key="NSDestination" ref="518241507"/>
+							<string key="NSLabel">minValue: itemLengthMinimumValue</string>
+							<string key="NSBinding">minValue</string>
+							<string key="NSKeyPath">itemLengthMinimumValue</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">LogValueTransformer</string>
+							</object>
+							<reference key="NSPreviousConnector" ref="846365783"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">538</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: maxItemLength</string>
 						<reference key="source" ref="1069703147"/>
@@ -3436,10 +3477,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<string key="NSLabel">value: maxItemLength</string>
 							<string key="NSBinding">value</string>
 							<string key="NSKeyPath">maxItemLength</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">LogValueTransformer</string>
+							</object>
+							<reference key="NSPreviousConnector" ref="155261112"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">527</int>
+					<int key="connectionID">539</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -5127,7 +5173,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">527</int>
+			<int key="maxID">539</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
