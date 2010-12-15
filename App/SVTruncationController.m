@@ -10,19 +10,6 @@
 
 @implementation SVTruncationController
 
-+ (void)initialize
-{
-	[self setKeys:[NSArray arrayWithObjects:
-				   @"truncateSliderValue", nil]
-	triggerChangeNotificationsForDependentKey:@"truncateDescription"];
-
-	// Changes to slider value affect the dependent maxItemLength
-	
-	[self setKeys:[NSArray arrayWithObjects:
-				   @"truncateSliderValue", nil]
-triggerChangeNotificationsForDependentKey:@"maxItemLength"];
-}
-
 @synthesize truncateSliderValue = _truncateSliderValue;		// bound to the slider; it's LOGFUNCTION of char count
 
 extern const NSUInteger kTruncationMin;
@@ -64,12 +51,14 @@ extern double kTruncationMaxLog;
 {
 	return EXPFUNCTION(self.truncateSliderValue);
 }
-
 - (void) setMaxItemLength: (NSUInteger) aMaxItemLength
 {
 	self.truncateSliderValue = LOGFUNCTION(aMaxItemLength);
 }
-
++ (NSSet *)keyPathsForValuesAffectingMaxItemLength;
+{
+    return [NSSet setWithObject:@"truncateSliderValue"];
+}
 
 
 
@@ -126,6 +115,10 @@ extern double kTruncationMaxLog;
 	return result;
 
 	 */
+}
++ (NSSet *)keyPathsForValuesAffectingTruncate;
+{
+    return [NSSet setWithObject:@"truncateSliderValue"];
 }
 
 
