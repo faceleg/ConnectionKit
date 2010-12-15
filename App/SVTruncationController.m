@@ -8,21 +8,53 @@
 
 #import "SVTruncationController.h"
 
+#define LOGFUNCTION log2
+#define EXPFUNCTION(x) exp2(x)
+
+
+@implementation LogValueTransformer
+
++ (void) initialize;
+{
+    LogValueTransformer *transformer = [[LogValueTransformer alloc] init];
+    [NSValueTransformer setValueTransformer:transformer forName:@"LogValueTransformer"];
+    [transformer release];
+}
+
++ (Class) transformedValueClass {
+	return [NSNumber class];
+}
+
++ (BOOL) allowsReverseTransformation {
+	return YES;
+}
+
+- (id) transformedValue: (id) value {
+	double toTransform = [value doubleValue];
+	double transformed = LOGFUNCTION(toTransform);
+	id result = [NSNumber numberWithDouble:transformed];
+	return result;
+}
+
+- (id) reverseTransformedValue: (id) value {
+	double toTransform = [value doubleValue];
+	double transformed = EXPFUNCTION(toTransform);
+	id result = [NSNumber numberWithDouble:transformed];
+	return result;
+}
+
+@end
+
+
+
 @implementation SVTruncationController
 
-@synthesize truncateSliderValue = _truncateSliderValue;		// the slider UI is bound to it; it's LOGFUNCTION of char count
+@synthesize maxItemLength = _maxItemLength;
 
 extern const NSUInteger kTruncationMin;
 extern const NSUInteger kTruncationMax;
 extern double kTruncationMinLog;
 extern double kTruncationMaxLog;
-
--(void)awakeFromNib;
-{
-	[oTruncationSlider setTarget:self];
-	[oTruncationSlider setMinValue:kTruncationMinLog];
-	[oTruncationSlider setMaxValue:kTruncationMaxLog];
-}
 
 
 #pragma mark -
@@ -30,36 +62,41 @@ extern double kTruncationMaxLog;
 
 - (IBAction)makeShortest:(id)sender;	// click on icon to make truncation the shortest
 {
-	self.truncateSliderValue = kTruncationMinLog;
+	self.maxItemLength = kTruncationMin;
 }
 
 - (IBAction)makeLongest:(id)sender;		// click on icon to make truncation the longest (remove truncation)
 {
-	self.truncateSliderValue = kTruncationMaxLog;
+	self.maxItemLength = kTruncationMax;
 }
 
-#pragma mark -
-#pragma mark Accessors - 
-
-
-// the maxItemLength property (which we bind to externally) corresponds with logarithmic slider value (bound to UI)
-
-#define LOGFUNCTION log2
-#define EXPFUNCTION(x) exp2(x)
-
-- (NSUInteger) maxItemLength
+- (IBAction)sliderChanged:(id)sender;	// push value back down to model
 {
-	return EXPFUNCTION(self.truncateSliderValue);
-}
-- (void) setMaxItemLength: (NSUInteger) aMaxItemLength
-{
-	self.truncateSliderValue = LOGFUNCTION(aMaxItemLength);
-}
-+ (NSSet *)keyPathsForValuesAffectingMaxItemLength;
-{
-    return [NSSet setWithObject:@"truncateSliderValue"];
+	NSDictionary *bindingInfo = [self infoForBinding:@"maxItemLength"];
+	if (bindingInfo)
+	{
+		id object = [bindingInfo objectForKey:NSObservedObjectKey];
+		NSString *keyPath = [bindingInfo objectForKey:NSObservedKeyPathKey];
+		NSUInteger newMaxItemLength = round(self.maxItemLength);
+		id oldValue = [object valueForKeyPath:keyPath];
+		
+		// We won't set value if it hasn't changed
+		if (NSIsControllerMarker(oldValue) || [oldValue intValue] != newMaxItemLength)
+		{
+			[object setValue:[NSNumber numberWithInt:newMaxItemLength] forKeyPath:keyPath];
+		}
+	}
 }
 
+- (NSUInteger) itemLengthMinimumValue
+{
+	return kTruncationMin;
+}
+
+- (NSUInteger) itemLengthMaximumValue
+{
+	return kTruncationMax;
+}
 
 
 
@@ -118,7 +155,7 @@ extern double kTruncationMaxLog;
 }
 + (NSSet *)keyPathsForValuesAffectingTruncateDescription;
 {
-    return [NSSet setWithObject:@"truncateSliderValue"];
+    return [NSSet setWithObject:@"maxItemLength"];
 }
 
 

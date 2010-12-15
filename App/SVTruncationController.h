@@ -9,18 +9,21 @@
 #import <Cocoa/Cocoa.h>
 #import "SVPageProtocol.h"		// for truncation types
 
+@interface LogValueTransformer : NSValueTransformer
+@end
+
 @interface SVTruncationController : NSObject
 {
     IBOutlet NSViewController  *oInspectorViewController;
 	IBOutlet NSSlider *oTruncationSlider;
 
-	double _truncateSliderValue;
+	double _maxItemLength;
 }
 
-@property double truncateSliderValue;
-@property NSUInteger maxItemLength;
+@property double maxItemLength;
 
 - (IBAction)makeShortest:(id)sender;	// click on icon to make truncation the shortest
 - (IBAction)makeLongest:(id)sender;		// click on icon to make truncation the longest (remove truncation)
+- (IBAction)sliderChanged:(id)sender;	// push value back down to model
 
 @end
