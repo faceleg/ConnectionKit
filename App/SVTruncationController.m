@@ -116,7 +116,7 @@ extern double kTruncationMaxLog;
 
 	 */
 }
-+ (NSSet *)keyPathsForValuesAffectingTruncate;
++ (NSSet *)keyPathsForValuesAffectingTruncateDescription;
 {
     return [NSSet setWithObject:@"truncateSliderValue"];
 }
