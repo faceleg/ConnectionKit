@@ -14,6 +14,7 @@
 + (void)initialize
 {
 	// Site Outline
+	// Deprecated .... should use keyPathsForValuesAffectingValueForKey
 	[self setKeys:[NSArray arrayWithObjects:@"beforeHTML",
                    @"bodyTag",
                    @"bodyTagEnd",

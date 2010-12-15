@@ -114,7 +114,11 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	theTransformer = [[[ProtocolToIndexTransformer alloc] init] autorelease];
 	[NSValueTransformer setValueTransformer:theTransformer
 									forName:@"ProtocolToIndexTransformer"];
-    [KTHostSetupController setKeys:
+    
+	
+	// Deprecated .... should use keyPathsForValuesAffectingValueForKey
+	
+	[KTHostSetupController setKeys:
         [NSArray arrayWithObjects: @"localSubFolder", @"localSharedMatrix", nil]
         triggerChangeNotificationsForDependentKey: @"localURL"];
     [KTHostSetupController setKeys:

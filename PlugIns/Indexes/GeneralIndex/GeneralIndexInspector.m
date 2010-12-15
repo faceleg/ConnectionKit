@@ -16,9 +16,6 @@
 - (void)loadView;
 {
 	[super loadView];
-	
-	// Similar to SVDocumentInspector -- what am I doing wrong?
-
     [oTruncationController bind:@"maxItemLength" toObject:self withKeyPath:@"inspectedObjectsController.selection.maxItemLength" options:nil];
 	
 }
