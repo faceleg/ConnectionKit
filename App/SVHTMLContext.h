@@ -212,7 +212,7 @@ typedef enum {
 #pragma mark Resource Files
 // Call to register the resource for needing publishing. Returns the URL to reference the resource by
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
-- (NSString *)stringWithResourceTemplateAtURL:(NSURL *)resource;
+- (NSString *)parseTemplateAtURL:(NSURL *)resource plugIn:(SVPlugIn *)plugIn;
 
 
 #pragma mark Design

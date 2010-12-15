@@ -809,34 +809,27 @@
     return resourceURL; // subclasses will correct for publishing
 }
 
-- (void)addJavascriptWithResourceAtURL:(NSURL *)resourceURL
-                               options:(SVJavascriptResourceOptions)options;
+- (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
+                                        plugIn:(SVPlugIn *)plugIn;
 {
     NSMutableString *script = [[NSMutableString alloc] init];
     SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:script inheritFromContext:self];
     
-    if (options & SVJavascriptResourceIsTemplate)
+    if ([self isForPublishing])
     {
-        if ([self isForPublishing])
-        {
-            NSURL *url = [self addResourceWithURL:resourceURL]; // assume publishing subclass will override to publish parsed data
-            [context writeJavascriptWithSrc:[self relativeStringFromURL:url]];
-        }
-        else
-        {
-            // Run through template
-            NSString *parsedResource = [self stringWithResourceTemplateAtURL:resourceURL];
-            if (parsedResource)
-            {
-                // Publish
-                [context writeJavascript:parsedResource useCDATA:YES];
-            }
-        }
+        // Proper publishing subclass will override to publish parsed string
+        NSURL *url = [self addResourceWithURL:templateURL]; 
+        [context writeJavascriptWithSrc:[self relativeStringFromURL:url]];
     }
     else
     {
-        NSURL *url = [self addResourceWithURL:resourceURL];
-        [context writeJavascriptWithSrc:[self relativeStringFromURL:url]];
+        // Run through template
+        NSString *parsedResource = [self parseTemplateAtURL:templateURL plugIn:plugIn];
+        if (parsedResource)
+        {
+            // Publish
+            [context writeJavascript:parsedResource useCDATA:YES];
+        }
     }
     
     [self addMarkupToEndOfBody:script];
@@ -844,15 +837,15 @@
     [script release];
 }
 
-- (NSString *)stringWithResourceTemplateAtURL:(NSURL *)resource;
+- (NSString *)parseTemplateAtURL:(NSURL *)templateURL plugIn:(SVPlugIn *)plugIn;
 {
     // Run through template
-    SVTemplate *template = [[SVTemplate alloc] initWithContentsOfURL:resource];
+    SVTemplate *template = [[SVTemplate alloc] initWithContentsOfURL:templateURL];
     if (template)
     {
         SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc]
                                         initWithTemplate:[template templateString]
-                                        component:[[SVHTMLTemplateParser currentTemplateParser] component]];
+                                        component:plugIn];
         
         NSMutableString *result = [NSMutableString string];
         
