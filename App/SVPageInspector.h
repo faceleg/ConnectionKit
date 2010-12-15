@@ -11,7 +11,7 @@
 #import "KTPage.h"
 
 
-@class KTPlaceholderBindingTextField, SVSidebarPageletsController, SVPageThumbnailController, SVSiteItemController;
+@class KTPlaceholderBindingTextField, SVSidebarPageletsController, SVPageThumbnailController, SVSiteItemController, SVTruncationController;
 
 
 @interface SVPageInspector : KSInspectorViewController
@@ -20,6 +20,7 @@
     
     IBOutlet SVPageThumbnailController  *oThumbnailController;
     IBOutlet SVSiteItemController       *oSiteItemController;
+	IBOutlet SVTruncationController		*oTruncationController;
     IBOutlet NSPopUpButton              *oThumbnailPicker;
     
     IBOutlet NSButton *showTimestampCheckbox;

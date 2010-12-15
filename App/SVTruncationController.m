@@ -7,6 +7,7 @@
 //
 
 #import "SVTruncationController.h"
+#import "KTPage.h"		// for function to show truncation
 
 #define LOGFUNCTION log2
 #define EXPFUNCTION(x) exp2(x)
@@ -105,13 +106,11 @@ extern double kTruncationMaxLog;
 
 - (NSString *)truncateDescription
 {
-	return @"";
-	
-	/* Later, get this hooked up....
-	 
 	NSString *result;
 	SVTruncationType truncType = kTruncateNone;
-	NSUInteger count = [self truncCountFromSliderValueChoosingTruncType:&truncType];
+	NSUInteger currentMaxItemLength = round(self.maxItemLength);
+
+	NSUInteger count = [KTPage truncCountFromMaxItemLength:currentMaxItemLength choosingTruncType:&truncType];
 	
 	switch(truncType)
 	{
@@ -142,7 +141,7 @@ extern double kTruncationMaxLog;
 			}
 			else
 			{
-				result = [NSString stringWithFormat:LocalizedStringInThisBundle(@"%d paragraphs", @"plural for number ofparagraphswords"), count];
+				result = [NSString stringWithFormat:LocalizedStringInThisBundle(@"%d paragraphs", @"plural for number ofparagraphs"), count];
 			}
 			break;
 		default:
@@ -150,8 +149,6 @@ extern double kTruncationMaxLog;
 			break;
 	}
 	return result;
-
-	 */
 }
 + (NSSet *)keyPathsForValuesAffectingTruncateDescription;
 {

@@ -3487,6 +3487,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					</object>
 					<int key="connectionID">539</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oTruncationController</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="518241507"/>
+					</object>
+					<int key="connectionID">540</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -5173,7 +5181,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">539</int>
+			<int key="maxID">540</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -6325,6 +6333,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<string>oSiteItemController</string>
 							<string>oThumbnailController</string>
 							<string>oThumbnailPicker</string>
+							<string>oTruncationController</string>
 							<string>showTimestampCheckbox</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -6335,6 +6344,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<string>SVSiteItemController</string>
 							<string>SVPageThumbnailController</string>
 							<string>NSPopUpButton</string>
+							<string>SVTruncationController</string>
 							<string>NSButton</string>
 						</object>
 					</object>
@@ -6348,6 +6358,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<string>oSiteItemController</string>
 							<string>oThumbnailController</string>
 							<string>oThumbnailPicker</string>
+							<string>oTruncationController</string>
 							<string>showTimestampCheckbox</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -6375,6 +6386,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<object class="IBToOneOutletInfo">
 								<string key="name">oThumbnailPicker</string>
 								<string key="candidateClassName">NSPopUpButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">oTruncationController</string>
+								<string key="candidateClassName">SVTruncationController</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">showTimestampCheckbox</string>

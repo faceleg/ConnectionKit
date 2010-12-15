@@ -337,7 +337,7 @@ NSUInteger kTwoThirdsTruncation;
 }
 
 // Based on raw number of characters (derived from slider value) and decsired truncation type, figure out an appropriate value in those units.
-- (NSUInteger) truncateCountFromMaxItemLength:(NSUInteger)maxItemLength forType:(SVTruncationType)truncType round:(BOOL)wantRound;
++ (NSUInteger) truncateCountFromMaxItemLength:(NSUInteger)maxItemLength forType:(SVTruncationType)truncType round:(BOOL)wantRound;
 {
 	NSUInteger result = 0;
 	float divided = 0.0;
@@ -395,7 +395,7 @@ NSUInteger kTwoThirdsTruncation;
 // Convert slider floating value to approprate truncation types.
 // Depending on which third the value is in, we round to a count of words, sentence, or paragraphs.
 
-- (NSUInteger) truncCountFromMaxItemLength:(NSUInteger)maxItemLength choosingTruncType:(SVTruncationType *)outTruncType
++ (NSUInteger) truncCountFromMaxItemLength:(NSUInteger)maxItemLength choosingTruncType:(SVTruncationType *)outTruncType
 {
 	
 	SVTruncationType type = 0;
@@ -416,7 +416,7 @@ NSUInteger kTwoThirdsTruncation;
 		type = kTruncateParagraphs;		// Third third, truncate paragraphs.
 	}
 	
-	NSUInteger truncCount = [self truncateCountFromMaxItemLength:maxItemLength
+	NSUInteger truncCount = [[self class] truncateCountFromMaxItemLength:maxItemLength
 														 forType:type
 														   round:YES];		// nice rounded number
 	if (outTruncType)
@@ -433,7 +433,7 @@ NSUInteger kTwoThirdsTruncation;
 - (BOOL)writeSummary:(SVHTMLContext *)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxItemLength;
 {
 	SVTruncationType truncationType = kTruncateNone;
-	NSUInteger truncCount = [self truncCountFromMaxItemLength:maxItemLength choosingTruncType:&truncationType];
+	NSUInteger truncCount = [[self class] truncCountFromMaxItemLength:maxItemLength choosingTruncType:&truncationType];
 	BOOL truncated = NO;
 	
 	[context willWriteSummaryOfPage:self];
