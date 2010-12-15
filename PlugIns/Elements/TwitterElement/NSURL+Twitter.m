@@ -2,7 +2,7 @@
 //  NSURL+Twitter.h
 //  TwitterElement
 //
-//  Copyright (c) 2008, Karelia Software. All rights reserved.
+//  Copyright (c) 2008, 2010 Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -39,16 +39,25 @@
 
 @implementation NSURL (Twitter)
 
+// http://twitter.com/karelia
+// http://twitter.com/#!/karelia
+// http://twitter.com/karelia#
+
 - (NSString *)twitterUsername
 {
     NSString *result = nil;
     
     if ([[self host] isEqualToString:@"twitter.com"])
     {
-        NSArray *pathComponents = [[self path] pathComponents];
-        if ([pathComponents count] >= 2)
+        // the funky chars in twitter paths mess with NSURL, so we need to brute force this a bit
+        NSString *URLAsString = [self absoluteString];
+        NSRange range = [URLAsString rangeOfString:[self host]];
+        NSString *twitterPath = [URLAsString substringFromIndex:range.location+range.length];
+        
+        if ( twitterPath )
         {
-            result = [pathComponents objectAtIndex:1];
+            NSCharacterSet *unwanted = [NSCharacterSet characterSetWithCharactersInString:@"#!/"];
+            result = [twitterPath stringByTrimmingCharactersInSet:unwanted];
         }
     }
     
