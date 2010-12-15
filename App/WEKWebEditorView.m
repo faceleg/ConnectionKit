@@ -1536,49 +1536,28 @@ typedef enum {  // this copied from WebPreferences+Private.h
             [super mouseDown:event];
         }
     }
-}
-
-/*  Actions we could take from this:
- *      - Deselect everything
- *      - Change selection to new item
- *      - Start editing selected item (actually happens upon -mouseUp:)
- *      - Add to the selection
- */
-- (void)mouseDown:(NSEvent *)event;
-{
-    // Direct to target item
-    NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
-    WEKWebEditorItem *item = [self itemHitTest:location handle:NULL];
     
-    if (item)
-    {
-        [item mouseDown:event]; // calls through to -mouseDown2: if no item handles it
-    }
-    else
-    {
-        [self mouseDown2:event];
-    }
-}
-
-- (void)mouseUp:(NSEvent *)theEvent
-{
+    
+    
+    // Run until mouse up
+    NSEvent *mouseUp = [[self window] nextEventMatchingMask:NSLeftMouseUpMask];
     if (!_mouseDownEvent) return;
     
     
     @try
     {
         // Should this go through to the WebView?
-        NSPoint location = [[self webView] convertPoint:[theEvent locationInWindow] fromView:nil];
+        NSPoint location = [[self webView] convertPoint:[mouseUp locationInWindow] fromView:nil];
         
         WEKWebEditorItem *item = [self selectableItemAtPoint:location];
         if ([item allowsDirectAccessToWebViewWhenSelected])
         {
-            [self forwardMouseEvent:theEvent selector:_cmd cachedTargetView:nil];
+            [self forwardMouseEvent:mouseUp selector:_cmd cachedTargetView:nil];
         }
         
-                                  
+        
         // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
-        if (_mouseUpMayBeginEditing && [theEvent timestamp] - [_mouseDownEvent timestamp] < 0.5)
+        if (_mouseUpMayBeginEditing && [mouseUp timestamp] - [_mouseDownEvent timestamp] < 0.5)
         {
             // Is the item at that location supposed to be for editing?
             // This is true if the clicked child item is either:
@@ -1593,9 +1572,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
             if (!element) return;   // happens if mouse up was somehow outside doc rect
             
             /*
-            if (([item isSelectable] && item != [self selectedItem]) ||
-                ([item conformsToProtocol:@protocol(SVWebEditorText)] && [(id)item isEditable]) ||
-                [node isKindOfClass:[DOMHTMLObjectElement class]])*/
+             if (([item isSelectable] && item != [self selectedItem]) ||
+             ([item conformsToProtocol:@protocol(SVWebEditorText)] && [(id)item isEditable]) ||
+             [node isKindOfClass:[DOMHTMLObjectElement class]])*/
             
             
             // Inline images don't want to be edited inside since they're already fully accessible for dragging etc. Basically applies to all images
@@ -1632,7 +1611,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 
                 // Can't call -sendEvent: as that doesn't update -currentEvent.
                 // Post in reverse order since I'm placing onto the front of the queue
-                [NSApp postEvent:[theEvent eventWithClickCount:1] atStart:YES];
+                [NSApp postEvent:[mouseUp eventWithClickCount:1] atStart:YES];
                 [NSApp postEvent:[_mouseDownEvent eventWithClickCount:1] atStart:YES];
             }
         }
@@ -1642,6 +1621,33 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // Tidy up
         _mouseUpMayBeginEditing = NO;
     }
+}
+
+/*  Actions we could take from this:
+ *      - Deselect everything
+ *      - Change selection to new item
+ *      - Start editing selected item (actually happens upon -mouseUp:)
+ *      - Add to the selection
+ */
+- (void)mouseDown:(NSEvent *)event;
+{
+    // Direct to target item
+    NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
+    WEKWebEditorItem *item = [self itemHitTest:location handle:NULL];
+    
+    if (item)
+    {
+        [item mouseDown:event]; // calls through to -mouseDown2: if no item handles it
+    }
+    else
+    {
+        [self mouseDown2:event];
+    }
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+    
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent;
