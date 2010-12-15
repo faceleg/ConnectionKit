@@ -10,7 +10,7 @@
 
 @implementation SVTruncationController
 
-@synthesize truncateSliderValue = _truncateSliderValue;		// bound to the slider; it's LOGFUNCTION of char count
+@synthesize truncateSliderValue = _truncateSliderValue;		// the slider UI is bound to it; it's LOGFUNCTION of char count
 
 extern const NSUInteger kTruncationMin;
 extern const NSUInteger kTruncationMax;
