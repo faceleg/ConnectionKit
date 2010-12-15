@@ -504,10 +504,46 @@
 
 #pragma mark Updating
 
+- (void)willUpdateWithNewChildController:(WEKWebEditorItem *)aChildController;
+{
+    // Helper method that:
+    //  A) swaps the new controller out for an existing one if possible
+    //  B) runs scripts for the new controller
+    
+    NSObject *object = [aChildController representedObject];
+    if (!object)
+    {
+        return;
+    }
+    
+    
+    DOMDocument *doc = [[self HTMLElement] ownerDocument];
+    [aChildController loadHTMLElementFromDocument:doc];
+    
+    for (WEKWebEditorItem *anOldController in [self childWebEditorItems])
+    {
+        if ([anOldController representedObject] == object)
+        {
+            // Bring back the old element!
+            DOMElement *element = [aChildController HTMLElement];
+            [[element parentNode] replaceChild:[anOldController HTMLElement] oldChild:element];
+            
+            // Bring back the old controller!
+            [[aChildController parentWebEditorItem] replaceChildWebEditorItem:aChildController
+                                                                         with:anOldController];
+            return;
+        }
+    }
+    
+    
+    // Force update the controller to run scripts etc. #99997
+    [aChildController setNeedsUpdate];
+    [aChildController updateIfNeeded];
+}
+
 - (void)updateWithHTMLString:(NSString *)html items:(NSArray *)items;
 {
     // Update DOM
-    DOMDocument *doc = [[self HTMLElement] ownerDocument];
     [[self HTMLElement] setOuterHTML:html];
     
     
@@ -516,24 +552,7 @@
     {
         for (WEKWebEditorItem *aChildController in [aController childWebEditorItems])
         {
-            NSObject *object = [aChildController representedObject];
-            if (object)
-            {
-                for (WEKWebEditorItem *anOldController in [self childWebEditorItems])
-                {
-                    if ([anOldController representedObject] == object)
-                    {
-                        // Bring back the old element!
-                        [aChildController loadHTMLElementFromDocument:doc];
-                        DOMElement *element = [aChildController HTMLElement];
-                        [[element parentNode] replaceChild:[anOldController HTMLElement] oldChild:element];
-                        
-                        // Bring back the old controller!
-                        [aController replaceChildWebEditorItem:aChildController with:anOldController];
-                        break;
-                    }
-                }
-            }
+            [self willUpdateWithNewChildController:aChildController];
         }
     }
     
