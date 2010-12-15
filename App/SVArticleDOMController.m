@@ -513,6 +513,11 @@
     NSObject *object = [aChildController representedObject];
     if (!object)
     {
+        // Probably a callout, update contents instead. #99997
+        for (aChildController in [aChildController childWebEditorItems])
+        {
+            [self willUpdateWithNewChildController:aChildController];
+        }
         return;
     }
     
