@@ -223,6 +223,11 @@
                 {
                     self.title = [item title];
                 }
+                
+                // initial properties
+                self.openLinksInNewWindow = NO;
+                self.includeTimestamp = YES;
+                self.count = 5;
             }
         }
         
