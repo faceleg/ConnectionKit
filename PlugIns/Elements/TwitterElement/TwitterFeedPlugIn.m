@@ -172,7 +172,7 @@
         NSString *timestampFlag = (self.includeTimestamp) ? @"true" : @"false";
         NSString *script1 = [NSString stringWithFormat:
                             @"<script type=\"text/javascript\">\n"
-                            @"function twitterCallback%@(obj)\n"
+                            @"function twitterCallback_%@(obj)\n"
                             @"{\n"
                             @"    twitterCallback_withOptions(obj, '%@', %@, %@);\n"
                             @"}\n"
@@ -181,7 +181,7 @@
         [context addMarkupToEndOfBody:script1];
         
         NSString *script2 = [NSString stringWithFormat:
-                             @"<script type=\"text/javascript\" src=\"http://twitter.com/statuses/user_timeline/%@.json?callback=twitterCallback%@&amp;count=%ld\">\n</script>\n",
+                             @"<script type=\"text/javascript\" src=\"http://twitter.com/statuses/user_timeline/%@.json?callback=twitterCallback_%@&amp;count=%lx\">\n</script>\n",
                              self.username, uniqueID, self.count];
         [context addMarkupToEndOfBody:script2];
     }
