@@ -89,7 +89,7 @@
 			;
 						
 			NSXMLDocument *xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:wrapper options:mask error:&theError] autorelease];
-			if (theError) NSLog(@"NSXMLDocument from truncation: %@", theError);
+			if (theError) DJW((@"NSXMLDocument from truncation: %@", theError));
 			NSArray *theNodes = [xmlDoc nodesForXPath:@"/html/body" error:&theError];
 			NSXMLNode *currentNode = [theNodes lastObject];		// working node we traverse
 			NSXMLNode *lastTextNode = nil;
@@ -306,7 +306,7 @@
 			whereAttachment = [markup rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(NSAttachmentCharacter, 1)] options:0 range:NSMakeRange(offset, [markup length] - offset) ];
 			if (NSNotFound != whereAttachment.location)
 			{
-				NSLog(@"Source: Attachment at offset %d", whereAttachment.location);
+				DJW((@"Source: Attachment at offset %d", whereAttachment.location));
 				offset = whereAttachment.location + 1;
 			}
 		}
@@ -319,7 +319,7 @@
 			whereAttachment = [truncatedMarkup rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(NSAttachmentCharacter, 1)] options:0 range:NSMakeRange(offset, [truncatedMarkup length] - offset) ];
 			if (NSNotFound != whereAttachment.location)
 			{
-				NSLog(@"Truncd: Attachment at offset %d", whereAttachment.location);
+				DJW((@"Truncd: Attachment at offset %d", whereAttachment.location));
 				offset = whereAttachment.location + 1;
 			}
 		}
