@@ -13,10 +13,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
 #import "KTPage.h"
-#import "SVProxyHTMLContext.h"
 #import "SVTextAttachment.h"
-
-#import "KSStringXMLEntityEscaping.h"
 
 #import "NSArray+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
@@ -463,22 +460,6 @@
     
     // If the last character is an attachment, want a line break so cursor can be placed after it.
     if ([self endsOnAttachment]) [context writeLineBreak];
-}
-
-#pragma mark RSS Feeds
-
-- (void)writeRSSFeedItemDescription;
-{
-    SVHTMLContext *feedContext = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
-    
-    KSEscapedXMLEntitiesWriter *writer = [[KSEscapedXMLEntitiesWriter alloc]
-                                          initWithOutputXMLWriter:feedContext];
-    
-    SVHTMLContext *context = [[SVProxyHTMLContext alloc] initWithOutputWriter:writer target:feedContext];
-    
-    [self writeText:context];
-    [context release];
-    [writer release];
 }
 
 #pragma mark Validation

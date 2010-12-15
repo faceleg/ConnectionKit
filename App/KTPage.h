@@ -190,6 +190,7 @@ typedef enum {
 
 - (NSString *)RSSFeed;
 - (void)writeRSSFeed:(SVHTMLContext *)context;
+- (void)writeRSSFeedItemDescription:(SVHTMLContext *)context;
 
 
 #pragma mark RSS Enclosures

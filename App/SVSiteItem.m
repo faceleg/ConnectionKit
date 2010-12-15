@@ -498,6 +498,8 @@
 
 @dynamic customSummaryHTML;
 
+- (void)writeRSSFeedItemDescription:(SVHTMLContext *)context { }
+
 - (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount; { return NO; }
 
 #pragma mark UI

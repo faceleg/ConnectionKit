@@ -44,7 +44,8 @@ enum {
 	kLargeMediaMask	= 1UL << 4,		// 16
 	kThumbMask		= 1UL << 5,		// 32
 	kFloatThumbMask	= 1UL << 6,		// 64
-	kInsetThumbMask	= 1UL << 7		// Not implemented yet
+	kInsetThumbMask	= 1UL << 7,		// 128 Not implemented yet
+	kLargeMediaIfBigEnough = 1UL << 8	// 256
 };
 
 typedef enum {
@@ -54,7 +55,7 @@ typedef enum {
 	kLayoutTable				= kTitleMask | kArticleMask | kThumbMask		| kTableMask,
 	kLayoutArticlesOnly			= kTitleMask | kArticleMask,
 	kLayoutArticlesAndThumbs	= kTitleMask | kArticleMask | kThumbMask | kFloatThumbMask,
-	kLayoutArticlesAndMedia		= kTitleMask | kArticleMask | kLargeMediaMask
+	kLayoutArticlesAndMedia		= kTitleMask | kArticleMask | kLargeMediaMask | kLargeMediaIfBigEnough
 
 } IndexLayoutType;
 

@@ -352,12 +352,20 @@
  [[summary item indexedCollection.collectionTruncateCharacters]]
  */
 
+extern NSUInteger kLargeMediaTruncationThreshold;
+
 - (BOOL)writeSummaryOfIteratedPage;
 {
+	BOOL includeLargeMedia = self.indexLayoutType & kLargeMediaMask;
+	if (includeLargeMedia && (self.indexLayoutType & kLargeMediaIfBigEnough) )
+	{
+		includeLargeMedia = self.maxItemLength >= kLargeMediaTruncationThreshold;
+	}
+	
     id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     BOOL truncated = [iteratedPage writeSummary:context
-							  includeLargeMedia:(self.indexLayoutType & kLargeMediaMask) 
+							  includeLargeMedia:includeLargeMedia
 									 truncation:self.maxItemLength];
 	return truncated;
 }

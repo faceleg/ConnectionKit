@@ -31,6 +31,8 @@
 #import "KSURLUtilities.h"
 #import "SVWebEditorHTMLContext.h"
 #import "KSStringHTMLEntityUnescaping.h"
+#import "KSStringXMLEntityEscaping.h"
+#import "SVProxyHTMLContext.h"
 
 @interface KTPage (IndexesPrivate)
 - (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
@@ -247,6 +249,27 @@
 
 - (NSSize)RSSFeedThumbnailsSize { return NSMakeSize(128.0, 128.0); }
 
+extern NSUInteger kLargeMediaTruncationThreshold;
+
+- (void)writeRSSFeedItemDescription:(SVHTMLContext *)feedContext
+{
+	KSEscapedXMLEntitiesWriter *xmlWriter = [[KSEscapedXMLEntitiesWriter alloc]
+											 initWithOutputXMLWriter:feedContext];
+	
+	SVHTMLContext *xmlContext = [[SVProxyHTMLContext alloc] initWithOutputWriter:xmlWriter target:feedContext];
+	
+	NSUInteger truncationLength = [self.collectionMaxFeedItemLength intValue];
+	BOOL includeLargeMedia = truncationLength >= kLargeMediaTruncationThreshold;
+	
+	(void) [self writeSummary:xmlContext
+					  includeLargeMedia:includeLargeMedia 
+							 truncation:truncationLength];
+	
+	// Do we want to insert anything into the feed if it is truncated?
+	[xmlContext release];
+	[xmlWriter release];
+}
+
 #pragma mark RSS Enclosures
 
 - (NSArray *)feedEnclosures
@@ -319,6 +342,7 @@ double kTwoThirdsTruncationLog;
 
 NSUInteger kOneThirdTruncation;
 NSUInteger kTwoThirdsTruncation;
+NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and you get large media; below, you don't.
 
 + (void) initialize
 {
@@ -332,6 +356,8 @@ NSUInteger kTwoThirdsTruncation;
 	
 	kOneThirdTruncation = EXPFUNCTION(kOneThirdTruncationLog);
 	kTwoThirdsTruncation = EXPFUNCTION(kTwoThirdsTruncationLog);
+	
+	kLargeMediaTruncationThreshold = kTwoThirdsTruncation;
 	
 	[pool release];
 }
@@ -427,6 +453,7 @@ NSUInteger kTwoThirdsTruncation;
 }
 
 #pragma mark Standard Summary
+
 
 // Returns YES if truncated.
 

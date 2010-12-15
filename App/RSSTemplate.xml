@@ -17,7 +17,7 @@
 			<title>[[=&item.title]]</title>
 			<link>[[path item]]</link>
 			<description>
-				[[=item.article.writeRSSFeedItemDescription]]
+				[[=item.writeRSSFeedItemDescription]]
 			</description>
 			<pubDate>[[=item.creationDate.descriptionRFC822]]</pubDate>
 			[[if item.URL]]<guid>[[=&item.URL]]</guid>[[endif]]
