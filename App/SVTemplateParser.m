@@ -9,9 +9,8 @@
 #import "SVTemplateParser.h"
 #import "KTHTMLParserMasterCache.h"
 
+#import "SVHTMLContext.h"
 #import "SVTemplate.h"
-
-#import "KSWriter.h"
 
 #import "NSBundle+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
@@ -20,11 +19,11 @@
 #import "NSString+KTExtensions.h"
 #import "NSScanner+Karelia.h"
 
-#import "KSURLUtilities.h"
 #import "KSStringXMLEntityEscaping.h"
+#import "KSWriter.h"
+#import "KSURLUtilities.h"
 
 #import "Debug.h"
-#import "SVPlugInGraphic.h"
 
 
 @interface SVTemplateParser ()
@@ -509,10 +508,6 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	
     id component = [self component];
 	NSBundle *theBundle = [NSBundle bundleForClass:[component class]];
-    if ([component isKindOfClass:[SVPlugInGraphic class]])
-    {
-        theBundle = [NSBundle bundleForClass:[[component plugIn] class]];
-    }
     
 	NSString *language = [[self cache] valueForKeyPath:@"parser.currentPage.master.language"];
 	if (!language) language = @"en";	// fallback just in case
