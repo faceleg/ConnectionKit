@@ -13,17 +13,17 @@
 + (void)initialize
 {
 	[self setKeys:[NSArray arrayWithObjects:
-				   @"truncateSliderValue",
-				   nil]
+				   @"truncateSliderValue", nil]
 	triggerChangeNotificationsForDependentKey:@"truncateDescription"];
+
+	// Changes to slider value affect the dependent maxItemLength
+	
 	[self setKeys:[NSArray arrayWithObjects:
-				   @"truncateSliderValue",
-				   nil]
+				   @"truncateSliderValue", nil]
 triggerChangeNotificationsForDependentKey:@"maxItemLength"];
 }
 
 @synthesize truncateSliderValue = _truncateSliderValue;		// bound to the slider; it's LOGFUNCTION of char count
-
 
 extern const NSUInteger kTruncationMin;
 extern const NSUInteger kTruncationMax;
@@ -52,7 +52,10 @@ extern double kTruncationMaxLog;
 }
 
 #pragma mark -
-#pragma mark Setters
+#pragma mark Accessors - 
+
+
+// the maxItemLength property (which we bind to externally) corresponds with logarithmic slider value (bound to UI)
 
 #define LOGFUNCTION log2
 #define EXPFUNCTION(x) exp2(x)

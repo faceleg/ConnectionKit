@@ -15,10 +15,10 @@
 	IBOutlet NSSlider *oTruncationSlider;
 
 	double _truncateSliderValue;
-	NSUInteger _maxItemLength;
 }
 
-@property double truncateSliderValue;		// "transient" version of truncate chars for instant feedback. Bound to slider itself.
+@property double truncateSliderValue;
+@property NSUInteger maxItemLength;
 
 - (IBAction)makeShortest:(id)sender;	// click on icon to make truncation the shortest
 - (IBAction)makeLongest:(id)sender;		// click on icon to make truncation the longest (remove truncation)
