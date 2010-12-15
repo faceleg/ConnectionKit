@@ -68,22 +68,7 @@
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
-    // this is so we get notification of updates to any properties that affect index type.
-	// This is a fake attribute -- we don't actually have this accessor since it's more UI related
-	// Deprecated .... should use keyPathsForValuesAffectingValueForKey
-	[self setKeys:[NSArray arrayWithObjects:
-		@"collectionShowPermanentLink",
-		@"collectionHyperlinkPageTitles",
-		@"collectionIndexBundleIdentifier",
-		@"collectionSyndicationType", 
-		@"collectionMaxSyndicatedPagesCount", 
-		@"collectionSortOrder", 
-		nil]
-        triggerChangeNotificationsForDependentKey: @"indexPresetDictionary"];
-	
-	
-	
-	// Register transformers
+    // Register transformers
 	NSSet *collectionTypes = [NSSet setWithObjects:[NSNumber numberWithInt:KTSummarizeRecentList],
 												   [NSNumber numberWithInt:KTSummarizeAlphabeticalList],
 												   nil];
