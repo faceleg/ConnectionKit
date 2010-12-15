@@ -40,6 +40,7 @@
 
 
 static NSArray *sBadgeNames = nil;
+static NSArray *sBadgeSizes = nil;
 static NSArray *sAltStrings = nil;
 
 
@@ -92,6 +93,23 @@ static NSArray *sAltStrings = nil;
 					   nil];
 	}
 	return sBadgeNames;
+}
+
++ (NSArray *)sharedBadgeSizes
+{
+    if ( nil == sBadgeSizes )
+    {
+        sBadgeSizes = [[NSArray alloc] initWithObjects:
+                       [NSValue valueWithSize:NSMakeSize(88., 31.)],
+                       [NSValue valueWithSize:NSMakeSize(88., 45.)],
+                       [NSValue valueWithSize:NSMakeSize(88., 45.)],
+                       [NSValue valueWithSize:NSMakeSize(88., 44.)],
+                       [NSValue valueWithSize:NSMakeSize(88., 44.)],
+                       [NSValue valueWithSize:NSMakeSize(94., 47.)],
+                       [NSValue valueWithSize:NSMakeSize(94., 47.)],
+                       nil];
+    }
+    return sBadgeSizes;
 }
 
 // These are various strings, randomly chosen, for the blurb on the badge.  This will help direct
@@ -166,6 +184,17 @@ static NSArray *sAltStrings = nil;
 	return result;
 }
 
+- (NSSize)currentBadgeSize
+{
+	NSSize result = NSZeroSize;
+	NSUInteger tag = [self badgeTypeTag]; // TAG 0 means not image...
+	if (tag > BADGE_TEXT && tag <= [[BadgePlugIn sharedBadgeNames] count])
+	{
+		result = [(NSValue *)[[BadgePlugIn sharedBadgeSizes] objectAtIndex:tag-1] sizeValue];
+	}
+	return result;
+}
+
 // returns relative URL for current badge, suitable for use in HTML template
 // alternatively, in template, could do <img src="[[=writeBadgeSrc]]"…
 - (NSString *)badgeURLString
@@ -189,6 +218,16 @@ static NSArray *sAltStrings = nil;
 {
     [super writeHTML:context];
     [context addDependencyForKeyPath:@"language" ofObject:[context page]];
+}
+
+- (NSUInteger)imgWidth
+{
+    return [self currentBadgeSize].width;
+}
+
+- (NSUInteger)imgHeight
+{
+    return [self currentBadgeSize].height;
 }
 
 
