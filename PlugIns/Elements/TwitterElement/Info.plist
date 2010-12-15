@@ -10,6 +10,8 @@
 	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2008-2010 Karelia Software</string>
 	<key>CFBundleIdentifier</key>
 	<string>sandvox.${PROJECT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>Twitter Updates</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -24,33 +26,8 @@
 	<string>${SVN_VERSION}</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KTCategory</key>
-	<string>5</string>
-	<key>KTElementAllowsIntroduction</key>
-	<true/>
-	<key>KSHelpAnchor</key>
-	<string>Twitter</string>
-	<key>KTMainElement</key>
-	<string></string>
-	<key>KTPageletCanHaveTitle</key>
-	<true/>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_twitter.tiff</string>
-	<key>KTPluginInitialProperties</key>
-	<dict>
-		<key>openLinksInNewWindow</key>
-		<false/>
-		<key>includeTimestamp</key>
-		<true/>
-		<key>count</key>
-		<integer>5</integer>
-	</dict>
-	<key>KTPluginName</key>
-	<string>Twitter</string>
-	<key>KTPluginPriority</key>
-	<integer>5</integer>
-	<key>KTPluginUntitledName</key>
-	<string>Twitter Updates</string>
 	<key>NSPrincipalClass</key>
 	<string>TwitterFeedPlugIn</string>
 </dict>
