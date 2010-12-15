@@ -332,6 +332,10 @@
 #pragma mark Master
 
 - (NSString *)language { return [[self master] language]; }
++ (NSSet *)keyPathsForValuesAffectingLanguage;
+{
+    return [NSSet setWithObject:@"master.language"];
+}
 
 #pragma mark Dates
 

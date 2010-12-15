@@ -19,8 +19,8 @@ typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSent
 
 
 #pragma mark Properties
-- (NSString *)language;
-- (NSString *)timestampDescription;    // nil if page does't have/want timestamp
+- (NSString *)language;             // KVO-compliant
+- (NSString *)timestampDescription; // nil if page does't have/want timestamp
 
 
 #pragma mark Thumbnail
