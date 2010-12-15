@@ -74,9 +74,7 @@
 						   @"showPermaLinks",
                            @"showComments",
 						   @"showTimestamps",
-						   @"truncate",
-						   @"truncateCount",
-						   @"truncationType",
+						   @"maxItemLength",
                            nil];    
     return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
 }
@@ -102,9 +100,7 @@
 	[context addDependencyForKeyPath:@"showPermaLinks"		ofObject:self];
 	[context addDependencyForKeyPath:@"showComments"		ofObject:self];
 	[context addDependencyForKeyPath:@"showTimestamps"		ofObject:self];
-	[context addDependencyForKeyPath:@"truncateCount"		ofObject:self];
-	[context addDependencyForKeyPath:@"truncationType"		ofObject:self];
-	[context addDependencyForKeyPath:@"truncate"			ofObject:self];
+	[context addDependencyForKeyPath:@"maxItemLength"		ofObject:self];
 
 	// parse template
     [super writeHTML:context];
@@ -362,8 +358,7 @@
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     BOOL truncated = [iteratedPage writeSummary:context
 							  includeLargeMedia:(self.indexLayoutType & kLargeMediaMask) 
-									 truncation:self.truncateCount
-								 truncationType:(self.truncate ? self.truncationType : kTruncateNone)];
+									 truncation:self.maxItemLength];
 	return truncated;
 }
 
@@ -408,9 +403,7 @@
 @synthesize showTitles = _showTitles;
 @synthesize showComments	= _showComments;
 @synthesize showTimestamps	= _showTimestamps;
-@synthesize truncateCount	= _truncateCount;
-@synthesize truncationType	= _truncationType;
-@synthesize truncate		= _truncate;
+@synthesize maxItemLength	= _maxItemLength;
 
 - (void) setIndexLayoutType:(IndexLayoutType)aType	// custom setter to also set dependent flags
 {

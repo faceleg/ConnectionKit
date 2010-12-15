@@ -44,12 +44,8 @@
 		<true/>
 		<key>showTimestamps</key>
 		<true/>
-		<key>truncate</key>
-		<false/>
-		<key>truncateCount</key>
-		<integer>20</integer>
-		<key>truncationType</key>
-		<integer>3</integer>
+		<key>maxItemLength</key>
+		<integer>999999</integer>
 		<key>indexLayoutType</key>
 		<integer>3</integer>
 	</dict>

@@ -69,9 +69,7 @@ typedef enum {
     BOOL _showEntries;			// transient only, for bindings
     BOOL _showTitles;			// transient only, for bindings
     BOOL _showComments;
-	BOOL _truncate;
-	SVTruncationType _truncationType;
-    NSUInteger _truncateCount;
+    NSUInteger _maxItemLength;
 }
 
 @property  BOOL hyperlinkTitles;
@@ -80,10 +78,8 @@ typedef enum {
 @property  BOOL showTitles;
 @property  BOOL showTimestamps;
 @property  BOOL showComments;
-@property  BOOL truncate;
 @property  IndexLayoutType indexLayoutType;
-@property  SVTruncationType truncationType;
-@property  NSUInteger truncateCount;
+@property  NSUInteger maxItemLength;
 
 
 

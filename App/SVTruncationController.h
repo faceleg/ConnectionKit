@@ -9,39 +9,18 @@
 #import <Cocoa/Cocoa.h>
 #import "SVPageProtocol.h"		// for truncation types
 
-#define kCharsPerWord 5
-#define kWordsPerSentence 10
-#define kSentencesPerParagraph 5
-#define kMaxTruncationParagraphs 10
-// 5 * 10 * 5 * 20 = 5000 characters in 20 paragraphs, so this is our range
-
-
-// Not really used, though we might want to re-activate it if we want live feedback while sliding
-@interface SVActionWhenDoneSliderCell : NSSliderCell
-@end
-
-
 @interface SVTruncationController : NSObject
 {
     IBOutlet NSViewController  *oInspectorViewController;
 	IBOutlet NSSlider *oTruncationSlider;
 
 	double _truncateSliderValue;
-	
-	NSUInteger _truncateCount;
-	SVTruncationType _truncationType;
-	
+	NSUInteger _maxItemLength;
 }
 
 @property double truncateSliderValue;		// "transient" version of truncate chars for instant feedback. Bound to slider itself.
-@property  NSUInteger truncateCount;
-@property  SVTruncationType truncationType;
 
-- (IBAction)sliderDone:(id)sender;		// Slider done dragging.  Move the final value into the model
 - (IBAction)makeShortest:(id)sender;	// click on icon to make truncation the shortest
 - (IBAction)makeLongest:(id)sender;		// click on icon to make truncation the longest (remove truncation)
-
-+ (NSUInteger) truncateCountFromRawCharCount:(NSUInteger)chars forType:(SVTruncationType)truncType round:(BOOL)wantRound;
-+ (NSUInteger) rawCharCountFromTruncateCount:(NSUInteger)count forType:(SVTruncationType)truncType;
 
 @end

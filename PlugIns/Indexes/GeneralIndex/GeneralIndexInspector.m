@@ -16,9 +16,19 @@
 - (void)loadView;
 {
 	[super loadView];
-    // Bind banner type
-    [oTruncationController bind:@"truncateCount" toObject:self withKeyPath:@"inspectedObjectsController.selection.truncateCount" options:nil];
-    [oTruncationController bind:@"truncationType" toObject:self withKeyPath:@"inspectedObjectsController.selection.truncationType" options:nil];
+	
+	// Similar to SVDocumentInspector -- what am I doing wrong?
+
+    [oTruncationController bind:@"maxItemLength" toObject:self withKeyPath:@"inspectedObjectsController.selection.maxItemLength" options:nil];
+	
 }
+
+- (void)dealloc
+{
+    [self unbind:@"maxItemLength"];
+
+    [super dealloc];
+}
+
 
 @end
