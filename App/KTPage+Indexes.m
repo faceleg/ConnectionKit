@@ -174,21 +174,6 @@
 @dynamic collectionTruncateFeedItems;
 @dynamic collectionMaxFeedItemLength;
 
-- (void)setCollectionMaxFeedItemLength:(NSNumber *)len;
-{
-	NSLog(@"setCollectionMaxFeedItemLength:%@", len);
-	[self setWrappedValue:len forKey:@"collectionMaxFeedItemLength"];
-}
-
-- (id)collectionMaxFeedItemLength
-{
-	id result = [self wrappedValueForKey:@"collectionMaxFeedItemLength"];
-	NSLog(@"collectionMaxFeedItemLength = %@", result);
-	return result;
-}
-
-
-
 @dynamic RSSFileName;
 
 - (NSURL *)feedURL
