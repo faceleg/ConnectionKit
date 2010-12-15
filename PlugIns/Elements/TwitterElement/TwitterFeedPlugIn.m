@@ -85,6 +85,7 @@
     [context addDependencyForKeyPath:@"count" ofObject:self];
     [context addDependencyForKeyPath:@"includeTimestamp" ofObject:self];
     [context addDependencyForKeyPath:@"openLinksInNewWindow" ofObject:self];
+    [context addDependencyForKeyPath:@"language" ofObject:[context page]];
     
     // add resources
     NSString *resourcePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"twittercallbacktemplate" ofType:@"js"];
