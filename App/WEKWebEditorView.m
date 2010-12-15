@@ -419,6 +419,98 @@ typedef enum {  // this copied from WebPreferences+Private.h
         
         if (itemIsSelected)
         {
+            
+            
+            
+            
+            // Run until mouse up
+            NSEvent *mouseUp = [[self window] nextEventMatchingMask:NSLeftMouseUpMask];
+            if (!_mouseDownEvent) return;
+            
+            
+            @try
+            {
+                // Should this go through to the WebView?
+                if ([item allowsDirectAccessToWebViewWhenSelected])
+                {
+                    [self forwardMouseEvent:mouseUp selector:_cmd cachedTargetView:nil];
+                }
+                
+                
+                // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
+                if (_mouseUpMayBeginEditing && [mouseUp timestamp] - [_mouseDownEvent timestamp] < 0.5)
+                {
+                    // Is the item at that location supposed to be for editing?
+                    // This is true if the clicked child item is either:
+                    //  A)  selectable
+                    //  B)  editable text
+                    //
+                    // Actually, trying out ignoring that! Mike. #84932
+                    
+                    
+                    NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
+                    NSDictionary *elementInfo = [[self webView] elementAtPoint:location];
+                    DOMElement *element = [elementInfo objectForKey:WebElementDOMNodeKey];
+                    if (!element) return;   // happens if mouse up was somehow outside doc rect
+                    
+                    /*
+                     if (([item isSelectable] && item != [self selectedItem]) ||
+                     ([item conformsToProtocol:@protocol(SVWebEditorText)] && [(id)item isEditable]) ||
+                     [node isKindOfClass:[DOMHTMLObjectElement class]])*/
+                    
+                    
+                    // Inline images don't want to be edited inside since they're already fully accessible for dragging etc. Basically applies to all images
+                    if (![[[item HTMLElement] tagName] isEqualToString:@"IMG"])
+                    {
+                        NSArray *items = [[self selectedItems] copy];
+                        [self selectItems:nil byExtendingSelection:NO];
+                        [self setEditingItems:items];    // should only be 1
+                        [items release];
+                        
+                        [self updateMouseoverWithFakeEvent];
+                        
+                        
+                        /*  Generally, repost equivalent events (unless a link or object) so they go to their correct target.
+                         */
+                        
+                        // return keyword is fine because of the @finally block
+                        if ([elementInfo objectForKey:WebElementLinkURLKey]) return;
+                        
+                        // don't send event through to video-like things as they would misinterpret it
+                        item = [self selectableItemForDOMNode:element];
+                        if ([items lastObject] == item &&
+                            [element isKindOfClass:[DOMElement class]]) // could actually be any DOMNode subclass
+                        {
+                            NSString *tagName = [element tagName];
+                            if ([tagName isEqualToString:@"OBJECT"] ||
+                                [tagName isEqualToString:@"EMBED"] ||
+                                [tagName isEqualToString:@"VIDEO"] ||
+                                [tagName isEqualToString:@"AUDIO"])
+                            {
+                                return;
+                            }
+                        }
+                        
+                        // Can't call -sendEvent: as that doesn't update -currentEvent.
+                        // Post in reverse order since I'm placing onto the front of the queue
+                        [NSApp postEvent:[mouseUp eventWithClickCount:1] atStart:YES];
+                        [NSApp postEvent:[_mouseDownEvent eventWithClickCount:1] atStart:YES];
+                    }
+                }
+            }
+            @finally
+            {
+                // Tidy up
+                _mouseUpMayBeginEditing = NO;
+            }
+            
+            
+            
+            
+            
+            
+            
+            
             // If you click an already selected item quick enough, it will start editing
             _mouseUpMayBeginEditing = NO;
 #ifdef ACCEPTS_FIRST_MOUSE
@@ -1535,88 +1627,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
             // Don't really expect to hit this point. Since if there is no item at the location, we should never have hit-tested positively in the first place
             [super mouseDown:event];
         }
-    }
-    
-    
-    
-    // Run until mouse up
-    NSEvent *mouseUp = [[self window] nextEventMatchingMask:NSLeftMouseUpMask];
-    if (!_mouseDownEvent) return;
-    
-    
-    @try
-    {
-        // Should this go through to the WebView?
-        if ([item allowsDirectAccessToWebViewWhenSelected])
-        {
-            [self forwardMouseEvent:mouseUp selector:_cmd cachedTargetView:nil];
-        }
-        
-        
-        // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
-        if (_mouseUpMayBeginEditing && [mouseUp timestamp] - [_mouseDownEvent timestamp] < 0.5)
-        {
-            // Is the item at that location supposed to be for editing?
-            // This is true if the clicked child item is either:
-            //  A)  selectable
-            //  B)  editable text
-            //
-            // Actually, trying out ignoring that! Mike. #84932
-            
-            
-            NSDictionary *elementInfo = [[self webView] elementAtPoint:location];
-            DOMElement *element = [elementInfo objectForKey:WebElementDOMNodeKey];
-            if (!element) return;   // happens if mouse up was somehow outside doc rect
-            
-            /*
-             if (([item isSelectable] && item != [self selectedItem]) ||
-             ([item conformsToProtocol:@protocol(SVWebEditorText)] && [(id)item isEditable]) ||
-             [node isKindOfClass:[DOMHTMLObjectElement class]])*/
-            
-            
-            // Inline images don't want to be edited inside since they're already fully accessible for dragging etc. Basically applies to all images
-            if (![[[item HTMLElement] tagName] isEqualToString:@"IMG"])
-            {
-                NSArray *items = [[self selectedItems] copy];
-                [self selectItems:nil byExtendingSelection:NO];
-                [self setEditingItems:items];    // should only be 1
-                [items release];
-                
-                [self updateMouseoverWithFakeEvent];
-                
-                
-                /*  Generally, repost equivalent events (unless a link or object) so they go to their correct target.
-                 */
-                
-                // return keyword is fine because of the @finally block
-                if ([elementInfo objectForKey:WebElementLinkURLKey]) return;
-                
-                // don't send event through to video-like things as they would misinterpret it
-                item = [self selectableItemForDOMNode:element];
-                if ([items lastObject] == item &&
-                    [element isKindOfClass:[DOMElement class]]) // could actually be any DOMNode subclass
-                {
-                    NSString *tagName = [element tagName];
-                    if ([tagName isEqualToString:@"OBJECT"] ||
-                        [tagName isEqualToString:@"EMBED"] ||
-                        [tagName isEqualToString:@"VIDEO"] ||
-                        [tagName isEqualToString:@"AUDIO"])
-                    {
-                        return;
-                    }
-                }
-                
-                // Can't call -sendEvent: as that doesn't update -currentEvent.
-                // Post in reverse order since I'm placing onto the front of the queue
-                [NSApp postEvent:[mouseUp eventWithClickCount:1] atStart:YES];
-                [NSApp postEvent:[_mouseDownEvent eventWithClickCount:1] atStart:YES];
-            }
-        }
-    }
-    @finally
-    {
-        // Tidy up
-        _mouseUpMayBeginEditing = NO;
     }
 }
 
