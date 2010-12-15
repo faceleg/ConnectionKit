@@ -174,6 +174,21 @@
 @dynamic collectionTruncateFeedItems;
 @dynamic collectionMaxFeedItemLength;
 
+- (void)setCollectionMaxFeedItemLength:(NSNumber *)len;
+{
+	NSLog(@"setCollectionMaxFeedItemLength:%@", len);
+	[self setWrappedValue:len forKey:@"collectionMaxFeedItemLength"];
+}
+
+- (id)collectionMaxFeedItemLength
+{
+	id result = [self wrappedValueForKey:@"collectionMaxFeedItemLength"];
+	NSLog(@"collectionMaxFeedItemLength = %@", result);
+	return result;
+}
+
+
+
 @dynamic RSSFileName;
 
 - (NSURL *)feedURL
@@ -251,14 +266,16 @@
 
 extern NSUInteger kLargeMediaTruncationThreshold;
 
-- (void)writeRSSFeedItemDescription:(SVHTMLContext *)feedContext
+- (void)writeRSSFeedItemDescription
 {
+	SVHTMLContext *feedContext = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+
 	KSEscapedXMLEntitiesWriter *xmlWriter = [[KSEscapedXMLEntitiesWriter alloc]
 											 initWithOutputXMLWriter:feedContext];
 	
 	SVHTMLContext *xmlContext = [[SVProxyHTMLContext alloc] initWithOutputWriter:xmlWriter target:feedContext];
 	
-	NSUInteger truncationLength = [self.collectionMaxFeedItemLength intValue];
+	NSUInteger truncationLength = [self.parentPage.collectionMaxFeedItemLength intValue];
 	BOOL includeLargeMedia = truncationLength >= kLargeMediaTruncationThreshold;
 	
 	(void) [self writeSummary:xmlContext

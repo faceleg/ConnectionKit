@@ -65,7 +65,7 @@
 
 // Returns YES if truncated.
 
-- (void)writeRSSFeedItemDescription:(SVHTMLContext *)context { }
+- (void)writeRSSFeedItemDescription { }
 
 - (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount; { return NO; }
 
