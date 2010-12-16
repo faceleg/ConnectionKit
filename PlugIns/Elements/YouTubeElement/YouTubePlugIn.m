@@ -177,7 +177,7 @@
 - (void)endObjectElement; { [[self currentContext] endElement]; }
 
 
-//<iframe title="YouTube video player" class="youtube-player" type="text/html" width="425" height="349" src="http://www.youtube.com/embed/R-mUh4MOuvk?rel=0" frameborder="0"></iframe>
+//<iframe title="YouTube video player" class="youtube-player" width="425" height="349" src="http://www.youtube.com/embed/R-mUh4MOuvk?rel=0" frameborder="0"></iframe>
 
 - (void)writeIFrameCode
 {
@@ -193,7 +193,6 @@
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 @"YouTube", @"title",
                                 @"youtube-player", @"class",
-                                @"text/html", @"type",
                                 embed, @"src",
                                 @"0", @"frameborder",
                                 nil];
