@@ -611,6 +611,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     {
         result = [[[self webContentAreaController] webEditorViewController] validateMenuItem:menuItem];
     }
+    else if ( itemAction == @selector(groupAsCollection:) )
+    {
+        result = ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
+    }
     
 	
 	// View menu

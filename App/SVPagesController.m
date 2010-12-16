@@ -672,6 +672,13 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     [template release];
     
     KTPage *parent = [[[self selectedObjects] lastObject] parentPage];
+    if (!parent)
+    {
+        // Selection is probably home page!
+        NSBeep();
+        return;
+    }
+    
     id collection = [self newObjectDestinedForCollection:parent];
     
     
