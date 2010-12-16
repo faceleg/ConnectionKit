@@ -89,9 +89,10 @@
 			;
 						
 			NSXMLDocument *xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:wrapper options:mask error:&theError] autorelease];
-			if (theError) DJW((@"NSXMLDocument from truncation: %@", theError));
+			if (theError) OFF((@"NSXMLDocument from truncation: %@", theError));
 			NSArray *theNodes = [xmlDoc nodesForXPath:@"/html/body" error:&theError];
 			NSXMLNode *currentNode = [theNodes lastObject];		// working node we traverse
+			NSXMLNode *previousNode = nil;
 			NSXMLNode *lastTextNode = nil;
 			NSXMLElement *theBody = [theNodes lastObject];	// the body that we we will be truncating
 			int accumulator = 0;
@@ -234,12 +235,14 @@
 							OFF((@"Not an inline tag, so consider this a word break"));
 							if (accumulator >= maxCount)
 							{
+								currentNode = previousNode;	// Back up - that's the node we should remove things after!
 								OFF((@"accumulator = %d; at following non-inline tag, time to STOP", accumulator));
 								break;
 							}
 						}
 					}
 				}
+				previousNode = currentNode;
 				currentNode = [currentNode nextNode];
 			}
 			
@@ -252,14 +255,21 @@
 			{
 				OFF((@"Did NOT remove some stuff"));
 			}
-			if (lastTextNode && removedAnything)
+			if (removedAnything)
 			{
-				// Trucate, plus add on an ellipses.  (Space before ellipses if we didn't break a word up.)
-				NSString *theFormat = NSLocalizedString(@"%@…", @"something followed by ellipses to show that we cut it off");
-				NSString *lastNodeString = [lastTextNode stringValue];
-				NSString *newString = [NSString stringWithFormat:theFormat,
-									   lastNodeString];
-				[lastTextNode setStringValue:newString];
+				if (lastTextNode)
+				{
+					// Trucate, plus add on an ellipses.  (Space before ellipses if we didn't break a word up.)
+					NSString *theFormat = NSLocalizedString(@"%@…", @"something followed by ellipses to show that we cut it off");
+					NSString *lastNodeString = [lastTextNode stringValue];
+					NSString *newString = [NSString stringWithFormat:theFormat,
+										   lastNodeString];
+					[lastTextNode setStringValue:newString];
+				}
+				else
+				{
+					LOG((@"NEED TO ADD ELLIPSES AFTER %@", currentNode));
+				}
 			}
 			
 			result = [theBody XMLStringWithOptions:NSXMLDocumentTidyXML];
@@ -306,7 +316,7 @@
 			whereAttachment = [markup rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(NSAttachmentCharacter, 1)] options:0 range:NSMakeRange(offset, [markup length] - offset) ];
 			if (NSNotFound != whereAttachment.location)
 			{
-				DJW((@"Source: Attachment at offset %d", whereAttachment.location));
+				OFF((@"Source: Attachment at offset %d", whereAttachment.location));
 				offset = whereAttachment.location + 1;
 			}
 		}
@@ -319,7 +329,7 @@
 			whereAttachment = [truncatedMarkup rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(NSAttachmentCharacter, 1)] options:0 range:NSMakeRange(offset, [truncatedMarkup length] - offset) ];
 			if (NSNotFound != whereAttachment.location)
 			{
-				DJW((@"Truncd: Attachment at offset %d", whereAttachment.location));
+				OFF((@"Truncd: Attachment at offset %d", whereAttachment.location));
 				offset = whereAttachment.location + 1;
 			}
 		}
@@ -341,7 +351,7 @@
             }
 			else
 			{
-				DJW((@"Expecting an attachment character at %d", range.location));
+				OFF((@"Expecting an attachment character at %d", range.location));
 			}
         }
     }
