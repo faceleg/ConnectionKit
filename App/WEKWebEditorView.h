@@ -42,7 +42,6 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     BOOL                            _isChangingSelectedItems;
     
     // Editing
-    BOOL            _mouseUpMayBeginEditing;
     NSUndoManager   *_undoManager;
     BOOL            _liveLinks;
     NSPasteboard    *_insertionPasteboard;
