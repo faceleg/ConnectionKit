@@ -17,10 +17,10 @@
     IBOutlet NSViewController  *oInspectorViewController;
 	IBOutlet NSSlider *oTruncationSlider;
 
-	double _maxItemLength;
+	NSNumber *_maxItemLength;
 }
 
-@property double maxItemLength;
+@property (retain) NSNumber *maxItemLength;
 
 - (IBAction)makeShortest:(id)sender;	// click on icon to make truncation the shortest
 - (IBAction)makeLongest:(id)sender;		// click on icon to make truncation the longest (remove truncation)

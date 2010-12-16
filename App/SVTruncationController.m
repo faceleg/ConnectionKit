@@ -70,12 +70,12 @@ extern double kTruncationMaxLog;
 
 - (IBAction)makeShortest:(id)sender;	// click on icon to make truncation the shortest
 {
-	self.maxItemLength = kTruncationMin;
+	self.maxItemLength = [NSNumber numberWithDouble:kTruncationMin];
 }
 
 - (IBAction)makeLongest:(id)sender;		// click on icon to make truncation the longest (remove truncation)
 {
-	self.maxItemLength = kTruncationMax;
+	self.maxItemLength = [NSNumber numberWithDouble:kTruncationMax];
 }
 
 - (IBAction)sliderChanged:(id)sender;	// push value back down to model
@@ -85,7 +85,7 @@ extern double kTruncationMaxLog;
 	{
 		id object = [bindingInfo objectForKey:NSObservedObjectKey];
 		NSString *keyPath = [bindingInfo objectForKey:NSObservedKeyPathKey];
-		NSUInteger newMaxItemLength = round(self.maxItemLength);
+		NSUInteger newMaxItemLength = round(self.maxItemLength.doubleValue);
 		id oldValue = [object valueForKeyPath:keyPath];
 		
 		// We won't set value if it hasn't changed
@@ -115,7 +115,7 @@ extern double kTruncationMaxLog;
 {
 	NSString *result;
 	SVTruncationType truncType = kTruncateNone;
-	NSUInteger currentMaxItemLength = round(self.maxItemLength);
+	NSUInteger currentMaxItemLength = round(self.maxItemLength.doubleValue);
 
 	NSUInteger count = [KTPage truncCountFromMaxItemLength:currentMaxItemLength choosingTruncType:&truncType];
 	
