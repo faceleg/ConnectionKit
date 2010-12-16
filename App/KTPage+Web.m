@@ -514,7 +514,6 @@
 		// start the anchor
 		if (siteItem != currentParserPage)
 		{
-			[context pushAttribute:@"title" value:[siteItem title]];
 			[context startAnchorElementWithPage:siteItem];
 		}
 		
