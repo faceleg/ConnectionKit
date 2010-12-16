@@ -210,6 +210,7 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 				disabledPreviewWarningWithNewlines = [NSString stringWithFormat:@"\n\n%@ %@", disabledPreviewNote, disabledPreviewExplanation];
 			}
 			
+			// DEPRECATED
 			NSRunInformationalAlertPanelRelativeToWindow(
 														 NSLocalizedString(@"Congratulations!  The HTML is valid.",@"Title of results alert"),
 														 NSLocalizedString(@"The validator returned the following status message:\n\n%@%@",@""),
