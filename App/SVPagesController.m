@@ -664,7 +664,16 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 - (void)groupAsCollection:(id)sender;
 {
+    SVPageTemplate *template = [[SVPageTemplate alloc]
+                                initWithCollectionPreset:[NSDictionary dictionary]];
     
+    [self setEntityNameWithPageTemplate:template];
+    [template release];
+    
+    KTPage *parent = [[[self selectedObjects] lastObject] parentPage];
+    id collection = [self newObjectDestinedForCollection:parent];
+    [self addObject:collection toCollection:parent];
+    [collection release];
 }
 
 #pragma mark Removing Objects
