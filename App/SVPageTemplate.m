@@ -20,6 +20,9 @@
 
 - (id)initWithCollectionPreset:(NSDictionary *)presetDict;
 {
+    OBPRECONDITION(presetDict);
+    
+    
     // Find corresponding bundle
     NSString *bundleIdentifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
     
