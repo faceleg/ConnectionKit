@@ -54,7 +54,6 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     DOMRange    *_dragCaretDOMRange;
     
     // Event Handling
-    NSEvent *_mouseDownEvent;   // have to record all mouse down events in case they turn into a drag op
     BOOL    _resizingGraphic;
     BOOL    _isProcessingEvent;
     BOOL    _isForwardingCommandToWebView;

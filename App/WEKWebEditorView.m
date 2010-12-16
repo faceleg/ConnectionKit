@@ -433,7 +433,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // Should this go through to the WebView?
         if ([item allowsDirectAccessToWebViewWhenSelected])
         {
-            [self forwardMouseEvent:mouseUp selector:_cmd cachedTargetView:nil];
+            [self forwardMouseEvent:mouseUp selector:@selector(mouseUp:) cachedTargetView:nil];
         }
         
         
@@ -1428,11 +1428,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)dragImageForEvent:(NSEvent *)event;
 {
-    if (!_mouseDownEvent) return;   // otherwise we initiate a drag multiple times!
-    
-    
-    
-    
     NSPoint eventLocation = [event locationInWindow];
     WEKWebEditorItem *item = [self selectedItemAtPoint:[self convertPoint:eventLocation fromView:nil]
                                                 handle:NULL];
@@ -1525,10 +1520,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
             }
         }
     }
-    
-    
-    // A drag of the mouse automatically removes the possibility that editing might commence
-    [_mouseDownEvent release],  _mouseDownEvent = nil;
 }
 
 - (void)mouseDown2:(NSEvent *)event;
@@ -1543,8 +1534,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (item && handle != kSVGraphicNoHandle)
     {
 		[self resizeItem:item usingHandle:handle withEvent:event];
-        [_mouseDownEvent release]; _mouseDownEvent = nil;
-		return;
+        return;
     }
     
     
@@ -1576,11 +1566,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 [[self window] makeFirstResponder:self];
             }
         }
-        
-        
-        // Store the event for a bit (for draging, editing, etc.). Note that we're not interested in it while editing
-        [_mouseDownEvent release];
-        _mouseDownEvent = [event retain];
     }
     else
     {
@@ -1588,7 +1573,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
         if ([[self editingItems] count] > 0)
         {
             [self setEditingItems:nil];
-            [_mouseDownEvent release]; _mouseDownEvent = nil;
             [NSApp sendEvent:event];    // this time round it'll go through to the WebView
             return;
         }
