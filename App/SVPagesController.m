@@ -664,6 +664,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 - (void)groupAsCollection:(id)sender;
 {
+    // New collection
     SVPageTemplate *template = [[SVPageTemplate alloc]
                                 initWithCollectionPreset:[NSDictionary dictionary]];
     
@@ -672,6 +673,13 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     KTPage *parent = [[[self selectedObjects] lastObject] parentPage];
     id collection = [self newObjectDestinedForCollection:parent];
+    
+    
+    // Move selection into it
+    [self moveObjects:[self selectedObjects] toCollection:collection index:0];
+    
+    
+    // Fully insert the new, selecting it
     [self addObject:collection toCollection:parent];
     [collection release];
 }
