@@ -771,6 +771,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     return result;
 }
 
+- (void)groupAsCollection:(id)sender;
+{
+    [[self pagesController] groupAsCollection:sender];
+}
+
 #pragma mark Window Delegate
 
 - (void)windowDidResize:(NSNotification *)aNotification

@@ -65,6 +65,8 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 // Doesn't add the result to collection, just uses it to determine property inheritance
 - (id)newObjectDestinedForCollection:(KTPage *)collection;
 
+- (void)groupAsCollection:(id)sender;
+
 
 #pragma mark Tree
 - (NSString *)childrenKeyPath;	// A hangover from NSTreeController

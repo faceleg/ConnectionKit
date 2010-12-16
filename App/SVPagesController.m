@@ -662,6 +662,11 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     }
 }
 
+- (void)groupAsCollection:(id)sender;
+{
+    
+}
+
 #pragma mark Removing Objects
 
 - (void)remove:(id)sender;
