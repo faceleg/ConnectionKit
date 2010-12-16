@@ -70,7 +70,7 @@
 		</dict>
 		<dict>
 			<key>action</key>
-			<string>group:</string>
+			<string>groupAsCollection:</string>
 			<key>help</key>
 			<string>TOOLTIP_GROUP_COLLECTION</string>
 			<key>identifier</key>
