@@ -39,8 +39,6 @@
 
 @implementation FlickrInspector
 
-- (NSString *)nibName { return @"FlickrInspector"; }
-
 - (void)awakeFromNib
 {
     // Lots of work to make a nice colorful logo!
