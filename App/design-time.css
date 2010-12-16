@@ -13,13 +13,8 @@
     -webkit-transition: none;
 }
 
-
-/*  Drop zones should have blue border */
-.svx-dragging-destination-active {
-    border-style: solid;
-    border-color: rgba(0,127,255,1);
-}
-
+/* Sidebar should be a min-height so content can be dropped in it
+ */
 #sidebar { min-height: 190px; }
 
 
