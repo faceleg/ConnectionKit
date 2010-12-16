@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>Flickr Thumbnails</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -24,14 +26,6 @@
 	<string>${SVN_VERSION}</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KTCategory</key>
-	<integer>4</integer>
-	<key>KSHelpAnchor</key>
-	<string>Flickr_Badge</string>
-	<key>KTMainElement</key>
-	<string></string>
-	<key>KTPageletCanHaveTitle</key>
-	<true/>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_flickr.tiff</string>
 	<key>KTPluginInitialProperties</key>
@@ -43,12 +37,6 @@
 		<key>tag</key>
 		<string>clouds</string>
 	</dict>
-	<key>KTPluginName</key>
-	<string>Flickr Thumbnails</string>
-	<key>KTPluginPriority</key>
-	<integer>5</integer>
-	<key>KTPluginUntitledName</key>
-	<string>Flickr Thumbnails</string>
 	<key>NSPrincipalClass</key>
 	<string>FlickrPlugIn</string>
 </dict>
