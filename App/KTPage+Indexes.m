@@ -325,6 +325,8 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 #pragma mark -
 #pragma mark Raw Char Count (exp of slider) <--> Truncate Count & Units
 
+// A larger "per" value means that we are more likely to have a reversal (rather than a gap) wen we cange from one truncation mode to another.
+// 
 #define kCharsPerWord 5
 #define kWordsPerSentence 10
 #define kSentencesPerParagraph 5

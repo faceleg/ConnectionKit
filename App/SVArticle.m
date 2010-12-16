@@ -60,7 +60,7 @@
 	if ((kTruncateNone != truncationType) && maxCount)	// only do something if we want to actually truncate something
 	{
 		// Only want run through this if:
-		// 1. We are truncating something other than characters
+		// 1. We are truncating something other than characters, OR....
 		// 2. We are truncating characters, and our maximum [character] count is shorter than the actual length we have.
 		if (truncationType != kTruncateCharacters || maxCount < [result length])
 		{			
@@ -202,8 +202,8 @@
 								OFF((@"We are out of words, but not breaking here in case we hit inline to follow"));
 							}
 						}
+						}
 					}
-				}
 				else if ([currentNode kind] == NSXMLElementKind)
 				{
 					NSXMLElement *theElement = (NSXMLElement *)currentNode;
@@ -255,10 +255,10 @@
 			if (lastTextNode && removedAnything)
 			{
 				// Trucate, plus add on an ellipses.  (Space before ellipses if we didn't break a word up.)
-				NSString *theFormat = (didSplitWord ? @"%@%C" : @"%@ %C");
+				NSString *theFormat = NSLocalizedString(@"%@…", @"something followed by ellipses to show that we cut it off");
 				NSString *lastNodeString = [lastTextNode stringValue];
 				NSString *newString = [NSString stringWithFormat:theFormat,
-									   lastNodeString, 0x2026];
+									   lastNodeString];
 				[lastTextNode setStringValue:newString];
 			}
 			
