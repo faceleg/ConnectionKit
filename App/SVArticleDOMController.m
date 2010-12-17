@@ -96,7 +96,7 @@
     
     // Catch mouse downs from #page. It will retain us.
     [[self mouseDownSelectionFallbackDOMElement]
-     addEventListener:@"mousedown" listener:self useCapture:NO];
+     addEventListener:@"mousedown" listener:[self eventsListener] useCapture:NO];
 }
 
 #pragma mark Properties
