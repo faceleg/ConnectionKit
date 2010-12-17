@@ -263,6 +263,8 @@
 
 - (void)updateIfNeeded; // recurses down the tree
 {
+    [self retain];  // it's possible the update will deallocate self (e.g. articles)
+    
     // Nil out ivar so it can be reused immediately
     // Also in case the update is async and hasn't finished yet
     NSSet *selectorStrings = _updateSelectors; _updateSelectors = nil;
@@ -279,6 +281,7 @@
     
     
     [super updateIfNeeded];
+    [self release];
 }
 
 #pragma mark Size Binding
