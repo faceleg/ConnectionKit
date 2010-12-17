@@ -124,6 +124,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     [self setWebEditor:nil];   // needed to tear down data source
     [self setDelegate:nil];
     
+    [_firstResponderItem release];
     [_context release];
     [_graphicsController release];
     [_loadedPage release];
