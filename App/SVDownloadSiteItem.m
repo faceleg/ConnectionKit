@@ -124,9 +124,12 @@
     if (webResource)
     {
         CFStringEncoding encoding = CFStringConvertIANACharSetNameToEncoding((CFStringRef)[webResource textEncodingName]);
+        if (encoding == kCFStringEncodingInvalidId)
+        {
+            encoding = kCFStringEncodingUTF8;
+        }
         
-        return [NSString stringWithData:[webResource data]
-                               encoding:CFStringConvertEncodingToNSStringEncoding(encoding)];
+        return [NSString stringWithData:[webResource data] encoding:CFStringConvertEncodingToNSStringEncoding(encoding)];
     }
     
     return [NSString stringWithContentsOfURL:[media mediaURL]
