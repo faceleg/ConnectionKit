@@ -63,25 +63,35 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // Keep an eye on model
     [self addObserver:self forKeyPath:@"representedObject.string" options:0 context:sBodyTextObservationContext];    
     
+    // Finish up
+    return self;
+}
+
+- (id)initWithRepresentedObject:(id <SVDOMControllerRepresentedObject>)content;
+{
+    self = [super initWithRepresentedObject:content];
+    
+    
+    // Used to do this in -init, binding to representedObject.attachments, but that creates a retain cycle
     _graphicsController = [[NSArrayController alloc] init];
     [_graphicsController setSortDescriptors:[SVRichText attachmentSortDescriptors]];
     [_graphicsController setAutomaticallyRearrangesObjects:YES];
     
     [_graphicsController bind:NSContentSetBinding
-                     toObject:self
-                  withKeyPath:@"representedObject.attachments"
+                     toObject:content
+                  withKeyPath:@"attachments"
                       options:nil];
     
     [_graphicsController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:sBodyTextObservationContext];
     
     
-    // Finish up
     return self;
 }
 
 - (void)dealloc
 {
     [self removeObserver:self forKeyPath:@"representedObject.string"];
+    [_graphicsController removeObserver:self forKeyPath:@"arrangedObjects"];
     
     // Release ivars
     [_changeHTMLContext release];//OBASSERT(!_changeHTMLContext);
