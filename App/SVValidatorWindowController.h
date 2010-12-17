@@ -16,6 +16,8 @@
 	NSString *_validationReportString;
 }
 
+typedef enum { kNonSandvoxHTMLPage, kSandvoxPage, kSandvoxFragment } PageValidationType;
+
 @property (copy) NSString *validationReportString;
 
 
@@ -23,7 +25,7 @@
 	   windowForSheet:(NSWindow *)aWindow;
 
 - (BOOL) validateSource:(NSString *)pageSource
-			 isFullPage:(BOOL)isFullPage
+			 pageValidationType:(PageValidationType)pageValidationType
 disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 				charset:(NSString *)charset
 		  docTypeString:(NSString *)docTypeString

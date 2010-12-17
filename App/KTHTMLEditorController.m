@@ -399,10 +399,14 @@ initial syntax coloring.
         html = [SVRemoteHTMLValidator HTMLStringWithFragment:fragment docType:[self docType]];
     }
 	
-	NSString *docTypeName = [SVHTMLContext titleOfDocType:[self docType] localize:NO];
+	NSString *docTypeName = nil;
+	if ([self docType])
+	{
+		docTypeName = [SVHTMLContext titleOfDocType:[self docType] localize:NO];
+	}
 	BOOL isValid = [[SVValidatorWindowController sharedController]
 					validateSource:html
-					isFullPage:NO
+					pageValidationType:([[self HTMLSourceObject] shouldValidateAsFragment] ? kSandvoxFragment : kNonSandvoxHTMLPage)
 					disabledPreviewObjectsCount:0
 					charset:@"UTF-8"
 					docTypeString:docTypeName

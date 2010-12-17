@@ -99,7 +99,7 @@
     NSString *charset = [[page master] valueForKey:@"charset"];
 	
     BOOL result = [self validateSource:pageSource
-							isFullPage:YES
+							pageValidationType:kSandvoxPage
 		   disabledPreviewObjectsCount:disabledPreviewObjectsCount
 							   charset:charset
 						 docTypeString:docTypeName
@@ -108,16 +108,17 @@
 }
 
 - (BOOL) validateSource:(NSString *)pageSource
-			 isFullPage:(BOOL)isFullPage
+	 pageValidationType:(PageValidationType)pageValidationType
 disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 				charset:(NSString *)charset
-		  docTypeString:(NSString *)docTypeString
+		  docTypeString:(NSString *)docTypeString		// if null, use what is in prelude
 		 windowForSheet:(NSWindow *)aWindow;
 {
 	BOOL isValid = NO;
 #if DEBUG
 	// pageSource = [@"fjsklfjdslkjfld <b><bererej>" stringByAppendingString:pageSource];		// TESTING -- FORCE INVALID MARKUP
 #endif
+	DJW((@"page source = %@", pageSource));
 	NSStringEncoding encoding = [charset encodingFromCharset];
 	NSData *pageData = [pageSource dataUsingEncoding:encoding allowLossyConversion:YES];
 	
@@ -172,14 +173,16 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 																					   encoding:NSUTF8StringEncoding
 																						  error:nil] autorelease];
 		
+		DJW((@"result = %@", resultingPageString));
 		NSError *error;
 		NSString *headers = [NSString stringWithContentsOfFile:pathHeaders encoding:NSUTF8StringEncoding error:&error];
+		DJW((@"headers = %@", headers));
 		NSDictionary *headerDict = [headers parseHTTPHeaders];
 		
 		int numErrors = [[headerDict objectForKey:@"X-W3C-Validator-Errors"] intValue];
 		int numWarnings = [[headerDict objectForKey:@"X-W3C-Validator-Warnings"] intValue];
 		isValid = [[headerDict objectForKey:@"X-W3C-Validator-Status"] isEqualToString:@"Valid"];	// Valid, Invalid, Abort
-		NSString *explanation = NSLocalizedString(@"(none provided)", "indicator that not explanation was provided to HTML validation success");	// needs to be scraped
+		NSString *explanation = nil;
 		
 		NSRange foundValidRange = [resultingPageString rangeBetweenString:@"<h2 class=\"valid\">" andString:@"</h2>"];
 		if (NSNotFound != foundValidRange.location)
@@ -210,11 +213,22 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 				disabledPreviewWarningWithNewlines = [NSString stringWithFormat:@"\n\n%@ %@", disabledPreviewNote, disabledPreviewExplanation];
 			}
 			
-			// DEPRECATED
-			NSRunInformationalAlertPanelRelativeToWindow(
-														 NSLocalizedString(@"Congratulations!  The HTML is valid.",@"Title of results alert"),
-														 NSLocalizedString(@"The validator returned the following status message:\n\n%@%@",@""),
-														 nil,nil,nil, aWindow, explanation, disabledPreviewWarningWithNewlines);
+			if (explanation)
+			{
+				// DEPRECATED
+				NSRunInformationalAlertPanelRelativeToWindow(
+					 NSLocalizedString(@"Congratulations!  The HTML is valid.",@"Title of results alert"),
+					 NSLocalizedString(@"The validator returned the following status message:\n\n%@%@",@""),
+					 nil,nil,nil, aWindow, explanation, disabledPreviewWarningWithNewlines);				
+			}
+			else	// no explanation to show ... just show any disabled warning below.
+			{
+				// DEPRECATED
+				NSRunInformationalAlertPanelRelativeToWindow(
+					 NSLocalizedString(@"Congratulations!  The HTML is valid.",@"Title of results alert"),
+						disabledPreviewWarningWithNewlines,
+					 nil,nil,nil, aWindow );
+			}
 		}
 		else
 		{
@@ -255,7 +269,7 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 			}
 			
 			NSString *windowTitleFormat = NSLocalizedString(@"Raw HTML Object Validator Results: %@, %@", "HTML Validator Window Title. Followed by <count> errors, <count> warnings");
-			if (isFullPage)
+			if (kSandvoxFragment != pageValidationType)
 			{
 				windowTitleFormat = NSLocalizedString(@"Page Validator Results: %@, %@", "HTML Validator Window Title. Followed by <count> errors, <count> warnings");
 			}
@@ -287,7 +301,7 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 			
 			NSString *explanation1a = NSLocalizedString(@"Some HTML that you have entered is invalid", @"Explanation Text for validator output");
 			NSString *fix1a = NSLocalizedString(@"Fix the HTML so that it no longer returns any errors or warnings", @"Suggestion for the user to perform");
-			if (isFullPage)
+			if (kSandvoxPage == pageValidationType)
 			{
 				explanation1a = NSLocalizedString(@"Some HTML, that you placed on raw HTML objects, is invalid", @"Explanation Text for validator output");
 				fix1a = NSLocalizedString(@"Check the raw HTML objects on the page, and fix the offending HTML code so that they no longer return validation errors or warnings", @"Suggestion for the user to perform");
@@ -295,15 +309,24 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 			}
 			NSString *explanation1bFmt = NSLocalizedString(@"Some HTML is not acceptable for the specified document type: %@", @"Explanation Text for validator output");
 			NSString *fix1b = NSLocalizedString(@"Change the HTML declaration to a less restrictive type", @"Suggestion for the user to perform");
-			if (isFullPage)
+			if (kSandvoxPage == pageValidationType)
 			{
 				explanation1bFmt = NSLocalizedString(@"Some HTML, that you placed on raw HTML objects, is not acceptable for the specified document type: %@", @"Explanation Text for validator output");
 				
 				fix1b = NSLocalizedString(@"Change the HTML declaration in the offending object(s) to be a less restrictive type", @"Suggestion for the user to perform");
 				
-			}		
+			}
+			else if (kNonSandvoxHTMLPage == pageValidationType)
+			{
+				// We won't be showing any doc type since it's not specified 
+				explanation1bFmt = NSLocalizedString(@"Some HTML is not acceptable for the document type you have specified on the page", @"Explanation Text for validator output");
+				explanation1bFmt = [explanation1bFmt stringByAppendingString:@"%@"]; // make it work generically with (non-showing) doc type
+				
+				fix1b = NSLocalizedString(@"Change the HTML declaration at the top to be a less restrictive type", @"Suggestion for the user to perform");
+				
+			}
 			NSString *explanation1c = NSLocalizedString(@"You have chosen to include popular, but technically invalid markup", @"Explanation Text for validator output");
-			if (isFullPage)
+			if (kSandvoxPage == pageValidationType)
 			{
 				explanation1c = NSLocalizedString(@"You have chosen to include popular, but technically invalid markup, in raw HTML objects on this page", @"Explanation Text for validator output");
 			}
@@ -312,7 +335,7 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 			
 			NSString *explanation1d = nil;	// won't use this explanation for objects, only for a full page
 			NSString *fix1d = nil;
-			if (isFullPage)
+			if (kSandvoxPage == pageValidationType)
 			{
 				explanation1d = NSLocalizedString(@"Sandvox has a problem and has produced incorrect HTML", @"Explanation Text for validator output");
 				fix1d = NSLocalizedString(@"This is not very likely, but if you can see that the invalid code is part of the Sandvox template, please [contact Karelia].", @"Suggestion for the user to perform -- the text between [ and ] will be hyperlinked");
@@ -321,6 +344,7 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 		
 			
 			
+			if (!docTypeString) docTypeString = @"";		// make sure nil doctype is just not output
 			
 			[replacementString appendFormat:@"<p>%@</p>\n<dl style='font-size:0.8em; line-height:1.6em; margin-left:120px;'><dt style='display: list-item;'>%@</dt><dd style='font-style:italic;'>%@</dd><dt style='display: list-item;'>%@</dt><dd style='font-style:italic;'>%@</dd><dt style='display: list-item;'>%@</dt><dd><dd>%@</dd><dd style='font-style:italic;'>%@</dd>",
 			 [explanation1 stringByEscapingHTMLEntities],
@@ -338,7 +362,7 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 			 [fix1c stringByEscapingHTMLEntities]];
 			
 			
-			if (isFullPage)
+			if (kSandvoxPage == pageValidationType)
 			{
 				NSString *attachmentEnglish = @"The validation report will be attached to this message.";
 				NSString *attachmentMessage = NSLocalizedString(@"The validation report will be attached to this message.", @"note to show somebody in the message window");
@@ -381,7 +405,7 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 													@"Even if you get errors or warnings, your page will often render just fine in most browsers — many large companies have HTML that does not pass validation on their pages — but in some cases this will explain why your page does not look right.", @"Explanation Text for validator output");
 			NSString *fixIfProblems = NSLocalizedString(
 														@"If you are experiencing display problems on certain browsers, you should fix any error messages in this raw HTML object, or adjust the HTML style specified for this object to be a less restrictive document type.", @"Explanation Text for validator output");
-			if (isFullPage)
+			if (kSandvoxPage == pageValidationType)
 			{
 				fixIfProblems = NSLocalizedString(
 												  @"If you are experiencing display problems on certain browsers, you should fix any error messages in the raw HTML objects that you put onto your page (including code injection), or adjust the HTML style specified for this page to be a less restrictive document type.", @"Explanation Text for validator output");
@@ -394,7 +418,7 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 			
 			[replacementString appendString:@"</div>\n"];	// finally done
 			[resultingPageString replace:@"</h2>" with:replacementString];
-			if (!isFullPage)
+			if (kSandvoxFragment == pageValidationType)
 			{
 				// Improve the (English) description a bit when we're just validating an object.
 				// Note: This is not localized, since the validator is giving us English output only.
