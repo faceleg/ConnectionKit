@@ -37,6 +37,10 @@
     return [NSSet setWithObject:@"media"];
 }
 
+#pragma mark Title
+
+- (id)titleBox; { return nil; }
+
 #pragma mark Thumbnail
 
 - (id)imageRepresentation;

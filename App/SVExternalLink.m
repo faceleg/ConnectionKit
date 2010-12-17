@@ -59,6 +59,10 @@
 	return (nil != [self URL]);		// Maybe be even smarter about having a real URL?
 }
 
+#pragma mark Title
+
+- (id)titleBox; { return nil; }
+
 - (NSNumber *) allowComments; { return NO; }
 
 #pragma mark Other properties
