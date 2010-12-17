@@ -148,6 +148,7 @@
     
     
     // Start swap
+    [oldItem retain];   // will possibly be deallocated by the replacement
     [oldItem itemWillMoveToParentWebEditorItem:nil];
     [oldItem setParentWebEditorItem:nil];
     [children replaceObjectsInRange:NSMakeRange(index, 1) withObjectsFromArray:newItems];
@@ -159,6 +160,7 @@
     // Finish the swap
     [_childControllers release]; _childControllers = children;
     [oldItem itemDidMoveToParentWebEditorItem];
+    [oldItem release];
     
     // Alert new
     [newItems makeObjectsPerformSelector:@selector(setParentWebEditorItem:) withObject:self];
