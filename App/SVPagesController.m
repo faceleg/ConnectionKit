@@ -32,6 +32,7 @@
 #import "NSObject+Karelia.h"
 
 #import "KSWebLocationPasteboardUtilities.h"
+#import "KSStringXMLEntityEscaping.h"
 
 #import "Debug.h"
 
@@ -273,18 +274,23 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         }
         if (!record)
         {
-            NSData *data = [@"" dataUsingEncoding:NSUTF8StringEncoding];
-            
-            SVMedia *media = [[SVMedia alloc]
-                              initWithData:data
-                              URL:[NSURL URLWithString:@"x-sandvox-fake-url:///emptystring.html"]];
-            
-            [media setPreferredFilename:@"Untitled.html"];
-            
-            record = [SVMediaRecord mediaRecordWithMedia:media
-                                              entityName:@"FileMedia"
-                          insertIntoManagedObjectContext:[self managedObjectContext]];
-            [media release];
+			NSString *boilerplateText = NSLocalizedString(@"This can be replaced with any HTML you want.", @"placeholder string");
+														  
+			NSString *boilerplateFormat = // Minimal, clean, but empty
+			@"<!DOCTYPE html>\n<html>\n<head>\n<meta charset='UTF-8' />\n<title></title>\n</head>\n<body>\n\n%@\n\n</body>\n</html>\n";
+			NSString *boilerplateHTML = [NSString stringWithFormat:boilerplateFormat, [boilerplateText stringByEscapingHTMLEntities]];
+			NSData *data = [boilerplateHTML dataUsingEncoding:NSUTF8StringEncoding];
+			
+			SVMedia *media = [[SVMedia alloc]
+							  initWithData:data
+							  URL:[NSURL URLWithString:@"x-sandvox-fake-url:///emptystring.html"]];
+			
+			[media setPreferredFilename:@"Untitled.html"];
+			
+			record = [SVMediaRecord mediaRecordWithMedia:media
+											  entityName:@"FileMedia"
+						  insertIntoManagedObjectContext:[self managedObjectContext]];
+			[media release];
         }
         
         [(SVDownloadSiteItem *)result setMedia:record];
