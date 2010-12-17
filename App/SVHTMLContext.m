@@ -862,6 +862,7 @@
         [parser parseIntoHTMLContext:fakeContext];
         [parser release];
         [fakeContext release];
+        [template release];
         
         return result;
     }
