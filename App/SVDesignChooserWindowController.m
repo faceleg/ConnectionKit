@@ -39,6 +39,16 @@
     return [self initWithWindowNibName:@"SVDesignChooser"];
 }
 
+- (void)dealloc;
+{
+    [_designsController release];
+    [_genre release];
+    [_color release];
+    [_width release];
+    
+    [super dealloc];
+}
+
 #pragma mark Properties
 
 - (KTDesign *)design;
