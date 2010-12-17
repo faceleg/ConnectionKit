@@ -366,66 +366,11 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 	[pool release];
 }
 
-// Based on raw number of characters (derived from slider value) and decsired truncation type, figure out an appropriate value in those units.
-+ (NSUInteger) truncateCountFromMaxItemLength:(NSUInteger)maxItemLength forType:(SVTruncationType)truncType round:(BOOL)wantRound;
-{
-	NSUInteger result = 0;
-	float divided = 0.0;
-	switch(truncType)
-	{
-		case kTruncateCharacters:
-			divided = (float)maxItemLength;
-			break;
-		case kTruncateWords:
-			divided = (float)maxItemLength / (kCharsPerWord);
-			break;
-		case kTruncateSentences:
-			divided = (float)maxItemLength / (kCharsPerWord * kWordsPerSentence);
-			break;
-		case kTruncateParagraphs:
-			divided = (float)maxItemLength / (kCharsPerWord * kWordsPerSentence * kSentencesPerParagraph);
-			break;
-		default:
-			break;
-	}
-	
-	if (wantRound)
-	{
-		// Not sure if there is any sophisticated mathematical way to do this.  Basically,
-		// show nice rounded numbers approximately corresponding to the order of magnitude
-		if (divided >= 800)
-		{
-			result = 100 * roundf(divided / 100);
-		}
-		else if (divided >= 200)
-		{
-			result = 50 * roundf(divided / 50);
-		}
-		else if (divided >= 80)
-		{
-			result = 10 * roundf(divided / 10);
-		}
-		else if (divided >= 20)
-		{
-			result = 5 * roundf(divided / 5);
-		}
-		else result = round(divided);
-	}
-	else
-	{
-		result = round(divided);
-	}
-	
-	if (0 == result) result = 1;		// do not let result go to zero
-	
-	return result;
-}
-
-// Even smarter than above, it figures out units based on which third of the slider is in range.
+// Figure out units based on which third of the slider is in range.
 // Convert slider floating value to approprate truncation types.
 // Depending on which third the value is in, we round to a count of words, sentence, or paragraphs.
 
-+ (NSUInteger) truncCountFromMaxItemLength:(NSUInteger)maxItemLength choosingTruncType:(SVTruncationType *)outTruncType
++ (SVTruncationType) chooseTruncTypeFromMaxItemLength:(NSUInteger)maxItemLength;
 {
 	
 	SVTruncationType type = 0;
@@ -445,15 +390,7 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 	{
 		type = kTruncateParagraphs;		// Third third, truncate paragraphs.
 	}
-	
-	NSUInteger truncCount = [[self class] truncateCountFromMaxItemLength:maxItemLength
-														 forType:type
-														   round:YES];		// nice rounded number
-	if (outTruncType)
-	{
-		*outTruncType = type;
-	}
-	return truncCount;
+	return type;
 }
 
 #pragma mark Standard Summary
@@ -463,8 +400,7 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 
 - (BOOL)writeSummary:(SVHTMLContext *)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxItemLength;
 {
-	SVTruncationType truncationType = kTruncateNone;
-	NSUInteger truncCount = [[self class] truncCountFromMaxItemLength:maxItemLength choosingTruncType:&truncationType];
+	SVTruncationType truncationType = [[self class] chooseTruncTypeFromMaxItemLength:maxItemLength];
 	BOOL truncated = NO;
 	
 	[context willWriteSummaryOfPage:self];
@@ -480,9 +416,9 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 	{
 		NSAttributedString *html = nil;
 		
-		if ( truncCount > 0 && kTruncateNone != truncationType )
+		if ( maxItemLength > 0 && kTruncateNone != truncationType )
 		{
-			html = [[self article] attributedHTMLStringWithTruncation:truncCount
+			html = [[self article] attributedHTMLStringWithTruncation:maxItemLength
                                                                  type:truncationType
                                                     includeLargeMedia:includeLargeMedia
                                                           didTruncate:&truncated];

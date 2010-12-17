@@ -89,13 +89,14 @@
 			;
 						
 			NSXMLDocument *xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:wrapper options:mask error:&theError] autorelease];
-			if (theError) OFF((@"NSXMLDocument from truncation: %@", theError));
+			if (theError) DJW((@"NSXMLDocument from truncation: %@", theError));
 			NSArray *theNodes = [xmlDoc nodesForXPath:@"/html/body" error:&theError];
 			NSXMLNode *currentNode = [theNodes lastObject];		// working node we traverse
 			NSXMLNode *previousNode = nil;
 			NSXMLNode *lastTextNode = nil;
 			NSXMLElement *theBody = [theNodes lastObject];	// the body that we we will be truncating
 			int accumulator = 0;
+			int charCount = 0;
 			BOOL inlineTag = NO;	// for word scanning; if inline, we may count next text as part of previous
 			BOOL endedWithWhitespace = YES;	// for word scanning; if last word ends with whitespace, next token is a word.
 			BOOL didSplitWord = NO;	// for character scanning; this lets us know if a word was truncated midway.  Doesn't really work in cases like abso<i>lutely</i>
@@ -117,7 +118,7 @@
 							
 							break;		// we will now remove everything after "node"
 						}
-						accumulator = newAccumulator;
+						charCount = accumulator = newAccumulator;
 					}
 					else if (kTruncateWords == truncationType || kTruncateSentences == truncationType)
 					{
@@ -147,7 +148,7 @@
 							  (kCFStringTokenizerTokenNone != (tokenType = CFStringTokenizerAdvanceToNextToken(tokenRef))) )
 						{
 							CFRange tokenRange = CFStringTokenizerGetCurrentTokenRange(tokenRef);
-							OFF((@"'%@' found at %d+%d", [thisString substringWithRange:NSMakeRange(tokenRange.location, tokenRange.length)], tokenRange.location, tokenRange.length));
+							DJW((@"'%@' found at %d+%d", [thisString substringWithRange:NSMakeRange(tokenRange.location, tokenRange.length)], tokenRange.location, tokenRange.length));
 							if (firstWord)
 							{
 								firstWord = NO;
@@ -155,22 +156,22 @@
 								if (tokenRange.location > 0 && accumulator >= maxCount)
 								{
 									stopWordScan = YES;
-									OFF((@"String starts with whitespace.  Early exit from word count, accumulator = %d", accumulator));
+									DJW((@"String starts with whitespace.  Early exit from word count, accumulator = %d", accumulator));
 								}
 								else if (inlineTag && !endedWithWhitespace && 0 == tokenRange.location)
 								{
-									OFF((@"#### Not incrementing accumulator (%d) since we are still inline.", accumulator));
+									DJW((@"#### Not incrementing accumulator (%d) since we are still inline.", accumulator));
 								}
 								else
 								{
 									++accumulator;
-									OFF((@"First word; ++accumulator = %d", accumulator));
+									DJW((@"First word; ++accumulator = %d", accumulator));
 								}
 							}
 							else	// other words, just increment the accumulator
 							{
 								++accumulator;
-								OFF((@"++accumulator = %d", accumulator));
+								DJW((@"++accumulator = %d", accumulator));
 							}
                             
 							if (!stopWordScan)	// don't increment if we early-exited above
@@ -182,25 +183,25 @@
 							if (accumulator >= maxCount)
 							{
 								stopWordScan = YES;
-								OFF((@"early exit from word count, accumulator = %d", accumulator));
+								DJW((@"early exit from word count, accumulator = %d", accumulator));
 							}
 						}
 						CFRelease(tokenRef);
-						OFF((@"in '%@' max=%d len=%d", thisString, lastWord, len));
+						DJW((@"in '%@' max=%d len=%d", thisString, lastWord, len));
 						endedWithWhitespace = (lastWord < len);
 						if (accumulator >= maxCount)
 						{
 							if (lastWord < len)
 							{
 								NSString *partialString = [thisString substringToIndex:lastWord];
-								OFF((@"accumulator = %d; Truncating to '%@'", accumulator, partialString));
+								DJW((@"accumulator = %d; Truncating to '%@'", accumulator, partialString));
 								[currentNode setStringValue:partialString];	// re-escapes &amp; etc.
-								OFF((@"... and breaking from loop; we're done, since this is really truncating"));
+								DJW((@"... and breaking from loop; we're done, since this is really truncating"));
 								break;		// exit outer loop, so we stop scanning
 							}
 							else
 							{
-								OFF((@"We are out of words, but not breaking here in case we hit inline to follow"));
+								DJW((@"We are out of words, but not breaking here in case we hit inline to follow"));
 							}
 						}
 						}
@@ -220,7 +221,7 @@
 					}
 					else if (kTruncateWords == truncationType || kTruncateSentences == truncationType)
 					{
-						OFF((@"<%@>", [theElement name]));
+						DJW((@"<%@>", [theElement name]));
 						static NSSet *sInlineTags = nil;
 						if (!sInlineTags)
 						{
@@ -232,11 +233,11 @@
 						if (!inlineTag)
 						{
 							// Not an inline tag; see if we should just stop now.
-							OFF((@"Not an inline tag, so consider this a word break"));
+							DJW((@"Not an inline tag, so consider this a word break"));
 							if (accumulator >= maxCount)
 							{
 								currentNode = previousNode;	// Back up - that's the node we should remove things after!
-								OFF((@"accumulator = %d; at following non-inline tag, time to STOP", accumulator));
+								DJW((@"accumulator = %d; at following non-inline tag, time to STOP", accumulator));
 								break;
 							}
 						}
@@ -249,11 +250,11 @@
 			removedAnything = [theBody removeAllNodesAfter:(NSXMLElement *)currentNode];
 			if (removedAnything)
 			{
-				OFF((@"Removed some stuff"));
+				DJW((@"Removed some stuff"));
 			}
 			else
 			{
-				OFF((@"Did NOT remove some stuff"));
+				DJW((@"Did NOT remove some stuff"));
 			}
 			if (removedAnything)
 			{
@@ -293,7 +294,7 @@
 	return result;
 }
 
-- (NSAttributedString *)attributedHTMLStringWithTruncation:(NSUInteger)maxCount
+- (NSAttributedString *)attributedHTMLStringWithTruncation:(NSUInteger)maxItemLength
                                                       type:(SVTruncationType)truncationType
                                          includeLargeMedia:(BOOL)includeLargeMedia
                                                didTruncate:(BOOL *)truncated;
@@ -304,7 +305,7 @@
     NSString *markup = [self string];
 	
     
-    NSString *truncatedMarkup = [self truncateMarkup:markup truncation:maxCount truncationType:truncationType didTruncate:truncated];
+    NSString *truncatedMarkup = [self truncateMarkup:markup truncation:maxItemLength truncationType:truncationType didTruncate:truncated];
   
 #ifdef DEBUG
 	if ([NSUserName() isEqualToString:@"dwood"])			// DEBUGGGING OF TRUNCATION FOR DAN.
@@ -316,7 +317,7 @@
 			whereAttachment = [markup rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(NSAttachmentCharacter, 1)] options:0 range:NSMakeRange(offset, [markup length] - offset) ];
 			if (NSNotFound != whereAttachment.location)
 			{
-				OFF((@"Source: Attachment at offset %d", whereAttachment.location));
+				DJW((@"Source: Attachment at offset %d", whereAttachment.location));
 				offset = whereAttachment.location + 1;
 			}
 		}
@@ -329,7 +330,7 @@
 			whereAttachment = [truncatedMarkup rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(NSAttachmentCharacter, 1)] options:0 range:NSMakeRange(offset, [truncatedMarkup length] - offset) ];
 			if (NSNotFound != whereAttachment.location)
 			{
-				OFF((@"Truncd: Attachment at offset %d", whereAttachment.location));
+				DJW((@"Truncd: Attachment at offset %d", whereAttachment.location));
 				offset = whereAttachment.location + 1;
 			}
 		}
@@ -351,7 +352,7 @@
             }
 			else
 			{
-				OFF((@"Expecting an attachment character at %d", range.location));
+				DJW((@"Expecting an attachment character at %d", range.location));
 			}
         }
     }

@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="506"/>
+			<integer value="417"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -3394,22 +3394,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					<int key="connectionID">521</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">toolTip: truncateDescription</string>
-						<reference key="source" ref="1069703147"/>
-						<reference key="destination" ref="518241507"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1069703147"/>
-							<reference key="NSDestination" ref="518241507"/>
-							<string key="NSLabel">toolTip: truncateDescription</string>
-							<string key="NSBinding">toolTip</string>
-							<string key="NSKeyPath">truncateDescription</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">523</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oInspectorViewController</string>
 						<reference key="source" ref="518241507"/>
@@ -6403,6 +6387,17 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				<object class="IBPartialClassDescription">
 					<string key="className">SVPagesController</string>
 					<string key="superclassName">KSArrayController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">groupAsCollection:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">groupAsCollection:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">groupAsCollection:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVPagesController.h</string>

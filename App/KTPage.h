@@ -171,8 +171,7 @@ typedef enum {
 - (KTPage *)previousPage;
 - (KTPage *)nextPage;
 
-// Utility to convert a raw truncation count to the chunk we are using.  Exposed so tooltip can show how much truncation.
-+ (NSUInteger) truncCountFromMaxItemLength:(NSUInteger)maxItemLength choosingTruncType:(SVTruncationType *)outTruncType;
++ (SVTruncationType) chooseTruncTypeFromMaxItemLength:(NSUInteger)maxItemLength;
 
 
 #pragma mark Syndication
