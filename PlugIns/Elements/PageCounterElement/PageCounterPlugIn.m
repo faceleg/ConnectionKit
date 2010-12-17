@@ -223,12 +223,13 @@ NSString *PCSampleImageKey = @"sampleImage";
     // make it all happen
     //<div class="page_counter" style="text-align: center;" id="pc-[[=elementID]]">
     NSDictionary *attrs = [NSDictionary dictionaryWithObject:@"text-align: center;" forKey:@"style"];
-    self.divID = [context startElement:@"div"
-                                    preferredIdName:@"pc"
-                                          className:@"page_counter"
-                                         attributes:attrs];
+    _divID = [context startElement:@"div"
+                   preferredIdName:@"pc"
+                         className:@"page_counter"
+                        attributes:attrs];
     // parse template
     [super writeHTML:context];
+    _divID = nil;
     
     // </div>
     [context endElement];
