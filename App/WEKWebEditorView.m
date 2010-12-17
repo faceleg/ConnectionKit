@@ -199,6 +199,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [_rootItem setWebEditor:nil];
     [_rootItem release];
     
+    [_focusedText release];
     [_selectedItems release];
     [_selectionParentItems release];
     [_itemsToDisplay release];
