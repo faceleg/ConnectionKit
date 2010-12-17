@@ -66,11 +66,6 @@
         //[_dragHighlightNode setDocumentViewNeedsDisplayInBoundingBoxRect];
         }
         
-        /*
-         NSString *class = [(DOMHTMLElement *)_dragHighlightNode className];
-        class = [class stringByReplacing:@" svx-dragging-destination-active" with:@""];
-        [(DOMHTMLElement *)_dragHighlightNode setClassName:class];*/
-        
         [_dragHighlightNode release];   _dragHighlightNode = [node retain];
         
         if (node)
@@ -78,11 +73,6 @@
             WEKWebEditorItem *item = [[self contentItem] hitTestDOMNode:node];
             [view setNeedsDisplayInRect:(item ? [item boundingBox] : [node boundingBox])];
         }
-        
-        /*
-        class = [(DOMHTMLElement *)node className];
-        class = [class stringByAppendingString:@" svx-dragging-destination-active"];
-        [(DOMHTMLElement *)node setClassName:class];*/
     }
 }
 
