@@ -21,7 +21,7 @@
 
 #pragma mark Text edting
 
-// Nil if the doc type is not yet known. Once text has been edited in any way, should be filled in with some value. Back by extensible properties
+// Nil; not really stored.
 @property(nonatomic, copy) NSNumber *docType;
 
 @property(nonatomic, copy) NSData *lastValidMarkupDigest;   // extensible property backed

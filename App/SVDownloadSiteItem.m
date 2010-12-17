@@ -164,8 +164,9 @@
     [media release];
 }
 
-- (NSNumber *)docType; { return [self valueForUndefinedKey:@"docType"]; }
-- (void)setDocType:(NSNumber *)docType; { [self setValue:docType forUndefinedKey:@"docType"]; }
+// No docType stored for these.  If it's an HTML page, it's encoded in the page itself.
+- (NSNumber *)docType; { return nil; }
+- (void)setDocType:(NSNumber *)docType; { }
 
 - (NSData *)lastValidMarkupDigest; { return [self valueForUndefinedKey:@"lastValidMarkupDigest"]; }
 - (void)setLastValidMarkupDigest:(NSData *)digest;
