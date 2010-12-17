@@ -675,7 +675,7 @@
 
 #pragma mark Text Blocks
 
-- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)sidebar; { }
+- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)block; { }
 - (void)didEndWritingHTMLTextBlock; { }
 - (void)willWriteSummaryOfPage:(SVSiteItem *)page; { }
 
