@@ -484,7 +484,7 @@
     
     // Indexes want <H3>s
     NSUInteger level = [self currentHeaderLevel];
-    [self setCurrentHeaderLevel:3];
+    [self setCurrentHeaderLevel:2];
     @try
     {
         // Register dependencies that come into play regardless of the route writing takes
