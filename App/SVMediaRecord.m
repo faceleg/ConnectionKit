@@ -105,7 +105,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 - (void)dealloc
 {
     [_filename release];
-    [_media release];       _media = nil; // why set to nil?! Mike.
+    [_media release];       //_media = nil; // why set to nil?! Mike.
     [_nextObject release];	_nextObject = nil;
     
     [super dealloc];
@@ -296,6 +296,12 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     {
         [self setExtensibleProperty:media forKey:@"media"];
     }
+}
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key;
+{
+    return ([key isEqualToString:@"media"] ?
+            YES :
+            [super automaticallyNotifiesObserversForKey:key]);
 }
 
 @synthesize fileAttributes = _attributes;

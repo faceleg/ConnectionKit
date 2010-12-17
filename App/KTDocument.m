@@ -667,6 +667,9 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     
     // Update media etc. to match
+    [[self managedObjectContext] processPendingChanges];
+    [[self undoManager] disableUndoRegistration];
+    
     NSDictionary *media = [self documentFileWrappers];
     for (NSString *key in media)
     {
@@ -680,6 +683,9 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
             [fileWrapper forceUpdateFromURL:URL];
         }
     }
+    
+    [[self managedObjectContext] processPendingChanges];
+    [[self undoManager] enableUndoRegistration];
 }
 
 - (void)setAutosavedContentsFileURL:(NSURL *)absoluteURL;
