@@ -502,8 +502,6 @@
 
 - (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount; { return NO; }
 
-- (id)titleBox; { return nil; }
-
 #pragma mark UI
 
 - (BOOL)isCollection { return NO; }
