@@ -358,7 +358,15 @@
         {
             if ([[result string] characterAtIndex:range.location] == NSAttachmentCharacter)
             {
-                [result addAttribute:@"SVAttachment" value:anAttachment range:range];
+				BOOL causesWrap = [[anAttachment causesWrap] boolValue];
+				if (includeLargeMedia || !causesWrap)
+				{
+					[result addAttribute:@"SVAttachment" value:anAttachment range:range];
+				}
+				else
+				{
+					// Hmm, do I need to remove the attachment character?
+				}
             }
 			else
 			{
