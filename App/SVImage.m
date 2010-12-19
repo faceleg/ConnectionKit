@@ -317,7 +317,11 @@
 - (void)writeHTML:(SVHTMLContext *)context
 {
     // Link
-    if ([[self container] isPagelet] && [self link])
+    if ([[self container] shouldWriteHTMLInline])
+    {
+        [self writeImageElement: context];
+    }
+    else
     {
         SVLink *link = [self link];
         NSString *href = @"";
@@ -334,10 +338,6 @@
         [context startAnchorElementWithHref:href title:nil target:nil rel:nil];
         [self writeImageElement:context];
         [context endElement];
-    }
-    else
-    {
-        [self writeImageElement: context];
     }
 }
 
