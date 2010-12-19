@@ -221,11 +221,14 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (void)writeBody:(SVHTMLContext *)context
 {
-    NSString *identifier = [self plugInIdentifier];
-    
     NSUInteger openElements = [context openElementsCount];
         
-    [context writeComment:[NSString stringWithFormat:@" %@ ", identifier]];
+    NSString *identifier = [self plugInIdentifier];
+    if (![self shouldWriteHTMLInline])
+    {
+        [context writeComment:[NSString stringWithFormat:@" %@ ", identifier]];
+    }
+    
     
     @try
     {
@@ -242,7 +245,10 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         }
     }
     
-    [context writeComment:[NSString stringWithFormat:@" /%@ ", identifier]];
+    if (![self shouldWriteHTMLInline])
+    {
+        [context writeComment:[NSString stringWithFormat:@" /%@ ", identifier]];
+    }
 }
 
 - (NSString *)inlineGraphicClassName;
