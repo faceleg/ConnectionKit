@@ -32,6 +32,12 @@ img.narrow.right { float:right!important; }
 .wide.left .graphic, img.wide.left { margin-left:0px; margin-right:auto; }
 .wide.center .graphic, img.wide.center { margin-left:auto; margin-right:auto; }
 .wide.right .graphic, img.wide.right { margin-left:auto; margin-right:0px; }
+
+.ImageElement.left { text-align:left; }
+.ImageElement.center { text-align:center; }
+.ImageElement.right { text-align:right; }
+
+/* Captions should align themselves with the graphic */
 .graphic-container.left .caption { text-align:left; }
 .graphic-container.center .caption { text-align:center; }
 .graphic-container.right .caption { text-align:right; }
