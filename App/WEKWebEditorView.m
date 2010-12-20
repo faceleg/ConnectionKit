@@ -690,12 +690,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
 - (BOOL)shouldTrySelectingDOMElementInline:(DOMElement *)element;
 {
     // Whether selecting the element should be inline (set the WebView's selection) or not (no WebView selection)
-    DOMCSSStyleDeclaration *style = [[self webView] computedStyleForElement:element
-                                                              pseudoElement:nil];
-    
     BOOL result = ([[element tagName] isEqualToString:@"IMG"] &&
-                   [[style display] isEqualToString:@"inline"] &&
-                   [element isKindOfClass:[DOMHTMLElement class]] &&
+                   [[element className] rangeOfString:@"graphic"].location == NSNotFound &&
                    [(DOMHTMLElement *)element isContentEditable]);
     
     return result;
