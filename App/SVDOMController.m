@@ -450,7 +450,7 @@
     
     
     // Is the aligned/floated left/center/right?
-    if ([[style getPropertyValue:@"float"] isEqualToString:@"right"] ||
+    if ([[style cssFloat] isEqualToString:@"right"] ||
         [[style textAlign] isEqualToString:@"right"])
     {
         result = kCALayerLeftEdge;
