@@ -36,14 +36,6 @@ img.narrow.right { float:right!important; }
 .graphic-container.center .caption { text-align:center; }
 .graphic-container.right .caption { text-align:right; }
 
-/* Captioned graphics *//*
-#main .graphic img.figure-content, #main .graphic object {
-    margin:0;
-    border:none;
-    padding:0;
-    max-width:none;
-}*/
-
 /* For content like amazon which forces white background. Design SHOULD set color for A tag and text color. */
 .whiteBackground
 {
