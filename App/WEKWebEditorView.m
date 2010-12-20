@@ -418,7 +418,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
     else
     {
         [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:NO isUIAction:YES];
-        if (!event) return; // done all we can
+        
+        // Done all we can?
+        if (!event || [item allowsDirectAccessToWebViewWhenSelected]) return; 
         
         
         // Should start a move/drag?
@@ -430,12 +432,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
         
         // Run until mouse up
         NSEvent *mouseUp = [[self window] nextEventMatchingMask:NSLeftMouseUpMask];
-        
-        // Should this go through to the WebView?
-        if ([item allowsDirectAccessToWebViewWhenSelected])
-        {
-            [self forwardMouseEvent:mouseUp selector:@selector(mouseUp:) cachedTargetView:nil];
-        }
         
         
         // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
@@ -474,7 +470,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 /*  Generally, repost equivalent events (unless a link or object) so they go to their correct target.
                  */
                 
-                // return keyword is fine because of the @finally block
                 if ([elementInfo objectForKey:WebElementLinkURLKey]) return;
                 
                 // don't send event through to video-like things as they would misinterpret it
