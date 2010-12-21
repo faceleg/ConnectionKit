@@ -8,6 +8,7 @@
 
 #import "SVFieldEditorHTMLWriterDOMAdapator.h"
 
+#import "NSIndexPath+Karelia.h"
 #import "NSString+Karelia.h"
 
 #import "DOMNode+Karelia.h"
@@ -439,9 +440,26 @@
         DOMNode *nodeToAppend = nextNode;
         nextNode = [nodeToAppend performSelector:@selector(ks_writeHTML:) withObject:self];
         
+        
+        // Maintain selection
+        WebView *webView = [[[textNode ownerDocument] webFrame] webView];
+        DOMRange *selection = [webView selectedDOMRange];
+        NSSelectionAffinity affinity = [webView selectionAffinity];
+        
+        NSUInteger length = [textNode length];
+        NSIndexPath *startPath = [[selection ks_startIndexPathFromNode:nodeToAppend] indexPathByAddingToLastIndex:length];
+        NSIndexPath *endPath = [[selection ks_endIndexPathFromNode:nodeToAppend] indexPathByAddingToLastIndex:length];
+        
+        
         // Delete node by appending to ourself
         [textNode appendData:[nodeToAppend nodeValue]];
         [[nodeToAppend parentNode] removeChild:nodeToAppend];
+        
+        
+        // Restore selection
+        if (startPath) [selection ks_setStartWithIndexPath:startPath fromNode:textNode];
+        if (endPath) [selection ks_setEndWithIndexPath:endPath fromNode:textNode];
+        if (startPath || endPath) [webView setSelectedDOMRange:selection affinity:affinity];
     }
     
     return [super didWriteDOMText:textNode nextNode:nextNode];
