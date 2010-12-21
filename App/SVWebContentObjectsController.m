@@ -28,6 +28,8 @@
 - (void)dealloc
 {
     [_page release];
+    [_sidebarPageletsController release];
+    
     [super dealloc];
 }
 
