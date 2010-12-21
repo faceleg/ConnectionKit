@@ -150,27 +150,36 @@
         // #100362
         if ([[self XMLWriter] hasOpenElement:[tagName lowercaseString]])
         {
-            // Shuffle up following nodes
-            DOMElement *parent = (DOMElement *)[element parentNode];
-            [parent flattenNodesAfterChild:element];
-            
-            
-            // It make take several moves up the tree till we find the conflicting element
-            while (![[parent tagName] isEqualToString:tagName])
+            // Find the conflicting element
+            DOMElement *existingElement = (DOMElement *)[element parentNode];
+            while (![[existingElement tagName] isEqualToString:tagName])
             {
-                // Move element across to a clone of its parent
-                DOMNode *clone = [parent cloneNode:NO];
-                [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
-                [clone appendChild:element];
-                parent = (DOMElement *)[parent parentNode];
+                existingElement = (DOMElement *)[existingElement parentNode];
             }
             
             
-            // Now we're ready to flatten the conflict
-            if ([element tryToPopulateStyleWithValuesInheritedFromElement:parent])
+            // Is it really a conflict?
+            if ([element tryToPopulateStyleWithValuesInheritedFromElement:existingElement])
             {
+                // Shuffle up following nodes
+                DOMNode *parent = [element parentNode];
+                [parent flattenNodesAfterChild:element];
+                
+                
+                // Try to flatten the conflict
+                // It make take several moves up the tree till we find the conflicting element
+                while (parent != existingElement)
+                {
+                    // Move element across to a clone of its parent
+                    DOMNode *clone = [parent cloneNode:NO];
+                    [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
+                    [clone appendChild:element];
+                    parent = [parent parentNode];
+                }
+                
+                
                 // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
-                [[parent parentNode] insertBefore:element refChild:[parent nextSibling]];
+                [[existingElement parentNode] insertBefore:element refChild:[existingElement nextSibling]];
                 result = nil;
             }
         }
