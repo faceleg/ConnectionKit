@@ -404,7 +404,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
                     @"isCollection",
                     @"thumbnailType",
                     @"customThumbnail",
-                    @"thumbnailSourceGraphic",
+                    @"thumbnailSourceGraphic.imageRepresentation",
                     @"title",
 					@"isStale",
 					@"codeInjection.hasCodeInjection",
