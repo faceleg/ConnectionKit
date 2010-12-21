@@ -428,8 +428,13 @@
 
 #pragma mark High-level Writing
 
-// Comments have no place in text fields! Yes, they get left in the DOM until it's replaced, but you can't see them, so no harm done
-- (void)writeComment:(NSString *)comment; { }
+// Comments have no place in text fields!
+- (DOMNode *)writeComment:(NSString *)comment withDOMComment:(DOMComment *)commentNode;
+{
+    DOMNode *result = [commentNode nextSibling];
+    [[commentNode parentNode] removeChild:commentNode];
+    return result;
+}
 
 - (DOMNode *)didWriteDOMText:(DOMText *)textNode nextNode:(DOMNode *)nextNode;
 {
