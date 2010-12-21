@@ -553,7 +553,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     NSManagedObjectContext *context = [self managedObjectContext];
     if (result)
 	{
-        KTSite *site = [[context site] retain];
+        KTSite *site = [context site];
         [self setSite:site];
         if (!site)
         {
