@@ -22,6 +22,7 @@
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 
 - (DOMElement *)replaceDOMElement:(DOMElement *)element withElementWithTagName:(NSString *)tagName;
+- (void)moveDOMElementToAfterParent:(DOMElement *)element;
 - (DOMNode *)unlinkDOMElementBeforeWriting:(DOMElement *)element;
 - (void)populateSpanElementAttributes:(DOMElement *)span
                       fromFontElement:(DOMHTMLFontElement *)fontElement;
@@ -179,7 +180,7 @@
                 
                 
                 // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
-                [[existingElement parentNode] insertBefore:element refChild:[existingElement nextSibling]];
+                [self moveDOMElementToAfterParent:element];
                 result = nil;
             }
         }
@@ -342,6 +343,8 @@
     return [result nodeByStrippingNonParagraphNodes:self];
 }
 
+#pragma mark Modifying the DOM
+
 - (DOMElement *)replaceDOMElement:(DOMElement *)element withElementWithTagName:(NSString *)tagName;
 {
     // When editing the DOM, WebKit has a nasty habbit of losing track of the selection. Since we're swapping one node for another, can correct by deducing new selection from index paths.
@@ -367,6 +370,35 @@
     
     
     return result;
+}
+
+- (void)moveDOMElementToAfterParent:(DOMElement *)element;
+{
+    OBPRECONDITION(element);
+    /*  Support method that makes the move, and maintains selection when possible
+     */
+    
+    
+    // Get hold of selection to see if it will be affected
+    WebView *webView = [[[element ownerDocument] webFrame] webView];
+    DOMRange *selection = [webView selectedDOMRange];
+    NSSelectionAffinity affinity = [webView selectionAffinity];
+    
+    NSIndexPath *startPath = [selection ks_startIndexPathFromNode:element];
+    NSIndexPath *endPath = [selection ks_endIndexPathFromNode:element];
+    
+    // Make the move
+    DOMNode *parent = [element parentNode];
+    [[parent parentNode] insertBefore:element refChild:[parent nextSibling]];
+    
+    // Repair the selection as needed
+    if (startPath) [selection ks_setStartWithIndexPath:startPath fromNode:element];
+    if (endPath) [selection ks_setEndWithIndexPath:endPath fromNode:element];
+    
+    if (startPath || endPath)
+    {
+        [webView setSelectedDOMRange:selection affinity:affinity];
+    }
 }
 
 - (DOMNode *)unlinkDOMElementBeforeWriting:(DOMElement *)element
