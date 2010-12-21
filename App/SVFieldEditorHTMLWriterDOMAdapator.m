@@ -143,7 +143,11 @@
         
         
         
-        // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
+        // Generally, can't allow nested elements.
+        // e.g. <span><span>foo</span> bar</span>   is wrong and should be simplified.
+        // The exception is if outer element has font: property, and inner element overrides that using longhand. e.g. font-family
+        // Under those circumstances, WebKit doesn't give us enough API to make the merge, so keep both elements.
+        // #100362
         if ([[self XMLWriter] hasOpenElement:[tagName lowercaseString]])
         {
             // Shuffle up following nodes
@@ -163,12 +167,12 @@
             
             
             // Now we're ready to flatten the conflict
-            [element copyInheritedStylingFromElement:parent];
-            [[parent parentNode] insertBefore:element refChild:[parent nextSibling]];
-            
-            
-            // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
-            return nil;
+            if ([element tryToPopulateStyleWithValuesInheritedFromElement:parent])
+            {
+                // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
+                [[parent parentNode] insertBefore:element refChild:[parent nextSibling]];
+                result = nil;
+            }
         }
     }
         
@@ -313,7 +317,7 @@
         if ([[element style] length] > 0)
         {
             DOMElement *replacement = [self replaceDOMElement:element withElementWithTagName:@"SPAN"];
-            [replacement copyInheritedStylingFromElement:element];
+            [replacement tryToPopulateStyleWithValuesInheritedFromElement:element];
             
             result = replacement;
         }
