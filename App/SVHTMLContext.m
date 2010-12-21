@@ -129,6 +129,7 @@
     [_language release];
     [_baseURL release];
     [_currentPage release];
+    [_article release];
     
     [_mainCSSURL release];
         
