@@ -1195,8 +1195,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Finally, fake cursor
     if (_cursor)
     {
-        NSImage *image = [_cursor image];
-        [image drawAtPoint:_cursorPoint fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0f];
+        [_cursor es_drawAtPoint:_cursorPoint];
     }
 }
 
