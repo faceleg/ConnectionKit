@@ -496,9 +496,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 				combinedType = type;	// keep looking, so far collecting a single type.
 			}
 		}
-		char *typestrings[] =  { "kUnknownSiteItemType", "kLinkSiteItemType", "kTextSiteItemType", "kFileSiteItemType", "kPageSiteItemType", "kMixedSiteItemType" };
+		char *typestrings[] =  { "kMixedSiteItemType", "kUnknownSiteItemType", "kLinkSiteItemType", "kTextSiteItemType", "kFileSiteItemType", "kPageSiteItemType" };
 
-		NSLog(@"whatKindOfItemsAreSelected => %s", typestrings[combinedType]);
+		NSLog(@"whatKindOfItemsAreSelected => %s", typestrings[combinedType+1]);
 		self.whatKindOfItemsAreSelected = combinedType;
 		
 		NSLog(@"%s --> layoutPageURLComponentsDelayed",__FUNCTION__);
@@ -785,6 +785,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	BOOL areLinksSelected = (kLinkSiteItemType == self.whatKindOfItemsAreSelected);
 	BOOL areFilesSelected = (kFileSiteItemType == self.whatKindOfItemsAreSelected);
 	BOOL areTextsSelected = (kTextSiteItemType == self.whatKindOfItemsAreSelected);
+	BOOL areMultiSelected = (kMixedSiteItemType == self.whatKindOfItemsAreSelected);
 
 	int selectedObjectsCount = [[oPagesController selectedObjects] count];
 	NSInteger pageIsCollectionState = NSMixedState;
@@ -832,11 +833,11 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 							   || (arePagesSelected && IS_ROOT_STATE == pageIsCollectionState)
 								|| selectedObjectsCount > 1];
 
-	[oDotSeparator setHidden:(!arePagesSelected  || NSOffState != pageIsCollectionState) && selectedObjectsCount == 1];
+	[oDotSeparator setHidden:(!arePagesSelected  || NSOffState != pageIsCollectionState) && (selectedObjectsCount == 1 || areMultiSelected)];
 	[oSlashSeparator setHidden:!arePagesSelected || NSOnState != pageIsCollectionState || selectedObjectsCount > 1];
 	[oIndexDotSeparator setHidden:!arePagesSelected || NSOffState == pageIsCollectionState || selectedObjectsCount > 1];
 
-	[oMultiplePagesField setHidden: !arePagesSelected || selectedObjectsCount == 1];
+	[oMultiplePagesField setHidden: selectedObjectsCount == 1];
 	
 	[oExtensionPopup setHidden:!arePagesSelected];
 	
@@ -881,7 +882,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		[oFollowButton setFrame:frame];
 //		NSLog(@"set oFollowButton to %@", NSStringFromRect(frame));
 	}
-	else if (hasLocalPath)
+	else if (hasLocalPath || areMultiSelected)
 	{
 		NSArray *itemsToLayOut = nil;
 		int *theExtraX = nil;
@@ -906,7 +907,11 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		NSArray *mediaItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oFollowButton,nil];
 		int mediaExtraX [] = {4,5,1};
 		int mediaMarginsAfter[] = {0,-1,0};
-				
+
+		NSArray *multipleTypesToLayOut = [NSArray arrayWithObjects:oMultiplePagesField,nil];
+		int multiTypeExtraX [] = {2};
+		int multiTypeMarginsAfter[] = {0};
+		
 		if (arePagesSelected)
 		{
 			if (selectedObjectsCount > 1)
@@ -941,6 +946,12 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 						break;
 				}
 			}
+		}
+		else if (selectedObjectsCount > 1)
+		{
+			itemsToLayOut = multipleTypesToLayOut;
+			theExtraX = multiTypeExtraX;
+			theMarginsAfter = multiTypeMarginsAfter;
 		}
 		else
 		{
