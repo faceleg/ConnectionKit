@@ -832,8 +832,11 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		if (oExternalURLField == self.activeTextField)
 		{
 			NSTextView *fieldEditor = (NSTextView *)[self.activeTextField currentEditor];
-			OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
-			extURLSize = [[fieldEditor textStorage] size];
+			if (fieldEditor)
+			{
+				OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
+				extURLSize = [[fieldEditor textStorage] size];
+			}
 		}
 		else
 		{
