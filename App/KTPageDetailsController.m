@@ -840,7 +840,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			extURLSize = [[oExternalURLField attributedStringValue] size];
 		}
         
-		int width = ceilf(extURLSize.width)  + 2;
+		int width = ceilf(extURLSize.width)  + 3;
 		if (width > availableForAll) width = availableForAll;	// make sure a really long URL will fit
 		frame.size.width = width;
         
@@ -926,7 +926,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			{
 				NSTextField *txtFld = (NSTextField *)fld;
 				NSSize fldSize = NSZeroSize;
-				if (fld just  == self.activeTextField)
+				if (fld == self.activeTextField)
 				{
 					NSTextView *fieldEditor = (NSTextView *)[self.activeTextField currentEditor];
 					OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
