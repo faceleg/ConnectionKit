@@ -825,16 +825,24 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
 		const int rightMargin = 20;
 		int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft - [oFollowButton frame].size.width - 8;
-#pragma unused (availableForAll)
 		NSRect frame = [oExternalURLField frame];
 		frame.origin.x = newLeft;
 		
-        // This code sets up the box width, but the call to -attributedStringValue causes the URL formatter to kick in undesireably. Same goes for if you call -stringValue. If left to its own devices, the text field already knows how to draw itself to match the width of the content; is there some way you can hook into that for sizing logic instead?
+		NSSize extURLSize = NSZeroSize;
+		if (oExternalURLField == self.activeTextField)
+		{
+			NSTextView *fieldEditor = (NSTextView *)[self.activeTextField currentEditor];
+			OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
+			extURLSize = [[fieldEditor textStorage] size];
+		}
+		else
+		{
+			extURLSize = [[oExternalURLField attributedStringValue] size];
+		}
         
-        /*NSAttributedString *text = [oExternalURLField attributedStringValue];
-		int width = ceilf([text size].width)  + 2;
+		int width = ceilf(extURLSize.width)  + 2;
 		if (width > availableForAll) width = availableForAll;	// make sure a really long URL will fit
-		frame.size.width = width;*/
+		frame.size.width = width;
         
 		[oExternalURLField setFrame:frame];
 
@@ -916,8 +924,21 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			
 			if ([fld isKindOfClass:[NSTextField class]])
 			{
-				NSAttributedString *text = [((NSTextField *)fld) attributedStringValue];
-				int width = ceilf([text size].width);
+				NSTextField *txtFld = (NSTextField *)fld;
+				NSSize fldSize = NSZeroSize;
+				if (fld just  == self.activeTextField)
+				{
+					NSTextView *fieldEditor = (NSTextView *)[self.activeTextField currentEditor];
+					OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
+					fldSize = [[fieldEditor textStorage] size];
+				}
+				else
+				{
+					fldSize = [[txtFld attributedStringValue] size];
+				}
+
+				
+				int width = ceilf(fldSize.width);
 				width += theExtraX[i];
 				width += theMarginsAfter[i];
 				frame.size.width = width;
@@ -987,6 +1008,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
 	
 	NSTextView *fieldEditor = (NSTextView *)[textField currentEditor];
+	OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
+
 	
 	NSRect textRect = [[fieldEditor layoutManager]
 					   usedRectForTextContainer:[fieldEditor textContainer]];
@@ -1031,6 +1054,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 /*	Sent when the user is typing in the meta description box.
  */
+
 - (void)controlTextDidChange:(NSNotification *)notification
 {
 	// For some stupid reason, this is getting called twice, all within the text system.
@@ -1041,23 +1065,23 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 		NSTextField *textField = (NSTextField *) [notification object];
 		// This VERY important: Do NOT ask a cell for its -stringValue unless you actually need it. If the cell has a formatter, calling -stringValue will invoke that, and format the entered text, even though the user probably wasn't ready for it.
+		NSTextView *fieldEditor = [[notification userInfo] objectForKey: @"NSFieldEditor"];
+		NSAttributedString *newAttrString = [fieldEditor textStorage];
+		NSString *newString = [newAttrString string];
 		
 		if (textField == oWindowTitleField)
 		{
-			[self windowTitleDidChangeToValue:[textField stringValue]];
+			[self windowTitleDidChangeToValue:newString];
 		}
 		else if (textField == oMetaDescriptionField)
 		{
-			[self metaDescriptionDidChangeToValue:[textField stringValue]];
+			[self metaDescriptionDidChangeToValue:newString];
 		}
 		else if (textField == oFileNameField)
 		{
-			[self fileNameDidChangeToValue:[textField stringValue]];
+			[self fileNameDidChangeToValue:newString];
 		}
-
-		[self layoutPageURLComponents];
-
-		
+		[self layoutPageURLComponents];		
 		_alreadyHandlingControlTextDidChange = NO;
 	}
 }
