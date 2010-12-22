@@ -293,6 +293,8 @@ webContentAreaController:(SVWebContentAreaController *)controller;
         NSURL *URL = [self URLToLoad];
         if (URL)
         {
+			[[[self webView] mainFrame] stopLoading];		// stop loading any previous page
+			DJW((@"Loading %@", URL));
             [[[self webView] mainFrame] loadRequest:[NSURLRequest requestWithURL:URL]];
         }
         else
