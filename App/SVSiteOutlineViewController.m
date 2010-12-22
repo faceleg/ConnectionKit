@@ -1767,6 +1767,9 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         NSString *title = ([self selectedItemsAreCollections] ?
                            NSLocalizedString(@"Convert to Single Page", "menu title") :
                            NSLocalizedString(@"Convert to Collection", "menu title"));
+        
+        if ([self selectedItemsHaveBeenPublished]) title = [title stringByAppendingString:@"…"];
+        
         [control setTitle:title];
         
         result = [self canToggleIsCollection];
