@@ -878,20 +878,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 #pragma mark Page Behaviour Actions
 
-- (NSCellStateValue)selectedItemsAreCollections;
-{
-    NSNumber *state = [[self content] valueForKeyPath:@"selection.isCollection"];
-    NSCellStateValue result = (NSIsControllerMarker(state) ? NSMixedState : [state integerValue]);
-    return result;
-}
-
-// YES if any of them have
-- (BOOL)selectedItemsHaveBeenPublished;
-{
-    NSDate *published = [[self content] valueForKeyPath:@"selection.datePublished"];
-    return (published != nil);
-}
-
 - (void)setIsCollection:(BOOL)makeCollection;
 {
     [[self content] setValue:NSBOOL(makeCollection) forKeyPath:@"selection.isCollection"];
@@ -912,7 +898,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     }
     
     
-    BOOL makeCollection = [self selectedItemsAreCollections] != NSOnState;
+    BOOL makeCollection = [[self content] selectedItemsAreCollections] != NSOnState;
     
     
     // Prepare callback invocation
@@ -925,7 +911,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
     
     // Warn before changing this on a published page
-    if ([self selectedItemsHaveBeenPublished])
+    if ([[self content] selectedItemsHaveBeenPublished])
     {
         NSArray *selection = [[self content] selectedObjects];
         OBASSERT([selection count] == 1);
@@ -1013,7 +999,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     BOOL result = (returnCode == NSAlertFirstButtonReturn);
     if (result)
     {
-        BOOL makeCollection = [self selectedItemsAreCollections] != NSOnState;
+        BOOL makeCollection = [[self content] selectedItemsAreCollections] != NSOnState;
         [self setIsCollection:makeCollection];
     }
     
@@ -1764,12 +1750,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     {
         // Set state to match
         id control = anItem;
-        NSString *title = ([self selectedItemsAreCollections] ?
-                           NSLocalizedString(@"Convert to Single Page", "menu title") :
-                           NSLocalizedString(@"Convert to Collection", "menu title"));
-        
-        if ([self selectedItemsHaveBeenPublished]) title = [title stringByAppendingString:@"…"];
-        
+        NSString *title = [[self content] convertToCollectionControlTitle];
         [control setTitle:title];
         
         result = [self canToggleIsCollection];

@@ -27,6 +27,9 @@
     
     IBOutlet SVSidebarPageletsController    *oSidebarPageletsController;
     IBOutlet NSTableView                    *oSidebarPageletsTable;
+    
+    IBOutlet NSButton   *_convertToCollectionButton;
+    IBOutlet NSButton   *_convertToRegularPageButton;
 }
 
 - (IBAction)chooseNavigationArrowsStyle:(NSPopUpButton *)sender;

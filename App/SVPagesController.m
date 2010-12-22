@@ -804,6 +804,33 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     }
 }
 
+#pragma mark Convert To Collection
+
+- (NSCellStateValue)selectedItemsAreCollections;
+{
+    NSNumber *state = [self valueForKeyPath:@"selection.isCollection"];
+    NSCellStateValue result = (NSIsControllerMarker(state) ? NSMixedState : [state integerValue]);
+    return result;
+}
+
+// YES if any of them have
+- (BOOL)selectedItemsHaveBeenPublished;
+{
+    NSDate *published = [self valueForKeyPath:@"selection.datePublished"];
+    return (published != nil);
+}
+
+- (NSString *)convertToCollectionControlTitle;
+{
+    NSString *result = ([self selectedItemsAreCollections] ?
+                        NSLocalizedString(@"Convert to Single Page", "menu title") :
+                        NSLocalizedString(@"Convert to Collection", "menu title"));
+    
+    if ([self selectedItemsHaveBeenPublished]) result = [result stringByAppendingString:@"…"];
+    
+    return result;
+}
+
 #pragma mark Accessors
 
 - (NSString *)childrenKeyPath { return @"sortedChildren"; }

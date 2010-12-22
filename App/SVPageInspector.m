@@ -239,6 +239,10 @@
     [super refresh];
     
     [oSidebarPageletsTable setNeedsDisplayInRect:[oSidebarPageletsTable rectOfColumn:[oSidebarPageletsTable columnWithIdentifier:@"showPagelet"]]];
+    
+    NSString *title = [[self inspectedObjectsController] valueForKey:@"convertToCollectionControlTitle"];
+    [_convertToCollectionButton setTitle:title];
+    [_convertToRegularPageButton setTitle:title];
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex

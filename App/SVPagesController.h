@@ -68,6 +68,12 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 - (void)groupAsCollection:(id)sender;
 
 
+#pragma mark Convert to Collection
+- (NSCellStateValue)selectedItemsAreCollections;
+- (BOOL)selectedItemsHaveBeenPublished;
+- (NSString *)convertToCollectionControlTitle;
+
+
 #pragma mark Tree
 - (NSString *)childrenKeyPath;	// A hangover from NSTreeController
 
