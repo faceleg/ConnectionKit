@@ -64,6 +64,8 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     
     // Drawing
     NSMutableArray  *_itemsToDisplay;
+    NSCursor        *_cursor;
+    NSPoint         _cursorPoint;
     
     // Datasource/delegate
     id <WEKWebEditorDataSource>  _dataSource;    // weak ref as you'd expect

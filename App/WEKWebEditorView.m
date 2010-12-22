@@ -87,6 +87,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 // Event handling
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector cachedTargetView:(NSView *)targetView;
 - (void)dragImageForEvent:(NSEvent *)event;
+- (NSCursor *)cursorForHandle:(SVGraphicHandle)handle;
 
 
 #pragma mark Guides
@@ -1188,8 +1189,15 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Draw drag caret
     [self drawDragCaretInView:view];
     
-    
+    // Guides
     [self drawGuidesInView:view];
+    
+    // Finally, fake cursor
+    if (_cursor)
+    {
+        NSImage *image = [_cursor image];
+        [image drawAtPoint:_cursorPoint fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0f];
+    }
 }
 
 - (void)drawItemsRect:(NSRect)dirtyRect inView:(NSView *)view;
@@ -1388,73 +1396,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
 }
 
 #pragma mark Tracking the Mouse
-
-- (void)resizeItem:(WEKWebEditorItem *)item usingHandle:(SVGraphicHandle)handle withEvent:(NSEvent *)event
-{
-    OBPRECONDITION(handle != kSVGraphicNoHandle);
-    
-    NSView *docView = [[item HTMLElement] documentView];
-    
-    
-    // Tell controllers not to draw selected during resize
-    [self setNeedsDisplayForItem:item];
-    
-    
-    // Start resize
-    CGAssociateMouseAndMouseCursorPosition(false);
-    [NSCursor hide];
-    _resizingGraphic = YES;
-    @try
-    {
-        while ([event type] != NSLeftMouseUp)
-        {
-            // Grab the next event
-            event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-            
-            // Handle the event
-            [docView autoscroll:event];
-            /*NSPoint handleLocation = [docView convertPoint:[event locationInWindow] fromView:nil];
-            handle = [item resizeByMovingHandle:handle toPoint:handleLocation];*/
-            handle = [item resizeUsingHandle:handle event:event];
-            
-            
-            /*/ The DOM has been updated, which may have caused layout. So position the mouse cursor to match
-            SVSelectionBorder *border = [item newSelectionBorder];
-            NSPoint point = [border locationOfHandle:handle frameRect:[item selectionFrame]];
-            NSPoint basePoint = [[docView window] convertBaseToScreen:[docView convertPoint:point toView:nil]];
-            
-            NSScreen *screen = [[NSScreen screens] objectAtIndex:0];
-            basePoint.y = [screen frame].size.height - basePoint.y;
-            
-            CGWarpMouseCursorPosition(NSPointToCGPoint(basePoint));
-            [border release];*/
-        }
-    }
-    @finally
-    {
-        _resizingGraphic = NO;
-        
-        // Place the cursor in the right spot
-        SVSelectionBorder *border = [item newSelectionBorder];
-        NSPoint point = [border locationOfHandle:handle frameRect:[item selectionFrame]];
-        NSPoint basePoint = [[docView window] convertBaseToScreen:[docView convertPoint:point toView:nil]];
-        
-        NSScreen *screen = [[NSScreen screens] objectAtIndex:0];
-        basePoint.y = [screen frame].size.height - basePoint.y;
-        
-        CGWarpMouseCursorPosition(NSPointToCGPoint(basePoint));
-        [border release];
-        
-        CGAssociateMouseAndMouseCursorPosition(true);
-        [NSCursor unhide];
-    }
-    [self setNeedsDisplayForItem:item];
-    
-    
-    // Update cursor for finish location
-    //[[NSCursor arrowCursor] set];
-    //[self mouseMoved:event];
-}
 
 - (void)dragImageForEvent:(NSEvent *)event;
 {
@@ -1668,22 +1609,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         }
         else
         {
-            CGFloat radians = 0.0;
-            switch(handle)
-            {
-                    // We might want to consider using angled size cursors  even for middle handles to show that you are resizing both dimensions?
-                    
-                case kSVGraphicUpperLeftHandle:		radians = M_PI_4 + M_PI_2;			break;
-                case kSVGraphicUpperMiddleHandle:	radians = M_PI_2;					break;
-                case kSVGraphicUpperRightHandle:	radians = M_PI_4;					break;
-                case kSVGraphicMiddleLeftHandle:	radians = M_PI;						break;
-                case kSVGraphicMiddleRightHandle:	radians = M_PI;						break;
-                case kSVGraphicLowerLeftHandle:		radians = M_PI + M_PI_4;			break;
-                case kSVGraphicLowerMiddleHandle:	radians = M_PI + M_PI_2;			break;
-                case kSVGraphicLowerRightHandle:	radians = M_PI + M_PI_2 + M_PI_4;	break;
-                default: break;
-            }
-            [[ESCursors straightCursorForAngle:radians withSize:16.0] set];
+            [[self cursorForHandle:handle] set];
         }
     }
     else
@@ -1713,6 +1639,92 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         [[self documentView] performSelector:@selector(_updateMouseoverWithFakeEvent)];
     }
+}
+
+#pragma mark Resizing
+
+- (void)resizeItem:(WEKWebEditorItem *)item usingHandle:(SVGraphicHandle)handle withEvent:(NSEvent *)event
+{
+    OBPRECONDITION(handle != kSVGraphicNoHandle);
+    
+    NSView *docView = [[item HTMLElement] documentView];
+    
+    
+    // Tell controllers not to draw selected during resize
+    [self setNeedsDisplayForItem:item];
+    
+    
+    [_cursor release]; _cursor = [[self cursorForHandle:handle] retain];
+    
+    // Start resize
+    CGAssociateMouseAndMouseCursorPosition(false);
+    [NSCursor hide];
+    _resizingGraphic = YES;
+    @try
+    {
+        while ([event type] != NSLeftMouseUp)
+        {
+            // Grab the next event
+            event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+            
+            // Handle the event
+            [docView autoscroll:event];
+            /*NSPoint handleLocation = [docView convertPoint:[event locationInWindow] fromView:nil];
+             handle = [item resizeByMovingHandle:handle toPoint:handleLocation];*/
+            handle = [item resizeUsingHandle:handle event:event];
+            
+            
+            // The DOM has been updated, which may have caused layout. So position the mouse cursor to match
+            SVSelectionBorder *border = [item newSelectionBorder];
+            _cursorPoint = [border locationOfHandle:handle frameRect:[item selectionFrame]];
+        }
+    }
+    @finally
+    {
+        _resizingGraphic = NO;
+        [_cursor release]; _cursor = nil;
+        
+        // Place the cursor in the right spot
+        SVSelectionBorder *border = [item newSelectionBorder];
+        NSPoint point = [border locationOfHandle:handle frameRect:[item selectionFrame]];
+        NSPoint basePoint = [[docView window] convertBaseToScreen:[docView convertPoint:point toView:nil]];
+        
+        NSScreen *screen = [[NSScreen screens] objectAtIndex:0];
+        basePoint.y = [screen frame].size.height - basePoint.y;
+        
+        CGWarpMouseCursorPosition(NSPointToCGPoint(basePoint));
+        [border release];
+        
+        CGAssociateMouseAndMouseCursorPosition(true);
+        [NSCursor unhide];
+    }
+    [self setNeedsDisplayForItem:item];
+    
+    
+    // Update cursor for finish location
+    //[[NSCursor arrowCursor] set];
+    //[self mouseMoved:event];
+}
+
+// This would probably be better suited as an SVSelectionBorder method eventually
+- (NSCursor *)cursorForHandle:(SVGraphicHandle)handle;
+{
+    CGFloat radians = 0.0;
+    switch(handle)
+    {
+            // We might want to consider using angled size cursors  even for middle handles to show that you are resizing both dimensions?
+            
+        case kSVGraphicUpperLeftHandle:		radians = M_PI_4 + M_PI_2;			break;
+        case kSVGraphicUpperMiddleHandle:	radians = M_PI_2;					break;
+        case kSVGraphicUpperRightHandle:	radians = M_PI_4;					break;
+        case kSVGraphicMiddleLeftHandle:	radians = M_PI;						break;
+        case kSVGraphicMiddleRightHandle:	radians = M_PI;						break;
+        case kSVGraphicLowerLeftHandle:		radians = M_PI + M_PI_4;			break;
+        case kSVGraphicLowerMiddleHandle:	radians = M_PI + M_PI_2;			break;
+        case kSVGraphicLowerRightHandle:	radians = M_PI + M_PI_2 + M_PI_4;	break;
+        default: break;
+    }
+    return [ESCursors straightCursorForAngle:radians withSize:16.0];
 }
 
 #pragma mark Dispatching Messages
