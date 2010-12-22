@@ -1011,21 +1011,23 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
 	
 	NSTextView *fieldEditor = (NSTextView *)[textField currentEditor];
-	OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
-
-	
-	NSRect textRect = [[fieldEditor layoutManager]
-					   usedRectForTextContainer:[fieldEditor textContainer]];
-	
-	NSRect fieldRect = [textField frame];
-	float textWidth = textRect.size.width;
-	float fieldWidth = fieldRect.size.width;
-	int width = ceilf(MIN(textWidth, fieldWidth));
-	width = MAX(width, 7);		// make sure it's at least 7 pixels wide
-	// NSLog(@"'%@' widths: text = %.2f, field = %.2f => %d", [textField stringValue], textWidth, fieldWidth, width);
-	fieldRect.size.width = width;
-	[view setShadowRect:fieldRect];
-	
+	if (fieldEditor)
+	{
+		OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
+		
+		
+		NSRect textRect = [[fieldEditor layoutManager]
+						   usedRectForTextContainer:[fieldEditor textContainer]];
+		
+		NSRect fieldRect = [textField frame];
+		float textWidth = textRect.size.width;
+		float fieldWidth = fieldRect.size.width;
+		int width = ceilf(MIN(textWidth, fieldWidth));
+		width = MAX(width, 7);		// make sure it's at least 7 pixels wide
+		// NSLog(@"'%@' widths: text = %.2f, field = %.2f => %d", [textField stringValue], textWidth, fieldWidth, width);
+		fieldRect.size.width = width;
+		[view setShadowRect:fieldRect];
+	}
 }
 
 - (void) backgroundFrameChanged:(NSNotification *)notification
