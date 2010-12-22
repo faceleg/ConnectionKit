@@ -94,6 +94,12 @@
 - (void)startAnchorElementWithPage:(id <SVPage>)page;
 
 
+#pragma mark Headers
+//  <hX>
+// The context will know what is the appropriate level of header to write. E.g. in a pagelet <H5>s are wanted, but for inline graphics use <H3>
+- (void)startHeaderWithAttributes:(NSDictionary *)attributes;
+
+
 #pragma mark Scripts
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
                                         plugIn:(SVPlugIn *)plugIn;

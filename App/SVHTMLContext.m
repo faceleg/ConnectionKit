@@ -399,6 +399,11 @@
     [self setCurrentHeaderLevel:[self currentHeaderLevel] - 1];
 }
 
+- (void)startHeaderWithAttributes:(NSDictionary *)attributes;
+{
+    [self startElement:[self currentHeaderLevelTagName] attributes:attributes];
+}
+
 #pragma mark Elements/Comments
 
 // Override to sort the keys so that they are always consistently written.
