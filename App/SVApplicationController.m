@@ -55,7 +55,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTTranscriptController.h"
 #import "SVWelcomeController.h"
 
-#import "NSArray+KTExtensions.h"
 #import "NSString+KTExtensions.h"
 
 #import "NSApplication+Karelia.h"
