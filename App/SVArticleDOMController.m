@@ -504,37 +504,57 @@
 
 #pragma mark Updating
 
-- (void)willUpdateWithNewChildController:(WEKWebEditorItem *)aChildController;
+- (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
 {
     // Helper method that:
     //  A) swaps the new controller out for an existing one if possible
     //  B) runs scripts for the new controller
     
-    NSObject *object = [aChildController representedObject];
+    
+    DOMDocument *doc = [[self HTMLElement] ownerDocument];
+    [newChildController loadHTMLElementFromDocument:doc];
+    
+    
+    NSObject *object = [newChildController representedObject];
     if (!object)
     {
-        // Probably a callout, update contents instead. #99997
-        for (aChildController in [aChildController childWebEditorItems])
+        // Probably a callout, search for a matching one
+        NSArray *objects = [newChildController valueForKeyPath:@"childWebEditorItems.representedObject"];
+        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
         {
-            [self willUpdateWithNewChildController:aChildController];
+            if (![anItem representedObject] &&
+                [objects isEqualToArray:[anItem valueForKeyPath:@"childWebEditorItems.representedObject"]])
+            {
+                // Bring back the old element!
+                DOMElement *element = [newChildController HTMLElement];
+                [[element parentNode] replaceChild:[anItem HTMLElement] oldChild:element];
+                
+                // Bring back the old controller!
+                [[newChildController parentWebEditorItem] replaceChildWebEditorItem:newChildController
+                                                                               with:anItem];
+                return;
+            }
+        }
+        
+        //update contents instead. #99997
+        for (newChildController in [newChildController childWebEditorItems])
+        {
+            [self willUpdateWithNewChildController:newChildController];
         }
         return;
     }
     
-    
-    DOMDocument *doc = [[self HTMLElement] ownerDocument];
-    [aChildController loadHTMLElementFromDocument:doc];
     
     for (WEKWebEditorItem *anOldController in [self childWebEditorItems])
     {
         if ([anOldController representedObject] == object)
         {
             // Bring back the old element!
-            DOMElement *element = [aChildController HTMLElement];
+            DOMElement *element = [newChildController HTMLElement];
             [[element parentNode] replaceChild:[anOldController HTMLElement] oldChild:element];
             
             // Bring back the old controller!
-            [[aChildController parentWebEditorItem] replaceChildWebEditorItem:aChildController
+            [[newChildController parentWebEditorItem] replaceChildWebEditorItem:newChildController
                                                                          with:anOldController];
             return;
         }
@@ -542,8 +562,8 @@
     
     
     // Force update the controller to run scripts etc. #99997
-    [aChildController setNeedsUpdate];
-    [aChildController updateIfNeeded];
+    [newChildController setNeedsUpdate];
+    [newChildController updateIfNeeded];
 }
 
 - (void)updateWithHTMLString:(NSString *)html items:(NSArray *)items;
@@ -555,9 +575,9 @@
     // Re-use any existing graphic controllers when possible
     for (WEKWebEditorItem *aController in items)
     {
-        for (WEKWebEditorItem *aChildController in [aController childWebEditorItems])
+        for (WEKWebEditorItem *newChildController in [aController childWebEditorItems])
         {
-            [self willUpdateWithNewChildController:aChildController];
+            [self willUpdateWithNewChildController:newChildController];
         }
     }
     
