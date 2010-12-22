@@ -447,6 +447,13 @@
     return handle;
 }
 
+- (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;
+{
+    SUBCLASSMUSTIMPLEMENT;
+    [self doesNotRecognizeSelector:_cmd];
+    return handle;
+}
+
 #pragma mark Layout
 
 - (NSRect)boundingBox;  // like -[DOMNode boundingBox] but performs union with subcontroller boxes

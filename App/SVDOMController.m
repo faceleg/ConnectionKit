@@ -560,6 +560,68 @@
     return handle;
 }
 
+- (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;
+{
+    // Start with the original bounds.
+    NSRect bounds = [self selectionFrame];
+    
+    // Is the user changing the width of the graphic?
+    if (handle == kSVGraphicUpperLeftHandle ||
+        handle == kSVGraphicMiddleLeftHandle ||
+        handle == kSVGraphicLowerLeftHandle)
+    {
+        // Change the left edge of the graphic.
+        bounds.size.width -= [event deltaX];
+        bounds.origin.x -= [event deltaX];
+    }
+    else if (handle == kSVGraphicUpperRightHandle ||
+             handle == kSVGraphicMiddleRightHandle ||
+             handle == kSVGraphicLowerRightHandle)
+    {
+        // Change the right edge of the graphic.
+        bounds.size.width += [event deltaX];
+    }
+    
+    // Did the user actually flip the graphic over?   OR RESIZE TO TOO SMALL?
+    NSSize minSize = [self minSize];
+    if (bounds.size.width <= minSize.width) bounds.size.width = minSize.width;
+    
+    
+    
+    // Is the user changing the height of the graphic?
+    if (handle == kSVGraphicUpperLeftHandle ||
+        handle == kSVGraphicUpperMiddleHandle ||
+        handle == kSVGraphicUpperRightHandle) 
+    {
+        // Change the top edge of the graphic.
+        bounds.size.height -= [event deltaY];
+        bounds.origin.y -= [event deltaY];
+    }
+    else if (handle == kSVGraphicLowerLeftHandle ||
+             handle == kSVGraphicLowerMiddleHandle ||
+             handle == kSVGraphicLowerRightHandle)
+    {
+        // Change the bottom edge of the graphic.
+        bounds.size.height += [event deltaY];
+    }
+    
+    // Did the user actually flip the graphic upside down?   OR RESIZE TO TOO SMALL?
+    if (bounds.size.height<=minSize.height) bounds.size.height = minSize.height;
+    
+    
+    // Apply constraints. Snap to guides UNLESS the command key is held down. Why not use current NSEvent? - Mike
+    NSSize size = [self constrainSize:bounds.size
+                               handle:handle
+                            snapToFit:((GetCurrentKeyModifiers() & cmdKey) == 0)];
+    
+    
+    // Finally, we can go ahead and resize
+    [self resizeToSize:size byMovingHandle:handle];
+    
+    
+    return handle;
+}
+
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
     if (snapToFit)

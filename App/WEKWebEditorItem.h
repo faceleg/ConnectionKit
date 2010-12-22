@@ -94,6 +94,7 @@
 #pragma mark Resizing
 - (unsigned int)resizingMask;   // default is 0
 - (SVGraphicHandle)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point;
+- (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;
 
 
 #pragma mark Layout
