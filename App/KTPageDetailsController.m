@@ -1225,13 +1225,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 }
 
-
-// If you tab out of last text field to something else, we don't lose first responder?
-- (void)controlTextDidEndEditing:(NSNotification *)notification;
-{
-	[self controlTextDidResignFirstResponder:notification];
-}
-
 #pragma mark -
 #pragma mark Actions
 
