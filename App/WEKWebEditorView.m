@@ -1393,17 +1393,19 @@ typedef enum {  // this copied from WebPreferences+Private.h
 {
     OBPRECONDITION(handle != kSVGraphicNoHandle);
     
+    NSView *docView = [[item HTMLElement] documentView];
+    
     
     // Tell controllers not to draw selected during resize
     [self setNeedsDisplayForItem:item];
     
+    
     // Start resize
     CGAssociateMouseAndMouseCursorPosition(false);
+    [NSCursor hide];
     _resizingGraphic = YES;
     @try
     {
-        NSView *docView = [[item HTMLElement] documentView];
-        
         while ([event type] != NSLeftMouseUp)
         {
             // Grab the next event
@@ -1416,7 +1418,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
             handle = [item resizeUsingHandle:handle event:event];
             
             
-            // The DOM has been updated, which may have caused layout. So position the mouse cursor to match
+            /*/ The DOM has been updated, which may have caused layout. So position the mouse cursor to match
             SVSelectionBorder *border = [item newSelectionBorder];
             NSPoint point = [border locationOfHandle:handle frameRect:[item selectionFrame]];
             NSPoint basePoint = [[docView window] convertBaseToScreen:[docView convertPoint:point toView:nil]];
@@ -1425,20 +1427,33 @@ typedef enum {  // this copied from WebPreferences+Private.h
             basePoint.y = [screen frame].size.height - basePoint.y;
             
             CGWarpMouseCursorPosition(NSPointToCGPoint(basePoint));
-            [border release];
+            [border release];*/
         }
     }
     @finally
     {
         _resizingGraphic = NO;
+        
+        // Place the cursor in the right spot
+        SVSelectionBorder *border = [item newSelectionBorder];
+        NSPoint point = [border locationOfHandle:handle frameRect:[item selectionFrame]];
+        NSPoint basePoint = [[docView window] convertBaseToScreen:[docView convertPoint:point toView:nil]];
+        
+        NSScreen *screen = [[NSScreen screens] objectAtIndex:0];
+        basePoint.y = [screen frame].size.height - basePoint.y;
+        
+        CGWarpMouseCursorPosition(NSPointToCGPoint(basePoint));
+        [border release];
+        
         CGAssociateMouseAndMouseCursorPosition(true);
+        [NSCursor unhide];
     }
     [self setNeedsDisplayForItem:item];
     
     
     // Update cursor for finish location
-    [[NSCursor arrowCursor] set];
-    [self mouseMoved:event];
+    //[[NSCursor arrowCursor] set];
+    //[self mouseMoved:event];
 }
 
 - (void)dragImageForEvent:(NSEvent *)event;
