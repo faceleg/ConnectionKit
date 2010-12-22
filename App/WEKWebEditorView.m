@@ -1404,9 +1404,22 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         // Handle the event
         event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-        [[self documentView] autoscroll:event];
+        NSView *view = [self documentView];
+        [view autoscroll:event];
         NSPoint handleLocation = [docView convertPoint:[event locationInWindow] fromView:nil];
         handle = [item resizeByMovingHandle:handle toPoint:handleLocation];
+        
+        
+        // The DOM has been updated, which may have caused layout. So position the mouse cursor to match
+        SVSelectionBorder *border = [item newSelectionBorder];
+        NSPoint point = [border locationOfHandle:handle frameRect:[item selectionFrame]];
+        NSPoint basePoint = [[view window] convertBaseToScreen:[view convertPoint:point toView:nil]];
+        
+        NSScreen *screen = [[NSScreen screens] objectAtIndex:0];
+        basePoint.y = [screen frame].size.height - basePoint.y;
+        
+        CGWarpMouseCursorPosition(NSPointToCGPoint(basePoint));
+        [border release];
     }
     
     _resizingGraphic = NO;

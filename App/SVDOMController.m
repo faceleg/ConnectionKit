@@ -496,15 +496,7 @@
     return [[self enclosingGraphicDOMController] resizingMask];
 }
 
-- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
-{
-    // The DOM has been updated, which may have caused layout. So position the mouse cursor to match
-    /*point = [self locationOfHandle:handle];
-     NSView *view = [[self HTMLElement] documentView];
-     NSPoint basePoint = [[view window] convertBaseToScreen:[view convertPoint:point toView:nil]];
-     CGWarpMouseCursorPosition(NSPointToCGPoint(basePoint));
-     */
-}
+- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle; { }
 
 - (SVGraphicHandle)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point;
 {
