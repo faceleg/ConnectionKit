@@ -1653,11 +1653,17 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [self setNeedsDisplayForItem:item];
     
     
+    // Take over drawing the cursor
     [_cursor release]; _cursor = [[self cursorForHandle:handle] retain];
+    SVSelectionBorder *border = [item newSelectionBorder];
+    _cursorPoint = [border locationOfHandle:handle frameRect:[item selectionFrame]];
+    [docView setNeedsDisplayInRect:[_cursor es_drawingRectForPoint:_cursorPoint]];
     
-    // Start resize
     CGAssociateMouseAndMouseCursorPosition(false);
     [NSCursor hide];
+    
+    
+    // Start the resize
     _resizingGraphic = YES;
     @try
     {
@@ -1673,9 +1679,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
             handle = [item resizeUsingHandle:handle event:event];
             
             
-            // The DOM has been updated, which may have caused layout. So position the mouse cursor to match
-            SVSelectionBorder *border = [item newSelectionBorder];
+            // Redraw the cursor in new position
+            [docView setNeedsDisplayInRect:[_cursor es_drawingRectForPoint:_cursorPoint]];
             _cursorPoint = [border locationOfHandle:handle frameRect:[item selectionFrame]];
+            [docView setNeedsDisplayInRect:[_cursor es_drawingRectForPoint:_cursorPoint]];
         }
     }
     @finally
@@ -1684,7 +1691,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
         [_cursor release]; _cursor = nil;
         
         // Place the cursor in the right spot
-        SVSelectionBorder *border = [item newSelectionBorder];
         NSPoint point = [border locationOfHandle:handle frameRect:[item selectionFrame]];
         NSPoint basePoint = [[docView window] convertBaseToScreen:[docView convertPoint:point toView:nil]];
         
