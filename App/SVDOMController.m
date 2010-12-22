@@ -498,73 +498,16 @@
 
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle; { }
 
-- (SVGraphicHandle)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point;
-{
-    // Start with the original bounds.
-    NSRect bounds = [[self selectableDOMElement] boundingBox];
-    
-    // Is the user changing the width of the graphic?
-    if (handle == kSVGraphicUpperLeftHandle ||
-        handle == kSVGraphicMiddleLeftHandle ||
-        handle == kSVGraphicLowerLeftHandle)
-    {
-        // Change the left edge of the graphic.
-        bounds.size.width = NSMaxX(bounds) - point.x;
-        bounds.origin.x = point.x;
-    }
-    else if (handle == kSVGraphicUpperRightHandle ||
-             handle == kSVGraphicMiddleRightHandle ||
-             handle == kSVGraphicLowerRightHandle)
-    {
-        // Change the right edge of the graphic.
-        bounds.size.width = point.x - bounds.origin.x;
-    }
-    
-    // Did the user actually flip the graphic over?   OR RESIZE TO TOO SMALL?
-    NSSize minSize = [self minSize];
-    if (bounds.size.width <= minSize.width) bounds.size.width = minSize.width;
-    
-    
-    
-    // Is the user changing the height of the graphic?
-    if (handle == kSVGraphicUpperLeftHandle ||
-        handle == kSVGraphicUpperMiddleHandle ||
-        handle == kSVGraphicUpperRightHandle) 
-    {
-        // Change the top edge of the graphic.
-        bounds.size.height = NSMaxY(bounds) - point.y;
-        bounds.origin.y = point.y;
-    }
-    else if (handle == kSVGraphicLowerLeftHandle ||
-             handle == kSVGraphicLowerMiddleHandle ||
-             handle == kSVGraphicLowerRightHandle)
-    {
-        // Change the bottom edge of the graphic.
-        bounds.size.height = point.y - bounds.origin.y;
-    }
-    
-    // Did the user actually flip the graphic upside down?   OR RESIZE TO TOO SMALL?
-    if (bounds.size.height<=minSize.height) bounds.size.height = minSize.height;
-    
-    
-    // Apply constraints. Snap to guides UNLESS the command key is held down. Why not use current NSEvent? - Mike
-    NSSize size = [self constrainSize:bounds.size
-                               handle:handle
-                            snapToFit:((GetCurrentKeyModifiers() & cmdKey) == 0)];
-    
-    
-    // Finally, we can go ahead and resize
-    [self resizeToSize:size byMovingHandle:handle];
-    
-    
-    return handle;
-}
-
 - (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;
 {
-    NSView *docView = [[self HTMLElement] documentView];
-    NSPoint handleLocation = [docView convertPoint:[event locationInWindow] fromView:nil];
-    return [self resizeByMovingHandle:handle toPoint:handleLocation];
+    NSPoint point;
+    
+    BOOL resizeInline = [self shouldResizeInline];
+    if (!resizeInline)
+    {
+        NSView *docView = [[self HTMLElement] documentView];
+        point = [docView convertPoint:[event locationInWindow] fromView:nil];
+    }
     
     
     
@@ -576,16 +519,31 @@
         handle == kSVGraphicMiddleLeftHandle ||
         handle == kSVGraphicLowerLeftHandle)
     {
-        // Change the left edge of the graphic.
-        bounds.size.width -= [event deltaX];
-        bounds.origin.x -= [event deltaX];
+        // Change the left edge of the graphic
+        if (resizeInline)
+        {
+            bounds.size.width -= [event deltaX];
+            bounds.origin.x -= [event deltaX];
+        }
+        else
+        {
+            bounds.size.width = NSMaxX(bounds) - point.x;
+            bounds.origin.x = point.x;
+        }
     }
     else if (handle == kSVGraphicUpperRightHandle ||
              handle == kSVGraphicMiddleRightHandle ||
              handle == kSVGraphicLowerRightHandle)
     {
-        // Change the right edge of the graphic.
-        bounds.size.width += [event deltaX];
+        // Change the right edge of the graphic
+        if (resizeInline)
+        {
+            bounds.size.width += [event deltaX];
+        }
+        else
+        {
+            bounds.size.width = point.x - bounds.origin.x;
+        }
     }
     
     // Did the user actually flip the graphic over?   OR RESIZE TO TOO SMALL?
@@ -599,16 +557,31 @@
         handle == kSVGraphicUpperMiddleHandle ||
         handle == kSVGraphicUpperRightHandle) 
     {
-        // Change the top edge of the graphic.
-        bounds.size.height -= [event deltaY];
-        bounds.origin.y -= [event deltaY];
+        // Change the top edge of the graphic
+        if (resizeInline)
+        {
+            bounds.size.height -= [event deltaY];
+            bounds.origin.y -= [event deltaY];
+        }
+        else
+        {
+            bounds.size.height = NSMaxY(bounds) - point.y;
+            bounds.origin.y = point.y;
+        }
     }
     else if (handle == kSVGraphicLowerLeftHandle ||
              handle == kSVGraphicLowerMiddleHandle ||
              handle == kSVGraphicLowerRightHandle)
     {
-        // Change the bottom edge of the graphic.
-        bounds.size.height += [event deltaY];
+        // Change the bottom edge of the graphic
+        if (resizeInline)
+        {
+            bounds.size.height += [event deltaY];
+        }
+        else
+        {
+            bounds.size.height = point.y - bounds.origin.y;
+        }
     }
     
     // Did the user actually flip the graphic upside down?   OR RESIZE TO TOO SMALL?

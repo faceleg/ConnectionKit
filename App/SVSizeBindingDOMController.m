@@ -113,6 +113,8 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Resize
 
+- (BOOL)shouldResizeInline; { return YES; }
+
 - (CGFloat)maxWidth; { return [[self enclosingGraphicDOMController] maxWidth]; }
 
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
