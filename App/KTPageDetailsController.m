@@ -806,21 +806,21 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		}
 	}
 	// Prompts
-	[oWindowTitlePrompt		setHidden:(!arePagesSelected) && (!areLinksSelected)];
-	[oMetaDescriptionPrompt	setHidden:(!arePagesSelected) && (!areLinksSelected)];
-	[oFilePrompt setHidden:(!areFilesSelected)];
+	[oWindowTitlePrompt		setHidden:!arePagesSelected && !areLinksSelected];
+	[oMetaDescriptionPrompt	setHidden:!arePagesSelected && !areLinksSelected];
+	[oFilePrompt setHidden:!areFilesSelected];
 
 	// Additional Lines
-	[oWindowTitleField		setHidden:(!arePagesSelected)];
-	[oMetaDescriptionField	setHidden:(!arePagesSelected)];
-	[oWindowTitleField		setHidden:(!arePagesSelected) && (!areLinksSelected)];
-	[oMetaDescriptionField	setHidden:(!arePagesSelected) && (!areLinksSelected)];
-	[oWindowTitleField		setEditable:(arePagesSelected)];
-	[oMetaDescriptionField	setEditable:(arePagesSelected)];
-	[oChooseFileButton		setHidden:(!areFilesSelected)];
+	[oWindowTitleField		setHidden:!arePagesSelected];
+	[oMetaDescriptionField	setHidden:!arePagesSelected];
+	[oWindowTitleField		setHidden:!arePagesSelected && !areLinksSelected];
+	[oMetaDescriptionField	setHidden:!arePagesSelected && !areLinksSelected];
+	[oWindowTitleField		setEditable:arePagesSelected];
+	[oMetaDescriptionField	setEditable:arePagesSelected];
+	[oChooseFileButton		setHidden:!areFilesSelected];
 
 	// First line, external URL field
-	[oExternalURLField setHidden:(!areLinksSelected)];
+	[oExternalURLField setHidden:!areLinksSelected];
 
 	// First line, complex pieces that make up the URL components
 	BOOL hasLocalPath = (	arePagesSelected
@@ -829,15 +829,16 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	
 	[oBaseURLField setHidden:!hasLocalPath];
 	[oFileNameField setHidden:(!hasLocalPath
-							   || (arePagesSelected && IS_ROOT_STATE == pageIsCollectionState))];
+							   || (arePagesSelected && IS_ROOT_STATE == pageIsCollectionState))
+								|| selectedObjectsCount > 1];
 
-	[oDotSeparator setHidden:(  || NSOffState != pageIsCollectionState)];
+	[oDotSeparator setHidden:(!arePagesSelected  || NSOffState != pageIsCollectionState)];
 	[oSlashSeparator setHidden:(!arePagesSelected || NSOnState != pageIsCollectionState)];
-	[oIndexDotSeparator setHidden:(!arePagesSelected || NSOffState == pageIsCollectionState)];
+	[oIndexDotSeparator setHidden:(!arePagesSelected || NSOffState == pageIsCollectionState) || selectedObjectsCount > 1];
 
-	[oMultiplePagesField setHidden:( (!arePagesSelected) || NSMixedState != pageIsCollectionState)];
+	[oMultiplePagesField setHidden:( !arePagesSelected || NSMixedState != pageIsCollectionState)];
 	
-	[oExtensionPopup setHidden:(!arePagesSelected)];
+	[oExtensionPopup setHidden:!arePagesSelected];
 
 	
 	// Follow button only enabled when there is one item ?
