@@ -124,6 +124,9 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     NSNumber *height = [NSNumber numberWithInt:size.height];
     [graphic setWidth:width];
     [graphic setHeight:height];
+    
+    // Push into view immediately
+    [self updateIfNeeded];
 }
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
