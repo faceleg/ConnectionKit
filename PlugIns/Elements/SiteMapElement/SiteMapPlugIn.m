@@ -65,7 +65,7 @@
 {
     [super awakeFromNew];
     
-    // set initial properties //FIXME: or do we leave this to KTPluginInitialProperties?
+    // set initial properties
     self.compact = NO;
     self.sections = NO;
     self.showHome = YES;
@@ -99,7 +99,6 @@
 - (void)writeLinkOfPage:(id<SVPage>)aPage
               toContext:(id<SVPlugInContext>)context
 {
-    //FIXME: what attributes should be written with the span?
     if ( [aPage isEqual:[context page]] ) // not likely but maybe possible
     {
         // just emit title
@@ -125,8 +124,6 @@
         id<NSFastEnumeration> keyPaths = [(NSArrayController *)aPage automaticRearrangementKeyPaths];
         for ( NSString *keyPath in keyPaths )
         {
-            //FIXME: 75490: replace NOT watching title of thisPage with a DOM controller
-            if ( [aPage isEqual:[context page]] && [keyPath isEqualToString:@"title"] ) continue;
             [context addDependencyForKeyPath:keyPath ofObject:aPage];
         }
         
@@ -216,8 +213,6 @@
             id<NSFastEnumeration> keyPaths = [(NSArrayController *)rootPage automaticRearrangementKeyPaths];
             for ( NSString *keyPath in keyPaths )
             {
-                //FIXME: 75490: replace NOT watching title of thisPage with a DOM controller
-                if ( [thisPage isEqual:rootPage] && [keyPath isEqualToString:@"title"] ) continue;
                 [context addDependencyForKeyPath:keyPath ofObject:rootPage];
             }
         }
