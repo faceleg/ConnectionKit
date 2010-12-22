@@ -686,6 +686,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 					withKeyPath:@"selection.windowTitle"
 						options:self.initialWindowTitleBindingOptions];
 		
+		// Force update of 
+		[self resetTitlePlaceholderToComboTitleText:[oPagesController valueForKeyPath:@"selection.comboTitleText"]];
+
 		[oMetaDescriptionField unbind:NSValueBinding];
 		[oMetaDescriptionField bind:NSValueBinding
 						   toObject:oPagesController
@@ -746,8 +749,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 						withKeyPath:@"metaDescription"
 							options:nil];
 	}
-}	
-
+	}
+	
 /*
  Algorithm 
  Calculate how much each of the variable fields oBaseURLField and oPageFileNameField *want* to be
