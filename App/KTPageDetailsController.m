@@ -1230,6 +1230,16 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 }
 
+
+// If you tab out of last text field to something else, we don't lose first responder?
+// Unfortunately this doesn't do what we want if you hit *return* in the field.  We want this to
+// happen when it ends editing with tab, but not when you use return.  Oh well.
+- (void)controlTextDidEndEditing:(NSNotification *)notification;
+{
+	[self controlTextDidResignFirstResponder:notification];
+}
+
+
 #pragma mark -
 #pragma mark Actions
 
