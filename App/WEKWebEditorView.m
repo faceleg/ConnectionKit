@@ -87,6 +87,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
 // Event handling
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector cachedTargetView:(NSView *)targetView;
 - (void)dragImageForEvent:(NSEvent *)event;
+
+#pragma mark Resizing
+- (void)resizeItem:(WEKWebEditorItem *)item usingHandle:(SVGraphicHandle)handle withEvent:(NSEvent *)event;
 - (NSCursor *)cursorForHandle:(SVGraphicHandle)handle;
 
 
@@ -1642,7 +1645,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 #pragma mark Resizing
 
-- (void)resizeItem:(WEKWebEditorItem *)item usingHandle:(SVGraphicHandle)handle withEvent:(NSEvent *)event
+- (void)resizeItem:(WEKWebEditorItem *)item usingHandle:(SVGraphicHandle)handle withEvent:(NSEvent *)event;
 {
     OBPRECONDITION(handle != kSVGraphicNoHandle);
     
