@@ -1650,20 +1650,24 @@ typedef enum {  // this copied from WebPreferences+Private.h
     OBPRECONDITION(handle != kSVGraphicNoHandle);
     
     NSView *docView = [[item HTMLElement] documentView];
+    SVSelectionBorder *border = [item newSelectionBorder];
     
     
     // Tell controllers not to draw selected during resize
     [self setNeedsDisplayForItem:item];
     
     
-    // Take over drawing the cursor
-    [_cursor release]; _cursor = [[self cursorForHandle:handle] retain];
-    SVSelectionBorder *border = [item newSelectionBorder];
-    _cursorPoint = [border locationOfHandle:handle frameRect:[item selectionFrame]];
-    [docView setNeedsDisplayInRect:[_cursor es_drawingRectForPoint:_cursorPoint]];
-    
-    CGAssociateMouseAndMouseCursorPosition(false);
-    [NSCursor hide];
+    BOOL resizeInline = [item shouldResizeInline];
+    if (resizeInline)
+    {
+        // Take over drawing the cursor
+        [_cursor release]; _cursor = [[self cursorForHandle:handle] retain];
+        _cursorPoint = [border locationOfHandle:handle frameRect:[item selectionFrame]];
+        [docView setNeedsDisplayInRect:[_cursor es_drawingRectForPoint:_cursorPoint]];
+        
+        CGAssociateMouseAndMouseCursorPosition(false);
+        [NSCursor hide];
+    }
     
     
     // Start the resize
@@ -1677,34 +1681,39 @@ typedef enum {  // this copied from WebPreferences+Private.h
             
             // Handle the event
             [docView autoscroll:event];
-            /*NSPoint handleLocation = [docView convertPoint:[event locationInWindow] fromView:nil];
-             handle = [item resizeByMovingHandle:handle toPoint:handleLocation];*/
             handle = [item resizeUsingHandle:handle event:event];
             
             
             // Redraw the cursor in new position
-            [docView setNeedsDisplayInRect:[_cursor es_drawingRectForPoint:_cursorPoint]];
-            _cursorPoint = [border locationOfHandle:handle frameRect:[item selectionFrame]];
-            [docView setNeedsDisplayInRect:[_cursor es_drawingRectForPoint:_cursorPoint]];
+            if (resizeInline)
+            {
+                [docView setNeedsDisplayInRect:[_cursor es_drawingRectForPoint:_cursorPoint]];
+                _cursorPoint = [border locationOfHandle:handle frameRect:[item selectionFrame]];
+                [docView setNeedsDisplayInRect:[_cursor es_drawingRectForPoint:_cursorPoint]];
+            }
         }
     }
     @finally
     {
         _resizingGraphic = NO;
-        [_cursor release]; _cursor = nil;
         
-        // Place the cursor in the right spot
-        NSPoint point = [border locationOfHandle:handle frameRect:[item selectionFrame]];
-        NSPoint basePoint = [[docView window] convertBaseToScreen:[docView convertPoint:point toView:nil]];
-        
-        NSScreen *screen = [[NSScreen screens] objectAtIndex:0];
-        basePoint.y = [screen frame].size.height - basePoint.y;
-        
-        CGWarpMouseCursorPosition(NSPointToCGPoint(basePoint));
+        if (resizeInline)
+        {
+            [_cursor release]; _cursor = nil;
+            
+            // Place the cursor in the right spot
+            NSPoint point = [border locationOfHandle:handle frameRect:[item selectionFrame]];
+            NSPoint basePoint = [[docView window] convertBaseToScreen:[docView convertPoint:point toView:nil]];
+            
+            NSScreen *screen = [[NSScreen screens] objectAtIndex:0];
+            basePoint.y = [screen frame].size.height - basePoint.y;
+            
+            CGWarpMouseCursorPosition(NSPointToCGPoint(basePoint));
+            
+            CGAssociateMouseAndMouseCursorPosition(true);
+            [NSCursor unhide];
+        }
         [border release];
-        
-        CGAssociateMouseAndMouseCursorPosition(true);
-        [NSCursor unhide];
     }
     [self setNeedsDisplayForItem:item];
     

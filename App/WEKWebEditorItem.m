@@ -440,18 +440,16 @@
 
 - (unsigned int)resizingMask; { return 0; }
 
-- (SVGraphicHandle)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point;
-{    
-    SUBCLASSMUSTIMPLEMENT;
-    [self doesNotRecognizeSelector:_cmd];
-    return handle;
-}
-
 - (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;
 {
     SUBCLASSMUSTIMPLEMENT;
     [self doesNotRecognizeSelector:_cmd];
     return handle;
+}
+
+- (BOOL)shouldResizeInline; // Default is NO. If YES, cursor will be locked to match the resize
+{
+    return NO;
 }
 
 #pragma mark Layout

@@ -93,8 +93,8 @@
 
 #pragma mark Resizing
 - (unsigned int)resizingMask;   // default is 0
-- (SVGraphicHandle)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point;
 - (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;
+- (BOOL)shouldResizeInline; // Default is NO. If YES, cursor will be locked to match the resize
 
 
 #pragma mark Layout

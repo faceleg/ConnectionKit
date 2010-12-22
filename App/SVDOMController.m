@@ -562,6 +562,12 @@
 
 - (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;
 {
+    NSView *docView = [[self HTMLElement] documentView];
+    NSPoint handleLocation = [docView convertPoint:[event locationInWindow] fromView:nil];
+    return [self resizeByMovingHandle:handle toPoint:handleLocation];
+    
+    
+    
     // Start with the original bounds.
     NSRect bounds = [self selectionFrame];
     
