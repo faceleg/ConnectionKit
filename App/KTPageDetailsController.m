@@ -59,6 +59,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (void) resetTitlePlaceholderToComboTitleText:(NSString *)comboTitleText;
 - (void) resetDescriptionPlaceholder:(NSString *)metaDescriptionText;
 - (void) layoutPageURLComponents;
+- (void) layoutPageURLComponentsDelayed;
 - (NSColor *)metaDescriptionCharCountColor;
 - (NSColor *)windowTitleCharCountColor;
 - (NSColor *)fileNameCharCountColor;
@@ -154,7 +155,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 													 name:NSViewFrameDidChangeNotification
 												   object:[self view]];
 		
-		[self layoutPageURLComponents];
+		NSLog(@"%s --> layoutPageURLComponentsDelayed",__FUNCTION__);
+		[self layoutPageURLComponentsDelayed];
 		
 		// Observe changes to the meta description and fake an initial observation
 		[oPagesController addObserver:self
@@ -458,6 +460,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void) updateFieldsBasedOnSelectedSiteOutlineObjects:(NSArray *)selObjects;
 {
+	NSLog(@"%s",__FUNCTION__);
 	if (NSIsControllerMarker(selObjects))
 	{
 		NSLog(@"Controller marker:  %@", selObjects);
@@ -493,9 +496,13 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 				combinedType = type;	// keep looking, so far collecting a single type.
 			}
 		}
+		char *typestrings[] =  { "kUnknownSiteItemType", "kLinkSiteItemType", "kTextSiteItemType", "kFileSiteItemType", "kPageSiteItemType", "kMixedSiteItemType" };
+
+		NSLog(@"whatKindOfItemsAreSelected => %s", typestrings[combinedType]);
 		self.whatKindOfItemsAreSelected = combinedType;
 		
-		[self layoutPageURLComponents];
+		NSLog(@"%s --> layoutPageURLComponentsDelayed",__FUNCTION__);
+		[self layoutPageURLComponentsDelayed];
 	}
 }
 
@@ -633,7 +640,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 {	
 //	NSLog(@"object = %@", object);
 	
-	[self layoutPageURLComponents];
+	NSLog(@"%s %@ --> layoutPageURLComponentsDelayed",__FUNCTION__, keyPath);
+	[self layoutPageURLComponentsDelayed];
 
 	if (context == sMetaDescriptionObservationContext)
 	{
@@ -749,7 +757,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 						withKeyPath:@"metaDescription"
 							options:nil];
 	}
-	}
+}
 	
 /*
  Algorithm 
@@ -761,14 +769,26 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
  
  */
 
+- (void) layoutPageURLComponentsDelayed
+{
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(layoutPageURLComponents) object:nil];
+	[self performSelector:@selector(layoutPageURLComponents) withObject:nil afterDelay:0.0];
+}
+
 - (void) layoutPageURLComponents;
 {
 #define IS_ROOT_STATE -99
 	// Only visible for page types
 	// TODO: deal with downloads, where we keep the base URL but have a special field for the whole filename
 	
+	BOOL arePagesSelected = (kPageSiteItemType == self.whatKindOfItemsAreSelected); 
+	BOOL areLinksSelected = (kLinkSiteItemType == self.whatKindOfItemsAreSelected);
+	BOOL areFilesSelected = (kFileSiteItemType == self.whatKindOfItemsAreSelected);
+	BOOL areTextsSelected = (kTextSiteItemType == self.whatKindOfItemsAreSelected);
+
+	int selectedObjectsCount = [[oPagesController selectedObjects] count];
 	NSInteger pageIsCollectionState = NSMixedState;
-	if (kPageSiteItemType == self.whatKindOfItemsAreSelected)
+	if (arePagesSelected)
 	{
 		id isCollectionMarker = [oPagesController valueForKeyPath:@"selection.isCollection"];
 		if ([isCollectionMarker respondsToSelector:@selector(boolValue)])
@@ -786,44 +806,44 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		}
 	}
 	// Prompts
-	[oWindowTitlePrompt		setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected) && (kLinkSiteItemType != self.whatKindOfItemsAreSelected)];
-	[oMetaDescriptionPrompt	setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected) && (kLinkSiteItemType != self.whatKindOfItemsAreSelected)];
-	[oFilePrompt setHidden:(kFileSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oWindowTitlePrompt		setHidden:(!arePagesSelected) && (!areLinksSelected)];
+	[oMetaDescriptionPrompt	setHidden:(!arePagesSelected) && (!areLinksSelected)];
+	[oFilePrompt setHidden:(!areFilesSelected)];
 
 	// Additional Lines
-	[oWindowTitleField		setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
-	[oMetaDescriptionField	setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
-	[oWindowTitleField		setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected) && (kLinkSiteItemType != self.whatKindOfItemsAreSelected)];
-	[oMetaDescriptionField	setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected) && (kLinkSiteItemType != self.whatKindOfItemsAreSelected)];
-	[oWindowTitleField		setEditable:(kPageSiteItemType == self.whatKindOfItemsAreSelected)];
-	[oMetaDescriptionField	setEditable:(kPageSiteItemType == self.whatKindOfItemsAreSelected)];
-	[oChooseFileButton setHidden:(kFileSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oWindowTitleField		setHidden:(!arePagesSelected)];
+	[oMetaDescriptionField	setHidden:(!arePagesSelected)];
+	[oWindowTitleField		setHidden:(!arePagesSelected) && (!areLinksSelected)];
+	[oMetaDescriptionField	setHidden:(!arePagesSelected) && (!areLinksSelected)];
+	[oWindowTitleField		setEditable:(arePagesSelected)];
+	[oMetaDescriptionField	setEditable:(arePagesSelected)];
+	[oChooseFileButton		setHidden:(!areFilesSelected)];
 
 	// First line, external URL field
-	[oExternalURLField setHidden:(kLinkSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oExternalURLField setHidden:(!areLinksSelected)];
 
 	// First line, complex pieces that make up the URL components
-	BOOL hasLocalPath = (	kPageSiteItemType == self.whatKindOfItemsAreSelected
-						||	kTextSiteItemType == self.whatKindOfItemsAreSelected
-						||	kFileSiteItemType == self.whatKindOfItemsAreSelected);
+	BOOL hasLocalPath = (	arePagesSelected
+						||	areTextsSelected
+						||	areFilesSelected);
 	
 	[oBaseURLField setHidden:!hasLocalPath];
 	[oFileNameField setHidden:(!hasLocalPath
-							   || (kPageSiteItemType == self.whatKindOfItemsAreSelected && IS_ROOT_STATE == pageIsCollectionState))];
+							   || (arePagesSelected && IS_ROOT_STATE == pageIsCollectionState))];
 
-	[oDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOffState != pageIsCollectionState)];
-	[oSlashSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOnState != pageIsCollectionState)];
-	[oIndexDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOffState == pageIsCollectionState)];
+	[oDotSeparator setHidden:(  || NSOffState != pageIsCollectionState)];
+	[oSlashSeparator setHidden:(!arePagesSelected || NSOnState != pageIsCollectionState)];
+	[oIndexDotSeparator setHidden:(!arePagesSelected || NSOffState == pageIsCollectionState)];
 
-	[oMultiplePagesField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSMixedState != pageIsCollectionState)];
+	[oMultiplePagesField setHidden:( (!arePagesSelected) || NSMixedState != pageIsCollectionState)];
 	
-	[oExtensionPopup setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oExtensionPopup setHidden:(!arePagesSelected)];
 
 	
 	// Follow button only enabled when there is one item ?
-	[oFollowButton setHidden: [[oPagesController selectedObjects] count] != 1];
+	[oFollowButton setHidden: selectedObjectsCount != 1];
 	
-	if (kLinkSiteItemType == self.whatKindOfItemsAreSelected)
+	if (areLinksSelected)
 	{
 		int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
 		const int rightMargin = 20;
@@ -884,7 +904,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		int mediaExtraX [] = {4,5,1};
 		int mediaMarginsAfter[] = {0,-1,0};
 				
-		if (kPageSiteItemType == self.whatKindOfItemsAreSelected)
+		if (arePagesSelected)
 		{
 			switch (pageIsCollectionState)
 			{
@@ -1035,7 +1055,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void) backgroundFrameChanged:(NSNotification *)notification
 {
-	[self layoutPageURLComponents];
+	NSLog(@"%s --> layoutPageURLComponentsDelayed",__FUNCTION__);
+	[self layoutPageURLComponentsDelayed];
 }
 
 #pragma mark Publish as Collection
@@ -1089,7 +1110,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		{
 			[self fileNameDidChangeToValue:newString];
 		}
-		[self layoutPageURLComponents];		
+		NSLog(@"%s --> layoutPageURLComponentsDelayed",__FUNCTION__);
+		[self layoutPageURLComponentsDelayed];		
 		_alreadyHandlingControlTextDidChange = NO;
 	}
 }
