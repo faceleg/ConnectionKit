@@ -65,9 +65,6 @@
             }
         }
         
-        if (!result) NSBeep();  // you'd think so, but NSSavePanel doesn't do this for us
-        
-        
         // Don't allow the user to overwrite document or its contents
         if (result)
         {
@@ -87,6 +84,13 @@
                                     contextInfo:NULL];
 				[alert release];	// will be dealloced when alert is dismissed
             }
+        }
+        else
+        {
+            NSBeep();  // you'd think so, but NSSavePanel doesn't do this for us
+            
+            // Give focus to URL field
+            [[oSiteURLField window] makeFirstResponder:oSiteURLField];
         }
     }
     
