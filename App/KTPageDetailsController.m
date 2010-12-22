@@ -155,7 +155,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 													 name:NSViewFrameDidChangeNotification
 												   object:[self view]];
 		
-		NSLog(@"%s --> layoutPageURLComponentsDelayed",__FUNCTION__);
 		[self layoutPageURLComponentsDelayed];
 		
 		// Observe changes to the meta description and fake an initial observation
@@ -460,7 +459,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void) updateFieldsBasedOnSelectedSiteOutlineObjects:(NSArray *)selObjects;
 {
-	NSLog(@"%s",__FUNCTION__);
 	if (NSIsControllerMarker(selObjects))
 	{
 		NSLog(@"Controller marker:  %@", selObjects);
@@ -497,11 +495,11 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			}
 		}
 		char *typestrings[] =  { "kMixedSiteItemType", "kUnknownSiteItemType", "kLinkSiteItemType", "kTextSiteItemType", "kFileSiteItemType", "kPageSiteItemType" };
+#pragma unused (typestrings)
 
-		NSLog(@"whatKindOfItemsAreSelected => %s", typestrings[combinedType+1]);
+		OFF((@"whatKindOfItemsAreSelected => %s", typestrings[combinedType+1]));
 		self.whatKindOfItemsAreSelected = combinedType;
 		
-		NSLog(@"%s --> layoutPageURLComponentsDelayed",__FUNCTION__);
 		[self layoutPageURLComponentsDelayed];
 	}
 }
@@ -640,7 +638,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 {	
 //	NSLog(@"object = %@", object);
 	
-	NSLog(@"%s %@ --> layoutPageURLComponentsDelayed",__FUNCTION__, keyPath);
 	[self layoutPageURLComponentsDelayed];
 
 	if (context == sMetaDescriptionObservationContext)
@@ -1078,7 +1075,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void) backgroundFrameChanged:(NSNotification *)notification
 {
-	NSLog(@"%s --> layoutPageURLComponentsDelayed",__FUNCTION__);
 	[self layoutPageURLComponentsDelayed];
 }
 
@@ -1133,7 +1129,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		{
 			[self fileNameDidChangeToValue:newString];
 		}
-		NSLog(@"%s --> layoutPageURLComponentsDelayed",__FUNCTION__);
 		[self layoutPageURLComponentsDelayed];		
 		_alreadyHandlingControlTextDidChange = NO;
 	}
