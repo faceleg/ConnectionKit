@@ -827,18 +827,20 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 						||	areTextsSelected
 						||	areFilesSelected);
 	
-	[oBaseURLField setHidden:!hasLocalPath];
-	[oFileNameField setHidden:(!hasLocalPath
-							   || (arePagesSelected && IS_ROOT_STATE == pageIsCollectionState))
+	[oBaseURLField setHidden:!hasLocalPath || selectedObjectsCount > 1];
+	[oFileNameField setHidden:!hasLocalPath
+							   || (arePagesSelected && IS_ROOT_STATE == pageIsCollectionState)
 								|| selectedObjectsCount > 1];
 
-	[oDotSeparator setHidden:(!arePagesSelected  || NSOffState != pageIsCollectionState)];
-	[oSlashSeparator setHidden:(!arePagesSelected || NSOnState != pageIsCollectionState)];
-	[oIndexDotSeparator setHidden:(!arePagesSelected || NSOffState == pageIsCollectionState) || selectedObjectsCount > 1];
+	[oDotSeparator setHidden:(!arePagesSelected  || NSOffState != pageIsCollectionState) && selectedObjectsCount == 1];
+	[oSlashSeparator setHidden:!arePagesSelected || NSOnState != pageIsCollectionState || selectedObjectsCount > 1];
+	[oIndexDotSeparator setHidden:!arePagesSelected || NSOffState == pageIsCollectionState || selectedObjectsCount > 1];
 
-	[oMultiplePagesField setHidden:( !arePagesSelected || NSMixedState != pageIsCollectionState)];
+	[oMultiplePagesField setHidden: !arePagesSelected || selectedObjectsCount == 1];
 	
 	[oExtensionPopup setHidden:!arePagesSelected];
+	
+	[oPublishAsCollectionPopup setHidden: !arePagesSelected || NSMixedState == pageIsCollectionState];
 
 	
 	// Follow button only enabled when there is one item ?
@@ -893,9 +895,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		int collectionExtraX [] = {4,5,1,6,8,0,0};
 		int collectionMarginsAfter[] = {0,-1,0,0,8,12,0};
 		
-		NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oMultiplePagesField,oDotSeparator,oExtensionPopup,oPublishAsCollectionPopup,nil];
-		int markerExtraX [] = {4,4,6,8,0};
-		int markerMarginsAfter[] = {0,0,0,8,12};
+		NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oMultiplePagesField,oDotSeparator,oExtensionPopup,oPublishAsCollectionPopup,nil];
+		int markerExtraX [] = {4,6,8,0,0};
+		int markerMarginsAfter[] = {0,0,8,12,0};
 			
 		NSArray *rootItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oIndexDotSeparator,oExtensionPopup,oFollowButton,oPublishAsCollectionPopup,nil];
 		int rootExtraX [] = {0,6,8,0,0};
@@ -907,28 +909,37 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 				
 		if (arePagesSelected)
 		{
-			switch (pageIsCollectionState)
+			if (selectedObjectsCount > 1)
 			{
-				case IS_ROOT_STATE:
-					itemsToLayOut = rootItemsToLayOut;
-					theExtraX = rootExtraX;
-					theMarginsAfter = rootMarginsAfter;
-					break;
-				case NSMixedState:
-					itemsToLayOut = markerItemsToLayOut;
-					theExtraX = markerExtraX;
-					theMarginsAfter = markerMarginsAfter;
-					break;
-				case NSOnState:
-					itemsToLayOut = collectionItemsToLayOut;
-					theExtraX = collectionExtraX;
-					theMarginsAfter = collectionMarginsAfter;
-					break;
-				case NSOffState:
-					itemsToLayOut = pageItemsToLayOut;
-					theExtraX = pageExtraX;
-					theMarginsAfter = pageMarginsAfter;
-					break;
+				itemsToLayOut = markerItemsToLayOut;
+				theExtraX = markerExtraX;
+				theMarginsAfter = markerMarginsAfter;
+			}
+			else
+			{
+				switch (pageIsCollectionState)
+				{
+					case IS_ROOT_STATE:
+						itemsToLayOut = rootItemsToLayOut;
+						theExtraX = rootExtraX;
+						theMarginsAfter = rootMarginsAfter;
+						break;
+					case NSMixedState:
+						itemsToLayOut = markerItemsToLayOut;
+						theExtraX = markerExtraX;
+						theMarginsAfter = markerMarginsAfter;
+						break;
+					case NSOnState:
+						itemsToLayOut = collectionItemsToLayOut;
+						theExtraX = collectionExtraX;
+						theMarginsAfter = collectionMarginsAfter;
+						break;
+					case NSOffState:
+						itemsToLayOut = pageItemsToLayOut;
+						theExtraX = pageExtraX;
+						theMarginsAfter = pageMarginsAfter;
+						break;
+				}
 			}
 		}
 		else

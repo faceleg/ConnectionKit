@@ -13,8 +13,8 @@
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<integer value="2183"/>
 			<integer value="1793"/>
-			<integer value="2122"/>
 			<integer value="2045"/>
+			<integer value="2122"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -1829,7 +1829,7 @@
 						<string key="label">enabled2: selection.isRoot</string>
 						<reference key="source" ref="481224017"/>
 						<reference key="destination" ref="601368962"/>
-						<object class="NSNibBindingConnector" key="connector" id="715694248">
+						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="481224017"/>
 							<reference key="NSDestination" ref="601368962"/>
 							<string key="NSLabel">enabled2: selection.isRoot</string>
@@ -1947,27 +1947,6 @@
 						<reference key="destination" ref="400506221"/>
 					</object>
 					<int key="connectionID">2202</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">hidden: selection.pageRepresentation</string>
-						<reference key="source" ref="481224017"/>
-						<reference key="destination" ref="601368962"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="481224017"/>
-							<reference key="NSDestination" ref="601368962"/>
-							<string key="NSLabel">hidden: selection.pageRepresentation</string>
-							<string key="NSBinding">hidden</string>
-							<string key="NSKeyPath">selection.pageRepresentation</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">NSIsNil</string>
-							</object>
-							<reference key="NSPreviousConnector" ref="715694248"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">2206</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2681,10 +2660,10 @@
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1547.IBEditorWindowLastContentRect">{{50, 608}, {1002, 548}}</string>
+				<string key="1547.IBEditorWindowLastContentRect">{{57, 458}, {1002, 548}}</string>
 				<string key="1547.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1547.IBViewEditorWindowController.showingLayoutRectangles"/>
-				<string key="1547.IBWindowTemplateEditedContentRect">{{50, 608}, {1002, 548}}</string>
+				<string key="1547.IBWindowTemplateEditedContentRect">{{57, 458}, {1002, 548}}</string>
 				<boolean value="YES" key="1547.ImportedFromIB2"/>
 				<boolean value="YES" key="1547.windowTemplate.hasMinSize"/>
 				<string key="1547.windowTemplate.minSize">{800, 280}</string>
