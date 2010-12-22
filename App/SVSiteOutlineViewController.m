@@ -20,7 +20,6 @@
 #import "SVPageTemplate.h"
 #import "KTElementPlugInWrapper.h"
 
-#import "NSArray+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSOutlineView+KTExtensions.h"
 #import "NSSet+KTExtensions.h"
