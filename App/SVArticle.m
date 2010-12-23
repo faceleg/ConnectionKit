@@ -272,8 +272,8 @@
 				{
 					if (lastTextNode)
 					{
-						// Trucate, plus add on an ellipses.  (Space before ellipses if we didn't break a word up.)
-						NSString *theFormat = NSLocalizedString(@"%@…", @"something followed by ellipses to show that we cut it off");
+						// Trucate, plus add on an ellipses.
+						NSString *theFormat = NSLocalizedString(@"%@…", @"something followed by ellipses to show that we cut it off. Appended directly after last word.  In French, there might be a space beforehand.");
 						NSString *lastNodeString = [lastTextNode stringValue];
 						NSString *newString = [NSString stringWithFormat:theFormat,
 											   lastNodeString];
