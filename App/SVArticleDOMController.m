@@ -179,12 +179,16 @@
 {
     DOMRange *result = [super insertionRangeForGraphic:graphic];
     
-    // Perform the insertion at top-level. #101122
-    while ([result startContainer] != [self textHTMLElement])
+    NSNumber *wrap = [[graphic textAttachment] causesWrap];
+    if (!wrap || [wrap boolValue])
     {
-        [result setStartBefore:[result startContainer]];
+        // Perform the insertion at top-level. #101122
+        while ([result startContainer] != [self textHTMLElement])
+        {
+            [result setStartBefore:[result startContainer]];
+        }
+        [result collapse:YES];
     }
-    [result collapse:YES];
     
     return result;
 }
