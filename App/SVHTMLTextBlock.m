@@ -335,7 +335,15 @@
     
     
 	// Main tag
-	[context startElement:[self tagName]];
+    NSString *element = [self tagName];
+    if ([element isEqualToStringCaseInsensitive:@"h"])
+    {
+        [context startHeaderWithAttributes:nil];
+    }
+    else
+    {
+        [context startElement:element];
+    }
 	
     
 	    
