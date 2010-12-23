@@ -45,21 +45,21 @@
 #import "NSString+IMStatus.h"
 
 
-NSString *IMServiceKey = @"service";
-NSString *IMHTMLKey = @"html"; 
-NSString *IMOnlineImageKey = @"online";
-NSString *IMOfflineImageKey = @"offline";
-NSString *IMWantBorderKey = @"wantBorder";
-
-
-@interface IMStatusPlugIn ()
-@end
-
+@implementation IMStatusPlugIn
 
 #pragma mark -
+#pragma mark SVPlugIn
 
-
-@implementation IMStatusPlugIn
++ (NSArray *)plugInKeys
+{ 
+    return [NSArray arrayWithObjects:
+            @"username", 
+            @"selectedServiceIndex",
+            @"headlineText",
+            @"offlineText",
+            @"onlineText",
+            nil];
+}
 
 - (void)dealloc
 {
@@ -73,7 +73,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 - (void)awakeFromNew;
 {
     [super awakeFromNew];
-
+    
     self.headlineText = LocalizedStringInThisBundle(@"Chat with me", @"Short headline for badge inviting website viewer to iChat/Skype chat with the owner of the website");
     self.offlineText = LocalizedStringInThisBundle(@"offline", @"status indicator of chat; offline or unavailable");
     self.onlineText = LocalizedStringInThisBundle(@"online", @"status indicator of chat; online or available");
@@ -98,21 +98,6 @@ NSString *IMWantBorderKey = @"wantBorder";
     
     self.selectedServiceIndex = serviceIndex;
     self.username = serviceUsername;
-}
-
-
-#pragma mark -
-#pragma mark SVPlugIn
-
-+ (NSArray *)plugInKeys
-{ 
-    return [NSArray arrayWithObjects:
-            @"username", 
-            @"selectedServiceIndex",
-            @"headlineText",
-            @"offlineText",
-            @"onlineText",
-            nil];
 }
 
 
