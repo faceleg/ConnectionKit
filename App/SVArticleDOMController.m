@@ -175,6 +175,20 @@
 
 #pragma mark Insertion
 
+- (DOMRange *)insertionRangeForGraphic:(SVGraphic *)graphic;
+{
+    DOMRange *result = [super insertionRangeForGraphic:graphic];
+    
+    // Perform the insertion at top-level. #101122
+    while ([result startContainer] != [self textHTMLElement])
+    {
+        [result setStartBefore:[result startContainer]];
+    }
+    [result collapse:YES];
+    
+    return result;
+}
+
 - (BOOL)insertGraphics:(NSArray *)graphics beforeDOMNode:(DOMNode *)refNode;
 {
     BOOL result = NO;

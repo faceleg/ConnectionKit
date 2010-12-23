@@ -468,20 +468,13 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     DOMRange *result = [self selectedDOMRange];
     if (result)
     {
-        // Perform the insertion at top-level
-        while ([result startContainer] != [self textHTMLElement])
-        {
-            [result setStartBefore:[result startContainer]];
-        }
-        [result collapse:YES];
-        
-        /*/ Tweak a little when at the start of a paragraph. #81909
+        // Tweak a little when at the start of a paragraph. #81909
         if ([result collapsed] &&
             [result startOffset] == 0 &&
             [[result startContainer] parentNode] == [self textHTMLElement])
         {
             [result setStartBefore:[result startContainer]];
-        }*/
+        }
     }
     else
     {
