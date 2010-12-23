@@ -53,7 +53,6 @@
             @"compact", 
             @"sections", 
             @"showHome", 
-            @"showSiteMap",
             nil];
 }
 
@@ -69,7 +68,6 @@
     self.compact = NO;
     self.sections = NO;
     self.showHome = YES;
-    self.showSiteMap = YES; //FIXME: what is this property for?
 }
 
 - (void)makeOriginalSize;
@@ -243,5 +241,4 @@
 @synthesize compact = _compact;
 @synthesize sections = _sections;
 @synthesize showHome = _showHome;
-@synthesize showSiteMap = _showSiteMap;
 @end

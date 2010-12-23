@@ -44,12 +44,10 @@
     BOOL _compact;
     BOOL _sections;     // top level items as H3
     BOOL _showHome;
-    BOOL _showSiteMap;
 }
 
 @property(nonatomic) BOOL compact;
 @property(nonatomic) BOOL sections;
 @property(nonatomic) BOOL showHome;
-@property(nonatomic) BOOL showSiteMap;
 
 @end
