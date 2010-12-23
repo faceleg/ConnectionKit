@@ -926,6 +926,11 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             NSMenu *insertMenu = [oInsertRawHTMLMenuItem menu];
             NSUInteger index = [insertMenu indexOfItem:oInsertRawHTMLMenuItem];
             
+            // Raw HTML
+            SVGraphicFactory *rawHTMLFactory = [SVGraphicFactory rawHTMLFactory];
+            [oInsertRawHTMLMenuItem setTag:[SVGraphicFactory tagForFactory:rawHTMLFactory]];
+            [oInsertRawHTMLMenuItem setRepresentedObject:rawHTMLFactory];
+            
             // More
             item = [SVGraphicFactory menuItemWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
 															title:NSLocalizedString(@"More", @"menu item")
