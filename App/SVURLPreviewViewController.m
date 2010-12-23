@@ -76,21 +76,10 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 {
     SVSiteItem *item = [self siteItem];
     SVMediaRecord *media = [item mediaRepresentation];
-    
     if (media)
     {
-        if ([(id)item docType]) return YES; // once assigned a doctype, remain editable. #87240
-        
-        
-        SVMediaRecord *media = [item mediaRepresentation];
-        
-        // Don't want to edit any old text as that includes things like RTF. Plain text would be ideal, but for some reason neither HTML or XML conform to it (or each other!) so cover them specially
-        NSString *type = [media typeOfFile];
-        return ([type conformsToUTI:(NSString *)kUTTypePlainText] ||
-                [type conformsToUTI:(NSString *)kUTTypeHTML] ||
-                [type conformsToUTI:(NSString *)kUTTypeXML]);
+        return [media isEditableText];
     }
-    
     return NO;
 }
 

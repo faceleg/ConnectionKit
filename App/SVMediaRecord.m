@@ -150,6 +150,15 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return ([[self filename] hasPrefix:@"shared/"] || [[self filename] hasPrefix:@"Shared/"]);
 }
 
+- (BOOL)isEditableText	// used by SVURLPreviewController and KTPageDetailsController
+{
+	NSString *type = [self typeOfFile];
+	// Don't want to edit any old text as that includes things like RTF. Plain text would be ideal, but for some reason neither HTML or XML conform to it (or each other!) so cover them specially
+	return ([type conformsToUTI:(NSString *)kUTTypePlainText] ||
+			[type conformsToUTI:(NSString *)kUTTypeHTML] ||
+			[type conformsToUTI:(NSString *)kUTTypeXML]);}
+}
+
 #pragma mark Updating File Wrappers
 
 - (BOOL)readFromURL:(NSURL *)URL options:(NSUInteger)options error:(NSError **)error;

@@ -445,19 +445,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		[oMetaDescriptionField unbind:NSValueBinding];
 		[oMetaDescriptionField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
 	}
-}
-
-- (BOOL) mediaIsEditableText:(SVMediaRecord *)aMedia
-{
-	NSString *UTI = [aMedia typeOfFile];
-	BOOL result = ([UTI conformsToUTI:(NSString *)kUTTypePlainText]
-				   || [UTI conformsToUTI:(NSString *)kUTTypeHTML]
-				   || [UTI conformsToUTI:(NSString *)kUTTypeXML]
-				   );
-		// We want subclasses of public.text but *not* RTF so we take its direct subtypes: public.plain-text, public.xml, public.html
-	return result;
-}
-	
+}	
 
 - (void) updateFieldsBasedOnSelectedSiteOutlineObjects:(NSArray *)selObjects;
 {
@@ -479,7 +467,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			{
 				type = kFileSiteItemType;
 				// But now see if it's actually editable text
-				if ([self mediaIsEditableText:media])
+				if ([media isEditableText])
 				{
 					type = kTextSiteItemType;
 				}

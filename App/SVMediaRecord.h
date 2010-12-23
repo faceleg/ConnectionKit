@@ -71,6 +71,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 //  .fileURL is not KVO-compliant
 
 - (BOOL)isPlaceholder;
+- (BOOL)isEditableText;	// used by SVURLPreviewController and KTPageDetailsController
 
 
 #pragma mark Updating File Wrappers
