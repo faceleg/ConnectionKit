@@ -216,7 +216,7 @@ NSString *IMWantBorderKey = @"wantBorder";
     }
     else
     {
-        NSString *noIDMessage = LocalizedStringInThisBundle(@"(Please set your ID using the object inspector)", @"");
+        NSString *noIDMessage = LocalizedStringInThisBundle(@"(Please enter your IM username in the Inspector)", @"");
         [context writeText:noIDMessage];
     }
 
