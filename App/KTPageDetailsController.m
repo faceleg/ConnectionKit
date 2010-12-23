@@ -820,7 +820,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	[oFileNameField setHidden:!arePagesSelected
 							   || (arePagesSelected && IS_ROOT_STATE == pageIsCollectionState)
 								|| selectedObjectsCount > 1];
-	[oMediaFilenameField setHidden:!areFilesSelected || selectedObjectsCount > 1];
+	[oMediaFilenameField setHidden:(!areFilesSelected && !areTextsSelected) || selectedObjectsCount > 1];
 
 	[oDotSeparator setHidden:(!arePagesSelected  || NSOffState != pageIsCollectionState) && (selectedObjectsCount == 1 || areMultiSelected)];
 	[oSlashSeparator setHidden:!arePagesSelected || NSOnState != pageIsCollectionState || selectedObjectsCount > 1];
@@ -893,9 +893,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		int rootExtraX [] = {0,6,8,0,0};
 		int rootMarginsAfter[] = {0,0,8,12,0};
 		
-		NSArray *mediaItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oFollowButton,nil];
-		int mediaExtraX [] = {4,5,1};
-		int mediaMarginsAfter[] = {0,-1,0};
+		NSArray *mediaItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oMediaFilenameField,oFollowButton,oEditTextButton,nil];
+		int mediaExtraX [] = {4,0,0,0};
+		int mediaMarginsAfter[] = {0,4,12,0};
 
 		NSArray *multipleTypesToLayOut = [NSArray arrayWithObjects:oMultiplePagesField,nil];
 		int multiTypeExtraX [] = {2};
