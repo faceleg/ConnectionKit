@@ -11,10 +11,10 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="2183"/>
 			<integer value="1793"/>
-			<integer value="2045"/>
 			<integer value="2122"/>
+			<integer value="2045"/>
+			<integer value="2183"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -481,6 +481,7 @@
 																	</array>
 																	<reference key="NSMenuFont" ref="502413197"/>
 																</object>
+																<int key="NSSelectedIndex">-1</int>
 																<int key="NSPreferredEdge">1</int>
 																<bool key="NSUsesItemFromMenu">YES</bool>
 																<bool key="NSAltersState">YES</bool>
@@ -661,10 +662,30 @@
 																<reference key="NSTextColor" ref="440280181"/>
 															</object>
 														</object>
+														<object class="NSButton" id="638238554">
+															<reference key="NSNextResponder" ref="327729126"/>
+															<int key="NSvFlags">268</int>
+															<string key="NSFrame">{{561, 37}, {60, 17}}</string>
+															<reference key="NSSuperview" ref="327729126"/>
+															<bool key="NSEnabled">YES</bool>
+															<object class="NSButtonCell" key="NSCell" id="711731780">
+																<int key="NSCellFlags">-2080244224</int>
+																<int key="NSCellFlags2">134348800</int>
+																<string key="NSContents">Edit</string>
+																<reference key="NSSupport" ref="26"/>
+																<reference key="NSControlView" ref="638238554"/>
+																<int key="NSButtonFlags">-2038152961</int>
+																<int key="NSButtonFlags2">164</int>
+																<string key="NSAlternateContents"/>
+																<string key="NSKeyEquivalent"/>
+																<int key="NSPeriodicDelay">400</int>
+																<int key="NSPeriodicInterval">75</int>
+															</object>
+														</object>
 														<object class="NSButton" id="416662240">
 															<reference key="NSNextResponder" ref="327729126"/>
 															<int key="NSvFlags">268</int>
-															<string key="NSFrame">{{4, 10}, {154, 17}}</string>
+															<string key="NSFrame">{{4, 14}, {154, 17}}</string>
 															<reference key="NSSuperview" ref="327729126"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSButtonCell" key="NSCell" id="746725616">
@@ -1948,6 +1969,22 @@
 					</object>
 					<int key="connectionID">2202</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oEditTextButton</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="638238554"/>
+					</object>
+					<int key="connectionID">2210</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">editRawHTMLInSelectedBlock:</string>
+						<reference key="source" ref="905391626"/>
+						<reference key="destination" ref="638238554"/>
+					</object>
+					<int key="connectionID">2212</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -2300,6 +2337,7 @@
 							<reference ref="597655839"/>
 							<reference ref="408006662"/>
 							<reference ref="481224017"/>
+							<reference ref="638238554"/>
 						</array>
 						<reference key="parent" ref="641495171"/>
 					</object>
@@ -2656,6 +2694,19 @@
 						<reference key="object" ref="1036557212"/>
 						<reference key="parent" ref="272058959"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2207</int>
+						<reference key="object" ref="638238554"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="711731780"/>
+						</array>
+						<reference key="parent" ref="327729126"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2208</int>
+						<reference key="object" ref="711731780"/>
+						<reference key="parent" ref="638238554"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2732,6 +2783,9 @@
 				<string key="1768.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1769.CustomClassName">KSFocusingTextField</string>
 				<string key="1769.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSAffineTransform" key="1769.IBViewBoundsToFrameTransform">
+					<bytes key="NSTransformStruct">P4AAAL+AAAA/gAAAwXAAAA</bytes>
+				</object>
 				<string key="1770.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1781.CustomClassName">KTPageDetailsController</string>
 				<string key="1781.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2770,7 +2824,7 @@
 				<string key="1957.CustomClassName">KSFocusingTextField</string>
 				<string key="1957.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<object class="NSAffineTransform" key="1957.IBViewBoundsToFrameTransform">
-					<bytes key="NSTransformStruct">P4AAAL+AAABD6AAAwkwAAA</bytes>
+					<bytes key="NSTransformStruct">P4AAAL+AAABD3AAAwkwAAA</bytes>
 				</object>
 				<string key="1958.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2026.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2780,6 +2834,9 @@
 				<string key="2032.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2033.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2035.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSAffineTransform" key="2035.IBViewBoundsToFrameTransform">
+					<bytes key="NSTransformStruct">P4AAAL+AAABAgAAAwegAAA</bytes>
+				</object>
 				<string key="2036.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2044.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2045.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2818,7 +2875,7 @@
 					<bytes key="NSTransformStruct">P4AAAL+AAABEIoAAwlAAAA</bytes>
 				</object>
 				<string key="2150.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2151.IBEditorWindowLastContentRect">{{971, 631}, {121, 37}}</string>
+				<string key="2151.IBEditorWindowLastContentRect">{{937, 481}, {121, 37}}</string>
 				<string key="2151.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2152.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2155.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2837,12 +2894,17 @@
 				<string key="2195.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2197.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2200.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2207.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSAffineTransform" key="2207.IBViewBoundsToFrameTransform">
+					<bytes key="NSTransformStruct">P4AAAL+AAABBEAAAwcAAAA</bytes>
+				</object>
+				<string key="2208.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2206</int>
+			<int key="maxID">2212</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2851,6 +2913,7 @@
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key=":">id</string>
+						<string key="editRawHTMLInSelectedBlock:">id</string>
 						<string key="getUpdatedApplication:">id</string>
 						<string key="myAction:">id</string>
 						<string key="showNewsWindow:">id</string>
@@ -2859,6 +2922,10 @@
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key=":">
 							<string key="name">:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="editRawHTMLInSelectedBlock:">
+							<string key="name">editRawHTMLInSelectedBlock:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="getUpdatedApplication:">
@@ -3209,6 +3276,7 @@
 						<string key="oChooseFileButton">NSButton</string>
 						<string key="oDocWindowController">KTDocWindowController</string>
 						<string key="oDotSeparator">NSTextField</string>
+						<string key="oEditTextButton">NSButton</string>
 						<string key="oExtensionPopup">KSFancySchmancyBindingsPopUpButton</string>
 						<string key="oExternalURLField">NSTextField</string>
 						<string key="oFileNameField">NSTextField</string>
@@ -3257,6 +3325,10 @@
 						<object class="IBToOneOutletInfo" key="oDotSeparator">
 							<string key="name">oDotSeparator</string>
 							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="oEditTextButton">
+							<string key="name">oEditTextButton</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="oExtensionPopup">
 							<string key="name">oExtensionPopup</string>

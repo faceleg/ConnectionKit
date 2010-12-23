@@ -38,6 +38,7 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 
 	IBOutlet NSButton				*oFollowButton;
 	IBOutlet NSButton				*oChooseFileButton;
+	IBOutlet NSButton				*oEditTextButton;
 
     IBOutlet SVSiteOutlineViewController    *oSiteOutlineController;
 	IBOutlet SVPagesController              *oPagesController;

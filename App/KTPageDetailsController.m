@@ -816,6 +816,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	[oWindowTitleField		setEditable:arePagesSelected];
 	[oMetaDescriptionField	setEditable:arePagesSelected];
 	[oChooseFileButton		setHidden:!areFilesSelected];
+	[oEditTextButton		setHidden:!areTextsSelected];
 
 	// First line, external URL field
 	[oExternalURLField setHidden:!areLinksSelected];
