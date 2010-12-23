@@ -298,6 +298,7 @@
 		271BFA4F10F00C2D006EA3A2 /* SVPageProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */; settings = {ATTRIBUTES = (); }; };
 		272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */; };
+		27238AFB12C3FE3A00999CD1 /* RawHTMLInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27238AFA12C3FE3A00999CD1 /* RawHTMLInspector.xib */; };
 		2725BA46121DE9990074EAA0 /* NSImageView+IMBImageItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 2725BA44121DE9990074EAA0 /* NSImageView+IMBImageItem.h */; };
 		2725BA47121DE9990074EAA0 /* NSImageView+IMBImageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2725BA45121DE9990074EAA0 /* NSImageView+IMBImageItem.m */; };
 		2725BC38121F3F690074EAA0 /* SVArchivePage.h in Headers */ = {isa = PBXBuildFile; fileRef = 2725BC36121F3F690074EAA0 /* SVArchivePage.h */; };
@@ -1862,6 +1863,7 @@
 		271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageProtocol.h; sourceTree = "<group>"; };
 		272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCollectionIndexFilenameButton.h; sourceTree = "<group>"; };
 		272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCollectionIndexFilenameButton.m; sourceTree = "<group>"; };
+		27238AFA12C3FE3A00999CD1 /* RawHTMLInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RawHTMLInspector.xib; sourceTree = "<group>"; };
 		2725BA44121DE9990074EAA0 /* NSImageView+IMBImageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImageView+IMBImageItem.h"; sourceTree = "<group>"; };
 		2725BA45121DE9990074EAA0 /* NSImageView+IMBImageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImageView+IMBImageItem.m"; sourceTree = "<group>"; };
 		2725BC36121F3F690074EAA0 /* SVArchivePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVArchivePage.h; sourceTree = "<group>"; };
@@ -3837,6 +3839,7 @@
 				27D7345312119C6600722189 /* SVMediaGraphicInspector.h */,
 				27D7345412119C6600722189 /* SVMediaGraphicInspector.m */,
 				27D7350E1211CC3C00722189 /* SVImage.xib */,
+				27238AFA12C3FE3A00999CD1 /* RawHTMLInspector.xib */,
 			);
 			name = "Plug-In Inspector";
 			sourceTree = "<group>";
@@ -6575,6 +6578,7 @@
 				278DB99612B6DDAC006C462F /* GraphicPlaceholder.html in Resources */,
 				CEB516AA12B7DFC2003A5505 /* excerpt_longer.gif in Resources */,
 				CEB516AB12B7DFC2003A5505 /* excerpt_shorter.gif in Resources */,
+				27238AFB12C3FE3A00999CD1 /* RawHTMLInspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

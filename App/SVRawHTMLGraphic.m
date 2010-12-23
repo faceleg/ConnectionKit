@@ -10,6 +10,7 @@
 
 #import "SVHTMLContext.h"
 #import "SVHTMLValidator.h"
+#import "SVInspectorViewController.h"
 #import "SVTemplate.h"
 
 #import "Registration.h"
@@ -101,6 +102,17 @@
     }
     
     return result;
+}
+
+#pragma mark Inspector
+
+- (NSString *)plugInIdentifier; { return @"sandvox.RawHTML"; }
+
++ (SVInspectorViewController *)makeInspectorViewController;
+{
+    return [[[SVInspectorViewController alloc]
+             initWithNibName:@"RawHTMLInspector" bundle:nil]
+            autorelease];
 }
 
 @end
