@@ -40,6 +40,7 @@
 
 + (NSArray *)attachmentSortDescriptors;
 - (BOOL)attachmentsCanCauseWrap;
+- (CGFloat)maxGraphicWidth;
 
 
 #pragma mark HTML

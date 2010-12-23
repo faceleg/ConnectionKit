@@ -205,15 +205,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     {
         case SVGraphicPlacementInline:
         {
-            if ([[page showSidebar] boolValue])
-            {
-                settings = [design imageScalingSettingsForUse:@"KTSidebarPageMedia"];
-            }
-            else
-            {
-                settings = [design imageScalingSettingsForUse:@"KTPageMedia"];
-            }
-            break;
+            SVRichText *textArea = [[self textAttachment] body];
+            return [textArea maxGraphicWidth];
         }
             
         case SVGraphicPlacementCallout:

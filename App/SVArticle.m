@@ -8,10 +8,13 @@
 
 #import "SVArticle.h"
 
+#import "KTDesign.h"
 #import "SVGraphic.h"
 #import "SVHTMLContext.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
+#import "KTImageScalingSettings.h"
+#import "KTMaster.h"
 #import "KTPage.h"
 #import "SVTextAttachment.h"
 
@@ -512,5 +515,23 @@
 }
 
 - (BOOL)attachmentsCanCauseWrap; { return YES; }
+
+- (CGFloat)maxGraphicWidth;
+{
+    KTPage *page = [self page];
+    
+    KTImageScalingSettings *settings;
+    if ([[page showSidebar] boolValue])
+    {
+        settings = [[[page master] design] imageScalingSettingsForUse:@"KTSidebarPageMedia"];
+    }
+    else
+    {
+        settings = [[[page master] design] imageScalingSettingsForUse:@"KTPageMedia"];
+    }
+
+    CGFloat result = [settings size].width;
+    return result;
+}
 
 @end

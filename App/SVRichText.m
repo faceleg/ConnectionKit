@@ -232,4 +232,9 @@
 
 - (BOOL)attachmentsCanCauseWrap; { return NO; }
 
+- (CGFloat)maxGraphicWidth;
+{
+    return 200.0f;
+}
+
 @end
