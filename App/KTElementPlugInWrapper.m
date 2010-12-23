@@ -90,10 +90,6 @@
 	{
 		return [NSNumber numberWithBool:YES];
 	}
-	else if ([key isEqualToString:@"KTPageDisableComments"])
-	{
-		return [NSNumber numberWithBool:NO];
-	}
 	else if ([key isEqualToString:@"KTPageletCanHaveTitle"])
 	{
 		return [NSNumber numberWithBool:YES];

@@ -28,16 +28,12 @@
 	<string>2.0</string>
 	<key>KTCSSClassName</key>
 	<string>sitemap</string>
-	<key>KTPageDisableComments</key>
-	<true/>
 	<key>KTPageType</key>
 	<string>site-map</string>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_sitemap.tiff</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
-	<key>KTSidebarChangeable</key>
-	<true/>
 	<key>NSPrincipalClass</key>
 	<string>SiteMapPlugIn</string>
 </dict>
