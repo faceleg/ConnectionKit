@@ -274,12 +274,12 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 		NSString *UTI = [media typeOfFile];
 		if ([UTI conformsToUTI:(NSString *)kUTTypeHTML])
 		{
-			result = [NSImage imageNamed:@"plainText"];
+			result = [NSImage imageNamed:@"textPage"];
 
 		}
 		else if ([UTI conformsToUTI:(NSString *)kUTTypePlainText])
 		{
-			result = [NSImage imageNamed:@"HTML"];
+			result = [NSImage imageNamed:@"htmlPage"];
 		}
 		else
 		{
