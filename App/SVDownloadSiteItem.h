@@ -16,7 +16,7 @@
 @interface SVDownloadSiteItem : SVSiteItem <KTHTMLSourceObject>
 
 @property(nonatomic, retain) SVMediaRecord *media;
-@property(nonatomic, copy) NSString *fileName;
+@property(nonatomic, copy) NSString *filename;
 
 
 #pragma mark Text edting

@@ -96,18 +96,18 @@
     return [result autorelease];
 }
 
-- (NSString *)filename { return [self.media preferredFilename]; }
-
-@dynamic fileName;
-- (void)setFileName:(NSString *)name;
+- (NSString *)filename
 {
-    [self willChangeValueForKey:@"fileName"];
-    [self setPrimitiveValue:name forKey:@"fileName"];
-    
-    // This invalidates publishing status
-    [self setDatePublished:nil];
-    
-    [self didChangeValueForKey:@"fileName"];
+    return [self.media preferredFilename];
+    // FIXME: Should legalize it for publishing
+}
+- (void)setFilename:(NSString *)filename;
+{
+    [[self media] setPreferredFilename:filename];
+}
++ (NSSet *)keyPathsForValuesAffectingFilename;
+{
+    return [NSSet setWithObject:@"media.preferredFilename"];
 }
 
 - (KTMaster *)master; { return [[self parentPage] master]; }
