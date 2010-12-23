@@ -451,8 +451,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 {
 	NSString *UTI = [aMedia typeOfFile];
 	BOOL result = ([UTI conformsToUTI:(NSString *)kUTTypePlainText]
-				   || [UTI conformsToUTI:(NSString *)kUTTypeHTML] );
-		// Let's try not allowing kUTTypeXML or KUTTypeHTML or other variants of kUTTypeText
+				   || [UTI conformsToUTI:(NSString *)kUTTypeHTML]
+				   || [UTI conformsToUTI:(NSString *)kUTTypeXML]
+				   );
+		// We want subclasses of public.text but *not* RTF so we take its direct subtypes: public.plain-text, public.xml, public.html
 	return result;
 }
 	
@@ -827,9 +829,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 						||	areFilesSelected);
 	
 	[oBaseURLField setHidden:!hasLocalPath || selectedObjectsCount > 1];
-	[oFileNameField setHidden:!hasLocalPath
+	[oFileNameField setHidden:!arePagesSelected
 							   || (arePagesSelected && IS_ROOT_STATE == pageIsCollectionState)
 								|| selectedObjectsCount > 1];
+	[oMediaFilenameField setHidden:!areFilesSelected || selectedObjectsCount > 1];
 
 	[oDotSeparator setHidden:(!arePagesSelected  || NSOffState != pageIsCollectionState) && (selectedObjectsCount == 1 || areMultiSelected)];
 	[oSlashSeparator setHidden:!arePagesSelected || NSOnState != pageIsCollectionState || selectedObjectsCount > 1];

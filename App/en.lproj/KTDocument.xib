@@ -11,10 +11,9 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="1793"/>
-			<integer value="2122"/>
 			<integer value="2045"/>
-			<integer value="2183"/>
+			<integer value="2122"/>
+			<integer value="1793"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -427,6 +426,29 @@
 													<reference key="NSNextResponder" ref="641495171"/>
 													<int key="NSvFlags">292</int>
 													<array class="NSMutableArray" key="NSSubviews">
+														<object class="NSTextField" id="478239044">
+															<reference key="NSNextResponder" ref="327729126"/>
+															<int key="NSvFlags">266</int>
+															<string key="NSFrame">{{128, 39}, {35, 14}}</string>
+															<reference key="NSSuperview" ref="327729126"/>
+															<bool key="NSEnabled">YES</bool>
+															<object class="NSTextFieldCell" key="NSCell" id="953279305">
+																<int key="NSCellFlags">-1804468671</int>
+																<int key="NSCellFlags2">272794624</int>
+																<string key="NSContents"/>
+																<reference key="NSSupport" ref="26"/>
+																<reference key="NSControlView" ref="478239044"/>
+																<bool key="NSDrawsBackground">YES</bool>
+																<int key="NSTextBezelStyle">1</int>
+																<reference key="NSBackgroundColor" ref="705998482"/>
+																<object class="NSColor" key="NSTextColor" id="440280181">
+																	<int key="NSColorSpace">6</int>
+																	<string key="NSCatalogName">System</string>
+																	<string key="NSColorName">textColor</string>
+																	<reference key="NSColor" ref="57005086"/>
+																</object>
+															</object>
+														</object>
 														<object class="NSPopUpButton" id="481224017">
 															<reference key="NSNextResponder" ref="327729126"/>
 															<int key="NSvFlags">265</int>
@@ -491,7 +513,7 @@
 														<object class="NSTextField" id="987946768">
 															<reference key="NSNextResponder" ref="327729126"/>
 															<int key="NSvFlags">268</int>
-															<string key="NSFrame">{{256, 39}, {129, 14}}</string>
+															<string key="NSFrame">{{198, 39}, {129, 14}}</string>
 															<reference key="NSSuperview" ref="327729126"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTextFieldCell" key="NSCell" id="648262233">
@@ -525,12 +547,7 @@
 																<reference key="NSSupport" ref="26"/>
 																<reference key="NSControlView" ref="899980468"/>
 																<reference key="NSBackgroundColor" ref="705998482"/>
-																<object class="NSColor" key="NSTextColor" id="440280181">
-																	<int key="NSColorSpace">6</int>
-																	<string key="NSCatalogName">System</string>
-																	<string key="NSColorName">textColor</string>
-																	<reference key="NSColor" ref="57005086"/>
-																</object>
+																<reference key="NSTextColor" ref="440280181"/>
 															</object>
 														</object>
 														<object class="NSTextField" id="452661693">
@@ -572,7 +589,7 @@
 														<object class="NSTextField" id="139174513">
 															<reference key="NSNextResponder" ref="327729126"/>
 															<int key="NSvFlags">265</int>
-															<string key="NSFrame">{{321, 39}, {8, 14}}</string>
+															<string key="NSFrame">{{357, 39}, {8, 14}}</string>
 															<reference key="NSSuperview" ref="327729126"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTextFieldCell" key="NSCell" id="366439242">
@@ -594,7 +611,7 @@
 														<object class="NSTextField" id="130323050">
 															<reference key="NSNextResponder" ref="327729126"/>
 															<int key="NSvFlags">265</int>
-															<string key="NSFrame">{{331, 39}, {10, 14}}</string>
+															<string key="NSFrame">{{367, 39}, {10, 14}}</string>
 															<reference key="NSSuperview" ref="327729126"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTextFieldCell" key="NSCell" id="832528743">
@@ -649,11 +666,11 @@
 														<object class="NSTextField" id="486193302">
 															<reference key="NSNextResponder" ref="327729126"/>
 															<int key="NSvFlags">266</int>
-															<string key="NSFrame">{{85, 39}, {234, 14}}</string>
+															<string key="NSFrame">{{85, 39}, {35, 14}}</string>
 															<reference key="NSSuperview" ref="327729126"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTextFieldCell" key="NSCell" id="747258577">
-																<int key="NSCellFlags">-1808662975</int>
+																<int key="NSCellFlags">-1800274367</int>
 																<int key="NSCellFlags2">272794624</int>
 																<string key="NSContents"/>
 																<reference key="NSSupport" ref="26"/>
@@ -671,7 +688,7 @@
 															<object class="NSButtonCell" key="NSCell" id="711731780">
 																<int key="NSCellFlags">-2080244224</int>
 																<int key="NSCellFlags2">134348800</int>
-																<string key="NSContents">Edit</string>
+																<string key="NSContents">Edit…</string>
 																<reference key="NSSupport" ref="26"/>
 																<reference key="NSControlView" ref="638238554"/>
 																<int key="NSButtonFlags">-2038152961</int>
@@ -974,6 +991,7 @@
 					<string>childItems.@count</string>
 					<string>isRoot</string>
 					<string>willPublishAsCollection</string>
+					<string>filename</string>
 				</array>
 				<string key="NSObjectClassName">KTPage</string>
 				<bool key="NSEditable">YES</bool>
@@ -1143,7 +1161,7 @@
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="1054972461">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="BWHyperlinkButton" id="1035959453">
@@ -1187,7 +1205,6 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{377, 50}</string>
-				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 		</array>
@@ -1985,6 +2002,52 @@
 					</object>
 					<int key="connectionID">2212</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="478239044"/>
+						<reference key="destination" ref="408607898"/>
+					</object>
+					<int key="connectionID">2215</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">formatter</string>
+						<reference key="source" ref="478239044"/>
+						<reference key="destination" ref="451075420"/>
+					</object>
+					<int key="connectionID">2216</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.filename</string>
+						<reference key="source" ref="478239044"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="478239044"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">value: selection.filename</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.filename</string>
+							<dictionary key="NSOptions">
+								<boolean value="YES" key="NSConditionallySetsHidden"/>
+								<string type="base64-UTF8" key="NSMultipleValuesPlaceholder">IA</string>
+								<string key="NSNullPlaceholder">unknown</string>
+								<boolean value="NO" key="NSRaisesForNotApplicableKeys"/>
+							</dictionary>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2219</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oMediaFilenameField</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="478239044"/>
+					</object>
+					<int key="connectionID">2220</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -2338,6 +2401,7 @@
 							<reference ref="408006662"/>
 							<reference ref="481224017"/>
 							<reference ref="638238554"/>
+							<reference ref="478239044"/>
 						</array>
 						<reference key="parent" ref="641495171"/>
 					</object>
@@ -2707,6 +2771,19 @@
 						<reference key="object" ref="711731780"/>
 						<reference key="parent" ref="638238554"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2213</int>
+						<reference key="object" ref="478239044"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="953279305"/>
+						</array>
+						<reference key="parent" ref="327729126"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2214</int>
+						<reference key="object" ref="953279305"/>
+						<reference key="parent" ref="478239044"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2758,6 +2835,9 @@
 				<string key="1748.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1749.CustomClassName">KSFocusingTextField</string>
 				<string key="1749.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSAffineTransform" key="1749.IBViewBoundsToFrameTransform">
+					<bytes key="NSTransformStruct">P4AAAL+AAABCqgAAwkwAAA</bytes>
+				</object>
 				<string key="1750.CustomClassName">KSFancySchmancyBindingsPopUpButton</string>
 				<string key="1750.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<object class="NSAffineTransform" key="1750.IBViewBoundsToFrameTransform">
@@ -2899,12 +2979,18 @@
 					<bytes key="NSTransformStruct">P4AAAL+AAABBEAAAwcAAAA</bytes>
 				</object>
 				<string key="2208.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2213.CustomClassName">KSFocusingTextField</string>
+				<string key="2213.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSAffineTransform" key="2213.IBViewBoundsToFrameTransform">
+					<bytes key="NSTransformStruct">P4AAAL+AAABCqgAAwkwAAA</bytes>
+				</object>
+				<string key="2214.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2212</int>
+			<int key="maxID">2220</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3283,6 +3369,7 @@
 						<string key="oFilePrompt">NSTextField</string>
 						<string key="oFollowButton">NSButton</string>
 						<string key="oIndexDotSeparator">NSTextField</string>
+						<string key="oMediaFilenameField">NSTextField</string>
 						<string key="oMetaDescriptionField">NSTextField</string>
 						<string key="oMetaDescriptionPrompt">NSTextField</string>
 						<string key="oMultiplePagesField">NSTextField</string>
@@ -3352,6 +3439,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="oIndexDotSeparator">
 							<string key="name">oIndexDotSeparator</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="oMediaFilenameField">
+							<string key="name">oMediaFilenameField</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="oMetaDescriptionField">
