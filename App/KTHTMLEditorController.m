@@ -325,6 +325,7 @@ initial syntax coloring.
 
 - (void) autoValidate;	// check validity while the user is typing
 {
+	if (![self isHTML]) return;
 	// Use NSXMLDocument -- not useful for errors, but it's quick.
 	NSMutableAttributedString*  textStore = [textView textStorage];
 	NSString *html = [textStore string];
@@ -378,14 +379,26 @@ initial syntax coloring.
 	return digest;		// will be nil if the string is empty or white space only.
 }
 
+- (BOOL)isHTML
+{
+	NSString *typeOfFile = [self.HTMLSourceObject typeOfFile];
+	BOOL conforms = [typeOfFile conformsToUTI:(NSString *)kUTTypeHTML];
+	return conforms;
+}
+
 - (BOOL) canValidate;
 {
-	return (self.validationState > kValidationStateDisabled);
+	return NO;
+	BOOL validationStateOK = self.validationState > kValidationStateDisabled;
+	NSString *typeOfFile = [self.HTMLSourceObject typeOfFile];
+	BOOL conforms = [typeOfFile conformsToUTI:(NSString *)kUTTypeHTML];
+	BOOL result = validationStateOK && conforms;
+	return result;
 }
 
 + (NSSet *)keyPathsForValuesAffectingCanValidate;
 {
-    return [NSSet setWithObject:@"validationState"];
+    return [NSSet setWithObjects:@"validationState", @"HTMLSourceObject.typeOfFile", nil];
 }
 
 - (IBAction) validate:(id)sender;

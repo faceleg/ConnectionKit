@@ -168,6 +168,15 @@
 - (NSNumber *)docType; { return nil; }
 - (void)setDocType:(NSNumber *)docType; { }
 
+- (NSString *)typeOfFile;
+{
+	if ([self media])
+	{
+		return [[self media] typeOfFile];
+	}
+	return (NSString *)kUTTypeData;
+}
+
 - (NSData *)lastValidMarkupDigest; { return [self valueForUndefinedKey:@"lastValidMarkupDigest"]; }
 - (void)setLastValidMarkupDigest:(NSData *)digest;
 {
