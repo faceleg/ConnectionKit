@@ -230,4 +230,6 @@
     return YES;
 }
 
+- (BOOL)attachmentsCanCauseWrap; { return NO; }
+
 @end

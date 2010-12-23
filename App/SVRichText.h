@@ -27,14 +27,19 @@
 @property(nonatomic, copy) NSString *string;
 - (void)setString:(NSString *)string attachments:(NSSet *)attachments;  // deletes old attachments
 
-@property(nonatomic, copy, readonly) NSSet *attachments;
-- (NSArray *)orderedAttachments;
-- (BOOL)endsOnAttachment;
-+ (NSArray *)attachmentSortDescriptors;
-
 - (BOOL)isEmpty;
 
 - (void)deleteCharactersInRange:(NSRange)aRange;
+
+
+#pragma mark Attachments
+
+@property(nonatomic, copy, readonly) NSSet *attachments;
+- (NSArray *)orderedAttachments;
+- (BOOL)endsOnAttachment;
+
++ (NSArray *)attachmentSortDescriptors;
+- (BOOL)attachmentsCanCauseWrap;
 
 
 #pragma mark HTML

@@ -511,4 +511,6 @@
     return YES;
 }
 
+- (BOOL)attachmentsCanCauseWrap; { return YES; }
+
 @end

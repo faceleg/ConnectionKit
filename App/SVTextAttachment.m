@@ -83,15 +83,30 @@
 @dynamic causesWrap;
 - (BOOL)validateCausesWrap:(NSNumber **)causesWrap error:(NSError **)error;
 {
-    // Only images and raw HTML support not causing wrap
     BOOL result = YES;
     
-    if (![*causesWrap boolValue] && [[self graphic] isPagelet])
+    BOOL wrap = [*causesWrap boolValue];
+    if (wrap)
     {
-        result = NO;
-        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                                code:NSValidationNumberTooSmallError
-                                localizedDescription:@"Pagelet must cause wrap"];
+        // Make sure the container supports wrapped images
+        if (![[self body] attachmentsCanCauseWrap])
+        {
+            result = NO;
+            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                    code:NSValidationNumberTooLargeError
+                                    localizedDescription:@"Graphics in this text area cannot cause wrap"];
+        }
+    }
+    else
+    {
+        // Only images and raw HTML support not causing wrap
+        if (![[self graphic] canWriteHTMLInline])
+        {
+            result = NO;
+            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                    code:NSValidationNumberTooSmallError
+                                    localizedDescription:@"Graphic must cause wrap"];
+        }
     }
     
     return result;
