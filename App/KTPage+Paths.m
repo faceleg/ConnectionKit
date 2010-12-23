@@ -112,43 +112,6 @@
     }
 }
 
-/*	Looks at sibling pages and the page title to determine the best possible filename.
- *	Guaranteed to return something unique.
- */
-- (NSString *)suggestedFilename
-{
-	// The home page's title isn't settable, so keep it constant
-	if ([self isRoot]) return nil;
-	
-	
-	// Get the preferred filename by converting to lowercase, spaces to _, & removing everything else
-    NSString *result = [self preferredFilename];
-    
-    
-	// Build a list of the file names already taken
-	NSSet *siblingFilenames = [[[self parentPage] childItems] valueForKey:@"filename"];
-	NSMutableSet *unavailableFileNames = [siblingFilenames mutableCopy];
-	[unavailableFileNames removeObjectIgnoringNil:[self filename]];
-	
-    
-	// Now munge it to make it unique.  Keep adding a number until we find an open slot.
-	NSString *baseFilename = result;
-	NSUInteger suffixCount = 2;
-	while ([unavailableFileNames containsObject:result])
-	{
-		result = [baseFilename ks_stringWithPathSuffix:[NSString stringWithFormat:
-                                                        @"_%u",
-                                                        suffixCount++]];
-	}
-    
-    [unavailableFileNames release];
-    
-	
-	OBPOSTCONDITION(result);
-	
-	return result;
-}
-
 - (BOOL)isFilenameAvailable:(NSString *)filename forItem:(SVSiteItem *)item;
 {
     OBPRECONDITION([self isCollection]);

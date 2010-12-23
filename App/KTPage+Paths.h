@@ -38,8 +38,6 @@ KTCollectionPathStyle;
 #pragma mark File Name
 
 @property(nonatomic, copy, readwrite) NSString *fileName;
-- (NSString *)preferredFilename;
-- (NSString *)suggestedFilename;
 
 // Ask a collection if a child item can have a given filename. By supplying the item in question, if it's already a child, will be taken into account
 - (BOOL)isFilenameAvailable:(NSString *)filename forItem:(SVSiteItem *)item;

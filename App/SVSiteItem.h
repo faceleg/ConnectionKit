@@ -87,6 +87,8 @@ typedef enum {
 
 // Will publishing result in a file or directory being created that corresponds to this item? If so, return its filename (so for collections, this ignores the index.html file). Otherwise, nil
 - (NSString *)filename;
+- (NSString *)preferredFilename;
+- (NSString *)suggestedFilename;
 
 - (NSString *)previewPath;
 
