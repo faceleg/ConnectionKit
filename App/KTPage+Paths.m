@@ -22,11 +22,12 @@
 #import "KTMaster.h"
 #import "SVWebEditingURL.h"
 
-#import "NSManagedObject+KTExtensions.h"
 #import "NSString+KTExtensions.h"
 
 #import "NSSet+Karelia.h"
 #import "NSString+Karelia.h"
+
+#import "KSPathUtilities.h"
 #import "KSURLUtilities.h"
 
 
@@ -102,7 +103,7 @@
         NSString *result = [[self title] suggestedLegalizedWebPublishingFileName];
         if (!result || [result isEqualToString:@""])
         {
-            result = [self identifier];
+            result = [self uniqueID];
         }
         
         if (![self isCollection]) result = [result stringByAppendingPathExtension:[self pathExtension]];
@@ -121,33 +122,31 @@
 	
 	
 	// Get the preferred filename by converting to lowercase, spaces to _, & removing everything else
-    NSString *result = [[self title] suggestedLegalizedWebPublishingFileName];
-    if (!result || [result isEqualToString:@""])
-    {
-        result = [self uniqueID];
-    }
+    NSString *result = [self preferredFilename];
     
-	NSString *baseFileName = result;
-	
     
 	// Build a list of the file names already taken
-	NSSet *siblingFileNames = [[[self parentPage] childItems] valueForKey:@"fileName"];
-	NSMutableSet *unavailableFileNames = [siblingFileNames mutableCopy];
-	[unavailableFileNames removeObjectIgnoringNil:[self fileName]];
+	NSSet *siblingFilenames = [[[self parentPage] childItems] valueForKey:@"filename"];
+	NSMutableSet *unavailableFileNames = [siblingFilenames mutableCopy];
+	[unavailableFileNames removeObjectIgnoringNil:[self filename]];
 	
     
 	// Now munge it to make it unique.  Keep adding a number until we find an open slot.
-	int suffixCount = 2;
+	NSString *baseFilename = result;
+	NSUInteger suffixCount = 2;
 	while ([unavailableFileNames containsObject:result])
 	{
-		result = [baseFileName stringByAppendingFormat:@"_%d", suffixCount++];
+		result = [baseFilename ks_stringWithPathSuffix:[NSString stringWithFormat:
+                                                        @"_%u",
+                                                        suffixCount++]];
 	}
+    
     [unavailableFileNames release];
     
 	
 	OBPOSTCONDITION(result);
 	
-	return [result stringByAppendingPathExtension:[self pathExtension]];
+	return result;
 }
 
 - (BOOL)isFilenameAvailable:(NSString *)filename forItem:(SVSiteItem *)item;
