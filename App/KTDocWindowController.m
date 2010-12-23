@@ -312,7 +312,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark IBActions
 
-- (IBAction)editRawHTMLInSelectedBlock:(id)sender
+- (IBAction)editRawHTMLInSelectedBlock:(id)sender;
 {
 	[[[self webContentAreaController] selectedViewControllerWhenReady] ks_doCommandBySelector:_cmd with:sender];
 }
