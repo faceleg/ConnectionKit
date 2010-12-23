@@ -121,7 +121,8 @@ NSString *IMWantBorderKey = @"wantBorder";
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
-    NSDictionary *divAttrs = [NSDictionary dictionaryWithObject:@"text-align:center; padding:15px 0; margin:0;" forKey:@"style"];
+    NSDictionary *divAttrs = [NSDictionary dictionaryWithObject:@"text-align:center; padding:15px 0; margin:0;" 
+                                                         forKey:@"style"];
     [context startElement:@"div" attributes:divAttrs];
     
     [context addDependencyForKeyPath:@"username" ofObject:self];
