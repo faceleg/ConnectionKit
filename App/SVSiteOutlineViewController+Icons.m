@@ -261,6 +261,9 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 /*	Support method for displaying the default bundle's icon for a page.
  *	If the page has an index, returns the index icon. Otherwise, the page plugin's icon.
  */
+
+// APPEARS NOT TO BE FULLY USED, FOR THE TEXT/HTML STUFF....
+
 - (NSImage *)bundleIconForItem:(SVSiteItem *)item;
 {
 	OBPRECONDITION(item);
