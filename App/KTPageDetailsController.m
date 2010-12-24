@@ -127,8 +127,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		[oPagesController removeObserver:self forKeyPath:@"selection.baseExampleURLString"];
 		[oPagesController removeObserver:self forKeyPath:@"selection.title"];
 		[oPagesController removeObserver:self forKeyPath:@"selectedObjects"];
-				
-		[[self webContentAreaController] removeObserver:self forKeyPath:@"selectedViewController"];
 
 	}
 	
@@ -136,6 +134,18 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 }
 
 @synthesize webContentAreaController = _contentArea;
+- (void)setWebContentAreaController:(SVWebContentAreaController *)controller;
+{
+    [_contentArea removeObserver:self forKeyPath:@"selectedViewController"];
+    
+    [controller retain];
+    [_contentArea release]; _contentArea = controller;
+    
+    [controller addObserver:self
+                 forKeyPath:@"selectedViewController"
+                    options:NSKeyValueObservingOptionNew
+                    context:sSelectedViewControllerObservationContext];
+}
 
 #pragma mark -
 #pragma mark Appearance
@@ -197,11 +207,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 							  context:sSelectedObjectsObservationContext];
 		[self updateFieldsBasedOnSelectedSiteOutlineObjects:[oPagesController selectedObjects]];
 		
-		[[self webContentAreaController]
-		 addObserver:self
-		 forKeyPath:@"selectedViewController"
-		 options:NSKeyValueObservingOptionNew
-		 context:sSelectedViewControllerObservationContext];
 		[self rebindWindowTitleAndMetaDescriptionFields];
 		
 		
