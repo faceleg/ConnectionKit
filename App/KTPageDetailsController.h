@@ -12,7 +12,7 @@
 
 enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSiteItemType, kPageSiteItemType, kMixedSiteItemType = -1 };
 
-@class SVSiteOutlineViewController, SVPagesController, KSFancySchmancyBindingsPopUpButton, KTPageDetailsBoxView, MAAttachedWindow, KTDocWindowController;
+@class SVSiteOutlineViewController, SVPagesController, KSFancySchmancyBindingsPopUpButton, KTPageDetailsBoxView, MAAttachedWindow, SVWebContentAreaController;
 
 
 @interface KTPageDetailsController : NSViewController
@@ -50,10 +50,10 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 	IBOutlet NSTextField			*oAttachedWindowTextField;
 	IBOutlet NSTextField			*oAttachedWindowExplanation;
 	IBOutlet NSButton				*oAttachedWindowHelpButton;
-	
-	IBOutlet KTDocWindowController	*oDocWindowController;	// to communicate with web view
-	
+		
 @private
+    SVWebContentAreaController  *_contentArea;
+    
 	NSNumber	*_metaDescriptionCount;
 	NSNumber	*_windowTitleCount;
 	NSNumber	*_fileNameCount;
@@ -71,6 +71,8 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 	BOOL _awokenFromNib;
 	
 }
+
+@property(nonatomic, retain) IBOutlet SVWebContentAreaController *webContentAreaController;
 
 - (IBAction) pageDetailsHelp:(id)sender;
 - (IBAction) preview:(id)sender;

@@ -101,6 +101,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 												  object:[self view]];
     
     self.view = nil;		// stop observing early.
+    self.webContentAreaController = nil;
 	
 	self.activeTextField = nil;
 	[_metaDescriptionCount release];
@@ -127,12 +128,14 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		[oPagesController removeObserver:self forKeyPath:@"selection.title"];
 		[oPagesController removeObserver:self forKeyPath:@"selectedObjects"];
 				
-		[[oDocWindowController webContentAreaController] removeObserver:self forKeyPath:@"selectedViewController"];
+		[[self webContentAreaController] removeObserver:self forKeyPath:@"selectedViewController"];
 
 	}
 	
 	[super setView:aView];
 }
+
+@synthesize webContentAreaController = _contentArea;
 
 #pragma mark -
 #pragma mark Appearance
@@ -194,7 +197,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 							  context:sSelectedObjectsObservationContext];
 		[self updateFieldsBasedOnSelectedSiteOutlineObjects:[oPagesController selectedObjects]];
 		
-		[[oDocWindowController webContentAreaController]
+		[[self webContentAreaController]
 		 addObserver:self
 		 forKeyPath:@"selectedViewController"
 		 options:NSKeyValueObservingOptionNew
@@ -672,7 +675,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 {
 	// Kind of hackish.  Re-bind the window title and meta description to the model object if it's a real page, or the controller if it's an external link.
 	
-	id selViewController = [[oDocWindowController webContentAreaController] selectedViewController];
+	id selViewController = [[self webContentAreaController] selectedViewController];
 	if ([selViewController isKindOfClass:[SVWebEditorViewController class]])
 	{
 		[oWindowTitleField unbind:NSValueBinding];

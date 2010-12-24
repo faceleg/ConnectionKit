@@ -11,8 +11,8 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="1793"/>
 			<integer value="2122"/>
+			<integer value="1793"/>
 			<integer value="2045"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -1721,14 +1721,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">oDocWindowController</string>
-						<reference key="source" ref="408607898"/>
-						<reference key="destination" ref="496514088"/>
-					</object>
-					<int key="connectionID">2042</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">oSplitView</string>
 						<reference key="source" ref="363902086"/>
 						<reference key="destination" ref="463123297"/>
@@ -2047,6 +2039,14 @@
 						<reference key="destination" ref="192588387"/>
 					</object>
 					<int key="connectionID">2220</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">webContentAreaController</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="696012676"/>
+					</object>
+					<int key="connectionID">2221</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2788,10 +2788,10 @@
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1547.IBEditorWindowLastContentRect">{{57, 458}, {1002, 548}}</string>
+				<string key="1547.IBEditorWindowLastContentRect">{{57, 208}, {1002, 548}}</string>
 				<string key="1547.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1547.IBViewEditorWindowController.showingLayoutRectangles"/>
-				<string key="1547.IBWindowTemplateEditedContentRect">{{57, 458}, {1002, 548}}</string>
+				<string key="1547.IBWindowTemplateEditedContentRect">{{57, 208}, {1002, 548}}</string>
 				<boolean value="YES" key="1547.ImportedFromIB2"/>
 				<boolean value="YES" key="1547.windowTemplate.hasMinSize"/>
 				<string key="1547.windowTemplate.minSize">{800, 280}</string>
@@ -2926,7 +2926,7 @@
 				<string key="2117.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2118.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2119.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="2122.IBEditorWindowLastContentRect">{{710, 758}, {320, 98}}</string>
+				<string key="2122.IBEditorWindowLastContentRect">{{710, 658}, {320, 98}}</string>
 				<string key="2122.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<object class="NSAffineTransform" key="2122.IBViewBoundsToFrameTransform"/>
 				<string key="2127.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2990,7 +2990,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2220</int>
+			<int key="maxID">2221</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3365,7 +3365,6 @@
 						<string key="oAttachedWindowView">NSView</string>
 						<string key="oBaseURLField">NSTextField</string>
 						<string key="oChooseFileButton">NSButton</string>
-						<string key="oDocWindowController">KTDocWindowController</string>
 						<string key="oDotSeparator">NSTextField</string>
 						<string key="oEditTextButton">NSButton</string>
 						<string key="oExtensionPopup">KSFancySchmancyBindingsPopUpButton</string>
@@ -3384,6 +3383,7 @@
 						<string key="oSlashSeparator">NSTextField</string>
 						<string key="oWindowTitleField">NSTextField</string>
 						<string key="oWindowTitlePrompt">NSTextField</string>
+						<string key="webContentAreaController">SVWebContentAreaController</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="oAttachedWindowExplanation">
@@ -3409,10 +3409,6 @@
 						<object class="IBToOneOutletInfo" key="oChooseFileButton">
 							<string key="name">oChooseFileButton</string>
 							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="oDocWindowController">
-							<string key="name">oDocWindowController</string>
-							<string key="candidateClassName">KTDocWindowController</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="oDotSeparator">
 							<string key="name">oDotSeparator</string>
@@ -3485,6 +3481,10 @@
 						<object class="IBToOneOutletInfo" key="oWindowTitlePrompt">
 							<string key="name">oWindowTitlePrompt</string>
 							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="webContentAreaController">
+							<string key="name">webContentAreaController</string>
+							<string key="candidateClassName">SVWebContentAreaController</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
