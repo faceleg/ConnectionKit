@@ -11,8 +11,8 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="2122"/>
 			<integer value="1793"/>
+			<integer value="2122"/>
 			<integer value="2045"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -1004,7 +1004,6 @@
 				<bool key="NSSelectsInsertedObjects">YES</bool>
 				<bool key="NSFilterRestrictsInsertion">YES</bool>
 				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
-				<bool key="NSAutomaticallyRearrangesObjects">YES</bool>
 			</object>
 			<object class="NSViewController" id="696012676"/>
 			<object class="NSViewController" id="408607898"/>
