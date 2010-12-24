@@ -99,9 +99,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[self setDesignChooserWindowController:nil];
 	self.rawHTMLMenuItem = nil;
 	self.HTMLTextPageMenuItem = nil;
-    [self setPagesController:nil];
     self.HTMLEditorController = nil;
-
+    
+    // Tear down model controller. #101246
+    [[self pagesController] unbind:NSContentSetBinding];
+    [[self pagesController] setContent:nil];
+    [self setPagesController:nil];
+    
     // stop observing
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
