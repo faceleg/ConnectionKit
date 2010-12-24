@@ -552,16 +552,23 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [textAttachment setBody:[self representedObject]];
     
     
-    // Insert
+    // Insert, selecting it
+    KSArrayController *selectionController =
+    [[self webEditorViewController] graphicsController];
+    [selectionController saveSelectionAttributes];
+    [selectionController setSelectsInsertedObjects:YES];
+    
     DOMRange *insertionRange = [self insertionRangeForGraphic:graphic];
     [self insertGraphic:graphic range:insertionRange];
+    
+    [selectionController restoreSelectionAttributes];
     
     
     
     // Select item.
-    NSArrayController *selectionController =
-    [[self webEditorViewController] graphicsController];
-    if ([selectionController setSelectedObjects:[NSArray arrayWithObject:graphic]])
+    //NSArrayController *selectionController =
+    //[[self webEditorViewController] graphicsController];
+    //if ([selectionController setSelectedObjects:[NSArray arrayWithObject:graphic]])
     {
         /*
         // For non-inline graphics, need the WebView to resign first responder. #79189

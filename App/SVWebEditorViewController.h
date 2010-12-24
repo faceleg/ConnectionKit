@@ -83,7 +83,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 #pragma mark Content
 
 // Everything here should be KVO-compliant
-@property(nonatomic, retain, readonly) NSArrayController *graphicsController;
+@property(nonatomic, retain, readonly) SVWebContentObjectsController *graphicsController;
 @property(nonatomic, retain) WEKWebEditorItem *firstResponderItem;  // like NSWindow.firstResponder
 
 @property(nonatomic, retain, readonly) SVContentDOMController *contentDOMController;
