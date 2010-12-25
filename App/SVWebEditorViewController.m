@@ -612,7 +612,10 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     for (id anObject in objects)
     {
+        // Possibly have to fall back to forcing selection of not normally selectable item
         id newItem = [[self webEditor] selectableItemForRepresentedObject:anObject];
+        if (!newItem) newItem =  [[[self webEditor] contentItem] hitTestRepresentedObject:anObject];
+        
         if ([[newItem HTMLElement] ks_isDescendantOfDOMNode:[[newItem HTMLElement] ownerDocument]])
         {
             [newSelection addObject:newItem];
