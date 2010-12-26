@@ -708,6 +708,13 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
             }
         }
     }
+    
+    // Hopefully it was a success, so open raw HTML editor if needed
+    SVGraphicFactory *factory = [SVGraphicFactory graphicFactoryForTag:[sender tag]];
+    if (factory == [SVGraphicFactory rawHTMLFactory])
+    {
+        [self editRawHTMLInSelectedBlock:sender];
+    }
 }
 
 - (IBAction)insertFile:(id)sender;
