@@ -247,13 +247,21 @@
 	return result;
 }
 
-- (NSString *)baseExampleURLString	// for page details. Subclasses override to be more specific if need be
+- (NSString *)baseExampleURLString		// make this work for pages and other things like downloadables
 {
-	NSURL *resultURL = [self _baseExampleURL];
+	NSURL *resultURL = nil;
+	if ([self isRoot])
+    {
+        resultURL = [self _baseExampleURL];
+    }
+    else
+    {
+        resultURL = [[self parentPage] _baseExampleURL];
+    }
+	
     NSString *result = [resultURL absoluteString];
 	return result;
 }
-
 
 #pragma mark Publishing
 
