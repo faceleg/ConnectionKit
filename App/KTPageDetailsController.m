@@ -186,7 +186,11 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 						   forKeyPath:@"selection.fileName"
 							  options:NSKeyValueObservingOptionNew
 							  context:sFileNameObservationContext];
-		[self fileNameDidChangeToValue:[oPagesController valueForKeyPath:@"selection.fileName"]];
+		[oPagesController addObserver:self
+						   forKeyPath:@"selection.filename"
+							  options:NSKeyValueObservingOptionNew
+							  context:sFileNameObservationContext];
+		[self fileNameDidChangeToValue:[oPagesController valueForKeyPath:@"selection.fileName"]];	// pre-launch with which?
 		
 		[oPagesController addObserver:self
 						   forKeyPath:@"selection.baseExampleURLString"
@@ -221,7 +225,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		NSFormatter *formatter = [[[KSValidateCharFormatter alloc]
 								   initWithIllegalCharacterSet:illegalCharSetForPageTitles] autorelease];
 		[oFileNameField setFormatter:formatter];
-		
+		[oMediaFilenameField setFormatter:formatter];
+
 		[oExtensionPopup bind:@"defaultValue"
 					 toObject:oPagesController
 				  withKeyPath:@"selection.defaultFileExtension"
@@ -587,13 +592,12 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}	
 	return result;
 }
-#define MAX_FILE_NAME_LENGTH 27
 #define FILE_NAME_WARNING_ZONE 5
 - (NSColor *)fileNameCharCountColor
 {
 	int charCount = [[self fileNameCount] intValue];
 	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:ATTACHED_WINDOW_TRANSP];
-	int remaining = MAX_FILE_NAME_LENGTH - charCount;
+	int remaining = _maxFileCharacters - charCount;
 	
 	if (remaining > FILE_NAME_WARNING_ZONE )		// out of warning zone: a nice light gray
 	{
@@ -1051,7 +1055,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			{							// (which we left wide enough so it wouldn't get clipped)
 				newLeft -= 4;
 			}
-			if (fld2 == oFileNameField)	// special case -- move file name over to left to adjoin previous field
+			if (fld2 == oFileNameField || fld2 == oMediaFilenameField)	// special case -- move file name over to left to adjoin previous field
 			{							// (which we left wide enough so it wouldn't get clipped)
 				newLeft -= 1;
 			}
@@ -1145,7 +1149,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		{
 			[self metaDescriptionDidChangeToValue:newString];
 		}
-		else if (textField == oFileNameField)
+		else if (textField == oFileNameField || textField == oMediaFilenameField)
 		{
 			[self fileNameDidChangeToValue:newString];
 		}
@@ -1170,11 +1174,12 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	NSString *bindingName = nil;
 	NSString *explanation = @"";
 	int tagForHelp = kUnknownPageDetailsContext;
-	if (field == oFileNameField)
+	if (field == oFileNameField || field == oMediaFilenameField)
 	{
+		_maxFileCharacters = field == oFileNameField ? 27 : 32;
 		tagForHelp = kFileNamePageDetailsContext;
 		bindingName = @"fileNameCountString";
-		explanation = NSLocalizedString(@"Maximum 27 characters",@"brief indication of maximum length of file name");
+		explanation = [NSString stringWithFormat:NSLocalizedString(@"Maximum %d characters",@"brief indication of maximum length of file name"), _maxFileCharacters];
 	}
 	else if (field == oMetaDescriptionField)
 	{	

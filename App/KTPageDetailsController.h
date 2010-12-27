@@ -62,6 +62,7 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 	MAAttachedWindow *_attachedWindow;
 
 	int     _whatKindOfItemsAreSelected;
+	int		_maxFileCharacters;
 	
 	BOOL _alreadyHandlingControlTextDidChange;
 	
