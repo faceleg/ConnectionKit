@@ -803,8 +803,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		}
 		
 		BOOL anyArePublished = [oPagesController selectedItemsHaveBeenPublished];
-		NSMenuItem *collMenuItem = [[oExtensionPopup menu] itemWithTag:1];
-		NSMenuItem *pageMenuItem = [[oExtensionPopup menu] itemWithTag:0];
+		NSMenuItem *collMenuItem = [[oPublishAsCollectionPopup menu] itemWithTag:1];
+		NSMenuItem *pageMenuItem = [[oPublishAsCollectionPopup menu] itemWithTag:0];
 
 		if (NSOnState == pageIsCollectionState)
 		{
