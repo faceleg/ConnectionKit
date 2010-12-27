@@ -53,9 +53,6 @@
 - (NSObject *)titleBox;
 @end
 
-@protocol PlugInContextPrivate
-- (NSString *)currentHeaderLevelTagName;
-@end
 
 @interface NSString (KareliaPrivate)
 - (NSString*)stringByReplacing:(NSString *)value with:(NSString *)newValue;
@@ -140,8 +137,7 @@
 - (void)writeInnards
 {
 	BOOL truncated = NO;
-    id<SVPlugInContext, PlugInContextPrivate> context
-	= (id<SVPlugInContext, PlugInContextPrivate>) [self currentContext];
+    id<SVPlugInContext> context = [self currentContext];
 	NSString *className = [context currentIterationCSSClassName];
 	
 	if (self.indexLayoutType & kTableMask)
@@ -169,7 +165,8 @@
 		if (self.indexLayoutType & kTitleMask)
 		{
 			[context startElement:@"td" className:@"dli2"];
-			[context startElement:[context currentHeaderLevelTagName] className:@"index-title"];
+			[context startHeaderWithAttributes:
+				[NSDictionary dictionaryWithObject:@"index-title" forKey:@"class"]];
 			[self writeTitleOfIteratedPage];
 			[context endElement];
 			[context endElement];
@@ -200,7 +197,8 @@
 	{
 		if (self.indexLayoutType & kTitleMask)
 		{
-			[context startElement:[context currentHeaderLevelTagName] className:@"index-title"];
+			[context startHeaderWithAttributes:
+				[NSDictionary dictionaryWithObject:@"index-title" forKey:@"class"]];
 			[self writeTitleOfIteratedPage];
 			[context endElement];
 		}
