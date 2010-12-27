@@ -283,6 +283,16 @@
     
     [context buildAttributesForElement:@"img" bindSizeToObject:self DOMControllerClass:[SVMediaDOMController class]  sizeDelta:NSZeroSize];
     
+    
+    // Tooltip for placeholders
+    if ([context isForEditing])
+    {
+        [context pushAttribute:@"title"
+                         value:NSLocalizedString(@"This image is a placeholder. Drag a new media file here to replace it.",
+                                                                "tooltip")];
+    }
+    
+    
     SVMedia *media = [self media];
     if (media)
     {
