@@ -786,11 +786,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	NSInteger pageIsCollectionState = NSMixedState;
 	if (arePagesSelected)
 	{
-		id isCollectionMarker = [oPagesController valueForKeyPath:@"selection.isCollection"];
-		if ([isCollectionMarker respondsToSelector:@selector(boolValue)])
-		{
-			pageIsCollectionState = [isCollectionMarker boolValue] ? NSOnState : NSOffState;
-		}
+		pageIsCollectionState = [oPagesController selectedItemsAreCollections];
 
 		// And also check if it's a root
 		if (NSOnState == pageIsCollectionState)
@@ -1123,8 +1119,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
     // If user cancelled, repair binding value
     if (!success)
     {
-		BOOL isCollection = [[oPagesController valueForKeyPath:@"selection.isCollection"] boolValue];
-        [oPublishAsCollectionPopup selectItemWithTag:(isCollection?1:0)];
+		NSCellStateValue isCollection = [oPagesController selectedItemsAreCollections];
+        [oPublishAsCollectionPopup selectItemWithTag:(NSOnState == isCollection?1:0)];
 	}
 }
 
