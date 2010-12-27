@@ -59,7 +59,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (void) resetTitlePlaceholderToComboTitleText:(NSString *)comboTitleText;
 - (void) resetDescriptionPlaceholder:(NSString *)metaDescriptionText;
 - (void) layoutPageURLComponents;
-- (void) layoutPageURLComponentsDelayed;
 - (NSColor *)metaDescriptionCharCountColor;
 - (NSColor *)windowTitleCharCountColor;
 - (NSColor *)fileNameCharCountColor;
@@ -168,7 +167,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 													 name:NSViewFrameDidChangeNotification
 												   object:[self view]];
 
-		[self layoutPageURLComponentsDelayed];
+		[self layoutPageURLComponents];
 		
 		// Observe changes to the meta description and fake an initial observation
 		[oPagesController addObserver:self
@@ -498,7 +497,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		OFF((@"whatKindOfItemsAreSelected => %s", typestrings[combinedType+1]));
 		self.whatKindOfItemsAreSelected = combinedType;
 		
-		[self layoutPageURLComponentsDelayed];
+		[self layoutPageURLComponents];
 	}
 }
 
@@ -636,7 +635,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 {	
 //	NSLog(@"object = %@", object);
 	
-	[self layoutPageURLComponentsDelayed];
+	[self layoutPageURLComponents];
 
 	if (context == sMetaDescriptionObservationContext)
 	{
@@ -763,12 +762,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
  We also need to call this when the observed page changes.
  
  */
-
-- (void) layoutPageURLComponentsDelayed
-{
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(layoutPageURLComponents) object:nil];
-	[self performSelector:@selector(layoutPageURLComponents) withObject:nil afterDelay:0.0];
-}
 
 - (void) layoutPageURLComponents;
 {
@@ -1102,7 +1095,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void) backgroundFrameChanged:(NSNotification *)notification
 {
-	[self layoutPageURLComponentsDelayed];
+	[self layoutPageURLComponents];
 }
 
 #pragma mark Publish as Collection
@@ -1156,7 +1149,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		{
 			[self fileNameDidChangeToValue:newString];
 		}
-		[self layoutPageURLComponentsDelayed];		
+		[self layoutPageURLComponents];		
 		_alreadyHandlingControlTextDidChange = NO;
 	}
 }
