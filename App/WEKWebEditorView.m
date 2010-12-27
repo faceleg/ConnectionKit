@@ -175,15 +175,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return self;
 }
 
-- (void)setFrameSize:(NSSize)newSize;
-{
-    [super setFrameSize:newSize];
-    
-    // Tooltips
-    [self removeAllToolTips];
-    [self addToolTipRect:[self bounds] owner:self userData:NULL];
-}
-
 - (void)viewDidMoveToWindow
 {
     if ([self window])
