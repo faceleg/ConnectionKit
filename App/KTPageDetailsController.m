@@ -167,7 +167,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 												 selector:@selector(backgroundFrameChanged:)
 													 name:NSViewFrameDidChangeNotification
 												   object:[self view]];
-		
+
 		[self layoutPageURLComponentsDelayed];
 		
 		// Observe changes to the meta description and fake an initial observation
@@ -791,16 +791,47 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		{
 			pageIsCollectionState = [isCollectionMarker boolValue] ? NSOnState : NSOffState;
 		}
-	}
-	// And also check if it's a root
-	if (NSOnState == pageIsCollectionState)
-	{
-		id isRootMarker = [oPagesController valueForKeyPath:@"selection.isRoot"];
-		if ([isRootMarker respondsToSelector:@selector(boolValue)] && [isRootMarker boolValue])
+
+		// And also check if it's a root
+		if (NSOnState == pageIsCollectionState)
 		{
-			pageIsCollectionState =  IS_ROOT_STATE;		// special marker indicating root, and only root, is selected.
+			id isRootMarker = [oPagesController valueForKeyPath:@"selection.isRoot"];
+			if ([isRootMarker respondsToSelector:@selector(boolValue)] && [isRootMarker boolValue])
+			{
+				pageIsCollectionState =  IS_ROOT_STATE;		// special marker indicating root, and only root, is selected.
+			}
+		}
+		
+		BOOL anyArePublished = [oPagesController selectedItemsHaveBeenPublished];
+		NSMenuItem *collMenuItem = [[oExtensionPopup menu] itemWithTag:1];
+		NSMenuItem *pageMenuItem = [[oExtensionPopup menu] itemWithTag:0];
+
+		if (NSOnState == pageIsCollectionState)
+		{
+			[collMenuItem setTitle:NSLocalizedString(@"Collection", "menu title")];
+			[pageMenuItem setTitle:
+			 anyArePublished	? NSLocalizedString(@"Single Page…", "menu title with ellipses")
+										 : NSLocalizedString(@"Single Page…", "menu title, NO ellipses")];
+		}
+		else if (NSOffState == pageIsCollectionState)
+		{
+			[pageMenuItem setTitle:NSLocalizedString(@"Single Page", "menu title")];
+			[collMenuItem setTitle:
+			 anyArePublished	? NSLocalizedString(@"Collection…", "menu title with ellipses")
+										 : NSLocalizedString(@"Collection…", "menu title, NO ellipses")];
+		}
+		else	// mixed state, perhaps both or neither will get ellipses
+		{
+			[pageMenuItem setTitle:
+			 anyArePublished	? NSLocalizedString(@"Single Page…", "menu title with ellipses")
+										 : NSLocalizedString(@"Single Page…", "menu title, NO ellipses")];
+			[collMenuItem setTitle:
+			 anyArePublished	? NSLocalizedString(@"Collection…", "menu title with ellipses")
+											   : NSLocalizedString(@"Collection…", "menu title, NO ellipses")];
 		}
 	}
+	
+	
 	// Prompts
 	[oWindowTitlePrompt		setHidden:!arePagesSelected && !areLinksSelected];
 	[oMetaDescriptionPrompt	setHidden:!arePagesSelected && !areLinksSelected];
