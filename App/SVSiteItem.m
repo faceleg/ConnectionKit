@@ -179,7 +179,11 @@
 
 - (NSString *)filename; { return nil; }
 
-- (NSString *)preferredFilename; { return [self filename]; }
+- (NSString *)preferredFilename;
+{
+	NSString *result = [[self filename] suggestedLegalizedWebPublishingFileName];
+	return result;
+}
 
 /*	Looks at sibling pages and the page title to determine the best possible filename.
  *	Guaranteed to return something unique.
