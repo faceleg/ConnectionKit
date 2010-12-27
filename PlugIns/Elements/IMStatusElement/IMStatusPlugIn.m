@@ -106,17 +106,20 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
-    NSDictionary *divAttrs = [NSDictionary dictionaryWithObject:@"text-align:center; padding:15px 0; margin:0;" 
-                                                         forKey:@"style"];
+    NSMutableDictionary *divAttrs = [NSMutableDictionary dictionaryWithObject:@"text-align:center; padding:15px 0; margin:0;" 
+                                                                       forKey:@"style"];
+//    if ( ![context liveDataFeeds] )
+//    {
+//        [divAttrs setObject:@"svx-placeholder" forKey:@"class"];
+//    }
     [context startElement:@"div" attributes:divAttrs];
     
     [context addDependencyForKeyPath:@"username" ofObject:self];
+    [context addDependencyForKeyPath:@"selectedServiceIndex" ofObject:self];
 
     if ( self.username )
     {
         // add our dependent keys
-        [context addDependencyForKeyPath:@"selectedServiceIndex" ofObject:self];
-        
         if ( self.selectedServiceIsIChat )
         {
             [context addDependencyForKeyPath:@"headlineText" ofObject:self];
@@ -150,7 +153,11 @@
                                               options:NSLiteralSearch 
                                                 range:NSMakeRange(0, [writeableHTMLCode length])];
         
-        NSURL *onlineImageURL = [IMStatusImageURLProtocol URLWithBaseImageURL:[IMStatusImageURLProtocol baseOnlineImageURL] headline:[self headlineText] status:[self onlineText]];
+        NSURL *onlineImageURL = [[service serviceIdentifier] isEqualToString:@"aim"] 
+            ? [IMStatusImageURLProtocol URLWithBaseImageURL:[IMStatusImageURLProtocol baseOnlineImageURL] 
+                                                   headline:[self headlineText] 
+                                                     status:[self onlineText]]
+            : [NSURL fileURLWithPath:[service onlineImagePath]];
         if (onlineImageURL)
         {
             // add resource to context
@@ -170,7 +177,12 @@
              [onlineImagePath release];
         }
         
-        NSURL *offlineImageURL = [IMStatusImageURLProtocol URLWithBaseImageURL:[IMStatusImageURLProtocol baseOfflineImageURL] headline:[self headlineText] status:[self offlineText]];
+        NSURL *offlineImageURL = [[service serviceIdentifier] isEqualToString:@"aim"] 
+        ? [IMStatusImageURLProtocol URLWithBaseImageURL:[IMStatusImageURLProtocol baseOfflineImageURL] 
+                                               headline:[self headlineText] 
+                                                 status:[self offlineText]]
+        : [NSURL fileURLWithPath:[service offlineImagePath]];
+        
         if ( offlineImageURL )
         {
             // add resource to context
@@ -197,7 +209,6 @@
                                                   options:NSLiteralSearch 
                                                     range:NSMakeRange(0, [writeableHTMLCode length])];
         }
-        
         [context writeHTMLString:writeableHTMLCode];
     }
     else
