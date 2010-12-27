@@ -175,6 +175,15 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return self;
 }
 
+- (void)setFrameSize:(NSSize)newSize;
+{
+    [super setFrameSize:newSize];
+    
+    // Tooltips
+    [self removeAllToolTips];
+    [self addToolTipRect:[self bounds] owner:self userData:NULL];
+}
+
 - (void)viewDidMoveToWindow
 {
     if ([self window])
@@ -1641,6 +1650,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         [[self documentView] performSelector:@selector(_updateMouseoverWithFakeEvent)];
     }
+}
+
+- (NSString *)view:(NSView *)view stringForToolTip:(NSToolTipTag)tag point:(NSPoint)point userData:(void *)userData
+{
+    return NSLocalizedString(@"This image is a placeholder. Drag a new media file here to replace it.",
+                             "tooltip");
 }
 
 #pragma mark Resizing
