@@ -901,7 +901,8 @@ initial syntax coloring.
 		self.hasRemoteLoads = YES;
 		result = nil;				// deny this -- cancel loading this request
 		[sender stopLoading:nil];	// stop loading the whole webview; we got what we needed
-		DJW((@"found resource; stopping."));
+		// [sender performSelector:@selector(stopLoading:) withObject:nil afterDelay:0.0];	// stop loading the whole webview; we got what we needed
+		LOG((@"found resource; stopping %@", sender));
 	}
 	return result;
 }
