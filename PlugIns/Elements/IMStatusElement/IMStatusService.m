@@ -141,6 +141,12 @@
 	{
 		result = [myResourcesPath stringByAppendingPathComponent:myOfflineImagePath];
 	}
+    
+    // some services don't have a separate offline image stored in plugin, in which case fallback to online image 
+    if ( !result && myOnlineImagePath )
+    {
+		result = [myResourcesPath stringByAppendingPathComponent:myOnlineImagePath];
+    }
 	
 	return result;
 }
