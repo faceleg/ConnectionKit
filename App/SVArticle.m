@@ -273,9 +273,9 @@
 					if (lastTextNode)
 					{
 						// Trucate, plus add on an ellipses.
-						NSString *ellipses = NSLocalizedString(@"…", @"ellipses appended to command, meaning there will be confirmation alert.  Probably spaces before in French.")
+						NSString *ellipses = NSLocalizedString(@"…", @"ellipses appended to command, meaning there will be confirmation alert.  Probably spaces before in French.");
 						NSString *lastNodeString = [lastTextNode stringValue];
-						NSString *newString = [[lastNodeString stringByAppendingString:ellipses];
+						NSString *newString = [lastNodeString stringByAppendingString:ellipses];
 						[lastTextNode setStringValue:newString];
 					}
 					else
