@@ -302,7 +302,10 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 {
 	[self drawDraftMarkersWithFrame:cellFrame];	// draw draft markers FIRST - will this work?
 	[super drawWithFrame:cellFrame inView:controlView];
-	[self drawNotPublishableMarkersWithFrame:cellFrame];	// draw afterwards so it goes on top
+	NSRect cellFrameToLeftEdge = cellFrame;
+	cellFrameToLeftEdge.size.width += cellFrameToLeftEdge.origin.x;
+	cellFrameToLeftEdge.origin.x = 0;
+	[self drawNotPublishableMarkersWithFrame:cellFrameToLeftEdge];	// draw afterwards so it goes on top
 }
 
 // draw cell interior (image and text)
