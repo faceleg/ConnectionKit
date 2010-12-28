@@ -68,10 +68,9 @@
     [super didAddToPage:page];
 //    if ( !self.title )
 //    {
-//FIXME: but this is called too many times
+        //FIXME: but this is called too many times potentially wiping out a user change
         if ( self.indexedCollection )
         {
-            //FIXME: this is never called because indexedCollection isn't set until didAddToPage:
             // attempt to set container's title to localized string
             NSString *title = [NSString stringWithFormat:@"%@ %@",
                                [self.indexedCollection title],
