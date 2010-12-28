@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>Collection Archive</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -24,22 +26,8 @@
 	<string>${SVN_VERSION}</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KTCategory</key>
-	<integer>2</integer>
-	<key>KTPageletCanHaveTitle</key>
-	<true/>
-	<key>KSHelpAnchor</key>
-	<string>Collection_Archive</string>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_archive.tiff</string>
-	<key>KTPluginInitialProperties</key>
-	<dict/>
-	<key>KTPluginName</key>
-	<string>Collection Archive</string>
-	<key>KTPluginPriority</key>
-	<integer>5</integer>
-	<key>KTPluginUntitledName</key>
-	<string></string>
 	<key>NSPrincipalClass</key>
 	<string>CollectionArchivePlugIn</string>
 </dict>
