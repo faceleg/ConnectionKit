@@ -385,8 +385,7 @@
     WEKWebEditorView *webEditor = [self webEditor];
     
     // Check WebEditor is OK with the change
-    DOMRange *range = [[element ownerDocument] createRange];
-    [range selectNode:element];
+    DOMRange *range = [self DOMRange];
     
     result = [webEditor shouldChangeTextInDOMRange:range];
     if (result)
