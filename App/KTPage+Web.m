@@ -334,13 +334,28 @@
     
     
     // Continue onto the next page if the app is licensed
-    if (recursive && !gLicenseIsBlacklisted && gRegistrationString)
+	// or if the pages to publish are the first N pages that can be published in the demo.
+	// Note: This won't publish a page that is OK to publish in the demo if its parent is NOT publishable.
+	// That's a pretty rare corner case (e.g. moving pages around) so let's not worry about it.
+    if (recursive)
     {
         for (SVSiteItem *anItem in [self sortedChildren])
         {
             if (![[anItem isDraft] boolValue])
             {
-                [anItem publish:publishingEngine recursively:recursive];
+				BOOL canBePublished = ((nil != gRegistrationString) && !gLicenseIsBlacklisted);	// OK if licensed, and not blacklisted...
+				if (!canBePublished)
+				{
+					NSNumber *publishable = [anItem isPublishableInDemo];
+					if (!NSIsControllerMarker(publishable))
+					{
+						canBePublished = [publishable boolValue];	// or if this is something that can be published in the demo
+					}
+				}
+				if (canBePublished)
+				{
+					[anItem publish:publishingEngine recursively:recursive];
+				}
             }
         }
     }
