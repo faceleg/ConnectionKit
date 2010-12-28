@@ -828,7 +828,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	// Prompts
 	[oWindowTitlePrompt		setHidden:!arePagesSelected && !areLinksSelected];
 	[oMetaDescriptionPrompt	setHidden:!arePagesSelected && !areLinksSelected];
-	[oFilePrompt setHidden:!areFilesSelected];
+	[oFilePrompt setHidden:(!areFilesSelected && !areTextsSelected)];
 
 	// Additional Lines
 	[oWindowTitleField		setHidden:!arePagesSelected];
@@ -837,7 +837,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	[oMetaDescriptionField	setHidden:!arePagesSelected && !areLinksSelected];
 	[oWindowTitleField		setEditable:arePagesSelected];
 	[oMetaDescriptionField	setEditable:arePagesSelected];
-	[oChooseFileButton		setHidden:!areFilesSelected];
+	[oChooseFileButton		setHidden:(!areFilesSelected && !areTextsSelected)];
 	[oEditTextButton		setHidden:!areTextsSelected];
 
 	// First line, external URL field
