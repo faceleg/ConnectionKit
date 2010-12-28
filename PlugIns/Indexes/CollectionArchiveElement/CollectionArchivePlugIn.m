@@ -39,8 +39,8 @@
 
 #define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 
-// LocalizedStringInThisBundle(@"You need to turn on archive pages, ok? Also, feel free to suggest how to phrase this better. Case 87647.", "String_On_Page_Template")
-// LocalizedStringInThisBundle(@"You really should add something to the collection so you can see it, ok? Also, feel free to suggest how to phrase this better. Case 87647.", "String_On_Page_Template")
+// LocalizedStringInThisBundle(@"Please turn on Publish Archives in the Collection Inspector.", "String_On_Page_Template")
+// LocalizedStringInThisBundle(@"Please add at least one page to this collection.", "String_On_Page_Template")
 
 
 @implementation CollectionArchivePlugIn
