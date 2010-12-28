@@ -694,10 +694,24 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// "Visit Published Page" visitPublishedPage:
 	else if ( itemAction == @selector(visitPublishedPage:) ) 
 	{
-		NSDate *published = [[[self siteOutlineViewController] content]
-                             valueForKeyPath:@"selection.datePublished"];
+		id content = [[self siteOutlineViewController] content];
+		NSDate *published = [content valueForKeyPath:@"selection.datePublished"];
         
 		result = (published && !NSIsControllerMarker(published));
+
+		// Check if page *can* be published
+		BOOL canBePublished = (nil != gRegistrationString);
+		if (!canBePublished)
+		{
+			NSNumber *publishable = [content valueForKeyPath:@"selection.isPublishableInDemo"];
+			if (!NSIsControllerMarker(publishable))
+			{
+				canBePublished = [publishable boolValue];
+			}
+		}
+		[menuItem setTitle:
+		 canBePublished ? NSLocalizedString(@"Visit Published Page", @"Menu item")
+						  : NSLocalizedString(@"License Required to Publish Page", @"Menu item")];
 	}
 
 	else if ( itemAction == @selector(submitSiteToDirectory:) ) 
