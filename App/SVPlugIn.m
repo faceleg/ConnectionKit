@@ -269,8 +269,7 @@ static id <SVPlugInContext> sCurrentContext;
     if (!class)
     {
         // are we an Index?
-        Class PrincipalClass = [bundle principalClass];
-        if ( [PrincipalClass isSubclassOfClass:[SVIndexPlugIn class]] )
+        if ( [self isSubclassOfClass:[SVIndexPlugIn class]] )
         {
             class = [SVIndexInspectorViewController class];
         }
@@ -289,9 +288,9 @@ static id <SVPlugInContext> sCurrentContext;
     if (class)
     {
         NSString *nibPath = [bundle pathForResource:@"Inspector" ofType:@"nib"];
-        if (nibPath)
+        if (nibPath || [class isSubclassOfClass:[SVIndexInspectorViewController class]])
         {
-            result = [[class alloc] initWithNibName:@"Inspector.nib" bundle:bundle];
+            result = [[class alloc] initWithNibName:[nibPath lastPathComponent] bundle:bundle];
             [result setTitle:[[bundle localizedInfoDictionary] objectForKey:@"KTPluginName"]];
             [result autorelease];
         }

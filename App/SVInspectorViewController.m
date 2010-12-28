@@ -25,17 +25,6 @@
 
 #pragma mark Presentation
 
-- (NSString *)nibName;
-{
-    NSString *result = [super nibName];
-    if (!result)
-    {
-        result = @"Inspector.nib";
-    }
-    
-    return result;
-}
-
 - (void)setView:(NSView *)view;
 {
     [super setView:view];
