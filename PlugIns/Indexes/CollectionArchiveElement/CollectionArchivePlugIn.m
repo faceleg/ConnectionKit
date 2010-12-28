@@ -50,7 +50,6 @@
 
 - (void)awakeFromNew;
 {
-    //FIXME: verify that superclass attempts to connect indexedCollection to our page's parent
     [super awakeFromNew];
     
     if ( self.indexedCollection )
@@ -59,9 +58,17 @@
         NSString *title = [NSString stringWithFormat:@"%@ %@",
                            [self.indexedCollection title],
                            LocalizedStringInThisBundle(@"Archive", @"Portion of pagelet title")];
-        //FIXME: is this really setting the page's title?
         self.title = title;
     }
+}
+
+
+#pragma mark HTML Generation
+
+- (void)writeHTML:(id <SVPlugInContext>)context
+{
+    [super writeHTML:context];
+    [context addDependencyForKeyPath:@"collectionGenerateArchives" ofObject:self.indexedCollection];
 }
 
 @end
