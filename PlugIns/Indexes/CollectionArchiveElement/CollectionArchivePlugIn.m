@@ -54,12 +54,32 @@
     
     if ( self.indexedCollection )
     {
+        //FIXME: this is never called because indexedCollection isn't set until didAddToPage:
         // attempt to set container's title to localized string
         NSString *title = [NSString stringWithFormat:@"%@ %@",
                            [self.indexedCollection title],
-                           LocalizedStringInThisBundle(@"Archive", @"Portion of pagelet title")];
+                           LocalizedStringInThisBundle(@"Archive", @"title of object")];
         self.title = title;
     }
+}
+
+- (void)didAddToPage:(id <SVPage>)page
+{
+    [super didAddToPage:page];
+//    if ( !self.title )
+//    {
+//FIXME: but this is called too many times
+        if ( self.indexedCollection )
+        {
+            //FIXME: this is never called because indexedCollection isn't set until didAddToPage:
+            // attempt to set container's title to localized string
+            NSString *title = [NSString stringWithFormat:@"%@ %@",
+                               [self.indexedCollection title],
+                               LocalizedStringInThisBundle(@"Archive", @"title of object")];
+            self.title = title;
+            NSLog(@"set the title!");
+        }
+//    }
 }
 
 
