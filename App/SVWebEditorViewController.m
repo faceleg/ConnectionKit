@@ -1055,6 +1055,10 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     // Maybe the first responder wants to handle it (i.e. if they're in an article)
     if ([[self firstResponderItem] tryToPerform:@selector(deleteObjects:) with:self])
     {
+        // Match selection of controller and web editor. Yes, bit of a hacky technique. #101631
+        [self willUpdate];
+        [self didUpdate];
+        
         return YES;
     }
     
