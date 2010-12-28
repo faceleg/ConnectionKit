@@ -387,4 +387,30 @@
 	return result;
 }
 
+#pragma mark -
+#pragma mark Licensing
+
+- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key
+{
+    if ( [key isEqualToString:@"countOfSiteItemsCreated"] )
+    {
+        return YES;
+    }
+    else
+    {
+        return [super usesExtensiblePropertiesForUndefinedKey:key];
+    }
+}
+
+- (NSUInteger)countOfSiteItemsCreated;
+{
+    return [[self extensiblePropertyForKey:@"countOfSiteItemsCreated"] intValue];
+}
+
+- (void)setCountOfSiteItemsCreated:(NSUInteger)newCount;
+{
+    [self setExtensibleProperty:[NSNumber numberWithInt:newCount] forKey:@"countOfSiteItemsCreated"];
+}
+
+
 @end
