@@ -76,7 +76,6 @@
                                [self.indexedCollection title],
                                LocalizedStringInThisBundle(@"Archive", @"title of object")];
             self.title = title;
-            NSLog(@"set the title!");
         }
 //    }
 }
