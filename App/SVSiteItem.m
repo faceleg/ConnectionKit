@@ -22,6 +22,7 @@
 #import "NSString+Karelia.h"
 
 #import "KSPathUtilities.h"
+#import "KTPublishingEngine.h"
 
 
 @implementation SVSiteItem 
@@ -290,6 +291,20 @@
 {
     // KTPage adds to this behaviour by recursively calling its descendants too, if requested
     [self setSite:site];
+	
+	
+	// Now that we have a site, also set the publishable-in-demo flags for this site item.
+	// Should we do this in setSite: instead?
+	// SVSiteItem awakeFromInsert should set isPublishableInDemo to true if the unique page count is <= kMaxNumberOfFreePublishedPages
+		NSUInteger pagesCreatedSoFar = [site countOfSiteItemsCreated];
+	NSUInteger newCountOfPagesCreatedSoFar = pagesCreatedSoFar + 1;
+	BOOL canPublishInDemo = newCountOfPagesCreatedSoFar <= kMaxNumberOfFreePublishedPages;
+	[self setPrimitiveValue:NSBOOL(canPublishInDemo) forKey:@"isPublishableInDemo"];
+	
+	// Undo issues here?
+	[site setValue:[NSNumber numberWithInt:newCountOfPagesCreatedSoFar] forKey:@"countOfSiteItemsCreated"];
+
+
 }
 
 @dynamic master;
