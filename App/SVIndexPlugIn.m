@@ -37,6 +37,8 @@
 
 - (void)didAddToPage:(id <SVPage>)page;
 {
+    [super didAddToPage:page];
+    
     if (![self indexedCollection])
     {
         if ([page isCollection]) [self setIndexedCollection:page];
