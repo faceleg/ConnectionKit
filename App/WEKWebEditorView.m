@@ -1720,14 +1720,16 @@ typedef enum {  // this copied from WebPreferences+Private.h
             CGAssociateMouseAndMouseCursorPosition(true);
             [NSCursor unhide];
         }
+        else
+        {
+            // Update cursor for finish location
+            [[NSCursor arrowCursor] set];
+            [self mouseMoved:event];
+        }
+        
         [border release];
     }
     [self setNeedsDisplayForItem:item];
-    
-    
-    // Update cursor for finish location
-    //[[NSCursor arrowCursor] set];
-    //[self mouseMoved:event];
 }
 
 // This would probably be better suited as an SVSelectionBorder method eventually
