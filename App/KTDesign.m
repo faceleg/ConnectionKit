@@ -418,6 +418,8 @@ const int kDesignThumbHeight = 65;
 	return (nil != urlString) ? [KSURLFormatter URLFromString:urlString] : nil;
 }
 
+#pragma mark Placeholder Image
+
 /*!	Return path for placeholder image, if it exists
 */
 - (NSURL *)placeholderImageURL;
@@ -426,6 +428,20 @@ const int kDesignThumbHeight = 65;
     if (path) return [NSURL fileURLWithPath:path];
     return nil;
 }
+
++ (NSURL *)placeholderImageURLForDesign:(KTDesign *)design;
+{
+    NSURL *result = [design placeholderImageURL];
+    if (!result)
+    {
+        result = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"placeholder"]];
+    }
+    
+    OBPOSTCONDITION(result);
+    return result;
+}
+
+#pragma mark 
 
 - (int)textWidth
 {

@@ -543,11 +543,7 @@
 
 - (SVMediaRecord *)makePlaceholdImageMediaWithEntityName:(NSString *)entityName;
 {
-    NSURL *URL = [[self design] placeholderImageURL];
-    if (!URL)
-    {
-        URL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"placeholder"]];
-    }
+    NSURL *URL = [KTDesign placeholderImageURLForDesign:[self design]];
     OBASSERT(URL);
     
     
