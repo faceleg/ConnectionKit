@@ -121,6 +121,15 @@
           attributes:(NSDictionary *)attributes;
 
 
+#pragma mark Page Thumbnails
+// If page is nil, a placeholder image will be substituted in
+- (BOOL)writeThumbnailOfPage:(id <SVPage>)page
+                    maxWidth:(NSUInteger)width
+                   maxHeight:(NSUInteger)height
+              imageClassName:(NSString *)className
+                      dryRun:(BOOL)dryRun;
+
+
 #pragma mark Extra markup
 // Appends the markup just before the </BODY> tag. If same code has already been added, goes ignored
 - (void)addMarkupToEndOfBody:(NSString *)markup;

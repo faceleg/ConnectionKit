@@ -815,6 +815,15 @@
                      height:height];
 }
 
+- (BOOL)writeThumbnailOfPage:(id <SVPage>)page
+                    maxWidth:(NSUInteger)width
+                   maxHeight:(NSUInteger)height
+              imageClassName:(NSString *)className
+                      dryRun:(BOOL)dryRun;
+{
+    return [page writeThumbnail:self maxWidth:width maxHeight:height imageClassName:className dryRun:dryRun];
+}
+
 #pragma mark Resource Files
 
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
