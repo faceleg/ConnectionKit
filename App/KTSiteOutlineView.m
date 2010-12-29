@@ -42,6 +42,22 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 	}
 }
 
+@synthesize draggedRows = _draggedRows;
+
+- (NSImage *)dragImageForRowsWithIndexes:(NSIndexSet *)dragRows tableColumns:(NSArray *)tableColumns event:(NSEvent*)dragEvent offset:(NSPointPointer)dragImageOffset AVAILABLE_MAC_OS_X_VERSION_10_4_AND_LATER;
+{
+	// Courtesy of CocoaDev.
+	// We need to save the dragged row indexes so that the delegate can choose how to draw the cell.
+	// Ideally we would prevent white text but that doesn't seem to be changeable.  However we can
+	// prevent drawing the stripes to indicate that a row is not publishable in the demo mode.
+	self.draggedRows = dragRows;
+	
+	NSImage *image = [super dragImageForRowsWithIndexes:dragRows tableColumns:tableColumns
+												  event:dragEvent offset:dragImageOffset];
+	self.draggedRows = nil;
+	return image;
+}
+
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
 	[[KTPulsatingOverlay sharedOverlay] hide];

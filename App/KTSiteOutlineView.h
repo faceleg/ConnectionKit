@@ -12,6 +12,9 @@
 @interface KTSiteOutlineView : NSOutlineView
 {
 	BOOL _isReloadingData;
+	NSIndexSet *_draggedRows;
 }
+
+@property (retain) NSIndexSet *draggedRows;
 
 @end
