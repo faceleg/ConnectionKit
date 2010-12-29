@@ -80,6 +80,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
          options:nil];
     
     [result setAutomaticallyRearrangesObjects:YES];
+    [result setManagedObjectContext:[collection managedObjectContext]]; // #101711
     
     [result bind:NSContentSetBinding toObject:collection withKeyPath:@"childItems" options:nil];
     
