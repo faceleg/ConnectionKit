@@ -48,36 +48,20 @@
 
 #pragma mark Initialization
 
-- (void)awakeFromNew;
+- (void)didAddToPage:(id <SVPage>)page
 {
-    [super awakeFromNew];
+    BOOL isNew = (nil != self.indexedCollection);
     
-    if ( self.indexedCollection )
+    [super didAddToPage:page]; // sets indexedCollection
+    
+    if ( isNew && self.indexedCollection )
     {
-        //FIXME: this is never called because indexedCollection isn't set until didAddToPage:
         // attempt to set container's title to localized string
         NSString *title = [NSString stringWithFormat:@"%@ %@",
                            [self.indexedCollection title],
                            LocalizedStringInThisBundle(@"Archive", @"title of object")];
         self.title = title;
     }
-}
-
-- (void)didAddToPage:(id <SVPage>)page
-{
-    [super didAddToPage:page];
-//    if ( !self.title )
-//    {
-        //FIXME: but this is called too many times potentially wiping out a user change
-        if ( self.indexedCollection )
-        {
-            // attempt to set container's title to localized string
-            NSString *title = [NSString stringWithFormat:@"%@ %@",
-                               [self.indexedCollection title],
-                               LocalizedStringInThisBundle(@"Archive", @"title of object")];
-            self.title = title;
-        }
-//    }
 }
 
 
