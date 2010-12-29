@@ -1616,7 +1616,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     else
     {
-        [super mouseMoved:theEvent];
+        // The event should really be targeted at WebView, so forward on there. It will probably bubble back up through us to superview. #101583
+        [self forwardMouseEvent:theEvent selector:_cmd cachedTargetView:nil];
     }
 }
 
