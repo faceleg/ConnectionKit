@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>Photo Grid</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -26,16 +28,10 @@
 	<string>2.0</string>
 	<key>KTCSSClassName</key>
 	<string>photogrid-index</string>
-	<key>KTCategory</key>
-	<string>2</string>
 	<key>KTPageIconName</key>
 	<string>page_grid_sb.tiff</string>
 	<key>SVPlugInIconPath</key>
 	<string>object_grid.tiff</string>
-	<key>KTPluginName</key>
-	<string>Photo Grid</string>
-	<key>KTPluginPriority</key>
-	<integer>3</integer>
 	<key>SVIndexMasters</key>
 	<array>
 		<dict>
