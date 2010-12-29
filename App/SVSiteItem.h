@@ -76,7 +76,7 @@ typedef enum {
 - (void)setPageOrParentDraft:(BOOL)inDraft;
 - (BOOL)excludedFromSiteMap;
 
-@property(nonatomic, copy) NSNumber *isPublishableInDemo;    // BOOL, mandatory
+@property(nonatomic, copy) NSNumber *isPublishableInDemo;    // BOOL, mandatory.  NOT ACTUALLY USED.
 
 @property(nonatomic, copy) NSNumber *includeInIndex;
 

@@ -172,7 +172,7 @@
 
 @dynamic includeInIndex;
 
-@dynamic isPublishableInDemo;
+@dynamic isPublishableInDemo;		// NOT ACTUALLY USED
 
 #pragma mark URL
 
@@ -286,22 +286,6 @@
 #pragma mark Site
 
 @dynamic site;
-
-- (void)setSite:(KTSite *)site;
-{
-	[self setWrappedValue:site forKey:@"site"];
-
-	// Now that we have a site, also set the publishable-in-demo flags for this site item.
-	// Should we do this in setSite: instead?
-	// SVSiteItem awakeFromInsert should set isPublishableInDemo to true if the unique page count is <= kMaxNumberOfFreePublishedPages
-	NSUInteger pagesCreatedSoFar = [site countOfSiteItemsCreated];
-	NSUInteger newCountOfPagesCreatedSoFar = pagesCreatedSoFar + 1;
-	BOOL canPublishInDemo = newCountOfPagesCreatedSoFar <= kMaxNumberOfFreePublishedPages;
-	[self setPrimitiveValue:NSBOOL(canPublishInDemo) forKey:@"isPublishableInDemo"];
-	
-	// Undo issues here?
-	[site setValue:[NSNumber numberWithInt:newCountOfPagesCreatedSoFar] forKey:@"countOfSiteItemsCreated"];
-}
 
 - (void)setSite:(KTSite *)site recursively:(BOOL)recursive;
 {
