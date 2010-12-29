@@ -925,9 +925,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		int rootExtraX [] = {0,6,8,0,0};
 		int rootMarginsAfter[] = {0,0,8,12,0};
 		
-		NSArray *mediaItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oMediaFilenameField,oFollowButton,oEditTextButton,nil];
-		int mediaExtraX [] = {4,0,0,0};
-		int mediaMarginsAfter[] = {0,4,12,0};
+		NSArray *mediaItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oMediaFilenameField,oFollowButton,nil];
+		int mediaExtraX [] = {4,0,0};
+		int mediaMarginsAfter[] = {0,4,12};
 
 		NSArray *multipleTypesToLayOut = [NSArray arrayWithObjects:oMultiplePagesField,nil];
 		int multiTypeExtraX [] = {2};
