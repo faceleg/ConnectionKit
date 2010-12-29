@@ -13,6 +13,7 @@
 #import "KTHostProperties.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
+#import "KTImageScalingSettings.h"
 #import "KTMaster.h"
 #import "SVMediaGraphic.h"
 #import "KTPage.h"
@@ -821,7 +822,44 @@
               imageClassName:(NSString *)className
                       dryRun:(BOOL)dryRun;
 {
-    return [page writeThumbnail:self maxWidth:width maxHeight:height imageClassName:className dryRun:dryRun];
+    if (page)
+    {
+        return [page writeThumbnail:self
+                           maxWidth:width
+                          maxHeight:height
+                     imageClassName:className
+                             dryRun:dryRun];
+    }
+    else
+    {
+        if (!dryRun)
+        {
+            
+            // Write design's example image
+            KTDesign *design = [[[self page] master] design];
+            NSURL *thumbURL = [KTDesign placeholderImageURLForDesign:design];
+            CIImage *thumb = [[CIImage alloc] initWithContentsOfURL:thumbURL];
+            if (thumb)
+            {
+                CGSize size = [thumb extent].size;
+                [thumb release];
+                
+                KTImageScalingSettings *settings = [KTImageScalingSettings
+                                                    settingsWithBehavior:KTScaleToSize
+                                                    size:NSMakeSize(width, height)];
+                
+                size = [settings scaledCGSizeForImageOfSize:size];
+                
+                [self writeImageWithSrc:[self relativeStringFromURL:thumbURL]
+                                    alt:@""
+                                  width:[NSNumber numberWithFloat:size.width]
+                                 height:[NSNumber numberWithFloat:size.height]];
+                
+            }
+        }
+        
+        return YES;
+    }
 }
 
 #pragma mark Resource Files
