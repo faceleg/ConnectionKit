@@ -50,7 +50,7 @@
 
 - (void)didAddToPage:(id <SVPage>)page
 {
-    BOOL isNew = (nil != self.indexedCollection);
+    BOOL isNew = (nil == self.indexedCollection);
     
     [super didAddToPage:page]; // sets indexedCollection
     
