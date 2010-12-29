@@ -11,6 +11,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "WebEditingKit.h"
 #import "SVWebEditorHTMLContext.h"
+#import "SVWebContentObjectsController.h"
 
 
 extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
@@ -18,7 +19,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 @class KTPage, SVDOMController, SVContentDOMController, SVTextDOMController;
 @class KTHTMLEditorController, SVWebContentAreaController;
-@class SVWebContentObjectsController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
 
