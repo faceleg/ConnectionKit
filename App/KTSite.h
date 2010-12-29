@@ -69,8 +69,4 @@ typedef enum {
 @property(nonatomic, retain, readonly) KTHostProperties *hostProperties;
 @property(nonatomic, copy) NSString *lastExportDirectoryPath;
 
-// Licensing
-- (NSUInteger)countOfSiteItemsCreated;
-- (void)setCountOfSiteItemsCreated:(NSUInteger)newCount;
-
 @end
