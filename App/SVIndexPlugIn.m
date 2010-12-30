@@ -176,7 +176,7 @@
         else
         {
             [context startElement:@"p"];
-            [context writeText:NSLocalizedString(@"Please specify the collection to index using the PlugIn Inspector.","set index collectionb")];
+            [context writeText:NSLocalizedString(@"Please specify the collection to index using the PlugIn Inspector.","set index collection")];
             [context endElement];
         }
     }
