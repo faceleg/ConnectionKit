@@ -34,8 +34,7 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "Sandvox.h"
-#import <Cocoa/Cocoa.h>
+#import <Sandvox.h>
 
 
 @interface FlickrInspector : SVInspectorViewController

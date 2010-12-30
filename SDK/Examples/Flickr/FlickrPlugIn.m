@@ -46,7 +46,6 @@
 @implementation FlickrPlugIn
 
 
-#pragma mark -
 #pragma mark SVPlugIn
 
 /*
@@ -98,7 +97,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Properties
 
 @synthesize flickrID = _flickrID;

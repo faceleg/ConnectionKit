@@ -286,9 +286,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = /Applications/Sandvox.app/Contents/MacOS/Sandvox;
+				HEADER_SEARCH_PATHS = /Applications/Sandvox.app/Contents/Headers;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Flickr;
-				USER_HEADER_SEARCH_PATHS = /Applications/Sandvox.app/Contents/Headers;
 				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970";
 				WRAPPER_EXTENSION = svxElement;
 			};
@@ -298,9 +298,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = /Applications/Sandvox.app/Contents/MacOS/Sandvox;
+				HEADER_SEARCH_PATHS = /Applications/Sandvox.app/Contents/Headers;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Flickr;
-				USER_HEADER_SEARCH_PATHS = /Applications/Sandvox.app/Contents/Headers;
 				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970";
 				WRAPPER_EXTENSION = svxElement;
 			};
