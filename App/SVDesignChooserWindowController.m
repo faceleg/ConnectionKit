@@ -82,8 +82,6 @@
 	// NSLog(@"Set design to %p ... now selected objects is %@", design, [[self designsController] selectedObjects]);
 }
 
-@synthesize selectorWhenChosen = _selectorWhenChosen;
-@synthesize targetWhenChosen = _targetWhenChosen;
 @synthesize genre = _genre;
 @synthesize color = _color;
 @synthesize width = _width;
@@ -98,18 +96,6 @@
 // IF I CHANGE THIS ORDER, CHANGE THE ORDER IN THE METHOD "matchString"
 enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to have the genre *first* but it's one that works best when collapsed, and MGScopeBar prefers collapsing items on the right.  It would be a huge rewrite to change that....
 
-+ (NSSet *)keyPathsForValuesAffectingMatchString
-{
-    // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
-    return [NSSet setWithObjects:@"genre", @"color", @"width", @"designsController.arrangedObjects", nil];
-}
-
-+ (NSSet *)keyPathsForValuesAffectingMatchColor
-{
-    // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
-    return [NSSet setWithObjects:@"genre", @"color", @"width", @"designsController.arrangedObjects", nil];
-}
-
 - (NSColor *)matchColor;
 {
 	if (self.genre || self.color || self.width)
@@ -120,6 +106,12 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 	}
 	return [NSColor lightGrayColor];	// no filter, everything showing: light gray, not interesting
 }
++ (NSSet *)keyPathsForValuesAffectingMatchColor
+{
+    // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
+    return [NSSet setWithObjects:@"genre", @"color", @"width", @"designsController.arrangedObjects", nil];
+}
+
 
 - (NSString *)matchString;
 {
@@ -162,8 +154,14 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 	}
 	return result;
 }
++ (NSSet *)keyPathsForValuesAffectingMatchString
+{
+    // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
+    return [NSSet setWithObjects:@"genre", @"color", @"width", @"designsController.arrangedObjects", nil];
+}
 
-#pragma mark -
+
+#pragma mark 
 
 - (void)lookForNulls
 {
@@ -182,6 +180,8 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 	[[self designsController] setFilterPredicate:nil];		// go back to no filter
 
 }
+
+#pragma mark Presentation
 
 - (void)beginDesignChooserForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector;
 {
@@ -224,19 +224,15 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 	[self showWindow:self];
 }
 
+@synthesize selectorWhenChosen = _selectorWhenChosen;
+@synthesize targetWhenChosen = _targetWhenChosen;
+
 - (IBAction)chooseDesign:(id)sender		// Design was chosen.  Now call back to notify of change.
 {
     // close up shop, we're done
     [NSApp endSheet:[self window]];
     
     [self.targetWhenChosen performSelector:self.selectorWhenChosen withObject:self];    
-}
-
-- (void)terminate:(id)sender
-{
-    // in 10.6 we could use setPreventsApplicationTerminationWhenModal:NO instead
-    [self cancelSheet:sender];
-    [NSApp terminate:sender];
 }
 
 - (IBAction)cancelSheet:(id)sender
@@ -252,6 +248,13 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
         [invocation setArgument:&returnCode atIndex:3];
         [invocation invoke];
     }
+}
+
+- (void)terminate:(id)sender
+{
+    // in 10.6 we could use setPreventsApplicationTerminationWhenModal:NO instead
+    [self cancelSheet:sender];
+    [NSApp terminate:sender];
 }
 
 - (void)designChooserDidEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
