@@ -87,11 +87,11 @@
 			isa = PBXGroup;
 			children = (
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				CE7D56D812761A900071E88D /* toolbar_archive.tiff */,
-				2740553A0D772386001E759E /* Template.html */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
-				3C42DDE40D64CAFE004F35FD /* Localizable.strings */,
 				3C42DE000D64CB6C004F35FD /* License.rtf */,
+				3C42DDE40D64CAFE004F35FD /* Localizable.strings */,
+				2740553A0D772386001E759E /* Template.html */,
+				CE7D56D812761A900071E88D /* toolbar_archive.tiff */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
