@@ -902,7 +902,11 @@ initial syntax coloring.
 		result = nil;				// deny this -- cancel loading this request
 		[sender stopLoading:nil];	// stop loading the whole webview; we got what we needed
 		// [sender performSelector:@selector(stopLoading:) withObject:nil afterDelay:0.0];	// stop loading the whole webview; we got what we needed
+        
 		LOG((@"found resource; stopping %@", sender));
+        
+        // It seems that if you don't return nil, the WebView tries to load it anyway, inspite of the -stopLoading: call. #101223
+        return nil;
 	}
 	return result;
 }
