@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>Delicious List</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -24,12 +26,6 @@
 	<string>${SVN_VERSION}</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KSHelpAnchor</key>
-	<string>Delicious_List</string>
-	<key>KTMainElement</key>
-	<string></string>
-	<key>KTPageletCanHaveTitle</key>
-	<true/>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_delicious.tiff</string>
 	<key>KTPluginInitialProperties</key>
@@ -39,10 +35,6 @@
 		<key>maxEntries</key>
 		<integer>15</integer>
 	</dict>
-	<key>KTPluginName</key>
-	<string>Delicious List</string>
-	<key>KTPluginPriority</key>
-	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
 	<string>My Delicious Links</string>
 	<key>NSPrincipalClass</key>
