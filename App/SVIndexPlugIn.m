@@ -144,6 +144,22 @@
 
 #pragma mark HTML Generation
 
+- (void)writePlaceholderHTML:(id <SVPlugInContext>)context;
+{
+    [context startElement:@"p"];
+    
+    if ( self.indexedCollection )
+    {
+        [context writeText:NSLocalizedString(@"To see the Index, please add indexable pages to the collection.","add pages to collection")];
+    }
+    else
+    {
+        [context writeText:NSLocalizedString(@"Please specify the collection to index using the PlugIn Inspector.","set index collection")];
+    }
+    
+    [context endElement];
+}
+
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
     // set up indexable pages controller
@@ -164,24 +180,9 @@
         
     if ( [context isForEditing] )
     {
-        if ( self.indexedCollection )
-        {
-            if ( ![self.indexablePagesOfCollection count] )
-            {
-                [context startElement:@"p"];
-                [context writeText:NSLocalizedString(@"To see the Index, please add indexable pages to the collection.","add pages to collection")];
-                [context endElement];
-            }
-        }
-        else
-        {
-            [context startElement:@"p"];
-            [context writeText:NSLocalizedString(@"Please specify the collection to index using the PlugIn Inspector.","set index collection")];
-            [context endElement];
-        }
+        if ( ![self.indexablePagesOfCollection count] ) [self writePlaceholderHTML:context];
     }
 }
-
 
 #pragma mark Properties
 
