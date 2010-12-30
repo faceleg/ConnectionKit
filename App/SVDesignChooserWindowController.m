@@ -228,6 +228,8 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
     [NSApp endSheet:[self window]];
     
     [_targetWhenChosen performSelector:_selectorWhenChosen withObject:self];    
+    _targetWhenChosen = nil;
+    _selectorWhenChosen = NULL;
 }
 
 - (void)sendDidCancelMessage;
@@ -242,7 +244,10 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
         [invocation setArgument:&self atIndex:2];
         [invocation setArgument:&returnCode atIndex:3];
         [invocation invoke];
+        
+        _targetWhenChosen = nil;
     }
+    _selectorWhenChosen = NULL;
 }
 
 - (IBAction)cancelSheet:(id)sender
