@@ -36,6 +36,7 @@
 
 
 #import "PageCounterPlugIn.h"
+#import <assertions.h>
 
  /*
   
@@ -51,6 +52,8 @@
   
   */
  
+
+#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 
 //LocalizedStringInThisBundle("page views",@" preceeded by a number to show how many times a page has been viewed over the web");
 
@@ -74,6 +77,13 @@ NSString *PCSampleImageKey = @"sampleImage";
             @"selectedThemeIndex", 
             nil];
 }
+
+
+- (void)awakeFromNew;
+{
+    [super awakeFromNew];
+    self.selectedThemeIndex = 0;
+}    
 
 
 #pragma mark Initialization

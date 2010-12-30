@@ -96,15 +96,15 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3C5D6F5012A4339600AAAB18 /* Inspector.xib */,
-				8D5B49B7048680CD000E48DA /* Info.plist */,
-				3C42E22B0D64D07D004F35FD /* Template.html */,
-				3C42E1870D64D050004F35FD /* digits */,
 				3C42E22A0D64D07D004F35FD /* counter.icns */,
-				3C42E22C0D64D07D004F35FD /* pagecounter.php */,
+				3C42E1870D64D050004F35FD /* digits */,
+				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
-				3C42E2310D64D093004F35FD /* Localizable.strings */,
+				3C5D6F5012A4339600AAAB18 /* Inspector.xib */,
 				3C42E24C0D64D116004F35FD /* License.rtf */,
+				3C42E2310D64D093004F35FD /* Localizable.strings */,
+				3C42E22C0D64D07D004F35FD /* pagecounter.php */,
+				3C42E22B0D64D07D004F35FD /* Template.html */,
 			);
 			name = Resources;
 			sourceTree = "<group>";

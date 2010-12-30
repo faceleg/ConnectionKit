@@ -34,7 +34,7 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "Sandvox.h"
+#import <Sandvox.h>
 
 enum { PC_INVISIBLE = 0, PC_TEXT = 1, PC_GRAPHICS = 2 };
 
