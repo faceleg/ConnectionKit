@@ -55,10 +55,24 @@
     
     // parse template
     [super writeHTML:context];
+}
+
+- (void)writePlaceholderHTML:(id <SVPlugInContext>)context;
+{
+    [context startElement:@"p"];
     
-    // if we're empty, write a <div> prompting user to drag photos to collection
-    //FIXME: the problem is that super's writeHTML does a bunch of setup that we don't want to duplicate
-    //but if we do call super we get generic messages
+    if ( self.indexedCollection )
+    {
+        [context writeText:NSLocalizedString(@"Drag photos to the collection to build the album.",
+                                             "add photos to grid")];
+    }
+    else
+    {
+        [context writeText:NSLocalizedString(@"Please specify the collection to use for the album.",
+                                             "set photo collection")];
+    }
+    
+    [context endElement];
 }
 
 

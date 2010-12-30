@@ -1,9 +1,9 @@
-[[if indexablePagesOfCollection]]
-[[foreach indexablePagesOfCollection aPage]]
+[[if indexedPages]]
+[[foreach indexedPages aPage]]
 <div class="gridItem [[i]] [[eo]][[last]]">
 	[[=writeThumbnailImageOfIteratedPage]]
-	[[COMMENT really this ought to be the current header level, but designs will have problems if it's not an h3]]
     <h3><a [[target aPage]]href="[[path aPage]]"><span class="in">[[=&aPage.title]]</span></a></h3>
+    [[COMMENT should be currentHeaderLevel, but some designs require h3]]
 </div>
 [[endForEach]]
 [[else]]
