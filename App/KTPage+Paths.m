@@ -172,12 +172,46 @@
 	return result;
 }
 
+- (NSString *)defaultIndexAndPathExtension
+{
+	NSString *result = [[NSUserDefaults standardUserDefaults] objectForKey:@"fileExtension"];
+	
+	if (!result || [result isEqualToString:@""])
+	{
+		result = @"html";
+	}
+	
+	if (result)
+	{
+		NSString *indexFileName = [[[self site] hostProperties] valueForKey:@"htmlIndexBaseName"];
+		result = [indexFileName stringByAppendingPathExtension:result];
+	}
+	
+	return result;
+}
+
+
+
+
+
 /*	All custom file extensions available for the receiver. Mainly used for bindings.
  */
 - (NSArray *)availablePathExtensions
 {
 	NSArray *result = [NSArray arrayWithObjects:@"html", @"htm", @"php", @"shtml", @"asp", nil];
 	return result;
+}
+- (NSArray *)availableIndexAndPathExtensions
+{
+	NSString *indexFileName = [[[self site] hostProperties] valueForKey:@"htmlIndexBaseName"];
+
+	NSMutableArray *result = [NSMutableArray array];
+	NSArray *extensions = [self availablePathExtensions];
+	for (NSString *extension in extensions)
+	{
+		[result addObject:[indexFileName stringByAppendingPathExtension:extension]];
+	}
+	return [NSArray arrayWithArray:result];
 }
 
 #pragma mark Filenames & Extensions

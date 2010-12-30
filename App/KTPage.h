@@ -54,6 +54,7 @@ typedef enum {
 
 #pragma mark Paths
 @property(nonatomic, copy) NSString *customPathExtension;
+@property(nonatomic, copy) NSString *customIndexAndPathExtension;
 
 
 #pragma mark Thumbnail

@@ -231,7 +231,14 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 					 toObject:oPagesController
 				  withKeyPath:@"selection.defaultFileExtension"
 					  options:nil];
+		// popup is bound to availablePathExtensions, selection is bound to customPathExtension.
         
+		[oIndexAndExtensionPopup bind:@"defaultValue"
+					 toObject:oPagesController
+				  withKeyPath:@"selection.defaultIndexAndPathExtension"
+					  options:nil];
+		// popup is bound to availableIndexAndPathExtensions, selection is bound to customIndexAndPathExtension.
+		
         
         _awokenFromNib = YES;
 	}
@@ -859,7 +866,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 	[oMultiplePagesField setHidden: selectedObjectsCount == 1];
 	
-	[oExtensionPopup setHidden:!arePagesSelected];
+	[oExtensionPopup setHidden:!arePagesSelected  || NSOffState != pageIsCollectionState];
+	[oIndexAndExtensionPopup setHidden:!arePagesSelected || (NSOnState != pageIsCollectionState && IS_ROOT_STATE != pageIsCollectionState)];
 	
 	[oPublishAsCollectionPopup setHidden: !arePagesSelected || NSMixedState == pageIsCollectionState];
 
@@ -912,7 +920,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		int pageExtraX [] = {4,5,6,8,0,0};
 		int pageMarginsAfter[] = {0,-1,0,8,12,0};
 		
-		NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oSlashSeparator,oExtensionPopup,oFollowButton,oPublishAsCollectionPopup,nil];
+		NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oSlashSeparator,oIndexAndExtensionPopup,oFollowButton,oPublishAsCollectionPopup,nil];
 		int collectionExtraX [] = {4,5,1,0,0,0};
 		int collectionMarginsAfter[] = {0,-1,2,8,12,0};
 		
@@ -920,7 +928,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		int markerExtraX [] = {4,6,8,0,0};
 		int markerMarginsAfter[] = {0,0,8,12,0};
 			
-		NSArray *rootItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oExtensionPopup,oFollowButton,oPublishAsCollectionPopup,nil];
+		NSArray *rootItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oIndexAndExtensionPopup,oFollowButton,oPublishAsCollectionPopup,nil];
 		int rootExtraX [] = {0,8,0,0};
 		int rootMarginsAfter[] = {4,8,12,0};
 		

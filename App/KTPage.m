@@ -33,6 +33,7 @@
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "KSContainsObjectValueTransformer.h"
+#import "KTSite.h"
 
 #import "Debug.h"
 
@@ -359,6 +360,24 @@
 {
 	[self setWrappedValue:extension forKey:@"customFileExtension"];
 	[self recursivelyInvalidateURL:NO];
+}
+
+// Derived
+- (NSString *)customIndexAndPathExtension
+{
+	NSString *result = [self wrappedValueForKey:@"customFileExtension"];
+	if (result)
+	{
+		NSString *indexFileName = [[[self site] hostProperties] valueForKey:@"htmlIndexBaseName"];
+		result = [indexFileName stringByAppendingPathExtension:result];
+	}
+	return result;
+}
+
+- (void)setCustomIndexAndPathExtension:(NSString *)indexAndExtension
+{
+	NSString *extensionOnly = [indexAndExtension pathExtension];
+	[self setCustomPathExtension:extensionOnly];
 }
 
 /*	KTAbstractPage doesn't support recursive operations, so we do instead
