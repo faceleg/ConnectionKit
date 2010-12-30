@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>Contact Form</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -23,15 +25,7 @@
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
 	<key>SVMinimumAppVersion</key>
-	<string>1.5</string>
-	<key>KTElementAllowsIntroduction</key>
-	<true/>
-	<key>KTElementSupportsPageletUsage</key>
-	<true/>
-	<key>KTElementSupportsPageUsage</key>
-	<true/>
-	<key>KSHelpAnchor</key>
-	<string>Contact_Form</string>
+	<string>2.0</string>
 	<key>KTPageDisableComments</key>
 	<true/>
 	<key>SVPlugInCSSFiles</key>
@@ -49,10 +43,6 @@
 		<key>subjectType</key>
 		<integer>1</integer>
 	</dict>
-	<key>KTPluginName</key>
-	<string>Contact Form</string>
-	<key>KTPluginPriority</key>
-	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
 	<string>Contact Me</string>
 	<key>NSPrincipalClass</key>
