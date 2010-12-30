@@ -37,6 +37,9 @@
 #import "TweetButtonPlugIn.h"
 
 
+#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
+
+
 @implementation TweetButtonPlugIn
 
 /*

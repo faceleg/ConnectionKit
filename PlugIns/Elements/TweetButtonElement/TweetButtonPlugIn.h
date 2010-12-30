@@ -34,7 +34,7 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "Sandvox.h"
+#import <Sandvox.h>
 
 /*
     Add this button to your website to let people share content on Twitter without having to leave the page. 
