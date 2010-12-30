@@ -36,4 +36,10 @@
 
 @property(nonatomic, readonly) NSArray *indexablePagesOfCollection;
 
+
+#pragma mark HTML
+// Called when there's no pages to go in the index. Default implementation simply writes out a bit of explanatory text, but you can override to provide a richer placeholder instead.
+- (void)writePlaceholderHTML:(id <SVPlugInContext>)context;
+
+
 @end
