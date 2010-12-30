@@ -40,6 +40,7 @@
 - (void) autoValidate;
 - (NSData *)generateHashFromFragment:(NSString *)fragment;
 - (void)loadFragment:(NSString *)fragmentString;
+@property (nonatomic, retain) SVOffscreenWebViewController *asyncOffscreenWebViewController;
 
 -(IBAction)	recolorCompleteFile: (id)sender;
 -(IBAction) recolorCompleteFileDeferred: (id)sender;

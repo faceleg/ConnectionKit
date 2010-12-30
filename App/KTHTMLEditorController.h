@@ -103,7 +103,6 @@
 @property (nonatomic) ValidationState validationState;
 @property (nonatomic) BOOL preventPreview;
 @property (nonatomic, copy) NSData *hashOfLastValidation;
-@property (nonatomic, retain) SVOffscreenWebViewController *asyncOffscreenWebViewController;
 
 @end
 
