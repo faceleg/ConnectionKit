@@ -27,8 +27,6 @@
 
 @interface SVDesignChooserWindowController ()
 - (NSString *)scopeBar:(MGScopeBar *)theScopeBar AXDescriptionForItem:(NSString *)identifier inGroup:(NSInteger)groupNumber;
-@property(assign) SEL selectorWhenChosen;
-@property(assign) id  targetWhenChosen;
 @end
 
 
@@ -185,8 +183,8 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 
 - (void)beginDesignChooserForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector;
 {
-	self.selectorWhenChosen = aSelector;
-	self.targetWhenChosen = aTarget;
+	_selectorWhenChosen = aSelector;
+	_targetWhenChosen = aTarget;    // weak ref
 	
 	
 	//[oViewController setSelectedDesign:nil];
@@ -218,36 +216,39 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 
 - (void)beginWithDelegate:(id)aTarget didEndSelector:(SEL)aSelector;
 {
-    self.selectorWhenChosen = aSelector;
-	self.targetWhenChosen = aTarget;
+    _selectorWhenChosen = aSelector;
+	_targetWhenChosen = aTarget;    // weak ref
     
 	[self showWindow:self];
 }
-
-@synthesize selectorWhenChosen = _selectorWhenChosen;
-@synthesize targetWhenChosen = _targetWhenChosen;
 
 - (IBAction)chooseDesign:(id)sender		// Design was chosen.  Now call back to notify of change.
 {
     // close up shop, we're done
     [NSApp endSheet:[self window]];
     
-    [self.targetWhenChosen performSelector:self.selectorWhenChosen withObject:self];    
+    [_targetWhenChosen performSelector:_selectorWhenChosen withObject:self];    
+}
+
+- (void)sendDidCancelMessage;
+{
+    if (_targetWhenChosen)
+    {
+        NSInteger returnCode = NSAlertAlternateReturn;
+        
+        NSInvocation *invocation = [NSInvocation invocationWithSelector:_selectorWhenChosen
+                                                                 target:_targetWhenChosen];
+        
+        [invocation setArgument:&self atIndex:2];
+        [invocation setArgument:&returnCode atIndex:3];
+        [invocation invoke];
+    }
 }
 
 - (IBAction)cancelSheet:(id)sender
 {
     [NSApp endSheet:[self window]];
-    
-    if ([self targetWhenChosen])
-    {
-        NSInteger returnCode = NSAlertAlternateReturn;
-        
-        NSInvocation *invocation = [NSInvocation invocationWithSelector:[self selectorWhenChosen] target:[self targetWhenChosen]];
-        [invocation setArgument:&self atIndex:2];
-        [invocation setArgument:&returnCode atIndex:3];
-        [invocation invoke];
-    }
+    [self sendDidCancelMessage];
 }
 
 - (void)terminate:(id)sender
@@ -277,15 +278,7 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 - (void)windowWillClose:(NSNotification *)notification;
 {
     // User clicked close button, alert delegate
-    if ([self targetWhenChosen])
-    {
-        NSInteger returnCode = NSAlertAlternateReturn;
-        
-        NSInvocation *invocation = [NSInvocation invocationWithSelector:[self selectorWhenChosen] target:[self targetWhenChosen]];
-        [invocation setArgument:&self atIndex:2];
-        [invocation setArgument:&returnCode atIndex:3];
-        [invocation invoke];
-    }
+    [self sendDidCancelMessage];
 }
 
 #pragma mark MGScopeBarDelegate
