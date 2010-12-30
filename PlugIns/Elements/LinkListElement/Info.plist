@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>List of External Links</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -24,31 +26,8 @@
 	<string>${SVN_VERSION}</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KTCategory</key>
-	<integer>6</integer>
-	<key>KTElementAllowsIntroduction</key>
-	<true/>
-	<key>KTElementSupportsPageletUsage</key>
-	<true/>
-	<key>KTElementSupportsPageUsage</key>
-	<true/>
-	<key>KSHelpAnchor</key>
-	<string>List_of_Links</string>
-	<key>KTPageletCanHaveTitle</key>
-	<true/>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_linklist.tiff</string>
-	<key>KTPluginInitialProperties</key>
-	<dict>
-		<key>layout</key>
-		<integer>0</integer>
-		<key>openInNewWindow</key>
-		<false/>
-	</dict>
-	<key>KTPluginName</key>
-	<string>List of External Links</string>
-	<key>KTPluginUntitledName</key>
-	<string>External Links</string>
 	<key>NSPrincipalClass</key>
 	<string>LinkListPlugIn</string>
 </dict>

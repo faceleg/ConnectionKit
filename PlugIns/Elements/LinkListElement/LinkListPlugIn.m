@@ -80,6 +80,10 @@
 {
     [super awakeFromNew];
     
+    // set initial properties
+    self.layout = 0;
+    self.openLinksInNewWindow = NO;
+    
     // see if we can start with the frontmost URL in the default browser
     id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
     if ( location )

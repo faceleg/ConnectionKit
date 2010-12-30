@@ -91,13 +91,13 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3C5D6F5312A4341200AAAB18 /* Inspector.xib */,
-				CE28031312432D1800B00F3D /* toolbar_linklist.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				3CA900910D63C8A200815310 /* Template.html */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
-				3CA900960D63C8AC00815310 /* Localizable.strings */,
+				3C5D6F5312A4341200AAAB18 /* Inspector.xib */,
 				3CA900BA0D63CB2900815310 /* License.rtf */,
+				3CA900960D63C8AC00815310 /* Localizable.strings */,
+				3CA900910D63C8A200815310 /* Template.html */,
+				CE28031312432D1800B00F3D /* toolbar_linklist.tiff */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
