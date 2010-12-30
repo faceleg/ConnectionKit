@@ -19,12 +19,8 @@
   @private
     id <SVPage>         _collection;
     id                  _reserved3;
-    id                  _reserved4;
-    id                  _reserved5;
-    id                  _reserved6;
     NSUInteger          _maxItems;
     BOOL                _enableMaxItems;
-    
 }
 
 - (void)makeOriginalSize;   // indexes use this to set their width to nil
