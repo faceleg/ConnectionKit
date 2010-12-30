@@ -64,6 +64,16 @@
             nil];
 }
 
+- (void)awakeFromNew;
+{
+    [super awakeFromNew];
+    
+    // set initial properties
+    self.number = 10;
+    self.showInfo = YES;
+    self.tag = @"clouds";
+}    
+
 - (void)dealloc
 {
     self.flickrID = nil;
