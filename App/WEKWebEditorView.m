@@ -2024,7 +2024,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     if (_lastAction == @selector(moveRight:) && currentRange && [currentRange collapsed])
     {
         DOMNode *oldNode = [currentRange ks_endNode:NULL];
-        DOMNode *newNode = [proposedRange startContainer];
+        DOMNode *newNode = [proposedRange ks_startNode:NULL];
         if (oldNode != newNode)
         {
             DOMTreeWalker *walker = [[oldNode ownerDocument] createTreeWalker:[[oldNode parentNode] parentNode]
