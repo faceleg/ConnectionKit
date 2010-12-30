@@ -18,7 +18,6 @@
 {
   @private
     id <SVPage>         _collection;
-    NSArrayController   *_indexablePagesController;
     id                  _reserved3;
     id                  _reserved4;
     id                  _reserved5;
@@ -34,7 +33,7 @@
 @property(nonatomic) BOOL enableMaxItems;
 @property(nonatomic) NSUInteger maxItems;
 
-@property(nonatomic, readonly) NSArray *indexablePagesOfCollection;
+@property(nonatomic, readonly) NSArray *indexedPages;
 
 
 #pragma mark HTML

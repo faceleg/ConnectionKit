@@ -18,10 +18,6 @@
 @end
 
 
-@interface SVIndexPlugIn ()
-@property(nonatomic, retain) NSArrayController *indexablePagesController;
-@end
-
 
 #pragma mark -
 
@@ -56,34 +52,15 @@
 
 #pragma mark Indexed Pages
 
-// this needs to be adjusted to return only those pages marked as indexable by parent
-// but we need to be KVO-compliant and so need a controller to vend this array?
-- (NSArray *)indexablePagesOfCollection
+- (NSArray *)indexedPages
 {
-//    NSArray *result = nil;
-//    if ( self.enableMaxItems && self.maxItems > 0 )
-//    {
-//        NSMutableArray *array = [NSMutableArray arrayWithCapacity:self.maxItems];
-//        NSUInteger numberOfChildPages = [[self.indexedCollection childPages] count];
-//        NSUInteger arrayMax = (numberOfChildPages < self.maxItems) ? numberOfChildPages : self.maxItems;
-//        for ( NSUInteger i=0; i<arrayMax; i++ )
-//        {
-//            id<SVPage> childPage = [[self.indexedCollection childPages] objectAtIndex:i];
-//            [array addObject:childPage];
-//        }
-//        result = [NSArray arrayWithArray:array];
-//    }
-//    else
-//    {
-//        result = self.indexedCollection.childPages;
-//    }
-//    return result;
-    
     NSArray *result = nil;
     
-    if ( self.indexablePagesController )
+    if ( self.indexedCollection )
     {
-        NSArray *arrangedObjects = [self.indexablePagesController arrangedObjects];
+        NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:(KTPage *)self.indexedCollection];
+        NSArray *arrangedObjects = [controller arrangedObjects];
+        
         if ( self.enableMaxItems && self.maxItems > 0 )
         {
             NSUInteger arrayMax = ([arrangedObjects count] < self.maxItems) ? [arrangedObjects count] : self.maxItems;
@@ -93,8 +70,7 @@
         else
         {
             result = arrangedObjects;
-        }
-
+        }        
     }
     
     return result;
@@ -162,13 +138,10 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
-    // set up indexable pages controller
     if ( self.indexedCollection )
     {
-        //FIXME: should we really be hanging on to the controller in an ivar? if not, how do we reference it outside this method?
-        //FIXME: remove reference to KTPage someday
-        self.indexablePagesController = [SVPagesController controllerWithPagesToIndexInCollection:(KTPage *)self.indexedCollection];
-        [context addDependencyForKeyPath:@"arrangedObjects" ofObject:self.indexablePagesController];
+        NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:(KTPage *)self.indexedCollection];
+        [context addDependencyForKeyPath:@"arrangedObjects" ofObject:controller];
     }
     
     // add dependencies
@@ -180,7 +153,7 @@
         
     if ( [context isForEditing] )
     {
-        if ( ![self.indexablePagesOfCollection count] ) [self writePlaceholderHTML:context];
+        if ( ![self.indexedPages count] ) [self writePlaceholderHTML:context];
     }
 }
 
@@ -191,11 +164,8 @@
 
 @synthesize maxItems = _maxItems;
 
-@synthesize indexablePagesController = _indexablePagesController;
-
 - (void)dealloc
 {
-    self.indexablePagesController = nil;
     self.indexedCollection = nil;
     [super dealloc];
 }
