@@ -26,10 +26,6 @@
 	<string>${SVN_VERSION}</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KTCategory</key>
-	<integer>3</integer>
-	<key>KSHelpAnchor</key>
-	<string>Sandvox_Badge</string>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_badge.tiff</string>
 	<key>NSPrincipalClass</key>
