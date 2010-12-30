@@ -794,50 +794,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
-- (BOOL)tryToSelectItemByMovingRight;
-{
-    BOOL result = NO;
-    
-    DOMRange *selection = [self selectedDOMRange];
-    if ([selection collapsed])
-    {
-        // Is there a next node to select? (there isn't if selection is mid-text or the last child)
-        DOMNode *nextNode = nil;
-        
-        DOMNode *selectionEnd = [selection endContainer];
-        if ([selectionEnd nodeType] == DOM_TEXT_NODE)
-        {
-            if ([[selectionEnd nodeValue] length] == [selection endOffset])
-            {
-                nextNode = [selectionEnd nextSibling];
-            }
-        }
-        else
-        {
-            nextNode = [[selectionEnd childNodes] item:[selection endOffset]];
-        }
-        
-        
-        // Great, found a node to perhaps select – does it correspond to a selectable item?
-        if (nextNode)
-        {
-            WEKWebEditorItem *item = [self selectableItemForDOMNode:nextNode];
-            DOMHTMLElement *element = [item HTMLElement];
-            
-            if (element == nextNode && [self shouldTrySelectingDOMElementInline:element])
-            {
-                result = [self changeSelectionByDeselectingAll:YES
-                                                orDeselectItem:nil
-                                                   selectItems:[NSArray arrayWithObject:item]
-                                                      DOMRange:nil
-                                                    isUIAction:YES];
-            }
-        }
-    }
-    
-    return result;
-}
-
 #pragma mark Editing
 
 - (BOOL)canEditText;
@@ -2112,6 +2068,36 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     DOMRange *range = proposedRange;
     
     
+    
+    // Select image if skipping over one. #77696
+    if (_lastAction == @selector(moveRight:) && currentRange && [currentRange collapsed])
+    {
+        DOMNode *oldNode = [currentRange commonAncestorContainer];
+        DOMNode *newNode = [proposedRange startContainer];
+        if (oldNode != newNode)
+        {
+            DOMTreeWalker *walker = [[oldNode ownerDocument] createTreeWalker:[[oldNode parentNode] parentNode]
+                                                                   whatToShow:DOM_SHOW_ALL
+                                                                       filter:nil
+                                                       expandEntityReferences:NO];
+            [walker setCurrentNode:oldNode];
+            
+            // Walk to the proposed range, looking for images to select
+            DOMNode *aNode = [walker nextNode];
+            while (aNode && aNode != newNode)
+            {
+                if ([aNode isKindOfClass:[DOMHTMLImageElement class]])
+                {
+                    [range selectNode:aNode]; rangeEdited = YES;
+                }
+                
+                aNode = [walker nextNode];
+            }
+        }
+    }
+    
+    
+    
     // We only want a collapsed range to be selected by the mouse if it's within the bounds of the text (showing the text cursor)
     if (!proposedRange || [proposedRange collapsed])
     {
@@ -2120,21 +2106,21 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             [event type] == NSRightMouseDown ||
             [event type] == NSOtherMouseDown)
         {
-            DOMNode *node = [proposedRange startContainer];
-            if (!node || ![node enclosingContentEditableElement])
+            DOMNode *oldNode = [proposedRange startContainer];
+            if (!oldNode || ![oldNode enclosingContentEditableElement])
             {
                 range = nil;
                 
-                if ([node nodeType] != DOM_TEXT_NODE)
+                if ([oldNode nodeType] != DOM_TEXT_NODE)
                 {
-                    node = [[node childNodes] item:[proposedRange startOffset]];
+                    oldNode = [[oldNode childNodes] item:[proposedRange startOffset]];
                 }
                 
-                if (node)
+                if (oldNode)
                 {
-                    NSRect textBox = [node boundingBox];
+                    NSRect textBox = [oldNode boundingBox];
 
-                    NSView *view = [node documentView];
+                    NSView *view = [oldNode documentView];
                     NSPoint location = [view convertPointFromBase:[event locationInWindow]];
                     
                     if ([view mouse:location inRect:textBox])
@@ -2387,6 +2373,8 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 - (BOOL)webView:(WebView *)webView doCommandBySelector:(SEL)command
 {
     BOOL result = NO;
+    _lastAction = command;
+    
     
     // _isForwardingCommandToWebView indicates that the command is already being processed by the Web Editor, so it's now up to the WebView to handle. Otherwise it's easy to get stuck in an infinite loop.
     if (!_isForwardingCommandToWebView)
@@ -2401,10 +2389,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             if (command == @selector(moveLeft:))
             {
                 result = [self tryToSelectItemByMovingLeft];
-            }
-            else if (command == @selector(moveRight:))
-            {
-                result = [self tryToSelectItemByMovingRight];
             }
             else if (command == @selector(moveUp:) || command == @selector(moveDown:))
             {   // don't want these to go to self
