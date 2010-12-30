@@ -893,7 +893,7 @@ initial syntax coloring.
 		self.hasRemoteLoads = YES;
 		result = nil;				// deny this -- cancel loading this request
         
-        // You'd think stopping the load (via WebView or WebFrame) is prudent since we're no longer loading. However, it seems that doing so from inside this delegate method will generally cause the WebView to crash. If we deny loading of all of resources, loading will be over almost straightaway though, so it's nearly the same.
+        // You'd think stopping the load (via WebView or WebFrame) is prudent since we're no longer loading. However, it seems that doing so from inside this delegate method will generally cause the WebView to crash. If we deny loading of all of resources, loading will be over almost straightaway though, so it's nearly the same. #101223
         
 		LOG((@"found resource; stopping %@", sender));
 	}
