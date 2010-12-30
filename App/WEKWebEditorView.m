@@ -1486,11 +1486,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
-- (void)mouseUp:(NSEvent *)theEvent
-{
-    
-}
-
 - (void)mouseMoved:(NSEvent *)theEvent;
 {
     NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
