@@ -55,6 +55,10 @@
     
     // parse template
     [super writeHTML:context];
+    
+    // if we're empty, write a <div> prompting user to drag photos to collection
+    //FIXME: the problem is that super's writeHTML does a bunch of setup that we don't want to duplicate
+    //but if we do call super we get generic messages
 }
 
 
@@ -71,11 +75,22 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
     id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
-    [iteratedPage writeThumbnail:context
-                        maxWidth:128
-                       maxHeight:128
-                  imageClassName:nil
-                          dryRun:NO];
+    [context writeThumbnailOfPage:iteratedPage
+                         maxWidth:128
+                        maxHeight:128
+                   imageClassName:nil
+                           dryRun:NO];
+}
+
+- (void)writeThumbnailPlaceholder
+{
+    id<SVPlugInContext> context = [self currentContext]; 
+    
+    [context writeThumbnailOfPage:nil
+                         maxWidth:128
+                        maxHeight:128
+                   imageClassName:nil
+                           dryRun:NO];
 }
 
 @end

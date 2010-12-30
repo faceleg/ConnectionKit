@@ -1,3 +1,4 @@
+[[if indexablePagesOfCollection]]
 [[foreach indexablePagesOfCollection aPage]]
 <div class="gridItem [[i]] [[eo]][[last]]">
 	[[=writeThumbnailImageOfIteratedPage]]
@@ -5,4 +6,9 @@
     <h3><a [[target aPage]]href="[[path aPage]]"><span class="in">[[=&aPage.title]]</span></a></h3>
 </div>
 [[endForEach]]
+[[else]]
+<div>
+	[[=writeThumbnailPlaceholder]]
+</div>
+[[endif]]
 <div class="photogrid-index-bottom"></div>
