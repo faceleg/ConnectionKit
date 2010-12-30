@@ -91,9 +91,9 @@
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C09515C0D5D0EE200DE6F62 /* License.rtf */,
+				3C0951500D5D0E8100DE6F62 /* Localizable.strings */,
 				3C0951450D5D0E1700DE6F62 /* Template.html */,
 				CE2802A012432BBD00B00F3D /* toolbar_photogrid.tiff */,
-				3C0951500D5D0E8100DE6F62 /* Localizable.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
