@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>Page Counter</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -24,25 +26,8 @@
 	<string>${SVN_VERSION}</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KSHelpAnchor</key>
-	<string>Page_Counter</string>
-	<key>KTMainElement</key>
-	<string></string>
-	<key>KTPageletCanHaveTitle</key>
-	<true/>
 	<key>SVPlugInIconPath</key>
 	<string>counter.icns</string>
-	<key>KTPluginInitialProperties</key>
-	<dict>
-		<key>selectedThemeIndex</key>
-		<integer>0</integer>
-	</dict>
-	<key>KTPluginName</key>
-	<string>Page Counter</string>
-	<key>KTPluginPriority</key>
-	<integer>5</integer>
-	<key>KTPluginUntitledName</key>
-	<string>Page Counter</string>
 	<key>NSPrincipalClass</key>
 	<string>PageCounterPlugIn</string>
 </dict>
