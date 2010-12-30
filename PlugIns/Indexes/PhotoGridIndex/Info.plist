@@ -28,6 +28,8 @@
 	<string>2.0</string>
 	<key>KTCSSClassName</key>
 	<string>photogrid-index</string>
+	<key>KTPageIconName</key>
+	<string>page_grid_sb.tiff</string>
 	<key>SVPlugInIconPath</key>
 	<string>object_grid.tiff</string>
 	<key>SVIndexMasters</key>
