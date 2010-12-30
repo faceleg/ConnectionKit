@@ -36,6 +36,7 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 + (NSArray *)registeredFactories;
 + (void)registerFactory:(SVGraphicFactory *)factory;
 + (NSInteger)tagForFactory:(SVGraphicFactory *)factory;
++ (SVGraphicFactory *)graphicFactoryForTag:(NSInteger)tag;
 
 
 #pragma mark Shared Objects
