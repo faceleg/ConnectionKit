@@ -123,6 +123,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		[oPagesController removeObserver:self forKeyPath:@"selection.metaDescription"];
 		[oPagesController removeObserver:self forKeyPath:@"selection.windowTitle"];
 		[oPagesController removeObserver:self forKeyPath:@"selection.fileName"];
+        [oPagesController removeObserver:self forKeyPath:@"selection.filename"];    // 101628
 		[oPagesController removeObserver:self forKeyPath:@"selection.baseExampleURLString"];
 		[oPagesController removeObserver:self forKeyPath:@"selection.title"];
 		[oPagesController removeObserver:self forKeyPath:@"selectedObjects"];
