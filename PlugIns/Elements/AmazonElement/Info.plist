@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>Amazon List</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -24,12 +26,6 @@
 	<string>${SVN_VERSION}</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KTCategory</key>
-	<integer>4</integer>
-	<key>KSHelpAnchor</key>
-	<string>Amazon_List</string>
-	<key>KTPageletCanHaveTitle</key>
-	<true/>
 	<key>SVPlugInCSSFiles</key>
 	<array>
 		<string>amazonlist.css</string>
@@ -61,13 +57,7 @@
 		<key>store</key>
 		<integer>1</integer>
 	</dict>
-	<key>KTPluginPriority</key>
-	<integer>5</integer>
 	<key>NSPrincipalClass</key>
 	<string>AmazonListPlugIn</string>
-	<key>KTElementSupportsPageUsage</key>
-	<true/>
-	<key>KTElementSupportsPageletUsage</key>
-	<true/>
 </dict>
 </plist>
