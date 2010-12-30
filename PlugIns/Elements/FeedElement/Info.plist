@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>External RSS Feed</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -24,29 +26,8 @@
 	<string>${SVN_VERSION}</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KTCategory</key>
-	<integer>5</integer>
-	<key>KTElementAllowsIntroduction</key>
-	<true/>
-	<key>KTElementSupportsPageUsage</key>
-	<true/>
-	<key>KTElementSupportsPageletUsage</key>
-	<true/>
-	<key>KSHelpAnchor</key>
-	<string>RSS_Feed</string>
-	<key>KTPageletCanHaveTitle</key>
-	<true/>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_feed.tiff</string>
-	<key>KTPluginInitialProperties</key>
-	<dict>
-		<key>max</key>
-		<integer>0</integer>
-	</dict>
-	<key>KTPluginName</key>
-	<string>External RSS Feed</string>
-	<key>KTPluginUntitledName</key>
-	<string>RSS Feed</string>
 	<key>NSPrincipalClass</key>
 	<string>FeedPlugIn</string>
 </dict>

@@ -71,6 +71,8 @@
 {
     [super awakeFromNew];
     
+    self.max = 0;
+    
     id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
     if ( [location URL] )
     {
@@ -190,8 +192,9 @@
 {
     if ( items && [items count] )
     {
-        id <SVPasteboardItem>item = [items objectAtIndex:0];
+        self.max = 0;
         
+        id <SVPasteboardItem>item = [items objectAtIndex:0];
         NSURL *URL = [item URL];
         if ( URL )
         {
