@@ -28,15 +28,6 @@
 	<string>2.0</string>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_flickr.tiff</string>
-	<key>KTPluginInitialProperties</key>
-	<dict>
-		<key>number</key>
-		<integer>10</integer>
-		<key>showInfo</key>
-		<true/>
-		<key>tag</key>
-		<string>clouds</string>
-	</dict>
 	<key>NSPrincipalClass</key>
 	<string>FlickrPlugIn</string>
 </dict>

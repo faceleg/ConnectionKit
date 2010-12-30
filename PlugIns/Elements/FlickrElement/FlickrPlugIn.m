@@ -46,7 +46,6 @@
 @implementation FlickrPlugIn
 
 
-#pragma mark -
 #pragma mark SVPlugIn
 
 /*
@@ -64,6 +63,16 @@
             @"showInfo", 
             nil];
 }
+
+- (void)awakeFromNew;
+{
+    [super awakeFromNew];
+    
+    // set initial properties
+    self.number = 10;
+    self.showInfo = YES;
+    self.tag = @"clouds";
+}    
 
 - (void)dealloc
 {
@@ -98,7 +107,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Properties
 
 @synthesize flickrID = _flickrID;
