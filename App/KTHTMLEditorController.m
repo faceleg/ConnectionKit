@@ -881,14 +881,6 @@ initial syntax coloring.
 #pragma mark Web Resource Load Delegate
 // Resource load delegate -- so I can know that we are trying to load off-page resources
 
-- (id)webView:(WebView *)sender identifierForInitialRequest:(NSURLRequest *)request fromDataSource:(WebDataSource *)dataSource;
-{
-	static NSUInteger itemNum = 0;
-	NSNumber *result = [NSString stringWithFormat:@"___%d___", itemNum++];
-	//NSLog(@"%s %@ %@",__FUNCTION__, result, request);
-	return result;
-}
-
 - (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource;
 {
 	NSURLRequest *result = request;
@@ -904,9 +896,6 @@ initial syntax coloring.
 		// [sender performSelector:@selector(stopLoading:) withObject:nil afterDelay:0.0];	// stop loading the whole webview; we got what we needed
         
 		LOG((@"found resource; stopping %@", sender));
-        
-        // It seems that if you don't return nil, the WebView tries to load it anyway, inspite of the -stopLoading: call. #101223
-        return nil;
 	}
 	return result;
 }
