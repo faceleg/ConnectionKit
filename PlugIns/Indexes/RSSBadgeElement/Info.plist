@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>RSS Badge</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -24,29 +26,12 @@
 	<string>${SVN_VERSION}</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KSHelpAnchor</key>
-	<string>RSS_Badge</string>
-	<key>KTPageletCanHaveTitle</key>
-	<false/>
 	<key>SVPlugInCSSFiles</key>
 	<array>
 		<string>rssbadge.css</string>
 	</array>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_rss.tiff</string>
-	<key>KTPluginInitialProperties</key>
-	<dict>
-		<key>iconPosition</key>
-		<integer>1</integer>
-		<key>iconStyle</key>
-		<integer>1</integer>
-	</dict>
-	<key>KTPluginName</key>
-	<string>RSS Badge</string>
-	<key>KTPluginPriority</key>
-	<integer>5</integer>
-	<key>KTPluginUntitledName</key>
-	<string></string>
 	<key>NSPrincipalClass</key>
 	<string>RSSBadgePlugIn</string>
 </dict>

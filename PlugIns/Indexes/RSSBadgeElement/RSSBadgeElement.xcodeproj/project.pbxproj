@@ -113,11 +113,14 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8D5B49B7048680CD000E48DA /* Info.plist */,
+				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C5D6F3612A42D2600AAAB18 /* Inspector.xib */,
+				3C42DE000D64CB6C004F35FD /* License.rtf */,
+				3C42DDE40D64CAFE004F35FD /* Localizable.strings */,
+				3C42DDCC0D64CAAD004F35FD /* rssbadge.css */,
 				3C42DDCB0D64CAAD004F35FD /* Template.html */,
 				CE28029112432B8100B00F3D /* toolbar_rss.tiff */,
-				8D5B49B7048680CD000E48DA /* Info.plist */,
-				3C42DDCC0D64CAAD004F35FD /* rssbadge.css */,
 				3C42DDD00D64CAC0004F35FD /* Gray Badge.png */,
 				3C42DDD10D64CAC0004F35FD /* gray_large.png */,
 				3C42DDD20D64CAC0004F35FD /* gray_small.png */,
@@ -127,9 +130,6 @@
 				3C42DDD60D64CAC0004F35FD /* rss.gif */,
 				3C42DDD70D64CAC0004F35FD /* rss_blue.png */,
 				3C42DDD80D64CAC0004F35FD /* xml.gif */,
-				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
-				3C42DDE40D64CAFE004F35FD /* Localizable.strings */,
-				3C42DE000D64CB6C004F35FD /* License.rtf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";

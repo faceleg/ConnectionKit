@@ -59,6 +59,13 @@
 
 #pragma mark Initialization
 
+- (void)awakeFromNew
+{
+    [super awakeFromNew];
+    self.iconPosition = 1;
+    self.iconStyle = 1;
+}
+
 - (void)didAddToPage:(id <SVPage>)page;
 {
     id <SVPage> oldPage = [self indexedCollection];
