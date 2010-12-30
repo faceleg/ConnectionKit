@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>YouTube</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -24,37 +26,10 @@
 	<string>${SVN_VERSION}</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KTCategory</key>
-	<integer>4</integer>
 	<key>KTCSSClassName</key>
 	<string>Movie</string>
-	<key>KTElementAllowsIntroduction</key>
-	<true/>
-	<key>KTElementSupportsPageUsage</key>
-	<false/>
-	<key>KTElementSupportsPageletUsage</key>
-	<true/>
-	<key>KSHelpAnchor</key>
-	<string>YouTube</string>
-	<key>KTPageShowSidebar</key>
-	<false/>
 	<key>SVPlugInIconPath</key>
 	<string>YouTube.icns</string>
-	<key>KTPluginInitialProperties</key>
-	<dict>
-		<key>includeRelatedVideos</key>
-		<false/>
-		<key>showBorder</key>
-		<false/>
-		<key>useCustomSecondaryColor</key>
-		<false/>
-	</dict>
-	<key>KTPluginName</key>
-	<string>YouTube</string>
-	<key>KTPluginPriority</key>
-	<integer>5</integer>
-	<key>KTPluginUntitledName</key>
-	<string>YouTube</string>
 	<key>NSPrincipalClass</key>
 	<string>YouTubePlugIn</string>
 </dict>

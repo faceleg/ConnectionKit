@@ -78,6 +78,23 @@
 	[super dealloc];
 }
 
+- (void)setInitialProperties
+{
+    // hint to user: prefer widescreen
+    self.widescreen = YES;
+    
+    // try the HTML5 iFrame
+    self.useIFrame = YES;
+    
+    // Prepare initial colors
+    self.useCustomSecondaryColor = NO;
+    self.color2 = [YouTubePlugIn defaultPrimaryColor];
+    
+    self.includeRelatedVideos = NO;
+    self.showBorder = NO;
+    self.useCustomSecondaryColor = NO;    
+}
+
 - (void)awakeFromNew;
 {
     [super awakeFromNew];
@@ -94,15 +111,7 @@
         }
     }
     
-    // hint to user: prefer widescreen
-    self.widescreen = YES;
-    
-    // try the HTML5 iFrame
-    self.useIFrame = YES;
-    
-    // Prepare initial colors
-    self.useCustomSecondaryColor = NO;
-    self.color2 = [YouTubePlugIn defaultPrimaryColor];  
+    [self setInitialProperties];
 }
 
 
@@ -365,6 +374,8 @@
         {
             self.title = title;
         }
+        
+        [self setInitialProperties];
         
         return YES;
     }
