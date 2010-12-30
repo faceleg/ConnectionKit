@@ -1664,14 +1664,18 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)forceWebViewToPerform:(SEL)action withObject:(id)sender;
 {
-    OBPRECONDITION(!_isForwardingCommandToWebView);
-    _isForwardingCommandToWebView = YES;
-    
-    WebFrame *frame = [[self webView] selectedFrame];
-    NSView *view = [[frame frameView] documentView];
-    [view doCommandBySelector:action];
-    
-    _isForwardingCommandToWebView = NO;
+    OBPRECONDITION(!_forwardedWebViewCommand);
+    _forwardedWebViewCommand = action;
+    @try
+    {
+        WebFrame *frame = [[self webView] selectedFrame];
+        NSView *view = [[frame frameView] documentView];
+        [view doCommandBySelector:action];
+    }
+    @finally
+    {
+        _forwardedWebViewCommand = NULL;
+    }
 }
 
 #pragma mark Setting the DataSource/Delegate
@@ -1734,7 +1738,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     else if ([self respondsToSelector:action])
     {
-        result = !_isForwardingCommandToWebView;
+        result = (_forwardedWebViewCommand == NULL);
     }
     
     
@@ -2021,7 +2025,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     
     // Select image if skipping over one. #77696
-    if (_lastAction == @selector(moveRight:) && currentRange && [currentRange collapsed])
+    if (_forwardedWebViewCommand == @selector(moveRight:) && currentRange && [currentRange collapsed])
     {
         DOMNode *oldNode = [currentRange ks_endNode:NULL];
         DOMNode *newNode = [proposedRange ks_startNode:NULL];
@@ -2046,7 +2050,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             }
         }
     }
-    else if (_lastAction == @selector(moveLeft:) && currentRange && [currentRange collapsed])
+    else if (_forwardedWebViewCommand == @selector(moveLeft:) && currentRange && [currentRange collapsed])
     {
         DOMNode *oldNode = [currentRange ks_startNode:NULL];
         DOMNode *newNode = [proposedRange ks_endNode:NULL];
@@ -2349,62 +2353,69 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 - (BOOL)webView:(WebView *)webView doCommandBySelector:(SEL)command
 {
     BOOL result = NO;
-    _lastAction = command;
     
     
-    // _isForwardingCommandToWebView indicates that the command is already being processed by the Web Editor, so it's now up to the WebView to handle. Otherwise it's easy to get stuck in an infinite loop.
-    if (!_isForwardingCommandToWebView)
+    // _forwardedWebViewCommand indicates that the command is already being processed by the Web Editor, so it's now up to the WebView to handle. Otherwise it's easy to get stuck in an infinite loop.
+    if (_forwardedWebViewCommand) return result;
+    
+    
+    
+    // Does the text view want to take command?
+    result = [_focusedText webEditorTextDoCommandBySelector:command];
+    
+    // Is it a command which we handle? (our implementation may well call back through to the WebView when appropriate)
+    if (!result)
     {
-        // Does the text view want to take command?
-        result = [_focusedText webEditorTextDoCommandBySelector:command];
+        if (command == @selector(moveUp:) || command == @selector(moveDown:))
+        {   // don't want these to go to self
+        }
         
-        // Is it a command which we handle? (our implementation may well call back through to the WebView when appropriate)
-        if (!result)
+        else if (command == @selector(moveLeft:) || command == @selector(moveRight:))
         {
-            if (command == @selector(moveUp:) || command == @selector(moveDown:))
-            {   // don't want these to go to self
-            }
-            
-            else if (command == @selector(cancelOperation:))
+            // Handle ourselves
+            [self doCommandBySelector:command];
+            result = YES;
+        }
+        
+        else if (command == @selector(cancelOperation:))
+        {
+            // End editing
+            if ([[self editingItems] count])
             {
-                // End editing
-                if ([[self editingItems] count])
-                {
-                    [self setEditingItems:nil];
-                    //result = YES; // still let webkit do its default action too
-                }
+                [self setEditingItems:nil];
+                //result = YES; // still let webkit do its default action too
             }
-            
-            else if (command == @selector(clearStyles:))
+        }
+        
+        else if (command == @selector(clearStyles:))
+        {
+            // Get no other delegate method warning of impending change, so fake one here
+            if (![self shouldChangeTextInDOMRange:[self selectedDOMRange]])
             {
-                // Get no other delegate method warning of impending change, so fake one here
-                if (![self shouldChangeTextInDOMRange:[self selectedDOMRange]])
-                {
-                    result = YES;
-                    NSBeep();
-                }
+                result = YES;
+                NSBeep();
             }
-            
-            else if (command == @selector(createLink:))
+        }
+        
+        else if (command == @selector(createLink:))
+        {
+            [self doCommandBySelector:command];
+            result = YES;
+        }
+        
+        else if (command == @selector(delete:))
+        {
+            // For text, generally want WebView to handle it. But if there's an empty selection, nothing for WebKit to do so see if we can take over
+            DOMRange *selection = [self selectedDOMRange];
+            if (selection && [selection collapsed])
             {
-                [self doCommandBySelector:command];
+                [self delete:nil];
                 result = YES;
             }
-            
-            else if (command == @selector(delete:))
+            else
             {
-                // For text, generally want WebView to handle it. But if there's an empty selection, nothing for WebKit to do so see if we can take over
-                DOMRange *selection = [self selectedDOMRange];
-                if (selection && [selection collapsed])
-                {
-                    [self delete:nil];
-                    result = YES;
-                }
-                else
-                {
-                    // WebKit BUG: -delete: doesn't ask permission of the delegate, so we must do so here
-                    [self webView:webView shouldDeleteDOMRange:selection];
-                }
+                // WebKit BUG: -delete: doesn't ask permission of the delegate, so we must do so here
+                [self webView:webView shouldDeleteDOMRange:selection];
             }
         }
     }

@@ -156,6 +156,16 @@
 
 #pragma mark Key presses
 
+- (void)moveLeft:(id)sender;
+{
+    [self forceWebViewToPerform:_cmd withObject:sender];
+}
+
+- (void)moveRight:(id)sender;
+{
+    [self forceWebViewToPerform:_cmd withObject:sender];
+}
+
 /*  In practice this seems to a bad idea. I wanted -moveUp: and -moveDown: actions, but it interprets everything else too!
 - (void)keyDown:(NSEvent *)theEvent;
 {
@@ -194,9 +204,9 @@
             SVValidatedUserInterfaceItem *item = [[SVValidatedUserInterfaceItem alloc] init];
             [item setAction:action];
             
-            _isForwardingCommandToWebView = YES;
+            _forwardedWebViewCommand = action;
             result = [(id)view validateUserInterfaceItem:item];
-            _isForwardingCommandToWebView = NO;
+            _forwardedWebViewCommand = NULL;
             
             [item release];
         }

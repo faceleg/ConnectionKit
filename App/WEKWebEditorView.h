@@ -56,8 +56,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     // Event Handling
     BOOL    _resizingGraphic;
     BOOL    _isProcessingEvent;
-    BOOL    _isForwardingCommandToWebView;
-    SEL     _lastAction;
+    SEL     _forwardedWebViewCommand;
     
     // Guides
     NSNumber    *_xGuide;
