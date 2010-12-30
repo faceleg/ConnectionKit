@@ -65,7 +65,6 @@
 @synthesize preventPreview = _preventPreview;
 @synthesize hashOfLastValidation = _hashOfLastValidation;
 @synthesize hasRemoteLoads = _hasRemoteLoads;
-@synthesize asyncOffscreenWebViewController = _asyncOffscreenWebViewController;
 
 
 /* -----------------------------------------------------------------------------
@@ -930,15 +929,14 @@ initial syntax coloring.
 	// Do nothing ... we will have gotten hasRemoteLoads set if there were any resources loaded
 }
 
+@synthesize asyncOffscreenWebViewController = _asyncOffscreenWebViewController;
 - (SVOffscreenWebViewController *)asyncOffscreenWebViewController
 {
-	if (nil == _asyncOffscreenWebViewController)
+	if (!_asyncOffscreenWebViewController)
 	{
 		_asyncOffscreenWebViewController = [[SVOffscreenWebViewController alloc] init];
 	}
     return _asyncOffscreenWebViewController; 
 }
-
-
 
 @end
