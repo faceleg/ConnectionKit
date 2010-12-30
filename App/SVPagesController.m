@@ -418,6 +418,9 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 {
     [super insertObject:object atArrangedObjectIndex:index];
     
+    // For some reason, some pages get inserted twice (I think once here, once from content binding) which means there are two copies present in -arrangedObjects. Thus, selecting such an object selects both copis, screwing up the Web Editor. Hacky fix is to rearrange content after each insertion, so the dupe goes away. #101625
+    [self rearrangeObjects];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:SVPagesControllerDidInsertObjectNotification object:self];
 }
 
