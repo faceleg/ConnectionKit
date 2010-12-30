@@ -856,7 +856,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 	[oDotSeparator setHidden:(!arePagesSelected  || NSOffState != pageIsCollectionState) && (selectedObjectsCount == 1 || areMultiSelected)];
 	[oSlashSeparator setHidden:!arePagesSelected || NSOnState != pageIsCollectionState || selectedObjectsCount > 1];
-	[oIndexDotSeparator setHidden:!arePagesSelected || NSOffState == pageIsCollectionState || selectedObjectsCount > 1];
 
 	[oMultiplePagesField setHidden: selectedObjectsCount == 1];
 	
@@ -913,17 +912,17 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		int pageExtraX [] = {4,5,6,8,0,0};
 		int pageMarginsAfter[] = {0,-1,0,8,12,0};
 		
-		NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oSlashSeparator, oIndexDotSeparator,oExtensionPopup,oFollowButton,oPublishAsCollectionPopup,nil];
-		int collectionExtraX [] = {4,5,1,6,8,0,0};
-		int collectionMarginsAfter[] = {0,-1,0,0,8,12,0};
+		NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oSlashSeparator,oExtensionPopup,oFollowButton,oPublishAsCollectionPopup,nil];
+		int collectionExtraX [] = {4,5,1,0,0,0};
+		int collectionMarginsAfter[] = {0,-1,2,8,12,0};
 		
 		NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oMultiplePagesField,oDotSeparator,oExtensionPopup,oPublishAsCollectionPopup,nil];
 		int markerExtraX [] = {4,6,8,0,0};
 		int markerMarginsAfter[] = {0,0,8,12,0};
 			
-		NSArray *rootItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oIndexDotSeparator,oExtensionPopup,oFollowButton,oPublishAsCollectionPopup,nil];
-		int rootExtraX [] = {0,6,8,0,0};
-		int rootMarginsAfter[] = {0,0,8,12,0};
+		NSArray *rootItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oExtensionPopup,oFollowButton,oPublishAsCollectionPopup,nil];
+		int rootExtraX [] = {0,8,0,0};
+		int rootMarginsAfter[] = {4,8,12,0};
 		
 		NSArray *mediaItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oMediaFilenameField,oFollowButton,nil];
 		int mediaExtraX [] = {4,0,0};
