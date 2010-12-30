@@ -77,11 +77,11 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3C5D6F4D12A4325E00AAAB18 /* Inspector.xib */,
-				CE28030712432CF400B00F3D /* toolbar_sitemap.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+				3C5D6F4D12A4325E00AAAB18 /* Inspector.xib */,
 				3C42DD910D64C5A2004F35FD /* License.rtf */,
+				CE28030712432CF400B00F3D /* toolbar_sitemap.tiff */,
 			);
 			name = Resources;
 			sourceTree = "<group>";

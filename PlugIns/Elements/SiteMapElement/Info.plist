@@ -32,8 +32,6 @@
 	<string>site-map</string>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_sitemap.tiff</string>
-	<key>KTPluginPriority</key>
-	<integer>5</integer>
 	<key>NSPrincipalClass</key>
 	<string>SiteMapPlugIn</string>
 </dict>
