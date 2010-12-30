@@ -745,55 +745,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
-#pragma mark Keyboard-Induced selection
-
-/*!
- These methods check to see if the move command should in fact select a graphic (like Pages does). If so, they perform that selection and return YES. Otherwise, do nothing and return NO.
- */
-
-- (BOOL)tryToSelectItemByMovingLeft;
-{
-    BOOL result = NO;
-    
-    DOMRange *selection = [self selectedDOMRange];
-    if ([selection collapsed])
-    {
-        // Is there a next node to select? (there isn't if selection is mid-text or the first child)
-        DOMNode *previousNode = nil;
-        
-        DOMNode *selectionStart = [selection startContainer];
-        int startOffset = [selection startOffset];
-        
-        if ([selectionStart nodeType] == DOM_TEXT_NODE)
-        {
-            if (startOffset == 0) previousNode = [selectionStart previousSibling];
-        }
-        else if (startOffset >= 1)  // use different technique to -tryToSelectItemByMovingRight to handle startOffset being *after*
-        {                           // the last child node
-            previousNode = [[selectionStart childNodes] item:(startOffset - 1)];
-        }
-        
-        
-        // Great, found a node to perhaps select – does it correspond to a selectable item?
-        if (previousNode)
-        {
-            WEKWebEditorItem *item = [self selectableItemForDOMNode:previousNode];
-            DOMHTMLElement *element = [item HTMLElement];
-            
-            if (element == previousNode && [self shouldTrySelectingDOMElementInline:element])
-            {
-                result = [self changeSelectionByDeselectingAll:YES
-                                                orDeselectItem:nil
-                                                   selectItems:[NSArray arrayWithObject:item]
-                                                      DOMRange:nil
-                                                    isUIAction:YES];
-            }
-        }
-    }
-    
-    return result;
-}
-
 #pragma mark Editing
 
 - (BOOL)canEditText;
@@ -2095,6 +2046,31 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             }
         }
     }
+    else if (_lastAction == @selector(moveLeft:) && currentRange && [currentRange collapsed])
+    {
+        DOMNode *oldNode = [currentRange ks_startNode:NULL];
+        DOMNode *newNode = [proposedRange ks_endNode:NULL];
+        if (oldNode != newNode)
+        {
+            DOMTreeWalker *walker = [[oldNode ownerDocument] createTreeWalker:[[oldNode parentNode] parentNode]
+                                                                   whatToShow:DOM_SHOW_ALL
+                                                                       filter:nil
+                                                       expandEntityReferences:NO];
+            [walker setCurrentNode:oldNode];
+            
+            // Walk to the proposed range, looking for images to select
+            DOMNode *aNode = [walker previousNode];
+            while (aNode && aNode != newNode)
+            {
+                if ([aNode isKindOfClass:[DOMHTMLImageElement class]])
+                {
+                    [range selectNode:aNode]; rangeEdited = YES;
+                }
+                
+                aNode = [walker previousNode];
+            }
+        }
+    }
     
     
     
@@ -2385,12 +2361,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         // Is it a command which we handle? (our implementation may well call back through to the WebView when appropriate)
         if (!result)
         {
-            // Moving left or right should select the graphic to the left if there is one
-            if (command == @selector(moveLeft:))
-            {
-                result = [self tryToSelectItemByMovingLeft];
-            }
-            else if (command == @selector(moveUp:) || command == @selector(moveDown:))
+            if (command == @selector(moveUp:) || command == @selector(moveDown:))
             {   // don't want these to go to self
             }
             
