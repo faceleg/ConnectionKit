@@ -106,6 +106,8 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 - (IBAction)insertPageletTitle:(id)sender;
 
+- (IBAction)editRawHTMLInSelectedBlock:(id)sender;
+
 
 #pragma mark Graphic Placement
 - (IBAction)placeInline:(id)sender;

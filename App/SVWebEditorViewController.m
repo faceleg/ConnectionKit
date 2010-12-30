@@ -991,7 +991,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 #pragma mark HTMLEditorController
 
-- (IBAction)editRawHTMLInSelectedBlock:(id)sender
+- (IBAction)editRawHTMLInSelectedBlock:(id)sender;
 {
 	for (id selection in [self.graphicsController selectedObjects])
 	{
