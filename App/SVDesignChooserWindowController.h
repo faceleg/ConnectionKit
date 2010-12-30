@@ -15,11 +15,11 @@
 
 @interface SVDesignChooserWindowController : NSWindowController <MGScopeBarDelegate>
 {
-    IBOutlet SVDesignChooserViewController   *oViewController;
     IBOutlet MGScopeBar             *oScopeBar;
 	
   @private
-    SVDesignsController *_designsController;
+    SVDesignsController             *_designsController;
+    SVDesignChooserViewController   *_viewController;
     
     NSString *_genre;
 	NSString *_color;
@@ -34,13 +34,13 @@
 }
 
 @property(nonatomic, retain) KTDesign *design;
-
-@property(nonatomic, retain) SVDesignChooserViewController *viewController;
-@property(nonatomic, retain) IBOutlet NSArrayController *designsController;
 @property (copy) NSString *genre;
 @property (copy) NSString *color;
 @property (copy) NSString *width;
 @property (readonly) NSString *matchString;
+
+@property(nonatomic, retain) IBOutlet NSArrayController *designsController;
+@property(nonatomic, retain) IBOutlet SVDesignChooserViewController *viewController;
 
 - (IBAction)cancelSheet:(id)sender;
 - (IBAction)chooseDesign:(id)sender;

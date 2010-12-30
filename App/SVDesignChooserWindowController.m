@@ -42,6 +42,7 @@
 - (void)dealloc;
 {
     [_designsController release];
+    [_viewController release];
     [_genre release];
     [_color release];
     [_width release];
@@ -74,9 +75,8 @@
 
 - (void)setDesign:(KTDesign *)design;
 {
-    [self window];  // make sure nib is loaded
-    IKImageBrowserView *imageBrowser = [oViewController imageBrowser];
-        
+    IKImageBrowserView *imageBrowser = [self.viewController imageBrowser];
+    
     [imageBrowser reloadData];  // so that -setSelectedObjects: succeeds
     [[self designsController] setSelectedObjects:[NSArray arrayWithObject:design]];
 	// NSLog(@"Set design to %p ... now selected objects is %@", design, [[self designsController] selectedObjects]);
@@ -187,15 +187,13 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 {
 	self.selectorWhenChosen = aSelector;
 	self.targetWhenChosen = aTarget;
-
-	[self window];		// get designs array controller loaded
 	
 	
 	//[oViewController setSelectedDesign:nil];
 	//[self lookForNulls];	// set up scope bar.  Do this before real selection.
 	
 	//[oViewController setSelectedDesign:aDesign];
-	[oViewController initializeExpandedState];
+	[self.viewController initializeExpandedState];
 
     
     [NSApp beginSheet:[self window]
@@ -262,7 +260,14 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
     [sheet orderOut:self];
 }
 
-@synthesize viewController = oViewController;
+#pragma mark View Controller
+
+@synthesize viewController = _viewController;
+- (SVDesignChooserViewController *) viewController;
+{
+    [self window];  // make sure it's loaded
+    return _viewController;
+}
 
 #pragma mark NSWindowDelegate
 

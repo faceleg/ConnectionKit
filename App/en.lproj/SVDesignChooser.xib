@@ -548,14 +548,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">oViewController</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="258437323"/>
-					</object>
-					<int key="connectionID">56</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="1005"/>
 						<reference key="destination" ref="1001"/>
@@ -657,6 +649,14 @@
 						<reference key="destination" ref="231188890"/>
 					</object>
 					<int key="connectionID">145</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">viewController</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="258437323"/>
+					</object>
+					<int key="connectionID">146</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -930,7 +930,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">145</int>
+			<int key="maxID">146</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1864,7 +1864,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>designsController</string>
 							<string>oScopeBar</string>
-							<string>oViewController</string>
+							<string>viewController</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1879,7 +1879,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>designsController</string>
 							<string>oScopeBar</string>
-							<string>oViewController</string>
+							<string>viewController</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1892,7 +1892,7 @@
 								<string key="candidateClassName">MGScopeBar</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">oViewController</string>
+								<string key="name">viewController</string>
 								<string key="candidateClassName">SVDesignChooserViewController</string>
 							</object>
 						</object>
