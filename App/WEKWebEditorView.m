@@ -2072,7 +2072,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     // Select image if skipping over one. #77696
     if (_lastAction == @selector(moveRight:) && currentRange && [currentRange collapsed])
     {
-        DOMNode *oldNode = [currentRange commonAncestorContainer];
+        DOMNode *oldNode = [currentRange ks_endNode:NULL];
         DOMNode *newNode = [proposedRange startContainer];
         if (oldNode != newNode)
         {
