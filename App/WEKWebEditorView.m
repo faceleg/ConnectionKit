@@ -1486,6 +1486,22 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
+- (void)mouseUp:(NSEvent *)theEvent;
+{
+    // Pass through to WebView if needed
+    NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    WEKWebEditorItem *item = [self itemHitTest:location handle:NULL];
+    
+    if ([item allowsDirectAccessToWebViewWhenSelected])
+    {
+        [self forwardMouseEvent:theEvent selector:_cmd cachedTargetView:nil];
+    }
+    else
+    {
+        [super mouseUp:theEvent];
+    }
+}
+
 - (void)mouseMoved:(NSEvent *)theEvent;
 {
     NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
