@@ -132,13 +132,13 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         if ([[item childItems] count] == 1)
         {
             // Select the first child, rather than item itself
-            BOOL select = [self selectsInsertedObjects];
+            [self saveSelectionAttributes];
             [self setSelectsInsertedObjects:NO];
             
             [self addObject:item];
             [self setSelectedObjects:[item childPages]];
             
-            [self setSelectsInsertedObjects:select];
+            [self restoreSelectionAttributes];
         }
         else
         {
