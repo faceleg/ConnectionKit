@@ -2041,12 +2041,21 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             DOMNode *aNode = [walker nextNode];
             while (aNode && aNode != newNode)
             {
-                if ([aNode isKindOfClass:[DOMHTMLImageElement class]])
+                WEKWebEditorItem *item = [self selectableItemForDOMNode:aNode];
+                if (item)
                 {
-                    [range selectNode:aNode]; rangeEdited = YES;
+                    if ([self shouldTrySelectingDOMElementInline:[item selectableDOMElement]])
+                    {
+                        [range selectNode:aNode]; rangeEdited = YES;
+                        break;
+                    }
+                    
+                    aNode = [walker nextSibling];
                 }
-                
-                aNode = [walker nextNode];
+                else
+                {
+                    aNode = [walker nextNode];
+                }
             }
         }
     }
@@ -2066,12 +2075,21 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             DOMNode *aNode = [walker previousNode];
             while (aNode && aNode != newNode)
             {
-                if ([aNode isKindOfClass:[DOMHTMLImageElement class]])
+                WEKWebEditorItem *item = [self selectableItemForDOMNode:aNode];
+                if (item)
                 {
-                    [range selectNode:aNode]; rangeEdited = YES;
+                    if ([self shouldTrySelectingDOMElementInline:[item selectableDOMElement]])
+                    {
+                        [range selectNode:aNode]; rangeEdited = YES;
+                        break;
+                    }
+                    
+                    aNode = [walker previousSibling];   // not interested in child nodes
                 }
-                
-                aNode = [walker previousNode];
+                else
+                {
+                    aNode = [walker previousNode];
+                }
             }
         }
     }
