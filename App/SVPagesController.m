@@ -33,6 +33,7 @@
 
 #import "KSWebLocationPasteboardUtilities.h"
 #import "KSStringXMLEntityEscaping.h"
+#import "KSURLUtilities.h"
 
 #import "Debug.h"
 
@@ -547,6 +548,33 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     // Create graphics for the content
     NSArray *items = [pboard sv_pasteboardItems];
+    
+    // Handle folder like its contents. #29203
+    if ([items count] == 1)
+    {
+        id <SVPasteboardItem> item = [items objectAtIndex:0];
+        NSURL *URL = [item URL];
+        if ([URL isFileURL])
+        {
+            NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[URL path]
+                                                                                    error:NULL];
+            
+            if (contents)
+            {
+                NSMutableArray *locations = [NSMutableArray arrayWithCapacity:[contents count]];
+                for (NSString *aFilename in contents)
+                {
+                    NSURL *aURL = [URL ks_URLByAppendingPathComponent:aFilename isDirectory:NO];
+                    KSWebLocation *aLocation = [[KSWebLocation alloc] initWithURL:aURL];
+                    [locations addObject:aLocation];
+                    [aLocation release];
+                }
+                items = locations;
+            }
+        }
+    }
+    
+    
     for (id <SVPasteboardItem> anItem in items)
     {
         SVGraphic *aGraphic = [SVGraphicFactory
