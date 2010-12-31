@@ -81,6 +81,40 @@
 
 - (SVTextDOMController *)textDOMController; { return self; }
 
+- (WEKWebEditorItem *)orphanedWebEditorItemMatchingDOMNode:(DOMNode *)aNode;
+{
+    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+    {
+        DOMNode *node = [anItem HTMLElement];
+        BOOL isOrphan = ![node isDescendantOfNode:[node ownerDocument]];
+        if (isOrphan && [node isEqualNode:aNode]) return anItem;
+    }
+    
+    return nil;
+}
+
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
+{
+    WEKWebEditorItem *result = [super hitTestDOMNode:node];
+    
+    
+    // Is there an orphaned item we should reconnect up, rather than self?
+    if (result == self && [node isKindOfClass:[DOMHTMLImageElement class]])
+    {
+        result = [self orphanedWebEditorItemMatchingDOMNode:node];
+        if (result)
+        {
+            [result setHTMLElement:(DOMHTMLElement *)node]; // already checked the class
+        }
+        else
+        {
+            // Create a new controller
+        }
+    }
+    
+    return result;
+}
+
 #pragma mark Attributes
 
 - (BOOL)isEditable

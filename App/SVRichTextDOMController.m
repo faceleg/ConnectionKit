@@ -112,20 +112,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [self setTextHTMLElement:element];
 }
 
-#pragma mark Hierarchy
-
-- (WEKWebEditorItem *)orphanedWebEditorItemMatchingDOMNode:(DOMNode *)aNode;
-{
-    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
-    {
-        DOMNode *node = [anItem HTMLElement];
-        BOOL isOrphan = ![node isDescendantOfNode:[node ownerDocument]];
-        if (isOrphan && [node isEqualNode:aNode]) return anItem;
-    }
-    
-    return nil;
-}
-
 #pragma mark Updating
 
 // Leave commented out until ready to implement
@@ -274,7 +260,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                                HTMLWriter:(SVParagraphedHTMLWriterDOMAdaptor *)writer;
 {
     // Is there an orphaned item we should reconnect to?
-    WEKWebEditorItem *orphanedItem = [self orphanedWebEditorItemMatchingDOMNode:imageElement];
+    WEKWebEditorItem *orphanedItem = [self hitTestDOMNode:imageElement];
     if (orphanedItem)
     {
         [orphanedItem setHTMLElement:imageElement];
