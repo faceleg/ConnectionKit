@@ -74,8 +74,12 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [super awakeFromExtensiblePropertyUndoUpdateForKey:key];
     
     // Need to pass the change onto our plug-in
-    id value = [self extensiblePropertyForKey:key];
-    [[self plugIn] setSerializedValue:value forKey:key];
+    SVPlugIn *plugIn = [self plugIn];
+    if ([[[plugIn class] plugInKeys] containsObject:key])
+    {
+        id value = [self extensiblePropertyForKey:key];
+        [plugIn setSerializedValue:value forKey:key];
+    }
 }
 
 - (void)didAddToPage:(id <SVPage>)page;
