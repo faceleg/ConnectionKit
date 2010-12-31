@@ -468,6 +468,10 @@
     
     return result;
 }
++ (NSSet *)keyPathsForValuesAffectingShouldWriteHTMLInline;
+{
+    return [NSSet setWithObjects:@"textAttachment.causesWrap", @"textAttachment.wrap", nil];
+}
 
 - (BOOL)canWriteHTMLInline; { return [[self plugIn] canWriteHTMLInline]; }
 
