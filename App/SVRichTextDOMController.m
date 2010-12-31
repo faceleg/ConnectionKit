@@ -263,7 +263,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     WEKWebEditorItem *orphanedItem = [self hitTestDOMNode:imageElement];
     if (orphanedItem)
     {
-        [orphanedItem setHTMLElement:imageElement];
         [orphanedItem writeAttributedHTML:writer];
         DOMNode *result = [[orphanedItem HTMLElement] nextSibling];
         

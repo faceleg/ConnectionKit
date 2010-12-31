@@ -160,45 +160,26 @@
 
 @implementation SVMediaGraphicDOMController
 
-- (void)dealloc
-{
-    [_imageDOMController release];
-    [super dealloc];
-}
-
-#pragma mark Controller
-
-@synthesize imageDOMController = _imageDOMController;
-
 #pragma mark DOM
 
 - (void)setHTMLElement:(DOMHTMLElement *)element;
 {
     // Is this a change due to being orphaned while editing? If so, pass down to image controller too. #83312
-    if ([self HTMLElement] == [[self imageDOMController] HTMLElement])
+    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
     {
-        [[self imageDOMController] setHTMLElement:element];
+        if ([self HTMLElement] == [anItem HTMLElement])
+        {
+            [anItem setHTMLElement:element];
+        }
     }
+    
     
     [super setHTMLElement:element];
 }
 
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document;
 {
-    // Hook up image controller first
-    SVMediaDOMController *imageController = [self imageDOMController];
-    if (![imageController isHTMLElementCreated])
-    {
-        [imageController loadHTMLElementFromDocument:document];
-    }
-    
     [super loadHTMLElementFromDocument:document];
-    
-    // If it failed that's because the image is chromeless, so adopt its element
-    if (![self isHTMLElementCreated])
-    {
-        [self setHTMLElement:[imageController HTMLElement]];
-    }
 }
 
 #pragma mark Update

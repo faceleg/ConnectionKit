@@ -27,11 +27,4 @@
 
 
 @interface SVMediaGraphicDOMController : SVGraphicDOMController
-{  
-@private
-    SVMediaDOMController    *_imageDOMController;
-}
-
-@property(nonatomic, retain) SVMediaDOMController *imageDOMController;
-
 @end
