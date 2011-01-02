@@ -58,7 +58,7 @@
     
     if ( self.indexedCollection )
     {
-        NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:(KTPage *)self.indexedCollection];
+        NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:self.indexedCollection];
         NSArray *arrangedObjects = [controller arrangedObjects];
         
         if ( self.enableMaxItems && self.maxItems > 0 )
@@ -140,7 +140,7 @@
 {
     if ( self.indexedCollection )
     {
-        NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:(KTPage *)self.indexedCollection];
+        NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:self.indexedCollection];
         [context addDependencyForKeyPath:@"arrangedObjects" ofObject:controller];
     }
     

@@ -21,7 +21,7 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 
 
 @class KTPage, SVPageTemplate;
-@protocol SVPagesControllerDelegate;
+@protocol SVPage, SVPagesControllerDelegate;
 
 
 @interface SVPagesController : KSArrayController
@@ -34,8 +34,8 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 }
 
 #pragma mark Creating a Pages Controller
-+ (NSArrayController *)controllerWithPagesInCollection:(KTPage *)collection;
-+ (NSArrayController *)controllerWithPagesToIndexInCollection:(KTPage *)collection;
++ (NSArrayController *)controllerWithPagesInCollection:(id <SVPage>)collection;
++ (NSArrayController *)controllerWithPagesToIndexInCollection:(id <SVPage>)collection;
 
 
 #pragma mark Core Data Support

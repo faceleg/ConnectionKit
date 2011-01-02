@@ -71,7 +71,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 #pragma mark Creating a Pages Controller
 
-+ (NSArrayController *)controllerWithPagesInCollection:(KTPage *)collection;
++ (NSArrayController *)controllerWithPagesInCollection:(id <SVPage>)collection;
 {
     NSArrayController *result = [[self alloc] init];
     
@@ -82,8 +82,9 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     if ([collection isKindOfClass:[NSManagedObject class]])
     {
+        // #101711
         [result setEntityName:@"SiteItem"];
-        [result setManagedObjectContext:[collection managedObjectContext]]; // #101711
+        [result setManagedObjectContext:[(NSManagedObject *)collection managedObjectContext]];
     }
     
     [result setAutomaticallyRearrangesObjects:YES];
@@ -93,7 +94,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     return [result autorelease];
 }
 
-+ (NSArrayController *)controllerWithPagesToIndexInCollection:(KTPage *)collection;
++ (NSArrayController *)controllerWithPagesToIndexInCollection:(id <SVPage>)collection;
 {
     NSArrayController *result = [self controllerWithPagesInCollection:collection];
     
