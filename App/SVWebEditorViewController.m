@@ -741,8 +741,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     if (returnCode == NSCancelButton) return;
     
     
-    // FIXME: Should reference non-images
-    SVMedia *media = [[SVMedia alloc] initWithContentsOfURL:[sheet URL] error:NULL];
+    SVMedia *media = [[SVMedia alloc] initByReferencingURL:[sheet URL]];
     if (!media) return;
     
     
