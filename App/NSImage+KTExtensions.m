@@ -163,7 +163,6 @@
 - (NSData *)preferredRepresentation
 {
 	NSData *result = nil;
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
 	if ( [self hasAlphaComponent] )
 	{
@@ -179,9 +178,8 @@
 - (NSData *)preferredRepresentationWithOriginalMedia:(KTMedia *)aParentMedia
 {
 	NSData *result = nil;
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
-	if ( [self hasAlphaComponent])
+	if ( [self hasAlphaComponent] )
 	{
 		result = [self PNGRepresentationWithOriginalMedia:aParentMedia];
 	}
