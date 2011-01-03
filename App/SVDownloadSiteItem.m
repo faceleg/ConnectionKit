@@ -98,8 +98,7 @@
 
 - (NSString *)filename
 {
-    return [self.media preferredFilename];
-    // FIXME: Should legalize it for publishing
+    return [[self.media preferredFilename] legalizedWebPublishingFilename];
 }
 - (void)setFilename:(NSString *)filename;
 {
