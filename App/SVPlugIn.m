@@ -215,7 +215,7 @@ static id <SVPlugInContext> sCurrentContext;
     
     if (result &&
         ![[self class] isExplicitlySized] &&
-        [[[self container] placement] intValue] == SVGraphicPlacementInline)
+        [[self container] isPagelet])
     {
         result = nil;
     }
