@@ -645,6 +645,11 @@
 
 #pragma mark Serialization
 
+- (void)awakeFromPropertyList:(id)propertyList parentItem:(SVSiteItem *)parent;
+{
+    [self awakeFromPropertyList:propertyList];
+}
+
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
 {
     [super populateSerializedProperties:propertyList];

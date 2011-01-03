@@ -71,13 +71,16 @@
         // FIXME: This heavily duplicates codes from -[SVSiteOutlineViewController duplicate:]
         SVSiteItem *duplicate = [[NSManagedObject alloc] initWithEntity:[self entity]
                                          insertIntoManagedObjectContext:context];
-        if ([duplicate isKindOfClass:[KTPage class]])
-        {
-            [(KTPage *)duplicate setMaster:[self master]];
-        }
-        [duplicate awakeFromPropertyList:aChild];
+        [duplicate awakeFromPropertyList:aChild parentItem:self];
         [self addChildItem:duplicate];
     }
+}
+
+- (void)awakeFromPropertyList:(id)propertyList parentItem:(SVSiteItem *)parent;
+{
+    [self setMaster:[parent master]];
+    
+    [super awakeFromPropertyList:propertyList parentItem:parent];
 }
 
 - (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key

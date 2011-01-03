@@ -174,6 +174,11 @@ typedef enum {
 
 + (id)pageWithUniqueID:(NSString *)pageID inManagedObjectContext:(NSManagedObjectContext *)MOC;
 
+
+#pragma mark Serialization
+- (void)awakeFromPropertyList:(id)propertyList parentItem:(SVSiteItem *)parent;
+
+
 @end
 
 
