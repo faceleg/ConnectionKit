@@ -64,8 +64,8 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 
 @interface FacebookPlugIn ()
-//- (NSNumber *)srcWidth;
-- (NSNumber *)srcHeight;
+- (NSNumber *)srcWidth:(id <SVPlugInContext>)context;
+- (NSNumber *)srcHeight:(id <SVPlugInContext>)context;
 @end
 
 
@@ -97,7 +97,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     {
         // determine size that we tell Facebook
         NSString *widthString = [[self srcWidth:context] stringValue];
-        NSString *heightString = [[self srcHeight] stringValue];
+        NSString *heightString = [[self srcHeight:context] stringValue];
         
         // determine src query parameters
         NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -243,7 +243,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 // facebook wants width and height, so we calculate those explicitly
 
-- (NSNumber *)srcWidth:(id <SVPlugInContext>)context;
+- (NSNumber *)srcWidth:(id <SVPlugInContext>)context
 {
     NSNumber *result = nil;
     
@@ -251,8 +251,6 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     {
         case STANDARD_LAYOUT:
             // this is tricky since this layout style includes text
-            //result = [NSNumber numberWithInt:200]; // could be as high as 450
-            NSLog(@"width is now %@", [self width]);
             result = [self width];
             if (!result)
             {
@@ -266,10 +264,10 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
                     result = [NSNumber numberWithInt:200];
                 }
             }
-
             break;
         case BUTTON_COUNT_LAYOUT:
             result = (self.action == RECOMMEND_ACTION) ? [NSNumber numberWithInt:140] : [NSNumber numberWithInt:90];
+            break;
         case BOX_COUNT_LAYOUT:
             result = (self.action == RECOMMEND_ACTION) ? [NSNumber numberWithInt:110] : [NSNumber numberWithInt:55];
             break;
@@ -280,7 +278,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     return result;
 }
 
-- (NSNumber *)srcHeight
+- (NSNumber *)srcHeight:(id <SVPlugInContext>)context
 {
     NSNumber *result = nil;
     
@@ -299,11 +297,6 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     }
     
     return result;
-}
-
-- (NSNumber *)XminWidth
-{
-    return [self srcWidth];
 }
 
 #pragma mark Resizing
@@ -342,17 +335,6 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     [self willChangeValueForKey:@"layout"];
     _layout = layoutTag;
     [self didChangeValueForKey:@"layout"];
-    
-//    switch ( self.layout )
-//    {
-//        case BUTTON_COUNT_LAYOUT:
-//            [self setWidth:[NSNumber numberWithInt:90] height:nil];
-//        case BOX_COUNT_LAYOUT:
-//            [self setWidth:[NSNumber numberWithInt:55] height:nil];
-//            break;
-//        default:
-//            break;
-//    }
 }
 
 @end
