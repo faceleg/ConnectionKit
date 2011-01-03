@@ -359,7 +359,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // Create controller for graphic and hook up to imported node
     SVMediaGraphicDOMController *controller = (SVMediaGraphicDOMController *)[image newDOMController];
     [controller awakeFromHTMLContext:[self HTMLContext]];
-    [[controller imageDOMController] setHTMLElement:imageElement];
     [controller setHTMLElement:imageElement];
     
     [self addChildWebEditorItem:controller];
