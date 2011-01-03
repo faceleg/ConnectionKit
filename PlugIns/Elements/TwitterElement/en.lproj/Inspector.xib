@@ -220,20 +220,22 @@
 										<string>maximum</string>
 										<string>maximumIntegerDigits</string>
 										<string>minimum</string>
+										<string>minimumIntegerDigits</string>
 										<string>negativeFormat</string>
 										<string>numberStyle</string>
 										<string>positiveFormat</string>
 									</object>
 									<object class="NSMutableArray" key="dict.values">
 										<bool key="EncodedWithXMLCoder">YES</bool>
-										<integer value="1"/>
+										<boolean value="NO"/>
 										<integer value="1040"/>
 										<object class="NSLocale">
 											<string key="NS.identifier"/>
 										</object>
 										<real value="20"/>
 										<integer value="2"/>
-										<real value="0.0"/>
+										<real value="1"/>
+										<integer value="1"/>
 										<string>-#</string>
 										<integer value="1"/>
 										<string>#</string>
@@ -257,7 +259,7 @@
 										</object>
 									</object>
 								</object>
-								<real value="0.0" key="NS.min"/>
+								<real value="1" key="NS.min"/>
 								<real value="20" key="NS.max"/>
 								<object class="NSDecimalNumberHandler" key="NS.rounding">
 									<int key="NS.roundingmode">3</int>
@@ -269,7 +271,7 @@
 								<string key="NS.thousand">,</string>
 								<bool key="NS.hasthousands">NO</bool>
 								<bool key="NS.localized">NO</bool>
-								<bool key="NS.allowsfloats">YES</bool>
+								<bool key="NS.allowsfloats">NO</bool>
 							</object>
 							<reference key="NSControlView" ref="501979337"/>
 							<bool key="NSDrawsBackground">YES</bool>
