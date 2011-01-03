@@ -165,7 +165,7 @@
 	NSData *result = nil;
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
-	if ( [defaults boolForKey:@"KTPrefersPNGFormat"]  || [self hasAlphaComponent] )
+	if ( [self hasAlphaComponent] )
 	{
 		result = [self PNGRepresentation];
 	}
@@ -181,7 +181,7 @@
 	NSData *result = nil;
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
-	if ( [defaults boolForKey:@"KTPrefersPNGFormat"]  || [self hasAlphaComponent])
+	if ( [self hasAlphaComponent])
 	{
 		result = [self PNGRepresentationWithOriginalMedia:aParentMedia];
 	}
