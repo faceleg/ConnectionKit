@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 12/11/2007.
-//  Copyright 2007-2009 Karelia Software. All rights reserved.
+//  Copyright 2007-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTMissingMediaThumbnailCell.h"

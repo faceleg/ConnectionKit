@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 22/08/2009.
-//  Copyright 2009 Karelia Software. All rights reserved.
+//  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
 //  An HTML element controller specialised to deal with text, generally of the editable variety. In a way, a bit like how NSText is too abstract to do anything on its own, but central to the operation of NSTextView and NSTextField. So check out the subclasses for more advanced stuff.

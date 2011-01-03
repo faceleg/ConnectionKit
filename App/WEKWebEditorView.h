@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Mike on 04/09/2009.
-//  Copyright 2009 Karelia Software. All rights reserved.
+//  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
 //  An WEKWebEditorView object abstracts out some of the functionality we need in Sandvox for performing editing in a webview. With it, you should have no need to access the contained WebView directly; the editor should provide its own API as a wrapper.

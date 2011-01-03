@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Mike on 04/04/2010.
-//  Copyright 2010 Karelia Software. All rights reserved.
+//  Copyright 2010-11 Karelia Software. All rights reserved.
 //
 
 //  Like NSFontManager, but for pagelets. (In the sense of the contents of "Insert > Pagelet >" menu)

@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 04/01/2009.
-//  Copyright 2009 Karelia Software. All rights reserved.
+//  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTPageDetailsController.h"

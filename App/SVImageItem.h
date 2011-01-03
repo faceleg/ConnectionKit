@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Mike on 04/11/2010.
-//  Copyright 2010 Karelia Software. All rights reserved.
+//  Copyright 2010-11 Karelia Software. All rights reserved.
 //
 //  A simple implementation of IMBImageItem that can be passed off to a background thread for processing, since we shouldn't do so with managed objects directly
 

@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Dan Wood on 5/7/10.
-//  Copyright 2010 Karelia Software. All rights reserved.
+//  Copyright 2010-11 Karelia Software. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

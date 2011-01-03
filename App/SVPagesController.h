@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Terrence Talbot on 1/2/08.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 //  We've not been very good at model controllers, but hopefully are getting better. SVPagesController is (surprise, surprise) a model controller that manages pages in a site. Although these days it actually manages SVSiteItem objects.
 //  What's strange, is that even though it's aware of the page hierarchy in a site, SVPagesController is actually an NSArrayController subclass. It holds together for now, and maybe we'll move to a tree controller later.

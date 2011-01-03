@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Mike on 11/10/2009.
-//  Copyright 2009 Karelia Software. All rights reserved.
+//  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
 //  We use the term "graphic" in the same way that Pages does through its scripting API (and probably in its class hierarchy). That is, a graphic is basically anything on the page that can be selected. From there, e.g. images are a type of graphic.

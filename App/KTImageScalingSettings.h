@@ -2,7 +2,7 @@
 //  KTImageScalingSettings.h
 //  Sandvox
 //
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE

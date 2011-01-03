@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Mike on 05/04/2010.
-//  Copyright 2010 Karelia Software. All rights reserved.
+//  Copyright 2010-11 Karelia Software. All rights reserved.
 //
 /*
  SVVideo is a MediaGraphic, similar to SVImage in some ways, and SVAudio in others.
@@ -341,7 +341,7 @@
 		// for playback only.
 		// *** Canceling drag because exception 'QTDisallowedForInitializationPurposeException' (reason 'Tried to use QTMovie method quickTimeMovie, which is not allowed when QTMovieOpenForPlaybackAttribute is YES.') was raised during a dragging session
 		
-		// [movieAttributes setValue:[NSNumber numberWithBool:YES] forKey:@"QTMovieOpenForPlaybackAttribute"];	// From Tim Monroe @ WWDC2010, so we can check how movie was loaded
+		// [movieAttributes setValue:[NSNumber numberWithBool:YES] forKey:@"QTMovieOpenForPlaybackAttribute"];	// From Tim Monroe @ WWDC'10, so we can check how movie was loaded
 	}
 	[self loadMovieFromAttributes:movieAttributes];
 }

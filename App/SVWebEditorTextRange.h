@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Mike on 12/02/2010.
-//  Copyright 2010 Karelia Software. All rights reserved.
+//  Copyright 2010-11 Karelia Software. All rights reserved.
 //
 
 //  An DOMRange-inspired immutable object for holding a range in a manner that can outlive the DOM. The start & end objects should generally be either paragraphs, or title/text boxes. Indexes specify a number of *characters* offset from the object. This way they operate a little more like NSRange & NSAttributedString, ignoring any styling.

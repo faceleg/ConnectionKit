@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Mike on 16/11/2009.
-//  Copyright 2009 Karelia Software. All rights reserved.
+//  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
 //  Since plug-ins cannot be actual Core Data objects (that would expose too much power to them, and is pretty much impossible anyway!), SVPlugInGraphic is a special graphic whose job is to host a plug-in instance.

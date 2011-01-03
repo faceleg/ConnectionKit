@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Mike on 05/11/2009.
-//  Copyright 2009 Karelia Software. All rights reserved.
+//  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
 #import "SVWebEditorHTMLContext.h"

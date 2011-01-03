@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Mike on 14/10/2009.
-//  Copyright 2009 Karelia Software. All rights reserved.
+//  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
 //  Like NSTextField before it, SVWebEditorTextFieldController takes SVTextDOMController and applies it to small chunks of text in the DOM. You can even use NSValueBinding just like a text field. Also, SVWebEditorTextFieldController is designed to be a selectable web editor item, much like how Keynote operates.

@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Dan Wood on 8/6/10.
-//  Copyright 2010 Karelia Software. All rights reserved.
+//  Copyright 2010-11 Karelia Software. All rights reserved.
 //
 /*
  SVAudio is a MediaGraphic, though unlike SVVideo and SVImage, its media is not visual (thus an

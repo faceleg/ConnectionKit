@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Terrence Talbot on 8/28/09.
-//  Copyright 2009 Karelia Software. All rights reserved.
+//  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
 #import "SVDesignChooserViewController.h"

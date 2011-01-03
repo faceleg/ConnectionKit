@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 17/08/2009.
-//  Copyright 2009 Karelia Software. All rights reserved.
+//  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
 #import <BWToolkitFramework/BWToolkitFramework.h>

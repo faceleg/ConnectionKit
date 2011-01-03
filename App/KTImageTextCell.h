@@ -1,7 +1,7 @@
 //
 //  KTImageTextCell.h
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 
 // from Apple's ImageAndTextCell class

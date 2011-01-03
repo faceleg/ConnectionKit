@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Mike on 29/11/2009.
-//  Copyright 2009 Karelia Software. All rights reserved.
+//  Copyright 2009-2011 Karelia Software. All rights reserved.
 
 //  A typical page is made up of lots of little scraps of content: paragraphs, pagelets, plug-ins etc. Each of these should be a descendant of SVContentObject as it provides the basic facilities they need:
 //

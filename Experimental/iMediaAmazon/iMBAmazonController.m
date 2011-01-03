@@ -3,7 +3,7 @@
 //  iMediaAmazon
 //
 //  Created by Dan Wood on 1/1/07.
-//  Copyright 2007-2009 Karelia Software. All rights reserved.
+//  Copyright 2007-2011 Karelia Software. All rights reserved.
 //
 
 /* CACHING

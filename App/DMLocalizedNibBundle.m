@@ -64,7 +64,7 @@
 //
 // Modified HEAVILY by Dan Wood of Karelia Software
 //
-// Copyright 2010 Karela Software.  All rights reserved.
+// Copyright 2011 Karela Software.  All rights reserved.
 //
 // TO DO: Figure out a licensing scheme if we are going to distribute it.
 //

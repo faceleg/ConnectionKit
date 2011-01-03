@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Greg Hulands on 23/03/06.
-//  Copyright 2006-2009 Karelia Software. All rights reserved.
+//  Copyright 2006-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTPulsatingOverlay.h"
