@@ -68,7 +68,6 @@
     NSArray *children = [propertyList objectForKey:@"childItems"];
     for (id aChild in children)
     {
-        // FIXME: This heavily duplicates codes from -[SVSiteOutlineViewController duplicate:]
         SVSiteItem *duplicate = [[NSManagedObject alloc] initWithEntity:[self entity]
                                          insertIntoManagedObjectContext:context];
         [duplicate awakeFromPropertyList:aChild parentItem:self];
