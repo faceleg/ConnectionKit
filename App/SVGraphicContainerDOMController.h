@@ -17,6 +17,9 @@
                           toPosition:(CGPoint)position
                                event:(NSEvent *)event;
 
+@optional - (void)addGraphic:(SVGraphic *)graphic;
+
+
 @end
 
 

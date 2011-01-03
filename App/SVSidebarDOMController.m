@@ -234,16 +234,29 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     // Insert it
     [pagelet awakeFromNew];
     
+    [self addGraphic:pagelet];
+}
+
+- (void)addGraphic:(SVGraphic *)graphic;
+{
     // Place at end of the sidebar
-    [[self pageletsController] addObject:pagelet];
+    [[self pageletsController] addObject:graphic];
     
     // Add to main controller too
-    NSArrayController *controller = [[self webEditorViewController] graphicsController];
+    KSArrayController *controller = [[self webEditorViewController] graphicsController];
     
-    BOOL selectInserted = [controller selectsInsertedObjects];
-    [controller setSelectsInsertedObjects:YES];
-    [controller addObject:pagelet];
-    [controller setSelectsInsertedObjects:selectInserted];
+    [controller saveSelectionAttributes];
+    @try
+    {
+        [controller setSelectsInsertedObjects:YES];
+        [controller addObject:graphic];
+    }
+    @finally
+    {
+        [controller restoreSelectionAttributes];
+    }
+    
+    // TODO: this duplicates -[SVWebEditorViewController _insertPageletInSidebar:] somewhat
 }
 
 #pragma mark Drop

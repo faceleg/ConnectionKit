@@ -111,6 +111,20 @@
                                            insertIntoManagedObjectContext:context];
     
     [graphic awakeFromNew];
+    
+    // If graphic is small enough to go in sidebar, place there instead.
+    if ([[graphic width] unsignedIntegerValue] <= 200)
+    {
+        [[self webEditorViewController] performSelector:@selector(_insertPageletInSidebar) withObject:graphic];
+    }
+    else
+    {
+        [self addGraphic:graphic];
+    }
+}
+
+- (void)addGraphic:(SVGraphic *)graphic;
+{
     [self addGraphic:graphic placeInline:NO];
 }
 

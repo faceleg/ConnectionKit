@@ -689,6 +689,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     [controller setSelectsInsertedObjects:YES];
     [controller addObject:pagelet];
     [controller setSelectsInsertedObjects:selectInserted];
+    
+    // TODO: this duplicates -[SVSidebarDOMController addGraphic:] somewhat
 }
 
 - (IBAction)insertPagelet:(id)sender;
