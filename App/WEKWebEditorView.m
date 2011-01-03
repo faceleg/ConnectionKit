@@ -2147,37 +2147,46 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         WEKWebEditorItem *editedItem = [[self editingItems] lastObject];
         if (editedItem)
         {
-            DOMElement *element = [editedItem HTMLElement]; // -[editedItem DOMRange] is undesireable as we only want contents
-            DOMRange *editRange = [[element ownerDocument] createRange];
-            [editRange selectNodeContents:element];
+            // Build a total allowed range for selection during editing.
+            // -[editedItem DOMRange] is undesireable as we only want *contents*
+            // If the item contains a iframe, it's likely the proposed selection is for a different document to the item itself. If so, can't compare boundary points, so just go ahead and allow the selection. #102267
             
-            if ([editRange compareBoundaryPoints:DOM_END_TO_END sourceRange:range] >= 0)    // selection ends before/with item
+            DOMElement *element = [editedItem HTMLElement]; 
+            DOMDocument *doc = [element ownerDocument];
+            
+            if (doc == [[range startContainer] ownerDocument])
             {
-                if ([editRange compareBoundaryPoints:DOM_START_TO_START sourceRange:range] <= 0)    // item encloses range
+                DOMRange *editRange = [doc createRange];
+                [editRange selectNodeContents:element];
+                
+                if ([editRange compareBoundaryPoints:DOM_END_TO_END sourceRange:range] >= 0)    // selection ends before/with item
                 {
-                    
-                }
-                else
-                {
-                    if ([editRange compareBoundaryPoints:DOM_END_TO_START sourceRange:range] > 0)   // two non-intersecting ranges
+                    if ([editRange compareBoundaryPoints:DOM_START_TO_START sourceRange:range] <= 0)    // item encloses range
                     {
                         
                     }
                     else
                     {
-                        // Constrain range to start with item
-                        [range setStart:[editRange startContainer] offset:[editRange startOffset]];
-                        rangeEdited = YES;
+                        if ([editRange compareBoundaryPoints:DOM_END_TO_START sourceRange:range] > 0)   // two non-intersecting ranges
+                        {
+                            
+                        }
+                        else
+                        {
+                            // Constrain range to start with item
+                            [range setStart:[editRange startContainer] offset:[editRange startOffset]];
+                            rangeEdited = YES;
+                        }
                     }
                 }
-            }
-            else
-            {
-                if ([editRange compareBoundaryPoints:DOM_START_TO_END sourceRange:range] > 0)   // two non-intersecting ranges
+                else
                 {
-                    // Constrain range to start with item
-                    [range setEnd:[editRange endContainer] offset:[editRange endOffset]];
-                    rangeEdited = YES;
+                    if ([editRange compareBoundaryPoints:DOM_START_TO_END sourceRange:range] > 0)   // two non-intersecting ranges
+                    {
+                        // Constrain range to start with item
+                        [range setEnd:[editRange endContainer] offset:[editRange endOffset]];
+                        rangeEdited = YES;
+                    }
                 }
             }
         }
