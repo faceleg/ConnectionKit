@@ -22,8 +22,6 @@
 
 - (NSData *)faviconRepresentation;
 
-- (NSData *)preferredRepresentation;
-
 // assumes kFitWithinRect, NSImageAlignCenter
 - (NSImage *)imageWithMaxPixels:(int)aPixels;
 

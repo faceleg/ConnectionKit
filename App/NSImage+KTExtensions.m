@@ -143,23 +143,6 @@
 }
 
 
-/*!	Return data in preferred representation.
- */
-- (NSData *)preferredRepresentation
-{
-	NSData *result = nil;
-	
-	if ( [self hasAlphaComponent] )
-	{
-		result = [self PNGRepresentation];
-	}
-	else
-	{
-		result = [self JPEGRepresentationWithCompressionFactor:0.7];
-	}
-	return result;
-}
-
 /*!	Get the data for a favicon.ico file.  Returns nil if unable.
  Note:  If the image is >= 32 pixels wide or high, a 32-pixel variant is created along with the 16,
  in case browsers want to use the higher-resolution variant.
