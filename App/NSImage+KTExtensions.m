@@ -114,10 +114,6 @@
 	{
 		data = [self TIFFRepresentation];
 	}
-	else
-	{
-		data = [self preferredRepresentation];
-	}
 	
 	return data;
 }
@@ -141,10 +137,6 @@
 	else if ( [aUTI isEqualToString:(NSString *)kUTTypeTIFF] )
 	{
 		data = [self TIFFRepresentation];
-	}
-	else
-	{
-		data = [self preferredRepresentation];
 	}
 	
 	return data;
