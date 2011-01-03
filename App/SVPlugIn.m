@@ -209,7 +209,20 @@ static id <SVPlugInContext> sCurrentContext;
 
 #pragma mark Metrics
 
-- (NSNumber *)width; { return [[self container] width]; }
+- (NSNumber *)width;
+{
+    NSNumber *result = [[self container] width];
+    
+    if (result &&
+        ![[self class] isExplicitlySized] &&
+        [[[self container] placement] intValue] == SVGraphicPlacementInline)
+    {
+        result = nil;
+    }
+    
+    return result;
+}
+
 - (NSNumber *)height; { return [[self container] height]; }
 
 - (void)setWidth:(NSNumber *)width height:(NSNumber *)height;
