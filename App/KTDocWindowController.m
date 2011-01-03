@@ -206,11 +206,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [_webContentAreaController release],   _webContentAreaController = controller;
     
     [controller setDelegate:self];
-    return; // FIXME: disabled because it retains window controller indefinitely
-    [self bind:@"contentTitle"
-      toObject:controller
-   withKeyPath:@"selectedViewController.title"
-       options:nil];
 }
 
 @synthesize pagesController = _pagesController;
