@@ -583,8 +583,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     if (returnCode == NSCancelButton) return;
     
     
-    // FIXME: Should reference non-image URLs
-    SVMedia *media = [[SVMedia alloc] initWithContentsOfURL:[sheet URL] error:NULL];
+    SVMedia *media = [[SVMedia alloc] initByReferencingURL:[sheet URL]];
     if (!media) return;
     
     
