@@ -115,7 +115,7 @@
     // If graphic is small enough to go in sidebar, place there instead.
     if ([[graphic width] unsignedIntegerValue] <= 200)
     {
-        [[self webEditorViewController] performSelector:@selector(_insertPageletInSidebar) withObject:graphic];
+        [[self webEditorViewController] performSelector:@selector(_insertPageletInSidebar:) withObject:graphic];
     }
     else
     {
