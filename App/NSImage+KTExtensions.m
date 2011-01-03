@@ -160,21 +160,6 @@
 	return result;
 }
 
-- (NSData *)preferredRepresentationWithOriginalMedia:(KTMedia *)aParentMedia
-{
-	NSData *result = nil;
-	
-	if ( [self hasAlphaComponent] )
-	{
-		result = [self PNGRepresentationWithOriginalMedia:aParentMedia];
-	}
-	else
-	{
-		result = [self JPEGRepresentationWithCompressionFactor:0.7 originalMedia:aParentMedia];
-	}
-	return result;
-}
-
 /*!	Get the data for a favicon.ico file.  Returns nil if unable.
  Note:  If the image is >= 32 pixels wide or high, a 32-pixel variant is created along with the 16,
  in case browsers want to use the higher-resolution variant.

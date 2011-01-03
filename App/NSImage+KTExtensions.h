@@ -23,7 +23,6 @@
 - (NSData *)faviconRepresentation;
 
 - (NSData *)preferredRepresentation;
-- (NSData *)preferredRepresentationWithOriginalMedia:(KTMedia *)parentMedia;
 
 // assumes kFitWithinRect, NSImageAlignCenter
 - (NSImage *)imageWithMaxPixels:(int)aPixels;
