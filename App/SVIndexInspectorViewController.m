@@ -96,7 +96,7 @@
         [collectionLinkSourceView setConnected:YES];
 
         // when we change indexedCollection, set the containers title to the title of the collection, or to
-        // KTPluginUntitledName if collection is nil
+        // CFBundleDisplayName if collection is nil
 		[[[self inspectedObjectsController] selection] setValue:aPage forKey:@"indexedCollection"];
         if ( [aPage title] )
         {
@@ -104,7 +104,7 @@
         }
         else
         {
-            NSString *defaultTitle = [[self nibBundle] objectForInfoDictionaryKey:@"KTPluginUntitledName"];
+            NSString *defaultTitle = [[self nibBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
             [[[self inspectedObjectsController] selection] setValue:defaultTitle forKey:@"title"];
         }
 	}
