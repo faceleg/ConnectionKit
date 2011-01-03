@@ -64,7 +64,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 
 @interface FacebookPlugIn ()
-- (NSNumber *)srcWidth;
+//- (NSNumber *)srcWidth;
 - (NSNumber *)srcHeight;
 @end
 
@@ -96,7 +96,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     if ( [context liveDataFeeds] )
     {
         // determine size that we tell Facebook
-        NSString *widthString = [[self srcWidth] stringValue];
+        NSString *widthString = [[self srcWidth:context] stringValue];
         NSString *heightString = [[self srcHeight] stringValue];
         
         // determine src query parameters
@@ -243,7 +243,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 // facebook wants width and height, so we calculate those explicitly
 
-- (NSNumber *)srcWidth
+- (NSNumber *)srcWidth:(id <SVPlugInContext>)context;
 {
     NSNumber *result = nil;
     
@@ -253,15 +253,18 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
             // this is tricky since this layout style includes text
             //result = [NSNumber numberWithInt:200]; // could be as high as 450
             NSLog(@"width is now %@", [self width]);
-            if ( [self width] )
+            result = [self width];
+            if (!result)
             {
-                result = [NSNumber numberWithInt:450];
-                [self setWidth:result height:[self height]];
                 // if width is auto and writing a pagelet, use 200, otherwise 450
-            }
-            else
-            {
-                result = [NSNumber numberWithInt:200];
+                if (![context isWritingPagelet])
+                {
+                    result = [NSNumber numberWithInt:450];
+                }
+                else
+                {
+                    result = [NSNumber numberWithInt:200];
+                }
             }
 
             break;
@@ -298,7 +301,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     return result;
 }
 
-- (NSNumber *)minWidth
+- (NSNumber *)XminWidth
 {
     return [self srcWidth];
 }
