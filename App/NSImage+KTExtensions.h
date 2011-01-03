@@ -20,8 +20,6 @@
 
 - (NSBitmapImageRep *)bitmapByScalingWithBehavior:(KTImageScalingSettings *)settings;
 
-+ (float)preferredJPEGQuality;
-
 - (NSData *)faviconRepresentation;
 
 - (NSData *)preferredRepresentation;

@@ -108,7 +108,7 @@
 	}
 	else if ([aMimeType isEqualToString:@"image/jpeg"])
 	{
-		data = [self JPEGRepresentationWithCompressionFactor:[NSImage preferredJPEGQuality]];
+		data = [self JPEGRepresentationWithCompressionFactor:0.7];
 	}
 	else if ([aMimeType isEqualToString:@"image/tiff"])
 	{
@@ -128,7 +128,7 @@
 	}
 	else if ( [aUTI isEqualToString:(NSString *)kUTTypeJPEG] )
 	{
-		data = [self JPEGRepresentationWithCompressionFactor:[NSImage preferredJPEGQuality]];
+		data = [self JPEGRepresentationWithCompressionFactor:0.7];
 	}
 	else if ( [aUTI isEqualToString:(NSString *)kUTTypePNG] )
 	{
@@ -143,21 +143,6 @@
 }
 
 
-+ (float)preferredJPEGQuality
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	float quality = [defaults floatForKey:@"KTPreferredJPEGQuality"];
-	if (quality > 1.0)
-	{
-		quality = 1.0;
-	}
-	if (quality <= 0.0)
-	{
-		quality = 0.7;		// default value if not specified
-	}
-	return quality;
-}
-
 /*!	Return data in preferred representation.
  */
 - (NSData *)preferredRepresentation
@@ -170,7 +155,7 @@
 	}
 	else
 	{
-		result = [self JPEGRepresentationWithCompressionFactor:[NSImage preferredJPEGQuality]];
+		result = [self JPEGRepresentationWithCompressionFactor:0.7];
 	}
 	return result;
 }
@@ -185,7 +170,7 @@
 	}
 	else
 	{
-		result = [self JPEGRepresentationWithCompressionFactor:[NSImage preferredJPEGQuality] originalMedia:aParentMedia];
+		result = [self JPEGRepresentationWithCompressionFactor:0.7 originalMedia:aParentMedia];
 	}
 	return result;
 }

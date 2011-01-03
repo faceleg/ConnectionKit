@@ -259,7 +259,7 @@
 		CGImageRelease(cg);
 		// Get JPEG data since it will be easiest to keep it a web-happy format
 		NSMutableDictionary *props = NSDICT(
-											[NSNumber numberWithFloat:[NSImage preferredJPEGQuality]], NSImageCompressionFactor,
+											[NSNumber numberWithFloat:0.7], NSImageCompressionFactor,
 											[NSNumber numberWithBool:NO], NSImageProgressive);
 		
 		jpegData = [bitmapImageRep representationUsingType:NSJPEGFileType properties:props];

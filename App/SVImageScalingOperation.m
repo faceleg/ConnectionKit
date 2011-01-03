@@ -182,7 +182,7 @@
     
     CGImageDestinationAddImage(imageDestination,
                                finalImage,
-                               (CFDictionaryRef)[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[NSImage preferredJPEGQuality]] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality]);
+                               (CFDictionaryRef)[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:0.7] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality]);
     
     if (!CGImageDestinationFinalize(imageDestination)) result = nil;
     CFRelease(imageDestination);
@@ -220,7 +220,7 @@
     CGImageDestinationAddImageFromSource(imageDestination,
                                          imageSource,
                                          0,
-                                         (CFDictionaryRef)[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[NSImage preferredJPEGQuality]] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality]);
+                                         (CFDictionaryRef)[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:0.7] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality]);
     
     if (!CGImageDestinationFinalize(imageDestination)) result = nil;
     CFRelease(imageDestination);
