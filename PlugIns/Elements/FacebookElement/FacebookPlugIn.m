@@ -256,6 +256,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
             if ( [self width] )
             {
                 result = [NSNumber numberWithInt:450];
+                [self setWidth:result height:[self height]];
                 // if width is auto and writing a pagelet, use 200, otherwise 450
             }
             else
