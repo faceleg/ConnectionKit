@@ -251,15 +251,23 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     {
         case STANDARD_LAYOUT:
             // this is tricky since this layout style includes text
-            //result = [NSNumber numberWithInt:225]; // could be 450
-            result = [self width];
+            //result = [NSNumber numberWithInt:200]; // could be as high as 450
+            NSLog(@"width is now %@", [self width]);
+            if ( [self width] )
+            {
+                result = [NSNumber numberWithInt:450];
+                // if width is auto and writing a pagelet, use 200, otherwise 450
+            }
+            else
+            {
+                result = [NSNumber numberWithInt:200];
+            }
+
             break;
         case BUTTON_COUNT_LAYOUT:
             result = (self.action == RECOMMEND_ACTION) ? [NSNumber numberWithInt:140] : [NSNumber numberWithInt:90];
-            //result = [self width];
         case BOX_COUNT_LAYOUT:
             result = (self.action == RECOMMEND_ACTION) ? [NSNumber numberWithInt:110] : [NSNumber numberWithInt:55];
-            //result = [self width];
             break;
         default:
             break;
@@ -298,12 +306,22 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 + (BOOL)isExplicitlySized
 {
-    return YES; // must return YES since minWidth < 200
+    return NO;
 }
 
 - (void)makeOriginalSize
 {
-    [self setWidth:[NSNumber numberWithInt:450] height:nil];
+    switch ( self.layout )
+    {
+        case STANDARD_LAYOUT:
+            [self setWidth:[NSNumber numberWithInt:450] height:nil];
+            break;
+        case BOX_COUNT_LAYOUT:
+        case BUTTON_COUNT_LAYOUT:
+        default:
+            [super makeOriginalSize];
+            break;
+    }
 }
 
 #pragma mark Properties
