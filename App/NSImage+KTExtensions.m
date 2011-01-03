@@ -151,23 +151,6 @@
 }
 
 
-/*!	Return UTI of preferred format type
- */
-- (NSString *)preferredFormatUTI	// return user defaults preferred file format, good for extensions!
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSString *result;
-	if ( [defaults boolForKey:@"KTPrefersPNGFormat"] || [self hasAlphaComponent])
-	{
-		result = (NSString *)kUTTypePNG;	// png if that's our preference, or if there is alpha in the image
-	}
-	else
-	{
-		result = (NSString *)kUTTypeJPEG;
-	}
-	return result;
-}
-
 + (float)preferredJPEGQuality
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

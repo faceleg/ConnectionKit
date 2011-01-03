@@ -24,9 +24,6 @@
 
 - (NSData *)faviconRepresentation;
 
-/*! returns UTI but also checks alpha */
-- (NSString *)preferredFormatUTI;
-
 - (NSData *)preferredRepresentation;
 - (NSData *)preferredRepresentationWithOriginalMedia:(KTMedia *)parentMedia;
 
