@@ -57,16 +57,6 @@
 	return [[NSDate date] descriptionRFC822];		// NOW in the proper format
 }
 
-/*!	Return a code that indicates what license is used.  To help with blacklists or detecting piracy.
- *	Returns a nonsense value.
- 
- FIXME: Is this even used anywhere?
- */
-- (NSString *)rhash
-{
-	return (nil != gRegistrationHash) ? gRegistrationHash : @""; 
-}
-
 - (void)writeString:(NSString *)string;
 {
     [super writeString:string];
