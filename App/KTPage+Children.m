@@ -466,6 +466,20 @@
 #pragma mark -
 #pragma mark Should probably be deprecated
 
++ (NSArray *)orderingSortDescriptors
+{
+	static NSArray *result;
+	
+	if (!result)
+	{
+		NSSortDescriptor *orderingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"ordering" ascending:YES];
+		result = [[NSArray alloc] initWithObjects:orderingDescriptor, nil];
+		[orderingDescriptor release];
+	}
+	
+	return result;
+}
+
 /*! returns a suggested ordering value for inserting aProposedChild
 	based on aSortType -- used for intra-app dragging */
 - (int)proposedOrderingForProposedChild:(id)aProposedChild
@@ -499,7 +513,7 @@
 			descriptors = [KTPage dateModifiedSortDescriptorsAscending:ascending];
 			break;
 		default:
-			descriptors = [NSSortDescriptor orderingSortDescriptors];	// use the "ordering" values
+			descriptors = [KTPage orderingSortDescriptors];	// use the "ordering" values
 			break;
 	}
 	[childArray sortUsingDescriptors:descriptors];
