@@ -112,6 +112,18 @@
     [self didChangeValueForKey:@"picksThumbnailFromPage"];
 }
 
+- (void)setNilValueForKey:(NSString *)key;  // #102342
+{
+    if ([key isEqualToString:@"thumbnailType"])
+    {
+        [self setThumbnailType:SVThumbnailTypeNone];
+    }
+    else
+    {
+        [super setNilValueForKey:key];
+    }
+}
+
 - (BOOL)picksThumbnailFromPage;
 {
     BOOL result = ([self thumbnailType] == SVThumbnailTypePickFromPage);
