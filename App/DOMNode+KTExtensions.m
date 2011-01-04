@@ -24,7 +24,6 @@
 
 @interface DOMNode (KTExtensionsPrivate)
 - (DOMNode *)unlink;
-- (void)combineAdjacentRedundantNodes;
 - (NSString *)textContent;
 @end
 
@@ -318,37 +317,6 @@
 
 
 #pragma mark Additional Utility operations
-
-/*!	When nodes next to each other are the same, like <b>foo</b><b>bar</b> this combines them.
- *
- // TODO:   I know -normalize does this for text nodes. We should check if it works for <b> elements etc.
- //         Then either remove this method, or rename it to have "normalize" in the name.
-*/
-- (void)combineAdjacentRedundantNodes
-{
-	if ([self hasChildNodes])
-	{
-		DOMNodeList *childNodes = [self childNodes];
-		int i, length = [childNodes length];
-		NSString *followingNodeName = nil;
-		for (i = length-1 ; i >=0 ; i--)	// backwards
-		{
-			DOMNode *child = [childNodes item:i];
-			if ([[child nodeName] isEqualToString:followingNodeName])
-			{
-				DOMNode *followingChild = [childNodes item:i+1];
-				DOMNodeList *followingGrandchildren = [followingChild childNodes];
-				[child appendChildren:followingGrandchildren];
-				[self removeChild:followingChild];		// done with following child
-			}
-			else
-			{
-				followingNodeName = [child nodeName];
-			}
-		}
-	}
-	[self normalize];
-}
 
 - (void) appendChildren:(DOMNodeList *)aList
 {
