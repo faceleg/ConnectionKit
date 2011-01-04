@@ -1243,34 +1243,21 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	}
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
+- (NSIndexSet *)outlineView:(NSOutlineView *)outlineView selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes;
 {
-	if ( [item isDeleted] )
-	{
-		LOG((@"warning: outlineView wanted to select a deleted page!"));
-		return NO;
-	}
-	else
-	{
-		return YES;
-	}
-}
-
-/*	Called ONLY when the selected row INDEXES changes. We must do other management to detect when the selected page
- *	changes, but the selected row(s) remain the same.
- *
- *	Initially I thought -selectionIsChanging: would do the trick, but it's not invoked by keyboard navigation.
- */
-- (void)outlineViewSelectionDidChange:(NSNotification *)notification
-{
-	if (!_isChangingSelection)
+	NSArray *proposedItems = [outlineView itemsAtRows:proposedSelectionIndexes];
+    
+    _isChangingSelection = YES;
+    @try
     {
-        NSArray *selectedPages = [[self outlineView] selectedItems];
-        
-        _isChangingSelection = YES;
-        [[self content] setSelectedObjects:selectedPages];
+        if (![[self content] setSelectedObjects:proposedItems]) return [outlineView selectedRowIndexes];
+    }
+    @finally
+    {
         _isChangingSelection = NO;
     }
+    
+    return proposedSelectionIndexes;
 }
 
 /*	If the current selection is about to be collapsed away, select the parent.
