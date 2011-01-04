@@ -79,7 +79,6 @@
 - (void)appendChildren:(DOMNodeList *)aList;
 
 - (void)makePlainTextWithSingleLine:(BOOL)aSingleLine;
-- (void)makeSingleLine;
 
 - (DOMNode *)removeStylesRecursive;
 - (void)removeAnyDescendentElementsNamed:(NSString *)elementName;
