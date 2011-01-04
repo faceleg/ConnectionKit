@@ -38,14 +38,18 @@
 	NSMutableArray *buffer = [NSMutableArray arrayWithCapacity:[rowIndexes count]];
 	
 	unsigned index = [rowIndexes firstIndex];
-	[buffer addObject:[self itemAtRow:index]];
+    id anItem = [self itemAtRow:index];
+    if (anItem) // during startup there sometimes isn't an item to match the row
+    {
+        [buffer addObject:anItem];
+        
+        while ((index = [rowIndexes indexGreaterThanIndex:index]) != NSNotFound)
+        {
+            [buffer addObject:[self itemAtRow:index]];
+        }
+    }
 	
-	while ((index = [rowIndexes indexGreaterThanIndex:index]) != NSNotFound)
-	{
-		[buffer addObject:[self itemAtRow:index]];
-	}
-	
-	return [[buffer copy] autorelease];
+	return buffer;
 }
 
 - (NSIndexSet *)rowsForItems:(NSArray *)items;
