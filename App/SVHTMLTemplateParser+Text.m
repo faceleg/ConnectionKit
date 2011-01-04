@@ -20,7 +20,6 @@
 #pragma mark -
 #pragma mark Standard Text Block
 
-// TODO: Generate nothing when publishing
 /* parameters allowed:
 	property
 	object
