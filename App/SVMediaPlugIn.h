@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Mike on 24/09/2010.
-//  Copyright 2010-11 Karelia Software. All rights reserved.
+//  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
 //  Takes the public SVPlugIn API and extends for our private use for media-specific handling. Like a regular plug-in, still hosted by a Graphic object (Core Data modelled), but have full access to it via the -container method. Several convenience methods are provided so you don't have to call -container so much (-media, -externalSourceURL, etc.).

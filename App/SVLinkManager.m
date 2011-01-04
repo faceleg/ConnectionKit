@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Mike on 12/01/2010.
-//  Copyright 2010-11 Karelia Software. All rights reserved.
+//  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
 #import "SVLinkManager.h"

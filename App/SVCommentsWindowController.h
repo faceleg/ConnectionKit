@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Terrence Talbot on 11/1/10.
-//  Copyright 2010-11 Karelia Software. All rights reserved.
+//  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
 // Sandvox 2 supports three comment providers: Disqus, Intense Debate, and JS-Kit/Echo

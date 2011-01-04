@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Mike on 10/01/2010.
-//  Copyright 2010-11 Karelia Software. All rights reserved.
+//  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
 //  To get HTML out of the DOM and into the model, the DOM nodes are written to an HTML context. SVHTMLContext does a pretty good job out of the box, but SVFieldEditorHTMLWriter has a few extra tricks up its sleeve:

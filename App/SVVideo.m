@@ -3,7 +3,7 @@
 //  Sandvox
 //
 //  Created by Mike on 05/04/2010.
-//  Copyright 2010-11 Karelia Software. All rights reserved.
+//  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 /*
  SVVideo is a MediaGraphic, similar to SVImage in some ways, and SVAudio in others.
