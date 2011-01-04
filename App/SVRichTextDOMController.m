@@ -289,8 +289,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     NSURL *URL = [imageElement absoluteImageURL];
     if ([URL isFileURL])
     {
-        media = [[SVMedia alloc] initWithContentsOfURL:URL error:NULL];
-        // FIXME: what if that failed?
+        media = [[SVMedia alloc] initByReferencingURL:URL];
     }
     else
     {
