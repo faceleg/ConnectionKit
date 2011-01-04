@@ -6,6 +6,9 @@
 //  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
+//  Used by the Page Inspector for handling all KVO etc. required to figure out the thumbnail image of a page. May have wider uses in the future.
+
+
 #import <Cocoa/Cocoa.h>
 #import "SVSiteItem.h"
 
