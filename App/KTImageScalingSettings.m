@@ -242,7 +242,8 @@
 
 - (unsigned)hash
 {
-	return 0;	// TODO: Return something more sensible!
+    // Not especially unique, but a decent start
+	return [self size].width * [self size].height;
 }
 
 #pragma mark -
