@@ -147,7 +147,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	// Dump the old outline
 	[_outlineView setDataSource:nil];  // don't call [self outlineView] as that may try to load the nib when we don't want it to
 	[_outlineView setDelegate:nil];
-    // TODO: Reset responder chain
+    [_outlineView setNextResponder:[self nextResponder]];   // reset responder chain
 	[self resetPageObservation];
 	
 	
