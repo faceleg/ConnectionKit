@@ -396,26 +396,6 @@
 
 
 
-/*!	General case  .... look in child nodes and process there.  We call this when we want to recurse
-*/
-
-- (DOMNode *) removeJunkRecursiveRestrictive:(BOOL)aRestrictive allowEmptyParagraphs:(BOOL)anAllowEmptyParagraphs
-{
-	if ([self hasChildNodes])
-	{
-		DOMNode *child;
-		for ( child = [self firstChild]; nil != child; )
-		{
-			DOMNode *next = [child nextSibling];		// get it in advance just in case we deleted this child
-			(void) [child removeJunkRecursiveRestrictive:aRestrictive allowEmptyParagraphs:anAllowEmptyParagraphs];
-			
-			// Point to the sibling to process, which we already fetched
-			child = next;
-		}
-	}
-	return self;
-}
-
 - (DOMNode *) replaceFakeCDataWithCDATA	// replace "fakecdata" tag with #TEXT underneath to real CDATA.  Returns new node.
 {
 	DOMNode *result = self;
@@ -722,58 +702,5 @@
 	return result;
 }
 
-
-- (DOMNode *) removeJunkRecursiveRestrictive:(BOOL)aRestrictive allowEmptyParagraphs:(BOOL)anAllowEmptyParagraphs
-{
-	BOOL wasItalic = NO;
-	BOOL wasBold = NO;
-	BOOL wasTT = NO;
-	
-	if ( [[self tagName] isEqualToString:@"A"])
-	{
-		aRestrictive = YES;	// we have an A, so nestings from here on down should be restrictive
-							// to pull out pseudo-underlines.
-	}
-	
-	[self removeJunkFromAttributesRestrictive:aRestrictive wasItalic:&wasItalic wasBold:&wasBold wasTT:&wasTT];
-	[self removeJunkFromClass];
-	
-	DOMNode *result = [super removeJunkRecursiveRestrictive:aRestrictive
-									   allowEmptyParagraphs:anAllowEmptyParagraphs];		// call super to deal with children
-	
-	
-	// remove P with a BR in it.
-	if ([[((DOMElement *)result) tagName] isEqualToString:@"P"])
-	{
-		result = [(DOMElement *)result removeJunkFromParagraphAllowEmpty:(BOOL)anAllowEmptyParagraphs];
-	}
-	else if ( [[((DOMElement *)result) tagName] isEqualToString:@"LI"] && ![result hasChildNodes])
-	{
-		// Remove empty lists, which is what you get when converting rich text with lists with blank lines
-		[[result parentNode] removeChild:result];
-		return nil;
-	}
-	
-	// OK, node is still alive.  Now maybe insert b and i nodes above.
-	if (wasBold)
-	{
-		result = [result insertElementIntoTreeNamed:@"B"];
-		[result removeAnyDescendentElementsNamed:@"B"];
-	}
-	if (wasItalic)
-	{
-		result = [result insertElementIntoTreeNamed:@"I"];
-		[result removeAnyDescendentElementsNamed:@"I"];
-	}
-	if (wasTT)
-	{
-		result = [result insertElementIntoTreeNamed:@"TT"];
-		[result removeAnyDescendentElementsNamed:@"TT"];
-	}
-	[result normalize];		// coalesce stuff, like two contiguous #text nodes
-	
-	return result;
-// TODO: here I should coalesce PRE elements (with a \n #text node between) into a single PRE
-}
 
 @end

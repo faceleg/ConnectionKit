@@ -72,8 +72,6 @@
 - (BOOL)isFileList;
 
 
-- (DOMNode *)removeJunkRecursiveRestrictive:(BOOL)aRestricted allowEmptyParagraphs:(BOOL)anAllowEmptyParagraphs;
-
 #pragma mark Utility
 
 - (void)appendChildren:(DOMNodeList *)aList;
