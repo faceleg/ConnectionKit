@@ -267,7 +267,6 @@
 			result = [self mediaFileWithPath:path preferExternalFile:preferExternal];
 		}
 	}
-	// TODO: Support drag sources other than files
 	
 	return result;
 }
