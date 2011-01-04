@@ -122,8 +122,8 @@
 	}
 	
     
-	// TODO: Commit any pending edits
-    BOOL result = [[[self siteOutlineViewController] content] commitEditing];
+    BOOL result = [[self pagesController] commitEditing];
+    if (result) result = [[[[self webContentAreaController] webEditorViewController] graphicsController] commitEditing];
 
     
     
