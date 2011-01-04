@@ -297,9 +297,10 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         if (resource)   // e.g. Chrome only provides the URL. #92311
         {
             media = [[SVMedia alloc] initWithWebResource:resource];
-            
-            // FIXME: Why not match the URL's filename?
-            [media setPreferredFilename:[@"pastedImage" stringByAppendingPathExtension:[URL ks_pathExtension]]];
+            if ([[media preferredFilename] length] == 0)
+            {
+                [media setPreferredFilename:[@"pastedImage" stringByAppendingPathExtension:[URL ks_pathExtension]]];
+            }
         }
     }
     
