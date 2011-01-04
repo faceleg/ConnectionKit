@@ -30,15 +30,11 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 	// check for drag to Trash
 	if ( operation == NSDragOperationDelete )
 	{
-		// delete any pages on the drag pboard
-		NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
-		NSArray *supportedTypes = [NSArray arrayWithObject:kKTOutlineDraggingPboardType];
-		NSString *bestType = [pboard availableTypeFromArray:supportedTypes];
-		
-		if ( [bestType isEqual:kKTOutlineDraggingPboardType] )
-		{
-			//FIXME: Delete the pages
-		}
+		NSResponder *controller = [self nextResponder];
+        if ([controller respondsToSelector:@selector(delete:)])
+        {
+            [controller performSelector:@selector(delete:) withObject:self];
+        }
 	}
 }
 
