@@ -268,10 +268,14 @@
 					  behavior:(CIScalingBehavior)aBehavior 
 					 alignment:(NSImageAlignment)anAlignment
 {
-	if ([self size].width <= aWidth && [self size].height <= aHeight)
+	if (aBehavior != kAnamorphic &&
+        [self size].width <= aWidth &&
+        [self size].height <= aHeight)
 	{
-		return self;	// Don't scale down.  FIXME: This might not be right for all CIScalingBehavior's!
+		return self;	// Don't need to scale
 	}
+    
+    
 	CIImage *theCI			= [self toCIImage];
 	CIImage *scaledCI		= [theCI scaleToWidth:aWidth height:aHeight behavior:aBehavior alignment:anAlignment opaqueEdges:YES];
 	NSUserDefaults *defaults= [NSUserDefaults standardUserDefaults];
