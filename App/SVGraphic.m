@@ -206,7 +206,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
         case SVGraphicPlacementInline:
         {
             SVRichText *textArea = [[self textAttachment] body];
-            return [textArea maxGraphicWidth];
+            return (textArea) ? [textArea maxGraphicWidth] : NSUIntegerMax;
         }
             
         case SVGraphicPlacementCallout:

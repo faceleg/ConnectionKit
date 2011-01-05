@@ -510,14 +510,14 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         WEKWebEditorItem *parentController = [self hitTestDOMNode:[controller HTMLElement]];
         [parentController addChildWebEditorItem:controller];
         
-        // Tell the graphic what's happened
-        KTPage *page = [[self HTMLContext] page];
-        [graphic didAddToPage:page];
-        
-        [controller update];	// push it through quickly
         
         // Finish the edit – had to wait until both node and controller were present
         [webEditor didChangeText];
+        
+        // Tell the graphic what's happened. Wait until after -didChangeText so full model has been hooked up
+        KTPage *page = [[self HTMLContext] page];        
+        [graphic didAddToPage:page];
+        [controller update];	// push it through quickly
     }
     
 }
