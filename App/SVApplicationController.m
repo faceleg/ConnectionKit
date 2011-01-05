@@ -579,6 +579,14 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	[super dealloc];
 }
 
+
+// This is for use by the feedback reporter.  Might be also useful in JSTalk.
+- (KTDocument *)currentDocument
+{
+	// NOTE: I took out the ivar to try to avoid too many retains. Just using doc controller now.
+    return [[NSDocumentController sharedDocumentController] currentDocument];
+}
+
 #define SHA1_DIGEST_LENGTH	20
 
 // Override of KSLicensedAppDelegate
