@@ -1018,6 +1018,7 @@
 					<string>availableIndexAndPathExtensions</string>
 					<string>indexAndCustomPathExtension</string>
 					<string>customIndexAndPathExtension</string>
+					<string>availableIndexFilenames</string>
 				</array>
 				<string key="NSObjectClassName">KTPage</string>
 				<bool key="NSEditable">YES</bool>
@@ -2064,16 +2065,24 @@
 					<int key="connectionID">2221</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oIndexAndExtensionPopup</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="953316196"/>
+					</object>
+					<int key="connectionID">2231</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">content: selection.availableIndexAndPathExtensions</string>
+						<string key="label">content: selection.availableIndexFilenames</string>
 						<reference key="source" ref="953316196"/>
 						<reference key="destination" ref="601368962"/>
-						<object class="NSNibBindingConnector" key="connector" id="45291785">
+						<object class="NSNibBindingConnector" key="connector" id="71718846">
 							<reference key="NSSource" ref="953316196"/>
 							<reference key="NSDestination" ref="601368962"/>
-							<string key="NSLabel">content: selection.availableIndexAndPathExtensions</string>
+							<string key="NSLabel">content: selection.availableIndexFilenames</string>
 							<string key="NSBinding">content</string>
-							<string key="NSKeyPath">selection.availableIndexAndPathExtensions</string>
+							<string key="NSKeyPath">selection.availableIndexFilenames</string>
 							<dictionary key="NSOptions">
 								<boolean value="YES" key="NSInsertsNullPlaceholder"/>
 								<string key="NSMultipleValuesPlaceholder">MULTIPLE</string>
@@ -2083,15 +2092,7 @@
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">2228</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">oIndexAndExtensionPopup</string>
-						<reference key="source" ref="408607898"/>
-						<reference key="destination" ref="953316196"/>
-					</object>
-					<int key="connectionID">2231</int>
+					<int key="connectionID">2233</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2108,11 +2109,11 @@
 								<string key="NS.key.0">NSRaisesForNotApplicableKeys</string>
 								<boolean value="NO" key="NS.object.0"/>
 							</object>
-							<reference key="NSPreviousConnector" ref="45291785"/>
+							<reference key="NSPreviousConnector" ref="71718846"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">2232</int>
+					<int key="connectionID">2234</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3079,7 +3080,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2232</int>
+			<int key="maxID">2234</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

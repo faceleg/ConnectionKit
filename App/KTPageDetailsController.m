@@ -238,7 +238,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 					 toObject:oPagesController
 				  withKeyPath:@"selection.defaultIndexAndPathExtension"
 					  options:nil];
-		// popup is bound to availableIndexAndPathExtensions, selection is bound to customIndexAndPathExtension.
+		// popup is bound to availableIndexFilenames, selection is bound to customIndexAndPathExtension.
 		
         
         _awokenFromNib = YES;

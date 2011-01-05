@@ -201,18 +201,6 @@
 	NSArray *result = [NSArray arrayWithObjects:@"html", @"htm", @"php", @"shtml", @"asp", nil];
 	return result;
 }
-- (NSArray *)availableIndexAndPathExtensions
-{
-	NSString *indexFileName = [[[self site] hostProperties] valueForKey:@"htmlIndexBaseName"];
-
-	NSMutableArray *result = [NSMutableArray array];
-	NSArray *extensions = [self availablePathExtensions];
-	for (NSString *extension in extensions)
-	{
-		[result addObject:[indexFileName stringByAppendingPathExtension:extension]];
-	}
-	return [NSArray arrayWithArray:result];
-}
 
 #pragma mark Filenames & Extensions
 

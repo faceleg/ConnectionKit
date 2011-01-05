@@ -47,7 +47,6 @@ KTCollectionPathStyle;
 @property(nonatomic, copy, readonly) NSString *pathExtension;
 - (NSString *)defaultPathExtension;
 - (NSArray *)availablePathExtensions;
-- (NSArray *)availableIndexAndPathExtensions;
 
 
 #pragma mark Summat else
