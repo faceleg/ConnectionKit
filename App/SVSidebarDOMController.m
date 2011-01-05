@@ -150,6 +150,17 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [controllers release];
     
     
+    // Hide the sidebar when empty to approximate how it would be published. #100208
+    if ([pagelets count])
+    {
+        [[[self sidebarDivElement] style] removeProperty:@"opacity"];
+    }
+    else
+    {
+        [[[self sidebarDivElement] style] setProperty:@"opacity" value:@"0" priority:@""];
+    }
+    
+    
     // Finish
     [self didUpdateWithSelector:_cmd];
 }
