@@ -105,6 +105,12 @@
 
 #pragma mark Metrics
 
+- (NSNumber *)height;
+{
+    // Used when generating HTML. We want to ignore whatever value is persisted (e.g. previous media was an image) and always write out with auto height
+    return nil;
+}
+
 - (BOOL) validateHeight:(NSNumber **)height error:(NSError **)error;
 {
     // Audio is unique among media, having auto height.
