@@ -22,11 +22,11 @@
 @interface SVSidebarPageletsController : KSArrayController
 {
   @private
-    SVSidebar   *_sidebar;
+    KTPage  *_page;
 }
 
-- (id)initWithSidebar:(SVSidebar *)sidebar;    // sets .managedObjectContext too
-@property(nonatomic, retain, readonly) SVSidebar *sidebar;
+- (id)initWithPage:(KTPage *)page;    // sets .managedObjectContext too
+@property(nonatomic, retain, readonly) KTPage *page;
 
 
 #pragma mark Arranging Objects

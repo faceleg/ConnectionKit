@@ -420,8 +420,8 @@
     if (!sidebarController) // #96989
     {
         SVArticle *article = [self representedObject];
-        SVSidebar *sidebar = [[article page] sidebar];
-        sidebarController = [[[SVSidebarPageletsController alloc] initWithSidebar:sidebar] autorelease];
+        KTPage *page = [article page];
+        sidebarController = [[[SVSidebarPageletsController alloc] initWithPage:page] autorelease];
     }
     if (!sidebarController) return NSBeep();
     

@@ -693,8 +693,8 @@
 {
     if (!_sidebarPageletsController)
     {
-        _sidebarPageletsController = [[SVSidebarPageletsController alloc] initWithSidebar:
-                                      [[self page] sidebar]];
+        _sidebarPageletsController = [[SVSidebarPageletsController alloc] initWithPage:
+                                      [self page]];
     }
     
     return _sidebarPageletsController;

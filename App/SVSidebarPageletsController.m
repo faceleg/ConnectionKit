@@ -26,13 +26,13 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithSidebar:(SVSidebar *)sidebar;
+- (id)initWithPage:(KTPage *)page;    // sets .managedObjectContext too
 {
     self = [self init];
-    _sidebar = [sidebar retain];
+    _page = [page retain];
     
     [self setObjectClass:[SVGraphic class]];
-    [self setManagedObjectContext:[sidebar managedObjectContext]];
+    [self setManagedObjectContext:[page managedObjectContext]];
     [self setEntityName:@"Graphic"];
     [self setAvoidsEmptySelection:NO];
     [self setAutomaticallyRearrangesObjects:YES];
@@ -42,7 +42,7 @@
                              [NSNumber numberWithBool:YES],
                              NSRaisesForNotApplicableKeysBindingOption,
                              nil];
-    [self bind:NSContentSetBinding toObject:sidebar withKeyPath:@"pagelets" options:options];
+    [self bind:NSContentSetBinding toObject:page withKeyPath:@"sidebar.pagelets" options:options];
     
     return self;
 }
@@ -56,7 +56,7 @@
 
 - (void)dealloc
 {
-    [_sidebar release];
+    [_page release];
     
     [super dealloc];
 }
@@ -105,7 +105,7 @@
 
 #pragma mark Managing Content
 
-@synthesize sidebar = _sidebar;
+@synthesize page = _page;
 
 - (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
@@ -130,7 +130,7 @@
     
     // Do the insert
     [super insertObject:object atArrangedObjectIndex:index];
-    [object didAddToPage:[[self sidebar] page]];
+    [object didAddToPage:[self page]];
     
     
     // Detach from text attachment
@@ -141,7 +141,7 @@
 {
     // Add to as many descendants as appropriate. Must do it before calling super otherwise inheritablePagelets will be wrong
     [[self class]
-     _addPagelet:pagelet toSidebarOfDescendantsOfPageIfApplicable:[[self sidebar] page]];
+     _addPagelet:pagelet toSidebarOfDescendantsOfPageIfApplicable:[self page]];
     
     // Place at top of sidebar, unlike most controllers
 	[self insertObject:pagelet atArrangedObjectIndex:0];
@@ -184,7 +184,7 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     SVGraphic *pagelet = object;
                    
     // Recurse down the page tree removing the pagelet from their sidebars.
-    [self removePagelet:pagelet fromSidebarOfPage:(KTPage *)[[self sidebar] page]];
+    [self removePagelet:pagelet fromSidebarOfPage:(KTPage *)[self page]];
     
     // Delete the pagelet if it no longer appears on any pages
     if ([[pagelet sidebars] count] == 0 && ![pagelet textAttachment])
