@@ -1028,7 +1028,9 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     _contentAreaController = controller;    // weak ref
     
     KTPage *page = [[controller selectedPage] pageRepresentation];
-    if (page != [[self HTMLContext] page])
+    
+    if (page != [[self HTMLContext] page] &&
+        [page master])  // check it looks like a reasonable page to load. #102548
     {
         _reload = NO;
         [self loadPage:page];
