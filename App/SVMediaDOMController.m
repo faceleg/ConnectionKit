@@ -35,6 +35,12 @@
 
 #pragma mark Selection
 
+- (DOMElement *) selectableDOMElement;
+{
+    // Media is always selectable. #102520
+    return [self HTMLElement];
+}
+
 - (BOOL)allowsDirectAccessToWebViewWhenSelected;
 {
     // Generally, no. EXCEPT for inline, non-wrap-causing images
