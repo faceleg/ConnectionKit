@@ -633,7 +633,7 @@
 - (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object DOMControllerClass:(Class)controllerClass  sizeDelta:(NSSize)sizeDelta;
 {
     id graphic = ([object isKindOfClass:[SVGraphic class]] ? object : [object valueForKey:@"container"]);
-    if (![graphic shouldWriteHTMLInline])
+    if (![self isWritingPagelet] && ![graphic shouldWriteHTMLInline])
     {
         [self pushClassName:@"graphic"];    // so it gets laid out right when a few levels of tags down. #98767
     }
