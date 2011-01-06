@@ -29,6 +29,8 @@
 		3C5169AF12D5625C00F61758 /* jquery.zrssfeed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.zrssfeed.js; sourceTree = "<group>"; };
 		3C5169B012D5625C00F61758 /* jquery.zrssfeed.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.zrssfeed.min.js; sourceTree = "<group>"; };
 		3C516AA612D5977900F61758 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Inspector.xib; sourceTree = "<group>"; };
+		3C516AE212D6299000F61758 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C516AE312D6299000F61758 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* VictualElement.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VictualElement.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -54,6 +56,7 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
+				3C516AE612D629AC00F61758 /* Xcode Configurations */,
 			);
 			name = VictualElement;
 			sourceTree = "<group>";
@@ -123,6 +126,15 @@
 				32DBCF630370AF2F00C91783 /* VictualElement_Prefix.pch */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		3C516AE612D629AC00F61758 /* Xcode Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				3C516AE212D6299000F61758 /* Debug.xcconfig */,
+				3C516AE312D6299000F61758 /* Release.xcconfig */,
+			);
+			name = "Xcode Configurations";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,39 +232,20 @@
 /* Begin XCBuildConfiguration section */
 		1DEB913B08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C516AE212D6299000F61758 /* Debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = /Applications/Sandvox.app/Contents/MacOS/Sandvox;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = VictualElement_Prefix.pch;
-				HEADER_SEARCH_PATHS = /Applications/Sandvox.app/Contents/Headers;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = VictualElement;
-				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970";
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Debug;
 		};
 		1DEB913C08733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C516AE312D6299000F61758 /* Release.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = /Applications/Sandvox.app/Contents/MacOS/Sandvox;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = VictualElement_Prefix.pch;
-				HEADER_SEARCH_PATHS = /Applications/Sandvox.app/Contents/Headers;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = VictualElement;
-				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970";
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
