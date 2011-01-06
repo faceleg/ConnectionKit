@@ -1,0 +1,4 @@
+﻿/* Localized versions of Info.plist keys */
+
+CFBundleDisplayName = "Victuals";
+SVPlugInDescription = "Feed your site with the goodness of jQuery and the Google Feeds API";
