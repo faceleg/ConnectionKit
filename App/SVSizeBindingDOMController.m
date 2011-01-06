@@ -214,8 +214,31 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
         if (size.width > maxWidth)
         {
             // Keep within max width
-            // Switch over to auto-sized for simple graphics
-            size.width = ([graphic isExplicitlySized] ? maxWidth : 0.0f);
+            if ([graphic isExplicitlySized])
+            {
+                size.width = maxWidth;
+            }
+            else
+            {
+                // Switch over to auto-sized for simple graphics.
+                // Exception to this if it auto-width would actually be smaller. e.g. audio defaults to 200px wide. #102520
+                size.width = 0.0f;
+                
+                DOMElement *element = [self HTMLElement];
+                DOMCSSRuleList *rules = [[element ownerDocument] getMatchedCSSRules:element pseudoElement:nil authorOnly:NO];
+                DOMCSSRule *aRule = [rules item:0];
+                
+                if ([aRule isKindOfClass:[DOMCSSStyleRule class]])
+                {
+                    DOMCSSStyleDeclaration *style = [(DOMCSSStyleRule *)aRule style];
+                    NSString *defaultWidth = [style width];
+                    if ([defaultWidth hasSuffix:@"px"] && [defaultWidth integerValue] < maxWidth)
+                    {
+                        size.width = maxWidth;
+                    }
+                }
+            }
+            
             if (ratio) size.height = maxWidth / [ratio floatValue];
         }
     }
