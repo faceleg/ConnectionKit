@@ -16,6 +16,8 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleDisplayName</key>
 	<string>Collection Archive</string>
+	<key>SVPlugInIsIndex</key>
+	<true/>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
