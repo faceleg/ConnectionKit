@@ -86,6 +86,13 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
             nil];
 }
 
+- (void)awakeFromNew;
+{
+    [super awakeFromNew];
+    [self setShowsTitle:NO];
+    [self setShowFaces:NO];
+}
+
 
 #pragma mark HTML Generation
 
