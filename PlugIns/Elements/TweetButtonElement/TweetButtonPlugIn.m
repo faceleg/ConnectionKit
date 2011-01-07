@@ -111,6 +111,8 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
+    [context startElement:@"p" attributes:[NSDictionary dictionaryWithObject:@"text-align:center; padding-top:10px; padding-bottom:10px;" forKey:@"style"]];
+    
     if ( [context liveDataFeeds] )
     {
         NSMutableDictionary *attrs = [NSMutableDictionary dictionaryWithCapacity:5];
@@ -161,6 +163,8 @@
         NSString *noLiveFeeds = LocalizedStringInThisBundle(@"Tweet Button visible only when loading data from the Internet", "");
         [context writeText:noLiveFeeds];
     }
+    
+    [context endElement]; // </p>
     
     // add dependencies
     [context addDependencyForKeyPath:@"tweetButtonStyle" ofObject:self];
