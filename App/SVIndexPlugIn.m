@@ -82,7 +82,6 @@
 + (NSArray *)plugInKeys;
 {
     NSArray *plugInKeys = [NSArray arrayWithObjects:
-                           @"indexedCollection", 
                            @"maxItems", 
                            @"enableMaxItems", 
                            nil];
@@ -159,7 +158,10 @@
 
 #pragma mark Properties
 
-@synthesize indexedCollection = _collection;
+- (id <SVPage>)indexedCollection; { return [self valueForKeyPath:@"container.indexedCollection"]; }
+- (void)setIndexedCollection:(id <SVPage>)collection; { [self setValue:collection forKeyPath:@"container.indexedCollection"]; }
++ (NSSet *)keyPathsForValuesAffectingIndexedCollection; { return [NSSet setWithObject:@"container.indexedCollection"]; }
+
 @synthesize enableMaxItems = _enableMaxItems;
 
 @synthesize maxItems = _maxItems;
