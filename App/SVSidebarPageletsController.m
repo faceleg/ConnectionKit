@@ -125,6 +125,10 @@
 {
     OBPRECONDITION(object);
     
+    // Add to as many descendants as appropriate. Must do it before calling super otherwise inheritablePagelets will be wrong
+    [[self class]
+     _addPagelet:object toSidebarOfDescendantsOfPageIfApplicable:[self page]];
+    
     // Position right
     [self moveObject:object toIndex:index];
     
@@ -137,14 +141,10 @@
     //[pagelet detachFromBodyText];
 }
 
-- (void)addObject:(id)pagelet
+- (void)addObject:(id)object
 {
-    // Add to as many descendants as appropriate. Must do it before calling super otherwise inheritablePagelets will be wrong
-    [[self class]
-     _addPagelet:pagelet toSidebarOfDescendantsOfPageIfApplicable:[self page]];
-    
     // Place at top of sidebar, unlike most controllers
-	[self insertObject:pagelet atArrangedObjectIndex:0];
+	[self insertObject:object atArrangedObjectIndex:0];
 }
 
 + (void)addPagelet:(SVGraphic *)pagelet toSidebarOfPage:(KTPage *)page;

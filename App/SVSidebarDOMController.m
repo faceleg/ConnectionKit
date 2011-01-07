@@ -251,7 +251,10 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 - (void)addGraphic:(SVGraphic *)graphic;
 {
     // Place at end of the sidebar
-    [[self pageletsController] addObject:graphic];
+    NSUInteger index = [[self pageletsController] selectionIndex];
+    if (index == NSNotFound) index = 0;
+    [[self pageletsController] insertObject:graphic atArrangedObjectIndex:index];
+    
     
     // Add to main controller too
     KSArrayController *controller = [[self webEditorViewController] graphicsController];
