@@ -378,8 +378,8 @@
 		2752332510A8983700120CE8 /* KSInspectorTabsMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 2752332310A8983700120CE8 /* KSInspectorTabsMatrix.m */; };
 		275341340C993D8600AC7220 /* KTHTMLParserMasterCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 275341320C993D8600AC7220 /* KTHTMLParserMasterCache.h */; settings = {ATTRIBUTES = (); }; };
 		275341350C993D8600AC7220 /* KTHTMLParserMasterCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 275341330C993D8600AC7220 /* KTHTMLParserMasterCache.m */; };
-		2755279C10546D990037524C /* SVSelectionBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 2755279A10546D990037524C /* SVSelectionBorder.h */; };
-		2755279D10546D990037524C /* SVSelectionBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2755279B10546D990037524C /* SVSelectionBorder.m */; };
+		2755279C10546D990037524C /* KSSelectionBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 2755279A10546D990037524C /* KSSelectionBorder.h */; };
+		2755279D10546D990037524C /* KSSelectionBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2755279B10546D990037524C /* KSSelectionBorder.m */; };
 		275666510F007B6200878A05 /* KTURLCredentialStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2756662E0F00760800878A05 /* KTURLCredentialStorage.m */; };
 		275666ED0F015E8400878A05 /* KTMobileMePublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */; };
 		275666EE0F015E8400878A05 /* KTMobileMePublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */; };
@@ -1949,8 +1949,8 @@
 		2752332310A8983700120CE8 /* KSInspectorTabsMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspectorTabsMatrix.m; sourceTree = "<group>"; };
 		275341320C993D8600AC7220 /* KTHTMLParserMasterCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLParserMasterCache.h; sourceTree = "<group>"; };
 		275341330C993D8600AC7220 /* KTHTMLParserMasterCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLParserMasterCache.m; sourceTree = "<group>"; };
-		2755279A10546D990037524C /* SVSelectionBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSelectionBorder.h; sourceTree = "<group>"; };
-		2755279B10546D990037524C /* SVSelectionBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSelectionBorder.m; sourceTree = "<group>"; };
+		2755279A10546D990037524C /* KSSelectionBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSelectionBorder.h; sourceTree = "<group>"; };
+		2755279B10546D990037524C /* KSSelectionBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSelectionBorder.m; sourceTree = "<group>"; };
 		2756662D0F00760800878A05 /* KTURLCredentialStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTURLCredentialStorage.h; sourceTree = "<group>"; };
 		2756662E0F00760800878A05 /* KTURLCredentialStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTURLCredentialStorage.m; sourceTree = "<group>"; };
 		275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMobileMePublishingEngine.h; sourceTree = "<group>"; };
@@ -3162,8 +3162,6 @@
 				27F243B2106BC8B9007FEC56 /* WEKWebEditorItem.m */,
 				271B485E1051C2F4008B698C /* WEKWebEditorView.h */,
 				271B485F1051C2F4008B698C /* WEKWebEditorView.m */,
-				2755279A10546D990037524C /* SVSelectionBorder.h */,
-				2755279B10546D990037524C /* SVSelectionBorder.m */,
 				2742243F106A926E0058C8DA /* WEKWebView.h */,
 				27422440106A926E0058C8DA /* WEKWebView.m */,
 				278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */,
@@ -3284,6 +3282,16 @@
 				276C004D129BE40500568A73 /* SVGraphicContainerDOMController.m */,
 			);
 			name = "Other DOM Controllers";
+			sourceTree = "<group>";
+		};
+		273E288312D73B9100A80A54 /* KSSelectionBorder */ = {
+			isa = PBXGroup;
+			children = (
+				2755279A10546D990037524C /* KSSelectionBorder.h */,
+				2755279B10546D990037524C /* KSSelectionBorder.m */,
+			);
+			name = KSSelectionBorder;
+			path = ../KSSelectionBorder;
 			sourceTree = "<group>";
 		};
 		27409DFC0DEC685300C2387E /* Data Migration */ = {
@@ -5399,7 +5407,8 @@
 				CE75EA92111A550600474753 /* ESCursors.h */,
 				CE75EA93111A550600474753 /* ESCursors.m */,
 			);
-			path = ESCursors;
+			name = ESCursors;
+			path = ../../ESCursors;
 			sourceTree = "<group>";
 		};
 		CE7638021083F70600EEA9CF /* Products */ = {
@@ -5466,6 +5475,7 @@
 		CEC11A2E0D78BE0100513E70 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				273E288312D73B9100A80A54 /* KSSelectionBorder */,
 				27FDA7051238F483006E1A0D /* KSFileUtilities */,
 				CE22E5B80D7C71A10055D8E9 /* Interfaces */,
 				27CC248211F07277007FB3FE /* KSHTMLWriter */,
@@ -5713,7 +5723,7 @@
 				3C2DA6EC104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h in Headers */,
 				2785197F104FD34A009C8558 /* KSWebViewController.h in Headers */,
 				271B48601051C2F4008B698C /* WEKWebEditorView.h in Headers */,
-				2755279C10546D990037524C /* SVSelectionBorder.h in Headers */,
+				2755279C10546D990037524C /* KSSelectionBorder.h in Headers */,
 				27422441106A926E0058C8DA /* WEKWebView.h in Headers */,
 				27F790D9106BABA6007DF81B /* KSDragging.h in Headers */,
 				27F243B3106BC8B9007FEC56 /* WEKWebEditorItem.h in Headers */,
@@ -7234,7 +7244,7 @@
 				3C2DA6EB104C7AAE0037D270 /* MGScopeBar.m in Sources */,
 				27851980104FD34A009C8558 /* KSWebViewController.m in Sources */,
 				271B48611051C2F4008B698C /* WEKWebEditorView.m in Sources */,
-				2755279D10546D990037524C /* SVSelectionBorder.m in Sources */,
+				2755279D10546D990037524C /* KSSelectionBorder.m in Sources */,
 				27422442106A926E0058C8DA /* WEKWebView.m in Sources */,
 				27F243B4106BC8B9007FEC56 /* WEKWebEditorItem.m in Sources */,
 				2713BDFE10778AE8000864C2 /* NSResponder+Karelia.m in Sources */,

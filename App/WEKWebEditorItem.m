@@ -495,7 +495,7 @@
     }
     else if ([self isSelected])
     {
-        SVSelectionBorder *border = [self newSelectionBorder];
+        KSSelectionBorder *border = [self newSelectionBorder];
         NSRect outline = [border drawingRectForGraphicBounds:[self selectionFrame]];
         [border release];
         
@@ -526,7 +526,7 @@
 		
 		// Selection border and handles
 		
-        SVSelectionBorder *border = [self newSelectionBorder];
+        KSSelectionBorder *border = [self newSelectionBorder];
         
         // Don't need stroke if graphic provides its own
         //DOMElement *element = [self selectableDOMElement];
@@ -565,9 +565,9 @@
     }
 }
 
-- (SVSelectionBorder *)newSelectionBorder;
+- (KSSelectionBorder *)newSelectionBorder;
 {
-    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+    KSSelectionBorder *border = [[KSSelectionBorder alloc] init];
     [border setMinSize:NSMakeSize(5.0f, 5.0f)];
     
     BOOL editing = ([self isEditing] || [[self webEditor] inLiveGraphicResize]);

@@ -787,9 +787,9 @@
 
 #pragma mark Drawing
 
-- (SVSelectionBorder *)newSelectionBorder;
+- (KSSelectionBorder *)newSelectionBorder;
 {
-    SVSelectionBorder *result = [super newSelectionBorder];
+    KSSelectionBorder *result = [super newSelectionBorder];
     
     // Hide border on <OBJECT> tags etc.
     DOMElement *selectionElement = [self selectableDOMElement];

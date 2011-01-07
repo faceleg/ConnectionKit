@@ -585,9 +585,9 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
 }
 
-- (SVSelectionBorder *)newSelectionBorder;
+- (KSSelectionBorder *)newSelectionBorder;
 {
-    SVSelectionBorder *result = [super newSelectionBorder];
+    KSSelectionBorder *result = [super newSelectionBorder];
     
     // Turn off handles while moving
     if ([self hasRelativePosition]) [result setEditing:YES];

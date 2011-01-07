@@ -8,7 +8,7 @@
 
 
 #import "WEKDOMController.h"
-#import "SVSelectionBorder.h"
+#import "KSSelectionBorder.h"
 
 
 @class WEKWebEditorView;
@@ -105,7 +105,7 @@
 // Expressed in -HTMLElement's document view's coordinates. If overrding, generally call super and union your custom rect with that
 - (NSRect)drawingRect;
 
-- (SVSelectionBorder *)newSelectionBorder;
+- (KSSelectionBorder *)newSelectionBorder;
 
 
 #pragma mark Display

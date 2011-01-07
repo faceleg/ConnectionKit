@@ -25,7 +25,7 @@
 #import "SVMedia.h"
 #import "SVPlugInGraphic.h"
 #import "KTSite.h"
-#import "SVSelectionBorder.h"
+#import "KSSelectionBorder.h"
 #import "SVRawHTMLGraphic.h"
 #import "SVRichTextDOMController.h"
 #import "SVSidebar.h"

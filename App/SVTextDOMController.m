@@ -177,9 +177,9 @@
     [text setHidden:NSBOOL(YES)];
 }
 
-- (SVSelectionBorder *)newSelectionBorder;
+- (KSSelectionBorder *)newSelectionBorder;
 {
-    SVSelectionBorder *result = [super newSelectionBorder];
+    KSSelectionBorder *result = [super newSelectionBorder];
     [result setBorderColor:[NSColor grayColor]];
     return result;
 }

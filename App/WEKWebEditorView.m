@@ -16,7 +16,7 @@
 #import "SVDocWindow.h"
 #import "SVLink.h"
 #import "SVLinkManager.h"
-#import "SVSelectionBorder.h"
+#import "KSSelectionBorder.h"
 
 #import "ESCursors.h"
 
@@ -1054,7 +1054,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 {
     // Like -selectableItemAtPoint:, but only looks at selection, and takes graphic handles into account
     
-    SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
+    KSSelectionBorder *border = [[[KSSelectionBorder alloc] init] autorelease];
     [border setMinSize:NSMakeSize(5.0f, 5.0f)];
     
     WEKWebEditorItem *result = nil;
@@ -1105,7 +1105,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Finally, fake cursor
     if (_cursor)
     {
-        [_cursor es_drawAtPoint:_cursorPoint];
+        [_cursor ks_drawAtPoint:_cursorPoint];
     }
 }
 
@@ -1575,7 +1575,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     OBPRECONDITION(handle != kSVGraphicNoHandle);
     
     NSView *docView = [[item HTMLElement] documentView];
-    SVSelectionBorder *border = [item newSelectionBorder];
+    KSSelectionBorder *border = [item newSelectionBorder];
     
     
     // Tell controllers not to draw selected during resize
@@ -1588,7 +1588,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // Take over drawing the cursor
         [_cursor release]; _cursor = [[self cursorForHandle:handle] retain];
         _cursorPoint = [border locationOfHandle:handle frameRect:[item selectionFrame]];
-        [docView setNeedsDisplayInRect:[_cursor es_drawingRectForPoint:_cursorPoint]];
+        [docView setNeedsDisplayInRect:[_cursor ks_drawingRectForPoint:_cursorPoint]];
         
         CGAssociateMouseAndMouseCursorPosition(false);
         [NSCursor hide];
@@ -1612,9 +1612,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
             // Redraw the cursor in new position
             if (resizeInline)
             {
-                [docView setNeedsDisplayInRect:[_cursor es_drawingRectForPoint:_cursorPoint]];
+                [docView setNeedsDisplayInRect:[_cursor ks_drawingRectForPoint:_cursorPoint]];
                 _cursorPoint = [border locationOfHandle:handle frameRect:[item selectionFrame]];
-                [docView setNeedsDisplayInRect:[_cursor es_drawingRectForPoint:_cursorPoint]];
+                [docView setNeedsDisplayInRect:[_cursor ks_drawingRectForPoint:_cursorPoint]];
             }
         }
     }
@@ -1650,7 +1650,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [self setNeedsDisplayForItem:item];
 }
 
-// This would probably be better suited as an SVSelectionBorder method eventually
+// This would probably be better suited as an KSSelectionBorder method eventually
 - (NSCursor *)cursorForHandle:(SVGraphicHandle)handle;
 {
     CGFloat radians = 0.0;
