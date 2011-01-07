@@ -172,8 +172,6 @@
 
 @dynamic includeInIndex;
 
-@dynamic isPublishableInDemo;		// NOT ACTUALLY USED
-
 #pragma mark URL
 
 @dynamic URL;
