@@ -2,17 +2,17 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1040</int>
-		<string key="IBDocument.SystemVersion">10H574</string>
+		<string key="IBDocument.SystemVersion">10J567</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="5"/>
+			<integer value="132"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -220,13 +220,13 @@
 					<object class="NSTextField" id="620839491">
 						<reference key="NSNextResponder" ref="924463587"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{7, 201}, {60, 14}}</string>
+						<string key="NSFrame">{{6, 201}, {61, 14}}</string>
 						<reference key="NSSuperview" ref="924463587"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="406734660">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">71435264</int>
-							<string key="NSContents">Username</string>
+							<string key="NSContents">Username:</string>
 							<reference key="NSSupport" ref="325667635"/>
 							<reference key="NSControlView" ref="620839491"/>
 							<reference key="NSBackgroundColor" ref="864347249"/>
@@ -340,7 +340,7 @@
 								<object class="NSTextFieldCell" key="NSCell" id="88314511">
 									<int key="NSCellFlags">68288064</int>
 									<int key="NSCellFlags2">71435264</int>
-									<string key="NSContents">Online</string>
+									<string key="NSContents">Online:</string>
 									<reference key="NSSupport" ref="325667635"/>
 									<reference key="NSControlView" ref="404759949"/>
 									<reference key="NSBackgroundColor" ref="864347249"/>
@@ -356,7 +356,7 @@
 								<object class="NSTextFieldCell" key="NSCell" id="756988151">
 									<int key="NSCellFlags">68288064</int>
 									<int key="NSCellFlags2">71435264</int>
-									<string key="NSContents">Offline</string>
+									<string key="NSContents">Offline:</string>
 									<reference key="NSSupport" ref="325667635"/>
 									<reference key="NSControlView" ref="747125070"/>
 									<reference key="NSBackgroundColor" ref="864347249"/>
@@ -389,7 +389,7 @@
 								<object class="NSTextFieldCell" key="NSCell" id="333655916">
 									<int key="NSCellFlags">68288064</int>
 									<int key="NSCellFlags2">71435264</int>
-									<string key="NSContents">Headline</string>
+									<string key="NSContents">Headline:</string>
 									<reference key="NSSupport" ref="325667635"/>
 									<reference key="NSControlView" ref="428363293"/>
 									<reference key="NSBackgroundColor" ref="864347249"/>
@@ -428,10 +428,6 @@
 				<string key="NSClassName">SVFieldFormatter</string>
 			</object>
 			<object class="NSUserDefaultsController" id="412999468">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>LiveDataFeeds</string>
-				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 		</object>
