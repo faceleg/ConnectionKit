@@ -381,6 +381,10 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     return ([self mediaURL] ? IKImageBrowserNSURLRepresentationType : nil);
 }
 
+#pragma mark Indexes
+
+@dynamic indexedCollection;
+
 #pragma mark Inspector
 
 - (Class)inspectorFactoryClass; { return [[self plugIn] class]; }

@@ -45,4 +45,9 @@
 @property(nonatomic) BOOL constrainProportions;
 - (BOOL)isConstrainProportionsEditable;
 
+
+#pragma mark Indexes
+@property(nonatomic, retain) KTPage *indexedCollection;
+
+
 @end
