@@ -95,7 +95,7 @@
 	{
         [collectionLinkSourceView setConnected:YES];
 
-        // when we change indexedCollection, set the containers title to the title of the collection, or to
+        // when we change indexedCollection, set the container's title to the title of the collection, or to
         // CFBundleDisplayName if collection is nil
 		[[[self inspectedObjectsController] selection] setValue:aPage forKey:@"indexedCollection"];
         if ( [aPage title] )
