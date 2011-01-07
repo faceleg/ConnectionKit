@@ -1158,98 +1158,12 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	[self checkRegistrationString:nil];
 #endif
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(updateLicensingMenus:)
-												 name:kKSLicenseStatusChangeNotification
-											   object:nil];
-	[self updateLicensingMenus:nil];	// update them now
 	
 	// Fix menus appropriately
 	[pool release];
 
 }
 
-- (void)updateLicensingMenus:(NSNotification *)aNotif
-{
-	NSArray *menusAffected = [NSArray arrayWithObjects:
-							  oAdvancedMenu, oPasteAsMarkupMenuItem, oEditRawHTMLMenuItem,
-							  oInsertRawHTMLMenuItem, oInsertHTMLTextMenuItem,
-							  oCodeInjectionMenuItem, oCodeInjectionLevelMenuItem,
-							  oValidateSourceViewMenuItem, oConfigureGoogleMenuItem,
-							  oStandardViewMenuItem, oStandardViewWithoutStylesMenuItem,
-							  oSourceViewMenuItem, oDOMViewMenuItem, oRSSViewMenuItem,
-							  nil];
-	NSArray *separatorsAfter = [NSArray arrayWithObjects:
-								oAfterValidateSourceViewMenuItem, oAfterEditRawHTMLMenuItem,
-//								oAfterConfigureGoogleMenuItem,
-								nil];
-	
-	if ((nil != gRegistrationString) && gIsPro)		// licensed for pro
-	{
-		for (NSMenuItem *item in menusAffected)
-		{
-			[item setHidden:NO];
-			[item setPro:NO];
-		}
-		for (NSMenuItem *separator in separatorsAfter)
-		{
-			[separator setHidden:NO];
-		}
-
-		// Hook up menus to their actions so they will be enabled
-//		[oPasteAsMarkupMenuItem setAction:@selector(pasteTextAsMarkup:)];
-//		[oEditRawHTMLMenuItem setAction:@selector(editRawHTMLInSelectedBlock:)];
-//		[oInsertRawHTMLMenuItem setAction:@selector(insertPagelet:)];
-//		[oCodeInjectionMenuItem setAction:@selector(showSiteCodeInjection:)];
-//		[oCodeInjectionLevelMenuItem setAction:@selector(showPageCodeInjection:)];
-//		[oValidateSourceViewMenuItem setAction:@selector(validateSource:)];
-//		[oConfigureGoogleMenuItem setAction:@selector(configureGoogle:)];
-//		
-//		[oStandardViewMenuItem setAction:@selector(selectWebViewViewType:)];
-//		[oStandardViewWithoutStylesMenuItem setAction:@selector(selectWebViewViewType:)];
-//		[oSourceViewMenuItem setAction:@selector(selectWebViewViewType:)];
-//		[oDOMViewMenuItem setAction:@selector(selectWebViewViewType:)];
-//		[oRSSViewMenuItem setAction:@selector(selectWebViewViewType:)];
-	}
-	else if (nil != gRegistrationString)	// licensed, non-pro
-	{
-		for (NSMenuItem *item in menusAffected)
-		{
-			[item setHidden:YES];
-		}
-		for (NSMenuItem *separator in separatorsAfter)
-		{
-			[separator setHidden:YES];
-		}
-		
-//		// clear actions so they will be disabled .... not strictly necessary, but just in case?
-//		[oPasteAsMarkupMenuItem setAction:nil];
-//		[oEditRawHTMLMenuItem setAction:nil];
-//		[oInsertRawHTMLMenuItem setAction:nil];
-//		[oCodeInjectionMenuItem setAction:nil];
-//		[oCodeInjectionLevelMenuItem setAction:nil];
-//		[oValidateSourceViewMenuItem setAction:nil];
-//		[oConfigureGoogleMenuItem setAction:nil];
-//		
-//		[oStandardViewMenuItem setAction:nil];
-//		[oStandardViewWithoutStylesMenuItem setAction:nil];
-//		[oSourceViewMenuItem setAction:nil];
-//		[oDOMViewMenuItem setAction:nil];
-//		[oRSSViewMenuItem setAction:nil];
-	}
-	else	// unregistered ... show these as being in Pro, still make them available!
-	{
-		for (NSMenuItem *item in menusAffected)
-		{
-			[item setHidden:NO];
-			[item setPro:YES];
-		}
-		for (NSMenuItem *separator in separatorsAfter)
-		{
-			[separator setHidden:NO];
-		}
-	}
-}
 	
 // Font Panel capabilities -- restrict what effects we can do.
 /// put back in effects that people might want.

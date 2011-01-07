@@ -698,10 +698,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		BOOL canBePublished = (nil != gRegistrationString);
 		if (!canBePublished)
 		{
-			NSNumber *publishable = [content valueForKeyPath:@"selection.isPublishableInDemo"];
-			if (!NSIsControllerMarker(publishable))
+			NSNumber *isPublishableNumber = [content valueForKeyPath:@"selection.isPagePublishableInDemo"];
+			if (!NSIsControllerMarker(isPublishableNumber))
 			{
-				canBePublished = [publishable boolValue];
+				canBePublished = [isPublishableNumber boolValue];
 			}
 		}
 		[menuItem setTitle:
@@ -950,23 +950,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		NSButton *button = [[self window] createBuyNowButtonWithTitle:buttonTitle prompt:buttonPrompt];
 		[button setAction:@selector(showRegistrationWindow:)];
 		[button setTarget:[NSApp delegate]];
-		
-		[self.rawHTMLMenuItem setHidden:NO];		// don't hide, this is unregistered
-		[self.rawHTMLMenuItem setPro:YES small:YES];			// Indicate that this is a Pro feature
-		[self.HTMLTextPageMenuItem setHidden:NO];	// don't hide, this is unregistered
-		[self.HTMLTextPageMenuItem setPro:YES small:YES];		// Indicate that this is a Pro feature
-
-	
 	}
 	else
 	{
 		[[self window] removeBuyNowButton];
-		
-		
-		[self.rawHTMLMenuItem setHidden:!gIsPro];		// hide if not pro, show it pro
-		[self.rawHTMLMenuItem setPro:NO small:YES];				// registered, we're not going to show the pro badge.
-		[self.HTMLTextPageMenuItem setHidden:!gIsPro];	// don't hide, this is unregistered
-		[self.HTMLTextPageMenuItem setPro:NO small:YES];			// Indicate that this is a Pro feature
 	}
 	
 }

@@ -516,16 +516,7 @@ static SVGraphicFactory *sRawHTMLFactory;
         [result setImage:icon];
         [icon release];
     }
-    
-    
-    // Pro status
-    if (9 == [self priority] && nil == gRegistrationString)
-    {
-        [result setPro:YES];
-    }
-    
-    
-    
+
     [result setRepresentedObject:self];
     
     

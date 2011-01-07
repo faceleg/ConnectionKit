@@ -346,11 +346,7 @@
 				BOOL canBePublished = ((nil != gRegistrationString) && !gLicenseIsBlacklisted);	// OK if licensed, and not blacklisted...
 				if (!canBePublished)
 				{
-					NSNumber *publishable = [anItem isPublishableInDemo];
-					if (!NSIsControllerMarker(publishable))
-					{
-						canBePublished = [publishable boolValue];	// or if this is something that can be published in the demo
-					}
+					canBePublished = [anItem isPagePublishableInDemo];
 				}
 				if (canBePublished)
 				{
