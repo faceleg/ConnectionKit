@@ -5408,7 +5408,7 @@
 				CE75EA93111A550600474753 /* ESCursors.m */,
 			);
 			name = ESCursors;
-			path = ../../ESCursors;
+			path = ../../KSSelectionBorder/ESCursors;
 			sourceTree = "<group>";
 		};
 		CE7638021083F70600EEA9CF /* Products */ = {
