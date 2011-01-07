@@ -1039,7 +1039,6 @@
 		CE01E7021208A8090093565F /* page_inspector.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E6FC1208A8090093565F /* page_inspector.tiff */; };
 		CE01E7031208A8090093565F /* document_inspector.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E6FD1208A8090093565F /* document_inspector.tiff */; };
 		CE01E7041208A8090093565F /* wrap_inspector.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E6FE1208A8090093565F /* wrap_inspector.tiff */; };
-		CE01E7061208A8170093565F /* PRO.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E7051208A8170093565F /* PRO.tiff */; };
 		CE01E71F1208A8590093565F /* toolbar_audio.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E7081208A8590093565F /* toolbar_audio.tiff */; };
 		CE033FA20B862BB90098735B /* Web-safe Mac:Windows.collection in Resources */ = {isa = PBXBuildFile; fileRef = CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */; };
 		CE043A6A10C7363600F76F97 /* KSRecentDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = CE043A6810C7363600F76F97 /* KSRecentDocument.h */; };
@@ -2691,7 +2690,6 @@
 		CE01E6FC1208A8090093565F /* page_inspector.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = page_inspector.tiff; sourceTree = "<group>"; };
 		CE01E6FD1208A8090093565F /* document_inspector.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = document_inspector.tiff; sourceTree = "<group>"; };
 		CE01E6FE1208A8090093565F /* wrap_inspector.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = wrap_inspector.tiff; sourceTree = "<group>"; };
-		CE01E7051208A8170093565F /* PRO.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = PRO.tiff; sourceTree = "<group>"; };
 		CE01E7081208A8590093565F /* toolbar_audio.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_audio.tiff; sourceTree = "<group>"; };
 		CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "Web-safe Mac:Windows.collection"; sourceTree = "<group>"; };
 		CE043A6810C7363600F76F97 /* KSRecentDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSRecentDocument.h; sourceTree = "<group>"; };
@@ -5228,7 +5226,6 @@
 		CE1BE7E311D2AD1E00D875AE /* Licensing */ = {
 			isa = PBXGroup;
 			children = (
-				CE01E7051208A8170093565F /* PRO.tiff */,
 			);
 			path = Licensing;
 			sourceTree = "<group>";
@@ -6533,7 +6530,6 @@
 				CE01E7021208A8090093565F /* page_inspector.tiff in Resources */,
 				CE01E7031208A8090093565F /* document_inspector.tiff in Resources */,
 				CE01E7041208A8090093565F /* wrap_inspector.tiff in Resources */,
-				CE01E7061208A8170093565F /* PRO.tiff in Resources */,
 				CE01E71F1208A8590093565F /* toolbar_audio.tiff in Resources */,
 				CEE2C64F120B25E7000E3C0E /* plugin_inspector.tiff in Resources */,
 				CEDA2DD2120CD676005FE23E /* SVVideoInspector.xib in Resources */,

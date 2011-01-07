@@ -46,17 +46,6 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
     [super dealloc];
 }
 
-
-- (void)updateProView:(NSNotification *)aNotif
-{
-	BOOL licensed =  (nil != gRegistrationString);
-	BOOL licensedForPro =  (nil != gRegistrationString) && gIsPro;
-	
-	[oProBadge setHidden:licensed];	// only show "Pro" badge if we are unregistered
-	// Make the button enabled if we are a demo, or a pro license
-    [oProButton setHidden:(licensed && !licensedForPro)]; // If we had other stuff here we'd need to enable pieces
-}
-
 - (void)viewDidLoad;
 {
     // Populate languages popup. Must happen before -refresh (which super will call)
@@ -93,14 +82,6 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
     // Bind Favicon
     [oFaviconPickerController bind:@"fillType" toObject:self withKeyPath:@"inspectedObjectsController.selection.master.faviconType" options:nil];
     [oFaviconPickerController bind:@"imageMedia" toObject:self withKeyPath:@"inspectedObjectsController.selection.master.favicon.media" options:nil];
-    
-    // Observe & update pro stuff
-    [[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(updateProView:)
-												 name:kKSLicenseStatusChangeNotification
-											   object:nil];
-	[self updateProView:nil];
-	
 }
 
 #pragma mark Presentation

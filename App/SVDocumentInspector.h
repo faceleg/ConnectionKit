@@ -22,7 +22,6 @@
     IBOutlet SVFillController           *oFaviconPickerController;
 	
 	IBOutlet NSButton *oProButton;	// Really just a button for Google integration ... Equivalent to menu
-	IBOutlet NSImageView *oProBadge;
 }
 
 - (NSArray *)languages;

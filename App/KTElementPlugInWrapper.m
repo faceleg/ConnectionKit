@@ -223,8 +223,7 @@
             {
                 priority = [priorityID intValue];
             } 
-            if (priority > 0	// don't add zero-priority items to menu!
-                && (priority < 9 || gIsPro || (nil == gRegistrationString)) )	// only if non-advanced or advanced allowed.
+            if (priority > 0)	// don't add zero-priority items to menu!
             {                
                 NSMutableDictionary *newPreset = [presetDict mutableCopy];
                 [newPreset setObject:[bundle bundleIdentifier] forKey:@"KTPresetIndexBundleIdentifier"];

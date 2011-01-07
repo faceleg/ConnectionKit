@@ -871,19 +871,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)configureGoogle:(id)sender;
 {
-    BOOL licensed =  (nil != gRegistrationString);
-    BOOL licensedForPro =  (nil != gRegistrationString) && gIsPro;
-
-    // show if pro or if not yet licensed
-    if ( !licensed || licensedForPro ) 
-    {
-        if ( !self.googleWindowController )
-        {
-            self.googleWindowController = [[[SVGoogleWindowController alloc] initWithWindowNibName:@"SVGoogleSheet"] autorelease];
-        }
-        [self.googleWindowController setSite:[[self document] site]];
-        [self.googleWindowController configureGoogle:self];
-    }
+	if ( !self.googleWindowController )
+	{
+		self.googleWindowController = [[[SVGoogleWindowController alloc] initWithWindowNibName:@"SVGoogleSheet"] autorelease];
+	}
+	[self.googleWindowController setSite:[[self document] site]];
+	[self.googleWindowController configureGoogle:self];
 }
 
 - (IBAction)configureComments:(id)sender;

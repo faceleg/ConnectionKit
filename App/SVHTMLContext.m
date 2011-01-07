@@ -341,17 +341,12 @@
     return result;
 }
 
-- (BOOL)isForPublishingProOnly
-{
-	return [self isForPublishing] && (nil != gRegistrationString) && gIsPro;
-}
-
 // Similar to above, but might be overridden by subclass to prevent sending to HTML validator
 - (BOOL)shouldWriteServerSideScripts; { return [self isForPublishing]; }
 
-- (BOOL)canWriteProMarkup;
+- (BOOL)canWriteCodeInjection;
 {
-	return [self isForPublishingProOnly]
+	return [self isForPublishing]
 			// Show the code injection in the webview as well, as long as this default is set.
 			|| ([[NSUserDefaults standardUserDefaults] boolForKey:@"ShowCodeInjectionInPreview"] && [self isForEditing]);
 }

@@ -171,7 +171,7 @@
 {
     OBPRECONDITION(context);
     
-    if ([context canWriteProMarkup])
+    if ([context canWriteCodeInjection])
 	{
         NSString *masterCode = [[[self master] codeInjection] valueForKey:aKey];
 		NSString *pageCode = [[self codeInjection] valueForKey:aKey];
@@ -201,7 +201,7 @@
 - (void)writeCodeInjectionBodyTag
 {
 	SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
-    if ([context canWriteProMarkup])
+    if ([context canWriteCodeInjection])
     {
         NSString *masterCode = [[[self master] codeInjection] valueForKey:@"bodyTag"];
 		NSString *pageCode = [[self codeInjection] valueForKey:@"bodyTag"];

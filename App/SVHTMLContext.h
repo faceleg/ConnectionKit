@@ -107,8 +107,7 @@ typedef enum {
 - (BOOL)isForEditing;		// Synonym, apparently...
 - (BOOL)isForQuickLookPreview;
 - (BOOL)isForPublishing;
-- (BOOL)isForPublishingProOnly;
-- (BOOL)canWriteProMarkup;
+- (BOOL)canWriteCodeInjection;
 
 
 #pragma mark Doctype

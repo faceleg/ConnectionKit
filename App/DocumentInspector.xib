@@ -2,17 +2,17 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10H574</string>
+		<string key="IBDocument.SystemVersion">10J567</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="171"/>
+			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -48,7 +48,7 @@
 							<object class="NSTabViewItem" id="409530022">
 								<string key="NSIdentifier">site</string>
 								<object class="NSView" key="NSView" id="324127978">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder" ref="812452045"/>
 									<int key="NSvFlags">261</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -275,39 +275,6 @@
 											<int key="NSvFlags">266</int>
 											<object class="NSMutableArray" key="NSSubviews">
 												<bool key="EncodedWithXMLCoder">YES</bool>
-												<object class="NSImageView" id="527178460">
-													<reference key="NSNextResponder" ref="288995462"/>
-													<int key="NSvFlags">265</int>
-													<object class="NSMutableSet" key="NSDragTypes">
-														<bool key="EncodedWithXMLCoder">YES</bool>
-														<object class="NSArray" key="set.sortedObjects">
-															<bool key="EncodedWithXMLCoder">YES</bool>
-															<string>Apple PDF pasteboard type</string>
-															<string>Apple PICT pasteboard type</string>
-															<string>Apple PNG pasteboard type</string>
-															<string>NSFilenamesPboardType</string>
-															<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
-															<string>NeXT TIFF v4.0 pasteboard type</string>
-														</object>
-													</object>
-													<string key="NSFrame">{{163, 21}, {29, 14}}</string>
-													<reference key="NSSuperview" ref="288995462"/>
-													<bool key="NSEnabled">YES</bool>
-													<object class="NSImageCell" key="NSCell" id="362226906">
-														<int key="NSCellFlags">67239424</int>
-														<int key="NSCellFlags2">33685504</int>
-														<object class="NSCustomResource" key="NSContents">
-															<string key="NSClassName">NSImage</string>
-															<string key="NSResourceName">PRO</string>
-														</object>
-														<reference key="NSSupport" ref="26"/>
-														<int key="NSAlign">0</int>
-														<int key="NSScale">0</int>
-														<int key="NSStyle">0</int>
-														<bool key="NSAnimates">NO</bool>
-													</object>
-													<bool key="NSEditable">YES</bool>
-												</object>
 												<object class="NSButton" id="677465902">
 													<reference key="NSNextResponder" ref="288995462"/>
 													<int key="NSvFlags">269</int>
@@ -700,6 +667,7 @@
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {244, 468}}</string>
+									<reference key="NSSuperview" ref="812452045"/>
 								</object>
 								<string key="NSLabel">Site</string>
 								<reference key="NSColor" ref="512321341"/>
@@ -708,7 +676,7 @@
 							<object class="NSTabViewItem" id="708745229">
 								<string key="NSIdentifier">appearance</string>
 								<object class="NSView" key="NSView" id="865099582">
-									<reference key="NSNextResponder" ref="812452045"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1436,21 +1404,20 @@
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {244, 468}}</string>
-									<reference key="NSSuperview" ref="812452045"/>
 								</object>
 								<string key="NSLabel">Appearance</string>
 								<reference key="NSColor" ref="512321341"/>
 								<reference key="NSTabView" ref="812452045"/>
 							</object>
 						</object>
-						<reference key="NSSelectedTabViewItem" ref="708745229"/>
+						<reference key="NSSelectedTabViewItem" ref="409530022"/>
 						<reference key="NSFont" ref="26"/>
 						<int key="NSTvFlags">134217728</int>
 						<bool key="NSAllowTruncatedLabels">YES</bool>
 						<bool key="NSDrawsBackground">YES</bool>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="865099582"/>
+							<reference ref="324127978"/>
 						</object>
 					</object>
 				</object>
@@ -1834,14 +1801,6 @@
 						</object>
 					</object>
 					<int key="connectionID">677</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">oProBadge</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="527178460"/>
-					</object>
-					<int key="connectionID">680</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2781,7 +2740,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="860155217"/>
 							<reference ref="677465902"/>
-							<reference ref="527178460"/>
 						</object>
 						<reference key="parent" ref="324127978"/>
 					</object>
@@ -3068,20 +3026,6 @@
 						<int key="objectID">670</int>
 						<reference key="object" ref="815074124"/>
 						<reference key="parent" ref="96297053"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">678</int>
-						<reference key="object" ref="527178460"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="362226906"/>
-						</object>
-						<reference key="parent" ref="288995462"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">679</int>
-						<reference key="object" ref="362226906"/>
-						<reference key="parent" ref="527178460"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">689</int>
@@ -3474,8 +3418,6 @@
 					<string>669.IBPluginDependency</string>
 					<string>669.ImportedFromIB2</string>
 					<string>670.IBPluginDependency</string>
-					<string>678.IBPluginDependency</string>
-					<string>679.IBPluginDependency</string>
 					<string>68.IBPluginDependency</string>
 					<string>68.ImportedFromIB2</string>
 					<string>689.IBPluginDependency</string>
@@ -3685,8 +3627,6 @@
 					<string>KTImageView</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -4263,7 +4203,6 @@
 							<string>oFaviconPickerController</string>
 							<string>oLanguageCodeField</string>
 							<string>oLanguagePopup</string>
-							<string>oProBadge</string>
 							<string>oProButton</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -4272,7 +4211,6 @@
 							<string>SVFillController</string>
 							<string>NSTextField</string>
 							<string>NSPopUpButton</string>
-							<string>NSImageView</string>
 							<string>NSButton</string>
 						</object>
 					</object>
@@ -4284,7 +4222,6 @@
 							<string>oFaviconPickerController</string>
 							<string>oLanguageCodeField</string>
 							<string>oLanguagePopup</string>
-							<string>oProBadge</string>
 							<string>oProButton</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -4304,10 +4241,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">oLanguagePopup</string>
 								<string key="candidateClassName">NSPopUpButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">oProBadge</string>
-								<string key="candidateClassName">NSImageView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oProButton</string>
@@ -5467,7 +5400,6 @@
 				<string>NSMenuCheckmark</string>
 				<string>NSMenuMixedState</string>
 				<string>NSSwitch</string>
-				<string>PRO</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
@@ -5475,7 +5407,6 @@
 				<string>{9, 8}</string>
 				<string>{7, 2}</string>
 				<string>{15, 15}</string>
-				<string>{72, 28}</string>
 			</object>
 		</object>
 	</data>

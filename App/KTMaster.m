@@ -311,7 +311,7 @@
 	NSString *codeInjection = [self.codeInjection valueForKey:@"additionalCSS"];
     
     // If the user has specified a custom banner and the design supports it, load it in
-    if ([codeInjection length] && [context canWriteProMarkup])
+    if ([codeInjection length] && [context canWriteCodeInjection])
     {
         [context addCSSString:codeInjection];
     }

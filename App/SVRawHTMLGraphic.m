@@ -43,7 +43,7 @@
 	
     NSString *html = [self HTMLString];
     
-    if (([context shouldWriteServerSideScripts] && [context isForPublishingProOnly]) ||
+    if (([context shouldWriteServerSideScripts] && [context isForPublishing]) ||
         ([context isForEditing] && [[self shouldPreviewWhenEditing] boolValue]))
     {
         // Is the preview going to be understandable by WebKit? Judge this by making sure there's no problem with close tags

@@ -76,12 +76,6 @@
 
 -(id)	init
 {
-	if ( !(gIsPro || (nil == gRegistrationString)) )	// don't allow this to be created if we're not pro
-	{
-		NSBeep();
-		[self release];
-		return nil;
-	}
     self = [super initWithWindowNibName:@"HTMLEditor"];
     if (self)
 	{

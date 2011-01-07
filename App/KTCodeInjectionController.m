@@ -26,14 +26,7 @@
 
 - (id)initWithPagesController:(id <KSCollectionController>)controller
                        master:(BOOL)isMaster;
-{
-	if ( !(gIsPro || (nil == gRegistrationString)) )	// don't allow this to be created if we're not pro
-	{
-		NSBeep();
-		[self release];
-		return nil;
-	}
-	
+{	
 	_pagesController = controller;
 	_isMaster = isMaster;
 	
