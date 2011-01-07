@@ -14,11 +14,44 @@
 @implementation SVGoogleWindowController
 
 @synthesize objectController = _objectController;
+@synthesize verificationCodeField = _verificationCodeField;
+@synthesize analyticsCodeField = _analyticsCodeField;
 
 - (void)dealloc
 {
     self.objectController = nil;
+    self.verificationCodeField = nil;
+    self.analyticsCodeField = nil;
     [super dealloc];
+}
+
+- (void)windowDidLoad
+{
+    // figure out our best possible mono-spaced font
+    // (this somewhat mimics -[NSTextView defaultTextAttributes])
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *fontName = [defaults objectForKey:@"HTMLViewFontName"];
+    float pointSize = [defaults floatForKey:@"HTMLViewPointSize"];
+    
+    NSFont *font = nil;
+    if ( fontName )
+    {
+        font = [NSFont fontWithName:fontName size:pointSize];
+    }
+    if (!font)
+    {
+        // For some reason, Snow Leopard gives us Menlo but doesn't use it by default!
+        NSFont *menlo = [NSFont fontWithName:@"Menlo-Regular" size:12.0];
+        if (menlo)
+        {
+            [NSFont setUserFixedPitchFont:menlo];
+        }
+        font = [NSFont userFixedPitchFontOfSize:12.0];
+    }
+    
+    [self.verificationCodeField setFont:font];
+    [self.analyticsCodeField setFont:font];    
 }
 
 - (void)setSite:(KTSite *)site

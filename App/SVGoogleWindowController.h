@@ -14,9 +14,13 @@
 @interface SVGoogleWindowController : NSWindowController 
 {
     NSObjectController *_objectController;
+    NSTextField *_verificationCodeField;
+    NSTextField *_analyticsCodeField;
 }
 
 @property (nonatomic, retain) IBOutlet NSObjectController *objectController;
+@property (nonatomic, retain) IBOutlet NSTextField *verificationCodeField;
+@property (nonatomic, retain) IBOutlet NSTextField *analyticsCodeField;
 
 - (void)configureGoogle:(NSWindowController *)sender;
 - (IBAction)closeSheet:(id)sender;
