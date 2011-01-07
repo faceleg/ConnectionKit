@@ -94,11 +94,13 @@
 	if (aPage)
 	{
         [collectionLinkSourceView setConnected:YES];
-
-        // when we change indexedCollection, set the container's title to the title of the collection, or to
+        
+        // Store the new collection. For some reason keypath of @"indexedCollection" is upsetting KVO heavily. #102661
+        [[[self inspectedObjectsController] selection] setValue:aPage forKeyPath:@"container.indexedCollection"];
+        
+        // When we change indexedCollection, set the container's title to the title of the collection, or to
         // CFBundleDisplayName if collection is nil
-		[[[self inspectedObjectsController] selection] setValue:aPage forKey:@"indexedCollection"];
-        if ( [aPage title] )
+		if ( [aPage title] )
         {
             [[[self inspectedObjectsController] selection] setValue:[aPage title] forKey:@"title"];
         }
