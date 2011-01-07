@@ -6621,7 +6621,7 @@
 		};
 		3C1F512C11D576ED0036B375 /* Internationalize XIBs */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -6629,9 +6629,9 @@
 			name = "Internationalize XIBs";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/zsh;
-			shellScript = "exit 0\n\nforeach nibFile (${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib) # getting every nib in the built product - but not plugins\n  echo \"Found compiled nib: ${nibFile}\"\n\n\n stringsFilePath=${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/en.lproj/`basename ${nibFile} .nib`.strings # The path where the strings file will go\n echo \"Strings will go into: ${stringsFilePath}\"\n\n xibFile=`basename ${nibFile} .nib`.xib\t# Look for the .xib file corresponding to that built nib file\n xibFilePath=`echo ${SOURCE_ROOT}/**/${xibFile}`\t# TRY to find the .xib file corresponding to that\n\n if [[ -e ${xibFilePath} ]] {\n  echo \"*** Getting strings out of Xib: ${xibFilePath}\"\n  ibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n  ${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n  rm ${stringsFilePath}~\n }\n\nend\n";
+			shellScript = "foreach nibFile (${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib) # getting every nib in the built product - but not plugins\n\techo \"nibFile=${nibFile}\"\n\techo \"SOURCE_ROOT=${SOURCE_ROOT}\"\n\n\tstringsFilePath=${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/en.lproj/`basename ${nibFile} .nib`.strings # The path where the strings file will go\n\techo \"stringsFilePath=${stringsFilePath}\"\n\n\t# Look for the .xib file corresponding to that built nib file\n\txibFile=`basename ${nibFile} .nib`.xib\n\techo \"xibFile=${xibFile}\"\n\n\t# TRY to find the .xib file corresponding to that\n\txibFilePath=`echo ${SOURCE_ROOT}/${xibFile}`\n\techo \"xibFilePath=${xibFilePath}\"\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** Getting strings out of Xib: ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\trm ${stringsFilePath}~\n\t}\n\n\txibFilePath=`echo ${SOURCE_ROOT}/en.lproj/${xibFile}`\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** Getting strings out of Xib: ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\trm ${stringsFilePath}~\n\t}\n\nend\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3E75F90F1C5F42002E3A9A /* ShellScript */ = {
