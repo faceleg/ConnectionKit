@@ -761,7 +761,9 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Pretend we're not here if only child element is selectable
-    if (result == self && [[self childWebEditorItems] count] == 1)
+    if (result == self &&
+        [[self childWebEditorItems] count] == 1 &&
+        [[[self childWebEditorItems] objectAtIndex:0] isSelectable])
     {
         // Seek out a better matching child which has no siblings. #93557
         DOMTreeWalker *walker = [[node ownerDocument] createTreeWalker:node
