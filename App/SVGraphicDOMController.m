@@ -850,10 +850,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (NSRect)drawingRect;
 {
-    // Fast-track; editing items cover the whole screen with darkening effect
-    if ([self isEditing]) return [[[self HTMLElement] documentView] bounds];
-    
-    
     NSRect result = [super drawingRect];
     
     if (_drawAsDropTarget)
@@ -866,28 +862,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;
 {
-    if ([self isEditing])
-    {
-        // Darken area around us
-        // Clip the rect covering editing item since we want to appear normal
-        CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-        CGContextSaveGState(context);
-        
-        CGRect unclippedRect = NSRectToCGRect([self selectionFrame]);
-        
-        CGContextBeginPath(context);
-        CGContextAddRect(context, CGRectInfinite); 
-        CGContextAddRect(context, unclippedRect);
-        CGContextEOClip(context);
-        
-        // Draw everything else slightly darkened
-        [[NSColor colorWithCalibratedWhite:0.25 alpha:0.25] set];
-        NSRectFillUsingOperation(dirtyRect, NSCompositeSourceOver);
-        
-        CGContextRestoreGState(context);
-    }
-    
-    
     [super drawRect:dirtyRect inView:view];
     
     
@@ -899,6 +873,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
 }
 
+- (BOOL)shouldHighlightWhileEditing; { return YES; }
 @end
 
 

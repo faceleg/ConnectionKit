@@ -58,6 +58,8 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     [parent delete];
 }
 
+- (BOOL)shouldHighlightWhileEditing; { return YES; }
+
 #pragma mark Updating
 
 @synthesize sizeDelta = _delta;

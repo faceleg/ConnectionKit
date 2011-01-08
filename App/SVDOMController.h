@@ -99,6 +99,7 @@
 
 #pragma mark Editing
 - (void)delete;
+- (BOOL)shouldHighlightWhileEditing;
 
 
 #pragma mark Resizing

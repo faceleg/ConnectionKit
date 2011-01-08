@@ -397,6 +397,8 @@
     [range detach];
 }
 
+- (BOOL)shouldHighlightWhileEditing; { return NO; }
+
 #pragma mark Summary
 
 - (NSArray *)contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems;
@@ -786,6 +788,45 @@
 }
 
 #pragma mark Drawing
+
+- (NSRect)drawingRect;
+{
+    // Fast-track; editing items cover the whole screen with darkening effect
+    if ([self isEditing] && [self shouldHighlightWhileEditing])
+    {
+        return [[[self HTMLElement] documentView] bounds];
+    }
+    
+    
+    return [super drawingRect];
+}
+    
+- (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;
+{
+    if ([self isEditing] && [self shouldHighlightWhileEditing])
+    {
+        // Darken area around us
+        // Clip the rect covering editing item since we want to appear normal
+        CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+        CGContextSaveGState(context);
+        
+        CGRect unclippedRect = NSRectToCGRect([self selectionFrame]);
+        
+        CGContextBeginPath(context);
+        CGContextAddRect(context, CGRectInfinite); 
+        CGContextAddRect(context, unclippedRect);
+        CGContextEOClip(context);
+        
+        // Draw everything else slightly darkened
+        [[NSColor colorWithCalibratedWhite:0.25 alpha:0.25] set];
+        NSRectFillUsingOperation(dirtyRect, NSCompositeSourceOver);
+        
+        CGContextRestoreGState(context);
+    }
+    
+    
+    [super drawRect:dirtyRect inView:view];
+}
 
 - (KSSelectionBorder *)newSelectionBorder;
 {
