@@ -123,6 +123,11 @@
     }
 }
 
+- (void)writePlaceholderHTML:(id <SVPlugInContext>)context
+{
+    ; // we'll write our own placeholder text in the Template
+}
+
 - (BOOL)useLargeIconLayout
 {
 	// Use the large icon layout if the large orange or grey feed icon has been chosen
