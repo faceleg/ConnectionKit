@@ -54,7 +54,7 @@
     if ( !title || (title == (id)[NSNull null]) ) title = [URL host];
         
     Link *result = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                    [URL absoluteString], @"url",
+                    URL, @"url",
                     title, @"title",
                     nil];
     return result;

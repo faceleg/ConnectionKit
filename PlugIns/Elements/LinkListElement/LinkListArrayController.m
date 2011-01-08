@@ -59,19 +59,22 @@
     
     if ( !result )
     {
-        NSString *theURLString = @"http://";
         NSString *theTitle = LocalizedStringInThisBundle(@"Name",@"Initial title of an item in a list of web links");
 
         NSURL *theURL = [location URL];
         if ( theURL )
         {
-            theURLString = [theURL absoluteString];
             theTitle = [location title];
         }
+        else
+        {
+            theURL = [NSURL URLWithString:@"http://www.example.com/"];
+        }
+
         
         result = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                   theTitle, @"title",
-                  theURLString, @"url",
+                  theURL, @"url",
                   nil];
     }
     

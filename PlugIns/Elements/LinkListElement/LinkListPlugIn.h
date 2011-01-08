@@ -52,7 +52,7 @@ typedef NSMutableDictionary Link;
 
 - (void)addLink:(Link *)link;
 
-// array of dictionaries, keys are url, title, comment, values are all NSStrings
+// array of dictionaries, keys are url, title, and comment
 @property (nonatomic, retain) NSArray *linkList;
 
 // UI tag, values are 1 or 0
