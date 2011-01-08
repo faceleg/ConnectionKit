@@ -61,6 +61,12 @@
             nil];
 }
 
+- (void)awakeFromNew;
+{
+    [super awakeFromNew];
+    [self setShowsTitle:NO];
+}
+
 // no-count button is 55 x 20
 // horizontal button is 110  (at least) x 20
 // vertical button is 55 x 62 (at least)
