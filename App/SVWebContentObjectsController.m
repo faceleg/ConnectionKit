@@ -82,7 +82,8 @@
             }
         }
     }
-    else if ([object isKindOfClass:[SVTitleBox class]])
+    else if ([object isKindOfClass:[SVTitleBox class]] ||
+             [object isKindOfClass:[SVAuxiliaryPageletText class]])
     {
         [(SVTitleBox *)object setHidden:[NSNumber numberWithBool:YES]];
     }
