@@ -370,12 +370,13 @@ static SVGraphicFactory *sRawHTMLFactory;
         
         for (KTElementPlugInWrapper *aWrapper in [KTElementPlugInWrapper pageletPlugins])
         {
+            /*
             switch ([aWrapper category])
             {
                 case KTPluginCategoryIndex:
                     [sIndexFactories addObject:[aWrapper graphicFactory]];
                     break;
-                    /*case KTPluginCategoryBadge:
+                    case KTPluginCategoryBadge:
                      [sBadgeFactories addObject:[aWrapper graphicFactory]];
                      break;
                      case KTPluginCategoryEmbedded:
@@ -383,10 +384,20 @@ static SVGraphicFactory *sRawHTMLFactory;
                      break;
                      case KTPluginCategorySocial:
                      [sSocialFactories addObject:[aWrapper graphicFactory]];
-                     break;*/
+                     break;
                 default:
                     [sMoreFactories addObject:[aWrapper graphicFactory]];
                     break;
+            }
+            */
+            
+            if ( [[aWrapper pluginPropertyForKey:@"SVPlugInIsIndex"] boolValue] )
+            {
+                [sIndexFactories addObject:[aWrapper graphicFactory]];
+            }
+            else
+            {
+                [sMoreFactories addObject:[aWrapper graphicFactory]];
             }
             
             [self registerFactory:[aWrapper graphicFactory]];
