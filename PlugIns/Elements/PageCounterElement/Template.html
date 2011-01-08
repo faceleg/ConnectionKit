@@ -41,6 +41,9 @@ document.getElementById("[[=divID]]").appendChild(paragraph);
 [[endif]]
 
 [[if themeType==0]]
+[[if !parser.HTMLGenerationPurpose]]
+[['Invisible Page Counter]]
+[[endif2]]
 <script type="text/javascript">
 var commentNode = document.createComment(svxPageCount);
 document.getElementById("[[=divID]]").appendChild(commentNode);

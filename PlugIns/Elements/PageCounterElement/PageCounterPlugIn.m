@@ -55,7 +55,8 @@
 
 #define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 
-//LocalizedStringInThisBundle("page views",@" preceeded by a number to show how many times a page has been viewed over the web");
+//LocalizedStringInThisBundle("page views", " preceeded by a number to show how many times a page has been viewed over the web");
+//LocalizedStringInThisBundle("Invisible Page Counter", "placeholder for invisible page counter");
 
 
 NSString *PCThemeKey = @"theme";
