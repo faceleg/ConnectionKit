@@ -42,6 +42,9 @@ img.narrow.right { float:right!important; }
 .graphic-container.center .caption { text-align:center; }
 .graphic-container.right .caption { text-align:right; }
 
+/* Inline iframes need to display as a block to layout right */
+.graphic iframe { display:block; }
+
 /* For content like amazon which forces white background. Design SHOULD set color for A tag and text color. */
 .whiteBackground
 {
