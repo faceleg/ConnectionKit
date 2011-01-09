@@ -2432,6 +2432,14 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 [self webView:webView shouldDeleteDOMRange:selection];
             }
         }
+        
+        // Treat Shift-Return to insert a linebreak. #102658
+        else if (command == @selector(insertNewline:) &&
+                 [[[self window] currentEvent] modifierFlags] & NSShiftKeyMask)
+        {
+            [webView insertNewlineIgnoringFieldEditor:self];
+            result = YES;
+        }
     }
     
     return result;
