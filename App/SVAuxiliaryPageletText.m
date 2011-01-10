@@ -46,16 +46,7 @@
 
 #pragma mark Metrics
 
-- (NSNumber *)width;
-{
-    return [[self pagelet] extensiblePropertyForKey:@"captionWidth"];
-}
-
-- (void)setWidth:(NSNumber *)width;
-{
-    [[self pagelet] setExtensibleProperty:width forKey:@"captionWidth"];
-}
-
+@dynamic width;
 - (NSNumber *)contentWidth;
 {
     return [self width];
