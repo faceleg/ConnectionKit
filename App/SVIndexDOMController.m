@@ -21,7 +21,8 @@
     
     // We'll take basically anything, since that avoids having to load all plug-ins
     [self unregisterDraggedTypes];
-    [self registerForDraggedTypes:[NSArray arrayWithObject:(NSString *)kUTTypeItem]];
+    [self registerForDraggedTypes:NSARRAY((NSString *)kUTTypeItem,
+                                          NSFilenamesPboardType)];
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
