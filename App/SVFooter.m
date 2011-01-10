@@ -11,4 +11,11 @@
 
 @implementation SVFooter
 
+- (SVTextDOMController *)newTextDOMController;
+{
+    SVTextDOMController *result = [super newTextDOMController];
+    [result setFieldEditor:YES];
+    return result;
+}
+
 @end
