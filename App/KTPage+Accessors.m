@@ -77,7 +77,7 @@
 
 + (NSSet *)keyPathsForValuesAffectingTimestamp
 {
-    return [NSSet setWithObject:@"timestampDate"];
+    return [NSSet setWithObjects:@"timestampDate", @"master.timestampFormat", nil];
 }
 
 - (NSString *)timestampWithStyle:(NSDateFormatterStyle)aStyle;
