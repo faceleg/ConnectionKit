@@ -8,6 +8,7 @@
 
 #import "SVWebContentObjectsController.h"
 
+#import "SVAuxiliaryPageletText.h"
 #import "SVGraphicFactory.h"
 #import "SVLogoImage.h"
 #import "KTPage.h"
