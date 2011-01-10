@@ -116,9 +116,9 @@
 
     
     // Footer
-    box = [NSEntityDescription insertNewObjectForEntityForName:@"Footer" inManagedObjectContext:[self managedObjectContext]];
-    [box setTextHTMLString:[self copyrightStatementWithAuthor:title]];
-    [self setFooter:box];
+    SVRichText *richText = [NSEntityDescription insertNewObjectForEntityForName:@"Footer" inManagedObjectContext:[self managedObjectContext]];
+    [richText setString:[self copyrightStatementWithAuthor:title]];
+    [self setFooter:richText];
     
     
     // Logo

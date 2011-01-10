@@ -24,7 +24,7 @@
 #import "SVMediaRecord.h"
 
 
-@class KTDesign, SVTitleBox, SVLogoImage, KTCodeInjection, SVHTMLContext;
+@class KTDesign, SVTitleBox, SVRichText, SVLogoImage, KTCodeInjection, SVHTMLContext;
 
 
 @interface KTMaster : KSExtensibleManagedObject 
@@ -34,7 +34,7 @@
 @property(nonatomic, retain) SVTitleBox *siteTitle;
 @property(nonatomic, retain) SVTitleBox *siteSubtitle;
 
-@property(nonatomic, retain) SVTitleBox *footer;
+@property(nonatomic, retain) SVRichText *footer;
 
 
 #pragma mark Other

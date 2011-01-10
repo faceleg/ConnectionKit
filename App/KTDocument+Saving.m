@@ -926,7 +926,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     NSMutableString *result = [NSMutableString string];
     
     
-    NSString *footer = [[[[[self site] rootPage] master] footer] text];
+    NSString *footer = [[[[[[self site] rootPage] master] footer] string] stringByConvertingHTMLToPlainText];
     if (footer)
     {
         [result writeString:footer];
