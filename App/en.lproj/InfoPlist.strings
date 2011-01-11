@@ -20,7 +20,7 @@
 	<string>Sandvox Pagelet</string>
 	<key>Cascading Style Sheet</key>
 	<string>Cascading Style Sheet</string>
-	<key>Macromedia Flash</key>
-	<string>Macromedia Flash</string>
+	<key>Adobe Flash</key>
+	<string>Adobe Flash</string>
 </dict>
 </plist>

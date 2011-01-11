@@ -292,7 +292,7 @@
 				<string>public.audiovisual-content</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Macromedia Flash</string>
+			<string>Adobe Flash</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.adobe.shockwave-flash</string>
 			<key>UTTypeReferenceURL</key>
