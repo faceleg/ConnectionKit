@@ -37,7 +37,14 @@
     
     if (![self indexedCollection])
     {
-        if ([page isCollection]) [self setIndexedCollection:page];
+        if ([page isCollection]) 
+        {
+            [self setIndexedCollection:page];
+        }
+        else
+        {
+            [self setIndexedCollection:[page parent]];
+        }
     }
 }
 
