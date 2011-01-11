@@ -85,6 +85,7 @@ NSString *PCSampleImageKey = @"sampleImage";
 {
     [super awakeFromNew];
     self.selectedThemeIndex = 0;
+    self.showsTitle = NO;
 }    
 
 
