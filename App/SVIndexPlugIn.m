@@ -137,7 +137,7 @@
     }
     else
     {
-        [context writeText:NSLocalizedString(@"Please specify the collection to index using the PlugIn Inspector.","set index collection")];
+        [context writeText:NSLocalizedString(@"Use the Inspector to connect this index to a collection.","set index collection")];
     }
     
     [context endElement];
