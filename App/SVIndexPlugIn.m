@@ -121,6 +121,7 @@
 
 - (void)writePlaceholderHTML:(id <SVPlugInContext>)context;
 {
+    [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"svx-placeholder" forKey:@"class"]];
     [context startElement:@"p"];
     
     if ( self.indexedCollection )
@@ -132,6 +133,7 @@
         [context writeText:NSLocalizedString(@"Please specify the collection to index using the PlugIn Inspector.","set index collection")];
     }
     
+    [context endElement];
     [context endElement];
 }
 
