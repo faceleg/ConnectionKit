@@ -244,7 +244,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
 	[IMBConfig registerDefaultValues];
-	[IMBConfig setShowsGroupNodes:YES];
+	[IMBConfig setShowsGroupNodes:NO];
+
     
     // BUGSID:36452 - having WebKitDefaultFontSize present seriously screws up text rendering
     [defaults removeObjectForKey:@"WebKitDefaultFontSize"];
