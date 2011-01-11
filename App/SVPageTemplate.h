@@ -12,7 +12,7 @@
 @class SVGraphicFactory;
 
 
-@interface SVPageTemplate : NSObject
+@interface SVPageTemplate : NSObject <NSCoding>
 {
   @private
     NSString            *_identifier;

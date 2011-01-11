@@ -260,4 +260,29 @@
     }
 }
 
+#pragma mark NSCoding
+
+- (id)initWithCoder:(NSCoder *)aDecoder;
+{
+    self = [self initWithGraphicFactory:[aDecoder decodeObjectForKey:@"graphicFactory"]];
+    
+    [self setIdentifier:[aDecoder decodeObjectForKey:@"identifier"]];
+    [self setTitle:[aDecoder decodeObjectForKey:@"title"]];
+    [self setSubtitle:[aDecoder decodeObjectForKey:@"subtitle"]];
+    [self setIcon:[aDecoder decodeObjectForKey:@"icon"]];
+    [self setPageProperties:[aDecoder decodeObjectForKey:@"pageProperties"]];
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder;
+{
+    [aCoder encodeObject:[self identifier] forKey:@"identifier"];
+    [aCoder encodeObject:[self title] forKey:@"title"];
+    [aCoder encodeObject:[self subtitle] forKey:@"subtitle"];
+    [aCoder encodeObject:[self icon] forKey:@"icon"];
+    [aCoder encodeObject:[self pageProperties] forKey:@"pageProperties"];
+    // TODO: encode graphic factory too
+}
+
 @end
