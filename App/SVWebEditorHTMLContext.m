@@ -15,8 +15,9 @@
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
 #import "SVMediaDOMController.h"
-#import "SVIndexDOMController.h"
 #import "SVMediaPlugIn.h"
+#import "SVIndexDOMController.h"
+#import "KTPage.h"
 #import "SVRichText.h"
 #import "SVSidebarDOMController.h"
 #import "SVSummaryDOMController.h"
@@ -294,15 +295,35 @@
 {
     // Ignore parser properties. And now context too
     // I think my original reason is that those properties aren't really going to change, but we're interested in depending on the original source of that property. e.g. reload when user turns on/off live data feeds, but do so with a fresh context
-    if (![[dependency object] isKindOfClass:[SVTemplateParser class]] &&
-        ![[dependency keyPath] hasPrefix:@"currentContext."])
+    if ([[dependency object] isKindOfClass:[SVTemplateParser class]] ||
+        [[dependency keyPath] hasPrefix:@"currentContext."])
     {
-        [[self currentDOMController] addDependency:dependency];
+        return;
     }
+    
+    
+    [[self currentDOMController] addDependency:dependency];
 }
 
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;
 {
+    // Trying to observe next/previous page's title with a compound keypath is a bad idea. #102968
+    if ([object isKindOfClass:[KTPage class]])
+    {
+        if ([keyPath hasPrefix:@"nextPage."])
+        {
+            object = [object valueForKey:@"nextPage"];
+            keyPath = [keyPath substringFromIndex:[@"nextPage." length]];
+        }
+        else if ([keyPath hasPrefix:@"previousPage."])
+        {
+            object = [object valueForKey:@"previousPage"];
+            keyPath = [keyPath substringFromIndex:[@"previousPage." length]];
+        }
+    }
+    
+    
+    
     [super addDependencyOnObject:object keyPath:keyPath];
     
     
