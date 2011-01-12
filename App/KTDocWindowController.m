@@ -33,6 +33,7 @@
 #import "NSMenuItem+Karelia.h"
 #import "SVCommentsWindowController.h"
 #import "SVGoogleWindowController.h"
+#import "SVDesignsController.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
@@ -386,7 +387,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)nextDesign:(id)sender;
 {
-	NSArrayController *designsController = [self.designChooserWindowController designsController];
+	SVDesignsController *designsController = [[[SVDesignsController alloc] init] autorelease];
 	NSArray *arrangedObjects = [designsController arrangedObjects];
 
     KTDesign *design = [[self pagesController] valueForKeyPath:@"selection.master.design"];
@@ -409,7 +410,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)previousDesign:(id)sender;
 {
-	NSArrayController *designsController = [self.designChooserWindowController designsController];
+	SVDesignsController *designsController = [[[SVDesignsController alloc] init] autorelease];
 	NSArray *arrangedObjects = [designsController arrangedObjects];
 	
     KTDesign *design = [[self pagesController] valueForKeyPath:@"selection.master.design"];
