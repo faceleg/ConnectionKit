@@ -515,7 +515,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 {
     [self setEntityName:[aPlist valueForKey:@"entity"]];
     SVSiteItem *result = [self newObjectDestinedForCollection:collection];
-    [result awakeFromPropertyList:aPlist];
+    [result awakeFromPropertyList:aPlist parentItem:collection];
     return result;
 }
 
