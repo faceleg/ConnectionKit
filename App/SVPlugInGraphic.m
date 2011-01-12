@@ -420,7 +420,12 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     NSString *identifier = [propertyList objectForKey:@"indexedCollection"];
     if (identifier)
     {
+        // Favour deserializing page over pre-existing to handle paste/duplicate nicely
         KTPage *pageToIndex = [KTPage deserializingPageForIdentifier:identifier];
+        if (!pageToIndex)
+        {
+            pageToIndex = [KTPage pageWithUniqueID:identifier inManagedObjectContext:[self managedObjectContext]];
+        }
         
         [self setIndexedCollection:pageToIndex];
     }
