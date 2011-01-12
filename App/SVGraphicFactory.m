@@ -722,4 +722,25 @@ static SVGraphicFactory *sRawHTMLFactory;
     return SVPasteboardPriorityIdeal;
 }
 
+#pragma mark NSCoding
+
+- (id)initWithCoder:(NSCoder *)aDecoder;
+{
+    return [self init];
+    // TODO: Implement this properly if possible. At the moment it's only for the benefit of #103192
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder;
+{
+    [aCoder encodeObject:[self name] forKey:@"name"];
+    [aCoder encodeObject:[self graphicDescription] forKey:@"graphicDescription"];
+    [aCoder encodeObject:[self icon] forKey:@"icon"];
+    [aCoder encodeObject:[self pageIcon] forKey:@"pageIcon"];
+    [aCoder encodeInteger:[self priority] forKey:@"priority"];
+    [aCoder encodeBool:[self isIndex] forKey:@"isIndex"];
+    [aCoder encodeObject:[self identifier] forKey:@"identifier"];
+    [aCoder encodeObject:NSStringFromClass([self class]) forKey:@"plugInClass"];
+}
+
 @end
+

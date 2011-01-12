@@ -30,7 +30,7 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 @class KSWebLocation;
 
 
-@interface SVGraphicFactory : NSObject
+@interface SVGraphicFactory : NSObject <NSCoding>   // conforms only for #103192
 
 #pragma mark Registration
 + (NSArray *)registeredFactories;
