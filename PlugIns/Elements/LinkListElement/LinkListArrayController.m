@@ -50,6 +50,19 @@
     [tableView setDelegate:self];
 }
 
+#pragma mark Inserting Objects
+
+- (void) insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
+{
+    [super insertObject:object atArrangedObjectIndex:index];
+    
+    // Because we have compound content (it's an option on the binding, specified in IB), the selecting inserted objects feature is broken. Recreate it ourselves. #102803
+    if ([self selectsInsertedObjects])
+    {
+        [self setSelectionIndex:index];
+    }
+}
+
 /*!	Create a new "template" object.  Try to pick up default from frontmost Safari doc.
 */
 - (id)newObject	// must return object with a retain count of one
@@ -80,6 +93,8 @@
     
 	return result;
 }
+
+#pragma mark 
 
 /*!	Also accept drag URL drag.  
 */
