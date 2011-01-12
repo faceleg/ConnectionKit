@@ -25,6 +25,7 @@
 #import "NSEvent+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSResponder+Karelia.h"
+#import "NSString+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 #import "WebView+Karelia.h"
 
@@ -687,7 +688,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 {
     // Whether selecting the element should be inline (set the WebView's selection) or not (no WebView selection)
     BOOL result = ([[element tagName] isEqualToString:@"IMG"] &&
-                   [[element className] rangeOfString:@"graphic"].location == NSNotFound &&
+                   ![[[element className] componentsSeparatedByWhitespace] containsObject:@"graphic"] &&
                    [(DOMHTMLElement *)element isContentEditable]);
     
     return result;
