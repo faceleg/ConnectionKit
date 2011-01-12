@@ -17,8 +17,8 @@
 @interface SVIndexPlugIn : SVPlugIn
 {
   @private
-    id <SVPage>         _collection;
     id                  _reserved3;
+    id                  _reserved4;
     NSUInteger          _maxItems;
     BOOL                _enableMaxItems;
 }
