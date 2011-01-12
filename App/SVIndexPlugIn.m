@@ -43,7 +43,7 @@
         }
         else
         {
-            [self setIndexedCollection:[page parent]];
+            [self setIndexedCollection:[page parentPage]];
         }
     }
 }
