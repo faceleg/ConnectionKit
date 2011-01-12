@@ -264,7 +264,9 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder;
 {
-    self = [self initWithGraphicFactory:[aDecoder decodeObjectForKey:@"graphicFactory"]];
+    SVGraphicFactory *factory = [aDecoder decodeObjectForKey:@"graphicFactory"];
+    
+    self = (factory ? [self initWithGraphicFactory:factory] : [self init]);
     
     [self setIdentifier:[aDecoder decodeObjectForKey:@"identifier"]];
     [self setTitle:[aDecoder decodeObjectForKey:@"title"]];
