@@ -235,6 +235,6 @@ typedef enum {
 
 
 @interface KTPage (Serialization)
-+ (SVSiteItem *)deserializingSiteItemForIdentifier:(NSString *)identifier;
++ (KTPage *)deserializingPageForIdentifier:(NSString *)identifier;
 @end
 

@@ -127,7 +127,7 @@ static NSMutableDictionary *sDeserializingPages;
     }
 }
 
-+ (SVSiteItem *)deserializingSiteItemForIdentifier:(NSString *)identifier;
++ (KTPage *)deserializingPageForIdentifier:(NSString *)identifier;
 {
     return [sDeserializingPages objectForKey:identifier];
 }

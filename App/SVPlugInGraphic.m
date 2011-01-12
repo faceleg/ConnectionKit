@@ -10,6 +10,7 @@
 
 #import "SVDOMController.h"
 #import "SVMediaProtocol.h"
+#import "KTPage.h"
 #import "SVPlugIn.h"
 #import "SVGraphicFactory.h"
 #import "SVHTMLContext.h"
@@ -414,6 +415,18 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 - (void)awakeFromPropertyList:(id)propertyList;
 {
     [super awakeFromPropertyList:propertyList];
+    
+    // Deserializing identifier is tricky. #102564
+    NSString *identifier = [propertyList objectForKey:@"indexedCollection"];
+    if (identifier)
+    {
+        KTPage *pageToIndex = [KTPage deserializingPageForIdentifier:identifier];
+        
+        [self setIndexedCollection:pageToIndex];
+    }
+                               
+    
+    // Load plug-in
     [self loadPlugInAsNew:NO];
 }
 
