@@ -52,19 +52,9 @@
     [[self codeInjection] awakeFromPropertyList:[propertyList objectForKey:@"codeInjection"]];
     
     
-    // Text
+    // Children
     NSManagedObjectContext *context = [self managedObjectContext];
     
-    NSData *article = [propertyList objectForKey:@"article"];
-    if (article)
-    {
-        NSAttributedString *html = [NSAttributedString attributedHTMLStringWithPropertyList:article
-                                                  insertAttachmentsIntoManagedObjectContext:context];
-        [[self article] setAttributedHTMLString:html];
-    }
-    
-    
-    // Children
     NSArray *children = [propertyList objectForKey:@"childItems"];
     for (id aChild in children)
     {
@@ -72,6 +62,16 @@
                                          insertIntoManagedObjectContext:context];
         [duplicate awakeFromPropertyList:aChild parentItem:self];
         [self addChildItem:duplicate];
+    }
+    
+    
+    // Text
+    NSData *article = [propertyList objectForKey:@"article"];
+    if (article)
+    {
+        NSAttributedString *html = [NSAttributedString attributedHTMLStringWithPropertyList:article
+                                                  insertAttachmentsIntoManagedObjectContext:context];
+        [[self article] setAttributedHTMLString:html];
     }
 }
 
