@@ -18,17 +18,11 @@
 
 #pragma mark Properties
 
-// TODO: proper logic for this:
 - (BOOL)isMediaPlaceholder;
 {
     // Don't accept drops on inline images
-    BOOL result = YES;
-    
     SVPlugInGraphic *graphic = [self representedObject];
-    if ([graphic textAttachment] && ![[[graphic textAttachment] causesWrap] boolValue])
-    {
-        result = NO;
-    }
+    BOOL result = ![graphic shouldWriteHTMLInline];
     
     return result;
 }
