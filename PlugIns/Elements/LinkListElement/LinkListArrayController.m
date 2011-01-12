@@ -73,8 +73,8 @@
 
         
         result = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                  theTitle, @"title",
                   theURL, @"url",
+                  theTitle, @"title",
                   nil];
     }
     
