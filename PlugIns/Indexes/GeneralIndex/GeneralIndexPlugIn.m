@@ -302,7 +302,11 @@
 		}
 		if (self.showTimestamps)	// Write out either timestamp ....
 		{
-			[context writeText:iteratedPage.timestampDescription];
+			NSString *timestamp = iteratedPage.timestampDescription;
+			if (timestamp)
+			{
+				[context writeText:iteratedPage.timestampDescription];
+			}
 		}
 		else if (self.showPermaLinks)	// ... or permanent link text ..
 		{
