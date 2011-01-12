@@ -112,16 +112,24 @@
     
     [graphic awakeFromNew];
     
+    
     // If graphic is small enough to go in sidebar, place there instead.
     NSNumber *width = [graphic width];
     if (width && [width unsignedIntegerValue] <= 200)
     {
-        [[self webEditorViewController] performSelector:@selector(_insertPageletInSidebar:) withObject:graphic];
+        // Doesn't make sense if there is no sidebar! #103205
+        if ([[[(SVArticle *)[self representedObject] page] showSidebar] boolValue])
+        {
+            [[self webEditorViewController] performSelector:@selector(_insertPageletInSidebar:)
+                                                 withObject:graphic];
+            
+            return;
+        }
     }
-    else
-    {
-        [self addGraphic:graphic];
-    }
+    
+    
+    
+    [self addGraphic:graphic];
 }
 
 - (void)addGraphic:(SVGraphic *)graphic;
