@@ -6,15 +6,11 @@
 //  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
-//  Takes the standard button cell, but adjusts the state behaviour to match Pages. i.e. the -nextState is _a_lways NSOnState so that the only way for the user to deselect the button is to click another.
+//  Takes the standard button cell, but adjusts the state behaviour to match Pages. i.e. the -nextState is always NSOnState so that the only way for the user to deselect the button is to click another.
 
 
 #import <Cocoa/Cocoa.h>
 
 
 @interface SVInspectorButtonCell : NSButtonCell
-{
-
-}
-
 @end
