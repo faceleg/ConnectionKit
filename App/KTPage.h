@@ -229,15 +229,3 @@ typedef enum {
 - (NSString *)commentsTemplate;	// instance method too for key paths to work in tiger
 
 @end
-
-
-@interface NSObject (KTPageDelegate)
-- (BOOL)pageShouldClearThumbnail:(KTPage *)page;
-- (BOOL)shouldMaskCustomSiteOutlinePageIcon:(KTPage *)page;
-- (NSArray *)pageWillReturnFeedEnclosures:(KTPage *)page;
-
-- (BOOL)pageShouldPublishHTMLTemplate:(KTPage *)page;
-
-- (NSString *)summaryHTMLKeyPath;
-- (BOOL)summaryHTMLIsEditable;
-@end
