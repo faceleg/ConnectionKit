@@ -580,7 +580,8 @@
         //update contents instead. #99997
         for (newChildController in [newChildController childWebEditorItems])
         {
-            [self willUpdateWithNewChildController:newChildController];
+            // Can't call -willUpdateWithNewChildController: as that will recycle an inline DOM controller in some cases. #95985
+            [newChildController setNeedsUpdate]; [newChildController updateIfNeeded];
         }
         return;
     }
@@ -603,8 +604,7 @@
     
     
     // Force update the controller to run scripts etc. #99997
-    [newChildController setNeedsUpdate];
-    [newChildController updateIfNeeded];
+    [newChildController setNeedsUpdate]; [newChildController updateIfNeeded];
 }
 
 - (void)updateWithHTMLString:(NSString *)html items:(NSArray *)items;
