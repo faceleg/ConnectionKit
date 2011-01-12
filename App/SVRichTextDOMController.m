@@ -346,7 +346,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [textAttachment setCausesWrap:[NSNumber numberWithBool:
                                    ([[style display] isEqualToString:@"block"] ? YES : NO)]];
     
-    NSString *floatProperty = [style cssFloat];
+    NSString *floatProperty = [style getPropertyValue:@"float"];    // -cssFloat returns empty string for some reason
     if ([floatProperty isEqualToString:@"left"])
     {
         [textAttachment setWrapRight:YES];  // believe it, this is the right call!
