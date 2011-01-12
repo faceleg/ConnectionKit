@@ -638,6 +638,9 @@
     if (record) [self replaceMedia:record forKeyPath:@"media"];
 }
 
+// We don't model this property, so fake it
+- (KTPage *)indexedCollection; { return nil; }
+
 #pragma mark Pasteboard
 
 - (BOOL)awakeFromPasteboardItems:(NSArray *)items;
