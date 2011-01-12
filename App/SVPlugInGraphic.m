@@ -421,8 +421,12 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 {
     [super populateSerializedProperties:propertyList];
     
+    // Store indexed collection by identifier
+    [propertyList setValue:[[self indexedCollection] identifier] forKey:@"indexedCollection"];
+    
     // Put plug-in properties in their own dict
     [propertyList setObject:[self extensibleProperties] forKey:@"plugInProperties"];
 }
 
 @end
+
