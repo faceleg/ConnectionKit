@@ -96,10 +96,13 @@
 
 - (NSURL *)mediaURL;
 {
-    NSURL *result = [[self webResource] URL];
+    // Not safe to access web resource from a background thread. #103169
+    NSURL *result = [[[self webResource] ks_proxyOnThread:nil] URL];
+    
     if (!result) result = [self fileURL];
     return result;
 }
+
 - (NSData *)mediaData;
 {
     // Despite being immutable, web resources fail assertion if accessed on background thread. #99174
