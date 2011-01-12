@@ -229,3 +229,12 @@ typedef enum {
 - (NSString *)commentsTemplate;	// instance method too for key paths to work in tiger
 
 @end
+
+
+#pragma mark -
+
+
+@interface KTPage (Serialization)
++ (SVSiteItem *)deserializingSiteItemForIdentifier:(NSString *)identifier;
+@end
+

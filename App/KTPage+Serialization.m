@@ -14,6 +14,9 @@
 #import "SVTitleBox.h"
 
 
+static NSMutableDictionary *sDeserializingPages;
+
+
 @implementation KTPage (Serialization)
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList
@@ -43,6 +46,7 @@
 - (void)awakeFromPropertyList:(id)propertyList
 {
     [super awakeFromPropertyList:propertyList];
+    
     
     // Title
     [[self titleBox] setTextHTMLString:[propertyList objectForKey:@"titleHTMLString"]];
@@ -79,7 +83,23 @@
 {
     [self setMaster:[parent master]];
     
-    [super awakeFromPropertyList:propertyList parentItem:parent];
+    // If this is the root page to be deserialized temporarily use a global variable (yeah I know, weak design), to record old page identifiers. #102564
+    if (!sDeserializingPages)
+    {
+        sDeserializingPages = [[NSMutableDictionary alloc] init];
+        @try
+        {
+            [super awakeFromPropertyList:propertyList parentItem:parent];
+        }
+        @finally
+        {
+            [sDeserializingPages release]; sDeserializingPages = nil;
+        }
+    }
+    else
+    {
+        [super awakeFromPropertyList:propertyList parentItem:parent];
+    }
 }
 
 - (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key
@@ -100,6 +120,16 @@
     {
         [super setSerializedValue:serializedValue forKey:key];
     }
+    else if ([key isEqualToString:@"uniqueID"])
+    {
+        // Temporarily record that serialized copy of this page had that ID. #102564
+        [sDeserializingPages setObject:self forKey:serializedValue];
+    }
+}
+
++ (SVSiteItem *)deserializingSiteItemForIdentifier:(NSString *)identifier;
+{
+    return [sDeserializingPages objectForKey:identifier];
 }
 
 @end
