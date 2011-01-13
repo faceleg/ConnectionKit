@@ -165,7 +165,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         
     
     
-    //  Write the whole out using a special stream
+    //  Write the whole out using a special adaptor
     
        
     KSStringWriter *stringWriter = [[KSStringWriter alloc] init];
@@ -182,12 +182,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Top-level nodes can only be: paragraph, newline, or graphic. Custom DOMNode addition handles this
-    DOMElement *textElement = [self textHTMLElement];
-    DOMNode *aNode = [textElement firstChild];
-    while (aNode)
-    {
-        aNode = [aNode writeTopLevelParagraph:adaptor];
-    }
+    [self writeText:adaptor];
     
     
     // Push HTML into the model
@@ -201,6 +196,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     if ([textObject endsOnAttachment])
     {
         // …by adding a line break
+        DOMElement *textElement = [self textHTMLElement];
         DOMElement *lineBreak = [[textElement ownerDocument] createElement:@"BR"];
         [textElement appendChild:lineBreak];
         

@@ -14,6 +14,8 @@
 #import "KSKeyValueBinding.h"
 #import "SVGraphicContainerDOMController.h"
 
+#import "KSXMLWriterDOMAdaptor.h"
+
 
 @class SVHTMLTextBlock, SVGraphicDOMController;
 
@@ -39,6 +41,7 @@
 
 #pragma mark DOM Node
 @property(nonatomic, retain) DOMHTMLElement *textHTMLElement;
+- (DOMHTMLElement *)innerTextHTMLElement;  // default is -textHTMLElement. Subclasses override to nil if there isn't one or can't be found
 
 
 #pragma mark Properties
@@ -60,6 +63,9 @@
 
 // e.g. Movement might be NSReturnTextMovement. Nil if we don't know
 - (void)didEndEditingTextWithMovement:(NSNumber *)textMovement;
+
+// Write the receiver's textual content using the passed in adaptor. Meant to happen for a change which updates the model
+- (void)writeText:(KSXMLWriterDOMAdaptor *)adaptor;
 
 
 #pragma mark Undo

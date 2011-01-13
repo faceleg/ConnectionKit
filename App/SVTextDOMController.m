@@ -77,6 +77,8 @@
     [self setEditable:[self isEditable]];
 }
 
+- (DOMHTMLElement *)innerTextHTMLElement; { return [self textHTMLElement]; }
+
 #pragma mark Hierarchy
 
 - (SVTextDOMController *)textDOMController; { return self; }
@@ -235,6 +237,33 @@
     if ([self isFieldEditor] && [textMovement intValue] == NSReturnTextMovement)
     {
         [[[self HTMLElement] documentView] selectAll:self];
+    }
+}
+
+- (void)writeText:(KSXMLWriterDOMAdaptor *)adaptor;
+{
+    DOMHTMLElement *textElement = [self innerTextHTMLElement];
+    
+    if ([self isFieldEditor])
+    {
+        if (textElement)
+        {
+            [adaptor writeInnerOfDOMNode:textElement];
+        }
+        else
+        {
+            // fallback
+            [[adaptor XMLWriter] startElement:@"br"];
+            [[adaptor XMLWriter] endElement];
+        }
+    }
+    else
+    {
+        DOMNode *aNode = [textElement firstChild];
+        while (aNode)
+        {
+            aNode = [aNode writeTopLevelParagraph:adaptor];
+        }
     }
 }
 

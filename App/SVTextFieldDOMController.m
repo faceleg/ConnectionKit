@@ -169,17 +169,7 @@
     SVFieldEditorHTMLWriterDOMAdapator *adaptor = [[SVFieldEditorHTMLWriterDOMAdapator alloc] initWithOutputStringWriter:writer];
     
     
-    DOMHTMLElement *textElement = [self innerTextHTMLElement];
-    if (textElement)
-    {
-        [adaptor writeInnerOfDOMNode:textElement];
-    }
-    else
-    {
-        // fallback
-        [[adaptor XMLWriter] startElement:@"br"];
-        [[adaptor XMLWriter] endElement];
-    }
+    [self writeText:adaptor];
     
     
     // Copy HTML across to ourself
