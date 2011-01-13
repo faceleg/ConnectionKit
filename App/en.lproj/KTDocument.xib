@@ -2,16 +2,16 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.SystemVersion">10H574</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<dictionary class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="com.apple.InterfaceBuilder.CocoaPlugin">823</string>
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="2045"/>
+			<integer value="1649"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -832,10 +832,7 @@
 																<reference key="NSSupport" ref="26"/>
 																<reference key="NSControlView" ref="718781323"/>
 																<reference key="NSBackgroundColor" ref="97692237"/>
-																<object class="NSColor" key="NSTextColor">
-																	<int key="NSColorSpace">3</int>
-																	<bytes key="NSWhite">MC4yNQA</bytes>
-																</object>
+																<reference key="NSTextColor" ref="57005086"/>
 															</object>
 														</object>
 														<object class="NSTextField" id="360802322">
@@ -851,10 +848,7 @@
 																<reference key="NSSupport" ref="26"/>
 																<reference key="NSControlView" ref="360802322"/>
 																<reference key="NSBackgroundColor" ref="97692237"/>
-																<object class="NSColor" key="NSTextColor" id="645161653">
-																	<int key="NSColorSpace">3</int>
-																	<bytes key="NSWhite">MC4yNQA</bytes>
-																</object>
+																<reference key="NSTextColor" ref="57005086"/>
 															</object>
 														</object>
 														<object class="NSTextField" id="84209680">
@@ -870,7 +864,7 @@
 																<reference key="NSSupport" ref="26"/>
 																<reference key="NSControlView" ref="84209680"/>
 																<reference key="NSBackgroundColor" ref="97692237"/>
-																<reference key="NSTextColor" ref="645161653"/>
+																<reference key="NSTextColor" ref="57005086"/>
 															</object>
 														</object>
 														<object class="NSTextField" id="680529185">
@@ -886,7 +880,7 @@
 																<reference key="NSSupport" ref="26"/>
 																<reference key="NSControlView" ref="680529185"/>
 																<reference key="NSBackgroundColor" ref="97692237"/>
-																<reference key="NSTextColor" ref="645161653"/>
+																<reference key="NSTextColor" ref="57005086"/>
 															</object>
 														</object>
 													</array>
@@ -1595,27 +1589,6 @@
 					<int key="connectionID">1949</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.metaDescription</string>
-						<reference key="source" ref="943593109"/>
-						<reference key="destination" ref="601368962"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="943593109"/>
-							<reference key="NSDestination" ref="601368962"/>
-							<string key="NSLabel">value: selection.metaDescription</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.metaDescription</string>
-							<dictionary key="NSOptions">
-								<string key="NSMultipleValuesPlaceholder">Multiple pages selected. Descriptions should be unique.</string>
-								<string key="NSNullPlaceholder">Summary of this page as it will appear in Google listings.</string>
-								<boolean value="NO" key="NSRaisesForNotApplicableKeys"/>
-							</dictionary>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">1950</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="899980468"/>
@@ -2114,6 +2087,26 @@
 						</object>
 					</object>
 					<int key="connectionID">2234</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.metaDescription</string>
+						<reference key="source" ref="943593109"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="943593109"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">value: selection.metaDescription</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.metaDescription</string>
+							<dictionary key="NSOptions">
+								<string key="NSMultipleValuesPlaceholder">Multiple pages selected. Descriptions should be unique.</string>
+								<boolean value="NO" key="NSRaisesForNotApplicableKeys"/>
+							</dictionary>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2235</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2897,6 +2890,14 @@
 				<boolean value="YES" key="1664.ImportedFromIB2"/>
 				<string key="1665.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1665.IBShouldRemoveOnLegacySave"/>
+				<object class="NSMutableDictionary" key="1667.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="92364140"/>
+						<string key="toolTip">URL of this page when it is published.</string>
+					</object>
+				</object>
 				<string key="1667.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1667.ImportedFromIB2"/>
 				<string key="1671.CustomClassName">SVSiteOutlineViewController</string>
@@ -2934,17 +2935,34 @@
 				<string key="1757.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1758.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1759.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<dictionary class="NSMutableDictionary" key="1763.IBAttributePlaceholdersKey"/>
 				<string key="1763.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1764.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1765.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1766.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1767.CustomClassName">KSFocusingTextField</string>
+				<object class="NSMutableDictionary" key="1767.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="452661693"/>
+						<string key="toolTip">Title of this page as it will appear in Google listings and in the title bar of your browser.</string>
+					</object>
+				</object>
 				<string key="1767.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<object class="NSAffineTransform" key="1767.IBViewBoundsToFrameTransform">
 					<bytes key="NSTransformStruct">P4AAAL+AAAA/gAAAwgQAAA</bytes>
 				</object>
 				<string key="1768.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1769.CustomClassName">KSFocusingTextField</string>
+				<object class="NSMutableDictionary" key="1769.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="943593109"/>
+						<string key="toolTip">Summary of this page as it will appear in Google listings.</string>
+					</object>
+				</object>
 				<string key="1769.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<object class="NSAffineTransform" key="1769.IBViewBoundsToFrameTransform">
 					<bytes key="NSTransformStruct">P4AAAL+AAAA/gAAAwXAAAA</bytes>
@@ -3080,7 +3098,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2234</int>
+			<int key="maxID">2235</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
