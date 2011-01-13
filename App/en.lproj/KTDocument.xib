@@ -11,10 +11,10 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="2183"/>
 			<integer value="2122"/>
-			<integer value="1701"/>
+			<integer value="2183"/>
 			<integer value="1793"/>
+			<integer value="2045"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -421,11 +421,11 @@
 									<array class="NSMutableArray" key="NSSubviews">
 										<object class="NSCustomView" id="641495171">
 											<reference key="NSNextResponder" ref="520114257"/>
-											<int key="NSvFlags">34</int>
+											<int key="NSvFlags">290</int>
 											<array class="NSMutableArray" key="NSSubviews">
 												<object class="NSCustomView" id="327729126">
 													<reference key="NSNextResponder" ref="641495171"/>
-													<int key="NSvFlags">292</int>
+													<int key="NSvFlags">266</int>
 													<array class="NSMutableArray" key="NSSubviews">
 														<object class="NSPopUpButton" id="953316196">
 															<reference key="NSNextResponder" ref="327729126"/>

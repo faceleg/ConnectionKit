@@ -837,6 +837,33 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	[oWindowTitlePrompt		setHidden:!arePagesSelected && !areLinksSelected];
 	[oMetaDescriptionPrompt	setHidden:!arePagesSelected && !areLinksSelected];
 	[oFilePrompt setHidden:(!areFilesSelected && !areTextsSelected)];
+	
+	if (arePagesSelected || areLinksSelected)
+	{
+		if (!_metaTrackingArea)
+		{
+			_metaTrackingArea = [[NSTrackingArea alloc] initWithRect:[oMetaDescriptionField bounds]
+															 options:
+								 NSTrackingActiveInKeyWindow
+								 | NSTrackingActiveInActiveApp
+								 | NSTrackingInVisibleRect
+								 | NSTrackingMouseEnteredAndExited
+															   owner:self
+															userInfo:nil];
+			[oMetaDescriptionField addTrackingArea:_metaTrackingArea];
+			NSLog(@"ADD    %p, %@", _metaTrackingArea, NSStringFromRect([oMetaDescriptionField bounds]));
+		}
+	}
+	else if (_metaTrackingArea)
+	{
+		NSLog(@"REMOVE %p", _metaTrackingArea);
+		[oMetaDescriptionField removeTrackingArea:_metaTrackingArea];
+		[_metaTrackingArea release];
+		_metaTrackingArea = nil;
+
+	}
+	
+	
 
 	// Additional Lines
 	[oWindowTitleField		setHidden:!arePagesSelected];
@@ -1076,6 +1103,39 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 }
 
+// -------------------------------------------------------------------------------
+//  mouseEntered:event
+// -------------------------------------------------------------------------------
+//  Because we installed NSTrackingArea with "NSTrackingMouseEnteredAndExited"
+//  as an option, this method will be called.
+// -------------------------------------------------------------------------------
+- (void)mouseEntered:(NSEvent*)event
+{
+	NSLog(@"mouseEntered %@", event);
+	
+	KSShadowedRectView *view = (KSShadowedRectView *)[oMetaDescriptionField superview];
+	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
+	
+	NSRect fieldRect = [oMetaDescriptionField frame];
+	[view setHiliteRect:fieldRect];
+}
+
+// -------------------------------------------------------------------------------
+//  mouseExited:event
+// -------------------------------------------------------------------------------
+//  Because we installed NSTrackingArea with "NSTrackingMouseEnteredAndExited",
+//  as an option, this method will be called.
+// -------------------------------------------------------------------------------
+- (void)mouseExited:(NSEvent*)event
+{
+	NSLog(@"mouseExited %@", event);
+	KSShadowedRectView *view = (KSShadowedRectView *)[oMetaDescriptionField superview];
+	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
+	[view setHiliteRect:NSZeroRect];
+}
+
+
+
 
 
 - (void)updateWidthForActiveTextField:(NSTextField *)textField;
@@ -1101,7 +1161,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		width = MAX(width, 7);		// make sure it's at least 7 pixels wide
 		// NSLog(@"'%@' widths: text = %.2f, field = %.2f => %d", [textField stringValue], textWidth, fieldWidth, width);
 		fieldRect.size.width = width;
-		[view setShadowRect:fieldRect];
+		[view setFocusRect:fieldRect];
 	}
 }
 
@@ -1285,7 +1345,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 {
 	KSShadowedRectView *view = (KSShadowedRectView *)[[notification object] superview];
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
-	[view setShadowRect:NSZeroRect];
+	[view setFocusRect:NSZeroRect];
 	self.activeTextField = nil;
 	
 	if (self.attachedWindow)

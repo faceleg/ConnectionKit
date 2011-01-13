@@ -71,6 +71,8 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 
 	BOOL _awokenFromNib;
 	
+	NSTrackingArea *_metaTrackingArea;
+	
 }
 
 @property(nonatomic, retain) IBOutlet SVWebContentAreaController *webContentAreaController;
