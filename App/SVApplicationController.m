@@ -922,7 +922,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             
 			/*/ put up a splash panel with a progress indicator
 			_progressPanel = [[KSProgressPanel alloc] init];
-			[_progressPanel setMessageText:NSLocalizedString(@"Initializing...",
+			[_progressPanel setMessageText:NSLocalizedString(@"Initializing…",
 															"Message while initializing launching application.")];
 			[_progressPanel setInformativeText:nil];
 			[_progressPanel makeKeyAndOrderFront:self];*/
@@ -1350,14 +1350,14 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 									 defaultButton:nil 
 								   alternateButton:nil 
 									   otherButton:nil
-						 informativeTextWithFormat:NSLocalizedString(@"You are running Sandvox version %@, build %@.\n\nThis is a Public Beta version and will expire on %@. (We will make a new version available by then.)\n\nIf you find problems, please use \\U201CSend Feedback...\\U201D under the Sandvox menu, or email support@karelia.com.\n\nSince this is BETA software, DO NOT use it with critical data or for critical business functions. Please keep backups of your files and all source material. We cannot guarantee that future versions of Sandvox will be able to open sites created with this version!\n\nUse of this version is subject to the terms and conditions of Karelia Software's Sandvox Beta License Agreement.", "Alert: Beta Informative Text"), marketingVersion, buildVersion, [[NSDate dateWithString:EXPIRY_TIMESTAMP] relativeFormatWithStyle:NSDateFormatterLongStyle]];
+						 informativeTextWithFormat:NSLocalizedString(@"You are running Sandvox version %@, build %@.\n\nThis is a Public Beta version and will expire on %@. (We will make a new version available by then.)\n\nIf you find problems, please use \\U201CSend Feedback…\\U201D under the Sandvox menu, or email support@karelia.com.\n\nSince this is BETA software, DO NOT use it with critical data or for critical business functions. Please keep backups of your files and all source material. We cannot guarantee that future versions of Sandvox will be able to open sites created with this version!\n\nUse of this version is subject to the terms and conditions of Karelia Software's Sandvox Beta License Agreement.", "Alert: Beta Informative Text"), marketingVersion, buildVersion, [[NSDate dateWithString:EXPIRY_TIMESTAMP] relativeFormatWithStyle:NSDateFormatterLongStyle]];
 #endif
 #ifdef VARIANT_ALPHA
 	NSAlert *alert = [NSAlert alertWithMessageText:@"Sandvox Alpha"		// Not bothering to localize this alpha text.
 									 defaultButton:nil 
 								   alternateButton:nil 
 									   otherButton:nil
-						 informativeTextWithFormat:@"You are running Sandvox version %@, build %@.\n\nThis is a private alpha version and will expire on %@. (We will make a new version available by then.)\n\nIf you find problems, please use 'Send Feedback...' under the Sandvox menu, or email support@karelia.com.\n\nSince this is ALPHA software, DO NOT use it with critical data or for critical business functions. Please keep backups of your files and all source material. We cannot guarantee that future versions of Sandvox will be able to open sites created with this version!\n\nUse of this version is subject to the terms and conditions of Karelia Software's Sandvox Beta License Agreement.", marketingVersion, buildVersion, [[NSDate dateWithString:EXPIRY_TIMESTAMP] relativeFormatWithStyle:NSDateFormatterLongStyle]];
+						 informativeTextWithFormat:@"You are running Sandvox version %@, build %@.\n\nThis is a private alpha version and will expire on %@. (We will make a new version available by then.)\n\nIf you find problems, please use 'Send Feedback…' under the Sandvox menu, or email support@karelia.com.\n\nSince this is ALPHA software, DO NOT use it with critical data or for critical business functions. Please keep backups of your files and all source material. We cannot guarantee that future versions of Sandvox will be able to open sites created with this version!\n\nUse of this version is subject to the terms and conditions of Karelia Software's Sandvox Beta License Agreement.", marketingVersion, buildVersion, [[NSDate dateWithString:EXPIRY_TIMESTAMP] relativeFormatWithStyle:NSDateFormatterLongStyle]];
 #endif
 	
 	

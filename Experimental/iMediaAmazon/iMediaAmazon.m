@@ -127,7 +127,7 @@ I assume 1 month?
 	if (!myCachedLibrary || !reuseCachedData)
 	{
 		myPlaceholderChild = [[iMBLibraryNode alloc] init];
-		[myPlaceholderChild setName:LocalizedStringInThisBundle(@"loading...", @"placeholder name while loading")];
+		[myPlaceholderChild setName:LocalizedStringInThisBundle(@"loading…", @"placeholder name while loading")];
 
 		myCachedLibrary = [[iMBLibraryNode alloc] init];
 		[myCachedLibrary setName:LocalizedStringInThisBundle(@"Amazon", @"Amazon name")];

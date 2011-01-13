@@ -922,7 +922,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[connection setName:@"Host Setup Test"];
 	[self setTestConnection:connection];
 	[connection setDelegate:self];
-	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Contacting %@... ", "status message for test connection"), [[self properties] valueForKey:@"hostName"]];
+	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Contacting %@… ", "status message for test connection"), [[self properties] valueForKey:@"hostName"]];
 
 	// Delay calling this so that we see the above message before the actual connect method is called, since this takes a moment in the foreground.
 	[self performSelector:@selector(actuallyConnect:) withObject:nil afterDelay:0.0];
@@ -930,7 +930,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 - (void)actuallyConnect:(id)bogus
 {
-	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Establishing %@ connection... ", "status message for test connection"), [KSUtilities displayNameForProtocol:[[self properties] valueForKey:@"protocol"]]];
+	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Establishing %@ connection… ", "status message for test connection"), [KSUtilities displayNameForProtocol:[[self properties] valueForKey:@"protocol"]]];
 
 //	NSLog(@"Queuing timeout test from actuallyConnect");
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
@@ -978,7 +978,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 // Support method to now upload the test file
 - (void)uploadTestFileAtPath:(NSString *)dirPath
 {
-	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to upload a test file... ", @"status message for test connection")];
+	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to upload a test file… ", @"status message for test connection")];
 	
 	[myRemotePath autorelease];
 	myRemotePath = [dirPath copy];
@@ -1021,7 +1021,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		if (	(path && ![path isEqualToString:@""])
 				||	(subFolder  && ![subFolder isEqualToString:@""]) )
 		{
-			[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Creating Directories... ", "status message for test connection")];
+			[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Creating Directories… ", "status message for test connection")];
 			[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue]];
 
 			NSArray *pathComponents = [path pathComponents];	///[path componentsSeparatedByString:@"/"];
@@ -1100,7 +1100,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	if (theConnection)
 	{
 		[self appendConnectionProgressLine:NO format:NSLocalizedString(@"Done.", @"status message for test connection")];
-		[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to download the test file... ", @"status message for test connection")];
+		[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to download the test file… ", @"status message for test connection")];
 
 		[self setDownloadTestConnection:theConnection];
 		// Create the NSMutableData that will hold the received data
@@ -1123,7 +1123,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 {
 	NSLog(@"= %@", NSStringFromSelector(_cmd));
 	[self appendConnectionProgressLine:NO format:NSLocalizedString(@"Done.", @"status message for test connection")];
-	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to delete the test file... ", @"status message for test connection")];
+	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to delete the test file… ", @"status message for test connection")];
 
 //	NSLog(@"Queuing timeout test from testConnectionDidFinishLoading");
 	[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue]];
@@ -1146,7 +1146,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSLog(@"= %@%@", NSStringFromSelector(_cmd), path);
 	[self appendConnectionProgressLine:NO format:NSLocalizedString(@"Done.", @"status message for test connection")];
 
-	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Disconnecting... ", @"status message for test connection")];
+	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Disconnecting… ", @"status message for test connection")];
 	[myTestConnection disconnect];
 
 	[self setValue:[self uploadURL] forKey:@"passedUploadURL"];
@@ -1197,7 +1197,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	{
 		// Next step, almost the same as connection:didCreateDirectory:
 		[self appendConnectionProgressLine:NO format:NSLocalizedString(@"Failed.", @"status message for test connection")];
-		//[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to change to directory... ", @"status message for test connection")];
+		//[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to change to directory… ", @"status message for test connection")];
 		// Directory created; now change to the directory
 
 		//we need to kill the test here and now

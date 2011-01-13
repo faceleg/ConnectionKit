@@ -91,7 +91,7 @@
 								</object>
 								<object class="NSMenuItem" id="484113392">
 									<reference key="NSMenu" ref="846920252"/>
-									<string key="NSTitle">Check for Updates...</string>
+									<string key="NSTitle">Check for Updates…</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -592,7 +592,7 @@
 								</object>
 								<object class="NSMenuItem" id="156517136">
 									<reference key="NSMenu" ref="261338889"/>
-									<string key="NSTitle">Create Link...</string>
+									<string key="NSTitle">Create Link…</string>
 									<string key="NSKeyEquiv">l</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -612,7 +612,7 @@
 								</object>
 								<object class="NSMenuItem" id="879417835">
 									<reference key="NSMenu" ref="261338889"/>
-									<string key="NSTitle">Edit Raw HTML...</string>
+									<string key="NSTitle">Edit Raw HTML…</string>
 									<string key="NSKeyEquiv">e</string>
 									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -1538,7 +1538,7 @@
 								</object>
 								<object class="NSMenuItem" id="200186185">
 									<reference key="NSMenu" ref="220650628"/>
-									<string key="NSTitle">Customize Toolbar...</string>
+									<string key="NSTitle">Customize Toolbar…</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -1580,7 +1580,7 @@
 								</object>
 								<object class="NSMenuItem" id="90412639">
 									<reference key="NSMenu" ref="858174837"/>
-									<string key="NSTitle">Export...</string>
+									<string key="NSTitle">Export…</string>
 									<string key="NSKeyEquiv">E</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>

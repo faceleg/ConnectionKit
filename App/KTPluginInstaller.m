@@ -56,7 +56,7 @@ NSLog(@"%@", aURL);
 	if (0 == [myURLs count] && !myProgressPanel)
 	{
         myProgressPanel = [[KSProgressPanel alloc] init];
-        [myProgressPanel setMessageText:NSLocalizedString(@"Installing Plug-ins...", @"")];
+        [myProgressPanel setMessageText:NSLocalizedString(@"Installing Plug-ins…", @"")];
         [myProgressPanel setInformativeText:nil];
         [myProgressPanel setIcon:[[NSWorkspace sharedWorkspace] iconForFile:[aURL path]]];
         

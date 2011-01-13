@@ -114,7 +114,7 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSFileManager *fm = [NSFileManager defaultManager];
 	
-	[progressPanel setMessageText:NSLocalizedString(@"Searching for previously opened documents...",
+	[progressPanel setMessageText:NSLocalizedString(@"Searching for previously opened documents…",
 													"Message while checking documents.")];
 	
 	// figure out if we should create or open document(s)
@@ -177,7 +177,7 @@
 					continue;
 				}				
 				
-				NSString *message = [NSString stringWithFormat:NSLocalizedString(@"Opening %@...", "Alert Message"), [fm displayNameAtPath:[path stringByDeletingPathExtension]]];
+				NSString *message = [NSString stringWithFormat:NSLocalizedString(@"Opening %@…", "Alert Message"), [fm displayNameAtPath:[path stringByDeletingPathExtension]]];
 				[progressPanel setMessageText:message];
 				[progressPanel setIcon:[NSImage imageNamed:@"document"]];
 				

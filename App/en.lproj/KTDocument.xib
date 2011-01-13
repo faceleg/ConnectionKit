@@ -2,16 +2,19 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10H574</string>
+		<string key="IBDocument.SystemVersion">10J567</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<dictionary class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="com.apple.InterfaceBuilder.CocoaPlugin">823</string>
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="1649"/>
+			<integer value="2183"/>
+			<integer value="2122"/>
+			<integer value="1701"/>
+			<integer value="1793"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -1029,7 +1032,7 @@
 			<object class="NSViewController" id="696012676"/>
 			<object class="NSViewController" id="408607898"/>
 			<object class="NSCustomView" id="82358768">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSButton" id="383955512">
@@ -1094,13 +1097,14 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{400, 29}</string>
+				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomObject" id="451075420">
 				<string key="NSClassName">KSTrimFirstLineFormatter</string>
 			</object>
 			<object class="NSCustomView" id="782832620">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="BWHyperlinkButton" id="936064823">
@@ -1176,10 +1180,11 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 98}</string>
+				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="1054972461">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="BWHyperlinkButton" id="1035959453">
@@ -1223,6 +1228,7 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{377, 50}</string>
+				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 		</array>
@@ -2907,9 +2913,17 @@
 				<string key="1684.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1694.CustomClassName">SVWebContentAreaController</string>
 				<string key="1694.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="1699.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">AccessibilityDescription</string>
+					<object class="IBAccessibilityAttribute" key="NS.object.0">
+						<string key="name">AccessibilityDescription</string>
+						<reference key="object" ref="855618030"/>
+						<string key="accessibilityValue">Action</string>
+					</object>
+				</object>
 				<string key="1699.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
 				<string key="1700.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
-				<string key="1701.IBEditorWindowLastContentRect">{{36, 428}, {333, 203}}</string>
+				<string key="1701.IBEditorWindowLastContentRect">{{165, 161}, {333, 203}}</string>
 				<string key="1701.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
 				<string key="1702.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
 				<string key="1703.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
