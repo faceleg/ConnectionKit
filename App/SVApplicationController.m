@@ -135,9 +135,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 @end
 
 
-@interface NSSQLChannel : NSObject // Apple Private
-+ (void)setDebugDefault:(BOOL)flag;
-@end
+#pragma mark -
 
 
 @implementation SVApplicationController
