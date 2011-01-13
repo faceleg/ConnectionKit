@@ -861,6 +861,7 @@
 
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
 {
+    OBPRECONDITION(resourceURL);
     return resourceURL; // subclasses will correct for publishing
 }
 
