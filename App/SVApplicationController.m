@@ -1093,7 +1093,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 - (BOOL) parserController:(IMBParserController*)inController didLoadParser:(IMBParser*)inParser forMediaType:(NSString*)inMediaType
 {
-	NSLog(@"%s inParser=%@ inMediaType=%@",__FUNCTION__,NSStringFromClass(inParser.class),inMediaType);
 	
 	if ([inParser isKindOfClass:[IMBFlickrParser class]])
 	{
