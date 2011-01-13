@@ -447,22 +447,24 @@
 
 - (BOOL)shouldWriteHTMLInline;
 {
-    BOOL result = [super shouldWriteHTMLInline];
+    BOOL result = [super shouldWriteHTMLInline];    // expected to be NO
     
-    // Media becomes inline once you turn off all additional stuff like title & caption
     if (![self isPagelet])
     {
         SVTextAttachment *attachment = [self textAttachment];
-        if (![[attachment causesWrap] boolValue])
+        if (attachment)
         {
-            result = YES;
-        }
-        else
-        {
-            SVGraphicWrap wrap = [[attachment wrap] intValue];
-            result = (wrap == SVGraphicWrapRight ||
-                      wrap == SVGraphicWrapLeft ||
-                      wrap == SVGraphicWrapNone);
+            if ([[attachment causesWrap] boolValue])
+            {
+                SVGraphicWrap wrap = [[attachment wrap] intValue];
+                result = (wrap == SVGraphicWrapRight ||
+                          wrap == SVGraphicWrapLeft ||
+                          wrap == SVGraphicWrapNone);
+            }
+            else
+            {
+                result = YES;
+            }
         }
     }
     
