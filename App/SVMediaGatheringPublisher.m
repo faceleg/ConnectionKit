@@ -73,6 +73,8 @@
 - (void)addCSSString:(NSString *)css; { }
 - (void)addCSSWithURL:(NSURL *)cssURL; { }
 
+- (KTSite *)site; { return [[self publishingEngine] site]; }
+
 - (NSString *)baseRemotePath; { return [[self publishingEngine] baseRemotePath]; }
 
 - (NSString *)designDirectoryPath; { return nil; }
