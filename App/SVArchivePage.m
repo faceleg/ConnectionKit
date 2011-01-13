@@ -195,7 +195,7 @@
 		[plugIn setBool:YES forKey:@"showEntries"];
 		[plugIn setBool:YES forKey:@"showTitles"];
 		[plugIn setBool:YES forKey:@"showTimestamps"];
-		[plugIn setInteger:3 forKey:@"indexLayoutType"]; // kLayoutTitlesAndArticles
+		[plugIn setInteger:275 forKey:@"indexLayoutType"]; // kLayoutArticlesAndMedia
 	}
 	
     [plugIn setIndexedCollection:self];	// Obviously this has to change from what got copied over

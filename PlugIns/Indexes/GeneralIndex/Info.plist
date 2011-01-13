@@ -47,7 +47,7 @@
 		<key>maxItemLength</key>
 		<integer>999999</integer>
 		<key>indexLayoutType</key>
-		<integer>3</integer>
+		<integer>275</integer>
 	</dict>
 	<key>SVIndexMasters</key>
 	<array>
