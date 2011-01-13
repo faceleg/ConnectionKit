@@ -170,14 +170,14 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
        
     KSStringWriter *stringWriter = [[KSStringWriter alloc] init];
     
-    SVParagraphedHTMLWriterDOMAdaptor *writer = 
+    SVParagraphedHTMLWriterDOMAdaptor *adaptor = 
     [[SVParagraphedHTMLWriterDOMAdaptor alloc] initWithOutputStringWriter:stringWriter];
     
-    [writer setDelegate:self];
-    [writer setAllowsPagelets:[self allowsPagelets]];
+    [adaptor setDelegate:self];
+    [adaptor setAllowsPagelets:[self allowsPagelets]];
     
     
-    [self willWriteText:writer];
+    [self willWriteText:adaptor];
     _isUpdating = YES;
     
     
@@ -186,7 +186,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     DOMNode *aNode = [textElement firstChild];
     while (aNode)
     {
-        aNode = [aNode writeTopLevelParagraph:writer];
+        aNode = [aNode writeTopLevelParagraph:adaptor];
     }
     
     
@@ -195,7 +195,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     NSString *html = [stringWriter string];
     
     [textObject setString:html
-              attachments:[writer textAttachments]];
+              attachments:[adaptor textAttachments]];
     
     // Wait, is the last thing an attachment? If so, should account for that…
     if ([textObject endsOnAttachment])
@@ -205,11 +205,11 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         [textElement appendChild:lineBreak];
         
         // Continue writing from the line break…
-        [lineBreak writeTopLevelParagraph:writer];
+        [lineBreak writeTopLevelParagraph:adaptor];
         
         // …and store the updated HTML
         [textObject setString:html
-                  attachments:[writer textAttachments]];
+                  attachments:[adaptor textAttachments]];
         
     }
     
@@ -217,7 +217,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Finish up
-    [writer release];
+    [adaptor release];
     [stringWriter release];
     
     [super webEditorTextDidChange];
