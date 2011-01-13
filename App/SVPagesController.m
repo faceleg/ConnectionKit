@@ -591,10 +591,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         if (aGraphic)
         {
             // Create pages for each graphic
-            [self setEntityName:@"Page"];
-            [self setPageTemplate:nil];
-            [self setObjectURL:nil];
-            
+            [self setEntityNameWithPageTemplate:nil];
             KTPage *page = [self newObjectDestinedForCollection:collection];
             [page setTitle:[aGraphic title]];
             
