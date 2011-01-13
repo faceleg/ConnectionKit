@@ -638,7 +638,7 @@
 
 #pragma mark Core Data
 
-+ (NSString *)entityName { return @"AbstractPage"; }
++ (NSString *)entityName { return @"SiteItem"; }
 
 /*	Picks out all the pages correspoding to self's entity
  */
