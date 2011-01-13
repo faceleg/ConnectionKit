@@ -12,6 +12,7 @@
 #import "SVExternalLink.h"
 #import "SVDownloadSiteItem.h"
 
+#import "SVApplicationController.h"
 #import "SVArticle.h"
 #import "SVAttributedHTML.h"
 #import "KTElementPlugInWrapper.h"
@@ -597,12 +598,29 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
             KTPage *page = [self newObjectDestinedForCollection:collection];
             [page setTitle:[aGraphic title]];
             
+            
             // First media added to a collection probably doesn't want sidebar. #96013
             if (![[collection childItems] count] && [aGraphic isKindOfClass:[SVMediaGraphic class]])
             {
                 [page setShowSidebar:NSBOOL(NO)]; 
             }
+            
+            
+            // Match date of page to media if desired. #102967
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:kSVSetDateFromSourceMaterialKey])
+            {
+                NSURL *URL = [anItem URL];
+                if ([URL isFileURL])
+                {
+                    NSDate *date = [[[NSFileManager defaultManager] attributesOfItemAtPath:[URL path]
+                                                                                     error:NULL]
+                                    fileModificationDate];
+                    
+                    if (date) [page setCreationDate:date];
+                }
+            }
                       
+            
             
             // Insert page into the collection. Do before inserting graphic so behaviour dependant on containing collection works. #90905
             [self addObject:page toCollection:collection];
