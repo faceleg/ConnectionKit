@@ -520,6 +520,79 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     return result;
 }
 
+- (void)addObjectFromPasteboardItem:(id <SVPasteboardItem>)anItem toCollection:(KTPage *)collection
+{
+    SVGraphic *aGraphic = [SVGraphicFactory
+                           graphicFromPasteboardItem:anItem
+                           minPriority:SVPasteboardPriorityReasonable   // don't want stuff like list of links
+                           insertIntoManagedObjectContext:[self managedObjectContext]];
+    
+    if (aGraphic)
+    {
+        // Create pages for each graphic
+        [self setEntityNameWithPageTemplate:nil];
+        KTPage *page = [self newObjectDestinedForCollection:collection];
+        [page setTitle:[aGraphic title]];
+        
+        
+        // First media added to a collection probably doesn't want sidebar. #96013
+        if (![[collection childItems] count] && [aGraphic isKindOfClass:[SVMediaGraphic class]])
+        {
+            [page setShowSidebar:NSBOOL(NO)]; 
+        }
+        
+        
+        // Match date of page to media if desired. #102967
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kSVSetDateFromSourceMaterialKey])
+        {
+            NSURL *URL = [anItem URL];
+            if ([URL isFileURL])
+            {
+                NSDate *date = [[[NSFileManager defaultManager] attributesOfItemAtPath:[URL path]
+                                                                                 error:NULL]
+                                fileModificationDate];
+                
+                if (date) [page setCreationDate:date];
+            }
+        }
+        
+        
+        
+        // Insert page into the collection. Do before inserting graphic so behaviour dependant on containing collection works. #90905
+        [self addObject:page toCollection:collection];
+        [page release];
+        
+        
+        // Insert graphic into the page
+        //[aGraphic willInsertIntoPage:page];
+        
+        SVRichText *article = [page article];
+        NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
+        
+        NSAttributedString *attachment = [NSAttributedString
+                                          attributedHTMLStringWithGraphic:aGraphic];
+        
+        [html insertAttributedString:attachment atIndex:0];
+        [article setAttributedHTMLString:html];
+        [html release];
+        
+        [aGraphic didAddToPage:page];
+    }
+    else
+    {
+        // Fallback to adding download or external URL with location
+        NSURL *URL = [anItem URL];
+        
+        BOOL external = ![URL isFileURL];
+        [self setEntityTypeWithURL:URL external:external];
+        
+        SVSiteItem *item = [self newObjectDestinedForCollection:collection];
+        [self addObject:item toCollection:collection];
+        [item release];
+    }
+    
+}
+
 - (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
 {
     OBPRECONDITION(collection);
@@ -583,74 +656,8 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     for (id <SVPasteboardItem> anItem in items)
     {
-        SVGraphic *aGraphic = [SVGraphicFactory
-                               graphicFromPasteboardItem:anItem
-                               minPriority:SVPasteboardPriorityReasonable   // don't want stuff like list of links
-                               insertIntoManagedObjectContext:[self managedObjectContext]];
-    
-        if (aGraphic)
-        {
-            // Create pages for each graphic
-            [self setEntityNameWithPageTemplate:nil];
-            KTPage *page = [self newObjectDestinedForCollection:collection];
-            [page setTitle:[aGraphic title]];
-            
-            
-            // First media added to a collection probably doesn't want sidebar. #96013
-            if (![[collection childItems] count] && [aGraphic isKindOfClass:[SVMediaGraphic class]])
-            {
-                [page setShowSidebar:NSBOOL(NO)]; 
-            }
-            
-            
-            // Match date of page to media if desired. #102967
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:kSVSetDateFromSourceMaterialKey])
-            {
-                NSURL *URL = [anItem URL];
-                if ([URL isFileURL])
-                {
-                    NSDate *date = [[[NSFileManager defaultManager] attributesOfItemAtPath:[URL path]
-                                                                                     error:NULL]
-                                    fileModificationDate];
-                    
-                    if (date) [page setCreationDate:date];
-                }
-            }
-                      
-            
-            
-            // Insert page into the collection. Do before inserting graphic so behaviour dependant on containing collection works. #90905
-            [self addObject:page toCollection:collection];
-            [page release];
-            
-            
-            // Insert graphic into the page
-            //[aGraphic willInsertIntoPage:page];
-            
-            SVRichText *article = [page article];
-            NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
-            
-            NSAttributedString *attachment = [NSAttributedString
-                                              attributedHTMLStringWithGraphic:aGraphic];
-            
-            [html insertAttributedString:attachment atIndex:0];
-            [article setAttributedHTMLString:html];
-            [html release];
-            
-            [aGraphic didAddToPage:page];
-        }
-        else
-        {
-            // Fallback to adding download or external URL with location
-            NSURL *URL = [anItem URL];
-            
-            BOOL external = ![URL isFileURL];
-            [self setEntityTypeWithURL:URL external:external];
-            
-            SVSiteItem *item = [self newObjectDestinedForCollection:collection];
-            [self addObject:item toCollection:collection];
-            [item release];
-        }
+        [self addObjectFromPasteboardItem: anItem toCollection: collection];
+
         
         result = YES;
     }
