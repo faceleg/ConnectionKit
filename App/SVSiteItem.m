@@ -665,11 +665,15 @@
 
 - (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key;
 {
-    // Assign a new ID to avoid risk of two pages having the same identifier
-    if (![key isEqualToString:@"uniqueID"])
+    if ([key isEqualToString:@"uniqueID"])
     {
-        [super setSerializedValue:serializedValue forKey:key];
+        // Is this ID free to use? #103155
+        SVSiteItem *existingItem = [SVSiteItem pageWithUniqueID:serializedValue
+                                         inManagedObjectContext:[self managedObjectContext]];
+        if (existingItem) return;
     }
+    
+    [super setSerializedValue:serializedValue forKey:key];
 }
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
