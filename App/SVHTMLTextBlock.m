@@ -428,7 +428,8 @@
 - (BOOL)generateSpanIn;
 {
     return ([self isFieldEditor] && 
-            ![[self tagName] isEqualToString:@"span"]);
+            ![[self tagName] isEqualToString:@"span"] &&
+            ![HTML_VALUE isKindOfClass:[SVRichText class]]);    // hack to stop footer generating it
 }
 
 
