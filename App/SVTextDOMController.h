@@ -14,13 +14,13 @@
 #import "KSKeyValueBinding.h"
 #import "SVGraphicContainerDOMController.h"
 
-#import "KSXMLWriterDOMAdaptor.h"
+#import "SVParagraphedHTMLWriterDOMAdaptor.h"
 
 
 @class SVHTMLTextBlock, SVGraphicDOMController;
 
 
-@interface SVTextDOMController : SVDOMController <SVWebEditorText, SVGraphicContainerDOMController, DOMEventListener>
+@interface SVTextDOMController : SVDOMController <SVWebEditorText, SVGraphicContainerDOMController, DOMEventListener, KSXMLWriterDOMAdaptorDelegate>
 {
   @private
     DOMHTMLElement  *_textElement;
@@ -67,6 +67,9 @@
 // Write the receiver's textual content using the passed in adaptor. Meant to happen for a change which updates the model
 - (void)writeText:(KSXMLWriterDOMAdaptor *)adaptor;
 
+// Subclassers take responsibility for overriding this to push to the model
+- (void)setHTMLString:(NSString *)html attachments:(NSSet *)attachments;
+
 
 #pragma mark Undo
 
@@ -101,5 +104,20 @@
 
 @interface WEKWebEditorItem (SVTextDOMController)
 - (SVTextDOMController *)textDOMController; // seeks the closest ancestor text controller
+@end
+
+
+#pragma mark -
+
+
+@interface WEKWebEditorItem (SVRichTextDOMController)
+
+#pragma mark Properties
+- (BOOL)allowsPagelets;
+
+#pragma mark Attributed HTML
+// Return YES if manages to write self. Otherwise return NO to treat as standard HTML
+- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriterDOMAdaptor *)writer;
+
 @end
 

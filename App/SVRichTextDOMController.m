@@ -100,10 +100,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [super dealloc];
 }
 
-#pragma mark Properties
-
-- (BOOL)allowsPagelets; { return NO; }
-
 #pragma mark DOM Node
 
 - (void)setHTMLElement:(DOMHTMLElement *)element
@@ -165,32 +161,23 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         
     
     
-    //  Write the whole out using a special adaptor
-    
-       
-    KSStringWriter *stringWriter = [[KSStringWriter alloc] init];
-    
-    SVParagraphedHTMLWriterDOMAdaptor *adaptor = 
-    [[SVParagraphedHTMLWriterDOMAdaptor alloc] initWithOutputStringWriter:stringWriter];
-    
-    [adaptor setDelegate:self];
-    [adaptor setAllowsPagelets:[self allowsPagelets]];
-    
-    
-    [self willWriteText:adaptor];
     _isUpdating = YES;
-    
-    
-    // Top-level nodes can only be: paragraph, newline, or graphic. Custom DOMNode addition handles this
-    [self writeText:adaptor];
-    
-    
-    // Push HTML into the model
+    @try
+    {
+        [super webEditorTextDidChange];
+    }
+    @finally
+    {
+        _isUpdating = NO;
+    }
+}
+
+- (void)setHTMLString:(NSString *)html attachments:(NSSet *)attachments;
+{
     SVRichText *textObject = [self representedObject];
-    NSString *html = [stringWriter string];
     
-    [textObject setString:html
-              attachments:[adaptor textAttachments]];
+    
+    [textObject setString:html attachments:attachments];
     
     // Wait, is the last thing an attachment? If so, should account for that…
     if ([textObject endsOnAttachment])
@@ -201,25 +188,14 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         [textElement appendChild:lineBreak];
         
         // Continue writing from the line break…
-        [lineBreak writeTopLevelParagraph:adaptor];
+        html = [html stringByAppendingString:@"<BR />"];
         
         // …and store the updated HTML
         [textObject setString:html
-                  attachments:[adaptor textAttachments]];
+                  attachments:attachments];
         
     }
-    
-    _isUpdating = NO;
-    
-    
-    // Finish up
-    [adaptor release];
-    [stringWriter release];
-    
-    [super webEditorTextDidChange];
 }
-
-- (void)willWriteText:(SVParagraphedHTMLWriterDOMAdaptor *)writer; { }
 
 - (DOMNode *)write:(SVParagraphedHTMLWriterDOMAdaptor *)adaptor
         DOMElement:(DOMElement *)element
@@ -639,18 +615,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     return result;
 }
-
-@end
-
-
-#pragma mark -
-
-
-@implementation WEKWebEditorItem (SVRichTextDOMController)
-
-- (BOOL)allowsPagelets; { return NO; }
-
-- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriterDOMAdaptor *)writer; { return NO; }
 
 @end
 

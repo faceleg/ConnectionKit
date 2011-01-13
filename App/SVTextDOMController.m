@@ -13,6 +13,8 @@
 #import "WebEditingKit.h"
 #import "SVWebEditorViewController.h"
 
+#import "SVParagraphedHTMLWriterDOMAdaptor.h"
+
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
 
@@ -195,6 +197,35 @@
 
 - (void)webEditorTextDidChange;
 {
+    // Validate the HTML
+    KSStringWriter *stringWriter = [[KSStringWriter alloc] init];
+    
+    if ([self isFieldEditor])
+    {
+        SVFieldEditorHTMLWriterDOMAdapator *adaptor = [[SVFieldEditorHTMLWriterDOMAdapator alloc]
+                                                       initWithOutputStringWriter:stringWriter];
+        
+        [self writeText:adaptor];
+        
+        NSString *html = [stringWriter string];
+        [self setHTMLString:html attachments:nil];
+    }
+    else
+    {
+        SVParagraphedHTMLWriterDOMAdaptor *adaptor = [[SVParagraphedHTMLWriterDOMAdaptor alloc]
+                                                      initWithOutputStringWriter:stringWriter];
+        
+        [adaptor setDelegate:self];
+        [adaptor setAllowsPagelets:[self allowsPagelets]];
+        
+        [self writeText:adaptor];
+        
+        NSString *html = [stringWriter string];
+        [self setHTMLString:html attachments:[adaptor textAttachments]];
+    }
+    
+    
+    
     // Wait until after -didChangeText so subclass has done its work
     WEKWebEditorView *webEditor = [self webEditor];
     NSUndoManager *undoManager = [webEditor undoManager];
@@ -259,12 +290,20 @@
     }
     else
     {
+        // Top-level nodes can only be: paragraph, newline, or graphic. Custom DOMNode addition handles this
         DOMNode *aNode = [textElement firstChild];
         while (aNode)
         {
-            aNode = [aNode writeTopLevelParagraph:adaptor];
+            aNode = [aNode writeTopLevelParagraph:(SVParagraphedHTMLWriterDOMAdaptor *)adaptor];
         }
     }
+}
+
+- (void)setHTMLString:(NSString *)html attachments:(NSSet *)attachments; { }
+
+- (DOMNode *)DOMAdaptor:(SVParagraphedHTMLWriterDOMAdaptor *)writer willWriteDOMElement:(DOMElement *)element;
+{
+    return element;
 }
 
 #pragma mark SVWebEditorText
@@ -457,6 +496,18 @@
 {
     return [[self parentWebEditorItem] textDOMController];
 }
+
+@end
+
+
+#pragma mark -
+
+
+@implementation WEKWebEditorItem (SVRichTextDOMController)
+
+- (BOOL)allowsPagelets; { return NO; }
+
+- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriterDOMAdaptor *)writer; { return NO; }
 
 @end
 

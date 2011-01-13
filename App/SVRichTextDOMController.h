@@ -7,14 +7,13 @@
 //
 
 #import "SVTextDOMController.h"
-#import "SVFieldEditorHTMLWriterDOMAdapator.h"
 #import "SVRichText.h"
 
 
 @class SVRichText, SVGraphic, SVWebEditorHTMLContext, SVParagraphedHTMLWriterDOMAdaptor;
 
 
-@interface SVRichTextDOMController : SVTextDOMController <KSXMLWriterDOMAdaptorDelegate>
+@interface SVRichTextDOMController : SVTextDOMController 
 {
     SVWebEditorHTMLContext  *_changeHTMLContext;
     
@@ -40,7 +39,6 @@
 
 
 #pragma mark Responding to Changes
-- (void)willWriteText:(SVParagraphedHTMLWriterDOMAdaptor *)writer;
 - (DOMNode *)write:(SVParagraphedHTMLWriterDOMAdaptor *)writer
         DOMElement:(DOMElement *)element
               item:(WEKWebEditorItem *)controller;
@@ -49,21 +47,6 @@
 #pragma mark Links
 @property(nonatomic, retain, readonly) DOMHTMLAnchorElement *selectedLink;
 
-
-@end
-
-
-#pragma mark -
-
-
-@interface WEKWebEditorItem (SVRichTextDOMController)
-
-#pragma mark Properties
-- (BOOL)allowsPagelets;
-
-#pragma mark Attributed HTML
-// Return YES if manages to write self. Otherwise return NO to treat as standard HTML
-- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriterDOMAdaptor *)writer;
 
 @end
 

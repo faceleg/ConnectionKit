@@ -162,18 +162,8 @@
     [self updateStyle];
 }
 
-- (void)webEditorTextDidChange;
+- (void)setHTMLString:(NSString *)html attachments:(NSSet *)attachments;
 {
-    // Validate the HTML
-    KSStringWriter *writer = [[KSStringWriter alloc] init];
-    SVFieldEditorHTMLWriterDOMAdapator *adaptor = [[SVFieldEditorHTMLWriterDOMAdapator alloc] initWithOutputStringWriter:writer];
-    
-    
-    [self writeText:adaptor];
-    
-    
-    // Copy HTML across to ourself
-    NSString *html = [writer string];
     if (![html isEqualToString:_uneditedValue])
     {
         [self setHTMLString:html needsUpdate:NO];
@@ -188,12 +178,6 @@
                       forKeyPath:[bindingInfo objectForKey:NSObservedKeyPathKey]];
         _isCommittingEditing = NO;
     }
-    
-    
-    // Finish up
-    [adaptor release];
-    [writer release];
-    [super webEditorTextDidChange];
 }
 
 #pragma mark Alignment

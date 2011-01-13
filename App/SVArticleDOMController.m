@@ -180,7 +180,7 @@
 
 @synthesize earlyCalloutDOMController = _earlyCalloutController;
 
-- (void)willWriteText:(SVParagraphedHTMLWriterDOMAdaptor *)writer;
+- (void)writeText:(SVParagraphedHTMLWriterDOMAdaptor *)writer;
 {
     // Write early callouts first
     SVCalloutDOMController *calloutController = [self earlyCalloutDOMController];
@@ -193,7 +193,7 @@
     
     
     
-    [super willWriteText:writer];
+    [super writeText:writer];
 }
 
 #pragma mark Insertion
