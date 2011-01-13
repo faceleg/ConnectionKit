@@ -157,7 +157,7 @@
     [super addResourceWithURL:resourceURL];
     [_publisher publishResourceAtURL:resourceURL];
     
-    return [[[[self page] site] hostProperties] URLForResourceFile:[resourceURL ks_lastPathComponent]];
+    return [[[_publisher site] hostProperties] URLForResourceFile:[resourceURL ks_lastPathComponent]];
 }
 
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
