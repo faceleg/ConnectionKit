@@ -107,6 +107,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 
 NSString *kSVLiveDataFeedsKey = @"LiveDataFeeds";
+NSString *kSVSetDateFromSourceMaterialKey = @"SetDateFromSourceMaterial";
 NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectableLinks";
 
 NSString *kSVPrefersPNGImageFormatKey = @"KTPrefersPNGFormat";
@@ -370,7 +371,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		
 		[NSNumber numberWithInt:5],				@"LocalHostVerifyTimeout",
 		@"/Library/WebServer/Documents",		@"ApacheDocRoot",
-		[NSNumber numberWithBool:NO],			@"SetDateFromSourceMaterial",
+		[NSNumber numberWithBool:NO],			kSVSetDateFromSourceMaterialKey,
 		[NSNumber numberWithBool:YES],			@"SetDateFromEXIF",		// applies if above is used
 
 		[NSNumber numberWithBool:NO],			@"movie autoplay",

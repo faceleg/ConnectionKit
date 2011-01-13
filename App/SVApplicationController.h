@@ -24,6 +24,7 @@ extern BOOL gWantToCatchSystemExceptions;
 
 
 extern NSString *kSVLiveDataFeedsKey;
+extern NSString *kSVSetDateFromSourceMaterialKey;
 extern NSString *kLiveEditableAndSelectableLinksDefaultsKey;
 
 extern NSString *kSVPrefersPNGImageFormatKey;
