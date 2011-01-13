@@ -663,6 +663,15 @@
     [self awakeFromPropertyList:propertyList];
 }
 
+- (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key;
+{
+    // Assign a new ID to avoid risk of two pages having the same identifier
+    if (![key isEqualToString:@"uniqueID"])
+    {
+        [super setSerializedValue:serializedValue forKey:key];
+    }
+}
+
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
 {
     [super populateSerializedProperties:propertyList];

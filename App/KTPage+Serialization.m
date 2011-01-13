@@ -109,7 +109,6 @@ static NSMutableDictionary *sDeserializingPages;
     if (!sIgnoredKeys)
     {
         sIgnoredKeys = [[NSSet alloc] initWithObjects:
-                        @"uniqueID",
                         @"fileName",
                         @"shouldUpdateFileNameWhenTitleChanges",
                         @"datePublished",
@@ -118,12 +117,13 @@ static NSMutableDictionary *sDeserializingPages;
     
     if (![sIgnoredKeys containsObject:key])
     {
+        if ([key isEqualToString:@"uniqueID"])
+        {
+            // Temporarily record that serialized copy of this page had that ID. #102564
+            [sDeserializingPages setObject:self forKey:serializedValue];
+        }
+        
         [super setSerializedValue:serializedValue forKey:key];
-    }
-    else if ([key isEqualToString:@"uniqueID"])
-    {
-        // Temporarily record that serialized copy of this page had that ID. #102564
-        [sDeserializingPages setObject:self forKey:serializedValue];
     }
 }
 
