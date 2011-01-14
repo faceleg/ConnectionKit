@@ -665,42 +665,6 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     return result;
 }
 
-- (void)moveObject:(id)object toCollection:(KTPage *)collection index:(NSInteger)index;
-{
-    [self moveObjects:[NSArray arrayWithObject:object] toCollection:collection index:index];
-}
-
-- (void)moveObjects:(NSArray *)objects toCollection:(KTPage *)collection index:(NSInteger)index;
-{
-    // Add the objects to the collection
-    for (SVSiteItem *anItem in objects)
-    {
-        [anItem retain];    // since we're potentially removing it from relationships etc.
-        
-        KTPage *parent = [anItem parentPage];
-        if (collection != parent)   // no point removing and re-adding a page
-        {
-            [parent removeChildItem:anItem];
-            [collection addChildItem:anItem];
-            
-            [self didInsertObject:anItem intoCollection:collection];
-        }
-        
-        
-        [anItem release];
-    }
-    
-    
-    // Then position too if requested. This is done in reverse so we can keep reusing the same index
-    if (index != NSOutlineViewDropOnItemIndex)
-    {
-        for (SVSiteItem *anItem in [objects reverseObjectEnumerator])
-        {
-            [collection moveChild:anItem toIndex:index];
-        }
-    }
-}
-
 - (void)didInsertObject:(id)object intoCollection:(KTPage *)collection;
 {
     // Make sure filename is unique within the collection
@@ -743,6 +707,44 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     // Fully insert the new, selecting it
     [self addObject:collection toCollection:parent];
     [collection release];
+}
+
+#pragma mark Moving Objects
+
+- (void)moveObject:(id)object toCollection:(KTPage *)collection index:(NSInteger)index;
+{
+    [self moveObjects:[NSArray arrayWithObject:object] toCollection:collection index:index];
+}
+
+- (void)moveObjects:(NSArray *)objects toCollection:(KTPage *)collection index:(NSInteger)index;
+{
+    // Add the objects to the collection
+    for (SVSiteItem *anItem in objects)
+    {
+        [anItem retain];    // since we're potentially removing it from relationships etc.
+        
+        KTPage *parent = [anItem parentPage];
+        if (collection != parent)   // no point removing and re-adding a page
+        {
+            [parent removeChildItem:anItem];
+            [collection addChildItem:anItem];
+            
+            [self didInsertObject:anItem intoCollection:collection];
+        }
+        
+        
+        [anItem release];
+    }
+    
+    
+    // Then position too if requested. This is done in reverse so we can keep reusing the same index
+    if (index != NSOutlineViewDropOnItemIndex)
+    {
+        for (SVSiteItem *anItem in [objects reverseObjectEnumerator])
+        {
+            [collection moveChild:anItem toIndex:index];
+        }
+    }
 }
 
 #pragma mark Removing Objects
