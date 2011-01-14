@@ -172,8 +172,12 @@ const int kDesignThumbHeight = 65;
 			KTDesign *familyPrototype = [family familyPrototype];
 			familyPrototype.family = family;		// put reference to family (which has weak references to other designs) in first design in group so we can scrub
 			
-			NSRange newRange = NSMakeRange(index,[subDesigns count]);
-			[ranges addObject:[NSValue valueWithRange:newRange]];
+			if ([subDesigns count] > 1)
+			{
+				NSRange newRange = NSMakeRange(index,[subDesigns count]);
+				// Ignore one-design families; not really a group.
+				[ranges addObject:[NSValue valueWithRange:newRange]];
+			}
 			[result addObjectsFromArray:subDesigns];
 			index += [subDesigns count];
 		}
