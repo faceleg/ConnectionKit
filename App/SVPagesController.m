@@ -654,13 +654,26 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     }
     
     
-    for (id <SVPasteboardItem> anItem in items)
+    
+    
+    [self saveSelectionAttributes];
+    [self setSelectsInsertedObjects:NO]; // Don't select inserted items. #103298
+    @try
     {
-        [self addObjectFromPasteboardItem: anItem toCollection: collection];
-
-        
-        result = YES;
+        for (id <SVPasteboardItem> anItem in items)
+        {
+            [self addObjectFromPasteboardItem: anItem toCollection: collection];
+            
+            
+            result = YES;
+        }
     }
+    @finally
+    {
+        [self restoreSelectionAttributes];
+    }
+    
+    
     
     return result;
 }
