@@ -11,10 +11,10 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="2214"/>
 			<integer value="1793"/>
-			<integer value="2122"/>
 			<integer value="2183"/>
+			<integer value="2045"/>
+			<integer value="2122"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -1574,27 +1574,6 @@
 					<int key="connectionID">1947</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.windowTitle</string>
-						<reference key="source" ref="452661693"/>
-						<reference key="destination" ref="601368962"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="452661693"/>
-							<reference key="NSDestination" ref="601368962"/>
-							<string key="NSLabel">value: selection.windowTitle</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.windowTitle</string>
-							<dictionary key="NSOptions">
-								<string key="NSMultipleValuesPlaceholder">Multiple pages selected. Titles should be unique.</string>
-								<string key="NSNullPlaceholder">Title of page's window as well as title in Google listings and bookmarks.</string>
-								<boolean value="NO" key="NSRaisesForNotApplicableKeys"/>
-							</dictionary>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">1949</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="899980468"/>
@@ -2113,6 +2092,26 @@
 						</object>
 					</object>
 					<int key="connectionID">2235</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.windowTitle</string>
+						<reference key="source" ref="452661693"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="452661693"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">value: selection.windowTitle</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.windowTitle</string>
+							<dictionary key="NSOptions">
+								<string key="NSMultipleValuesPlaceholder">Multiple pages selected. Titles should be unique.</string>
+								<boolean value="NO" key="NSRaisesForNotApplicableKeys"/>
+							</dictionary>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2236</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3112,7 +3111,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2235</int>
+			<int key="maxID">2236</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

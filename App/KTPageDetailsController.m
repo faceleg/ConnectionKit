@@ -40,7 +40,6 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
 static NSString *sWindowTitleObservationContext = @"-windowTitle observation context";
 static NSString *sFileNameObservationContext = @"-fileName observation context";
 static NSString *sBaseExampleURLStringObservationContext = @"-baseExampleURLString observation context";
-static NSString *sTitleObservationContext = @"-titleText observation context";
 static NSString *sSelectedObjectsObservationContext = @"-selectedObjects observation context";
 static NSString *sSelectedViewControllerObservationContext = @"-selectedViewController observation context";
 static NSString *sCharacterDescription0Count = nil;
@@ -56,7 +55,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (void)metaDescriptionDidChangeToValue:(id)value;
 - (void)windowTitleDidChangeToValue:(id)value;
 - (void)fileNameDidChangeToValue:(id)value;
-- (void) resetTitlePlaceholderToComboTitleText:(NSString *)comboTitleText;
 - (void) resetDescriptionPlaceholder:(NSString *)metaDescriptionText;
 - (void) layoutPageURLComponents;
 - (NSColor *)metaDescriptionCharCountColor;
@@ -203,14 +201,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 						   forKeyPath:@"selection.baseExampleURLString"
 							  options:NSKeyValueObservingOptionNew
 							  context:sBaseExampleURLStringObservationContext];
-		
-		
-		[oPagesController addObserver:self
-						   forKeyPath:@"selection.title"
-							  options:NSKeyValueObservingOptionNew
-							  context:sTitleObservationContext];
-		[self resetTitlePlaceholderToComboTitleText:[oPagesController valueForKeyPath:@"selection.comboTitleText"]];
-		
+
 		[oPagesController addObserver:self
 						   forKeyPath:@"selectedObjects"
 							  options:NSKeyValueObservingOptionNew
@@ -520,39 +511,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 }
 
-- (void) resetTitlePlaceholderToComboTitleText:(NSString *)comboTitleText
-{
-	NSDictionary *infoForBinding;
-	NSDictionary *bindingOptions;
-	NSString *bindingKeyPath;
-	id observedObject;
-	
-	// The Window Title field ... re-bind the null placeholder.
-	
-	infoForBinding	= [oWindowTitleField infoForBinding:NSValueBinding];
-	bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
-	bindingKeyPath	= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
-	observedObject	= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
-	
-	NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
-	
-	if (NSMultipleValuesMarker == comboTitleText)
-	{
-		// Try copying over the multiple values string to the null placeholder...
-		// I think that is so we see the multiple mark when the values are empty (unset)
-		[newBindingOptions setObject:[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] forKey:NSNullPlaceholderBindingOption];
-	}
-	else if (!NSIsControllerMarker(comboTitleText))
-	{		
-		if (![[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] isEqualToString:comboTitleText])	// why this check?
-		{
-			// For some reason it seems like you need to set the Null placeholder even with multiple bindings!
-			[newBindingOptions setObject:comboTitleText forKey:NSNullPlaceholderBindingOption];
-		}
-	}
-	[oWindowTitleField unbind:NSValueBinding];
-	[oWindowTitleField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
-}
 
 #pragma mark -
 #pragma mark Count colors
@@ -676,10 +634,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	{
 		[self rebindWindowTitleAndMetaDescriptionFields];
 	}
-	else if (context == sTitleObservationContext)
-	{
-		[self resetTitlePlaceholderToComboTitleText:[object valueForKeyPath:@"selection.comboTitleText"]];	// go ahead and get the combo title
-	}
 	else if (context == sSelectedObjectsObservationContext)
 	{
 		[self updateFieldsBasedOnSelectedSiteOutlineObjects:[object selectedObjects]];
@@ -706,9 +660,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 					withKeyPath:@"selection.windowTitle"
 						options:self.initialWindowTitleBindingOptions];
 		
-		// Force update of 
-		[self resetTitlePlaceholderToComboTitleText:[oPagesController valueForKeyPath:@"selection.comboTitleText"]];
-
 		[oMetaDescriptionField unbind:NSValueBinding];
 		[oMetaDescriptionField bind:NSValueBinding
 						   toObject:oPagesController
