@@ -41,15 +41,15 @@
     [promise setDestinationDirectoryPath:NSTemporaryDirectory()];
     [promise start];
     [promise waitUntilFinished];
-    NSArray *URLs = [promise fileURLs];
     
-    if ([URLs count])
+    NSArray *objects = [promise objects];
+    if ([objects count])
     {
-        NSMutableArray *result = [NSMutableArray arrayWithCapacity:[URLs count]];
-        for (NSURL *aURL in URLs)
+        NSMutableArray *result = [NSMutableArray arrayWithCapacity:[objects count]];
+        for (IMBObject *anObject in objects)
         {
-            // TODO: pull title out of promise if available
-            [result addObject:[KSWebLocation webLocationWithURL:aURL]];
+            NSURL *aURL = [promise fileURLForObject:anObject];
+            [result addObject:[KSWebLocation webLocationWithURL:aURL title:[anObject name]]];
         }
         
         return result;
