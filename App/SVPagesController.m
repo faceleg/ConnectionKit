@@ -702,7 +702,8 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     [self setEntityNameWithPageTemplate:template];
     [template release];
     
-    KTPage *parent = [[[self selectedObjects] lastObject] parentPage];
+    SVSiteItem *selection = [[self selectedObjects] lastObject];
+    KTPage *parent = [selection parentPage];
     if (!parent)
     {
         // Selection is probably home page!

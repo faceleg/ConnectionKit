@@ -43,6 +43,7 @@
 }
 
 @synthesize collection = _collection;
+- (id <SVPage>)parentPage; { return nil; }  // could return -collection in future
 
 - (NSString *)identifier; { return nil; }
 

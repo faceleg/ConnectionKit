@@ -37,7 +37,8 @@ typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSent
 
 // Most SVPage methods aren't KVO-compliant. Instead, observe all of -automaticRearrangementKeyPaths.
 @property(nonatomic, readonly) BOOL isCollection;   // or is it enough to test if childPages is non-nil?
-- (NSArray *)childPages; 
+- (NSArray *)childPages;
+- (id <SVPage>)parentPage;
 - (id <SVPage>)rootPage;
 
 - (NSArray *)archivePages;
