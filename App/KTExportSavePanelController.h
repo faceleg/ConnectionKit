@@ -12,6 +12,7 @@
 @interface KTExportSavePanelController : NSViewController
 {
     IBOutlet NSTextField    *oSiteURLField;
+    IBOutlet NSImageView    *oSiteURLWarningImageView;
     
   @private
     NSURL   *_documentURL;

@@ -89,6 +89,8 @@
         {
             NSBeep();  // you'd think so, but NSSavePanel doesn't do this for us
             
+            [oSiteURLWarningImageView setHidden:NO];
+            
             // Give focus to URL field
             [[oSiteURLField window] makeFirstResponder:oSiteURLField];
         }
