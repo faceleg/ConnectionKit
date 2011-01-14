@@ -171,14 +171,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	{
 		[result appendFormat:@"\nAdditional Plug-ins:\n%@\n", plugins];		// DO NOT LOCALIZE
 	}
-
-	// Call the following method on KTDesign to get the right plugin path
-	NSString *designs = [KTDesign generateReportOfPluginsWithFileExtension:kKTDesignExtension thirdPartyPluginsOnly:YES];
-	if (![designs isEqualToString:@""])
-	{
-		[result appendFormat:@"\nAdditional Designs:\n%@\n", designs];	// DO NOT LOCALIZE
-	}
-	
 	
 	NSDocument *document = [[NSDocumentController sharedDocumentController] currentDocument];
     if (document && [document isKindOfClass:[KTDocument class]])
