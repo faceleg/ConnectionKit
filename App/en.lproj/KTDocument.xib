@@ -11,10 +11,10 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
+			<integer value="2214"/>
+			<integer value="1793"/>
 			<integer value="2122"/>
 			<integer value="2183"/>
-			<integer value="1793"/>
-			<integer value="2045"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -3509,20 +3509,20 @@
 						<string key="oDotSeparator">NSTextField</string>
 						<string key="oEditTextButton">NSButton</string>
 						<string key="oExtensionPopup">KSFancySchmancyBindingsPopUpButton</string>
-						<string key="oExternalURLField">NSTextField</string>
-						<string key="oFileNameField">NSTextField</string>
+						<string key="oExternalURLField">KSFocusingTextField</string>
+						<string key="oFileNameField">KSFocusingTextField</string>
 						<string key="oFilePrompt">NSTextField</string>
 						<string key="oFollowButton">NSButton</string>
 						<string key="oIndexAndExtensionPopup">KSFancySchmancyBindingsPopUpButton</string>
-						<string key="oMediaFilenameField">NSTextField</string>
-						<string key="oMetaDescriptionField">NSTextField</string>
+						<string key="oMediaFilenameField">KSFocusingTextField</string>
+						<string key="oMetaDescriptionField">KSFocusingTextField</string>
 						<string key="oMetaDescriptionPrompt">NSTextField</string>
 						<string key="oMultiplePagesField">NSTextField</string>
 						<string key="oPagesController">SVPagesController</string>
 						<string key="oPublishAsCollectionPopup">BWIWorkPopUpButton</string>
 						<string key="oSiteOutlineController">SVSiteOutlineViewController</string>
 						<string key="oSlashSeparator">NSTextField</string>
-						<string key="oWindowTitleField">NSTextField</string>
+						<string key="oWindowTitleField">KSFocusingTextField</string>
 						<string key="oWindowTitlePrompt">NSTextField</string>
 						<string key="webContentAreaController">SVWebContentAreaController</string>
 					</dictionary>
@@ -3565,11 +3565,11 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="oExternalURLField">
 							<string key="name">oExternalURLField</string>
-							<string key="candidateClassName">NSTextField</string>
+							<string key="candidateClassName">KSFocusingTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="oFileNameField">
 							<string key="name">oFileNameField</string>
-							<string key="candidateClassName">NSTextField</string>
+							<string key="candidateClassName">KSFocusingTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="oFilePrompt">
 							<string key="name">oFilePrompt</string>
@@ -3585,11 +3585,11 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="oMediaFilenameField">
 							<string key="name">oMediaFilenameField</string>
-							<string key="candidateClassName">NSTextField</string>
+							<string key="candidateClassName">KSFocusingTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="oMetaDescriptionField">
 							<string key="name">oMetaDescriptionField</string>
-							<string key="candidateClassName">NSTextField</string>
+							<string key="candidateClassName">KSFocusingTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="oMetaDescriptionPrompt">
 							<string key="name">oMetaDescriptionPrompt</string>
@@ -3617,7 +3617,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="oWindowTitleField">
 							<string key="name">oWindowTitleField</string>
-							<string key="candidateClassName">NSTextField</string>
+							<string key="candidateClassName">KSFocusingTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="oWindowTitlePrompt">
 							<string key="name">oWindowTitlePrompt</string>

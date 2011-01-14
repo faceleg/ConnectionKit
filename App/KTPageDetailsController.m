@@ -90,6 +90,12 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 @synthesize initialWindowTitleBindingOptions = _initialWindowTitleBindingOptions;
 @synthesize initialMetaDescriptionBindingOptions = _initialMetaDescriptionBindingOptions;
 
+@synthesize windowTitleTrackingArea		= _windowTitleTrackingArea;
+@synthesize metaDescriptionTrackingArea = _metaDescriptionTrackingArea;
+@synthesize externalURLTrackingArea		= _externalURLTrackingArea;
+@synthesize fileNameTrackingArea		= _fileNameTrackingArea;
+@synthesize mediaFilenameTrackingArea	= _mediaFilenameTrackingArea;
+
 #pragma mark -
 #pragma mark Init & Dealloc
 
@@ -840,9 +846,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	
 	if (arePagesSelected || areLinksSelected)
 	{
-		if (!_metaTrackingArea)
+		if (!_metaDescriptionTrackingArea)
 		{
-			_metaTrackingArea = [[NSTrackingArea alloc] initWithRect:[oMetaDescriptionField bounds]
+			_metaDescriptionTrackingArea = [[NSTrackingArea alloc] initWithRect:[oMetaDescriptionField bounds]
 															 options:
 								 NSTrackingActiveInKeyWindow
 								 | NSTrackingActiveInActiveApp
@@ -850,16 +856,14 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 								 | NSTrackingMouseEnteredAndExited
 															   owner:self
 															userInfo:nil];
-			[oMetaDescriptionField addTrackingArea:_metaTrackingArea];
-			NSLog(@"ADD    %p, %@", _metaTrackingArea, NSStringFromRect([oMetaDescriptionField bounds]));
+			[oMetaDescriptionField addTrackingArea:_metaDescriptionTrackingArea];
 		}
 	}
-	else if (_metaTrackingArea)
+	else if (_metaDescriptionTrackingArea)
 	{
-		NSLog(@"REMOVE %p", _metaTrackingArea);
-		[oMetaDescriptionField removeTrackingArea:_metaTrackingArea];
-		[_metaTrackingArea release];
-		_metaTrackingArea = nil;
+		[oMetaDescriptionField removeTrackingArea:_metaDescriptionTrackingArea];
+		[_metaDescriptionTrackingArea release];
+		_metaDescriptionTrackingArea = nil;
 
 	}
 	

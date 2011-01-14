@@ -12,13 +12,16 @@
 
 enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSiteItemType, kPageSiteItemType, kMixedSiteItemType = -1 };
 
-@class SVSiteOutlineViewController, SVPagesController, KSFancySchmancyBindingsPopUpButton, KTPageDetailsBoxView, MAAttachedWindow, SVWebContentAreaController;
+@class SVSiteOutlineViewController, SVPagesController, KSFancySchmancyBindingsPopUpButton, KTPageDetailsBoxView, MAAttachedWindow, SVWebContentAreaController, KSFocusingTextField;
 
 
 @interface KTPageDetailsController : NSViewController
 {
-	IBOutlet NSTextField			*oWindowTitleField;
-	IBOutlet NSTextField			*oMetaDescriptionField;
+	IBOutlet KSFocusingTextField	*oWindowTitleField;
+	IBOutlet KSFocusingTextField	*oMetaDescriptionField;
+	IBOutlet KSFocusingTextField	*oExternalURLField;
+	IBOutlet KSFocusingTextField	*oFileNameField;		// binds to fileName
+	IBOutlet KSFocusingTextField	*oMediaFilenameField;	// binds to filename
 
 	IBOutlet NSTextField			*oWindowTitlePrompt;
 	IBOutlet NSTextField			*oMetaDescriptionPrompt;
@@ -26,8 +29,6 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 
 	
 	IBOutlet NSTextField			*oBaseURLField;
-	IBOutlet NSTextField			*oFileNameField;		// binds to fileName
-	IBOutlet NSTextField			*oMediaFilenameField;	// binds to filename
 	IBOutlet NSTextField			*oDotSeparator;
 
 	IBOutlet NSTextField			*oSlashSeparator;
@@ -35,7 +36,6 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 	IBOutlet KSFancySchmancyBindingsPopUpButton			*oIndexAndExtensionPopup;
 	IBOutlet NSTextField			*oMultiplePagesField;
 
-	IBOutlet NSTextField			*oExternalURLField;
 
 	IBOutlet NSButton				*oFollowButton;
 	IBOutlet NSButton				*oChooseFileButton;
@@ -71,9 +71,19 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 
 	BOOL _awokenFromNib;
 	
-	NSTrackingArea *_metaTrackingArea;
+	NSTrackingArea *_windowTitleTrackingArea;
+	NSTrackingArea *_metaDescriptionTrackingArea;
+	NSTrackingArea *_externalURLTrackingArea;
+	NSTrackingArea *_fileNameTrackingArea;
+	NSTrackingArea *_mediaFilenameTrackingArea;
 	
 }
+
+@property (retain) NSTrackingArea *windowTitleTrackingArea;
+@property (retain) NSTrackingArea *metaDescriptionTrackingArea;
+@property (retain) NSTrackingArea *externalURLTrackingArea;
+@property (retain) NSTrackingArea *fileNameTrackingArea;
+@property (retain) NSTrackingArea *mediaFilenameTrackingArea;
 
 @property(nonatomic, retain) IBOutlet SVWebContentAreaController *webContentAreaController;
 
