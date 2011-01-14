@@ -376,4 +376,16 @@
             IKImageBrowserNSURLRepresentationType);
 }
 
+#pragma mark Pasteboard
+
+- (BOOL)awakeFromPasteboardItems:(NSArray *)items;
+{
+    BOOL result = [super awakeFromPasteboardItems:items];
+    
+    NSString *title = [[items lastObject] title];
+    [self setAlternateText:title];
+    
+    return result;
+}
+
 @end
