@@ -3495,6 +3495,22 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					</object>
 					<int key="connectionID">544</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selectionIndexes.count</string>
+						<reference key="source" ref="549251230"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="549251230"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selectionIndexes.count</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selectionIndexes.count</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">552</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -5206,7 +5222,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">544</int>
+			<int key="maxID">552</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5244,6 +5260,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/KSPopUpButton.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">KSFocusingTextField</string>
+					<string key="superclassName">NSTextField</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../../Shared/AppKit/KSFocusingTextField.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -5430,20 +5454,20 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<string>NSTextField</string>
 							<string>NSButton</string>
 							<string>KSFancySchmancyBindingsPopUpButton</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
+							<string>KSFocusingTextField</string>
+							<string>KSFocusingTextField</string>
 							<string>NSTextField</string>
 							<string>NSButton</string>
 							<string>KSFancySchmancyBindingsPopUpButton</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
+							<string>KSFocusingTextField</string>
+							<string>KSFocusingTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>SVPagesController</string>
 							<string>BWIWorkPopUpButton</string>
 							<string>SVSiteOutlineViewController</string>
 							<string>NSTextField</string>
-							<string>NSTextField</string>
+							<string>KSFocusingTextField</string>
 							<string>NSTextField</string>
 							<string>SVWebContentAreaController</string>
 						</object>
@@ -5518,11 +5542,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oExternalURLField</string>
-								<string key="candidateClassName">NSTextField</string>
+								<string key="candidateClassName">KSFocusingTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oFileNameField</string>
-								<string key="candidateClassName">NSTextField</string>
+								<string key="candidateClassName">KSFocusingTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oFilePrompt</string>
@@ -5538,11 +5562,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oMediaFilenameField</string>
-								<string key="candidateClassName">NSTextField</string>
+								<string key="candidateClassName">KSFocusingTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oMetaDescriptionField</string>
-								<string key="candidateClassName">NSTextField</string>
+								<string key="candidateClassName">KSFocusingTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oMetaDescriptionPrompt</string>
@@ -5570,7 +5594,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oWindowTitleField</string>
-								<string key="candidateClassName">NSTextField</string>
+								<string key="candidateClassName">KSFocusingTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oWindowTitlePrompt</string>
