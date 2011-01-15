@@ -115,14 +115,24 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
     NSString *languageCode = [[self inspectedObjectsController]
                               valueForKeyPath:@"selection.master.language"];
     
-    NSInteger theIndex = [oLanguagePopup indexOfItemWithRepresentedObject:languageCode];
-    BOOL otherLanguage = (theIndex < 0);
-    [oLanguageCodeField setEnabled:otherLanguage];
-    if (otherLanguage)
+    BOOL selection = (languageCode != NSNoSelectionMarker);
+    [oLanguagePopup setEnabled:selection];
+    
+    if (selection)
     {
-        theIndex = [oLanguagePopup indexOfItemWithTag:-1];
+        NSInteger theIndex = [oLanguagePopup indexOfItemWithRepresentedObject:languageCode];
+        BOOL otherLanguage = (theIndex < 0);
+        [oLanguageCodeField setEnabled:otherLanguage];
+        if (otherLanguage)
+        {
+            theIndex = [oLanguagePopup indexOfItemWithTag:-1];
+        }
+        [oLanguagePopup selectItemAtIndex:theIndex];
     }
-    [oLanguagePopup selectItemAtIndex:theIndex];
+    else
+    {
+        [oLanguageCodeField setEnabled:NO];
+    }
 }
 
 - (NSArray *)languages
