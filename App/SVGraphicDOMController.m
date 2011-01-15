@@ -108,7 +108,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
     else
     {
-        [self setBodyHTMLElement:[self HTMLElement]];
+        if ([self isHTMLElementCreated]) [self setBodyHTMLElement:[self HTMLElement]];
     }
 }
 
