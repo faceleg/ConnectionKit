@@ -45,7 +45,7 @@
 
 - (void)setInspectedWindow:(NSWindow *)window
 {
-    if ([self inspectedWindow])
+    if (!window)
     {
         [self unbind:@"inspectedPagesController"];
         [self setInspectedPagesController:[[self class] noSelectionController]];
