@@ -71,6 +71,22 @@
 
 #pragma mark DOM Element Loading
 
+- (DOMHTMLElement *)HTMLElement;
+{
+    DOMHTMLElement *result = [super HTMLElement];
+    if (!result)
+    {
+        DOMElement *parentElement = [[self parentWebEditorItem] HTMLElement];
+        if (parentElement)
+        {
+            [self loadHTMLElementFromDocument:[parentElement ownerDocument]];
+            result = [self HTMLElement];
+        }
+    }
+    
+    return result;
+}
+
 - (void)createHTMLElement
 {
     // Gather the HTML
