@@ -177,11 +177,6 @@
     [super setHTMLElement:element];
 }
 
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
-{
-    [super loadHTMLElementFromDocument:document];
-}
-
 #pragma mark Update
 
 - (void)updateSize;
