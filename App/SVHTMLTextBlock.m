@@ -208,6 +208,7 @@
     NSDictionary *graphicalTextSettings = [[design imageReplacementTags] objectForKey:graphicalTextCode];
     if (!graphicalTextSettings) return;
     
+    [design loadLocalFontsIfNeeded];    // #102950
     NSURL *composition = [design URLForCompositionForImageReplacementCode:graphicalTextCode];
     NSString *text = [(SVTitleBox *)HTML_VALUE text];
     
