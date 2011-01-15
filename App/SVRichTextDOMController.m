@@ -576,14 +576,21 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (void)webEditorTextDidSetSelectionTypesForPasteboard:(NSPasteboard *)pasteboard;
 {
-    [pasteboard addTypes:[NSArray arrayWithObject:@"com.karelia.html+graphics"] owner:self];
+    // No point writing custom HTML if there's no items selected. Besides, messes up for simple pastes like #103440
+    if ([[self webEditor] selectedItem])
+    {
+        [pasteboard addTypes:[NSArray arrayWithObject:@"com.karelia.html+graphics"] owner:self];
+    }
 }
 
-- (void)XwebEditorTextDidWriteSelectionToPasteboard:(NSPasteboard *)pasteboard;
+- (void)webEditorTextDidWriteSelectionToPasteboard:(NSPasteboard *)pasteboard;
 {
-    [SVAttributedHTMLWriter writeDOMRange:[[self webEditor] selectedDOMRange]
-                             toPasteboard:pasteboard
-                       graphicControllers:[self childWebEditorItems]];
+    if ([[pasteboard types] containsObject:@"com.karelia.html+graphics"])
+    {
+        [SVAttributedHTMLWriter writeDOMRange:[[self webEditor] selectedDOMRange]
+                                 toPasteboard:pasteboard
+                           graphicControllers:[self childWebEditorItems]];
+    }
 }
 
 #pragma mark KVO
