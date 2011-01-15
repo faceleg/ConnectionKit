@@ -403,10 +403,8 @@
 #pragma mark Pasteboard / Drag
 
 // Up to subclasses to add custom types
-- (void)webEditorTextDidSetSelectionTypesForPasteboard:(NSPasteboard *)pasteboard;
-{
-    
-}
+- (void)webEditorTextDidSetSelectionTypesForPasteboard:(NSPasteboard *)pasteboard; { }
+- (void)webEditorTextDidWriteSelectionToPasteboard:(NSPasteboard *)pasteboard; { }
 
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
 {

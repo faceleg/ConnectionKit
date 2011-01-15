@@ -577,7 +577,10 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 - (void)webEditorTextDidSetSelectionTypesForPasteboard:(NSPasteboard *)pasteboard;
 {
     [pasteboard addTypes:[NSArray arrayWithObject:@"com.karelia.html+graphics"] owner:self];
-    
+}
+
+- (void)XwebEditorTextDidWriteSelectionToPasteboard:(NSPasteboard *)pasteboard;
+{
     [SVAttributedHTMLWriter writeDOMRange:[[self webEditor] selectedDOMRange]
                              toPasteboard:pasteboard
                        graphicControllers:[self childWebEditorItems]];

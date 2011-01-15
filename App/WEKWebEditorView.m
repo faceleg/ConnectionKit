@@ -2453,6 +2453,11 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     [[self focusedText] webEditorTextDidSetSelectionTypesForPasteboard:pasteboard];
 }
 
+- (void)webView:(WebView *)webView didWriteSelectionToPasteboard:(NSPasteboard *)pasteboard
+{
+    [[self focusedText] webEditorTextDidWriteSelectionToPasteboard:pasteboard];
+}
+
 @end
 
 

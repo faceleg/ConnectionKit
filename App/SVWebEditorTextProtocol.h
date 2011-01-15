@@ -41,6 +41,7 @@
 
 #pragma mark Pasteboard
 - (void)webEditorTextDidSetSelectionTypesForPasteboard:(NSPasteboard *)pasteboard;
+- (void)webEditorTextDidWriteSelectionToPasteboard:(NSPasteboard *)pasteboard;
 
 
 #pragma mark Drag & Drop
