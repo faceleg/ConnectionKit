@@ -282,8 +282,7 @@
     {
         // Prepare to write HTML
         NSMutableString *editingHTML = [[NSMutableString alloc] init];
-        OBASSERT(!_changeHTMLContext);
-        _changeHTMLContext = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:editingHTML
+        SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:editingHTML
                                                                inheritFromContext:[self HTMLContext]];
         
         
@@ -295,7 +294,7 @@
         if (attributedHTML)
         {
             // Generate HTML for the DOM
-            [_changeHTMLContext writeAttributedHTMLString:attributedHTML];
+            [context writeAttributedHTMLString:attributedHTML];
         }
         
         
@@ -316,8 +315,16 @@
             
             // Remove source dragged items if they came from us. No need to call -didChangeText as the insertion will do that
             [webEditor removeDraggedItems];
+            
+            
+            // Insert controllers. They will be hooked up lazily by -hitTest:
+            for (WEKWebEditorItem *anItem in [[context rootDOMController] childWebEditorItems])
+            {
+                [self addChildWebEditorItem:anItem];
+            }
         }
         
+        [context release];
         [editingHTML release];
     }
     

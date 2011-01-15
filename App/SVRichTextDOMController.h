@@ -15,8 +15,6 @@
 
 @interface SVRichTextDOMController : SVTextDOMController 
 {
-    SVWebEditorHTMLContext  *_changeHTMLContext;
-    
   @private
     BOOL    _isUpdating;
     

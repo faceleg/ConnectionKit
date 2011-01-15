@@ -94,7 +94,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [_graphicsController removeObserver:self forKeyPath:@"arrangedObjects"];
     
     // Release ivars
-    [_changeHTMLContext release];//OBASSERT(!_changeHTMLContext);
     [_graphicsController release];
     
     [super dealloc];
@@ -146,21 +145,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (void)webEditorTextDidChange;
 {    
-    // Are there DOM Controllers from the change waiting to be inserted?
-    if (_changeHTMLContext)
-    {
-        for (WEKWebEditorItem *anItem in [[_changeHTMLContext rootDOMController] childWebEditorItems])
-        {
-            // Web Editor View Controller will pick up the insertion in its delegate method and handle the various side-effects.
-            [self addChildWebEditorItem:anItem];
-        }
-        
-        [_changeHTMLContext release]; _changeHTMLContext = nil;
-    }
-        
-        
-    
-    
     _isUpdating = YES;
     @try
     {
