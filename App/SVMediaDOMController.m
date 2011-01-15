@@ -167,7 +167,7 @@
     // Is this a change due to being orphaned while editing? If so, pass down to image controller too. #83312
     for (WEKWebEditorItem *anItem in [self childWebEditorItems])
     {
-        if ([self HTMLElement] == [anItem HTMLElement])
+        if ([self isHTMLElementCreated] && ([self HTMLElement] == [anItem HTMLElement]))
         {
             [anItem setHTMLElement:element];
         }
