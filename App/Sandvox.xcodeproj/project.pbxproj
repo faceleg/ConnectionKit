@@ -308,6 +308,8 @@
 		2726DE8E11E699720000257D /* RawHTMLPlaceholder.html in Resources */ = {isa = PBXBuildFile; fileRef = 2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */; };
 		2727551212410C010043C223 /* SVPlugInGraphicFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 2727551012410C010043C223 /* SVPlugInGraphicFactory.h */; };
 		2727551312410C010043C223 /* SVPlugInGraphicFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 2727551112410C010043C223 /* SVPlugInGraphicFactory.m */; };
+		2728C12512E31390008B6CD2 /* KSIsNotNSNotFound.h in Headers */ = {isa = PBXBuildFile; fileRef = 2728C12312E31390008B6CD2 /* KSIsNotNSNotFound.h */; };
+		2728C12612E31390008B6CD2 /* KSIsNotNSNotFound.m in Sources */ = {isa = PBXBuildFile; fileRef = 2728C12412E31390008B6CD2 /* KSIsNotNSNotFound.m */; };
 		272B38CD10B18FB60056B4CA /* SVPlugInGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */; };
 		272B38CE10B18FB60056B4CA /* SVPlugInGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */; };
 		272B3B2910B20B240056B4CA /* SVInspectorButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */; };
@@ -1874,6 +1876,8 @@
 		2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = RawHTMLPlaceholder.html; sourceTree = "<group>"; };
 		2727551012410C010043C223 /* SVPlugInGraphicFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInGraphicFactory.h; sourceTree = "<group>"; };
 		2727551112410C010043C223 /* SVPlugInGraphicFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInGraphicFactory.m; sourceTree = "<group>"; };
+		2728C12312E31390008B6CD2 /* KSIsNotNSNotFound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSIsNotNSNotFound.h; sourceTree = "<group>"; };
+		2728C12412E31390008B6CD2 /* KSIsNotNSNotFound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSIsNotNSNotFound.m; sourceTree = "<group>"; };
 		272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInGraphic.h; sourceTree = "<group>"; };
 		272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInGraphic.m; sourceTree = "<group>"; };
 		272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInspectorButtonCell.h; sourceTree = "<group>"; };
@@ -5021,6 +5025,8 @@
 				27CC249C11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m */,
 				27DD06F81201BDB90083C7C1 /* KSInvocationOperation.h */,
 				27DD06F91201BDB90083C7C1 /* KSInvocationOperation.m */,
+				2728C12312E31390008B6CD2 /* KSIsNotNSNotFound.h */,
+				2728C12412E31390008B6CD2 /* KSIsNotNSNotFound.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -5913,6 +5919,7 @@
 				2794A45412B235B40077A291 /* SVFaviconPickerController.h in Headers */,
 				CEB516C212B7E42A003A5505 /* SVTruncationController.h in Headers */,
 				277AFC9F12DBCF9B009CD192 /* SVFooter.h in Headers */,
+				2728C12512E31390008B6CD2 /* KSIsNotNSNotFound.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7430,6 +7437,7 @@
 				2794A45512B235B40077A291 /* SVFaviconPickerController.m in Sources */,
 				CEB516C312B7E42A003A5505 /* SVTruncationController.m in Sources */,
 				277AFCA012DBCF9B009CD192 /* SVFooter.m in Sources */,
+				2728C12612E31390008B6CD2 /* KSIsNotNSNotFound.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
