@@ -2160,35 +2160,43 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: inspectedObjectsController.selectionIndexes.count</string>
+						<string key="label">enabled: inspectedObjectsController.selectionIndex</string>
 						<reference key="source" ref="677465902"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="677465902"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">enabled: inspectedObjectsController.selectionIndexes.count</string>
+							<string key="NSLabel">enabled: inspectedObjectsController.selectionIndex</string>
 							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">inspectedObjectsController.selectionIndexes.count</string>
+							<string key="NSKeyPath">inspectedObjectsController.selectionIndex</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">KSIsNotNSNotFound</string>
+							</object>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">744</int>
+					<int key="connectionID">747</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: inspectedObjectsController.selectionIndexes.count</string>
+						<string key="label">enabled: inspectedObjectsController.selectionIndex</string>
 						<reference key="source" ref="741194879"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="741194879"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">enabled: inspectedObjectsController.selectionIndexes.count</string>
+							<string key="NSLabel">enabled: inspectedObjectsController.selectionIndex</string>
 							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">inspectedObjectsController.selectionIndexes.count</string>
+							<string key="NSKeyPath">inspectedObjectsController.selectionIndex</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">KSIsNotNSNotFound</string>
+							</object>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">745</int>
+					<int key="connectionID">749</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3703,7 +3711,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">745</int>
+			<int key="maxID">749</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
