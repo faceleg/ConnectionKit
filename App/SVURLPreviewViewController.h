@@ -16,6 +16,7 @@
 {
   @private
     SVSiteItem  *_siteItem;
+    BOOL        _copyNextLoadedURLToModel;
 	
 	NSString *_metaDescription;
 }

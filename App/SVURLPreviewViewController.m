@@ -53,6 +53,7 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     [super setWebView:webView];
     [webView setFrameLoadDelegate:self];
     [webView setPolicyDelegate:self];
+    [webView setUIDelegate:self];
 }
 
 - (NSString *)HTMLTemplateAndURL:(NSURL **)outURL
@@ -324,9 +325,20 @@ webContentAreaController:(SVWebContentAreaController *)controller;
     if (frame == [webView mainFrame])
     {
         WebNavigationType type = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
-        if (type != WebNavigationTypeReload && type != WebNavigationTypeOther)
+        switch (type)
         {
-            result = NO;
+            case WebNavigationTypeOther:
+                if (_copyNextLoadedURLToModel)
+                {
+                    _copyNextLoadedURLToModel = NO;
+                    [(SVExternalLink *)[self siteItem] setURL:[request URL]];
+                }
+                
+            case WebNavigationTypeReload:
+                break;
+                
+            default:
+                result = NO;
         }
     }
     
@@ -340,6 +352,8 @@ webContentAreaController:(SVWebContentAreaController *)controller;
         NSURL *URL = [request URL];
         [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
     }
+    
+    _copyNextLoadedURLToModel = NO; // reset
 }
 
 /*	We don't want to allow navigation within Sandvox! Open in web browser instead
@@ -354,6 +368,13 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 	
 	NSURL *URL = [request URL];
 	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
+}
+
+#pragma mark WebUIDelegate
+
+- (void)webView:(WebView *)sender willPerformDragDestinationAction:(WebDragDestinationAction)action forDraggingInfo:(id < NSDraggingInfo >)draggingInfo
+{
+    if (action == WebDragDestinationActionLoad) _copyNextLoadedURLToModel = YES;
 }
 
 @end
