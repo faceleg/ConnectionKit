@@ -330,7 +330,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		@"sandvox.GeneralIndex",	@"DefaultIndexBundleIdentifier",
 		@"sandvox.BadgeElement",	@"DefaultBadgeBundleIdentifier",		// can be empty
 		@"sandvox.RSSBadgeElement",	@"DefaultRSSBadgeBundleIdentifier",		// can be empty
-		@"index.xml", @"RSSFileName",
+		@"index.rss", @"RSSFileName",
 		@"index", @"htmlIndexBaseName",
 		@"archives", @"archivesBaseName",
 										 
