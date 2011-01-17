@@ -125,6 +125,10 @@
 {
     OBPRECONDITION(object);
     
+    // Make sure sidebar is visible. #103828
+    [[self page] setShowSidebar:NSBOOL(YES)];
+    
+    
     // Add to as many descendants as appropriate. Must do it before calling super otherwise inheritablePagelets will be wrong
     [[self class]
      _addPagelet:object toSidebarOfDescendantsOfPageIfApplicable:[self page]];
