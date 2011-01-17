@@ -138,14 +138,27 @@
     NSString *mediaPath = [_publisher publishMediaWithRequest:request];
     
     KTPage *page = [self page];
-    NSString *pagePath = [[_publisher baseRemotePath] stringByAppendingPathComponent:[page uploadPath]];
-    
-    NSString *relPath = [mediaPath ks_pathRelativeToDirectory:[pagePath stringByDeletingLastPathComponent]];
-    
-    if (relPath)
+    if (page)
     {
-        // Can't use -baseURL here as it may differ to [page URL] (e.g. archive pages) #98791
-        NSURL *result = [NSURL URLWithString:relPath relativeToURL:[page URL]];
+        NSString *pagePath = [[_publisher baseRemotePath] stringByAppendingPathComponent:[page uploadPath]];
+        
+        NSString *relPath = [mediaPath ks_pathRelativeToDirectory:[pagePath stringByDeletingLastPathComponent]];
+        
+        if (relPath)
+        {
+            // Can't use -baseURL here as it may differ to [page URL] (e.g. archive pages) #98791
+            NSURL *result = [NSURL URLWithString:relPath relativeToURL:[page URL]];
+            return result;
+        }
+    }
+    else
+    {
+        // e.g. RSS
+        NSString *mediaPathRelativeToBase = [mediaPath ks_pathRelativeToDirectory:[_publisher baseRemotePath]];
+        
+        NSURL *result = [NSURL URLWithString:mediaPathRelativeToBase
+                               relativeToURL:[[[_publisher site] rootPage] URL]];
+        
         return result;
     }
     
