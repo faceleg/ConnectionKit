@@ -305,6 +305,7 @@
         NSString *RSSUploadPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
         
         SVHTMLContext *context2 = [publishingEngine beginPublishingHTMLToPath:RSSUploadPath];
+        [context2 setBaseURL:nil]; // #103807
         [self writeRSSFeed:context2];
         [context2 close];
         
