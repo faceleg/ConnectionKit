@@ -1065,9 +1065,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 //  as an option, this method will be called.
 // -------------------------------------------------------------------------------
 - (void)mouseEntered:(NSEvent*)event
-{
-	NSLog(@"mouseEntered %@", event);
-	
+{	
 	KSShadowedRectView *view = (KSShadowedRectView *)[oMetaDescriptionField superview];
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
 	
@@ -1083,7 +1081,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 // -------------------------------------------------------------------------------
 - (void)mouseExited:(NSEvent*)event
 {
-	NSLog(@"mouseExited %@", event);
 	KSShadowedRectView *view = (KSShadowedRectView *)[oMetaDescriptionField superview];
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
 	[view setHiliteRect:NSZeroRect];
