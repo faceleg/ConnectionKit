@@ -64,5 +64,6 @@
 - (void)configureComments:(NSWindowController *)sender;
 - (void)setMaster:(KTMaster *)master;
 - (IBAction)closeSheet:(id)sender;
+- (IBAction)windowHelp:(id)sender;
 
 @end

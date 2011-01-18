@@ -27,4 +27,6 @@
 
 - (void)setSite:(KTSite *)master;
 
+- (IBAction)windowHelp:(id)sender;
+
 @end

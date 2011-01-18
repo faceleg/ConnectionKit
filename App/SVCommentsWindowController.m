@@ -51,4 +51,9 @@
     [NSApp endSheet:[self window]];
 }
 
+- (IBAction)windowHelp:(id)sender
+{
+    [[NSApp delegate] showHelpPage:@"Comments"];    // HELPSTRING
+}
+
 @end

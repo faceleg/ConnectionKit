@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="45"/>
+			<integer value="2"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -639,6 +639,26 @@ ZWJzaXRlIHRvIGNvbmZpcm0gdmVyaWZpY2F0aW9uLg</bytes>
 								<reference key="NSTextColor" ref="393350311"/>
 							</object>
 						</object>
+						<object class="NSButton" id="254248838">
+							<reference key="NSNextResponder" ref="1006"/>
+							<int key="NSvFlags">292</int>
+							<string key="NSFrame">{{17, 16}, {25, 25}}</string>
+							<reference key="NSSuperview" ref="1006"/>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSButtonCell" key="NSCell" id="220478691">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">134217728</int>
+								<string key="NSContents"/>
+								<reference key="NSSupport" ref="95827749"/>
+								<reference key="NSControlView" ref="254248838"/>
+								<int key="NSButtonFlags">-2038415105</int>
+								<int key="NSButtonFlags2">161</int>
+								<string key="NSAlternateContents"/>
+								<string key="NSKeyEquivalent"/>
+								<int key="NSPeriodicDelay">200</int>
+								<int key="NSPeriodicInterval">25</int>
+							</object>
+						</object>
 					</object>
 					<string key="NSFrameSize">{617, 377}</string>
 					<reference key="NSSuperview"/>
@@ -791,6 +811,14 @@ OyBzLnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGdhLCBzKTsKICB9KSgpOwoKPC9zY3JpcHQ+A</strin
 					</object>
 					<int key="connectionID">93</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">windowHelp:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="254248838"/>
+					</object>
+					<int key="connectionID">96</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -840,6 +868,7 @@ OyBzLnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGdhLCBzKTsKICB9KSgpOwoKPC9zY3JpcHQ+A</strin
 							<reference ref="165569073"/>
 							<reference ref="177887969"/>
 							<reference ref="673448552"/>
+							<reference ref="254248838"/>
 						</object>
 						<reference key="parent" ref="1005"/>
 					</object>
@@ -1048,6 +1077,20 @@ OyBzLnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGdhLCBzKTsKICB9KSgpOwoKPC9zY3JpcHQ+A</strin
 						<reference key="object" ref="200557576"/>
 						<reference key="parent" ref="177887969"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">94</int>
+						<reference key="object" ref="254248838"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="220478691"/>
+						</object>
+						<reference key="parent" ref="1006"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">95</int>
+						<reference key="object" ref="220478691"/>
+						<reference key="parent" ref="254248838"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1106,13 +1149,16 @@ OyBzLnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGdhLCBzKTsKICB9KSgpOwoKPC9zY3JpcHQ+A</strin
 					<string>84.IBPluginDependency</string>
 					<string>84.IBViewBoundsToFrameTransform</string>
 					<string>84.ImportedFromIB2</string>
+					<string>94.IBPluginDependency</string>
+					<string>94.IBViewBoundsToFrameTransform</string>
+					<string>95.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{576, 628}, {617, 377}}</string>
+					<string>{{550, 628}, {617, 377}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{576, 628}, {617, 377}}</string>
+					<string>{{550, 628}, {617, 377}}</string>
 					<boolean value="NO"/>
 					<string>{196, 240}</string>
 					<string>{{202, 428}, {480, 270}}</string>
@@ -1181,6 +1227,11 @@ OyBzLnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGdhLCBzKTsKICB9KSgpOwoKPC9zY3JpcHQ+A</strin
 						<bytes key="NSTransformStruct">P4AAAL+AAABCAAAAw6gAAA</bytes>
 					</object>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABDUgAAwfAAAA</bytes>
+					</object>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -1199,7 +1250,7 @@ OyBzLnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGdhLCBzKTsKICB9KSgpOwoKPC9zY3JpcHQ+A</strin
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">93</int>
+			<int key="maxID">96</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1503,11 +1554,13 @@ OyBzLnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGdhLCBzKTsKICB9KSgpOwoKPC9zY3JpcHQ+A</strin
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>closeSheet:</string>
 							<string>configureGoogle:</string>
+							<string>windowHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
 							<string>NSWindowController</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -1516,6 +1569,7 @@ OyBzLnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGdhLCBzKTsKICB9KSgpOwoKPC9zY3JpcHQ+A</strin
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>closeSheet:</string>
 							<string>configureGoogle:</string>
+							<string>windowHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1526,6 +1580,10 @@ OyBzLnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGdhLCBzKTsKICB9KSgpOwoKPC9zY3JpcHQ+A</strin
 							<object class="IBActionInfo">
 								<string key="name">configureGoogle:</string>
 								<string key="candidateClassName">NSWindowController</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">windowHelp:</string>
+								<string key="candidateClassName">id</string>
 							</object>
 						</object>
 					</object>

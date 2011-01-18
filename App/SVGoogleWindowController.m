@@ -86,4 +86,9 @@
     [NSApp endSheet:[self window]];
 }
 
+- (IBAction)windowHelp:(id)sender
+{
+    [[NSApp delegate] showHelpPage:@"Google_Integration"];    // HELPSTRING
+}
+
 @end
