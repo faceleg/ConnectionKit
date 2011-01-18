@@ -75,6 +75,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     SVMediaRecord *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
                                                           inManagedObjectContext:context];
     
+    if (media.fileURL) [result setAlias:[BDAlias aliasWithPath:media.fileURL.path]];
     [result setMedia:media];
     [result setPreferredFilename:[media preferredFilename]];
     
