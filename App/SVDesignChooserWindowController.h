@@ -44,6 +44,7 @@
 
 - (IBAction)cancelSheet:(id)sender;
 - (IBAction)chooseDesign:(id)sender;
+- (IBAction) windowHelp:(id)sender;
 
 // Selector should take the form -designChooserDidEnd:returnCode:
 - (void)beginDesignChooserForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector;

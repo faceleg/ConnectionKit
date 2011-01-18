@@ -16,6 +16,7 @@
 #import "SVDesignsController.h"
 #import "KT.h"
 #import "Debug.h"
+#import "KSAppDelegate.h"
 
 #import "KSPlugInWrapper.h"
 #import "MGScopeBar.h"
@@ -230,6 +231,11 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
     [_targetWhenChosen performSelector:_selectorWhenChosen withObject:self];    
     _targetWhenChosen = nil;
     _selectorWhenChosen = NULL;
+}
+
+- (IBAction) windowHelp:(id)sender;
+{
+	[[NSApp delegate] showHelpPage:@"Design_Chooser"];	// HELPSTRING
 }
 
 - (void)sendDidCancelMessage;
