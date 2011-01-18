@@ -80,7 +80,7 @@
         if (parentElement)
         {
             [self loadHTMLElementFromDocument:[parentElement ownerDocument]];
-            result = [self HTMLElement];
+            if ([self isHTMLElementCreated]) result = [self HTMLElement];
         }
     }
     
