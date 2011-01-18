@@ -329,6 +329,25 @@
     }
     
     
+    if (result)
+    {
+        // Strip out <br class="Apple-interchange-newline" />
+        // WebKit inserts these when creating a WebArchive out of something it thinks deserves them (display:block elements I believe). Thus, we strip back out since messes up formatting.
+        DOMNodeIterator *iterator = [[node ownerDocument] createNodeIterator:node whatToShow:DOM_SHOW_ELEMENT filter:nil expandEntityReferences:NO];
+        
+        DOMElement *aNode;
+        while (aNode = (DOMElement *)[iterator nextNode])
+        {
+            if ([[aNode getAttribute:@"class"] isEqualToString:@"Apple-interchange-newline"])
+            {
+                [[aNode parentNode] removeChild:aNode];
+            }
+        }
+        
+        [iterator detach];
+    }
+    
+    
     // Pretend we Inserted nothing. MUST supply empty text node otherwise WebKit interprets as a paragraph break for some reason
     if (!result)
     {
