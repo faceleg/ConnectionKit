@@ -345,18 +345,33 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 #pragma mark File Management
 
+- (BOOL)validateMedia:(NSError **)error;
+{
+    // Media must be referred to in the package, by alias, or stored raw in extensible properties
+    
+    BOOL result = ([self filename] || [self alias] || [self extensiblePropertyForKey:@"media"]);
+    if (!result && error)
+    {
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                     code:NSValidationMissingMandatoryPropertyError
+                     localizedDescription:@"Media has no source"];
+    }
+    
+    return result;
+}
+
 - (BOOL)validateForInsert:(NSError **)error
 {
     BOOL result = [super validateForInsert:error];
-    if (result)
-    {
-        // When inserting media, it must either refer to an alias, or raw data
-        result = ([self alias] || [self areContentsCached] || [self fileURL]);
-        if (!result && error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                                           code:NSValidationMissingMandatoryPropertyError
-                                           localizedDescription:@"New media must be sourced from data or location"];
-    }
+    if (result) result = [self validateMedia:error];
     return result;
+}
+
+- (BOOL)validateForUpdate:(NSError **)error;
+{
+    BOOL result = [super validateForUpdate:error];
+    if (result) result = [self validateMedia:error];
+    return result;    
 }
 
 #pragma mark Writing Files
