@@ -33,6 +33,9 @@
 
 - (void) dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:sSVWebEditorViewControllerWillUpdateNotification
+												  object:self.webEditorViewController];
 	self.webEditorViewController = nil;
 	[super dealloc];
 }
