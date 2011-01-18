@@ -37,7 +37,7 @@ img[width="0"], img[height="0"] { display:none; }
 
 
 /* While a change is happening in the editor, force floated, editable images not to float so WebKit doesn't insert spurious linebreaks. */
-.webeditor-changing [contenteditable=true] img { float:none; display:inline; !important }
+.webeditor-changing [contenteditable] img { float:none !important; display:inline !important; }
 
 
 div.svx-placeholder
