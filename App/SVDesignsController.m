@@ -55,5 +55,20 @@
 	return objects;
 }
 
+- (KTDesign *)designWithIdentifier:(NSString *)anIdentifier;
+{
+	KTDesign *result = nil;
+	NSArray *designs = [self arrangedObjects];
+	for (KTDesign *design in designs)
+	{
+		if ([[design identifier] isEqualToString:anIdentifier])
+		{
+			result = design;
+			break;
+		}
+	}
+	return result;
+}
+
 @end
 

@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class KTDesign;
 
 @interface SVDesignsController : NSArrayController {
 
@@ -15,5 +16,7 @@
 }
 
 @property (retain) NSArray *rangesOfGroups;
+
+- (KTDesign *)designWithIdentifier:(NSString *)anIdentifier;
 
 @end

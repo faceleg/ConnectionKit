@@ -389,9 +389,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 {
 	SVDesignsController *designsController = [[[SVDesignsController alloc] init] autorelease];
 	NSArray *arrangedObjects = [designsController arrangedObjects];
-
+	
     KTDesign *design = [[self pagesController] valueForKeyPath:@"selection.master.design"];
-	NSUInteger index = [arrangedObjects indexOfObject:design];
+	KTDesign *matchingDesign = [designsController designWithIdentifier:[design identifier]];
+
+	NSUInteger index = [arrangedObjects indexOfObject:matchingDesign];
 	if (NSNotFound == index || !arrangedObjects)
 	{
 		NSBeep();
@@ -414,7 +416,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	NSArray *arrangedObjects = [designsController arrangedObjects];
 	
     KTDesign *design = [[self pagesController] valueForKeyPath:@"selection.master.design"];
-	NSUInteger index = [arrangedObjects indexOfObject:design];
+	KTDesign *matchingDesign = [designsController designWithIdentifier:[design identifier]];
+
+	NSUInteger index = [arrangedObjects indexOfObject:matchingDesign];
 	if (NSNotFound == index || !arrangedObjects)
 	{
 		NSBeep();

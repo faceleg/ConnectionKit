@@ -124,7 +124,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 - (BOOL) appIsExpired;
 - (void)showDebugTableForObject:(id)inObject titled:(NSString *)inTitle;	// a table or array
-- (void)updateLicensingMenus:(NSNotification *)aNotif;
 
 #if !defined(VARIANT_RELEASE) && defined(EXPIRY_TIMESTAMP)
 - (void)warnExpiring:(id)bogus;
