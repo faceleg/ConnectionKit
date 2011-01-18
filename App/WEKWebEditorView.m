@@ -1958,6 +1958,18 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     }
     
     
+    // Also declare image
+    DOMRange *selection = [self selectedDOMRange];
+    if ([[selection text] length] == 0 &&
+        [[self selectedItems] count] == 1)
+    {
+        [pboard addTypes:NSARRAY(kUTTypeFileURL) owner:self];
+        
+        DOMHTMLImageElement *image = [[self selectedItem] HTMLElement];
+        [pboard setString:[image src] forType:kUTTypeFileURL];
+    }
+    
+    
     WEKWebEditorItem *selectedItem = [self selectedItem];
     if ([items count] == 1 &&
         [[self selectedDOMRange] ks_selectsNode:[selectedItem HTMLElement]])
