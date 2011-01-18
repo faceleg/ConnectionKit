@@ -63,7 +63,7 @@
 
 - (id)titleBox; { return nil; }
 
-- (NSNumber *) allowComments; { return NO; }
+- (NSNumber *)allowComments; { return NSBOOL(NO); }
 
 #pragma mark Other properties
 
