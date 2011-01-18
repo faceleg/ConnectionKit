@@ -34,6 +34,7 @@
 #import "SVCommentsWindowController.h"
 #import "SVGoogleWindowController.h"
 #import "SVDesignsController.h"
+#import "KTDesign.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
@@ -51,7 +52,7 @@
 
 #import "Debug.h"
 #import "Registration.h"
-
+#import "MAAttachedWindow.h"
 
 NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
@@ -459,6 +460,64 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
                                                      didEndSelector:@selector(designChooserDidEnd:returnCode:)];
 }
 
+- (void) hideDesignIdentityWindow
+{
+	[[NSAnimationContext currentContext] setDuration:1.0f];
+	[_designIdentityWindow.animator setAlphaValue:0.0];	// animate closed
+	
+}
+- (void) showDesignIdentityWindow:(KTDesign *)aDesign;
+{
+	if (!_designIdentityWindow)
+	{
+		NSUInteger kDesignIDWindowHeight = kDesignThumbHeight + 100;
+		const NSUInteger kDesignIDWindowWidth = 350;
+		const NSUInteger kDesignIDThumbY = 70;
+		
+		NSView *contentView = [[[NSView alloc] initWithFrame:NSMakeRect(0,0,kDesignIDWindowWidth, kDesignIDWindowHeight)] autorelease];
+		_designIdentityThumbnail = [[[NSImageView alloc] initWithFrame:
+									 NSMakeRect((kDesignIDWindowWidth- kDesignThumbWidth)/2.0,kDesignIDThumbY,
+												kDesignThumbWidth, kDesignThumbHeight)] autorelease];
+		[_designIdentityThumbnail setImageScaling:NSImageScaleProportionallyDown];
+		_designIdentityTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(0,0,kDesignIDWindowWidth, 40)];
+		[_designIdentityTitle setAlignment:NSCenterTextAlignment];
+		[[_designIdentityTitle cell] setLineBreakMode:NSLineBreakByTruncatingMiddle];
+		[_designIdentityTitle setTextColor:[NSColor whiteColor]];
+		[_designIdentityTitle setBordered:NO];
+		[_designIdentityTitle setBezeled:NO];
+		[_designIdentityTitle setSelectable:NO];
+		[_designIdentityTitle setDrawsBackground:NO];
+		[_designIdentityTitle setFont:[NSFont systemFontOfSize:[NSFont systemFontSize] * 2.0]];
+		
+		[contentView addSubview:_designIdentityThumbnail];
+		[contentView addSubview:_designIdentityTitle];
+
+		NSWindow *parentWindow = [self window];
+		NSRect frame = [parentWindow frame];
+		NSPoint attachmentPoint = NSMakePoint(frame.size.width/2.0,
+											  (frame.size.height-kDesignIDWindowHeight)/2.0);
+		_designIdentityWindow = [[MAAttachedWindow alloc]
+								 initWithView:contentView
+								 attachedToPoint:attachmentPoint
+								 inWindow:parentWindow
+								 onSide:MAPositionTop
+								 atDistance:0.0 ];
+		
+		[_designIdentityWindow setHasArrow:NO];
+		[_designIdentityWindow setBorderWidth:0.0];
+		[_designIdentityWindow setAlphaValue:0.0];		// initially ZERO ALPHA!
+	
+		[parentWindow addChildWindow:_designIdentityWindow ordered:NSWindowAbove];
+	}
+	[_designIdentityTitle setStringValue:[aDesign title]];
+	[_designIdentityThumbnail setImage:[aDesign thumbnail]];
+	
+	[[NSAnimationContext currentContext] setDuration:0.25f];
+	[_designIdentityWindow.animator setAlphaValue:1.0];	// animate open
+	[self performSelector:@selector(hideDesignIdentityWindow) withObject:nil afterDelay:1.0];
+
+}
+
 - (void)changeDesignTo:(KTDesign *)aDesign;
 {
 	[[self pagesController] setValue:aDesign forKeyPath:@"selection.master.design"];
@@ -486,6 +545,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 			if (page) [aGraphic didAddToPage:page];
 		}
 	}
+	[self showDesignIdentityWindow:aDesign];
 }
 - (void)designChooserDidEnd:(SVDesignChooserWindowController *)designChooser returnCode:(NSInteger)returnCode;
 {

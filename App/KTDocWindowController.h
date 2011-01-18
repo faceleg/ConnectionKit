@@ -38,6 +38,7 @@
 @class SVCommentsWindowController;
 @class SVGoogleWindowController;
 @class BWAnchoredPopUpButton;
+@class MAAttachedWindow;
 
 extern NSString *gInfoWindowAutoSaveName;
 
@@ -92,7 +93,10 @@ extern NSString *gInfoWindowAutoSaveName;
 	NSMenuItem						*_rawHTMLMenuItem;		// like an outlet
 	NSMenuItem						*_HTMLTextPageMenuItem;		// like an outlet
 
-	
+	MAAttachedWindow						*_designIdentityWindow;
+	NSTextField								*_designIdentityTitle;
+	NSImageView								*_designIdentityThumbnail;
+
 }
 
 #pragma mark Window Title
