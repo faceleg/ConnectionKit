@@ -101,14 +101,17 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     // Locate body element too
     SVGraphic *graphic = [self representedObject];
-    if ([graphic isPagelet])
+    if ([self isHTMLElementCreated])
     {
-        DOMNodeList *elements = [[self HTMLElement] getElementsByClassName:@"pagelet-body"];
-        [self setBodyHTMLElement:(DOMHTMLElement *)[elements item:0]];
-    }
-    else
-    {
-        if ([self isHTMLElementCreated]) [self setBodyHTMLElement:[self HTMLElement]];
+        if ([graphic isPagelet])
+        {
+            DOMNodeList *elements = [[self HTMLElement] getElementsByClassName:@"pagelet-body"];
+            [self setBodyHTMLElement:(DOMHTMLElement *)[elements item:0]];
+        }
+        else
+        {
+            if ([self isHTMLElementCreated]) [self setBodyHTMLElement:[self HTMLElement]];
+        }
     }
 }
 
