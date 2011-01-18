@@ -9,6 +9,8 @@
 #import "SVCommentsWindowController.h"
 #import "Debug.h"
 #import "KTMaster.h"
+#import "KSAppDelegate.h"
+
 
 @implementation SVCommentsWindowController
 @synthesize objectController = _objectController;

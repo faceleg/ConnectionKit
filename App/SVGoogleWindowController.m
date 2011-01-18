@@ -9,6 +9,7 @@
 #import "SVGoogleWindowController.h"
 #import "Debug.h"
 #import "KTSite.h"
+#import "KSAppDelegate.h"
 
 
 @implementation SVGoogleWindowController
