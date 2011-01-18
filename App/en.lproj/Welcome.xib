@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="133"/>
+			<integer value="6"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -58,7 +58,7 @@
 							<object class="NSButtonCell" key="NSCell" id="170784435">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Create a New Site</string>
+								<string key="NSContents">Create a New Site…</string>
 								<object class="NSFont" key="NSSupport" id="910301825">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -285,6 +285,7 @@
 													</object>
 													<string key="NSFrame">{{1, 1}, {208, 365}}</string>
 													<reference key="NSSuperview" ref="492737931"/>
+													<reference key="NSNextKeyView" ref="891262708"/>
 													<reference key="NSDocView" ref="891262708"/>
 													<reference key="NSBGColor" ref="789047625"/>
 													<int key="NScvFlags">4</int>
@@ -311,6 +312,7 @@
 											</object>
 											<string key="NSFrame">{{20, 20}, {225, 367}}</string>
 											<reference key="NSSuperview" ref="263548748"/>
+											<reference key="NSNextKeyView" ref="567445930"/>
 											<int key="NSsFlags">18</int>
 											<reference key="NSVScroller" ref="1017002275"/>
 											<reference key="NSHScroller" ref="163293123"/>
@@ -1527,6 +1529,7 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 					<string>79.IBPluginDependency</string>
 					<string>79.ImportedFromIB2</string>
 					<string>8.IBPluginDependency</string>
+					<string>8.IBViewBoundsToFrameTransform</string>
 					<string>8.ImportedFromIB2</string>
 					<string>9.IBPluginDependency</string>
 					<string>9.ImportedFromIB2</string>
@@ -1642,6 +1645,9 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABBoAAAwgwAAA</bytes>
+					</object>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
