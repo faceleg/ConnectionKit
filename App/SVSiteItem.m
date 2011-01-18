@@ -87,10 +87,6 @@
 
 @dynamic keywords;
 
-#pragma mark Comments
-
-@dynamic allowComments;
-
 #pragma mark Navigation
 
 /*	In addition to a standard setter, we must also invalidate old site menu

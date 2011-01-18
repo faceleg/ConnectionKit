@@ -63,8 +63,6 @@
 
 - (id)titleBox; { return nil; }
 
-- (NSNumber *)allowComments; { return NSBOOL(NO); }
-
 #pragma mark Other properties
 
 - (KTMaster *)master; { return [[self parentPage] master]; }

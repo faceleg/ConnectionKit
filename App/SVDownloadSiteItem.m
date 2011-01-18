@@ -111,8 +111,6 @@
 
 - (KTMaster *)master; { return [[self parentPage] master]; }
 
-- (NSNumber *) allowComments; { return NO; }
-
 #pragma mark KTHTMLSourceObject
 
 - (NSString *)HTMLString;
