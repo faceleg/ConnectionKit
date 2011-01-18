@@ -18,6 +18,7 @@
 #import "SVLinkManager.h"
 #import "KSSelectionBorder.h"
 
+#import "DOMElement+Karelia.h"
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
 #import "NSArray+Karelia.h"
@@ -815,8 +816,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         
         // Temporarily mark the DOM as changing. #80643
         // Yes, this is a rather horrible, kludgy hack. Mike.
-        DOMDocument *doc = [self HTMLDocument];
-        [[doc documentElement] setAttribute:@"class" value:@"webeditor-changing"];
+        [[textController textHTMLElement] ks_addClassName:@"webeditor-changing"];
     }
     
     
@@ -826,8 +826,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
 - (void)didChangeText;  // posts kSVWebEditorViewDidChangeNotification
 {
     // Unmark the DOM as changing. #80643
-    DOMDocument *doc = [self HTMLDocument];
-    [[doc documentElement] removeAttribute:@"class"];
+    for (id <SVWebEditorText> aTextController in _changingTextControllers)
+    {
+        [[aTextController textHTMLElement] ks_removeClassName:@"webeditor-changing"];
+    }
     
     
     [_changingTextControllers makeObjectsPerformSelector:@selector(webEditorTextDidChange)];

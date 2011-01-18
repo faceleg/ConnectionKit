@@ -11,6 +11,8 @@
 
 @protocol SVWebEditorText <NSObject>
 
+- (DOMHTMLElement *)textHTMLElement;
+
 // These MIGHT be received before editing the DOM
 - (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node
                     replacingDOMRange:(DOMRange *)range
