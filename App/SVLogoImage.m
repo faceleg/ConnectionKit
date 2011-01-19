@@ -69,6 +69,16 @@
 
 - (CGFloat)maxWidthOnPage:(KTPage *)page; { return 200.0; }
 
+#pragma mark HTML
+
+- (BOOL)shouldWriteHTMLInline; { return YES; }  // we're not a pagelet
+
+- (void)writeBody:(SVHTMLContext *)context;
+{
+    [context pushClassName:@"logo"];
+    [super writeBody:context];
+}
+
 #pragma mark Serialization
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
