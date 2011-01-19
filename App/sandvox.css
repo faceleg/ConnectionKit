@@ -45,6 +45,9 @@ img.narrow.right { float:right!important; }
 /* Inline iframes need to display as a block to layout right */
 .graphic iframe { display:block; }
 
+/* Pagelet photo grids should be generally be auto width (some 1.x designs hardcoded an exact width) */
+.pagelet .photogrid-index { width:auto; }
+
 /* For content like amazon which forces white background. Design SHOULD set color for A tag and text color. */
 .whiteBackground
 {
