@@ -715,6 +715,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 				&& 1 == [selection count]
 				&& nil != [[selection lastObject] pageRepresentation] );
 	}
+	else if ( itemAction == @selector(showPageCodeInjection:) || itemAction == @selector(showSiteCodeInjection:) )
+	{
+		id selection = [[[self siteOutlineViewController] content] selectedObjects];
+		result = ( !NSIsControllerMarker(selection)
+				  && 1 == [selection count]
+				  && nil != [[selection lastObject] pageRepresentation] );
+	}
 	
 	// "Use Small Page Icons" toggleSmallPageIcons:
     else if ( itemAction == @selector(toggleSmallPageIcons:) )
