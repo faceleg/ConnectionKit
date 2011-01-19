@@ -73,4 +73,14 @@
     [context addDependencyForKeyPath:@"collectionGenerateArchives" ofObject:self.indexedCollection];
 }
 
+
+#pragma mark Metrics
+
+- (void)makeOriginalSize;
+{
+    // default width to 200 so it is placed in sidebar
+    [self setWidth:[NSNumber numberWithUnsignedInt:200] height:nil];
+}
+
+
 @end
