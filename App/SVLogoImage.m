@@ -65,6 +65,10 @@
 
 - (SVLink *)link; { return NSNotApplicableMarker; }
 
+#pragma mark Metrics
+
+- (CGFloat)maxWidthOnPage:(KTPage *)page; { return 200.0; }
+
 #pragma mark Serialization
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
