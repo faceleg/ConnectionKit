@@ -138,11 +138,13 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 	[NSURLProtocol registerClass:[KTImageScalingURLProtocol class]];
 }
 
+static NSOperationQueue *_coreImageQueue;
 static NSURLCache *_sharedCache;
-/*  // turning the cache off for now. System one should be good enough. #103267
+
 + (void)initialize
 {
-	if (!_sharedCache)
+	/*  // turning the cache off for now. System one should be good enough. #103267
+    if (!_sharedCache)
 	{
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
@@ -155,11 +157,15 @@ static NSURLCache *_sharedCache;
 														 diskPath:path];
 		
 		[pool release];
-	}	
+     }	
+     */
 	
-	
+	if (!_coreImageQueue)
+    {
+        _coreImageQueue = [[NSOperationQueue alloc] init];
+        [_coreImageQueue setMaxConcurrentOperationCount:1]; // Core Image is already multithreaded
+    }
 }
-*/
 + (BOOL)canInitWithRequest:(NSURLRequest *)request
 {
 	BOOL result = NO;
@@ -183,6 +189,14 @@ static NSURLCache *_sharedCache;
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request
 {
 	return request;
+}
+
+- (void)dealloc;
+{
+    [_operation removeObserver:self forKeyPath:@"isFinished"];
+    [_operation release];
+    
+    [super dealloc];
 }
 
 #pragma mark -
@@ -216,30 +230,33 @@ static NSURLCache *_sharedCache;
     }
     else
     {
-        [self performSelector:@selector(_startLoadingUncached) withObject:nil afterDelay:0.0];
+        [self _startLoadingUncached];
 	}
 }
 
 - (void)stopLoading
 {
-	// We can't kill the protocol mid-render, but we can cancel any pending renders
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_startLoadingUncached) object:nil];
+    [_operation cancel];
 }
 
 - (void)_startLoadingUncached
 {
     // Run the scaling op
-    SVImageScalingOperation *op = [[SVImageScalingOperation alloc] initWithURL:
-                                   [[self request] URL]];
-    [op start];
-    
+    _operation = [[SVImageScalingOperation alloc] initWithURL:[[self request] URL]];
+    [_operation addObserver:self forKeyPath:@"isFinished" options:0 context:NULL];
+    [_coreImageQueue addOperation:_operation];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(SVImageScalingOperation *)operation change:(NSDictionary *)change context:(void *)context;
+{
+    if ([operation isCancelled]) return;
     
     // Return decent result
-    NSData *imageData = [op result];
+    NSData *imageData = [operation result];
     if (imageData)
     {
         // Construct new cached response
-        NSURLResponse *response = [op returnedResponse];
+        NSURLResponse *response = [operation returnedResponse];
         
         [[self client] URLProtocol:self
                 didReceiveResponse:response
@@ -270,11 +287,7 @@ static NSURLCache *_sharedCache;
         
         [[self client] URLProtocol:self didFailWithError:error];
     }
-    
-    
-    [op release];
 }
-
 
 @end
 

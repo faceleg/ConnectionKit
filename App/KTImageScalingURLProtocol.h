@@ -42,6 +42,10 @@ extern NSString *KTImageScalingURLProtocolScheme;
 
 
 @interface KTImageScalingURLProtocol : NSURLProtocol
+{
+  @private
+    NSOperation *_operation;
+}
 @end
 
 
