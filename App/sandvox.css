@@ -19,7 +19,7 @@
 /* Navigation arrows */
 div.text-navigation { text-align:center; margin-bottom:1em;}
 div.text-navigation div { display:inline; margin:0px 0.5em; }
-
+.collection-navigation .disabled-navigation { text-indent:-5000px; }
 
 /* 2.0 callout compatibility. 2.0-compatible designs are expected to implement this themselves */
 .callout-container, .graphic-container { clear:both; }
