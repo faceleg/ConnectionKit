@@ -39,7 +39,7 @@
 
 #pragma mark Title
 
-- (id)titleBox; { return nil; }
+- (id)titleBox; { return NSNotApplicableMarker; } // #103991
 
 #pragma mark Thumbnail
 
