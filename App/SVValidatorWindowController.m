@@ -195,10 +195,10 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 		switch (disabledPreviewObjectsCount)
 		{
 			case 1:
-				disabledPreviewNote = NSLocalizedString(@"Plese note that there was a raw HTML object that you have chosen not to be included in this validation.", @""); 
+				disabledPreviewNote = NSLocalizedString(@"Please note that there was a raw HTML object that you have chosen not to be included in this validation.", @""); 
 				break;
 			default:
-				disabledPreviewNote = [NSString stringWithFormat:NSLocalizedString(@"Plese note that there were %d raw HTML objects that you have chosen not to be included in this validation.", @""), disabledPreviewObjectsCount]; 
+				disabledPreviewNote = [NSString stringWithFormat:NSLocalizedString(@"Please note that there were %d raw HTML objects that you have chosen not to be included in this validation.", @""), disabledPreviewObjectsCount]; 
 				break;
 		}
 		

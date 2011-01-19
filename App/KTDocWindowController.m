@@ -993,7 +993,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 				buttonTitle = NSLocalizedString(@"Update License", @"Button title to enter a license Code");
 				break;
 			case kKSLicenseExpired:		// Trial license expired
-				buttonPrompt = NSLocalizedString(@"Trail expired", @"Indicator of license status of app");
+				buttonPrompt = NSLocalizedString(@"Trial expired", @"Indicator of license status of app");
 				buttonTitle = NSLocalizedString(@"Buy a License", @"Button title to purchase a license");
 				break;
 			case kKSNoLongerValid:		// License from a previous version of Sandvox
