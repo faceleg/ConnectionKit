@@ -88,7 +88,7 @@
 - (void)loadMovieFromURL:(NSURL *)movieSourceURL;
 - (void)loadMovieFromAttributes:(NSDictionary *)anAttributes;
 - (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
-- (void)calculateMovieDimensions:(QTMovie *)aMovie;
+- (BOOL)calculateMovieDimensions:(QTMovie *)aMovie;
 - (BOOL) enablePoster;
 
 @end
@@ -122,6 +122,7 @@
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	self.dimensionCalculationMovie = nil;
 	self.dimensionCalculationConnection = nil;	
 	[super dealloc];
@@ -1112,8 +1113,8 @@
 	NSError *error = nil;
 	QTMovie *movie = nil;
 		
-	movie = [[[QTMovie alloc] initWithAttributes:anAttributes
-										   error:&error] autorelease];
+	movie = [[QTMovie alloc] initWithAttributes:anAttributes
+										   error:&error];
 	if (movie
 		&& [[movie tracks] count]
 		&& (NSOrderedSame != QTTimeCompare([movie duration], QTZeroTime))
@@ -1176,6 +1177,10 @@
 			}
 		}
 	}
+	if (movie)
+	{
+		[movie autorelease];
+	}
 }
 	
 // Asynchronous load returned -- try to set the dimensions.
@@ -1211,13 +1216,15 @@
 	QTMovie *movie = [notif object];
     if ([self.dimensionCalculationMovie isEqual:movie])
 	{
+		BOOL keepGoing = NO;
 		long loadState = [[movie attributeForKey:QTMovieLoadStateAttribute] longValue];
 		if (loadState >= kMovieLoadStateLoaded)
 		{
-			[self calculateMovieDimensions:movie];
+			keepGoing = [self calculateMovieDimensions:movie];
 		}
+		// We might have dealloced ourself after this, so proceed carefully!
 
-		if (loadState >= kMovieLoadStatePlaythroughOK)
+		if (keepGoing && (loadState >= kMovieLoadStatePlaythroughOK))
 		{
 			if (!self.media && self.posterFrameType == kPosterFrameTypeAutomatic)	// ONLY try to get poster image for a *remote* URL
 			{
@@ -1240,8 +1247,10 @@
 	}
 }
 
-- (void)calculateMovieDimensions:(QTMovie *)aMovie;
+- (BOOL)calculateMovieDimensions:(QTMovie *)aMovie;
 {
+	BOOL keepGoing = YES;
+	
 	NSSize movieSize = NSZeroSize;
 	
 	NSArray* vtracks = [aMovie tracksOfMediaType:QTMediaTypeVideo];
@@ -1265,6 +1274,10 @@
 	
 	if (0 == movieSize.width || 0 == movieSize.height)
 	{
+		keepGoing = NO;	// since we are about to be deallocated -- and nothing retains self, be careful to not do more.
+		// However, just to help  a bit more, try this....
+		[[self retain] autorelease];		// kludgey way to hang onto this so that we don't have SELF go away immediately!
+		
 		// Chances are if we got here with zero width/height, there is just no video track -- so become an audio file!
 		[self setCodecType:@"com.apple.quicktime-audio"];		// Our specialization of generic quicktime movie
 		// This will re-create things as an audio....
@@ -1274,6 +1287,8 @@
 	{
 		[self setNaturalWidth:[NSNumber numberWithFloat:movieSize.width] height:[NSNumber numberWithFloat:movieSize.height]];
 	}
+	
+	return keepGoing;
 }
 
 
