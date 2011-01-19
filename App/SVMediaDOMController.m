@@ -22,7 +22,7 @@
 {
     // Don't accept drops on inline images
     SVPlugInGraphic *graphic = [self representedObject];
-    BOOL result = ![graphic shouldWriteHTMLInline];
+    BOOL result = ![graphic textAttachment] || ![graphic shouldWriteHTMLInline];
     
     return result;
 }
