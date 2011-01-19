@@ -89,7 +89,6 @@
 - (void)loadMovieFromAttributes:(NSDictionary *)anAttributes;
 - (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
 - (void)calculateMovieDimensions:(QTMovie *)aMovie;
-- (void)calculateMoviePlayability:(QTMovie *)aMovie;
 - (BOOL) enablePoster;
 
 @end
@@ -1216,7 +1215,6 @@
 		if (loadState >= kMovieLoadStateLoaded)
 		{
 			[self calculateMovieDimensions:movie];
-			[self calculateMoviePlayability:movie];
 		}
 
 		if (loadState >= kMovieLoadStatePlaythroughOK)
@@ -1230,18 +1228,6 @@
 			self.dimensionCalculationMovie = nil;	// we are done with movie now!
 		}
 	}
-}
-
-- (void)calculateMoviePlayability:(QTMovie *)aMovie;
-{
-	if ([aMovie respondsToSelector:@selector(usesFigMedia)])
-	{
-		if ([aMovie usesFigMedia])	// Modern quicktime stack - From Tim Monroe, sounds like movie must be this to play on iOS
-		{
-			// However, there is more to determine ... I'm going to put this aside for now.
-		}
-	}
-	
 }
 
 - (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
