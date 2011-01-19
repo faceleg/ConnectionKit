@@ -139,7 +139,7 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 }
 
 static NSURLCache *_sharedCache;
-
+/*  // turning the cache off for now. System one should be good enough. #103267
 + (void)initialize
 {
 	if (!_sharedCache)
@@ -159,7 +159,7 @@ static NSURLCache *_sharedCache;
 	
 	
 }
-
+*/
 + (BOOL)canInitWithRequest:(NSURLRequest *)request
 {
 	BOOL result = NO;
