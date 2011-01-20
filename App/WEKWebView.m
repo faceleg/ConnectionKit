@@ -122,7 +122,7 @@
         // Pretend to WebView that dragging exited
         if (!_delegateWillHandleDraggingInfo) 
         {
-            [super draggingExited:sender];
+            [self draggingExited:sender];
             _delegateWillHandleDraggingInfo = YES;
         }
     }
