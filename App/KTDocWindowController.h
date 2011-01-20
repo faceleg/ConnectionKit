@@ -134,6 +134,8 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)showPageCodeInjection:(id)sender;
 - (IBAction)showSiteCodeInjection:(id)sender;
 
+- (IBAction)groupAsCollection:(id)sender;
+
 - (IBAction)reload:(id)sender;
 
 
