@@ -37,6 +37,7 @@
 #import "IFramePlugIn.h"
 
 // LocalizedStringInThisBundle(@"Placeholder for:", "String_On_Page_Template- followed by a URL")
+// LocalizedStringInThisBundle(@"Please enter a URL in the Inspector.", "String_On_Page_Template")
 
 @implementation IFramePlugIn
 
