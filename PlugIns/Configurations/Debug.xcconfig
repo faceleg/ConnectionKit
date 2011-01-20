@@ -1,6 +1,6 @@
 
 // we want to grab SANDVOX_VERSION and SVN_VERSION from Sandvox
-#include "../../../Xcode/Configurations/Sandvox.xcconfig"
+#include "../../Xcode/Configurations/Sandvox.xcconfig"
 
 // we want to "link" against Sandvox directly
 USER_HEADER_SEARCH_PATHS = "$(SYMROOT)/Debug/Sandvox.app/Contents/PrivateHeaders" "$(SYMROOT)/Debug/Sandvox.app/Contents/Headers"
