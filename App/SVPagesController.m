@@ -693,6 +693,8 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     }
 }
 
+#pragma mark Group
+
 - (void)groupAsCollection:(id)sender;
 {
     // New collection
@@ -721,6 +723,13 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     // Fully insert the new, selecting it
     [self addObject:collection toCollection:parent];
     [collection release];
+}
+
+- (BOOL)canGroupAsCollection;
+{
+    NSNumber *selectionIsRoot = [[self selection] valueForKey:@"isRoot"];
+    if (NSIsControllerMarker(selectionIsRoot)) selectionIsRoot = NSBOOL(YES);
+    return ![selectionIsRoot boolValue];
 }
 
 #pragma mark Moving Objects

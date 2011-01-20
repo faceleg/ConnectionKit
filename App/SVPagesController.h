@@ -66,6 +66,7 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 - (id)newObjectDestinedForCollection:(KTPage *)collection;
 
 - (void)groupAsCollection:(id)sender;
+- (BOOL)canGroupAsCollection;
 
 
 #pragma mark Convert to Collection

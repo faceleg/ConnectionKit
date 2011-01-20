@@ -677,7 +677,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     }
     else if ( itemAction == @selector(groupAsCollection:) )
     {
-        result = ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
+        result = ([[self pagesController] canGroupAsCollection]);
     }
     
 	
@@ -838,7 +838,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
     else if ( action == @selector(groupAsCollection:) )
     {
-        result = ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
+        result = ([[self pagesController] canGroupAsCollection]);
     }
     else if ( action == @selector(group:) )
     {
