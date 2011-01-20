@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.SystemVersion">10H574</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
@@ -21,10 +21,10 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="2122"/>
 			<integer value="2045"/>
 			<integer value="1793"/>
 			<integer value="2183"/>
-			<integer value="2122"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -580,9 +580,9 @@
 																<string key="NSKeyEquivalent"/>
 																<int key="NSPeriodicDelay">400</int>
 																<int key="NSPeriodicInterval">75</int>
-																<object class="NSMenuItem" key="NSMenuItem" id="1010196643">
+																<object class="NSMenuItem" key="NSMenuItem" id="746534752">
 																	<reference key="NSMenu" ref="624452430"/>
-																	<string key="NSTitle">Single Page</string>
+																	<string key="NSTitle">Collection</string>
 																	<string key="NSKeyEquiv"/>
 																	<int key="NSKeyEquivModMask">1048576</int>
 																	<int key="NSMnemonicLoc">2147483647</int>
@@ -590,6 +590,7 @@
 																	<reference key="NSOnImage" ref="439133155"/>
 																	<reference key="NSMixedImage" ref="598599151"/>
 																	<string key="NSAction">_popUpItemAction:</string>
+																	<int key="NSTag">1</int>
 																	<reference key="NSTarget" ref="68074209"/>
 																</object>
 																<bool key="NSMenuItemRespectAlignment">YES</bool>
@@ -597,23 +598,22 @@
 																	<string key="NSTitle">OtherViews</string>
 																	<object class="NSMutableArray" key="NSMenuItems">
 																		<bool key="EncodedWithXMLCoder">YES</bool>
-																		<reference ref="1010196643"/>
-																		<object class="NSMenuItem" id="746534752">
+																		<object class="NSMenuItem" id="1010196643">
 																			<reference key="NSMenu" ref="624452430"/>
-																			<string key="NSTitle">Collection</string>
+																			<string key="NSTitle">Single Page</string>
 																			<string key="NSKeyEquiv"/>
 																			<int key="NSKeyEquivModMask">1048576</int>
 																			<int key="NSMnemonicLoc">2147483647</int>
 																			<reference key="NSOnImage" ref="439133155"/>
 																			<reference key="NSMixedImage" ref="598599151"/>
 																			<string key="NSAction">_popUpItemAction:</string>
-																			<int key="NSTag">1</int>
 																			<reference key="NSTarget" ref="68074209"/>
 																		</object>
+																		<reference ref="746534752"/>
 																	</object>
 																	<reference key="NSMenuFont" ref="502413197"/>
 																</object>
-																<int key="NSSelectedIndex">-1</int>
+																<int key="NSSelectedIndex">1</int>
 																<int key="NSPreferredEdge">1</int>
 																<bool key="NSUsesItemFromMenu">YES</bool>
 																<bool key="NSAltersState">YES</bool>
@@ -1958,14 +1958,6 @@
 					<int key="connectionID">2161</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">toggleIsCollection:</string>
-						<reference key="source" ref="408607898"/>
-						<reference key="destination" ref="481224017"/>
-					</object>
-					<int key="connectionID">2169</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oPublishAsCollectionPopup</string>
 						<reference key="source" ref="408607898"/>
@@ -2266,6 +2258,14 @@
 						</object>
 					</object>
 					<int key="connectionID">2236</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">popupSetPageOrCollection:</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="481224017"/>
+					</object>
+					<int key="connectionID">2237</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3247,10 +3247,10 @@
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{177, 341}, {1002, 548}}</string>
+					<string>{{278, 376}, {1002, 548}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{177, 341}, {1002, 548}}</string>
+					<string>{{278, 376}, {1002, 548}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{800, 280}</string>
@@ -3460,7 +3460,7 @@
 						<bytes key="NSTransformStruct">P4AAAL+AAABEIoAAwlAAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{937, 481}, {121, 37}}</string>
+					<string>{{1057, 364}, {121, 37}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3517,7 +3517,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2236</int>
+			<int key="maxID">2237</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4001,15 +4001,15 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>chooseFile:</string>
 							<string>pageDetailsHelp:</string>
+							<string>popupSetPageOrCollection:</string>
 							<string>preview:</string>
-							<string>toggleIsCollection:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
 							<string>id</string>
-							<string>id</string>
 							<string>NSButton</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -4018,8 +4018,8 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>chooseFile:</string>
 							<string>pageDetailsHelp:</string>
+							<string>popupSetPageOrCollection:</string>
 							<string>preview:</string>
-							<string>toggleIsCollection:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -4032,12 +4032,12 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">preview:</string>
-								<string key="candidateClassName">id</string>
+								<string key="name">popupSetPageOrCollection:</string>
+								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">toggleIsCollection:</string>
-								<string key="candidateClassName">NSButton</string>
+								<string key="name">preview:</string>
+								<string key="candidateClassName">id</string>
 							</object>
 						</object>
 					</object>

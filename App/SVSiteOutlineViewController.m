@@ -885,6 +885,92 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     [self toggleIsCollectionWithDelegate:nil didToggleSelector:NULL];
 }
 
+- (void)setToCollection:(BOOL)makeCollection withDelegate:(id)delegate didToggleSelector:(SEL)selector;
+{
+	// Quick sanity check
+    if (![self canToggleIsCollection])
+    {
+        NSBeep();
+        return;
+    }
+	
+	BOOL isAlreadyCorrect = ([[self content] selectedItemsAreCollections] == NSOnState && makeCollection)
+	|| ([[self content] selectedItemsAreCollections] == NSOffState && !makeCollection);
+	if (!isAlreadyCorrect)
+	{
+		// Prepare callback invocation
+		NSInvocation *callback = nil;
+		if (delegate)
+		{
+			callback = [NSInvocation invocationWithSelector:selector target:delegate];
+			[callback setArgument:&self atIndex:2];
+		}
+		
+		
+		// Warn before changing this on a published page
+		if ([[self content] selectedItemsHaveBeenPublished])
+		{
+			NSArray *selection = [[self content] selectedObjects];
+			OBASSERT([selection count] == 1);
+			
+			NSAlert *alert = [[NSAlert alloc] init];
+			
+			
+			// Main text
+			KTPage *page = [selection lastObject];
+			if (makeCollection)
+			{
+				[alert setMessageText:[NSString stringWithFormat:
+									   NSLocalizedString(@"Are you sure you want to publish the page “%@” as a collection?", "alert title"),
+									   [page title]]];
+			}
+			else
+			{
+				[alert setMessageText:[NSString stringWithFormat:
+									   NSLocalizedString(@"Are you sure you want to stop publishing the page “%@” as a collection?", "alert title"),
+									   [page title]]];
+			}
+			
+			[alert setInformativeText:
+			 NSLocalizedString(@"This will break any bookmarks to the page your visitors might have saved.",
+							   "alert subtitle")];
+			
+			
+			// Accessory View
+			NSString *currentLink = [[page URL] absoluteString];
+			[oCurrentPageURLLink setUrlString:currentLink];
+			[oCurrentPageURLLink setTitle:currentLink];
+			
+			[oNewPageURLLabel setStringValue:[[page URLAsCollection:makeCollection] absoluteString]];
+			
+			[alert setAccessoryView:oToggleIsCollectionAlertAccessoryView];
+			
+			
+			// Buttons
+			[alert addButtonWithTitle:NSLocalizedString(@"Change", "button title")];
+			[alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button title")];
+			
+			
+			// Present
+			[alert beginSheetModalForWindow:[[self view] window]
+							  modalDelegate:self
+							 didEndSelector:@selector(toggleIsCollectionAlertDidEnd:returnCode:contextInfo:)
+								contextInfo:[callback retain]];
+			
+			[alert release];
+		}
+		else
+		{
+			[self setIsCollection:makeCollection];
+			
+			// Send callback
+			BOOL result = YES;
+			[callback setArgument:&result atIndex:3];
+			[callback invoke];
+		}
+	}
+}
+
 - (void)toggleIsCollectionWithDelegate:(id)delegate didToggleSelector:(SEL)selector;
 {
     // Quick sanity check
@@ -894,80 +980,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         return;
     }
     
-    
     BOOL makeCollection = [[self content] selectedItemsAreCollections] != NSOnState;
-    
-    
-    // Prepare callback invocation
-    NSInvocation *callback = nil;
-    if (delegate)
-    {
-        callback = [NSInvocation invocationWithSelector:selector target:delegate];
-        [callback setArgument:&self atIndex:2];
-    }
-    
-    
-    // Warn before changing this on a published page
-    if ([[self content] selectedItemsHaveBeenPublished])
-    {
-        NSArray *selection = [[self content] selectedObjects];
-        OBASSERT([selection count] == 1);
-        
-        NSAlert *alert = [[NSAlert alloc] init];
-        
-        
-        // Main text
-        KTPage *page = [selection lastObject];
-        if (makeCollection)
-        {
-            [alert setMessageText:[NSString stringWithFormat:
-                                   NSLocalizedString(@"Are you sure you want to publish the page “%@” as a collection?", "alert title"),
-                                   [page title]]];
-        }
-        else
-        {
-            [alert setMessageText:[NSString stringWithFormat:
-                                   NSLocalizedString(@"Are you sure you want to stop publishing the page “%@” as a collection?", "alert title"),
-                                   [page title]]];
-        }
-        
-        [alert setInformativeText:
-         NSLocalizedString(@"This will break any bookmarks to the page your visitors might have saved.",
-                           "alert subtitle")];
-        
-        
-        // Accessory View
-        NSString *currentLink = [[page URL] absoluteString];
-        [oCurrentPageURLLink setUrlString:currentLink];
-        [oCurrentPageURLLink setTitle:currentLink];
-        
-        [oNewPageURLLabel setStringValue:[[page URLAsCollection:makeCollection] absoluteString]];
-        
-        [alert setAccessoryView:oToggleIsCollectionAlertAccessoryView];
-        
-        
-        // Buttons
-        [alert addButtonWithTitle:NSLocalizedString(@"Change", "button title")];
-        [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button title")];
-        
-        
-        // Present
-        [alert beginSheetModalForWindow:[[self view] window]
-                          modalDelegate:self
-                         didEndSelector:@selector(toggleIsCollectionAlertDidEnd:returnCode:contextInfo:)
-                            contextInfo:[callback retain]];
-        
-        [alert release];
-    }
-    else
-    {
-        [self setIsCollection:makeCollection];
-        
-        // Send callback
-        BOOL result = YES;
-        [callback setArgument:&result atIndex:3];
-        [callback invoke];
-    }
+    [self setToCollection:makeCollection withDelegate:delegate didToggleSelector:selector];
 }
 
 - (BOOL)canToggleIsCollection;

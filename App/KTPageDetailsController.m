@@ -845,7 +845,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 								|| selectedObjectsCount > 1];
 	[oMediaFilenameField setHidden:(!areFilesSelected && !areTextsSelected) || selectedObjectsCount > 1];
 
-	[oDotSeparator setHidden:(!arePagesSelected  || NSOffState != pageIsCollectionState) && (selectedObjectsCount == 1 || areMultiSelected)];
+	[oDotSeparator setHidden:(!arePagesSelected  || NSOffState != pageIsCollectionState || selectedObjectsCount > 1 || areMultiSelected)];
 	[oSlashSeparator setHidden:!arePagesSelected || NSOnState != pageIsCollectionState || selectedObjectsCount > 1];
 
 	[oMultiplePagesField setHidden: selectedObjectsCount == 1];
@@ -1125,10 +1125,11 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 #pragma mark Publish as Collection
 
-- (IBAction)toggleIsCollection:(NSPopUpButton *)sender;
+- (IBAction)popupSetPageOrCollection:(NSPopUpButton *)sender;
 {
+	NSUInteger tag = [[sender selectedItem] tag];
     [oSiteOutlineController
-     toggleIsCollectionWithDelegate:self
+     setToCollection:(1 == tag) withDelegate:self
      didToggleSelector:@selector(siteOutlineController:didToggleIsCollection:)];
 }
 

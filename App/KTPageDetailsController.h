@@ -93,7 +93,7 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 
 
 // Publish as Collection
-- (IBAction)toggleIsCollection:(NSButton *)sender;
+- (IBAction)popupSetPageOrCollection:(NSButton *)sender;
 
 
 // Meta description

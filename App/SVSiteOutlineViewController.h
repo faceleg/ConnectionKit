@@ -95,6 +95,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 #pragma mark Publish as Collection
 - (IBAction)toggleIsCollection:(id)sender;
 // Follow -siteOutlineController:didToggleIsCollection: signature
+- (void)setToCollection:(BOOL)makeCollection withDelegate:(id)delegate didToggleSelector:(SEL)selector;
 - (void)toggleIsCollectionWithDelegate:(id)delegate didToggleSelector:(SEL)selector;
 - (BOOL)canToggleIsCollection;
 
