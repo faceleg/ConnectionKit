@@ -756,6 +756,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	{
 		NSURL *siteURL = [[[[self document] site] hostProperties] siteURL];
 		result = (nil != siteURL);
+
+		NSArray *selectedItems = [[[self siteOutlineViewController] content] selectedObjects];
+		
+		NSString *title = NSLocalizedString(@"Visit Published Site", @"Menu item");
+		if (!result) title = NSLocalizedString(@"Visit Published Site (Not yet published)", @"Menu item");
+		[menuItem setTitle:title];
 	}
 	
 	// "Visit Published Page" visitPublishedPage:
@@ -764,6 +770,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		id content = [[self siteOutlineViewController] content];
 		NSDate *published = [content valueForKeyPath:@"selection.datePublished"];
         
+		// Enable if published, and this is only one item selected
 		result = (published && !NSIsControllerMarker(published));
 
 		// Check if page *can* be published
@@ -776,9 +783,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 				canBePublished = [isPublishableNumber boolValue];
 			}
 		}
-		[menuItem setTitle:
-		 canBePublished ? NSLocalizedString(@"Visit Published Page", @"Menu item")
-						  : NSLocalizedString(@"License Required to Publish Page", @"Menu item")];
+		NSArray *selectedItems = [[[self siteOutlineViewController] content] selectedObjects];
+
+		NSString *title = NSLocalizedString(@"Visit Published Page", @"Menu item");
+		if ((nil == published) && (1==[selectedItems count])) title = NSLocalizedString(@"Visit Published Page (Not yet published)", @"Menu item");
+		if (!canBePublished) title = NSLocalizedString(@"License Required to Publish Page", @"Menu item");
+		[menuItem setTitle:title];
 	}
 
 	else if ( itemAction == @selector(submitSiteToDirectory:) ) 
