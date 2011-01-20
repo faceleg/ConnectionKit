@@ -756,8 +756,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	{
 		NSURL *siteURL = [[[[self document] site] hostProperties] siteURL];
 		result = (nil != siteURL);
-
-		NSArray *selectedItems = [[[self siteOutlineViewController] content] selectedObjects];
 		
 		NSString *title = NSLocalizedString(@"Visit Published Site", @"Menu item");
 		if (!result) title = NSLocalizedString(@"Visit Published Site (Not yet published)", @"Menu item");
