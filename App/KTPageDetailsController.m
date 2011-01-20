@@ -761,6 +761,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		}
 		
 		BOOL anyArePublished = [oPagesController selectedItemsHaveBeenPublished];
+				
 		NSMenuItem *collMenuItem = [[oPublishAsCollectionPopup menu] itemWithTag:1];
 		NSMenuItem *pageMenuItem = [[oPublishAsCollectionPopup menu] itemWithTag:0];
 
@@ -769,23 +770,23 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			[collMenuItem setTitle:NSLocalizedString(@"Collection", "menu title")];
 			[pageMenuItem setTitle:
 			 anyArePublished	? NSLocalizedString(@"Single Page…", "menu title with ellipses")
-										 : NSLocalizedString(@"Single Page…", "menu title, NO ellipses")];
+										 : NSLocalizedString(@"Single Page", "menu title, NO ellipses")];
 		}
 		else if (NSOffState == pageIsCollectionState)
 		{
 			[pageMenuItem setTitle:NSLocalizedString(@"Single Page", "menu title")];
 			[collMenuItem setTitle:
 			 anyArePublished	? NSLocalizedString(@"Collection…", "menu title with ellipses")
-										 : NSLocalizedString(@"Collection…", "menu title, NO ellipses")];
+										 : NSLocalizedString(@"Collection", "menu title, NO ellipses")];
 		}
 		else	// mixed state, perhaps both or neither will get ellipses
 		{
 			[pageMenuItem setTitle:
 			 anyArePublished	? NSLocalizedString(@"Single Page…", "menu title with ellipses")
-										 : NSLocalizedString(@"Single Page…", "menu title, NO ellipses")];
+										 : NSLocalizedString(@"Single Page", "menu title, NO ellipses")];
 			[collMenuItem setTitle:
 			 anyArePublished	? NSLocalizedString(@"Collection…", "menu title with ellipses")
-											   : NSLocalizedString(@"Collection…", "menu title, NO ellipses")];
+											   : NSLocalizedString(@"Collection", "menu title, NO ellipses")];
 		}
 	}
 	
