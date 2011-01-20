@@ -758,7 +758,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		result = (nil != siteURL);
 		
 		NSString *title = NSLocalizedString(@"Visit Published Site", @"Menu item");
-		if (!result) title = NSLocalizedString(@"Visit Published Site (Not yet published)", @"Menu item");
+		if (!result) title = NSLocalizedString(@"Visit Published Site (Not Yet Published)", @"Menu item");
 		[menuItem setTitle:title];
 	}
 	
@@ -784,7 +784,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		NSArray *selectedItems = [[[self siteOutlineViewController] content] selectedObjects];
 
 		NSString *title = NSLocalizedString(@"Visit Published Page", @"Menu item");
-		if ((nil == published) && (1==[selectedItems count])) title = NSLocalizedString(@"Visit Published Page (Not yet published)", @"Menu item");
+		if ((nil == published) && (1==[selectedItems count])) title = NSLocalizedString(@"Visit Published Page (Not Yet Published)", @"Menu item");
 		if (!canBePublished) title = NSLocalizedString(@"License Required to Publish Page", @"Menu item");
 		[menuItem setTitle:title];
 	}
