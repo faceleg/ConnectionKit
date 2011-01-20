@@ -92,11 +92,17 @@ document.getElementById('delicious-container-[[=container.elementID]]').appendCh
 [[endif3]]
 
 [[else2]]
+[[if listStyle]]
 <ul>
 	<li>[['delicious.com example no.]] 1</li>
 	<li>[['delicious.com example no.]] 2</li>
 	<li>[['delicious.com example no.]] 3</li>
 </ul>
+[[else3]]
+	[['delicious.com example no.]] 1<br/>
+	[['delicious.com example no.]] 2<br/>
+	[['delicious.com example no.]] 3<br/>
+[[endif3]]
 [[endif2]]
 
 [[else]]
