@@ -146,3 +146,12 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 @end
 
 
+#pragma mark -
+
+
+@interface WEKWebEditorItem (SVWebEditorViewController)
+- (NSObject *)hitTestDOMNode:(DOMNode *)node
+          draggingPasteboard:(NSPasteboard *)pasteboard;
+@end
+
+

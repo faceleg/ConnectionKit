@@ -577,6 +577,18 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     }
 }
 
+- (NSObject *)hitTestDOMNode:(DOMNode *)node draggingPasteboard:(NSPasteboard *)pasteboard;
+{
+    // If the drop is targeted at us, let the webview handle instead. #103882
+    
+    NSObject *result = [super hitTestDOMNode:node draggingPasteboard:pasteboard];
+    if (!result && [self hitTestDOMNode:node])
+    {
+        result = [[self webEditor] webView];
+    }
+    return result;
+}
+
 #pragma mark KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

@@ -65,15 +65,6 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 #pragma mark -
 
 
-@interface WEKWebEditorItem (SVWebEditorViewController)
-- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node
-                  draggingPasteboard:(NSPasteboard *)pasteboard;
-@end
-
-
-#pragma mark -
-
-
 @interface SVWebEditorViewController ()
 
 @property(nonatomic, readwrite) BOOL viewIsReadyToAppear;
@@ -1418,7 +1409,12 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     id result = [[webEditor contentItem] hitTestDOMNode:node
                                      draggingPasteboard:[dragInfo draggingPasteboard]];
     
-    if (!result)
+    // An item may wish for the webview to handle drops. If so, we're not interested
+    if (result == [self webView])
+    {
+        result = nil;
+    }
+    else if (!result)
     {
         // Don't allow drops of pagelets inside non-page body text
         // This doesn't make sense to me – Mike
@@ -1540,12 +1536,12 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
 
 @implementation WEKWebEditorItem (SVWebEditorViewController)
 
-- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node
-                  draggingPasteboard:(NSPasteboard *)pasteboard;
+- (NSObject *)hitTestDOMNode:(DOMNode *)node
+          draggingPasteboard:(NSPasteboard *)pasteboard;
 {
     OBPRECONDITION(node);
     
-    WEKWebEditorItem *result = nil;
+    NSObject *result = nil;
     
     if ([node ks_isDescendantOfElement:[self HTMLElement]] || ![self HTMLElement])
     {
