@@ -1469,7 +1469,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBDocumentRelativeSource</string>
-						<string key="minorKey">../../../../App/SVIndexInspectorViewController.h</string>
+						<string key="minorKey">../../../App/SVIndexInspectorViewController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1477,7 +1477,7 @@
 					<string key="superclassName">NSViewController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBDocumentRelativeSource</string>
-						<string key="minorKey">../../../../App/SVInspectorViewController.h</string>
+						<string key="minorKey">../../../App/SVInspectorViewController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1556,7 +1556,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBDocumentRelativeSource</string>
-						<string key="minorKey">../../../../App/SVTruncationController.h</string>
+						<string key="minorKey">../../../App/SVTruncationController.h</string>
 					</object>
 				</object>
 			</object>

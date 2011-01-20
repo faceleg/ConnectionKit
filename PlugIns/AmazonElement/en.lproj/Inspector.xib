@@ -3855,7 +3855,7 @@ cm9kdWN0A</string>
 					<string key="superclassName">NSViewController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBDocumentRelativeSource</string>
-						<string key="minorKey">../../../../App/SVInspectorViewController.h</string>
+						<string key="minorKey">../../../App/SVInspectorViewController.h</string>
 					</object>
 				</object>
 			</object>

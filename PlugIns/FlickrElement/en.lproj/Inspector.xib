@@ -1292,7 +1292,7 @@
 					<string key="superclassName">NSFormatter</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBDocumentRelativeSource</string>
-						<string key="minorKey">../../../../App/SVFieldFormatter.h</string>
+						<string key="minorKey">../../../App/SVFieldFormatter.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1300,7 +1300,7 @@
 					<string key="superclassName">NSViewController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBDocumentRelativeSource</string>
-						<string key="minorKey">../../../../App/SVInspectorViewController.h</string>
+						<string key="minorKey">../../../App/SVInspectorViewController.h</string>
 					</object>
 				</object>
 			</object>
