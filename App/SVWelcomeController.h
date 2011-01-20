@@ -40,7 +40,7 @@
 - (IBAction)openSelectedRecentDocument:(id)sender;
 - (IBAction)openLicensing:(id)sender;
 - (IBAction)openScreencast:(id)sender;
-- (IBAction)showHelp:(id)sender;
+- (IBAction)showDiscoverHelp:(id)sender;
 
 - (void)showWindowAndBringToFront:(BOOL)bringToFront initial:(BOOL)firstTimeSoReopenSavedDocuments;
 

@@ -561,9 +561,9 @@
 	[[NSApp delegate] openScreencast:nil];
 }
 
-- (IBAction) showHelp:(id)sender
+- (IBAction) showDiscoverHelp:(id)sender
 {
-	[[NSApp delegate] showHelpPage:@"Discover"];	// HELPSTRING
+	[[NSApp delegate] showHelpPage:@".discover"];	// HELPSTRING ... not in a subdirectory, so the dot prefix.
 }
 
 - (NSString *)tableView:(NSTableView *)aTableView toolTipForCell:(NSCell *)aCell rect:(NSRectPointer)rect tableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)row mouseLocation:(NSPoint)mouseLocation

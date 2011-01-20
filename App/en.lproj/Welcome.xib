@@ -2,17 +2,17 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.SystemVersion">10H574</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="6"/>
+			<integer value="245"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -285,7 +285,6 @@
 													</object>
 													<string key="NSFrame">{{1, 1}, {208, 365}}</string>
 													<reference key="NSSuperview" ref="492737931"/>
-													<reference key="NSNextKeyView" ref="891262708"/>
 													<reference key="NSDocView" ref="891262708"/>
 													<reference key="NSBGColor" ref="789047625"/>
 													<int key="NScvFlags">4</int>
@@ -312,7 +311,6 @@
 											</object>
 											<string key="NSFrame">{{20, 20}, {225, 367}}</string>
 											<reference key="NSSuperview" ref="263548748"/>
-											<reference key="NSNextKeyView" ref="567445930"/>
 											<int key="NSsFlags">18</int>
 											<reference key="NSVScroller" ref="1017002275"/>
 											<reference key="NSHScroller" ref="163293123"/>
@@ -913,14 +911,6 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">showHelp:</string>
-						<reference key="source" ref="283890133"/>
-						<reference key="destination" ref="142364517"/>
-					</object>
-					<int key="connectionID">223</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">openSelectedRecentDocument:</string>
 						<reference key="source" ref="283890133"/>
 						<reference key="destination" ref="48000294"/>
@@ -1050,6 +1040,14 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 						<reference key="destination" ref="267273242"/>
 					</object>
 					<int key="connectionID">246</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showDiscoverHelp:</string>
+						<reference key="source" ref="283890133"/>
+						<reference key="destination" ref="142364517"/>
+					</object>
+					<int key="connectionID">247</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1617,10 +1615,10 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{91, 603}, {920, 482}}</string>
+					<string>{{91, 524}, {920, 482}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{91, 603}, {920, 482}}</string>
+					<string>{{91, 524}, {920, 482}}</string>
 					<boolean value="YES"/>
 					<boolean value="NO"/>
 					<boolean value="NO"/>
@@ -1669,7 +1667,7 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">246</int>
+			<int key="maxID">247</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2099,7 +2097,7 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 							<string>openLicensing:</string>
 							<string>openScreencast:</string>
 							<string>openSelectedRecentDocument:</string>
-							<string>showHelp:</string>
+							<string>showDiscoverHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2118,7 +2116,7 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 							<string>openLicensing:</string>
 							<string>openScreencast:</string>
 							<string>openSelectedRecentDocument:</string>
-							<string>showHelp:</string>
+							<string>showDiscoverHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2139,7 +2137,7 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">showHelp:</string>
+								<string key="name">showDiscoverHelp:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>
