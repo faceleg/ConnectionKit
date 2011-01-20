@@ -1,0 +1,160 @@
+﻿/* Class = "NSButtonCell"; title = "Sidebar:"; ObjectID = "17"; */
+"Sidebar:" = "Barre latérale";
+
+/* Class = "NSButtonCell"; title = "Menu as:"; ObjectID = "23"; */
+"Menu as:" = "Menu en";
+
+/* Class = "NSButtonCell"; title = "Site maps"; ObjectID = "24"; */
+"Site maps" = "Cartesdu site";
+
+/* Class = "NSButtonCell"; title = "Draft (do not publish)"; ObjectID = "25"; */
+"Draft (do not publish)" = "Ébauche (ne pas publier)";
+
+/* Class = "NSButtonCell"; title = "Comments"; ObjectID = "28"; */
+"Comments" = "Commentaires";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "43"; */
+"Box" = "Box";
+
+/* Class = "NSTextFieldCell"; title = "Created:"; ObjectID = "45"; */
+"Created:" = "Créé :";
+
+/* Class = "NSTextFieldCell"; title = "Date & Time"; ObjectID = "47"; */
+"Date & Time" = "Date et heure";
+
+/* Class = "NSTextFieldCell"; title = "Modified:"; ObjectID = "50"; */
+"Modified:" = "Modifié :";
+
+/* Class = "NSTextFieldCell"; title = "Navigation"; ObjectID = "54"; */
+"Navigation" = "Navigation";
+
+/* Class = "NSTextFieldCell"; title = "Layout"; ObjectID = "91"; */
+"Layout" = "Mise en page";
+/* Class = "NSTextFieldCell"; title = "Publishing"; ObjectID = "94"; */
+"Publishing" = "Publication";
+
+/* Class = "NSButton"; designAccessibilityDescription = "Timestamp"; ObjectID = "95"; */
+"Timestamp" = "Horodateur";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "99"; */
+"OtherViews" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Date Created"; ObjectID = "100"; */
+"Date Created" = "La date de création";
+
+/* Class = "NSMenuItem"; title = "Date Modified"; ObjectID = "101"; */
+"Date Modified" = "La date de modification";
+
+/* Class = "NSTabViewItem"; label = "Page"; ObjectID = "140"; */
+"Page" = "Page";
+
+/* Class = "NSTabViewItem"; label = "Appearance"; ObjectID = "142"; */
+"Appearance" = "Aspect";
+
+/* Class = "NSButtonCell"; title = "Page Title"; ObjectID = "145"; */
+"Page Title" = "Titre de la page";
+
+/* Class = "NSTextFieldCell"; placeholderString = "Untitled"; ObjectID = "170"; */
+"Untitled" = "Sans titre";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "170"; */
+"Text Cell" = "Text Cell";
+
+/* Class = "NSTabViewItem"; label = "Collection"; ObjectID = "196"; */
+"Collection" = "Collection";
+
+/* Class = "NSImageView"; designAccessibilityDescription = "thumbnail"; ObjectID = "200"; */
+"thumbnail" = "vignette";
+/* Class = "NSMenuItem"; title = "Pick from Page"; ObjectID = "212"; */
+"Pick from Page" = "Choisir à partir de la page";
+
+/* Class = "NSMenuItem"; title = "Custom Image"; ObjectID = "213"; */
+"Custom Image" = "Image personnalisée";
+
+/* Class = "NSButtonCell"; title = "Choose…"; ObjectID = "214"; */
+"Choose…" = "Choisir…";
+
+/* Class = "NSTextFieldCell"; title = "Thumbnail"; ObjectID = "216"; */
+"Thumbnail" = "Vignette";
+/* Class = "NSMenuItem"; title = "None"; ObjectID = "240"; */
+"None" = "Aucune";
+
+/* Class = "NSPopUpButton"; designAccessibilityDescription = "Collection Sort"; ObjectID = "264"; */
+"Collection Sort" = "Tri de la collection";
+/* Class = "NSButtonCell"; title = "Publish archives"; ObjectID = "270"; */
+"Publish archives" = "Archives publiées";
+
+/* Class = "NSTextFieldCell"; title = "Automatic Sorting"; ObjectID = "271"; */
+"Automatic Sorting" = "Tri automatique";
+
+/* Class = "NSButtonCell"; title = "Reverse order"; ObjectID = "272"; */
+"Reverse order" = "Ordre inverse";
+/* Class = "NSMenuItem"; title = "By Date Modified"; ObjectID = "276"; */
+"By Date Modified" = "Par date de modification";
+
+/* Class = "NSMenuItem"; title = "By Date Created"; ObjectID = "277"; */
+"By Date Created" = "Par date de création";
+
+/* Class = "NSMenuItem"; title = "Alphabetical"; ObjectID = "278"; */
+"Alphabetical" = "Alphabétique";
+
+/* Class = "NSButton"; gToolTip = "When checked, links to this page will open in a new window."; ObjectID = "296"; */
+"When checked, links to this page will open in a new window." = "Après vérification, les liens vers cette page ouvriront une nouvelle fenêtre.";
+
+/* Class = "NSButtonCell"; title = "Open in new window"; ObjectID = "297"; */
+"Open in new window" = "Ouvrir dans une nouvelle fenêtre";
+
+/* Class = "NSTextFieldCell"; title = "8,888"; ObjectID = "303"; */
+"8,888" = "8,888";
+
+/* Class = "NSTextFieldCell"; title = "most recent articles"; ObjectID = "306"; */
+"most recent articles" = "Article le plus récent";
+/* Class = "NSButtonCell"; title = "Indexes & previous/next links"; ObjectID = "328"; */
+"Indexes & previous/next links" = "Indexes & liens précédents/suivants";
+/* Class = "NSMenuItem"; title = "Graphical Arrows"; ObjectID = "350"; */
+"Graphical Arrows" = "Flèches  graphisme";
+
+/* Class = "NSMenuItem"; title = "Textual Links"; ObjectID = "351"; */
+"Textual Links" = "Liens textuels";
+
+/* Class = "NSTextFieldCell"; title = "Link to previous/next page:"; ObjectID = "353"; */
+"Link to previous/next page:" = "Lien à un page précédente/suivante";
+
+/* Class = "NSTextFieldCell"; title = "Applies to all pages in the same collection"; ObjectID = "363"; */
+"Applies to all pages in the same collection" = "S’applique à toute les page dans la même collection";
+
+/* Class = "NSTextFieldCell"; title = "Include page in:"; ObjectID = "365"; */
+"Include page in:" = "Include page in:";
+/* Class = "NSTextFieldCell"; title = "Meta Tags/Keywords"; ObjectID = "387"; */
+"Meta Tags/Keywords" = "Méta étiquettes/mots-clés";
+
+/* Class = "NSMenuItem"; title = "Take from last Child Page"; ObjectID = "392"; */
+"Take from last Child Page" = "Prendre de la dernière page enfant";
+
+/* Class = "NSMenuItem"; title = "Take from first Child Page"; ObjectID = "393"; */
+"Take from first Child Page" = "Prendre de la première page enfant";
+
+/* Class = "NSTextFieldCell"; title = "RSS Feed"; ObjectID = "407"; */
+"RSS Feed" = "Flux RSS";
+/* Class = "NSMenuItem"; title = "Standard"; ObjectID = "412"; */
+"Standard" = "Standard";
+
+/* Class = "NSMenuItem"; title = "Photocast"; ObjectID = "413"; */
+"Photocast" = "Photocast";
+
+/* Class = "NSMenuItem"; title = "Podcast"; ObjectID = "416"; */
+"Podcast" = "Podcast";
+
+/* Class = "NSTextFieldCell"; title = "A collection can contain other pages"; ObjectID = "452"; */
+"A collection can contain other pages" = "Une collection peut contenir d’autres pages";
+
+/* Class = "NSButtonCell"; title = "Convert to Collection…"; ObjectID = "464"; */
+"Convert to Collection…" = "Convertir en Collection…";
+
+/* Class = "NSButtonCell"; title = "Convert to Single Page…"; ObjectID = "470"; */
+"Convert to Single Page…" = "Convertir en une seule page…";
+
+/* Class = "NSTextFieldCell"; title = "Use a collection to group together multiple child pages"; ObjectID = "471"; */
+"Use a collection to group together multiple child pages" = "Utilisez une collection de regrouper plusieurs pages enfant";
+/* Class = "NSTextFieldCell"; title = "Article Length:"; ObjectID = "512"; */
+"Article Length:" = "Longueur de l’article :";

@@ -1,0 +1,38 @@
+﻿/* Class = "NSTextFieldCell"; title = "Size"; ObjectID = "6"; */
+"Size" = "Taille";
+
+/* Class = "NSTextFieldCell"; title = "Width"; ObjectID = "12"; */
+"Width" = "Largeur";
+
+/* Class = "NSTextFieldCell"; title = "Height"; ObjectID = "19"; */
+"Height" = "Hauteur";
+
+/* Class = "NSButtonCell"; title = "Constrain proportions"; ObjectID = "22"; */
+"Constrain proportions" = "Restreindre proportions";
+
+/* Class = "NSButtonCell"; title = "Original Size"; ObjectID = "45"; */
+"Original Size" = "Taille d'origine";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "46"; */
+"Box" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "51"; */
+"OtherViews" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "JPEG (best for photos)"; ObjectID = "52"; */
+"JPEG (best for photos)" = "JPEG (préférable pour les photos)";
+
+/* Class = "NSMenuItem"; title = "PNG"; ObjectID = "53"; */
+"PNG" = "PNG";
+
+/* Class = "NSTextFieldCell"; title = "Format"; ObjectID = "60"; */
+"Format" = "Format";
+
+/* Class = "NSMenuItem"; title = "GIF"; ObjectID = "67"; */
+"GIF" = "GIF";
+
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "auto"; ObjectID = "176"; */
+"auto" = "auto";
+
+/* Class = "IBBindingConnection"; designableNoSelectionPlaceholder = " "; ObjectID = "176"; */
+" " = " ";

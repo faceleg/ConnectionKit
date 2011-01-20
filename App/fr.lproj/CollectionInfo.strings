@@ -1,0 +1,14 @@
+﻿/* Class = "KTLinkSourceView"; designAccessibilityDescription = "target"; ObjectID = "4"; */
+"target" = "Cible";
+
+/* Class = "NSTextFieldCell"; title = "Drag target to a collection in the site outline"; ObjectID = "5"; */
+"Drag target to a collection in the site outline" = "Glisser la cible sur une collection dans le résumé du site.";
+
+/* Class = "NSTextFieldCell"; title = "888 items"; ObjectID = "19"; */
+"888 items" = "8888 éléments";
+
+/* Class = "NSButtonCell"; title = "Show at most:"; ObjectID = "23"; */
+"Show at most:" = "Afficher au plus";
+
+/* Class = "NSTextFieldCell"; title = "Collection to Index"; ObjectID = "38"; */
+"Collection to Index" = "Collection à  indexer";

@@ -22,7 +22,7 @@ if [ -e "$2/Contents" ]; then
 cd ~/Desktop
 
 WD=`pwd`;
-VERBOSE='v';        #make it 'v' if verbose; '' if not verbose
+VERBOSE='';        #make it 'v' if verbose; '' if not verbose
 
 if [ -e "Subversion" ]; then
     mv Subversion Subversion.old
@@ -41,8 +41,8 @@ pushd "$2" > /dev/null
 mkdir -p$VERBOSE $WD/Subversion/imedia
 cp -R$VERBOSE ./Contents/Frameworks/iMediaBrowser.framework/Versions/A/Resources/$1.lproj $WD/Subversion/imedia
 
-mkdir -p$VERBOSE $WD/Subversion/connection/branches/sandvox1.6
-cp -R$VERBOSE ./Contents/Frameworks/Connection.framework/Versions/A/Resources/$1.lproj $WD/Subversion/connection/branches/sandvox1.6
+mkdir -p$VERBOSE $WD/Subversion/connection
+cp -R$VERBOSE ./Contents/Frameworks/Connection.framework/Versions/A/Resources/$1.lproj $WD/Subversion/connection
 
 mkdir -p$VERBOSE $WD/Subversion/Shared/Code/AmazonSupport
 cp -R$VERBOSE ./Contents/Frameworks/AmazonSupport.framework/Versions/A/Resources/$1.lproj $WD/Subversion/Shared/Code/AmazonSupport
@@ -82,24 +82,23 @@ do
         echo "Not copying $PLUGIN - no $1.lproj"
     fi
 done
-for PLUGIN in *.svxIndex
-do
-    BASE=`echo $PLUGIN | sed 's/.svxIndex//'`
-    if [ ! -z "$PLUGIN/Contents/Resources/$1.lproj" ]; then
-        echo "$BASE:"
-        mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/Plugins/Indexes/${BASE}Index
-        cp -R$VERBOSE $PLUGIN/Contents/Resources/$1.lproj $WD/Subversion/Sandvox$CURRENTBRANCH/Plugins/Indexes/${BASE}Index
-    else
-        echo "Not copying $PLUGIN - no $1.lproj"
-    fi
-done
 popd > /dev/null
 
 
 
 popd > /dev/null
 
-find Subversion -name '*~.nib' -exec rm -rf {} \;  2> /dev/null
+# Remove nib backup files, and nib files (since we don't localize those)
+find Subversion -name '*~.nib' -exec rm -rf {} \;  2> /dev/null      
+find Subversion -name '*.nib' -exec rm -rf {} \;  2> /dev/null
+
+# Remove any graphics ... they would not have been translated (e.g. Sandvox badges) ... those are handled manually
+find Subversion -name '*.png' -delete
+find Subversion -name '*.gif' -delete
+find Subversion -name '*.jpg' -delete
+find Subversion -name '*.jpeg' -delete
+find Subversion -name '*.tif' -delete
+find Subversion -name '*.tiff' -delete
 
 mv Subversion $FILENAME
 

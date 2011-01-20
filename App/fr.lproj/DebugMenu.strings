@@ -1,0 +1,44 @@
+﻿/* Class = "NSMenu"; title = "Menu"; ObjectID = "1027"; */
+"Menu" = "Menu";
+
+/* Class = "NSMenuItem"; title = "Reload Site Outline"; ObjectID = "1030"; */
+"Reload Site Outline" = "Recharger le plan du site";
+
+/* Class = "NSMenuItem"; title = "Clear Staleness"; ObjectID = "1031"; */
+"Clear Staleness" = "Clear Staleness";
+
+/* Class = "NSMenuItem"; title = "Available Components"; ObjectID = "1033"; */
+"Available Components" = "Composants disponibles";
+
+/* Class = "NSMenuItem"; title = "Available Designs"; ObjectID = "1035"; */
+"Available Designs" = "Designs disponibles";
+
+/* Class = "NSMenuItem"; title = "Media Inspector"; ObjectID = "1039"; */
+"Media Inspector" = "Inspecteur de média";
+
+/* Class = "NSMenuItem"; title = "Log JavaScript Errors"; ObjectID = "1043"; */
+"Log JavaScript Errors" = "Inscrire les erreurs JavaScript";
+
+/* Class = "NSMenuItem"; title = "Logging Configuration"; ObjectID = "1044"; */
+"Logging Configuration" = "Inscrire la configuration";
+
+/* Class = "NSMenuItem"; title = "Test: Generate Exception"; ObjectID = "1046"; */
+"Test: Generate Exception" = "Test: Generate Exception";
+
+/* Class = "NSMenuItem"; title = "Test: Crash"; ObjectID = "1047"; */
+"Test: Crash" = "Test: Crash";
+
+/* Class = "NSMenuItem"; title = "Report Latest Crash"; ObjectID = "1048"; */
+"Report Latest Crash" = "Report Latest Crash";
+
+/* Class = "NSMenuItem"; title = "Make Everything Stale"; ObjectID = "1054"; */
+"Make Everything Stale" = "Make Everything Stale";
+
+/* Class = "NSMenuItem"; title = "Test: Infinite Loop"; ObjectID = "1073"; */
+"Test: Infinite Loop" = "Test: Infinite Loop";
+
+/* Class = "NSMenuItem"; title = "Test: Fail Assersion"; ObjectID = "1074"; */
+"Test: Fail Assersion" = "Test: Fail Assersion";
+
+/* Class = "NSMenuItem"; title = "View Editor HTML Source"; ObjectID = "1088"; */
+"View Editor HTML Source" = "Voir la source HTLML dans l’éditeur";

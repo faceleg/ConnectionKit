@@ -1,0 +1,37 @@
+﻿/* Class = "NSBox"; title = "Box"; ObjectID = "4"; */
+"Box" = "Box";
+
+/* Class = "NSButtonCell"; title = "Make all links active"; ObjectID = "6"; */
+"Make all links active" = "Rendre tous les liens actifs";
+
+/* Class = "NSTextFieldCell"; title = "Hold down Shift key over a link to activate it"; ObjectID = "8"; */
+"Hold down Shift key over a link to activate it" = "Apuyer sur Majus sur un lien pour l’activer";
+
+/* Class = "NSButtonCell"; title = "Open link in new window"; ObjectID = "18"; */
+"Open link in new window" = "Ouvrir le lien dans une nouvelle fenêtre";
+
+/* Class = "KTLinkSourceView"; designAccessibilityDescription = "target"; ObjectID = "24"; */
+"target" = "Cible";
+
+/* Class = "NSTextFieldCell"; title = "Drag target to a page in the site outline"; ObjectID = "33"; */
+"Drag target to a page in the site outline" = "Faites glisser vers une page cible dans le plan de site";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "132"; */
+"OtherViews" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "External URL"; ObjectID = "133"; */
+"External URL" = "URL externe";
+
+/* Class = "NSMenuItem"; title = "Page in this Site"; ObjectID = "134"; */
+"Page in this Site" = "Page dans ce site";
+
+/* Class = "NSMenuItem"; title = "Full-size image"; ObjectID = "135"; */
+"Full-size image" = "Image pleine grandeur";
+
+/* Class = "NSTextFieldCell"; title = "Link to:"; ObjectID = "137"; */
+"Link to:" = "Relier à";
+
+/* Class = "NSTextFieldCell"; title = "URL:"; ObjectID = "144"; */
+"URL:" = "URL :";
+/* Class = "NSMenuItem"; title = "Nothing"; ObjectID = "166"; */
+"Nothing" = "Rien";

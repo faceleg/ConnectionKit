@@ -1,0 +1,40 @@
+﻿/* Class = "KTHTMLEditorWindow"; title = "Raw HTML Editor"; ObjectID = "5"; */
+"Raw HTML Editor" = "Éditeur HTML brut";
+
+/* Class = "NSButton"; gToolTip = "Open Help"; ObjectID = "19"; */
+"Open Help" = "Ouvrir Aide";
+
+/* Class = "NSImageView"; designAccessibilityDescription = "Validation Status"; ObjectID = "67"; */
+"Validation Status" = "État de la validation";
+
+/* Class = "NSToolbarItem"; label = "Validate"; ObjectID = "116"; */
+"Validate" = "Valider";
+/* Class = "NSToolbarItem"; label = "Update Preview"; ObjectID = "117"; */
+"Update Preview" = "Actualiser l’aperçu";
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "120"; */
+"OtherViews" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Hide Preview (PHP scripts, etc.)"; ObjectID = "121"; */
+"Hide Preview (PHP scripts, etc.)" = "Masquer l’aperçu";
+
+/* Class = "NSMenuItem"; title = "XHTML 1.0 Transitional"; ObjectID = "123"; */
+"XHTML 1.0 Transitional" = "XHTML 1.0 Transitional";
+
+/* Class = "NSMenuItem"; title = "HTML5"; ObjectID = "124"; */
+"HTML5" = "HTML5";
+
+/* Class = "NSMenuItem"; title = "HTML 4.01"; ObjectID = "126"; */
+"HTML 4.01" = "HTML 4.01";
+
+/* Class = "NSMenuItem"; title = "XHTML 1.0 Strict"; ObjectID = "127"; */
+"XHTML 1.0 Strict" = "XHTML 1.0 Strict";
+
+/* Class = "NSToolbarItem"; label = "HTML Type"; ObjectID = "129"; */
+"HTML Type" = "Type de HTML";
+/* Class = "NSImageView"; designAccessibilityDescription = "Load Status"; ObjectID = "144"; */
+"Load Status" = "État du chargement";
+
+/* Class = "NSImageView"; gToolTip = "The preference to show \"live\" data feeds and pages is turned off, so any resources loaded by this raw HTML will not be visible."; ObjectID = "144"; */
+"The preference to show \"live\" data feeds and pages is turned off, so any resources loaded by this raw HTML will not be visible." = "La préférence pour voir \"en direct\" des flux de données et des pages est éteint, de sorte que toute les ressources chargées par cette première HTML ne sera pas visible.";
+/* Class = "NSTextFieldCell"; title = "Loaded items will not be visible."; ObjectID = "146"; */
+"Loaded items will not be visible." = "Les éléments charés ne seront pas visibles.";

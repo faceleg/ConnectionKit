@@ -1,0 +1,39 @@
+﻿/* Class = "NSWindow"; title = "Window"; ObjectID = "1"; */
+"Window" = "Fenêtre";
+
+/* Class = "NSButtonCell"; title = "Done"; ObjectID = "5"; */
+"Done" = "Terminé";
+
+/* Class = "NSTabViewItem"; label = "None"; ObjectID = "8"; */
+"None" = "Aucune";
+
+/* Class = "NSTabViewItem"; label = "Haloscan"; ObjectID = "9"; */
+"Haloscan" = "Haloscan";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "14"; */
+"OtherViews" = "OtherViews";
+
+/* Class = "NSTabViewItem"; label = "Disqus"; ObjectID = "21"; */
+"Disqus" = "Disqus";
+
+/* Class = "NSMenuItem"; title = "IntenseDebate"; ObjectID = "16"; */
+"IntenseDebate" = "Débat intense";
+
+/* Class = "NSTextFieldCell"; title = "Choose a comments system for your site:"; ObjectID = "19"; */
+"Choose a comments system for your site:" = "Choisir un système de remarque pour votre site";
+/* Class = "NSTabViewItem"; label = "Echo"; ObjectID = "23"; */
+"Echo" = "Écho";
+
+/* Class = "NSTextFieldCell"; title = "Moderator Email:"; ObjectID = "44"; */
+"Moderator Email:" = "Courriel du modérateur :";
+/* Class = "NSTextFieldCell"; title = "Account ID:"; ObjectID = "59"; */
+"Account ID:" = "ID du complte :";
+
+/* Class = "NSTextFieldCell"; title = "Shortname:"; ObjectID = "64"; */
+"Shortname:" = "Nom abrégé";
+
+/* Class = "NSTextFieldCell"; title = "Haloscan is no longer supported"; ObjectID = "67"; */
+"Haloscan is no longer supported" = "Haloscan n’est plus géré";
+
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "e.g., 5d9c1ea6f026465c2fcaa7366a6e60e0"; ObjectID = "77"; */
+"e.g., 5d9c1ea6f026465c2fcaa7366a6e60e0" = "e.g., 5d9c1ea6f026465c2fcaa7366a6e60e0";

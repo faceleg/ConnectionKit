@@ -1,0 +1,23 @@
+﻿/* Class = "NSTextFieldCell"; title = "Border applies only to certain designs"; ObjectID = "21"; */
+"Border applies only to certain designs" = "La bordure s’applique seulement à certains designs";
+
+/* Class = "NSTextFieldCell"; title = "Layout"; ObjectID = "22"; */
+"Layout" = "Mise en page";
+
+/* Class = "NSButtonCell"; title = "Caption"; ObjectID = "23"; */
+"Caption" = "Légende";
+
+/* Class = "NSButtonCell"; title = "Introduction"; ObjectID = "24"; */
+"Introduction" = "Introduction";
+
+/* Class = "NSButtonCell"; title = "Title"; ObjectID = "25"; */
+"Title" = "Titre";
+
+/* Class = "NSButtonCell"; title = "Border"; ObjectID = "26"; */
+"Border" = "Bordure";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "49"; */
+"Box" = "Box";
+
+/* Class = "NSTextFieldCell"; title = "Not all designs/placements support this"; ObjectID = "58"; */
+"Not all designs/placements support this" = "Seulement certains designs supportent ceci";

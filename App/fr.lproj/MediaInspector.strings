@@ -1,0 +1,35 @@
+﻿/* Class = "NSPanel"; title = "Media Inspector"; ObjectID = "5"; */
+"Media Inspector" = "Inspecteur de média";
+
+/* Class = "NSTableColumn"; headerCell.title = "name"; ObjectID = "10"; */
+"name" = "nom";
+
+/* Class = "NSTableColumn"; headerCell.title = "originalPath"; ObjectID = "11"; */
+"originalPath" = "Chemin original";
+
+/* Class = "NSTableColumn"; headerCell.title = "uniqueID"; ObjectID = "12"; */
+"uniqueID" = "IdentifiantUnique";
+
+/* Class = "NSBox"; title = "Cached Images"; ObjectID = "13"; */
+"Cached Images" = "Images en cache";
+
+/* Class = "NSTableColumn"; headerCell.title = "Name"; ObjectID = "18"; */
+"Name" = "Nom ";
+
+/* Class = "NSTableColumn"; headerCell.title = "UTI"; ObjectID = "110"; */
+"UTI" = "UTI";
+
+/* Class = "NSTableColumn"; headerCell.title = "Storage"; ObjectID = "112"; */
+"Storage" = "Stockage";
+
+/* Class = "NSTextFieldCell"; title = "No Size\n"; ObjectID = "130"; */
+"No Size\n" = "Aucune taille";
+
+/* Class = "NSTextFieldCell"; title = "No Size"; ObjectID = "132"; */
+"No Size" = "No Size";
+
+/* Class = "NSTextFieldCell"; title = "9"; ObjectID = "134"; */
+"9" = "9";
+
+/* Class = "NSTextFieldCell"; title = "Redwood City"; ObjectID = "136"; */
+"Redwood City" = "Redwood City";

@@ -1,0 +1,29 @@
+﻿/* Class = "NSWindow"; title = "Window"; ObjectID = "1"; */
+"Window" = "Fenêtre";
+
+/* Class = "NSButtonCell"; title = "Done"; ObjectID = "4"; */
+"Done" = "Terminé";
+
+/* Class = "NSTabViewItem"; label = "Sitemap"; ObjectID = "46"; */
+"Sitemap" = "Carte du site";
+
+/* Class = "NSTabViewItem"; label = "Google Analytics"; ObjectID = "47"; */
+"Google Analytics" = "Google Analytics";
+
+/* Class = "NSTextFieldCell"; title = "Verification"; ObjectID = "55"; */
+"Verification" = "Vérification";
+
+/* Class = "NSTextFieldCell"; title = "Be sure to submit a Sitemap to Google with the following URL:"; ObjectID = "60"; */
+"Be sure to submit a Sitemap to Google with the following URL:" = "Assurez-vous de soumettre un plan du site à Google avec l'URL suivante :";
+
+/* Class = "NSButtonCell"; title = "Publish Google Sitemap"; ObjectID = "61"; */
+"Publish Google Sitemap" = "Publiez le plan du site Google";
+
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "Please publish your website to generate the correct Sitemap URL."; ObjectID = "63"; */
+"Please publish your website to generate the correct Sitemap URL." = "Veuillez publier votre site Web pour générer l'URL correcte de la carte du site.";
+
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "<meta name=\"google-site-verification\" content=\"…\" />"; ObjectID = "88"; */
+"<meta name=\"google-site-verification\" content=\"…\" />" = "<meta name=\"google-site-verification\" content=\"…\" />";
+
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "<script type=\"text/javascript\">\n\n  var _gaq = _gaq || [];\n  _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);\n  _gaq.push(['_trackPageview']);\n\n  (function() {\n    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;\n    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';\n    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);\n  })();\n\n</script>"; ObjectID = "90"; */
+"<script type=\"text/javascript\">\n\n  var _gaq = _gaq || [];\n  _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);\n  _gaq.push(['_trackPageview']);\n\n  (function() {\n    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;\n    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';\n    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);\n  })();\n\n</script>" = "<script type=\"text/javascript\">\n\n  var _gaq = _gaq || [];\n  _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);\n  _gaq.push(['_trackPageview']);\n\n  (function() {\n    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;\n    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';\n    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);\n  })();\n\n</script>";

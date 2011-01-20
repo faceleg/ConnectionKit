@@ -1,0 +1,137 @@
+﻿/* Class = "SVDocWindow"; title = "Document"; ObjectID = "1547"; */
+"Document" = "Document";
+
+/* Class = "NSTabView"; gToolTip = "URL of this page when it is published."; ObjectID = "1667"; */
+"URL of this page when it is published." = "L’URL de cette page lorsqu’elle sera publiée.";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "1684"; */
+"Box" = "Box";
+
+/* Class = "BWAnchoredPopUpButton"; designAccessibilityDescription = "Action"; ObjectID = "1699"; */
+"Action" = "Action";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "1701"; */
+"OtherViews" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Delete Page"; ObjectID = "1703"; */
+"Delete Page" = "Supprimer\nune page";
+/* Class = "NSMenuItem"; title = "shtml"; ObjectID = "1753"; */
+"shtml" = "shtml";
+
+/* Class = "NSTextFieldCell"; title = "."; ObjectID = "1757"; */
+"." = ",";
+
+/* Class = "NSTextFieldCell"; placeholderString = "http://domain.com/"; ObjectID = "1758"; */
+"http://domain.com/" = "http://domain.com/";
+
+/* Class = "NSTextFieldCell"; title = "URL:"; ObjectID = "1759"; */
+"URL:" = "URL :";
+
+/* Class = "NSTextFieldCell"; title = "Window Title:"; ObjectID = "1764"; */
+"Window Title:" = "Titre de la fenêtre";
+
+/* Class = "NSTextFieldCell"; title = "Meta Description:"; ObjectID = "1766"; */
+"Meta Description:" = "Meta Description:";
+
+/* Class = "NSTextField"; gToolTip = "Title of this page as it will appear in Google listings and in the title bar of your browser."; ObjectID = "1767"; */
+"Title of this page as it will appear in Google listings and in the title bar of your browser." = "Le titre de cette page tel qu’il apparaitra dans les listes Google et dans la barre de titre  du navigateur.";
+
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "Summary of this page as it will appear in Google listings."; ObjectID = "1950"; */
+"Summary of this page as it will appear in Google listings." = "Résumé de cette page telle qu'elle apparaîtra dans les listes de Google.";
+
+/* Class = "NSButton"; designAccessibilityDescription = "Preview"; ObjectID = "1826"; */
+"Preview" = "Aperçu";
+
+/* Class = "NSButton"; gToolTip = "View the currently published version of this page in your browser.  May not match the version you see in Sandvox."; ObjectID = "1826"; */
+"View the currently published version of this page in your browser.  May not match the version you see in Sandvox." = "Voir la version actuellement publiée de cette page dans votre navigateur. Peut ne pas correspondre à la version que vous voyez dans Sandvox.";
+
+/* Class = "NSTextFieldCell"; title = "/"; ObjectID = "1832"; */
+"/" = "/";
+
+/* Class = "NSMenuItem"; title = "Small Page Icons"; ObjectID = "1926"; */
+"Small Page Icons" = "Icônes de petite page";
+
+/* Class = "NSMenuItem"; title = "Rename Page…"; ObjectID = "1930"; */
+"Rename Page…" = "Renommer la page";
+
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "No page selected"; ObjectID = "1932"; */
+"No page selected" = "Aucune page sélectionnée";
+
+/* Class = "IBBindingConnection"; designableMultipleValuesPlaceholder = "Multiple pages selected"; ObjectID = "1932"; */
+"Multiple pages selected" = "Plusieurs pages sélectionnées";
+
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "unknown"; ObjectID = "1933"; */
+"unknown" = "inconnu";
+
+/* Class = "IBBindingConnection"; designableMultipleValuesPlaceholder = " "; ObjectID = "1933"; */
+" " = " ";
+
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "NULL"; ObjectID = "2025"; */
+"NULL" = "NULL";
+
+/* Class = "IBBindingConnection"; designableMultipleValuesPlaceholder = "MULTIPLE"; ObjectID = "2025"; */
+"MULTIPLE" = "PLUSIEURS";
+
+/* Class = "IBBindingConnection"; designableNoSelectionPlaceholder = "NO SEL"; ObjectID = "2025"; */
+"NO SEL" = "AuCUNE SEL";
+
+/* Class = "IBBindingConnection"; designableNotApplicablePlaceholder = "NOT APP"; ObjectID = "2025"; */
+"NOT APP" = "NON APPLI";
+
+/* Class = "NSTextFieldCell"; title = "Multiple Pages Selected"; ObjectID = "2030"; */
+"Multiple Pages Selected" = "Plusieurs pages sélectionnées";
+
+/* Class = "NSTextFieldCell"; title = "File:"; ObjectID = "2033"; */
+"File:" = "Fichier :";
+
+/* Class = "NSButtonCell"; title = "Choose…"; ObjectID = "2036"; */
+"Choose…" = "Choisir…";
+
+/* Class = "NSMenuItem"; title = "Group as Collection"; ObjectID = "2103"; */
+"Group as Collection" = "Grouper en  Collection";
+/* Class = "NSMenuItem"; title = "Add to (Site) Menu – haven't quite got this right yet"; ObjectID = "2118"; */
+"Add to (Site) Menu – haven't quite got this right yet" = "Add to (Site) Menu – haven't quite got this right yet";
+
+/* Class = "NSMenuItem"; title = "Convert to Collection"; ObjectID = "2119"; */
+"Convert to Collection" = "Convertir en Collection";
+
+/* Class = "NSTextFieldCell"; title = "http://example.com/foo/"; ObjectID = "2128"; */
+"http://example.com/foo/" = "http://example.com/foo/";
+
+/* Class = "NSTextFieldCell"; title = "It has already been published at:"; ObjectID = "2130"; */
+"It has already been published at:" = "Déjà publier sur :";
+
+/* Class = "NSTextFieldCell"; title = "By changing, it will be now be published at:"; ObjectID = "2132"; */
+"By changing, it will be now be published at:" = "en le changeant, il sera publié  sur :";
+
+/* Class = "BWHyperlinkButtonCell"; title = "http://example.com/foo.html"; ObjectID = "2134"; */
+"http://example.com/foo.html" = "http://example.com/foo.html";
+/* Class = "NSMenuItem"; title = "Single Page"; ObjectID = "2152"; */
+"Single Page" = "Page unique";
+
+/* Class = "NSMenuItem"; title = "Collection"; ObjectID = "2155"; */
+"Collection" = "Collection";
+
+/* Class = "IBBindingConnection"; designableMultipleValuesPlaceholder = "Multiple"; ObjectID = "2179"; */
+"Multiple" = "Multiple";
+
+/* Class = "NSTextFieldCell"; title = "The published page will be left in place, but will no longer be updated"; ObjectID = "2189"; */
+"The published page will be left in place, but will no longer be updated" = "La page publiée sera laissé en place, mais ne sera plus mis à jour";
+/* Class = "NSMenuItem"; title = "Page Code Injection…"; ObjectID = "2195"; */
+"Page Code Injection…" = "Injection du code de la page…";
+
+/* Class = "NSMenuItem"; title = "Site Code Injection…"; ObjectID = "2197"; */
+"Site Code Injection…" = "Injection de code du site…";
+
+/* Class = "NSMenuItem"; title = "Visit Published Page"; ObjectID = "2200"; */
+"Visit Published Page" = "Visitez la page publiée";
+
+/* Class = "NSButtonCell"; title = "Edit Text…"; ObjectID = "2208"; */
+"Edit Text…" = "Modifier le texte";
+/* Class = "NSMenuItem"; title = "index.shtml"; ObjectID = "2225"; */
+"index.shtml" = "index.shtml";
+/* Class = "IBBindingConnection"; designableMultipleValuesPlaceholder = "Multiple pages selected. Descriptions should be unique."; ObjectID = "1950"; */
+"Multiple pages selected. Descriptions should be unique." = "Plusieurs pages sélectionnées (:es descriptions  devraient être dfférents)";
+
+/* Class = "IBBindingConnection"; designableMultipleValuesPlaceholder = "Multiple pages selected. Titles should be unique."; ObjectID = "1949"; */
+"Multiple pages selected. Titles should be unique." = "Plusieurs pages sélectionnées (:es titres  devraient être dfférents)";

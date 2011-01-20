@@ -1,0 +1,52 @@
+﻿/* Class = "NSButtonCell"; title = "Show controller"; ObjectID = "14"; */
+"Show controller" = "Afficher le controleur";
+
+/* Class = "NSButtonCell"; title = "Automatically play"; ObjectID = "15"; */
+"Automatically play" = "Lire automatiquement";
+
+/* Class = "NSButtonCell"; title = "Automatically load"; ObjectID = "16"; */
+"Automatically load" = "Charger automatiquement";
+
+/* Class = "NSTextFieldCell"; title = "Options"; ObjectID = "149"; */
+"Options" = "Options";
+
+/* Class = "NSButtonCell"; title = "Switch"; ObjectID = "155"; */
+"Switch" = "Alterner";
+
+/* Class = "NSTextFieldCell"; title = "Poster Image"; ObjectID = "157"; */
+"Poster Image" = "Image affiche";
+
+/* Class = "NSImageView"; designAccessibilityDescription = "Video Poster"; ObjectID = "158"; */
+"Video Poster" = "Poster une vidéo";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "166"; */
+"Box" = "Box";
+
+/* Class = "NSImageView"; designAccessibilityDescription = "Caution"; ObjectID = "167"; */
+"Caution" = "Attention";
+
+/* Class = "NSButtonCell"; title = "Loop"; ObjectID = "176"; */
+"Loop" = "Boucle";
+
+/* Class = "NSButtonCell"; title = "Choose…"; ObjectID = "195"; */
+"Choose…" = "Choisir…";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "200"; */
+"OtherViews" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "None"; ObjectID = "201"; */
+"None" = "Aucune";
+
+/* Class = "NSMenuItem"; title = "Automatic"; ObjectID = "202"; */
+"Automatic" = "Automatique";
+
+/* Class = "NSMenuItem"; title = "Custom Image"; ObjectID = "203"; */
+"Custom Image" = "Image personnalisée";
+/* Class = "NSTextFieldCell"; title = "Advanced"; ObjectID = "269"; */
+"Advanced" = "Avancé";
+
+/* Class = "NSButtonCell"; title = "Copy file into document"; ObjectID = "271"; */
+"Copy file into document" = "Copier le fichier dans le document";
+
+/* Class = "NSButtonCell"; title = "Enclosure in RSS Feeds"; ObjectID = "282"; */
+"Enclosure in RSS Feeds" = "Pièce jointe dans des flux RSS";

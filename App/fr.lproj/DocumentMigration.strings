@@ -1,0 +1,11 @@
+﻿/* Class = "NSWindow"; title = "Window"; ObjectID = "5"; */
+"Window" = "Fenêtre";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "62"; */
+"Cancel" = "Annuler";
+
+/* Class = "NSTextFieldCell"; title = "Before it can be opened, this document must be upgraded to the latest Sandvox data format. A backup of the original document will be saved as \"%@.\""; ObjectID = "63"; */
+"Before it can be opened, this document must be upgraded to the latest Sandvox data format. A backup of the original document will be saved as \"%@.\"" = "Avant de pouvoir être ouvert, le présent document doit être mis à niveau au dernier format de données Sandvox. Une sauvegarde du document original sera enregistrée sous \"%@.\"";
+
+/* Class = "NSTextFieldCell"; title = "Upgrading document \"%@.\""; ObjectID = "64"; */
+"Upgrading document \"%@.\"" = "Mise à niveau du document \"%@.\"";

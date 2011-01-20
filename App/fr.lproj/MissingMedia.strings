@@ -1,0 +1,29 @@
+﻿/* Class = "NSPanel"; title = "Window"; ObjectID = "1"; */
+"Window" = "Fenêtre";
+
+/* Class = "NSTableColumn"; headerCell.title = "Last Known Location"; ObjectID = "13"; */
+"Last Known Location" = "Dernier endroit connu";
+
+/* Class = "NSTextFieldCell"; placeholderString = "Unknown"; ObjectID = "14"; */
+"Unknown" = "Inconnu";
+
+/* Class = "NSButtonCell"; title = "Find…"; ObjectID = "24"; */
+"Find…" = "Rechercher…";
+
+/* Class = "IBBindingConnection"; designableDisplayPattern = "%{value1}@ file(s)"; ObjectID = "76"; */
+"%{value1}@ file(s)" = "%{value1}@ fichier(s)";
+
+/* Class = "NSTableColumn"; headerCell.title = "Name"; ObjectID = "100"; */
+"Name" = "Nom ";
+
+/* Class = "NSTableColumn"; headerCell.title = "Thumbnail"; ObjectID = "102"; */
+"Thumbnail" = "Vignette";
+
+/* Class = "NSTextFieldCell"; title = "The following media files could not be found while opening this document:"; ObjectID = "155"; */
+"The following media files could not be found while opening this document:" = "Les fichiers médias suivants n'ont pas pu être trouvés lors de l'ouverture de ce document :";
+
+/* Class = "NSButtonCell"; title = "Continue"; ObjectID = "156"; */
+"Continue" = "Continuer";
+
+/* Class = "NSTextFieldCell"; title = "-"; ObjectID = "157"; */
+"-" = "-";

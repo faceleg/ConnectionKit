@@ -1,0 +1,67 @@
+﻿/* Class = "NSPanel"; title = "Sandvox Preferences"; ObjectID = "47"; */
+"Sandvox Preferences" = "Préférences Sandvox";
+
+/* Class = "NSButtonCell"; title = "Load data from the Internet"; ObjectID = "208"; */
+"Load data from the Internet" = "Charger les données depuis Internet";
+
+/* Class = "NSButtonCell"; title = "Match creation date to source material"; ObjectID = "210"; */
+"Match creation date to source material" = "Faire concorder la date de création avec le matériel source";
+
+/* Class = "NSButtonCell"; title = "Read URLs from web browser"; ObjectID = "211"; */
+"Read URLs from web browser" = "Lire les URL depuis le navigateur web";
+
+/* Class = "NSButton"; gToolTip = "Open Help"; ObjectID = "230"; */
+"Open Help" = "Ouvrir Aide";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "455"; */
+"OtherViews" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Include beta versions"; ObjectID = "456"; */
+"Include beta versions" = "Inclure versions bêta";
+
+/* Class = "NSMenuItem"; title = "Release versions only"; ObjectID = "457"; */
+"Release versions only" = "Versions finales seules";
+
+/* Class = "NSMenuItem"; title = "Manually"; ObjectID = "458"; */
+"Manually" = "Manuellement";
+/* Class = "NSMenuItem"; title = "Never"; ObjectID = "596"; */
+"Never" = "Jamais";
+
+/* Class = "NSMenuItem"; title = "Automatically"; ObjectID = "597"; */
+"Automatically" = "Automatiquement";
+
+/* Class = "NSMenuItem"; title = "Ask each time"; ObjectID = "598"; */
+"Ask each time" = "Demander à chaque fois";
+
+/* Class = "NSTextFieldCell"; title = "Check for software updates:"; ObjectID = "728"; */
+"Check for software updates:" = "Rechercher une mise à jour";
+
+/* Class = "NSButtonCell"; title = "Check Now"; ObjectID = "730"; */
+"Check Now" = "Rechercher ";
+
+/* Class = "NSTextFieldCell"; title = "Report problems to Karelia:"; ObjectID = "731"; */
+"Report problems to Karelia:" = "Rapporter les erreurs à Karelia :";
+
+/* Class = "NSTextFieldCell"; title = "From:"; ObjectID = "733"; */
+"From:" = "De :";
+
+/* Class = "NSButtonCell"; title = "Include index filename"; ObjectID = "749"; */
+"Include index filename" = "Inclure le nom de fichier de l'index";
+
+/* Class = "NSTextFieldCell"; title = "Collection URLs:"; ObjectID = "757"; */
+"Collection URLs:" = "URL des cCcllections";
+
+/* Class = "NSTextFieldCell"; title = "http://example.com/collection/"; ObjectID = "759"; */
+"http://example.com/collection/" = "http://example.com/collection/";
+
+/* Class = "NSTextFieldCell"; title = "http://example.com/collection/index.html"; ObjectID = "766"; */
+"http://example.com/collection/index.html" = "http://example.com/collection/index.html";
+
+/* Class = "NSTextFieldCell"; title = "When inserting pages/objects:"; ObjectID = "770"; */
+"When inserting pages/objects:" = "Lors de l'insertion de pages/objets :";
+
+/* Class = "NSTextFieldCell"; title = "While editing:"; ObjectID = "772"; */
+"While editing:" = "Lors de la modification";
+
+/* Class = "NSTextFieldCell"; title = "Turning off may speed up page loading"; ObjectID = "774"; */
+"Turning off may speed up page loading" = "La désactification peut accélérer le chargement des pages";

@@ -1,0 +1,8 @@
+﻿/* Class = "NSWindow"; title = "Debug Window"; ObjectID = "5"; */
+"Debug Window" = "Fenêtre de débogage";
+
+/* Class = "NSButtonCell"; title = "☸"; ObjectID = "253"; */
+"☸" = "☸";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "254"; */
+"Text Cell" = "Text Cell";

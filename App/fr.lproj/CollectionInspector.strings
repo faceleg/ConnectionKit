@@ -1,0 +1,35 @@
+﻿/* Class = "NSPopUpButton"; designAccessibilityDescription = "Collection Sort"; ObjectID = "6"; */
+"Collection Sort" = "Tri de la collection";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "8"; */
+"OtherViews" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Alphabetical"; ObjectID = "9"; */
+"Alphabetical" = "Alphabétique";
+
+/* Class = "NSMenuItem"; title = "By Date Created"; ObjectID = "10"; */
+"By Date Created" = "Par date de création";
+
+/* Class = "NSMenuItem"; title = "By Date Modified"; ObjectID = "11"; */
+"By Date Modified" = "Par date de modification";
+
+/* Class = "NSMenuItem"; title = "None"; ObjectID = "12"; */
+"None" = "Aucune";
+
+/* Class = "NSTextFieldCell"; title = "Syndication"; ObjectID = "15"; */
+"Syndication" = "Syndication";
+
+/* Class = "NSButtonCell"; title = "Generate RSS feed"; ObjectID = "16"; */
+"Generate RSS feed" = "Générer le flux RSS";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "28"; */
+"Box" = "Box";
+
+/* Class = "NSButtonCell"; title = "Reverse order"; ObjectID = "30"; */
+"Reverse order" = "Ordre inverse";
+
+/* Class = "NSTextFieldCell"; title = "Automatic Sorting"; ObjectID = "32"; */
+"Automatic Sorting" = "Tri automatique";
+
+/* Class = "NSButtonCell"; title = "Generate archives"; ObjectID = "41"; */
+"Generate archives" = "Générer les archives";

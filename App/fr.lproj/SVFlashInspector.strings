@@ -1,0 +1,29 @@
+﻿/* Class = "NSButtonCell"; title = "Automatically play"; ObjectID = "14"; */
+"Automatically play" = "Lire automatiquement";
+
+/* Class = "NSButtonCell"; title = "Loop"; ObjectID = "15"; */
+"Loop" = "Boucle";
+
+/* Class = "NSTextFieldCell"; title = "Options"; ObjectID = "149"; */
+"Options" = "Options";
+
+/* Class = "NSButtonCell"; title = "Switch"; ObjectID = "155"; */
+"Switch" = "Alterner";
+
+/* Class = "NSTextFieldCell"; title = "FlashVars :"; ObjectID = "217"; */
+"FlashVars :" = "Barres Flash";
+
+/* Class = "NSTextFieldCell"; placeholderString = "Optional parameters to pass to Flash player"; ObjectID = "219"; */
+"Optional parameters to pass to Flash player" = "Paramètres facultatifs à donner  au lecteur Flash";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "227"; */
+"Box" = "Box";
+
+/* Class = "NSButtonCell"; title = "Copy file into document"; ObjectID = "229"; */
+"Copy file into document" = "Copier le fichier dans le document";
+
+/* Class = "NSTextFieldCell"; title = "Advanced"; ObjectID = "230"; */
+"Advanced" = "Avancé";
+
+/* Class = "NSButtonCell"; title = "Enable contextual menu"; ObjectID = "238"; */
+"Enable contextual menu" = "Activer le menu contextuel";
