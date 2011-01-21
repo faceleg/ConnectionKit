@@ -64,6 +64,7 @@
     [super awakeFromNew];
     self.iconPosition = 1;
     self.iconStyle = 1;
+    self.showsTitle = NO;
 }
 
 - (void)didAddToPage:(id <SVPage>)page;
