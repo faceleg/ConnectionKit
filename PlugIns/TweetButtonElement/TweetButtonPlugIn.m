@@ -116,61 +116,64 @@
 #pragma mark HTML Generation
 
 - (void)writeHTML:(id <SVPlugInContext>)context
-{
-    [context startElement:@"p" attributes:[NSDictionary dictionaryWithObject:@"text-align:center; padding-top:10px; padding-bottom:10px;" forKey:@"style"]];
-    
+{  
     if ( [context liveDataFeeds] )
     {
-        NSMutableDictionary *attrs = [NSMutableDictionary dictionaryWithCapacity:5];
+        NSMutableDictionary *tweetAttrs = [NSMutableDictionary dictionaryWithCapacity:5];
         // href
-        [attrs setObject:@"http://twitter.com/share" forKey:@"href"];
+        [tweetAttrs setObject:@"http://twitter.com/share" forKey:@"href"];
         // class
-        [attrs setObject:@"twitter-share-button" forKey:@"class"];
+        [tweetAttrs setObject:@"twitter-share-button" forKey:@"class"];
         // data-url (if no url, twitter uses url of page button is on)
         if ( self.tweetURL )
         {
-            [attrs setObject:self.tweetURL forKey:@"data-url"];
+            [tweetAttrs setObject:self.tweetURL forKey:@"data-url"];
         }
         // data-text (if no text, twitter uses title of page button is on)
         if ( self.tweetText )
         {
-            [attrs setObject:self.tweetText forKey:@"data-text"];
+            [tweetAttrs setObject:self.tweetText forKey:@"data-text"];
         }
         // data-count
-        [attrs setObject:self.tweetButton forKey:@"data-count"];
+        [tweetAttrs setObject:self.tweetButton forKey:@"data-count"];
         // data-via
         if ( self.tweetVia )
         {
-            [attrs setObject:self.tweetVia forKey:@"data-via"];
+            [tweetAttrs setObject:self.tweetVia forKey:@"data-via"];
         }
         // data-related
         if ( self.tweetRelated )
         {
-            [attrs setObject:self.tweetRelated forKey:@"data-related"];
+            [tweetAttrs setObject:self.tweetRelated forKey:@"data-related"];
         }
         // data-lang (if no lang, en is assumed)
         NSString *language = [(id<SVPage>)[context page] language];
         if ( language && ![language isEqualToString:@"en"] )
         {
-            [attrs setObject:language forKey:@"data-lang"];
+            [tweetAttrs setObject:language forKey:@"data-lang"];
         }
         
+        NSDictionary *divAttrs = [NSDictionary dictionaryWithObject:@"text-align:center; padding-top:10px; padding-bottom:10px;" 
+                                                             forKey:@"style"];
+        [context startElement:@"div" attributes:divAttrs];
+
         // write anchor
-        [context startElement:@"a" attributes:attrs]; // <a>
+        [context startElement:@"a" attributes:tweetAttrs]; // <a>
         [context writeText:@"Tweet"];
         [context endElement]; // </a>
+        
+        [context endElement]; // </div>
         
         // write <script> to endBody
         [context addMarkupToEndOfBody:@"<script type=\"text/javascript\" src=\"http://platform.twitter.com/widgets.js\"></script>"];
     }
     else 
     {
-        //FIXME: phrase this better for user
+        [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"svx-placeholder" forKey:@"class"]];
         NSString *noLiveFeeds = LocalizedStringInThisBundle(@"Tweet Button visible only when loading data from the Internet", "");
         [context writeText:noLiveFeeds];
+        [context endElement]; // </div>
     }
-    
-    [context endElement]; // </p>
     
     // add dependencies
     [context addDependencyForKeyPath:@"tweetButtonStyle" ofObject:self];
