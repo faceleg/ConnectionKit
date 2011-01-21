@@ -369,7 +369,6 @@
 															</object>
 															<string key="NSFrame">{{1, 1}, {725, 380}}</string>
 															<reference key="NSSuperview" ref="597012545"/>
-															<reference key="NSNextKeyView" ref="342835708"/>
 															<int key="NSViewLayerContentsRedrawPolicy">2</int>
 															<reference key="NSDocView" ref="342835708"/>
 															<reference key="NSBGColor" ref="173529639"/>
@@ -400,7 +399,6 @@
 													</object>
 													<string key="NSFrame">{{-1, -1}, {742, 382}}</string>
 													<reference key="NSSuperview" ref="792805901"/>
-													<reference key="NSNextKeyView" ref="661423584"/>
 													<int key="NSViewLayerContentsRedrawPolicy">2</int>
 													<int key="NSsFlags">18</int>
 													<reference key="NSVScroller" ref="1020946278"/>
