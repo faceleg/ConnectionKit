@@ -1298,21 +1298,14 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (float)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
 {
+    float result = [outlineView rowHeight];
+    
 	if (item == [self rootPage]) 
 	{
-		if ( [self displaySmallPageIcons] )
-		{
-			return SMALL_ICON_CELL_HEIGHT + SMALL_ICON_ROOT_SPACING;
-		}
-		else
-		{
-			return LARGE_ICON_CELL_HEIGHT + LARGE_ICON_ROOT_SPACING;
-		}
+		result += ([self displaySmallPageIcons] ? SMALL_ICON_ROOT_SPACING : LARGE_ICON_ROOT_SPACING);
 	}
-	else
-	{
-        return [outlineView rowHeight];
-	}
+    
+    return result;
 }
 
 #pragma mark Drag
