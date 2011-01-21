@@ -224,16 +224,17 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
         
         // write iframe
         style = @"text-align:center; padding-top:10px; padding-bottom:10px;";
-        [context startElement:@"p" attributes:[NSDictionary dictionaryWithObject:style forKey:@"style"]];
+        [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:style forKey:@"style"]];
         [context startElement:@"iframe" attributes:attributes];
         [context endElement]; // </iframe>
-        [context endElement]; // </p>
+        [context endElement]; // </div>
     }
     else 
     {
-        //FIXME: phrase this better for user
+        [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"svx-placeholder" forKey:@"class"]];
         NSString *noLiveFeeds = LocalizedStringInThisBundle(@"Facebook Button visible only when loading data from the Internet", "");
         [context writeText:noLiveFeeds];
+        [context endElement];
     }
     
     // add dependencies
