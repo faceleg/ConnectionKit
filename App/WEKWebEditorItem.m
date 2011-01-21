@@ -538,6 +538,12 @@
         {
             [border setBorderColor:nil];
         }
+        else
+        {
+            DOMRGBColor *color = [(DOMCSSPrimitiveValue *)[style getPropertyCSSValue:@"background-color"] getRGBColorValue];
+            if ([[color color] alphaComponent] > 0.1) [border setBorderColor:nil];
+        }
+        
         
         NSRect borderDrawingRect = [border drawingRectForGraphicBounds:frameRect];
         if ([view needsToDrawRect:borderDrawingRect])
