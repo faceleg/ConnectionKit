@@ -65,6 +65,8 @@
         case SVThumbnailTypeLastChildItem:
         {
             // This is it boys, this is war. Need a controller for the pages...
+            // The controller might already be loaded, so if so just jog our memory of what to index. #104216
+            if ([self childPagesToIndex]) [self setChildPagesToIndex:[self childPagesToIndex]];
             [self childPagesToIndexController]; // makes sure it's loaded/bound
             
             // ...and from there take the thumbnail media
