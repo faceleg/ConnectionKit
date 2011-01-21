@@ -18,6 +18,7 @@ typedef enum {
     SVLinkToRSSFeed,
     SVLinkToFullSizeImage = 8,
     SVLinkExternal = 10,
+    SVLinkEmail
 } SVLinkType;
 
 

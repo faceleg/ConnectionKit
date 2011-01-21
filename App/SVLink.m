@@ -33,7 +33,7 @@
     
     [self init];
     
-    _type = SVLinkExternal;
+    _type = ([urlString hasPrefix:@"mailto:"] ? SVLinkEmail : SVLinkExternal);
     _URLString = [urlString copy];
     _openInNewWindow = openInNewWindow;
     
