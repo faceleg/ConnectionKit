@@ -121,6 +121,12 @@
                                        @"Indication in site outline that the page has an empty title. Distinct from untitled, which is for newly created pages.");
         }
     }
+    else if ([self linkType] == SVLinkEmail)
+    {
+        NSURL *url = [[NSURL alloc] initWithString:result];
+        result = [url resourceSpecifier];
+        [url release];
+    }
     
     return result;
 }
