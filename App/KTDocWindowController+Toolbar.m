@@ -413,6 +413,12 @@
 	for ( itemInfo in itemArray ) 
 	{
 		NSString *itemIdentifier = [itemInfo valueForKey:@"identifier"];
+		
+		if ([itemIdentifier isEqualToString:@"toggleMediaBrowserShown:"] && (NSHostByteOrder() == NS_LittleEndian))
+		{
+			continue;		// KLUDGE ... disallow imedia on a PPC machine
+		}
+		
 		[allowedIdentifiers addObject:itemIdentifier];
 	}
 	return [NSArray arrayWithArray:allowedIdentifiers];

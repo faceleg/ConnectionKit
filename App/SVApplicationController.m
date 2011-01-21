@@ -233,8 +233,11 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-	[IMBConfig registerDefaultValues];
-	[IMBConfig setShowsGroupNodes:NO];
+	if (NSHostByteOrder() == NS_LittleEndian)
+	{
+		[IMBConfig registerDefaultValues];
+		[IMBConfig setShowsGroupNodes:NO];
+	}
 
     
     // BUGSID:36452 - having WebKitDefaultFontSize present seriously screws up text rendering
@@ -649,15 +652,22 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	}
     else if (action == @selector(toggleMediaBrowserShown:))
     {
-        if ([IMBPanelController isSharedPanelControllerLoaded] &&
-            [[[IMBPanelController sharedPanelController] window] isVisible])
-        {
-            [menuItem setTitle:NSLocalizedString(@"Hide Media Browser", @"menu title to hide inspector panel")];
-        }
-        else
-        {
-            [menuItem setTitle:NSLocalizedString(@"Show Media Browser", @"menu title to show inspector panel")];
-        }
+		if (NSHostByteOrder() == NS_LittleEndian)
+		{
+			if ([IMBPanelController isSharedPanelControllerLoaded] &&
+				[[[IMBPanelController sharedPanelController] window] isVisible])
+			{
+				[menuItem setTitle:NSLocalizedString(@"Hide Media Browser", @"menu title to hide inspector panel")];
+			}
+			else
+			{
+				[menuItem setTitle:NSLocalizedString(@"Show Media Browser", @"menu title to show inspector panel")];
+			}
+		}
+		else
+		{
+			result = NO;		// no imedia browser on PPC for now ... crashing a lot!
+		}
     }
 	else if (action == @selector(showReleaseNotes:))
 	{
