@@ -110,6 +110,10 @@
         SVLink *link = [[SVLinkManager sharedLinkManager] guessLink];
         if (link) [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
     }
+    else if (type == SVLinkEmail)
+    {
+        [self setLinkURL:oEmailAddressField];
+    }
     else if (type == SVLinkToFullSizeImage)
     {
         SVLink *link = [[SVLink alloc] initLinkToFullSizeImageOpensInNewWindow:NO];
