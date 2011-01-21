@@ -55,6 +55,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 }
 
 @property(nonatomic, retain) IBOutlet NSOutlineView *outlineView;
+- (BOOL)isOutlineViewLoaded;
 
 @property(nonatomic, retain) SVPagesController *content;
 

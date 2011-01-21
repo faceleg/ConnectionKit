@@ -212,6 +212,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 }
 
+- (BOOL)isOutlineViewLoaded; { return _outlineView != nil; }
+
 #pragma mark Other Accessors
 
 @synthesize content = _pagesController;
