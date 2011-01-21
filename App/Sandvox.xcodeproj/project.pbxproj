@@ -6216,7 +6216,7 @@
 		3C004C5E121251D4006BAD9C /* PhotoGrid.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = PhotoGrid.svxElement;
+			path = PhotoGridIndex.svxElement;
 			remoteRef = 3C004C5D121251D4006BAD9C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -6279,7 +6279,7 @@
 		3C9CF9AB12120196005CFDD4 /* General.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = General.svxElement;
+			path = GeneralIndex.svxElement;
 			remoteRef = 3C9CF9AA12120196005CFDD4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
