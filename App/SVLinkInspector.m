@@ -13,7 +13,9 @@
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
 #import "KTPage.h"
+
 #import "KSURLFormatter.h"
+#import "KSURLUtilities.h"
 
 #import "DOMRange+Karelia.h"
 
@@ -126,7 +128,17 @@
 
 - (IBAction)setLinkURL:(id)sender;
 {
-    SVLink *link = [[SVLink alloc] initWithURLString:[oLinkField stringValue]
+    NSString *urlString = [sender stringValue];
+    
+    // Emails need mailto: prepended
+    SVLinkType type = [oLinkTypePopUpButton selectedTag];
+    if (type == SVLinkEmail || [KSURLFormatter isValidEmailAddress:urlString])
+    {
+        urlString = [[NSURL ks_mailtoURLWithEmailAddress:urlString] absoluteString];
+    }
+    
+    // Apply to model
+    SVLink *link = [[SVLink alloc] initWithURLString:urlString
                                      openInNewWindow:[oOpenInNewWindowCheckbox intValue]];
     [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
     [link release];
