@@ -1502,7 +1502,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 															<object class="NSTextField" id="487945475">
 																<reference key="NSNextResponder" ref="747201708"/>
 																<int key="NSvFlags">290</int>
-																<string key="NSFrame">{{7, 11}, {216, 22}}</string>
+																<string key="NSFrame">{{32, 11}, {166, 22}}</string>
 																<reference key="NSSuperview" ref="747201708"/>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTextFieldCell" key="NSCell" id="90716026">
