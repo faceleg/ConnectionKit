@@ -196,9 +196,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 												 selector:@selector(pageIconSizeDidChange:)
 													 name:@"KTDisplaySmallPageIconsDidChange"
 												   object:[[[outlineView window] windowController] document]];
-		// Set up initial value.  Kind of hack-ish? Any better way?  We've already loaded the value into the doc!
-		self.displaySmallPageIcons = [[[[outlineView window] windowController] document] displaySmallPageIcons];
-		// Note: we do this before setting ivar, so reload doesn't kill us.
 	}
 	
 	// Retain the new view
@@ -1314,14 +1311,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	}
 	else
 	{
-		if ( [self displaySmallPageIcons] )
-		{
-			return SMALL_ICON_CELL_HEIGHT;
-		}
-		else
-		{
-			return LARGE_ICON_CELL_HEIGHT;
-		}
+        return [outlineView rowHeight];
 	}
 }
 
@@ -1789,7 +1779,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	[self invalidateIconCaches];	// If the icon size changes this lot are no longer valid
 	
 	// Setup is complete, reload outline
-	[self reloadSiteOutline];
+    if ([self isOutlineViewLoaded])
+    {
+        [[self outlineView] setRowHeight:(smallIcons ? SMALL_ICON_CELL_HEIGHT : LARGE_ICON_CELL_HEIGHT)];
+        [self reloadSiteOutline];
+    }
 }
 
 
