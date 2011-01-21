@@ -30,6 +30,7 @@
 		8D5B49B6048680CD000E48DA /* TweetButton.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TweetButton.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE09D14F124336D80094EC48 /* toolbar_tweet.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_tweet.tiff; sourceTree = "<group>"; };
+		CE753EBF12EA4DA800C93992 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -167,6 +168,7 @@
 				French,
 				German,
 				en,
+				fr,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* TweetButtonElement */;
 			projectDirPath = "";
@@ -207,6 +209,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				089C167EFE841241C02AAC07 /* en */,
+				CE753EBF12EA4DA800C93992 /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
