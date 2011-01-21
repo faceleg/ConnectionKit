@@ -1041,7 +1041,6 @@
 		CE050182127B86440082BFA9 /* page_html.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE050181127B86440082BFA9 /* page_html.tiff */; };
 		CE050229127B8DD80082BFA9 /* KTElementPlugInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31C320D4B7E1600895DA1 /* KTElementPlugInWrapper.m */; };
 		CE05022A127B8DD90082BFA9 /* KTElementPlugInWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31C310D4B7E1600895DA1 /* KTElementPlugInWrapper.h */; };
-		CE12151E0B5EFF3200C40320 /* LivePagesDisabled.html in Resources */ = {isa = PBXBuildFile; fileRef = CE12151D0B5EFF3200C40320 /* LivePagesDisabled.html */; };
 		CE13026B0BD009D000DC2439 /* SyntaxColorDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026A0BD009D000DC2439 /* SyntaxColorDefaults.plist */; };
 		CE13026D0BD009E700DC2439 /* HTMLSyntaxColoring.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */; };
 		CE13900009BAB73000661A1A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE138FFF09BAB73000661A1A /* SystemConfiguration.framework */; };
@@ -2500,7 +2499,6 @@
 		79D35F950974C84000241EDA /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = ../../Shared/ThirdParty/Growl/Growl.framework; sourceTree = SOURCE_ROOT; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Sandvox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sandvox.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE018C970DB6DD43003E008B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = es; path = es.lproj/LivePagesDisabled.html; sourceTree = "<group>"; };
 		CE01A6220EAFD63600BDF264 /* CIImage+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CIImage+Karelia.h"; sourceTree = "<group>"; };
 		CE01A6230EAFD63600BDF264 /* CIImage+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CIImage+Karelia.m"; sourceTree = "<group>"; };
 		CE01A6240EAFD63600BDF264 /* KSAbstractBugReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSAbstractBugReporter.h; sourceTree = "<group>"; };
@@ -2743,14 +2741,6 @@
 		CE05013A127B7FE00082BFA9 /* page_contact_sb.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = page_contact_sb.tiff; sourceTree = "<group>"; };
 		CE05013C127B7FE60082BFA9 /* page_sitemap_sb.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = page_sitemap_sb.tiff; sourceTree = "<group>"; };
 		CE050181127B86440082BFA9 /* page_html.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = page_html.tiff; sourceTree = "<group>"; };
-		CE1215420B5EFFC600C40320 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fr; path = fr.lproj/LivePagesDisabled.html; sourceTree = "<group>"; };
-		CE1215430B5EFFC800C40320 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = de; path = de.lproj/LivePagesDisabled.html; sourceTree = "<group>"; };
-		CE1215440B5EFFCB00C40320 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = da; path = da.lproj/LivePagesDisabled.html; sourceTree = "<group>"; };
-		CE1215450B5EFFCD00C40320 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = it; path = it.lproj/LivePagesDisabled.html; sourceTree = "<group>"; };
-		CE1215460B5EFFD100C40320 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = ja; path = ja.lproj/LivePagesDisabled.html; sourceTree = "<group>"; };
-		CE1215470B5EFFD400C40320 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = zh_TW; path = zh_TW.lproj/LivePagesDisabled.html; sourceTree = "<group>"; };
-		CE1215480B5EFFD900C40320 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = zh_CN; path = zh_CN.lproj/LivePagesDisabled.html; sourceTree = "<group>"; };
-		CE121D9A0B5F008200C40320 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/LivePagesDisabled.html; sourceTree = "<group>"; };
 		CE13026A0BD009D000DC2439 /* SyntaxColorDefaults.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = SyntaxColorDefaults.plist; sourceTree = "<group>"; };
 		CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = HTMLSyntaxColoring.plist; sourceTree = "<group>"; };
 		CE138FFF09BAB73000661A1A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
@@ -4340,7 +4330,6 @@
 				CEA962C20AF6A924008A1367 /* sandvox.css */,
 				CEAE132B08450536007025D4 /* RSSTemplate.xml */,
 				CEC4DB2F0935179500D75C23 /* NonStandardURL.html */,
-				CE12151D0B5EFF3200C40320 /* LivePagesDisabled.html */,
 			);
 			name = "HTML,text,js";
 			sourceTree = "<group>";
@@ -6498,7 +6487,6 @@
 				CE214BFA098060CD006DD2B1 /* Languages.plist in Resources */,
 				CED196C50AC33F90002E8A4A /* Sandvox Help in Resources */,
 				CEA962C30AF6A924008A1367 /* sandvox.css in Resources */,
-				CE12151E0B5EFF3200C40320 /* LivePagesDisabled.html in Resources */,
 				CE033FA20B862BB90098735B /* Web-safe Mac:Windows.collection in Resources */,
 				CE13026B0BD009D000DC2439 /* SyntaxColorDefaults.plist in Resources */,
 				CE13026D0BD009E700DC2439 /* HTMLSyntaxColoring.plist in Resources */,
@@ -7898,22 +7886,6 @@
 				3CACE2CC127FC21100983DF2 /* en */,
 			);
 			name = SVGoogleSheet.xib;
-			sourceTree = "<group>";
-		};
-		CE12151D0B5EFF3200C40320 /* LivePagesDisabled.html */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE1215420B5EFFC600C40320 /* fr */,
-				CE1215430B5EFFC800C40320 /* de */,
-				CE1215440B5EFFCB00C40320 /* da */,
-				CE1215450B5EFFCD00C40320 /* it */,
-				CE1215460B5EFFD100C40320 /* ja */,
-				CE1215470B5EFFD400C40320 /* zh_TW */,
-				CE1215480B5EFFD900C40320 /* zh_CN */,
-				CE121D9A0B5F008200C40320 /* en */,
-				CE018C970DB6DD43003E008B /* es */,
-			);
-			name = LivePagesDisabled.html;
 			sourceTree = "<group>";
 		};
 		CE6EE00111F129F100F00AAC /* KSBugReporterViews.xib */ = {
