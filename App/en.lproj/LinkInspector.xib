@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="140"/>
+			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -306,7 +306,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="676878134">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">71435264</int>
-							<string key="NSContents">Link to:</string>
+							<string key="NSContents">Link To:</string>
 							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="419155358"/>
 							<reference key="NSBackgroundColor" ref="779414817"/>
@@ -2490,7 +2490,7 @@
 			<integer value="3100" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-		<string key="IBDocument.LastKnownRelativeProjectPath">Sandvox.xcodeproj</string>
+		<string key="IBDocument.LastKnownRelativeProjectPath">../Sandvox.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<bool key="EncodedWithXMLCoder">YES</bool>
