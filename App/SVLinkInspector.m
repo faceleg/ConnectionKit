@@ -64,6 +64,10 @@
             
             break;
         }
+        case SVLinkEmail:
+            [oEmailAddressField setStringValue:[link targetDescription]];
+            break;
+            
         case SVLinkExternal:
         {
             // Configure for a generic link
