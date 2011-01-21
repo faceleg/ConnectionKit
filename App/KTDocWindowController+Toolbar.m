@@ -400,7 +400,15 @@
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
-	return [[self infoForToolbar:toolbar] objectForKey:@"default set"];
+	NSArray *result = [[self infoForToolbar:toolbar] objectForKey:@"default set"];
+	
+	if (NSHostByteOrder() != NS_LittleEndian && [result containsObject:@"toggleMediaBrowserShown:"])
+	{
+		NSMutableArray *patched = [NSMutableArray arrayWithArray:result];
+		[patched removeObject:@"toggleMediaBrowserShown:"];
+		result = [NSArray arrayWithArray:patched];
+	}
+	return result;
 }
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar 
@@ -414,7 +422,7 @@
 	{
 		NSString *itemIdentifier = [itemInfo valueForKey:@"identifier"];
 		
-		if ([itemIdentifier isEqualToString:@"toggleMediaBrowserShown:"] && (NSHostByteOrder() == NS_LittleEndian))
+		if ([itemIdentifier isEqualToString:@"toggleMediaBrowserShown:"] && (NSHostByteOrder() != NS_LittleEndian))
 		{
 			continue;		// KLUDGE ... disallow imedia on a PPC machine
 		}
