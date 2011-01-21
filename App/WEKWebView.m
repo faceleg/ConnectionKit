@@ -57,10 +57,14 @@
         if (![delegate webView:self shouldPerformAction:_cmd fromSender:sender]) return;
     }
     
-    if ([[self webEditor] shouldChangeTextInDOMRange:[self selectedDOMRange]])
+    DOMRange *selection = [self selectedDOMRange];
+    if (selection)
     {
-        SVLink *link = [sender selectedLink];
-        [self createLink:[link URLString] userInterface:NO];
+        if ([[self webEditor] shouldChangeTextInDOMRange:selection])
+        {
+            SVLink *link = [sender selectedLink];
+            [self createLink:[link URLString] userInterface:NO];
+        }
     }
 }
 
