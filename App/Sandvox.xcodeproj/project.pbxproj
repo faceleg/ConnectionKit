@@ -4074,7 +4074,7 @@
 		3C004C5A121251D4006BAD9C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3C004C5E121251D4006BAD9C /* PhotoGrid.svxElement */,
+				3C004C5E121251D4006BAD9C /* PhotoGridIndex.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4650,7 +4650,7 @@
 		3C9CF9A712120196005CFDD4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3C9CF9AB12120196005CFDD4 /* General.svxElement */,
+				3C9CF9AB12120196005CFDD4 /* GeneralIndex.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6213,7 +6213,7 @@
 			remoteRef = 3C0049551210CB87006BAD9C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3C004C5E121251D4006BAD9C /* PhotoGrid.svxElement */ = {
+		3C004C5E121251D4006BAD9C /* PhotoGridIndex.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = PhotoGridIndex.svxElement;
@@ -6276,7 +6276,7 @@
 			remoteRef = 3C9870EE11F3D5F60053A72C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3C9CF9AB12120196005CFDD4 /* General.svxElement */ = {
+		3C9CF9AB12120196005CFDD4 /* GeneralIndex.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = GeneralIndex.svxElement;
@@ -6645,7 +6645,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/zsh;
-			shellScript = "foreach nibFile (${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib) # getting every nib in the built product - but not plugins\n\techo \"nibFile=${nibFile}\"\n\techo \"SOURCE_ROOT=${SOURCE_ROOT}\"\n\n\tstringsFilePath=${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/en.lproj/`basename ${nibFile} .nib`.strings # The path where the strings file will go\n\techo \"stringsFilePath=${stringsFilePath}\"\n\n\t# Look for the .xib file corresponding to that built nib file\n\txibFile=`basename ${nibFile} .nib`.xib\n\techo \"xibFile=${xibFile}\"\n\n\t# TRY to find the .xib file corresponding to that\n\txibFilePath=`echo ${SOURCE_ROOT}/${xibFile}`\n\techo \"xibFilePath=${xibFilePath}\"\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** Getting strings out of Xib: ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\trm ${stringsFilePath}~\n\t}\n\n\txibFilePath=`echo ${SOURCE_ROOT}/en.lproj/${xibFile}`\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** Getting strings out of Xib: ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\trm ${stringsFilePath}~\n\t}\n\nend\n\n";
+			shellScript = "foreach nibFile (${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib) # getting every nib in the built product - but not plugins\n\t#echo \"nibFile=${nibFile}\"\n\t#echo \"SOURCE_ROOT=${SOURCE_ROOT}\"\n\n\tstringsFilePath=${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/en.lproj/`basename ${nibFile} .nib`.strings # The path where the strings file will go\n\t#echo \"stringsFilePath=${stringsFilePath}\"\n\n\t# Look for the .xib file corresponding to that built nib file\n\txibFile=`basename ${nibFile} .nib`.xib\n\t#echo \"xibFile=${xibFile}\"\n\n\t# TRY to find the .xib file corresponding to that\n\txibFilePath=`echo ${SOURCE_ROOT}/${xibFile}`\n\t#echo \"xibFilePath=${xibFilePath}\"\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** UNLOCALIZED? Getting strings out of Xib: ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\trm ${stringsFilePath}~\n\t}\n\n\txibFilePath=`echo ${SOURCE_ROOT}/en.lproj/${xibFile}`\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** en.lproj: Getting strings out of Xib: ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\trm ${stringsFilePath}~\n\t}\n\n\txibFilePath=`echo ${SOURCE_ROOT}/../../Shared/en.lproj/${xibFile}`\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** SHARED: Getting strings out of Xib: ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\trm ${stringsFilePath}~\n\t}\n\nend\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3E75F90F1C5F42002E3A9A /* ShellScript */ = {
