@@ -43,7 +43,7 @@
 
 #define LARGE_ICON_CELL_HEIGHT	34.00
 #define SMALL_ICON_CELL_HEIGHT	17.00
-#define LARGE_ICON_ROOT_SPACING	24.00
+#define LARGE_ICON_ROOT_SPACING	6.00
 #define SMALL_ICON_ROOT_SPACING 16.00
 
 #define CAN_CONVERT_TO_COLLECTIONS
@@ -1223,7 +1223,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		}
 		
 		// Home page is drawn slightly differently
-		[cell setRoot:(item == [self rootPage])];
+		//[cell setRoot:(item == [self rootPage])];
 	}
 	
 	

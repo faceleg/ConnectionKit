@@ -162,4 +162,17 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 	}
 }
 
+- (NSRect) rectOfRow:(NSInteger)row;
+{
+    NSRect result = [super rectOfRow:row];
+    
+    // The first row is special as we want to draw it like a normal height row. It's made taller by the delegate to accomodate divider
+    if (row == 0)
+    {
+        result.size.height = [self rowHeight] + [self intercellSpacing].height;
+    }
+    
+    return result;
+}
+
 @end
