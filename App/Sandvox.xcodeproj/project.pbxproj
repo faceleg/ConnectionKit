@@ -298,7 +298,6 @@
 		271BFA4F10F00C2D006EA3A2 /* SVPageProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */; settings = {ATTRIBUTES = (); }; };
 		272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */; };
-		27238AFB12C3FE3A00999CD1 /* RawHTMLInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27238AFA12C3FE3A00999CD1 /* RawHTMLInspector.xib */; };
 		2725BA46121DE9990074EAA0 /* NSImageView+IMBImageItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 2725BA44121DE9990074EAA0 /* NSImageView+IMBImageItem.h */; };
 		2725BA47121DE9990074EAA0 /* NSImageView+IMBImageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2725BA45121DE9990074EAA0 /* NSImageView+IMBImageItem.m */; };
 		2725BC38121F3F690074EAA0 /* SVArchivePage.h in Headers */ = {isa = PBXBuildFile; fileRef = 2725BC36121F3F690074EAA0 /* SVArchivePage.h */; };
@@ -329,7 +328,6 @@
 		273864660D50BB1D00A8A209 /* KTPage+Indexes.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864650D50BB1D00A8A209 /* KTPage+Indexes.m */; };
 		273B400B1176305600A275E6 /* SVMediaGatheringPublisher.h in Headers */ = {isa = PBXBuildFile; fileRef = 273B40091176305600A275E6 /* SVMediaGatheringPublisher.h */; };
 		273B400C1176305600A275E6 /* SVMediaGatheringPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 273B400A1176305600A275E6 /* SVMediaGatheringPublisher.m */; };
-		273B43741178676900A275E6 /* DocumentSavePanelAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 273B43731178676900A275E6 /* DocumentSavePanelAccessoryView.xib */; };
 		273B438411786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273B438211786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h */; };
 		273B438511786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273B438311786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m */; };
 		273B443A1179046500A275E6 /* SVDocumentFileWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 273B44381179046500A275E6 /* SVDocumentFileWrapper.h */; };
@@ -337,7 +335,6 @@
 		273D139410A321EA00E88CC6 /* SVWebEditorHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */; };
 		273D139510A321EB00E88CC6 /* SVWebEditorHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D139310A321EA00E88CC6 /* SVWebEditorHTMLContext.m */; };
 		273D730310EA7A9C003F5BA8 /* SVPlugInContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D730110EA7A9C003F5BA8 /* SVPlugInContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		273D764410EC134F003F5BA8 /* PlugInInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 273D764310EC134F003F5BA8 /* PlugInInspector.xib */; };
 		273D765010EC169F003F5BA8 /* SVPlugInInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D764E10EC169F003F5BA8 /* SVPlugInInspector.h */; };
 		273D765110EC169F003F5BA8 /* SVPlugInInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D764F10EC169F003F5BA8 /* SVPlugInInspector.m */; };
 		273D7DB40D070BC100057448 /* KTPage+Paths.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D7DB30D070BC100057448 /* KTPage+Paths.m */; };
@@ -345,7 +342,6 @@
 		273DCFA010CBD5D3003CCE97 /* SVWebContentObjectsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273DCF9E10CBD5D3003CCE97 /* SVWebContentObjectsController.m */; };
 		273DCFF110CBDC10003CCE97 /* KSArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273DCFEF10CBDC10003CCE97 /* KSArrayController.h */; };
 		273DCFF210CBDC10003CCE97 /* KSArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273DCFF010CBDC10003CCE97 /* KSArrayController.m */; };
-		273DD20810CC74AA003CCE97 /* CollectionInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 273DD20710CC74AA003CCE97 /* CollectionInspector.xib */; };
 		27422441106A926E0058C8DA /* WEKWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2742243F106A926E0058C8DA /* WEKWebView.h */; };
 		27422442106A926E0058C8DA /* WEKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27422440106A926E0058C8DA /* WEKWebView.m */; };
 		27443266103D8693007E7FF0 /* LoadingPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27443265103D8693007E7FF0 /* LoadingPlaceholder.xib */; };
@@ -412,7 +408,6 @@
 		276C004F129BE40500568A73 /* SVGraphicContainerDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276C004D129BE40500568A73 /* SVGraphicContainerDOMController.m */; };
 		276C010C129C00F800568A73 /* DOMTreeWalker+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 276C010A129C00F800568A73 /* DOMTreeWalker+Karelia.h */; };
 		276C010D129C00F800568A73 /* DOMTreeWalker+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 276C010B129C00F800568A73 /* DOMTreeWalker+Karelia.m */; };
-		276C151D114A6C0300D30CFE /* GraphicInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 276C151C114A6C0300D30CFE /* GraphicInspector.xib */; };
 		276F8AB210D572780094AA73 /* SVDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 276F8AB010D572780094AA73 /* SVDOMController.h */; };
 		276F8AB310D572780094AA73 /* SVDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276F8AB110D572780094AA73 /* SVDOMController.m */; };
 		276FE0AB12424D1D00EE2C14 /* SVSizeFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 276FE0A912424D1D00EE2C14 /* SVSizeFormatter.h */; };
@@ -437,7 +432,6 @@
 		277AFCA012DBCF9B009CD192 /* SVFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 277AFC9E12DBCF9B009CD192 /* SVFooter.m */; };
 		277E4E8811104CF4005AF346 /* SVImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E4E8611104CF4005AF346 /* SVImage.h */; };
 		277E4E8911104CF4005AF346 /* SVImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E4E8711104CF4005AF346 /* SVImage.m */; };
-		277E4F7A11108847005AF346 /* MetricsInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 277E4F7911108847005AF346 /* MetricsInspector.xib */; };
 		277E55A011133051005AF346 /* KTPage+Serialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C58AE7110204EE00F42306 /* KTPage+Serialization.m */; };
 		277E6EE6112EB4830081389F /* SVDirectoryPublishingRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E6EE0112EB4830081389F /* SVDirectoryPublishingRecord.h */; };
 		277E6EE7112EB4830081389F /* SVDirectoryPublishingRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E6EE1112EB4830081389F /* SVDirectoryPublishingRecord.m */; };
@@ -461,8 +455,6 @@
 		278116E5107CEC3E003AA6F5 /* WEKWebEditorView+Dragging.m in Sources */ = {isa = PBXBuildFile; fileRef = 278116E4107CEC3E003AA6F5 /* WEKWebEditorView+Dragging.m */; };
 		2782914610912B30008D0A64 /* SVInspectorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2782914410912B30008D0A64 /* SVInspectorViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2782914710912B30008D0A64 /* SVInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2782914510912B30008D0A64 /* SVInspectorViewController.m */; };
-		2782918F10912D5D008D0A64 /* DocumentInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2782918E10912D5D008D0A64 /* DocumentInspector.xib */; };
-		2782919110912E14008D0A64 /* PageInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2782919010912E14008D0A64 /* PageInspector.xib */; };
 		2782B2DA12367C6E00C5F870 /* SVEnclosure.h in Headers */ = {isa = PBXBuildFile; fileRef = 2782B2D912367C6E00C5F870 /* SVEnclosure.h */; };
 		2782D1D91257483F00B7CF1A /* SVSummaryDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2782D1D71257483F00B7CF1A /* SVSummaryDOMController.h */; };
 		2782D1DA1257483F00B7CF1A /* SVSummaryDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2782D1D81257483F00B7CF1A /* SVSummaryDOMController.m */; };
@@ -522,7 +514,6 @@
 		27A080791151704F005D873A /* SVImageItemCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A080771151704F005D873A /* SVImageItemCell.h */; };
 		27A0807A1151704F005D873A /* SVImageItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A080781151704F005D873A /* SVImageItemCell.m */; };
 		27A095341097598600F43746 /* PageletTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27A095331097598600F43746 /* PageletTemplate.html */; };
-		27A1882D11F78323004BEFC2 /* MultipleSelectionPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27A1882C11F78323004BEFC2 /* MultipleSelectionPlaceholder.xib */; };
 		27A1892D11F864F0004BEFC2 /* SVPublisher.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A1892C11F864F0004BEFC2 /* SVPublisher.h */; };
 		27A3578910E6D59D00C99FB3 /* SVTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A3578710E6D59D00C99FB3 /* SVTemplate.h */; };
 		27A3578A10E6D59D00C99FB3 /* SVTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A3578810E6D59D00C99FB3 /* SVTemplate.m */; };
@@ -595,8 +586,6 @@
 		27D7340712118E3400722189 /* SVIndexPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D7340512118E3400722189 /* SVIndexPlugIn.m */; };
 		27D7345512119C6600722189 /* SVMediaGraphicInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D7345312119C6600722189 /* SVMediaGraphicInspector.h */; };
 		27D7345612119C6600722189 /* SVMediaGraphicInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D7345412119C6600722189 /* SVMediaGraphicInspector.m */; };
-		27D7347312119F3100722189 /* FileInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27D7347212119F3100722189 /* FileInfo.xib */; };
-		27D7350F1211CC3C00722189 /* SVImage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27D7350E1211CC3C00722189 /* SVImage.xib */; };
 		27D90AD90D7ED62800C13012 /* SVHTMLTemplateParser+Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D90AD80D7ED62800C13012 /* SVHTMLTemplateParser+Text.m */; };
 		27D9A259117FB49000049638 /* SVAuxiliaryPageletTextDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D9A257117FB49000049638 /* SVAuxiliaryPageletTextDOMController.h */; };
 		27D9A25A117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D9A258117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m */; };
@@ -617,7 +606,6 @@
 		27DD0B59120329A80083C7C1 /* SVURLFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DD0B57120329A80083C7C1 /* SVURLFormatter.m */; };
 		27DDFDBE11FDB2040083C7C1 /* KSStringWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DDFDBC11FDB2040083C7C1 /* KSStringWriter.h */; };
 		27DDFDBF11FDB2040083C7C1 /* KSStringWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDFDBD11FDB2040083C7C1 /* KSStringWriter.m */; };
-		27DE6C5910A4F6EE00D71710 /* WrapInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27DE6C5810A4F6EE00D71710 /* WrapInspector.xib */; };
 		27E1BF4B115B8235000FF123 /* SVDocumentUndoManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */; };
 		27E1BF4C115B8235000FF123 /* SVDocumentUndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */; };
 		27E24AC610FB9591004EFE9F /* SVLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E24AC410FB9591004EFE9F /* SVLink.h */; };
@@ -648,7 +636,6 @@
 		27F365ED11602161003BDA5F /* SVMetricsInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F365EB11602161003BDA5F /* SVMetricsInspector.h */; };
 		27F365EE11602161003BDA5F /* SVMetricsInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F365EC11602161003BDA5F /* SVMetricsInspector.m */; };
 		27F63BD40D463F7800FAEB48 /* KTMaster.h in Headers */ = {isa = PBXBuildFile; fileRef = 273C2F8E0CCE58C100E48E22 /* KTMaster.h */; settings = {ATTRIBUTES = (); }; };
-		27F71A7310F7641D0029AE3A /* LinkInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F71A7210F7641D0029AE3A /* LinkInspector.xib */; };
 		27F790D9106BABA6007DF81B /* KSDragging.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F790D8106BABA6007DF81B /* KSDragging.h */; };
 		27F9A745127A31070042D7B8 /* SVPageTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F9A743127A31070042D7B8 /* SVPageTemplate.h */; };
 		27F9A746127A31070042D7B8 /* SVPageTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F9A744127A31070042D7B8 /* SVPageTemplate.m */; };
@@ -751,7 +738,6 @@
 		3C72D3C6094A23880061A876 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D3C5094A23880061A876 /* Carbon.framework */; };
 		3C72D483094A23D80061A876 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D482094A23D80061A876 /* Security.framework */; };
 		3C72D4F6094A24390061A876 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D4F5094A24390061A876 /* libz.dylib */; };
-		3C7B015E122F526B0098E147 /* CollectionInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C7B015D122F526B0098E147 /* CollectionInfo.xib */; };
 		3C89AD7308E0BE1400CA0522 /* KTDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */; };
 		3C96FCAE07E7FF5100B418ED /* KTStringRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C96FCAC07E7FF5100B418ED /* KTStringRenderer.m */; };
 		3C96FD6707E7FFFF00B418ED /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C96FD6607E7FFFF00B418ED /* Quartz.framework */; };
@@ -762,12 +748,9 @@
 		3C9BC1F6103DF90C00D2CF47 /* KTTransfer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1F4103DF90C00D2CF47 /* KTTransfer.xib */; };
 		3C9BC1FA103DF92500D2CF47 /* Welcome.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1F8103DF92500D2CF47 /* Welcome.xib */; };
 		3C9BC1FE103DF94300D2CF47 /* Prefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1FC103DF94300D2CF47 /* Prefs.xib */; };
-		3C9BC205103DF97F00D2CF47 /* DocumentMigration.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC204103DF97F00D2CF47 /* DocumentMigration.xib */; };
 		3C9BC208103DF99300D2CF47 /* DebugMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC207103DF99300D2CF47 /* DebugMenu.xib */; };
 		3C9BC20B103DF9A900D2CF47 /* DebugTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC20A103DF9A900D2CF47 /* DebugTable.xib */; };
-		3C9BC20E103DF9BA00D2CF47 /* KTTranscript.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC20D103DF9BA00D2CF47 /* KTTranscript.xib */; };
 		3C9BC211103DF9CB00D2CF47 /* MediaInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC210103DF9CB00D2CF47 /* MediaInspector.xib */; };
-		3C9BC214103DF9DF00D2CF47 /* HTMLEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC213103DF9DF00D2CF47 /* HTMLEditor.xib */; };
 		3CA17FC9122DB2C700331125 /* SVIndexInspectorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CA17FC7122DB2C700331125 /* SVIndexInspectorViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CA17FCA122DB2C700331125 /* SVIndexInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA17FC8122DB2C700331125 /* SVIndexInspectorViewController.m */; };
 		3CA6B98D11F9130B004A4794 /* YRKSpinningProgressIndicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CA6B98B11F9130B004A4794 /* YRKSpinningProgressIndicator.h */; };
@@ -1190,7 +1173,6 @@
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CE89C230123999D70056D74B /* SVFlash.h in Headers */ = {isa = PBXBuildFile; fileRef = CE89C22E123999D70056D74B /* SVFlash.h */; };
 		CE89C231123999D70056D74B /* SVFlash.m in Sources */ = {isa = PBXBuildFile; fileRef = CE89C22F123999D70056D74B /* SVFlash.m */; };
-		CE89C23912399A560056D74B /* SVFlashInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE89C23812399A560056D74B /* SVFlashInspector.xib */; };
 		CE89F96A11F6149600B180EB /* ddsmoothmenu.css in Resources */ = {isa = PBXBuildFile; fileRef = CE89F96511F6149500B180EB /* ddsmoothmenu.css */; };
 		CE89F9C611F6152D00B180EB /* ddsmoothmenu.js in Resources */ = {isa = PBXBuildFile; fileRef = CE89F96411F6149500B180EB /* ddsmoothmenu.js */; };
 		CE8D547C112AFDBD007AC2F0 /* SVValidatorWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8D547A112AFDBD007AC2F0 /* SVValidatorWindowController.h */; };
@@ -1255,12 +1237,10 @@
 		CEDA2D85120CC6B1005FE23E /* SVAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDA2D83120CC6B1005FE23E /* SVAudio.m */; };
 		CEDA2DC0120CD437005FE23E /* SVVideoInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = CEDA2DBE120CD437005FE23E /* SVVideoInspector.h */; };
 		CEDA2DC1120CD437005FE23E /* SVVideoInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDA2DBF120CD437005FE23E /* SVVideoInspector.m */; };
-		CEDA2DD2120CD676005FE23E /* SVVideoInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDA2DD1120CD676005FE23E /* SVVideoInspector.xib */; };
 		CEDE1DC50A5C6B8C0055352C /* NonStandardURL.html in Resources */ = {isa = PBXBuildFile; fileRef = CEC4DB2F0935179500D75C23 /* NonStandardURL.html */; };
 		CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EA307E0101100DE4994 /* Acknowledgments.rtf */; };
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
 		CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CECCED7C0E646B6800BE9016 /* Symbolication.framework */; };
-		CEE20EEC121DC141006BA09C /* SVAudioInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE20EEB121DC141006BA09C /* SVAudioInspector.xib */; };
 		CEE2C64F120B25E7000E3C0E /* plugin_inspector.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEE2C64E120B25E7000E3C0E /* plugin_inspector.tiff */; };
 		CEE77B8012528930001F74FC /* SVAudioVisualPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = CEE77B7E12528930001F74FC /* SVAudioVisualPlugIn.h */; };
 		CEE77B8112528930001F74FC /* SVAudioVisualPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE77B7F12528930001F74FC /* SVAudioVisualPlugIn.m */; };
@@ -1271,6 +1251,26 @@
 		CEF9D0C30D862C4A00BD9895 /* KTImageWebKitViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */; };
 		CEF9D1460D86304600BD9895 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CEF9D1470D86304900BD9895 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		CEFD1D2E12E9F7C000D3A6CD /* CollectionInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D2D12E9F7C000D3A6CD /* CollectionInfo.xib */; };
+		CEFD1D3012E9F7FC00D3A6CD /* GraphicInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D2F12E9F7FC00D3A6CD /* GraphicInspector.xib */; };
+		CEFD1D3212E9F7FC00D3A6CD /* FileInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D3112E9F7FC00D3A6CD /* FileInfo.xib */; };
+		CEFD1D3412E9F7FC00D3A6CD /* DocumentInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D3312E9F7FC00D3A6CD /* DocumentInspector.xib */; };
+		CEFD1D3612E9F7FC00D3A6CD /* DocumentSavePanelAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D3512E9F7FC00D3A6CD /* DocumentSavePanelAccessoryView.xib */; };
+		CEFD1D3812E9F7FC00D3A6CD /* HTMLEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D3712E9F7FC00D3A6CD /* HTMLEditor.xib */; };
+		CEFD1D3A12E9F7FC00D3A6CD /* DocumentMigration.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D3912E9F7FC00D3A6CD /* DocumentMigration.xib */; };
+		CEFD1D3D12E9F82900D3A6CD /* KTTranscript.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D3C12E9F82900D3A6CD /* KTTranscript.xib */; };
+		CEFD1D3F12E9F85300D3A6CD /* CollectionInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D3E12E9F85300D3A6CD /* CollectionInspector.xib */; };
+		CEFD1D4112E9F85300D3A6CD /* SVFlashInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D4012E9F85300D3A6CD /* SVFlashInspector.xib */; };
+		CEFD1D4312E9F85300D3A6CD /* SVVideoInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D4212E9F85300D3A6CD /* SVVideoInspector.xib */; };
+		CEFD1D4512E9F85300D3A6CD /* SVImage.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D4412E9F85300D3A6CD /* SVImage.xib */; };
+		CEFD1D4712E9F85300D3A6CD /* MultipleSelectionPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D4612E9F85300D3A6CD /* MultipleSelectionPlaceholder.xib */; };
+		CEFD1D4912E9F85300D3A6CD /* MetricsInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D4812E9F85300D3A6CD /* MetricsInspector.xib */; };
+		CEFD1D4B12E9F85300D3A6CD /* RawHTMLInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D4A12E9F85300D3A6CD /* RawHTMLInspector.xib */; };
+		CEFD1D4D12E9F85300D3A6CD /* SVAudioInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D4C12E9F85300D3A6CD /* SVAudioInspector.xib */; };
+		CEFD1D4F12E9F85300D3A6CD /* WrapInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D4E12E9F85300D3A6CD /* WrapInspector.xib */; };
+		CEFD1D5112E9F85300D3A6CD /* LinkInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D5012E9F85300D3A6CD /* LinkInspector.xib */; };
+		CEFD1D5312E9F86300D3A6CD /* PlugInInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D5212E9F86300D3A6CD /* PlugInInspector.xib */; };
+		CEFD1D5512E9F87000D3A6CD /* PageInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFD1D5412E9F87000D3A6CD /* PageInspector.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1866,7 +1866,7 @@
 		271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageProtocol.h; sourceTree = "<group>"; };
 		272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCollectionIndexFilenameButton.h; sourceTree = "<group>"; };
 		272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCollectionIndexFilenameButton.m; sourceTree = "<group>"; };
-		27238AFA12C3FE3A00999CD1 /* RawHTMLInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RawHTMLInspector.xib; sourceTree = "<group>"; };
+		27238AFA12C3FE3A00999CD1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RawHTMLInspector.xib; sourceTree = "<group>"; };
 		2725BA44121DE9990074EAA0 /* NSImageView+IMBImageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImageView+IMBImageItem.h"; sourceTree = "<group>"; };
 		2725BA45121DE9990074EAA0 /* NSImageView+IMBImageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImageView+IMBImageItem.m"; sourceTree = "<group>"; };
 		2725BC36121F3F690074EAA0 /* SVArchivePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVArchivePage.h; sourceTree = "<group>"; };
@@ -1900,7 +1900,7 @@
 		273864650D50BB1D00A8A209 /* KTPage+Indexes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Indexes.m"; sourceTree = "<group>"; };
 		273B40091176305600A275E6 /* SVMediaGatheringPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaGatheringPublisher.h; sourceTree = "<group>"; };
 		273B400A1176305600A275E6 /* SVMediaGatheringPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaGatheringPublisher.m; sourceTree = "<group>"; };
-		273B43731178676900A275E6 /* DocumentSavePanelAccessoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentSavePanelAccessoryView.xib; sourceTree = "<group>"; };
+		273B43731178676900A275E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DocumentSavePanelAccessoryView.xib; sourceTree = "<group>"; };
 		273B438211786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocumentSavePanelAccessoryViewController.h; sourceTree = "<group>"; };
 		273B438311786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocumentSavePanelAccessoryViewController.m; sourceTree = "<group>"; };
 		273B44381179046500A275E6 /* SVDocumentFileWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocumentFileWrapper.h; sourceTree = "<group>"; };
@@ -1911,7 +1911,7 @@
 		273D705810E8ECB4003F5BA8 /* SVCalloutDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVCalloutDOMController.h; sourceTree = "<group>"; };
 		273D705910E8ECB4003F5BA8 /* SVCalloutDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVCalloutDOMController.m; sourceTree = "<group>"; };
 		273D730110EA7A9C003F5BA8 /* SVPlugInContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInContext.h; sourceTree = "<group>"; };
-		273D764310EC134F003F5BA8 /* PlugInInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlugInInspector.xib; sourceTree = "<group>"; };
+		273D764310EC134F003F5BA8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PlugInInspector.xib; sourceTree = "<group>"; };
 		273D764E10EC169F003F5BA8 /* SVPlugInInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInInspector.h; sourceTree = "<group>"; };
 		273D764F10EC169F003F5BA8 /* SVPlugInInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInInspector.m; sourceTree = "<group>"; };
 		273D7DB30D070BC100057448 /* KTPage+Paths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Paths.m"; sourceTree = "<group>"; };
@@ -1919,7 +1919,7 @@
 		273DCF9E10CBD5D3003CCE97 /* SVWebContentObjectsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebContentObjectsController.m; sourceTree = "<group>"; };
 		273DCFEF10CBDC10003CCE97 /* KSArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSArrayController.h; sourceTree = "<group>"; };
 		273DCFF010CBDC10003CCE97 /* KSArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSArrayController.m; sourceTree = "<group>"; };
-		273DD20710CC74AA003CCE97 /* CollectionInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionInspector.xib; sourceTree = "<group>"; };
+		273DD20710CC74AA003CCE97 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CollectionInspector.xib; sourceTree = "<group>"; };
 		2742243F106A926E0058C8DA /* WEKWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebView.h; sourceTree = "<group>"; };
 		27422440106A926E0058C8DA /* WEKWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEKWebView.m; sourceTree = "<group>"; };
 		274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CollectionArchiveElement.xcodeproj; path = ../PlugIns/CollectionArchiveElement/CollectionArchiveElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -1987,7 +1987,7 @@
 		276C004D129BE40500568A73 /* SVGraphicContainerDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGraphicContainerDOMController.m; sourceTree = "<group>"; };
 		276C010A129C00F800568A73 /* DOMTreeWalker+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMTreeWalker+Karelia.h"; sourceTree = "<group>"; };
 		276C010B129C00F800568A73 /* DOMTreeWalker+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMTreeWalker+Karelia.m"; sourceTree = "<group>"; };
-		276C151C114A6C0300D30CFE /* GraphicInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GraphicInspector.xib; sourceTree = "<group>"; };
+		276C151C114A6C0300D30CFE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/GraphicInspector.xib; sourceTree = "<group>"; };
 		276F8AB010D572780094AA73 /* SVDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMController.h; sourceTree = "<group>"; };
 		276F8AB110D572780094AA73 /* SVDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMController.m; sourceTree = "<group>"; };
 		276FE0A912424D1D00EE2C14 /* SVSizeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSizeFormatter.h; sourceTree = "<group>"; };
@@ -2012,7 +2012,7 @@
 		277AFC9E12DBCF9B009CD192 /* SVFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFooter.m; sourceTree = "<group>"; };
 		277E4E8611104CF4005AF346 /* SVImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVImage.h; sourceTree = "<group>"; };
 		277E4E8711104CF4005AF346 /* SVImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVImage.m; sourceTree = "<group>"; };
-		277E4F7911108847005AF346 /* MetricsInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MetricsInspector.xib; sourceTree = "<group>"; };
+		277E4F7911108847005AF346 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MetricsInspector.xib; sourceTree = "<group>"; };
 		277E6EE0112EB4830081389F /* SVDirectoryPublishingRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDirectoryPublishingRecord.h; sourceTree = "<group>"; };
 		277E6EE1112EB4830081389F /* SVDirectoryPublishingRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDirectoryPublishingRecord.m; sourceTree = "<group>"; };
 		277E6EE2112EB4830081389F /* SVPublishingRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPublishingRecord.h; sourceTree = "<group>"; };
@@ -2037,8 +2037,8 @@
 		278116E4107CEC3E003AA6F5 /* WEKWebEditorView+Dragging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WEKWebEditorView+Dragging.m"; sourceTree = "<group>"; };
 		2782914410912B30008D0A64 /* SVInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInspectorViewController.h; sourceTree = "<group>"; };
 		2782914510912B30008D0A64 /* SVInspectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVInspectorViewController.m; sourceTree = "<group>"; };
-		2782918E10912D5D008D0A64 /* DocumentInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentInspector.xib; sourceTree = "<group>"; };
-		2782919010912E14008D0A64 /* PageInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageInspector.xib; sourceTree = "<group>"; };
+		2782918E10912D5D008D0A64 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DocumentInspector.xib; sourceTree = "<group>"; };
+		2782919010912E14008D0A64 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PageInspector.xib; sourceTree = "<group>"; };
 		2782B2D912367C6E00C5F870 /* SVEnclosure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVEnclosure.h; sourceTree = "<group>"; };
 		2782D1D71257483F00B7CF1A /* SVSummaryDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSummaryDOMController.h; sourceTree = "<group>"; };
 		2782D1D81257483F00B7CF1A /* SVSummaryDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSummaryDOMController.m; sourceTree = "<group>"; };
@@ -2102,7 +2102,7 @@
 		27A0932F0D1DECDA00F57801 /* WebViewEditingHelperClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewEditingHelperClasses.h; sourceTree = "<group>"; };
 		27A093300D1DECDA00F57801 /* WebViewEditingHelperClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewEditingHelperClasses.m; sourceTree = "<group>"; };
 		27A095331097598600F43746 /* PageletTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = PageletTemplate.html; sourceTree = "<group>"; };
-		27A1882C11F78323004BEFC2 /* MultipleSelectionPlaceholder.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MultipleSelectionPlaceholder.xib; sourceTree = "<group>"; };
+		27A1882C11F78323004BEFC2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MultipleSelectionPlaceholder.xib; sourceTree = "<group>"; };
 		27A1892C11F864F0004BEFC2 /* SVPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPublisher.h; sourceTree = "<group>"; };
 		27A3578710E6D59D00C99FB3 /* SVTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTemplate.h; sourceTree = "<group>"; };
 		27A3578810E6D59D00C99FB3 /* SVTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTemplate.m; sourceTree = "<group>"; };
@@ -2180,8 +2180,8 @@
 		27D7340512118E3400722189 /* SVIndexPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndexPlugIn.m; sourceTree = "<group>"; };
 		27D7345312119C6600722189 /* SVMediaGraphicInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaGraphicInspector.h; sourceTree = "<group>"; };
 		27D7345412119C6600722189 /* SVMediaGraphicInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaGraphicInspector.m; sourceTree = "<group>"; };
-		27D7347212119F3100722189 /* FileInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileInfo.xib; sourceTree = "<group>"; };
-		27D7350E1211CC3C00722189 /* SVImage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SVImage.xib; sourceTree = "<group>"; };
+		27D7347212119F3100722189 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FileInfo.xib; sourceTree = "<group>"; };
+		27D7350E1211CC3C00722189 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVImage.xib; sourceTree = "<group>"; };
 		27D90AD80D7ED62800C13012 /* SVHTMLTemplateParser+Text.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVHTMLTemplateParser+Text.m"; sourceTree = "<group>"; };
 		27D90B390D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContinueReadingLinkTextBlock.h; sourceTree = "<group>"; };
 		27D90B3A0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContinueReadingLinkTextBlock.m; sourceTree = "<group>"; };
@@ -2203,7 +2203,7 @@
 		27DD0B57120329A80083C7C1 /* SVURLFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVURLFormatter.m; sourceTree = "<group>"; };
 		27DDFDBC11FDB2040083C7C1 /* KSStringWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSStringWriter.h; sourceTree = "<group>"; };
 		27DDFDBD11FDB2040083C7C1 /* KSStringWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSStringWriter.m; sourceTree = "<group>"; };
-		27DE6C5810A4F6EE00D71710 /* WrapInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WrapInspector.xib; sourceTree = "<group>"; };
+		27DE6C5810A4F6EE00D71710 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WrapInspector.xib; sourceTree = "<group>"; };
 		27DEC7900DDC3EB500D795F3 /* Media System.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Media System.graffle"; sourceTree = "<group>"; };
 		27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileEqualityTester.h; sourceTree = "<group>"; };
 		27DECBA90DE03F0800D795F3 /* KTMediaFileEqualityTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileEqualityTester.m; sourceTree = "<group>"; };
@@ -2242,7 +2242,7 @@
 		27F3658F115EB7BA003BDA5F /* SVArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVArticle.m; sourceTree = "<group>"; };
 		27F365EB11602161003BDA5F /* SVMetricsInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMetricsInspector.h; sourceTree = "<group>"; };
 		27F365EC11602161003BDA5F /* SVMetricsInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMetricsInspector.m; sourceTree = "<group>"; };
-		27F71A7210F7641D0029AE3A /* LinkInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkInspector.xib; sourceTree = "<group>"; };
+		27F71A7210F7641D0029AE3A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LinkInspector.xib; sourceTree = "<group>"; };
 		27F790D8106BABA6007DF81B /* KSDragging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDragging.h; sourceTree = "<group>"; };
 		27F9A743127A31070042D7B8 /* SVPageTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageTemplate.h; sourceTree = "<group>"; };
 		27F9A744127A31070042D7B8 /* SVPageTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageTemplate.m; sourceTree = "<group>"; };
@@ -2400,7 +2400,7 @@
 		3C72D3C5094A23880061A876 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		3C72D482094A23D80061A876 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		3C72D4F5094A24390061A876 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
-		3C7B015D122F526B0098E147 /* CollectionInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionInfo.xib; sourceTree = "<group>"; };
+		3C7B015D122F526B0098E147 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CollectionInfo.xib; sourceTree = "<group>"; };
 		3C89AD7008E0BE1400CA0522 /* KTDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocumentController.h; sourceTree = "<group>"; };
 		3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocumentController.m; sourceTree = "<group>"; };
 		3C96FCAB07E7FF5100B418ED /* KTStringRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStringRenderer.h; sourceTree = "<group>"; };
@@ -2414,12 +2414,12 @@
 		3C9BC1F5103DF90C00D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KTTransfer.xib; sourceTree = "<group>"; };
 		3C9BC1F9103DF92500D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Welcome.xib; sourceTree = "<group>"; };
 		3C9BC1FD103DF94300D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Prefs.xib; sourceTree = "<group>"; };
-		3C9BC204103DF97F00D2CF47 /* DocumentMigration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentMigration.xib; sourceTree = "<group>"; };
+		3C9BC204103DF97F00D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DocumentMigration.xib; sourceTree = "<group>"; };
 		3C9BC207103DF99300D2CF47 /* DebugMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugMenu.xib; sourceTree = "<group>"; };
 		3C9BC20A103DF9A900D2CF47 /* DebugTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugTable.xib; sourceTree = "<group>"; };
-		3C9BC20D103DF9BA00D2CF47 /* KTTranscript.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KTTranscript.xib; sourceTree = "<group>"; };
+		3C9BC20D103DF9BA00D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KTTranscript.xib; sourceTree = "<group>"; };
 		3C9BC210103DF9CB00D2CF47 /* MediaInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaInspector.xib; sourceTree = "<group>"; };
-		3C9BC213103DF9DF00D2CF47 /* HTMLEditor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HTMLEditor.xib; sourceTree = "<group>"; };
+		3C9BC213103DF9DF00D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/HTMLEditor.xib; sourceTree = "<group>"; };
 		3CA17FC7122DB2C700331125 /* SVIndexInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndexInspectorViewController.h; sourceTree = "<group>"; };
 		3CA17FC8122DB2C700331125 /* SVIndexInspectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndexInspectorViewController.m; sourceTree = "<group>"; };
 		3CA6B98B11F9130B004A4794 /* YRKSpinningProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YRKSpinningProgressIndicator.h; path = "../../yrk-spinning-progress-indicator/Code/YRKSpinningProgressIndicator.h"; sourceTree = SOURCE_ROOT; };
@@ -2871,7 +2871,7 @@
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		CE89C22E123999D70056D74B /* SVFlash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVFlash.h; sourceTree = "<group>"; };
 		CE89C22F123999D70056D74B /* SVFlash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFlash.m; sourceTree = "<group>"; };
-		CE89C23812399A560056D74B /* SVFlashInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SVFlashInspector.xib; sourceTree = "<group>"; };
+		CE89C23812399A560056D74B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVFlashInspector.xib; sourceTree = "<group>"; };
 		CE89F96411F6149500B180EB /* ddsmoothmenu.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ddsmoothmenu.js; sourceTree = "<group>"; };
 		CE89F96511F6149500B180EB /* ddsmoothmenu.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = ddsmoothmenu.css; sourceTree = "<group>"; };
 		CE8D547A112AFDBD007AC2F0 /* SVValidatorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVValidatorWindowController.h; sourceTree = "<group>"; };
@@ -2950,7 +2950,7 @@
 		CEDA2D83120CC6B1005FE23E /* SVAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAudio.m; sourceTree = "<group>"; };
 		CEDA2DBE120CD437005FE23E /* SVVideoInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVVideoInspector.h; sourceTree = "<group>"; };
 		CEDA2DBF120CD437005FE23E /* SVVideoInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVVideoInspector.m; sourceTree = "<group>"; };
-		CEDA2DD1120CD676005FE23E /* SVVideoInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SVVideoInspector.xib; sourceTree = "<group>"; };
+		CEDA2DD1120CD676005FE23E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVVideoInspector.xib; sourceTree = "<group>"; };
 		CEDE18960A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = zh_TW; path = zh_TW.lproj/Credits.html; sourceTree = "<group>"; };
 		CEDE189B0A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEDE18A10A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2959,7 +2959,7 @@
 		CEDE18B60A5C69840055352C /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEE09F7009ED94D8004850FB /* fr */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; lineEnding = 0; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEE09F7509ED9559004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CEE20EEB121DC141006BA09C /* SVAudioInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SVAudioInspector.xib; sourceTree = "<group>"; };
+		CEE20EEB121DC141006BA09C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVAudioInspector.xib; sourceTree = "<group>"; };
 		CEE2C64E120B25E7000E3C0E /* plugin_inspector.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = plugin_inspector.tiff; sourceTree = "<group>"; };
 		CEE77B7E12528930001F74FC /* SVAudioVisualPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVAudioVisualPlugIn.h; sourceTree = "<group>"; };
 		CEE77B7F12528930001F74FC /* SVAudioVisualPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAudioVisualPlugIn.m; sourceTree = "<group>"; };
@@ -3123,7 +3123,7 @@
 				27D7340512118E3400722189 /* SVIndexPlugIn.m */,
 				3CA17FC7122DB2C700331125 /* SVIndexInspectorViewController.h */,
 				3CA17FC8122DB2C700331125 /* SVIndexInspectorViewController.m */,
-				3C7B015D122F526B0098E147 /* CollectionInfo.xib */,
+				CEFD1D2D12E9F7C000D3A6CD /* CollectionInfo.xib */,
 				2745948A123944FE005D0640 /* NSURL+Sandvox.h */,
 				2745948B123944FE005D0640 /* NSURL+Sandvox.m */,
 				277586C9129E846B0027C7FF /* NSBundle+Sandvox.h */,
@@ -3396,7 +3396,7 @@
 				279217D010BC11CF00E590D5 /* HTMLSourceView.xib */,
 				2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */,
 				2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */,
-				27A1882C11F78323004BEFC2 /* MultipleSelectionPlaceholder.xib */,
+				CEFD1D4612E9F85300D3A6CD /* MultipleSelectionPlaceholder.xib */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -3843,19 +3843,19 @@
 		27F365E01160209B003BDA5F /* Plug-In Inspector */ = {
 			isa = PBXGroup;
 			children = (
-				27D7347212119F3100722189 /* FileInfo.xib */,
-				CEDA2DD1120CD676005FE23E /* SVVideoInspector.xib */,
-				CEE20EEB121DC141006BA09C /* SVAudioInspector.xib */,
-				CE89C23812399A560056D74B /* SVFlashInspector.xib */,
+				CEFD1D3112E9F7FC00D3A6CD /* FileInfo.xib */,
+				CEFD1D4212E9F85300D3A6CD /* SVVideoInspector.xib */,
+				CEFD1D4C12E9F85300D3A6CD /* SVAudioInspector.xib */,
+				CEFD1D4012E9F85300D3A6CD /* SVFlashInspector.xib */,
 				CEDA2DBE120CD437005FE23E /* SVVideoInspector.h */,
 				CEDA2DBF120CD437005FE23E /* SVVideoInspector.m */,
-				273D764310EC134F003F5BA8 /* PlugInInspector.xib */,
+				CEFD1D5212E9F86300D3A6CD /* PlugInInspector.xib */,
 				273D764E10EC169F003F5BA8 /* SVPlugInInspector.h */,
 				273D764F10EC169F003F5BA8 /* SVPlugInInspector.m */,
 				27D7345312119C6600722189 /* SVMediaGraphicInspector.h */,
 				27D7345412119C6600722189 /* SVMediaGraphicInspector.m */,
-				27D7350E1211CC3C00722189 /* SVImage.xib */,
-				27238AFA12C3FE3A00999CD1 /* RawHTMLInspector.xib */,
+				CEFD1D4412E9F85300D3A6CD /* SVImage.xib */,
+				CEFD1D4A12E9F85300D3A6CD /* RawHTMLInspector.xib */,
 			);
 			name = "Plug-In Inspector";
 			sourceTree = "<group>";
@@ -3863,7 +3863,7 @@
 		27F365E1116020A9003BDA5F /* Link Inspector */ = {
 			isa = PBXGroup;
 			children = (
-				27F71A7210F7641D0029AE3A /* LinkInspector.xib */,
+				CEFD1D5012E9F85300D3A6CD /* LinkInspector.xib */,
 				270E4B1410FA4DF500EF1FA0 /* SVLinkInspector.h */,
 				270E4B1510FA4DF500EF1FA0 /* SVLinkInspector.m */,
 			);
@@ -3873,7 +3873,7 @@
 		27F365E2116020B1003BDA5F /* Metrics Inspector */ = {
 			isa = PBXGroup;
 			children = (
-				277E4F7911108847005AF346 /* MetricsInspector.xib */,
+				CEFD1D4812E9F85300D3A6CD /* MetricsInspector.xib */,
 				27F365EB11602161003BDA5F /* SVMetricsInspector.h */,
 				27F365EC11602161003BDA5F /* SVMetricsInspector.m */,
 				276FE0A912424D1D00EE2C14 /* SVSizeFormatter.h */,
@@ -3885,7 +3885,7 @@
 		27F365E3116020BC003BDA5F /* Graphic Inspector */ = {
 			isa = PBXGroup;
 			children = (
-				276C151C114A6C0300D30CFE /* GraphicInspector.xib */,
+				CEFD1D2F12E9F7FC00D3A6CD /* GraphicInspector.xib */,
 			);
 			name = "Graphic Inspector";
 			sourceTree = "<group>";
@@ -3895,7 +3895,7 @@
 			children = (
 				277E71D11133094E0081389F /* SVWrapInspector.h */,
 				277E71D21133094E0081389F /* SVWrapInspector.m */,
-				27DE6C5810A4F6EE00D71710 /* WrapInspector.xib */,
+				CEFD1D4E12E9F85300D3A6CD /* WrapInspector.xib */,
 			);
 			name = "Wrap Inspector";
 			sourceTree = "<group>";
@@ -3903,8 +3903,8 @@
 		27F365E5116020CE003BDA5F /* Page Inspector */ = {
 			isa = PBXGroup;
 			children = (
-				2782919010912E14008D0A64 /* PageInspector.xib */,
-				273DD20710CC74AA003CCE97 /* CollectionInspector.xib */,
+				CEFD1D5412E9F87000D3A6CD /* PageInspector.xib */,
+				CEFD1D3E12E9F85300D3A6CD /* CollectionInspector.xib */,
 				27AF0E2610F40B42000A6B15 /* SVPageInspector.h */,
 				27AF0E2710F40B42000A6B15 /* SVPageInspector.m */,
 				27ACC73712631ADC00EA521E /* SVPageThumbnailController.h */,
@@ -3920,7 +3920,7 @@
 			children = (
 				CE9E525E111C933B00BEF1C8 /* SVDocumentInspector.h */,
 				CE9E525F111C933B00BEF1C8 /* SVDocumentInspector.m */,
-				2782918E10912D5D008D0A64 /* DocumentInspector.xib */,
+				CEFD1D3312E9F7FC00D3A6CD /* DocumentInspector.xib */,
 				27F2790811F9F29400B7F8FA /* SVBannerPickerController.h */,
 				27F2790911F9F29400B7F8FA /* SVBannerPickerController.m */,
 				2794A45212B235B40077A291 /* SVFaviconPickerController.h */,
@@ -4144,7 +4144,7 @@
 				2765061D0EAE417200461A0E /* NSDocument+KTExtensions.m */,
 				27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */,
 				27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */,
-				273B43731178676900A275E6 /* DocumentSavePanelAccessoryView.xib */,
+				CEFD1D3512E9F7FC00D3A6CD /* DocumentSavePanelAccessoryView.xib */,
 				273B438211786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h */,
 				273B438311786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m */,
 				273B44381179046500A275E6 /* SVDocumentFileWrapper.h */,
@@ -4299,12 +4299,12 @@
 		3C26C43D0BC597B900FF874D /* Non-Localized */ = {
 			isa = PBXGroup;
 			children = (
-				3C9BC204103DF97F00D2CF47 /* DocumentMigration.xib */,
+				CEFD1D3912E9F7FC00D3A6CD /* DocumentMigration.xib */,
 				3C9BC207103DF99300D2CF47 /* DebugMenu.xib */,
 				3C9BC20A103DF9A900D2CF47 /* DebugTable.xib */,
-				3C9BC20D103DF9BA00D2CF47 /* KTTranscript.xib */,
+				CEFD1D3C12E9F82900D3A6CD /* KTTranscript.xib */,
 				3C9BC210103DF9CB00D2CF47 /* MediaInspector.xib */,
-				3C9BC213103DF9DF00D2CF47 /* HTMLEditor.xib */,
+				CEFD1D3712E9F7FC00D3A6CD /* HTMLEditor.xib */,
 				CE6EDFF111F126FD00F00AAC /* Publishing.xib */,
 			);
 			name = "Non-Localized";
@@ -6433,29 +6433,29 @@
 				3C9BC1F6103DF90C00D2CF47 /* KTTransfer.xib in Resources */,
 				3C9BC1FA103DF92500D2CF47 /* Welcome.xib in Resources */,
 				3C9BC1FE103DF94300D2CF47 /* Prefs.xib in Resources */,
-				3C9BC205103DF97F00D2CF47 /* DocumentMigration.xib in Resources */,
+				CEFD1D3A12E9F7FC00D3A6CD /* DocumentMigration.xib in Resources */,
 				3C9BC208103DF99300D2CF47 /* DebugMenu.xib in Resources */,
 				3C9BC20B103DF9A900D2CF47 /* DebugTable.xib in Resources */,
-				3C9BC20E103DF9BA00D2CF47 /* KTTranscript.xib in Resources */,
+				CEFD1D3D12E9F82900D3A6CD /* KTTranscript.xib in Resources */,
 				3C9BC211103DF9CB00D2CF47 /* MediaInspector.xib in Resources */,
-				3C9BC214103DF9DF00D2CF47 /* HTMLEditor.xib in Resources */,
+				CEFD1D3812E9F7FC00D3A6CD /* HTMLEditor.xib in Resources */,
 				3C0B1D05104792B0002EE098 /* SVDesignChooser.xib in Resources */,
-				2782918F10912D5D008D0A64 /* DocumentInspector.xib in Resources */,
-				2782919110912E14008D0A64 /* PageInspector.xib in Resources */,
+				CEFD1D3412E9F7FC00D3A6CD /* DocumentInspector.xib in Resources */,
+				CEFD1D5512E9F87000D3A6CD /* PageInspector.xib in Resources */,
 				27A095341097598600F43746 /* PageletTemplate.html in Resources */,
-				27DE6C5910A4F6EE00D71710 /* WrapInspector.xib in Resources */,
+				CEFD1D4F12E9F85300D3A6CD /* WrapInspector.xib in Resources */,
 				279217D110BC11CF00E590D5 /* HTMLSourceView.xib in Resources */,
-				273DD20810CC74AA003CCE97 /* CollectionInspector.xib in Resources */,
+				CEFD1D3F12E9F85300D3A6CD /* CollectionInspector.xib in Resources */,
 				27E83E4810D9A9BA00FBEC84 /* CalloutTemplate.html in Resources */,
-				273D764410EC134F003F5BA8 /* PlugInInspector.xib in Resources */,
-				27F71A7310F7641D0029AE3A /* LinkInspector.xib in Resources */,
-				277E4F7A11108847005AF346 /* MetricsInspector.xib in Resources */,
+				CEFD1D5312E9F86300D3A6CD /* PlugInInspector.xib in Resources */,
+				CEFD1D5112E9F85300D3A6CD /* LinkInspector.xib in Resources */,
+				CEFD1D4912E9F85300D3A6CD /* MetricsInspector.xib in Resources */,
 				279AB3B711147C18001C830A /* Download.html in Resources */,
 				27A617661123005100004FED /* TextBoxBodyTemplate.html in Resources */,
 				CE8D54C6112B0B23007AC2F0 /* KSProgressPanel.xib in Resources */,
 				CE8D5A7C112B339A007AC2F0 /* validator.css in Resources */,
-				276C151D114A6C0300D30CFE /* GraphicInspector.xib in Resources */,
-				273B43741178676900A275E6 /* DocumentSavePanelAccessoryView.xib in Resources */,
+				CEFD1D3012E9F7FC00D3A6CD /* GraphicInspector.xib in Resources */,
+				CEFD1D3612E9F7FC00D3A6CD /* DocumentSavePanelAccessoryView.xib in Resources */,
 				CE2D42EE1188BD910051E238 /* README.rtf in Resources */,
 				27FA98961194BF06003B8308 /* SidebarTemplate.html in Resources */,
 				27990F48119D956800D07FDF /* loremipsum1.html in Resources */,
@@ -6535,7 +6535,7 @@
 				CE6EE01711F129F100F00AAC /* KSPluginInstaller.xib in Resources */,
 				CE6EE01811F129F100F00AAC /* KSRegistration.xib in Resources */,
 				CE89F96A11F6149600B180EB /* ddsmoothmenu.css in Resources */,
-				27A1882D11F78323004BEFC2 /* MultipleSelectionPlaceholder.xib in Resources */,
+				CEFD1D4712E9F85300D3A6CD /* MultipleSelectionPlaceholder.xib in Resources */,
 				CE01E6F71208A7F10093565F /* target_set.tiff in Resources */,
 				CE01E6F81208A7F10093565F /* target.tiff in Resources */,
 				CE01E6FF1208A8090093565F /* metrics_inspector.tiff in Resources */,
@@ -6546,14 +6546,14 @@
 				CE01E7041208A8090093565F /* wrap_inspector.tiff in Resources */,
 				CE01E71F1208A8590093565F /* toolbar_audio.tiff in Resources */,
 				CEE2C64F120B25E7000E3C0E /* plugin_inspector.tiff in Resources */,
-				CEDA2DD2120CD676005FE23E /* SVVideoInspector.xib in Resources */,
-				27D7347312119F3100722189 /* FileInfo.xib in Resources */,
-				27D7350F1211CC3C00722189 /* SVImage.xib in Resources */,
+				CEFD1D4312E9F85300D3A6CD /* SVVideoInspector.xib in Resources */,
+				CEFD1D3212E9F7FC00D3A6CD /* FileInfo.xib in Resources */,
+				CEFD1D4512E9F85300D3A6CD /* SVImage.xib in Resources */,
 				CE5A77FE12135D770085C5EE /* player_flv_maxi.swf in Resources */,
-				CEE20EEC121DC141006BA09C /* SVAudioInspector.xib in Resources */,
+				CEFD1D4D12E9F85300D3A6CD /* SVAudioInspector.xib in Resources */,
 				CE318CC4121ECDBD003894EC /* player_mp3_maxi.swf in Resources */,
-				3C7B015E122F526B0098E147 /* CollectionInfo.xib in Resources */,
-				CE89C23912399A560056D74B /* SVFlashInspector.xib in Resources */,
+				CEFD1D2E12E9F7C000D3A6CD /* CollectionInfo.xib in Resources */,
+				CEFD1D4112E9F85300D3A6CD /* SVFlashInspector.xib in Resources */,
 				CE6532591253B5C8003A9AA0 /* down.gif in Resources */,
 				CE65325A1253B5C8003A9AA0 /* right.gif in Resources */,
 				CEED943012691AD1004ACB0E /* sound_placeholder.png in Resources */,
@@ -6598,7 +6598,7 @@
 				278DB99612B6DDAC006C462F /* GraphicPlaceholder.html in Resources */,
 				CEB516AA12B7DFC2003A5505 /* excerpt_longer.gif in Resources */,
 				CEB516AB12B7DFC2003A5505 /* excerpt_shorter.gif in Resources */,
-				27238AFB12C3FE3A00999CD1 /* RawHTMLInspector.xib in Resources */,
+				CEFD1D4B12E9F85300D3A6CD /* RawHTMLInspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7882,6 +7882,166 @@
 				CE6EE01011F129F100F00AAC /* en */,
 			);
 			name = KSRegistration.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D2D12E9F7C000D3A6CD /* CollectionInfo.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C7B015D122F526B0098E147 /* en */,
+			);
+			name = CollectionInfo.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D2F12E9F7FC00D3A6CD /* GraphicInspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				276C151C114A6C0300D30CFE /* en */,
+			);
+			name = GraphicInspector.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D3112E9F7FC00D3A6CD /* FileInfo.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27D7347212119F3100722189 /* en */,
+			);
+			name = FileInfo.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D3312E9F7FC00D3A6CD /* DocumentInspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2782918E10912D5D008D0A64 /* en */,
+			);
+			name = DocumentInspector.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D3512E9F7FC00D3A6CD /* DocumentSavePanelAccessoryView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				273B43731178676900A275E6 /* en */,
+			);
+			name = DocumentSavePanelAccessoryView.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D3712E9F7FC00D3A6CD /* HTMLEditor.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C9BC213103DF9DF00D2CF47 /* en */,
+			);
+			name = HTMLEditor.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D3912E9F7FC00D3A6CD /* DocumentMigration.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C9BC204103DF97F00D2CF47 /* en */,
+			);
+			name = DocumentMigration.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D3C12E9F82900D3A6CD /* KTTranscript.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C9BC20D103DF9BA00D2CF47 /* en */,
+			);
+			name = KTTranscript.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D3E12E9F85300D3A6CD /* CollectionInspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				273DD20710CC74AA003CCE97 /* en */,
+			);
+			name = CollectionInspector.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D4012E9F85300D3A6CD /* SVFlashInspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE89C23812399A560056D74B /* en */,
+			);
+			name = SVFlashInspector.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D4212E9F85300D3A6CD /* SVVideoInspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEDA2DD1120CD676005FE23E /* en */,
+			);
+			name = SVVideoInspector.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D4412E9F85300D3A6CD /* SVImage.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27D7350E1211CC3C00722189 /* en */,
+			);
+			name = SVImage.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D4612E9F85300D3A6CD /* MultipleSelectionPlaceholder.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27A1882C11F78323004BEFC2 /* en */,
+			);
+			name = MultipleSelectionPlaceholder.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D4812E9F85300D3A6CD /* MetricsInspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				277E4F7911108847005AF346 /* en */,
+			);
+			name = MetricsInspector.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D4A12E9F85300D3A6CD /* RawHTMLInspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27238AFA12C3FE3A00999CD1 /* en */,
+			);
+			name = RawHTMLInspector.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D4C12E9F85300D3A6CD /* SVAudioInspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEE20EEB121DC141006BA09C /* en */,
+			);
+			name = SVAudioInspector.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D4E12E9F85300D3A6CD /* WrapInspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27DE6C5810A4F6EE00D71710 /* en */,
+			);
+			name = WrapInspector.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D5012E9F85300D3A6CD /* LinkInspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27F71A7210F7641D0029AE3A /* en */,
+			);
+			name = LinkInspector.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D5212E9F86300D3A6CD /* PlugInInspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				273D764310EC134F003F5BA8 /* en */,
+			);
+			name = PlugInInspector.xib;
+			sourceTree = "<group>";
+		};
+		CEFD1D5412E9F87000D3A6CD /* PageInspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2782919010912E14008D0A64 /* en */,
+			);
+			name = PageInspector.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
