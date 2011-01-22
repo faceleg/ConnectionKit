@@ -489,7 +489,7 @@
 									<reference ref="48733168"/>
 									<object class="NSMenuItem" id="745696601">
 										<reference key="NSMenu" ref="346260809"/>
-										<string key="NSTitle">Email Message</string>
+										<string key="NSTitle">Email</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
