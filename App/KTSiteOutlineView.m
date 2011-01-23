@@ -23,6 +23,52 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 
 @implementation KTSiteOutlineView
 
+#pragma mark Layout
+
+- (NSRect)rectOfRow:(NSInteger)row;
+{
+    NSRect result = [super rectOfRow:row];
+    
+    // The first row is special as we want to draw it like a normal height row. It's made taller by the delegate to accomodate divider
+    // Only takes effect during drawing of the row or highlight. Ensures:
+    //  A.  Drop indicator draws in correct position
+    //  B.  Cell rect marked for display includes divider
+    if (_drawingRows && row == 0)
+    {
+        result.size.height = [self rowHeight] + [self intercellSpacing].height;
+    }
+    
+    return result;
+}
+
+- (void)drawRow:(NSInteger)row clipRect:(NSRect)clipRect;
+{
+    _drawingRows = YES;
+    @try
+    {
+        [super drawRow:row clipRect:clipRect];
+    }
+    @finally
+    {
+        _drawingRows = NO;
+    }
+}
+
+- (void)highlightSelectionInClipRect:(NSRect)clipRect;
+{
+    _drawingRows = YES;
+    @try
+    {
+        [super highlightSelectionInClipRect:clipRect];
+    }
+    @finally
+    {
+        _drawingRows = NO;
+    }
+}
+
+#pragma mark Dragging
+
 - (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)aPoint operation:(NSDragOperation)operation
 {
 	[super draggedImage:anImage endedAt:aPoint operation:operation];
@@ -160,19 +206,6 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 	{
 		[self performSelector:@selector(reloadData) withObject:nil afterDelay:0.0];
 	}
-}
-
-- (NSRect) rectOfRow:(NSInteger)row;
-{
-    NSRect result = [super rectOfRow:row];
-    
-    // The first row is special as we want to draw it like a normal height row. It's made taller by the delegate to accomodate divider
-    if (row == 0)
-    {
-        result.size.height = [self rowHeight] + [self intercellSpacing].height;
-    }
-    
-    return result;
 }
 
 @end
