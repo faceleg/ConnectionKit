@@ -445,3 +445,14 @@
 
 @end
 
+
+
+#pragma mark -
+
+
+@implementation WEKWebEditorItem (SVWebEditorHTMLContext)
+
+- (void)awakeFromHTMLContext:(SVWebEditorHTMLContext *)context; { }
+
+@end
+
