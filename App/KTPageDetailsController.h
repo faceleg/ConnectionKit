@@ -12,7 +12,7 @@
 
 enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSiteItemType, kPageSiteItemType, kMixedSiteItemType = -1 };
 
-@class SVSiteOutlineViewController, SVPagesController, KSFancySchmancyBindingsPopUpButton, KTPageDetailsBoxView, MAAttachedWindow, SVWebContentAreaController, KSFocusingTextField;
+@class SVSiteOutlineViewController, SVPagesTreeController, KSFancySchmancyBindingsPopUpButton, KTPageDetailsBoxView, MAAttachedWindow, SVWebContentAreaController, KSFocusingTextField;
 
 
 @interface KTPageDetailsController : NSViewController
@@ -41,8 +41,8 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 	IBOutlet NSButton				*oChooseFileButton;
 	IBOutlet NSButton				*oEditTextButton;
 
-    IBOutlet SVSiteOutlineViewController    *oSiteOutlineController;
-	IBOutlet SVPagesController              *oPagesController;
+    IBOutlet SVSiteOutlineViewController *oSiteOutlineController;
+	IBOutlet SVPagesTreeController	*oPagesTreeController;
     
 	IBOutlet BWIWorkPopUpButton		*oPublishAsCollectionPopup;
 

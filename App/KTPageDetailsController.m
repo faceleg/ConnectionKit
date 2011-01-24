@@ -13,7 +13,7 @@
 #import "SVDownloadSiteItem.h"
 #import "SVMediaRecord.h"
 #import "SVMediaProtocol.h"
-#import "SVPagesController.h"
+#import "SVPagesTreeController.h"
 #import "SVSiteOutlineViewController.h"
 #import "SVURLPreviewViewController.h"
 
@@ -124,13 +124,13 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	// Remove observers
 	if (!aView)
 	{
-		[oPagesController removeObserver:self forKeyPath:@"selection.metaDescription"];
-		[oPagesController removeObserver:self forKeyPath:@"selection.windowTitle"];
-		[oPagesController removeObserver:self forKeyPath:@"selection.fileName"];
-        [oPagesController removeObserver:self forKeyPath:@"selection.filename"];    // 101628
-		[oPagesController removeObserver:self forKeyPath:@"selection.baseExampleURLString"];
-		//[oPagesController removeObserver:self forKeyPath:@"selection.title"];
-		[oPagesController removeObserver:self forKeyPath:@"selectedObjects"];
+		[oPagesTreeController removeObserver:self forKeyPath:@"selection.metaDescription"];
+		[oPagesTreeController removeObserver:self forKeyPath:@"selection.windowTitle"];
+		[oPagesTreeController removeObserver:self forKeyPath:@"selection.fileName"];
+        [oPagesTreeController removeObserver:self forKeyPath:@"selection.filename"];    // 101628
+		[oPagesTreeController removeObserver:self forKeyPath:@"selection.baseExampleURLString"];
+		//[oPagesTreeController removeObserver:self forKeyPath:@"selection.title"];
+		[oPagesTreeController removeObserver:self forKeyPath:@"selectedObjects"];
 
 	}
 	
@@ -175,38 +175,38 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		[self layoutPageURLComponents];
 		
 		// Observe changes to the meta description and fake an initial observation
-		[oPagesController addObserver:self
+		[oPagesTreeController addObserver:self
 						   forKeyPath:@"selection.metaDescription"
 							  options:NSKeyValueObservingOptionNew
 							  context:sMetaDescriptionObservationContext];
-		[self metaDescriptionDidChangeToValue:[oPagesController valueForKeyPath:@"selection.metaDescription"]];
-		[self resetDescriptionPlaceholder:[oPagesController valueForKeyPath:@"selection.metaDescription"]];
+		[self metaDescriptionDidChangeToValue:[oPagesTreeController valueForKeyPath:@"selection.metaDescription"]];
+		[self resetDescriptionPlaceholder:[oPagesTreeController valueForKeyPath:@"selection.metaDescription"]];
 		
-		[oPagesController addObserver:self
+		[oPagesTreeController addObserver:self
 						   forKeyPath:@"selection.windowTitle"
 							  options:NSKeyValueObservingOptionNew
 							  context:sWindowTitleObservationContext];
-		[self windowTitleDidChangeToValue:[oPagesController valueForKeyPath:@"selection.windowTitle"]];
-		[oPagesController addObserver:self
+		[self windowTitleDidChangeToValue:[oPagesTreeController valueForKeyPath:@"selection.windowTitle"]];
+		[oPagesTreeController addObserver:self
 						   forKeyPath:@"selection.fileName"
 							  options:NSKeyValueObservingOptionNew
 							  context:sFileNameObservationContext];
-		[oPagesController addObserver:self
+		[oPagesTreeController addObserver:self
 						   forKeyPath:@"selection.filename"
 							  options:NSKeyValueObservingOptionNew
 							  context:sFileNameObservationContext];
-		[self fileNameDidChangeToValue:[oPagesController valueForKeyPath:@"selection.fileName"]];	// pre-launch with which?
+		[self fileNameDidChangeToValue:[oPagesTreeController valueForKeyPath:@"selection.fileName"]];	// pre-launch with which?
 		
-		[oPagesController addObserver:self
+		[oPagesTreeController addObserver:self
 						   forKeyPath:@"selection.baseExampleURLString"
 							  options:NSKeyValueObservingOptionNew
 							  context:sBaseExampleURLStringObservationContext];
 
-		[oPagesController addObserver:self
+		[oPagesTreeController addObserver:self
 						   forKeyPath:@"selectedObjects"
 							  options:NSKeyValueObservingOptionNew
 							  context:sSelectedObjectsObservationContext];
-		[self updateFieldsBasedOnSelectedSiteOutlineObjects:[oPagesController selectedObjects]];
+		[self updateFieldsBasedOnSelectedSiteOutlineObjects:[oPagesTreeController selectedObjects]];
 		
 		[self rebindWindowTitleAndMetaDescriptionFields];
 		
@@ -226,13 +226,13 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		[oMediaFilenameField setFormatter:formatter];
 
 		[oExtensionPopup bind:@"defaultValue"
-					 toObject:oPagesController
+					 toObject:oPagesTreeController
 				  withKeyPath:@"selection.defaultFileExtension"
 					  options:nil];
 		// popup is bound to availablePathExtensions, selection is bound to customPathExtension.
         
 		[oIndexAndExtensionPopup bind:@"defaultValue"
-					 toObject:oPagesController
+					 toObject:oPagesTreeController
 				  withKeyPath:@"selection.defaultIndexAndPathExtension"
 					  options:nil];
 		// popup is bound to availableIndexFilenames, selection is bound to customIndexAndPathExtension.
@@ -656,13 +656,13 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	{
 		[oWindowTitleField unbind:NSValueBinding];
 		[oWindowTitleField bind:NSValueBinding
-					   toObject:oPagesController
+					   toObject:oPagesTreeController
 					withKeyPath:@"selection.windowTitle"
 						options:self.initialWindowTitleBindingOptions];
 		
 		[oMetaDescriptionField unbind:NSValueBinding];
 		[oMetaDescriptionField bind:NSValueBinding
-						   toObject:oPagesController
+						   toObject:oPagesTreeController
 						withKeyPath:@"selection.metaDescription"
 							options:self.initialMetaDescriptionBindingOptions];
 		
@@ -744,23 +744,23 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	BOOL areTextsSelected = (kTextSiteItemType == self.whatKindOfItemsAreSelected);
 	BOOL areMultiSelected = (kMixedSiteItemType == self.whatKindOfItemsAreSelected);
 
-	int selectedObjectsCount = [[oPagesController selectedObjects] count];
+	int selectedObjectsCount = [[oPagesTreeController selectedObjects] count];
 	NSInteger pageIsCollectionState = NSMixedState;
 	if (arePagesSelected)
 	{
-		pageIsCollectionState = [oPagesController selectedItemsAreCollections];
+		pageIsCollectionState = [oPagesTreeController selectedItemsAreCollections];
 
 		// And also check if it's a root
 		if (NSOnState == pageIsCollectionState)
 		{
-			id isRootMarker = [oPagesController valueForKeyPath:@"selection.isRoot"];
+			id isRootMarker = [oPagesTreeController valueForKeyPath:@"selection.isRoot"];
 			if ([isRootMarker respondsToSelector:@selector(boolValue)] && [isRootMarker boolValue])
 			{
 				pageIsCollectionState =  IS_ROOT_STATE;		// special marker indicating root, and only root, is selected.
 			}
 		}
 		
-		BOOL anyArePublished = [oPagesController selectedItemsHaveBeenPublished];
+		BOOL anyArePublished = [oPagesTreeController selectedItemsHaveBeenPublished];
 				
 		NSMenuItem *collMenuItem = [[oPublishAsCollectionPopup menu] itemWithTag:1];
 		NSMenuItem *pageMenuItem = [[oPublishAsCollectionPopup menu] itemWithTag:0];
@@ -1139,7 +1139,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
     // If user cancelled, repair binding value
     if (!success)
     {
-		NSCellStateValue isCollection = [oPagesController selectedItemsAreCollections];
+		NSCellStateValue isCollection = [oPagesTreeController selectedItemsAreCollections];
         [oPublishAsCollectionPopup selectItemWithTag:(NSOnState == isCollection?1:0)];
 	}
 }
@@ -1343,7 +1343,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (IBAction) preview:(id)sender;
 {
-	NSArray *selectedObjects = [oPagesController selectedObjects];
+	NSArray *selectedObjects = [oPagesTreeController selectedObjects];
 	id item = [selectedObjects lastObject];
 	if (item)
 	{
@@ -1354,7 +1354,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (IBAction) chooseFile:(id)sender;
 {
 	
-	NSArray *selectedObjects = [oPagesController selectedObjects];
+	NSArray *selectedObjects = [oPagesTreeController selectedObjects];
 	id item = [selectedObjects lastObject];
 	KTSite *site = [item site];
 
@@ -1375,7 +1375,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 {
     if (returnCode == NSOKButton && [[panel URLs] count])
 	{
-		SVDownloadSiteItem *downloadPage = [[oPagesController selectedObjects] lastObject];
+		SVDownloadSiteItem *downloadPage = [[oPagesTreeController selectedObjects] lastObject];
 		NSManagedObjectContext *context = [downloadPage managedObjectContext];
 		NSURL *url = [[panel URLs] lastObject];		// we have just one
 		NSError *error = nil;
