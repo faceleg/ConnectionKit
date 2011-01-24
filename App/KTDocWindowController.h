@@ -72,7 +72,7 @@ extern NSString *gInfoWindowAutoSaveName;
 @private
     NSString    *_contentTitle;
     
-	SVWebContentAreaController  *_webContentAreaController;     // Weak ref Ñ why?
+	SVWebContentAreaController  *_webContentAreaController;     // Weak ref â€” why?
 	SVSiteOutlineViewController *_siteOutlineViewController;
     SVPagesTreeController       *_pagesController;
 		
