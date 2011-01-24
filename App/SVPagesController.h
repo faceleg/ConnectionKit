@@ -50,10 +50,6 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 - (void)setEntityName:(NSString *)entityName;
 
 
-#pragma mark Managing Objects
-- (BOOL)canGroupAsCollection;
-
-
 #pragma mark Pasteboard Support
 - (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard;
 - (id)newObjectFromPasteboardItem:(id <SVPasteboardItem>)pboardItem;
