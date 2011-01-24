@@ -863,7 +863,7 @@
         
         for (id <SVPasteboardItem> anItem in items)
         {
-            SVSiteItem *aPage = [pagesController newObjectFromPasteboardItem:anItem parentPage:collection];
+            SVSiteItem *aPage = [pagesController newObjectFromPasteboardItem:anItem];
             [pages addObject:aPage];
             [aPage release];
         }

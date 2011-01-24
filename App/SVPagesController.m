@@ -154,8 +154,6 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     if ([[self entityName] isEqualToString:@"Page"])
     {
         // Match the basic page properties up to the selection
-        [result setMaster:[predecessor master]];
-        
         if (predecessor)
         {
             [result setShowSidebar:[predecessor showSidebar]];
@@ -345,9 +343,19 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     [[object parentPage] invalidateSortedChildrenCache];
 	
 	
-	// Attach to master & site too
+	// Attach to master if needed
     KTPage *collection = [(SVSiteItem *)object parentPage];
-    if ([object respondsToSelector:@selector(setMaster:)]) [object setMaster:[collection master]];
+    if ([object respondsToSelector:@selector(setMaster:)] && [object master] != [collection master])
+    {
+        [object setMaster:[collection master]];
+        
+        // When adding via the pboard, graphics need to fit within the page
+        NSSet *graphics = [[[object article] attachments] valueForKey:@"graphic"];
+        [graphics makeObjectsPerformSelector:@selector(didAddToPage:) withObject:object];
+    }
+    
+    
+    // Attach to site too
     [object setSite:[collection site] recursively:YES];
     
     
@@ -403,11 +411,11 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 #pragma mark Pasteboard Support
 
-- (SVSiteItem *)newObjectFromPropertyList:(id)aPlist destinedForCollection:(KTPage *)collection
+- (SVSiteItem *)newObjectFromPropertyList:(id)aPlist;
 {
     [self setEntityName:[aPlist valueForKey:@"entity"]];
     SVSiteItem *result = [self newObject];
-    [result awakeFromPropertyList:aPlist parentItem:collection];
+    [result awakeFromPropertyList:aPlist parentItem:nil];
     return result;
 }
 
@@ -565,7 +573,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     return result;
 }
 
-- (id)newObjectFromPasteboardItem:(id <SVPasteboardItem>)pboardItem parentPage:(KTPage *)collection;
+- (id)newObjectFromPasteboardItem:(id <SVPasteboardItem>)pboardItem;
 {
     id result = nil;
     
@@ -583,7 +591,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         
         
         // First media added to a collection probably doesn't want sidebar. #96013
-        if (![[collection childItems] count] && [aGraphic isKindOfClass:[SVMediaGraphic class]])
+        if (![[self content] count] && [aGraphic isKindOfClass:[SVMediaGraphic class]])
         {
             [result setShowSidebar:NSBOOL(NO)]; 
         }
@@ -622,7 +630,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         [article setAttributedHTMLString:html];
         [html release];
         
-        [aGraphic didAddToPage:result];
+        // Inserting the page will call -didAddToPage: on all graphics
     }
     else
     {
