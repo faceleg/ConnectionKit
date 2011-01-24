@@ -501,8 +501,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         
         for (id aPlist in plists)
         {
-            SVSiteItem *item = [self newObjectFromPropertyList:aPlist
-                                         destinedForCollection:nil];
+            SVSiteItem *item = [self newObjectFromPropertyList:aPlist];
             
             if (item)   // might be nil due to invalid plist
             {
