@@ -51,10 +51,6 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 
 
 #pragma mark Managing Objects
-
-// Doesn't add the result to collection, just uses it to determine property inheritance
-- (id)newObjectDestinedForCollection:(KTPage *)collection;
-
 - (BOOL)canGroupAsCollection;
 
 #pragma mark Pasteboard Support

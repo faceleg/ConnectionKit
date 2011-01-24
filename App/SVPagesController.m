@@ -139,32 +139,10 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 - (id)newObject
 {
     // Figure out the predecessor (which page to inherit properties from)
-    KTPage *parent = [[self selectedObjects] lastObject];
-    return [self newObjectDestinedForCollection:parent];
-}
-
-- (id)newObjectDestinedForCollection:(KTPage *)collection;
-{
-    // Figure out the predecessor (which page to inherit properties from)
-    if (![collection isCollection]) collection = [collection parentPage];
-    if (!collection) collection = [[self content] lastObject];
+    NSArray *pagesByDate = [[self arrangedObjects] sortedArrayUsingDescriptors:
+                            [KTPage dateCreatedSortDescriptorsAscending:YES]];
     
-    OBASSERT(collection || ![[self content] count]);    // it's acceptable to have no parent when creating first page
-    
-    
-    KTPage *predecessor = collection;
-    NSArray *children = [collection childrenWithSorting:SVCollectionSortByDateCreated
-                                          ascending:NO
-                                            inIndex:NO];
-    
-    for (SVSiteItem *aChild in children)
-    {
-        if ([aChild isKindOfClass:[KTPage class]])
-        {
-            predecessor = (KTPage *)aChild;
-            break;
-        }
-    }
+    KTPage *predecessor = [pagesByDate lastObject];
     
     return [self newObjectWithPredecessor:predecessor followTemplate:YES];
 }
@@ -415,7 +393,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 - (SVSiteItem *)newObjectFromPropertyList:(id)aPlist destinedForCollection:(KTPage *)collection
 {
     [self setEntityName:[aPlist valueForKey:@"entity"]];
-    SVSiteItem *result = [self newObjectDestinedForCollection:collection];
+    SVSiteItem *result = [self newObject];
     [result awakeFromPropertyList:aPlist parentItem:collection];
     return result;
 }
@@ -431,7 +409,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     {
         // Create pages for each graphic
         [self setEntityNameWithPageTemplate:nil];
-        KTPage *page = [self newObjectDestinedForCollection:collection];
+        KTPage *page = [self newObject];
         [page setTitle:[aGraphic title]];
         
         
@@ -486,7 +464,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         BOOL external = ![URL isFileURL];
         [self setEntityTypeWithURL:URL external:external];
         
-        SVSiteItem *item = [self newObjectDestinedForCollection:collection];
+        SVSiteItem *item = [self newObject];
         [self addObject:item toCollection:collection];
         [item release];
     }
@@ -589,7 +567,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     {
         // Create pages for each graphic
         [self setEntityNameWithPageTemplate:nil];
-        result = [self newObjectDestinedForCollection:collection];
+        result = [self newObject];
         [result setTitle:[aGraphic title]];
         
         
@@ -643,7 +621,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         BOOL external = ![URL isFileURL];
         [self setEntityTypeWithURL:URL external:external];
         
-        result = [self newObjectDestinedForCollection:collection];
+        result = [self newObject];
         //[self addObject:result toCollection:collection];
     }
     
