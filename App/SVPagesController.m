@@ -336,13 +336,9 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 	}
 }
 
-- (void)insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
+- (void)didInsertObject:(id)object;
 {
-    // Insert
-    [super insertObject:object atArrangedObjectIndex:index];
-	
-	
-	// Attach to master if needed
+    // Attach to master if needed
     KTPage *collection = [(SVSiteItem *)object parentPage];
     if ([object respondsToSelector:@selector(setMaster:)] && [object master] != [collection master])
     {
@@ -414,79 +410,6 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     return result;
 }
 
-- (void)addObjectFromPasteboardItem:(id <SVPasteboardItem>)anItem
-{
-    SVGraphic *aGraphic = [SVGraphicFactory
-                           graphicFromPasteboardItem:anItem
-                           minPriority:SVPasteboardPriorityReasonable   // don't want stuff like list of links
-                           insertIntoManagedObjectContext:[self managedObjectContext]];
-    
-    if (aGraphic)
-    {
-        // Create pages for each graphic
-        [self setEntityNameWithPageTemplate:nil];
-        KTPage *page = [self newObject];
-        [page setTitle:[aGraphic title]];
-        
-        
-        // First media added to a collection probably doesn't want sidebar. #96013
-        if (![[self content] count] && [aGraphic isKindOfClass:[SVMediaGraphic class]])
-        {
-            [page setShowSidebar:NSBOOL(NO)]; 
-        }
-        
-        
-        // Match date of page to media if desired. #102967
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kSVSetDateFromSourceMaterialKey])
-        {
-            NSURL *URL = [anItem URL];
-            if ([URL isFileURL])
-            {
-                NSDate *date = [[[NSFileManager defaultManager] attributesOfItemAtPath:[URL path]
-                                                                                 error:NULL]
-                                fileModificationDate];
-                
-                if (date) [page setCreationDate:date];
-            }
-        }
-        
-        
-        
-        // Insert page into the collection. Do before inserting graphic so behaviour dependant on containing collection works. #90905
-        [self addObject:page];
-        [page release];
-        
-        
-        // Insert graphic into the page
-        //[aGraphic willInsertIntoPage:page];
-        
-        SVRichText *article = [page article];
-        NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
-        
-        NSAttributedString *attachment = [NSAttributedString
-                                          attributedHTMLStringWithGraphic:aGraphic];
-        
-        [html insertAttributedString:attachment atIndex:0];
-        [article setAttributedHTMLString:html];
-        [html release];
-        
-        [aGraphic didAddToPage:page];
-    }
-    else
-    {
-        // Fallback to adding download or external URL with location
-        NSURL *URL = [anItem URL];
-        
-        BOOL external = ![URL isFileURL];
-        [self setEntityTypeWithURL:URL external:external];
-        
-        SVSiteItem *item = [self newObject];
-        [self addObject:item];
-        [item release];
-    }
-    
-}
-
 - (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard;
 {
     if ([[pboard types] containsObject:kKTPagesPboardType])
@@ -551,11 +474,18 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     [self setSelectsInsertedObjects:NO]; // Don't select inserted items. #103298
     @try
     {
+        NSMutableArray *pages = [[NSMutableArray alloc] initWithCapacity:[items count]];
+        
         for (id <SVPasteboardItem> anItem in items)
         {
-            [self addObjectFromPasteboardItem:anItem];
-            result = YES;
+            SVSiteItem *aPage = [self newObjectFromPasteboardItem:anItem];
+            [pages addObject:aPage];
+            [aPage release];
         }
+        
+        [self addObjects:pages];
+        result = [pages count];
+        [pages release];
     }
     @finally
     {
