@@ -652,12 +652,13 @@
     {
         NSIndexPath *removalPath = [indexPaths objectAtIndex:0];
         NSIndexPath *path = [removalPath indexPathByIncrementingLastIndex];
-        nextSelectionNode = [[self arrangedObjects] descendantNodeAtIndexPath:path];
         
-        while (!nextSelectionNode) // have to step up to the parent
+        while (!(nextSelectionNode = [[self arrangedObjects] descendantNodeAtIndexPath:path]) ||
+               [indexPaths containsObject:path])
         {
-            path = [path indexPathByRemovingLastIndex];
-            nextSelectionNode = [[self arrangedObjects] descendantNodeAtIndexPath:path];
+            path = ([path lastIndex] > 0 ?
+                    [path indexPathByDecrementingLastIndex] :
+                    [path indexPathByRemovingLastIndex]);
         }
     }
     
