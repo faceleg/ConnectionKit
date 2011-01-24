@@ -333,7 +333,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 	
 	
 	// Attach to master & site too
-    KTPage *collection = [object parentPage];
+    KTPage *collection = [(SVSiteItem *)object parentPage];
     [object setMaster:[collection master]];
     [object setSite:[collection site] recursively:YES];
     
