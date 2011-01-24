@@ -254,7 +254,7 @@
     
     
     // Include in site menu if appropriate
-    KTPage *collection = [object parentPage];
+    KTPage *collection = (KTPage *)[object parentPage];
     if ([collection isRootPage] && [[collection childItems] count] < 7)
     {
         [object setIncludeInSiteMenu:[NSNumber numberWithBool:YES]];
