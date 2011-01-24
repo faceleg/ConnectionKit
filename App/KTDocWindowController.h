@@ -32,7 +32,7 @@
 @class KTLinkSourceView;
 @class SVPagesController;
 @class SVSiteOutlineViewController;
-@class KTPage;
+@class KTPage, SVPagesTreeController;
 @class KTCodeInjectionController;
 @class SVDesignChooserWindowController;
 @class SVCommentsWindowController;
@@ -74,7 +74,7 @@ extern NSString *gInfoWindowAutoSaveName;
     
 	SVWebContentAreaController  *_webContentAreaController;     // Weak ref Ñ why?
 	SVSiteOutlineViewController *_siteOutlineViewController;
-    NSObjectController          *_pagesController;
+    SVPagesTreeController       *_pagesController;
 		
 	// Raw HTML
 	KTHTMLEditorController      *_HTMLEditorController;
@@ -105,7 +105,7 @@ extern NSString *gInfoWindowAutoSaveName;
 #pragma mark View Controllers
 @property(nonatomic, retain) IBOutlet SVSiteOutlineViewController *siteOutlineViewController;
 @property(nonatomic, retain, readonly) IBOutlet SVWebContentAreaController *webContentAreaController;
-@property(nonatomic, retain) IBOutlet NSObjectController *pagesController;
+@property(nonatomic, retain) IBOutlet SVPagesTreeController *pagesController;
 
 #pragma mark Raw HTML
 @property (nonatomic, retain) KTHTMLEditorController *HTMLEditorController;
