@@ -249,7 +249,7 @@
 
 @dynamic masterIdentifier;
 
-#pragma mark Properties
+#pragma mark Site/Master
 
 - (void)setSite:(KTSite *)site recursively:(BOOL)recursive;
 {
@@ -263,6 +263,31 @@
         }
     }
 }
+
+@dynamic master;
+
+- (void)setMaster:(KTMaster *)master recursive:(BOOL)recursive; // calls -didAddToPage: on graphics
+{
+    [self setMaster:master];
+    
+    // When adding via the pboard, graphics need to fit within the page
+    NSSet *graphics = [[[self article] attachments] valueForKey:@"graphic"];
+    [graphics makeObjectsPerformSelector:@selector(didAddToPage:) withObject:self];
+    
+    // Carry on down the tree
+    if (recursive)
+    {
+        for (id anItem in [self childItems])
+        {
+            if ([anItem respondsToSelector:@selector(setMaster:recursive:)])
+            {
+                [anItem setMaster:master recursive:recursive];
+            }
+        }
+    }
+}
+
+#pragma mark Properties
 
 @dynamic sidebar;
 @dynamic showSidebar;

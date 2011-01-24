@@ -106,7 +106,7 @@ typedef enum {
 #pragma mark Site
 @property(nonatomic, retain) KTSite *site;
 - (void)setSite:(KTSite *)site recursively:(BOOL)recursive;
-@property(nonatomic, retain) KTMaster *master;
+@property(nonatomic, retain, readonly) KTMaster *master;
 
 
 #pragma mark Tree

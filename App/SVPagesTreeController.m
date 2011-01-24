@@ -885,7 +885,7 @@
 {
     [self setEntityName:[aPlist valueForKey:@"entity"]];
     SVSiteItem *result = [self newObjectDestinedForCollection:collection];
-    [result awakeFromPropertyList:aPlist parentItem:collection];
+    [result awakeFromPropertyList:aPlist parentItem:nil];
     return result;
 }
 

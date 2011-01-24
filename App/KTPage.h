@@ -37,6 +37,11 @@ typedef enum {
 
 @interface KTPage : SVSiteItem
 
+#pragma mark Site/Master
+@property(nonatomic, retain, readwrite) KTMaster *master;
+- (void)setMaster:(KTMaster *)master recursive:(BOOL)recursive; // calls -didAddToPage: on graphics
+
+
 #pragma mark Title
 @property(nonatomic, retain) SVPageTitle *titleBox;  // you can use inherited .title property for ease of use too
 - (BOOL)canEditTitle;

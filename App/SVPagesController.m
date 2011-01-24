@@ -347,11 +347,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     KTPage *collection = [(SVSiteItem *)object parentPage];
     if ([object respondsToSelector:@selector(setMaster:)] && [object master] != [collection master])
     {
-        [object setMaster:[collection master]];
-        
-        // When adding via the pboard, graphics need to fit within the page
-        NSSet *graphics = [[[object article] attachments] valueForKey:@"graphic"];
-        [graphics makeObjectsPerformSelector:@selector(didAddToPage:) withObject:object];
+        [object setMaster:[collection master] recursive:YES];
     }
     
     
