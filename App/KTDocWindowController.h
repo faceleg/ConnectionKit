@@ -72,9 +72,9 @@ extern NSString *gInfoWindowAutoSaveName;
 @private
     NSString    *_contentTitle;
     
-	SVWebContentAreaController  *_webContentAreaController;     // Weak ref â€” why?
+	SVWebContentAreaController  *_webContentAreaController;     // Weak ref Ñ why?
 	SVSiteOutlineViewController *_siteOutlineViewController;
-    SVPagesController           *_pagesController;
+    NSObjectController          *_pagesController;
 		
 	// Raw HTML
 	KTHTMLEditorController      *_HTMLEditorController;
@@ -105,7 +105,7 @@ extern NSString *gInfoWindowAutoSaveName;
 #pragma mark View Controllers
 @property(nonatomic, retain) IBOutlet SVSiteOutlineViewController *siteOutlineViewController;
 @property(nonatomic, retain, readonly) IBOutlet SVWebContentAreaController *webContentAreaController;
-@property(nonatomic, retain) IBOutlet SVPagesController *pagesController;
+@property(nonatomic, retain) IBOutlet NSObjectController *pagesController;
 
 #pragma mark Raw HTML
 @property (nonatomic, retain) KTHTMLEditorController *HTMLEditorController;

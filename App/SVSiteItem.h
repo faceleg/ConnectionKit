@@ -32,6 +32,10 @@ typedef enum {
 
 
 @interface SVSiteItem : KSExtensibleManagedObject <SVPage, SVPublishedObject, IMBImageItem>
+{
+  @public
+    id  _proxy; // weak ref, managed by the SVPageProxy
+}
 
 #pragma mark Identifier
 @property(nonatomic, copy, readonly) NSString *uniqueID;

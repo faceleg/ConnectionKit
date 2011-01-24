@@ -33,6 +33,7 @@
 #import "NSObject+Karelia.h"
 #import "NSResponder+Karelia.h"
 #import "NSSet+Karelia.h"
+#import "NSSortDescriptor+Karelia.h"
 #import "KTPublishingEngine.h"
 #import "KTSiteOutlineView.h"
 
@@ -52,8 +53,6 @@
 @interface SVSiteOutlineViewController ()
 + (NSSet *)mostSiteOutlineRefreshingKeyPaths;
 
-- (void)observeValueForSortedChildrenOfPage:(KTPage *)page change:(NSDictionary *)change context:(void *)context;
-
 - (void)observeValueForOtherKeyPath:(NSString *)keyPath
 							 ofPage:(KTPage *)page
 							 change:(NSDictionary *)change
@@ -61,17 +60,13 @@
 
 // Drag & Drop
 @property(nonatomic, copy) NSArray *lastItemsWrittenToPasteboard;   // call with nil to clean out
-- (void)setDropSiteItem:(id)item dropChildIndex:(NSInteger)index;
 
-- (BOOL)moveSiteItems:(NSArray *)items intoCollection:(KTPage *)collection childIndex:(NSInteger)index;
+- (BOOL)moveTreeNodes:(NSArray *)nodes intoCollectionAtIndexPath:(NSIndexPath *)indexPath childIndex:(NSInteger)index;
 
 @end
 
 
 #pragma mark -
-
-
-static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewControllerContentSelectionObservationContext";
 
 
 @implementation SVSiteOutlineViewController
@@ -214,31 +209,32 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 #pragma mark Other Accessors
 
 @synthesize content = _pagesController;
-- (void)setContent:(SVPagesController *)controller
+- (void)setContent:(SVPagesTreeController *)controller
 {
-    [_pagesController removeObserver:self forKeyPath:@"selectedObjects"];
-    [_pagesController setDelegate:nil];
+    if (_pagesController) [[NSNotificationCenter defaultCenter] removeObserver:self name:SVPagesControllerDidInsertObjectNotification object:_pagesController];
     
     // Store
     [controller retain];
     [_pagesController release]; _pagesController = controller;
-    [controller setContent:[self rootPage]];
+    //[controller setContent:[self rootPage]];
     
     
-    // Load
-    [[self outlineView] reloadData];
+    // Observe    
+    if (controller) [[NSNotificationCenter defaultCenter] addObserver:self
+                                                             selector:@selector(pagesControllerDidInsertObject:)
+                                                                 name:SVPagesControllerDidInsertObjectNotification
+                                                               object:controller];
     
-    [controller addObserver:self
-                 forKeyPath:@"selectedObjects"
-                    options:NSKeyValueObservingOptionInitial
-                    context:sContentSelectionObservationContext];
-    
-    [controller setDelegate:self];
     
     // Restore selection
-    NSArray *selection = [self persistentSelectedItems];
-    if ([selection count] == 0) selection = [NSArray arrayWithObject:[self rootPage]];
-    [controller setSelectedObjects:selection];
+    NSArray *selection = [self persistentSelectedObjects];
+    NSArray *indexPaths = [selection valueForKey:@"indexPath"];
+    if ([indexPaths count] == 0)
+    {
+        indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathWithIndex:0]];
+    }
+    
+    [controller setSelectionIndexPaths:indexPaths];
 }
 
 #pragma mark Pages List
@@ -253,20 +249,19 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (NSSet *)pages { return [[_pages copy] autorelease]; }
 
-@synthesize rootPage = _rootPage;
 - (void)setRootPage:(KTPage *)page
 {
-    [[self rootPage] removeObserver:self forKeyPath:@"master.siteTitle.text"];
-    [[self rootPage] removeObserver:self forKeyPath:@"master.favicon"];
-    [[self rootPage] removeObserver:self forKeyPath:@"master.codeInjection.hasCodeInjection"];
+    [_rootPage removeObserver:self forKeyPath:@"master.siteTitle.text"];
+    [_rootPage removeObserver:self forKeyPath:@"master.favicon"];
+    [_rootPage removeObserver:self forKeyPath:@"master.codeInjection.hasCodeInjection"];
     
     [page retain];
     [_rootPage release];
     _rootPage = page;
     
-    [[self rootPage] addObserver:self forKeyPath:@"master.siteTitle.text" options:0 context:NULL];
-    [[self rootPage] addObserver:self forKeyPath:@"master.favicon" options:0 context:NULL];
-    [[self rootPage] addObserver:self forKeyPath:@"master.codeInjection.hasCodeInjection" options:0 context:NULL];
+    [_rootPage addObserver:self forKeyPath:@"master.siteTitle.text" options:0 context:NULL];
+    [_rootPage addObserver:self forKeyPath:@"master.favicon" options:0 context:NULL];
+    [_rootPage addObserver:self forKeyPath:@"master.codeInjection.hasCodeInjection" options:0 context:NULL];
 }
 
 - (void)addPages:(NSSet *)pages;
@@ -287,11 +282,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         for (SVSiteItem *page in newPages)
         {
             //	Begin observing the page
-            [page addObserver:self
-                   forKeyPath:@"sortedChildren"
-                      options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)
-                      context:nil];
-            
             [page addObserver:self
                   forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]
                       options:(NSKeyValueObservingOptionNew)
@@ -330,11 +320,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         
         
         //	Begin observing the page
-		[page addObserver:self
-				forKeyPath:@"sortedChildren"
-				   options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)
-				   context:nil];
-		
 		[page addObserver:self
 			   forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]
 				   options:(NSKeyValueObservingOptionNew)
@@ -375,7 +360,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         if ([_pages containsObject:aPage])
         {
             // Remove observers
-            [aPage removeObserver:self forKeyPath:@"sortedChildren"];
             [aPage removeObserver:self forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]];
             
             // Uncache custom icon to free memory
@@ -401,11 +385,9 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	if (!keyPaths)
 	{
 		keyPaths = [[NSSet alloc] initWithObjects:
-                    @"isCollection",
                     @"thumbnailType",
                     @"customThumbnail",
                     @"thumbnailSourceGraphic.imageRepresentation",
-                    @"title",
 					@"isStale",
 					@"codeInjection.hasCodeInjection",
 					@"isDraft",
@@ -429,86 +411,16 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-	if (context == sContentSelectionObservationContext)
+    // Ignore objects not in our pages list. If we don't, NSOutlineView can occasionally embark on an endless loop.
+    if (![[self pages] containsObject:object])
     {
-        if (!_isChangingSelection)
-        {
-            _isChangingSelection = YES;
-            [[self outlineView] selectItems:[[self content] selectedObjects]];
-            _isChangingSelection = NO;
-        }
+        return;
     }
-    else
-    {
-        // Ignore objects not in our pages list. If we don't, NSOutlineView can occasionally embark on an endless loop.
-        if (![[self pages] containsObject:object])
-        {
-            return;
-        }
-        
-        
-        // Having prescreened the parameters, pass them onto the right support methods for processing
-        OBASSERT([object isKindOfClass:[SVSiteItem class]]);
-        if ([keyPath isEqualToString:@"sortedChildren"])
-        {
-            [self observeValueForSortedChildrenOfPage:object change:change context:context];
-        }
-        else
-        {
-            [self observeValueForOtherKeyPath:keyPath ofPage:object change:change context:context];
-        }
-    }
-}
-
-/*	Oh noes, the sortedChildren property of a page has changed! We need to reload something.
- */
-- (void)observeValueForSortedChildrenOfPage:(KTPage *)page change:(NSDictionary *)change context:(void *)context
-{
-	id changeOld = [change objectForKey:NSKeyValueChangeOldKey];
-    NSArray *oldSortedChildren = ([changeOld isKindOfClass:[NSArray class]]) ? changeOld : [NSArray array];
-    NSSet *oldChildren  = [NSSet setWithArray:oldSortedChildren];
     
-    id changeNew = [change objectForKey:NSKeyValueChangeNewKey];
-	NSArray *newSortedChildren = ([changeNew isKindOfClass:[NSArray class]]) ? changeNew : [NSArray array];
-	NSSet *newChildren = [NSSet setWithArray:newSortedChildren];
-	
-	
-	// Stop observing removed pages
-	NSSet *removedPages = [oldChildren setByRemovingObjects:newChildren];
-	if (removedPages && [removedPages count] > 0)
-	{
-		[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
-	}
-	
-	
-	// Do the reload
-	//NSArray *oldSelection = [[self outlineView] selectedItems];
-	[self reloadItem:page reloadChildren:YES];
-	
-	
-	
-	// Correct the selection
-    /*  I think this should be handled by SVPagesController these days. #92429
-	NSMutableSet *correctedSelection = [NSMutableSet setWithArray:oldSelection];
-	[correctedSelection minusSet:removedPages];
-		
-	NSSet *removedSelectedPages = [removedPages setByIntersectingObjectsFromArray:oldSelection];
-		KTPage *aRemovedPage;
-	for (aRemovedPage in removedSelectedPages)
-	{
-		unsigned originalIndex = [oldSortedChildren indexOfObjectIdenticalTo:aRemovedPage];	// Where possible, select the
-		KTPage *replacementPage = [newSortedChildren objectClosestToIndex:originalIndex];	// next sibling, but fallback to
-		[correctedSelection addObjectIgnoringNil:replacementPage];							// the previous sibling.
-	}
-	
-	if ([correctedSelection count] == 0)	// If nothing remains to be selected, fallback to the parent
-	{
-		OBASSERT(page);
-        [correctedSelection addObject:page];
-     }
-     */
-	
-	[[self outlineView] selectItems:[[self content] selectedObjects] forceDidChangeNotification:NO];
+    
+    // Having prescreened the parameters, pass them onto the right support methods for processing
+    OBASSERT([object isKindOfClass:[SVSiteItem class]]);
+    [self observeValueForOtherKeyPath:keyPath ofPage:object change:change context:context];
 }
 
 /*	There was a change that doesn't affect the tree itself, so we just need to mark the outline for display.
@@ -533,64 +445,31 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	BOOL childrenNeedDisplay = ([keyPath isEqualToString:@"isDraft"]);
 	
 	
-    if ([keyPath isEqualToString:@"isCollection"])
-    {
-        [self reloadItem:page reloadChildren:childrenNeedDisplay];
-        [[self outlineView] expandItem:page];
-    }
-    else
-    {
-        [[self outlineView] setItemNeedsDisplay:page childrenNeedDisplay:childrenNeedDisplay];
-    }
-}
-
-#pragma mark Public Functions
-
-- (void)reloadSiteOutline
-{
-	if (_outlineView)	// don't try to reload if we haven't really loaded it. We throw an exception otherwise
-	{
-		[[self outlineView] reloadData];
-	}
-}
-
-/*	!!IMPORTANT!!
- *	Please use this method rather than directly calling the outline view since it handles reloading root.
- */
-- (void)reloadItem:(KTPage *)anItem reloadChildren:(BOOL)reloadChildren
-{
-	NSOutlineView *siteOutline = [self outlineView];
-	
-	
-	// Do the approrpriate refresh. In the case of the home page, we must reload everything.
-	if (anItem == [self rootPage] && reloadChildren)
-	{
-		[siteOutline reloadData];
-	}
-	else
-	{
-		[siteOutline reloadItem:anItem reloadChildren:reloadChildren];
-	}
-
-// OLD CODE I WAS TESTING - Mike.
-//	// Compare selections
-//	NSArray *oldSelection = [siteOutline selectedItems];
-//	NSArray *newSelection = [siteOutline selectedItems];
-//	if (![newSelection isEqualToArray:oldSelection])
-//	{
-//		[[NSNotificationCenter defaultCenter] postNotificationName:NSOutlineViewSelectionDidChangeNotification
-//															object:siteOutline];
-//	}
+    [[self outlineView] setItemNeedsDisplay:page childrenNeedDisplay:childrenNeedDisplay];
 }
 
 #pragma mark Adding a Page
+
+- (void)addSiteItem:(id)sender;
+{
+    // Calls -add: or -addChild: on the controller as appropriate to selection
+    NSTreeNode *selection = [[self content] selectedNode];
+    if ([[self outlineView] isItemExpanded:selection])
+    {
+        [[self content] addChild:self];
+    }
+    else
+    {
+        [[self content] add:self];
+    }
+}
 
 - (IBAction)addPage:(id)sender;             // your basic page
 {
     SVPageTemplate *template = [sender representedObject];
     
     [[self content] setEntityNameWithPageTemplate:template];
-    [[self content] add:self];
+    [self addSiteItem:sender];
 }
 
 - (IBAction)addCollection:(id)sender;       // a collection. Uses [sender representedObject] for preset info
@@ -601,13 +480,13 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 - (IBAction)addExternalLinkPage:(id)sender; // external link
 {
     [[self content] setEntityTypeWithURL:nil external:YES];
-    [[self content] add:self];
+    [self addSiteItem:sender];
 }
 
 - (IBAction)addRawTextPage:(id)sender;      // Raw HTML page
 {
     [[self content] setEntityTypeWithURL:nil external:NO];
-    [[self content] add:self];
+    [self addSiteItem:sender];
 }
 
 - (IBAction)addFilePage:(id)sender;         // uses open panel to select a file, then inserts
@@ -631,7 +510,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
     
     [[self content] setEntityTypeWithURL:[sheet URL] external:NO];
-    [[self content] add:self];
+    [self addSiteItem:self];
 }
 
 - (KTPage *)collectionForPagesControllerToInsertInto:(SVPagesController *)sender;
@@ -650,7 +529,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (void)pagesControllerDidInsertObject:(NSNotification *)notification;
 {
-    SVSiteItem *item = [[[notification object] selectedObjects] firstObjectKS];  // Really, I ought to have a way of pulling this from the notification
+    SVPagesTreeController *controller = [notification object];
+    SVSiteItem *item = [controller selectedNode];  // Really, I ought to have a way of pulling this from the notification
     
     if (item) [[self outlineView] expandItem:item];
 }
@@ -701,8 +581,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     {
         // Create a page for the content
         SVPagesController *controller = [self content];
-        [controller addObjectsFromPasteboard:pboard
-                                toCollection:[self collectionForPagesControllerToInsertInto:controller]];
+        [controller addObjectsFromPasteboard:pboard];
     }
     else
     {
@@ -725,13 +604,9 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (IBAction)duplicate:(id)sender;
 {
-    // Don't want selection changing mid-duplication
-    BOOL selectInserted = [[self content] selectsInsertedObjects];
-    [[self content] setSelectsInsertedObjects:NO];
-    
-    
     NSArray *items = [[self content] selectedObjects];
     NSMutableArray *newItems = [[NSMutableArray alloc] initWithCapacity:[items count]];
+    
     for (SVSiteItem *anItem in items)
     {
         // Serialize
@@ -740,7 +615,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         
         // Where's it going to be placed?
         KTPage *parent = [anItem parentPage];
-        if (!parent) parent = [self rootPage];  // happens if duplicating root
+        OBASSERT(parent);
         
         
         // Create copy
@@ -749,17 +624,12 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         
         [newItems addObject:duplicate];
         [duplicate awakeFromPropertyList:plist parentItem:parent];
-        
-        
-        // Insert copy
-        [[self content] addObject:duplicate toCollection:parent];
         [duplicate release];
     }
     
     
-    // Select new items
-    [[self content] setSelectsInsertedObjects:selectInserted];
-    [[self content] setSelectedObjects:newItems];
+    // Insert new items
+    [[self content] addObjects:newItems];
     [newItems release];
 }
 
@@ -830,7 +700,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
     if ([self canDelete])
     {
-        SVPagesController *controller = [self content];
+        SVPagesTreeController *controller = [self content];
         if ([controller canRemove])
         {
             NSSet *selection = [[[NSSet alloc] initWithArray:[[self content] selectedObjects]] autorelease];
@@ -866,9 +736,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 // Can only delete a page if there's a selection and that selection doesn't include the root page
 - (BOOL)canDelete
 {
-    NSObjectController *objectController = [self content];
-    BOOL result = ([objectController canRemove] &&
-                   ![[objectController selectedObjects] containsObjectIdenticalTo:[self rootPage]]);
+    SVPagesTreeController *controller = [self content];
+    
+    BOOL result = ([controller canRemove] &&
+                   ![[controller selectionIndexPaths] containsObject:[NSIndexPath indexPathWithIndex:0]]);
+    
     return result;
 }
 
@@ -920,13 +792,13 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 			if (makeCollection)
 			{
 				[alert setMessageText:[NSString stringWithFormat:
-									   NSLocalizedString(@"Are you sure you want to publish the page “%@” as a collection?", "alert title"),
+									   NSLocalizedString(@"Are you sure you want to publish the page ‚Äú%@‚Äù as a collection?", "alert title"),
 									   [page title]]];
 			}
 			else
 			{
 				[alert setMessageText:[NSString stringWithFormat:
-									   NSLocalizedString(@"Are you sure you want to stop publishing the page “%@” as a collection?", "alert title"),
+									   NSLocalizedString(@"Are you sure you want to stop publishing the page ‚Äú%@‚Äù as a collection?", "alert title"),
 									   [page title]]];
 			}
 			
@@ -1034,111 +906,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 #pragma mark Datasource
 
-- (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(SVSiteItem *)item
-{
-	int result = 0;
-	
-    if (item)
-    {
-        if (item != [self rootPage])    // the root *page* shows up as a single item right at the top of the outline
-        {
-            NSSet *pages = [[NSSet alloc] initWithArray:[item sortedChildren]];
-            
-            result = [pages count];
-            [self addPages:pages];  // quicker for big collections than calling -addPage: repeatedly
-            [pages release];
-        }
-	}
-    else
-    {
-        result = [[[self rootPage] sortedChildren] count] + 1;  // add 1 to account for how root page is displayed
-    }
-    
-	return result;
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
-{
-	BOOL result = NO;
-	
-	if ( item == [self rootPage] )
-	{
-		result = NO;
-	}
-	else if ([item isCollection])
-	{
-		result = YES;
-	}
-	else
-	{
-		result = NO;
-	}
-	
-	return result;
-}
-
-- (id)outlineView:(NSOutlineView *)outlineView child:(int)anIndex ofItem:(id)item
-{
-	id child = nil;
-	
-	if (!item)
-	{
-		if (anIndex == 0)
-		{
-			child = [self rootPage];
-		}
-		else
-		{
-			// subtract 1 at top level for "My Site"
-			unsigned int childIndex = anIndex-1;
-			NSArray *children = [[self rootPage] sortedChildren];
-			if ( [children count] >= childIndex+1 )
-			{
-				child = [children objectAtIndex:childIndex];
-			}
-		}
-	}
-	else
-	{
-		// everything (with children) below top level should all be collections
-		NSArray *children = [(KTPage *)item sortedChildren];
-		if ( [children count] >= (unsigned int)anIndex+1 )
-		{
-			child = [children objectAtIndex:anIndex];
-		}
-	}
-	
-	// keep a retain http://rentzsch.com/cocoa/foamingAtTheMouth
-	if (child)
-	{
-		[self addPagesObject:child];
-	}
-	
-	return child;
-}
-
-- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
-{
-	NSString *result = nil;
-	
-	if ([[tableColumn identifier] isEqualToString:@"displayName"])
-	{
-        OBASSERT([item isKindOfClass:[SVSiteItem class]]);
-        
-		result = [item title];
-        if (!result) result = @"";
-	}
-	else
-	{
-		result = [NSString stringWithFormat:@"%i:%i", [[self outlineView] rowForItem:item], [[item wrappedValueForKey:@"childIndex"] intValue]];
-	}
-	
-	
-	// Tidy up
-	OBPOSTCONDITION(result);
-	return result;
-}
-
 - (id)outlineView:(NSOutlineView *)outlineView parentOfItem:(id)item
 {
 	id result = nil;
@@ -1150,33 +917,23 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	return result;
 }
 
-- (void)outlineView:(NSOutlineView *)outlineView setObjectValue:(id)aNewValue forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
-{
-	if (item == [self rootPage])
-    {
-        [[[item master] siteTitle] setText:aNewValue];
-    }
-    else
-    {
-        [item setTitle:aNewValue];
-    }
-}
-
-
 #pragma mark Delegate
 
 - (void)outlineView:(NSOutlineView *)outlineView
     willDisplayCell:(KTImageTextCell *)cell
      forTableColumn:(NSTableColumn *)tableColumn
-               item:(SVSiteItem *)item
+               item:(NSTreeNode *)node
 {
+    SVSiteItem *item = [node representedObject];
+    
 	// Ignore any uninteresting columns/rows
 	if (!item || ![[tableColumn identifier] isEqualToString:@"displayName"]) {
 		return;
 	}
 		
 	// Set the cell's appearance
-	if ([cell isKindOfClass:[KTImageTextCell class]])	// Fail gracefully if not the image kind of cell
+	BOOL isRoot = [outlineView rowForItem:node] == 0;
+    if ([cell isKindOfClass:[KTImageTextCell class]])	// Fail gracefully if not the image kind of cell
 	{
 		// Size
 		NSControlSize controlSize = ([self displaySmallPageIcons]) ? NSSmallControlSize : NSRegularControlSize;
@@ -1198,7 +955,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		[cell setDraft:isDraft];
 		
 		NSInteger rowIndex = [outlineView rowForItem:item];
-				
+
+		
 		// If the row is selected but isn't being edited and the current drawing isn't being used to create a drag image,
 		// colour the text white; otherwise, colour it black
 		BOOL inDraggedRows = [[(KTSiteOutlineView *)outlineView draggedRows] containsIndex:rowIndex];
@@ -1216,21 +974,18 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		// always show as publishable if we are registered.  ALSO show publishable (no markings) if in a drag.
 		
 		// Code Injection
-		[cell setHasCodeInjection:[[item codeInjection] hasCodeInjection]];
-		if (item == [self rootPage] && ![cell hasCodeInjection])
+        [cell setHasCodeInjection:[[item codeInjection] hasCodeInjection]];
+		if (isRoot && ![cell hasCodeInjection])
 		{
-			[cell setHasCodeInjection:[[[[self rootPage] master] codeInjection] hasCodeInjection]];
+			[cell setHasCodeInjection:[[[item master] codeInjection] hasCodeInjection]];
 		}
-		
-		// Home page is drawn slightly differently
-		//[cell setRoot:(item == [self rootPage])];
 	}
 	
 	
 	
     //  Draw a line to "separate" the root from its children
     //  Note that we need to check there is a valid CGContext to draw into. Otherwise the console will be littered with CG error messages. This situation can sometimes arise on Snowy when switching apps.
-	if (item == [self rootPage] &&
+	if (isRoot &&
         ![[[self outlineView] selectedItems] containsObject:item] &&
         [NSView focusView] == outlineView)
 	{
@@ -1255,21 +1010,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	}
 }
 
-- (NSIndexSet *)outlineView:(NSOutlineView *)outlineView selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes;
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(id)item
 {
-	NSArray *proposedItems = [outlineView itemsAtRows:proposedSelectionIndexes];
-    
-    _isChangingSelection = YES;
-    @try
-    {
-        if (![[self content] setSelectedObjects:proposedItems]) return [outlineView selectedRowIndexes];
-    }
-    @finally
-    {
-        _isChangingSelection = NO;
-    }
-    
-    return proposedSelectionIndexes;
+    // Root can't be collapsed
+    BOOL result = ([outlineView rowForItem:item] > 0);
+    return result;
 }
 
 /*	If the current selection is about to be collapsed away, select the parent.
@@ -1296,11 +1041,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	}
 }
 
-- (float)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
+- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(NSTreeNode *)item
 {
     float result = [outlineView rowHeight];
     
-	if (item == [self rootPage]) 
+	if ([outlineView rowForItem:item] == 0)
 	{
 		result += ([self displaySmallPageIcons] ? SMALL_ICON_ROOT_SPACING : LARGE_ICON_ROOT_SPACING);
 	}
@@ -1320,21 +1065,22 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     return NSDragOperationCopy;
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
+- (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)nodes toPasteboard:(NSPasteboard *)pboard
 {
 	[pboard declareTypes:[NSArray arrayWithObject:kKTPagesPboardType] owner:self];
     
-    [self setLastItemsWrittenToPasteboard:items];
+    [self setLastItemsWrittenToPasteboard:nodes];
     
-    NSMutableArray *serializedPages = [[NSMutableArray alloc] initWithCapacity:[items count]];
-    for (SVSiteItem *anItem in items)
+    NSMutableArray *serializedPages = [[NSMutableArray alloc] initWithCapacity:[nodes count]];
+    for (NSTreeNode *aNode in nodes)
     {
         // Ignore if it's a descendant of a selected collection
         BOOL write = YES;
+        SVSiteItem *anItem = [aNode representedObject];
         KTPage *parent = [anItem parentPage];
         while (parent)
         {
-            if ([items containsObjectIdenticalTo:parent])
+            if ([nodes containsObjectIdenticalTo:parent])
             {
                 write = NO;
                 break;
@@ -1364,13 +1110,16 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 #pragma mark Validating a Drop
 
 - (NSDragOperation)validateNonLinkDrop:(id <NSDraggingInfo>)info
-                    proposedCollection:(KTPage *)page
+                      proposedTreeNode:(NSTreeNode *)node
                     proposedChildIndex:(NSInteger)index;
 {
     //  Rather like the Outline View datasource method, but has already taken into account the layout of root
     
     
-    OBPRECONDITION(page);
+    KTPage *page = [node representedObject];
+    
+    
+    OBPRECONDITION(node);
 #ifndef CAN_CONVERT_TO_COLLECTIONS
     OBPRECONDITION([page isCollection]);
 #endif
@@ -1381,7 +1130,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         [[page collectionSortOrder] integerValue] != SVCollectionSortManually)
     {
         index = NSOutlineViewDropOnItemIndex;
-        [self setDropSiteItem:page dropChildIndex:index];
+        [[self outlineView] setDropItem:node dropChildIndex:index];
     }
     
     
@@ -1397,9 +1146,9 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         NSArray *draggedItems = [self lastItemsWrittenToPasteboard];
         
         // Rule 4. Don't allow a collection to become a descendant of itself
-        for (SVSiteItem *aDraggedItem in draggedItems)
+        for (NSTreeNode *aDraggedItem in draggedItems)
         {
-            if ([page isDescendantOfItem:aDraggedItem]) return NSDragOperationNone;
+            if ([page isDescendantOfItem:[aDraggedItem representedObject]]) return NSDragOperationNone;
         }
         
         
@@ -1449,18 +1198,20 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (NSDragOperation)outlineView:(NSOutlineView *)outlineView
 				  validateDrop:(id <NSDraggingInfo>)info
-				  proposedItem:(id)item
+				  proposedItem:(NSTreeNode *)node
 			proposedChildIndex:(NSInteger)anIndex
 {
     // There's 2 basic types of drop: creating a link, and everything else. Links are special because they create nothing. Instead it's a feedback mechanism to the source view
     
+    SVSiteItem *siteItem = [node representedObject];
+    
     NSPasteboard *pboard = [info draggingPasteboard];
     if ([[pboard types] containsObject:kKTLocalLinkPboardAllowedType])
 	{
-        if (item && anIndex == NSOutlineViewDropOnItemIndex)
+        if (siteItem && anIndex == NSOutlineViewDropOnItemIndex)
         {
             NSString *pboardString = [pboard stringForType:kKTLocalLinkPboardAllowedType];
-            return [self validateLinkDrop:pboardString onProposedItem:item];
+            return [self validateLinkDrop:pboardString onProposedItem:siteItem];
         }
         else
         {
@@ -1479,17 +1230,20 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
     
     // Correct for the root page. i.e. a drop with a nil item is actually a drop onto/in the root page, and the index needs to be bumped slightly
-    SVSiteItem *siteItem = item;
     NSInteger index = anIndex;
-    if (!siteItem)
+    if (!node)
     {
         if (anIndex == 0) return NSDragOperationNone;   // rule 3.
         
-        siteItem = [self rootPage];
+        node = [[[[self content] arrangedObjects] childNodes] objectAtIndex:0];
+        siteItem = [node representedObject];
+        
         if (index != NSOutlineViewDropOnItemIndex) 
         {
             index--;    // we've already weeded out the case of index being 0
         }
+        
+        [[self outlineView] setDropItem:node dropChildIndex:index];
     }
     OBASSERT(siteItem);
     
@@ -1502,7 +1256,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 #endif
     {
         return [self validateNonLinkDrop:info
-                      proposedCollection:[siteItem pageRepresentation]
+                      proposedTreeNode:node
                       proposedChildIndex:index];
     }
     
@@ -1513,9 +1267,10 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 #pragma mark Accepting a Drop
 
 - (BOOL)acceptNonLinkDrop:(id <NSDraggingInfo>)info
-               collection:(KTPage *)collection
+                     node:(NSTreeNode *)node
                childIndex:(NSInteger)index;
 {
+    KTPage *collection = [node representedObject];
     OBPRECONDITION(collection);
     OBPRECONDITION([collection isCollection]);
     
@@ -1525,20 +1280,22 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         [info draggingSourceOperationMask] & NSDragOperationMove)
     {
         NSArray *draggedItems = [self lastItemsWrittenToPasteboard];
-        return [self moveSiteItems:draggedItems intoCollection:collection childIndex:index];
+        return [self moveTreeNodes:draggedItems intoCollectionAtIndexPath:[node indexPath] childIndex:index];
     }
     else
     {
         // Create a page for the content
-        SVPagesController *pagesController = [self content];
-        return [pagesController addObjectsFromPasteboard:[info draggingPasteboard]
-                                            toCollection:collection];
+        if (index < 0) index = [[node childNodes] count];
+        NSIndexPath *path = [[node indexPath] indexPathByAddingIndex:index];
+        
+        return [[self content] insertObjectsFromPasteboard:[info draggingPasteboard]
+                                    atArrangedObjectIndexPath:path];
     }
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView
          acceptDrop:(id <NSDraggingInfo>)info
-               item:(id)item
+               item:(NSTreeNode *)item
          childIndex:(NSInteger)anIndex;
 {
 	// Remember, links are special
@@ -1547,7 +1304,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	{
         KTLinkConnector *linkConnector = [info draggingSource];
         
-        SVLink *link = [[SVLink alloc] initWithPage:item openInNewWindow:NO];
+        SVLink *link = [[SVLink alloc] initWithPage:[item representedObject] openInNewWindow:NO];
         [linkConnector setLink:link];
         [link release];
         
@@ -1556,7 +1313,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
     
     // Correct for the root page. i.e. a drop with a nil item is actually a drop onto/in the root page, and the index needs to be bumped slightly
-    KTPage *page = item;
+    KTPage *page = [item representedObject];
     NSInteger index = anIndex;
     if (!page)
     {
@@ -1579,7 +1336,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 #endif
     {
         return [self acceptNonLinkDrop:info
-                            collection:page
+                                  node:item
                             childIndex:index];
     }
     
@@ -1590,28 +1347,32 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 /*	Called when rearranging pages within the Site Outline
  */
-- (BOOL)moveSiteItems:(NSArray *)items intoCollection:(KTPage *)collection childIndex:(NSInteger)index;
+- (BOOL)moveTreeNodes:(NSArray *)nodes intoCollectionAtIndexPath:(NSIndexPath *)indexPath childIndex:(NSInteger)index;
 {	
-	OBPRECONDITION(collection);
-    OBPRECONDITION([collection isCollection]);
+	OBPRECONDITION(indexPath);
+    //OBPRECONDITION([collection isCollection]);
     
 	
-    NSMutableArray *expansion = [[NSMutableArray alloc] initWithCapacity:[items count]];
-    for (SVSiteItem *anItem in items)
+    NSMutableArray *expansion = [[NSMutableArray alloc] initWithCapacity:[nodes count]];
+    for (NSTreeNode *aNode in nodes)
     {
-        BOOL expanded = [[self outlineView] isItemExpanded:anItem];
+        BOOL expanded = [[self outlineView] isItemExpanded:aNode];
         [expansion addObject:NSBOOL(expanded)];
     }
     
+    
     // Insert each item in turn. By running in reverse we can keep reusing the same index
-    SVPagesController *controller = [self content];
-    [controller moveObjects:items toCollection:collection index:index];
+    SVPagesTreeController *controller = [self content];
+    
+    [controller moveNodes:nodes
+              toIndexPath:[indexPath indexPathByAddingIndex:index]];
 	
+    
     // Restore expansion state. #95795
-    NSUInteger i, count = [items count];
+    NSUInteger i, count = [nodes count];
     for (i = 0; i < count; i++)
     {
-        SVSiteItem *anItem = [items objectAtIndex:i];
+        SVSiteItem *anItem = [nodes objectAtIndex:i];
         BOOL expanded = [[expansion objectAtIndex:i] boolValue];
         if (expanded) [[self outlineView] expandItem:anItem];
     }
@@ -1628,7 +1389,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	
 	// Should we display a progress indicator?
 	int i = 0;
-	NSString *localizedStatus = NSLocalizedString(@"Copying…", "");
+	NSString *localizedStatus = NSLocalizedString(@"Copying...", "");
 	BOOL displayProgressIndicator = NO;
 	if ([archivedPages count] > 3)
 	{
@@ -1667,7 +1428,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	{
 		if (progressPanel)
 		{
-			localizedStatus = NSLocalizedString(@"Copying pages…", "");
+			localizedStatus = NSLocalizedString(@"Copying pages...", "");
 			[progressPanel setMessageText:localizedStatus];
             [progressPanel setDoubleValue:i];
 			i++;
@@ -1701,22 +1462,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	
 	return result;
 }*/
-
-- (void)setDropSiteItem:(id)item dropChildIndex:(NSInteger)index;
-{
-    //  Like the NSOutlineView method, but accounts for root
-    OBPRECONDITION(item);
-    
-    
-    if (item == [self rootPage] && index != NSOutlineViewDropOnItemIndex)
-    {
-        [[self outlineView] setDropItem:nil dropChildIndex:(index + 1)];
-    }
-    else
-    {
-        [[self outlineView] setDropItem:item dropChildIndex:index];
-    }
-}
 
 #pragma mark NSUserInterfaceValidations
 
@@ -1775,7 +1520,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     if ([self isOutlineViewLoaded])
     {
         [[self outlineView] setRowHeight:(smallIcons ? SMALL_ICON_CELL_HEIGHT : LARGE_ICON_CELL_HEIGHT)];
-        [self reloadSiteOutline];
+        [_outlineView reloadData];
     }
 }
 
@@ -1783,7 +1528,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 #pragma mark Persistence
 
-- (NSArray *)persistentSelectedItems;
+- (NSArray *)persistentSelectedObjects;
 {
 	
     NSManagedObjectContext *context = [[self content] managedObjectContext];
@@ -1796,7 +1541,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     return result;
 }
 
-- (NSArray *)persistentExpandedItems;
+- (NSArray *)persistentExpandedObjects;
 {
     NSManagedObjectContext *context = [[self content] managedObjectContext];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"collectionIsExpandedInSiteOutline != 0"];
@@ -1804,6 +1549,22 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     NSArray *result = [context fetchAllObjectsForEntityForName:@"Page"
 													 predicate:predicate
 														 error:NULL];
+    
+    return result;
+}
+
+- (NSArray *)persistentExpandedTreeNodes;
+{
+    NSArray *objects = [self persistentExpandedObjects];
+    NSArray *paths = [objects valueForKey:@"indexPath"];
+    
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[paths count]];
+    for (NSIndexPath *aPath in paths)
+    {
+        NSTreeNode *node = [[(NSTreeController *)[self content] arrangedObjects] descendantNodeAtIndexPath:aPath];
+        
+        if (node) [result addObject:node];
+    }
     
     return result;
 }
@@ -1816,11 +1577,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	int rows = [ov numberOfRows];
 	for (int row = 0 ; row < rows ; row++)
 	{
-		id item = [ov itemAtRow:row];
+		NSTreeNode *item = [ov itemAtRow:row];
 		BOOL expanded = [ov isItemExpanded:item];
 		if (expanded)
 		{
-			[result addObject:item];
+			[result addObject:[item representedObject]];
 		}
 	}
 	return [NSArray arrayWithArray:result];
@@ -1834,7 +1595,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	[[[[[[self view] window] windowController] document] site] setValue:[NSNumber numberWithInt:width] forKey:@"sourceOutlineSize"];
 	
     // Remove old selection
-    NSArray *oldSelection = [self persistentSelectedItems];
+    NSArray *oldSelection = [self persistentSelectedObjects];
     [oldSelection makeObjectsPerformSelector:@selector(setIsSelectedInSiteOutline:)
                                   withObject:[NSNumber numberWithBool:NO]];
     
@@ -1843,7 +1604,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
                                withObject:[NSNumber numberWithBool:YES]];
 
     // Similarly for expanded collections
-    oldSelection = [self persistentExpandedItems];
+    oldSelection = [self persistentExpandedObjects];
     [oldSelection makeObjectsPerformSelector:@selector(setCollectionIsExpandedInSiteOutline:)
                                   withObject:[NSNumber numberWithBool:NO]];
     
@@ -1883,14 +1644,16 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	[oSplitView adjustSubviews];
     
 	// Restore expanded items
-	NSArray *selectedItems = [self persistentSelectedItems];
-	NSArray *expandedItems = [self persistentExpandedItems];
+	NSArray *selectedItems = [self persistentSelectedObjects];
+	NSArray *expandedItems = [self persistentExpandedTreeNodes];
 	id item;
 	
 	for (item in expandedItems)
 	{
 		[self.outlineView expandItem:item];
 	}
+    // make sure homepage is expanded
+    [self.outlineView expandItem:[self.outlineView itemAtRow:0]];
     
     
     // Restore selected items

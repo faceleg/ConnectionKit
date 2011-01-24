@@ -48,7 +48,7 @@
     if (!window)
     {
         [self unbind:@"inspectedPagesController"];
-        [self setInspectedPagesController:[[self class] noSelectionController]];
+        [self setInspectedPagesController:[[[NSTreeController alloc] init] autorelease]];
     }
     
     

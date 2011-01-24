@@ -89,55 +89,6 @@
 
 + (NSString *)entityName { return @"Page"; }
 
-#pragma mark -
-#pragma mark Initialisation
-
-/*	Private support method that creates a generic, blank page.
- *	It gets created either by unarchiving or the user creating a new page.
- */
-+ (KTPage *)_insertNewPageWithParent:(KTPage *)parent
-{
-	OBPRECONDITION([parent managedObjectContext]);
-	
-	
-	// Create the page
-	KTPage *result = [NSEntityDescription insertNewObjectForEntityForName:@"Page"
-                                                   inManagedObjectContext:[parent managedObjectContext]];
-	
-	
-	// Attach to parent & other relationships
-	[result setMaster:[parent master]];
-	[result setSite:[parent valueForKeyPath:@"site"]];
-	[parent addChildItem:result];	// Must use this method to correctly maintain ordering
-	
-	return result;
-}
-
-+ (KTPage *)insertNewPageWithParent:(KTPage *)aParent;
-{
-	// Figure out nearest sibling/parent
-    KTPage *predecessor = aParent;
-	NSArray *children = [aParent childrenWithSorting:SVCollectionSortByDateModified
-                                           ascending:NO
-                                             inIndex:NO];
-	if ([children count] > 0)
-	{
-		predecessor = [children firstObjectKS];
-	}
-	
-	
-    // Create the page
-	KTPage *page = [self _insertNewPageWithParent:aParent];
-	
-	
-	// Load properties from parent/sibling
-	[page setAllowComments:[predecessor allowComments]];
-	[page setIncludeTimestamp:[predecessor includeTimestamp]];
-	
-	
-	return page;
-}
-
 #pragma mark Awake
 
 /*!	Early initialization.  Note that we don't know our bundle yet!  Use awakeFromBundle for later init.

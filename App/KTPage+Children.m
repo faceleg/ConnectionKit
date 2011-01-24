@@ -86,59 +86,6 @@
     return result;
 }
 
-/*	Adds the specified page to the receiver's children relationship.
- *
- *	If the receiver is sorted manually this method behaves like -[NSArray addObject:] and the page is
- *	placed at the end of the list.
- */
-- (void)addChildItem:(SVSiteItem *)item
-{
-	OBPRECONDITION(item);
-	OBPRECONDITION([self isCollection]);
-	
-	
-	// If inserting a page into a manually sorted collection, place the page at the end of it
-	if ([[self collectionSortOrder] intValue] == SVCollectionSortManually)
-	{
-		unsigned index = [[[self sortedChildren] lastObject] childIndex] + 1;
-		[item setChildIndex:index];
-	}
-	
-	
-	// Attach the page to ourself and update the page cache
-	[item setValue:self forKey:@"parentPage"];
-	[self invalidateSortedChildrenCache];
-	
-	
-	if ([item isKindOfClass:[KTPage class]])
-    {
-        // As it has a new parent, the page's path must have changed.
-        KTPage *page = (KTPage *)item;
-        [page recursivelyInvalidateURL:YES];
-    }
-}
-
-
-/*	This method is remarkably simple since when you remove a page there is actually no need to update
- *	the childrens' -collectionIndex. They are ultimately still in the right overall order.
- */
-- (void)removeChildItem:(SVSiteItem *)item
-{
-	// Remove the page and update the page cache
-	[[self mutableSetValueForKey:@"childItems"] removeObject:item];
-	[self invalidateSortedChildrenCache];
-}
-
-
-/*	Batch equivalent of the above method. It's significantly faster because we guarantee that the
- *	-sortedChildren cache will only be invalidated the once.
- */
-- (void)removePages:(NSSet *)pages
-{
-	[[self mutableSetValueForKey:@"childItems"] minusSet:pages];
-	[self invalidateSortedChildrenCache];
-}
-
 #pragma mark Sorting Properties
 
 @dynamic collectionSortOrder;
@@ -184,15 +131,9 @@
  */
 - (NSArray *)sortedChildren
 {
-	NSArray *result = [self wrappedValueForKey:@"sortedChildren"];
-	if (!result)
-	{
-		result = [self childrenWithSorting:SVCollectionSortOrderUnspecified
+	NSArray *result = [self childrenWithSorting:SVCollectionSortOrderUnspecified
                                  ascending:[[self collectionSortAscending] boolValue]
                                    inIndex:NO];
-        
-		[self setPrimitiveValue:result forKey:@"sortedChildren"];
-	}
 	
 	return result;
 }
@@ -264,14 +205,8 @@
 {
 	// Clear the cache
 	[self willChangeValueForKey:@"sortedChildren"];
-	
 	[self setPrimitiveValue:nil forKey:@"sortedChildren"];
-	
 	[self didChangeValueForKey:@"sortedChildren"];
-	
-	
-	// Also, the site menu may well have been affected
-	[[self site] invalidatePagesInSiteMenuCache];
 }
 
 

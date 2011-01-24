@@ -1,5 +1,5 @@
 //
-//  KTDocSiteOutlineController.h
+//  SVPagesController.h
 //  Marvel
 //
 //  Created by Terrence Talbot on 1/2/08.
@@ -21,7 +21,7 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 
 
 @class KTPage, SVPageTemplate;
-@protocol SVPage, SVPagesControllerDelegate;
+@protocol SVPage, SVPasteboardItem;
 
 
 @interface SVPagesController : KSArrayController
@@ -29,8 +29,6 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
   @private
     SVPageTemplate  *_template;
     NSURL           *_URL;
-    
-    id <SVPagesControllerDelegate>  _delegate;  // weak ref
 }
 
 #pragma mark Creating a Pages Controller
@@ -54,44 +52,14 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 
 #pragma mark Managing Objects
 
-- (void)addObject:(id)object toCollection:(KTPage *)collection;
-- (void)addObjects:(NSArray *)objects toCollection:(KTPage *)collection;
-
-- (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
-
-- (void)moveObject:(id)object toCollection:(KTPage *)collection index:(NSInteger)index;
-- (void)moveObjects:(NSArray *)objects toCollection:(KTPage *)collection index:(NSInteger)index;
-
 // Doesn't add the result to collection, just uses it to determine property inheritance
 - (id)newObjectDestinedForCollection:(KTPage *)collection;
 
-- (void)groupAsCollection:(id)sender;
 - (BOOL)canGroupAsCollection;
 
-
-#pragma mark Convert to Collection
-- (NSCellStateValue)selectedItemsAreCollections;
-- (BOOL)selectedItemsHaveBeenPublished;
-- (NSString *)convertToCollectionControlTitle;
-
-
-#pragma mark Tree
-- (NSString *)childrenKeyPath;	// A hangover from NSTreeController
-
-
-#pragma mark Delegate
-@property(nonatomic, assign) id <SVPagesControllerDelegate> delegate;
+#pragma mark Pasteboard Support
+- (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
+- (id)newObjectFromPasteboardItem:(id <SVPasteboardItem>)pboardItem parentPage:(KTPage *)collection;
 
 
 @end
-
-
-#pragma mark -
-
-
-@protocol SVPagesControllerDelegate <NSObject>
-- (KTPage *)collectionForPagesControllerToInsertInto:(SVPagesController *)sender;
-@optional
-- (void)pagesControllerDidInsertObject:(NSNotification *)notification;
-@end
-

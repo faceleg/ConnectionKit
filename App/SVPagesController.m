@@ -16,8 +16,6 @@
 #import "SVArticle.h"
 #import "SVAttributedHTML.h"
 #import "KTElementPlugInWrapper.h"
-#import "SVLink.h"
-#import "SVLinkManager.h"
 #import "SVMediaGraphic.h"
 #import "SVMediaRecord.h"
 #import "KTPage+Paths.h"
@@ -25,8 +23,6 @@
 #import "SVRichText.h"
 #import "SVSidebarPageletsController.h"
 #import "SVTextAttachment.h"
-
-#import "NSManagedObjectContext+KTExtensions.h"
 
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
@@ -59,8 +55,6 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 - (id)newObjectWithPredecessor:(KTPage *)predecessor followTemplate:(BOOL)allowCollections;
 - (void)configurePageAsCollection:(KTPage *)collection;
-
-- (void)didInsertObject:(id)object intoCollection:(KTPage *)collection;
 
 @end
 
@@ -110,52 +104,10 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 - (void) dealloc;
 {
-    [self setDelegate:nil];
+    [_template release];
+	[_URL release];
+	
     [super dealloc];
-}
-
-#pragma mark Managing Content
-
-- (void)add:(id)sender;
-{
-    [self commitEditingWithDelegate:self
-                  didCommitSelector:@selector(controller:didCommitBeforeAdding:contextInfo:)
-                        contextInfo:NULL];
-}
-
-- (void)controller:(SVPagesController *)controller didCommitBeforeAdding:(BOOL)didCommit contextInfo:(void  *)contextInfo
-{
-    if (didCommit)
-    {
-        if ([[self entityName] isEqualToString:@"ExternalLink"] && ![self objectURL])
-        {
-            // Guess URL before continuing
-            SVLink *link = [[SVLinkManager sharedLinkManager] guessLink];
-            if ([link URLString]) [self setObjectURL:[NSURL URLWithString:[link URLString]]];
-        }
-        
-        
-        SVSiteItem *item = [self newObject];
-        if ([[item childItems] count] == 1)
-        {
-            // Select the first child, rather than item itself
-            [self saveSelectionAttributes];
-            [self setSelectsInsertedObjects:NO];
-            
-            [self addObject:item];
-            [self setSelectedObjects:[item childPages]];
-            
-            [self restoreSelectionAttributes];
-        }
-        else
-        {
-            [self addObject:item];
-        }
-    }
-    else
-    {
-        NSBeep();
-    }
 }
 
 #pragma mark Core Data Support
@@ -391,84 +343,42 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     }
 }
 
-#pragma mark Managing Selections
+#pragma mark Inserting Objects
 
-- (BOOL)setSelectedObjects:(NSArray *)objects;
+- (void)insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
 {
-    BOOL result = [super setSelectedObjects:objects];
-    if (result && [[self selectedObjects] count] < [objects count])
-    {
-        // SVPagesController loads pages lazily, so selection may not have been loaded yet
-        NSDictionary *info = [self infoForBinding:NSContentSetBinding];
-        
-        NSMutableSet *content = [[info objectForKey:NSObservedObjectKey] mutableSetValueForKeyPath:[info objectForKey:NSObservedKeyPathKey]];
-        
-        [self saveSelectionAttributes];
-        [self setAvoidsEmptySelection:NO];
-        [self setPreservesSelection:NO];
-        
-        [content addObjectsFromArray:objects];
-        
-        [self restoreSelectionAttributes];
-        
-        
-        // retry
-        result = [super setSelectedObjects:objects];
-    }
-    
-    return result;
-}
-
-#pragma mark Adding Objects
-
-- (void) insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
-{
+    // Insert
     [super insertObject:object atArrangedObjectIndex:index];
-    
-    // For some reason, some pages get inserted twice (I think once here, once from content binding) which means there are two copies present in -arrangedObjects. Thus, selecting such an object selects both copis, screwing up the Web Editor. Hacky fix is to rearrange content after each insertion, so the dupe goes away. #101625
-    [self rearrangeObjects];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:SVPagesControllerDidInsertObjectNotification object:self];
-}
-
-- (void)addObject:(KTPage *)page
-{
-    // Figure out where to insert the page. i.e. from our selection, what collection should it be made a child of?
-    KTPage *parent;
-    if ([self delegate])
-    {
-        parent = [[self delegate] collectionForPagesControllerToInsertInto:self];
-    }
-    else
-    {
-        parent = [[self selectedObjects] lastObject];
-        if (![parent isCollection]) parent = [parent parentPage];
-    }
-    
-    OBASSERT(parent);
-    OBASSERT([parent isCollection]);
-    
-    
-    [self addObject:page toCollection:parent];
-}
-
-- (void)addObject:(id)object toCollection:(KTPage *)collection;
-{
-    OBPRECONDITION(object);
-    OBPRECONDITION(collection);
-    
-    
-    // Attach to parent & other relationships
+    [[object parentPage] invalidateSortedChildrenCache];
+	
+	
+	// Attach to site too
+    KTPage *collection = [object parentPage];
     [object setSite:[collection site] recursively:YES];
     
     
+    // As it has a new parent, the page's URL must have changed.
+    if ([object isKindOfClass:[KTPage class]])
+    {
+        [object recursivelyInvalidateURL:YES];
+    }
     
-    // Add
-    [collection addChildItem:object];	// Must use this method to correctly maintain ordering
-	
-	
-    [self didInsertObject: object intoCollection: collection];
-
+    
+    if ([[collection collectionSortOrder] intValue] == SVCollectionSortManually)
+    {
+        // Store the ordering in model too
+        [self setAutomaticallyRearrangesObjects:NO];
+        @try
+        {
+            NSArray *childPages = [self arrangedObjects];
+            [KTPage setCollectionIndexForPages:childPages];
+        }
+        @finally
+        {
+            [self setAutomaticallyRearrangesObjects:YES];
+        }
+    }
+    // Sorted collections trust the insertion to be in correct location
     
     
     // Inherit standard pagelets
@@ -480,37 +390,25 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         }
     }
     
- 
-	// Include in site menu if appropriate
-    if ([collection isRootPage] && [[collection childItems] count] < 7)
+    
+    // Make sure filename is unique within the collection
+    if ([object respondsToSelector:@selector(preferredFilename)])
     {
-        [object setIncludeInSiteMenu:[NSNumber numberWithBool:YES]];
+        NSString *preferredFilename = [object preferredFilename];
+        if (![collection isFilenameAvailable:preferredFilename forItem:object])
+        {
+            [object setFileName:nil];   // needed to fool -suggestedFilename
+            NSString *suggestedFilename = [object suggestedFilename];
+            [object setFileName:[suggestedFilename stringByDeletingPathExtension]];
+        }
     }
-	
-    
-    // Do the actual controller-level insertion
-    [super addObject:object];
     
     
-    // Suckily, the selection doesn't match the inserted object as it orta. And I can't find a good reason why
-    if ([self selectsInsertedObjects] &&
-        ![[self selectedObjects] isEqualToArray:[NSArray arrayWithObject:object]])
-    {
-        [self setSelectedObjects:[NSArray arrayWithObject:object]];
-    }
+	// Done
+    [[NSNotificationCenter defaultCenter] postNotificationName:SVPagesControllerDidInsertObjectNotification object:self];
 }
 
-- (void)addObjects:(NSArray *)objects toCollection:(KTPage *)collection;
-{
-    OBPRECONDITION(objects);
-    OBPRECONDITION(collection);
-    
-    
-    for (SVSiteItem *anObject in objects)
-    {
-        [self addObject:anObject toCollection:collection];
-    }
-}
+#pragma mark Pasteboard Support
 
 - (SVSiteItem *)newObjectFromPropertyList:(id)aPlist destinedForCollection:(KTPage *)collection
 {
@@ -678,206 +576,81 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     return result;
 }
 
-- (void)didInsertObject:(id)object intoCollection:(KTPage *)collection;
+- (id)newObjectFromPasteboardItem:(id <SVPasteboardItem>)pboardItem parentPage:(KTPage *)collection;
 {
-    // Make sure filename is unique within the collection
-    if ([object respondsToSelector:@selector(preferredFilename)])
+    id result = nil;
+    
+    SVGraphic *aGraphic = [SVGraphicFactory
+                           graphicFromPasteboardItem:pboardItem
+                           minPriority:SVPasteboardPriorityReasonable   // don't want stuff like list of links
+                           insertIntoManagedObjectContext:[self managedObjectContext]];
+    
+    if (aGraphic)
     {
-        NSString *preferredFilename = [object preferredFilename];
-        if (![collection isFilenameAvailable:preferredFilename forItem:object])
-        {
-            [object setFileName:nil];   // needed to fool -suggestedFilename
-            NSString *suggestedFilename = [object suggestedFilename];
-            [object setFileName:[suggestedFilename stringByDeletingPathExtension]];
-        }
-    }
-}
-
-#pragma mark Group
-
-- (void)groupAsCollection:(id)sender;
-{
-    // New collection
-    SVPageTemplate *template = [[SVPageTemplate alloc]
-                                initWithCollectionPreset:[NSDictionary dictionary]];
-    
-    [self setEntityNameWithPageTemplate:template];
-    [template release];
-    
-    SVSiteItem *selection = [[self selectedObjects] lastObject];
-    KTPage *parent = [selection parentPage];
-    if (!parent)
-    {
-        // Selection is probably home page!
-        NSBeep();
-        return;
-    }
-    
-    id collection = [self newObjectDestinedForCollection:parent];
-    
-    
-    // Move selection into it
-    [self moveObjects:[self selectedObjects] toCollection:collection index:0];
-    
-    
-    // Fully insert the new, selecting it
-    [self addObject:collection toCollection:parent];
-    [collection release];
-}
-
-- (BOOL)canGroupAsCollection;
-{
-    NSNumber *selectionIsRoot = [[self selection] valueForKey:@"isRoot"];
-    if (NSIsControllerMarker(selectionIsRoot)) selectionIsRoot = NSBOOL(YES);
-    return ![selectionIsRoot boolValue];
-}
-
-#pragma mark Moving Objects
-
-- (void)moveObject:(id)object toCollection:(KTPage *)collection index:(NSInteger)index;
-{
-    [self moveObjects:[NSArray arrayWithObject:object] toCollection:collection index:index];
-}
-
-- (void)moveObjects:(NSArray *)objects toCollection:(KTPage *)collection index:(NSInteger)index;
-{
-    // Add the objects to the collection
-    for (SVSiteItem *anItem in objects)
-    {
-        [anItem retain];    // since we're potentially removing it from relationships etc.
+        // Create pages for each graphic
+        [self setEntityNameWithPageTemplate:nil];
+        result = [self newObjectDestinedForCollection:collection];
+        [result setTitle:[aGraphic title]];
         
-        KTPage *parent = [anItem parentPage];
-        if (collection != parent)   // no point removing and re-adding a page
+        
+        // First media added to a collection probably doesn't want sidebar. #96013
+        if (![[collection childItems] count] && [aGraphic isKindOfClass:[SVMediaGraphic class]])
         {
-            [parent removeChildItem:anItem];
-            [collection addChildItem:anItem];
-            
-            [self didInsertObject:anItem intoCollection:collection];
+            [result setShowSidebar:NSBOOL(NO)]; 
         }
         
         
-        [anItem release];
-    }
-    
-    
-    // Then position too if requested. This is done in reverse so we can keep reusing the same index
-    if (index != NSOutlineViewDropOnItemIndex)
-    {
-        for (SVSiteItem *anItem in [objects reverseObjectEnumerator])
+        // Match date of page to media if desired. #102967
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kSVSetDateFromSourceMaterialKey])
         {
-            [collection moveChild:anItem toIndex:index];
+            NSURL *URL = [pboardItem URL];
+            if ([URL isFileURL])
+            {
+                NSDate *date = [[[NSFileManager defaultManager] attributesOfItemAtPath:[URL path]
+                                                                                 error:NULL]
+                                fileModificationDate];
+                
+                if (date) [result setCreationDate:date];
+            }
         }
-    }
-}
-
-#pragma mark Removing Objects
-
-- (void)remove:(id)sender;
-{
-    [super remove:sender];
-    
-    // Label undo menu
-    NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
-    if ([[self selectionIndexes] count] == 1)
-    {
-        if ([[[self selectedObjects] objectAtIndex:0] isCollection])
-        {
-            [undoManager setActionName:NSLocalizedString(@"Delete Collection", "Delete Collection MenuItem")];
-        }
-        else
-        {
-            [undoManager setActionName:NSLocalizedString(@"Delete Page", "Delete Page MenuItem")];
-        }
+        
+        
+        
+        // Insert page into the collection. Do before inserting graphic so behaviour dependant on containing collection works. #90905
+        //[self addObject:page toCollection:collection];
+        
+        
+        // Insert graphic into the page
+        //[aGraphic willInsertIntoPage:page];
+        
+        SVRichText *article = [result article];
+        NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
+        
+        NSAttributedString *attachment = [NSAttributedString
+                                          attributedHTMLStringWithGraphic:aGraphic];
+        
+        [html insertAttributedString:attachment atIndex:0];
+        [article setAttributedHTMLString:html];
+        [html release];
+        
+        [aGraphic didAddToPage:result];
     }
     else
     {
-        [undoManager setActionName:NSLocalizedString(@"Delete Pages", "Delete Pages MenuItem")];
-    }
-}
-
-/* We manage removals by modifying the model directly, so don't call through to super
- */
-
-- (void)removeObjectsAtArrangedObjectIndexes:(NSIndexSet *)indexes
-{
-    NSArray *objects = [[self arrangedObjects] objectsAtIndexes:indexes];
-    
-    
-    // Should we avoid empty selection after this removal?
-    BOOL avoidsEmptySelection = [self avoidsEmptySelection];
-    KTPage *nextSelectionParent = nil;
-    NSUInteger nextSelectionIndex = 0;
-
-    if (avoidsEmptySelection)
-    {
-        SVSiteItem *lastSelection = [objects lastObject];
-        nextSelectionParent = [lastSelection parentPage];
-        nextSelectionIndex = [[nextSelectionParent childPages] indexOfObjectIdenticalTo:lastSelection];
-    }
-    
-                                           
-    // Remove the pages from their parents
-    [self setAvoidsEmptySelection:NO];
-    NSSet *pages = [[NSSet alloc] initWithArray:objects];
-    
-    NSSet *parentPages = [pages valueForKey:@"parentPage"];
-    for (KTPage *aCollection in parentPages)
-    {
-        [aCollection removePages:pages];	// Far more efficient than calling -removePage: repetitively
-    }
-    
-    [pages release];
-    
-    
-    // Delete
-    [self willRemoveObjects:objects];
-    
-    
-    // Setup new selection
-    if (nextSelectionParent)
-    {
-        SVSiteItem *newSelection;
+        // Fallback to adding download or external URL with location
+        NSURL *URL = [pboardItem URL];
         
-        NSArray *children = [nextSelectionParent childPages];
-        if ([children count] > nextSelectionIndex)
-        {
-            newSelection = [children objectAtIndex:nextSelectionIndex];
-        }
-        else if ([children count] == 0)
-        {
-            newSelection = nextSelectionParent;
-        }
-        else
-        {
-            newSelection = [children lastObject];
-        }
+        BOOL external = ![URL isFileURL];
+        [self setEntityTypeWithURL:URL external:external];
         
-        [self setSelectedObjects:[NSArray arrayWithObject:newSelection]];
+        result = [self newObjectDestinedForCollection:collection];
+        //[self addObject:result toCollection:collection];
     }
-    [self setAvoidsEmptySelection:avoidsEmptySelection];
+    
+    return result;
 }
 
-- (void)removeObjectAtArrangedObjectIndex:(NSUInteger)index;
-{
-    [self removeObjectsAtArrangedObjectIndexes:[NSIndexSet indexSetWithIndex:index]];
-}
-
-- (void) willRemoveObject:(id)object;
-{
-    [super willRemoveObject:object];
-
-    // Delete. Pages have to be treated specially, but I forget quite why
-    if ([object isKindOfClass:[KTPage class]])
-    {
-        [[self managedObjectContext] deletePage:object];
-    }
-    else
-    {
-        [[self managedObjectContext] deleteObject:object];
-    }
-}
-
-#pragma mark Convert To Collection
+#pragma mark KTPageDetailsController compatibility
 
 - (NSCellStateValue)selectedItemsAreCollections;
 {
@@ -904,41 +677,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     return result;
 }
 
-#pragma mark Accessors
-
-- (NSString *)childrenKeyPath { return @"sortedChildren"; }
-
-#pragma mark KVC
-
-/*	When the user customizes the filename, we want it to become fixed on their choice
- */
-- (void)setValue:(id)value forKeyPath:(NSString *)keyPath
-{
-	[super setValue:value forKeyPath:keyPath];
-	
-	if ([keyPath isEqualToString:@"selection.fileName"])
-	{
-		[self setValue:[NSNumber numberWithBool:NO] forKeyPath:@"selection.shouldUpdateFileNameWhenTitleChanges"];
-	}
-}
-
-#pragma mark Delegate
-
-@synthesize delegate = _delegate;
-- (void)setDelegate:(id <SVPagesControllerDelegate>)delegate
-{
-    if ([_delegate respondsToSelector:@selector(pagesControllerDidInsertObject:)])
-    {
-        [[NSNotificationCenter defaultCenter] removeObserver:_delegate name:SVPagesControllerDidInsertObjectNotification object:self];
-    }
-    
-    _delegate = delegate;
-    
-    if ([delegate respondsToSelector:@selector(pagesControllerDidInsertObject:)])
-    {
-        [[NSNotificationCenter defaultCenter] addObserver:delegate selector:@selector(pagesControllerDidInsertObject:) name:SVPagesControllerDidInsertObjectNotification object:self];
-    }
-}
-
 @end
+
+
 

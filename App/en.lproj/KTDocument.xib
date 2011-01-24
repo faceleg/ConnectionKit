@@ -21,10 +21,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1793"/>
-			<integer value="2122"/>
-			<integer value="1701"/>
-			<integer value="2183"/>
+			<integer value="1663"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -217,6 +214,7 @@
 													<int key="NSsFlags">1</int>
 													<reference key="NSTarget" ref="243233654"/>
 													<string key="NSAction">_doScroller:</string>
+													<double key="NSCurValue">0.050000004470348358</double>
 													<double key="NSPercent">0.8875739574432373</double>
 												</object>
 											</object>
@@ -1030,6 +1028,20 @@
 				<string key="NSFrameAutosaveName">KTDocument</string>
 			</object>
 			<object class="NSViewController" id="363902086"/>
+			<object class="NSTreeController" id="660072411">
+				<object class="NSMutableArray" key="NSDeclaredKeys">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>title</string>
+				</object>
+				<bool key="NSEditable">YES</bool>
+				<object class="_NSManagedProxy" key="_NSManagedProxy">
+					<string key="NSEntityName">SiteItem</string>
+				</object>
+				<bool key="_NSIsUsingManagedProxy">YES</bool>
+				<bool key="NSSelectsInsertedObjects">YES</bool>
+				<string key="NSTreeContentChildrenKey">childItems</string>
+				<string key="NSTreeContentLeafKey">isLeaf</string>
+			</object>
 			<object class="NSArrayController" id="601368962">
 				<object class="NSMutableArray" key="NSDeclaredKeys">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1076,7 +1088,7 @@
 			<object class="NSViewController" id="696012676"/>
 			<object class="NSViewController" id="408607898"/>
 			<object class="NSCustomView" id="82358768">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1142,14 +1154,13 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{400, 29}</string>
-				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomObject" id="451075420">
 				<string key="NSClassName">KSTrimFirstLineFormatter</string>
 			</object>
 			<object class="NSCustomView" id="782832620">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1226,11 +1237,10 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{320, 98}</string>
-				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="1054972461">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1275,7 +1285,6 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{377, 50}</string>
-				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 		</object>
@@ -1513,14 +1522,6 @@
 						</object>
 					</object>
 					<int key="connectionID">1922</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">pagesController</string>
-						<reference key="source" ref="496514088"/>
-						<reference key="destination" ref="601368962"/>
-					</object>
-					<int key="connectionID">1925</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -2266,6 +2267,62 @@
 						<reference key="destination" ref="400506221"/>
 					</object>
 					<int key="connectionID">2238</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">contentObject: document.site.rootPage</string>
+						<reference key="source" ref="660072411"/>
+						<reference key="destination" ref="496514088"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="660072411"/>
+							<reference key="NSDestination" ref="496514088"/>
+							<string key="NSLabel">contentObject: document.site.rootPage</string>
+							<string key="NSBinding">contentObject</string>
+							<string key="NSKeyPath">document.site.rootPage</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2240</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">managedObjectContext: document.managedObjectContext</string>
+						<reference key="source" ref="660072411"/>
+						<reference key="destination" ref="496514088"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="660072411"/>
+							<reference key="NSDestination" ref="496514088"/>
+							<string key="NSLabel">managedObjectContext: document.managedObjectContext</string>
+							<string key="NSBinding">managedObjectContext</string>
+							<string key="NSKeyPath">document.managedObjectContext</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2241</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: arrangedObjects.title</string>
+						<reference key="source" ref="402314034"/>
+						<reference key="destination" ref="660072411"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="402314034"/>
+							<reference key="NSDestination" ref="660072411"/>
+							<string key="NSLabel">value: arrangedObjects.title</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">arrangedObjects.title</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2243</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">pagesController</string>
+						<reference key="source" ref="496514088"/>
+						<reference key="destination" ref="660072411"/>
+					</object>
+					<int key="connectionID">2244</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3072,6 +3129,11 @@
 						<reference key="object" ref="1064303852"/>
 						<reference key="parent" ref="84930732"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2239</int>
+						<reference key="object" ref="660072411"/>
+						<reference key="parent" ref="0"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -3243,14 +3305,16 @@
 					<string>2224.IBEditorWindowLastContentRect</string>
 					<string>2224.IBPluginDependency</string>
 					<string>2225.IBPluginDependency</string>
+					<string>2239.CustomClassName</string>
+					<string>2239.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{51, 376}, {1002, 548}}</string>
+					<string>{{1058, 587}, {1002, 548}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{51, 376}, {1002, 548}}</string>
+					<string>{{1058, 587}, {1002, 548}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{800, 280}</string>
@@ -3300,7 +3364,7 @@
 					</object>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.brandonwalkin.BWToolkit</string>
-					<string>{{39, 196}, {333, 203}}</string>
+					<string>{{1046, 407}, {333, 203}}</string>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.brandonwalkin.BWToolkit</string>
@@ -3499,6 +3563,8 @@
 					<string>{{886, 381}, {124, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>SVPagesTreeController</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -3517,7 +3583,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2238</int>
+			<int key="maxID">2244</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3655,6 +3721,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/KSShadowedRectView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">KSTreeController</string>
+					<string key="superclassName">NSTreeController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../../Shared/AppKit/KSTreeController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3874,7 +3948,7 @@
 							<string>KTLinkSourceView</string>
 							<string>NSTextField</string>
 							<string>KSBorderlessWindow</string>
-							<string>SVPagesController</string>
+							<string>NSObjectController</string>
 							<string>SVSiteOutlineViewController</string>
 							<string>SVWebContentAreaController</string>
 						</object>
@@ -3936,7 +4010,7 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">pagesController</string>
-								<string key="candidateClassName">SVPagesController</string>
+								<string key="candidateClassName">NSObjectController</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">siteOutlineViewController</string>
@@ -4279,7 +4353,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSArrayController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="633149755">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/KSCollectionController.h</string>
 					</object>
@@ -4553,6 +4627,10 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">NSTreeController</string>
+					<reference key="sourceIdentifier" ref="633149755"/>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">NSView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="216486148">
 						<string key="majorKey">IBProjectSource</string>
@@ -4706,6 +4784,14 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">SVPagesController</string>
 					<string key="superclassName">KSArrayController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVPagesController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVPagesTreeController</string>
+					<string key="superclassName">KSTreeController</string>
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">groupAsCollection:</string>
 						<string key="NS.object.0">id</string>
@@ -4719,7 +4805,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">SVPagesController.h</string>
+						<string key="minorKey">SVPagesTreeController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -5962,6 +6048,14 @@
 					<string key="className">NSToolbarItem</string>
 					<string key="superclassName">NSObject</string>
 					<reference key="sourceIdentifier" ref="772883327"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSTreeController</string>
+					<string key="superclassName">NSObjectController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSTreeController.h</string>
+					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSView</string>

@@ -111,9 +111,6 @@ typedef enum {
 
 #pragma mark Children
 @property(nonatomic, copy, readonly) NSSet *childItems;
-- (void)addChildItem:(SVSiteItem *)page;
-- (void)removeChildItem:(SVSiteItem *)page;
-- (void)removePages:(NSSet *)pages;
 
 
 #pragma mark Sorting Properties

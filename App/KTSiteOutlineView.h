@@ -13,8 +13,9 @@
 {
   @private
     BOOL    _drawingRows;
+    BOOL    _isDrawing;
+	BOOL    _isReloadingData;
     
-	BOOL _isReloadingData;
 	NSIndexSet *_draggedRows;
 }
 

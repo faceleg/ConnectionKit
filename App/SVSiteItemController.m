@@ -48,17 +48,31 @@
             break;
             
         case SVThumbnailTypeCustom:
-            [self bind:@"thumbnailMedia"
-              toObject:([self content] ? [self content] : nil)
-           withKeyPath:@"self"
-               options:nil];
+            if ([self content])
+            {
+                [self bind:@"thumbnailMedia"
+                  toObject:[self content]
+               withKeyPath:@"self"
+                   options:nil];
+            }
+            else
+            {
+                [self unbind:@"thumbnailMedia"];
+            }
             break;
             
         case SVThumbnailTypePickFromPage:
-            [self bind:@"thumbnailMedia"
-              toObject:[self content]
-           withKeyPath:@"thumbnailSourceGraphic.thumbnailMedia"
-               options:nil];
+            if ([self content])
+            {
+                [self bind:@"thumbnailMedia"
+                  toObject:[self content]
+               withKeyPath:@"thumbnailSourceGraphic.thumbnailMedia"
+                   options:nil];
+            }
+            else
+            {
+                [self unbind:@"thumbnailMedia"];
+            }
             break;
             
         case SVThumbnailTypeFirstChildItem:

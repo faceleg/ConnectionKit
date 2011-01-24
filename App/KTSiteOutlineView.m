@@ -69,6 +69,68 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 
 #pragma mark Dragging
 
+#pragma mark Indentation
+
+/*  We want child pages of root to appear as if they were top-level items. Otherwise, there's quite a waste of outline space.
+ *  For day-to-day operation, the best bet seems to be customising cell frames.
+ *  But annoyingly, drop highlight doesn't respect that. Discoveries:
+ *
+ *      * -drawRect: calls -_drawDropHightlight
+ *      * -_drawDropHighlight calls -levelForRow: for the drop item to determine where to draw, so overriding to decrement super should do the trick
+ *      * - However, doing this all the time messes up drag/drop interaction, so we have to be super-cunning and only kick in the custom behaviour mid-draw
+ */
+
+- (NSInteger)levelForRow:(NSInteger)row;
+{
+    // Decrement the level when drawing so drop highlight is correctly placed
+    NSInteger result = [super levelForRow:row];
+    if (_isDrawing) result--;
+    return result;
+}
+
+- (NSRect)frameOfCellAtColumn:(NSInteger)columnIndex row:(NSInteger)rowIndex;
+{
+    NSRect result = [super frameOfCellAtColumn:columnIndex row:rowIndex];
+    
+    // Shunt all but the home page leftwards so top-level pages sit level with it
+    if (rowIndex > 0)
+    {
+        CGFloat indent = [self indentationPerLevel];
+        result.origin.x -= indent;
+        result.size.width += indent;
+    }
+    return result;
+}
+
+- (NSRect)frameOfOutlineCellAtRow:(NSInteger)row
+{
+    // Root page doesn't want disclosure triangle
+    // Everything else needs to move to the lef to match that
+    if (row > 0)
+    {
+        NSRect result = [super frameOfOutlineCellAtRow:row];
+        result.origin.x -= [self indentationPerLevel];
+        return result;
+    }
+    
+    return NSZeroRect;
+}
+
+- (void)drawRect:(NSRect)rect;
+{
+    _isDrawing = YES;
+    @try
+    {
+        [super drawRect:rect];
+    }
+    @finally
+    {
+        _isDrawing = NO;
+    }
+}
+
+#pragma mark Dragging
+
 - (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)aPoint operation:(NSDragOperation)operation
 {
 	[super draggedImage:anImage endedAt:aPoint operation:operation];

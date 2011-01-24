@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "KTPage+Paths.h"
-#import "SVPagesController.h"
+#import "SVPagesTreeController.h"
 #import "KSViewController.h"
 
 #import <BWToolkitFramework/BWHyperlinkButton.h>
@@ -21,7 +21,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 @class SVPagesController, SVSiteItem, BWSplitView;
 
 
-@interface SVSiteOutlineViewController : NSViewController <SVPagesControllerDelegate, NSUserInterfaceValidations>
+@interface SVSiteOutlineViewController : NSViewController <NSUserInterfaceValidations>
 {
 	IBOutlet BWSplitView *oSplitView;
     
@@ -33,9 +33,8 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
     IBOutlet BWHyperlinkButton  *oDeletePublishedPageURLLink;
 	
   @private
-    NSOutlineView       *_outlineView;
-    SVPagesController	*_pagesController;
-    BOOL                _isChangingSelection;
+    NSOutlineView           *_outlineView;
+    SVPagesTreeController	*_pagesController;
 	    
     // Content
 	NSMutableSet    *_pages;
@@ -57,17 +56,12 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 @property(nonatomic, retain) IBOutlet NSOutlineView *outlineView;
 - (BOOL)isOutlineViewLoaded;
 
-@property(nonatomic, retain) SVPagesController *content;
-
-
-@property(nonatomic, retain) KTPage *rootPage;
+@property(nonatomic, retain) SVPagesTreeController *content;
 
 - (void)resetPageObservation;
 
 
 #pragma mark Public Functions
-- (void)reloadSiteOutline;
-- (void)reloadItem:(SVSiteItem *)anItem reloadChildren:(BOOL)aFlag;
 - (void)loadPersistentProperties;
 
 
@@ -106,7 +100,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 
 #pragma mark Persistence
-- (NSArray *)persistentSelectedItems;
+- (NSArray *)persistentSelectedObjects;
 - (void)persistUIProperties;
 
 

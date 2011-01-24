@@ -93,15 +93,18 @@
     [context addDependencyOnObject:self keyPath:@"parentPage.childPages"];
     
 	unsigned index = [siblings indexOfObjectIdenticalTo:self];
-	while (index > 0)
-	{
-        index--;
-		
-        KTPage *result = [siblings objectAtIndex:index];
-        [context addDependencyOnObject:result keyPath:@"shouldIncludeInIndexes"];
-        
-        if ([result shouldIncludeInIndexes]) return result;
-	}
+    if (index != NSNotFound)
+    {
+        while (index > 0)
+        {
+            index--;
+            
+            KTPage *result = [siblings objectAtIndex:index];
+            [context addDependencyOnObject:result keyPath:@"shouldIncludeInIndexes"];
+            
+            if ([result shouldIncludeInIndexes]) return result;
+        }
+    }
 	
 	return nil;
 }

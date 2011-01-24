@@ -72,7 +72,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	NSUInteger maxSize = [self maximumIconSize];
     
     // The home page always appears as some kind of favicon
-	if (item == [self rootPage])
+	if ([[self outlineView] rowForItem:item] == 0)
 	{
 		result = [self favicon];
 	}
@@ -162,7 +162,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
     
     for (int aRow = visibleRows.location; aRow < visibleRows.location + visibleRows.length; aRow++)
     {
-        SVSiteItem *anItem = [outlineView itemAtRow:aRow];
+        SVSiteItem *anItem = [[outlineView itemAtRow:aRow] representedObject];
         if ([item isEqualToIMBImageItem:anItem])
         {
             NSRect displayRect = [outlineView rectOfRow:aRow];

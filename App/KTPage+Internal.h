@@ -15,10 +15,6 @@
 
 @interface KTPage (Internal)
 
-// Creation
-+ (KTPage *)insertNewPageWithParent:(KTPage *)aParent;
-
-
 // Hierarchy
 - (int)proposedOrderingForProposedChild:(id)aProposedChild
 							   sortType:(SVCollectionSortOrder)aSortType

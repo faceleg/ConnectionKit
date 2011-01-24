@@ -429,6 +429,7 @@
 		2775DB6D11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 2775DB6B11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m */; };
 		277892A010CD5FA3008AA683 /* SVTitleBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2778929E10CD5FA3008AA683 /* SVTitleBox.h */; };
 		277892A110CD5FA3008AA683 /* SVTitleBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2778929F10CD5FA3008AA683 /* SVTitleBox.m */; };
+		277AF78812DB15F6009CD192 /* SVPagesTreeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277AF77B12DB1526009CD192 /* SVPagesTreeController.m */; };
 		277AFC9F12DBCF9B009CD192 /* SVFooter.h in Headers */ = {isa = PBXBuildFile; fileRef = 277AFC9D12DBCF9B009CD192 /* SVFooter.h */; };
 		277AFCA012DBCF9B009CD192 /* SVFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 277AFC9E12DBCF9B009CD192 /* SVFooter.m */; };
 		277E4E8811104CF4005AF346 /* SVImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E4E8611104CF4005AF346 /* SVImage.h */; };
@@ -638,6 +639,8 @@
 		27F365EE11602161003BDA5F /* SVMetricsInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F365EC11602161003BDA5F /* SVMetricsInspector.m */; };
 		27F63BD40D463F7800FAEB48 /* KTMaster.h in Headers */ = {isa = PBXBuildFile; fileRef = 273C2F8E0CCE58C100E48E22 /* KTMaster.h */; settings = {ATTRIBUTES = (); }; };
 		27F790D9106BABA6007DF81B /* KSDragging.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F790D8106BABA6007DF81B /* KSDragging.h */; };
+		27F91ECD12EB3B1600372364 /* KSTreeController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F91ECB12EB3B1600372364 /* KSTreeController.h */; };
+		27F91ECE12EB3B1600372364 /* KSTreeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F91ECC12EB3B1600372364 /* KSTreeController.m */; };
 		27F9A745127A31070042D7B8 /* SVPageTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F9A743127A31070042D7B8 /* SVPageTemplate.h */; };
 		27F9A746127A31070042D7B8 /* SVPageTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F9A744127A31070042D7B8 /* SVPageTemplate.m */; };
 		27FA98851194BC0C003B8308 /* SVSidebarDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FA98831194BC0C003B8308 /* SVSidebarDOMController.h */; };
@@ -2043,6 +2046,8 @@
 		2775DB6B11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSCaseInsensitiveDictionary.m; sourceTree = "<group>"; };
 		2778929E10CD5FA3008AA683 /* SVTitleBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTitleBox.h; sourceTree = "<group>"; };
 		2778929F10CD5FA3008AA683 /* SVTitleBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTitleBox.m; sourceTree = "<group>"; };
+		277AF77A12DB1526009CD192 /* SVPagesTreeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPagesTreeController.h; sourceTree = "<group>"; };
+		277AF77B12DB1526009CD192 /* SVPagesTreeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPagesTreeController.m; sourceTree = "<group>"; };
 		277AFC9D12DBCF9B009CD192 /* SVFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVFooter.h; sourceTree = "<group>"; };
 		277AFC9E12DBCF9B009CD192 /* SVFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFooter.m; sourceTree = "<group>"; };
 		277E4E8611104CF4005AF346 /* SVImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVImage.h; sourceTree = "<group>"; };
@@ -2279,6 +2284,8 @@
 		27F365EC11602161003BDA5F /* SVMetricsInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMetricsInspector.m; sourceTree = "<group>"; };
 		27F71A7210F7641D0029AE3A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LinkInspector.xib; sourceTree = "<group>"; };
 		27F790D8106BABA6007DF81B /* KSDragging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDragging.h; sourceTree = "<group>"; };
+		27F91ECB12EB3B1600372364 /* KSTreeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSTreeController.h; sourceTree = "<group>"; };
+		27F91ECC12EB3B1600372364 /* KSTreeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSTreeController.m; sourceTree = "<group>"; };
 		27F9A743127A31070042D7B8 /* SVPageTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageTemplate.h; sourceTree = "<group>"; };
 		27F9A744127A31070042D7B8 /* SVPageTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageTemplate.m; sourceTree = "<group>"; };
 		27FA98831194BC0C003B8308 /* SVSidebarDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSidebarDOMController.h; sourceTree = "<group>"; };
@@ -3136,6 +3143,8 @@
 				270E44BA10F77D8B00EF1FA0 /* SVSidebarPageletsController.m */,
 				275D9C6B125C80DE004A3A53 /* SVSiteItemController.h */,
 				275D9C6C125C80DE004A3A53 /* SVSiteItemController.m */,
+				277AF77A12DB1526009CD192 /* SVPagesTreeController.h */,
+				277AF77B12DB1526009CD192 /* SVPagesTreeController.m */,
 			);
 			name = "Model Controllers";
 			sourceTree = "<group>";
@@ -4964,6 +4973,8 @@
 				CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */,
 				27F27AAD11FA57C400B7F8FA /* BWRoundedRectBoxView.h */,
 				27F27AAE11FA57C400B7F8FA /* BWRoundedRectBoxView.m */,
+				27F91ECB12EB3B1600372364 /* KSTreeController.h */,
+				27F91ECC12EB3B1600372364 /* KSTreeController.m */,
 			);
 			path = AppKit;
 			sourceTree = "<group>";
@@ -6003,6 +6014,7 @@
 				CEB516C212B7E42A003A5505 /* SVTruncationController.h in Headers */,
 				277AFC9F12DBCF9B009CD192 /* SVFooter.h in Headers */,
 				2728C12512E31390008B6CD2 /* KSIsNotNSNotFound.h in Headers */,
+				27F91ECD12EB3B1600372364 /* KSTreeController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7570,6 +7582,8 @@
 				CEB516C312B7E42A003A5505 /* SVTruncationController.m in Sources */,
 				277AFCA012DBCF9B009CD192 /* SVFooter.m in Sources */,
 				2728C12612E31390008B6CD2 /* KSIsNotNSNotFound.m in Sources */,
+				277AF78812DB15F6009CD192 /* SVPagesTreeController.m in Sources */,
+				27F91ECE12EB3B1600372364 /* KSTreeController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
