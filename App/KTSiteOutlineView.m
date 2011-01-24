@@ -35,7 +35,8 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
     //  B.  Cell rect marked for display includes divider
     if (_drawingRows && row == 0)
     {
-        result.size.height = [self rowHeight] + [self intercellSpacing].height;
+        result.size.height = ([self rowHeight] + [self intercellSpacing].height +   // the usual
+                              4.0f);     // extra space to add weight & give breathing room at top
     }
     
     return result;
