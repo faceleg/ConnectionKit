@@ -12,7 +12,6 @@
 
 
 @interface KTPage (ChildrenPrivate)
-- (void)invalidateSortedChildrenCache;
 @end
 
 
@@ -32,14 +31,6 @@
 	if ([page shouldUpdateFileNameWhenTitleChanges] && ![page datePublished])
 	{
 		[page setFileName:[[page suggestedFilename] stringByDeletingPathExtension]];
-	}
-	
-	
-	// Invalidate our parent's sortedChildren cache if it is alphabetically sorted
-	SVCollectionSortOrder sorting = [[[page parentPage] collectionSortOrder] integerValue];
-	if (sorting == SVCollectionSortAlphabetically)
-	{
-		[[page parentPage] invalidateSortedChildrenCache];
 	}
 }
 

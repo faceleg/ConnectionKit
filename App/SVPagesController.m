@@ -340,7 +340,6 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 {
     // Insert
     [super insertObject:object atArrangedObjectIndex:index];
-    [[object parentPage] invalidateSortedChildrenCache];
 	
 	
 	// Attach to master if needed

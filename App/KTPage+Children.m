@@ -21,7 +21,6 @@
 
 @interface KTPage (ChildrenPrivate)
 
-- (void)invalidateSortedChildrenCache;
 + (void)setCollectionIndexForPages:(NSArray *)pages;
 
 + (NSPredicate *)includeInIndexAndPublishPredicate;
@@ -100,9 +99,6 @@
 	{
 		[KTPage setCollectionIndexForPages:[self sortedChildren]];
 	}
-	
-	// Since the sort ordering has changed the sortedChildren cache must be invalid
-	[self invalidateSortedChildrenCache];
 }
 
 - (BOOL)isSortedChronologically;
@@ -113,15 +109,6 @@
 }
 
 @dynamic collectionSortAscending;
-- (void)setCollectionSortAscending:(NSNumber *)sortAscending;
-{
-    [self willChangeValueForKey:@"collectionSortAscending"];
-    [self setPrimitiveValue:sortAscending forKey:@"collectionSortAscending"];
-    
-    [self invalidateSortedChildrenCache];
-    
-    [self didChangeValueForKey:@"collectionSortAscending"];
-}
 
 #pragma mark Sorted Children
 
@@ -160,9 +147,6 @@
 	{
 		[newSortedChildren moveObjectAtIndex:whereSelfInParent toIndex:index];
 		[KTPage setCollectionIndexForPages:newSortedChildren];
-		
-		// Invalidate our parent's sortedChildren cache
-		[self invalidateSortedChildrenCache];
 	}
 	else
 	{
@@ -200,15 +184,6 @@
 	
 	return result;
 }
-
-- (void)invalidateSortedChildrenCache
-{
-	// Clear the cache
-	[self willChangeValueForKey:@"sortedChildren"];
-	[self setPrimitiveValue:nil forKey:@"sortedChildren"];
-	[self didChangeValueForKey:@"sortedChildren"];
-}
-
 
 #pragma mark Sorting Support
 
