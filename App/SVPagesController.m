@@ -342,7 +342,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 {
     // Insert
     [super insertObject:object atArrangedObjectIndex:index];
-    [self updateContentChildIndexes];
+    [[object parentPage] invalidateSortedChildrenCache];
 	
 	
 	// Attach to master & site too
@@ -364,8 +364,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         [self setAutomaticallyRearrangesObjects:NO];
         @try
         {
-            NSArray *childPages = [self arrangedObjects];
-            [KTPage setCollectionIndexForPages:childPages];
+            [self updateContentChildIndexes];
         }
         @finally
         {
