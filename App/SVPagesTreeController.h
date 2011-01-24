@@ -31,6 +31,7 @@
 
 #pragma mark Grouping
 - (void)groupAsCollection:(id)sender;
+- (BOOL)canGroupAsCollection;
 
 
 #pragma mark Object Creation

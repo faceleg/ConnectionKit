@@ -309,6 +309,12 @@
     [selection release];
 }
 
+- (BOOL)canGroupAsCollection;
+{
+    // Can group if root isn't selected
+    return ![[self selectionIndexPaths] containsObject:[NSIndexPath indexPathWithIndex:0]];
+}
+
 #pragma mark New Objects
 
 - (id)newObject
