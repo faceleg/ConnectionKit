@@ -15,7 +15,7 @@
 
 @implementation SVIndexDOMController
 
-- (void) setRepresentedObject:(id)object;
+- (void)setRepresentedObject:(id)object;
 {
     [super setRepresentedObject:object];
     
@@ -28,15 +28,11 @@
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
 {
     // Add pages to the collection, corresponding to media
-    KTPage *collection = (KTPage *)[(SVIndexPlugIn *)[[self representedObject] plugIn] indexedCollection];
+    id <SVPage> collection = [(SVIndexPlugIn *)[[self representedObject] plugIn] indexedCollection];
     
-    SVPagesController *controller = [[SVPagesController alloc] init];
-    [controller setManagedObjectContext:[collection managedObjectContext]];
+    SVPagesController *controller = [SVPagesController controllerWithPagesInCollection:collection];
     
-    BOOL result = [controller addObjectsFromPasteboard:[sender draggingPasteboard]
-                                          toCollection:collection];
-    
-    [controller release];
+    BOOL result = [controller addObjectsFromPasteboard:[sender draggingPasteboard]];
     return result;
 }
 

@@ -66,7 +66,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 #pragma mark Creating a Pages Controller
 
-+ (NSArrayController *)controllerWithPagesInCollection:(id <SVPage>)collection;
++ (SVPagesController *)controllerWithPagesInCollection:(id <SVPage>)collection;
 {
     NSArrayController *result = [[self alloc] init];
     
@@ -147,6 +147,8 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 {
     // Figure out the predecessor (which page to inherit properties from)
     if (![collection isCollection]) collection = [collection parentPage];
+    if (!collection) collection = [[self content] lastObject];
+    
     OBASSERT(collection || ![[self content] count]);    // it's acceptable to have no parent when creating first page
     
     
@@ -457,7 +459,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         
         
         // Insert page into the collection. Do before inserting graphic so behaviour dependant on containing collection works. #90905
-        [self addObject:page toCollection:collection];
+        [self addObject:page];
         [page release];
         
         
@@ -491,10 +493,8 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
 }
 
-- (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
+- (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard;
 {
-    OBPRECONDITION(collection);
-    
     if ([[pboard types] containsObject:kKTPagesPboardType])
     {
         NSArray *plists = [pboard propertyListForType:kKTPagesPboardType];
@@ -503,7 +503,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         for (id aPlist in plists)
         {
             SVSiteItem *item = [self newObjectFromPropertyList:aPlist
-                                         destinedForCollection:collection];
+                                         destinedForCollection:nil];
             
             if (item)   // might be nil due to invalid plist
             {
@@ -514,7 +514,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         
         if ([graphics count])
         {
-            [self addObjects:graphics toCollection:collection];
+            [self addObjects:graphics];
             return YES;
         }
     }
@@ -560,7 +560,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     {
         for (id <SVPasteboardItem> anItem in items)
         {
-            [self addObjectFromPasteboardItem: anItem toCollection: collection];
+            [self addObjectFromPasteboardItem:anItem toCollection:nil];
             
             
             result = YES;

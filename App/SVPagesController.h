@@ -32,7 +32,7 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 }
 
 #pragma mark Creating a Pages Controller
-+ (NSArrayController *)controllerWithPagesInCollection:(id <SVPage>)collection;
++ (SVPagesController *)controllerWithPagesInCollection:(id <SVPage>)collection;
 + (NSArrayController *)controllerWithPagesToIndexInCollection:(id <SVPage>)collection;
 
 
@@ -58,7 +58,7 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 - (BOOL)canGroupAsCollection;
 
 #pragma mark Pasteboard Support
-- (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard toCollection:(KTPage *)collection;
+- (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard;
 - (id)newObjectFromPasteboardItem:(id <SVPasteboardItem>)pboardItem parentPage:(KTPage *)collection;
 
 
