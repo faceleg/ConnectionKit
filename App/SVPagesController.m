@@ -439,6 +439,19 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     BOOL result = NO;
     
     
+    // Fallback to creating graphics/links from the pasteboard
+    NSArray *pages = [self objectsWithContentFromPasteboard:pboard];
+    if (pages)
+    {
+        [self addObjects:pages];
+        result = YES;
+    }
+    
+    return result;
+}
+
+- (NSArray *)objectsWithContentFromPasteboard:(NSPasteboard *)pboard;
+{
     // Create graphics for the content
     NSArray *items = [pboard sv_pasteboardItems];
     
@@ -470,30 +483,16 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     
     
-    [self saveSelectionAttributes];
-    [self setSelectsInsertedObjects:NO]; // Don't select inserted items. #103298
-    @try
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[items count]];
+    for (id <SVPasteboardItem> anItem in items)
     {
-        NSMutableArray *pages = [[NSMutableArray alloc] initWithCapacity:[items count]];
-        
-        for (id <SVPasteboardItem> anItem in items)
-        {
-            SVSiteItem *aPage = [self newObjectFromPasteboardItem:anItem];
-            [pages addObject:aPage];
-            [aPage release];
-        }
-        
-        [self addObjects:pages];
-        result = [pages count];
-        [pages release];
-    }
-    @finally
-    {
-        [self restoreSelectionAttributes];
+        SVSiteItem *aPage = [self newObjectFromPasteboardItem:anItem];
+        [result addObject:aPage];
+        [aPage release];
     }
     
     
-    
+    if (![result count]) result = nil;
     return result;
 }
 

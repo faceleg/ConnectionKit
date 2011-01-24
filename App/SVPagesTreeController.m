@@ -793,6 +793,7 @@
 {
     NSIndexPath *collectionPath = [startingIndexPath indexPathByRemovingLastIndex];
     KTPage *collection = [[[self arrangedObjects] descendantNodeAtIndexPath:collectionPath] representedObject];
+    SVPagesController *pagesController = [collection valueForKey:@"childPagesController"]; // slight hack!
     
     if ([[pboard types] containsObject:kKTPagesPboardType])
     {
@@ -801,7 +802,7 @@
         
         for (id aPlist in plists)
         {
-            SVSiteItem *item = [[collection valueForKey:@"childPagesController"] newObjectFromPropertyList:aPlist];
+            SVSiteItem *item = [pagesController newObjectFromPropertyList:aPlist];
             
             if (item)   // might be nil due to invalid plist
             {
@@ -818,62 +819,15 @@
     }
     
     
+    // Fallback to creating graphics/links from the pasteboard
     BOOL result = NO;
     
-    
-    // Create graphics for the content
-    NSArray *items = [pboard sv_pasteboardItems];
-    
-    // Handle folder like its contents. #29203
-    if ([items count] == 1)
+    NSArray *pages = [pagesController objectsWithContentFromPasteboard:pboard];
+    if (pages)
     {
-        id <SVPasteboardItem> item = [items objectAtIndex:0];
-        NSURL *URL = [item URL];
-        if ([URL isFileURL])
-        {
-            NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[URL path]
-                                                                                    error:NULL];
-            
-            if (contents)
-            {
-                NSMutableArray *locations = [NSMutableArray arrayWithCapacity:[contents count]];
-                for (NSString *aFilename in contents)
-                {
-                    NSURL *aURL = [URL ks_URLByAppendingPathComponent:aFilename isDirectory:NO];
-                    KSWebLocation *aLocation = [[KSWebLocation alloc] initWithURL:aURL];
-                    [locations addObject:aLocation];
-                    [aLocation release];
-                }
-                items = locations;
-            }
-        }
-    }
-    
-    
-    
-    
-    //[self saveSelectionAttributes];
-    //[self setSelectsInsertedObjects:NO]; // Don't select inserted items. #103298
-    @try
-    {
-        SVPagesController *pagesController = [collection valueForKey:@"childPagesController"];
-        NSMutableArray *pages = [[NSMutableArray alloc] initWithCapacity:[items count]];
-        
-        for (id <SVPasteboardItem> anItem in items)
-        {
-            SVSiteItem *aPage = [pagesController newObjectFromPasteboardItem:anItem];
-            [pages addObject:aPage];
-            [aPage release];
-        }
         [self insertObjects:pages atArrangedObjectIndexPath:startingIndexPath];
-        
-        result = [pages count];
+        result = YES;
     }
-    @finally
-    {
-        //[self restoreSelectionAttributes];
-    }
-    
     
     
     return result;
