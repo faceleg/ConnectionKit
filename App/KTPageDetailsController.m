@@ -88,11 +88,96 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 @synthesize initialWindowTitleBindingOptions = _initialWindowTitleBindingOptions;
 @synthesize initialMetaDescriptionBindingOptions = _initialMetaDescriptionBindingOptions;
 
+#pragma mark -
+#pragma mark Tracking Areas
+
 @synthesize windowTitleTrackingArea		= _windowTitleTrackingArea;
 @synthesize metaDescriptionTrackingArea = _metaDescriptionTrackingArea;
 @synthesize externalURLTrackingArea		= _externalURLTrackingArea;
 @synthesize fileNameTrackingArea		= _fileNameTrackingArea;
 @synthesize mediaFilenameTrackingArea	= _mediaFilenameTrackingArea;
+
+- (void) setWindowTitleTrackingArea: (NSTrackingArea *) aWindowTitleTrackingArea
+{
+	if (_windowTitleTrackingArea)
+	{
+		[oWindowTitleField removeTrackingArea:_windowTitleTrackingArea];
+	}
+
+    [aWindowTitleTrackingArea retain];
+    [_windowTitleTrackingArea release];
+    _windowTitleTrackingArea = aWindowTitleTrackingArea;
+
+	if (_windowTitleTrackingArea)
+	{
+		[oWindowTitleField addTrackingArea:_windowTitleTrackingArea];
+	}
+}
+- (void) setMetaDescriptionTrackingArea: (NSTrackingArea *) aMetaDescriptionTrackingArea	// w/ oMetaDescriptionField
+{
+	if (_metaDescriptionTrackingArea)
+	{
+		[oMetaDescriptionField removeTrackingArea:_metaDescriptionTrackingArea];
+	}
+	
+    [aMetaDescriptionTrackingArea retain];
+    [_metaDescriptionTrackingArea release];
+    _metaDescriptionTrackingArea = aMetaDescriptionTrackingArea;
+
+	if (_metaDescriptionTrackingArea)
+	{
+		[oMetaDescriptionField addTrackingArea:_metaDescriptionTrackingArea];
+	}
+}
+- (void) setExternalURLTrackingArea: (NSTrackingArea *) anExternalURLTrackingArea
+{
+	if (_externalURLTrackingArea)
+	{
+		[oExternalURLField removeTrackingArea:_externalURLTrackingArea];
+	}
+
+    [anExternalURLTrackingArea retain];
+    [_externalURLTrackingArea release];
+    _externalURLTrackingArea = anExternalURLTrackingArea;
+
+	if (_externalURLTrackingArea)
+	{
+		[oExternalURLField addTrackingArea:_externalURLTrackingArea];
+	}
+}
+- (void) setFileNameTrackingArea: (NSTrackingArea *) aFileNameTrackingArea
+{
+	if (_fileNameTrackingArea)
+	{
+		[oFileNameField removeTrackingArea:_fileNameTrackingArea];
+	}
+
+    [aFileNameTrackingArea retain];
+    [_fileNameTrackingArea release];
+    _fileNameTrackingArea = aFileNameTrackingArea;
+
+	if (_fileNameTrackingArea)
+	{
+		[oFileNameField addTrackingArea:_fileNameTrackingArea];
+	}
+}
+- (void) setMediaFilenameTrackingArea: (NSTrackingArea *) aMediaFilenameTrackingArea
+{
+	if (_mediaFilenameTrackingArea)
+	{
+		[oMediaFilenameField removeTrackingArea:_mediaFilenameTrackingArea];
+	}
+
+    [aMediaFilenameTrackingArea retain];
+    [_mediaFilenameTrackingArea release];
+    _mediaFilenameTrackingArea = aMediaFilenameTrackingArea;
+
+	if (_mediaFilenameTrackingArea)
+	{
+		[oMediaFilenameField addTrackingArea:_mediaFilenameTrackingArea];
+	}
+}
+
 
 #pragma mark -
 #pragma mark Init & Dealloc
@@ -105,6 +190,12 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
     
     self.view = nil;		// stop observing early.
     self.webContentAreaController = nil;
+
+	self.windowTitleTrackingArea		= nil;
+	self.metaDescriptionTrackingArea	= nil;
+	self.externalURLTrackingArea		= nil;
+	self.fileNameTrackingArea			= nil;
+	self.mediaFilenameTrackingArea		= nil;
 	
 	self.activeTextField = nil;
 	[_metaDescriptionCount release];
@@ -797,30 +888,51 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	[oMetaDescriptionPrompt	setHidden:!arePagesSelected && !areLinksSelected];
 	[oFilePrompt setHidden:(!areFilesSelected && !areTextsSelected)];
 	
-	if (arePagesSelected || areLinksSelected)
+	if (arePagesSelected)
 	{
 		if (!_metaDescriptionTrackingArea)
 		{
-			_metaDescriptionTrackingArea = [[NSTrackingArea alloc] initWithRect:[oMetaDescriptionField bounds]
-															 options:
-								 NSTrackingActiveInKeyWindow
-								 | NSTrackingActiveInActiveApp
-								 | NSTrackingInVisibleRect
-								 | NSTrackingMouseEnteredAndExited
-															   owner:self
-															userInfo:nil];
-			[oMetaDescriptionField addTrackingArea:_metaDescriptionTrackingArea];
+			self.metaDescriptionTrackingArea = [[[NSTrackingArea alloc]
+												 initWithRect:[oMetaDescriptionField bounds]
+												 options:NSTrackingActiveInKeyWindow | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited
+												 owner:self
+												 userInfo:nil] autorelease];
+		}
+		if (!_windowTitleTrackingArea)
+		{
+			self.windowTitleTrackingArea = [[[NSTrackingArea alloc]
+												 initWithRect:[oWindowTitleField bounds]
+												 options:NSTrackingActiveInKeyWindow | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited
+												 owner:self
+												 userInfo:nil] autorelease];
 		}
 	}
-	else if (_metaDescriptionTrackingArea)
+	else
 	{
-		[oMetaDescriptionField removeTrackingArea:_metaDescriptionTrackingArea];
-		[_metaDescriptionTrackingArea release];
-		_metaDescriptionTrackingArea = nil;
-
+		self.metaDescriptionTrackingArea = nil;
+		self.windowTitleTrackingArea = nil;
 	}
 	
+	if (areLinksSelected)
+	{
+		if (!_externalURLTrackingArea)
+		{
+			self.externalURLTrackingArea = [[[NSTrackingArea alloc]
+											 initWithRect:[oExternalURLField bounds]
+											 options:NSTrackingActiveInKeyWindow | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited
+											 owner:self
+											 userInfo:nil] autorelease];
+		}
+	}
+	else
+	{
+		self.externalURLTrackingArea = nil;
+	}
 	
+	/*
+	 @synthesize fileNameTrackingArea		= _fileNameTrackingArea;
+	 @synthesize mediaFilenameTrackingArea	= _mediaFilenameTrackingArea;
+*/
 
 	// Additional Lines
 	[oWindowTitleField		setHidden:!arePagesSelected];
@@ -845,6 +957,37 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 							   || (arePagesSelected && IS_ROOT_STATE == pageIsCollectionState)
 								|| selectedObjectsCount > 1];
 	[oMediaFilenameField setHidden:(!areFilesSelected && !areTextsSelected) || selectedObjectsCount > 1];
+	
+	if (![oFileNameField isHidden])
+	{
+		if (!_fileNameTrackingArea)
+		{
+			self.fileNameTrackingArea = [[[NSTrackingArea alloc]
+											   initWithRect:[oFileNameField bounds]
+											   options:NSTrackingActiveInKeyWindow | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited
+											   owner:self
+											   userInfo:nil] autorelease];
+		}
+	}
+	else
+	{
+		self.fileNameTrackingArea = nil;
+	}
+	if (![oMediaFilenameField isHidden])
+	{
+		if (!_mediaFilenameTrackingArea)
+		{
+			self.mediaFilenameTrackingArea = [[[NSTrackingArea alloc]
+											 initWithRect:[oMediaFilenameField bounds]
+											 options:NSTrackingActiveInKeyWindow | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited
+											 owner:self
+											 userInfo:nil] autorelease];
+		}
+	}
+	else
+	{
+		self.mediaFilenameTrackingArea = nil;
+	}
 
 	[oDotSeparator setHidden:(!arePagesSelected  || NSOffState != pageIsCollectionState || selectedObjectsCount > 1 || areMultiSelected)];
 	[oSlashSeparator setHidden:!arePagesSelected || NSOnState != pageIsCollectionState || selectedObjectsCount > 1];
