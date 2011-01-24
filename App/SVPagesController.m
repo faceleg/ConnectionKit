@@ -332,8 +332,9 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     [[object parentPage] invalidateSortedChildrenCache];
 	
 	
-	// Attach to site too
+	// Attach to master & site too
     KTPage *collection = [object parentPage];
+    [object setMaster:[collection master]];
     [object setSite:[collection site] recursively:YES];
     
     
