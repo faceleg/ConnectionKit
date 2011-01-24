@@ -325,11 +325,24 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 #pragma mark Inserting Objects
 
+- (void)updateContentChildIndexes;
+{
+    // Get the pages in order. Don't use -arrangedObjects as we want to ignore any filter that's in place
+    NSArray *pages = [[self content] sortedArrayUsingDescriptors:[self sortDescriptors]];
+    
+	NSUInteger i;
+	for (i=0; i<[pages count]; i++)
+	{
+		KTPage *aPage = [pages objectAtIndex:i];
+		[aPage setChildIndex:i];
+	}
+}
+
 - (void)insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
 {
     // Insert
     [super insertObject:object atArrangedObjectIndex:index];
-    [[object parentPage] invalidateSortedChildrenCache];
+    [self updateContentChildIndexes];
 	
 	
 	// Attach to master & site too
