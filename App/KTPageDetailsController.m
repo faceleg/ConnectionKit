@@ -35,6 +35,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+NSString* kTrackerKey = @"whichTracker";
+
 
 static NSString *sMetaDescriptionObservationContext = @"-metaDescription observation context";
 static NSString *sWindowTitleObservationContext = @"-windowTitle observation context";
@@ -812,7 +814,18 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 							options:nil];
 	}
 }
-	
+
+- (NSTrackingArea *) createTrackingArea:(NSTextField *)aTextField;
+{
+	NSDictionary *userInfoDict = NSDICT(aTextField, kTrackerKey);
+	NSTrackingArea *result = [[[NSTrackingArea alloc]
+							   initWithRect:[aTextField bounds]
+							   options:NSTrackingActiveInKeyWindow | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited
+							   owner:self
+							   userInfo:userInfoDict] autorelease];
+	return result;
+}
+
 /*
  Algorithm 
  Calculate how much each of the variable fields oBaseURLField and oPageFileNameField *want* to be
@@ -892,19 +905,11 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	{
 		if (!_metaDescriptionTrackingArea)
 		{
-			self.metaDescriptionTrackingArea = [[[NSTrackingArea alloc]
-												 initWithRect:[oMetaDescriptionField bounds]
-												 options:NSTrackingActiveInKeyWindow | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited
-												 owner:self
-												 userInfo:nil] autorelease];
+			self.metaDescriptionTrackingArea = [self createTrackingArea:oMetaDescriptionField];
 		}
 		if (!_windowTitleTrackingArea)
 		{
-			self.windowTitleTrackingArea = [[[NSTrackingArea alloc]
-												 initWithRect:[oWindowTitleField bounds]
-												 options:NSTrackingActiveInKeyWindow | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited
-												 owner:self
-												 userInfo:nil] autorelease];
+			self.windowTitleTrackingArea = [self createTrackingArea:oWindowTitleField];
 		}
 	}
 	else
@@ -917,11 +922,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	{
 		if (!_externalURLTrackingArea)
 		{
-			self.externalURLTrackingArea = [[[NSTrackingArea alloc]
-											 initWithRect:[oExternalURLField bounds]
-											 options:NSTrackingActiveInKeyWindow | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited
-											 owner:self
-											 userInfo:nil] autorelease];
+			self.externalURLTrackingArea = [self createTrackingArea:oExternalURLField];
 		}
 	}
 	else
@@ -929,11 +930,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		self.externalURLTrackingArea = nil;
 	}
 	
-	/*
-	 @synthesize fileNameTrackingArea		= _fileNameTrackingArea;
-	 @synthesize mediaFilenameTrackingArea	= _mediaFilenameTrackingArea;
-*/
-
 	// Additional Lines
 	[oWindowTitleField		setHidden:!arePagesSelected];
 	[oMetaDescriptionField	setHidden:!arePagesSelected];
@@ -962,11 +958,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	{
 		if (!_fileNameTrackingArea)
 		{
-			self.fileNameTrackingArea = [[[NSTrackingArea alloc]
-											   initWithRect:[oFileNameField bounds]
-											   options:NSTrackingActiveInKeyWindow | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited
-											   owner:self
-											   userInfo:nil] autorelease];
+			self.fileNameTrackingArea = [self createTrackingArea:oFileNameField];
 		}
 	}
 	else
@@ -977,11 +969,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	{
 		if (!_mediaFilenameTrackingArea)
 		{
-			self.mediaFilenameTrackingArea = [[[NSTrackingArea alloc]
-											 initWithRect:[oMediaFilenameField bounds]
-											 options:NSTrackingActiveInKeyWindow | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited
-											 owner:self
-											 userInfo:nil] autorelease];
+			self.mediaFilenameTrackingArea = [self createTrackingArea:oMediaFilenameField];
 		}
 	}
 	else
@@ -1211,11 +1199,12 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 // -------------------------------------------------------------------------------
 - (void)mouseEntered:(NSEvent*)event
 {	
-	KSShadowedRectView *view = (KSShadowedRectView *)[oMetaDescriptionField superview];
-	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
+	NSView *hiliteView = [[[event trackingArea] userInfo] objectForKey:kTrackerKey];
+	KSShadowedRectView *superview = (KSShadowedRectView *)[hiliteView superview];
+	OBASSERT([superview isKindOfClass:[KSShadowedRectView class]]);
 	
-	NSRect fieldRect = [oMetaDescriptionField frame];
-	[view setHiliteRect:fieldRect];
+	NSRect fieldRect = [hiliteView frame];
+	[superview setHiliteRect:fieldRect];
 }
 
 // -------------------------------------------------------------------------------
@@ -1226,9 +1215,11 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 // -------------------------------------------------------------------------------
 - (void)mouseExited:(NSEvent*)event
 {
-	KSShadowedRectView *view = (KSShadowedRectView *)[oMetaDescriptionField superview];
-	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
-	[view setHiliteRect:NSZeroRect];
+	NSView *hiliteView = [[[event trackingArea] userInfo] objectForKey:kTrackerKey];
+
+	KSShadowedRectView *superview = (KSShadowedRectView *)[hiliteView superview];
+	OBASSERT([superview isKindOfClass:[KSShadowedRectView class]]);
+	[superview setHiliteRect:NSZeroRect];
 }
 
 
