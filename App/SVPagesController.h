@@ -20,7 +20,7 @@
 extern NSString *SVPagesControllerDidInsertObjectNotification;
 
 
-@class KTPage, SVPageTemplate;
+@class KTPage, SVSiteItem, SVPageTemplate;
 @protocol SVPage, SVPasteboardItem;
 
 
@@ -53,6 +53,7 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 #pragma mark Pasteboard Support
 - (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard;
 - (id)newObjectFromPasteboardItem:(id <SVPasteboardItem>)pboardItem;
+- (SVSiteItem *)newObjectFromPropertyList:(id)aPlist;
 
 
 @end

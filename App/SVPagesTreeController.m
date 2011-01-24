@@ -54,7 +54,6 @@
 @property(nonatomic, retain, readwrite) SVPageTemplate *pageTemplate;
 @property(nonatomic, copy, readwrite) NSURL *objectURL;
 - (id)newObjectDestinedForCollection:(KTPage *)collection;
-- (SVSiteItem *)newObjectFromPropertyList:(id)aPlist destinedForCollection:(KTPage *)collection;
 - (void)configurePageAsCollection:(KTPage *)collection;
 @end
 
@@ -802,8 +801,7 @@
         
         for (id aPlist in plists)
         {
-            SVSiteItem *item = [self newObjectFromPropertyList:aPlist
-                                         destinedForCollection:collection];
+            SVSiteItem *item = [[collection valueForKey:@"childPagesController"] newObjectFromPropertyList:aPlist];
             
             if (item)   // might be nil due to invalid plist
             {
@@ -878,14 +876,6 @@
     
     
     
-    return result;
-}
-
-- (SVSiteItem *)newObjectFromPropertyList:(id)aPlist destinedForCollection:(KTPage *)collection;
-{
-    [self setEntityName:[aPlist valueForKey:@"entity"]];
-    SVSiteItem *result = [self newObjectDestinedForCollection:collection];
-    [result awakeFromPropertyList:aPlist parentItem:nil];
     return result;
 }
 
