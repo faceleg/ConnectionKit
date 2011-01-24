@@ -347,7 +347,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 	
 	// Attach to master & site too
     KTPage *collection = [(SVSiteItem *)object parentPage];
-    [object setMaster:[collection master]];
+    if ([object respondsToSelector:@selector(setMaster:)]) [object setMaster:[collection master]];
     [object setSite:[collection site] recursively:YES];
     
     
@@ -411,7 +411,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     return result;
 }
 
-- (void)addObjectFromPasteboardItem:(id <SVPasteboardItem>)anItem toCollection:(KTPage *)collection
+- (void)addObjectFromPasteboardItem:(id <SVPasteboardItem>)anItem
 {
     SVGraphic *aGraphic = [SVGraphicFactory
                            graphicFromPasteboardItem:anItem
@@ -427,7 +427,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         
         
         // First media added to a collection probably doesn't want sidebar. #96013
-        if (![[collection childItems] count] && [aGraphic isKindOfClass:[SVMediaGraphic class]])
+        if (![[self content] count] && [aGraphic isKindOfClass:[SVMediaGraphic class]])
         {
             [page setShowSidebar:NSBOOL(NO)]; 
         }
@@ -478,7 +478,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         [self setEntityTypeWithURL:URL external:external];
         
         SVSiteItem *item = [self newObject];
-        [self addObject:item toCollection:collection];
+        [self addObject:item];
         [item release];
     }
     
@@ -551,9 +551,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     {
         for (id <SVPasteboardItem> anItem in items)
         {
-            [self addObjectFromPasteboardItem:anItem toCollection:nil];
-            
-            
+            [self addObjectFromPasteboardItem:anItem];
             result = YES;
         }
     }
