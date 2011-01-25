@@ -17,6 +17,8 @@
 
 - (BOOL)isDirectory; { return YES; }
 
+- (NSData *)SHA1Digest; { return nil; }
+
 - (SVPublishingRecord *)directoryPublishingRecordWithFilename:(NSString *)filename;
 {
     SVPublishingRecord *result = [self publishingRecordForFilename:filename];
