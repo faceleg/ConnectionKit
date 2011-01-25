@@ -16,6 +16,10 @@
 
 #import "Registration.h"
 
+#define LARGE_ICON_CELL_HEIGHT	34.00
+#define SMALL_ICON_CELL_HEIGHT	17.00
+#define LARGE_ICON_ROOT_SPACING	10.00
+#define SMALL_ICON_ROOT_SPACING 10.00
 
 NSString *kKTSelectedObjectsKey = @"KTSelectedObjects";
 NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
@@ -123,6 +127,26 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
     @try
     {
         [super drawRect:rect];
+        
+        // draw line to separate root from children
+        float width = [self bounds].size.width*0.95;
+        float lineX = ([self bounds].size.width - width)/2.0;
+        
+        float height = 1; // line thickness
+        float lineY;
+        if ( [self rowHeight] < LARGE_ICON_CELL_HEIGHT )
+        {
+            lineY = SMALL_ICON_CELL_HEIGHT+SMALL_ICON_ROOT_SPACING-3.0;
+        }
+        else
+        {
+            lineY = LARGE_ICON_CELL_HEIGHT+LARGE_ICON_ROOT_SPACING-3.0;
+        }
+        
+        [[NSColor colorWithCalibratedWhite:0.80 alpha:1.0] set];
+        [NSBezierPath fillRect:NSMakeRect(lineX, lineY, width, height)];
+        [[NSColor colorWithCalibratedWhite:0.60 alpha:1.0] set];
+        [NSBezierPath fillRect:NSMakeRect(lineX, lineY+1, width, height)];        
     }
     @finally
     {
