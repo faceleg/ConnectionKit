@@ -13,6 +13,7 @@
 #import "KTDesignFamily.h"
 #import "SVDesignsController.h"
 #import "SVDesignChooserImageBrowserView.h"
+#import "KSPathUtilities.h"
 
 @interface IKImageBrowserView (Private10_5)
 
@@ -232,6 +233,56 @@
 	// Simulate the clicking of the OK button... 
 	[NSApp sendAction:@selector(chooseDesign:) to:nil from:self];	
 }
+
+- (void) imageBrowser:(IKImageBrowserView *) aBrowser
+	cellWasRightClickedAtIndex:(NSUInteger) index withEvent:(NSEvent *)event
+{
+	//contextual menu for item index
+	NSMenu*  menu;
+	
+	menu = [[NSMenu alloc] initWithTitle:@"menu"];
+	[menu setAutoenablesItems:NO];
+
+	// Only can reveal designs not in the 
+	_rightClickedIndex = index;
+	KTDesign *design = [[oDesignsArrayController arrangedObjects] objectAtIndex:index];
+	NSString *path = [[design bundle] bundlePath];
+	BOOL canBeRevealed = YES; // ... MAYBE ONLY EXTERNAL DESIGNS? ... ![path ks_isSubpathOfPath:[[NSBundle mainBundle] bundlePath]];
+	
+	[menu addItemWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Reveal in Finder", @"")] action:@selector(revealDesign) keyEquivalent:@""];
+	
+	[[menu itemAtIndex:0] setTarget:self];
+	[[menu itemAtIndex:0] setEnabled:canBeRevealed];
+
+	// OPTIONAL -- open home page for third-party design
+	
+	if ([design URL])
+	{
+		[menu addItemWithTitle:[NSString stringWithFormat:NSLocalizedString(@"View Website for Design", @"")] action:@selector(openDesignURL) keyEquivalent:@""];
+		[[menu itemAtIndex:1] setTarget:self];
+	}
+	
+	
+	
+	[NSMenu popUpContextMenu:menu withEvent:event forView:aBrowser];
+	
+	[menu release];
+}
+
+- (void) revealDesign
+{
+	KTDesign *design = [[oDesignsArrayController arrangedObjects] objectAtIndex:_rightClickedIndex];
+	NSString *path = [[design bundle] bundlePath];
+	[[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:@""];
+}
+
+- (void) openDesignURL
+{
+	KTDesign *design = [[oDesignsArrayController arrangedObjects] objectAtIndex:_rightClickedIndex];
+	NSURL *URL = [design URL];
+	[[NSWorkspace sharedWorkspace] openURL:[URL absoluteURL]];
+}
+
 
 
 // Data source

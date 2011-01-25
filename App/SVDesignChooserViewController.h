@@ -24,6 +24,8 @@
     IKImageBrowserView  *_browser;
     
 	NSTrackingArea		*_trackingArea;
+	
+	NSUInteger _rightClickedIndex;
 }
 
 @property(nonatomic, retain) IBOutlet IKImageBrowserView *imageBrowser;
