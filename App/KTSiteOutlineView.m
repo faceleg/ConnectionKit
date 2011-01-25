@@ -18,8 +18,8 @@
 
 #define LARGE_ICON_CELL_HEIGHT	34.00
 #define SMALL_ICON_CELL_HEIGHT	17.00
-#define LARGE_ICON_ROOT_SPACING	10.00
-#define SMALL_ICON_ROOT_SPACING 10.00
+#define ICON_ROOT_DIVIDER_SPACING	6.00
+#define ICON_GROUP_ROW_SPACING 3.00
 
 NSString *kKTSelectedObjectsKey = @"KTSelectedObjects";
 NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
@@ -33,14 +33,17 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 {
     NSRect result = [super rectOfRow:row];
     
-    // The first row is special as we want to draw it like a normal height row. It's made taller by the delegate to accomodate divider
+    // The first row is special:
+    //  1.  Delegate makes the row taller so as to accomodate divider & padding
+    //  2.  Draw the cell/highlight as standard height
+    //  3.  Offset the cell from top of table slightly so as to mimic a group row
     // Only takes effect during drawing of the row or highlight. Ensures:
     //  A.  Drop indicator draws in correct position
     //  B.  Cell rect marked for display includes divider
     if (_drawingRows && row == 0)
     {
-        result.size.height = ([self rowHeight] + [self intercellSpacing].height +   // the usual
-                              4.0f);     // extra space to add weight & give breathing room at top
+        result.origin.y += ICON_GROUP_ROW_SPACING;
+        result.size.height = [self rowHeight] + [self intercellSpacing].height; // standard size
     }
     
     return result;
@@ -136,11 +139,11 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
         float lineY;
         if ( [self rowHeight] < LARGE_ICON_CELL_HEIGHT )
         {
-            lineY = SMALL_ICON_CELL_HEIGHT+SMALL_ICON_ROOT_SPACING-3.0;
+            lineY = SMALL_ICON_CELL_HEIGHT+ICON_ROOT_DIVIDER_SPACING;
         }
         else
         {
-            lineY = LARGE_ICON_CELL_HEIGHT+LARGE_ICON_ROOT_SPACING-3.0;
+            lineY = LARGE_ICON_CELL_HEIGHT+ICON_ROOT_DIVIDER_SPACING;
         }
         
         [[NSColor colorWithCalibratedWhite:0.80 alpha:1.0] set];
