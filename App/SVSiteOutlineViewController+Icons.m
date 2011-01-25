@@ -72,7 +72,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	NSUInteger maxSize = [self maximumIconSize];
     
     // The home page always appears as some kind of favicon
-	if ([[self outlineView] rowForItem:item] == 0)
+	if ([item isRoot])
 	{
 		result = [self favicon];
 	}
