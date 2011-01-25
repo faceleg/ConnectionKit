@@ -112,7 +112,16 @@
     else if (type == SVLinkExternal)
     {
         SVLink *link = [[SVLinkManager sharedLinkManager] guessLink];
-        if (link) [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
+        if (link) 
+        {
+            [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
+        }
+        else
+        {
+            // No link could be guessed, so make sure this field is empty.
+            // TODO: Would it be better to apply any existing value? might be handy if user wants to make two links to the same address in a row?
+            [oLinkField setStringValue:@""];
+        }
     }
     else if (type == SVLinkEmail)
     {
