@@ -516,9 +516,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSString *remoteDesignDirectoryPath = [self designDirectoryPath];    
     
     // Upload the design's resources
-	NSEnumerator *resourcesEnumerator = [[design resourceFileURLs] objectEnumerator];
-	NSURL *aResource;
-	while (aResource = [resourcesEnumerator nextObject])
+	for (NSURL *aResource in [design resourceFileURLs])
 	{
 		NSString *filename = [aResource ks_lastPathComponent];
         NSString *uploadPath = [remoteDesignDirectoryPath stringByAppendingPathComponent:filename];
