@@ -337,6 +337,13 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 - (void)didInsertObject:(id)object;
 {
+    // Any enclosures needed?
+    if ([object respondsToSelector:@selector(guessEnclosures)])
+    {
+        [object guessEnclosures];
+    }
+    
+    
     // Attach to master if needed
     KTPage *collection = [(SVSiteItem *)object parentPage];
     if ([object respondsToSelector:@selector(setMaster:)] && [object master] != [collection master])
