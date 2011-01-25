@@ -980,34 +980,6 @@
 			[cell setHasCodeInjection:[[[item master] codeInjection] hasCodeInjection]];
 		}
 	}
-	
-	
-	
-    //  Draw a line to "separate" the root from its children
-    //  Note that we need to check there is a valid CGContext to draw into. Otherwise the console will be littered with CG error messages. This situation can sometimes arise on Snowy when switching apps.
-	if (isRoot &&
-        ![[[self outlineView] selectedItems] containsObject:item] &&
-        [NSView focusView] == outlineView)
-	{
-		float width = [tableColumn width]*0.95;
-		float lineX = ([tableColumn width] - width)/2.0;
-		
-		float height = 1; // line thickness
-		float lineY;
-		if ([self displaySmallPageIcons])
-		{
-			lineY = SMALL_ICON_CELL_HEIGHT+SMALL_ICON_ROOT_SPACING-3.0;
-		}
-		else
-		{
-			lineY = LARGE_ICON_CELL_HEIGHT+LARGE_ICON_ROOT_SPACING-3.0;
-		}
-		
-		[[NSColor colorWithCalibratedWhite:0.80 alpha:1.0] set];
-		[NSBezierPath fillRect:NSMakeRect(lineX, lineY, width, height)];
-		[[NSColor colorWithCalibratedWhite:0.60 alpha:1.0] set];
-		[NSBezierPath fillRect:NSMakeRect(lineX, lineY+1, width, height)];
-	}
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(id)item
