@@ -319,15 +319,22 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         [self setNeedsUpdateWithSelector:@selector(updateSize)];
     }
     
-    // Special case where we don't want complete updaye
-    else if ([keyPath isEqualToString:@"textAttachment.wrap"])
-    {
-        [self setNeedsUpdateWithSelector:@selector(updateWrap)];
-    }
-    
     else
     {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+- (void)dependenciesTracker:(KSDependenciesTracker *)tracker didObserveChange:(NSDictionary *)change forDependency:(KSObjectKeyPathPair *)dependency;
+{
+    // Special case where we don't want complete update
+    if ([[dependency keyPath] isEqualToString:@"textAttachment.wrap"])
+    {
+        [self setNeedsUpdateWithSelector:@selector(updateWrap)];
+    }
+    else
+    {
+        [super dependenciesTracker:tracker didObserveChange:change forDependency:dependency];
     }
 }
 

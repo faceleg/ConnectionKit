@@ -17,12 +17,14 @@
 #import "SVContentObject.h"
 #import "SVHTMLContext.h"
 
+#import "KSDependenciesTracker.h"
+
 
 @class SVWebEditorHTMLContext, KSObjectKeyPathPair, SVWebEditorViewController, SVGraphic, SVSizeBindingDOMController;
 @protocol SVDOMControllerRepresentedObject;
 
 
-@interface SVDOMController : WEKWebEditorItem
+@interface SVDOMController : WEKWebEditorItem <KSDependenciesTrackerDelegate>
 {
   @private
     // Loading
@@ -31,8 +33,7 @@
     // Updating
     NSMutableSet            *_updateSelectors;
     NSNumber                *_width;
-    NSMutableSet            *_dependencies;
-    BOOL                    _isObservingDependencies;
+    KSDependenciesTracker   *_dependenciesTracker;
     SVWebEditorHTMLContext  *_context;
     
     // Moving
@@ -94,7 +95,6 @@
 @property(nonatomic, copy, readonly) NSSet *dependencies;
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 - (void)removeAllDependencies;
-- (BOOL)isObservingDependencies;
 
 
 #pragma mark Editing

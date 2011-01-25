@@ -16,9 +16,6 @@
 #import "DOMNode+Karelia.h"
 
 
-#define sWebViewDependenciesObservationContext @"SVWebViewDependenciesObservationContext"
-
-
 @implementation SVDOMController
 
 #pragma mark Init & Dealloc
@@ -27,8 +24,8 @@
 {
     [super init];
     
-    _dependencies = [[NSMutableSet alloc] init];
-    [self startObservingDependencies];
+    _dependenciesTracker = [[KSDependenciesTracker alloc] initWithDelegate:self
+                                                          observingOptions:NSKeyValueObservingOptionPrior];
     
     return self;
 }
@@ -45,8 +42,8 @@
 
 - (void)dealloc
 {
-    [self removeAllDependencies];
-    [_dependencies release];
+    [_dependenciesTracker removeAllDependencies];
+    [_dependenciesTracker release];
     
     [_updateSelectors release];
     [_elementID release];
@@ -313,66 +310,23 @@
 
 #pragma mark Generic Dependencies
 
-- (NSSet *)dependencies { return [[_dependencies copy] autorelease]; }
+- (NSSet *)dependencies { return [_dependenciesTracker dependencies]; }
 
-- (void)beginObservingDependency:(KSObjectKeyPathPair *)pair;
-{
-    [[pair object] addObserver:self
-                    forKeyPath:[pair keyPath]
-                       options:NSKeyValueObservingOptionPrior
-                       context:sWebViewDependenciesObservationContext];
-}
+- (void)addDependency:(KSObjectKeyPathPair *)pair; { [_dependenciesTracker addDependency:pair]; }
 
-- (void)beginObservingDependencies;
-{
-    for (KSObjectKeyPathPair *aDependency in [self dependencies])
-    {
-        [self beginObservingDependency:aDependency];
-    }
-    _isObservingDependencies = YES;
-}
-
-- (void)endObservingDependencies;
-{
-    for (KSObjectKeyPathPair *aDependency in [self dependencies])
-    {
-        [[aDependency object] removeObserver:self forKeyPath:[aDependency keyPath]];
-    }
-    _isObservingDependencies = NO;
-}
-
-- (void)addDependency:(KSObjectKeyPathPair *)pair;
-{
-    OBASSERT(_dependencies);
-    
-    if (![_dependencies containsObject:pair])
-    {
-        [_dependencies addObject:pair];
-        if ([self isObservingDependencies]) [self beginObservingDependency:pair];
-    }
-}
-
-- (void)removeAllDependencies;
-{
-    if ([self isObservingDependencies]) [self endObservingDependencies];
-    [_dependencies removeAllObjects];
-}
+- (void)removeAllDependencies; { [_dependenciesTracker removeAllDependencies]; }
 
 - (void)startObservingDependencies;
 {
-    if (![self isObservingDependencies]) [self beginObservingDependencies];
-    
+    [_dependenciesTracker startObservingDependencies];
     [super startObservingDependencies]; // recurse
 }
 
 - (void)stopObservingDependencies;
 {
-    if ([self isObservingDependencies]) [self endObservingDependencies];
-    
+    [_dependenciesTracker stopObservingDependencies];
     [super stopObservingDependencies]; // recurse
 }
-
-- (BOOL)isObservingDependencies; { return _isObservingDependencies; }
 
 #pragma mark Sidebar
 
@@ -872,19 +826,9 @@
 
 #pragma mark KVO
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
+- (void)dependenciesTracker:(KSDependenciesTracker *)tracker didObserveChange:(NSDictionary *)change forDependency:(KSObjectKeyPathPair *)dependency;
 {
-    if (context == sWebViewDependenciesObservationContext)
-    {
-        [self setNeedsUpdate];
-    }
-    else
-    {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
+    [self setNeedsUpdate];
 }
 
 @end
