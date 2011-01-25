@@ -150,19 +150,21 @@
 - (IBAction)setLinkURL:(id)sender;
 {
     NSString *urlString = [sender stringValue];
-    
-    // Emails need mailto: prepended
-    SVLinkType type = [oLinkTypePopUpButton selectedTag];
-    if (type == SVLinkEmail || [KSURLFormatter isValidEmailAddress:urlString])
+    if ([urlString length])
     {
-        urlString = [[NSURL ks_mailtoURLWithEmailAddress:urlString] absoluteString];
+        // Emails need mailto: prepended
+        SVLinkType type = [oLinkTypePopUpButton selectedTag];
+        if (type == SVLinkEmail || [KSURLFormatter isValidEmailAddress:urlString])
+        {
+            urlString = [[NSURL ks_mailtoURLWithEmailAddress:urlString] absoluteString];
+        }
+        
+        // Apply to model
+        SVLink *link = [[SVLink alloc] initWithURLString:urlString
+                                         openInNewWindow:[oOpenInNewWindowCheckbox intValue]];
+        [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
+        [link release];
     }
-    
-    // Apply to model
-    SVLink *link = [[SVLink alloc] initWithURLString:urlString
-                                     openInNewWindow:[oOpenInNewWindowCheckbox intValue]];
-    [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
-    [link release];
 }
 
 - (IBAction)clearLinkDestination:(id)sender;
