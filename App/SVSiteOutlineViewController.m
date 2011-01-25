@@ -530,9 +530,9 @@
 - (void)pagesControllerDidInsertObject:(NSNotification *)notification;
 {
     SVPagesTreeController *controller = [notification object];
-    SVSiteItem *item = [controller selectedNode];  // Really, I ought to have a way of pulling this from the notification
+    NSTreeNode *node = [controller selectedNode];  // Really, I ought to have a way of pulling this from the notification
     
-    if (item) [[self outlineView] expandItem:item];
+    if (node) [[self outlineView] expandItem:node];
 }
 
 #pragma mark Other Actions
