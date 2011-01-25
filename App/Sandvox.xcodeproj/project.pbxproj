@@ -528,6 +528,8 @@
 		27A617661123005100004FED /* TextBoxBodyTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27A617651123005100004FED /* TextBoxBodyTemplate.html */; };
 		27A6187B1123480C00004FED /* SVParagraphedHTMLWriterDOMAdaptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A618791123480C00004FED /* SVParagraphedHTMLWriterDOMAdaptor.h */; };
 		27A6187C1123480C00004FED /* SVParagraphedHTMLWriterDOMAdaptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A6187A1123480C00004FED /* SVParagraphedHTMLWriterDOMAdaptor.m */; };
+		27A8223D12EF532D00152934 /* KSDependenciesTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A8223B12EF532D00152934 /* KSDependenciesTracker.h */; };
+		27A8223E12EF532D00152934 /* KSDependenciesTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A8223C12EF532D00152934 /* KSDependenciesTracker.m */; };
 		27AA10290CDA065A001D6B9B /* KTMissingMediaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */; settings = {ATTRIBUTES = (); }; };
 		27AA102A0CDA065A001D6B9B /* KTMissingMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */; };
 		27ACACB60D588F64004732D0 /* KTPlaceholderBindingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */; settings = {ATTRIBUTES = (); }; };
@@ -2157,6 +2159,8 @@
 		27A617651123005100004FED /* TextBoxBodyTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = TextBoxBodyTemplate.html; sourceTree = "<group>"; };
 		27A618791123480C00004FED /* SVParagraphedHTMLWriterDOMAdaptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVParagraphedHTMLWriterDOMAdaptor.h; sourceTree = "<group>"; };
 		27A6187A1123480C00004FED /* SVParagraphedHTMLWriterDOMAdaptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVParagraphedHTMLWriterDOMAdaptor.m; sourceTree = "<group>"; };
+		27A8223B12EF532D00152934 /* KSDependenciesTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDependenciesTracker.h; sourceTree = "<group>"; };
+		27A8223C12EF532D00152934 /* KSDependenciesTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSDependenciesTracker.m; sourceTree = "<group>"; };
 		27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaController.h; sourceTree = "<group>"; };
 		27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaController.m; sourceTree = "<group>"; };
 		27ACA30F0D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSummaryWebViewTextBlock.h; sourceTree = "<group>"; };
@@ -5076,6 +5080,8 @@
 				27DD06F91201BDB90083C7C1 /* KSInvocationOperation.m */,
 				2728C12312E31390008B6CD2 /* KSIsNotNSNotFound.h */,
 				2728C12412E31390008B6CD2 /* KSIsNotNSNotFound.m */,
+				27A8223B12EF532D00152934 /* KSDependenciesTracker.h */,
+				27A8223C12EF532D00152934 /* KSDependenciesTracker.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -6015,6 +6021,7 @@
 				277AFC9F12DBCF9B009CD192 /* SVFooter.h in Headers */,
 				2728C12512E31390008B6CD2 /* KSIsNotNSNotFound.h in Headers */,
 				27F91ECD12EB3B1600372364 /* KSTreeController.h in Headers */,
+				27A8223D12EF532D00152934 /* KSDependenciesTracker.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7584,6 +7591,7 @@
 				2728C12612E31390008B6CD2 /* KSIsNotNSNotFound.m in Sources */,
 				277AF78812DB15F6009CD192 /* SVPagesTreeController.m in Sources */,
 				27F91ECE12EB3B1600372364 /* KSTreeController.m in Sources */,
+				27A8223E12EF532D00152934 /* KSDependenciesTracker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
