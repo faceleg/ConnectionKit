@@ -1117,10 +1117,14 @@
         
         NSArray *draggedItems = [self lastItemsWrittenToPasteboard];
         
-        // Rule 4. Don't allow a collection to become a descendant of itself
+        // Rule 4. Don't allow an item to become a descendant of itself
         for (NSTreeNode *aDraggedItem in draggedItems)
         {
-            if ([page isDescendantOfItem:[aDraggedItem representedObject]]) return NSDragOperationNone;
+            // The dragged items are probably proxies so be safe and de-proxify them
+            if ([page isDescendantOfItem:[[aDraggedItem representedObject] self]])
+            {
+                return NSDragOperationNone;
+            }
         }
         
         

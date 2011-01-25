@@ -339,7 +339,7 @@
 
 - (BOOL)isDescendantOfCollection:(KTPage *)aPotentialAncestor;
 {
-	if (aPotentialAncestor == self) return YES;
+	if ([aPotentialAncestor isEqual:self]) return YES;
     
     KTPage *parent = [self parentPage];
 	if (nil == parent)		// we are at the root node, so it can't be descended from the given node
