@@ -980,6 +980,9 @@
     @finally {
         _syncingChildren = NO;
     }
+    
+    
+    OBPOSTCONDITION([_childNodes isEqualToArray:[_childPagesController arrangedObjects]]);
 }
 
 - (void)removeObjectFromChildNodesAtIndex:(NSUInteger)index;
@@ -1000,6 +1003,9 @@
     {
         _syncingChildren = NO;
     }
+    
+    
+    OBPOSTCONDITION([_childNodes isEqualToArray:[_childPagesController arrangedObjects]]);
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;
