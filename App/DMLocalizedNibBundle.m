@@ -844,7 +844,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	NSString		*nibPath	= [nibBundle pathForResource:nibName ofType:@"nib"];
 	NSDictionary	*context	= [NSDictionary dictionaryWithObjectsAndKeys:self, NSNibOwner, nil];
 	
-	// NSLog(@"loadView %@ going to localize %@ with top objects: %@", [[nibBundle bundlePath] lastPathComponent], [nibPath lastPathComponent], [[context description] condenseWhiteSpace]);
+	DJW((@"loadView %@ going to localize %@ with top objects: %@", [[nibBundle bundlePath] lastPathComponent], [nibPath lastPathComponent], [[context description] condenseWhiteSpace]));
 	BOOL loaded = [NSBundle _deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil bundle:nibBundle];	// call through to support method
 	if (!loaded)
 	{
@@ -885,7 +885,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	// Don't allow this to localize any file that is not in the app bundle!
 	if ([fileName hasPrefix:[[NSBundle mainBundle] bundlePath]])
 	{
-		// NSLog(@"loadNibFile going to localize %@ with top objects: %@", [fileName lastPathComponent], [[context description] condenseWhiteSpace]);
+		DJW((@"loadNibFile going to localize %@ with top objects: %@", [fileName lastPathComponent], [[context description] condenseWhiteSpace]));
 		result = [self _deliciousLocalizingLoadNibFile:fileName externalNameTable:context withZone:zone bundle:[NSBundle mainBundle]];
 	}
 	else
@@ -903,7 +903,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 - (NSString *)debugLocalizedStringForKey:(NSString *)key value:(NSString *)value table:(NSString *)tableName;
 {
 	NSString *string = [self debugLocalizedStringForKey:key value:value table:tableName];
-	
+	if (0 == [string length]) return string;
 	if ([string isEqualToString:@"I AM THE DEFAULT VALUE"]) return string;
 	if ([string hasPrefix:@"(A Document Being Saved By"]) return string;
 
@@ -1056,10 +1056,18 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	if ([object isKindOfClass:[NSCell class]]) return;
 	
 	NSArray *supportedAttrs = [object accessibilityAttributeNames];
-	if ([supportedAttrs containsObject:NSAccessibilityHelpAttribute]) {
-		NSString *accessibilityHelp
-		= [object accessibilityAttributeValue:NSAccessibilityHelpAttribute];
-		if (accessibilityHelp) {
+	if ([supportedAttrs containsObject:NSAccessibilityDescriptionAttribute])
+	{
+		DJW((@"DESC: %@", [object accessibilityAttributeValue:NSAccessibilityDescriptionAttribute]));
+	}
+		
+	if ([supportedAttrs containsObject:NSAccessibilityHelpAttribute])
+	{
+		NSString *accessibilityHelp = [object accessibilityAttributeValue:NSAccessibilityHelpAttribute];
+		if (accessibilityHelp) DJW((@"HELP: %@", accessibilityHelp));
+
+		if (accessibilityHelp && ![accessibilityHelp isEqualToString:@""])
+		{
 			
 			NSString *toolTip = nil;		// get the tooltip and make sure it's not the same; Help seems to come from tooltip if undefined!
 			if ([object respondsToSelector:@selector(toolTip)]) toolTip = [object toolTip];
@@ -1083,6 +1091,26 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 				}
 			}
 		}
+		
+		// TEMPORARY ... USEFUL FOR CHECKING FOR ACCESSIBILY HOLES, THOUGH THE API DOESN'T GIVE US MUCH HELP!
+		
+//		else	// while we are here, check for no accessibility or other info, may want to add accessibility!
+//		{
+//			if (	([object isKindOfClass:[NSButton class]] && 0 == [[object title] length])
+//				// ||	[object isKindOfClass:[NSImageView class]]	// HMM, DOESN'T SEEM TO FIND ACCESSIBILITY
+//				// ||	[object isKindOfClass:[NSSlider class]]		// HMM, DOESN'T SEEM TO FIND ACCESSIBILITY
+//				// ||	([object isKindOfClass:[NSTextField class]] && 0 == [[object stringValue] length])
+//				)
+//			{
+//				if (![object isKindOfClass:[NSPopUpButton class]]
+//					&& 
+//					!([object isKindOfClass:[NSButton class]] && [NSStringFromSelector([object action]) hasSuffix:@"Help:"])
+//					)
+//				{
+//					DJW((@"@@@ Missing accessibility for %@", object));
+//				}
+//			}
+//		}
 	}
 }
 
