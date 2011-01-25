@@ -325,8 +325,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 - (void)updateContentChildIndexes;
 {
-    // Get the pages in order. Don't use -arrangedObjects as we want to ignore any filter that's in place
-    NSArray *pages = [[self content] sortedArrayUsingDescriptors:[self sortDescriptors]];
+    NSArray *pages = [self arrangedObjects];
     
 	NSUInteger i;
 	for (i=0; i<[pages count]; i++)
