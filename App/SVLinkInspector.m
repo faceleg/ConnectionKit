@@ -85,7 +85,11 @@
     
     
     [oLinkTypePopUpButton selectItemWithTag:linkType];
+    
+    // When changing away from email, it has nasty tendency to send its action even though nothing has changed. This is unwanted as the user is probably in the middle of changing the selection! So turn, the effect off for a moment.
+    [[oEmailAddressField cell] setSendsActionOnEndEditing:NO];
     [oTabView selectTabViewItemAtIndex:[oLinkTypePopUpButton indexOfSelectedItem]];
+    [[oEmailAddressField cell] setSendsActionOnEndEditing:YES];
     
     [oOpenInNewWindowCheckbox setState:([link openInNewWindow] ? NSOnState : NSOffState)];
 }
