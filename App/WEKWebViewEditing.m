@@ -109,8 +109,26 @@
         [self setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
     }
     
+    // Ask for permission. Not sure what the best delegate method to use is :(
+    if ([[self editingDelegate] respondsToSelector:@selector(webView:shouldDeleteDOMRange:)])
+    {
+        if (![[self editingDelegate] webView:self shouldDeleteDOMRange:selection])
+        {
+            NSBeep();
+            return;
+        }
+    }
+    
+    
     DOMDocument *document = [[self mainFrame] DOMDocument];
-    if (![document execCommand:@"unlink" userInterface:NO value:nil]) NSBeep();
+    if ([document execCommand:@"unlink" userInterface:NO value:nil])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+    }
+    else
+    {
+        NSBeep();
+    }
 }
 
 @end
