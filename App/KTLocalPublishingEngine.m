@@ -168,12 +168,40 @@
 - (void)threaded_publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath object:object;
 {
     // Could be done more efficiently by not loading the entire file at once
-    NSData *data = [[NSData alloc] initWithContentsOfURL:localURL];
-    NSData *digest = [data SHA1Digest];
-    [data release];
+    NSError *error;
+    NSData *data = [[NSData alloc] initWithContentsOfURL:localURL
+                                                 options:0
+                                                   error:&error];
     
-    [[self ks_proxyOnThread:nil waitUntilDone:NO]
-     publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest object:object];
+    if (data)
+    {
+        NSData *digest = [data SHA1Digest];
+        [data release];
+        
+        [[self ks_proxyOnThread:nil waitUntilDone:NO]
+         publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest object:object];
+    }
+    else
+    {
+        if ([localURL isFileURL])
+        {
+            // Hopefully the failure is because it's a directory, so we can process normally
+            NSFileManager *fileManager = [[NSFileManager alloc] init];
+            
+            BOOL isDirectory;
+            if ([fileManager fileExistsAtPath:[localURL path] isDirectory:&isDirectory] &&
+                isDirectory)
+            {
+                [[self ks_proxyOnThread:nil waitUntilDone:NO]
+                 publishContentsOfURL:localURL
+                 toPath:remotePath
+                 cachedSHA1Digest:[NSData data] // stops us trying to calculate digest again!
+                 object:object];
+            }
+            
+            [fileManager release];
+        }
+    }
 }
 
 /*	Supplement the default behaviour by also deleting any existing file first if the user requests it.
