@@ -16,6 +16,7 @@
 #import "SVDocWindow.h"
 #import "SVLink.h"
 #import "SVLinkManager.h"
+#import "SVPasteboardItemInternal.h"
 #import "KSSelectionBorder.h"
 
 #import "DOMElement+Karelia.h"
@@ -2272,6 +2273,33 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return [self shouldChangeTextInDOMRange:range];
 }
 
+- (BOOL)tryToPopulateNode:(DOMNode *)node withImagesFromPasteboard:(NSPasteboard *)pboard;
+{
+    // TODO: Could any of logic be shared with how media system imports images?
+    
+    if ([pboard availableTypeFromArray:[NSBitmapImageRep imageTypes]])
+    {
+        // FIXME: Import as subresource using fake URL
+    }
+    else
+    {
+        NSURL *URL = [pboard URL];
+        if ([URL isFileURL] &&
+            [[NSString UTIForFileAtPath:[URL path]] ks_conformsToOneOfTypes:[NSBitmapImageRep imageTypes]])
+        {
+            [[node mutableChildDOMNodes] removeAllObjects];
+            
+            DOMHTMLImageElement *image = (DOMHTMLImageElement *)[[node ownerDocument] createElement:@"IMG"];
+            [image setSrc:[URL absoluteString]];
+            
+            [node appendChild:image];
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
 - (BOOL)webView:(WebView *)webView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 {
     BOOL result = [self canEditText];
@@ -2283,6 +2311,17 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         if (action == WebViewInsertActionDropped)
         {
             result = [self webView:webView shouldDeleteDOMRange:[self selectedDOMRange]];
+            
+            if (result)
+            {
+                // Import images off the pboard. #103882
+                // But not if there's a web archive there, because WebKit will handle that right
+                NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
+                if (![pboard availableTypeFromArray:NSARRAY((NSString *)kUTTypeWebArchive, WebArchivePboardType)])
+                {
+                    [self tryToPopulateNode:node withImagesFromPasteboard:pboard];
+                }
+            }
         }
     }
      
