@@ -337,11 +337,14 @@
     // Is there already an archive pagelet for this? If so, do nothing
     for (SVGraphic *aGraphic in [sidebarController arrangedObjects])
     {
-        id plugIn = [(id)aGraphic plugIn];
-        if ([plugIn isKindOfClass:[SVIndexPlugIn class]] &&
-            [plugIn indexedCollection] == collection)
+        if ([aGraphic respondsToSelector:@selector(plugIn)])
         {
-            return;
+            id plugIn = [(id)aGraphic plugIn];
+            if ([plugIn isKindOfClass:[SVIndexPlugIn class]] &&
+                [plugIn indexedCollection] == collection)
+            {
+                return;
+            }
         }
     }
     
