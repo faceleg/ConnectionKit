@@ -83,9 +83,18 @@
 
 - (void)createLink:(NSString *)link userInterface:(BOOL)userInterface;
 {
-    if ([[self selectedDOMRange] collapsed])
+    DOMRange *selection = [self selectedDOMRange];
+    if ([selection collapsed])
     {
-        [self selectWord:self];
+        // Try to modify existing link
+        [self selectLink:self];
+        selection = [self selectedDOMRange];
+        
+        if ([selection collapsed])
+        {
+            // Fall back to turning the nearest word into a link
+            [self selectWord:self];
+        }
     }
     
     DOMDocument *document = [[self mainFrame] DOMDocument];
