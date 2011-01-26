@@ -1964,7 +1964,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     if ([[selection text] length] == 0 &&
         [[self selectedItems] count] == 1)
     {
-        [pboard addTypes:NSARRAY(kUTTypeFileURL) owner:self];
+        [pboard addTypes:NSARRAY((NSString *)kUTTypeFileURL) owner:self];
         
         DOMHTMLImageElement *image = [[self selectedItem] HTMLElement];
         [pboard setString:[image src] forType:kUTTypeFileURL];
