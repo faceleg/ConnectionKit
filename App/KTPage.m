@@ -385,9 +385,9 @@
 #pragma mark Thumbnail
 
 - (BOOL)writeThumbnailImage:(SVHTMLContext *)context
-                   maxWidth:(NSUInteger)width
-                  maxHeight:(NSUInteger)height
-                     dryRun:(BOOL)dryRun;
+                   width:(NSUInteger)width
+                  height:(NSUInteger)height
+                     options:(SVThumbnailOptions)options;
 {
     switch ([[self thumbnailType] integerValue])
     {
@@ -397,7 +397,7 @@
             SVGraphic *source = [self thumbnailSourceGraphic];
             if ([source imageRepresentation])
             {
-                if (!dryRun)
+                if (!(options & SVThumbnailDryRun))
                 {
                     [source writeThumbnailImage:context maxWidth:width maxHeight:height];
                 }
@@ -406,7 +406,7 @@
             else
             {
                 // Write placeholder if desired
-                return [super writeThumbnailImage:context maxWidth:width maxHeight:height dryRun:dryRun];
+                return [super writeThumbnailImage:context width:width height:height options:options];
             }
         }
             
@@ -419,9 +419,9 @@
             [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
             
             return [page writeThumbnailImage:context
-                                    maxWidth:width
-                                   maxHeight:height
-                                      dryRun:dryRun];
+                                    width:width
+                                   height:height
+                                      options:options];
         }
             
         case SVThumbnailTypeLastChildItem:
@@ -433,17 +433,17 @@
             [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
             
             return [page writeThumbnailImage:context
-                                    maxWidth:width
-                                   maxHeight:height
-                                      dryRun:dryRun];
+                                    width:width
+                                   height:height
+                                      options:options];
         }
             
         default:
             // Hand off to super for custom/no thumbnail
             return [super writeThumbnailImage:context
-                                     maxWidth:width
-                                    maxHeight:height
-                                       dryRun:dryRun];
+                                     width:width
+                                    height:height
+                                       options:options];
     }
 }
 

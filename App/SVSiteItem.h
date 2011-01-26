@@ -144,11 +144,11 @@ typedef enum {
                options:(SVThumbnailOptions)options;
 
 - (BOOL)writeThumbnailImage:(SVHTMLContext *)context    // support method for subclasses to override
-                   maxWidth:(NSUInteger)width           // writes only the image, not anchor
-                  maxHeight:(NSUInteger)height
-                     dryRun:(BOOL)dryRun;
+                   width:(NSUInteger)width           // writes only the image, not anchor
+                  height:(NSUInteger)height
+                     options:(SVThumbnailOptions)options;
 
-- (void)writePlaceholderThumbnail:(SVHTMLContext *)context width:(NSUInteger)width height:(NSUInteger) height;
+- (void)writeThumbnailPlaceholder:(SVHTMLContext *)context width:(NSUInteger)width height:(NSUInteger) height;
 
 @property(nonatomic, copy) NSNumber *thumbnailType; // SVThumbnailType, mandatory
 @property(nonatomic, retain) SVMediaRecord *customThumbnail;

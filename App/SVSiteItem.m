@@ -447,7 +447,7 @@
 @dynamic thumbnailType;
 @dynamic customThumbnail;
 
-- (void)writePlaceholderThumbnail:(SVHTMLContext *)context width:(NSUInteger)width height:(NSUInteger) height;
+- (void)writeThumbnailPlaceholder:(SVHTMLContext *)context width:(NSUInteger)width height:(NSUInteger) height;
 {
     // Fallback to placeholder <DIV>
     [(SVHTMLContext *)context pushAttribute:@"style" value:[NSString stringWithFormat:
@@ -470,7 +470,7 @@
     
     if (options & SVThumbnailDryRun) // just test if there is a thumbnail
     {
-        return [self writeThumbnailImage:context maxWidth:width maxHeight:height dryRun:YES];
+        return [self writeThumbnailImage:context width:width height:height options:YES];
     }
     else
     {
@@ -478,7 +478,7 @@
         [context startAnchorElementWithPage:self];
         
         if (attributes) [context pushAttributes:attributes];
-        BOOL result = [self writeThumbnailImage:context maxWidth:width maxHeight:height dryRun:NO];
+        BOOL result = [self writeThumbnailImage:context width:width height:height options:NO];
         
         [context endElement];
         
@@ -487,13 +487,13 @@
 }
 
 - (BOOL)writeThumbnailImage:(SVHTMLContext *)context
-                   maxWidth:(NSUInteger)width
-                  maxHeight:(NSUInteger)height
-                     dryRun:(BOOL)dryRun;
+                      width:(NSUInteger)width
+                     height:(NSUInteger)height
+                    options:(SVThumbnailOptions)options;
 {
     if ([[self thumbnailType] integerValue] == SVThumbnailTypeCustom && [self customThumbnail])
     {
-        if (!dryRun)
+        if (!(options & SVThumbnailDryRun))
         {
             [context writeImageWithSourceMedia:[[self customThumbnail] media]
                                            alt:@""
@@ -504,9 +504,9 @@
         }
         return YES;
     }
-    else if (!dryRun)
+    else if (!(options & SVThumbnailDryRun))
     {
-        [self writePlaceholderThumbnail:context width:width height:height];
+        [self writeThumbnailPlaceholder:context width:width height:height];
     }
     
     return NO;
