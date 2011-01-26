@@ -191,7 +191,13 @@
 
 - (NSString *)preferredFilename;
 {
-	NSString *result = [[self filename] suggestedLegalizedWebPublishingFileName];
+    NSString *result = [self filename];
+    
+	NSString *fileName = [result stringByDeletingPathExtension];
+    NSString *extension = [[result pathExtension] lowercaseString];
+    
+    result = [[fileName legalizedWebPublishingFileName]
+                        stringByAppendingPathExtension:extension];
 	return result;
 }
 
