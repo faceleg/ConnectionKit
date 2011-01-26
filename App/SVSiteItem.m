@@ -215,9 +215,14 @@
     
     
 	// Build a list of the file names already taken
-	NSSet *siblingFilenames = [[[self parentPage] childItems] valueForKey:@"filename"];
-	NSMutableSet *unavailableFileNames = [siblingFilenames mutableCopy];
-	[unavailableFileNames removeObjectIgnoringNil:[self filename]];
+	NSMutableSet *unavailableFileNames = [[NSMutableSet alloc] init];
+    for (SVSiteItem *anItem in [[self parentPage] childItems])
+    {
+        if (anItem != self)
+        {
+            [unavailableFileNames addObjectIgnoringNil:[anItem filename]];
+        }
+    }
 	
     
 	// Now munge it to make it unique.  Keep adding a number until we find an open slot.
