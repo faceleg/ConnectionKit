@@ -75,10 +75,18 @@
     uploadPath = [uploadPath stringByAppendingPathComponent:
                   [[media preferredUploadPath] lastPathComponent]];
     
-    [publishingEngine publishContentsOfURL:[media mediaURL]
-                                    toPath:uploadPath
-                          cachedSHA1Digest:nil
-                                    object:self];
+    NSData *data = [media mediaData];
+    if (data)
+    {
+        [publishingEngine publishData:data toPath:uploadPath cachedSHA1Digest:nil contentHash:nil object:self];
+    }
+    else
+    {
+        [publishingEngine publishContentsOfURL:[media mediaURL]
+                                        toPath:uploadPath
+                              cachedSHA1Digest:nil
+                                        object:self];
+    }
 }
 
 // For display in the placeholder webview
