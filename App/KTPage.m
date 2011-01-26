@@ -399,7 +399,7 @@
             {
                 if (!(options & SVThumbnailDryRun))
                 {
-                    [source writeThumbnailImage:context maxWidth:width maxHeight:height];
+                    [source writeThumbnailImage:context width:width height:height options:options];
                 }
                 return YES;
             }

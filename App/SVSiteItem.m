@@ -470,7 +470,7 @@
     
     if (options & SVThumbnailDryRun) // just test if there is a thumbnail
     {
-        return [self writeThumbnailImage:context width:width height:height options:YES];
+        return [self writeThumbnailImage:context width:width height:height options:options];
     }
     else
     {
@@ -478,7 +478,7 @@
         [context startAnchorElementWithPage:self];
         
         if (attributes) [context pushAttributes:attributes];
-        BOOL result = [self writeThumbnailImage:context width:width height:height options:NO];
+        BOOL result = [self writeThumbnailImage:context width:width height:height options:options];
         
         [context endElement];
         

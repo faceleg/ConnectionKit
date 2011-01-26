@@ -486,35 +486,43 @@
 #pragma mark Thumbnail
 
 - (void)writeThumbnailImage:(SVHTMLContext *)context
-                   maxWidth:(NSUInteger)width
-                  maxHeight:(NSUInteger)height;
+                   width:(NSUInteger)width
+                  height:(NSUInteger)height
+                  options:(SVThumbnailOptions)options;
 {
     id <SVMedia> media = [[self plugIn] thumbnailMedia];
     if (media)
     {
-        // Calculate dimensions
-        NSNumber *aspectRatioNumber = [self constrainedAspectRatio];
-        [context addDependencyOnObject:self keyPath:@"constrainedAspectRatio"];
+        KSImageScalingMode scaling = KSImageScalingModeCropCenter;
         
-        CGFloat aspectRatio;
-        if (aspectRatioNumber)
+        if (options & SVThumbnailScaleAspectFit)
         {
-            aspectRatio = [aspectRatioNumber floatValue];
-        }
-        else
-        {
-            aspectRatio = [[self width] floatValue] / [[self height] floatValue];
-            [context addDependencyOnObject:self keyPath:@"width"];
-            [context addDependencyOnObject:self keyPath:@"height"];
-        }
-        
-        if (aspectRatio > 1.0f)
-        {
-            height = width / aspectRatio;
-        }
-        else if (aspectRatio < 1.0f)
-        {
-            width = height * aspectRatio;
+            scaling = KSImageScalingModeFill;
+            
+            // Calculate dimensions
+            NSNumber *aspectRatioNumber = [self constrainedAspectRatio];
+            [context addDependencyOnObject:self keyPath:@"constrainedAspectRatio"];
+            
+            CGFloat aspectRatio;
+            if (aspectRatioNumber)
+            {
+                aspectRatio = [aspectRatioNumber floatValue];
+            }
+            else
+            {
+                aspectRatio = [[self width] floatValue] / [[self height] floatValue];
+                [context addDependencyOnObject:self keyPath:@"width"];
+                [context addDependencyOnObject:self keyPath:@"height"];
+            }
+            
+            if (aspectRatio > 1.0f)
+            {
+                height = width / aspectRatio;
+            }
+            else if (aspectRatio < 1.0f)
+            {
+                width = height * aspectRatio;
+            }
         }
         
         
@@ -530,7 +538,7 @@
         {
             NSURL *url = [NSURL sandvoxImageURLWithFileURL:[media mediaURL]
                                                       size:NSMakeSize(width, height)
-                                               scalingMode:0
+                                               scalingMode:scaling
                                                 sharpening:0.0f
                                          compressionFactor:1.0f
                                                   fileType:type];

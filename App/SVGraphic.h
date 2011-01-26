@@ -175,8 +175,9 @@ extern NSString *kSVGraphicPboardType;
 
 #pragma mark Thumbnail
 - (void)writeThumbnailImage:(SVHTMLContext *)context
-                   maxWidth:(NSUInteger)width
-                  maxHeight:(NSUInteger)height;
+                   width:(NSUInteger)width
+                  height:(NSUInteger)height
+                  options:(SVThumbnailOptions)options;
 
 
 #pragma mark RSS
