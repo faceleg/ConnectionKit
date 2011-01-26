@@ -20,6 +20,7 @@
 
 - (void)createLink:(NSString *)link userInterface:(BOOL)userInterface;
 - (IBAction)unlink:(id)sender;
+- (IBAction)selectLink:(id)sender;
 
 
 @end

@@ -104,9 +104,8 @@
     DOMRange *selection = [self selectedDOMRange];
     if ([selection collapsed])
     {
-        DOMHTMLAnchorElement *anchor = [selection editableAnchorElement];
-        [selection selectNode:anchor];
-        [self setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
+        [self selectLink:self];
+        selection = [self selectedDOMRange];
     }
     
     // Ask for permission. Not sure what the best delegate method to use is :(
@@ -128,6 +127,17 @@
     else
     {
         NSBeep();
+    }
+}
+
+- (IBAction)selectLink:(id)sender;
+{
+    DOMRange *selection = [self selectedDOMRange];
+    DOMHTMLAnchorElement *anchor = [selection editableAnchorElement];
+    if (anchor)
+    {
+        [selection selectNode:anchor];
+        [self setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
     }
 }
 
