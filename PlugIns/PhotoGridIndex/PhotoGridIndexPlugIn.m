@@ -90,10 +90,10 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
     [context writeThumbnailOfPage:iteratedPage
-                         maxWidth:128
-                        maxHeight:128
-                   imageClassName:nil
-                           dryRun:NO];
+                            width:128
+                           height:128
+                       attributes:nil
+                          options:SVThumbnailScaleAspectFit];
 }
 
 - (void)writeThumbnailPlaceholder
@@ -101,10 +101,10 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
     id<SVPlugInContext> context = [self currentContext]; 
     
     [context writeThumbnailOfPage:nil
-                         maxWidth:128
-                        maxHeight:128
-                   imageClassName:nil
-                           dryRun:NO];
+                            width:128
+                           height:128
+                       attributes:nil
+                          options:SVThumbnailScaleAspectFit];
 }
 
 @end
