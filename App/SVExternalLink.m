@@ -32,9 +32,16 @@
 {
     [self setLinkURLString:[url absoluteString]];
     
-    // Derive title from URL
-    NSString *title = [url guessedTitle];
-    [self setTitle:title];
+	if (url)
+	{
+		// Derive title from URL
+		NSString *title = [url guessedTitle];
+		[self setTitle:title];
+	}
+	else
+	{
+		[self setTitle:NSLocalizedString(@"Untitled", "placeholder text")];
+	}
 }
 
 + (NSSet *)keyPathsForValuesAffectingURL
