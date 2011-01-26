@@ -1432,6 +1432,11 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         WEKWebEditorItem *articleController = [self articleDOMController];
         result = [articleController hitTestDOMNode:[articleController HTMLElement]
                                 draggingPasteboard:[dragInfo draggingPasteboard]];
+        
+        if (result == [self webView])
+        {
+            result = nil;
+        }
     }
     
     
