@@ -395,9 +395,13 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         NSString *preferredFilename = [object preferredFilename];
         if (![collection isFilenameAvailable:preferredFilename forItem:object])
         {
-            [object setFileName:nil];   // needed to fool -suggestedFilename
+            if ([object respondsToSelector:@selector(setFileName:)])
+            {
+                [object setFileName:nil];   // needed to fool -suggestedFilename
+            }
+            
             NSString *suggestedFilename = [object suggestedFilename];
-            [object setFileName:[suggestedFilename stringByDeletingPathExtension]];
+            [object setFilename:suggestedFilename];
         }
     }
     

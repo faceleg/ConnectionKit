@@ -60,6 +60,12 @@
     return result;
 }
 
+- (void)setFilename:(NSString *)filename;
+{
+    [self setFileName:[filename stringByDeletingPathExtension]];
+    // Ignore path extension for now
+}
+
 /*	First we have a simple accessor pair for the file name. This does NOT include the extension.
  */
 @dynamic fileName;
