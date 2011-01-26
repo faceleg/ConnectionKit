@@ -138,7 +138,9 @@ typedef enum {
 
 
 #pragma mark UI
-// Default implementation guesses nib, returning nil if one isn't found. Classname is also guessed, falling back to vanilla SVInspectorViewController. Override if that's not good enough.
+// Default implementation looks for a Template.nib file (xibs work too). If found, a view controller is made and returned.
+// The class name for the controller is guessed, falling back to vanilla SVInspectorViewController.
+// Override this method if either of those behaviours isn't good enough
 + (SVInspectorViewController *)makeInspectorViewController;
 
 
