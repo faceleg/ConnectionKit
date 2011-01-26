@@ -126,7 +126,8 @@ typedef enum {
 @property(nonatomic, copy, readonly) NSURL *mainCSSURL;
 
 
-#pragma mark Preferred ID
+#pragma mark Attributes
+- (void)pushAttributes:(NSDictionary *)attributes;
 - (NSString *)pushPreferredIdName:(NSString *)preferredID;
 
 

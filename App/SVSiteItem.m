@@ -460,52 +460,30 @@
 }
 
 - (BOOL)writeThumbnail:(SVHTMLContext *)context
-              maxWidth:(NSUInteger)width
-             maxHeight:(NSUInteger)height
-        imageClassName:(NSString *)className
-                dryRun:(BOOL)dryRun;
+                 width:(NSUInteger)width
+                height:(NSUInteger)height
+            attributes:(NSDictionary *)attributes  // e.g. custom CSS class
+               options:(SVThumbnailOptions)options;
 {
     // Write placeholder if there's no built-in image
     
     
-    if (dryRun) // just test if there is a thumbnail
+    if (options & SVThumbnailDryRun) // just test if there is a thumbnail
     {
-        return [self writeThumbnailImage:context maxWidth:width maxHeight:height dryRun:dryRun];
+        return [self writeThumbnailImage:context maxWidth:width maxHeight:height dryRun:YES];
     }
     else
     {
         [context pushClassName:@"imageLink"];
         [context startAnchorElementWithPage:self];
         
-        if (className) [(SVHTMLContext *)context pushClassName:className];
-        BOOL result = [self writeThumbnailImage:context maxWidth:width maxHeight:height dryRun:dryRun];
+        if (attributes) [context pushAttributes:attributes];
+        BOOL result = [self writeThumbnailImage:context maxWidth:width maxHeight:height dryRun:NO];
         
         [context endElement];
         
         return result;
     }
-    
-    
-    
-    if ([[self thumbnailType] integerValue] == SVThumbnailTypeNone)
-    {
-        
-    }
-    else
-    {
-        [context pushClassName:@"imageLink"];
-        [context startAnchorElementWithPage:self];
-            
-        if (className) [context pushClassName:className];
-        BOOL result = [self writeThumbnailImage:context maxWidth:width maxHeight:height dryRun:dryRun];
-            
-        [context endElement];
-        
-        return result;
-    }
-    
-    
-    return NO;
 }
 
 - (BOOL)writeThumbnailImage:(SVHTMLContext *)context

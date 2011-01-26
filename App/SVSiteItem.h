@@ -137,6 +137,12 @@ typedef enum {
 
 #pragma mark Thumbnail
 
+- (BOOL)writeThumbnail:(SVHTMLContext *)context
+                 width:(NSUInteger)width
+                height:(NSUInteger)height
+            attributes:(NSDictionary *)attributes  // e.g. custom CSS class
+               options:(SVThumbnailOptions)options;
+
 - (BOOL)writeThumbnailImage:(SVHTMLContext *)context    // support method for subclasses to override
                    maxWidth:(NSUInteger)width           // writes only the image, not anchor
                   maxHeight:(NSUInteger)height

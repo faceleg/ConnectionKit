@@ -9,6 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 
+enum {
+    SVThumbnailDryRun = 1 << 0,         // nothing will actually be written
+    SVThumbnailScaleAspectFit = 1 << 1  // avoid cropping the image
+};
+typedef NSUInteger SVThumbnailOptions;
+
+
 @class SVPlugIn, SVInspectorViewController;
 @protocol SVPage;
 
@@ -122,12 +129,11 @@
 
 
 #pragma mark Page Thumbnails
-// If page is nil, a placeholder image will be substituted in
-- (BOOL)writeThumbnailOfPage:(id <SVPage>)page
-                    maxWidth:(NSUInteger)width
-                   maxHeight:(NSUInteger)height
-              imageClassName:(NSString *)className
-                      dryRun:(BOOL)dryRun;
+- (BOOL)writeThumbnailOfPage:(id <SVPage>)page  // nil page will write a placeholder image
+                       width:(NSUInteger)width
+                      height:(NSUInteger)height
+                  attributes:(NSDictionary *)attributes  // e.g. custom CSS class
+                     options:(SVThumbnailOptions)options;
 
 
 #pragma mark Extra markup

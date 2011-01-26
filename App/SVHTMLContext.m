@@ -811,23 +811,23 @@
                      height:height];
 }
 
-- (BOOL)writeThumbnailOfPage:(id <SVPage>)page
-                    maxWidth:(NSUInteger)width
-                   maxHeight:(NSUInteger)height
-              imageClassName:(NSString *)className
-                      dryRun:(BOOL)dryRun;
+- (BOOL)writeThumbnailOfPage:(SVSiteItem *)page  // nil page will write a placeholder image
+                       width:(NSUInteger)width
+                      height:(NSUInteger)height
+                  attributes:(NSDictionary *)attributes  // e.g. custom CSS class
+                     options:(SVThumbnailOptions)options;
 {
     if (page)
     {
         return [page writeThumbnail:self
-                           maxWidth:width
-                          maxHeight:height
-                     imageClassName:className
-                             dryRun:dryRun];
+                              width:width
+                             height:height
+                         attributes:attributes
+                            options:options];
     }
     else
     {
-        if (!dryRun)
+        if (!(options & SVThumbnailDryRun))
         {
             
             // Write design's example image
