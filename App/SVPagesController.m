@@ -281,7 +281,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         KTPage *firstChild = [self newObjectWithPredecessor:collection followTemplate:NO];
         
         // Insert at right place.
-        [collection addChildItem:firstChild];
+        [[SVPagesController controllerWithPagesInCollection:collection] addObject:firstChild];
         [firstChild release];
         
         // Initial properties
