@@ -11,7 +11,7 @@
 
 enum {
     SVThumbnailDryRun = 1 << 0,         // nothing will actually be written
-    SVThumbnailScaleAspectFit = 1 << 1  // avoid cropping the image
+    SVThumbnailScaleAspectFit = 1 << 1  // without this, image will be cropped to fill width & height
 };
 typedef NSUInteger SVThumbnailOptions;
 
