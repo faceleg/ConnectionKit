@@ -719,7 +719,7 @@
     return [[self selectionIndexPaths] lastObject];
 }
 
-- (NSArray *)XselectedObjects;
+- (NSArray *)selectedObjects;
 {
     NSArray *result = [super selectedObjects];
     return [result valueForKey:@"representedObject"];
