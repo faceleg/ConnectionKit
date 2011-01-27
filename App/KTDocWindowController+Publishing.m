@@ -34,7 +34,8 @@
 
 
 @interface KTDocWindowController (PublishingPrivate)
-- (BOOL)shouldPublish;
+- (BOOL)shouldPublishWithWarningIfNo;
+- (BOOL)tryToEndEditing;
 - (Class)publishingEngineClass;
 @end
 
@@ -46,9 +47,33 @@
 
 #pragma mark Publishing
 
+- (void)maybeShowRestrictedPublishingAlert;
+{
+	if (nil == gRegistrationString)	// check registration
+	{
+		// Further check... see if we have too many pages to publish
+		NSArray *pages = [[[self document] managedObjectContext] fetchAllObjectsForEntityForName:@"Page" error:NULL];
+		unsigned int pageCount = 0;
+		if ( nil != pages )
+		{
+			pageCount = [pages count]; // according to mmalc, this is the only way to get this kind of count
+		}
+		
+		if (pageCount > kMaxNumberOfFreePublishedPages)
+		{
+			[KSSilencingConfirmSheet alertWithWindow:[self window]
+										silencingKey:@"shutUpDemoUploadWarning"
+											   title:NSLocalizedString(@"Restricted Publishing", @"title of alert")
+											  format:NSLocalizedString(@"You are running the free edition of Sandvox. Only the first %d pages will be exported or uploaded. To publish additional pages, you will need to purchase a license. To publish Raw HTML, you will need to get the Pro edition.",@""), kMaxNumberOfFreePublishedPages];
+		}
+	}
+}
+
 - (IBAction)publishSiteChanges:(id)sender
 {
-    if (![self shouldPublish]) return;
+	if (![self tryToEndEditing]) return;
+	[self maybeShowRestrictedPublishingAlert];
+    if (![self shouldPublishWithWarningIfNo]) return;
     
     
     // Start publishing
@@ -66,7 +91,9 @@
 
 - (IBAction)publishSiteAll:(id)sender
 {
-    if (![self shouldPublish]) return;
+	if (![self tryToEndEditing]) return;
+	[self maybeShowRestrictedPublishingAlert];
+    if (![self shouldPublishWithWarningIfNo]) return;
     
     
     // Start publishing
@@ -98,34 +125,17 @@
     }
 }
 
-/*  Disallow publishing if the user hasn't been through host setup yet
- */
-- (BOOL)shouldPublish
+- (BOOL)tryToEndEditing;
 {
-	if (nil == gRegistrationString)	// check registration
-	{
-		// Further check... see if we have too many pages to publish
-		NSArray *pages = [[[self document] managedObjectContext] fetchAllObjectsForEntityForName:@"Page" error:NULL];
-		unsigned int pageCount = 0;
-		if ( nil != pages )
-		{
-			pageCount = [pages count]; // according to mmalc, this is the only way to get this kind of count
-		}
-		
-		if (pageCount > kMaxNumberOfFreePublishedPages)
-		{
-			[KSSilencingConfirmSheet alertWithWindow:[self window]
-										silencingKey:@"shutUpDemoUploadWarning"
-											   title:NSLocalizedString(@"Restricted Publishing", @"title of alert")
-											  format:NSLocalizedString(@"You are running the free edition of Sandvox. Only the first %d pages will be exported or uploaded. To publish additional pages, you will need to purchase a license. To publish Raw HTML, you will need to get the Pro edition.",@""), kMaxNumberOfFreePublishedPages];
-		}
-	}
-	
-    
     BOOL result = [[self pagesController] commitEditing];
     if (result) result = [[[[self webContentAreaController] webEditorViewController] graphicsController] commitEditing];
-
-    
+	return result;
+}
+/*  Disallow publishing if the user hasn't been through host setup yet
+ */
+- (BOOL)shouldPublishWithWarningIfNo
+{
+    BOOL result = NO;
     
     // Check host setup
     KTHostProperties *hostProperties = [[[self document] site] hostProperties];
