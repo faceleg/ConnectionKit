@@ -86,6 +86,7 @@
 
 - (void)awakeFromNew;
 {
+    [[self container] setConstrainProportions:NO];
 	self.controller = YES;
 	self.preload = kPreloadAuto;
 	self.autoplay = NO;
@@ -101,6 +102,7 @@
 - (void)makeOriginalSize;
 {
     [self setWidth:[NSNumber numberWithUnsignedInt:200] height:nil];
+    [[self container] setConstrainProportions:NO];
 }
 
 #pragma mark Metrics
