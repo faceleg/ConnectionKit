@@ -12,10 +12,15 @@
 @interface KTSiteOutlineView : NSOutlineView
 {
   @private
-    BOOL    _drawingRows;
+    // Layout/drawing
+    CGFloat _homePageX;
+    BOOL    _isDrawingRows;
     BOOL    _isDrawing;
-	BOOL    _isReloadingData;
+	
+    // Data
+    BOOL    _isReloadingData;
     
+    // Drag and drop
 	NSIndexSet *_draggedRows;
 }
 

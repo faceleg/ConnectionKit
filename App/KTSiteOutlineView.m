@@ -40,7 +40,7 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
     // Only takes effect during drawing of the row or highlight. Ensures:
     //  A.  Drop indicator draws in correct position
     //  B.  Cell rect marked for display includes divider
-    if (_drawingRows && row == 0)
+    if (_isDrawingRows && row == 0)
     {
         result.origin.y += ICON_GROUP_ROW_SPACING;
         result.size.height = [self rowHeight] + [self intercellSpacing].height; // standard size
@@ -51,27 +51,27 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 
 - (void)drawRow:(NSInteger)row clipRect:(NSRect)clipRect;
 {
-    _drawingRows = YES;
+    _isDrawingRows = YES;
     @try
     {
         [super drawRow:row clipRect:clipRect];
     }
     @finally
     {
-        _drawingRows = NO;
+        _isDrawingRows = NO;
     }
 }
 
 - (void)highlightSelectionInClipRect:(NSRect)clipRect;
 {
-    _drawingRows = YES;
+    _isDrawingRows = YES;
     @try
     {
         [super highlightSelectionInClipRect:clipRect];
     }
     @finally
     {
-        _drawingRows = NO;
+        _isDrawingRows = NO;
     }
 }
 
@@ -99,11 +99,18 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
     NSRect result = [super frameOfCellAtColumn:columnIndex row:rowIndex];
     
     // Shunt all but the home page leftwards so top-level pages sit level with it
-    if (rowIndex > 0)
+    if (rowIndex == 0)
     {
-        CGFloat indent = [self indentationPerLevel];
-        result.origin.x -= indent;
-        result.size.width += indent;
+        _homePageX = result.origin.x;   // store for future calcs
+    }
+    else
+    {
+        NSUInteger levelToDrawAt = ([super levelForRow:rowIndex] - 1);  // NEED to call super!
+        CGFloat left = ([self indentationPerLevel] * levelToDrawAt) + _homePageX;
+        
+        // Adjust width so that right-hand edge remains the same
+        result.size.width += result.origin.x - left;
+        result.origin.x = left;
     }
     return result;
 }
