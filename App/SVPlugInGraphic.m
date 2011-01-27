@@ -358,9 +358,13 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (BOOL)isConstrainProportionsEditable;
 {
-    return ([self width] &&
-            [self height] &&
+    return ([[self plugIn] width] &&
+            [[self plugIn] height] &&
             [[self plugIn] respondsToSelector:@selector(setConstrainedAspectRatio:)]);
+}
++ (NSSet *)keyPathsForValuesAffectingIsConstrainProportionsEditable;
+{
+    return [NSSet setWithObjects:@"plugIn.width", @"plugIn.height", nil];
 }
 
 - (NSNumber *)constrainedProportionsRatio; { return [[self plugIn] constrainedAspectRatio]; }
