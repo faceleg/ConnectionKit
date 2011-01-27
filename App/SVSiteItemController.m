@@ -146,6 +146,15 @@
     return result;
 }
 
+- (BOOL)usesCustomThumbnail;
+{
+    return [self thumbnailType] == SVThumbnailTypeCustom;
+}
++ (NSSet *)keyPathsForValuesAffectingUsesCustomThumbnail;
+{
+    return [NSSet setWithObject:@"thumbnailType"];
+}
+
 #pragma mark Sub-Controllers
 
 - (NSArrayController *)childPagesToIndexController;

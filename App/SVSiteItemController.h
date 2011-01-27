@@ -30,6 +30,7 @@
 @property(nonatomic, retain, readonly) id <SVMedia> thumbnailMedia;
 @property(nonatomic) SVThumbnailType thumbnailType;
 - (BOOL)picksThumbnailFromPage;
+- (BOOL)usesCustomThumbnail;
 
 @property(nonatomic, readonly) NSArrayController *childPagesToIndexController;
 
