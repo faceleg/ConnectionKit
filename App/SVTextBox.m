@@ -36,6 +36,15 @@
     [self setBody:[SVRichText insertPageletBodyIntoManagedObjectContext:[self managedObjectContext]]];
 }
 
+- (void)didAddToPage:(id <SVPage>)page;
+{
+    [super didAddToPage:page];
+    
+    // Size any embedded images to fit. #105069
+    NSSet *graphics = [[[self body] attachments] valueForKey:@"graphic"];
+    [graphics makeObjectsPerformSelector:_cmd withObject:page];
+}
+
 #pragma mark Intro & Caption
 
 - (BOOL)canHaveCaption; { return NO; }

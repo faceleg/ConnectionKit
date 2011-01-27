@@ -46,7 +46,15 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (void)awakeFromNew; { }
 
-- (void)didAddToPage:(id <SVPage>)page; { }
+- (void)didAddToPage:(id <SVPage>)page;
+{
+    // Size any embedded images to fit. #105069
+    NSSet *graphics = [[[self introduction] attachments] valueForKey:@"graphic"];
+    [graphics makeObjectsPerformSelector:_cmd withObject:page];
+    
+    graphics = [[[self caption] attachments] valueForKey:@"graphic"];
+    [graphics makeObjectsPerformSelector:_cmd withObject:page];
+}
 
 #pragma mark Placement
 
