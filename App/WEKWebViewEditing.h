@@ -9,6 +9,9 @@
 #import <WebKit/WebKit.h>
 
 
+@class SVLink;
+
+
 @interface WebView (WEKWebViewEditing)
 
 #pragma mark Links
@@ -18,7 +21,7 @@
 - (NSArray *)selectedAnchorElements;
 - (NSString *)linkValue;
 
-- (void)createLink:(NSString *)link userInterface:(BOOL)userInterface;
+- (void)createLink:(SVLink *)link userInterface:(BOOL)userInterface;
 - (IBAction)unlink:(id)sender;
 - (IBAction)selectLink:(id)sender;
 

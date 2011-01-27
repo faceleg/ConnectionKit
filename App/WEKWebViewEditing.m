@@ -8,6 +8,8 @@
 
 #import "WEKWebViewEditing.h"
 
+#import "SVLink.h"
+
 #import "DOMRange+Karelia.h"
 
 
@@ -81,7 +83,7 @@
     return result;
 }
 
-- (void)createLink:(NSString *)link userInterface:(BOOL)userInterface;
+- (void)createLink:(SVLink *)link userInterface:(BOOL)userInterface;
 {
     DOMRange *selection = [self selectedDOMRange];
     if ([selection collapsed])
@@ -94,17 +96,43 @@
         {
             // Fall back to turning the nearest word into a link
             [self selectWord:self];
+            selection = [self selectedDOMRange];
         }
     }
     
+    
     DOMDocument *document = [[self mainFrame] DOMDocument];
-    if ([document execCommand:@"createLink" userInterface:userInterface value:link])
+    if ([selection collapsed])
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+        // Create our own link so it has correct text content. #104879
+        DOMHTMLAnchorElement *anchor = (DOMHTMLAnchorElement *)[document createElement:@"A"];
+        [anchor setHref:[link URLString]];
+        
+        DOMText *text = [document createTextNode:[link targetDescription]];
+        [anchor appendChild:text];
+        
+        // Ask for permission
+        if ([[self editingDelegate] webView:self shouldInsertNode:anchor replacingDOMRange:selection givenAction:WebViewInsertActionTyped])
+        {
+            [selection insertNode:anchor];
+            
+            [selection selectNode:anchor];
+            [self setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+        }
     }
     else
     {
-        NSBeep();
+        // Let the system take care of turning the current selection into a link
+        if ([document execCommand:@"createLink" userInterface:userInterface value:[link URLString]])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+        }
+        else
+        {
+            NSBeep();
+        }
     }
 }
 

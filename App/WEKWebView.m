@@ -63,7 +63,7 @@
         if ([[self webEditor] shouldChangeTextInDOMRange:selection])
         {
             SVLink *link = [sender selectedLink];
-            [self createLink:[link URLString] userInterface:NO];
+            [self createLink:link userInterface:NO];
         }
     }
 }
