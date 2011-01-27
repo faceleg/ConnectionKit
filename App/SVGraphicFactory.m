@@ -135,20 +135,17 @@
     {
         NSString *path = [[item URL] path];
         type = [[NSWorkspace sharedWorkspace] typeOfFile:path error:NULL];
-    }
-    if (!type) type = [NSString UTIForFilenameExtension:[URL ks_pathExtension]];
-    
-    
-    if (type)
-    {
-        for (NSString *aType in [SVMediaGraphic allowedTypes])
+        if (!type) type = [NSString UTIForFilenameExtension:[URL ks_pathExtension]];
+        
+        if (type)
         {
-            if ([[NSWorkspace sharedWorkspace] type:type conformsToType:aType])
+            if ([type ks_conformsToOneOfTypes:[SVMediaGraphic allowedTypes]])
             {
                 return SVPasteboardPriorityTypical;
             }
-        }
+         }
     }
+    
     return SVPasteboardPriorityNone;
 }
 
