@@ -2310,7 +2310,8 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     {
         if (action == WebViewInsertActionDropped)
         {
-            result = [self webView:webView shouldDeleteDOMRange:[self selectedDOMRange]];
+            DOMRange *selection = [self selectedDOMRange];
+            if (selection) result = [self webView:webView shouldDeleteDOMRange:selection];
             
             if (result)
             {
