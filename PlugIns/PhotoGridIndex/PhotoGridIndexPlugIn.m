@@ -93,7 +93,7 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
                             width:128
                            height:128
                        attributes:nil
-                          options:SVThumbnailScaleAspectFit];
+                          options:(SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)];
 }
 
 - (void)writeThumbnailPlaceholder
@@ -104,7 +104,7 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
                             width:128
                            height:128
                        attributes:nil
-                          options:SVThumbnailScaleAspectFit];
+                          options:(SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)];
 }
 
 @end
