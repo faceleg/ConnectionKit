@@ -127,9 +127,17 @@
 
 - (NSUInteger)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
 {
-    NSString *path = [[item URL] path];
-    NSString *type = [[NSWorkspace sharedWorkspace] typeOfFile:path error:NULL];
-    if (!type) type = [NSString UTIForFilenameExtension:[path pathExtension]];
+    // Try to figure type
+    NSURL *URL = [item URL];
+    NSString *type = nil;
+    
+    if ([URL isFileURL])
+    {
+        NSString *path = [[item URL] path];
+        type = [[NSWorkspace sharedWorkspace] typeOfFile:path error:NULL];
+    }
+    if (!type) type = [NSString UTIForFilenameExtension:[URL ks_pathExtension]];
+    
     
     if (type)
     {
