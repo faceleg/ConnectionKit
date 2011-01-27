@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1255"/>
+			<integer value="1273"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -967,25 +967,6 @@
 										<string key="NSTitle">New Page</string>
 										<object class="NSMutableArray" key="NSMenuItems">
 											<bool key="EncodedWithXMLCoder">YES</bool>
-											<object class="NSMenuItem" id="353037223">
-												<reference key="NSMenu" ref="690280364"/>
-												<string key="NSTitle">Blank Page</string>
-												<string key="NSKeyEquiv">N</string>
-												<int key="NSKeyEquivModMask">1048576</int>
-												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="73959282"/>
-												<reference key="NSMixedImage" ref="49718828"/>
-											</object>
-											<object class="NSMenuItem" id="809715087">
-												<reference key="NSMenu" ref="690280364"/>
-												<bool key="NSIsDisabled">YES</bool>
-												<bool key="NSIsSeparator">YES</bool>
-												<string key="NSTitle"/>
-												<string key="NSKeyEquiv"/>
-												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="73959282"/>
-												<reference key="NSMixedImage" ref="49718828"/>
-											</object>
 											<object class="NSMenuItem" id="532765352">
 												<reference key="NSMenu" ref="690280364"/>
 												<bool key="NSIsDisabled">YES</bool>
@@ -2762,14 +2743,6 @@
 					<int key="connectionID">1271</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">addPage:</string>
-						<reference key="source" ref="464856506"/>
-						<reference key="destination" ref="353037223"/>
-					</object>
-					<int key="connectionID">1288</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oNewPageMenu</string>
 						<reference key="source" ref="205882656"/>
@@ -2904,14 +2877,6 @@
 						<reference key="destination" ref="917095661"/>
 					</object>
 					<int key="connectionID">1350</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">oInsertBlankPageMenuItem</string>
-						<reference key="source" ref="205882656"/>
-						<reference key="destination" ref="353037223"/>
-					</object>
-					<int key="connectionID">1352</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -4205,8 +4170,6 @@
 						<reference key="object" ref="690280364"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="353037223"/>
-							<reference ref="809715087"/>
 							<reference ref="532765352"/>
 							<reference ref="318837517"/>
 							<reference ref="646545510"/>
@@ -4219,16 +4182,6 @@
 						<int key="objectID">1275</int>
 						<reference key="object" ref="607508562"/>
 						<reference key="parent" ref="712257728"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1279</int>
-						<reference key="object" ref="353037223"/>
-						<reference key="parent" ref="690280364"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1280</int>
-						<reference key="object" ref="809715087"/>
-						<reference key="parent" ref="690280364"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1281</int>
@@ -4466,8 +4419,6 @@
 					<string>1273.IBEditorWindowLastContentRect</string>
 					<string>1273.IBPluginDependency</string>
 					<string>1275.IBPluginDependency</string>
-					<string>1279.IBPluginDependency</string>
-					<string>1280.IBPluginDependency</string>
 					<string>1281.IBPluginDependency</string>
 					<string>1282.IBPluginDependency</string>
 					<string>1283.IBPluginDependency</string>
@@ -4827,9 +4778,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{790, 568}, {195, 113}}</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>{{790, 598}, {157, 83}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5843,14 +5792,6 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">KSArrayController</string>
-					<string key="superclassName">NSArrayController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../Shared/AppKit/KSArrayController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">KSBorderlessWindow</string>
 					<string key="superclassName">NSWindow</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -6593,6 +6534,14 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">KSTreeController</string>
+					<string key="superclassName">NSTreeController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../../Shared/AppKit/KSTreeController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">KSViewController</string>
 					<string key="superclassName">NSResponder</string>
 					<object class="NSMutableDictionary" key="outlets">
@@ -6787,6 +6736,7 @@
 							<string>editRawHTMLInSelectedBlock:</string>
 							<string>exportSite:</string>
 							<string>exportSiteAgain:</string>
+							<string>groupAsCollection:</string>
 							<string>nextDesign:</string>
 							<string>previousDesign:</string>
 							<string>publishSiteAll:</string>
@@ -6804,6 +6754,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -6832,6 +6783,7 @@
 							<string>editRawHTMLInSelectedBlock:</string>
 							<string>exportSite:</string>
 							<string>exportSiteAgain:</string>
+							<string>groupAsCollection:</string>
 							<string>nextDesign:</string>
 							<string>previousDesign:</string>
 							<string>publishSiteAll:</string>
@@ -6863,6 +6815,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">exportSiteAgain:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">groupAsCollection:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -6951,7 +6907,7 @@
 							<string>KTLinkSourceView</string>
 							<string>NSTextField</string>
 							<string>KSBorderlessWindow</string>
-							<string>SVPagesController</string>
+							<string>SVPagesTreeController</string>
 							<string>SVSiteOutlineViewController</string>
 							<string>SVWebContentAreaController</string>
 						</object>
@@ -7013,7 +6969,7 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">pagesController</string>
-								<string key="candidateClassName">SVPagesController</string>
+								<string key="candidateClassName">SVPagesTreeController</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">siteOutlineViewController</string>
@@ -7455,7 +7411,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSArrayController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="883386200">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/KSCollectionController.h</string>
 					</object>
@@ -7550,13 +7506,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../KSThreadProxy/KSThreadProxy.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../Shared/AppKit/KSSilencingConfirmSheet.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -7758,6 +7707,10 @@
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
 					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSTreeController</string>
+					<reference key="sourceIdentifier" ref="883386200"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSView</string>
@@ -8095,7 +8048,6 @@
 							<string>oFindSeparator</string>
 							<string>oFindSubmenu</string>
 							<string>oIndexesMenu</string>
-							<string>oInsertBlankPageMenuItem</string>
 							<string>oInsertExternalLinkMenuItem</string>
 							<string>oInsertHTMLTextMenuItem</string>
 							<string>oInsertRawHTMLMenuItem</string>
@@ -8133,7 +8085,6 @@
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
 							<string>NSMenu</string>
 							<string>NSMenu</string>
 							<string>NSMenuItem</string>
@@ -8168,7 +8119,6 @@
 							<string>oFindSeparator</string>
 							<string>oFindSubmenu</string>
 							<string>oIndexesMenu</string>
-							<string>oInsertBlankPageMenuItem</string>
 							<string>oInsertExternalLinkMenuItem</string>
 							<string>oInsertHTMLTextMenuItem</string>
 							<string>oInsertRawHTMLMenuItem</string>
@@ -8253,10 +8203,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">oIndexesMenu</string>
 								<string key="candidateClassName">NSMenu</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">oInsertBlankPageMenuItem</string>
-								<string key="candidateClassName">NSMenuItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oInsertExternalLinkMenuItem</string>
@@ -8417,11 +8363,13 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>closeSheet:</string>
 							<string>configureComments:</string>
+							<string>windowHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
 							<string>NSWindowController</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -8430,6 +8378,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>closeSheet:</string>
 							<string>configureComments:</string>
+							<string>windowHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -8440,6 +8389,10 @@
 							<object class="IBActionInfo">
 								<string key="name">configureComments:</string>
 								<string key="candidateClassName">NSWindowController</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">windowHelp:</string>
+								<string key="candidateClassName">id</string>
 							</object>
 						</object>
 					</object>
@@ -8523,9 +8476,11 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>cancelSheet:</string>
 							<string>chooseDesign:</string>
+							<string>windowHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 						</object>
@@ -8536,6 +8491,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>cancelSheet:</string>
 							<string>chooseDesign:</string>
+							<string>windowHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -8545,6 +8501,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">chooseDesign:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">windowHelp:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>
@@ -8610,11 +8570,13 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>closeSheet:</string>
 							<string>configureGoogle:</string>
+							<string>windowHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
 							<string>NSWindowController</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -8623,6 +8585,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>closeSheet:</string>
 							<string>configureGoogle:</string>
+							<string>windowHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -8633,6 +8596,10 @@
 							<object class="IBActionInfo">
 								<string key="name">configureGoogle:</string>
 								<string key="candidateClassName">NSWindowController</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">windowHelp:</string>
+								<string key="candidateClassName">id</string>
 							</object>
 						</object>
 					</object>
@@ -8697,8 +8664,8 @@
 					<reference key="sourceIdentifier" ref="238281729"/>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">SVPagesController</string>
-					<string key="superclassName">KSArrayController</string>
+					<string key="className">SVPagesTreeController</string>
+					<string key="superclassName">KSTreeController</string>
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">groupAsCollection:</string>
 						<string key="NS.object.0">id</string>
@@ -8712,7 +8679,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">SVPagesController.h</string>
+						<string key="minorKey">SVPagesTreeController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -9014,7 +8981,7 @@
 							</object>
 						</object>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="440302361">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVWebEditorViewController.h</string>
 					</object>
@@ -9030,7 +8997,7 @@
 							<string>openLicensing:</string>
 							<string>openScreencast:</string>
 							<string>openSelectedRecentDocument:</string>
-							<string>showHelp:</string>
+							<string>showDiscoverHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -9049,7 +9016,7 @@
 							<string>openLicensing:</string>
 							<string>openScreencast:</string>
 							<string>openSelectedRecentDocument:</string>
-							<string>showHelp:</string>
+							<string>showDiscoverHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -9070,7 +9037,7 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">showHelp:</string>
+								<string key="name">showDiscoverHelp:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>
@@ -9205,6 +9172,10 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WEKWebEditorItem</string>
+					<reference key="sourceIdentifier" ref="440302361"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WEKWebEditorItem</string>
 					<string key="superclassName">WEKDOMController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -9292,14 +9263,35 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">WebView</string>
 					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">unlink:</string>
-						<string key="NS.object.0">id</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>selectLink:</string>
+							<string>unlink:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">unlink:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">unlink:</string>
-							<string key="candidateClassName">id</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>selectLink:</string>
+							<string>unlink:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">selectLink:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">unlink:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -10456,6 +10448,14 @@
 					<string key="className">NSToolbarItem</string>
 					<string key="superclassName">NSObject</string>
 					<reference key="sourceIdentifier" ref="25934560"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSTreeController</string>
+					<string key="superclassName">NSObjectController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSTreeController.h</string>
+					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSUserDefaultsController</string>

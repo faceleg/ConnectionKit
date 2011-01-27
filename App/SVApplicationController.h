@@ -74,7 +74,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	IBOutlet NSMenuItem		*oAfterConfigureGoogleMenuItem;
 	
 	IBOutlet NSMenuItem		*oInsertExternalLinkMenuItem;
-	IBOutlet NSMenuItem		*oInsertBlankPageMenuItem;
 	
     // we have pages and collections (summary pages)
     IBOutlet NSMenu			*oAddPageMenu;

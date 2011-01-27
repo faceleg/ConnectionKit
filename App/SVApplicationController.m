@@ -963,7 +963,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             [insertMenu insertItem:item atIndex:index]; 
             
 			// Presets
-			[SVPageTemplate populateMenu:[oInsertBlankPageMenuItem menu] withPageTemplates:[SVPageTemplate pageTemplates] index:2 includeIcons:NO];
+			[SVPageTemplate populateMenu:[oInsertExternalLinkMenuItem menu] withPageTemplates:[SVPageTemplate pageTemplates] index:0 includeIcons:NO];
 
             // Text box item
             factory = [SVGraphicFactory textBoxFactory];
