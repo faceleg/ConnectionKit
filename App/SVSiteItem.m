@@ -266,7 +266,7 @@
 	NSURL *result = [[[self site] hostProperties] siteURL];
 	if (!result)
 	{
-		result = [NSURL URLWithString:@"http://www.EXAMPLE.com/"];
+		result = [NSURL URLWithString:@"http://www.example.com/"];
 	}
 	// What if this contains an index.html at the end?
 	return result;
