@@ -485,13 +485,16 @@
     }
     else
     {
-        [context pushClassName:@"imageLink"];
-        [context startAnchorElementWithPage:self];
+        if (options & SVThumbnailLinkToPage)
+        {
+            [context pushClassName:@"imageLink"];
+            [context startAnchorElementWithPage:self];
+        }
         
         if (attributes) [context pushAttributes:attributes];
         BOOL result = [self writeThumbnailImage:context width:width height:height options:options];
         
-        [context endElement];
+        if (options & SVThumbnailLinkToPage) [context endElement];
         
         return result;
     }
