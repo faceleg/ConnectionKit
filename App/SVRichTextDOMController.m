@@ -312,12 +312,20 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         [textAttachment setWrapLeft:YES];  // believe it, this is the right call!
     }
     
+    
     // Create controller for graphic and hook up to imported node
     SVMediaGraphicDOMController *controller = (SVMediaGraphicDOMController *)[image newDOMController];
     [controller awakeFromHTMLContext:[self HTMLContext]];
     [controller setHTMLElement:imageElement];
     
     [self addChildWebEditorItem:controller];
+    
+    
+    // Apply size limit
+    NSSize size = NSMakeSize([[image width] floatValue], [[image height] floatValue]);
+    size = [controller constrainSize:size handle:kSVGraphicNoHandle snapToFit:YES];
+    [image setWidth:[NSNumber numberWithInt:size.width]];
+    [image setHeight:[NSNumber numberWithInt:size.height]];
     
     
     // Generate new DOM node to match what model would normally generate
