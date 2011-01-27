@@ -674,7 +674,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
                 size.height = size.width / [ratio floatValue];
             }
         }
-        else
+        else if (resizingHeight)
         {
             size.width = size.height * [ratio floatValue];
         }
