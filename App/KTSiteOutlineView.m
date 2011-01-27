@@ -75,8 +75,6 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
     }
 }
 
-#pragma mark Dragging
-
 #pragma mark Indentation
 
 /*  We want child pages of root to appear as if they were top-level items. Otherwise, there's quite a waste of outline space.
