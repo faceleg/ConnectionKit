@@ -72,7 +72,9 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     
     
     DOMHTMLElement *element = [self HTMLElement];
+    
     NSObject *object = [self representedObject];
+    if ([object isKindOfClass:[SVPlugInGraphic class]]) object = [(SVPlugInGraphic *)object plugIn];
     
     
     // Push size change into DOM
