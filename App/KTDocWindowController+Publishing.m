@@ -25,6 +25,7 @@
 #import "KSSilencingConfirmSheet.h"
 
 #import "NSObject+Karelia.h"
+#import "NSInvocation+Karelia.h"
 #import "NSManagedObjectContext+Karelia.h"
 #import "KSURLUtilities.h"
 #import "NSWorkspace+Karelia.h"
@@ -47,7 +48,7 @@
 
 #pragma mark Publishing
 
-- (void)maybeShowRestrictedPublishingAlert;
+- (void)maybeShowRestrictedPublishingAlertAndContinueWith:(SEL)aSelector;
 {
 	if (nil == gRegistrationString)	// check registration
 	{
@@ -61,21 +62,43 @@
 		
 		if (pageCount > kMaxNumberOfFreePublishedPages)
 		{
-			[KSSilencingConfirmSheet alertWithWindow:[self window]
-										silencingKey:@"shutUpDemoUploadWarning"
+			KSSilencingConfirmSheet *sheet = [[[KSSilencingConfirmSheet alloc]
+											   initWithWindow:[self window]
+											   silencingKey:@"shutUpDemoUploadWarning"
+											   canCancel:YES
+											   OKButton:nil
+											   silence:nil	// default button
 											   title:NSLocalizedString(@"Restricted Publishing", @"title of alert")
-											  format:NSLocalizedString(@"You are running the free edition of Sandvox. Only the first %d pages will be exported or uploaded. To publish additional pages, you will need to purchase a license. To publish Raw HTML, you will need to get the Pro edition.",@""), kMaxNumberOfFreePublishedPages];
+											   message:
+											   [NSString stringWithFormat:NSLocalizedString(@"You are running the free edition of Sandvox. Only the first %d pages will be exported or uploaded. To publish additional pages, you will need to purchase a license.",@""), kMaxNumberOfFreePublishedPages]
+											   ] autorelease];
+			
+			sheet.invocation = [NSInvocation invocationWithSelector:aSelector target:self];
+			sheet.target = self;
+
+			[sheet doAlert];		// may or may not actually alert, but the invocation will happen
 		}
+		else
+		{
+			NSInvocation *nextStep = [NSInvocation invocationWithSelector:aSelector target:self];
+			[nextStep invoke];
+		}
+	}
+	else
+	{
+		NSInvocation *nextStep = [NSInvocation invocationWithSelector:aSelector target:self];
+		[nextStep invoke];
 	}
 }
 
 - (IBAction)publishSiteChanges:(id)sender
 {
 	if (![self tryToEndEditing]) return;
-	[self maybeShowRestrictedPublishingAlert];
     if (![self shouldPublishWithWarningIfNo]) return;
-    
-    
+	[self maybeShowRestrictedPublishingAlertAndContinueWith:@selector(_publishSiteChanges)];
+}
+- (void)_publishSiteChanges
+{
     // Start publishing
 	Class publishingEngineClass = [self publishingEngineClass];
     KTPublishingEngine *publishingEngine = [[publishingEngineClass alloc] initWithSite:[[self document] site]
@@ -92,10 +115,11 @@
 - (IBAction)publishSiteAll:(id)sender
 {
 	if (![self tryToEndEditing]) return;
-	[self maybeShowRestrictedPublishingAlert];
     if (![self shouldPublishWithWarningIfNo]) return;
-    
-    
+	[self maybeShowRestrictedPublishingAlertAndContinueWith:@selector(_publishSiteChanges)];
+}
+- (void)_publishSiteAll
+{
     // Start publishing
     Class publishingEngineClass = [self publishingEngineClass];
     KTPublishingEngine *publishingEngine = [[publishingEngineClass alloc] initWithSite:[[self document] site]
