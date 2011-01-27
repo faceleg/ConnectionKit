@@ -138,9 +138,21 @@
     [context startAnchorElementWithHref:[self URLString] title:nil target:nil rel:nil];
 }
 
+- (DOMElement *)createDOMElementInDocument:(DOMDocument *)document;
+{
+    // Create our own link so it has correct text content. #104879
+    DOMHTMLAnchorElement *result = (DOMHTMLAnchorElement *)[document createElement:@"A"];
+    [result setHref:[self URLString]];
+    
+    DOMText *text = [document createTextNode:[self targetDescription]];
+    [result appendChild:text];
+    
+    return result;
+}
+
 #pragma mark Description
 
--(NSString *) description;
+- (NSString *)description;
 {
     return [[super description] stringByAppendingFormat:@" %@", [self URLString]];
 }

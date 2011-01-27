@@ -105,11 +105,7 @@
     if ([selection collapsed])
     {
         // Create our own link so it has correct text content. #104879
-        DOMHTMLAnchorElement *anchor = (DOMHTMLAnchorElement *)[document createElement:@"A"];
-        [anchor setHref:[link URLString]];
-        
-        DOMText *text = [document createTextNode:[link targetDescription]];
-        [anchor appendChild:text];
+        DOMElement *anchor = [link createDOMElementInDocument:document];
         
         // Ask for permission
         if ([[self editingDelegate] webView:self shouldInsertNode:anchor replacingDOMRange:selection givenAction:WebViewInsertActionTyped])

@@ -56,6 +56,7 @@ typedef enum {
 
 #pragma mark HTML
 - (void)writeStartTagToContext:(SVHTMLContext *)context;
+- (DOMElement *)createDOMElementInDocument:(DOMDocument *)document;
 
 
 @end
