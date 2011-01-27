@@ -390,7 +390,7 @@ extern NSUInteger kLargeMediaTruncationThreshold;
                                 width:64
                                height:64
                            attributes:nil
-                              options:(SVThumbnailDryRun | SVThumbnailScaleAspectFit)])
+                              options:(SVThumbnailDryRun | SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)])
     {
         [context startElement:@"div" className:@"article-thumbnail"];
         
@@ -398,7 +398,7 @@ extern NSUInteger kLargeMediaTruncationThreshold;
                                 width:64
                                height:64
                            attributes:nil
-                              options:SVThumbnailScaleAspectFit];
+                              options:(SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)];
         
         [context endElement];
     }
