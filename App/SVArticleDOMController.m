@@ -569,6 +569,39 @@
     return result;
 }
 
+- (DOMRange *)webEditorSelectionDOMRangeForProposedSelection:(DOMRange *)proposedRange
+                                                    affinity:(NSSelectionAffinity)selectionAffinity
+                                              stillSelecting:(BOOL)flag;
+{
+    DOMRange *result = [super webEditorSelectionDOMRangeForProposedSelection:proposedRange
+                                                                    affinity:selectionAffinity
+                                                              stillSelecting:flag];
+    
+    BOOL changed = NO;
+    
+    // If user tries to select paragraph, WebKit has a nasty tendency to include any following block-level graphics. We'll deselect them
+    DOMNode *penultimateNode = [[result endContainer] previousSibling];
+    if ([penultimateNode parentNode] == [self innerTextHTMLElement])
+    {
+        WEKWebEditorItem *controller = [self hitTestDOMNode:penultimateNode];
+        while (controller != self)
+        {
+            [result setEndBefore:penultimateNode]; changed = YES;
+            
+            penultimateNode = [penultimateNode previousSibling];
+            controller = [self hitTestDOMNode:penultimateNode];
+        }
+    }
+    
+    
+    if (changed && result == proposedRange)
+    {
+        // Have to make a copy to fool caller
+        result = [result cloneRange];
+    }
+    return result;
+}
+
 #pragma mark Updating
 
 - (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
