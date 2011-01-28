@@ -8,12 +8,15 @@
 
 #import "SVDownloadSiteItem.h"
 
+#import "SVHTMLContext.h"
 #import "SVMediaRecord.h"
 #import "KTPage+Paths.h"
 #import "SVPublisher.h"
 
 #import "NSData+Karelia.h"
 #import "NSString+Karelia.h"
+
+#import "KSURLUtilities.h"
 
 
 @implementation SVDownloadSiteItem
@@ -42,6 +45,35 @@
 - (id)titleBox; { return NSNotApplicableMarker; } // #103991
 
 #pragma mark Thumbnail
+
+// #105408 - in progress
+- (BOOL)XwriteThumbnailImage:(SVHTMLContext *)context
+                      width:(NSUInteger)width
+                     height:(NSUInteger)height
+                    options:(SVThumbnailOptions)options;
+{
+    NSString *type = [NSString UTIForFilenameExtension:
+                      [[[[self media] media] mediaURL] ks_pathExtension]];
+    
+    if ([type conformsToUTI:(NSString *)kUTTypeImage])
+    {
+        if (!(options & SVThumbnailDryRun))
+        {
+            [context writeImageWithSourceMedia:[[self media] media]
+                                           alt:@""
+                                         width:[NSNumber numberWithUnsignedInteger:width]
+                                        height:[NSNumber numberWithUnsignedInteger:height]
+                                          type:nil
+                             preferredFilename:nil];
+        }
+        
+        return YES;
+    }
+    else
+    {
+        return [super writeThumbnailImage:context width:width height:height options:options];
+    }
+}
 
 - (id)imageRepresentation;
 {
