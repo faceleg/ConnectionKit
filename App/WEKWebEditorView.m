@@ -2190,6 +2190,20 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         }
     }
     
+    
+    // Ask text controller's permission
+    if (result && range)
+    {
+        id <SVWebEditorText> textController = [self textItemForDOMRange:range];
+        if (textController)
+        {
+            result = [textController webEditorTextShouldChangeSelectedDOMRange:currentRange
+                                                                    toDOMRange:range
+                                                                      affinity:selectionAffinity
+                                                                stillSelecting:stillSelecting];
+        }
+    }
+    
         
     
     //  Update -selectedItems to match. Make sure not to try and change the WebView's selection in turn or it'll all end in tears. It doesn't make sense to bother doing this if the selection change was initiated by ourself.
