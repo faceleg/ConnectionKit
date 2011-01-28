@@ -31,7 +31,7 @@ typedef enum {
 
 
 @class KSStringWriter;
-@class KTPage, SVSiteItem, SVArchivePage, SVGraphic, SVHTMLTextBlock, SVLink, SVMediaRecord, SVSidebarPageletsController;
+@class KTPage, SVSiteItem, SVArchivePage, SVGraphic, SVHTMLTextBlock, SVLink, SVMedia, SVSidebarPageletsController;
 @protocol SVGraphic, SVMedia, SVEnclosure;
 
 
@@ -206,6 +206,12 @@ typedef enum {
                            height:(NSNumber *)height
                              type:(NSString *)type
                 preferredFilename:(NSString *)preferredFilename;
+
+- (void)writeThumbnailImageWithSourceMedia:(SVMedia *)media
+                                       alt:(NSString *)altText
+                                     width:(NSUInteger)width
+                                    height:(NSUInteger)height
+                                   options:(SVThumbnailOptions)options;
 
 
 #pragma mark Resource Files

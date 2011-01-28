@@ -509,12 +509,11 @@
     {
         if (!(options & SVThumbnailDryRun))
         {
-            [context writeImageWithSourceMedia:[[self customThumbnail] media]
-                                           alt:@""
-                                         width:[NSNumber numberWithUnsignedInteger:width]
-                                        height:[NSNumber numberWithUnsignedInteger:height]
-                                          type:nil
-                             preferredFilename:nil];
+            [context writeThumbnailImageWithSourceMedia:[[self customThumbnail] media]
+                                                    alt:@""
+                                                  width:width
+                                                 height:height
+                                                options:options];
         }
         return YES;
     }

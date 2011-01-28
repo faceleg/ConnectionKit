@@ -857,6 +857,35 @@
     }
 }
 
+- (void)writeThumbnailImageWithSourceMedia:(SVMedia *)media
+                                       alt:(NSString *)altText
+                                     width:(NSUInteger)width
+                                    height:(NSUInteger)height
+                                   options:(SVThumbnailOptions)options;
+{
+    // Scale to fit?
+    if (options & SVThumbnailScaleAspectFit)
+    {
+        KTImageScalingSettings *settings = [KTImageScalingSettings settingsWithBehavior:KTScaleToSize size:NSMakeSize(width, height)];
+        
+        CIImage *image = [[CIImage alloc] initWithContentsOfURL:[media mediaURL]];
+        if (!image) image = [[CIImage alloc] initWithData:[media mediaData]];
+        
+        CGSize size = [settings scaledCGSizeForImageOfSize:[image extent].size];
+        width = size.width;
+        height = size.height;
+        
+        [image release];
+    }
+    
+    [self writeImageWithSourceMedia:media
+                                   alt:altText
+                                 width:[NSNumber numberWithUnsignedInteger:width]
+                                height:[NSNumber numberWithUnsignedInteger:height]
+                                  type:nil
+                     preferredFilename:nil];
+}
+
 #pragma mark Resource Files
 
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
