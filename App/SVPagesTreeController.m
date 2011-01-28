@@ -139,35 +139,38 @@
 
 - (void)controller:(SVPagesController *)controller didCommitBeforeAdding:(BOOL)didCommit contextInfo:(BOOL)asChild;
 {
-    if (didCommit)
+    if (!didCommit) return NSBeep();
+    
+    
+    // Guess URL before continuing
+    if ([[self entityName] isEqualToString:@"ExternalLink"] && ![self objectURL])
     {
-        if ([[self entityName] isEqualToString:@"ExternalLink"] && ![self objectURL])
-        {
-            // Guess URL before continuing
-            SVLink *link = [[SVLinkManager sharedLinkManager] guessLink];
-            if ([link URLString]) [self setObjectURL:[NSURL URLWithString:[link URLString]]];
-        }
-        
-        
-        // Figure out the predecessor (which page to inherit properties from)
-        KTPage *selectedPage = [[self selectedNode] representedObject];
-        if (asChild)
-        {
-            id page = [self newObjectDestinedForCollection:selectedPage];
-            [self addChildObject:page];
-            [page release];
-        }
-        else
-        {
-            id page = [self newObjectDestinedForCollection:[selectedPage parentPage]];
-            [self addObject:page];
-            [page release];
-        }
+        SVLink *link = [[SVLinkManager sharedLinkManager] guessLink];
+        if ([link URLString]) [self setObjectURL:[NSURL URLWithString:[link URLString]]];
+    }
+    
+    
+    // Figure out the predecessor (which page to inherit properties from)
+    KTPage *selectedPage = [[self selectedNode] representedObject];
+    id page;
+    
+    if (asChild)
+    {
+        page = [self newObjectDestinedForCollection:selectedPage];
+        [self addChildObject:page];
     }
     else
     {
-        NSBeep();
+        page = [self newObjectDestinedForCollection:[selectedPage parentPage]];
+        [self addObject:page];
     }
+    
+    // Actually select the first child page if possible
+    if ([[page childPages] count])
+    {
+        [self setSelectedObjects:[page childPages]];
+    }
+    [page release];
 }
 
 - (void)addChild:(id)sender;
