@@ -160,6 +160,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Behaviour
     [self setLiveEditableAndSelectableLinks:YES];
     
+    WebPreferences *prefs = [[self webView] preferences];
+    if ([prefs respondsToSelector:@selector(setShrinksStandaloneImagesToFit:)])
+    {
+        [prefs setValue:NSBOOL(YES) forKey:@"shrinksStandaloneImagesToFit"];
+    }
+    
     
     // Tracking area
     NSTrackingAreaOptions options = (NSTrackingMouseMoved | NSTrackingActiveInKeyWindow | NSTrackingInVisibleRect);
