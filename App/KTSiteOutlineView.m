@@ -54,6 +54,29 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
     _isDrawingRows = YES;
     @try
     {
+        // seems to work best if we draw it before anything else
+        if ( row == 0 )
+        {
+            // draw line to separate root from children
+            float width = clipRect.size.width*0.95;
+            float lineX = (clipRect.size.width - width)/2.0;
+            
+            float height = 1; // line thickness
+            float lineY;
+            if ( [self rowHeight] < LARGE_ICON_CELL_HEIGHT )
+            {
+                lineY = SMALL_ICON_CELL_HEIGHT+ICON_ROOT_DIVIDER_SPACING;
+            }
+            else
+            {
+                lineY = LARGE_ICON_CELL_HEIGHT+ICON_ROOT_DIVIDER_SPACING;
+            }
+            
+            [[NSColor colorWithCalibratedWhite:0.80 alpha:1.0] set];
+            [NSBezierPath fillRect:NSMakeRect(lineX, lineY, width, height)];
+            [[NSColor colorWithCalibratedWhite:0.60 alpha:1.0] set];
+            [NSBezierPath fillRect:NSMakeRect(lineX, lineY+1, width, height)];                
+        }
         [super drawRow:row clipRect:clipRect];
     }
     @finally
@@ -135,26 +158,6 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
     @try
     {
         [super drawRect:rect];
-        
-        // draw line to separate root from children
-        float width = [self bounds].size.width*0.95;
-        float lineX = ([self bounds].size.width - width)/2.0;
-        
-        float height = 1; // line thickness
-        float lineY;
-        if ( [self rowHeight] < LARGE_ICON_CELL_HEIGHT )
-        {
-            lineY = SMALL_ICON_CELL_HEIGHT+ICON_ROOT_DIVIDER_SPACING;
-        }
-        else
-        {
-            lineY = LARGE_ICON_CELL_HEIGHT+ICON_ROOT_DIVIDER_SPACING;
-        }
-        
-        [[NSColor colorWithCalibratedWhite:0.80 alpha:1.0] set];
-        [NSBezierPath fillRect:NSMakeRect(lineX, lineY, width, height)];
-        [[NSColor colorWithCalibratedWhite:0.60 alpha:1.0] set];
-        [NSBezierPath fillRect:NSMakeRect(lineX, lineY+1, width, height)];        
     }
     @finally
     {
