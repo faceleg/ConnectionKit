@@ -117,7 +117,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Resize
 
-- (BOOL)shouldResizeInline; { return YES; }
+- (BOOL)shouldResizeInline; { return [[self representedObject] shouldWriteHTMLInline]; }
 
 - (CGFloat)maxWidth; { return [[self enclosingGraphicDOMController] maxWidth]; }
 
