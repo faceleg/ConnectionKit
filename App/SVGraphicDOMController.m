@@ -28,6 +28,8 @@
 #import "DOMNode+Karelia.h"
 #import "NSColor+Karelia.h"
 
+#import "KSGeometry.h"
+
 
 static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
@@ -436,11 +438,18 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
     else
     {
-        // Union together children
+        // Union together children, but only vertically once the firsy has been found
         NSRect result = NSZeroRect;
         for (WEKWebEditorItem *anItem in [self selectableTopLevelDescendants])
         {
-            result = NSUnionRect(result, [anItem selectionFrame]);
+            if (result.size.width > 0.0f)
+            {
+                result = [KSGeometry KSVerticallyUnionRect:result :[anItem selectionFrame]];
+            }
+            else
+            {
+                result = NSUnionRect(result, [anItem selectionFrame]);
+            }
         }
         
         return result;
