@@ -2197,10 +2197,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         id <SVWebEditorText> textController = [self textItemForDOMRange:range];
         if (textController)
         {
-            result = [textController webEditorTextShouldChangeSelectedDOMRange:currentRange
-                                                                    toDOMRange:range
-                                                                      affinity:selectionAffinity
-                                                                stillSelecting:stillSelecting];
+            range = [textController webEditorSelectionDOMRangeForProposedSelection:range
+                                                                          affinity:selectionAffinity
+                                                                    stillSelecting:stillSelecting];
         }
     }
     

@@ -390,12 +390,11 @@
 	return result;
 }
 
-- (BOOL)webEditorTextShouldChangeSelectedDOMRange:(DOMRange *)currentRange
-                                       toDOMRange:(DOMRange *)proposedRange
-                                         affinity:(NSSelectionAffinity)selectionAffinity
-                                   stillSelecting:(BOOL)flag;
+- (DOMRange *)webEditorSelectionDOMRangeForProposedSelection:(DOMRange *)range
+                                                    affinity:(NSSelectionAffinity)selectionAffinity
+                                              stillSelecting:(BOOL)flag;
 {
-    return YES;
+    return range;
 }
 
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification; { }

@@ -34,10 +34,9 @@
 // Return YES if you will handle the selector yourself. Return NO to have the Web Editor do its own thing
 - (BOOL)webEditorTextDoCommandBySelector:(SEL)action;
 
-- (BOOL)webEditorTextShouldChangeSelectedDOMRange:(DOMRange *)currentRange
-                                       toDOMRange:(DOMRange *)proposedRange
-                                         affinity:(NSSelectionAffinity)selectionAffinity
-                                   stillSelecting:(BOOL)flag;
+- (DOMRange *)webEditorSelectionDOMRangeForProposedSelection:(DOMRange *)proposedRange
+                                                    affinity:(NSSelectionAffinity)selectionAffinity
+                                              stillSelecting:(BOOL)flag;
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification;
 
 
