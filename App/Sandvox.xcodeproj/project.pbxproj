@@ -314,6 +314,8 @@
 		272B38CE10B18FB60056B4CA /* SVPlugInGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */; };
 		272B3B2910B20B240056B4CA /* SVInspectorButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */; };
 		272B3B2A10B20B240056B4CA /* SVInspectorButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */; };
+		272BCD3712F2E20B00080225 /* KSGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 272BCD3512F2E20B00080225 /* KSGeometry.h */; };
+		272BCD3812F2E20B00080225 /* KSGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 272BCD3612F2E20B00080225 /* KSGeometry.m */; };
 		272DA58A108E6F42007A99D5 /* SVPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 272DA588108E6F42007A99D5 /* SVPlugIn.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		272DA58B108E6F42007A99D5 /* SVPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 272DA589108E6F42007A99D5 /* SVPlugIn.m */; };
 		272F1F5110C2CBE600BBB836 /* SVContentObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 272F1F4F10C2CBE600BBB836 /* SVContentObject.h */; };
@@ -1922,6 +1924,8 @@
 		272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInGraphic.m; sourceTree = "<group>"; };
 		272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInspectorButtonCell.h; sourceTree = "<group>"; };
 		272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVInspectorButtonCell.m; sourceTree = "<group>"; };
+		272BCD3512F2E20B00080225 /* KSGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSGeometry.h; sourceTree = "<group>"; };
+		272BCD3612F2E20B00080225 /* KSGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSGeometry.m; sourceTree = "<group>"; };
 		272C18930D0C131B00734495 /* KTMediaFileUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileUpload.h; sourceTree = "<group>"; };
 		272C18940D0C131B00734495 /* KTMediaFileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileUpload.m; sourceTree = "<group>"; };
 		272DA588108E6F42007A99D5 /* SVPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugIn.h; sourceTree = "<group>"; };
@@ -4424,6 +4428,8 @@
 				3C682BB80D62348A00B4D485 /* NSString+KTExtensions.m */,
 				27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */,
 				27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */,
+				272BCD3512F2E20B00080225 /* KSGeometry.h */,
+				272BCD3612F2E20B00080225 /* KSGeometry.m */,
 			);
 			name = Foundation;
 			sourceTree = "<group>";
@@ -6022,6 +6028,7 @@
 				2728C12512E31390008B6CD2 /* KSIsNotNSNotFound.h in Headers */,
 				27F91ECD12EB3B1600372364 /* KSTreeController.h in Headers */,
 				27A8223D12EF532D00152934 /* KSDependenciesTracker.h in Headers */,
+				272BCD3712F2E20B00080225 /* KSGeometry.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7592,6 +7599,7 @@
 				277AF78812DB15F6009CD192 /* SVPagesTreeController.m in Sources */,
 				27F91ECE12EB3B1600372364 /* KSTreeController.m in Sources */,
 				27A8223E12EF532D00152934 /* KSDependenciesTracker.m in Sources */,
+				272BCD3812F2E20B00080225 /* KSGeometry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
