@@ -406,6 +406,10 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     }
     
     
+    // Redo site menu
+    [[object site] invalidatePagesInSiteMenuCache];
+    
+    
 	// Done
     [[NSNotificationCenter defaultCenter] postNotificationName:SVPagesControllerDidInsertObjectNotification object:self];
 }
