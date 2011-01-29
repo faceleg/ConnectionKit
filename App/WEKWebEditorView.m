@@ -1970,10 +1970,19 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     if ([[selection text] length] == 0 &&
         [[self selectedItems] count] == 1)
     {
-        [pboard addTypes:NSARRAY((NSString *)kUTTypeFileURL) owner:self];
+        WEKWebEditorItem *item = [self selectedItem];
+        OBASSERT(item);
         
-        DOMHTMLImageElement *image = [[self selectedItem] HTMLElement];
-        [pboard setString:[image src] forType:kUTTypeFileURL];
+        DOMHTMLImageElement *image = (DOMHTMLImageElement*)[item HTMLElement];
+        if ([image isKindOfClass:[DOMHTMLImageElement class]])
+        {
+            NSURL *URL = [image absoluteImageURL];
+            if ([URL isFileURL])
+            {
+                [pboard addTypes:NSARRAY((NSString *)kUTTypeFileURL) owner:self];
+                [pboard setString:[URL absoluteString] forType:(NSString *)kUTTypeFileURL];
+            }
+        }
     }
     
     
