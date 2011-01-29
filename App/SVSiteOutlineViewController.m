@@ -228,13 +228,15 @@
     
     // Restore selection
     NSArray *selection = [self persistentSelectedObjects];
-    NSArray *indexPaths = [selection valueForKey:@"indexPath"];
-    if ([indexPaths count] == 0)
+    if ([selection count] == 0)
     {
-        indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathWithIndex:0]];
+        [controller setSelectionIndexPaths:[NSArray arrayWithObject:
+                                            [NSIndexPath indexPathWithIndex:0]]];
     }
-    
-    [controller setSelectionIndexPaths:indexPaths];
+    else
+    {
+        [controller setSelectedObjects:selection];
+    }
 }
 
 #pragma mark Pages List
