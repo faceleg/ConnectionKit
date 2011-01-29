@@ -22,6 +22,7 @@
 #import "SVPageTemplate.h"
 #import "SVRichText.h"
 #import "SVSidebarPageletsController.h"
+#import "KTSite.h"
 #import "SVTextAttachment.h"
 
 #import "NSArray+Karelia.h"
