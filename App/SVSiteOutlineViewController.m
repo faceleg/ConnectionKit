@@ -1532,20 +1532,17 @@
     return result;
 }
 
-- (NSArray *)persistentExpandedTreeNodes;
+- (void)restoreExpandedItems;
 {
+    SVPagesTreeController *controller = [self content];
     NSArray *objects = [self persistentExpandedObjects];
-    NSArray *paths = [objects valueForKey:@"indexPath"];
     
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[paths count]];
-    for (NSIndexPath *aPath in paths)
+    for (SVSiteItem *aPage in objects)
     {
-        NSTreeNode *node = [[(NSTreeController *)[self content] arrangedObjects] descendantNodeAtIndexPath:aPath];
-        
-        if (node) [result addObject:node];
+        NSIndexPath *path = [controller indexPathOfObject:aPage];
+        NSTreeNode *node = [[controller arrangedObjects] descendantNodeAtIndexPath:path];
+        [[self outlineView] expandItem:node];
     }
-    
-    return result;
 }
 
 - (NSArray *)expandedObjects;
@@ -1622,22 +1619,16 @@
 	
 	[oSplitView adjustSubviews];
     
-	// Restore expanded items
 	NSArray *selectedItems = [self persistentSelectedObjects];
-	NSArray *expandedItems = [self persistentExpandedTreeNodes];
-	id item;
 	
-	for (item in expandedItems)
-	{
-		[self.outlineView expandItem:item];
-	}
-    // make sure homepage is expanded
+    // Restore expanded items. make sure homepage is expanded
+	[self restoreExpandedItems];
     [self.outlineView expandItem:[self.outlineView itemAtRow:0]];
     
     
     // Restore selected items
 	NSMutableIndexSet *toSelect = [NSMutableIndexSet indexSet];
-	for (item in selectedItems)
+	for (id item in selectedItems)
 	{
 		NSInteger row = [self.outlineView rowForItem:item];
 		if (row >= 0) [toSelect addIndex:row];
