@@ -32,6 +32,24 @@
 #pragma mark -
 
 
+// Super-simple class that watches a WebView waiting for an edit
+@interface SVWebViewChangeWatcher : NSObject
+{
+  @private
+    BOOL    _didChange;
+    WebView *_webView;  // weak ref
+}
+
+- (id)initWithWebView:(WebView *)webView;
+@property(nonatomic, readonly) BOOL webViewDidChange;
+
+@end
+
+
+
+#pragma mark -
+
+
 @implementation WEKWebEditorView (EditingSupport)
 
 #pragma mark Cut, Copy & Paste
@@ -101,15 +119,23 @@
 
 - (void)delete:(id)sender forwardingSelector:(SEL)action;
 {
-    DOMRange *selection = [self selectedDOMRange];
-    if (selection)// && ![selection collapsed])
+    // First let the webview have a crack at the delete. Best way I can think to see if it does is to watch out for the change notification
+    SVWebViewChangeWatcher *watcher = [[SVWebViewChangeWatcher alloc]
+                                           initWithWebView:[self webView]];
+    
+    [self forceWebViewToPerform:action withObject:sender];
+    
+    if ([watcher webViewDidChange])
     {
-        [self forceWebViewToPerform:action withObject:sender];
+        [watcher release];
+        return;
     }
-    else
-    {
-        if (![[self dataSource] webEditor:self removeItems:[self selectedItems]]) NSBeep();
-    }
+    
+    [watcher release];
+    
+    
+    // WebView didn't handle the delete so go ahead and give to the datasource
+    if (![[self dataSource] webEditor:self removeItems:[self selectedItems]]) NSBeep();
 }
 
 - (void)delete:(id)sender;
@@ -260,4 +286,36 @@
 @synthesize tag = _tag;
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVWebViewChangeWatcher
+
+- (id)initWithWebView:(WebView *)webView;
+{
+    OBPRECONDITION(webView);
+    
+    [self init];
+    
+    _webView = webView;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(webViewDidChange:) name:WebViewDidChangeNotification object:webView];
+    
+    return self;
+}
+
+- (void) dealloc;
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:WebViewDidChangeNotification object:_webView];
+    
+    [super dealloc];
+}
+
+@synthesize webViewDidChange = _didChange;
+
+- (void)webViewDidChange:(NSNotification *)notification; { _didChange = YES; }
+
+@end
+
 
