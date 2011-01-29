@@ -110,7 +110,7 @@
     
     
     [self setContent:nil];  // implementation relies on .rootPage being non-nil, so must do this first
-	[self setRootPage:nil];
+    //[self setRootPage:nil];
     
     // Dump the pages list
     [_draggedItems release];
@@ -580,7 +580,7 @@
     if ([[pboard types] containsObject:kKTPagesPboardType])
     {
         // Create a page for the content
-        SVPagesController *controller = [self content];
+        SVPagesTreeController *controller = [self content];
         [controller addObjectsFromPasteboard:pboard];
     }
     else
@@ -1271,7 +1271,7 @@
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView
          acceptDrop:(id <NSDraggingInfo>)info
-               item:(NSTreeNode *)item
+               item:(NSTreeNode *)node
          childIndex:(NSInteger)anIndex;
 {
 	// Remember, links are special
@@ -1280,7 +1280,7 @@
 	{
         KTLinkConnector *linkConnector = [info draggingSource];
         
-        SVLink *link = [[SVLink alloc] initWithPage:[item representedObject] openInNewWindow:NO];
+        SVLink *link = [[SVLink alloc] initWithPage:[node representedObject] openInNewWindow:NO];
         [linkConnector setLink:link];
         [link release];
         
@@ -1289,22 +1289,23 @@
     
     
     // Correct for the root page. i.e. a drop with a nil item is actually a drop onto/in the root page, and the index needs to be bumped slightly
-    KTPage *page = [item representedObject];
     NSInteger index = anIndex;
-    if (!page)
+    if (!node)
     {
         if (anIndex == 0) return NO;   // rule 3.
         
-        page = [self rootPage];
-        if (index != NSOutlineViewDropOnItemIndex) 
+        node = [[[[self content] arrangedObjects] childNodes] objectAtIndex:0];
+        if (index != NSOutlineViewDropOnItemIndex)
         {
             index--;    // we've already weeded out the case of index being 0
         }
     }
-    OBASSERT(page);
     
     
     // Rule 1. Only a collection can be dropped on/into.
+    KTPage *page = [node representedObject];
+    OBASSERT(page);
+    
 #ifdef CAN_CONVERT_TO_COLLECTIONS
     [page setIsCollection:YES];
 #else
@@ -1312,7 +1313,7 @@
 #endif
     {
         return [self acceptNonLinkDrop:info
-                                  node:item
+                                  node:node
                             childIndex:index];
     }
     

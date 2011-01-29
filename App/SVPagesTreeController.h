@@ -32,6 +32,7 @@
 #pragma mark Grouping
 - (void)groupAsCollection:(id)sender;
 - (BOOL)canGroupAsCollection;
+- (NSString *)convertToCollectionControlTitle;
 
 
 #pragma mark Object Creation
