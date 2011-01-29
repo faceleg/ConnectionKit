@@ -135,7 +135,10 @@
     
     
     // WebView didn't handle the delete so go ahead and give to the datasource
-    if (![[self dataSource] webEditor:self removeItems:[self selectedItems]]) NSBeep();
+    NSArray *selection = [self selectedItems];
+    if (![selection count]) selection = [NSArray arrayWithObject:[[self editingItems] lastObject]];
+    
+    if (![[self dataSource] webEditor:self removeItems:selection]) NSBeep();
 }
 
 - (void)delete:(id)sender;
