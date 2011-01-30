@@ -116,7 +116,7 @@
 {
 	if (![self tryToEndEditing]) return;
     if (![self shouldPublishWithWarningIfNo]) return;
-	[self maybeShowRestrictedPublishingAlertAndContinueWith:@selector(_publishSiteChanges)];
+	[self maybeShowRestrictedPublishingAlertAndContinueWith:@selector(_publishSiteAll)];
 }
 - (void)_publishSiteAll
 {
