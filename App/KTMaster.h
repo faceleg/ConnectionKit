@@ -37,12 +37,12 @@
 @property(nonatomic, retain) SVRichText *footer;
 
 
-#pragma mark Other
-
+#pragma mark Design
 - (KTDesign *)design;
 - (void)setDesign:(KTDesign *)design;
 - (void)setDesignBundleIdentifier:(NSString *)identifier;
 - (NSURL *)designDirectoryURL;
+- (void)writeCSS:(SVHTMLContext *)context;
 
 
 #pragma mark Banner

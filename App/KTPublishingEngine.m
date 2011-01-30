@@ -509,11 +509,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     KTPage *rootPage = [[self site] rootPage];
     KTMaster *master = [rootPage master];
     KTDesign *design = [master design];
-    [design writeCSS:(id)self];
-    [master writeBannerCSS:(id)self];
-	[master writeCodeInjectionCSS:(id)self];	// WILL THIS WORK?  SELF IS KTPublishingEngine  ... AN NSOPERATION !!!! IT'S AN UGLY HACK FOR NOW TO GET OUT THE DATA WE NEED.
+    [master writeCSS:(id)self];	// WILL THIS WORK?  SELF IS KTPublishingEngine  ... AN NSOPERATION !!!! IT'S AN UGLY HACK FOR NOW TO GET OUT THE DATA WE NEED.
 
-    NSString *remoteDesignDirectoryPath = [self designDirectoryPath];    
+    NSString *remoteDesignDirectoryPath = [self designDirectoryPath];
     
     // Upload the design's resources
 	for (NSURL *aResource in [design resourceFileURLs])

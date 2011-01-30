@@ -259,6 +259,15 @@
 	return result;
 }
 
+- (void)writeCSS:(SVHTMLContext *)context;
+{
+    [[self design] writeCSS:context];
+    
+    
+    [self writeBannerCSS:context];
+	[self writeCodeInjectionCSS:context];
+}
+
 #pragma mark Banner
 
 @dynamic banner;
