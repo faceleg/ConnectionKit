@@ -55,6 +55,8 @@
 @property(nonatomic, copy, readwrite) NSURL *objectURL;
 - (id)newObjectDestinedForCollection:(KTPage *)collection;
 - (void)configurePageAsCollection:(KTPage *)collection;
+
+- (void)undoRedo_setSelectionIndexPaths:(NSArray *)indexPaths registerIndexPaths:(NSArray *)undoRedoIndexPaths;
 @end
 
 
@@ -250,9 +252,15 @@
 
 - (void)insertObject:(id)object atArrangedObjectIndexPath:(NSIndexPath *)indexPath;
 {
-    // Record current selection
-    [[[[self managedObjectContext] undoManager] prepareWithInvocationTarget:self]
-     setSelectionIndexPaths:[self selectionIndexPaths]];
+    // Restore current selection if user undoes
+    if ([self selectsInsertedObjects])
+    {
+        NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
+        
+        [[undoManager prepareWithInvocationTarget:self]
+         undoRedo_setSelectionIndexPaths:[self selectionIndexPaths]
+         registerIndexPaths:[NSArray arrayWithObject:indexPath]];
+    }
     
     
     // Actually insert proxy for the page
@@ -715,18 +723,14 @@
 
 #pragma mark Selection
 
-- (BOOL)setSelectionIndexPaths:(NSArray *)indexPaths;
+- (void)undoRedo_setSelectionIndexPaths:(NSArray *)indexPaths registerIndexPaths:(NSArray *)undoRedoIndexPaths;
 {
     NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
-    if ([undoManager isUndoing] || [undoManager isRedoing])
-    {
-        [undoManager registerUndoWithTarget:self
-                                   selector:_cmd
-                                     object:[self selectionIndexPaths]];
-    }
+    [[undoManager prepareWithInvocationTarget:self]
+     undoRedo_setSelectionIndexPaths:undoRedoIndexPaths registerIndexPaths:indexPaths];
     
     
-    return [super setSelectionIndexPaths:indexPaths];
+    [self setSelectionIndexPaths:indexPaths];
 }
 
 - (NSTreeNode *)selectedNode;
