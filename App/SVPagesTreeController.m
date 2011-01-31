@@ -655,7 +655,7 @@
 
 - (void)removeObjectsAtArrangedObjectIndexPaths:(NSArray *)indexPaths;
 {
-    // The default implementation of this method tries to change the content of the controller after making the removal (as to why, I haven't the foggiest idea). Instead, remove from the tree directly ourselves.
+    // NSTreeController's default implementation tries to change the content of the controller after making the removal (as to why, I haven't the foggiest idea). Instead, remove from the tree directly ourselves.
     
     
     // Sort the index paths backwards so as we remove each one the remaining paths are not affected
