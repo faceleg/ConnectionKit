@@ -96,6 +96,7 @@
 #pragma mark Properties
 
 @synthesize importsGraphics = _allowsImages;
+@synthesize allowsLinks = _allowsLinks;
 
 #pragma mark Elements
 
@@ -476,6 +477,8 @@
 {
     BOOL result = [[self class] validateElement:tagName];
     
+    if (![self allowsLinks] && [tagName isEqualToString:@"A"]) result = NO;
+    
     // List items are permitted inside of a list. We don't actually allow lists, but this is handy for subclasses that do implement lists
     if (!result && [tagName isEqualToString:@"LI"])
     {
@@ -492,7 +495,8 @@
                    [tagName isEqualToString:@"EM"] ||
                    [tagName isEqualToString:@"BR"] ||
                    [tagName isEqualToString:@"SUP"] ||
-                   [tagName isEqualToString:@"SUB"]);
+                   [tagName isEqualToString:@"SUB"] ||
+                   [tagName isEqualToString:@"A"]);
     
     return result;
 }

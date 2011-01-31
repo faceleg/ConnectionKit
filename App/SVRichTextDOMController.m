@@ -156,6 +156,13 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     }
 }
 
+- (void)writeText:(SVFieldEditorHTMLWriterDOMAdapator *)writer;
+{
+    [writer setAllowsLinks:YES];    // so even footer accepts them. #105830
+    
+    [super writeText:writer];
+}
+
 - (void)setHTMLString:(NSString *)html attachments:(NSSet *)attachments;
 {
     SVRichText *textObject = [self representedObject];

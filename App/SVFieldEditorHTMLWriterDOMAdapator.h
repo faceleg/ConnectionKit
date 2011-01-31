@@ -25,6 +25,7 @@
     KSStringWriter  *_output;
     
     BOOL    _allowsImages;
+    BOOL    _allowsLinks;
 }
 
 // Constructs intermediate HTML Writer for you
@@ -33,6 +34,7 @@
 
 #pragma mark Properties
 @property(nonatomic) BOOL importsGraphics;
+@property(nonatomic) BOOL allowsLinks;
 
 
 #pragma mark Cleanup
