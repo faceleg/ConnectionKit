@@ -59,7 +59,7 @@
 
 - (void)writePlaceholderHTML:(id <SVPlugInContext>)context;
 {
-    [context startElement:@"p"];
+    [context startElement:@"div"];
     
     if ( self.indexedCollection )
     {
