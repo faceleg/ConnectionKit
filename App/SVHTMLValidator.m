@@ -51,6 +51,8 @@
 
 + (NSString *)HTMLStringWithFragment:(NSString *)fragment docType:(KTDocType)docType;
 {
+    OBPRECONDITION(fragment);
+    
     NSString *title			= @"<title>This is a piece of HTML, wrapped in some markup to help the validator</title>";
 	NSString *commentStart	= @"<!-- BELOW IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->";
 	
