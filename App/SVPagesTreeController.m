@@ -250,6 +250,11 @@
 
 - (void)insertObject:(id)object atArrangedObjectIndexPath:(NSIndexPath *)indexPath;
 {
+    // Record current selection
+    [[[[self managedObjectContext] undoManager] prepareWithInvocationTarget:self]
+     setSelectionIndexPaths:[self selectionIndexPaths]];
+    
+    
     // Actually insert proxy for the page
     SVPageProxy *proxy = [SVPageProxy proxyForTargetPage:object];
     [super insertObject:proxy atArrangedObjectIndexPath:indexPath];
@@ -709,6 +714,20 @@
 }
 
 #pragma mark Selection
+
+- (BOOL)setSelectionIndexPaths:(NSArray *)indexPaths;
+{
+    NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
+    if ([undoManager isUndoing] || [undoManager isRedoing])
+    {
+        [undoManager registerUndoWithTarget:self
+                                   selector:_cmd
+                                     object:[self selectionIndexPaths]];
+    }
+    
+    
+    return [super setSelectionIndexPaths:indexPaths];
+}
 
 - (NSTreeNode *)selectedNode;
 {
