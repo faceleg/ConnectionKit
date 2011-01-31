@@ -658,6 +658,12 @@
     // NSTreeController's default implementation tries to change the content of the controller after making the removal (as to why, I haven't the foggiest idea). Instead, remove from the tree directly ourselves.
     
     
+    // Restore selection if user undoes
+    NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
+    [[undoManager prepareWithInvocationTarget:self]
+     undoRedo_setSelectionIndexPaths:[self selectionIndexPaths] registerIndexPaths:indexPaths];
+    
+    
     // Sort the index paths backwards so as we remove each one the remaining paths are not affected
     NSArray *descriptors = [NSSortDescriptor sortDescriptorArrayWithKey:@"self" ascending:NO];
     indexPaths = [indexPaths sortedArrayUsingDescriptors:descriptors];
