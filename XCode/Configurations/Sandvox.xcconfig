@@ -14,7 +14,7 @@ PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE = ALPHA_19R
 
 
 // expiry for beta
-EXPIRY_TIMESTAMP = '@\"2011-01-31 11:59:59 -0800\"'
+EXPIRY_TIMESTAMP = '@\"2011-02-28 11:59:59 -0800\"'
 
 // Release builds checkout and use these specific revisions
 
