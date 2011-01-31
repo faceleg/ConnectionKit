@@ -215,29 +215,6 @@
     return result;
 }
 
-- (BOOL)validateAttribute:(NSString *)attributeName ofElement:(NSString *)tagName;
-{
-    // Super doesn't allow links; we do.
-    if ([tagName isEqualToString:@"a"])
-    {
-        BOOL result = ([attributeName isEqualToString:@"href"] ||
-                       [attributeName isEqualToString:@"target"] ||
-                       [attributeName isEqualToString:@"style"] ||
-                       [attributeName isEqualToString:@"charset"] ||
-                       [attributeName isEqualToString:@"hreflang"] ||
-                       [attributeName isEqualToString:@"name"] ||
-                       [attributeName isEqualToString:@"title"] ||
-                       [attributeName isEqualToString:@"rel"] ||
-                       [attributeName isEqualToString:@"rev"]);
-        
-        return result;               
-    }
-    else
-    {
-        return [super validateAttribute:attributeName ofElement:tagName];
-    }
-}
-
 - (BOOL)validateStyleProperty:(NSString *)propertyName ofElementWithTagName:(NSString *)tagName;
 {
     BOOL result = [super validateStyleProperty:propertyName ofElementWithTagName:tagName];

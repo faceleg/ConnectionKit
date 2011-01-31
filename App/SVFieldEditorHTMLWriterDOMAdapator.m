@@ -515,8 +515,22 @@
 {
     BOOL result = NO;
     
-	// <FONT> tags are no longer allowed, but leave this in in case we turn support back on again
-    if ([elementName isEqualToString:@"font"])
+	if ([elementName isEqualToString:@"a"])
+    {
+        result = ([attributeName isEqualToString:@"href"] ||
+                       [attributeName isEqualToString:@"target"] ||
+                       [attributeName isEqualToString:@"style"] ||
+                       [attributeName isEqualToString:@"charset"] ||
+                       [attributeName isEqualToString:@"hreflang"] ||
+                       [attributeName isEqualToString:@"name"] ||
+                       [attributeName isEqualToString:@"title"] ||
+                       [attributeName isEqualToString:@"rel"] ||
+                       [attributeName isEqualToString:@"rev"]);
+        
+        return result;
+    }
+    // <FONT> tags are no longer allowed, but leave this in in case we turn support back on again
+    else if ([elementName isEqualToString:@"font"])
     {
         if ([attributeName isEqualToString:@"face"] || [attributeName isEqualToString:@"size"] || [attributeName isEqualToString:@"color"]) return YES;
     }
