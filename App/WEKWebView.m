@@ -43,8 +43,11 @@
 - (IBAction)reload:(id)sender
 {
     // Let delegate have a crack at it. (WebView doesn't inform delegate by default)
-    [[[self webEditor] delegate] webEditor:[self webEditor]
-                       doCommandBySelector:_cmd];
+    if (![[[self webEditor] delegate] webEditor:[self webEditor]
+                            doCommandBySelector:_cmd])
+    {
+        [super reload:sender];
+    }
 }
 
 - (void)createLink:(SVLinkManager *)sender;

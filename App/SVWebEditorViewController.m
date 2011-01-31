@@ -1361,6 +1361,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     else if (action == @selector(reload:))
     {
         [self doCommandBySelector:action];
+        return YES;
     }
     
     
