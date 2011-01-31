@@ -41,13 +41,14 @@
 	// Show the real HTML if it's the pro-licensed edition publishing
 	// OR we are previewing and the SVRawHTMLGraphic is marked as being OK for preview
 	
-    NSString *html = [self HTMLString];
+    NSString *fragment = [self HTMLString];
     
     if (([context shouldWriteServerSideScripts] && [context isForPublishing]) ||
         ([context isForEditing] && [[self shouldPreviewWhenEditing] boolValue]))
     {
         // Is the preview going to be understandable by WebKit? Judge this by making sure there's no problem with close tags
-        html = [SVHTMLValidator HTMLStringWithFragment:html docType:KTHTML401DocType];
+        NSString *html = [SVHTMLValidator HTMLStringWithFragment:(fragment ? fragment : @"")
+                                               docType:KTHTML401DocType];
         
         NSError *error = nil;
         ValidationState validation = [SVHTMLValidator validateHTMLString:html docType:KTHTML401DocType error:&error];
@@ -62,7 +63,7 @@
         
         if (validation >= kValidationStateLocallyValid)
         {
-            [context writeHTMLString:[self HTMLString]];
+            if (fragment) [context writeHTMLString:fragment];
             [context addDependencyOnObject:self keyPath:@"HTMLString"];
         }
         else
