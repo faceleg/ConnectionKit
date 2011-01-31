@@ -211,7 +211,11 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 {
     [super viewDidDisappear:animated];
     
-    if (![self isUpdating]) [self loadPage:nil];
+    // Once we're not the interesting view, stop tracking for updates. This is particular important during undo/redo where it would otherwise be possible to continue tracking a deleted object
+    if ([_contentAreaController selectedViewControllerWhenReady] != self)
+    {
+        [self loadPage:nil];
+    }
     
     // Once we move offscreen, we're no longer suitable to be shown
     [self setViewIsReadyToAppear:NO];
