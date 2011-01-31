@@ -966,7 +966,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Node in question might be in a different frame. #84559
     DOMHTMLElement *frameElement = [[[nextNode ownerDocument] webFrame] frameElement];
-    if (frameElement) nextNode = frameElement;
+    while (frameElement)
+    {
+        nextNode = frameElement;
+        frameElement = [[[nextNode ownerDocument] webFrame] frameElement];
+    }
     
     
     // Look for children at the deepest possible level (normally top-level). Keep backing out until we find something of use
