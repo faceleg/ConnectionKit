@@ -16,10 +16,6 @@
 
 #import "Registration.h"
 
-#define LARGE_ICON_CELL_HEIGHT	34.00
-#define SMALL_ICON_CELL_HEIGHT	17.00
-#define ICON_ROOT_DIVIDER_SPACING	7.00
-#define ICON_GROUP_ROW_SPACING 3.00
 
 NSString *kKTSelectedObjectsKey = @"KTSelectedObjects";
 NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
