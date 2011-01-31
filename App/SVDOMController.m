@@ -24,8 +24,8 @@
 {
     [super init];
     
-    _dependenciesTracker = [[KSDependenciesTracker alloc] initWithDelegate:self
-                                                          observingOptions:NSKeyValueObservingOptionPrior];
+    _dependenciesTracker = [[KSDependenciesTracker alloc] initWithObservingOptions:NSKeyValueObservingOptionPrior];
+    [_dependenciesTracker setDelegate:self];
     
     return self;
 }
@@ -42,6 +42,7 @@
 
 - (void)dealloc
 {
+    [_dependenciesTracker setDelegate:nil];
     [_dependenciesTracker removeAllDependencies];
     [_dependenciesTracker release];
     
