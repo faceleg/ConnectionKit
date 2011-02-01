@@ -311,7 +311,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 // draw cell interior (image and text)
 - (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	// fix for 7294: don't lockFocus in this method, it alters the coords
+	// don't lockFocus in this method, it alters the coords. #7294
 
 	// Draw image
 	NSRect	imageFrame = [self imageRectForBounds:cellFrame];
