@@ -73,6 +73,11 @@
     
     [self setParentKeyPath:@"parentPage"];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didOpenUndoGroup:)
+                                                 name:NSUndoManagerDidOpenUndoGroupNotification
+                                               object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pageProxyWillChange:) name:@"SVPageProxyWillChange" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pageProxyDidChange:) name:@"SVPageProxyDidChange" object:nil];
     
@@ -81,6 +86,7 @@
 
 - (void)dealloc;
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidOpenUndoGroupNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SVPageProxyWillChange" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SVPageProxyDidChange" object:nil];
     
@@ -729,16 +735,6 @@
 
 #pragma mark Selection
 
-- (void)undoRedo_setSelectionIndexPaths:(NSArray *)indexPaths registerIndexPaths:(NSArray *)undoRedoIndexPaths;
-{
-    NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
-    [[undoManager prepareWithInvocationTarget:self]
-     undoRedo_setSelectionIndexPaths:undoRedoIndexPaths registerIndexPaths:indexPaths];
-    
-    
-    [self setSelectionIndexPaths:indexPaths];
-}
-
 - (NSTreeNode *)selectedNode;
 {
     NSIndexPath *path = [self selectionIndexPath];
@@ -883,6 +879,31 @@
 	{
 		[self setValue:[NSNumber numberWithBool:NO] forKeyPath:@"selection.shouldUpdateFileNameWhenTitleChanges"];
 	}
+}
+
+#pragma mark Undo
+
+- (void)undoRedo_setSelectionIndexPaths:(NSArray *)indexPaths registerIndexPaths:(NSArray *)undoRedoIndexPaths;
+{
+    NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
+    [[undoManager prepareWithInvocationTarget:self]
+     undoRedo_setSelectionIndexPaths:undoRedoIndexPaths registerIndexPaths:indexPaths];
+    
+    
+    [self setSelectionIndexPaths:indexPaths];
+}
+
+- (void)undoRedo_setSelectionIndexPaths:(NSArray *)indexPaths;
+{
+    [self undoRedo_setSelectionIndexPaths:indexPaths registerIndexPaths:indexPaths];
+}
+
+- (void)didOpenUndoGroup:(NSNotification *)notification
+{
+    NSUndoManager *undoManager = [notification object];
+    if (undoManager != [[self managedObjectContext] undoManager]) return;
+    
+    [[undoManager prepareWithInvocationTarget:self] undoRedo_setSelectionIndexPaths:[self selectionIndexPaths]];
 }
 
 @end
