@@ -121,19 +121,44 @@
     _selectedPages = pages;
     
     
+    // During an undo or redo we're often not quite ready to load the page
     NSUndoManager *undoManager = [[self view] undoManager];
-    if ([undoManager isUndoing] || [undoManager isRedoing])
+    if ([undoManager isUndoing])
     {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                                 selector:@selector(didChangeSelectionOrViewType)
-                                                   object:nil];
+        // Just in case were already registered
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidUndoChangeNotification object:undoManager];
         
-        [self performSelector:@selector(didChangeSelectionOrViewType) withObject:nil afterDelay:0.0f];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didUndoChange:)
+                                                     name:NSUndoManagerDidUndoChangeNotification
+                                                   object:undoManager];
+    }
+    else if ([undoManager isRedoing])
+    {
+        // Just in case were already registered
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidRedoChangeNotification object:undoManager];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didRedoChange:)
+                                                     name:NSUndoManagerDidRedoChangeNotification
+                                                   object:undoManager];
     }
     else
     {
         [self didChangeSelectionOrViewType];
     }
+}
+
+- (void)didUndoChange:(NSNotification *)notification;
+{
+    [self didChangeSelectionOrViewType];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidUndoChangeNotification object:[notification object]];
+}
+
+- (void)didRedoChange:(NSNotification *)notification;
+{
+    [self didChangeSelectionOrViewType];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidRedoChangeNotification object:[notification object]];
 }
 
 - (SVSiteItem *)selectedPage;   // returns nil if more than one page is selected
