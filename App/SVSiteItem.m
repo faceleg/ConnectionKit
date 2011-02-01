@@ -505,6 +505,9 @@
                      height:(NSUInteger)height
                     options:(SVThumbnailOptions)options;
 {
+    [context addDependencyOnObject:self keyPath:@"thumbnailType"];
+    
+    
     if ([[self thumbnailType] integerValue] == SVThumbnailTypeCustom && [self customThumbnail])
     {
         if (!(options & SVThumbnailDryRun))
