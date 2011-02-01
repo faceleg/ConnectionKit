@@ -182,16 +182,24 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 
 - (NSImage *)dragImageForRowsWithIndexes:(NSIndexSet *)dragRows tableColumns:(NSArray *)tableColumns event:(NSEvent*)dragEvent offset:(NSPointPointer)dragImageOffset AVAILABLE_MAC_OS_X_VERSION_10_4_AND_LATER;
 {
+    NSImage *result = nil;
+    
 	// Courtesy of CocoaDev.
 	// We need to save the dragged row indexes so that the delegate can choose how to draw the cell.
-	// Ideally we would prevent white text but that doesn't seem to be changeable.  However we can
-	// prevent drawing the stripes to indicate that a row is not publishable in the demo mode.
+	// We prevent drawing the stripes to indicate that a row is not publishable in the demo mode.
 	self.draggedRows = dragRows;
-	
-	NSImage *image = [super dragImageForRowsWithIndexes:dragRows tableColumns:tableColumns
-												  event:dragEvent offset:dragImageOffset];
-	self.draggedRows = nil;
-	return image;
+    @try
+    {
+        result = [super dragImageForRowsWithIndexes:dragRows tableColumns:tableColumns
+                                              event:dragEvent
+                                             offset:dragImageOffset];
+    }
+    @finally
+    {
+        self.draggedRows = nil;
+    }
+    
+    return result;
 }
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender
@@ -199,6 +207,22 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 	[[KTPulsatingOverlay sharedOverlay] hide];
 	[super draggingExited:sender];
 }
+
+- (NSCell *)preparedCellAtColumn:(NSInteger)column row:(NSInteger)row;
+{
+    // Internally, tells delegate the cell will be displayed. Nicely, this means the delegate is unaware we are tampering with cell properties to achieve desired drawing
+    NSCell *result = [super preparedCellAtColumn:column row:row];
+    
+    if (self.draggedRows)
+    {
+        // When using the source highlight style, NSTableView prepopulates the cell with an attributed string value, effectively hardcoding the text color. Reset that during a drag (for visibility #105959) like so:
+        [result setStringValue:[result stringValue]];
+    }
+    
+    return result;
+}
+
+#pragma mark Menu
 
 /*- (NSMenu *)menuForEvent:(NSEvent *)theEvent
 {
