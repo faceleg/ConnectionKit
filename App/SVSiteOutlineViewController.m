@@ -955,18 +955,10 @@
 		
 
 		
-		// If the row is selected but isn't being edited and the current drawing isn't being used to create a drag image,
-		// colour the text white; otherwise, colour it black
+		// Disable drawing of the non-publishable stripes when we are in a drag.
 		BOOL inDraggedRows = [[(KTSiteOutlineView *)outlineView draggedRows] containsIndex:rowIndex];
-		BOOL shouldBeWhite = ( [[outlineView selectedRowIndexes] containsIndex:rowIndex]
-							  && ([outlineView editedRow] != rowIndex)
-							  && (!inDraggedRows) );
-		NSColor *fontColor = shouldBeWhite ? [NSColor whiteColor] : [NSColor blackColor];
-		[cell setTextColor:fontColor];
-		// Strangely, this doesn't seem to actually have the desired effect.  We're always getting white text
-		// even though this seems to be working properly.  Probably colors are hard-wired for the source list style.
-		// At least we are able to disable drawing of the non-publishable stripes when we are in a drag.
 		
+        
 		BOOL isPublishable = (nil != gRegistrationString) || [item isPagePublishableInDemo] || inDraggedRows;
 		[cell setPublishable:isPublishable];
 		// always show as publishable if we are registered.  ALSO show publishable (no markings) if in a drag.
