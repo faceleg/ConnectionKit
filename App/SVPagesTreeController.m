@@ -903,6 +903,8 @@
     NSUndoManager *undoManager = [notification object];
     if (undoManager != [[self managedObjectContext] undoManager]) return;
     
+    if ([undoManager groupingLevel] > 1) return;
+    
     [[undoManager prepareWithInvocationTarget:self] undoRedo_setSelectionIndexPaths:[self selectionIndexPaths]];
 }
 
