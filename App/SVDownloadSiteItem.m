@@ -47,27 +47,35 @@
 #pragma mark Thumbnail
 
 // #105408 - in progress
-- (BOOL)XwriteThumbnailImage:(SVHTMLContext *)context
+- (BOOL)writeThumbnailImage:(SVHTMLContext *)context
                       width:(NSUInteger)width
                      height:(NSUInteger)height
                     options:(SVThumbnailOptions)options;
 {
-    NSString *type = [NSString UTIForFilenameExtension:
-                      [[[[self media] media] mediaURL] ks_pathExtension]];
-    
-    if ([type conformsToUTI:(NSString *)kUTTypeImage])
+    if ([[self thumbnailType] intValue] == SVThumbnailTypePickFromPage)
     {
-        if (!(options & SVThumbnailDryRun))
+        [context addDependencyOnObject:self keyPath:@"thumbnailType"];
+        
+        
+        NSString *type = [NSString UTIForFilenameExtension:
+                          [[[[self media] media] mediaURL] ks_pathExtension]];
+        
+        if ([type conformsToUTI:(NSString *)kUTTypeImage])
         {
-            [context writeImageWithSourceMedia:[[self media] media]
-                                           alt:@""
-                                         width:[NSNumber numberWithUnsignedInteger:width]
-                                        height:[NSNumber numberWithUnsignedInteger:height]
-                                          type:nil
-                             preferredFilename:nil];
+            if (!(options & SVThumbnailDryRun))
+            {
+                [context writeImageWithSourceMedia:[[self media] media]
+                                               alt:@""
+                                             width:[NSNumber numberWithUnsignedInteger:width]
+                                            height:[NSNumber numberWithUnsignedInteger:height]
+                                              type:nil
+                                 preferredFilename:nil];
+            }
+            
+            return YES;
         }
         
-        return YES;
+        return NO;
     }
     else
     {
