@@ -929,7 +929,9 @@
 	}
 		
 	// Set the cell's appearance
-	BOOL isRoot = [outlineView rowForItem:node] == 0;
+    NSInteger rowIndex = [outlineView rowForItem:node];
+    BOOL isRoot = rowIndex == 0;
+    
     if ([cell isKindOfClass:[KTImageTextCell class]])	// Fail gracefully if not the image kind of cell
 	{
 		// Size
@@ -951,7 +953,6 @@
 		BOOL isDraft = [item isDraftOrHasDraftAncestor];
 		[cell setDraft:isDraft];
 		
-		NSInteger rowIndex = [outlineView rowForItem:item];
 
 		
 		// If the row is selected but isn't being edited and the current drawing isn't being used to create a drag image,
