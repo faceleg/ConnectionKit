@@ -115,6 +115,7 @@ extern NSString *gInfoWindowAutoSaveName;
 @property(nonatomic, retain) SVCommentsWindowController *commentsWindowController;
 @property(nonatomic, retain) SVGoogleWindowController *googleWindowController;
 
+@property(nonatomic, retain) MAAttachedWindow *designIdentityWindow;
 
 //- (void)updateEditMenuItems;
 - (void) updateDocWindowLicenseStatus:(NSNotification *)aNotification;

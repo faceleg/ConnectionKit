@@ -118,6 +118,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[myMasterCodeInjectionController release];
 	[myPageCodeInjectionController release];
 
+	self.designIdentityWindow = nil;
+	
     [super dealloc];
 }
 
@@ -461,6 +463,21 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
                                                      didEndSelector:@selector(designChooserDidEnd:returnCode:)];
 }
 
+@synthesize designIdentityWindow = _designIdentityWindow;
+
+- (void) setDesignIdentityWindow: (MAAttachedWindow *) aDesignIdentityWindow
+{
+	if (_designIdentityWindow)
+	{
+		[[self window] removeChildWindow:_designIdentityWindow];
+	}
+	
+    [aDesignIdentityWindow retain];
+    [_designIdentityWindow release];
+    _designIdentityWindow = aDesignIdentityWindow;
+}
+
+
 - (void) hideDesignIdentityWindow
 {
 	[[NSAnimationContext currentContext] setDuration:1.0f];
@@ -469,47 +486,57 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 }
 - (void) showDesignIdentityWindow:(KTDesign *)aDesign;
 {
-	if (!_designIdentityWindow)
-	{
-		NSUInteger kDesignIDWindowHeight = kDesignThumbHeight + 100;
-		const NSUInteger kDesignIDWindowWidth = 350;
-		const NSUInteger kDesignIDThumbY = 70;
-		
-		NSView *contentView = [[[NSView alloc] initWithFrame:NSMakeRect(0,0,kDesignIDWindowWidth, kDesignIDWindowHeight)] autorelease];
-		_designIdentityThumbnail = [[[NSImageView alloc] initWithFrame:
-									 NSMakeRect((kDesignIDWindowWidth- kDesignThumbWidth)/2.0,kDesignIDThumbY,
-												kDesignThumbWidth, kDesignThumbHeight)] autorelease];
-		[_designIdentityThumbnail setImageScaling:NSImageScaleProportionallyDown];
-		_designIdentityTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(0,0,kDesignIDWindowWidth, 40)];
-		[_designIdentityTitle setAlignment:NSCenterTextAlignment];
-		[[_designIdentityTitle cell] setLineBreakMode:NSLineBreakByTruncatingMiddle];
-		[_designIdentityTitle setTextColor:[NSColor whiteColor]];
-		[_designIdentityTitle setBordered:NO];
-		[_designIdentityTitle setBezeled:NO];
-		[_designIdentityTitle setSelectable:NO];
-		[_designIdentityTitle setDrawsBackground:NO];
-		[_designIdentityTitle setFont:[NSFont systemFontOfSize:[NSFont systemFontSize] * 2.0]];
-		
-		[contentView addSubview:_designIdentityThumbnail];
-		[contentView addSubview:_designIdentityTitle];
+	self.designIdentityWindow = nil;		// make sure old one is released before creating new one
 
-		NSWindow *parentWindow = [self window];
-		NSRect frame = [parentWindow frame];
-		NSPoint attachmentPoint = NSMakePoint(frame.size.width/2.0,
-											  (frame.size.height-kDesignIDWindowHeight)/2.0);
-		_designIdentityWindow = [[MAAttachedWindow alloc]
-								 initWithView:contentView
-								 attachedToPoint:attachmentPoint
-								 inWindow:parentWindow
-								 onSide:MAPositionTop
-								 atDistance:0.0 ];
-		
-		[_designIdentityWindow setHasArrow:NO];
-		[_designIdentityWindow setBorderWidth:0.0];
-		[_designIdentityWindow setAlphaValue:0.0];		// initially ZERO ALPHA!
+	SVWebContentAreaController *contentAreaController = [self webContentAreaController];
+	NSTabView *tabview = [contentAreaController tabView];
+
+	NSUInteger tabviewHeight = [tabview bounds].size.height;
+	NSUInteger tabviewWidth = [tabview bounds].size.width - 16;	// don't include scroll bars
+
+	NSUInteger kDesignIDWindowHeight = kDesignThumbHeight + 100;
+	NSUInteger kDesignIDWindowWidth = 350;
+
+
+	const NSUInteger kDesignIDThumbY   = 70;
 	
-		[parentWindow addChildWindow:_designIdentityWindow ordered:NSWindowAbove];
-	}
+	NSView *contentView = [[[NSView alloc] initWithFrame:NSMakeRect(0,0,kDesignIDWindowWidth, kDesignIDWindowHeight)] autorelease];
+	_designIdentityThumbnail = [[[NSImageView alloc] initWithFrame:
+								 NSMakeRect((kDesignIDWindowWidth- kDesignThumbWidth)/2.0,kDesignIDThumbY,
+											kDesignThumbWidth, kDesignThumbHeight)] autorelease];
+	[_designIdentityThumbnail setImageScaling:NSImageScaleProportionallyDown];
+	_designIdentityTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(0,0,kDesignIDWindowWidth, 40)];
+	[_designIdentityTitle setAlignment:NSCenterTextAlignment];
+	[[_designIdentityTitle cell] setLineBreakMode:NSLineBreakByTruncatingMiddle];
+	[_designIdentityTitle setTextColor:[NSColor whiteColor]];
+	[_designIdentityTitle setBordered:NO];
+	[_designIdentityTitle setBezeled:NO];
+	[_designIdentityTitle setSelectable:NO];
+	[_designIdentityTitle setDrawsBackground:NO];
+	[_designIdentityTitle setFont:[NSFont systemFontOfSize:[NSFont systemFontSize] * 2.0]];
+	
+	[contentView addSubview:_designIdentityThumbnail];
+	[contentView addSubview:_designIdentityTitle];
+
+	NSWindow *parentWindow = [self window];
+	
+	NSRect tabviewRectInWindow = [tabview convertRect:[tabview bounds] toView:nil];
+	
+	NSPoint attachmentPoint = NSMakePoint( tabviewRectInWindow.origin.x+ (tabviewWidth)/2.0,
+										  tabviewRectInWindow.origin.y + (tabviewHeight)/2.0);
+	_designIdentityWindow = [[MAAttachedWindow alloc]
+							 initWithView:contentView
+							 attachedToPoint:attachmentPoint
+							 inWindow:parentWindow
+							 onSide:MAPositionTop
+							 atDistance:0.0 ];
+	
+	[_designIdentityWindow setHasArrow:NO];
+	[_designIdentityWindow setBorderWidth:0.0];
+	[_designIdentityWindow setAlphaValue:0.0];		// initially ZERO ALPHA!
+
+	[parentWindow addChildWindow:_designIdentityWindow ordered:NSWindowAbove];
+
 	[_designIdentityTitle setStringValue:[aDesign title]];
 	[_designIdentityThumbnail setImage:[aDesign thumbnail]];
 	

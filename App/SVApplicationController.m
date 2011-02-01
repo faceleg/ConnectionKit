@@ -1003,7 +1003,10 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 				NSLog(@"BETA: For now, always creating a new document, to make debugging easier");
 				[[NSDocumentController sharedDocumentController] newDocument:nil];
 	#else
-				[[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindowInitial:!firstRun];	// launching, so try to reopen... unless it's first run.
+				if (!firstRun)
+				{
+					[[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindowInitial:!firstRun];	// launching, so try to reopen... unless it's first run.
+				}
 	#endif
 			}
 			
@@ -1137,6 +1140,18 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 - (void)applicationWillFinishLaunching:(NSNotification *)notification
 {
 	[super applicationWillFinishLaunching:notification];
+
+	/*
+	 
+	 If/when we want to use the iPhoto parser as a utility to convert useless keyword numbers on the pasteboard
+	 from iPhoto, we can use this to get the iPhoto parser to convert.
+	 
+	NSArray* mediaTypes = [NSArray arrayWithObjects:kIMBMediaTypeImage,kIMBMediaTypeAudio,kIMBMediaTypeMovie,kIMBMediaTypeLink,nil];
+	(void) [IMBPanelController sharedPanelControllerWithDelegate:self mediaTypes:mediaTypes];
+
+	IMBParser *iPhotoParser = [[IMBParserController sharedParserController] registeredParserOfClass:@"IMBiPhotoParser" forMediaType:@"image"]; 
+	DJW((@"My iphoto parser = %@", iPhotoParser));
+	*/
 	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];	// apparently pool may not be in place yet?
 	// see http://lapcatsoftware.com/blog/2007/03/10/everything-you-always-wanted-to-know-about-nsapplication/
