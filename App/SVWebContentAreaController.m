@@ -121,7 +121,19 @@
     _selectedPages = pages;
     
     
-    [self didChangeSelectionOrViewType];
+    NSUndoManager *undoManager = [[self view] undoManager];
+    if ([undoManager isUndoing] || [undoManager isRedoing])
+    {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                                 selector:@selector(didChangeSelectionOrViewType)
+                                                   object:nil];
+        
+        [self performSelector:@selector(didChangeSelectionOrViewType) withObject:nil afterDelay:0.0f];
+    }
+    else
+    {
+        [self didChangeSelectionOrViewType];
+    }
 }
 
 - (SVSiteItem *)selectedPage;   // returns nil if more than one page is selected
