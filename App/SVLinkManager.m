@@ -27,11 +27,26 @@
 
 #pragma mark Shared Manager
 
+static SVLinkManager *sSharedLinkManager;
+
 + (SVLinkManager *)sharedLinkManager
 {
-    static SVLinkManager *result;
-    if (!result) result = [[SVLinkManager alloc] init];
-    return result;
+    if (!sSharedLinkManager) [[[SVLinkManager alloc] init] release];    // sets sSharedLinkManager internally
+    return sSharedLinkManager;
+}
+
++ (id)allocWithZone:(NSZone *)zone;
+{
+    // If there's already a manager, re-use it
+    if (sSharedLinkManager)
+    {
+        return [sSharedLinkManager retain];
+    }
+    else
+    {
+        sSharedLinkManager = [super allocWithZone:zone];
+        return [sSharedLinkManager retain];
+    }
 }
 
 #pragma mark Dealloc

@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1273"/>
+			<integer value="169"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1825,6 +1825,9 @@
 			<object class="NSCustomObject" id="838031862">
 				<string key="NSClassName">NSFontManager</string>
 			</object>
+			<object class="NSCustomObject" id="608768318">
+				<string key="NSClassName">SVLinkManager</string>
+			</object>
 			<object class="NSCustomObject" id="205882656">
 				<string key="NSClassName">SVApplicationController</string>
 			</object>
@@ -2735,14 +2738,6 @@
 					<int key="connectionID">1245</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">orderFrontLinkPanel:</string>
-						<reference key="source" ref="464856506"/>
-						<reference key="destination" ref="156517136"/>
-					</object>
-					<int key="connectionID">1271</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oNewPageMenu</string>
 						<reference key="source" ref="205882656"/>
@@ -2949,6 +2944,14 @@
 						<reference key="destination" ref="426530287"/>
 					</object>
 					<int key="connectionID">1366</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">orderFrontLinkPanel:</string>
+						<reference key="source" ref="608768318"/>
+						<reference key="destination" ref="156517136"/>
+					</object>
+					<int key="connectionID">1369</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4303,6 +4306,12 @@
 						<reference key="object" ref="892799029"/>
 						<reference key="parent" ref="686301075"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1368</int>
+						<reference key="object" ref="608768318"/>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">Link Manager</string>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -4450,6 +4459,7 @@
 					<string>136.ImportedFromIB2</string>
 					<string>1360.IBPluginDependency</string>
 					<string>1361.IBPluginDependency</string>
+					<string>1368.IBPluginDependency</string>
 					<string>143.IBPluginDependency</string>
 					<string>143.ImportedFromIB2</string>
 					<string>144.IBPluginDependency</string>
@@ -4813,6 +4823,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -5048,7 +5059,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1367</int>
+			<int key="maxID">1369</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
