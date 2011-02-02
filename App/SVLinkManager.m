@@ -138,6 +138,12 @@ static SVLinkManager *sSharedLinkManager;
             [(NSToolbarItem *)anItem setLabel:
              ([self selectedLink] ? TOOLBAR_EDIT_LINK : TOOLBAR_CREATE_LINK)];
         }
+        else if ([(id <NSObject>)anItem isKindOfClass:[NSMenuItem class]])
+        {
+            [(NSMenuItem *)anItem setTitle:([self selectedLink] ?
+                                            NSLocalizedString(@"Edit Link…", "menu item") :
+                                            NSLocalizedString(@"Create Link…", "menu item"))];
+        }
     }
     
     return result;
