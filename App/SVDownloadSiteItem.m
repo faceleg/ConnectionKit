@@ -13,6 +13,8 @@
 #import "KTPage+Paths.h"
 #import "SVPublisher.h"
 
+#import "NSImage+KTExtensions.h"
+
 #import "NSData+Karelia.h"
 #import "NSString+Karelia.h"
 
@@ -60,9 +62,9 @@
         NSString *type = [NSString UTIForFilenameExtension:
                           [[[[self media] media] mediaURL] ks_pathExtension]];
         
-        if ([type conformsToUTI:(NSString *)kUTTypeImage])
+        if (!(options & SVThumbnailDryRun))
         {
-            if (!(options & SVThumbnailDryRun))
+            if ([type conformsToUTI:(NSString *)kUTTypeImage])
             {
                 [context writeImageWithSourceMedia:[[self media] media]
                                                alt:@""
@@ -71,11 +73,26 @@
                                               type:nil
                                  preferredFilename:nil];
             }
-            
-            return YES;
+            else
+            {
+                NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:type];
+                NSData *png = [icon PNGRepresentation];
+                
+                SVMedia *media = [[SVMedia alloc] initWithData:png
+                                                           URL:[[[self media] media] mediaURL]];
+                
+                [context writeImageWithSourceMedia:media
+                                               alt:@""
+                                             width:[NSNumber numberWithUnsignedInteger:width]
+                                            height:[NSNumber numberWithUnsignedInteger:height]
+                                              type:(NSString *)kUTTypePNG
+                                 preferredFilename:nil];
+                
+                [media release];
+            }
         }
         
-        return NO;
+        return YES;
     }
     else
     {
