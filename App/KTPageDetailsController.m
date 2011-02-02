@@ -1015,6 +1015,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		}
         
 		int width = ceilf(extURLSize.width)  + 3;
+		if (width < 100) width = 100;	// make sure there is some width there so hover can be found
 		if (width > availableForAll) width = availableForAll;	// make sure a really long URL will fit
 		frame.size.width = width;
         

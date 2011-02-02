@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.SystemVersion">10H574</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
@@ -21,7 +21,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1726"/>
+			<integer value="2045"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2042,43 +2042,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.externalLinkRepresentation.URL</string>
-						<reference key="source" ref="899980468"/>
-						<reference key="destination" ref="660072411"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="899980468"/>
-							<reference key="NSDestination" ref="660072411"/>
-							<string key="NSLabel">value: selection.externalLinkRepresentation.URL</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.externalLinkRepresentation.URL</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSConditionallySetsHidden</string>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSRaisesForNotApplicableKeys</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<boolean value="YES"/>
-									<string>MULTIPLE</string>
-									<string>NO SEL</string>
-									<string>NOT APP</string>
-									<string>NULL</string>
-									<boolean value="NO"/>
-								</object>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">2256</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: selection.childItems.@count</string>
 						<reference key="source" ref="481224017"/>
 						<reference key="destination" ref="660072411"/>
@@ -2248,6 +2211,37 @@
 						</object>
 					</object>
 					<int key="connectionID">2264</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.externalLinkRepresentation.URL</string>
+						<reference key="source" ref="899980468"/>
+						<reference key="destination" ref="660072411"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="899980468"/>
+							<reference key="NSDestination" ref="660072411"/>
+							<string key="NSLabel">value: selection.externalLinkRepresentation.URL</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.externalLinkRepresentation.URL</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSConditionallySetsHidden</string>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSRaisesForNotApplicableKeys</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<boolean value="YES"/>
+									<string>MULTIPLE</string>
+									<boolean value="NO"/>
+								</object>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2268</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3228,10 +3222,10 @@
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{918, 587}, {1002, 548}}</string>
+					<string>{{678, 458}, {1002, 548}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{918, 587}, {1002, 548}}</string>
+					<string>{{678, 458}, {1002, 548}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{800, 280}</string>
@@ -3498,7 +3492,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2264</int>
+			<int key="maxID">2268</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3855,7 +3849,7 @@
 							<string>KTLinkSourceView</string>
 							<string>NSTextField</string>
 							<string>KSBorderlessWindow</string>
-							<string>NSObjectController</string>
+							<string>SVPagesTreeController</string>
 							<string>SVSiteOutlineViewController</string>
 							<string>SVWebContentAreaController</string>
 						</object>
@@ -3917,7 +3911,7 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">pagesController</string>
-								<string key="candidateClassName">NSObjectController</string>
+								<string key="candidateClassName">SVPagesTreeController</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">siteOutlineViewController</string>
@@ -4307,13 +4301,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../KSThreadProxy/KSThreadProxy.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../Shared/AppKit/KSSilencingConfirmSheet.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -4971,14 +4958,35 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">WebView</string>
 					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">unlink:</string>
-						<string key="NS.object.0">id</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>selectLink:</string>
+							<string>unlink:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">unlink:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">unlink:</string>
-							<string key="candidateClassName">id</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>selectLink:</string>
+							<string>unlink:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">selectLink:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">unlink:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
