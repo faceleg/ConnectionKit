@@ -224,6 +224,7 @@ static id <SVPlugInContext> sCurrentContext;
 }
 
 - (NSNumber *)height; { return [[self container] height]; }
++ (NSSet *)keyPathsForValuesAffectingHeight; { return [NSSet setWithObject:@"container.height"]; }
 
 - (void)setWidth:(NSNumber *)width height:(NSNumber *)height;
 {
