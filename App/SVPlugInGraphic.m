@@ -109,12 +109,14 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [[self plugIn] didAddToPage:page];
 }
 
-/*  Where possible (i.e. Leopard) tear down the delegate early to avoid any KVO issues.
- */
+/*  Where possible (i.e. Leopard) tear down the plug-in early to avoid any KVO issues.
+ *  
+ *  Don't think this is required any more since plug-in is now a modelled property
+ *
 - (void)willTurnIntoFault
 {
     [self setPlugIn:nil useSerializedProperties:NO];
-}
+}*/
 
 #pragma mark Plug-in
 
