@@ -59,20 +59,40 @@
 
 - (void)writePlaceholderHTML:(id <SVPlugInContext>)context;
 {
-    [context startElement:@"div"];
-    
     if ( self.indexedCollection )
     {
+        // write thumbnail of example image
+        [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"gridItem" 
+                                                                            forKey:@"class"]];
+        [context writeThumbnailOfPage:nil
+                                width:128
+                               height:128
+                           attributes:nil
+                              options:(SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)];
+        [context startElement:@"h3"];
+        [context startElement:@"span" attributes:[NSDictionary dictionaryWithObject:@"in" 
+                                                                             forKey:@"class"]];
+        [context writeText:NSLocalizedString(@"Example", 
+                                             "placeholder image name")];
+        [context endElement]; // </span>
+        [context endElement]; // </h3>
+        [context endElement]; // </div>
+
+        // thumbnail <DIV> with text content that instructs you to drag in images
+        [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"gridItem" 
+                                                                            forKey:@"class"]];
         [context writeText:NSLocalizedString(@"Drag photos to the collection to build the album.",
                                              "add photos to grid")];
+        [context endElement]; // </div>                
     }
     else
     {
+        [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"gridItem" 
+                                                                            forKey:@"class"]];
         [context writeText:NSLocalizedString(@"Please specify the collection to use for the album.",
                                              "set photo collection")];
+        [context endElement];
     }
-    
-    [context endElement];
 }
 
 
@@ -90,17 +110,6 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
     [context writeThumbnailOfPage:iteratedPage
-                            width:128
-                           height:128
-                       attributes:nil
-                          options:(SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)];
-}
-
-- (void)writeThumbnailPlaceholder
-{
-    id<SVPlugInContext> context = [self currentContext]; 
-    
-    [context writeThumbnailOfPage:nil
                             width:128
                            height:128
                        attributes:nil
