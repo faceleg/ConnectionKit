@@ -44,7 +44,7 @@
 	self = [super init];
 	if ( self != nil )
 	{
-		_designs = [NSMutableArray array];	// weak reference
+		_designs = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
