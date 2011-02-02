@@ -96,7 +96,8 @@
         [collectionLinkSourceView setConnected:YES];
         
         // Store the new collection. For some reason keypath of @"indexedCollection" is upsetting KVO heavily. #102661
-        [[[self inspectedObjectsController] selection] setValue:aPage forKeyPath:@"container.indexedCollection"];
+        [[[self inspectedObjectsController] selection] setValue:[aPage self]    // to be sure it's not a proxy
+                                                     forKeyPath:@"container.indexedCollection"];
         
         // When we change indexedCollection, set the container's title to the title of the collection, or to
         // CFBundleDisplayName if collection is nil
