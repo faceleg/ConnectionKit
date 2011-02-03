@@ -23,6 +23,8 @@
 
 #import "NSImage+Karelia.h"
 
+#import <Connection/Connection.h>
+
 
 @implementation SVPageInspector
 
@@ -223,7 +225,15 @@
     }
     
     
-    [oThumbnailPicker selectItemWithTag:[[oThumbnailController fillType] integerValue]];
+    SVThumbnailType fillType = [[oThumbnailController fillType] integerValue];
+    if (fillType > SVThumbnailTypePickFromPage)
+    {
+        [oThumbnailPicker selectItemWithTag:fillType];
+    }
+    else
+    {
+        [oThumbnailPicker selectItemWithRepresentedObject:[page thumbnailSourceGraphic]];
+    }
 }
 
 - (IBAction)pickThumbnailFromPage:(NSPopUpButton *)sender;
