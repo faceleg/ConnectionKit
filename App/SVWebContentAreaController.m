@@ -132,7 +132,7 @@
         [[[[self webEditorViewController] webEditor] contentItem] stopObservingDependencies];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(didUndoChange:)
+                                                 selector:@selector(didUndoOrRedo:)
                                                      name:NSUndoManagerDidUndoChangeNotification
                                                    object:undoManager];
     }
@@ -145,7 +145,7 @@
         [[[[self webEditorViewController] webEditor] contentItem] stopObservingDependencies];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(didRedoChange:)
+                                                 selector:@selector(didUndoOrRedo:)
                                                      name:NSUndoManagerDidRedoChangeNotification
                                                    object:undoManager];
     }
@@ -155,16 +155,13 @@
     }
 }
 
-- (void)didUndoChange:(NSNotification *)notification;
+- (void)didUndoOrRedo:(NSNotification *)notification;
 {
     [self didChangeSelectionOrViewType];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidUndoChangeNotification object:[notification object]];
-}
-
-- (void)didRedoChange:(NSNotification *)notification;
-{
-    [self didChangeSelectionOrViewType];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidRedoChangeNotification object:[notification object]];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:[notification name]
+                                                  object:[notification object]];
 }
 
 - (SVSiteItem *)selectedPage;   // returns nil if more than one page is selected
