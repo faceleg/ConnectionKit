@@ -216,13 +216,16 @@
     
     
     // First & Last child
-    [menu addItem:[NSMenuItem separatorItem]];
-    [menu addItemWithTitle:NSLocalizedString(@"First Child Page", "menu item")
-                    action:nil
-             keyEquivalent:@""];
-    [menu addItemWithTitle:NSLocalizedString(@"Last Child Page", "menu item")
-                    action:nil
-             keyEquivalent:@""];
+    if ([page isCollection])
+    {
+        [menu addItem:[NSMenuItem separatorItem]];
+        [menu addItemWithTitle:NSLocalizedString(@"First Child Page", "menu item")
+                        action:nil
+                 keyEquivalent:@""];
+        [menu addItemWithTitle:NSLocalizedString(@"Last Child Page", "menu item")
+                        action:nil
+                 keyEquivalent:@""];
+    }
 }
 
 - (IBAction)pickThumbnailFromPage:(NSPopUpButton *)sender;
