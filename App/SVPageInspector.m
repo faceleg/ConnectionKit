@@ -12,6 +12,7 @@
 #import "KTElementPlugInWrapper.h"
 #import "SVGraphic.h"
 #import "SVIndexPlugIn.h"
+#import "SVFillController.h"
 #import "SVMediaRecord.h"
 #import "SVRichText.h"
 #import "SVSidebar.h"
@@ -237,7 +238,16 @@
     NSMenuItem *selectedItem = [sender selectedItem];
     SVGraphic *graphic = [selectedItem representedObject];
     
-    [(NSObject *)[self inspectedObjectsController] setValue:graphic forKeyPath:@"selection.thumbnailSourceGraphic"];
+    if (graphic)
+    {
+        [[self inspectedObjectsController] setValue:graphic forKeyPath:@"selection.thumbnailSourceGraphic"];
+    }
+    else
+    {
+        // They chose a different type
+        [oThumbnailController setFillType:[NSNumber numberWithInteger:[sender selectedTag]]];
+        [oThumbnailController fillTypeChosen:sender];
+    }
 }
 
 #pragma mark Sidebar Pagelets
