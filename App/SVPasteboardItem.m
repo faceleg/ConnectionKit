@@ -38,7 +38,13 @@
 {
     // Start with iMedia
     IMBObjectsPromise *promise = [IMBObjectsPromise promiseFromPasteboard:self];
-    [promise setDestinationDirectoryPath:NSTemporaryDirectory()];
+    
+    // Redirect remote downloads from default location to temp dir. #106173
+    if ([promise destinationDirectoryPath])
+    {
+        [promise setDestinationDirectoryPath:NSTemporaryDirectory()];
+    }
+    
     [promise start];
     [promise waitUntilFinished];
     
