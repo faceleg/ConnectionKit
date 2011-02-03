@@ -70,10 +70,12 @@
                            attributes:nil
                               options:(SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)];
         [context startElement:@"h3"];
+        [context startAnchorElementWithPage:[context page]];
         [context startElement:@"span" attributes:[NSDictionary dictionaryWithObject:@"in" 
                                                                              forKey:@"class"]];
-        [context writeText:NSLocalizedString(@"Example", 
+        [context writeText:NSLocalizedString(@"Example Photo", 
                                              "placeholder image name")];
+        [context endElement]; // </a>
         [context endElement]; // </span>
         [context endElement]; // </h3>
         [context endElement]; // </div>
@@ -81,7 +83,7 @@
         // thumbnail <DIV> with text content that instructs you to drag in images
         [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"gridItem" 
                                                                             forKey:@"class"]];
-        [context writeText:NSLocalizedString(@"Drag photos to the collection to build the album.",
+        [context writeText:NSLocalizedString(@"Drag photos directly to this grid to build the album.",
                                              "add photos to grid")];
         [context endElement]; // </div>                
     }
