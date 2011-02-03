@@ -83,6 +83,8 @@
     [oThumbnailController bind:@"fillType" toObject:self withKeyPath:@"inspectedObjectsController.selection.thumbnailType" options:nil];
     [oThumbnailController bind:@"imageMedia" toObject:oSiteItemController withKeyPath:@"thumbnailMedia" options:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(thumbnailPickerWillPopUp:) name:NSPopUpButtonWillPopUpNotification object:oThumbnailPicker];
+    
     [self updatePickFromPageThumbnail];
 }
 
@@ -167,10 +169,10 @@
     }
 }
 
-- (void)menuNeedsUpdate:(NSMenu *)menu
+- (void)thumbnailPickerWillPopUp:(NSNotification *)notification
 {
     // Dump the old menu. Curiously, NSMenu has no easy way to do this.
-    while ([menu numberOfItems] > 1) { [menu removeItemAtIndex:1]; }
+    while ([oThumbnailPicker numberOfItems] > 1) { [oThumbnailPicker removeItemAtIndex:1]; }
     
     
     // Populate with available choices
@@ -196,7 +198,7 @@
                     [item setImage:thumnailImage];
                     [thumnailImage release];
                     
-                    [menu addItem:item];
+                    [oThumbnailPicker addItem:item];
                     [item release];
                 }
             }
@@ -205,32 +207,27 @@
     
     
     // Placeholder
-    if ([menu numberOfItems] <= 1)
+    if ([oThumbnailPicker numberOfItems] <= 1)
     {
-        NSMenuItem *placeholder = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"No images found on page", "Page thumbnail picker placeholder")
-                                                             action:nil
-                                                      keyEquivalent:@""];
-        [placeholder setEnabled:NO];
-        [menu addItem:placeholder];
-        [placeholder release];
+        [oThumbnailPicker addItemWithTitle:NSLocalizedString(@"No images found on page", "Page thumbnail picker placeholder")];
+        [[oThumbnailPicker lastItem] setEnabled:NO];
     }
     
     
     // First & Last child
     if ([page isCollection])
     {
-        [menu addItem:[NSMenuItem separatorItem]];
+        [[oThumbnailPicker menu] addItem:[NSMenuItem separatorItem]];
         
-        NSMenuItem *item = [menu addItemWithTitle:NSLocalizedString(@"First Child Page", "menu item")
-                                           action:nil
-                                    keyEquivalent:@""];
-        [item setTag:SVThumbnailTypeFirstChildItem];
+        [oThumbnailPicker addItemWithTitle:NSLocalizedString(@"First Child Page", "menu item")];
+        [[oThumbnailPicker lastItem] setTag:SVThumbnailTypeFirstChildItem];
         
-        item = [menu addItemWithTitle:NSLocalizedString(@"Last Child Page", "menu item")
-                               action:nil
-                        keyEquivalent:@""];
-        [item setTag:SVThumbnailTypeFirstChildItem];
+        [oThumbnailPicker addItemWithTitle:NSLocalizedString(@"Last Child Page", "menu item")];
+        [[oThumbnailPicker lastItem] setTag:SVThumbnailTypeLastChildItem];
     }
+    
+    
+    [oThumbnailPicker selectItemWithTag:[[oThumbnailController fillType] integerValue]];
 }
 
 - (IBAction)pickThumbnailFromPage:(NSPopUpButton *)sender;
