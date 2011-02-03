@@ -14,6 +14,8 @@
 
 }
 
+@property(nonatomic, readonly) BOOL fillTypeIsImage;
+
 @end
 
 

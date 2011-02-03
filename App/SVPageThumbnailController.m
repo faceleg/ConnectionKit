@@ -43,6 +43,12 @@
     return YES;
 }
 
+- (BOOL)fillTypeIsImage;
+{
+    return [[self fillType] intValue] >= SVThumbnailTypePickFromPage;
+}
++ (NSSet *)keyPathsForValuesAffectingFillTypeIsImage; { return [NSSet setWithObject:@"fillType"]; }
+
 @end
 
 
