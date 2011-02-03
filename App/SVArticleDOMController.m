@@ -125,11 +125,15 @@
             
             return;
         }
+        
+        // No sidebar? Make it a callout. #103215
+        [self addGraphic:graphic];
+        [[graphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementCallout]];
     }
-    
-    
-    
-    [self addGraphic:graphic];
+    else
+    {
+        [self addGraphic:graphic];
+    }
 }
 
 - (void)addGraphic:(SVGraphic *)graphic;
