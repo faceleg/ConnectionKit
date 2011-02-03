@@ -192,14 +192,10 @@
                 
                 if (thumnailImage)
                 {
-                    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
-                    [item setRepresentedObject:graphic];
-                    
-                    [item setImage:thumnailImage];
+                    [oThumbnailPicker addItemWithTitle:@""];
+                    [oThumbnailPicker.lastItem setRepresentedObject:graphic];
+                    [oThumbnailPicker.lastItem setImage:thumnailImage];
                     [thumnailImage release];
-                    
-                    [oThumbnailPicker addItem:item];
-                    [item release];
                 }
             }
         }
