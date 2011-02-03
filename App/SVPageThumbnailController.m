@@ -67,3 +67,17 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVPageThumbnailPickerCell
+
+/*  This feels a pretty dirty solution, but it works. By overriding this method rather than calling -setPullsDown: you get what looks like a pull down button (arrow drawing, menu placement), but behaves like a popup.
+ */
+- (BOOL)pullsDown; { return YES; }
+
+@end
+
+

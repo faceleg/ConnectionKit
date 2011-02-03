@@ -4695,7 +4695,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAwkgAAA</bytes>
 					</object>
-					<string>BWIWorkPopUpButtonCell</string>
+					<string>SVPageThumbnailPickerCell</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{799, 293}, {116, 37}}</string>
@@ -5594,10 +5594,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				<object class="IBPartialClassDescription">
 					<string key="className">SVPageThumbnailController</string>
 					<string key="superclassName">SVFillController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="155989282">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVPageThumbnailController.h</string>
 					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVPageThumbnailPickerCell</string>
+					<string key="superclassName">BWIWorkPopUpButtonCell</string>
+					<reference key="sourceIdentifier" ref="155989282"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">SVSidebarPageletsController</string>

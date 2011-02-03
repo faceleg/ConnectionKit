@@ -8,6 +8,8 @@
 
 #import "SVFillController.h"
 
+#import <BWToolkitFramework/BWToolkitFramework.h>
+
 
 @interface SVPageThumbnailController : SVFillController
 {
@@ -24,3 +26,12 @@
 
 @interface SVFillTypeFromThumbnailType : NSValueTransformer
 @end
+
+
+#pragma mark -
+
+
+@interface SVPageThumbnailPickerCell : BWIWorkPopUpButtonCell
+
+@end
+
