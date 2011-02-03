@@ -2771,22 +2771,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					<int key="connectionID">441</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: fillType</string>
-						<reference key="source" ref="549251230"/>
-						<reference key="destination" ref="305880100"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="549251230"/>
-							<reference key="NSDestination" ref="305880100"/>
-							<string key="NSLabel">selectedTag: fillType</string>
-							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">fillType</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">443</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oThumbnailController</string>
 						<reference key="source" ref="1001"/>
@@ -3271,6 +3255,26 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						</object>
 					</object>
 					<int key="connectionID">565</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedTag: fillType</string>
+						<reference key="source" ref="549251230"/>
+						<reference key="destination" ref="305880100"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="549251230"/>
+							<reference key="NSDestination" ref="305880100"/>
+							<string key="NSLabel">selectedTag: fillType</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">fillType</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">SVFillTypeFromThumbnailType</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">566</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -5034,7 +5038,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">565</int>
+			<int key="maxID">566</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

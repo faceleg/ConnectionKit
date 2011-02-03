@@ -15,3 +15,10 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@interface SVFillTypeFromThumbnailType : NSValueTransformer
+@end

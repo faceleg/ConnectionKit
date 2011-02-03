@@ -9,6 +9,7 @@
 #import "SVPageThumbnailController.h"
 
 #import "SVMediaRecord.h"
+#import "SVSiteItem.h"
 
 #import "KSInspectorViewController.h"
 
@@ -40,6 +41,23 @@
                                                              forKeyPath:@"selection.customThumbnail"];
     
     return YES;
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation SVFillTypeFromThumbnailType
+
++ (Class)transformedValueClass; { return [NSNumber class]; }
++ (BOOL)allowsReverseTransformation; { return YES; }
+
+- (id)transformedValue:(id)value;           // by default returns value
+{
+    if ([value intValue] > SVThumbnailTypePickFromPage) value = [NSNumber numberWithInt:SVThumbnailTypePickFromPage];
+    return value;
 }
 
 @end
