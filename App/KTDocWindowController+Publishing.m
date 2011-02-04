@@ -272,6 +272,9 @@
 
 - (IBAction)exportSiteAgain:(id)sender
 {
+    if (![self tryToEndEditing]) return;
+	
+    
     NSString *exportDirectoryPath = [[[self document] lastExportDirectory] path];
     if (exportDirectoryPath)
     {
