@@ -456,12 +456,6 @@
     SVWebEditorHTMLContext *context = [self HTMLContext];
     
     SVSidebarPageletsController *sidebarController = [context sidebarPageletsController];
-    if (!sidebarController) // #96989
-    {
-        SVArticle *article = [self representedObject];
-        KTPage *page = [article page];
-        sidebarController = [[[SVSidebarPageletsController alloc] initWithPage:page] autorelease];
-    }
     if (!sidebarController) return NSBeep();
     
     
