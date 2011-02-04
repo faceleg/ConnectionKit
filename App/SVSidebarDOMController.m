@@ -758,7 +758,11 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 {
     if (context == sSVSidebarDOMControllerPageletsObservation)
     {
-        [self setNeedsUpdateWithSelector:@selector(updatePageletOrdering)];
+        NSArray *loadedPagelets = [[self pageletDOMControllers] valueForKey:@"representedObject"];
+        if (![[object valueForKeyPath:keyPath] isEqual:loadedPagelets])
+        {
+            [self setNeedsUpdateWithSelector:@selector(updatePageletOrdering)];
+        }
     }
     else
     {
