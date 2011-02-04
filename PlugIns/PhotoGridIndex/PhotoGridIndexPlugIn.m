@@ -83,7 +83,7 @@
         // thumbnail <DIV> with text content that instructs you to drag in images
         [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"gridItem" 
                                                                             forKey:@"class"]];
-        [context writeText:NSLocalizedString(@"Drag photos directly to this grid to build the album.",
+        [context writeText:NSLocalizedString(@"Drag photos here",
                                              "add photos to grid")];
         [context endElement]; // </div>                
     }
