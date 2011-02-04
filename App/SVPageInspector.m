@@ -174,7 +174,8 @@
 - (void)thumbnailPickerWillPopUp:(NSNotification *)notification
 {
     // Dump the old menu. Curiously, NSMenu has no easy way to do this.
-    while ([oThumbnailPicker numberOfItems]) { [oThumbnailPicker removeItemAtIndex:0]; }
+    [oThumbnailPicker removeAllItems];
+    [oThumbnailPicker addItemWithTitle:@""];    // won't appear, as is a pulldown
     
     
     // Populate with available choices
@@ -194,7 +195,7 @@
                 
                 if (thumnailImage)
                 {
-                    [oThumbnailPicker addItemWithTitle:@""];
+                    [oThumbnailPicker addItemWithTitle:[graphic title]];
                     [oThumbnailPicker.lastItem setRepresentedObject:graphic];
                     [oThumbnailPicker.lastItem setImage:thumnailImage];
                     [thumnailImage release];
@@ -207,7 +208,7 @@
     // Placeholder
     if ([oThumbnailPicker numberOfItems] <= 1)
     {
-        [oThumbnailPicker addItemWithTitle:NSLocalizedString(@"No images found on page", "Page thumbnail picker placeholder")];
+        [oThumbnailPicker addItemWithTitle:NSLocalizedString(@"No media found directly on page", "Page thumbnail picker placeholder")];
         [[oThumbnailPicker lastItem] setEnabled:NO];
     }
     
