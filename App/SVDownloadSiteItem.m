@@ -70,7 +70,7 @@
                                                alt:@""
                                              width:[NSNumber numberWithUnsignedInteger:width]
                                             height:[NSNumber numberWithUnsignedInteger:height]
-                                              type:nil
+                                              type:(NSString *)kUTTypePNG
                                  preferredFilename:nil];
             }
             else
