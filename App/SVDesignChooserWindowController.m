@@ -66,7 +66,7 @@
 			NSLog(@"Not sure which variation to use.  If you can reproduce this problem please report to Karelia.");
 			imageVersion = 0;
 		}
-		design = [family.designs objectAtIndex:imageVersion];
+		design = [family.designs.allObjects objectAtIndex:imageVersion];
 	}
     
 	return design;

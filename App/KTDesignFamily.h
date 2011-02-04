@@ -14,13 +14,13 @@
 
 @interface KTDesignFamily : NSObject  {
 
-	NSMutableArray *_designs;
+	NSPointerArray *_designs;
 	KTDesign *_familyPrototype;
 }
 
 - (void) addDesign:(KTDesign *)aDesign;
 
-@property (assign) NSMutableArray *designs;			// weak reference so we don't have retain cycles; this is retained by a design.
+@property (assign) NSPointerArray *designs;			// weak reference so we don't have retain cycles; this is retained by a design.
 @property (retain) KTDesign *familyPrototype;	// which design acts as the prototype, for default thumbnail.
 
 @end

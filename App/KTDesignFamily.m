@@ -32,7 +32,10 @@
 		}
 		if (!result)	// none set?  Just choose the first one.
 		{
-			result = self.familyPrototype = [self.designs firstObjectKS];
+			if ([self.designs count])
+			{
+				result = self.familyPrototype = [self.designs pointerAtIndex:0];
+			}
 		}
 		
 	}
@@ -44,7 +47,9 @@
 	self = [super init];
 	if ( self != nil )
 	{
-		_designs = [[NSMutableArray alloc] init];
+		_designs = [[NSPointerArray alloc] initWithOptions:
+					NSPointerFunctionsZeroingWeakMemory|
+					NSPointerFunctionsObjectPointerPersonality];
 	}
 	return self;
 }
@@ -58,13 +63,16 @@
 
 - (void) addDesign:(KTDesign *)aDesign;
 {
-	if ([aDesign isFamilyPrototype])
+	if ([aDesign isFamilyPrototype] && [self.designs count])
 	{
-		[self.designs insertObject:aDesign atIndex:0];	// family prototype goes first
+		// insert at beginning of array
+		[self.designs insertPointer:aDesign atIndex:0];	// family prototype goes first
+		OBASSERT([self.designs count] == [self.designs.allObjects count]);
 	}
 	else
 	{
-		[self.designs addObject:aDesign];
+		[self.designs addPointer:aDesign];
+		OBASSERT([self.designs count] == [self.designs.allObjects count]);
 	}
 }
 

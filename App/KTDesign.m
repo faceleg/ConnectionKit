@@ -168,7 +168,7 @@ const int kDesignThumbHeight = 65;
 			// Add all of the subdesigns, and add a new range to my list of groups.
 
 			KTDesignFamily *family = (KTDesignFamily *)designOrFamily;
-			NSArray *subDesigns = [family designs];
+			NSArray *subDesigns = [[family designs] allObjects];
 			KTDesign *familyPrototype = [family familyPrototype];
 			familyPrototype.family = family;		// put reference to family (which has weak references to other designs) in first design in group so we can scrub
 			
@@ -815,7 +815,7 @@ const int kDesignThumbHeight = 65;
 	{
 		//return (id) [self.familyPrototype thumbnailCG];
 		
-		NSArray *familyDesigns = self.family.designs;
+		NSArray *familyDesigns = self.family.designs.allObjects;
 		CGImageRef result = nil;
 		NSNumber *indexNumber = [NSNumber numberWithInt:self.imageVersion];
 		result = (CGImageRef) [self.thumbnails objectForKey:indexNumber];

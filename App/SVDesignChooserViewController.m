@@ -246,7 +246,7 @@
 	// Only can reveal designs not in the 
 	_rightClickedIndex = index;
 	KTDesign *design = [[oDesignsArrayController arrangedObjects] objectAtIndex:index];
-	NSString *path = [[design bundle] bundlePath];
+	//NSString *path = [[design bundle] bundlePath];
 	BOOL canBeRevealed = YES; // ... MAYBE ONLY EXTERNAL DESIGNS? ... ![path ks_isSubpathOfPath:[[NSBundle mainBundle] bundlePath]];
 	
 	[menu addItemWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Reveal in Finder", @"")] action:@selector(revealDesign) keyEquivalent:@""];
