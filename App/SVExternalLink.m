@@ -8,8 +8,12 @@
 
 #import "SVExternalLink.h"
 
+#import "SVHTMLContext.h"
+#import "SVMedia.h"
 #import "SVURLPreviewViewController.h"
 #import "SVWebEditingURL.h"
+
+#import "NSImage+KTExtensions.h"
 
 #import "NSURL+Karelia.h"
 #import "KSURLUtilities.h"
@@ -69,6 +73,43 @@
 #pragma mark Title
 
 - (id)titleBox; { return NSNotApplicableMarker; } // #103991
+
+#pragma mark Thumbnail
+
+- (BOOL)writeThumbnailImage:(SVHTMLContext *)context
+                      width:(NSUInteger)width
+                     height:(NSUInteger)height
+                    options:(SVThumbnailOptions)options;
+{
+    if ([[self thumbnailType] intValue] == SVThumbnailTypePickFromPage)
+    {
+        [context addDependencyOnObject:self keyPath:@"thumbnailType"];
+        
+        
+        if (!(options & SVThumbnailDryRun))
+        {
+            NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"webloc"];
+            NSData *png = [icon PNGRepresentation];
+            
+            SVMedia *media = [[SVMedia alloc] initWithData:png URL:[NSURL URLWithString:@"x-sandvox:///webloc.png"]];
+            
+            [context writeImageWithSourceMedia:media
+                                           alt:@""
+                                         width:[NSNumber numberWithUnsignedInteger:width]
+                                        height:[NSNumber numberWithUnsignedInteger:height]
+                                          type:(NSString *)kUTTypePNG
+                             preferredFilename:nil];
+            
+            [media release];
+        }
+        
+        return YES;
+    }
+    else
+    {
+        return [super writeThumbnailImage:context width:width height:height options:options];
+    }
+}
 
 #pragma mark Other properties
 
