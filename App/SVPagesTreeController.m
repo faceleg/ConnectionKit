@@ -269,13 +269,29 @@
     }
     
     
+    // Is the name already taken?
+    KTPage *collection = [[[self arrangedObjects] descendantNodeAtIndexPath:[indexPath indexPathByRemovingLastIndex]] 
+                          representedObject];
+    
+    NSSet *titles = [[collection childItems] valueForKey:@"title"];
+    if ([collection isRootPage]) titles = [titles setByAddingObject:[collection title]];    // avoid two home pages. #106504
+    
+    NSString *preferredTitle = [object title];
+    NSUInteger index = 1;
+    
+    while ([titles containsObject:[object title]])
+    {
+        index++;
+        [object setTitle:[preferredTitle stringByAppendingFormat:@" %u", index]];
+    }
+    
+    
     // Actually insert proxy for the page
     SVPageProxy *proxy = [SVPageProxy proxyForTargetPage:object];
     [super insertObject:proxy atArrangedObjectIndexPath:indexPath];
     
     
     // Include in site menu if appropriate
-    KTPage *collection = (KTPage *)[object parentPage];
     if ([collection isRootPage] && [[collection childItems] count] < 7)
     {
         [object setIncludeInSiteMenu:[NSNumber numberWithBool:YES]];
