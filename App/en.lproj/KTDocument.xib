@@ -2229,19 +2229,21 @@
 									<bool key="EncodedWithXMLCoder">YES</bool>
 									<string>NSConditionallySetsHidden</string>
 									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNullPlaceholder</string>
 									<string>NSRaisesForNotApplicableKeys</string>
 								</object>
 								<object class="NSMutableArray" key="dict.values">
 									<bool key="EncodedWithXMLCoder">YES</bool>
 									<boolean value="YES"/>
 									<string>MULTIPLE</string>
+									<string>http://www.example.com/</string>
 									<boolean value="NO"/>
 								</object>
 							</object>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">2268</int>
+					<int key="connectionID">2269</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3492,7 +3494,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2268</int>
+			<int key="maxID">2269</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
