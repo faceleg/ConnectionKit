@@ -45,7 +45,7 @@
         [_sidebarPageletsController release]; _sidebarPageletsController = nil;
         if (page)
         {
-            _sidebarPageletsController = [[SVSidebarPageletsController alloc] initWithPage:page];
+            _sidebarPageletsController = [[SVSidebarPageletsController alloc] initWithPageletsInSidebarOfPage:page];
             [self synchronizeSidebarPageletsController];
         }
     }

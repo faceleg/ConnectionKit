@@ -47,6 +47,11 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 - (id)initWithPageletsController:(SVSidebarPageletsController *)pageletsController;
 {
+    // Get pagelets controller nicelt setup
+    OBPRECONDITION(pageletsController);
+    [pageletsController bindContentToPage];
+    
+    
     [self init];
     [self setElementIdName:@"sidebar-container"];
     

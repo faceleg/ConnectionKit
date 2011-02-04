@@ -688,8 +688,8 @@
 {
     if (!_sidebarPageletsController)
     {
-        _sidebarPageletsController = [[SVSidebarPageletsController alloc] initWithPage:
-                                      [self page]];
+        // This does the job nicely; if a client needs the controller to live-update they can turn that on
+        _sidebarPageletsController = [[SVSidebarPageletsController alloc] initWithPageletsInSidebarOfPage:[self page]];
     }
     
     return _sidebarPageletsController;

@@ -360,7 +360,7 @@
 
 - (void)addArchivePageletForCollectionIfNeeded:(KTPage *)collection
 {
-    SVSidebarPageletsController *sidebarController = [[SVSidebarPageletsController alloc] initWithPage:collection];
+    SVSidebarPageletsController *sidebarController = [[SVSidebarPageletsController alloc] initWithPageletsInSidebarOfPage:collection];
     [sidebarController autorelease];
 
     

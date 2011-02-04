@@ -26,23 +26,16 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithPage:(KTPage *)page;    // sets .managedObjectContext too
+- (id)initWithPageletsInSidebarOfPage:(KTPage *)page;    // sets .managedObjectContext too
 {
-    self = [self init];
+    self = [self initWithContent:[[page sidebar] pagelets]];
     _page = [page retain];
     
     [self setObjectClass:[SVGraphic class]];
-    [self setManagedObjectContext:[page managedObjectContext]];
+    //[self setManagedObjectContext:[page managedObjectContext]];   // if on, causes a fetch. Don't want
     [self setEntityName:@"Graphic"];
     [self setAvoidsEmptySelection:NO];
-    [self setAutomaticallyRearrangesObjects:YES];
     [self didChangeArrangementCriteria];
-    
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNumber numberWithBool:YES],
-                             NSRaisesForNotApplicableKeysBindingOption,
-                             nil];
-    [self bind:NSContentSetBinding toObject:page withKeyPath:@"sidebar.pagelets" options:options];
     
     return self;
 }
@@ -62,6 +55,18 @@
 }
 
 #pragma mark Arranging Objects
+
+- (void)bindContentToPage;
+{
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES],
+                             NSRaisesForNotApplicableKeysBindingOption,
+                             nil];
+    [self bind:NSContentSetBinding toObject:[self page] withKeyPath:@"sidebar.pagelets" options:options];
+    
+    [self setAutomaticallyRearrangesObjects:YES];
+    [self setManagedObjectContext:[[self page] managedObjectContext]];
+}
 
 - (NSArray *)arrangeObjects:(NSArray *)objects;
 {
