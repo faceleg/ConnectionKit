@@ -22,7 +22,7 @@
 @property(nonatomic, copy) NSNumber *docType;
 @property(nonatomic, copy) NSString *HTMLString;
 @property(nonatomic, copy) NSNumber *shouldPreviewWhenEditing;    // BOOL, mandatory
-@property(nonatomic, copy) NSString *typeOfFile;
+@property(nonatomic, copy, readonly) NSString *typeOfFile;
 
 #pragma mark Validation
 // The digest of the last string to be successfully validated with W3C
