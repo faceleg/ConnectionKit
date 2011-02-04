@@ -154,7 +154,7 @@
         }
     }
     
-    [[oThumbnailPicker itemAtIndex:0] setImage:result];
+    [[oThumbnailPicker selectedItem] setImage:result];
     [result release];
         
 }
@@ -174,7 +174,7 @@
 - (void)thumbnailPickerWillPopUp:(NSNotification *)notification
 {
     // Dump the old menu. Curiously, NSMenu has no easy way to do this.
-    while ([oThumbnailPicker numberOfItems] > 1) { [oThumbnailPicker removeItemAtIndex:1]; }
+    while ([oThumbnailPicker numberOfItems]) { [oThumbnailPicker removeItemAtIndex:0]; }
     
     
     // Populate with available choices
