@@ -101,13 +101,13 @@
     
     // see if we can start with the frontmost URL in the default browser
     id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
-    if ( location.URL && [location.URL youTubeVideoID] )
+    if ( [[location URL] youTubeVideoID] )
     {
-        self.userVideoCode = [location.URL absoluteString];
+        self.userVideoCode = [[location URL] absoluteString];
         
-        if ( location.title )
+        if ( [location title] )
         {
-            self.title = location.title;
+            self.title = [location title];
         }
     }
     
