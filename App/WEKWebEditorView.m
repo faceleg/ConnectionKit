@@ -1983,7 +1983,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             NSURL *URL = [image absoluteImageURL];
             if ([URL isFileURL])
             {
-                [pboard addTypes:NSARRAY((NSString *)kUTTypeFileURL) owner:self];
+                [pboard addTypes:NSARRAY((NSString *)kUTTypeFileURL) owner:nil];
                 [pboard setString:[URL absoluteString] forType:(NSString *)kUTTypeFileURL];
             }
         }

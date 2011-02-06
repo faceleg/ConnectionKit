@@ -118,7 +118,7 @@ static NSImage *sTargetSetImage = nil;
 	[targetCursor push];
 	
 	NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
-	[pboard declareTypes:[NSArray arrayWithObject:kKTLocalLinkPboardAllowedType] owner:self];
+	[pboard declareTypes:[NSArray arrayWithObject:kKTLocalLinkPboardAllowedType] owner:nil];
 	if (self.collectionsOnly)
 	{
 		[pboard setString:@"KTCollection" forType:kKTLocalLinkPboardAllowedType];	// target will reject drop if it's not a collection

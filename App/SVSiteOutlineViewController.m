@@ -1029,9 +1029,7 @@
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)nodes toPasteboard:(NSPasteboard *)pboard
 {
-	[pboard declareTypes:[NSArray arrayWithObject:kKTPagesPboardType] owner:self];
-    
-    [self setLastItemsWrittenToPasteboard:nodes];
+	[self setLastItemsWrittenToPasteboard:nodes];
     
     NSMutableArray *serializedPages = [[NSMutableArray alloc] initWithCapacity:[nodes count]];
     for (NSTreeNode *aNode in nodes)
@@ -1058,13 +1056,11 @@
         }
     }
     
+    [pboard declareTypes:[NSArray arrayWithObject:kKTPagesPboardType] owner:nil];
     [pboard setPropertyList:serializedPages forType:kKTPagesPboardType];
+    
     [serializedPages release];
-    
-    
-    
-    
-	return YES;
+    return YES;
 }
 
 @synthesize lastItemsWrittenToPasteboard = _draggedItems;

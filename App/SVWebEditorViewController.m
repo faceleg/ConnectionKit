@@ -1089,7 +1089,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     {
         result = YES;
         
-        [pasteboard addTypes:[NSArray arrayWithObject:kSVGraphicPboardType] owner:self];
+        [pasteboard addTypes:[NSArray arrayWithObject:kSVGraphicPboardType] owner:nil];
         [graphic writeToPasteboard:pasteboard];
     }
     
