@@ -238,5 +238,6 @@ typedef enum {
 
 @interface KTPage (Serialization)
 + (KTPage *)deserializingPageForIdentifier:(NSString *)identifier;
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList childItems:(NSArray *)children;
 @end
 

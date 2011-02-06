@@ -21,6 +21,13 @@ static NSMutableDictionary *sDeserializingPages;
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList
 {
+    // Children, but not if root. #89388
+    [self populateSerializedProperties:propertyList
+                            childItems:([self isRootPage] ? nil : [self sortedChildren])];
+}
+
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList childItems:(NSArray *)children;
+{
     [super populateSerializedProperties:propertyList];
     
     // Title
@@ -35,12 +42,8 @@ static NSMutableDictionary *sDeserializingPages;
     [propertyList setValue:[[self codeInjection] serializedProperties]
                     forKey:@"codeInjection"];
     
-    // Children, but not if root. #89388
-    if (![self isRootPage])
-    {
-        NSArray *children = [[self sortedChildren] valueForKey:@"serializedProperties"];
-        [propertyList setValue:children forKey:@"childItems"];
-    }
+    NSArray *serializedChildren = [children valueForKey:@"serializedProperties"];
+    [propertyList setValue:serializedChildren forKey:@"childItems"];
 }
 
 - (void)awakeFromPropertyList:(id)propertyList
