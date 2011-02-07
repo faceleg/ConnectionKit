@@ -70,7 +70,10 @@ static NSMutableDictionary *sDeserializingPages;
     NSArray *children = [propertyList objectForKey:@"childItems"];
     for (id aChild in children)
     {
-        SVSiteItem *duplicate = [[NSManagedObject alloc] initWithEntity:[self entity]
+        NSManagedObjectModel *model = [[context persistentStoreCoordinator] managedObjectModel];
+        NSEntityDescription *entity = [[model entitiesByName] objectForKey:[aChild objectForKey:@"entity"]];
+        
+        SVSiteItem *duplicate = [[NSManagedObject alloc] initWithEntity:entity
                                          insertIntoManagedObjectContext:context];
         [duplicate awakeFromPropertyList:aChild parentItem:self];
         [childItems addObject:duplicate];
