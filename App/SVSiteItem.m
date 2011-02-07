@@ -666,6 +666,14 @@
     [super setSerializedValue:serializedValue forKey:key];
 }
 
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList
+                            delegate:(id <SVPageSerializationDelegate>)delegate;
+{
+    // KTPage overrides this method to make use of the delegate
+    
+    [self populateSerializedProperties:propertyList];
+}
+
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
 {
     [super populateSerializedProperties:propertyList];

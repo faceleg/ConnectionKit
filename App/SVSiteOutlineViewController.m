@@ -1051,8 +1051,10 @@
         // Serialize
         if (write)
         {
-            id plist = [anItem serializedProperties];
+            NSMutableDictionary *plist = [[NSMutableDictionary alloc] init];
+            [anItem populateSerializedProperties:plist delegate:self];
             [serializedPages addObject:plist];
+            [plist release];
         }
     }
     
@@ -1061,6 +1063,22 @@
     
     [serializedPages release];
     return YES;
+}
+
+- (id)serializeChildrenOfPage:(KTPage *)page;
+{
+    NSTreeNode *node = [[self content] nodeForObject:page];
+    OBASSERT(node);
+    
+    if ([[self outlineView] isItemExpanded:node])
+    {
+        return nil;
+    }
+    else
+    {
+        // Collapsed items should serialize all descendants
+        return [[page sortedChildren] valueForKey:@"serializedProperties"];
+    }
 }
 
 @synthesize lastItemsWrittenToPasteboard = _draggedItems;

@@ -28,7 +28,7 @@ typedef enum {
 
 
 @class KTSite, KTMaster, KTPage, KTCodeInjection, SVExternalLink, SVMediaRecord, SVHTMLContext;
-@protocol SVWebContentViewController, SVMedia;
+@protocol SVWebContentViewController, SVMedia, SVPageSerializationDelegate;
 
 
 @interface SVSiteItem : KSExtensibleManagedObject <SVPage, SVPublishedObject, IMBImageItem>
@@ -182,7 +182,17 @@ typedef enum {
 #pragma mark Serialization
 - (void)awakeFromPropertyList:(id)propertyList parentItem:(SVSiteItem *)parent;
 
+// Pass in a nil delegate to have all child items serialized
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList
+                            delegate:(id <SVPageSerializationDelegate>)delegate;
 
+
+@end
+
+
+@protocol SVPageSerializationDelegate <NSObject>
+// Lets you customize exactly which children get serialized. 
+- (id)serializeChildrenOfPage:(KTPage *)page;
 @end
 
 
