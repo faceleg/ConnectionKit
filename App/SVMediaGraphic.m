@@ -596,7 +596,7 @@
 {
     [super populateSerializedProperties:propertyList];
     
-    // Write image data
+    // Write image data. Same logic as SVDownloadSiteItem
     SVMediaRecord *record = [self media];
     
     if ([record fileURL])

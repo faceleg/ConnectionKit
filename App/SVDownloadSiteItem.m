@@ -257,4 +257,40 @@
             [super usesExtensiblePropertiesForUndefinedKey:key]);
 }
 
+#pragma mark Serialization
+
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
+{
+    [super populateSerializedProperties:propertyList];
+    
+    // Reference the file somehow. Same logic as SVMediaGraphic
+    NSURL *url = [[self media] fileURL];
+    if (url)
+    {
+        [propertyList setObject:[url absoluteString] forKey:@"fileURL"];
+    }
+    else
+    {
+        NSData *data = [[[self media] media] mediaData];
+        [propertyList setValue:data forKey:@"fileContents"];
+    }
+}
+
+- (void)awakeFromPropertyList:(id)propertyList;
+{
+    NSString *urlString = [propertyList objectForKey:@"fileURL"];
+    if (urlString)
+    {
+        NSURL *url = [NSURL URLWithString:urlString];
+        SVMedia *media = [[SVMedia alloc] initByReferencingURL:url];
+        
+        SVMediaRecord *record = [SVMediaRecord mediaRecordWithMedia:media entityName:@"FileMedia" insertIntoManagedObjectContext:[self managedObjectContext]];
+        
+        [self setMedia:record];
+        [media release];
+    }
+    
+    [super awakeFromPropertyList:propertyList];
+}
+
 @end
