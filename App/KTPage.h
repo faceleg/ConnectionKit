@@ -236,8 +236,19 @@ typedef enum {
 #pragma mark -
 
 
+@protocol SVPageSerializationDelegate;
 @interface KTPage (Serialization)
+
 + (KTPage *)deserializingPageForIdentifier:(NSString *)identifier;
-- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList childItems:(NSArray *)children;
+
+// Pass in a nil delegate to have all child items serialized
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList
+                            delegate:(id <SVPageSerializationDelegate>)delegate;
+
+@end
+
+@protocol SVPageSerializationDelegate <NSObject>
+// Lets you customize exactly which children get serialized. 
+- (id)serializeChildrenOfPage:(KTPage *)page;
 @end
 
