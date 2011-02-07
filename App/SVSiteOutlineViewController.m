@@ -54,7 +54,7 @@
 							context:(void *)context;
 
 // Drag & Drop
-@property(nonatomic, copy) NSArray *lastItemsWrittenToPasteboard;   // call with nil to clean out
+@property(nonatomic, copy) NSArray *nodesToWriteToPasteboard;   // call with nil to clean out
 
 - (BOOL)moveTreeNodes:(NSArray *)nodes intoCollectionAtIndexPath:(NSIndexPath *)indexPath childIndex:(NSInteger)index;
 
@@ -108,7 +108,7 @@
     //[self setRootPage:nil];
     
     // Dump the pages list
-    [_draggedItems release];
+    [_nodesToWriteToPasteboard release];
     
 	[self resetPageObservation];       // This will also remove home page observation
     OBASSERT([_pages count] == 0);
@@ -1029,33 +1029,22 @@
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)nodes toPasteboard:(NSPasteboard *)pboard
 {
-	[self setLastItemsWrittenToPasteboard:nodes];
+    // Takes care of sorting the nodes and resetting _numberOfNodesWrittenToPasteboard.
+	[self setNodesToWriteToPasteboard:nodes];
+    nodes = [self nodesToWriteToPasteboard];
     
-    NSMutableArray *serializedPages = [[NSMutableArray alloc] initWithCapacity:[nodes count]];
-    for (NSTreeNode *aNode in nodes)
+    NSMutableArray *serializedPages = [[NSMutableArray alloc] init];
+    
+    // Serialize top-level pages, as determined by _numberOfNodesWrittenToPasteboard
+    while (_indexOfNextNodeToWriteToPasteboard < [nodes count])
     {
-        // Ignore if it's a descendant of a selected collection
-        BOOL write = YES;
-        SVSiteItem *anItem = [aNode representedObject];
-        KTPage *parent = [anItem parentPage];
-        while (parent)
-        {
-            if ([nodes containsObjectIdenticalTo:parent])
-            {
-                write = NO;
-                break;
-            }
-            parent = [parent parentPage];
-        }
+        NSTreeNode *aNode = [nodes objectAtIndex:_indexOfNextNodeToWriteToPasteboard];
+        _indexOfNextNodeToWriteToPasteboard++;
         
-        // Serialize
-        if (write)
-        {
-            NSMutableDictionary *plist = [[NSMutableDictionary alloc] init];
-            [anItem populateSerializedProperties:plist delegate:self];
-            [serializedPages addObject:plist];
-            [plist release];
-        }
+        NSMutableDictionary *plist = [[NSMutableDictionary alloc] init];
+        [[aNode representedObject] populateSerializedProperties:plist delegate:self];
+        [serializedPages addObject:plist];
+        [plist release];
     }
     
     [pboard declareTypes:[NSArray arrayWithObject:kKTPagesPboardType] owner:nil];
@@ -1072,7 +1061,28 @@
     
     if ([[self outlineView] isItemExpanded:node])
     {
-        return nil;
+        NSArray *nodes = [self nodesToWriteToPasteboard];
+        if (_indexOfNextNodeToWriteToPasteboard >= [nodes count]) return nil;    // done all the writing already
+        
+        
+        // Serialize chosen children
+        NSMutableArray *result = [NSMutableArray array];
+        NSTreeNode *aNode = [nodes objectAtIndex:_indexOfNextNodeToWriteToPasteboard];
+        
+        while ([aNode ks_isDescendantOfNode:node])
+        {
+            _indexOfNextNodeToWriteToPasteboard++;
+            
+            NSMutableDictionary *plist = [[NSMutableDictionary alloc] init];
+            [[aNode representedObject] populateSerializedProperties:plist delegate:self];
+            [result addObject:plist];
+            [plist release];
+            
+            if (_indexOfNextNodeToWriteToPasteboard >= [nodes count]) break;    // done all the writing already
+            aNode = [nodes objectAtIndex:_indexOfNextNodeToWriteToPasteboard];
+        }
+        
+        return result;
     }
     else
     {
@@ -1081,7 +1091,16 @@
     }
 }
 
-@synthesize lastItemsWrittenToPasteboard = _draggedItems;
+@synthesize nodesToWriteToPasteboard = _nodesToWriteToPasteboard;
+- (void)setNodesToWriteToPasteboard:(NSArray *)nodes;
+{
+    // Sort the nodes by index path so we write them in correct order
+    nodes = [nodes sortedArrayUsingDescriptors:[NSSortDescriptor sortDescriptorArrayWithKey:@"indexPath"
+                                                                                  ascending:YES]];
+    
+    [_nodesToWriteToPasteboard release]; _nodesToWriteToPasteboard = [nodes copy];
+    _indexOfNextNodeToWriteToPasteboard = 0;
+}
 
 #pragma mark Validating a Drop
 
@@ -1119,7 +1138,7 @@
         if (![page isCollection] && [page datePublished]) return NSDragOperationNone;
         
         
-        NSArray *draggedItems = [self lastItemsWrittenToPasteboard];
+        NSArray *draggedItems = [self nodesToWriteToPasteboard];
         
         // Rule 4. Don't allow an item to become a descendant of itself
         for (NSTreeNode *aDraggedItem in draggedItems)
@@ -1259,7 +1278,7 @@
     if ([info draggingSource] == [self outlineView] &&
         [info draggingSourceOperationMask] & NSDragOperationMove)
     {
-        NSArray *draggedItems = [self lastItemsWrittenToPasteboard];
+        NSArray *draggedItems = [self nodesToWriteToPasteboard];
         return [self moveTreeNodes:draggedItems intoCollectionAtIndexPath:[node indexPath] childIndex:index];
     }
     else

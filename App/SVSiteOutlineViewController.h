@@ -49,8 +49,9 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 	NSMutableDictionary	*_cachedImagesByRepresentation;
     NSOperationQueue    *_queue;
 	    
-    // Drag & Drop
-    NSArray *_draggedItems;
+    // Serialization, Drag & Drop
+    NSArray     *_nodesToWriteToPasteboard;
+    NSUInteger  _indexOfNextNodeToWriteToPasteboard;
 }
 
 @property(nonatomic, retain) IBOutlet NSOutlineView *outlineView;
