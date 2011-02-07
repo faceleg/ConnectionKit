@@ -62,6 +62,7 @@
 
 
 #pragma mark Queries
+- (NSTreeNode *)nodeForObject:(id)object;
 - (KTPage *)parentPageOfObjectAtIndexPath:(NSIndexPath *)indexPath;
 
 

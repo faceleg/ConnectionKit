@@ -824,6 +824,13 @@
 
 #pragma mark Queries
 
+- (NSTreeNode *)nodeForObject:(id)object;
+{
+    NSIndexPath *path = [self indexPathOfObject:object];
+    NSTreeNode *result = [[self arrangedObjects] descendantNodeAtIndexPath:path];
+    return result;
+}
+
 - (KTPage *)parentPageOfObjectAtIndexPath:(NSIndexPath *)indexPath;
 {
     NSIndexPath *parentPath = [indexPath indexPathByRemovingLastIndex];
