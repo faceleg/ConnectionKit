@@ -57,4 +57,10 @@ p.svx-placeholder
     border-width: medium; 
     border-style: dashed; 
     border-radius: .75em;
+    /* padding: 4px; 'padding seems to help, can we really not use it? */
+}
+
+#sidebar p.svx-placeholder
+{
+    text-align: center;
 }
