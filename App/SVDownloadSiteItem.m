@@ -57,9 +57,6 @@
 {
     if (type == SVThumbnailTypePickFromPage)
     {
-        [context addDependencyOnObject:self keyPath:@"thumbnailType"];
-        
-        
         NSString *type = [NSString UTIForFilenameExtension:
                           [[[[self media] media] mediaURL] ks_pathExtension]];
         

@@ -84,9 +84,6 @@
 {
     if (type == SVThumbnailTypePickFromPage)
     {
-        [context addDependencyOnObject:self keyPath:@"thumbnailType"];
-        
-        
         if (!(options & SVThumbnailDryRun))
         {
             NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"webloc"];

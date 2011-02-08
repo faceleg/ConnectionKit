@@ -476,6 +476,9 @@
             attributes:(NSDictionary *)attributes  // e.g. custom CSS class
                options:(SVThumbnailOptions)options;
 {
+    [context addDependencyOnObject:self keyPath:@"thumbnailType"];
+    
+    
     // Write placeholder if there's no built-in image
     
     
@@ -514,9 +517,6 @@
                      height:(NSUInteger)height
                     options:(SVThumbnailOptions)options;
 {
-    [context addDependencyOnObject:self keyPath:@"thumbnailType"];
-    
-    
     if (type == SVThumbnailTypeCustom && [self customThumbnail])
     {
         if (!(options & SVThumbnailDryRun))
