@@ -42,7 +42,8 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 /*	These strings are localizations for case https://karelia.fogbugz.com/default.asp?4736
  *	Not sure when we're going to have time to implement it, so strings are placed here to ensure they are localized.
  *
- *	NSLocalizedString(@"There is already a page with the file name \\U201C%@.\\U201D Do you wish to rename it to \\U201C%@?\\U201D",
+ *	NSLocalizedString(@"There is already a page with the file name \\U201C%@.\\U201D Do you wish to rename it to \\U201C%@\\U201D?
+",
 					  "Alert message when changing the file name or extension of a page to match an existing file");
  *	NSLocalizedString(@"There are already some pages with the same file name as those you are adding. Do you wish to rename them to be different?",
 					  "Alert message when pasting/dropping in pages whose filenames conflict");
