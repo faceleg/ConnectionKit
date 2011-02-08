@@ -1021,7 +1021,7 @@
 {
     if (isLocal) 
 	{
-        return NSDragOperationMove;
+        return NSDragOperationGeneric;
     }
 	
     return NSDragOperationCopy;
@@ -1104,6 +1104,14 @@
 
 #pragma mark Validating a Drop
 
+// THE RULES:
+//  (1.  The drop item can only be a collection) – ditching partly for 2.0
+//  2.  You can only drop at a specific index if the collection is manually sorted
+//  3.  You can't drop above the root page
+//  4.  When moving an existing page, can't drop it as a descendant of itself
+
+
+
 - (NSDragOperation)validateNonLinkDrop:(id <NSDraggingInfo>)info
                       proposedTreeNode:(NSTreeNode *)node
                     proposedChildIndex:(NSInteger)index;
@@ -1132,7 +1140,7 @@
     
     // Is the aim to move a page within the Site Outline?
     if ([info draggingSource] == [self outlineView] &&
-        [info draggingSourceOperationMask] & NSDragOperationMove)
+        [info draggingSourceOperationMask] & NSDragOperationGeneric)
     {
         // Don't allow drops onto a published non-collection, as they're unsuitable for conversion. #98962
         if (![page isCollection] && [page datePublished]) return NSDragOperationNone;
@@ -1150,7 +1158,7 @@
         }
         
         
-        return NSDragOperationMove;
+        return NSDragOperationGeneric;
     }
     
     
@@ -1159,7 +1167,7 @@
     {
         // Pretend we're going to do the preferred operation
         if ([info draggingSourceOperationMask] & NSDragOperationCopy) return NSDragOperationCopy;
-        if ([info draggingSourceOperationMask] & NSDragOperationMove) return NSDragOperationMove;
+        if ([info draggingSourceOperationMask] & NSDragOperationGeneric) return NSDragOperationGeneric;
     }
     return NSDragOperationNone;
 }
@@ -1218,14 +1226,6 @@
     }
     
 	
-    
-    // THE RULES:
-    //  (1.  The drop item can only be a collection) – ditching partly for 2.0
-    //  2.  You can only drop at a specific index if the collection is manually sorted
-    //  3.  You can't drop above the root page
-    //  4.  When moving an existing page, can't drop it as a descendant of itself
-    
-    
     
     // Correct for the root page. i.e. a drop with a nil item is actually a drop onto/in the root page, and the index needs to be bumped slightly
     NSInteger index = anIndex;
