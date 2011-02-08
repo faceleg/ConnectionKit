@@ -61,4 +61,5 @@ div.svx-placeholder > * > *
     border-radius: .75em;
     margin:0px;
     padding: 24px;
+    font-weight: bold;
 }
