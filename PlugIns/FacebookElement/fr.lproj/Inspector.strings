@@ -1,0 +1,47 @@
+﻿/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "9"; */
+"OtherViews" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Like"; ObjectID = "10"; */
+"Like" = "Comme";
+
+/* Class = "NSMenuItem"; title = "Recommend"; ObjectID = "11"; */
+"Recommend" = "Recommandé";
+/* Class = "NSMenuItem"; title = "Light"; ObjectID = "16"; */
+"Light" = "Clair";
+
+/* Class = "NSMenuItem"; title = "Dark"; ObjectID = "17"; */
+"Dark" = "Foncé";
+/* Class = "NSMenuItem"; title = "Standard"; ObjectID = "22"; */
+"Standard" = "Standard";
+
+/* Class = "NSMenuItem"; title = "Button-only, Tall"; ObjectID = "23"; */
+"Button-only, Tall" = "Bouton seul., grand";
+
+/* Class = "NSMenuItem"; title = "Button-only, Wide"; ObjectID = "24"; */
+"Button-only, Wide" = "Bouton seul., large";
+
+/* Class = "NSTextFieldCell"; title = "Layout:"; ObjectID = "26"; */
+"Layout:" = "Disposition :";
+
+/* Class = "NSTextFieldCell"; title = "Label:"; ObjectID = "28"; */
+"Label:" = "Étiquette :";
+
+/* Class = "NSTextFieldCell"; title = "Colors:"; ObjectID = "30"; */
+"Colors:" = "Couleurs :";
+
+/* Class = "NSTextFieldCell"; title = "Location"; ObjectID = "38"; */
+"Location" = "Emplacement";
+/* Class = "NSMenuItem"; title = "This Page"; ObjectID = "42"; */
+"This Page" = "Cette page";
+
+/* Class = "NSMenuItem"; title = "Other Page"; ObjectID = "43"; */
+"Other Page" = "Autre page";
+
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "www.facebook.com/yournamehere"; ObjectID = "55"; */
+"www.facebook.com/yournamehere" = "www.facebook.com/yournamehere";
+
+/* Class = "NSTextFieldCell"; title = "Appearance"; ObjectID = "57"; */
+"Appearance" = "Aspect";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "58"; */
+"Box" = "Box";

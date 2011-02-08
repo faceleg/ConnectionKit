@@ -17,6 +17,7 @@
 		3C5D6F5212A4339600AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F5012A4339600AAAB18 /* Inspector.xib */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CEDA1DC9130207D400DC6FE7 /* Inspector.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEDA1DC7130207D400DC6FE7 /* Inspector.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEB4FDE510309E470054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEB4FDE610309E470054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEDA1DC8130207D400DC6FE7 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -96,6 +98,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CEDA1DC7130207D400DC6FE7 /* Inspector.strings */,
 				3C42E22A0D64D07D004F35FD /* counter.icns */,
 				3C42E1870D64D050004F35FD /* digits */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
@@ -228,6 +231,7 @@
 				3C42E2350D64D093004F35FD /* Localizable.strings in Resources */,
 				3C42E24D0D64D116004F35FD /* License.rtf in Resources */,
 				3C5D6F5212A4339600AAAB18 /* Inspector.xib in Resources */,
+				CEDA1DC9130207D400DC6FE7 /* Inspector.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +306,14 @@
 				3C5D6F5112A4339600AAAB18 /* en */,
 			);
 			name = Inspector.xib;
+			sourceTree = "<group>";
+		};
+		CEDA1DC7130207D400DC6FE7 /* Inspector.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEDA1DC8130207D400DC6FE7 /* fr */,
+			);
+			name = Inspector.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

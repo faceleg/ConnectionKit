@@ -23,6 +23,7 @@
 		CE29097E12B6D9AE00815440 /* titles_list.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE29097812B6D9AE00815440 /* titles_list.tiff */; };
 		CE29097F12B6D9AE00815440 /* titles.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE29097912B6D9AE00815440 /* titles.tiff */; };
 		CE88028B12A70356006C682C /* GeneralIndexInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88028A12A70356006C682C /* GeneralIndexInspector.m */; };
+		CEDA1DCC130207E200DC6FE7 /* Inspector.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEDA1DCA130207E200DC6FE7 /* Inspector.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		CE88028A12A70356006C682C /* GeneralIndexInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralIndexInspector.m; sourceTree = "<group>"; };
 		CEB4FDB110309E080054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEB4FDB210309E080054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEDA1DCB130207E200DC6FE7 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -108,6 +110,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CEDA1DCA130207E200DC6FE7 /* Inspector.strings */,
 				3C5D6F3B12A42EB500AAAB18 /* Inspector.xib */,
 				CE2802C912432C4100B00F3D /* toolbar_general_index.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
@@ -250,6 +253,7 @@
 				CE29097D12B6D9AE00815440 /* table.tiff in Resources */,
 				CE29097E12B6D9AE00815440 /* titles_list.tiff in Resources */,
 				CE29097F12B6D9AE00815440 /* titles.tiff in Resources */,
+				CEDA1DCC130207E200DC6FE7 /* Inspector.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +311,14 @@
 				CEB4FDB210309E080054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		CEDA1DCA130207E200DC6FE7 /* Inspector.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEDA1DCB130207E200DC6FE7 /* fr */,
+			);
+			name = Inspector.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

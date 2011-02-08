@@ -38,6 +38,7 @@
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		CE722FA40D85CE9A00E9C592 /* amazon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE722FA30D85CE9A00E9C592 /* amazon.icns */; };
 		CEC1F0231141A69D00D8D0B9 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC1F0211141A69D00D8D0B9 /* Inspector.xib */; };
+		CEDA1DF31302086A00DC6FE7 /* Inspector.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEDA1DF11302086A00DC6FE7 /* Inspector.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +105,7 @@
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE722FA30D85CE9A00E9C592 /* amazon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = amazon.icns; sourceTree = "<group>"; };
 		CEC1F0221141A69D00D8D0B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
+		CEDA1DF21302086A00DC6FE7 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -145,6 +147,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CEDA1DF11302086A00DC6FE7 /* Inspector.strings */,
 				CEC1F0211141A69D00D8D0B9 /* Inspector.xib */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C4A171E0D5E74ED009476BF /* Buttons */,
@@ -361,6 +364,7 @@
 				3C4A17480D5E75AC009476BF /* Thumbnail placeholder.png in Resources */,
 				CE722FA40D85CE9A00E9C592 /* amazon.icns in Resources */,
 				CEC1F0231141A69D00D8D0B9 /* Inspector.xib in Resources */,
+				CEDA1DF31302086A00DC6FE7 /* Inspector.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +447,14 @@
 				CEC1F0221141A69D00D8D0B9 /* en */,
 			);
 			name = Inspector.xib;
+			sourceTree = "<group>";
+		};
+		CEDA1DF11302086A00DC6FE7 /* Inspector.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEDA1DF21302086A00DC6FE7 /* fr */,
+			);
+			name = Inspector.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

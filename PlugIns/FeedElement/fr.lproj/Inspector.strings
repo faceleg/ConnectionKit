@@ -1,0 +1,23 @@
+﻿/* Class = "NSTextFieldCell"; title = "Full URL of feed (RSS or Atom):"; ObjectID = "138"; */
+"Full URL of feed (RSS or Atom):" = "URL complète du flux (RSS ou Atom) :";
+
+/* Class = "NSTextFieldCell"; title = "Entries:"; ObjectID = "141"; */
+"Entries:" = "Entrées :";
+
+/* Class = "NSButtonCell"; title = "Open in new window"; ObjectID = "142"; */
+"Open in new window" = "Ouvrir dans une nouvelle fenêtre";
+
+/* Class = "NSTextFieldCell"; title = "Links:"; ObjectID = "143"; */
+"Links:" = "Liens :";
+
+/* Class = "NSTextFieldCell"; title = "maximum"; ObjectID = "145"; */
+"maximum" = "maximum";
+
+/* Class = "NSTextFieldCell"; title = "Summaries:"; ObjectID = "147"; */
+"Summaries:" = "Résumés :";
+
+/* Class = "NSTextFieldCell"; title = "characters"; ObjectID = "149"; */
+"characters" = "caractères";
+
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "feed://"; ObjectID = "168"; */
+"feed://" = "Flux ://";

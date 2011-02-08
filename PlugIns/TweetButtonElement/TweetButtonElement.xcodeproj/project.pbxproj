@@ -13,6 +13,7 @@
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		CE09D150124336D80094EC48 /* toolbar_tweet.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE09D14F124336D80094EC48 /* toolbar_tweet.tiff */; };
+		CEDA1DB81302075000DC6FE7 /* Inspector.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEDA1DB61302075000DC6FE7 /* Inspector.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE09D14F124336D80094EC48 /* toolbar_tweet.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_tweet.tiff; sourceTree = "<group>"; };
 		CE753EBF12EA4DA800C93992 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEDA1DB71302075000DC6FE7 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -71,6 +73,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CEDA1DB61302075000DC6FE7 /* Inspector.strings */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C5D6F4912A431F500AAAB18 /* Inspector.xib */,
@@ -188,6 +191,7 @@
 				3CFEEDE2122877BE005A08FC /* License.rtf in Resources */,
 				CE09D150124336D80094EC48 /* toolbar_tweet.tiff in Resources */,
 				3C5D6F4B12A431F500AAAB18 /* Inspector.xib in Resources */,
+				CEDA1DB81302075000DC6FE7 /* Inspector.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +224,14 @@
 				3C5D6F4A12A431F500AAAB18 /* en */,
 			);
 			name = Inspector.xib;
+			sourceTree = "<group>";
+		};
+		CEDA1DB61302075000DC6FE7 /* Inspector.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEDA1DB71302075000DC6FE7 /* fr */,
+			);
+			name = Inspector.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

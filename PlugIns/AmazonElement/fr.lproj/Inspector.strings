@@ -1,0 +1,121 @@
+﻿/* Class = "NSTableView"; designAccessibilityDescription = "Products"; ObjectID = "21"; */
+"Products" = "Produits";
+
+/* Class = "NSTextField"; gToolTip = "Copy the URL (address) or ASIN of an Amazon product from your web browser.\nISBN numbers can be found on the back of a book."; ObjectID = "36"; */
+"Copy the URL (address) or ASIN of an Amazon product from your web browser.\nISBN numbers can be found on the back of a book." = "Copier l'URL (adresse) ou l'ASIN d'un produit Amazon de votre navigateur Web. Les numéros ISBN peuvent être trouvés au dos d'un livre.";
+
+/* Class = "NSTextField"; gToolTip = "Your thoughts on the product."; ObjectID = "37"; */
+"Your thoughts on the product." = "Ce que vous pensez du produit.";
+
+/* Class = "NSPopUpButton"; gToolTip = "The Amazon store to load data from."; ObjectID = "62"; */
+"The Amazon store to load data from." = "Le magasin Amazon d'où charger les données.";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "63"; */
+"OtherViews" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Amazon.de"; ObjectID = "64"; */
+"Amazon.de" = "Amazon.de";
+
+/* Class = "NSMenuItem"; title = "Amazon.co.uk"; ObjectID = "65"; */
+"Amazon.co.uk" = "Amazon.co.uk";
+
+/* Class = "NSMenuItem"; title = "Amazon.com"; ObjectID = "66"; */
+"Amazon.com" = "Amazon.com";
+
+/* Class = "NSMenuItem"; title = "Amazon.fr"; ObjectID = "67"; */
+"Amazon.fr" = "Amazon.fr";
+
+/* Class = "NSMenuItem"; title = "Amazon.co.jp"; ObjectID = "68"; */
+"Amazon.co.jp" = "Amazon.co.jp";
+
+/* Class = "NSMenuItem"; title = "Amazon.ca"; ObjectID = "69"; */
+"Amazon.ca" = "Amazon.ca";
+
+/* Class = "NSTabViewItem"; label = "Appearance"; ObjectID = "248"; */
+"Appearance" = "Aspect";
+
+/* Class = "NSButton"; gToolTip = "Hide or display the \"creator\" of a product."; ObjectID = "253"; */
+"Hide or display the \"creator\" of a product." = "Affichez ou masquez le \"créateur\" d'un produit.";
+
+/* Class = "NSButton"; gToolTip = "Hide or display product thumbnails."; ObjectID = "255"; */
+"Hide or display product thumbnails." = "Affichez ou masquez les vignettes d'un produit.";
+
+/* Class = "NSButton"; gToolTip = "Hide or display your comments upon products."; ObjectID = "256"; */
+"Hide or display your comments upon products." = "Affichez ou masquez vos commentaires sur un produit.";
+
+/* Class = "NSSlider"; gToolTip = "Thumbnail size."; ObjectID = "308"; */
+"Thumbnail size." = "Taille de la vignette.";
+
+/* Class = "NSTextField"; designAccessibilityDescription = "Store"; ObjectID = "321"; */
+"Store" = "Magasin";
+
+/* Class = "NSPopUpButton"; gToolTip = "List framing choices."; ObjectID = "324"; */
+"List framing choices." = "Listez les choix de cadres.";
+/* Class = "NSMenuItem"; title = "All products"; ObjectID = "326"; */
+"All products" = "Tous les produits";
+
+/* Class = "NSMenuItem"; title = "None"; ObjectID = "327"; */
+"None" = "Aucune";
+
+/* Class = "NSMenuItem"; title = "Thumbnails"; ObjectID = "328"; */
+"Thumbnails" = "Vignettes";
+
+/* Class = "NSButton"; gToolTip = "Hide or display product titles."; ObjectID = "331"; */
+"Hide or display product titles." = "Affichez ou masquez les titres des produits.";
+
+/* Class = "NSSegmentedControl"; gToolTip = "Select the list's layout:\n• Left-aligned\n• Right-aligned\n• Alternating\n• Centered\n• Two-across\n• Bullets (no thumbnails)\n• Enhanced (can include pricing)\n• Random product"; ObjectID = "363"; */
+"Select the list's layout:\n• Left-aligned\n• Right-aligned\n• Alternating\n• Centered\n• Two-across\n• Bullets (no thumbnails)\n• Enhanced (can include pricing)\n• Random product" = "Choisissez la disposition de la liste :\n• Alignée à gauche\n• Alignée à droite\n\n• Alternative\n• Centrée\n• Deux colonnes\n• Puces (aucune vignette)• Mis en valeur (peut inclure le prix)\n• Produit aléatoire";
+
+/* Class = "NSButton"; gToolTip = "Displays a floating preview popup over links to Amazon products."; ObjectID = "490"; */
+"Displays a floating preview popup over links to Amazon products." = "Affiche une fenêtre flottante de prévision au-dessus des liens vers les produits d'Amazon.";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "492"; */
+"Box" = "Box";
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "Associates ID"; ObjectID = "897"; */
+"Associates ID" = "ID associés";
+
+/* Class = "NSButtonCell"; title = "Creators"; ObjectID = "965"; */
+"Creators" = "Créateurs";
+/* Class = "NSButtonCell"; title = "Comments"; ObjectID = "967"; */
+"Comments" = "Commentaires";
+
+/* Class = "NSButtonCell"; title = "Titles"; ObjectID = "970"; */
+"Titles" = "Titre";
+
+/* Class = "NSTextFieldCell"; title = "Show:"; ObjectID = "972"; */
+"Show:" = "Afficher :";
+
+/* Class = "NSButtonCell"; title = "Prices"; ObjectID = "973"; */
+"Prices" = "Prix";
+
+/* Class = "NSButtonCell"; title = "New prices only"; ObjectID = "974"; */
+"New prices only" = "Nouv. prix seul.";
+
+/* Class = "NSButtonCell"; title = "Use product preview popups"; ObjectID = "975"; */
+"Use product preview popups" = "Utiliser les fenêtres d'aperçu des produits";
+
+/* Class = "NSTextFieldCell"; title = "Affects all pagelets throughout the site. Popups do not appear when previewed in Sandvox."; ObjectID = "976"; */
+"Affects all pagelets throughout the site. Popups do not appear when previewed in Sandvox." = "Affecte tous les pagelets sur tout le site. Les fenêtres n'apparaîtront pas lorsque prévisualisées dans Sandvox.";
+
+/* Class = "NSTextFieldCell"; title = "Frame:"; ObjectID = "978"; */
+"Frame:" = "Cadre :";
+
+/* Class = "NSTextFieldCell"; title = "Product:"; ObjectID = "989"; */
+"Product:" = "Produit :";
+
+/* Class = "NSTextFieldCell"; title = "Comment:"; ObjectID = "990"; */
+"Comment:" = "Commentaires :";
+
+/* Class = "NSTextFieldCell"; title = "Enter the URL or ASIN of an Amazon product, or a book's ISBN number."; ObjectID = "993"; */
+"Enter the URL or ASIN of an Amazon product, or a book's ISBN number." = "Écrivez l'URL ou l'ASIN d'un produit Amazon, ou le numéro ISBN d'un livre.";
+
+/* Class = "NSTextFieldCell"; title = "Store:"; ObjectID = "998"; */
+"Store:" = "Magasin :";
+/* Class = "NSMenuItem"; title = "View Selected Product"; ObjectID = "1029"; */
+"View Selected Product" = "Voir le produit sélectionné";
+
+/* Class = "NSMenuItem"; title = "Reload Selected Product"; ObjectID = "1031"; */
+"Reload Selected Product" = "Recharger le produit choisi";
+
+/* Class = "NSMenuItem"; title = "Reload All"; ObjectID = "1032"; */
+"Reload All" = "Tout recharger";

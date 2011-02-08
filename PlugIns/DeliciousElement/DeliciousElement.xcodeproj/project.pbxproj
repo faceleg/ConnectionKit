@@ -17,6 +17,7 @@
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		CE28032D12432D9E00B00F3D /* toolbar_delicious.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE28032C12432D9E00B00F3D /* toolbar_delicious.tiff */; };
 		CE427D080E6332E7002146D7 /* delicious.16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE427D070E6332E7002146D7 /* delicious.16.png */; };
+		CEDA1DE61302083400DC6FE7 /* Inspector.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEDA1DE41302083400DC6FE7 /* Inspector.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		CE427D070E6332E7002146D7 /* delicious.16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delicious.16.png; sourceTree = "<group>"; };
 		CEB4FE6010309EB70054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEB4FE6110309EB70054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEDA1DE51302083400DC6FE7 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +97,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CEDA1DE41302083400DC6FE7 /* Inspector.strings */,
 				3C5D6F6A12A4369000AAAB18 /* Inspector.xib */,
 				CE28032C12432D9E00B00F3D /* toolbar_delicious.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
@@ -226,6 +229,7 @@
 				CE427D080E6332E7002146D7 /* delicious.16.png in Resources */,
 				CE28032D12432D9E00B00F3D /* toolbar_delicious.tiff in Resources */,
 				3C5D6F6C12A4369000AAAB18 /* Inspector.xib in Resources */,
+				CEDA1DE61302083400DC6FE7 /* Inspector.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +304,14 @@
 				3C5D6F6B12A4369000AAAB18 /* en */,
 			);
 			name = Inspector.xib;
+			sourceTree = "<group>";
+		};
+		CEDA1DE41302083400DC6FE7 /* Inspector.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEDA1DE51302083400DC6FE7 /* fr */,
+			);
+			name = Inspector.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

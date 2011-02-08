@@ -245,7 +245,15 @@
 			isa = PBXProject;
 			buildConfigurationList = 2CA326220896AD4900168862 /* Build configuration list for PBXProject "SandvoxQuickLook" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+			);
 			mainGroup = 089C166AFE841209C02AAC07 /* SandvoxQuickLook */;
 			projectDirPath = "";
 			projectRoot = "";

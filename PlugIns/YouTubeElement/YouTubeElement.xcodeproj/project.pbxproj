@@ -17,6 +17,7 @@
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		CE81C30E113460C200CF4B7F /* YouTubePlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81C30D113460C200CF4B7F /* YouTubePlugIn.m */; };
 		CE81C313113460DD00CF4B7F /* YouTubeInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81C312113460DD00CF4B7F /* YouTubeInspector.m */; };
+		CEDA1DAE1302072C00DC6FE7 /* Inspector.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEDA1DAC1302072C00DC6FE7 /* Inspector.strings */; };
 		CEF120680D9055B700FCAC70 /* YouTube.icns in Resources */ = {isa = PBXBuildFile; fileRef = CEF120670D9055B700FCAC70 /* YouTube.icns */; };
 		CEF1206A0D9055E600FCAC70 /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = CEF120690D9055E600FCAC70 /* Template.html */; };
 		CEF120E00D90567900FCAC70 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEF120DE0D90567900FCAC70 /* InfoPlist.strings */; };
@@ -52,6 +53,7 @@
 		CE81C30D113460C200CF4B7F /* YouTubePlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubePlugIn.m; sourceTree = "<group>"; };
 		CE81C311113460DD00CF4B7F /* YouTubeInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeInspector.h; sourceTree = "<group>"; };
 		CE81C312113460DD00CF4B7F /* YouTubeInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeInspector.m; sourceTree = "<group>"; };
+		CEDA1DAD1302072C00DC6FE7 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
 		CEF120670D9055B700FCAC70 /* YouTube.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = YouTube.icns; sourceTree = "<group>"; };
 		CEF120690D9055E600FCAC70 /* Template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Template.html; sourceTree = "<group>"; };
 		CEF120DF0D90567900FCAC70 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CEDA1DAC1302072C00DC6FE7 /* Inspector.strings */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				CEF120DE0D90567900FCAC70 /* InfoPlist.strings */,
 				3C5D6F4112A4317600AAAB18 /* Inspector.xib */,
@@ -239,6 +242,7 @@
 				CEF120E00D90567900FCAC70 /* InfoPlist.strings in Resources */,
 				270461D40DAE7FF000D74480 /* youtube-logo.png in Resources */,
 				3C5D6F4312A4317600AAAB18 /* Inspector.xib in Resources */,
+				CEDA1DAE1302072C00DC6FE7 /* Inspector.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +302,14 @@
 				3C5D6F4212A4317600AAAB18 /* en */,
 			);
 			name = Inspector.xib;
+			sourceTree = "<group>";
+		};
+		CEDA1DAC1302072C00DC6FE7 /* Inspector.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEDA1DAD1302072C00DC6FE7 /* fr */,
+			);
+			name = Inspector.strings;
 			sourceTree = "<group>";
 		};
 		CEF120DE0D90567900FCAC70 /* InfoPlist.strings */ = {

@@ -22,6 +22,7 @@
 		CEA32ADC1283353500648C39 /* toolbar_contact.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEA32ADB1283353500648C39 /* toolbar_contact.tiff */; };
 		CEA7FA4209B27B7C0034E035 /* ContactStrings.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEA7FA4109B27B7C0034E035 /* ContactStrings.plist */; };
 		CED6B34E099ABE0800D6528E /* ContactElement.css in Resources */ = {isa = PBXBuildFile; fileRef = CED6B34D099ABE0800D6528E /* ContactElement.css */; };
+		CEDA1DEA1302084000DC6FE7 /* Inspector.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEDA1DE81302084000DC6FE7 /* Inspector.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		CEB5638E0A7AB7110081179A /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEBCD9E60A5D941E0075DBB9 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CED6B34D099ABE0800D6528E /* ContactElement.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ContactElement.css; sourceTree = "<group>"; };
+		CEDA1DE91302084000DC6FE7 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
 		CEDE18730A5C69580055352C /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEE0B3A509EDB258004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEFC34490D0A09FB00CE15EC /* ContactPassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactPassword.h; path = ../../App/ContactPassword.h; sourceTree = SOURCE_ROOT; };
@@ -110,6 +112,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CEDA1DE81302084000DC6FE7 /* Inspector.strings */,
 				3C5D6F6D12A4371B00AAAB18 /* Inspector.xib */,
 				CEA32ADB1283353500648C39 /* toolbar_contact.tiff */,
 				27F19AD00D4E479D000DB895 /* InfoPlist.strings */,
@@ -251,6 +254,7 @@
 				27F19AD20D4E479D000DB895 /* InfoPlist.strings in Resources */,
 				CEA32ADC1283353500648C39 /* toolbar_contact.tiff in Resources */,
 				3C5D6F6F12A4371C00AAAB18 /* Inspector.xib in Resources */,
+				CEDA1DEA1302084000DC6FE7 /* Inspector.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +332,14 @@
 				CEB4FE9210309F070054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		CEDA1DE81302084000DC6FE7 /* Inspector.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEDA1DE91302084000DC6FE7 /* fr */,
+			);
+			name = Inspector.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
