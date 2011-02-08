@@ -9,12 +9,13 @@
 #import "KSInspectorViewController.h"
 
 #import "KTPage.h"
+#import "SVPageThumbnailHTMLContext.h"
 
 
 @class KTPlaceholderBindingTextField, SVSidebarPageletsController, SVPageThumbnailController, SVSiteItemController, SVTruncationController;
 
 
-@interface SVPageInspector : KSInspectorViewController
+@interface SVPageInspector : KSInspectorViewController <SVPageThumbnailHTMLContextDelegate>
 {
     IBOutlet KTPlaceholderBindingTextField  *oMenuTitleField;
     

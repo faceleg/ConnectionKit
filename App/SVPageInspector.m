@@ -14,7 +14,6 @@
 #import "SVIndexPlugIn.h"
 #import "SVFillController.h"
 #import "SVMediaRecord.h"
-#import "SVPageThumbnailHTMLContext.h"
 #import "SVRichText.h"
 #import "SVSidebar.h"
 #import "SVSidebarPageletsController.h"
@@ -239,6 +238,17 @@
         // Last child
         [oThumbnailPicker addItemWithTitle:NSLocalizedString(@"Last Child Page", "menu item")];
         [[oThumbnailPicker lastItem] setTag:SVThumbnailTypeLastChildItem];
+        
+        context = [[SVPageThumbnailHTMLContext alloc] init];
+        [context setDelegate:self];
+        
+        [page writeThumbnailImage:context
+                             type:SVThumbnailTypeLastChildItem
+                            width:32
+                           height:32
+                          options:0];
+        
+        [context release];
     }
     
     
