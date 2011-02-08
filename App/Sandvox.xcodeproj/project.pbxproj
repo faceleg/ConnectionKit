@@ -741,7 +741,7 @@
 		3C682BD60D62353500B4D485 /* KTMagnifyButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B700D62329500B4D485 /* KTMagnifyButton.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BDC0D62354700B4D485 /* KTView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B820D6232EA00B4D485 /* KTView.h */; settings = {ATTRIBUTES = (); }; };
 		3C6EA9491048E4E700B0763D /* SVDesignChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */; };
-		3C6EA94F1048E59300B0763D /* SVDesignChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EA94D1048E59300B0763D /* SVDesignChooserViewController.m */; };
+		3C6EA94F1048E59300B0763D /* SVDesignBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EA94D1048E59300B0763D /* SVDesignBrowserViewController.m */; };
 		3C72D3C6094A23880061A876 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D3C5094A23880061A876 /* Carbon.framework */; };
 		3C72D483094A23D80061A876 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D482094A23D80061A876 /* Security.framework */; };
 		3C72D4F6094A24390061A876 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D4F5094A24390061A876 /* libz.dylib */; };
@@ -2446,8 +2446,8 @@
 		3C6B91F31186859B00EBFAA2 /* Hudson.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Hudson.xcconfig; path = ../XCode/Configurations/Hudson.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C6EA9461048E4E700B0763D /* SVDesignChooserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserWindowController.h; sourceTree = "<group>"; };
 		3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserWindowController.m; sourceTree = "<group>"; };
-		3C6EA94C1048E59300B0763D /* SVDesignChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserViewController.h; sourceTree = "<group>"; };
-		3C6EA94D1048E59300B0763D /* SVDesignChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserViewController.m; sourceTree = "<group>"; };
+		3C6EA94C1048E59300B0763D /* SVDesignBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignBrowserViewController.h; sourceTree = "<group>"; };
+		3C6EA94D1048E59300B0763D /* SVDesignBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignBrowserViewController.m; sourceTree = "<group>"; };
 		3C72D3C5094A23880061A876 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		3C72D482094A23D80061A876 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		3C72D4F5094A24390061A876 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
@@ -4150,8 +4150,8 @@
 				3C0B1D03104792B0002EE098 /* SVDesignChooser.xib */,
 				3C6EA9461048E4E700B0763D /* SVDesignChooserWindowController.h */,
 				3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */,
-				3C6EA94C1048E59300B0763D /* SVDesignChooserViewController.h */,
-				3C6EA94D1048E59300B0763D /* SVDesignChooserViewController.m */,
+				3C6EA94C1048E59300B0763D /* SVDesignBrowserViewController.h */,
+				3C6EA94D1048E59300B0763D /* SVDesignBrowserViewController.m */,
 				CEC4C55510CEED7E00AEE22D /* SVDesignChooserImageBrowserView.h */,
 				CEC4C55610CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m */,
 				CEC4C55C10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.h */,
@@ -7414,7 +7414,7 @@
 				279D27EA103A112A0099A7DD /* NSTabView+Karelia.m in Sources */,
 				2790BDB01040162000654665 /* SVTextDOMController.m in Sources */,
 				3C6EA9491048E4E700B0763D /* SVDesignChooserWindowController.m in Sources */,
-				3C6EA94F1048E59300B0763D /* SVDesignChooserViewController.m in Sources */,
+				3C6EA94F1048E59300B0763D /* SVDesignBrowserViewController.m in Sources */,
 				3C2DA6E9104C7AAE0037D270 /* MGRecessedPopUpButtonCell.m in Sources */,
 				3C2DA6EB104C7AAE0037D270 /* MGScopeBar.m in Sources */,
 				27851980104FD34A009C8558 /* KSWebViewController.m in Sources */,

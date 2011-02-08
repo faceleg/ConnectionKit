@@ -8,7 +8,7 @@
 
 #import "SVDesignChooserImageBrowserView.h"
 #import "SVDesignChooserImageBrowserCell.h"
-#import "SVDesignChooserViewController.h"
+#import "SVDesignBrowserViewController.h"
 #if MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_5
 #else
 #import "DumpedImageKit.h"

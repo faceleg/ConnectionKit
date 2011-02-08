@@ -7,7 +7,7 @@
 //
 
 #import "SVDesignChooserWindowController.h"
-#import "SVDesignChooserViewController.h"
+#import "SVDesignBrowserViewController.h"
 
 #import "KTDesign.h"
 #import "KTDesignFamily.h"
@@ -278,7 +278,7 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 #pragma mark View Controller
 
 @synthesize viewController = _viewController;
-- (SVDesignChooserViewController *) viewController;
+- (SVDesignBrowserViewController *) viewController;
 {
     [self window];  // make sure it's loaded
     return _viewController;

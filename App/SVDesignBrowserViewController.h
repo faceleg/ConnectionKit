@@ -1,5 +1,5 @@
 //
-//  SVDesignChooserViewController.h
+//  SVDesignBrowserViewController.h
 //  Sandvox
 //
 //  Created by Terrence Talbot on 8/28/09.
@@ -16,7 +16,7 @@
 @protocol IKImageBrowserDelegate <NSObject> @end
 
 
-@interface SVDesignChooserViewController : NSViewController <IKImageBrowserDataSource, IKImageBrowserDelegate>
+@interface SVDesignBrowserViewController : NSViewController <IKImageBrowserDataSource, IKImageBrowserDelegate>
 {  
 	IBOutlet SVDesignsController *oDesignsArrayController;
     

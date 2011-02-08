@@ -10,7 +10,7 @@
 #import "MGScopeBarDelegateProtocol.h"
 
 @class KTDesign;
-@class SVDesignChooserViewController;
+@class SVDesignBrowserViewController;
 @class SVDesignsController;
 
 @interface SVDesignChooserWindowController : NSWindowController <MGScopeBarDelegate>
@@ -19,7 +19,7 @@
 	
   @private
     SVDesignsController             *_designsController;
-    SVDesignChooserViewController   *_viewController;
+    SVDesignBrowserViewController   *_viewController;
     
     NSString *_genre;
 	NSString *_color;
@@ -40,7 +40,7 @@
 @property (readonly) NSString *matchString;
 
 @property(nonatomic, retain) IBOutlet NSArrayController *designsController;
-@property(nonatomic, retain) IBOutlet SVDesignChooserViewController *viewController;
+@property(nonatomic, retain) IBOutlet SVDesignBrowserViewController *viewController;
 
 - (IBAction)cancelSheet:(id)sender;
 - (IBAction)chooseDesign:(id)sender;

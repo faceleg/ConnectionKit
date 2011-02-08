@@ -1,12 +1,12 @@
 //
-//  SVDesignChooserViewController.m
+//  SVDesignBrowserViewController.m
 //  Sandvox
 //
 //  Created by Terrence Talbot on 8/28/09.
 //  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
-#import "SVDesignChooserViewController.h"
+#import "SVDesignBrowserViewController.h"
 #import "NSBundle+Karelia.h"
 #import "KT.h"
 #import "KTDesign.h"
@@ -24,7 +24,7 @@
 
 @end
 
-@implementation SVDesignChooserViewController
+@implementation SVDesignBrowserViewController
 
 #pragma mark Init & Dealloc
 
