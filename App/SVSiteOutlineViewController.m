@@ -1410,7 +1410,7 @@
 	
 	// Should we display a progress indicator?
 	int i = 0;
-	NSString *localizedStatus = NSLocalizedString(@"Copying...", "");
+	NSString *localizedStatus = NSLocalizedString(@"Copying…", "");
 	BOOL displayProgressIndicator = NO;
 	if ([archivedPages count] > 3)
 	{
@@ -1449,7 +1449,7 @@
 	{
 		if (progressPanel)
 		{
-			localizedStatus = NSLocalizedString(@"Copying pages...", "");
+			localizedStatus = NSLocalizedString(@"Copying pages…", "");
 			[progressPanel setMessageText:localizedStatus];
             [progressPanel setDoubleValue:i];
 			i++;
