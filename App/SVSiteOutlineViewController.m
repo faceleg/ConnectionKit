@@ -1143,8 +1143,7 @@
         // Rule 4. Don't allow an item to become a descendant of itself
         for (NSTreeNode *aDraggedItem in draggedItems)
         {
-            // The dragged items are probably proxies so be safe and de-proxify them
-            if ([page isDescendantOfItem:[[aDraggedItem representedObject] self]])
+            if ([node ks_isDescendantOfNode:aDraggedItem])
             {
                 return NSDragOperationNone;
             }
