@@ -472,7 +472,7 @@
 
 - (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;
 {
-    NSPoint point;
+    NSPoint point = NSZeroPoint;
     
     BOOL resizeInline = [self shouldResizeInline];
     if (!resizeInline)
