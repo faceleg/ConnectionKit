@@ -14,6 +14,7 @@
 #import "SVIndexPlugIn.h"
 #import "SVFillController.h"
 #import "SVMediaRecord.h"
+#import "SVPageThumbnailHTMLContext.h"
 #import "SVRichText.h"
 #import "SVSidebar.h"
 #import "SVSidebarPageletsController.h"
@@ -218,9 +219,23 @@
     {
         [[oThumbnailPicker menu] addItem:[NSMenuItem separatorItem]];
         
+        
+        // First page, including thumb
         [oThumbnailPicker addItemWithTitle:NSLocalizedString(@"First Child Page", "menu item")];
         [[oThumbnailPicker lastItem] setTag:SVThumbnailTypeFirstChildItem];
         
+        for (SVSiteItem *aChildPage in [page sortedChildren])
+        {
+            SVPageThumbnailHTMLContext *context = [[SVPageThumbnailHTMLContext alloc] init];
+            [context setDelegate:self];
+            [context writeThumbnailOfPage:aChildPage width:32 height:32 attributes:nil options:0];
+            [context release];
+            
+            if ([[oThumbnailPicker lastItem] image]) break;
+        }
+        
+        
+        // Last child
         [oThumbnailPicker addItemWithTitle:NSLocalizedString(@"Last Child Page", "menu item")];
         [[oThumbnailPicker lastItem] setTag:SVThumbnailTypeLastChildItem];
     }
@@ -235,6 +250,18 @@
     {
         [oThumbnailPicker selectItemWithRepresentedObject:[page thumbnailSourceGraphic]];
     }
+}
+
+- (void)pageThumbnailHTMLContext:(SVPageThumbnailHTMLContext *)context didAddMediaWithURL:(NSURL *)mediaURL;
+{
+    NSImage *result = [[NSImage alloc] initWithThumbnailOfURL:mediaURL maxPixelSize:32];
+    [[oThumbnailPicker lastItem] setImage:result];
+    [result release];
+}
+
+- (void)pageThumbnailHTMLContext:(SVPageThumbnailHTMLContext *)context
+                   addDependency:(KSObjectKeyPathPair *)dependency;
+{   // ignored
 }
 
 - (IBAction)pickThumbnailFromPage:(NSPopUpButton *)sender;
@@ -269,6 +296,8 @@
 {
     [super refresh];
     
+    
+    // Sidebar pagelets
     [oSidebarPageletsTable setNeedsDisplayInRect:[oSidebarPageletsTable rectOfColumn:[oSidebarPageletsTable columnWithIdentifier:@"showPagelet"]]];
     
     if ([[self inspectedObjectsController] respondsToSelector:@selector(convertToCollectionControlTitle)])
