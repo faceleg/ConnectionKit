@@ -29,6 +29,7 @@
 #import "NSArray+Karelia.h"
 #import "NSDate+Karelia.h"
 #import "NSEvent+Karelia.h"
+#import "NSIndexPath+Karelia.h"
 #import "NSInvocation+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSResponder+Karelia.h"
@@ -1159,11 +1160,23 @@
         }
         
         
-        // Rule 5. No point dropping an item *onto* its parent
-        if (index == NSOutlineViewDropOnItemIndex &&
-            [[draggedItems objectAtIndex:0] parentNode] == node)
+        NSTreeNode *draggedItem = [draggedItems objectAtIndex:0];
+        if ([draggedItem parentNode] == node)
         {
-            return NSDragOperationNone;
+            // Rule 5. No point dropping an item *onto* its parent
+            if (index == NSOutlineViewDropOnItemIndex)
+            {
+                return NSDragOperationNone;
+            }
+            else
+            {
+                // Rule 5. No point dropping just before or after the dragged item
+                NSUInteger draggedIndex = [[draggedItem indexPath] lastIndex];
+                if (index == draggedIndex || index == draggedIndex+1)
+                {
+                    return NSDragOperationNone;
+                }
+            }
         }
         
         
