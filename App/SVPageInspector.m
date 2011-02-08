@@ -224,15 +224,16 @@
         [oThumbnailPicker addItemWithTitle:NSLocalizedString(@"First Child Page", "menu item")];
         [[oThumbnailPicker lastItem] setTag:SVThumbnailTypeFirstChildItem];
         
-        for (SVSiteItem *aChildPage in [page sortedChildren])
-        {
-            SVPageThumbnailHTMLContext *context = [[SVPageThumbnailHTMLContext alloc] init];
-            [context setDelegate:self];
-            [context writeThumbnailOfPage:aChildPage width:32 height:32 attributes:nil options:0];
-            [context release];
-            
-            if ([[oThumbnailPicker lastItem] image]) break;
-        }
+        SVPageThumbnailHTMLContext *context = [[SVPageThumbnailHTMLContext alloc] init];
+        [context setDelegate:self];
+        
+        [page writeThumbnailImage:context
+                             type:SVThumbnailTypeFirstChildItem
+                            width:32
+                           height:32
+                          options:0];
+        
+        [context release];
         
         
         // Last child

@@ -77,11 +77,12 @@
 #pragma mark Thumbnail
 
 - (BOOL)writeThumbnailImage:(SVHTMLContext *)context
+                       type:(SVThumbnailType)type
                       width:(NSUInteger)width
                      height:(NSUInteger)height
                     options:(SVThumbnailOptions)options;
 {
-    if ([[self thumbnailType] intValue] == SVThumbnailTypePickFromPage)
+    if (type == SVThumbnailTypePickFromPage)
     {
         [context addDependencyOnObject:self keyPath:@"thumbnailType"];
         
@@ -107,7 +108,7 @@
     }
     else
     {
-        return [super writeThumbnailImage:context width:width height:height options:options];
+        return [super writeThumbnailImage:context type:type width:width height:height options:options];
     }
 }
 

@@ -481,7 +481,11 @@
     
     if (options & SVThumbnailDryRun) // just test if there is a thumbnail
     {
-        return [self writeThumbnailImage:context width:width height:height options:options];
+        return [self writeThumbnailImage:context
+                                    type:[[self thumbnailType] intValue]
+                                   width:width
+                                  height:height
+                                 options:options];
     }
     else
     {
@@ -492,7 +496,11 @@
         }
         
         if (attributes) [context pushAttributes:attributes];
-        BOOL result = [self writeThumbnailImage:context width:width height:height options:options];
+        BOOL result = [self writeThumbnailImage:context
+                                           type:[[self thumbnailType] intValue]
+                                          width:width
+                                         height:height
+                                        options:options];
         
         if (options & SVThumbnailLinkToPage) [context endElement];
         
@@ -501,6 +509,7 @@
 }
 
 - (BOOL)writeThumbnailImage:(SVHTMLContext *)context
+                       type:(SVThumbnailType)type
                       width:(NSUInteger)width
                      height:(NSUInteger)height
                     options:(SVThumbnailOptions)options;
@@ -508,7 +517,7 @@
     [context addDependencyOnObject:self keyPath:@"thumbnailType"];
     
     
-    if ([[self thumbnailType] integerValue] == SVThumbnailTypeCustom && [self customThumbnail])
+    if (type == SVThumbnailTypeCustom && [self customThumbnail])
     {
         if (!(options & SVThumbnailDryRun))
         {

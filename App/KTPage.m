@@ -385,11 +385,12 @@
 #pragma mark Thumbnail
 
 - (BOOL)writeThumbnailImage:(SVHTMLContext *)context
-                   width:(NSUInteger)width
-                  height:(NSUInteger)height
-                     options:(SVThumbnailOptions)options;
+                       type:(SVThumbnailType)type
+                      width:(NSUInteger)width
+                     height:(NSUInteger)height
+                    options:(SVThumbnailOptions)options;
 {
-    switch ([[self thumbnailType] integerValue])
+    switch (type)
     {
         case SVThumbnailTypePickFromPage:
         {
@@ -406,7 +407,7 @@
             else
             {
                 // Write placeholder if desired
-                return [super writeThumbnailImage:context width:width height:height options:options];
+                return [super writeThumbnailImage:context type:type width:width height:height options:options];
             }
         }
             
@@ -419,9 +420,10 @@
             [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
             
             return [page writeThumbnailImage:context
-                                    width:width
-                                   height:height
-                                      options:options];
+                                        type:[[page thumbnailType] intValue]
+                                       width:width
+                                      height:height
+                                     options:options];
         }
             
         case SVThumbnailTypeLastChildItem:
@@ -433,17 +435,19 @@
             [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
             
             return [page writeThumbnailImage:context
-                                    width:width
-                                   height:height
+                                        type:[[page thumbnailType] intValue]
+                                       width:width
+                                      height:height
                                       options:options];
         }
             
         default:
             // Hand off to super for custom/no thumbnail
             return [super writeThumbnailImage:context
-                                     width:width
-                                    height:height
-                                       options:options];
+                                         type:type
+                                        width:width
+                                       height:height
+                                      options:options];
     }
 }
 
