@@ -555,6 +555,8 @@
 		27B0BF6D1168B8840084BFE0 /* SVGraphicFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B0BF6B1168B8840084BFE0 /* SVGraphicFactory.m */; };
 		27B0C1B111694F250084BFE0 /* SVMediaGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B0C1B011694F250084BFE0 /* SVMediaGraphic.h */; };
 		27B0C1B311694F250084BFE0 /* SVMediaGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B0C1B211694F250084BFE0 /* SVMediaGraphic.m */; };
+		27B0C35312F07BB400CE0F98 /* SVPageThumbnailHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B0C35112F07BB400CE0F98 /* SVPageThumbnailHTMLContext.h */; };
+		27B0C35412F07BB400CE0F98 /* SVPageThumbnailHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B0C35212F07BB400CE0F98 /* SVPageThumbnailHTMLContext.m */; };
 		27B1D5D1124CC87D00851A18 /* SVMediaPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B1D5CF124CC87D00851A18 /* SVMediaPlugIn.h */; };
 		27B1D5D2124CC87D00851A18 /* SVMediaPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B1D5D0124CC87D00851A18 /* SVMediaPlugIn.m */; };
 		27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B306D50D74266F00903807 /* KTDocument+Saving.m */; };
@@ -2190,6 +2192,8 @@
 		27B0BF6B1168B8840084BFE0 /* SVGraphicFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGraphicFactory.m; sourceTree = "<group>"; };
 		27B0C1B011694F250084BFE0 /* SVMediaGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaGraphic.h; sourceTree = "<group>"; };
 		27B0C1B211694F250084BFE0 /* SVMediaGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaGraphic.m; sourceTree = "<group>"; };
+		27B0C35112F07BB400CE0F98 /* SVPageThumbnailHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageThumbnailHTMLContext.h; sourceTree = "<group>"; };
+		27B0C35212F07BB400CE0F98 /* SVPageThumbnailHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageThumbnailHTMLContext.m; sourceTree = "<group>"; };
 		27B1D5CF124CC87D00851A18 /* SVMediaPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaPlugIn.h; sourceTree = "<group>"; };
 		27B1D5D0124CC87D00851A18 /* SVMediaPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaPlugIn.m; sourceTree = "<group>"; };
 		27B306D50D74266F00903807 /* KTDocument+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Saving.m"; sourceTree = "<group>"; };
@@ -3969,6 +3973,8 @@
 				27ACC73812631ADC00EA521E /* SVPageThumbnailController.m */,
 				CEB516C012B7E42A003A5505 /* SVTruncationController.h */,
 				CEB516C112B7E42A003A5505 /* SVTruncationController.m */,
+				27B0C35112F07BB400CE0F98 /* SVPageThumbnailHTMLContext.h */,
+				27B0C35212F07BB400CE0F98 /* SVPageThumbnailHTMLContext.m */,
 			);
 			name = "Page Inspector";
 			sourceTree = "<group>";
@@ -6028,6 +6034,7 @@
 				2728C12512E31390008B6CD2 /* KSIsNotNSNotFound.h in Headers */,
 				27F91ECD12EB3B1600372364 /* KSTreeController.h in Headers */,
 				27A8223D12EF532D00152934 /* KSDependenciesTracker.h in Headers */,
+				27B0C35312F07BB400CE0F98 /* SVPageThumbnailHTMLContext.h in Headers */,
 				272BCD3712F2E20B00080225 /* KSGeometry.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7599,6 +7606,7 @@
 				277AF78812DB15F6009CD192 /* SVPagesTreeController.m in Sources */,
 				27F91ECE12EB3B1600372364 /* KSTreeController.m in Sources */,
 				27A8223E12EF532D00152934 /* KSDependenciesTracker.m in Sources */,
+				27B0C35412F07BB400CE0F98 /* SVPageThumbnailHTMLContext.m in Sources */,
 				272BCD3812F2E20B00080225 /* KSGeometry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
