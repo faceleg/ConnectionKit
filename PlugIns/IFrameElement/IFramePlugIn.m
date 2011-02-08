@@ -110,13 +110,21 @@
 
 - (void)startPlaceholderElement
 {
-    NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
-                                                           forKey:@"class"];
-    [[self currentContext] startElement:@"div" 
-                                        bindSizeToPlugIn:self 
-                                              attributes:attributes];
+    id <SVPlugInContext> context = [self currentContext];
+    
+    [context startElement:@"div" bindSizeToPlugIn:self attributes:nil];
+    [context startElement:@"div" className:@"svx-placeholder"];
+    [context startElement:@"p"];
 }
-- (void)endPlaceholderElement; { [[self currentContext] endElement]; }
+
+- (void)endPlaceholderElement;
+{
+    id <SVPlugInContext> context = [self currentContext];
+    
+    [context endElement];
+    [context endElement];
+    [context endElement];
+}
 
 
 #pragma mark Metrics
