@@ -11,10 +11,26 @@
 #import "SVMediaRecord.h"
 #import "SVSiteItem.h"
 
+#import "NSImage+Karelia.h"
+
 #import "KSInspectorViewController.h"
 
 
 @implementation SVPageThumbnailController
+
+#pragma mark Init
+
+- (id)init;
+{
+    self = [super init];
+    
+    _dependenciesTracker = [[KSDependenciesTracker alloc] init];
+    [_dependenciesTracker setDelegate:self];
+    
+    return self;
+}
+
+#pragma mark Custom Image
 
 - (BOOL)shouldShowFileChooser;
 {
@@ -43,11 +59,55 @@
     return YES;
 }
 
+- (BOOL)fillTypeIsCustomImage;
+{
+    return [[self fillType] intValue] == SVThumbnailTypeCustom;
+}
++ (NSSet *)keyPathsForValuesAffectingFillTypeIsCustomImage; { return [NSSet setWithObject:@"fillType"]; }
+
+#pragma mark Image Picker
+
+- (void)updatePickFromPageThumbnail
+{
+    [_dependenciesTracker removeAllDependencies];
+    [[oImagePicker selectedItem] setImage:nil];
+    
+    SVSiteItem *page = [[oInspectorViewController inspectedObjects] lastObject]; 
+    if (page)
+    {
+        SVPageThumbnailHTMLContext *context = [[SVPageThumbnailHTMLContext alloc] init];
+        [context setDelegate:self];
+        
+        // This will call a delegate methods which will update the UI
+        [context writeThumbnailOfPage:page width:32 height:32 attributes:nil options:SVThumbnailScaleAspectFit];
+        
+        [context setDelegate:nil];
+        [context release];
+    }
+}
+
 - (BOOL)fillTypeIsImage;
 {
     return [[self fillType] intValue] >= SVThumbnailTypePickFromPage;
 }
 + (NSSet *)keyPathsForValuesAffectingFillTypeIsImage; { return [NSSet setWithObject:@"fillType"]; }
+
+- (void)pageThumbnailHTMLContext:(SVPageThumbnailHTMLContext *)context didAddMediaWithURL:(NSURL *)mediaURL;
+{
+    NSImage *result = [[NSImage alloc] initWithThumbnailOfURL:mediaURL maxPixelSize:32];
+    [[oImagePicker selectedItem] setImage:result];
+    [result release];
+}
+
+- (void) pageThumbnailHTMLContext:(SVPageThumbnailHTMLContext *)context addDependency:(KSObjectKeyPathPair *)dependency;
+{
+    [_dependenciesTracker addDependency:dependency];
+}
+
+- (void) dependenciesTracker:(KSDependenciesTracker *)tracker didObserveChange:(NSDictionary *)change forDependency:(KSObjectKeyPathPair *)dependency;
+{
+    [self updatePickFromPageThumbnail];
+}
 
 @end
 
@@ -77,6 +137,10 @@
 /*  This feels a pretty dirty solution, but it works. By overriding this method rather than calling -setPullsDown: you get what looks like a pull down button (arrow drawing, menu placement), but behaves like a popup.
  */
 - (BOOL)pullsDown; { return YES; }
+
+- (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{   // don't want to ever see the title
+}
 
 @end
 

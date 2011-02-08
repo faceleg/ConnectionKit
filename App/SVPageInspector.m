@@ -83,7 +83,7 @@
     
     // Setup thumbnail picker
     [oThumbnailController bind:@"fillType" toObject:self withKeyPath:@"inspectedObjectsController.selection.thumbnailType" options:nil];
-    [oThumbnailController bind:@"imageMedia" toObject:oSiteItemController withKeyPath:@"thumbnailMedia" options:nil];
+    //[oThumbnailController bind:@"imageMedia" toObject:oSiteItemController withKeyPath:@"thumbnailMedia" options:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(thumbnailPickerWillPopUp:) name:NSPopUpButtonWillPopUpNotification object:oThumbnailPicker];
     
@@ -138,32 +138,14 @@
 
 - (void)updatePickFromPageThumbnail
 {
-    NSImage *result = nil;
-    
-    id <IMBImageItem> thumbnail = [(NSObject *)[self inspectedObjectsController]
-                                   valueForKeyPath:@"selection.thumbnailSourceGraphic"];
-    if (thumbnail && !NSIsControllerMarker(thumbnail) && [thumbnail imageRepresentation])
-    {
-        CGImageSourceRef source = IMB_CGImageSourceCreateWithImageItem(thumbnail, NULL);
-        if (source)
-        {
-            result = [[NSImage alloc]
-                      initWithThumbnailFromCGImageSource:source
-                      maxPixelSize:32];
-            CFRelease(source);
-        }
-    }
-    
-    [[oThumbnailPicker selectedItem] setImage:result];
-    [result release];
-        
+    [oThumbnailController performSelector:_cmd];
 }
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"inspectedObjectsController.selection.thumbnailSourceGraphic.imageRepresentation"])
     {
-        [self updatePickFromPageThumbnail];
+        //[self updatePickFromPageThumbnail];
     }
     else
     {
@@ -317,6 +299,10 @@
         [_convertToCollectionButton setTitle:title];
         [_convertToRegularPageButton setTitle:title];
     }
+    
+    
+    // Thumbnail
+    [self updatePickFromPageThumbnail];
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex

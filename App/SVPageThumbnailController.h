@@ -7,16 +7,22 @@
 //
 
 #import "SVFillController.h"
+#import "SVPageThumbnailHTMLContext.h"
+#import "KSDependenciesTracker.h"
 
 #import <BWToolkitFramework/BWToolkitFramework.h>
 
 
-@interface SVPageThumbnailController : SVFillController
-{
 
+@interface SVPageThumbnailController : SVFillController <SVPageThumbnailHTMLContextDelegate, KSDependenciesTrackerDelegate>
+{
+    IBOutlet NSPopUpButton  *oImagePicker;
+  @private
+    KSDependenciesTracker   *_dependenciesTracker;
 }
 
 @property(nonatomic, readonly) BOOL fillTypeIsImage;
+@property(nonatomic, readonly) BOOL fillTypeIsCustomImage;
 
 @end
 
