@@ -1397,17 +1397,17 @@
 		};
 		3C004C5D121251D4006BAD9C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */;
+			containerPortal = 3C095BF40D5D281000DE6F62 /* PhotoGridIndexElement.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = PhotoGridIndex;
+			remoteInfo = PhotoGridIndexElement;
 		};
 		3C004C5F121251E4006BAD9C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */;
+			containerPortal = 3C095BF40D5D281000DE6F62 /* PhotoGridIndexElement.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = PhotoGridIndex;
+			remoteInfo = PhotoGridIndexElement;
 		};
 		3C104A21121B016700899C3B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2321,7 +2321,7 @@
 		32DBCF750370BD2300C91783 /* Marvel_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Marvel_Prefix.pch; sourceTree = "<group>"; };
 		3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Sandvox.xcconfig; path = ../Xcode/Configurations/Sandvox.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GeneralIndex.xcodeproj; path = ../PlugIns/GeneralIndexElement/GeneralIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PhotoGridIndex.xcodeproj; path = ../PlugIns/PhotoGridIndex/PhotoGridIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C095BF40D5D281000DE6F62 /* PhotoGridIndexElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PhotoGridIndexElement.xcodeproj; path = ../PlugIns/PhotoGridIndexElement/PhotoGridIndexElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C0B1D04104792B0002EE098 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVDesignChooser.xib; sourceTree = "<group>"; };
 		3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = ../../Shared/ThirdParty/BWToolkit/BWToolkitFramework.framework; sourceTree = SOURCE_ROOT; };
 		3C0C02040905882300CFFE3E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -4139,7 +4139,7 @@
 		3C004C5A121251D4006BAD9C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3C004C5E121251D4006BAD9C /* PhotoGridIndex.svxElement */,
+				3C004C5E121251D4006BAD9C /* PhotoGridIndexElement.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4739,7 +4739,7 @@
 			children = (
 				274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */,
 				3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */,
-				3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */,
+				3C095BF40D5D281000DE6F62 /* PhotoGridIndexElement.xcodeproj */,
 				3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */,
 			);
 			name = Indexes;
@@ -6231,7 +6231,7 @@
 				},
 				{
 					ProductGroup = 3C004C5A121251D4006BAD9C /* Products */;
-					ProjectRef = 3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */;
+					ProjectRef = 3C095BF40D5D281000DE6F62 /* PhotoGridIndexElement.xcodeproj */;
 				},
 				{
 					ProductGroup = 3CFCF2EE123EC863003A635C /* Products */;
@@ -6329,10 +6329,10 @@
 			remoteRef = 3C0049551210CB87006BAD9C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3C004C5E121251D4006BAD9C /* PhotoGridIndex.svxElement */ = {
+		3C004C5E121251D4006BAD9C /* PhotoGridIndexElement.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = PhotoGridIndex.svxElement;
+			path = PhotoGridIndexElement.svxElement;
 			remoteRef = 3C004C5D121251D4006BAD9C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -7657,7 +7657,7 @@
 		};
 		3C004C60121251E4006BAD9C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = PhotoGridIndex;
+			name = PhotoGridIndexElement;
 			targetProxy = 3C004C5F121251E4006BAD9C /* PBXContainerItemProxy */;
 		};
 		3C15B86A0DC7917B00DE9957 /* PBXTargetDependency */ = {
