@@ -324,7 +324,8 @@
     [self setEntityNameWithPageTemplate:template];
     [template release];
     
-    NSIndexPath *path = [self indexPathForAddingObjects];
+    NSIndexPath *path = [self selectionIndexPath];
+    OBASSERT(path);
     
     KTPage *parent = [self parentPageOfObjectAtIndexPath:path];
     if (!parent)
@@ -337,14 +338,13 @@
     
     
     // Insert
-    NSArray *selection = [[self selectedNodes] retain]; // inserting may change selection so grab now
+    NSArray *nodes = [NSTreeNode arrayByRemovingDescendantsFromNodes:[self selectedNodes]]; // inserting may change selection so grab now
     [self insertObject:group atArrangedObjectIndexPath:path];
     [group release];
     
     
     // Move selection into it
-    [self moveNodes:selection toIndexPath:[path indexPathByAddingIndex:0]];
-    [selection release];
+    [self moveNodes:nodes toIndexPath:[path indexPathByAddingIndex:0]];
 }
 
 - (BOOL)canGroupAsCollection;
