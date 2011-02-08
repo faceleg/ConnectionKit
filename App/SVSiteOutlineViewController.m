@@ -1109,6 +1109,7 @@
 //  2.  You can only drop at a specific index if the collection is manually sorted
 //  3.  You can't drop above the root page
 //  4.  When moving an existing page, can't drop it as a descendant of itself
+//  5.  No point moving a page to a destination that is actually the same as source
 
 
 
@@ -1155,6 +1156,14 @@
             {
                 return NSDragOperationNone;
             }
+        }
+        
+        
+        // Rule 5. No point dropping an item *onto* its parent
+        if (index == NSOutlineViewDropOnItemIndex &&
+            [[draggedItems objectAtIndex:0] parentNode] == node)
+        {
+            return NSDragOperationNone;
         }
         
         
