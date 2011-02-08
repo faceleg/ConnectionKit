@@ -47,13 +47,11 @@ div.svx-placeholder
     font-size: medium; 
     color: white; 
     /*background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.38, #BABABA), color-stop(1, #F0EBF0)); */
-    /*padding: 25px;    can't pad as that upsets any explicitly sized graphics. #84833 */
-	text-align: center !important;
+    text-align: center !important;
+    padding:5px !important;
 }
 
-div.svx-placeholder > div { padding:5px !important; }
-
-div.svx-placeholder > * > *
+div.svx-placeholder > *
 {
     border-color: white; 
     border-width: medium; 
