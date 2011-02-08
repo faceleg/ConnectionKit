@@ -47,7 +47,6 @@ div.svx-placeholder
     font-size: medium; 
     color: white; 
     /*background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.38, #BABABA), color-stop(1, #F0EBF0)); */
-    text-align: center !important;
     padding:5px !important;
 }
 
@@ -60,4 +59,5 @@ div.svx-placeholder > *
     margin:0px;
     padding: 24px;
     font-weight: bold;
+    text-align: center !important;
 }
