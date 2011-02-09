@@ -402,11 +402,14 @@
 {
 	NSArray *result = [[self infoForToolbar:toolbar] objectForKey:@"default set"];
 	
-	if (NSHostByteOrder() != NS_LittleEndian && [result containsObject:@"toggleMediaBrowserShown:"])
+	if ((NSHostByteOrder() != NS_LittleEndian) && [result containsObject:@"toggleMediaBrowserShown:"])
 	{
 		NSMutableArray *patched = [NSMutableArray arrayWithArray:result];
 		[patched removeObject:@"toggleMediaBrowserShown:"];
 		result = [NSArray arrayWithArray:patched];
+#ifndef VARIANT_RELEASE
+		NSLog(@"BETA: PPC, Removing imedia browser from toolbar");
+#endif
 	}
 	return result;
 }
@@ -424,6 +427,10 @@
 		
 		if ([itemIdentifier isEqualToString:@"toggleMediaBrowserShown:"] && (NSHostByteOrder() != NS_LittleEndian))
 		{
+#ifndef VARIANT_RELEASE
+			NSLog(@"BETA: PPC, not allowing iMedia in toolbar");
+#endif
+			
 			continue;		// KLUDGE ... disallow imedia on a PPC machine
 		}
 		

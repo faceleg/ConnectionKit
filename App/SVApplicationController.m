@@ -238,6 +238,12 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[IMBConfig registerDefaultValues];
 		[IMBConfig setShowsGroupNodes:NO];
 	}
+#ifndef VARIANT_RELEASE
+	else
+	{
+		NSLog(@"BETA: PPC, Not configuring iMedia");
+	}
+#endif
 
     
     // BUGSID:36452 - having WebKitDefaultFontSize present seriously screws up text rendering
@@ -667,6 +673,9 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		else
 		{
 			result = NO;		// no imedia browser on PPC for now ... crashing a lot!
+#ifndef VARIANT_RELEASE
+				NSLog(@"BETA: validate iMedia item FALSE for being on PPC");
+#endif
 		}
     }
 	else if (action == @selector(showReleaseNotes:))
@@ -893,7 +902,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		}
 
 #ifndef VARIANT_RELEASE
-		NSLog(@"Running build %@", [NSApplication buildVersion]);
+		NSLog(@"BETA: Running build %@", [NSApplication buildVersion]);
 #endif
 
         
@@ -1062,6 +1071,13 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	}
 	
 	[JSTalk listen];
+	
+#ifndef VARIANT_RELEASE
+	NSLog(@"BETA: Host order = %d which means %@",
+		  NSHostByteOrder() , 
+		  (NSHostByteOrder() == NS_LittleEndian) ? @"i386" : @"ppc"
+		  );
+#endif
 	
     _applicationIsLaunching = NO; // we're done
 }
@@ -1263,6 +1279,13 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 - (IBAction)toggleMediaBrowserShown:(id)sender
 {
+#ifndef VARIANT_RELEASE
+	if (NSHostByteOrder() != NS_LittleEndian)
+	{
+		NSLog(@"BETA: toggleMediaBrowserShown: should not be allowed!");
+	}
+#endif
+	
 	NSArray* mediaTypes = [NSArray arrayWithObjects:kIMBMediaTypeImage,kIMBMediaTypeAudio,kIMBMediaTypeMovie,kIMBMediaTypeLink,nil];
 	IMBPanelController* panelController = [IMBPanelController sharedPanelControllerWithDelegate:self mediaTypes:mediaTypes];
 
