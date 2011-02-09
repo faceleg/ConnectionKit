@@ -174,7 +174,7 @@
         NSAlert *alert = [[NSAlert alloc] init];
         [alert setMessageText:NSLocalizedString(@"This website is not set up to be published on this computer or on another host.", @"Hosting not setup")];
         [alert setInformativeText:NSLocalizedString(@"Please set up the site for publishing, or export it to a folder instead.", @"Hosting not setup")];
-        [alert addButtonWithTitle:[TOOLBAR_SETUP_HOST stringByAppendingString:NSLocalizedString(@"…", @"ellipses appended to command, meaning there will be confirmation alert.  Probably spaces before in French.")]];
+        [alert addButtonWithTitle:[TOOLBAR_SETUP_HOST stringByAppendingString:NSLocalizedString(@"\\U2026", @"ellipses appended to command, meaning there will be confirmation alert.  Probably spaces before in French.")]];
         [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "Cancel Button")];
         [alert addButtonWithTitle:NSLocalizedString(@"Export…", @"button title")];
         

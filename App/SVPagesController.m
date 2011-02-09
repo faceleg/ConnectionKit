@@ -615,7 +615,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
                         NSLocalizedString(@"Convert to Single Page", "menu title") :
                         NSLocalizedString(@"Convert to Collection", "menu title"));
     
-    if ([self selectedItemsHaveBeenPublished]) result = [result stringByAppendingString:NSLocalizedString(@"…", @"ellipses appended to command, meaning there will be confirmation alert.  Probably spaces before in French.")];
+    if ([self selectedItemsHaveBeenPublished]) result = [result stringByAppendingString:NSLocalizedString(@"\\U2026", @"ellipses appended to command, meaning there will be confirmation alert.  Probably spaces before in French.")];
     
     return result;
 }
