@@ -141,6 +141,9 @@
         selection = [self selectedDOMRange];
     }
     
+    if (!selection) return NSBeep();
+    
+    
     // Ask for permission. Not sure what the best delegate method to use is :(
     if ([[self editingDelegate] respondsToSelector:@selector(webView:shouldDeleteDOMRange:)])
     {
