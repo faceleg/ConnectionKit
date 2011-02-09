@@ -83,7 +83,7 @@
     
     // Setup thumbnail picker
     [oThumbnailController bind:@"fillType" toObject:self withKeyPath:@"inspectedObjectsController.selection.thumbnailType" options:nil];
-    //[oThumbnailController bind:@"imageMedia" toObject:oSiteItemController withKeyPath:@"thumbnailMedia" options:nil];
+    [oThumbnailController bind:@"imageMedia" toObject:oSiteItemController withKeyPath:@"thumbnailMedia" options:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(thumbnailPickerWillPopUp:) name:NSPopUpButtonWillPopUpNotification object:oThumbnailPicker];
     
