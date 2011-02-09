@@ -153,6 +153,29 @@
     }
 }
 
+- (void)addGraphicToThumbnailPickerIfSuitable:(SVGraphic *)graphic;
+{
+    if ([graphic imageRepresentation])
+    {
+        CGImageSourceRef source = IMB_CGImageSourceCreateWithImageItem(graphic, NULL);
+        if (source)
+        {
+            NSImage *thumnailImage = [[NSImage alloc]
+                                      initWithThumbnailFromCGImageSource:source
+                                      maxPixelSize:32];
+            CFRelease(source);
+            
+            if (thumnailImage)
+            {
+                [oThumbnailPicker addItemWithTitle:[graphic title]];
+                [oThumbnailPicker.lastItem setRepresentedObject:graphic];
+                [oThumbnailPicker.lastItem setImage:thumnailImage];
+                [thumnailImage release];
+            }
+        }
+    }
+}
+
 - (void)thumbnailPickerWillPopUp:(NSNotification *)notification
 {
     // Dump the old menu. Curiously, NSMenu has no easy way to do this.
@@ -162,27 +185,18 @@
     
     // Populate with available choices
     KTPage *page = [(NSObject *)[self inspectedObjectsController] valueForKeyPath:@"selection.self"];
+    
     for (SVTextAttachment *anAttachment in [[page article] orderedAttachments])
     {
         SVGraphic *graphic = [anAttachment graphic];
-        if ([graphic imageRepresentation])
+        [self addGraphicToThumbnailPickerIfSuitable:graphic];
+    }
+    
+    if ([[page showSidebar] boolValue])
+    {
+        for (SVGraphic *aPagelet in [[page sidebar] pagelets])
         {
-            CGImageSourceRef source = IMB_CGImageSourceCreateWithImageItem(graphic, NULL);
-            if (source)
-            {
-                NSImage *thumnailImage = [[NSImage alloc]
-                                          initWithThumbnailFromCGImageSource:source
-                                          maxPixelSize:32];
-                CFRelease(source);
-                
-                if (thumnailImage)
-                {
-                    [oThumbnailPicker addItemWithTitle:[graphic title]];
-                    [oThumbnailPicker.lastItem setRepresentedObject:graphic];
-                    [oThumbnailPicker.lastItem setImage:thumnailImage];
-                    [thumnailImage release];
-                }
-            }
+            [self addGraphicToThumbnailPickerIfSuitable:aPagelet];
         }
     }
     
