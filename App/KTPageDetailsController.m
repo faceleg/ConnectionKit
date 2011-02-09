@@ -874,13 +874,13 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		
 		if (NSOnState == pageIsCollectionState || IS_ROOT_STATE == pageIsCollectionState)
 		{
-			collTitle = NSLocalizedString(@"Collection", "menu title");
+			collTitle = NSLocalizedString(@"Collection", "menu title, NO ellipses");
 			pageTitle = anyArePublished	? NSLocalizedString(@"Single Page…", "menu title with ellipses")
 										 : NSLocalizedString(@"Single Page", "menu title, NO ellipses");
 		}
 		else if (NSOffState == pageIsCollectionState)
 		{
-			pageTitle = NSLocalizedString(@"Single Page", "menu title");
+			pageTitle = NSLocalizedString(@"Single Page", "menu title, NO ellipses");
 			collTitle = anyArePublished	? NSLocalizedString(@"Collection…", "menu title with ellipses")
 										 : NSLocalizedString(@"Collection", "menu title, NO ellipses");
 		}
