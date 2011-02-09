@@ -50,7 +50,6 @@
 
 - (id) master;
 - (void)writeComments:(id<SVPlugInContext>)context;
-- (NSObject *)titleBox;
 @end
 
 
@@ -336,7 +335,7 @@
     id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage, PagePrivate> iteratedPage = [context objectForCurrentTemplateIteration];
 	
-	if (![[[iteratedPage titleBox] valueForKey:@"hidden"] boolValue])		// Do not show title if it is hidden!
+	if ([iteratedPage showsTitle])		// Do not show title if it is hidden!
 	{
 		if ( self.hyperlinkTitles) { [context startAnchorElementWithPage:iteratedPage]; } // <a>
 		
