@@ -38,8 +38,10 @@ pushd "$2" > /dev/null
 
 # frameworks
 
+echo "Frameworks..."
+
 mkdir -p$VERBOSE $WD/Subversion/imedia
-cp -R$VERBOSE ./Contents/Frameworks/iMediaBrowser.framework/Versions/A/Resources/$1.lproj $WD/Subversion/imedia
+cp -R$VERBOSE ./Contents/Frameworks/iMedia.framework/Versions/A/Resources/$1.lproj $WD/Subversion/imedia
 
 mkdir -p$VERBOSE $WD/Subversion/connection
 cp -R$VERBOSE ./Contents/Frameworks/Connection.framework/Versions/A/Resources/$1.lproj $WD/Subversion/connection
@@ -49,24 +51,33 @@ cp -R$VERBOSE ./Contents/Frameworks/AmazonSupport.framework/Versions/A/Resources
 
 # App & Spotlight
 
+echo "MetaMarvel..."
+
 mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/Code/MetaMarvel
 cp -R$VERBOSE ./Contents/Library/Spotlight/MetaSandvox.mdimporter/Contents/Resources/$1.lproj $WD/Subversion/Sandvox$CURRENTBRANCH/Code/MetaMarvel
+
+echo "App..."
 
 # Put things NOT beginning with KS in the app, and things beginning with KS into Shared.
 
 mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/App
 mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/App/$1.lproj
 
+echo "Copy all then remove KS Files...."
+
 # silly hack: copy in all the files, then remove the KS* files
 cp -R$VERBOSE ./Contents/Resources/$1.lproj/* $WD/Subversion/Sandvox$CURRENTBRANCH/App/$1.lproj/
 rm -rf$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/App/$1.lproj/KS*
 
+echo "Shared KS Files...."
+
 mkdir -p$VERBOSE $WD/Subversion/Shared/Interfaces
 mkdir -p$VERBOSE $WD/Subversion/Shared/Interfaces/$1.lproj
-echo ./Contents/Resources/$1.lproj/KS*
-echo $WD/Subversion/Shared/Interfaces/$1.lproj/
+# echo ./Contents/Resources/$1.lproj/KS*
+# echo $WD/Subversion/Shared/Interfaces/$1.lproj/
 cp -R$VERBOSE ./Contents/Resources/$1.lproj/KS* $WD/Subversion/Shared/Interfaces/$1.lproj/
 
+echo "Plugins..."
 
 # plugins with their own project
 
@@ -88,9 +99,13 @@ popd > /dev/null
 
 popd > /dev/null
 
+echo "Removing nibs and backups..."
+
 # Remove nib backup files, and nib files (since we don't localize those)
 find Subversion -name '*~.nib' -exec rm -rf {} \;  2> /dev/null      
 find Subversion -name '*.nib' -exec rm -rf {} \;  2> /dev/null
+
+echo "Removing graphics...."
 
 # Remove any graphics ... they would not have been translated (e.g. Sandvox badges) ... those are handled manually
 find Subversion -name '*.png' -delete
