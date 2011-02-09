@@ -1568,7 +1568,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* PhotoGridIndex */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = PhotoGridIndex;
 		};
 		3C88838E0BFCB4A400921FA4 /* PBXContainerItemProxy */ = {
