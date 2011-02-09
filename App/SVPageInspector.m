@@ -278,14 +278,16 @@
     
     if (graphic)
     {
+        [oThumbnailController setFillType:[NSNumber numberWithInteger:SVThumbnailTypePickFromPage]];
         [[self inspectedObjectsController] setValue:graphic forKeyPath:@"selection.thumbnailSourceGraphic"];
     }
     else
     {
         // They chose a different type
         [oThumbnailController setFillType:[NSNumber numberWithInteger:[sender selectedTag]]];
-        [oThumbnailController fillTypeChosen:sender];
     }
+    
+    [oThumbnailController fillTypeChosen:sender];
 }
 
 #pragma mark Sidebar Pagelets
