@@ -84,35 +84,21 @@
         // write thumbnail <DIV><p> combo with text that instructs you to drag in images
         [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"gridItem" 
                                                                             forKey:@"class"]];
-        [context startElement:@"div" attributes:nil];
-        [context startElement:@"p" attributes:[NSDictionary dictionaryWithObject:@"svx-placeholder" 
+        // use a specially tagged placeholder so it doesn't conflict with svx-placeholder
+        [context startElement:@"p" attributes:[NSDictionary dictionaryWithObject:@"grid-placholder" 
                                                                             forKey:@"class"]];
         [context writeText:NSLocalizedString(@"Drag photos here", "add photos to grid")];
         [context endElement]; // </p>  
         [context endElement]; // </div>  
-        [context endElement]; // </div>  
         
         // swizzle the CSS for a more advanced look
         // <http://www.w3.org/TR/css3-background/>
-        
-        // .gridItem is defined at the design level
-        // here's the definition for Aqua:
-        //.gridItem {
-        //    float: left;
-        //    position:relative;
-        //    width:152px;
-        //    height:192px;	/* room for caption */
-        //    overflow: hidden;
-        //    margin: 3px;
-        //    padding-top: 6px;
-        //    background: url(thumbnail_bkgd.png) no-repeat;
-        //}
-        
+                
         // add gradient to .gridItem div
         [context addCSSString:@".gridItem { background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.38, #BABABA), color-stop(1, #F0EBF0)); }"];
 
         // add border to .placeholder p
-        [context addCSSString:@".svx-placeholder { border-color: white; border-width: medium; border-style: dashed; border-radius: .75em; margin: 0px; padding: 24px; font-weight: bold; } p.svx-placeholder { font-size: x-large; color: white; vertical-align: bottom; }"];
+        [context addCSSString:@".grid-placholder { background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.38, #BABABA), color-stop(1, #F0EBF0)); border-color: white; border-width: medium; border-style: dashed; border-radius: .75em; margin: 0px; padding: 24px;} p.grid-placholder { font-family: \"Lucida Grande\"; font-size: 13pt;  font-weight: bold; color: white; }"];
     }
     else
     {
