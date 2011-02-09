@@ -1130,6 +1130,14 @@
 		CE390976127BA2D100C994C6 /* object_grid.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE390973127BA2D100C994C6 /* object_grid.tiff */; };
 		CE390977127BA2D100C994C6 /* object_summaries.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE390974127BA2D100C994C6 /* object_summaries.tiff */; };
 		CE42A63111DE506600381E46 /* DTD in Resources */ = {isa = PBXBuildFile; fileRef = CE42A62311DE506600381E46 /* DTD */; };
+		CE44C87B130216C600015A24 /* KSBugReporterViews.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE44C86B130216C600015A24 /* KSBugReporterViews.strings */; };
+		CE44C87C130216C600015A24 /* KSCrash.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE44C86D130216C600015A24 /* KSCrash.strings */; };
+		CE44C87D130216C600015A24 /* KSException.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE44C86F130216C600015A24 /* KSException.strings */; };
+		CE44C87E130216C600015A24 /* KSFeedback.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE44C871130216C600015A24 /* KSFeedback.strings */; };
+		CE44C87F130216C600015A24 /* KSJoinList.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE44C873130216C600015A24 /* KSJoinList.strings */; };
+		CE44C880130216C600015A24 /* KSKeepInTouch.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE44C875130216C600015A24 /* KSKeepInTouch.strings */; };
+		CE44C881130216C600015A24 /* KSPluginInstaller.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE44C877130216C600015A24 /* KSPluginInstaller.strings */; };
+		CE44C882130216C600015A24 /* KSRegistration.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE44C879130216C600015A24 /* KSRegistration.strings */; };
 		CE44DFBA0BD0019400479A8E /* KTHTMLEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44DFB80BD0019400479A8E /* KTHTMLEditorController.m */; };
 		CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */; };
 		CE487741108FE2C9008417FD /* KSYellowStickyWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */; };
@@ -2842,6 +2850,14 @@
 		CE390973127BA2D100C994C6 /* object_grid.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = object_grid.tiff; sourceTree = "<group>"; };
 		CE390974127BA2D100C994C6 /* object_summaries.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = object_summaries.tiff; sourceTree = "<group>"; };
 		CE42A62311DE506600381E46 /* DTD */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DTD; sourceTree = "<group>"; };
+		CE44C86C130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSBugReporterViews.strings; sourceTree = "<group>"; };
+		CE44C86E130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSCrash.strings; sourceTree = "<group>"; };
+		CE44C870130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSException.strings; sourceTree = "<group>"; };
+		CE44C872130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSFeedback.strings; sourceTree = "<group>"; };
+		CE44C874130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSJoinList.strings; sourceTree = "<group>"; };
+		CE44C876130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSKeepInTouch.strings; sourceTree = "<group>"; };
+		CE44C878130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSPluginInstaller.strings; sourceTree = "<group>"; };
+		CE44C87A130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSRegistration.strings; sourceTree = "<group>"; };
 		CE44DFB80BD0019400479A8E /* KTHTMLEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLEditorController.m; sourceTree = "<group>"; };
 		CE44DFB90BD0019400479A8E /* KTHTMLEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLEditorController.h; sourceTree = "<group>"; };
 		CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPluginInstaller.h; sourceTree = "<group>"; };
@@ -5391,6 +5407,14 @@
 		CE22E5B80D7C71A10055D8E9 /* Interfaces */ = {
 			isa = PBXGroup;
 			children = (
+				CE44C86B130216C600015A24 /* KSBugReporterViews.strings */,
+				CE44C86D130216C600015A24 /* KSCrash.strings */,
+				CE44C86F130216C600015A24 /* KSException.strings */,
+				CE44C871130216C600015A24 /* KSFeedback.strings */,
+				CE44C873130216C600015A24 /* KSJoinList.strings */,
+				CE44C875130216C600015A24 /* KSKeepInTouch.strings */,
+				CE44C877130216C600015A24 /* KSPluginInstaller.strings */,
+				CE44C879130216C600015A24 /* KSRegistration.strings */,
 				CE6EE00111F129F100F00AAC /* KSBugReporterViews.xib */,
 				CE6EE00311F129F100F00AAC /* KSCrash.xib */,
 				CE6EE00511F129F100F00AAC /* KSException.xib */,
@@ -6741,6 +6765,14 @@
 				CEFDA5E512EA397F00D3A6CD /* SVVideoInspector.strings in Resources */,
 				CEFDA5E612EA397F00D3A6CD /* Welcome.strings in Resources */,
 				CEFDA5E712EA397F00D3A6CD /* WrapInspector.strings in Resources */,
+				CE44C87B130216C600015A24 /* KSBugReporterViews.strings in Resources */,
+				CE44C87C130216C600015A24 /* KSCrash.strings in Resources */,
+				CE44C87D130216C600015A24 /* KSException.strings in Resources */,
+				CE44C87E130216C600015A24 /* KSFeedback.strings in Resources */,
+				CE44C87F130216C600015A24 /* KSJoinList.strings in Resources */,
+				CE44C880130216C600015A24 /* KSKeepInTouch.strings in Resources */,
+				CE44C881130216C600015A24 /* KSPluginInstaller.strings in Resources */,
+				CE44C882130216C600015A24 /* KSRegistration.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7911,6 +7943,70 @@
 				3CACE2CC127FC21100983DF2 /* en */,
 			);
 			name = SVGoogleSheet.xib;
+			sourceTree = "<group>";
+		};
+		CE44C86B130216C600015A24 /* KSBugReporterViews.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE44C86C130216C600015A24 /* fr */,
+			);
+			name = KSBugReporterViews.strings;
+			sourceTree = "<group>";
+		};
+		CE44C86D130216C600015A24 /* KSCrash.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE44C86E130216C600015A24 /* fr */,
+			);
+			name = KSCrash.strings;
+			sourceTree = "<group>";
+		};
+		CE44C86F130216C600015A24 /* KSException.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE44C870130216C600015A24 /* fr */,
+			);
+			name = KSException.strings;
+			sourceTree = "<group>";
+		};
+		CE44C871130216C600015A24 /* KSFeedback.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE44C872130216C600015A24 /* fr */,
+			);
+			name = KSFeedback.strings;
+			sourceTree = "<group>";
+		};
+		CE44C873130216C600015A24 /* KSJoinList.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE44C874130216C600015A24 /* fr */,
+			);
+			name = KSJoinList.strings;
+			sourceTree = "<group>";
+		};
+		CE44C875130216C600015A24 /* KSKeepInTouch.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE44C876130216C600015A24 /* fr */,
+			);
+			name = KSKeepInTouch.strings;
+			sourceTree = "<group>";
+		};
+		CE44C877130216C600015A24 /* KSPluginInstaller.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE44C878130216C600015A24 /* fr */,
+			);
+			name = KSPluginInstaller.strings;
+			sourceTree = "<group>";
+		};
+		CE44C879130216C600015A24 /* KSRegistration.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE44C87A130216C600015A24 /* fr */,
+			);
+			name = KSRegistration.strings;
 			sourceTree = "<group>";
 		};
 		CE6EE00111F129F100F00AAC /* KSBugReporterViews.xib */ = {
