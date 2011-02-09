@@ -6855,7 +6855,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL KSThreadProxy FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSThreadProxy\n\nif [ -e /usr/local/git/bin ]\nthen\n\tGIT_PATH=/usr/local/git/bin\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSThreadProxy from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSThreadProxy\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL KSThreadProxy FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSThreadProxy\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSThreadProxy from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSThreadProxy\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3ED294120894F70080EB6E /* ShellScript */ = {
@@ -6869,7 +6869,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL ConnectionKit FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../connection\n\nif [ -e /usr/local/git/bin ]\nthen\n\tGIT_PATH=/usr/local/git/bin\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling ConnectionKit from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling ConnectionKit\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL ConnectionKit FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../connection\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling ConnectionKit from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling ConnectionKit\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3ED29E120895580080EB6E /* ShellScript */ = {
@@ -6883,7 +6883,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL yrk-spinning-progress-indicator FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../yrk-spinning-progress-indicator\n\nif [ -e /usr/local/git/bin ]\nthen\n\tGIT_PATH=/usr/local/git/bin\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling yrk-spinning-progress-indicator from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling yrk-spinning-progress-indicator\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL yrk-spinning-progress-indicator FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../yrk-spinning-progress-indicator\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling yrk-spinning-progress-indicator from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling yrk-spinning-progress-indicator\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C5A77C40EB6E0880049B898 /* ShellScript */ = {
@@ -7089,7 +7089,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL KSExtensibleManagedObjects FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSExtensibleManagedObject\n\nif [ -e /usr/local/git/bin ]\nthen\n\tGIT_PATH=/usr/local/git/bin\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSExtensibleManagedObject from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSExtensibleManagedObject\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL KSExtensibleManagedObjects FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSExtensibleManagedObject\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSExtensibleManagedObject from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSExtensibleManagedObject\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3CBC727211F0C59E00716937 /* ShellScript */ = {
@@ -7103,7 +7103,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL KSHTMLWriter FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSHTMLWriter\n\nif [ -e /usr/local/git/bin ]\nthen\n\tGIT_PATH=/usr/local/git/bin\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSHTMLWriter from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSHTMLWriter\"\n\npopd\n\nexit 0\n\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL KSHTMLWriter FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSHTMLWriter\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSHTMLWriter from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSHTMLWriter\"\n\npopd\n\nexit 0\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3CD5B7830DCA668D006EE4D9 /* ShellScript */ = {
@@ -7131,7 +7131,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL BDAlias FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../bdalias\n\nif [ -e /usr/local/git/bin ]\nthen\n\tGIT_PATH=/usr/local/git/bin\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling BDAlias from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling BDAlias\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL BDAlias FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../bdalias\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling BDAlias from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling BDAlias\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3CE2B2B60D7F1DD900E2711E /* ShellScript */ = {
