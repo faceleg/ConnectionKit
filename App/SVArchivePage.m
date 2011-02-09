@@ -64,6 +64,8 @@
 	return result;
 }
 
+- (BOOL)showsTitle; { return YES; }
+
 // Returns YES if truncated.
 
 - (void)writeRSSFeedItemDescription { }

@@ -14,7 +14,10 @@ typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSent
 @protocol SVPage <NSObject>
 
 #pragma mark Content
+
 - (NSString *)title;
+- (BOOL)showsTitle;
+
 - (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount;
 
 

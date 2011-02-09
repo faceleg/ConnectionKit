@@ -192,6 +192,11 @@
 }
 + (NSSet *)keyPathsForValuesAffectingTitle { return [NSSet setWithObject:@"titleBox.text"]; }
 
+- (BOOL)showsTitle;
+{
+    return ![[[self titleBox] hidden] boolValue];
+}
+
 // For bindings.  We can edit title if we aren't root;
 - (BOOL)canEditTitle
 {

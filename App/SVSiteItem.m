@@ -60,6 +60,7 @@
 #pragma mark Title
 
 @dynamic title;
+- (BOOL)showsTitle; { return YES; }
 
 - (void)writeTitle:(id <SVPlugInContext>)context;   // uses rich txt/html when available
 {
