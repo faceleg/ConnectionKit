@@ -143,6 +143,7 @@
 				3C8544AA12061D69000A19C3 /* PBXTargetDependency */,
 				3C7C1E401219B5DA005D75B1 /* PBXTargetDependency */,
 				3C9CF9B0121201D8005CFDD4 /* PBXTargetDependency */,
+				3C85B31C13023F8A00690048 /* PBXTargetDependency */,
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
 				3C15B86A0DC7917B00DE9957 /* PBXTargetDependency */,
 			);
@@ -1562,6 +1563,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = YouTubeElement;
+		};
+		3C85B31B13023F8A00690048 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* PhotoGridIndex */;
+			remoteInfo = PhotoGridIndex;
 		};
 		3C88838E0BFCB4A400921FA4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -7763,6 +7771,11 @@
 			isa = PBXTargetDependency;
 			name = YouTubeElement;
 			targetProxy = 3C8544A912061D69000A19C3 /* PBXContainerItemProxy */;
+		};
+		3C85B31C13023F8A00690048 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PhotoGridIndex;
+			targetProxy = 3C85B31B13023F8A00690048 /* PBXContainerItemProxy */;
 		};
 		3C88838F0BFCB4A400921FA4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
