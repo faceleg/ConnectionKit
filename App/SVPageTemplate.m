@@ -144,8 +144,8 @@
         [aTemplate release];
         
         aTemplate = [[SVPageTemplate alloc] init];
-        [aTemplate setTitle:NSLocalizedString(@"Empty/Text", "menu item title")];
-		[aTemplate setSubtitle:NSLocalizedString(@"Without Sidebar", "menu item subtitle")];
+        [aTemplate setTitle:NSLocalizedString(@"Empty/Text — Without Sidebar", "menu item title")];
+		// [aTemplate setSubtitle:NSLocalizedString(@"Without Sidebar", "menu item subtitle")];
 		[aTemplate setIcon:[NSImage imageNamed:@"page_empty"]];
         [aTemplate setPageProperties:[NSDictionary dictionaryWithObject:NSBOOL(NO) forKey:@"showSidebar"]];
         [buffer addObject:aTemplate];
@@ -161,8 +161,8 @@
         
         aTemplate = [[SVPageTemplate alloc] initWithGraphicFactory:aGraphicFactory];
  		[aTemplate setIcon:[NSImage imageNamed:@"page_photo"]];
-		[aTemplate setTitle:NSLocalizedString(@"Photo/Video", "menu item title")];
-  		[aTemplate setSubtitle:NSLocalizedString(@"Without Sidebar", "menu item subtitle")];
+		[aTemplate setTitle:NSLocalizedString(@"Photo/Video — Without Sidebar", "menu item title")];
+  		//[aTemplate setSubtitle:NSLocalizedString(@"Without Sidebar", "menu item subtitle")];
         [aTemplate setPageProperties:NSDICT(NSBOOL(NO), @"showSidebar", NSLocalizedString(@"Photo", "page title"), @"title")];
 		[buffer addObject:aTemplate];
         [aTemplate release];
