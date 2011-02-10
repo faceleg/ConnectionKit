@@ -97,33 +97,6 @@
     return result;
 }
 
-- (id)serializedValueForKey:(NSString *)key;
-{
-    if ([key isEqualToString:@"indexedCollection"])
-    {
-        return [[self indexedCollection] performSelector:@selector(identifier)];
-    }
-    else
-    {
-        return [super serializedValueForKey:key];
-    }
-}
-
-- (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key;
-{
-    if ([key isEqualToString:@"indexedCollection"])
-    {
-        [self setIndexedCollection:(serializedValue ?
-                                    [self pageWithIdentifier:serializedValue] :
-                                    nil)];
-    }
-    else
-    {
-        [super setSerializedValue:serializedValue forKey:key];
-    }
-}
-
-
 #pragma mark HTML Generation
 
 - (void)writePlaceholderHTML:(id <SVPlugInContext>)context;
