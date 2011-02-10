@@ -413,20 +413,18 @@
 - (void)addArchivePageletForCollectionIfNeeded:(KTPage *)collection
 {
     SVSidebarPageletsController *sidebarController = [[SVSidebarPageletsController alloc] initWithPageletsInSidebarOfPage:collection];
+    
+    [sidebarController bindContentToPage];
     [sidebarController autorelease];
 
     
     // Is there already an archive pagelet for this? If so, do nothing
     for (SVGraphic *aGraphic in [sidebarController arrangedObjects])
     {
-        if ([aGraphic respondsToSelector:@selector(plugIn)])
+        if ([aGraphic respondsToSelector:@selector(plugIn)] &&
+            [[aGraphic performSelector:@selector(plugInIdentifier)] isEqualToString:@"sandvox.CollectionArchive"])
         {
-            id plugIn = [(id)aGraphic plugIn];
-            if ([plugIn isKindOfClass:[SVIndexPlugIn class]] &&
-                [plugIn indexedCollection] == collection)
-            {
-                return;
-            }
+            return;
         }
     }
     
