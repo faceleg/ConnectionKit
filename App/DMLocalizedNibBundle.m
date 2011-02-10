@@ -347,10 +347,10 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 //		{
 //			NSLog(@"Break here");
 //		}
-		if ([subview isKindOfClass:[NSButton class]] && [[((NSButton *)subview) title] hasPrefix:@"Can___cel"])
-		{
-			NSLog(@"Break here");
-		}
+//		if ([subview isKindOfClass:[NSButton class]] && [[((NSButton *)subview) title] hasPrefix:@"Can___cel"])
+//		{
+//			NSLog(@"Break here");
+//		}
 //		if ([subview isKindOfClass:[NSBox class]] && [subview frame].origin.y == 62.0)
 //		{
 //			NSLog(@"Break here - this is the separator line");
@@ -525,7 +525,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 					CGFloat margin = 10.0;
 					if ([[view superview] isKindOfClass:[NSTabView class]])
 					{
-						NSLog(@"FUDGE -- This is where the margin needs to be adjusted for the enclosing tab view");
+						DJW((@"FUDGE -- This is where the margin needs to be adjusted for the enclosing tab view"));
 						margin -= [[view superview] frame].origin.x;	// this will add 17 to the margin
 					}
 					rowDelta = margin - (enclosingMaxX-newMaxX);
@@ -890,7 +890,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	}
 	else
 	{
-		NSLog(@"%s is NOT LOCALIZING non-app loadNibFile:%@",__FUNCTION__, fileName);
+		DJW((@"%s is NOT LOCALIZING non-app loadNibFile:%@",__FUNCTION__, fileName));
 	}
 	if (!result)
 	{
@@ -1024,7 +1024,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 				if (delta > 0)
 				{
 					windowFrame.size.width += delta;
-					DJW((@"##### Delta from resizing window-level view: %f.  Resized the whole window.", delta));
+					DJW((@"##### Delta from resizing window-level view: %f.  Resized the whole %@ window.", delta, [fileName lastPathComponent]));
 					// TODO: should we update min size?
 					windowFrame = [contentView convertRect:windowFrame toView:nil];
 					[window setFrame:windowFrame display:YES];	
@@ -1039,11 +1039,11 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		
         if (nil == localizedStringsTablePath)
 		{
-			NSLog(@"Not running through localizer because localizedStringsTablePath == nil");
+			DJW((@"Not running through localizer because localizedStringsTablePath == nil"));
 		}
 		else
 		{
-			NSLog(@"Not running through localizer because containing dir is not English: %@", [[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent]);
+			DJW((@"Not running through localizer because containing dir is not English: %@", [[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent]));
 		}
 		
 		return NO;		// not successful
@@ -1079,13 +1079,13 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 					
 					if ([object accessibilityIsAttributeSettable:NSAccessibilityHelpAttribute])
 					{
-						NSLog(@"ACCESSIBILITY: %@ %@", localizedAccessibilityHelp, localizedAccessibilityHelp);
+						DJW((@"ACCESSIBILITY: %@ %@", localizedAccessibilityHelp, localizedAccessibilityHelp));
 						[object accessibilitySetValue:localizedAccessibilityHelp
 										 forAttribute:NSAccessibilityHelpAttribute];
 					}
 					else
 					{
-						NSLog(@"DISALLOWED ACCESSIBILITY: %@ %@", localizedAccessibilityHelp, localizedAccessibilityHelp);
+						DJW((@"DISALLOWED ACCESSIBILITY: %@ %@", localizedAccessibilityHelp, localizedAccessibilityHelp));
 						
 					}
 				}
@@ -1391,7 +1391,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     
 	if ([string hasPrefix:@"["])
 	{
-		NSLog(@"??? Double-translation of %@", string);
+		DJW((@"??? Double-translation of %@", string));
 	}
     static NSString *defaultValue = @"I AM THE DEFAULT VALUE";
     NSString *localizedString = [bundle localizedStringForKey:string value:defaultValue table:table];
