@@ -115,10 +115,7 @@ typedef NSUInteger SVThumbnailOptions;
 
 #pragma mark Placeholder
 // For if you need to generate a stand-in for the real content. e.g. Live data feeds are disabled
-// Don't forget this can behappily accessed from template with something like:
-// [[=currentContext.startPlaceholder]]Placeholder Text[[=currentContext.endPlaceholder]]
-- (void)startPlaceholder;
-- (void)endPlaceholder;
+- (void)writePlaceholderWithText:(NSString *)text;
 
 
 #pragma mark Metrics
