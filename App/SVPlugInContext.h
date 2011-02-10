@@ -113,6 +113,14 @@ typedef NSUInteger SVThumbnailOptions;
                                         plugIn:(SVPlugIn *)plugIn;
 
 
+#pragma mark Placeholder
+// For if you need to generate a stand-in for the real content. e.g. Live data feeds are disabled
+// Don't forget this can behappily accessed from template with something like:
+// [[=currentContext.startPlaceholder]]Placeholder Text[[=currentContext.endPlaceholder]]
+- (void)startPlaceholder;
+- (void)endPlaceholder;
+
+
 #pragma mark Metrics
 // The element's size will be taken from plug-in's .width and .height properties. When editing, that will be kept up-to-date, with resize handles if appropriate
 - (void)startElement:(NSString *)elementName

@@ -617,6 +617,20 @@
 
 - (NSUInteger)numberOfGraphicsOnPage; { return _numberOfGraphics; }
 
+#pragma mark Placeholder
+
+- (void)startPlaceholder;
+{
+    [self startElement:@"div" className:@"svx-placeholder"];
+    [self startElement:@"div"];
+}
+
+- (void)endPlaceholder;
+{
+    [self endElement];
+    [self endElement];
+}
+
 #pragma mark Metrics
 
 - (void)startElement:(NSString *)elementName bindSizeToObject:(NSObject *)object;

@@ -113,16 +113,14 @@
     id <SVPlugInContext> context = [self currentContext];
     
     [context startElement:@"div" bindSizeToPlugIn:self attributes:nil];
-    [context startElement:@"div" className:@"svx-placeholder"];
-    [context startElement:@"p"];
+    [context startPlaceholder];
 }
 
 - (void)endPlaceholderElement;
 {
     id <SVPlugInContext> context = [self currentContext];
     
-    [context endElement];
-    [context endElement];
+    [context endPlaceholder];
     [context endElement];
 }
 

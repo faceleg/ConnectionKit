@@ -40,7 +40,7 @@ img[width="0"], img[height="0"] { display:none; }
 .webeditor-changing[contenteditable] img { float:none !important; display:inline !important; }
 
 
-div.svx-placeholder
+.svx-placeholder
 {
 	/*min-height: 50px;*/
 	background: rgba(0,0,0,0.25);
@@ -49,7 +49,7 @@ div.svx-placeholder
     padding:5px !important;
 }
 
-div.svx-placeholder > *
+.svx-placeholder > div
 {
     border-color: white; 
     border-width: medium; 
