@@ -76,8 +76,8 @@
                 NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:type];
                 NSData *png = [icon PNGRepresentation];
                 
-                SVMedia *media = [[SVMedia alloc] initWithData:png
-                                                           URL:[[[self media] media] mediaURL]];
+                NSURL *URL = [[[self media] media] mediaURL];
+                SVMedia *media = [[SVMedia alloc] initWithData:png URL:URL];
                 
                 [context writeImageWithSourceMedia:media
                                                alt:@""

@@ -66,12 +66,12 @@
 {
     OBPRECONDITION(url);
     
-    NSString *type = [NSString MIMETypeForUTI:
-                      [NSString UTIForFilenameExtension:[url ks_pathExtension]]];
+    NSString *type = [NSString UTIForFilenameExtension:[url ks_pathExtension]];
+    NSString *mimeType = ([type length] ? [NSString MIMETypeForUTI:type] : @"application/octet-stream");
     
     WebResource *resource = [[WebResource alloc] initWithData:data
                                                           URL:url
-                                                     MIMEType:type
+                                                     MIMEType:mimeType
                                              textEncodingName:nil
                                                     frameName:nil];
     
