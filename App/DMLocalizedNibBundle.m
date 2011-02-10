@@ -826,7 +826,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
     if (
 		
-	([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
+//	([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
 		self == [NSViewController class]) {
 		//NSLog(@"Switching in NSViewController Localizer!");
@@ -862,7 +862,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
     if (
 		
-		([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
+//		([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
 		self == [NSBundle class]) {
 		//NSLog(@"Switching in NSBundle localizer. W00T!");
@@ -870,7 +870,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		
 		
 		// DEBUG-ONLY ... localizedStringForKey gets a longer version installed
-		method_exchangeImplementations(class_getInstanceMethod(self, @selector(localizedStringForKey:value:table:)), class_getInstanceMethod(self, @selector(debugLocalizedStringForKey:value:table:)));
+//		method_exchangeImplementations(class_getInstanceMethod(self, @selector(localizedStringForKey:value:table:)), class_getInstanceMethod(self, @selector(debugLocalizedStringForKey:value:table:)));
 
 
 		
@@ -959,7 +959,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     NSString *localizedStringsTablePath = [[NSBundle mainBundle] pathForResource:localizedStringsTableName ofType:@"strings"];
     if (
 		
-		([NSUserName() isEqualToString:DEBUG_THIS_USER]) || 
+//		([NSUserName() isEqualToString:DEBUG_THIS_USER]) || 
 		
 			(
 		localizedStringsTablePath
@@ -1396,9 +1396,10 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     static NSString *defaultValue = @"I AM THE DEFAULT VALUE";
     NSString *localizedString = [bundle localizedStringForKey:string value:defaultValue table:table];
     if (![localizedString isEqualToString:defaultValue]) {
-        return [NSString stringWithFormat:@"[_%@_]", localizedString];
+        //return [NSString stringWithFormat:@"[_%@_]", localizedString];
+		return localizedString;
     } else { 
-#ifdef DEBUG
+#if 0
  //       NSLog(@"        Can't find translation for string %@", string);
        //return [NSString stringWithFormat:@"[%@]", [string uppercaseString]];
        // return string;
