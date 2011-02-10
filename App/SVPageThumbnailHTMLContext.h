@@ -12,7 +12,7 @@
 #import "SVHTMLContext.h"
 
 
-@class KSObjectKeyPathPair;
+@class KSObjectKeyPathPair, SVMedia;
 @protocol SVPageThumbnailHTMLContextDelegate;
 
 
@@ -29,7 +29,7 @@
 @protocol SVPageThumbnailHTMLContextDelegate
 
 - (void)pageThumbnailHTMLContext:(SVPageThumbnailHTMLContext *)context
-              didAddMediaWithURL:(NSURL *)mediaURL;
+                     didAddMedia:(SVMedia *)media;
 
 - (void)pageThumbnailHTMLContext:(SVPageThumbnailHTMLContext *)context
                    addDependency:(KSObjectKeyPathPair *)dependency;

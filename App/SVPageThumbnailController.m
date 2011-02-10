@@ -92,9 +92,18 @@
 }
 + (NSSet *)keyPathsForValuesAffectingFillTypeIsImage; { return [NSSet setWithObject:@"fillType"]; }
 
-- (void)pageThumbnailHTMLContext:(SVPageThumbnailHTMLContext *)context didAddMediaWithURL:(NSURL *)mediaURL;
+- (void)pageThumbnailHTMLContext:(SVPageThumbnailHTMLContext *)context didAddMedia:(SVMedia *)media;
 {
-    NSImage *result = [[NSImage alloc] initWithThumbnailOfURL:mediaURL maxPixelSize:32];
+    NSImage *result;
+    if ([media mediaData])
+    {
+        result = [[NSImage alloc] initWithData:[media mediaData]];
+    }
+    else
+    {
+        result = [[NSImage alloc] initWithThumbnailOfURL:[media mediaURL] maxPixelSize:32];
+    }
+    
     [[oImagePicker selectedItem] setImage:result];
     [result release];
 }
