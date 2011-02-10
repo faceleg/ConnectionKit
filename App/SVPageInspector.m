@@ -422,7 +422,7 @@
     for (SVGraphic *aGraphic in [sidebarController arrangedObjects])
     {
         if ([aGraphic respondsToSelector:@selector(plugIn)] &&
-            [[aGraphic performSelector:@selector(plugInIdentifier)] isEqualToString:@"sandvox.CollectionArchive"])
+            [[aGraphic performSelector:@selector(plugInIdentifier)] isEqualToString:@"sandvox.CollectionArchiveElement"])
         {
             return;
         }
