@@ -106,9 +106,5 @@ document.getElementById('delicious-container-[[=container.elementID]]').appendCh
 [[endif2]]
 
 [[else]]
-[[if !parser.HTMLGenerationPurpose]]
-<div class="svx-placeholder">
-    <p>[['Enter your Delicious username in the Inspector.]]</p>
-</div>
-[[endif2]]
+[[=writePlaceholder]]
 [[endif]]
