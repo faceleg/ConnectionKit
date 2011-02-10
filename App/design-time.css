@@ -62,3 +62,15 @@ img[width="0"], img[height="0"] { display:none; }
     font-family: "Lucida Grande";
     font-size: 13pt;
 }
+
+div.svx-size-bound {
+    position:relative;
+}
+
+div.svx-size-bound .svx-placeholder {
+    position:absolute;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+}
