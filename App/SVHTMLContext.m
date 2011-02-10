@@ -680,6 +680,12 @@
     // Push the extra attributes
     [self pushAttributes:attributes];
     
+    // During editing, placeholders want to recognise this specific content
+    if ([self isForEditing])
+    {
+        [self pushClassName:@"svx-size-bound"];
+    }
+    
     [self buildAttributesForElement:elementName
                    bindSizeToObject:[plugIn performSelector:@selector(container)]
                  DOMControllerClass:nil
