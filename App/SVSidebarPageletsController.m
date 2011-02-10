@@ -81,6 +81,7 @@
     
     
     NSManagedObjectContext *context = [self managedObjectContext];
+    OBASSERT(context);  // #107523
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"Graphic"
