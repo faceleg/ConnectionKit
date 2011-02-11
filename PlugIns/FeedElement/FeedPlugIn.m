@@ -43,8 +43,6 @@
 #define kNetNewsWireString @"CorePasteboardFlavorType 0x52535373"
 
 
-// LocalizedStringInThisBundle(@"Please specify the URL of the feed using the Inspector.", "String_On_Page_Template")
-
 
 @implementation FeedPlugIn
 
@@ -92,7 +90,7 @@
 {
     id<SVPlugInContext> context = [self currentContext];
     
-    NSString *exampleText = LocalizedStringInThisBundle(@"example no.", "String_On_Page_Template- followed by a number");
+    NSString *exampleText = LocalizedStringInThisBundle(@"example no.", "String_On_Page_Template - followed by a number");
     
     NSString *itemText = LocalizedStringInThisBundle(@"item summary", "String_On_Page_Template - example of a summary of an RSS item");
     
@@ -118,6 +116,12 @@
     }
     
     [context endElement]; // </ul>    
+}
+
+- (void)writePlaceholder
+{
+    id <SVPlugInContext> context = [self currentContext];
+    [context writePlaceholderWithText:LocalizedStringInThisBundle(@"Please specify the URL of the feed using the Inspector.", "String_On_Page_Template - placeholder")];
 }
 
 - (NSURL *)URLAsHTTP		// server requires http:// scheme
