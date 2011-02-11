@@ -95,10 +95,10 @@
         // <http://www.w3.org/TR/css3-background/>
                 
         // add gradient to .gridItem div
-        [context addCSSString:@".gridItem { background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.38, #BABABA), color-stop(1, #F0EBF0)); }"];
+//        [context addCSSString:@".gridItem { background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.38, #BABABA), color-stop(1, #F0EBF0)); }"];
 
         // add border to .placeholder p
-        [context addCSSString:@".grid-placholder { border-color: white; border-width: medium; border-style: dashed; border-radius: .75em; margin: 0px; padding: 24px;} p.grid-placholder { font-family: \"Lucida Grande\"; font-size: 13pt;  font-weight: bold; color: white; }"];
+//        [context addCSSString:@".grid-placholder { border-color: white; border-width: medium; border-style: dashed; border-radius: .75em; margin: 0px; padding: 24px;} p.grid-placholder { font-family: \"Lucida Grande\"; font-size: 13pt;  font-weight: bold; color: white; }"];
     }
     else
     {
