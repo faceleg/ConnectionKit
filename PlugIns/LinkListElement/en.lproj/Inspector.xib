@@ -63,7 +63,7 @@
 										<bool key="EncodedWithXMLCoder">YES</bool>
 										<object class="NSScrollView" id="118978594">
 											<reference key="NSNextResponder" ref="972752083"/>
-											<int key="NSvFlags">274</int>
+											<int key="NSvFlags">282</int>
 											<object class="NSMutableArray" key="NSSubviews">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 												<object class="NSClipView" id="26915287">
@@ -199,7 +199,7 @@
 										</object>
 										<object class="BWAnchoredButtonBar" id="1005744294">
 											<reference key="NSNextResponder" ref="972752083"/>
-											<int key="NSvFlags">290</int>
+											<int key="NSvFlags">266</int>
 											<object class="NSMutableArray" key="NSSubviews">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 												<object class="BWAnchoredButton" id="1049587597">
