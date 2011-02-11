@@ -37,6 +37,9 @@
 #import "PhotoGridIndexPlugIn.h"
 
 
+#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
+
+
 @implementation PhotoGridIndexPlugIn
 
 - (void)awakeFromNew
@@ -60,8 +63,24 @@
 - (void)writePlaceholderHTML:(id <SVPlugInContext>)context;
 {
     if ( self.indexedCollection )
-    {
-        // write empty thumbnail which we can hopefully style
+    {        
+        // write thumbnail <DIV> of design's example image
+        [context startElement:@"div" className:@"gridItem"];
+        [context writeThumbnailOfPage:nil
+                                width:128
+                               height:128
+                           attributes:nil
+                              options:(SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)];
+        [context startElement:@"h3"];
+        [context startAnchorElementWithPage:[context page]];
+        [context startElement:@"span" attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
+        [context writeText:LocalizedStringInThisBundle(@"Example Photo", "placeholder image name")];
+        [context endElement]; // </span>
+        [context endElement]; // </a>
+        [context endElement]; // </h3>
+        [context endElement]; // </div>
+        
+        // write (localized) placeholder image
         NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"placeholder" ofType:@"png"];
         NSURL *URL = [NSURL fileURLWithPath:path];
         [context addResourceWithURL:URL];
@@ -76,32 +95,6 @@
         [context startElement:@"img" attributes:attrs];
         [context endElement]; // </img>
         [context endElement]; // </div>
-        
-       // [context writeHTMLString:@"<p style=\"position:absolute;\">Drag images here</p>"];
-        
-        attrs = [NSDictionary dictionaryWithObject:@"position: absolute; padding: 32px;"
-                                            forKey:@"style"];
-        
-        [context startElement:@"div" attributes:attrs];
-        [context writeText:@"Drag photos here"];
-        [context endElement];
-        
-        
-        // write thumbnail <DIV> of design's example image
-        [context startElement:@"div" className:@"gridItem"];
-        [context writeThumbnailOfPage:nil
-                                width:128
-                               height:128
-                           attributes:nil
-                              options:(SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)];
-        [context startElement:@"h3"];
-        [context startAnchorElementWithPage:[context page]];
-        [context startElement:@"span" attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
-        [context writeText:NSLocalizedString(@"Example Photo", "placeholder image name")];
-        [context endElement]; // </span>
-        [context endElement]; // </a>
-        [context endElement]; // </h3>
-        [context endElement]; // </div>        
     }
     else
     {
