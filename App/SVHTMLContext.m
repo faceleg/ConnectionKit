@@ -619,13 +619,6 @@
 
 #pragma mark Placeholder
 
-- (void)writePlaceholderWithText:(NSString *)text;
-{
-	[self startPlaceholder];
-	[self writeText:text];
-	[self endPlaceholder];
-}
-    
 - (void)startPlaceholder;
 {
     [self startElement:@"div" className:@"svx-placeholder"];
@@ -636,6 +629,13 @@
 {
     [self endElement];
     [self endElement];
+}
+
+- (void)writePlaceholderWithText:(NSString *)text;
+{
+	[self startPlaceholder];
+	[self writeText:text];
+	[self endPlaceholder];
 }
 
 #pragma mark Metrics
