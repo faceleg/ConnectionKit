@@ -39,8 +39,6 @@
 
 #define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 
-// LocalizedStringInThisBundle(@"Add links via Inspector", "String_On_Page_Template")
-
 @implementation LinkListPlugIn
 
 + (Link *)displayableLinkFromLocation:(id<SVWebLocation>)location
@@ -94,7 +92,6 @@
 }
 
 
-#pragma mark -
 #pragma mark SVPlugIn
 
 + (NSArray *)plugInKeys
@@ -103,6 +100,16 @@
             @"linkList", 
             @"layout", 
             @"openInNewWindow", nil];
+}
+
+
+#pragma mark HTML Generation
+
+
+- (void)writePlaceholder
+{
+    id <SVPlugInContext> context = [self currentContext];
+    [context writePlaceholderWithText:LocalizedStringInThisBundle(@"Add links via Inspector", "String_On_Page_Template")];
 }
 
 
@@ -161,7 +168,7 @@
 
 + (BOOL)supportsMultiplePasteboardItems; { return YES; }
 
-#pragma mark -
+
 #pragma mark Properties
 
 @synthesize linkList = _linkList;
