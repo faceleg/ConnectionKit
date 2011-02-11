@@ -860,24 +860,9 @@
             // Write design's example image
             KTDesign *design = [[[self page] master] design];
             NSURL *thumbURL = [KTDesign placeholderImageURLForDesign:design];
-            CIImage *thumb = [[CIImage alloc] initWithContentsOfURL:thumbURL];
-            if (thumb)
-            {
-                CGSize size = [thumb extent].size;
-                [thumb release];
-                
-                KTImageScalingSettings *settings = [KTImageScalingSettings
-                                                    settingsWithBehavior:KTScaleToSize
-                                                    size:NSMakeSize(width, height)];
-                
-                size = [settings scaledCGSizeForImageOfSize:size];
-                
-                [self writeImageWithSrc:[self relativeStringFromURL:thumbURL]
-                                    alt:@""
-                                  width:[NSNumber numberWithFloat:size.width]
-                                 height:[NSNumber numberWithFloat:size.height]];
-                
-            }
+            SVMedia *media = [[SVMedia alloc] initByReferencingURL:thumbURL];
+            
+            [self writeThumbnailImageWithSourceMedia:media alt:@"" width:width height:height options:options];
         }
         
         return YES;
