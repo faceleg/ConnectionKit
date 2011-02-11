@@ -1185,6 +1185,7 @@
 		CE7B67CA11EE784600F56D8B /* MissingMediaQMark.png in Resources */ = {isa = PBXBuildFile; fileRef = CE7B67C911EE784600F56D8B /* MissingMediaQMark.png */; };
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CE84FA481304C7760091B8F8 /* KSInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE84FA471304C7760091B8F8 /* KSInspector.xib */; };
+		CE84FB86130588900091B8F8 /* KSInspector.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE84FB84130588900091B8F8 /* KSInspector.strings */; };
 		CE89C230123999D70056D74B /* SVFlash.h in Headers */ = {isa = PBXBuildFile; fileRef = CE89C22E123999D70056D74B /* SVFlash.h */; };
 		CE89C231123999D70056D74B /* SVFlash.m in Sources */ = {isa = PBXBuildFile; fileRef = CE89C22F123999D70056D74B /* SVFlash.m */; };
 		CE89F96A11F6149600B180EB /* ddsmoothmenu.css in Resources */ = {isa = PBXBuildFile; fileRef = CE89F96511F6149500B180EB /* ddsmoothmenu.css */; };
@@ -2917,6 +2918,7 @@
 		CE7779E40AE499C3002E6844 /* SVWelcomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWelcomeController.m; sourceTree = "<group>"; };
 		CE7B67C911EE784600F56D8B /* MissingMediaQMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MissingMediaQMark.png; sourceTree = "<group>"; };
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
+		CE84FB85130588900091B8F8 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSInspector.strings; sourceTree = "<group>"; };
 		CE89C22E123999D70056D74B /* SVFlash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVFlash.h; sourceTree = "<group>"; };
 		CE89C22F123999D70056D74B /* SVFlash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFlash.m; sourceTree = "<group>"; };
 		CE89C23812399A560056D74B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVFlashInspector.xib; sourceTree = "<group>"; };
@@ -5419,6 +5421,7 @@
 				CE44C86D130216C600015A24 /* KSCrash.strings */,
 				CE44C86F130216C600015A24 /* KSException.strings */,
 				CE44C871130216C600015A24 /* KSFeedback.strings */,
+				CE84FB84130588900091B8F8 /* KSInspector.strings */,
 				CE44C873130216C600015A24 /* KSJoinList.strings */,
 				CE44C875130216C600015A24 /* KSKeepInTouch.strings */,
 				CE44C877130216C600015A24 /* KSPluginInstaller.strings */,
@@ -6781,6 +6784,7 @@
 				CE44C880130216C600015A24 /* KSKeepInTouch.strings in Resources */,
 				CE44C881130216C600015A24 /* KSPluginInstaller.strings in Resources */,
 				CE44C882130216C600015A24 /* KSRegistration.strings in Resources */,
+				CE84FB86130588900091B8F8 /* KSInspector.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8092,6 +8096,14 @@
 				CE6EDFE211F125A500F00AAC /* en */,
 			);
 			name = KSInspector.xib;
+			sourceTree = "<group>";
+		};
+		CE84FB84130588900091B8F8 /* KSInspector.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE84FB85130588900091B8F8 /* fr */,
+			);
+			name = KSInspector.strings;
 			sourceTree = "<group>";
 		};
 		CEFD1D2D12E9F7C000D3A6CD /* CollectionInfo.xib */ = {
