@@ -69,6 +69,9 @@
                                height:128
                            attributes:nil
                               options:(SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)];
+        
+        [context writeHTMLString:@"<p style=\"position:absolute;\">Drag images here</p>"];
+        
         [context startElement:@"h3"];
         [context startAnchorElementWithPage:[context page]];
         [context startElement:@"span" attributes:[NSDictionary dictionaryWithObject:@"in" 
