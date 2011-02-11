@@ -1010,7 +1010,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 				// HACK for now to make the inspector window wider.
 				if ([fileName hasSuffix:@"KSInspector.nib"])
 				{
-//					windowFrame.size.width += 200;
+					windowFrame.size.width += 200;
 				}
 //				if ([fileName hasSuffix:@"KSCrash.nib"])
 //				{
