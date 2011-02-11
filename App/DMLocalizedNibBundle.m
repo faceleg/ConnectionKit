@@ -826,7 +826,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
     if (
 		
-	([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
+//	([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
 		self == [NSViewController class]) {
 		//NSLog(@"Switching in NSViewController Localizer!");
@@ -841,10 +841,10 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	NSString		*nibName	= [self nibName];
 	NSBundle		*nibBundle	= [self nibBundle];		
 	if(!nibBundle) nibBundle = [NSBundle mainBundle];
-	NSString		*nibPath	= [nibBundle pathForResource:nibName ofType:@"nib"];
+	NSString		*nibPath	= [nibBundle pathForResource:[nibName stringByDeletingPathExtension] ofType:@"nib"];
 	NSDictionary	*context	= [NSDictionary dictionaryWithObjectsAndKeys:self, NSNibOwner, nil];
 	
-	DJW((@"loadView %@ going to localize %@ with top objects: %@", [[nibBundle bundlePath] lastPathComponent], [nibPath lastPathComponent], [[context description] condenseWhiteSpace]));
+	// DJW((@"loadView %@ going to localize %@ with top objects: %@", [[nibBundle bundlePath] lastPathComponent], [nibPath lastPathComponent], [[context description] condenseWhiteSpace]));
 	BOOL loaded = [NSBundle _deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil bundle:nibBundle];	// call through to support method
 	if (!loaded)
 	{
@@ -862,7 +862,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
     if (
 		
-		([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
+//		([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
 		self == [NSBundle class]) {
 		//NSLog(@"Switching in NSBundle localizer. W00T!");
@@ -956,10 +956,10 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	// Note: What about loading not from the main bundle? Can I try to load from where the nib file came from?
 	
     NSString *localizedStringsTableName = [[fileName lastPathComponent] stringByDeletingPathExtension];
-    NSString *localizedStringsTablePath = [[NSBundle mainBundle] pathForResource:localizedStringsTableName ofType:@"strings"];
+    NSString *localizedStringsTablePath = [aBundle pathForResource:localizedStringsTableName ofType:@"strings"];
     if (
 		
-		([NSUserName() isEqualToString:DEBUG_THIS_USER]) || 
+//		([NSUserName() isEqualToString:DEBUG_THIS_USER]) || 
 		
 			(
 		localizedStringsTablePath
@@ -1040,11 +1040,11 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		
         if (nil == localizedStringsTablePath)
 		{
-			DJW((@"Not running through localizer because localizedStringsTablePath == nil"));
+			DJW((@"Not running %@ through localizer because localizedStringsTablePath == nil: no .strings file -- %@", localizedStringsTableName, fileName));
 		}
 		else
 		{
-			DJW((@"Not running through localizer because containing dir is not English: %@", [[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent]));
+			DJW((@"Not running %@ through localizer because containing dir is not English -- %@", [[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent], fileName));
 		}
 		
 		return NO;		// not successful
@@ -1065,7 +1065,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	if ([supportedAttrs containsObject:NSAccessibilityHelpAttribute])
 	{
 		NSString *accessibilityHelp = [object accessibilityAttributeValue:NSAccessibilityHelpAttribute];
-		if (accessibilityHelp) DJW((@"HELP: %@", accessibilityHelp));
+		// if (accessibilityHelp) DJW((@"HELP: %@", accessibilityHelp));
 
 		if (accessibilityHelp && ![accessibilityHelp isEqualToString:@""])
 		{
