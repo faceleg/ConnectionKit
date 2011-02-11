@@ -256,6 +256,16 @@
     [paths release];
 }
 
+- (void)willInsertOrMoveObjectToTopLevel:(id)object;
+{
+    // Include in site menu if appropriate
+    NSTreeNode *rootNode = [[[self arrangedObjects] childNodes] objectAtIndex:0];
+    if ([[rootNode childNodes] count] < 6)
+    {
+        [object setIncludeInSiteMenu:[NSNumber numberWithBool:YES]];
+    }
+}
+
 - (void)insertObject:(id)object atArrangedObjectIndexPath:(NSIndexPath *)indexPath;
 {
     // Restore current selection if user undoes
@@ -286,16 +296,13 @@
     }
     
     
+    // Include in site menu if appropriate
+    if ([collection isRootPage]) [self willInsertOrMoveObjectToTopLevel:object];
+    
+    
     // Actually insert proxy for the page
     SVPageProxy *proxy = [SVPageProxy proxyForTargetPage:object];
     [super insertObject:proxy atArrangedObjectIndexPath:indexPath];
-    
-    
-    // Include in site menu if appropriate
-    if ([collection isRootPage] && [[collection childItems] count] < 7)
-    {
-        [object setIncludeInSiteMenu:[NSNumber numberWithBool:YES]];
-    }
     
     
     [[NSNotificationCenter defaultCenter] postNotificationName:SVPagesControllerDidInsertObjectNotification object:self];
@@ -596,7 +603,19 @@
     }
     
     
+    // Should any of these nodes get added to the site menu?
+    for (NSTreeNode *aNode in nodes)
+    {
+        if ([[aNode indexPath] length] > 2)
+        {
+            [self willInsertOrMoveObjectToTopLevel:[aNode representedObject]];
+        }
+    }
+    
+    
+    // Make the insert
     [super moveNodes:nodes toIndexPath:startingIndexPath];
+    
     
     // If moved into an auto-sorted collection, will probably need to rearrange
     [self didAddObjectsByInsertingIntoNode:parentNode];
