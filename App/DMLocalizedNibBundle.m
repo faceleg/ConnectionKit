@@ -1006,21 +1006,22 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 				NSView *contentView = [window contentView];
 				NSRect windowFrame = [contentView convertRect:[window frame] fromView:nil];
 
-				
-				// HACK for now to make the inspector window wider.
-				if ([fileName hasSuffix:@"KSInspector.nib"])
-				{
-					windowFrame.size.width += 200;
-				}
-//				if ([fileName hasSuffix:@"KSCrash.nib"])
-//				{
-//					NSLog(@"Gonna check out KSCrash.nib");
-//				}
-				
 				// Regular windows want 20 pixels right margin; utility windows 10 pixels.  I think from the HIG.
 				// CGFloat desiredMargins = ([window styleMask] & NSUtilityWindowMask) ? 10 : 20;
 
 				CGFloat delta = ResizeToFit([window contentView], 0);
+
+				// HACK for now to make the inspector window wider.  We don't know all of the widths that will be
+				// loaded at this time, so we have to fudge it in advance.  Yikes!
+				if ([fileName hasSuffix:@"KSInspector.nib"])
+				{
+					NSString *myLang = [[[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent] stringByDeletingPathExtension];
+					NSLog(@"%@", myLang);
+					if ([myLang isEqualToString:@"fr"]) delta = MAX(delta, 50);	// Empirically what French needs
+					if ([myLang isEqualToString:@"de"]) delta = MAX(delta, 75);	// GUESS what German needs
+					// Any other languages need a resize? DJW needs to run them through and check logs 
+				}
+				
 				if (delta > 0)
 				{
 					windowFrame.size.width += delta;
