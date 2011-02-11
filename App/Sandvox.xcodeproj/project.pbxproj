@@ -1161,7 +1161,6 @@
 		CE65325A1253B5C8003A9AA0 /* right.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE6532581253B5C8003A9AA0 /* right.gif */; };
 		CE65643B1219DAC8006C5B0D /* KSSimpleURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */; };
 		CE66D15E083D305700AD46CD /* imageReplacementEntry.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */; };
-		CE6EDFE311F125A500F00AAC /* KSInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFE211F125A500F00AAC /* KSInspector.xib */; };
 		CE6EDFF211F126FD00F00AAC /* Publishing.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFF111F126FD00F00AAC /* Publishing.xib */; };
 		CE6EDFF411F1274F00F00AAC /* Publishing.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFF311F1274F00F00AAC /* Publishing.xib */; };
 		CE6EDFFE11F129DC00F00AAC /* KSPDFWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFFB11F129DC00F00AAC /* KSPDFWindow.xib */; };
@@ -1185,6 +1184,7 @@
 		CE7779E60AE499C3002E6844 /* SVWelcomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7779E40AE499C3002E6844 /* SVWelcomeController.m */; };
 		CE7B67CA11EE784600F56D8B /* MissingMediaQMark.png in Resources */ = {isa = PBXBuildFile; fileRef = CE7B67C911EE784600F56D8B /* MissingMediaQMark.png */; };
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
+		CE84FA481304C7760091B8F8 /* KSInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE84FA471304C7760091B8F8 /* KSInspector.xib */; };
 		CE89C230123999D70056D74B /* SVFlash.h in Headers */ = {isa = PBXBuildFile; fileRef = CE89C22E123999D70056D74B /* SVFlash.h */; };
 		CE89C231123999D70056D74B /* SVFlash.m in Sources */ = {isa = PBXBuildFile; fileRef = CE89C22F123999D70056D74B /* SVFlash.m */; };
 		CE89F96A11F6149600B180EB /* ddsmoothmenu.css in Resources */ = {isa = PBXBuildFile; fileRef = CE89F96511F6149500B180EB /* ddsmoothmenu.css */; };
@@ -2891,7 +2891,7 @@
 		CE6532571253B5C8003A9AA0 /* down.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = down.gif; sourceTree = "<group>"; };
 		CE6532581253B5C8003A9AA0 /* right.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = right.gif; sourceTree = "<group>"; };
 		CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementEntry.txt; sourceTree = "<group>"; };
-		CE6EDFE211F125A500F00AAC /* KSInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KSInspector.xib; sourceTree = "<group>"; };
+		CE6EDFE211F125A500F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSInspector.xib; sourceTree = "<group>"; };
 		CE6EDFF111F126FD00F00AAC /* Publishing.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Publishing.xib; sourceTree = "<group>"; };
 		CE6EDFF311F1274F00F00AAC /* Publishing.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Publishing.xib; sourceTree = "<group>"; };
 		CE6EDFFB11F129DC00F00AAC /* KSPDFWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KSPDFWindow.xib; sourceTree = "<group>"; };
@@ -5432,7 +5432,7 @@
 				CE6EE00D11F129F100F00AAC /* KSPluginInstaller.xib */,
 				CE6EE00F11F129F100F00AAC /* KSRegistration.xib */,
 				CE8D54C5112B0B23007AC2F0 /* KSProgressPanel.xib */,
-				CE6EDFE211F125A500F00AAC /* KSInspector.xib */,
+				CE84FA471304C7760091B8F8 /* KSInspector.xib */,
 				CE6EDFFB11F129DC00F00AAC /* KSPDFWindow.xib */,
 				CE6EDFFC11F129DC00F00AAC /* KSRTFDWindow.xib */,
 				CE6EDFFD11F129DC00F00AAC /* KSWebViewWindow.xib */,
@@ -6656,7 +6656,7 @@
 				CEB2EF0511ED08DF002DD050 /* NoNetwork.tiff in Resources */,
 				CE7B67CA11EE784600F56D8B /* MissingMediaQMark.png in Resources */,
 				CE36E59011EF95FF003EFCA8 /* designPlaceholder.tiff in Resources */,
-				CE6EDFE311F125A500F00AAC /* KSInspector.xib in Resources */,
+				CE84FA481304C7760091B8F8 /* KSInspector.xib in Resources */,
 				CE6EDFF211F126FD00F00AAC /* Publishing.xib in Resources */,
 				CE6EDFF411F1274F00F00AAC /* Publishing.xib in Resources */,
 				CE6EDFFE11F129DC00F00AAC /* KSPDFWindow.xib in Resources */,
@@ -8084,6 +8084,14 @@
 				CE6EE01011F129F100F00AAC /* en */,
 			);
 			name = KSRegistration.xib;
+			sourceTree = "<group>";
+		};
+		CE84FA471304C7760091B8F8 /* KSInspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE6EDFE211F125A500F00AAC /* en */,
+			);
+			name = KSInspector.xib;
 			sourceTree = "<group>";
 		};
 		CEFD1D2D12E9F7C000D3A6CD /* CollectionInfo.xib */ = {
