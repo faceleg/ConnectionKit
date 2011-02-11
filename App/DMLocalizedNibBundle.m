@@ -826,7 +826,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
     if (
 		
-//	([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
+	([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
 		self == [NSViewController class]) {
 		//NSLog(@"Switching in NSViewController Localizer!");
@@ -862,7 +862,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
     if (
 		
-//		([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
+		([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
 		self == [NSBundle class]) {
 		//NSLog(@"Switching in NSBundle localizer. W00T!");
@@ -959,7 +959,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     NSString *localizedStringsTablePath = [[NSBundle mainBundle] pathForResource:localizedStringsTableName ofType:@"strings"];
     if (
 		
-//		([NSUserName() isEqualToString:DEBUG_THIS_USER]) || 
+		([NSUserName() isEqualToString:DEBUG_THIS_USER]) || 
 		
 			(
 		localizedStringsTablePath
