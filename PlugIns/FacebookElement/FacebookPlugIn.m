@@ -231,10 +231,8 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     }
     else 
     {
-        [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"svx-placeholder" forKey:@"class"]];
-        NSString *noLiveFeeds = LocalizedStringInThisBundle(@"Facebook Button visible only when loading data from the Internet", "");
-        [context writeText:noLiveFeeds];
-        [context endElement];
+        NSString *noLiveFeeds = LocalizedStringInThisBundle(@"Facebook Button visible only when loading data from the Internet.", "");
+        [context writePlaceholderWithText:noLiveFeeds];
     }
     
     // add dependencies
