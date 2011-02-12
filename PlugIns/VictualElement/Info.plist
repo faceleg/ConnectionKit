@@ -4,31 +4,31 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
-	<key>SVPlugInIconPath</key>
-	<string>toolbar_feed.tiff</string>
+	<key>CFBundleDisplayName</key>
+	<string>Victuals</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
 	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>com.karelia.${PRODUCT_NAME:rfc1034Identifier}</string>
+	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
-	<key>CFBundleDisplayName</key>
-	<string>Victuals</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>Svox</string>
-	<key>SVMinimumAppVersion</key>
-	<string>2.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>${SVN_VERSION}</string>
 	<key>NSPrincipalClass</key>
 	<string>VictualPlugIn</string>
+	<key>SVMinimumAppVersion</key>
+	<string>2.0</string>
+	<key>SVPlugInIconPath</key>
+	<string>toolbar_feed.tiff</string>
 </dict>
 </plist>
