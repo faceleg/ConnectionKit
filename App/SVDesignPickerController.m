@@ -40,6 +40,8 @@
 
 - (void)dealloc;
 {
+    [self setWindow:nil];
+    
     [_designsController release];
     [_browserViewController release];
     [_genre release];
@@ -85,11 +87,19 @@
 @synthesize color = _color;
 @synthesize width = _width;
 
-@synthesize window = _window;
 - (NSWindow *)window;
 {
     [self view];    // make sure it's loaded
     return _window;
+}
+- (void)setWindow:(NSWindow *)window;
+{
+    [_window setDelegate:nil];
+    
+    [window retain];
+    [_window release]; _window = window;
+    
+    [window setDelegate:self];
 }
 
 @synthesize designsController = _designsController;
