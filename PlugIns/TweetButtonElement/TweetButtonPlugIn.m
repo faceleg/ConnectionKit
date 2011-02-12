@@ -169,7 +169,7 @@
     }
     else 
     {
-        NSString *noLiveFeeds = LocalizedStringInThisBundle(@"Tweet Button visible only when loading data from the Internet", "");
+        NSString *noLiveFeeds = LocalizedStringInThisBundle(@"Tweet Button visible only when loading data from the Internet.", "");
         [context writePlaceholderWithText:noLiveFeeds];
     }
     
