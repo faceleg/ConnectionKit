@@ -169,10 +169,8 @@
     }
     else 
     {
-        [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"svx-placeholder" forKey:@"class"]];
         NSString *noLiveFeeds = LocalizedStringInThisBundle(@"Tweet Button visible only when loading data from the Internet", "");
-        [context writeText:noLiveFeeds];
-        [context endElement]; // </div>
+        [context writePlaceholderWithText:noLiveFeeds];
     }
     
     // add dependencies
