@@ -90,56 +90,88 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
+    // add dependencies
+    [context addDependencyForKeyPath:@"feedURL" ofObject:self];
+    [context addDependencyForKeyPath:@"limit" ofObject:self];
+    [context addDependencyForKeyPath:@"showHeader" ofObject:self];
+    [context addDependencyForKeyPath:@"showDate" ofObject:self];
+    [context addDependencyForKeyPath:@"showContent" ofObject:self];
+    [context addDependencyForKeyPath:@"showSnippet" ofObject:self];
+    
+    // dependencies not currently exposed in UI, commented out for performance
+    //[context addDependencyForKeyPath:@"showError" ofObject:self];
+    //[context addDependencyForKeyPath:@"titleTag" ofObject:self];
+    //[context addDependencyForKeyPath:@"googleAPIKey" ofObject:self];
+    //[context addDependencyForKeyPath:@"errorMessage" ofObject:self];
+
+    // write HTML
     if ( self.feedURL )
     {
-        // write div to context
-        NSString *idName = [context startElement:@"div"
-                                 preferredIdName:@"victual"
-                                       className:nil
-                                      attributes:nil];
-        //FIXME: #107815 -- this writeText: shouldn't be needed
-        [context writeText:@"Help Me"];
-        [context endElement]; // </div>
-        
-        // append zRSSFeed jquery functions to end body (assumes jquery is already loaded)
-        NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"jquery.zrssfeed.min" ofType:@"js"];
-        NSURL *URL = [context addResourceWithURL:[NSURL fileURLWithPath:path]];
-        NSString *script = [NSString stringWithFormat:@"<script type=\"text/javascript\" src=\"%@\"></script>\n", [URL absoluteURL]];
-        [context addMarkupToEndOfBody:script];
-        
-        // append zRSSFeed <script> to end body
-        NSString *feed = [NSString stringWithFormat:
-                          @"<script type=\"text/javascript\">\n"
-                          @"$(document).ready(function () {\n"
-                          @"	$('#%@').rssfeed('%@', {limit:%@,header:%@,titletag:'%@',date:%@,content:%@,snippet:%@,showerror:%@,errormsg:'%@',key:%@});\n"
-                          @"});\n"
-                          @"</script>\n",
-                          idName,
-                          self.feedURL,
-                          [[NSNumber numberWithUnsignedInt:self.limit] stringValue],
-                          ((self.showHeader) ? @"true" : @"false"),
-                          self.titleTag,
-                          ((self.showDate) ? @"true" : @"false"),
-                          ((self.showSnippet) ? @"true" : @"false"), // we tie showContent to showSnippet, otherwise we get FULL feeds
-                          ((self.showSnippet) ? @"true" : @"false"),
-                          ((self.showError) ? @"true" : @"false"),
-                          self.errorMessage,
-                          self.googleAPIKey];
-        [context addMarkupToEndOfBody:feed];
-        
-        // add dependencies
-        [context addDependencyForKeyPath:@"feedURL" ofObject:self];
-        [context addDependencyForKeyPath:@"limit" ofObject:self];
-        [context addDependencyForKeyPath:@"showHeader" ofObject:self];
-        [context addDependencyForKeyPath:@"showDate" ofObject:self];
-        [context addDependencyForKeyPath:@"showContent" ofObject:self];
-        [context addDependencyForKeyPath:@"showSnippet" ofObject:self];
-        
-        // dependencies not currently exposed in UI, commented out for performance
-        //[context addDependencyForKeyPath:@"showError" ofObject:self];
-        //[context addDependencyForKeyPath:@"titleTag" ofObject:self];
-        //[context addDependencyForKeyPath:@"googleAPIKey" ofObject:self];
-        //[context addDependencyForKeyPath:@"errorMessage" ofObject:self];
+        if ( [context liveDataFeeds] )
+        {
+            // write div to context
+            NSString *idName = [context startElement:@"div"
+                                     preferredIdName:@"victual"
+                                           className:nil
+                                          attributes:nil];
+            //FIXME: #107815 -- this writeText: shouldn't be needed
+            [context writeText:@"Help Me"];
+            [context endElement]; // </div>
+            
+            // append zRSSFeed jquery functions to end body (assumes jquery is already loaded)
+            NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"jquery.zrssfeed.min" ofType:@"js"];
+            NSURL *URL = [context addResourceWithURL:[NSURL fileURLWithPath:path]];
+            NSString *script = [NSString stringWithFormat:@"<script type=\"text/javascript\" src=\"%@\"></script>\n", [URL absoluteURL]];
+            [context addMarkupToEndOfBody:script];
+            
+            // append zRSSFeed <script> to end body
+            NSString *feed = [NSString stringWithFormat:
+                              @"<script type=\"text/javascript\">\n"
+                              @"$(document).ready(function () {\n"
+                              @"	$('#%@').rssfeed('%@', {limit:%@,header:%@,titletag:'%@',date:%@,content:%@,snippet:%@,showerror:%@,errormsg:'%@',key:%@});\n"
+                              @"});\n"
+                              @"</script>\n",
+                              idName,
+                              [self.feedURL absoluteString],
+                              [[NSNumber numberWithUnsignedInt:self.limit] stringValue],
+                              ((self.showHeader) ? @"true" : @"false"),
+                              self.titleTag,
+                              ((self.showDate) ? @"true" : @"false"),
+                              ((self.showSnippet) ? @"true" : @"false"), // we tie showContent to showSnippet, otherwise we get FULL feeds
+                              ((self.showSnippet) ? @"true" : @"false"),
+                              ((self.showError) ? @"true" : @"false"),
+                              self.errorMessage,
+                              self.googleAPIKey];
+            [context addMarkupToEndOfBody:feed];
+        }
+        else 
+        {
+            // write offline preview
+            // impementation shamelessly stolen from FeedElement
+            NSString *exampleText = LocalizedStringInThisBundle(@"example no.", "String_On_Page_Template - followed by a number");
+            NSString *itemText = LocalizedStringInThisBundle(@"item summary", "String_On_Page_Template - example of a summary of an RSS item");
+            
+            NSInteger writeMax = (self.limit > 0) ? self.limit : 4;
+            NSString *host = (nil != [self.feedURL host]) ? [self.feedURL host] : @"example.com";
+            
+            [context startElement:@"ul"]; // <ul>
+            for ( NSInteger i = 1; i <= writeMax; i++ )
+            {        
+                [context startElement:@"li"]; // <li>
+                
+                NSString *exampleLink = [NSString stringWithFormat:@"<a href=\"#\">%@ %@ %d</a>", host, exampleText, i];
+                [context writeHTMLString:exampleLink];
+                
+                if ( self.showSnippet )
+                {
+                    [context writeHTMLString:@"<br />"];
+                    [context writeText:itemText];
+                }
+                
+                [context endElement]; // </li>    
+            }
+            [context endElement]; // </ul>    
+        }
     }
     else 
     {
