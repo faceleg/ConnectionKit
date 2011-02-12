@@ -1,5 +1,5 @@
 //
-//  SVDesignChooserWindowController.h
+//  SVDesignPickerController.h
 //  Sandvox
 //
 //  Created by Terrence Talbot on 8/28/09.
@@ -13,11 +13,12 @@
 @class SVDesignBrowserViewController;
 @class SVDesignsController;
 
-@interface SVDesignChooserWindowController : NSWindowController <MGScopeBarDelegate>
+@interface SVDesignPickerController : NSViewController <MGScopeBarDelegate>
 {
     IBOutlet MGScopeBar             *oScopeBar;
 	
   @private
+    NSWindow                        *_window;
     SVDesignsController             *_designsController;
     SVDesignBrowserViewController   *_viewController;
     
@@ -39,6 +40,7 @@
 @property (copy) NSString *width;
 @property (readonly) NSString *matchString;
 
+@property(nonatomic, retain) IBOutlet NSWindow *window;
 @property(nonatomic, retain) IBOutlet NSArrayController *designsController;
 @property(nonatomic, retain) IBOutlet SVDesignBrowserViewController *viewController;
 

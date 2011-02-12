@@ -12,7 +12,7 @@
 #import "SVApplicationController.h"
 #import "SVArticle.h"
 #import "KTCodeInjectionController.h"
-#import "SVDesignChooserWindowController.h"
+#import "SVDesignPickerController.h"
 #import "SVPagesController.h"
 #import "KTDocument.h"
 #import "KTElementPlugInWrapper.h"
@@ -373,11 +373,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 @synthesize designChooserWindowController = _designChooserWindowController;
 
-- (SVDesignChooserWindowController *)designChooserWindowController
+- (SVDesignPickerController *)designChooserWindowController
 {
 	if ( !_designChooserWindowController )
     {
-        _designChooserWindowController = [[SVDesignChooserWindowController alloc] init];
+        _designChooserWindowController = [[SVDesignPickerController alloc] init];
 		[_designChooserWindowController window];  // make sure nib is loaded
 
 	}
@@ -575,7 +575,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 	[self showDesignIdentityWindow:aDesign];
 }
-- (void)designChooserDidEnd:(SVDesignChooserWindowController *)designChooser returnCode:(NSInteger)returnCode;
+- (void)designChooserDidEnd:(SVDesignPickerController *)designChooser returnCode:(NSInteger)returnCode;
 {
     if (returnCode == NSAlertAlternateReturn)
     {

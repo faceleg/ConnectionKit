@@ -11,7 +11,7 @@
 #import "KT.h"
 #import "KTDataMigrator.h"
 #import "KTDataMigrationDocument.h"
-#import "SVDesignChooserWindowController.h"
+#import "SVDesignPickerController.h"
 #import "KTDesign.h"
 #import "KTDocument.h"
 #import "KTSite.h"
@@ -68,11 +68,11 @@
     // Display design chooser
     if (_designChooser)
     {
-        [_designChooser showWindow:self];
+        [[_designChooser window] makeKeyAndOrderFront:self];
     }
     else
     {
-        _designChooser = [[SVDesignChooserWindowController alloc] init];
+        _designChooser = [[SVDesignPickerController alloc] init];
         
         NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
         NSArray *newRangesOfGroups;
@@ -94,7 +94,7 @@
     }
 }
 
-- (void)designChooserDidEnd:(SVDesignChooserWindowController *)designChooser returnCode:(NSInteger)returnCode;
+- (void)designChooserDidEnd:(SVDesignPickerController *)designChooser returnCode:(NSInteger)returnCode;
 {
     OBPRECONDITION(designChooser == _designChooser);
     

@@ -1,12 +1,12 @@
 //
-//  SVDesignChooserWindowController.m
+//  SVDesignPickerController.m
 //  Sandvox
 //
 //  Created by Terrence Talbot on 8/28/09.
 //  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
-#import "SVDesignChooserWindowController.h"
+#import "SVDesignPickerController.h"
 #import "SVDesignBrowserViewController.h"
 
 #import "KTDesign.h"
@@ -26,16 +26,16 @@
 #import "NSString+Karelia.h"
 
 
-@interface SVDesignChooserWindowController ()
+@interface SVDesignPickerController ()
 - (NSString *)scopeBar:(MGScopeBar *)theScopeBar AXDescriptionForItem:(NSString *)identifier inGroup:(NSInteger)groupNumber;
 @end
 
 
-@implementation SVDesignChooserWindowController
+@implementation SVDesignPickerController
 
 - (id)init;
 {
-    return [self initWithWindowNibName:@"SVDesignChooser"];
+    return [self initWithNibName:@"SVDesignChooser" bundle:nil];
 }
 
 - (void)dealloc;
@@ -84,6 +84,13 @@
 @synthesize genre = _genre;
 @synthesize color = _color;
 @synthesize width = _width;
+
+@synthesize window = _window;
+- (NSWindow *)window;
+{
+    [self view];    // make sure it's loaded
+    return _window;
+}
 
 @synthesize designsController = _designsController;
 - (NSArrayController *)designsController;
@@ -220,7 +227,7 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
     _selectorWhenChosen = aSelector;
 	_targetWhenChosen = aTarget;    // weak ref
     
-	[self showWindow:self];
+	[[self window] makeKeyAndOrderFront:self];
 }
 
 - (IBAction)chooseDesign:(id)sender		// Design was chosen.  Now call back to notify of change.

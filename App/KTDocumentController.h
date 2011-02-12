@@ -9,7 +9,7 @@
 #import "KSDocumentController.h"
 
 
-@class KTDocument, SVDesignChooserWindowController;
+@class KTDocument, SVDesignPickerController;
 
 
 @interface KTDocumentController : KSDocumentController
@@ -18,7 +18,7 @@
 	IBOutlet NSView			*oNewDocAccessoryView;
 	IBOutlet NSPopUpButton	*oNewDocHomePageTypePopup;
   @private
-    SVDesignChooserWindowController *_designChooser;
+    SVDesignPickerController *_designChooser;
 }
 
 - (void)showDocumentPlaceholderWindowInitial:(BOOL)firstTimeSoReopenSavedDocuments;

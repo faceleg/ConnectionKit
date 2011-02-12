@@ -34,7 +34,7 @@
 @class SVSiteOutlineViewController;
 @class KTPage, SVPagesTreeController;
 @class KTCodeInjectionController;
-@class SVDesignChooserWindowController;
+@class SVDesignPickerController;
 @class SVCommentsWindowController;
 @class SVGoogleWindowController;
 @class BWAnchoredPopUpButton;
@@ -82,7 +82,7 @@ extern NSString *gInfoWindowAutoSaveName;
 	KTCodeInjectionController	*myPageCodeInjectionController;
     
     // Design Chooser
-    SVDesignChooserWindowController *_designChooserWindowController;
+    SVDesignPickerController *_designChooserWindowController;
     
     // Comments
     SVCommentsWindowController *_commentsWindowController;
@@ -125,7 +125,7 @@ extern NSString *gInfoWindowAutoSaveName;
 
 - (IBAction)windowHelp:(id)sender;
 
-@property(retain) SVDesignChooserWindowController *designChooserWindowController;
+@property(retain) SVDesignPickerController *designChooserWindowController;
 - (IBAction)chooseDesign:(id)sender;
 - (IBAction)nextDesign:(id)sender;
 - (IBAction)previousDesign:(id)sender;
