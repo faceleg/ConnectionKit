@@ -22,6 +22,9 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* PhotoGridIndex_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoGridIndex_Prefix.pch; sourceTree = "<group>"; };
+		3C0429AA1306FF3300D9F2A7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/placeholder.acorn; sourceTree = "<group>"; };
+		3C0429AB1306FF4900D9F2A7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file; name = fr; path = fr.lproj/placeholder.acorn; sourceTree = "<group>"; };
+		3C0429AC1306FF5D00D9F2A7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fr; path = fr.lproj/placeholder.png; sourceTree = "<group>"; };
 		3C0951370D5D0DBE00DE6F62 /* PhotoGridIndexPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoGridIndexPlugIn.h; sourceTree = "<group>"; };
 		3C0951380D5D0DBE00DE6F62 /* PhotoGridIndexPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoGridIndexPlugIn.m; sourceTree = "<group>"; };
 		3C09513D0D5D0DE700DE6F62 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -44,7 +47,6 @@
 		3C09515A0D5D0EBF00DE6F62 /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C09515B0D5D0EC500DE6F62 /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C09515C0D5D0EE200DE6F62 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../License.rtf; sourceTree = SOURCE_ROOT; };
-		3CDF97A91305BA6E000026AE /* placeholder.acorn */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.acorn; sourceTree = "<group>"; };
 		3CDF98E01305D096000026AE /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = en.lproj/placeholder.png; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* PhotoGridIndex.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoGridIndex.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -98,7 +100,7 @@
 				3C0951450D5D0E1700DE6F62 /* Template.html */,
 				CE2802A012432BBD00B00F3D /* toolbar_photogrid.tiff */,
 				3CDF98DF1305D096000026AE /* placeholder.png */,
-				3CDF97A91305BA6E000026AE /* placeholder.acorn */,
+				3C0429A91306FF3300D9F2A7 /* placeholder.acorn */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -251,6 +253,15 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		3C0429A91306FF3300D9F2A7 /* placeholder.acorn */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C0429AA1306FF3300D9F2A7 /* en */,
+				3C0429AB1306FF4900D9F2A7 /* fr */,
+			);
+			name = placeholder.acorn;
+			sourceTree = "<group>";
+		};
 		3C0951500D5D0E8100DE6F62 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -271,6 +282,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				3CDF98E01305D096000026AE /* en */,
+				3C0429AC1306FF5D00D9F2A7 /* fr */,
 			);
 			name = placeholder.png;
 			sourceTree = "<group>";
