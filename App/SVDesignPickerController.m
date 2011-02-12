@@ -41,7 +41,7 @@
 - (void)dealloc;
 {
     [_designsController release];
-    [_viewController release];
+    [_browserViewController release];
     [_genre release];
     [_color release];
     [_width release];
@@ -74,7 +74,7 @@
 
 - (void)setDesign:(KTDesign *)design;
 {
-    IKImageBrowserView *imageBrowser = [self.viewController imageBrowser];
+    IKImageBrowserView *imageBrowser = [self.browserViewController imageBrowser];
     
     [imageBrowser reloadData];  // so that -setSelectedObjects: succeeds
     [[self designsController] setSelectedObjects:[NSArray arrayWithObject:design]];
@@ -199,7 +199,7 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 	//[self lookForNulls];	// set up scope bar.  Do this before real selection.
 	
 	//[oViewController setSelectedDesign:aDesign];
-	[self.viewController initializeExpandedState];
+	[self.browserViewController initializeExpandedState];
 
     
     [NSApp beginSheet:[self window]
@@ -284,11 +284,11 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 
 #pragma mark View Controller
 
-@synthesize viewController = _viewController;
-- (SVDesignBrowserViewController *) viewController;
+@synthesize browserViewController = _browserViewController;
+- (SVDesignBrowserViewController *) browserViewController;
 {
     [self window];  // make sure it's loaded
-    return _viewController;
+    return _browserViewController;
 }
 
 #pragma mark NSWindowDelegate

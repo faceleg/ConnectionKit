@@ -21,7 +21,6 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -56,10 +55,10 @@
 				<string key="NSWindowTitle">Choose Design</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
-				<string key="NSWindowContentMaxSize">{3.40282e+38, 3.40282e+38}</string>
+				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<string key="NSWindowContentMinSize">{666, 484}</string>
 				<object class="NSView" key="NSWindowView" id="1006">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -130,7 +129,7 @@
 									<string key="NSColorName">controlColor</string>
 									<object class="NSColor" key="NSColor">
 										<int key="NSColorSpace">3</int>
-										<bytes key="NSWhite">MC42NjY2NjY2ODY1AA</bytes>
+										<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 									</object>
 								</object>
 								<object class="NSColor" key="NSTextColor">
@@ -517,11 +516,10 @@
 						</object>
 					</object>
 					<string key="NSFrameSize">{666, 551}</string>
-					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
 				<string key="NSMinSize">{666, 506}</string>
-				<string key="NSMaxSize">{3.40282e+38, 3.40282e+38}</string>
+				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
 			</object>
 			<object class="NSViewController" id="258437323"/>
 			<object class="NSUserDefaultsController" id="909702574">
@@ -672,14 +670,6 @@
 					<int key="connectionID">145</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">viewController</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="258437323"/>
-					</object>
-					<int key="connectionID">146</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">windowHelp:</string>
 						<reference key="source" ref="1001"/>
@@ -694,6 +684,14 @@
 						<reference key="destination" ref="1006"/>
 					</object>
 					<int key="connectionID">150</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">browserViewController</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="258437323"/>
+					</object>
+					<int key="connectionID">151</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -990,7 +988,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">150</int>
+			<int key="maxID">151</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1891,27 +1889,31 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>browserViewController</string>
 							<string>designsController</string>
 							<string>oScopeBar</string>
-							<string>viewController</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>SVDesignBrowserViewController</string>
 							<string>NSArrayController</string>
 							<string>MGScopeBar</string>
-							<string>SVDesignBrowserViewController</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>browserViewController</string>
 							<string>designsController</string>
 							<string>oScopeBar</string>
-							<string>viewController</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">browserViewController</string>
+								<string key="candidateClassName">SVDesignBrowserViewController</string>
+							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">designsController</string>
 								<string key="candidateClassName">NSArrayController</string>
@@ -1919,10 +1921,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">oScopeBar</string>
 								<string key="candidateClassName">MGScopeBar</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">viewController</string>
-								<string key="candidateClassName">SVDesignBrowserViewController</string>
 							</object>
 						</object>
 					</object>

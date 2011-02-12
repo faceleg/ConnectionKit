@@ -20,7 +20,7 @@
   @private
     NSWindow                        *_window;
     SVDesignsController             *_designsController;
-    SVDesignBrowserViewController   *_viewController;
+    SVDesignBrowserViewController   *_browserViewController;
     
     NSString *_genre;
 	NSString *_color;
@@ -42,7 +42,7 @@
 
 @property(nonatomic, retain) IBOutlet NSWindow *window;
 @property(nonatomic, retain) IBOutlet NSArrayController *designsController;
-@property(nonatomic, retain) IBOutlet SVDesignBrowserViewController *viewController;
+@property(nonatomic, retain) IBOutlet SVDesignBrowserViewController *browserViewController;
 
 - (IBAction)cancelSheet:(id)sender;
 - (IBAction)chooseDesign:(id)sender;
