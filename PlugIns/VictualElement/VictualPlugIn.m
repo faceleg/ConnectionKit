@@ -9,7 +9,9 @@
 #import "VictualPlugIn.h"
 
 
-// http://www.zazar.net/developers/zrssfeed/
+// Karelia's feed: <http://www.karelia.com/news/index.xml>
+
+// <http://www.zazar.net/developers/zrssfeed/>
 // This plugin will read RSS feeds from any website url using the Google Feeds API. It produces structured HTML with in-built CSS classes for styling. Simple and easy to use.
 
 //Parameter Default	Description
@@ -33,7 +35,15 @@
 { 
     return [NSArray arrayWithObjects:
             @"feedURL", 
-            @"limit", 
+            @"limit",
+            @"showHeader",
+            @"showDate",
+            @"showContent",
+            @"showSnippet",
+            @"showError",
+            @"titleTag",
+            @"googleAPIKey",
+            @"errorMessage",
             nil];
 }
 
@@ -44,11 +54,23 @@
 {
     [super awakeFromNew];
     
-    self.limit = 5;
-    self.feedURL = [NSURL URLWithString:@"http://www.karelia.com/news/index.xml"];
-    //FIXME: setting a default URL for quick testing, should be changed to handle
-    //both nothing set and/or no live feed
+    // make some initial guesses at params
+    self.limit = 5;             // limit feed to last 5 entries
+    self.showSnippet = YES;
     
+    // no UI for these (should there be?)
+    self.showContent = YES;         // showContent is FULL content, so we don't want that
+                                    // but showSnippet requires it to be YES, too, to show any snippets
+    
+    self.showDate = NO;             // shows posting date, but we can't format it, so turn it off
+    self.showHeader = NO;           // do not show feed name, Sandvox prefers this to be the object title
+    self.titleTag = @"null";        // show no titles, could use h3 instead
+    self.showError = YES;           // always show error messages returned by server
+    self.errorMessage = @"";        // empty, show whatever message Google returns
+    self.googleAPIKey = @"null";    // no API key, could check defaults for this
+    
+    
+    // set feedURL, if we can
     id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
     if ( [location URL] )
     {
@@ -84,17 +106,35 @@
     NSString *feed = [NSString stringWithFormat:
                       @"<script type=\"text/javascript\">\n"
                       @"$(document).ready(function () {\n"
-                      @"	$('#%@').rssfeed('%@', {limit:%@,header:false,titletag:'h4',date:false,content:true,snippet:true,showerror:true,errormsg:'',key:null});\n"
+                      @"	$('#%@').rssfeed('%@', {limit:%@,header:%@,titletag:'%@',date:%@,content:%@,snippet:%@,showerror:%@,errormsg:'%@',key:%@});\n"
                       @"});\n"
                       @"</script>\n",
                       idName,
                       self.feedURL,
-                      [[NSNumber numberWithUnsignedInt:self.limit] stringValue]];
+                      [[NSNumber numberWithUnsignedInt:self.limit] stringValue],
+                      ((self.showHeader) ? @"true" : @"false"),
+                      self.titleTag,
+                      ((self.showDate) ? @"true" : @"false"),
+                      ((self.showSnippet) ? @"true" : @"false"), // we tie showContent to showSnippet, otherwise we get FULL feeds
+                      ((self.showSnippet) ? @"true" : @"false"),
+                      ((self.showError) ? @"true" : @"false"),
+                      self.errorMessage,
+                      self.googleAPIKey];
     [context addMarkupToEndOfBody:feed];
     
     // add dependencies
     [context addDependencyForKeyPath:@"feedURL" ofObject:self];
     [context addDependencyForKeyPath:@"limit" ofObject:self];
+    [context addDependencyForKeyPath:@"showHeader" ofObject:self];
+    [context addDependencyForKeyPath:@"showDate" ofObject:self];
+    [context addDependencyForKeyPath:@"showContent" ofObject:self];
+    [context addDependencyForKeyPath:@"showSnippet" ofObject:self];
+    
+    // dependencies not currently exposed in UI, commented out for performance
+    //[context addDependencyForKeyPath:@"showError" ofObject:self];
+    //[context addDependencyForKeyPath:@"titleTag" ofObject:self];
+    //[context addDependencyForKeyPath:@"googleAPIKey" ofObject:self];
+    //[context addDependencyForKeyPath:@"errorMessage" ofObject:self];
 }
 
 
@@ -169,6 +209,13 @@
 
 @synthesize feedURL = _feedURL;
 @synthesize limit = _limit;
-
+@synthesize showHeader = _showHeader;
+@synthesize showDate = _showDate;
+@synthesize showContent = _showContent;
+@synthesize showSnippet = _showSnippet;
+@synthesize titleTag = _titleTag;
+@synthesize showError = _showError;
+@synthesize googleAPIKey = _googleAPIKey;
+@synthesize errorMessage = _errorMessage;
 
 @end
