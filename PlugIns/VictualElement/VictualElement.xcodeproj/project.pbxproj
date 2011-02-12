@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3C01C9A912D4F44000694376 /* VictualPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C01C9A812D4F44000694376 /* VictualPlugIn.m */; };
+		3C43BBBC13074F0B007ED67D /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BBBB13074F0B007ED67D /* License.rtf */; };
 		3C5168F612D4FC8300F61758 /* toolbar_feed.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3C5168F512D4FC8300F61758 /* toolbar_feed.tiff */; };
 		3C5169B812D5627D00F61758 /* jquery.zrssfeed.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3C5169B012D5625C00F61758 /* jquery.zrssfeed.min.js */; };
 		3C516AA712D5977900F61758 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C516AA512D5977900F61758 /* Inspector.xib */; };
@@ -23,6 +24,7 @@
 		32DBCF630370AF2F00C91783 /* VictualElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VictualElement_Prefix.pch; sourceTree = "<group>"; };
 		3C01C9A712D4F44000694376 /* VictualPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VictualPlugIn.h; sourceTree = "<group>"; };
 		3C01C9A812D4F44000694376 /* VictualPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VictualPlugIn.m; sourceTree = "<group>"; };
+		3C43BBBB13074F0B007ED67D /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../License.rtf; sourceTree = SOURCE_ROOT; };
 		3C5168F512D4FC8300F61758 /* toolbar_feed.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_feed.tiff; sourceTree = "<group>"; };
 		3C5169AD12D5625C00F61758 /* jquery.vticker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.vticker.js; sourceTree = "<group>"; };
 		3C5169AE12D5625C00F61758 /* jquery.zrssfeed.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = jquery.zrssfeed.css; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				3C5169AF12D5625C00F61758 /* jquery.zrssfeed.js */,
 				3C5169B012D5625C00F61758 /* jquery.zrssfeed.min.js */,
 				3C5168F512D4FC8300F61758 /* toolbar_feed.tiff */,
+				3C43BBBB13074F0B007ED67D /* License.rtf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 				3C5168F612D4FC8300F61758 /* toolbar_feed.tiff in Resources */,
 				3C5169B812D5627D00F61758 /* jquery.zrssfeed.min.js in Resources */,
 				3C516AA712D5977900F61758 /* Inspector.xib in Resources */,
+				3C43BBBC13074F0B007ED67D /* License.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
