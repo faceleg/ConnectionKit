@@ -236,6 +236,16 @@
                                               [[self currentDOMController] representedObject]];
     [controller setSizeDelta:sizeDelta];
     
+    
+    // Has an ID for the controller already been decided?
+    KSElementInfo *info = [self currentElementInfo];
+    NSString *ID = [[info attributesAsDictionary] objectForKey:@"id"];
+    if (ID)
+    {
+        [controller setElementIdName:ID];
+    }
+    
+    
     [self startDOMController:controller];
     [controller release];
     
