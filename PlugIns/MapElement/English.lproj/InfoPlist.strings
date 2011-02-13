@@ -1,0 +1,4 @@
+﻿/* Localized versions of Info.plist keys */
+
+CFBundleDisplayName = "Google Maps";
+SVPlugInDescription = "Add a Google Map to your site";
