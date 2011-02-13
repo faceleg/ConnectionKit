@@ -17,10 +17,12 @@
 @interface SVPlugInInspector : KSInspectorViewController
 {
   @private
+    NSArray                     *_inspectedPages;
     SVInspectorViewController   *_selectedInspector;
     NSMutableDictionary         *_plugInInspectors;
 }
 
+@property(nonatomic, copy) NSArray *inspectedPages;
 @property(nonatomic, retain) SVInspectorViewController *selectedInspector;
 
 @end

@@ -14,10 +14,10 @@
 {
   @private
     NSArrayController   *_inspectedObjectsController;
+    NSArray             *_inspectedPages;
     id                  _reserved2;
     id                  _reserved3;
     id                  _reserved4;
-    id                  _reserved5;
     CGFloat             _tabHeight;
 }
 
@@ -28,6 +28,8 @@
 // Bind to File's Owner inspectedObjectsController.selection.<key>
 // Should have no reason to start introspecting or editing the controller's other properties; Plug-in system will do that for you.
 - (NSArrayController *)inspectedObjectsController;
+
+- (NSArray *)inspectedPages;    // KVO-compliant
 
 
 #pragma mark Presentation

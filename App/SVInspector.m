@@ -39,6 +39,15 @@
     [_documentInspector setInspectedObjectsController:controller];
     [_pageInspector setInspectedObjectsController:controller];
     [_collectionInspector setInspectedObjectsController:controller];
+    
+    if (controller)
+    {
+        [_plugInInspector bind:@"inspectedPages" toObject:controller withKeyPath:@"selectedObjects" options:nil];
+    }
+    else
+    {
+        [_plugInInspector unbind:@"inspectedPages"];
+    }
 }
 
 @synthesize linkInspector = _linkInspector;

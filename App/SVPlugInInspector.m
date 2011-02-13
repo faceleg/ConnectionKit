@@ -48,6 +48,7 @@ static NSString *sPlugInInspectorInspectedObjectsObservation = @"PlugInInspector
 {
     [self removeObserver:self forKeyPath:@"inspectedObjectsController.selectedObjects.plugIn"];
     [self unbind:@"title"];
+    [self unbind:@"inspectedPages"];
     
     [_plugInInspectors release];
     
@@ -96,6 +97,16 @@ change context:(void *)context
 
 #pragma mark -
 
+@synthesize inspectedPages = _inspectedPages;
+- (void)setInspectedPages:(NSArray *)pages;
+{
+    pages = [pages copy];
+    [_inspectedPages release]; _inspectedPages = pages;
+    
+    // Pass on to plug-in
+    [(id)[self selectedInspector] setInspectedPages:pages];
+}
+
 @synthesize selectedInspector = _selectedInspector;
 - (void)setSelectedInspector:(SVInspectorViewController *)inspector;
 {
@@ -141,6 +152,7 @@ change context:(void *)context
         [[self view] addSubview:view];
 		
 		[_selectedInspector setRepresentedObject:[self representedObject]];
+        [(id)_selectedInspector setInspectedPages:[self inspectedPages]];
     }
     @catch (NSException *exception)
     {

@@ -9,6 +9,12 @@
 #import "SVInspectorViewController.h"
 
 
+@interface SVInspectorViewController ()
+@property(nonatomic, copy) NSArray *inspectedPages;
+@end
+
+
+
 @implementation SVInspectorViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
@@ -46,5 +52,7 @@
 {
     return _inspectedObjectsController;
 }
+
+@synthesize inspectedPages = _inspectedPages;
 
 @end
