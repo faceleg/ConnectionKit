@@ -86,18 +86,13 @@
         if ( [context liveDataFeeds] )
         {
             // bind size
+            NSString *idName = [context pushPreferredIdName:@"googlemap"];
             [context startElement:@"div"
                  bindSizeToPlugIn:self
                        attributes:nil];
             
-            // write div to context
-            NSString *idName = [context startElement:@"div"
-                                     preferredIdName:@"googlemap"
-                                           className:nil
-                                          attributes:nil];
             //FIXME: #107815 -- this writeText: shouldn't be needed
             [context writeText:@"If you see this sentence, hit reload..."];
-            [context endElement]; // </div>
             [context endElement]; // </div>
             
             // append Google Maps API functions to end body
