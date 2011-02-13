@@ -443,7 +443,7 @@
 {
     NSString *result = [self pushPreferredIdName:preferredID];
     [self pushAttributes:attributes];
-    [self startElement:tagName idName:result className:className];
+    [self startElement:tagName className:className];
     
     return result;
 }
