@@ -121,9 +121,9 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	NSURL *result = nil;
 	
-	if (!documentUTI || [documentUTI isEqualToString:kKTDocumentUTI_1_5])
+	if ([documentUTI isEqualToString:kKTDocumentUTI_1_5])
 	{
-		result = [inURL ks_URLByAppendingPathComponent:SVPersistentStoreFilename isDirectory:NO];
+		result = [inURL ks_URLByAppendingPathComponent:@"datastore.sqlite3" isDirectory:NO];
 	}
 	else if ([documentUTI isEqualToString:kKTDocumentUTI_ORIGINAL])
 	{
@@ -131,7 +131,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
 	else
 	{
-		OBASSERT_NOT_REACHED("Unknown document UTI");
+		result = [inURL ks_URLByAppendingPathComponent:SVPersistentStoreFilename isDirectory:NO];
 	}
 	
 	

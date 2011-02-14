@@ -198,7 +198,9 @@
     NSString *type = [self typeForContentsOfURL:absoluteURL error:outError];	// Should we ignore this error?
 	
 	// are we opening a KTDocument?
-	if (type && ([type isEqualToString:kKTDocumentType] || [type isEqualToString:kKTDocumentUTI_ORIGINAL]))
+	if (type && ([type isEqualToString:kKTDocumentType] ||
+                 [type isEqualToString:kKTDocumentUTI_1_5] ||
+                 [type isEqualToString:kKTDocumentUTI_ORIGINAL]))
 	{		
 		// check compatibility with KTModelVersion
 		NSDictionary *metadata = nil;
