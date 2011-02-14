@@ -170,11 +170,19 @@
         BOOL fileIsDirectory = YES;
         BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[inAbsoluteURL path] isDirectory:&fileIsDirectory];
                            
-        if (fileExists &&
-            [[NSString UTIForFileAtPath:[inAbsoluteURL path]] conformsToUTI:kKTDocumentUTI_ORIGINAL] &&
-            !fileIsDirectory)
+        if (fileExists)
         {
-            result = kKTDocumentUTI_ORIGINAL;
+            if ([[NSString UTIForFileAtPath:[inAbsoluteURL path]] conformsToUTI:kKTDocumentUTI_ORIGINAL] &&
+                !fileIsDirectory)
+            {
+                result = kKTDocumentUTI_ORIGINAL;
+            }
+            else if (fileIsDirectory)
+            {
+                NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[inAbsoluteURL path] error:NULL];
+                
+                if ([contents containsObject:@"datastore.sqlite3"]) result = kKTDocumentUTI_1_5;
+            }
         }
     }
     
@@ -197,7 +205,7 @@
 		@try
 		{
 			NSURL *datastoreURL = [KTDocument datastoreURLForDocumentURL:absoluteURL
-                                                                    type:([type isEqualToString:kKTDocumentUTI_ORIGINAL] ? kKTDocumentUTI_ORIGINAL : kKTDocumentUTI)];
+                                                                    type:([type isEqualToString:kKTDocumentUTI_ORIGINAL] ? kKTDocumentUTI_ORIGINAL : kKTDocumentUTI_1_5)];
             
 			metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:nil
                                                                                   URL:datastoreURL

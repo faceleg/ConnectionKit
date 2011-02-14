@@ -121,7 +121,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	NSURL *result = nil;
 	
-	if (!documentUTI || [documentUTI isEqualToString:kKTDocumentUTI])
+	if (!documentUTI || [documentUTI isEqualToString:kKTDocumentUTI_1_5])
 	{
 		result = [inURL ks_URLByAppendingPathComponent:SVPersistentStoreFilename isDirectory:NO];
 	}

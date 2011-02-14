@@ -478,7 +478,7 @@
     }
     
     
-    KTDocument *newDoc = [[KTDocument alloc] initWithType:kKTDocumentUTI error:outError];
+    KTDocument *newDoc = [[KTDocument alloc] initWithType:kKTDocumentUTI_1_5 error:outError];
     if (newDoc)
     {
         [[newDoc undoManager] disableUndoRegistration];
