@@ -139,6 +139,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
                                        initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
     
+    [context writeJQueryImport];    // for any plug-ins that might depend on it
+    
     [[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
     [context writeGraphic:[self representedObject]];
     
