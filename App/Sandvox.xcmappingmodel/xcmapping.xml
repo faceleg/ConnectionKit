@@ -1240,6 +1240,8 @@ CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNz
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z247"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z352">
+        <attribute name="sourcemappingname" type="string">DocumentInfoToSite</attribute>
+        <attribute name="sourcekeypath" type="string">$source.documentInfo</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <attribute name="name" type="string">site</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z349"></relationship>
