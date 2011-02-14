@@ -426,7 +426,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 			
 			// INSTEAD:
 			accumulatingDelta = runningMaxX - NSMaxX(originalRect);	// really calculate how much things have changed
-		}
+			}
 		else
 		{
 			// Overlapping views, so don't increase delta.  However we probably want to move over to match
@@ -476,7 +476,11 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 			// From what I can tell, the tabview is always 20 pixels larger than its contained views.
 			NSRect originalFrame = [view frame];
 			NSRect newFrame = originalFrame;
-			newFrame.size.width = maxWidth + 20;
+			if (NSNoTabsNoBorder != [((NSTabView *)view) tabViewType])		// fudge if we have a border ...
+																			// hopefully all borders are equivalent sizing?
+			{
+				newFrame.size.width = maxWidth + 20;
+			}
 			[view setFrame:newFrame];
 			delta = NSWidth(newFrame) - NSWidth(originalFrame);
 		}
