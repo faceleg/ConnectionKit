@@ -309,50 +309,6 @@
 }
 
 
-#pragma mark jQuery
-
-- (void)writeJQueryImport
-{
-	// We might want to update this if a major new stable update comes along. We'd put fresh copies in the app resources.
-#define JQUERY_VERSION @"1.4.4"
-	
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
-	NSURL *jQueryURL = nil;
-	NSString *minimizationSuffix = @".min";
-	NSURL *siteURL = [self.hostProperties siteURL];
-	NSString *scheme = [siteURL scheme];
-	if (!scheme) scheme = @"http";		// for instance, when newly set up. Better to show something for page source.
-
-	if ([defaults boolForKey:@"jQueryDevelopment"])
-	{
-		minimizationSuffix = @"";		// Use the development version instead, not the minimized.
-	}
-	
-	// This is either the local version, or not uploaded to a web server, or user preference to keep their own copy of jQuery.
-	if ([context isForEditing] || [scheme isEqualToString:@"file"] || [defaults boolForKey:@"jQueryLocal"])
-	{
-		NSURL *localJQueryURL = [NSURL fileURLWithPath:[[NSBundle mainBundle]
-											pathForResource:[NSString stringWithFormat:@"jquery-%@%@", JQUERY_VERSION, minimizationSuffix]
-											ofType:@"js"]];
-		
-		jQueryURL = [context addResourceWithURL:localJQueryURL];
-		
-	}
-	else	// Normal publishing case: remote version from google, fastest for downloading.
-			// Match http/https scheme of uploaded site.
-	{
-		jQueryURL = [NSURL URLWithString:
-					 [NSString stringWithFormat:@"%@://ajax.googleapis.com/ajax/libs/jquery/%@/jquery%@.js",
-					  scheme, JQUERY_VERSION, minimizationSuffix]];
-	}
-	
-	[context writeJavascriptWithSrc:[context relativeStringFromURL:jQueryURL]];
-
-	// Note: I may want to also get: http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js
-	// I would just put in parallel code.  However this might be better to be added with code injection by people who want it.
-}
-
 #pragma mark -
 #pragma mark Publishing
 

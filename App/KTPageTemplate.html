@@ -33,7 +33,7 @@
 		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&title]]" href="[[=&feedURL]]" charset="UTF-8" />
 [[endif2]][[endif]]
 		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
-		[[=site.writeJQueryImport]]
+		[[=parser.HTMLContext.writeJQueryImport]]
         [[=writeHierMenuLoader]]
 [[if javascriptURLPath]]
 		<script src="[[=&javascriptURLPath]]" type="text/javascript" charset="UTF-8"></script>

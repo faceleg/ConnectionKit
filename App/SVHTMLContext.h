@@ -89,6 +89,7 @@ typedef enum {
 // Sets various context properties to match the page too
 - (void)writeDocumentWithPage:(KTPage *)page;
 - (void)writeDocumentWithArchivePage:(SVArchivePage *)archive;
+- (void)writeJQueryImport;
 
 
 #pragma mark Properties
