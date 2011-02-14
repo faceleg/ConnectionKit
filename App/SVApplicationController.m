@@ -233,7 +233,9 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
+#ifdef SUPPRESS_IMEDIA_PPC
 	if (NSHostByteOrder() == NS_LittleEndian)
+#endif
 	{
 		[IMBConfig registerDefaultValues];
 		[IMBConfig setShowsGroupNodes:NO];
@@ -658,7 +660,9 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	}
     else if (action == @selector(toggleMediaBrowserShown:))
     {
+#ifdef SUPPRESS_IMEDIA_PPC
 		if (NSHostByteOrder() == NS_LittleEndian)
+#endif
 		{
 			if ([IMBPanelController isSharedPanelControllerLoaded] &&
 				[[[IMBPanelController sharedPanelController] window] isVisible])
@@ -1279,13 +1283,17 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 - (IBAction)toggleMediaBrowserShown:(id)sender
 {
+#ifdef SUPPRESS_IMEDIA_PPC
+
 #ifndef VARIANT_RELEASE
 	if (NSHostByteOrder() != NS_LittleEndian)
 	{
 		NSLog(@"BETA: toggleMediaBrowserShown: should not be allowed!");
 	}
 #endif
-	
+
+#endif
+
 	NSArray* mediaTypes = [NSArray arrayWithObjects:kIMBMediaTypeImage,kIMBMediaTypeAudio,kIMBMediaTypeMovie,kIMBMediaTypeLink,nil];
 	IMBPanelController* panelController = [IMBPanelController sharedPanelControllerWithDelegate:self mediaTypes:mediaTypes];
 
