@@ -175,12 +175,7 @@
 }
 
 @dynamic collectionTruncateFeedItems;
-
 @dynamic collectionMaxFeedItemLength;
-- (BOOL)validateCollectionMaxFeedItemLength:(NSNumber **)max error:(NSError **)outError;
-{
-    return YES;
-}
 
 @dynamic RSSFileName;
 
