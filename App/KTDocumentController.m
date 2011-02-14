@@ -18,6 +18,7 @@
 #import "KTElementPlugInWrapper.h"
 #import "SVInspector.h"
 #import "KTMaster.h"
+#import "SVMigrationManager.h"
 #import "KTPage+Internal.h"
 #import "SVWelcomeController.h"
 #import "KTPluginInstaller.h"
@@ -198,7 +199,7 @@
     
     NSURL *sourceModelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox 1.5" ofType:@"mom"]];
     NSManagedObjectModel *sourceModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:sourceModelURL];
-    NSMigrationManager *manager = [[NSMigrationManager alloc] initWithSourceModel:sourceModel destinationModel:[KTDocument managedObjectModel]];
+    NSMigrationManager *manager = [[SVMigrationManager alloc] initWithSourceModel:sourceModel destinationModel:[KTDocument managedObjectModel]];
     
     
     NSURL *sourceStoreURL = [KTDocument datastoreURLForDocumentURL:sourceURL type:kKTDocumentUTI_1_5];
