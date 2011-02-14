@@ -189,6 +189,32 @@
     return result;
 }
 
+- (BOOL)migrateURL:(NSURL *)sourceURL ofType:(NSString *)type error:(NSError **)error;
+{
+    NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox" ofType:@"cdm"]];
+    NSMappingModel *mappingModel = [[NSMappingModel alloc] initWithContentsOfURL:modelURL];
+    
+    
+    
+    NSURL *sourceModelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox 1.5" ofType:@"mom"]];
+    NSManagedObjectModel *sourceModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:sourceModelURL];
+    NSMigrationManager *manager = [[NSMigrationManager alloc] initWithSourceModel:sourceModel destinationModel:[KTDocument managedObjectModel]];
+    
+    
+    NSURL *sourceStoreURL = [KTDocument datastoreURLForDocumentURL:sourceURL type:kKTDocumentUTI_1_5];
+                           
+    
+    BOOL result = [manager migrateStoreFromURL:sourceStoreURL
+                                          type:type
+                                       options:nil
+                              withMappingModel:mappingModel
+                              toDestinationURL:[KTDocument datastoreURLForDocumentURL:sourceURL type:nil]
+                               destinationType:NSBinaryStoreType
+                            destinationOptions:nil
+                                         error:error];
+    return result;
+}
+
 - (id)openDocumentWithContentsOfURL:(NSURL *)absoluteURL display:(BOOL)displayDocument error:(NSError **)outError
 {
 	NSString *requestedPath = [absoluteURL path];
@@ -206,11 +232,11 @@
 		NSDictionary *metadata = nil;
 		@try
 		{
-			NSURL *datastoreURL = [KTDocument datastoreURLForDocumentURL:absoluteURL
+			NSURL *sourceStoreURL = [KTDocument datastoreURLForDocumentURL:absoluteURL
                                                                     type:([type isEqualToString:kKTDocumentUTI_ORIGINAL] ? kKTDocumentUTI_ORIGINAL : kKTDocumentUTI_1_5)];
             
 			metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:nil
-                                                                                  URL:datastoreURL
+                                                                                  URL:sourceStoreURL
                                                                                 error:&subError];
 		}
 		@catch (NSException *exception)
@@ -266,6 +292,21 @@
 			return nil;
 		}
     }
+    
+    
+    
+    // Migrate!
+    if ([type isEqualToString:kKTDocumentUTI_1_5])
+    {
+        if (![self migrateURL:absoluteURL ofType:NSSQLiteStoreType error:outError])
+        {
+            //if (outError) NSLog(@"%@", *outError);
+            return nil;
+        }
+    }
+    
+    
+    
 	
 	// by now, absoluteURL should be a good file, open it
 	id document = [super openDocumentWithContentsOfURL:absoluteURL

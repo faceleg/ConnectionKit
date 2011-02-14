@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" standalone="yes"?>
 <!DOCTYPE database SYSTEM "file:///System/Library/DTDs/CoreData.dtd">
 
 <database>
@@ -991,12 +991,13 @@
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z465"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z304">
+        <attribute name="sourcename" type="string">DocumentInfo</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
         <attribute name="mappingnumber" type="int16">16</attribute>
         <attribute name="destinationname" type="string">Site</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z121 z192 z183 z419 z227 z228 z308 z224 z260 z366 z317 z178 z425"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z419 z308 z228 z178 z260 z183 z317 z224 z121 z227 z192 z425 z366"></relationship>
         <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z285 z286"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z305">
@@ -1271,13 +1272,14 @@ cBIAAYagrxEUdwAHAAgAFwAYADQANQA2AIoAiwCMAI0AjgCPAJAAkQCSAJMAlACVAJYAlwCYAJkAmgCb
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z142"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z359">
+        <attribute name="sourcename" type="string">Pagelet</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
         <attribute name="mappingnumber" type="int16">35</attribute>
         <attribute name="destinationname" type="string">PlugInGraphic</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z453 z363 z249 z216 z370 z154 z306 z344 z202 z501 z129"></relationship>
-        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z220 z248 z434 z204 z198 z179 z143"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z501 z202 z129 z154 z370 z216 z249 z363 z306 z344 z453"></relationship>
+        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z198 z179 z248 z204 z143 z220 z434"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z360">
         <attribute name="name" type="string">bodyTagStart</attribute>
