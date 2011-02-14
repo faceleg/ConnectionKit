@@ -31,6 +31,21 @@ typedef enum {
         [sInstance setValue:nil forKey:@"fileName"];
     }
     
+    // Make sure collectionMaxFeedItemLength is appropriate
+    if (![sInstance valueForKey:@"collectionTruncateCharacters"])
+    {
+        NSEntityDescription *dEntity = [manager destinationEntityForEntityMapping:mapping];
+        NSAttributeDescription *dAttribute = [[dEntity attributesByName] objectForKey:@"collectionMaxFeedItemLength"];
+        [sInstance setValue:[dAttribute defaultValue] forKey:@"collectionTruncateCharacters"];
+    }
+    
+    // collectionMaxSyndicatedPagesCount can no longer be zero. Instead make it rather large
+    if ([[sInstance valueForKey:@"collectionMaxIndexItems"] intValue] < 1)
+    {
+        [sInstance setValue:[NSNumber numberWithInt:20] forKey:@"collectionMaxIndexItems"];
+    }
+    
+    
     BOOL result = [super createDestinationInstancesForSourceInstance:sInstance entityMapping:mapping manager:manager error:error];
 
     return result;
