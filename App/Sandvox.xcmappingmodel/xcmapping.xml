@@ -389,6 +389,9 @@ CA9VJG51bGzTCQoLDA0OXxAQTlNFeHByZXNzaW9uVHlwZVYkY2xhc3NfEBhOU0NvbnN0YW50VmFsdWVD
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z477"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z170">
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGPD1YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKwH
+CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5hbWVWJGNsYXNzWU5TT3BlcmFuZFtOU0FyZ3VtZW50cxAEgAKAC4ADgAZfEBB2YWx1ZUZvcktleVBhdGg60xUJCxYXGFpOU1ZhcmlhYmxlgAQQAoAFVnNvdXJjZdIbHB0eWiRjbGFzc25hbWVYJGNsYXNzZXNfEBROU1ZhcmlhYmxlRXhwcmVzc2lvbqMfICFfEBROU1ZhcmlhYmxlRXhwcmVzc2lvblxOU0V4cHJlc3Npb25YTlNPYmplY3TSCyMkJVpOUy5vYmplY3RzgAqhJoAH0ygJCykqK1lOU0tleVBhdGiACBAKgAlfEB5jb2xsZWN0aW9uU2hvd05hdmlnYXRpb25BcnJvd3PSGxwuL18QHE5TS2V5UGF0aFNwZWNpZmllckV4cHJlc3Npb26jMDEhXxAcTlNLZXlQYXRoU3BlY2lmaWVyRXhwcmVzc2lvblxOU0V4cHJlc3Npb27SGxwzNF5OU011dGFibGVBcnJheaMzNSFXTlNBcnJhedIbHDc4XxATTlNLZXlQYXRoRXhwcmVzc2lvbqQ5OjshXxATTlNLZXlQYXRoRXhwcmVzc2lvbl8QFE5TRnVuY3Rpb25FeHByZXNzaW9uXE5TRXhwcmVzc2lvbl8QD05TS2V5ZWRBcmNoaXZlctE+P1Ryb290gAEACAARABoAIwAtADIANwBEAEoAVQBoAHcAfgCIAJQAlgCYAJoAnACeALEAuADDAMUAxwDJANAA1QDgAOkBAAEEARsBKAExATYBQQFDAUUBRwFOAVgBWgFcAV4BfwGEAaMBpwHGAdMB2AHnAesB8wH4Ag4CEwIpAkACTQJfAmICZwAAAAAAAAIBAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAJp
+</attribute>
         <attribute name="name" type="string">navigationArrowsStyle</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z349"></relationship>
     </object>
