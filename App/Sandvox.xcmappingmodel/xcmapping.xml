@@ -43,6 +43,9 @@
         </metadata>
     </databaseInfo>
     <object type="XDDEVATTRIBUTEMAPPING" id="z102">
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGGBlYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKQH
+CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNzEACAAoADXxAhPHA+RklYTUU6IGltcG9ydCBhcnRpY2xlIHRleHQ8L3A+0hESExRaJGNsYXNzbmFtZVgkY2xhc3Nlc18QGU5TQ29uc3RhbnRWYWx1ZUV4cHJlc3Npb26jFRYXXxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvblxOU0V4cHJlc3Npb25YTlNPYmplY3RfEA9OU0tleWVkQXJjaGl2ZXLRGhtUcm9vdIABAAgAEQAaACMALQAyADcAPABCAEkAXABuAHUAdwB5AHsAnwCkAK8AuADUANgA9AEBAQoBHAEfASQAAAAAAAACAQAAAAAAAAAcAAAAAAAAAAAAAAAAAAABJg==
+</attribute>
         <attribute name="name" type="string">string</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z186"></relationship>
     </object>
