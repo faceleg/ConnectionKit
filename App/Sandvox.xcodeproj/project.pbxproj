@@ -524,6 +524,7 @@
 		27A3578A10E6D59D00C99FB3 /* SVTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A3578810E6D59D00C99FB3 /* SVTemplate.m */; };
 		27A50E8A0D19282B00149038 /* SVHTMLTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A50E880D19282B00149038 /* SVHTMLTextBlock.h */; settings = {ATTRIBUTES = (); }; };
 		27A50E8B0D19282B00149038 /* SVHTMLTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50E890D19282B00149038 /* SVHTMLTextBlock.m */; };
+		27A5C390130933980093B397 /* Sandvox.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 27A5C38F130933980093B397 /* Sandvox.xcmappingmodel */; };
 		27A6098511282AC0007C301F /* KSWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A6098311282AC0007C301F /* KSWriter.h */; settings = {ATTRIBUTES = (); }; };
 		27A6098611282AC0007C301F /* KSWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A6098411282AC0007C301F /* KSWriter.m */; };
 		27A617141122FA0000004FED /* SVTextBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A617121122FA0000004FED /* SVTextBox.h */; };
@@ -1409,14 +1410,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C042ABE1307166B00D9F2A7 /* VictualElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* VictualElement.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = VictualElement;
 		};
 		3C042AC41307167D00D9F2A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C042ABE1307166B00D9F2A7 /* VictualElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* VictualElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = VictualElement;
 		};
 		3C104A21121B016700899C3B /* PBXContainerItemProxy */ = {
@@ -2182,6 +2183,7 @@
 		27A50E890D19282B00149038 /* SVHTMLTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLTextBlock.m; sourceTree = "<group>"; };
 		27A50F260D19443800149038 /* DOM+KTWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOM+KTWebViewController.h"; sourceTree = "<group>"; };
 		27A50F270D19443800149038 /* DOM+KTWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOM+KTWebViewController.m"; sourceTree = "<group>"; };
+		27A5C38F130933980093B397 /* Sandvox.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; path = Sandvox.xcmappingmodel; sourceTree = "<group>"; };
 		27A6098311282AC0007C301F /* KSWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWriter.h; sourceTree = "<group>"; };
 		27A6098411282AC0007C301F /* KSWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWriter.m; sourceTree = "<group>"; };
 		27A617121122FA0000004FED /* SVTextBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextBox.h; sourceTree = "<group>"; };
@@ -2249,7 +2251,6 @@
 		27CE81161137EEB100EE1A6F /* SVImageReplacementURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVImageReplacementURLProtocol.h; sourceTree = "<group>"; };
 		27CE81171137EEB100EE1A6F /* SVImageReplacementURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVImageReplacementURLProtocol.m; sourceTree = "<group>"; };
 		27CFC5DF123E280800BF018C /* Sandvox 1.5.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = "Sandvox 1.5.xcdatamodel"; sourceTree = "<group>"; };
-		27CFC5E4123E28A700BF018C /* Sandvox.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; path = Sandvox.xcmappingmodel; sourceTree = "<group>"; };
 		27D353B611A9CC7200BC4DB8 /* KSComparisonValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSComparisonValueTransformer.h; sourceTree = "<group>"; };
 		27D353B711A9CC7200BC4DB8 /* KSComparisonValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSComparisonValueTransformer.m; sourceTree = "<group>"; };
 		27D7340412118E3400722189 /* SVIndexPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndexPlugIn.h; sourceTree = "<group>"; };
@@ -3404,7 +3405,7 @@
 				27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */,
 				3CF941CC0D623BDF00B1C83D /* KTDataMigrator.h */,
 				3CF941CE0D623BE400B1C83D /* KTDataMigrator.m */,
-				27CFC5E4123E28A700BF018C /* Sandvox.xcmappingmodel */,
+				27A5C38F130933980093B397 /* Sandvox.xcmappingmodel */,
 			);
 			name = "Data Migration";
 			sourceTree = "<group>";
@@ -7680,6 +7681,7 @@
 				27A8223E12EF532D00152934 /* KSDependenciesTracker.m in Sources */,
 				27B0C35412F07BB400CE0F98 /* SVPageThumbnailHTMLContext.m in Sources */,
 				272BCD3812F2E20B00080225 /* KSGeometry.m in Sources */,
+				27A5C390130933980093B397 /* Sandvox.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
