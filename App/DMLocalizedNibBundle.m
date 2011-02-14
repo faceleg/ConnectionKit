@@ -1371,7 +1371,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 					if (valueChanged) {
 						// Only unbind and rebind if there is a change.
 						DJW((@"Rebinding %@, %@", exposedBinding, path));
-						[object unbind:exposedBinding];
+						// [object unbind:exposedBinding];
 						[object bind:exposedBinding 
 							toObject:observedObject 
 						 withKeyPath:path 
