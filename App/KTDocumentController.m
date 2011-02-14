@@ -234,7 +234,7 @@
 		@try
 		{
 			NSURL *sourceStoreURL = [KTDocument datastoreURLForDocumentURL:absoluteURL
-                                                                    type:([type isEqualToString:kKTDocumentUTI_ORIGINAL] ? kKTDocumentUTI_ORIGINAL : kKTDocumentUTI_1_5)];
+                                                                    type:type];
             
 			metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:nil
                                                                                   URL:sourceStoreURL
