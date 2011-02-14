@@ -619,6 +619,8 @@ CAwPVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNz
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z349"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z219">
+        <attribute name="sourcemappingname" type="string">HostPropertiesToRootPublishingRecord</attribute>
+        <attribute name="sourcekeypath" type="string">$source</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <attribute name="name" type="string">rootPublishingRecord</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z477"></relationship>
@@ -1288,13 +1290,14 @@ cBIAAYagrxEUdwAHAAgAFwAYADQANQA2AIoAiwCMAI0AjgCPAJAAkQCSAJMAlACVAJYAlwCYAJkAmgCb
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z470"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z356">
+        <attribute name="sourcename" type="string">HostProperties</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
         <attribute name="mappingnumber" type="int16">28</attribute>
         <attribute name="destinationname" type="string">RootPublishingRecord</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
         <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z322 z310"></relationship>
-        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z394 z400 z131"></relationship>
+        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z131 z400 z394"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z357">
         <attribute name="name" type="string">publishedPath</attribute>
