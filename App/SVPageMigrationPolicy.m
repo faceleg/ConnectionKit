@@ -8,6 +8,8 @@
 
 #import "SVPageMigrationPolicy.h"
 
+#import "KTPage.h"
+
 
 typedef enum {
     KTCollectionSortUnspecified = -1,		// used internally
@@ -37,6 +39,29 @@ typedef enum {
 - (NSNumber *)sourceCollectionSortOrderIsAscending:(NSNumber *)sOrder;
 {
     return NSBOOL([sOrder intValue] < KTCollectionSortLatestAtTop);
+}
+
+- (NSNumber *)collectionSortOrderFromSource:(NSManagedObject *)sInstance;
+{
+    NSNumber *sOrder = [sInstance valueForKey:@"collectionSortOrder"];
+    switch ([sOrder intValue])
+    {
+        case KTCollectionSortAlpha:
+        case KTCollectionSortReverseAlpha:
+            return [NSNumber numberWithInt:SVCollectionSortAlphabetically];
+            
+        case KTCollectionSortLatestAtBottom:
+        case KTCollectionSortLatestAtTop:
+        {
+            NSNumber *timestampType = [sInstance valueForKeyPath:@"master.timestampType"];
+            return [NSNumber numberWithInt:([timestampType intValue] == KTTimestampCreationDate ?
+                                            SVCollectionSortByDateCreated :
+                                            SVCollectionSortByDateModified)];
+        }
+            
+        default:
+            return [NSNumber numberWithInt:SVCollectionSortManually];
+    }
 }
 
 @end
