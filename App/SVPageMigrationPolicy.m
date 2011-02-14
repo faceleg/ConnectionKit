@@ -94,6 +94,21 @@ typedef enum {
     return result;
 }
 
+- (NSNumber *)shouldUpdateFileNameWhenTitleChangesFromSource:(NSManagedObject *)sInstance;
+{
+    NSData *data = [sInstance valueForKey:@"extensiblePropertiesData"];
+    NSDictionary *extensibelProps = [self extensiblePropertiesFromData:data];
+    NSNumber *result = [extensibelProps objectForKey:@"shouldUpdateFileNameWhenTitleChanges"];
+    
+    if (!result)
+    {
+        result = NSBOOL(![sInstance valueForKey:@"publishedPath"] &&
+                        ![extensibelProps objectForKey:@"publishedDataDigest"]);
+    }
+    
+    return result;
+}
+
 @end
 
 
