@@ -660,6 +660,9 @@
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z349"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z233">
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGGBlYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKQH
+CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNzEACAAoADWWluZGV4LnJzc9IREhMUWiRjbGFzc25hbWVYJGNsYXNzZXNfEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uoxUWF18QGU5TQ29uc3RhbnRWYWx1ZUV4cHJlc3Npb25cTlNFeHByZXNzaW9uWE5TT2JqZWN0XxAPTlNLZXllZEFyY2hpdmVy0RobVHJvb3SAAQAIABEAGgAjAC0AMgA3ADwAQgBJAFwAbgB1AHcAeQB7AIUAigCVAJ4AugC+ANoA5wDwAQIBBQEKAAAAAAAAAgEAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAQw=
+</attribute>
         <attribute name="name" type="string">RSSFileName</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z349"></relationship>
     </object>
