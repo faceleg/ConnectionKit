@@ -252,7 +252,6 @@
 #define JQUERY_VERSION @"1.4.4"
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
 	NSURL *jQueryURL = nil;
 	NSString *minimizationSuffix = @".min";
 
@@ -265,13 +264,13 @@
 	}
 	
 	// This is either the local version, or not uploaded to a web server, or user preference to keep their own copy of jQuery.
-	if ([context isForEditing] || [scheme isEqualToString:@"file"] || [defaults boolForKey:@"jQueryLocal"])
+	if ([self isForEditing] || [scheme isEqualToString:@"file"] || [defaults boolForKey:@"jQueryLocal"])
 	{
 		NSURL *localJQueryURL = [NSURL fileURLWithPath:[[NSBundle mainBundle]
                                                         pathForResource:[NSString stringWithFormat:@"jquery-%@%@", JQUERY_VERSION, minimizationSuffix]
                                                         ofType:@"js"]];
 		
-		jQueryURL = [context addResourceWithURL:localJQueryURL];
+		jQueryURL = [self addResourceWithURL:localJQueryURL];
 		
 	}
 	else	// Normal publishing case: remote version from google, fastest for downloading.
@@ -282,7 +281,7 @@
 					  scheme, JQUERY_VERSION, minimizationSuffix]];
 	}
 	
-	[context writeJavascriptWithSrc:[context relativeStringFromURL:jQueryURL]];
+	[self writeJavascriptWithSrc:[self relativeStringFromURL:jQueryURL]];
     
 	// Note: I may want to also get: http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js
 	// I would just put in parallel code.  However this might be better to be added with code injection by people who want it.
