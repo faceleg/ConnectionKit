@@ -248,6 +248,9 @@ CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5h
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z470"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z146">
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGFxhYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKQH
+CAwPVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNzEACAAoAD0hAREhNaJGNsYXNzbmFtZVgkY2xhc3Nlc18QGU5TQ29uc3RhbnRWYWx1ZUV4cHJlc3Npb26jFBUWXxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvblxOU0V4cHJlc3Npb25YTlNPYmplY3RfEA9OU0tleWVkQXJjaGl2ZXLRGRpUcm9vdIABAAgAEQAaACMALQAyADcAPABCAEkAXABuAHUAdwB5AHsAgACLAJQAsAC0ANAA3QDmAPgA+wEAAAAAAAAAAgEAAAAAAAAAGwAAAAAAAAAAAAAAAAAAAQI=
+</attribute>
         <attribute name="name" type="string">collectionGenerateArchives</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z349"></relationship>
     </object>
