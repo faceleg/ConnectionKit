@@ -121,8 +121,7 @@
         [self setPrimitiveValue:maxTitles forKey:@"collectionMaxSyndicatedPagesCount"];
     }
     
-    [self setPrimitiveValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"RSSFileName"]
-                     forKey:@"RSSFileName"];
+    [self setPrimitiveValue:@"index.rss" forKey:@"RSSFileName"];
     
     
     // Code Injection

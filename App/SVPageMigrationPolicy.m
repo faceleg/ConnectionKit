@@ -52,6 +52,12 @@ typedef enum {
     return result;
 }
 
+- (NSDictionary *)extensiblePropertiesFromData:(NSData *)data;
+{
+    NSDictionary *result = [KSExtensibleManagedObject unarchiveExtensibleProperties:data];
+    return result;
+}
+
 - (NSNumber *)sourceCollectionSortOrderIsAscending:(NSNumber *)sOrder;
 {
     return NSBOOL([sOrder intValue] < KTCollectionSortLatestAtTop);
@@ -80,9 +86,11 @@ typedef enum {
     }
 }
 
-- (NSDictionary *)extensiblePropertiesFromData:(NSData *)data;
+- (NSString *)RSSFileNameFromExtensiblePropertiesData:(NSData *)data;
 {
-    NSDictionary *result = [KSExtensibleManagedObject unarchiveExtensibleProperties:data];
+    // If a value was ever set, use it. Otherwise fall back to prefs. #100026
+    NSString *result = [[self extensiblePropertiesFromData:data] objectForKey:@"RSSFileName"];
+    if (!result) result = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
     return result;
 }
 
