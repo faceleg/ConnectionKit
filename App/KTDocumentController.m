@@ -181,7 +181,7 @@
             {
                 NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[inAbsoluteURL path] error:NULL];
                 
-                if ([contents containsObject:@"datastore.sqlite3"]) result = kKTDocumentUTI_1_5;
+                if (![contents containsObject:@"index"]) result = kKTDocumentUTI_1_5;
             }
         }
     }
