@@ -623,6 +623,8 @@
 		27E040BA130AC71D00FEA059 /* Media 1.5.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27E040B9130AC71D00FEA059 /* Media 1.5.xcdatamodel */; };
 		27E040EB130ACDD800FEA059 /* SVMediaMigrationPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E040E9130ACDD800FEA059 /* SVMediaMigrationPolicy.h */; };
 		27E040EC130ACDD800FEA059 /* SVMediaMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E040EA130ACDD800FEA059 /* SVMediaMigrationPolicy.m */; };
+		27E04196130AEEE300FEA059 /* SVArticleMigrationPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E04194130AEEE300FEA059 /* SVArticleMigrationPolicy.h */; };
+		27E04197130AEEE300FEA059 /* SVArticleMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E04195130AEEE300FEA059 /* SVArticleMigrationPolicy.m */; };
 		27E1BF4B115B8235000FF123 /* SVDocumentUndoManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */; };
 		27E1BF4C115B8235000FF123 /* SVDocumentUndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */; };
 		27E24AC610FB9591004EFE9F /* SVLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E24AC410FB9591004EFE9F /* SVLink.h */; };
@@ -2298,6 +2300,8 @@
 		27E040B9130AC71D00FEA059 /* Media 1.5.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = "Media 1.5.xcdatamodel"; sourceTree = "<group>"; };
 		27E040E9130ACDD800FEA059 /* SVMediaMigrationPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaMigrationPolicy.h; sourceTree = "<group>"; };
 		27E040EA130ACDD800FEA059 /* SVMediaMigrationPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaMigrationPolicy.m; sourceTree = "<group>"; };
+		27E04194130AEEE300FEA059 /* SVArticleMigrationPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVArticleMigrationPolicy.h; sourceTree = "<group>"; };
+		27E04195130AEEE300FEA059 /* SVArticleMigrationPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVArticleMigrationPolicy.m; sourceTree = "<group>"; };
 		27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocumentUndoManager.h; sourceTree = "<group>"; };
 		27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocumentUndoManager.m; sourceTree = "<group>"; };
 		27E24AC410FB9591004EFE9F /* SVLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLink.h; sourceTree = "<group>"; };
@@ -3427,6 +3431,8 @@
 				2736A1081309606200397D1A /* SVMigrationManager.m */,
 				27E040E9130ACDD800FEA059 /* SVMediaMigrationPolicy.h */,
 				27E040EA130ACDD800FEA059 /* SVMediaMigrationPolicy.m */,
+				27E04194130AEEE300FEA059 /* SVArticleMigrationPolicy.h */,
+				27E04195130AEEE300FEA059 /* SVArticleMigrationPolicy.m */,
 			);
 			name = "Data Migration";
 			sourceTree = "<group>";
@@ -6113,6 +6119,7 @@
 				2736A0E613095B9800397D1A /* SVPageMigrationPolicy.h in Headers */,
 				2736A1091309606200397D1A /* SVMigrationManager.h in Headers */,
 				27E040EB130ACDD800FEA059 /* SVMediaMigrationPolicy.h in Headers */,
+				27E04196130AEEE300FEA059 /* SVArticleMigrationPolicy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7710,6 +7717,7 @@
 				2736A10A1309606200397D1A /* SVMigrationManager.m in Sources */,
 				27E040BA130AC71D00FEA059 /* Media 1.5.xcdatamodel in Sources */,
 				27E040EC130ACDD800FEA059 /* SVMediaMigrationPolicy.m in Sources */,
+				27E04197130AEEE300FEA059 /* SVArticleMigrationPolicy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

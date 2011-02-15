@@ -47,7 +47,7 @@
 CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNzEACAAoADXxAhPHA+RklYTUU6IGltcG9ydCBhcnRpY2xlIHRleHQ8L3A+0hESExRaJGNsYXNzbmFtZVgkY2xhc3Nlc18QGU5TQ29uc3RhbnRWYWx1ZUV4cHJlc3Npb26jFRYXXxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvblxOU0V4cHJlc3Npb25YTlNPYmplY3RfEA9OU0tleWVkQXJjaGl2ZXLRGhtUcm9vdIABAAgAEQAaACMALQAyADcAPABCAEkAXABuAHUAdwB5AHsAnwCkAK8AuADUANgA9AEBAQoBHAEfASQAAAAAAAACAQAAAAAAAAAcAAAAAAAAAAAAAAAAAAABJg==
 </attribute>
         <attribute name="name" type="string">string</attribute>
-        <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z186"></relationship>
+        <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z103">
         <attribute name="name" type="string">filename</attribute>
@@ -486,6 +486,7 @@ CA9VJG51bGzTCQoLDA0OXxAQTlNFeHByZXNzaW9uVHlwZVYkY2xhc3NfEBhOU0NvbnN0YW50VmFsdWVD
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z165"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z186">
+        <attribute name="migrationpolicyclassname" type="string">SVArticleMigrationPolicy</attribute>
         <attribute name="sourceexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGXl9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8Q
 FQcIExwdIiMrLzI3PD1AQUVKS1BTWVUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlwZV8QD05TTU9DRXhwcmVzc2lvbl5OU0ZSRXhwcmVzc2lvblYkY2xhc3NfEA9OU0NvdW50T25seUZsYWcQMoAKgAKAFAjVCRQMFRYXGBkaG15OU1NlbGVjdG9yTmFtZVlOU09wZXJhbmRbTlNBcmd1bWVudHMQBIADgAmABIAHXxARcGFnZXNGZXRjaFJlcXVlc3TTHgkMHyAhWk5TVmFyaWFibGWABRACgAZXbWFuYWdlctIkJSYnWiRjbGFzc25hbWVYJGNsYXNzZXNfEBROU1ZhcmlhYmxlRXhwcmVzc2lvbqMoKSpfEBROU1ZhcmlhYmxlRXhwcmVzc2lvblxOU0V4cHJlc3Npb25YTlNPYmplY3TSDCwtLlpOUy5vYmplY3RzgAig0iQlMDFXTlNBcnJheaIwKtIkJTM0XxAUTlNGdW5jdGlvbkV4cHJlc3Npb26jNTYqXxAUTlNGdW5jdGlvbkV4cHJlc3Npb25cTlNFeHByZXNzaW9u1QkUDBUWFzg5OjuAC4ATgAyADl8QEHZhbHVlRm9yS2V5UGF0aDrTHgkMPiAhgA2ABldtYW5hZ2Vy0gwsQkOAEqFEgA/TRgkMR0hJWU5TS2V5UGF0aIAQEAqAEV1zb3VyY2VDb250ZXh00iQlTE1fEBxOU0tleVBhdGhTcGVjaWZpZXJFeHByZXNzaW9uo05PKl8QHE5TS2V5UGF0aFNwZWNpZmllckV4cHJlc3Npb25cTlNFeHByZXNzaW9u0iQlUVJeTlNNdXRhYmxlQXJyYXmjUTAq0iQlVFVfEBNOU0tleVBhdGhFeHByZXNzaW9upFZXWCpfEBNOU0tleVBhdGhFeHByZXNzaW9uXxAUTlNGdW5jdGlvbkV4cHJlc3Npb25cTlNFeHByZXNzaW9u0iQlWltfEBhOU0ZldGNoUmVxdWVzdEV4cHJlc3Npb26jXF0qXxAYTlNGZXRjaFJlcXVlc3RFeHByZXNzaW9uXE5TRXhwcmVzc2lvbl8QD05TS2V5ZWRBcmNoaXZlctFgYVRyb290gAEACAARABoAIwAtADIANwBPAFUAYABzAIUAlACbAK0ArwCxALMAtQC2AMEA0ADaAOYA6ADqAOwA7gDwAQQBCwEWARgBGgEcASQBKQE0AT0BVAFYAW8BfAGFAYoBlQGXAZgBnQGlAagBrQHEAcgB3wHsAfcB+QH7Af0B/wISAhkCGwIdAiUCKgIsAi4CMAI3AkECQwJFAkcCVQJaAnkCfQKcAqkCrgK9AsECxgLcAuEC9wMOAxsDIAM7Az8DWgNnA3kDfAOBAAAAAAAAAgEAAAAAAAAAYgAAAAAAAAAAAAAAAAAAA4M=
 </attribute>
@@ -495,7 +496,7 @@ FQcIExwdIiMrLzI3PD1AQUVKS1BTWVUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlwZV8Q
         <attribute name="destinationname" type="string">Article</attribute>
         <attribute name="autogenerateexpression" type="bool">0</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z102"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING"></relationship>
         <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z389 z391"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z187">
