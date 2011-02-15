@@ -509,12 +509,15 @@ FQcIExwdIiMrLzI3PD1AQUVKS1BTWVUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlwZV8Q
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z164"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z190">
+        <attribute name="migrationpolicyclassname" type="string">SVMediaMigrationPolicy</attribute>
+        <attribute name="sourcename" type="string">Page</attribute>
+        <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier == "sandvox.DownloadElement"</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
         <attribute name="mappingnumber" type="int16">15</attribute>
         <attribute name="destinationname" type="string">FileMedia</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z103 z402 z458 z331 z201 z441"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z103 z201 z402 z458 z441 z331"></relationship>
         <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z128"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z191">
@@ -779,6 +782,8 @@ EwcIExQZGiInLC0wMTU6O0BESkxVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNT
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z465"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z243">
+        <attribute name="sourcemappingname" type="string">PageToFileMedia</attribute>
+        <attribute name="sourcekeypath" type="string">$source</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <attribute name="name" type="string">media</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z438"></relationship>

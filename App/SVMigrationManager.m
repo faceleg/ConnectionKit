@@ -64,6 +64,7 @@
     NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox" ofType:@"cdm"]];
     NSMappingModel *mappingModel = [[NSMappingModel alloc] initWithContentsOfURL:modelURL];
     
+    _docURL = dURL;
     NSURL *sStoreURL = [KTDocument datastoreURLForDocumentURL:sourceDocURL type:kKTDocumentUTI_1_5];
     NSURL *dStoreURL = [KTDocument datastoreURLForDocumentURL:sourceDocURL type:nil];
     
@@ -76,6 +77,7 @@
                          destinationOptions:nil
                                       error:error];
     
+    _docURL = nil;
     [mappingModel release];
     [_mediaContext release];
     
@@ -85,6 +87,14 @@
 - (NSManagedObjectModel *)sourceMediaModel; { return _mediaModel; }
 
 - (NSManagedObjectContext *)sourceMediaContext; { return _mediaContext; }
+
+- (NSURL *)sourceURLOfMediaWithFilename:(NSString *)filename;
+{
+    NSURL *result = [[[_docURL ks_URLByAppendingPathComponent:@"Site" isDirectory:YES]
+                      ks_URLByAppendingPathComponent:@"_Media" isDirectory:YES]
+                     ks_URLByAppendingPathComponent:filename isDirectory:NO];
+    return result;
+}
 
 - (NSFetchRequest *)pagesFetchRequest;
 {

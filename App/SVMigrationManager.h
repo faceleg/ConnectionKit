@@ -14,6 +14,8 @@
   @private
     NSManagedObjectModel    *_mediaModel;
     NSManagedObjectContext  *_mediaContext;
+    
+    NSURL   *_docURL;   // weak ref
 }
 
 // Designated initializer
@@ -27,6 +29,7 @@
 
 - (NSManagedObjectModel *)sourceMediaModel;
 - (NSManagedObjectContext *)sourceMediaContext;
+- (NSURL *)sourceURLOfMediaWithFilename:(NSString *)filename;
 
 - (NSFetchRequest *)pagesFetchRequest;
 
