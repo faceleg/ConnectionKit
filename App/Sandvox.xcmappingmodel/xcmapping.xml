@@ -248,6 +248,9 @@ CBMUGRoiJyorLlUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlwZV5OU1NlbGVjdG9yTmFt
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z465"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z141">
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGPD1YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKwH
+CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5hbWVWJGNsYXNzWU5TT3BlcmFuZFtOU0FyZ3VtZW50cxAEgAKAC4ADgAZfEBB2YWx1ZUZvcktleVBhdGg60xUJCxYXGFpOU1ZhcmlhYmxlgAQQAoAFVnNvdXJjZdIbHB0eWiRjbGFzc25hbWVYJGNsYXNzZXNfEBROU1ZhcmlhYmxlRXhwcmVzc2lvbqMfICFfEBROU1ZhcmlhYmxlRXhwcmVzc2lvblxOU0V4cHJlc3Npb25YTlNPYmplY3TSCyMkJVpOUy5vYmplY3RzgAqhJoAH0ygJCykqK1lOU0tleVBhdGiACBAKgAlfEBRsYXN0TW9kaWZpY2F0aW9uRGF0ZdIbHC4vXxAcTlNLZXlQYXRoU3BlY2lmaWVyRXhwcmVzc2lvbqMwMSFfEBxOU0tleVBhdGhTcGVjaWZpZXJFeHByZXNzaW9uXE5TRXhwcmVzc2lvbtIbHDM0Xk5TTXV0YWJsZUFycmF5ozM1IVdOU0FycmF50hscNzhfEBNOU0tleVBhdGhFeHByZXNzaW9upDk6OyFfEBNOU0tleVBhdGhFeHByZXNzaW9uXxAUTlNGdW5jdGlvbkV4cHJlc3Npb25cTlNFeHByZXNzaW9uXxAPTlNLZXllZEFyY2hpdmVy0T4/VHJvb3SAAQAIABEAGgAjAC0AMgA3AEQASgBVAGgAdwB+AIgAlACWAJgAmgCcAJ4AsQC4AMMAxQDHAMkA0ADVAOAA6QEAAQQBGwEoATEBNgFBAUMBRQFHAU4BWAFaAVwBXgF1AXoBmQGdAbwByQHOAd0B4QHpAe4CBAIJAh8CNgJDAlUCWAJdAAAAAAAAAgEAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAl8=
+</attribute>
         <attribute name="name" type="string">modificationDate</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z438"></relationship>
     </object>
@@ -1624,6 +1627,8 @@ CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5h
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z175"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z404">
+        <attribute name="sourcemappingname" type="string">DocumentInfoToSite</attribute>
+        <attribute name="sourcekeypath" type="string">$source.documentInfo</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <attribute name="name" type="string">site</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z438"></relationship>
@@ -1784,13 +1789,15 @@ CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5h
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z212"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z438">
+        <attribute name="sourcename" type="string">Page</attribute>
+        <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier == "sandvox.DownloadElement"</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
         <attribute name="mappingnumber" type="int16">17</attribute>
         <attribute name="destinationname" type="string">File</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z384 z214 z329 z116 z123 z362 z141 z502 z422 z478 z150 z244 z290 z195 z459 z357 z294 z373"></relationship>
-        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z176 z243 z194 z404"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z214 z150 z459 z362 z123 z116 z478 z195 z357 z294 z373 z502 z290 z141 z329 z422 z384 z244"></relationship>
+        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z194 z176 z404 z243"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z439">
         <attribute name="autogenerateexpression" type="bool">1</attribute>
