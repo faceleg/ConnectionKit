@@ -102,7 +102,9 @@
     
     NSFetchRequest *result = [[[NSFetchRequest alloc] init] autorelease];
     [result setEntity:[self sourceEntityForEntityMapping:[self currentEntityMapping]]];
-    [result setPredicate:[NSPredicate predicateWithFormat:@"pluginIdentifier != 'sandvox.DownloadElement'"]];
+    
+    [result setPredicate:[NSPredicate predicateWithFormat:
+                          @"pluginIdentifier != 'sandvox.DownloadElement' && pluginIdentifier != 'sandvox.LinkElement'"]];
     
     return result;
 }
