@@ -157,7 +157,8 @@
             WEKWebEditorView *webEditor = [self webEditor];
             
             DOMRange *fallbackRange = [[[self HTMLElement] ownerDocument] createRange];
-            [fallbackRange setStartAfter:[[self textHTMLElement] lastChild]];
+            DOMNode *textElement = [self textHTMLElement];
+            [fallbackRange setStart:textElement offset:[[textElement childNodes] length]];
             
             if ([[webEditor delegate] webEditor:webEditor
                    shouldChangeSelectedDOMRange:[webEditor selectedDOMRange]
