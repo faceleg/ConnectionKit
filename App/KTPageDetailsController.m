@@ -505,26 +505,27 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	[self.attachedWindow setBackgroundColor:windowColor];
 }
 
-- (void)fileNameDidChangeToValue:(id)value
+- (void)fileNameDidChangeToValue:(id)newFileName
 {
-	if (value)
+	NSNumber *count = nil;
+	if (newFileName)
 	{
-		if (NSIsControllerMarker(value))
+		if (NSIsControllerMarker(newFileName))
 		{
-			value = nil;
+			count = nil;
 		}
 		else
 		{
-			OBASSERT([value isKindOfClass:[NSString class]]);
-			value = [NSNumber numberWithInt:[value length]];
+			OBASSERT([newFileName isKindOfClass:[NSString class]]);
+			count = [NSNumber numberWithInt:[newFileName length]];
 		}
 	}
 	else
 	{
-		value = [NSNumber numberWithInt:0];
+		count = [NSNumber numberWithInt:0];
 	}
 	
-	[self setFileNameCount:value];
+	[self setFileNameCount:count];
 
 	NSColor *windowColor = [self fileNameCharCountColor];
 	[self.attachedWindow setBackgroundColor:windowColor];
@@ -939,6 +940,25 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	[oMetaDescriptionField	setEditable:arePagesSelected];
 	[oChooseFileButton		setHidden:(!areFilesSelected && !areTextsSelected)];
 	[oEditTextButton		setHidden:!areTextsSelected];
+	
+	// If active text field, update the visibility of the edit button
+	if (oMediaFilenameField == self.activeTextField)
+	{
+		NSTextView *fieldEditor = (NSTextView *)[self.activeTextField currentEditor];
+		if (fieldEditor)
+		{
+			OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
+			NSTextStorage *ts = [fieldEditor textStorage];
+			NSString *newFileName = [ts string];
+
+			NSString *type = [NSString UTIForFilenameExtension:[newFileName pathExtension]];
+			BOOL isEditableTextUTI = ([type conformsToUTI:(NSString *)kUTTypePlainText] ||
+									  [type conformsToUTI:(NSString *)kUTTypeHTML] ||
+									  [type conformsToUTI:(NSString *)kUTTypeXML]);
+			
+			[oEditTextButton setHidden:!isEditableTextUTI];
+		}
+	}
 
 	// First line, external URL field
 	[oExternalURLField setHidden:!areLinksSelected];
