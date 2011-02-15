@@ -1365,7 +1365,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 						NSString *value = [newOptions objectForKey:key];
 						if ([value isKindOfClass:[NSString class]]) {
 							NSString *localizedValue = [self _localizedStringForString:value bundle:bundle table:table];
-							DJW((@"%@ -> %@", value, localizedValue));
+							OFF((@"%@ -> %@", value, localizedValue));
 							if (localizedValue) {
 								valueChanged = YES;
 								[newOptions setObject:localizedValue forKey:key];
@@ -1374,7 +1374,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 					}
 					if (valueChanged) {
 						// Only unbind and rebind if there is a change.
-						DJW((@"Rebinding %@, %@", exposedBinding, path));
+						OFF((@"Rebinding %@, %@", exposedBinding, path));
 						// [object unbind:exposedBinding];
 						[object bind:exposedBinding 
 							toObject:observedObject 
