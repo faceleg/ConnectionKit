@@ -21,7 +21,7 @@
     NSDictionary *properties = [KSExtensibleManagedObject unarchiveExtensibleProperties:[sInstance valueForKey:@"extensiblePropertiesData"]];
     
     NSString *html = [properties objectForKey:@"richTextHTML"];
-    if (!html) html = @"<p>Non-text pages</p>";
+    if (![html length]) html = @"<p>Non-text pages</p>";
     [article setValue:html forKey:@"string"];
     
     [manager associateSourceInstance:sInstance withDestinationInstance:article forEntityMapping:mapping];
