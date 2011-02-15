@@ -376,10 +376,7 @@
 	return result;
 }
 
-- (void) setComboTitleText:(NSString *)aTitle
-{
-	[self setWindowTitle:aTitle];
-}
+#pragma mark Window Title
 
 /*!	Return the string that makes up the title.  Page Title | Site Title | Author ... this is the DEFAULT if not set by windowTitle property.
 */
@@ -434,6 +431,11 @@
 	}
 	
 	return buf;
+}
+
+- (void)setComboTitleText:(NSString *)aTitle
+{
+	[self setWindowTitle:aTitle];
 }
 
 #pragma mark DTD
