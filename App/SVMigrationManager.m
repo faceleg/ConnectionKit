@@ -11,6 +11,7 @@
 #import "KTDocument.h"
 #import "KT.h"
 
+#import "KSExtensibleManagedObject.h"
 #import "KSURLUtilities.h"
 
 
@@ -106,6 +107,12 @@
     [result setPredicate:[NSPredicate predicateWithFormat:
                           @"pluginIdentifier != 'sandvox.DownloadElement' && pluginIdentifier != 'sandvox.LinkElement'"]];
     
+    return result;
+}
+
+- (NSDictionary *)extensiblePropertiesFromData:(NSData *)data;
+{
+    NSDictionary *result = [KSExtensibleManagedObject unarchiveExtensibleProperties:data];
     return result;
 }
 
