@@ -61,13 +61,14 @@ CA9VJG51bGzTCQoLDA0OXxAQTlNFeHByZXNzaW9uVHlwZVYkY2xhc3NfEBhOU0NvbnN0YW50VmFsdWVD
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z349"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z105">
+        <attribute name="migrationpolicyclassname" type="string">SVPageletTitleMigrationPolicy</attribute>
         <attribute name="sourcename" type="string">Pagelet</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
         <attribute name="mappingnumber" type="int16">21</attribute>
         <attribute name="destinationname" type="string">PageletTitle</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z347 z426"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING"></relationship>
         <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z267"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z106">
@@ -1354,11 +1355,11 @@ FgcIExQZGiIoLS4zNDk9QkNITFIxVlhVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVe
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z205"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z347">
-        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGGBlYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKQH
-CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNzEACAAoADCNIREhMUWiRjbGFzc25hbWVYJGNsYXNzZXNfEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uoxUWF18QGU5TQ29uc3RhbnRWYWx1ZUV4cHJlc3Npb25cTlNFeHByZXNzaW9uWE5TT2JqZWN0XxAPTlNLZXllZEFyY2hpdmVy0RobVHJvb3SAAQAIABEAGgAjAC0AMgA3ADwAQgBJAFwAbgB1AHcAeQB7AHwAgQCMAJUAsQC1ANEA3gDnAPkA/AEBAAAAAAAAAgEAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAQM=
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGOTpYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKsH
+CBMUFx8kKSovM1UkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlwZV5OU1NlbGVjdG9yTmFtZVYkY2xhc3NZTlNPcGVyYW5kW05TQXJndW1lbnRzEAOAAoAKgAOABVx2YWx1ZUZvcktleTrSCQsVFhABgATSGBkaG1okY2xhc3NuYW1lWCRjbGFzc2VzXxAQTlNTZWxmRXhwcmVzc2lvbqMcHR5fEBBOU1NlbGZFeHByZXNzaW9uXE5TRXhwcmVzc2lvblhOU09iamVjdNILICEiWk5TLm9iamVjdHOACaEjgAbTJQkLJicoWU5TS2V5UGF0aIAHEAqACFZORUdBVEXSGBkrLF8QHE5TS2V5UGF0aFNwZWNpZmllckV4cHJlc3Npb26jLS4eXxAcTlNLZXlQYXRoU3BlY2lmaWVyRXhwcmVzc2lvblxOU0V4cHJlc3Npb27SGBkwMV5OU011dGFibGVBcnJheaMwMh5XTlNBcnJhedIYGTQ1XxATTlNLZXlQYXRoRXhwcmVzc2lvbqQ2NzgeXxATTlNLZXlQYXRoRXhwcmVzc2lvbl8QFE5TRnVuY3Rpb25FeHByZXNzaW9uXE5TRXhwcmVzc2lvbl8QD05TS2V5ZWRBcmNoaXZlctE7PFRyb290gAEACAARABoAIwAtADIANwBDAEkAVABnAHYAfQCHAJMAlQCXAJkAmwCdAKoArwCxALMAuADDAMwA3wDjAPYBAwEMAREBHAEeASABIgEpATMBNQE3ATkBQAFFAWQBaAGHAZQBmQGoAawBtAG5Ac8B1AHqAgECDgIgAiMCKAAAAAAAAAIBAAAAAAAAAD0AAAAAAAAAAAAAAAAAAAIq
 </attribute>
         <attribute name="name" type="string">hidden</attribute>
-        <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z105"></relationship>
+        <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z348">
         <attribute name="mappingtypename" type="string">Undefined</attribute>
@@ -1775,7 +1776,7 @@ CA9VJG51bGzTCQoLDA0OXxAQTlNFeHByZXNzaW9uVHlwZVYkY2xhc3NfEBhOU0NvbnN0YW50VmFsdWVD
 CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5hbWVWJGNsYXNzWU5TT3BlcmFuZFtOU0FyZ3VtZW50cxAEgAKAC4ADgAZfEBB2YWx1ZUZvcktleVBhdGg60xUJCxYXGFpOU1ZhcmlhYmxlgAQQAoAFVnNvdXJjZdIbHB0eWiRjbGFzc25hbWVYJGNsYXNzZXNfEBROU1ZhcmlhYmxlRXhwcmVzc2lvbqMfICFfEBROU1ZhcmlhYmxlRXhwcmVzc2lvblxOU0V4cHJlc3Npb25YTlNPYmplY3TSCyMkJVpOUy5vYmplY3RzgAqhJoAH0ygJCykqK1lOU0tleVBhdGiACBAKgAlZdGl0bGVIVE1M0hscLi9fEBxOU0tleVBhdGhTcGVjaWZpZXJFeHByZXNzaW9uozAxIV8QHE5TS2V5UGF0aFNwZWNpZmllckV4cHJlc3Npb25cTlNFeHByZXNzaW9u0hscMzReTlNNdXRhYmxlQXJyYXmjMzUhV05TQXJyYXnSGxw3OF8QE05TS2V5UGF0aEV4cHJlc3Npb26kOTo7IV8QE05TS2V5UGF0aEV4cHJlc3Npb25fEBROU0Z1bmN0aW9uRXhwcmVzc2lvblxOU0V4cHJlc3Npb25fEA9OU0tleWVkQXJjaGl2ZXLRPj9Ucm9vdIABAAgAEQAaACMALQAyADcARABKAFUAaAB3AH4AiACUAJYAmACaAJwAngCxALgAwwDFAMcAyQDQANUA4ADpAQABBAEbASgBMQE2AUEBQwFFAUcBTgFYAVoBXAFeAWgBbQGMAZABrwG8AcEB0AHUAdwB4QH3AfwCEgIpAjYCSAJLAlAAAAAAAAACAQAAAAAAAABAAAAAAAAAAAAAAAAAAAACUg==
 </attribute>
         <attribute name="name" type="string">textHTMLString</attribute>
-        <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z105"></relationship>
+        <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z427">
         <attribute name="name" type="string">bannerType</attribute>
