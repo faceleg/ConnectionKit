@@ -620,6 +620,7 @@
 		27DD0B59120329A80083C7C1 /* SVURLFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DD0B57120329A80083C7C1 /* SVURLFormatter.m */; };
 		27DDFDBE11FDB2040083C7C1 /* KSStringWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DDFDBC11FDB2040083C7C1 /* KSStringWriter.h */; };
 		27DDFDBF11FDB2040083C7C1 /* KSStringWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDFDBD11FDB2040083C7C1 /* KSStringWriter.m */; };
+		27E040BA130AC71D00FEA059 /* Media 1.5.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27E040B9130AC71D00FEA059 /* Media 1.5.xcdatamodel */; };
 		27E1BF4B115B8235000FF123 /* SVDocumentUndoManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */; };
 		27E1BF4C115B8235000FF123 /* SVDocumentUndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */; };
 		27E24AC610FB9591004EFE9F /* SVLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E24AC410FB9591004EFE9F /* SVLink.h */; };
@@ -2292,6 +2293,7 @@
 		27DEC7900DDC3EB500D795F3 /* Media System.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Media System.graffle"; sourceTree = "<group>"; };
 		27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileEqualityTester.h; sourceTree = "<group>"; };
 		27DECBA90DE03F0800D795F3 /* KTMediaFileEqualityTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileEqualityTester.m; sourceTree = "<group>"; };
+		27E040B9130AC71D00FEA059 /* Media 1.5.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = "Media 1.5.xcdatamodel"; sourceTree = "<group>"; };
 		27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocumentUndoManager.h; sourceTree = "<group>"; };
 		27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocumentUndoManager.m; sourceTree = "<group>"; };
 		27E24AC410FB9591004EFE9F /* SVLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLink.h; sourceTree = "<group>"; };
@@ -3408,6 +3410,7 @@
 		27409DFC0DEC685300C2387E /* Data Migration */ = {
 			isa = PBXGroup;
 			children = (
+				27E040B9130AC71D00FEA059 /* Media 1.5.xcdatamodel */,
 				27CFC5DF123E280800BF018C /* Sandvox 1.5.xcdatamodel */,
 				27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */,
 				27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */,
@@ -7698,6 +7701,7 @@
 				27A5C390130933980093B397 /* Sandvox.xcmappingmodel in Sources */,
 				2736A0E713095B9800397D1A /* SVPageMigrationPolicy.m in Sources */,
 				2736A10A1309606200397D1A /* SVMigrationManager.m in Sources */,
+				27E040BA130AC71D00FEA059 /* Media 1.5.xcdatamodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

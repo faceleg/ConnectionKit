@@ -189,6 +189,8 @@ static BOOL sDoneLoading;
 		{
 			body = (DOMHTMLElement *)[bodyList item:0];
 		}
+        
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate distantPast]];
 		[_delegate offscreenWebViewController:self didLoadBody:body];
 	}
 }

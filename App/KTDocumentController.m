@@ -191,28 +191,21 @@
 }
 
 - (BOOL)migrateURL:(NSURL *)sourceURL ofType:(NSString *)type error:(NSError **)error;
-{
-    NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox" ofType:@"cdm"]];
-    NSMappingModel *mappingModel = [[NSMappingModel alloc] initWithContentsOfURL:modelURL];
+{    
     
     
+    NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox 1.5" ofType:@"mom"]];
+    NSManagedObjectModel *sModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     
-    NSURL *sourceModelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox 1.5" ofType:@"mom"]];
-    NSManagedObjectModel *sourceModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:sourceModelURL];
-    NSMigrationManager *manager = [[SVMigrationManager alloc] initWithSourceModel:sourceModel destinationModel:[KTDocument managedObjectModel]];
+    modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Media 1.5" ofType:@"mom"]];
+    NSManagedObjectModel *sMediaModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    
+    SVMigrationManager *manager = [[SVMigrationManager alloc] initWithSourceModel:sModel
+                                                                       mediaModel:sMediaModel
+                                                                 destinationModel:[KTDocument managedObjectModel]];
     
     
-    NSURL *sourceStoreURL = [KTDocument datastoreURLForDocumentURL:sourceURL type:kKTDocumentUTI_1_5];
-                           
-    
-    BOOL result = [manager migrateStoreFromURL:sourceStoreURL
-                                          type:type
-                                       options:nil
-                              withMappingModel:mappingModel
-                              toDestinationURL:[KTDocument datastoreURLForDocumentURL:sourceURL type:nil]
-                               destinationType:NSBinaryStoreType
-                            destinationOptions:nil
-                                         error:error];
+    BOOL result = [manager migrateDocumentFromURL:sourceURL toDestinationURL:sourceURL error:error];
     return result;
 }
 

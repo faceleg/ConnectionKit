@@ -8,8 +8,83 @@
 
 #import "SVMigrationManager.h"
 
+#import "KTDocument.h"
+#import "KT.h"
+
+#import "KSURLUtilities.h"
+
 
 @implementation SVMigrationManager
+
+- (id)initWithSourceModel:(NSManagedObjectModel *)sourceModel
+               mediaModel:(NSManagedObjectModel *)mediaModel
+         destinationModel:(NSManagedObjectModel *)destinationModel;
+{
+    OBPRECONDITION(mediaModel);
+    
+    if (self = [super initWithSourceModel:sourceModel destinationModel:destinationModel])
+    {
+        _mediaModel = [mediaModel retain];
+    }
+    
+    return self;
+}
+
+- (id)initWithSourceModel:(NSManagedObjectModel *)sourceModel destinationModel:(NSManagedObjectModel *)destinationModel;
+{
+    return [self initWithSourceModel:sourceModel mediaModel:nil destinationModel:destinationModel];
+}
+
+- (BOOL)migrateDocumentFromURL:(NSURL *)sourceDocURL
+              toDestinationURL:(NSURL *)dURL
+                         error:(NSError **)error;
+{
+    // Create context for accessing media during migration
+    NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc]
+                                                 initWithManagedObjectModel:[self sourceMediaModel]];
+    
+    NSURL *sMediaStoreURL = [sourceDocURL ks_URLByAppendingPathComponent:@"media.xml" isDirectory:NO];
+    
+    if (![coordinator addPersistentStoreWithType:NSXMLStoreType
+                                   configuration:nil
+                                             URL:sMediaStoreURL
+                                         options:nil
+                                           error:error])
+    {
+        [coordinator release];
+        return NO;
+    }
+    
+    _mediaContext = [[NSManagedObjectContext alloc] init];
+    [_mediaContext setPersistentStoreCoordinator:coordinator];
+    [coordinator release];
+    
+    
+    // Do the migration
+    NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox" ofType:@"cdm"]];
+    NSMappingModel *mappingModel = [[NSMappingModel alloc] initWithContentsOfURL:modelURL];
+    
+    NSURL *sStoreURL = [KTDocument datastoreURLForDocumentURL:sourceDocURL type:kKTDocumentUTI_1_5];
+    NSURL *dStoreURL = [KTDocument datastoreURLForDocumentURL:sourceDocURL type:nil];
+    
+    BOOL result = [self migrateStoreFromURL:sStoreURL
+                                       type:NSSQLiteStoreType
+                                    options:nil
+                           withMappingModel:mappingModel
+                           toDestinationURL:dStoreURL
+                            destinationType:NSBinaryStoreType
+                         destinationOptions:nil
+                                      error:error];
+    
+    [mappingModel release];
+    [_mediaContext release];
+    
+    return result;
+}
+
+- (NSManagedObjectModel *)sourceMediaModel; { return _mediaModel; }
+
+- (NSManagedObjectContext *)sourceMediaContext; { return _mediaContext; }
 
 - (NSFetchRequest *)pagesFetchRequest;
 {
