@@ -95,6 +95,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (void)dealloc
 {
+	self.designIdentityWindow = nil;		// Try doing this sooner, crash 108258
+
 	// Get rid of view controllers
 	[self setSiteOutlineViewController:nil];
 	[self setWebContentAreaController:nil];
@@ -118,7 +120,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[myMasterCodeInjectionController release];
 	[myPageCodeInjectionController release];
 
-	self.designIdentityWindow = nil;
 	
     [super dealloc];
 }
