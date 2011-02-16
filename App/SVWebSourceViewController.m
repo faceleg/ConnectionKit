@@ -93,4 +93,10 @@ webContentAreaController:(SVWebContentAreaController *)controller
     return YES;
 }
 
+- (IBAction)reload:(id)sender
+{
+	SVWebEditorHTMLContext *context = self.webEditorViewController.HTMLContext;
+	[self updateWithPage:context.page];
+}
+
 @end
