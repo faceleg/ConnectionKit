@@ -382,7 +382,7 @@ static CGFloat ResizeRowViews(NSArray *rowViews, NSUInteger level)
 		}
 		if (NSLeftTextAlignment != alignment && NSNaturalTextAlignment != alignment)
 		{
-//			DJW((@"****************************** alignment for %@ = %d", subview, alignment));
+//			OFF((@"****************************** alignment for %@ = %d", subview, alignment));
 		}
 		
 		NSUInteger mask = [subview autoresizingMask];
@@ -529,7 +529,7 @@ static CGFloat ResizeAnySubviews(NSView *view, NSUInteger level)
 					CGFloat margin = 10.0;
 					if ([[view superview] isKindOfClass:[NSTabView class]])
 					{
-						DJW((@"FUDGE -- This is where the margin needs to be adjusted for the enclosing tab view"));
+						OFF((@"FUDGE -- This is where the margin needs to be adjusted for the enclosing tab view"));
 						margin -= [[view superview] frame].origin.x;	// this will add 17 to the margin
 					}
 					rowDelta = margin - (enclosingMaxX-newMaxX);
@@ -834,7 +834,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		
 		self == [NSViewController class])
 	{
-		DJW((@"Switching in NSViewController Localizer!"));
+		OFF((@"Switching in NSViewController Localizer!"));
         method_exchangeImplementations(class_getInstanceMethod(self, @selector(loadView)), class_getInstanceMethod(self, @selector(deliciousLocalizingLoadView)));
     }
     [autoreleasePool release];
@@ -849,11 +849,11 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	NSString		*nibPath	= [nibBundle pathForResource:[nibName stringByDeletingPathExtension] ofType:@"nib"];
 	NSDictionary	*context	= [NSDictionary dictionaryWithObjectsAndKeys:self, NSNibOwner, nil];
 	
-	DJW((@"loadView %@ going to localize %@ with top objects: %@", [[nibBundle bundlePath] lastPathComponent], [nibPath lastPathComponent], [[context description] condenseWhiteSpace]));
+	OFF((@"loadView %@ going to localize %@ with top objects: %@", [[nibBundle bundlePath] lastPathComponent], [nibPath lastPathComponent], [[context description] condenseWhiteSpace]));
 	BOOL loaded = [NSBundle _deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil bundle:nibBundle];	// call through to support method
 	if (!loaded)
 	{
-		DJW((@"original loadView being called for %@", [[nibBundle bundlePath] lastPathComponent] ));
+		OFF((@"original loadView being called for %@", [[nibBundle bundlePath] lastPathComponent] ));
 		//[NSBundle deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil];	// use old-fashioned way
 		[self deliciousLocalizingLoadView];		// use the un-swapped method
 	}
@@ -873,7 +873,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		
 		self == [NSBundle class])
 	{
-		DJW((@"Switching in NSBundle localizer. W00T!"));
+		OFF((@"Switching in NSBundle localizer. W00T!"));
         method_exchangeImplementations(class_getClassMethod(self, @selector(loadNibFile:externalNameTable:withZone:)), class_getClassMethod(self, @selector(deliciousLocalizingLoadNibFile:externalNameTable:withZone:)));
 		
 		
@@ -894,12 +894,12 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	// Don't allow this to localize any file that is not in the app bundle!
 	if ([fileName hasPrefix:[[NSBundle mainBundle] bundlePath]])
 	{
-		DJW((@"loadNibFile going to localize %@ with top objects: %@", [fileName lastPathComponent], [[context description] condenseWhiteSpace]));
+		OFF((@"loadNibFile going to localize %@ with top objects: %@", [fileName lastPathComponent], [[context description] condenseWhiteSpace]));
 		result = [self _deliciousLocalizingLoadNibFile:fileName externalNameTable:context withZone:zone bundle:[NSBundle mainBundle]];
 	}
 	else
 	{
-		DJW((@"%s is NOT LOCALIZING non-app loadNibFile:%@",__FUNCTION__, fileName));
+		OFF((@"%s is NOT LOCALIZING non-app loadNibFile:%@",__FUNCTION__, fileName));
 	}
 	if (!result)
 	{
@@ -1001,7 +1001,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 				//if ([fileName hasSuffix:@"KSBugReporterViews.nib"])		// THE ONLY ONE TO RESIZE, FOR NOW, JUST SO IT'S EASIER TO DEBUG.
 				{
 					CGFloat delta = ResizeToFit(view, 0);
-					if (delta) DJW((@"############## Warning: Delta from resizing top-level %@ view: %f", [fileName lastPathComponent], delta));
+					if (delta) OFF((@"############## Warning: Delta from resizing top-level %@ view: %f", [fileName lastPathComponent], delta));
 				}
 			}
 			else if ([topLevelObject isKindOfClass:[NSWindow class]])
@@ -1025,7 +1025,6 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 				if ([fileName hasSuffix:@"KSInspector.nib"])
 				{
 					NSString *myLang = [[[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent] stringByDeletingPathExtension];
-					NSLog(@"%@", myLang);
 					if ([myLang isEqualToString:@"fr"]) delta = MAX(delta, 50);	// Empirically what French needs
 					if ([myLang isEqualToString:@"de"]) delta = MAX(delta, 75);	// GUESS what German needs
 					// Any other languages need a resize? DJW needs to run them through and check logs 
@@ -1034,7 +1033,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 				if (delta > 0)
 				{
 					windowFrame.size.width += delta;
-					DJW((@"##### Delta from resizing window-level view: %f.  Resized the whole %@ window.", delta, [fileName lastPathComponent]));
+					OFF((@"##### Delta from resizing window-level view: %f.  Resized the whole %@ window.", delta, [fileName lastPathComponent]));
 					// TODO: should we update min size?
 					windowFrame = [contentView convertRect:windowFrame toView:nil];
 					[window setFrame:windowFrame display:YES];	
@@ -1049,11 +1048,11 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		
         if (nil == localizedStringsTablePath)
 		{
-			DJW((@"Not running %@ through localizer because localizedStringsTablePath == nil: no .strings file -- %@", localizedStringsTableName, fileName));
+			OFF((@"Not running %@ through localizer because localizedStringsTablePath == nil: no .strings file -- %@", localizedStringsTableName, fileName));
 		}
 		else
 		{
-			DJW((@"Not running %@ through localizer because containing dir is not English -- %@", [[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent], fileName));
+			OFF((@"Not running %@ through localizer because containing dir is not English -- %@", [[localizedStringsTablePath stringByDeletingLastPathComponent] lastPathComponent], fileName));
 		}
 		
 		return NO;		// not successful
@@ -1068,13 +1067,13 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	NSArray *supportedAttrs = [object accessibilityAttributeNames];
 	if ([supportedAttrs containsObject:NSAccessibilityDescriptionAttribute])
 	{
-		DJW((@"DESC: %@", [object accessibilityAttributeValue:NSAccessibilityDescriptionAttribute]));
+		OFF((@"DESC: %@", [object accessibilityAttributeValue:NSAccessibilityDescriptionAttribute]));
 	}
 		
 	if ([supportedAttrs containsObject:NSAccessibilityHelpAttribute])
 	{
 		NSString *accessibilityHelp = [object accessibilityAttributeValue:NSAccessibilityHelpAttribute];
-		// if (accessibilityHelp) DJW((@"HELP: %@", accessibilityHelp));
+		// if (accessibilityHelp) OFF((@"HELP: %@", accessibilityHelp));
 
 		if (accessibilityHelp && ![accessibilityHelp isEqualToString:@""])
 		{
@@ -1089,13 +1088,13 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 					
 					if ([object accessibilityIsAttributeSettable:NSAccessibilityHelpAttribute])
 					{
-						DJW((@"ACCESSIBILITY: %@ %@", localizedAccessibilityHelp, localizedAccessibilityHelp));
+						OFF((@"ACCESSIBILITY: %@ %@", localizedAccessibilityHelp, localizedAccessibilityHelp));
 						[object accessibilitySetValue:localizedAccessibilityHelp
 										 forAttribute:NSAccessibilityHelpAttribute];
 					}
 					else
 					{
-						DJW((@"DISALLOWED ACCESSIBILITY: %@ %@", localizedAccessibilityHelp, localizedAccessibilityHelp));
+						OFF((@"DISALLOWED ACCESSIBILITY: %@ %@", localizedAccessibilityHelp, localizedAccessibilityHelp));
 						
 					}
 				}
@@ -1117,7 +1116,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 //					!([object isKindOfClass:[NSButton class]] && [NSStringFromSelector([object action]) hasSuffix:@"Help:"])
 //					)
 //				{
-//					DJW((@"@@@ Missing accessibility for %@", object));
+//					OFF((@"@@@ Missing accessibility for %@", object));
 //				}
 //			}
 //		}
@@ -1403,7 +1402,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     
 	if ([string hasPrefix:@"["])
 	{
-		DJW((@"??? Double-translation of %@", string));
+		OFF((@"??? Double-translation of %@", string));
 	}
     static NSString *defaultValue = @"I AM THE DEFAULT VALUE";
     NSString *localizedString = [bundle localizedStringForKey:string value:defaultValue table:table];
