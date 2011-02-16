@@ -323,7 +323,6 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     
     // Set our sort key to match
     NSNumber *pageletSortKey = (pagelet ? [pagelet sortKey] : [NSNumber numberWithInteger:-1]);
-    OBASSERT(pageletSortKey);
     NSInteger nextSortKey = [pageletSortKey integerValue] + 1;
     [object setSortKey:[NSNumber numberWithInteger:nextSortKey]];
     
