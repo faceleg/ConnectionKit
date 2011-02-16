@@ -18,10 +18,14 @@
 
 - (void) propagateSidebarRelationshipForDestinationPagelet:(NSManagedObject *)dInstance toDescendantsOfPage:(NSManagedObject *)sPage manager:(NSMigrationManager *)manager
 {
-    NSSet *sPages = [sPage valueForKey:@"children"];
-    NSArray *dSidebars = [manager destinationInstancesForEntityMappingNamed:@"PageToSidebar" sourceInstances:[sPages allObjects]];
+    NSSet *sPages = [[sPage valueForKey:@"children"]
+                     filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"includeInheritedSidebar == 1"]];
+    
+    NSArray *dSidebars = [manager destinationInstancesForEntityMappingNamed:@"PageToSidebar"
+                                                            sourceInstances:[sPages allObjects]];
     
     [[dInstance mutableSetValueForKey:@"sidebars"] addObjectsFromArray:dSidebars];
+    
     
     // Truck on brother
     for (NSManagedObject *aPage in sPages)
