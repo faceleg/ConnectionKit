@@ -83,7 +83,7 @@
 // and http://openradar.appspot.com/7496255 for more information.
 
 
-#define DEBUG_THIS_USER @"dw___ood"
+#define DEBUG_THIS_USER @"dwood"
 
 #import <Cocoa/Cocoa.h>
 #import <objc/runtime.h>
@@ -832,8 +832,9 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		
 //	([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
-		self == [NSViewController class]) {
-		//NSLog(@"Switching in NSViewController Localizer!");
+		self == [NSViewController class])
+	{
+		DJW((@"Switching in NSViewController Localizer!"));
         method_exchangeImplementations(class_getInstanceMethod(self, @selector(loadView)), class_getInstanceMethod(self, @selector(deliciousLocalizingLoadView)));
     }
     [autoreleasePool release];
@@ -868,8 +869,9 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 		
 //		([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
-		self == [NSBundle class]) {
-		//NSLog(@"Switching in NSBundle localizer. W00T!");
+		self == [NSBundle class])
+	{
+		DJW((@"Switching in NSBundle localizer. W00T!"));
         method_exchangeImplementations(class_getClassMethod(self, @selector(loadNibFile:externalNameTable:withZone:)), class_getClassMethod(self, @selector(deliciousLocalizingLoadNibFile:externalNameTable:withZone:)));
 		
 		
@@ -963,7 +965,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     NSString *localizedStringsTablePath = [aBundle pathForResource:localizedStringsTableName ofType:@"strings"];
     if (
 		
-//		([NSUserName() isEqualToString:DEBUG_THIS_USER]) || 
+//		([NSUserName() isEqualToString:DEBUG_THIS_USER]) &&
 		
 			(
 		localizedStringsTablePath
