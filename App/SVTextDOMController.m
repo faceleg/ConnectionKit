@@ -9,6 +9,7 @@
 #import "SVTextDOMController.h"
 
 #import "SVHTMLTextBlock.h"
+#import "SVMediaDOMController.h"
 #import "SVTitleBox.h"
 #import "WebEditingKit.h"
 #import "SVWebEditorViewController.h"
@@ -112,7 +113,12 @@
         }
         else
         {
-            // TODO: Create a new controller
+            SVMediaDOMController *result = [[SVMediaDOMController alloc] init];
+            [result setHTMLElement:(DOMHTMLElement *)node];
+            
+            [self addChildWebEditorItem:result];
+            
+            [result release];
         }
     }
     
