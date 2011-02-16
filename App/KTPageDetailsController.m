@@ -751,7 +751,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		[oWindowTitleField unbind:NSValueBinding];
 		[oWindowTitleField bind:NSValueBinding
 					   toObject:oPagesTreeController
-					withKeyPath:@"selection.windowTitle"
+					withKeyPath:@"selection.comboTitleText"
 						options:self.initialWindowTitleBindingOptions];
 		
 		[oMetaDescriptionField unbind:NSValueBinding];

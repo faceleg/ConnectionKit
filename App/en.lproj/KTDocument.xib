@@ -898,7 +898,7 @@
 														<object class="NSTextField" id="680529185">
 															<reference key="NSNextResponder" ref="607898317"/>
 															<int key="NSvFlags">265</int>
-															<string key="NSFrame">{{0, 20}, {113, 14}}</string>
+															<string key="NSFrame">{{0, 21}, {113, 14}}</string>
 															<reference key="NSSuperview" ref="607898317"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTextFieldCell" key="NSCell" id="727344823">
@@ -2204,24 +2204,18 @@
 								<object class="NSArray" key="dict.sortedKeys">
 									<bool key="EncodedWithXMLCoder">YES</bool>
 									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
 									<string>NSRaisesForNotApplicableKeys</string>
 								</object>
 								<object class="NSMutableArray" key="dict.values">
 									<bool key="EncodedWithXMLCoder">YES</bool>
 									<string>Multiple pages selected. Titles should be unique.</string>
-									<string>NO SEL</string>
-									<string>NOT APP</string>
-									<string>NULL</string>
 									<boolean value="NO"/>
 								</object>
 							</object>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">2273</int>
+					<int key="connectionID">2279</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2239,24 +2233,20 @@
 								<object class="NSArray" key="dict.sortedKeys">
 									<bool key="EncodedWithXMLCoder">YES</bool>
 									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
 									<string>NSNullPlaceholder</string>
 									<string>NSRaisesForNotApplicableKeys</string>
 								</object>
 								<object class="NSMutableArray" key="dict.values">
 									<bool key="EncodedWithXMLCoder">YES</bool>
 									<string>Multiple pages selected. Descriptions should be unique.</string>
-									<string>NO SEL</string>
-									<string>NOT APP</string>
-									<string>NULL</string>
+									<string>Summary of this page as it will appear in Google listings</string>
 									<boolean value="NO"/>
 								</object>
 							</object>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">2276</int>
+					<int key="connectionID">2283</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2622,7 +2612,6 @@
 							<reference ref="209282229"/>
 							<reference ref="987946768"/>
 							<reference ref="899980468"/>
-							<reference ref="452661693"/>
 							<reference ref="597655839"/>
 							<reference ref="408006662"/>
 							<reference ref="481224017"/>
@@ -2630,6 +2619,7 @@
 							<reference ref="192588387"/>
 							<reference ref="486193302"/>
 							<reference ref="953316196"/>
+							<reference ref="452661693"/>
 						</object>
 						<reference key="parent" ref="641495171"/>
 					</object>
@@ -3519,7 +3509,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2276</int>
+			<int key="maxID">2283</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

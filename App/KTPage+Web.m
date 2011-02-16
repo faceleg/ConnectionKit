@@ -382,6 +382,10 @@
 */
 - (NSString *)comboTitleText
 {
+	if (self.windowTitle && ![self.windowTitle isEqualToString:@""])
+	{
+		return self.windowTitle;
+	}
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSString *titleSeparator = [defaults objectForKey:@"TitleSeparator"];
 	
