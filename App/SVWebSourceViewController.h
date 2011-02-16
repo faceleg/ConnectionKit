@@ -17,6 +17,7 @@
 
 	IBOutlet NSTextView *oSourceView;
 
+	KTPage						*_currentPage;
     KTWebViewViewType           _viewType;
     SVWebEditorViewController   *_webEditorViewController;
 }
@@ -25,5 +26,6 @@
 
 @property(nonatomic) KTWebViewViewType viewType;
 @property(nonatomic, retain) SVWebEditorViewController *webEditorViewController;
+@property(nonatomic, retain) KTPage *currentPage;
 
 @end

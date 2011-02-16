@@ -36,6 +36,7 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self
 													name:sSVWebEditorViewControllerWillUpdateNotification
 												  object:self.webEditorViewController];
+	self.currentPage = nil;
 	self.webEditorViewController = nil;
 	[super dealloc];
 }
@@ -44,11 +45,13 @@
 
 @synthesize viewType = _viewType;
 @synthesize webEditorViewController = _webEditorViewController;
+@synthesize currentPage = _currentPage;
 
 #pragma mark Presentation
 
 - (void)updateWithPage:(KTPage *)page;
-{    
+{
+	self.currentPage = page;
     NSString *pageHTML = @"";
     if (page)
     {
@@ -89,14 +92,14 @@
 webContentAreaController:(SVWebContentAreaController *)controller
 {
     [self setViewType:[controller viewType]];   // copy across for use during updates
-    [self updateWithPage:(KTPage *)[controller selectedPage]];
+	self.currentPage = (KTPage *)[controller selectedPage];
+    [self updateWithPage:self.currentPage];
     return YES;
 }
 
 - (IBAction)reload:(id)sender
 {
-	SVWebEditorHTMLContext *context = self.webEditorViewController.HTMLContext;
-	[self updateWithPage:context.page];
+	[self updateWithPage:self.currentPage];
 }
 
 @end
