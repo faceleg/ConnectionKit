@@ -627,6 +627,8 @@
 		27E04197130AEEE300FEA059 /* SVArticleMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E04195130AEEE300FEA059 /* SVArticleMigrationPolicy.m */; };
 		27E0426B130B3AF300FEA059 /* SVPageletTitleMigrationPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E04269130B3AF300FEA059 /* SVPageletTitleMigrationPolicy.h */; };
 		27E0426C130B3AF300FEA059 /* SVPageletTitleMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E0426A130B3AF300FEA059 /* SVPageletTitleMigrationPolicy.m */; };
+		27E044EA130BF65D00FEA059 /* SVSidebarMigrationPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E044E8130BF65D00FEA059 /* SVSidebarMigrationPolicy.h */; };
+		27E044EB130BF65D00FEA059 /* SVSidebarMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E044E9130BF65D00FEA059 /* SVSidebarMigrationPolicy.m */; };
 		27E1BF4B115B8235000FF123 /* SVDocumentUndoManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */; };
 		27E1BF4C115B8235000FF123 /* SVDocumentUndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */; };
 		27E24AC610FB9591004EFE9F /* SVLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E24AC410FB9591004EFE9F /* SVLink.h */; };
@@ -2306,6 +2308,8 @@
 		27E04195130AEEE300FEA059 /* SVArticleMigrationPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVArticleMigrationPolicy.m; sourceTree = "<group>"; };
 		27E04269130B3AF300FEA059 /* SVPageletTitleMigrationPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageletTitleMigrationPolicy.h; sourceTree = "<group>"; };
 		27E0426A130B3AF300FEA059 /* SVPageletTitleMigrationPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageletTitleMigrationPolicy.m; sourceTree = "<group>"; };
+		27E044E8130BF65D00FEA059 /* SVSidebarMigrationPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSidebarMigrationPolicy.h; sourceTree = "<group>"; };
+		27E044E9130BF65D00FEA059 /* SVSidebarMigrationPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSidebarMigrationPolicy.m; sourceTree = "<group>"; };
 		27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocumentUndoManager.h; sourceTree = "<group>"; };
 		27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocumentUndoManager.m; sourceTree = "<group>"; };
 		27E24AC410FB9591004EFE9F /* SVLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLink.h; sourceTree = "<group>"; };
@@ -3439,6 +3443,8 @@
 				27E04195130AEEE300FEA059 /* SVArticleMigrationPolicy.m */,
 				27E04269130B3AF300FEA059 /* SVPageletTitleMigrationPolicy.h */,
 				27E0426A130B3AF300FEA059 /* SVPageletTitleMigrationPolicy.m */,
+				27E044E8130BF65D00FEA059 /* SVSidebarMigrationPolicy.h */,
+				27E044E9130BF65D00FEA059 /* SVSidebarMigrationPolicy.m */,
 			);
 			name = "Data Migration";
 			sourceTree = "<group>";
@@ -6127,6 +6133,7 @@
 				27E040EB130ACDD800FEA059 /* SVMediaMigrationPolicy.h in Headers */,
 				27E04196130AEEE300FEA059 /* SVArticleMigrationPolicy.h in Headers */,
 				27E0426B130B3AF300FEA059 /* SVPageletTitleMigrationPolicy.h in Headers */,
+				27E044EA130BF65D00FEA059 /* SVSidebarMigrationPolicy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7726,6 +7733,7 @@
 				27E040EC130ACDD800FEA059 /* SVMediaMigrationPolicy.m in Sources */,
 				27E04197130AEEE300FEA059 /* SVArticleMigrationPolicy.m in Sources */,
 				27E0426C130B3AF300FEA059 /* SVPageletTitleMigrationPolicy.m in Sources */,
+				27E044EB130BF65D00FEA059 /* SVSidebarMigrationPolicy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
