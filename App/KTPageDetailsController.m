@@ -267,6 +267,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 													 name:NSViewFrameDidChangeNotification
 												   object:[self view]];
 
+		DJW((@"Gonna call layoutPageURLComponents from awakeFromNib"));
 		[self layoutPageURLComponents];
 		
 		// Observe changes to the meta description and fake an initial observation
@@ -567,6 +568,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void) updateFieldsBasedOnSelectedSiteOutlineObjects:(NSArray *)selObjects;
 {
+	DJW((@"updateFieldsBasedOnSelectedSiteOutlineObjects: %@", [[selObjects description] condenseWhiteSpace] ));
 	if (NSIsControllerMarker(selObjects))
 	{
 		NSLog(@"Controller marker:  %@", selObjects);
@@ -605,9 +607,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		char *typestrings[] =  { "kMixedSiteItemType", "kUnknownSiteItemType", "kLinkSiteItemType", "kTextSiteItemType", "kFileSiteItemType", "kPageSiteItemType" };
 #pragma unused (typestrings)
 
-		OFF((@"whatKindOfItemsAreSelected => %s", typestrings[combinedType+1]));
+		DJW((@"whatKindOfItemsAreSelected => %s", typestrings[combinedType+1]));
 		self.whatKindOfItemsAreSelected = combinedType;
 		
+		DJW((@"Gonna call layoutPageURLComponents from updateFieldsBasedOnSelectedSiteOutlineObjects:"));
 		[self layoutPageURLComponents];
 	}
 }
@@ -712,6 +715,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 {	
 //	NSLog(@"object = %@", object);
 	
+	DJW((@"Gonna call layoutPageURLComponents from observeValueForKeyPath:%@ %@", keyPath, context));
 	[self layoutPageURLComponents];
 
 	if (context == sMetaDescriptionObservationContext)
@@ -983,7 +987,25 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	[oFileNameField setHidden:!arePagesSelected
 							   || (arePagesSelected && IS_ROOT_STATE == pageIsCollectionState)
 								|| selectedObjectsCount > 1];
-	[oMediaFilenameField setHidden:(!areFilesSelected && !areTextsSelected) || selectedObjectsCount > 1];
+	BOOL hideMediaFilename = (!areFilesSelected && !areTextsSelected) || selectedObjectsCount > 1;
+	[oMediaFilenameField setHidden:hideMediaFilename];
+//	DJW((@"oMediaFilenameField hidden? %d", hideMediaFilename));
+	
+//	
+//	NSArray *exposedBindings = [oMediaFilenameField exposedBindings];
+//	if (exposedBindings) {
+//		for (NSString *exposedBinding in exposedBindings)
+//		{
+//			NSDictionary *bindingInfo = [oMediaFilenameField infoForBinding:exposedBinding];
+//			if (bindingInfo)
+//			{
+//				NSLog(@"%@: %@", exposedBinding, [[bindingInfo description] condenseWhiteSpace]);
+//			}
+//		}
+//	}
+
+	
+	
 	
 	if (![oFileNameField isHidden])
 	{
@@ -1139,7 +1161,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			
 			// bindings: baseExampleURLString, fileName.  Are these coming through on media?
 		}
-			
+	
+		NSLog(@"items to layout = %@", itemsToLayOut);
 		int widths[6] = { 0 }; // filled in below. Make sure we have enough items for array above
 		int i = 0;
 		// Collect up the widths that these items *want* to be
@@ -1288,6 +1311,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void) backgroundFrameChanged:(NSNotification *)notification
 {
+	DJW((@"Gonna call layoutPageURLComponents from backgroundFrameChanged"));
 	[self layoutPageURLComponents];
 }
 
@@ -1343,6 +1367,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		{
 			[self fileNameDidChangeToValue:newString];
 		}
+		DJW((@"Gonna call layoutPageURLComponents from controlTextDidChange:"));
 		[self layoutPageURLComponents];		
 		_alreadyHandlingControlTextDidChange = NO;
 	}
