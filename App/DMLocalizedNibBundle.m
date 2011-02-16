@@ -841,7 +841,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 }
 
 
-- (void)deliciousLocalizingLoadView
+- (void)deliciousLocalizingLoadView		// Replacement for -[NSViewControllerloadView]
 {
 	NSString		*nibName	= [self nibName];
 	NSBundle		*nibBundle	= [self nibBundle];		
@@ -849,7 +849,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	NSString		*nibPath	= [nibBundle pathForResource:[nibName stringByDeletingPathExtension] ofType:@"nib"];
 	NSDictionary	*context	= [NSDictionary dictionaryWithObjectsAndKeys:self, NSNibOwner, nil];
 	
-	// DJW((@"loadView %@ going to localize %@ with top objects: %@", [[nibBundle bundlePath] lastPathComponent], [nibPath lastPathComponent], [[context description] condenseWhiteSpace]));
+	DJW((@"loadView %@ going to localize %@ with top objects: %@", [[nibBundle bundlePath] lastPathComponent], [nibPath lastPathComponent], [[context description] condenseWhiteSpace]));
 	BOOL loaded = [NSBundle _deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil bundle:nibBundle];	// call through to support method
 	if (!loaded)
 	{
@@ -884,7 +884,8 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
     [autoreleasePool release];
 }
 
-// Method that gets swapped
+// Method that gets swapped in for +[NSBundle loadNibFile:externalNameTable:withZone:]
+
 + (BOOL)deliciousLocalizingLoadNibFile:(NSString *)fileName externalNameTable:(NSDictionary *)context withZone:(NSZone *)zone;
 {
 	BOOL result = NO;
