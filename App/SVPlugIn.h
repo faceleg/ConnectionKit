@@ -161,4 +161,10 @@ typedef enum {
 - (void)enableUndoRegistration;
 
 
+#pragma mark Migration from 1.5
+// Called to migrate plug-ins from 1.5 properties to 2.0. Probably not applicable to third-party developers
+// Default behaviour is to read each +plugInKeys value and set them on self. Subclasses can override to do additional processing
+- (void)awakeFromSourceProperties:(NSDictionary *)properties;
+
+
 @end

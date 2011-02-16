@@ -349,6 +349,14 @@ static id <SVPlugInContext> sCurrentContext;
 
 @synthesize container = _container;
 
+#pragma mark Migration from 1.5
+
+- (void)awakeFromSourceProperties:(NSDictionary *)properties;
+{
+    properties = [properties dictionaryWithValuesForKeys:[[self class] plugInKeys]];
+    [self setValuesForKeysWithDictionary:properties];
+}
+
 @end
 
 

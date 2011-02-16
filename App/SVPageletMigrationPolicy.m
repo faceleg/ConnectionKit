@@ -94,6 +94,25 @@
     return [NSNumber numberWithInteger:result];
 }
 
+- (NSData *)dataFromSourceExtensibleProperties:(NSDictionary *)properties plugInIdentifier:(NSString *)identifier;
+{
+    SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
+    SVPlugIn *plugIn = [[[factory plugInClass] alloc] init];
+    [plugIn awakeFromSourceProperties:properties];
+    
+    NSMutableDictionary *serializedProperties = [[NSMutableDictionary alloc] init];
+    for (NSString *aKey in [[plugIn class] plugInKeys])
+    {
+        id value = [plugIn serializedValueForKey:aKey];
+        if (value) [serializedProperties setObject:value forKey:aKey];
+    }
+    
+    NSData *result = [KSExtensibleManagedObject archiveExtensibleProperties:serializedProperties];
+    [serializedProperties release];
+    
+    return result;
+}
+
 @end
 
 
