@@ -522,6 +522,9 @@ FQcIExwdIiMrLzI3PD1AQUVKS1BTWVUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlwZV8Q
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z164"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z190">
+        <attribute name="userinfodata" type="binary">YnBsaXN0MDDUAQIDBAUGGhtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKUH
+CBESE1UkbnVsbNMJCgsMDQ9WJGNsYXNzV05TLmtleXNaTlMub2JqZWN0c4AEoQ6AAqEQgANfEB9tZWRpYUNvbnRhaW5lcklkZW50aWZpZXJLZXlQYXRoXxAgZG93bmxvYWRNZWRpYS5teU9iamVjdElkZW50aWZpZXLSFBUWF1okY2xhc3NuYW1lWCRjbGFzc2VzXxATTlNNdXRhYmxlRGljdGlvbmFyeaMWGBlcTlNEaWN0aW9uYXJ5WE5TT2JqZWN0XxAPTlNLZXllZEFyY2hpdmVy0RwdVHJvb3SAAQAIABEAGgAjAC0AMgA3AD0AQwBKAFEAWQBkAGYAaABqAGwAbgCQALMAuADDAMwA4gDmAPMA/AEOAREBFgAAAAAAAAIBAAAAAAAAAB4AAAAAAAAAAAAAAAAAAAEY
+</attribute>
         <attribute name="migrationpolicyclassname" type="string">SVMediaMigrationPolicy</attribute>
         <attribute name="sourcename" type="string">Page</attribute>
         <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier == "sandvox.DownloadElement"</attribute>
@@ -1428,6 +1431,9 @@ cBIAAYagrxEUdwAHAAgAFwAYADQANQA2AIoAiwCMAI0AjgCPAJAAkQCSAJMAlACVAJYAlwCYAJkAmgCb
         <relationship name="entitymappings" type="0/0" destination="XDDEVENTITYMAPPING" idrefs="z190 z451 z186 z356 z323 z483 z304 z438 z359 z261 z349 z465 z164 z405 z247 z330 z142 z197 z250 z175 z307 z165 z180 z348 z271 z477 z475 z205 z334 z470 z482 z135 z105 z298 z212"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z354">
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGGBlYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKQH
+CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNzEACAAoADWnB1YmxpYy5wbmfSERITFFokY2xhc3NuYW1lWCRjbGFzc2VzXxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvbqMVFhdfEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uXE5TRXhwcmVzc2lvblhOU09iamVjdF8QD05TS2V5ZWRBcmNoaXZlctEaG1Ryb290gAEACAARABoAIwAtADIANwA8AEIASQBcAG4AdQB3AHkAewCGAIsAlgCfALsAvwDbAOgA8QEDAQYBCwAAAAAAAAIBAAAAAAAAABwAAAAAAAAAAAAAAAAAAAEN
+</attribute>
         <attribute name="name" type="string">typeToPublish</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z271"></relationship>
     </object>
@@ -1628,6 +1634,8 @@ CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5h
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z186"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z392">
+        <attribute name="sourcemappingname" type="string">PageletToGraphicMedia</attribute>
+        <attribute name="sourcekeypath" type="string">$source</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <attribute name="name" type="string">media</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z271"></relationship>
@@ -1983,6 +1991,9 @@ CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5h
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z164"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z461">
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGGBlYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKQH
+CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNzEACAAoADCNIREhMUWiRjbGFzc25hbWVYJGNsYXNzZXNfEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uoxUWF18QGU5TQ29uc3RhbnRWYWx1ZUV4cHJlc3Npb25cTlNFeHByZXNzaW9uWE5TT2JqZWN0XxAPTlNLZXllZEFyY2hpdmVy0RobVHJvb3SAAQAIABEAGgAjAC0AMgA3ADwAQgBJAFwAbgB1AHcAeQB7AHwAgQCMAJUAsQC1ANEA3gDnAPkA/AEBAAAAAAAAAgEAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAQM=
+</attribute>
         <attribute name="name" type="string">isMediaPlaceholder</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z271"></relationship>
     </object>
@@ -2029,12 +2040,18 @@ CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5h
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z250"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z470">
+        <attribute name="userinfodata" type="binary">YnBsaXN0MDDUAQIDBAUGGhtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKUH
+CBESE1UkbnVsbNMJCgsMDQ9WJGNsYXNzV05TLmtleXNaTlMub2JqZWN0c4AEoQ6AAqEQgANfEB9tZWRpYUNvbnRhaW5lcklkZW50aWZpZXJLZXlQYXRoXxAYaW1hZ2UubXlPYmplY3RJZGVudGlmaWVy0hQVFhdaJGNsYXNzbmFtZVgkY2xhc3Nlc18QE05TTXV0YWJsZURpY3Rpb25hcnmjFhgZXE5TRGljdGlvbmFyeVhOU09iamVjdF8QD05TS2V5ZWRBcmNoaXZlctEcHVRyb290gAEACAARABoAIwAtADIANwA9AEMASgBRAFkAZABmAGgAagBsAG4AkACrALAAuwDEANoA3gDrAPQBBgEJAQ4AAAAAAAACAQAAAAAAAAAeAAAAAAAAAAAAAAAAAAABEA==
+</attribute>
+        <attribute name="sourcename" type="string">Pagelet</attribute>
+        <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier == "sandvox.ImageElement"</attribute>
+        <attribute name="migrationpolicyclassname" type="string">SVMediaMigrationPolicy</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
         <attribute name="mappingnumber" type="int16">24</attribute>
         <attribute name="destinationname" type="string">GraphicMedia</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z462 z492 z289 z355 z350 z168"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z492 z289 z350 z462 z168 z355"></relationship>
         <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z145"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z471">
