@@ -57,7 +57,13 @@
                                                             inManagedObjectContext:[manager destinationContext]];
     
     [record setValue:filename forKey:@"filename"];
-    [record setValue:[mediaFile valueForKey:@"sourceFilename"] forKey:@"preferredFilename"];
+    
+    NSString *preferredFilename = [mediaFile valueForKey:@"sourceFilename"];
+    if (!preferredFilename)
+    {
+        preferredFilename = filename;
+    }
+    [record setValue:preferredFilename forKey:@"preferredFilename"];
     
     [manager associateSourceInstance:sInstance withDestinationInstance:record forEntityMapping:mapping];
     
