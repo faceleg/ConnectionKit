@@ -41,7 +41,17 @@
                                                              inManagedObjectContext:[manager destinationContext]];
     
         
-    if (![string length] && [keyPath isEqualToString:@"richTextHTML"]) string = @"<p>Non-text pages</p>";
+    if (![string length])
+    {
+        if ([keyPath isEqualToString:@"richTextHTML"])
+        {
+            string = @"<p>Non-text pages</p>";
+        }
+        else
+        {
+            string = @"<p></p>";
+        }
+    }
     [article setValue:string forKey:@"string"];
     
     
