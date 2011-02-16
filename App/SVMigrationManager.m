@@ -112,6 +112,7 @@
 
 - (NSNumber *)isNil:(id)anObject; { return NSBOOL(anObject == nil); }
 - (NSNumber *)isNotNil:(id)anObject; { return NSBOOL(anObject != nil); }
+- (NSNumber *)boolValue:(id)anObject; { return NSBOOL([anObject boolValue]); }
 
 - (NSDictionary *)extensiblePropertiesFromData:(NSData *)data;
 {
