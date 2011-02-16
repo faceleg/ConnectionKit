@@ -20,9 +20,18 @@
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
 {
     // Figure media ID
-    NSDictionary *properties = [KSExtensibleManagedObject unarchiveExtensibleProperties:[sInstance valueForKey:@"extensiblePropertiesData"]];
     NSString *keyPath = [[mapping userInfo] objectForKey:@"mediaContainerIdentifierKeyPath"];
-    NSString *mediaID = [properties valueForKeyPath:keyPath];
+    NSString *mediaID;
+    
+    if ([[[sInstance entity] attributesByName] objectForKey:keyPath])
+    {
+        mediaID = [sInstance valueForKey:keyPath];
+    }
+    else
+    {
+        NSDictionary *properties = [KSExtensibleManagedObject unarchiveExtensibleProperties:[sInstance valueForKey:@"extensiblePropertiesData"]];
+        mediaID = [properties valueForKeyPath:keyPath];
+    }
     
     if (!mediaID) return YES;   // there was no media to import
     
