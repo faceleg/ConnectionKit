@@ -16,13 +16,29 @@
 
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager error:(NSError **)error;
 {
-    NSManagedObject *article = [SVArticle insertPageBodyIntoManagedObjectContext:[manager destinationContext]];
+    // Loate HTML
+    NSString *keyPath = [[mapping userInfo] objectForKey:@"stringKeyPath"];
+    NSString *string;
     
-    NSDictionary *properties = [KSExtensibleManagedObject unarchiveExtensibleProperties:[sInstance valueForKey:@"extensiblePropertiesData"]];
+    if ([[[sInstance entity] attributesByName] objectForKey:keyPath])
+    {
+        string = [sInstance valueForKey:keyPath];
+    }
+    else
+    {
+        NSDictionary *properties = [KSExtensibleManagedObject unarchiveExtensibleProperties:[sInstance valueForKey:@"extensiblePropertiesData"]];
+        string = [properties valueForKeyPath:keyPath];
+    }
     
-    NSString *html = [properties objectForKey:@"richTextHTML"];
-    if (![html length]) html = @"<p>Non-text pages</p>";
-    [article setValue:html forKey:@"string"];
+    
+    // Insert new
+    NSManagedObject *article = [NSEntityDescription insertNewObjectForEntityForName:[mapping destinationEntityName]
+                                                             inManagedObjectContext:[manager destinationContext]];
+    
+        
+    if (![string length]) string = @"<p>Non-text pages</p>";
+    [article setValue:string forKey:@"string"];
+    
     
     [manager associateSourceInstance:sInstance withDestinationInstance:article forEntityMapping:mapping];
      
