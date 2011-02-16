@@ -213,6 +213,17 @@
     [context writeHTMLString:[self titleHTMLString]];
 }
 
+- (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
+{
+    // Make sure .titleBox is already faulted in before observing title. #108418
+    if ([keyPath isEqualToString:@"title"] && [self isFault])
+    {
+        [self willAccessValueForKey:nil];
+    }
+    
+    [super addObserver:observer forKeyPath:keyPath options:options context:context];
+}
+
 #pragma mark Body
 
 @dynamic article;
