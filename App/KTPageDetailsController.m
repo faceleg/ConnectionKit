@@ -42,6 +42,7 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
 static NSString *sWindowTitleObservationContext = @"-windowTitle observation context";
 static NSString *sFileNameObservationContext = @"-fileName observation context";
 static NSString *sBaseExampleURLStringObservationContext = @"-baseExampleURLString observation context";
+static NSString *sExternalURLStringObservationContext = @"-externalURLString observation context";
 static NSString *sSelectedObjectsObservationContext = @"-selectedObjects observation context";
 static NSString *sSelectedViewControllerObservationContext = @"-selectedViewController observation context";
 static NSString *sCharacterDescription0Count = nil;
@@ -295,6 +296,11 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 							  options:NSKeyValueObservingOptionNew
 							  context:sBaseExampleURLStringObservationContext];
 
+		[oPagesTreeController addObserver:self
+							   forKeyPath:@"selection.URL"
+								  options:NSKeyValueObservingOptionNew
+								  context:sExternalURLStringObservationContext];
+		
 		[oPagesTreeController addObserver:self
 						   forKeyPath:@"selectedObjects"
 							  options:NSKeyValueObservingOptionNew
@@ -724,6 +730,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	{
 		; // base URL changed, so re-layout
 	}
+	else if (context == sExternalURLStringObservationContext)
+	{
+		DJW((@"context == sExternalURLStringObservationContext")); // external URL changed, so re-layout
+	}
 	else if (context == sSelectedViewControllerObservationContext)
 	{
 		[self rebindWindowTitleAndMetaDescriptionFields];
@@ -1031,6 +1041,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		}
 		else
 		{
+			DJW((@"%@", [oExternalURLField stringValue]));
 			extURLSize = [[oExternalURLField attributedStringValue] size];
 		}
         
@@ -1045,7 +1056,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		frame = [oFollowButton frame];
 		frame.origin.x = NSMaxX([oExternalURLField frame])+8;
 		[oFollowButton setFrame:frame];
-//		NSLog(@"set oFollowButton to %@", NSStringFromRect(frame));
+		DJW((@"set oFollowButton to %@", NSStringFromRect(frame)));
 	}
 	else if (hasLocalPath || areMultiSelected)
 	{
