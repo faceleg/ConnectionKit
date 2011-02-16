@@ -110,6 +110,7 @@
     return result;
 }
 
+- (NSNumber *)isNil:(id)anObject; { return NSBOOL(anObject == nil); }
 - (NSNumber *)isNotNil:(id)anObject; { return NSBOOL(anObject != nil); }
 
 - (NSDictionary *)extensiblePropertiesFromData:(NSData *)data;
