@@ -743,6 +743,16 @@
     [self startElement:elementName];
 }
 
+- (NSString *)startElement:(NSString *)elementName
+          bindSizeToPlugIn:(SVPlugIn *)plugIn
+           preferredIdName:(NSString *)preferredID
+                attributes:(NSDictionary *)attributes;
+{
+    NSString *result = [self pushPreferredIdName:preferredID];
+    [self startElement:elementName bindSizeToPlugIn:plugIn attributes:attributes];
+    return result;
+}
+
 #pragma mark Text Blocks
 
 - (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)block; { }
