@@ -853,7 +853,9 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 	BOOL loaded = [NSBundle _deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil bundle:nibBundle];	// call through to support method
 	if (!loaded)
 	{
-		[NSBundle deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil];	// use old-fashioned way
+		DJW((@"original loadView being called for %@", [[nibBundle bundlePath] lastPathComponent] ));
+		//[NSBundle deliciousLocalizingLoadNibFile:nibPath externalNameTable:context withZone:nil];	// use old-fashioned way
+		[self deliciousLocalizingLoadView];		// use the un-swapped method
 	}
 }
 
