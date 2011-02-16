@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.SystemVersion">10H574</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
@@ -540,7 +540,7 @@
 														<object class="NSTextField" id="192588387">
 															<reference key="NSNextResponder" ref="327729126"/>
 															<int key="NSvFlags">-2147483382</int>
-															<string key="NSFrame">{{128, 39}, {35, 14}}</string>
+															<string key="NSFrame">{{128, 33}, {35, 14}}</string>
 															<reference key="NSSuperview" ref="327729126"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTextFieldCell" key="NSCell" id="820609068">
@@ -1921,39 +1921,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.fileName</string>
-						<reference key="source" ref="486193302"/>
-						<reference key="destination" ref="660072411"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="486193302"/>
-							<reference key="NSDestination" ref="660072411"/>
-							<string key="NSLabel">value: selection.fileName</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.fileName</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSConditionallySetsHidden</string>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSRaisesForNotApplicableKeys</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<boolean value="YES"/>
-									<string type="base64-UTF8">IA</string>
-									<string>unknown</string>
-									<boolean value="NO"/>
-								</object>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">2252</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: selection.baseExampleURLString</string>
 						<reference key="source" ref="209282229"/>
 						<reference key="destination" ref="660072411"/>
@@ -2067,39 +2034,6 @@
 						</object>
 					</object>
 					<int key="connectionID">2260</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.filename</string>
-						<reference key="source" ref="192588387"/>
-						<reference key="destination" ref="660072411"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="192588387"/>
-							<reference key="NSDestination" ref="660072411"/>
-							<string key="NSLabel">value: selection.filename</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.filename</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSConditionallySetsHidden</string>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSRaisesForNotApplicableKeys</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<boolean value="YES"/>
-									<string type="base64-UTF8">IA</string>
-									<string>unknown</string>
-									<boolean value="NO"/>
-								</object>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">2261</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2247,6 +2181,68 @@
 						</object>
 					</object>
 					<int key="connectionID">2283</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.fileName</string>
+						<reference key="source" ref="486193302"/>
+						<reference key="destination" ref="660072411"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="486193302"/>
+							<reference key="NSDestination" ref="660072411"/>
+							<string key="NSLabel">value: selection.fileName</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.fileName</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSRaisesForNotApplicableKeys</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string type="base64-UTF8">IA</string>
+									<string>unknown</string>
+									<boolean value="NO"/>
+								</object>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2284</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.filename</string>
+						<reference key="source" ref="192588387"/>
+						<reference key="destination" ref="660072411"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="192588387"/>
+							<reference key="NSDestination" ref="660072411"/>
+							<string key="NSLabel">value: selection.filename</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.filename</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSRaisesForNotApplicableKeys</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string type="base64-UTF8">IA</string>
+									<string>unknown</string>
+									<boolean value="NO"/>
+								</object>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2285</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3229,10 +3225,10 @@
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{541, 458}, {1002, 548}}</string>
+					<string>{{353, 458}, {1002, 548}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{541, 458}, {1002, 548}}</string>
+					<string>{{353, 458}, {1002, 548}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{800, 280}</string>
@@ -3509,7 +3505,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2283</int>
+			<int key="maxID">2285</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
