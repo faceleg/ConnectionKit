@@ -110,6 +110,8 @@
     return result;
 }
 
+- (NSNumber *)isNotNil:(id)anObject; { return NSBOOL(anObject != nil); }
+
 - (NSDictionary *)extensiblePropertiesFromData:(NSData *)data;
 {
     NSDictionary *result = [KSExtensibleManagedObject unarchiveExtensibleProperties:data];
