@@ -80,6 +80,12 @@ typedef enum {
     }
 }
 
+- (NSNumber *)collectionMaxFeedItemLength:(NSNumber *)length;
+{
+    if (![length boolValue]) length = [NSNumber numberWithInt:1000];
+    return length;
+}
+
 - (NSString *)RSSFileNameFromExtensiblePropertiesData:(NSData *)data;
 {
     // If a value was ever set, use it. Otherwise fall back to prefs. #100026
