@@ -732,7 +732,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 	else if (context == sExternalURLStringObservationContext)
 	{
-		DJW((@"context == sExternalURLStringObservationContext")); // external URL changed, so re-layout
+		; // DJW((@"context == sExternalURLStringObservationContext")); // external URL changed, so re-layout
 	}
 	else if (context == sSelectedViewControllerObservationContext)
 	{
@@ -1041,7 +1041,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		}
 		else
 		{
-			DJW((@"%@", [oExternalURLField stringValue]));
+			// DJW((@"%@", [oExternalURLField stringValue]));
 			extURLSize = [[oExternalURLField attributedStringValue] size];
 		}
         
@@ -1056,7 +1056,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		frame = [oFollowButton frame];
 		frame.origin.x = NSMaxX([oExternalURLField frame])+8;
 		[oFollowButton setFrame:frame];
-		DJW((@"set oFollowButton to %@", NSStringFromRect(frame)));
+		// DJW((@"set oFollowButton to %@", NSStringFromRect(frame)));
 	}
 	else if (hasLocalPath || areMultiSelected)
 	{
