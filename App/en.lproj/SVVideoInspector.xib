@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.SystemVersion">10H574</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">823</string>
@@ -41,7 +41,7 @@
 					<object class="NSButton" id="856689416">
 						<reference key="NSNextResponder" ref="913361672"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{7, 225}, {63, 18}}</string>
+						<string key="NSFrame">{{7, 285}, {63, 18}}</string>
 						<reference key="NSSuperview" ref="913361672"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="876182142">
@@ -72,7 +72,7 @@
 					<object class="NSButton" id="83876535">
 						<reference key="NSNextResponder" ref="913361672"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{31, 245}, {122, 18}}</string>
+						<string key="NSFrame">{{31, 225}, {122, 18}}</string>
 						<reference key="NSSuperview" ref="913361672"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="196029596">
@@ -94,7 +94,7 @@
 					<object class="NSButton" id="428353281">
 						<reference key="NSNextResponder" ref="913361672"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{19, 265}, {121, 18}}</string>
+						<string key="NSFrame">{{19, 245}, {121, 18}}</string>
 						<reference key="NSSuperview" ref="913361672"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="814367450">
@@ -116,7 +116,7 @@
 					<object class="NSButton" id="456725036">
 						<reference key="NSNextResponder" ref="913361672"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{7, 285}, {107, 18}}</string>
+						<string key="NSFrame">{{7, 265}, {107, 18}}</string>
 						<reference key="NSSuperview" ref="913361672"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="950541098">
