@@ -16,6 +16,20 @@
 
 @implementation SVPageletMigrationPolicy
 
+- (void) propagateSidebarRelationshipForDestinationPagelet:(NSManagedObject *)dInstance toDescendantsOfPage:(NSManagedObject *)sPage manager:(NSMigrationManager *)manager
+{
+    NSSet *sPages = [sPage valueForKey:@"children"];
+    NSArray *dSidebars = [manager destinationInstancesForEntityMappingNamed:@"PageToSidebar" sourceInstances:[sPages allObjects]];
+    
+    [[dInstance mutableSetValueForKey:@"sidebars"] addObjectsFromArray:dSidebars];
+    
+    // Truck on brother
+    for (NSManagedObject *aPage in sPages)
+    {
+        [self propagateSidebarRelationshipForDestinationPagelet:dInstance toDescendantsOfPage:aPage manager:manager];
+    }
+}
+
 - (BOOL)createRelationshipsForDestinationInstance:(NSManagedObject *)dInstance entityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager error:(NSError **)error;
 {
     BOOL result = [super createRelationshipsForDestinationInstance:dInstance entityMapping:mapping manager:manager error:error];
@@ -33,6 +47,13 @@
     NSArray *dSidebars = [manager destinationInstancesForEntityMappingNamed:@"PageToSidebar" sourceInstances:[NSArray arrayWithObject:sPage]];
     
     [[dInstance mutableSetValueForKey:@"sidebars"] addObjectsFromArray:dSidebars];
+    
+    
+    // Carry on down the tree?
+    if ([[sPagelet valueForKey:@"shouldPropagate"] boolValue])
+    {
+        [self propagateSidebarRelationshipForDestinationPagelet:dInstance toDescendantsOfPage:sPage manager:manager];
+    }
     
     return YES;
 }
