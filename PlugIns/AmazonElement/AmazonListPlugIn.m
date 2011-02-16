@@ -159,7 +159,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 + (NSArray *)plugInKeys
 {
-    return [NSSet setWithObjects:@"store", @"layout", @"showProductPreviews", @"frame", @"showPrices", @"showThumbnails", @"centeredThumbnailWidths", @"showNewPricesOnly", @"showTitles", @"showComments", @"showCreators", @"products", @"showLinkToList", nil];
+    return [NSArray arrayWithObjects:@"store", @"layout", @"showProductPreviews", @"frame", @"showPrices", @"showThumbnails", @"centeredThumbnailWidths", @"showNewPricesOnly", @"showTitles", @"showComments", @"showCreators", @"products", @"showLinkToList", nil];
 }
 
 @synthesize store = _store;
