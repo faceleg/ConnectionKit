@@ -13,6 +13,6 @@
 @end
 
 
-@interface SVPageletTitleMigrationPolicy : NSEntityMigrationPolicy
+@interface SVTitleMigrationPolicy : NSEntityMigrationPolicy
 
 @end

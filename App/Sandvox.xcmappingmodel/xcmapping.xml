@@ -61,7 +61,7 @@ CA9VJG51bGzTCQoLDA0OXxAQTlNFeHByZXNzaW9uVHlwZVYkY2xhc3NfEBhOU0NvbnN0YW50VmFsdWVD
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z349"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z105">
-        <attribute name="migrationpolicyclassname" type="string">SVPageletTitleMigrationPolicy</attribute>
+        <attribute name="migrationpolicyclassname" type="string">SVTitleMigrationPolicy</attribute>
         <attribute name="sourcename" type="string">Pagelet</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
         <attribute name="mappingnumber" type="int16">20</attribute>
@@ -223,6 +223,7 @@ CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5h
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z349"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z135">
+        <attribute name="migrationpolicyclassname" type="string">SVTitleMigrationPolicy</attribute>
         <attribute name="sourceexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGXl9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8Q
 FQcIExwdIiMrLzI3PD1AQUVKS1BTWVUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlwZV8QD05TTU9DRXhwcmVzc2lvbl5OU0ZSRXhwcmVzc2lvblYkY2xhc3NfEA9OU0NvdW50T25seUZsYWcQMoAKgAKAFAjVCRQMFRYXGBkaG15OU1NlbGVjdG9yTmFtZVlOU09wZXJhbmRbTlNBcmd1bWVudHMQBIADgAmABIAHXxARcGFnZXNGZXRjaFJlcXVlc3TTHgkMHyAhWk5TVmFyaWFibGWABRACgAZXbWFuYWdlctIkJSYnWiRjbGFzc25hbWVYJGNsYXNzZXNfEBROU1ZhcmlhYmxlRXhwcmVzc2lvbqMoKSpfEBROU1ZhcmlhYmxlRXhwcmVzc2lvblxOU0V4cHJlc3Npb25YTlNPYmplY3TSDCwtLlpOUy5vYmplY3RzgAig0iQlMDFXTlNBcnJheaIwKtIkJTM0XxAUTlNGdW5jdGlvbkV4cHJlc3Npb26jNTYqXxAUTlNGdW5jdGlvbkV4cHJlc3Npb25cTlNFeHByZXNzaW9u1QkUDBUWFzg5OjuAC4ATgAyADl8QEHZhbHVlRm9yS2V5UGF0aDrTHgkMPiAhgA2ABldtYW5hZ2Vy0gwsQkOAEqFEgA/TRgkMR0hJWU5TS2V5UGF0aIAQEAqAEV1zb3VyY2VDb250ZXh00iQlTE1fEBxOU0tleVBhdGhTcGVjaWZpZXJFeHByZXNzaW9uo05PKl8QHE5TS2V5UGF0aFNwZWNpZmllckV4cHJlc3Npb25cTlNFeHByZXNzaW9u0iQlUVJeTlNNdXRhYmxlQXJyYXmjUTAq0iQlVFVfEBNOU0tleVBhdGhFeHByZXNzaW9upFZXWCpfEBNOU0tleVBhdGhFeHByZXNzaW9uXxAUTlNGdW5jdGlvbkV4cHJlc3Npb25cTlNFeHByZXNzaW9u0iQlWltfEBhOU0ZldGNoUmVxdWVzdEV4cHJlc3Npb26jXF0qXxAYTlNGZXRjaFJlcXVlc3RFeHByZXNzaW9uXE5TRXhwcmVzc2lvbl8QD05TS2V5ZWRBcmNoaXZlctFgYVRyb290gAEACAARABoAIwAtADIANwBPAFUAYABzAIUAlACbAK0ArwCxALMAtQC2AMEA0ADaAOYA6ADqAOwA7gDwAQQBCwEWARgBGgEcASQBKQE0AT0BVAFYAW8BfAGFAYoBlQGXAZgBnQGlAagBrQHEAcgB3wHsAfcB+QH7Af0B/wISAhkCGwIdAiUCKgIsAi4CMAI3AkECQwJFAkcCVQJaAnkCfQKcAqkCrgK9AsECxgLcAuEC9wMOAxsDIAM7Az8DWgNnA3kDfAOBAAAAAAAAAgEAAAAAAAAAYgAAAAAAAAAAAAAAAAAAA4M=
 </attribute>
@@ -232,7 +233,7 @@ FQcIExwdIiMrLzI3PD1AQUVKS1BTWVUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlwZV8Q
         <attribute name="destinationname" type="string">PageTitle</attribute>
         <attribute name="autogenerateexpression" type="bool">0</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z119 z156"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z156 z119"></relationship>
         <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z324"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z136">

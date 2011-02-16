@@ -116,11 +116,12 @@
 @end
 
 
-@implementation SVPageletTitleMigrationPolicy
+@implementation SVTitleMigrationPolicy
 
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager error:(NSError **)error;
 {
-    NSManagedObject *dInstance = [NSEntityDescription insertNewObjectForEntityForName:@"PageletTitle" inManagedObjectContext:[manager destinationContext]];
+    NSManagedObject *dInstance = [NSEntityDescription insertNewObjectForEntityForName:[mapping destinationEntityName]
+                                                               inManagedObjectContext:[manager destinationContext]];
     
     NSString *html = [sInstance valueForKey:@"titleHTML"];
     BOOL hidden = NO;
@@ -134,7 +135,7 @@
         SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
         html = [[factory name] stringByEscapingHTMLEntities];
         
-        if (!html) html = @"Pagelet";
+        if (!html) html = @"Untitled";
     }
     
     [dInstance setValue:NSBOOL(hidden) forKey:@"hidden"];
