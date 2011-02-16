@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="5"/>
+			<integer value="172"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -49,7 +49,7 @@
 						<object class="NSMutableArray" key="NSCells">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="NSButtonCell" id="224411436">
-								<int key="NSCellFlags">-2080244160</int>
+								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">134219776</int>
 								<string key="NSContents">Created with Sandvox</string>
 								<object class="NSFont" key="NSSupport">
@@ -78,6 +78,10 @@
 								<int key="NSTag">1</int>
 								<int key="NSButtonFlags">-1226555137</int>
 								<int key="NSButtonFlags2">6</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">sandvox_icon_white</string>
+								</object>
 								<string key="NSAlternateContents"/>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
@@ -91,6 +95,10 @@
 								<int key="NSTag">2</int>
 								<int key="NSButtonFlags">-1226555137</int>
 								<int key="NSButtonFlags2">6</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">sandvox_castle</string>
+								</object>
 								<string key="NSAlternateContents"/>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
@@ -104,6 +112,10 @@
 								<int key="NSTag">3</int>
 								<int key="NSButtonFlags">-1226555137</int>
 								<int key="NSButtonFlags2">6</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">sandvox_castle_white</string>
+								</object>
 								<string key="NSAlternateContents"/>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
@@ -117,12 +129,16 @@
 								<int key="NSTag">4</int>
 								<int key="NSButtonFlags">-1226555137</int>
 								<int key="NSButtonFlags2">6</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">sandvox_castle_top</string>
+								</object>
 								<string key="NSAlternateContents"/>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
 							</object>
 							<object class="NSButtonCell" id="29830193">
-								<int key="NSCellFlags">67239488</int>
+								<int key="NSCellFlags">-2080244160</int>
 								<int key="NSCellFlags2">134219776</int>
 								<string key="NSContents"/>
 								<reference key="NSSupport" ref="666114809"/>
@@ -130,6 +146,10 @@
 								<int key="NSTag">5</int>
 								<int key="NSButtonFlags">-1226555137</int>
 								<int key="NSButtonFlags2">6</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">sandvox_castle_top_white</string>
+								</object>
 								<string key="NSAlternateContents"/>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
@@ -143,6 +163,10 @@
 								<int key="NSTag">6</int>
 								<int key="NSButtonFlags">-1226555137</int>
 								<int key="NSButtonFlags2">6</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">sandvox_bucket</string>
+								</object>
 								<string key="NSAlternateContents"/>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
@@ -156,6 +180,10 @@
 								<int key="NSTag">7</int>
 								<int key="NSButtonFlags">-1226555137</int>
 								<int key="NSButtonFlags2">6</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">sandvox_bucket_white</string>
+								</object>
 								<string key="NSAlternateContents"/>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
@@ -176,7 +204,9 @@
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
 						</object>
-						<reference key="NSSelectedCell" ref="224411436"/>
+						<int key="NSSelectedRow">2</int>
+						<int key="NSSelectedCol">1</int>
+						<reference key="NSSelectedCell" ref="29830193"/>
 						<object class="NSColor" key="NSBackgroundColor" id="840584110">
 							<int key="NSColorSpace">6</int>
 							<string key="NSCatalogName">System</string>
@@ -982,5 +1012,28 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<string key="IBDocument.LastKnownRelativeProjectPath">../BadgeElement.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<bool key="EncodedWithXMLCoder">YES</bool>
+			<object class="NSArray" key="dict.sortedKeys">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>sandvox_bucket</string>
+				<string>sandvox_bucket_white</string>
+				<string>sandvox_castle</string>
+				<string>sandvox_castle_top</string>
+				<string>sandvox_castle_top_white</string>
+				<string>sandvox_castle_white</string>
+				<string>sandvox_icon_white</string>
+			</object>
+			<object class="NSMutableArray" key="dict.values">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>{128, 128}</string>
+				<string>{128, 128}</string>
+				<string>{128, 128}</string>
+				<string>{128, 128}</string>
+				<string>{128, 128}</string>
+				<string>{128, 128}</string>
+				<string>{128, 128}</string>
+			</object>
+		</object>
 	</data>
 </archive>
