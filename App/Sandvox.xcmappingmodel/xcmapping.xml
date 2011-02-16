@@ -838,9 +838,12 @@ EwcIExQZGiInLC0wMTU6O0BESkxVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNT
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z164"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z246">
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGFxhYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKMH
+CA9VJG51bGzTCQoLDA0OXxAQTlNFeHByZXNzaW9uVHlwZVYkY2xhc3NfEBhOU0NvbnN0YW50VmFsdWVDbGFzc05hbWUQAIACgADSEBESE1okY2xhc3NuYW1lWCRjbGFzc2VzXxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvbqMUFRZfEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uXE5TRXhwcmVzc2lvblhOU09iamVjdF8QD05TS2V5ZWRBcmNoaXZlctEZGlRyb290gAEACAARABoAIwAtADIANwA7AEEASABbAGIAfQB/AIEAgwCIAJMAnAC4ALwA2ADlAO4BAAEDAQgAAAAAAAACAQAAAAAAAAAbAAAAAAAAAAAAAAAAAAABCg==
+</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <attribute name="name" type="string">pagelets</attribute>
-        <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z261"></relationship>
+        <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z247">
         <attribute name="mappingtypename" type="string">Undefined</attribute>
@@ -940,7 +943,7 @@ FQcIExwdIiMrLzI3PD1AQUVKS1BTWVUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlwZV8Q
         <attribute name="autogenerateexpression" type="bool">0</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
         <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING"></relationship>
-        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z270 z246"></relationship>
+        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z270"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z262">
         <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGPD1YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKwH
@@ -992,6 +995,7 @@ GAcIExQZGh8gKC0yMzY3O0BBRkpQUldbXlUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlw
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z261"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z271">
+        <attribute name="migrationpolicyclassname" type="string">SVPageletMigrationPolicy</attribute>
         <attribute name="sourcename" type="string">Pagelet</attribute>
         <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier == "sandvox.ImageElement" || pluginIdentifier = "sandvox.VideoElement"</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
@@ -1490,6 +1494,7 @@ GAcIExQZGh8gKC0yMzY3O0BBRkpQUldbXlUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlw
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z142"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z359">
+        <attribute name="migrationpolicyclassname" type="string">SVPageletMigrationPolicy</attribute>
         <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier != "sandvox.RichTextElement" \u2600\u2600 pluginIdentifier != "sandvox.ImageElement" \u2600\u2600 pluginIdentifier != "sandvox.VideoElement" \u2600\u2600 pluginIdentifier != "sandvox.HTMLElement"</attribute>
         <attribute name="sourcename" type="string">Pagelet</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
@@ -1733,6 +1738,7 @@ CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5h
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z438"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z405">
+        <attribute name="migrationpolicyclassname" type="string">SVPageletMigrationPolicy</attribute>
         <attribute name="sourcename" type="string">Pagelet</attribute>
         <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier == "sandvox.HTMLElement"</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
@@ -2122,6 +2128,7 @@ CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5h
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z323"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z475">
+        <attribute name="migrationpolicyclassname" type="string">SVPageletMigrationPolicy</attribute>
         <attribute name="sourcename" type="string">Pagelet</attribute>
         <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier == "sandvox.RichTextElement"</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>

@@ -1,5 +1,5 @@
 //
-//  SVPageletTitleMigrationPolicy.h
+//  SVPageletMigrationPolicy.h
 //  Sandvox
 //
 //  Created by Mike on 15/02/2011.
@@ -7,6 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+
+
+@interface SVPageletMigrationPolicy : NSEntityMigrationPolicy
+@end
 
 
 @interface SVPageletTitleMigrationPolicy : NSEntityMigrationPolicy
