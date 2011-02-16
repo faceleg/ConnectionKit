@@ -1097,7 +1097,10 @@
 
 - (void)setDimensionCalculationMovie:(QTMovie *)aMovie
 {
-    OBASSERT([NSThread isMainThread]);
+	if (aMovie)
+	{
+		OBASSERT([NSThread isMainThread]);
+	}
 	[aMovie retain];
 	[_dimensionCalculationMovie release];
 	_dimensionCalculationMovie = aMovie;
