@@ -14,6 +14,11 @@
 
 @implementation SVArticleMigrationPolicy
 
+- (void)associateSourceInstance:(NSManagedObject *)sInstance withDestinationInstance:(NSManagedObject *)dInstance forEntityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager;
+{
+    [manager associateSourceInstance:sInstance withDestinationInstance:dInstance forEntityMapping:mapping];
+}
+
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager error:(NSError **)error;
 {
     // Loate HTML
@@ -36,13 +41,28 @@
                                                              inManagedObjectContext:[manager destinationContext]];
     
         
-    if (![string length]) string = @"<p>Non-text pages</p>";
+    if (![string length] && [keyPath isEqualToString:@"richTextHTML"]) string = @"<p>Non-text pages</p>";
     [article setValue:string forKey:@"string"];
     
     
-    [manager associateSourceInstance:sInstance withDestinationInstance:article forEntityMapping:mapping];
+    [self associateSourceInstance:sInstance withDestinationInstance:article forEntityMapping:mapping manager:manager];
      
     return YES;
+}
+
+@end
+
+
+
+@implementation SVAuxiliaryPageletTextMigrationPolicy
+
+- (void)associateSourceInstance:(NSManagedObject *)sInstance withDestinationInstance:(NSManagedObject *)dInstance forEntityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager;
+{
+    // Also import whether to hide
+    BOOL hide = [[dInstance valueForKeyPath:@"string.stringByConvertingHTMLToPlainText"] length] == 0;
+    [dInstance setValue:NSBOOL(hide) forKey:@"hidden"];
+    
+    [super associateSourceInstance:sInstance withDestinationInstance:dInstance forEntityMapping:mapping manager:manager];
 }
 
 @end

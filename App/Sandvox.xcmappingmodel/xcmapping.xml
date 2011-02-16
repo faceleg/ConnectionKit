@@ -2186,7 +2186,7 @@ CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5h
         <attribute name="userinfodata" type="binary">YnBsaXN0MDDUAQIDBAUGGhtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKUH
 CBESE1UkbnVsbNMJCgsMDQ9WJGNsYXNzV05TLmtleXNaTlMub2JqZWN0c4AEoQ6AAqEQgANdc3RyaW5nS2V5UGF0aFtjYXB0aW9uSFRNTNIUFRYXWiRjbGFzc25hbWVYJGNsYXNzZXNfEBNOU011dGFibGVEaWN0aW9uYXJ5oxYYGVxOU0RpY3Rpb25hcnlYTlNPYmplY3RfEA9OU0tleWVkQXJjaGl2ZXLRHB1Ucm9vdIABCBEaIy0yNz1DSlFZZGZoamxufIiNmKG3u8jR4+brAAAAAAAAAQEAAAAAAAAAHgAAAAAAAAAAAAAAAAAAAO0=
 </attribute>
-        <attribute name="migrationpolicyclassname" type="string">SVArticleMigrationPolicy</attribute>
+        <attribute name="migrationpolicyclassname" type="string">SVAuxiliaryPageletTextMigrationPolicy</attribute>
         <attribute name="sourcename" type="string">Pagelet</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
         <attribute name="mappingnumber" type="int16">6</attribute>

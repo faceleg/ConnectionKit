@@ -12,3 +12,7 @@
 @interface SVArticleMigrationPolicy : NSEntityMigrationPolicy
 
 @end
+
+
+@interface SVAuxiliaryPageletTextMigrationPolicy : SVArticleMigrationPolicy
+@end
