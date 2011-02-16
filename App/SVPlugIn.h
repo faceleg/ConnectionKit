@@ -77,7 +77,7 @@ typedef enum {
 
 /*  Default implementation:
  *   1. Looks up SVPlugInCSSFiles in the Info.plist and adds those files to the context
- *   2. Sets +currentContext to return the context
+ *   2. Sets -currentContext to return the context
  *   3. Parses the HTML template if found
  *
  *  Generally, two possible reasons to override this method:
