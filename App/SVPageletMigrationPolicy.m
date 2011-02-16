@@ -62,6 +62,38 @@
     return YES;
 }
 
+- (NSNumber *)sortKeyForPagelet:(NSManagedObject *)sPagelet;
+{
+    // Only sidebar pagelets get a sort key
+    if ([[sPagelet valueForKey:@"location"] intValue] != 1) return nil;
+    
+    
+    // Start out with the old ordering value
+    NSInteger result = [[sPagelet valueForKey:@"ordering"] integerValue];
+    
+    // Adjust by 50 corresponding to depth in tree. Thus, original inherited ordering will be maintained provided the user doesn't have pages 10 deep!
+    NSUInteger depth = 0;
+    KTPage *parent = [sPagelet valueForKeyPath:@"page.parent"];
+    while (parent)
+    {
+        depth++;
+        parent = [parent valueForKey:@"parent"];
+    }
+    
+    // Apply offset, based off old .prefersBottom setting
+    if ([[sPagelet valueForKey:@"prefersBottom"] boolValue])
+    {
+        result += 1000 - 50*depth;
+    }
+    else
+    {
+        result += 50*depth;
+    }
+    
+    
+    return [NSNumber numberWithInteger:result];
+}
+
 @end
 
 
