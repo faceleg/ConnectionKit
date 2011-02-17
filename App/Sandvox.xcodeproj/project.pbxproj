@@ -350,6 +350,8 @@
 		273DCFA010CBD5D3003CCE97 /* SVWebContentObjectsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273DCF9E10CBD5D3003CCE97 /* SVWebContentObjectsController.m */; };
 		273DCFF110CBDC10003CCE97 /* KSArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273DCFEF10CBDC10003CCE97 /* KSArrayController.h */; };
 		273DCFF210CBDC10003CCE97 /* KSArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273DCFF010CBDC10003CCE97 /* KSArrayController.m */; };
+		27403DFF130D72D3001006D6 /* SVMigrationDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 27403DFD130D72D3001006D6 /* SVMigrationDocument.h */; };
+		27403E00130D72D3001006D6 /* SVMigrationDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 27403DFE130D72D3001006D6 /* SVMigrationDocument.m */; };
 		27422441106A926E0058C8DA /* WEKWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2742243F106A926E0058C8DA /* WEKWebView.h */; };
 		27422442106A926E0058C8DA /* WEKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27422440106A926E0058C8DA /* WEKWebView.m */; };
 		27443266103D8693007E7FF0 /* LoadingPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27443265103D8693007E7FF0 /* LoadingPlaceholder.xib */; };
@@ -2006,6 +2008,8 @@
 		273DCFEF10CBDC10003CCE97 /* KSArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSArrayController.h; sourceTree = "<group>"; };
 		273DCFF010CBDC10003CCE97 /* KSArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSArrayController.m; sourceTree = "<group>"; };
 		273DD20710CC74AA003CCE97 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CollectionInspector.xib; sourceTree = "<group>"; };
+		27403DFD130D72D3001006D6 /* SVMigrationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMigrationDocument.h; sourceTree = "<group>"; };
+		27403DFE130D72D3001006D6 /* SVMigrationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMigrationDocument.m; sourceTree = "<group>"; };
 		2742243F106A926E0058C8DA /* WEKWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebView.h; sourceTree = "<group>"; };
 		27422440106A926E0058C8DA /* WEKWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEKWebView.m; sourceTree = "<group>"; };
 		274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CollectionArchiveElement.xcodeproj; path = ../PlugIns/CollectionArchiveElement/CollectionArchiveElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -3439,6 +3443,8 @@
 				27E04195130AEEE300FEA059 /* SVTextMigrationPolicy.m */,
 				27E04269130B3AF300FEA059 /* SVPageletMigrationPolicy.h */,
 				27E0426A130B3AF300FEA059 /* SVPageletMigrationPolicy.m */,
+				27403DFD130D72D3001006D6 /* SVMigrationDocument.h */,
+				27403DFE130D72D3001006D6 /* SVMigrationDocument.m */,
 			);
 			name = "Data Migration";
 			sourceTree = "<group>";
@@ -6127,6 +6133,7 @@
 				27E040EB130ACDD800FEA059 /* SVMediaMigrationPolicy.h in Headers */,
 				27E04196130AEEE300FEA059 /* SVTextMigrationPolicy.h in Headers */,
 				27E0426B130B3AF300FEA059 /* SVPageletMigrationPolicy.h in Headers */,
+				27403DFF130D72D3001006D6 /* SVMigrationDocument.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7726,6 +7733,7 @@
 				27E040EC130ACDD800FEA059 /* SVMediaMigrationPolicy.m in Sources */,
 				27E04197130AEEE300FEA059 /* SVTextMigrationPolicy.m in Sources */,
 				27E0426C130B3AF300FEA059 /* SVPageletMigrationPolicy.m in Sources */,
+				27403E00130D72D3001006D6 /* SVMigrationDocument.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

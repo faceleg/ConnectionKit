@@ -18,6 +18,7 @@
 #import "KTElementPlugInWrapper.h"
 #import "SVInspector.h"
 #import "KTMaster.h"
+#import "SVMigrationDocument.h"
 #import "SVMigrationManager.h"
 #import "KTPage+Internal.h"
 #import "SVWelcomeController.h"
@@ -154,6 +155,10 @@
     {
         return nil;//[KTDataMigrationDocument class];
     }
+    else if ([documentTypeName isEqualToString:kKTDocumentUTI_1_5])
+    {
+        return [SVMigrationDocument class];
+    }
     else
     {
         return [super documentClassForType:documentTypeName];
@@ -187,25 +192,6 @@
         }
     }
     
-    return result;
-}
-
-- (BOOL)migrateURL:(NSURL *)sourceURL ofType:(NSString *)type error:(NSError **)error;
-{    
-    
-    
-    NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox 1.5" ofType:@"mom"]];
-    NSManagedObjectModel *sModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    
-    modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Media 1.5" ofType:@"mom"]];
-    NSManagedObjectModel *sMediaModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    
-    SVMigrationManager *manager = [[SVMigrationManager alloc] initWithSourceModel:sModel
-                                                                       mediaModel:sMediaModel
-                                                                 destinationModel:[KTDocument managedObjectModel]];
-    
-    
-    BOOL result = [manager migrateDocumentFromURL:sourceURL toDestinationURL:sourceURL error:error];
     return result;
 }
 
@@ -331,7 +317,7 @@
 	return document;
 }
 
-- (id)makeDocumentWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError;
+- (id)XmakeDocumentWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError;
 {
     // Migrate!
     if ([typeName isEqualToString:kKTDocumentUTI_1_5])
