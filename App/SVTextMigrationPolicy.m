@@ -52,11 +52,11 @@
     {
         if ([keyPath isEqualToString:@"richTextHTML"])
         {
-            string = @"<p>Non-text pages</p>";
+            string = @"";
         }
         else
         {
-            string = @"<p></p>";
+            string = @"<p><br /></p>";
         }
     }
     [article setValue:string forKey:@"string"];
@@ -73,13 +73,13 @@
     
     
     // Fully hook up attachments
-    NSArray *callouts = [[dInstance valueForKey:@"attachments"] KS_sortedArrayUsingDescriptors:[SVRichText attachmentSortDescriptors]];
-    NSUInteger i, count = [callouts count];
+    NSArray *attachments = [[dInstance valueForKey:@"attachments"] KS_sortedArrayUsingDescriptors:[SVRichText attachmentSortDescriptors]];
+    NSUInteger i, count = [attachments count];
     
     for (i = 0; i < count; i++)
     {
-        NSManagedObject *anAttachment = [callouts objectAtIndex:i];
-        OBASSERT([[anAttachment valueForKey:@"placement"] intValue] == SVGraphicPlacementCallout);
+        NSManagedObject *anAttachment = [attachments objectAtIndex:i];
+        //OBASSERT([[anAttachment valueForKey:@"placement"] intValue] == SVGraphicPlacementCallout);
         
         // Correct location in case source document was a little wonky
         
