@@ -31,6 +31,4 @@
 - (NSManagedObjectContext *)sourceMediaContext;
 - (NSURL *)sourceURLOfMediaWithFilename:(NSString *)filename;
 
-- (NSFetchRequest *)pagesFetchRequest;
-
 @end
