@@ -27,7 +27,7 @@
     SVTextAttachment *result = [self insertNewTextAttachmentInManagedObjectContext:
                                 [graphic managedObjectContext]];
     
-    [result setGraphic:graphic];
+    [result setValue:graphic forKey:@"graphic"];
     
     return result;
 }
