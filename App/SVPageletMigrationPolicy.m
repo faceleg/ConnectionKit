@@ -10,9 +10,6 @@
 
 #import "SVGraphicFactory.h"
 
-#import "KSStringHTMLEntityUnescaping.h"
-#import "KSStringXMLEntityEscaping.h"
-
 
 @implementation SVPageletMigrationPolicy
 

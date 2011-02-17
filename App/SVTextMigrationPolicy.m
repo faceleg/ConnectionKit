@@ -10,6 +10,10 @@
 
 #import "SVArticle.h"
 #import "KSExtensibleManagedObject.h"
+#import "SVGraphicFactory.h"
+
+#import "KSStringHTMLEntityUnescaping.h"
+#import "KSStringXMLEntityEscaping.h"
 
 
 @implementation SVArticleMigrationPolicy
