@@ -62,6 +62,7 @@
     NSManagedObject *sPagelet = [[manager sourceInstancesForEntityMappingNamed:[mapping name] destinationInstances:[NSArray arrayWithObject:dInstance]] lastObject]; 
     
     // Only interested in sidebar pagelets
+    if ([dInstance valueForKey:@"textAttachment"]) return YES;
     if ([[sPagelet valueForKey:@"location"] intValue] != 1) return YES;
     
     
