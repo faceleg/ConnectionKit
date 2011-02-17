@@ -38,7 +38,7 @@
 
 - (BOOL)migrateDocumentFromURL:(NSURL *)sourceDocURL
               toDestinationURL:(NSURL *)dURL
-                         error:(NSError **)error;
+                         error:(NSError **)outError;
 {
     // Create context for accessing media during migration
     NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc]
@@ -50,7 +50,7 @@
                                    configuration:nil
                                              URL:sMediaStoreURL
                                          options:nil
-                                           error:error])
+                                           error:outError])
     {
         [coordinator release];
         return NO;
@@ -67,8 +67,9 @@
     
     _docURL = dURL;
     NSURL *sStoreURL = [KTDocument datastoreURLForDocumentURL:sourceDocURL type:kKTDocumentUTI_1_5];
-    NSURL *dStoreURL = [KTDocument datastoreURLForDocumentURL:sourceDocURL type:nil];
+    NSURL *dStoreURL = [KTDocument datastoreURLForDocumentURL:dURL type:nil];
     
+    NSError *error;
     BOOL result = [self migrateStoreFromURL:sStoreURL
                                        type:NSSQLiteStoreType
                                     options:nil
@@ -76,7 +77,8 @@
                            toDestinationURL:dStoreURL
                             destinationType:NSBinaryStoreType
                          destinationOptions:nil
-                                      error:error];
+                                      error:&error];
+    if (outError) *outError = error;
     
     _docURL = nil;
     [mappingModel release];

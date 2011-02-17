@@ -15,8 +15,13 @@
 
 - (BOOL)migrateURL:(NSURL *)sourceURL ofType:(NSString *)type error:(NSError **)error;
 {    
+    [self autosaveDocumentWithDelegate:self didAutosaveSelector:@selector(document:didAutosave:contextInfo:) contextInfo:NULL];
     
-    
+    return YES;
+}
+
+- (void)document:(SVMigrationDocument *)document didAutosave:(BOOL)didSave contextInfo:(void *)context;
+{
     NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox 1.5" ofType:@"mom"]];
     NSManagedObjectModel *sModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     
@@ -28,7 +33,9 @@
                                                                  destinationModel:[KTDocument managedObjectModel]];
     
     
-    BOOL result = [manager migrateDocumentFromURL:sourceURL toDestinationURL:sourceURL error:error];
+    BOOL result = [manager migrateDocumentFromURL:[self fileURL]
+                                 toDestinationURL:[self autosavedContentsFileURL]
+                                            error:NULL];
     return result;
 }
 
@@ -41,7 +48,7 @@
             typeName = [[NSDocumentController sharedDocumentController] typeForContentsOfURL:absoluteURL error:outError];
             if (!typeName) return NO;
             
-            return [super readFromURL:absoluteURL ofType:typeName error:outError];
+            return YES;
         }
         else
         {
