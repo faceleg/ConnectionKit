@@ -13,7 +13,29 @@
 
 @implementation SVPageletMigrationPolicy
 
-- (void) propagateSidebarRelationshipForDestinationPagelet:(NSManagedObject *)dInstance toDescendantsOfPage:(NSManagedObject *)sPage manager:(NSMigrationManager *)manager
+- (BOOL) createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager error:(NSError **)error;
+{
+    @try
+    {
+        return [super createDestinationInstancesForSourceInstance:sInstance entityMapping:mapping manager:manager error:error];
+    }
+    @catch (NSException *exception)
+    {
+        if (error)
+        {
+            NSString *description = [NSString stringWithFormat:NSLocalizedString(@"%@ plug-in threw an exception while migrating", "migration error"), [sInstance valueForKey:@"pluginIdentifier"]]
+            ;
+            *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                         code:NSEntityMigrationPolicyError
+                         localizedDescription:description];
+        }
+        
+        return NO;
+    }
+    return YES;
+}
+
+- (void)propagateSidebarRelationshipForDestinationPagelet:(NSManagedObject *)dInstance toDescendantsOfPage:(NSManagedObject *)sPage manager:(NSMigrationManager *)manager
 {
     NSSet *sPages = [[sPage valueForKey:@"children"]
                      filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"includeInheritedSidebar == 1"]];
