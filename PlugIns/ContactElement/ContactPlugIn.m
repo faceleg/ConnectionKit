@@ -379,4 +379,26 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
     [self setWidth:nil height:nil];
 }
 
+#pragma mark Migration
+
+- (void)awakeFromSourceProperties:(NSDictionary *)properties;
+{
+    NSMutableDictionary *properties2 = [properties mutableCopy];
+    
+    // Replace fields dictionary with real objects
+    NSMutableArray *fields = [[properties objectForKey:@"fields"] mutableCopy];
+    for (int i = 0; i < [fields count]; i++)
+    {
+        ContactElementField *field = [[ContactElementField alloc] initWithDictionary:[fields objectAtIndex:i]];
+        [fields replaceObjectAtIndex:i withObject:field];
+        [field release];
+    }
+    
+    [properties2 setObject:fields forKey:@"fields"];
+    [fields release];
+    
+    [super awakeFromSourceProperties:properties2];
+    [properties2 release];
+}
+
 @end
