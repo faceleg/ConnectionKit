@@ -13,55 +13,17 @@
 
 @implementation SVMigrationDocument
 
-- (BOOL)migrateURL:(NSURL *)sourceURL ofType:(NSString *)type error:(NSError **)error;
-{    
-    return [self saveToURL:sourceURL ofType:kKTDocumentType forSaveOperation:NSSaveOperation error:error];
-    
-    [self autosaveDocumentWithDelegate:self didAutosaveSelector:@selector(document:didAutosave:contextInfo:) contextInfo:NULL];
-    
-    return YES;
-}
-
-- (void)document:(SVMigrationDocument *)document didAutosave:(BOOL)didSave contextInfo:(void *)context;
-{
-    NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox 1.5" ofType:@"mom"]];
-    NSManagedObjectModel *sModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    
-    modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Media 1.5" ofType:@"mom"]];
-    NSManagedObjectModel *sMediaModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    
-    SVMigrationManager *manager = [[SVMigrationManager alloc] initWithSourceModel:sModel
-                                                                       mediaModel:sMediaModel
-                                                                 destinationModel:[KTDocument managedObjectModel]];
-    
-    
-    BOOL result = [manager migrateDocumentFromURL:[self fileURL]
-                                 toDestinationURL:[self autosavedContentsFileURL]
-                                            error:NULL];
-    return result;
-}
-
 - (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
     if ([typeName isEqualToString:kKTDocumentUTI_1_5])
     {
-        if ([self migrateURL:absoluteURL ofType:NSSQLiteStoreType error:outError])
-        {
-            typeName = [[NSDocumentController sharedDocumentController] typeForContentsOfURL:absoluteURL error:outError];
-            if (!typeName) return NO;
-            
-            return YES;
-        }
-        else
-        {
-            //if (outError) NSLog(@"%@", *outError);
-            return NO;
-        }
+        if (![self saveToURL:absoluteURL ofType:kKTDocumentType forSaveOperation:NSSaveOperation error:outError]) return NO;
+
+        typeName = [[NSDocumentController sharedDocumentController] typeForContentsOfURL:absoluteURL error:outError];
+        if (!typeName) return NO;
     }
-    else
-    {
-        return [super readFromURL:absoluteURL ofType:typeName error:outError];
-    }
+    
+    return [super readFromURL:absoluteURL ofType:typeName error:outError];
 }
 
 - (BOOL)writeToURL:(NSURL *)inURL 
@@ -77,6 +39,20 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     }
     
     
+    // Create directory to act as new document
+    NSDictionary *attributes = [self fileAttributesToWriteToURL:inURL
+                                                         ofType:inType
+                                               forSaveOperation:saveOperation
+                                            originalContentsURL:inOriginalContentsURL
+                                                          error:outError];
+    if (!attributes) return NO;
+    
+    if (![[NSFileManager defaultManager] createDirectoryAtPath:[inURL path]
+                                   withIntermediateDirectories:NO
+                                                    attributes:attributes
+                                                         error:outError]) return NO;
+                                                                                                                         
+                                                                                                                         
     // Migrate!
     NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox 1.5" ofType:@"mom"]];
     NSManagedObjectModel *sModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
@@ -95,6 +71,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
-- (BOOL)keepBackupFile; { return YES; }
+- (BOOL)keepBackupFile;
+{
+    // Only want to keep backup when migrating in case you need to get back to 1.6 land
+    BOOL result = ([[self fileType] isEqualToString:kKTDocumentUTI_1_5] ? YES : [super keepBackupFile]);
+    return result;
+}
 
 @end
