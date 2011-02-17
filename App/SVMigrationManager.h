@@ -15,7 +15,8 @@
     NSManagedObjectModel    *_mediaModel;
     NSManagedObjectContext  *_mediaContext;
     
-    NSURL   *_docURL;   // weak ref
+    NSURL   *_docURL;           // weak refs
+    NSURL   *_destinationURL;
 }
 
 // Designated initializer
@@ -30,5 +31,7 @@
 - (NSManagedObjectModel *)sourceMediaModel;
 - (NSManagedObjectContext *)sourceMediaContext;
 - (NSURL *)sourceURLOfMediaWithFilename:(NSString *)filename;
+- (NSURL *)destinationURLOfMediaWithFilename:(NSString *)filename;
+
 
 @end

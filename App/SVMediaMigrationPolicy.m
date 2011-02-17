@@ -48,10 +48,16 @@
     NSManagedObject *mediaFile = [mediaContainer valueForKey:@"file"];
     NSString *filename = [mediaFile valueForKey:@"filename"];
     NSURL *url = [manager sourceURLOfMediaWithFilename:filename];
+    NSURL *dURL = [manager destinationURLOfMediaWithFilename:filename];
+    
+    // Copy media. Might well fail, but if so:
+    // A) There's nothing user can really do to fix it
+    // B) Failure might be because file is already copied
+    [[NSFileManager defaultManager] copyItemAtPath:[url path] toPath:[dURL path] error:NULL];
     
     
     // Create new media record to match
-    SVMedia *media = [[SVMedia alloc] initByReferencingURL:url];
+    SVMedia *media = [[SVMedia alloc] initByReferencingURL:dURL];
     
     NSManagedObject *record = [NSEntityDescription insertNewObjectForEntityForName:[mapping destinationEntityName]
                                                             inManagedObjectContext:[manager destinationContext]];
