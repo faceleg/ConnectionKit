@@ -209,7 +209,8 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	BOOL result = NO;
     
     
-    if (saveOperation == NSSaveOperation)
+    if (saveOperation == NSSaveOperation &&
+        [typeName isEqualToString:[self fileType]]) // during migration want standard saving
         //(saveOperation == NSAutosaveOperation && [absoluteURL isEqual:[self autosavedContentsFileURL]]))
     {
         // NSDocument attempts to write a copy of the document out at a temporary location.
