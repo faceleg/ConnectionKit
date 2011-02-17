@@ -76,3 +76,36 @@
 }
 
 @end
+
+
+@implementation SVTitleMigrationPolicy
+
+- (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager error:(NSError **)error;
+{
+    NSManagedObject *dInstance = [NSEntityDescription insertNewObjectForEntityForName:[mapping destinationEntityName]
+                                                               inManagedObjectContext:[manager destinationContext]];
+    
+    NSString *html = [sInstance valueForKey:@"titleHTML"];
+    BOOL hidden = NO;
+    
+    if (![[html stringByConvertingHTMLToPlainText] length])
+    {
+        // There was no visible text, so user deleted it in 1.x. Reset to a default title, and make hidden
+        hidden = YES;
+        
+        NSString *identifier = [sInstance valueForKey:@"pluginIdentifier"];
+        SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
+        html = [[factory name] stringByEscapingHTMLEntities];
+        
+        if (!html) html = @"Untitled";
+    }
+    
+    [dInstance setValue:NSBOOL(hidden) forKey:@"hidden"];
+    [dInstance setValue:html forKey:@"textHTMLString"];
+    
+    [manager associateSourceInstance:sInstance withDestinationInstance:dInstance forEntityMapping:mapping];
+    
+    return YES;
+}
+
+@end

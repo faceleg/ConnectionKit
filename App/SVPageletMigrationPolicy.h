@@ -11,8 +11,3 @@
 
 @interface SVPageletMigrationPolicy : NSEntityMigrationPolicy
 @end
-
-
-@interface SVTitleMigrationPolicy : NSEntityMigrationPolicy
-
-@end

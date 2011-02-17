@@ -16,3 +16,7 @@
 
 @interface SVAuxiliaryPageletTextMigrationPolicy : SVArticleMigrationPolicy
 @end
+
+
+@interface SVTitleMigrationPolicy : NSEntityMigrationPolicy
+@end
