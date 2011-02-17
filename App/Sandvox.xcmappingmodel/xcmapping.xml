@@ -5,7 +5,7 @@
     <databaseInfo>
         <version>134481920</version>
         <UUID>80C5EDCE-7FD9-41E4-AB5D-2568EBA8138D</UUID>
-        <nextObjectID>544</nextObjectID>
+        <nextObjectID>545</nextObjectID>
         <metadata>
             <plist version="1.0">
                 <dict>
@@ -2562,7 +2562,7 @@ GAcIExwdIiMrMDU2Oz5DSElMTVFWV1xfZVUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlw
         <attribute name="destinationname" type="string">PlugInGraphic</attribute>
         <attribute name="autogenerateexpression" type="bool">0</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z534 z535 z536 z538 z539"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z534 z535 z536 z545 z538 z539"></relationship>
         <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z540"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z538">
@@ -2620,5 +2620,12 @@ CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5h
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <attribute name="name" type="string">textAttachment</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z542"></relationship>
+    </object>
+    <object type="XDDEVATTRIBUTEMAPPING" id="z545">
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGFxhYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKMH
+CA9VJG51bGzTCQoLDA0OXxAQTlNFeHByZXNzaW9uVHlwZVYkY2xhc3NfEBhOU0NvbnN0YW50VmFsdWVDbGFzc05hbWUQAIACgADSEBESE1okY2xhc3NuYW1lWCRjbGFzc2VzXxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvbqMUFRZfEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uXE5TRXhwcmVzc2lvblhOU09iamVjdF8QD05TS2V5ZWRBcmNoaXZlctEZGlRyb290gAEACAARABoAIwAtADIANwA7AEEASABbAGIAfQB/AIEAgwCIAJMAnAC4ALwA2ADlAO4BAAEDAQgAAAAAAAACAQAAAAAAAAAbAAAAAAAAAAAAAAAAAAABCg==
+</attribute>
+        <attribute name="name" type="string">width</attribute>
+        <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z537"></relationship>
     </object>
 </database>
