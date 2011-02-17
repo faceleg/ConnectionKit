@@ -1,12 +1,12 @@
 //
-//  SVArticleMigrationPolicy.m
+//  SVTextMigrationPolicy.m
 //  Sandvox
 //
 //  Created by Mike on 15/02/2011.
 //  Copyright 2011 Karelia Software. All rights reserved.
 //
 
-#import "SVArticleMigrationPolicy.h"
+#import "SVTextMigrationPolicy.h"
 
 #import "SVArticle.h"
 #import "KSExtensibleManagedObject.h"

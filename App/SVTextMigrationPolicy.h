@@ -1,5 +1,5 @@
 //
-//  SVArticleMigrationPolicy.h
+//  SVTextMigrationPolicy.h
 //  Sandvox
 //
 //  Created by Mike on 15/02/2011.
