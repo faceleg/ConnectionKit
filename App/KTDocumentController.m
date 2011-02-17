@@ -317,25 +317,6 @@
 	return document;
 }
 
-- (id)XmakeDocumentWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError;
-{
-    // Migrate!
-    if ([typeName isEqualToString:kKTDocumentUTI_1_5])
-    {
-        if ([self migrateURL:absoluteURL ofType:NSSQLiteStoreType error:outError])
-        {
-            typeName = [self typeForContentsOfURL:absoluteURL error:outError];
-        }
-        else
-        {
-            //if (outError) NSLog(@"%@", *outError);
-            return nil;
-        }
-    }
-    
-    return [super makeDocumentWithContentsOfURL:absoluteURL ofType:typeName error:outError];
-}
-
 #pragma mark -
 #pragma mark Document List
 
