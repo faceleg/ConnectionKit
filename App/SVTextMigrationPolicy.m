@@ -12,6 +12,9 @@
 #import "KSExtensibleManagedObject.h"
 #import "SVGraphicFactory.h"
 
+#import "NSSet+Karelia.h"
+#import "NSString+Karelia.h"
+
 #import "KSStringHTMLEntityUnescaping.h"
 #import "KSStringXMLEntityEscaping.h"
 
@@ -61,6 +64,32 @@
     
     [self associateSourceInstance:sInstance withDestinationInstance:article forEntityMapping:mapping manager:manager];
      
+    return YES;
+}
+
+- (BOOL)createRelationshipsForDestinationInstance:(NSManagedObject *)dInstance entityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager error:(NSError **)error;
+{
+    if (![super createRelationshipsForDestinationInstance:dInstance entityMapping:mapping manager:manager error:error]) return NO;
+    
+    
+    // Fully hook up attachments
+    NSArray *callouts = [[dInstance valueForKey:@"attachments"] KS_sortedArrayUsingDescriptors:[SVRichText attachmentSortDescriptors]];
+    NSUInteger i, count = [callouts count];
+    
+    for (i = 0; i < count; i++)
+    {
+        NSManagedObject *anAttachment = [callouts objectAtIndex:i];
+        OBASSERT([[anAttachment valueForKey:@"placement"] intValue] == SVGraphicPlacementCallout);
+        
+        // Correct location in case source document was a little wonky
+        
+        NSString *string = [[NSString stringWithUnichar:NSAttachmentCharacter] stringByAppendingString:[dInstance valueForKey:@"string"]];
+        [dInstance setValue:string forKey:@"string"];
+        
+        [anAttachment setValue:[NSNumber numberWithUnsignedInteger:i] forKey:@"location"];
+    }
+    
+    
     return YES;
 }
 
