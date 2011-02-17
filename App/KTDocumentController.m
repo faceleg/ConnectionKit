@@ -289,20 +289,7 @@
     
     
     
-    // Migrate!
-    if ([type isEqualToString:kKTDocumentUTI_1_5])
-    {
-        if (![self migrateURL:absoluteURL ofType:NSSQLiteStoreType error:outError])
-        {
-            //if (outError) NSLog(@"%@", *outError);
-            return nil;
-        }
-    }
-    
-    
-    
-	
-	// by now, absoluteURL should be a good file, open it
+    // by now, absoluteURL should be a good file, open it
 	id document = [super openDocumentWithContentsOfURL:absoluteURL
 											   display:displayDocument
 												 error:&subError];
@@ -342,6 +329,25 @@
 	}
 	
 	return document;
+}
+
+- (id)makeDocumentWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError;
+{
+    // Migrate!
+    if ([typeName isEqualToString:kKTDocumentUTI_1_5])
+    {
+        if ([self migrateURL:absoluteURL ofType:NSSQLiteStoreType error:outError])
+        {
+            typeName = [self typeForContentsOfURL:absoluteURL error:outError];
+        }
+        else
+        {
+            //if (outError) NSLog(@"%@", *outError);
+            return nil;
+        }
+    }
+    
+    return [super makeDocumentWithContentsOfURL:absoluteURL ofType:typeName error:outError];
 }
 
 #pragma mark -
