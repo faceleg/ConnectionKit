@@ -169,6 +169,35 @@
 + (BOOL)supportsMultiplePasteboardItems; { return YES; }
 
 
+#pragma mark Migration
+
+- (void)awakeFromSourceProperties:(NSDictionary *)properties
+{
+    NSLog(@"props to convert: %@", properties);
+    if ( [properties objectForKey:@"layout"] )
+    {
+        self.layout = [[properties objectForKey:@"layout"] integerValue];
+    }
+    if ( [properties objectForKey:@"openInNewWindow"] )
+    {
+        self.openLinksInNewWindow = [[properties objectForKey:@"openInNewWindow"] boolValue];
+    }
+    if ( [properties objectForKey:@"linkList"] )
+    {
+        for ( NSDictionary *oldLink in [properties objectForKey:@"linkList"] )
+        {
+            NSString *title = [oldLink objectForKey:@"titleHTML"];
+            NSURL *url = [NSURL URLWithString:[oldLink objectForKey:@"url"]];
+            Link *newLink = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                             title, @"title",
+                             url, @"url",
+                             nil];
+            [self addLink:newLink];
+        }
+        
+    }
+}
+
 #pragma mark Properties
 
 @synthesize linkList = _linkList;
