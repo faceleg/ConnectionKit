@@ -1251,6 +1251,26 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
             }
         }
     }
+    else if ([[[request URL] scheme] isEqualToString:@"svxmedia"])
+    {
+        NSString *graphicID = [[request URL] ks_lastPathComponent];
+        NSManagedObjectContext *context = [[[self HTMLContext] page] managedObjectContext];
+        
+        NSArray *graphics = [context
+                             fetchAllObjectsForEntityForName:@"MediaGraphic"
+                             predicate:[NSPredicate predicateWithFormat:@"identifier == %@", graphicID]
+                             error:NULL];
+        
+        if ([graphics count])
+        {
+            SVMediaGraphic *graphic = [graphics objectAtIndex:0];
+            SVMedia *media = [[graphic media] media];
+            
+            NSMutableURLRequest *result = [[request mutableCopy] autorelease];
+            [result setURL:[media mediaURL]];
+            request = result;
+        }
+    }
     else
     {
         for (SVMedia *media in [[self HTMLContext] media])
