@@ -264,6 +264,10 @@
             NSManagedObject *anAttachment = [attachments objectAtIndex:i];
             NSManagedObject *aGraphic = [graphics objectAtIndex:i];
             NSManagedObject *aMedia = [media objectAtIndex:i];
+            
+            NSDictionary *props = [KSExtensibleManagedObject unarchiveExtensibleProperties:[aMedia valueForKey:@"extensiblePropertiesData"]];
+            [aGraphic setValue:[props objectForKey:@"mediaContainerIdentifier"] forKey:@"identifier"];
+            
             [anAttachment setValue:aGraphic forKey:@"graphic"];
             [aGraphic setValue:aMedia forKey:@"media"];
         }

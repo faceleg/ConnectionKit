@@ -86,7 +86,7 @@
 
 - (SVTextDOMController *)textDOMController; { return self; }
 
-- (WEKWebEditorItem *)orphanedWebEditorItemMatchingDOMNode:(DOMNode *)aNode;
+- (WEKWebEditorItem *)orphanedWebEditorItemForImageDOMElement:(DOMHTMLImageElement *)aNode;
 {
     for (WEKWebEditorItem *anItem in [self childWebEditorItems])
     {
@@ -106,7 +106,7 @@
     // Is there an orphaned item we should reconnect up, rather than self?
     if (result == self && [node isKindOfClass:[DOMHTMLImageElement class]])
     {
-        result = [self orphanedWebEditorItemMatchingDOMNode:node];
+        result = [self orphanedWebEditorItemForImageDOMElement:(DOMHTMLImageElement *)node];
         if (result)
         {
             [result setHTMLElement:(DOMHTMLElement *)node]; // already checked the class

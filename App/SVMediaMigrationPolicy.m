@@ -69,10 +69,16 @@
     }
     [result setValue:preferredFilename forKey:@"preferredFilename"];
     
+    
+    // Also record old ID in case anything else needs it
+    [result setValue:[KSExtensibleManagedObject archiveExtensibleProperties:
+                      [NSMutableDictionary dictionaryWithObject:mediaID
+                                                         forKey:@"mediaContainerIdentifier"]]
+              forKey:@"extensiblePropertiesData"];
+    
+    
+    // Finish up
     [manager associateSourceInstance:sInstance withDestinationInstance:result forEntityMapping:mapping];
-    
-    
-    // Tidy up
     [media release];
     
     return result;

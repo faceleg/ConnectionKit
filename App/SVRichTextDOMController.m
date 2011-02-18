@@ -107,6 +107,19 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [self setTextHTMLElement:element];
 }
 
+- (WEKWebEditorItem *)orphanedWebEditorItemForImageDOMElement:(DOMHTMLImageElement *)aNode;
+{
+    WEKWebEditorItem *result = [super orphanedWebEditorItemForImageDOMElement:aNode];
+    
+    if (!result && [[[aNode absoluteImageURL] scheme] isEqualToString:@"x-svx-embedded-image"])
+    {
+        // See if there's an imported embedded image that wants hooking up
+        
+    }
+    
+    return result;
+}
+
 #pragma mark Updating
 
 // Leave commented out until ready to implement
