@@ -133,4 +133,11 @@
     return result;
 }
 
+- (NSString *)plugInIdentifierForCollectionIndexBundleIdentifier:(NSString *)identifier;
+{
+    // Under 2.0 everything except photo grids becomes a general index
+    if (![identifier isEqualToString:@"sandvox.PhotoGridIndex"]) identifier = @"sandvox.GeneralIndex";
+    return identifier;
+}
+
 @end
