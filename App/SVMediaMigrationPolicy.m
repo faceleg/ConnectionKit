@@ -17,35 +17,32 @@
 
 @implementation SVMediaMigrationPolicy
 
-- (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
+- (BOOL)createDestinationInstanceForSourceInstance:(NSManagedObject *)sInstance mediaContainerIdentifier:(NSString *)mediaID entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
 {
-    // Figure media ID
-    NSString *keyPath = [[mapping userInfo] objectForKey:@"mediaContainerIdentifierKeyPath"];
-    NSString *mediaID;
-    
-    if ([[[sInstance entity] attributesByName] objectForKey:keyPath])
-    {
-        mediaID = [sInstance valueForKey:keyPath];
-    }
-    else
-    {
-        NSDictionary *properties = [KSExtensibleManagedObject unarchiveExtensibleProperties:[sInstance valueForKey:@"extensiblePropertiesData"]];
-        mediaID = [properties valueForKeyPath:keyPath];
-    }
-    
-    if (!mediaID) return YES;   // there was no media to import
-    
-    
-    // Find Media
+    // Find Media Container & File
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", mediaID];
     
     NSArray *containers = [[manager sourceMediaContext] fetchAllObjectsForEntityForName:@"MediaContainer"
                                                                               predicate:predicate
                                                                                   error:error];
-    if (![containers count]) return NO; // FIXME: return an error
+    if (!containers) return NO;
     
-    NSManagedObject *mediaContainer = [containers objectAtIndex:0];
+    
+    NSManagedObject *mediaContainer = [containers lastObject];
     NSManagedObject *mediaFile = [mediaContainer valueForKey:@"file"];
+    
+    // The container might be referencing another, so follow that up
+    while (mediaContainer && !mediaFile)
+    {
+        mediaContainer = [mediaContainer valueForKey:@"sourceMedia"];
+        mediaFile = [mediaContainer valueForKey:@"file"];
+    }
+    
+    if (!mediaContainer) return NO; // FIXME: return an error
+    
+    
+    
+    // Locate file on disk
     NSString *filename = [mediaFile valueForKey:@"filename"];
     NSURL *url = [manager sourceURLOfMediaWithFilename:filename];
     NSURL *dURL = [manager destinationURLOfMediaWithFilename:filename];
@@ -54,6 +51,7 @@
     // A) There's nothing user can really do to fix it
     // B) Failure might be because file is already copied
     [[NSFileManager defaultManager] copyItemAtPath:[url path] toPath:[dURL path] error:NULL];
+    
     
     
     // Create new media record to match
@@ -78,6 +76,29 @@
     [media release];
     
     return YES;
+}
+
+- (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
+{
+    // Figure media ID
+    NSString *keyPath = [[mapping userInfo] objectForKey:@"mediaContainerIdentifierKeyPath"];
+    NSString *mediaID;
+    
+    if ([[[sInstance entity] attributesByName] objectForKey:keyPath])
+    {
+        mediaID = [sInstance valueForKey:keyPath];
+    }
+    else
+    {
+        NSDictionary *properties = [KSExtensibleManagedObject unarchiveExtensibleProperties:[sInstance valueForKey:@"extensiblePropertiesData"]];
+        mediaID = [properties valueForKeyPath:keyPath];
+    }
+    
+    if (!mediaID) return YES;   // there was no media to import
+    
+    
+    // Find Media
+    return [self createDestinationInstanceForSourceInstance:sInstance mediaContainerIdentifier:mediaID entityMapping:mapping manager:manager error:error];
 }
 
 @end

@@ -9,7 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 
+@class SVMigrationManager;
+
+
 @interface SVMediaMigrationPolicy : NSEntityMigrationPolicy
 
+- (BOOL)createDestinationInstanceForSourceInstance:(NSManagedObject *)sInstance mediaContainerIdentifier:(NSString *)mediaID entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
 
 @end

@@ -8,6 +8,9 @@
 
 #import "SVTextMigrationPolicy.h"
 
+#import "SVMediaMigrationPolicy.h"
+#import "SVMigrationManager.h"
+
 #import "SVArticle.h"
 #import "KSExtensibleManagedObject.h"
 #import "SVGraphicFactory.h"
@@ -26,7 +29,134 @@
     [manager associateSourceInstance:sInstance withDestinationInstance:dInstance forEntityMapping:mapping];
 }
 
-- (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager error:(NSError **)error;
++ (NSString *)mediaContainerIdentifierForURI:(NSURL *)mediaURI
+{
+    NSString *result = nil;
+    
+    if ([[mediaURI scheme] isEqualToString:@"svxmedia"])
+	{
+        NSArray *pathComponents = [[mediaURI path] pathComponents];
+        if ([pathComponents count] == 2)
+        {
+            result = [pathComponents objectAtIndex:1];
+        }
+    }
+    
+    return result;
+}
+
++ (NSSet *)mediaContainerIdentifiersInHTML:(NSString *)HTML
+{
+    NSMutableSet *buffer = [[NSMutableSet alloc] init];
+    if (HTML)
+	{
+		NSScanner *imageScanner = [[NSScanner alloc] initWithString:HTML];
+		while (![imageScanner isAtEnd])
+		{
+			// Look for an image tag
+			[imageScanner scanUpToString:@"<img" intoString:NULL];
+			if ([imageScanner isAtEnd]) break;
+			
+			
+			// Locate the image's source attribute
+			[imageScanner scanUpToString:@"src=\"" intoString:NULL];
+			[imageScanner scanString:@"src=\"" intoString:NULL];
+			
+			NSString *aMediaURIString = nil;
+			if ([imageScanner scanUpToString:@"\"" intoString:&aMediaURIString])
+			{
+				NSURL *aMediaURI = [[NSURL alloc] initWithString:aMediaURIString];
+				[buffer addObjectIgnoringNil:[self mediaContainerIdentifierForURI:aMediaURI]];
+				[aMediaURI release];
+			}
+		}    
+		
+		[imageScanner release];
+	}
+    
+    NSSet *result = [[buffer copy] autorelease];
+    [buffer release];
+    return result;
+}
+
+- (NSString *)processHTML:(NSString *)result
+{/*
+    WebView *webview = [[WebView alloc] init];
+    [webview setResourceLoadDelegate:self];
+    [[webview mainFrame] loadHTMLString:result baseURL:nil];
+    
+    while ([webview isLoading])
+    {
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate distantPast]];
+    }*/
+    
+    
+    
+    /*
+			// Convert media source paths
+			NSScanner *scanner = [[NSScanner alloc] initWithString:result];
+			NSMutableString *buffer = [[NSMutableString alloc] initWithCapacity:[result length]];
+			NSString *aString;	NSString *aMediaPath;
+			
+			while (![scanner isAtEnd])
+			{
+				[scanner scanUpToString:@" src=\"" intoString:&aString];
+				OBASSERT(aString);
+				[buffer appendString:aString];
+				if ([scanner isAtEnd]) break;
+				
+				[buffer appendString:@" src=\""];
+				[scanner setScanLocation:([scanner scanLocation] + 6)];
+				
+				if ([scanner scanUpToString:@"\"" intoString:&aMediaPath])
+				{
+					NSURL *aMediaURI = [NSURL URLWithString:aMediaPath];
+					
+					// Replace the path with one suitable for the specified purpose
+					KTMediaContainer *mediaContainer = [KTMediaContainer mediaContainerForURI:aMediaURI];
+					if (mediaContainer)
+					{
+						if ([[self parser] HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
+						{
+							aMediaPath = [[mediaContainer file] quickLookPseudoTag];
+						}
+						else
+						{
+							KTAbstractPage *page = [[self parser] currentPage];
+							KTMediaFile *mediaFile = [mediaContainer sourceMediaFile];
+                            KTMediaFileUpload *upload = [mediaFile uploadForScalingProperties:[(KTScaledImageContainer *)mediaContainer latestProperties]];
+							aMediaPath = [[upload URL] stringRelativeToURL:[page URL]];
+							
+							// Tell the parser's delegate
+							[[self parser] didEncounterMediaFile:mediaFile upload:upload];
+						}
+					}
+					
+					
+					// Add the processed path back in. For external images, it should remain unchanged
+					if (aMediaPath) [buffer appendString:aMediaPath];
+				}
+			}
+			
+			
+			// Finish up
+			result = [NSString stringWithString:buffer];
+			[buffer release];
+			[scanner release];
+    
+    
+    */
+    return result;
+}
+
+- (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource
+{
+    
+    
+    return request;
+}
+
+- (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
 {
     // Loate HTML
     NSString *keyPath = [[mapping userInfo] objectForKey:@"stringKeyPath"];
@@ -48,7 +178,26 @@
                                                              inManagedObjectContext:[manager destinationContext]];
     
         
-    if (![string length])
+    if ([string length])
+    {
+        // Import embedded images
+        NSSet *IDs = [[self class] mediaContainerIdentifiersInHTML:string];
+        for (NSString *anID in IDs)
+        {
+            NSEntityMapping *mediaMapping = [[[manager mappingModel] entityMappingsByName] objectForKey:@"EmbeddedImageToGraphicMedia"];
+            SVMediaMigrationPolicy *policy = [[NSClassFromString([mediaMapping entityMigrationPolicyClassName]) alloc] init];
+            
+            if (![policy createDestinationInstanceForSourceInstance:sInstance
+                                           mediaContainerIdentifier:anID
+                                                      entityMapping:mediaMapping
+                                                            manager:manager
+                                                              error:error])
+            {
+                return NO;
+            }
+        }
+    }
+    else
     {
         if ([keyPath isEqualToString:@"richTextHTML"])
         {
