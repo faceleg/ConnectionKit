@@ -5,7 +5,7 @@
     <databaseInfo>
         <version>134481920</version>
         <UUID>80C5EDCE-7FD9-41E4-AB5D-2568EBA8138D</UUID>
-        <nextObjectID>562</nextObjectID>
+        <nextObjectID>563</nextObjectID>
         <metadata>
             <plist version="1.0">
                 <dict>
@@ -2793,7 +2793,7 @@ GAcIExwdIiMrMDU2Oz5DSElMTVFWV1xfZVUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlw
         <attribute name="destinationname" type="string">TextAttachment</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z561 z562"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z561 z562 z563"></relationship>
         <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z561">
@@ -2808,6 +2808,13 @@ CAwPVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNz
 CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNzEACAAoADEX//0hESExRaJGNsYXNzbmFtZVgkY2xhc3Nlc18QGU5TQ29uc3RhbnRWYWx1ZUV4cHJlc3Npb26jFRYXXxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvblxOU0V4cHJlc3Npb25YTlNPYmplY3RfEA9OU0tleWVkQXJjaGl2ZXLRGhtUcm9vdIABAAgAEQAaACMALQAyADcAPABCAEkAXABuAHUAdwB5AHsAfgCDAI4AlwCzALcA0wDgAOkA+wD+AQMAAAAAAAACAQAAAAAAAAAcAAAAAAAAAAAAAAAAAAABBQ==
 </attribute>
         <attribute name="name" type="string">location</attribute>
+        <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z560"></relationship>
+    </object>
+    <object type="XDDEVATTRIBUTEMAPPING" id="z563">
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGGBlYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKQH
+CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNzEACAAoADEAHSERITFFokY2xhc3NuYW1lWCRjbGFzc2VzXxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvbqMVFhdfEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uXE5TRXhwcmVzc2lvblhOU09iamVjdF8QD05TS2V5ZWRBcmNoaXZlctEaG1Ryb290gAEACAARABoAIwAtADIANwA8AEIASQBcAG4AdQB3AHkAewB9AIIAjQCWALIAtgDSAN8A6AD6AP0BAgAAAAAAAAIBAAAAAAAAABwAAAAAAAAAAAAAAAAAAAEE
+</attribute>
+        <attribute name="name" type="string">length</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z560"></relationship>
     </object>
 </database>

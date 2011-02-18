@@ -156,6 +156,36 @@
     return request;
 }
 
+- (BOOL)createDestinationMediaGraphicsForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
+{
+    Class class = NSClassFromString([mapping entityMigrationPolicyClassName]);
+    if (!class) class = [NSEntityMigrationPolicy class];
+    NSEntityMigrationPolicy *graphicPolicy = [[class alloc] init];
+    
+    BOOL result = [graphicPolicy createDestinationInstancesForSourceInstance:sInstance
+                                                                  entityMapping:mapping
+                                                                        manager:manager
+                                                                          error:error];
+    
+    [graphicPolicy release];
+    return result;
+}
+
+- (BOOL)createDestinationTextAttachmentsForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
+{
+    Class class = NSClassFromString([mapping entityMigrationPolicyClassName]);
+    if (!class) class = [NSEntityMigrationPolicy class];
+    NSEntityMigrationPolicy *attachmentPolicy = [[class alloc] init];
+    
+    BOOL result = [attachmentPolicy createDestinationInstancesForSourceInstance:sInstance
+                                                                  entityMapping:mapping
+                                                                        manager:manager
+                                                                          error:error];
+    
+    [attachmentPolicy release];
+    return result;
+}
+
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
 {
     // Loate HTML
@@ -199,35 +229,18 @@
             
             // Graphic
             NSEntityMapping *graphicMapping = [[[manager mappingModel] entityMappingsByName] objectForKey:@"EmbeddedImageToMediaGraphic"];
-            Class class = NSClassFromString([graphicMapping entityMigrationPolicyClassName]);
-            if (!class) class = [NSEntityMigrationPolicy class];
-            NSEntityMigrationPolicy *graphicPolicy = [[class alloc] init];
-            
-            if (![graphicPolicy createDestinationInstancesForSourceInstance:sInstance
-                                                              entityMapping:graphicMapping
-                                                                    manager:manager
-                                                                      error:error])
-            {
-                return NO;
-            }
-            [graphicPolicy release];
+            if (![self createDestinationMediaGraphicsForSourceInstance:sInstance
+                                                         entityMapping:graphicMapping
+                                                               manager:manager
+                                                                 error:error]) return NO;
             
             
             // Text attachment
             NSEntityMapping *attachmentMapping = [[[manager mappingModel] entityMappingsByName] objectForKey:@"EmbeddedImageToTextAttachment"];
-            class = NSClassFromString([attachmentMapping entityMigrationPolicyClassName]);
-            if (!class) class = [NSEntityMigrationPolicy class];
-            NSEntityMigrationPolicy *attachmentPolicy = [[class alloc] init];
-            
-            if (![attachmentPolicy createDestinationInstancesForSourceInstance:sInstance
-                                                              entityMapping:attachmentMapping
-                                                                    manager:manager
-                                                                      error:error])
-            {
-                return NO;
-            }
-            [attachmentPolicy release];
-            
+            if (![self createDestinationTextAttachmentsForSourceInstance:sInstance
+                                                           entityMapping:attachmentMapping
+                                                                 manager:manager
+                                                                   error:error]) return NO;
         }
     }
     else
