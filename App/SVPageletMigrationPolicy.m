@@ -114,12 +114,23 @@
     return [NSNumber numberWithInteger:result];
 }
 
-- (NSData *)dataFromSourceExtensibleProperties:(NSDictionary *)properties plugInIdentifier:(NSString *)identifier;
+- (NSData *)extensiblePropertiesDataFromSource:(NSManagedObject *)sInstance plugInIdentifier:(NSString *)identifier;
 {
     SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
     SVPlugIn *plugIn = [[[factory plugInClass] alloc] init];
-    [plugIn awakeFromSourceProperties:properties];
     
+    // Grab all reasonable attributes of source
+    NSArray *attributes = [[[sInstance entity] attributesByName] allKeys];
+    NSMutableDictionary *properties = [[sInstance dictionaryWithValuesForKeys:attributes] mutableCopy];
+    
+    [properties addEntriesFromDictionary:[KSExtensibleManagedObject unarchiveExtensibleProperties:
+                                          [sInstance valueForKey:@"extensiblePropertiesData"]]];
+    
+    [plugIn awakeFromSourceProperties:properties];
+    [properties release];
+    
+    
+    // Serialize the plug-in
     NSMutableDictionary *serializedProperties = [[NSMutableDictionary alloc] init];
     for (NSString *aKey in [[plugIn class] plugInKeys])
     {
