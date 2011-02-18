@@ -242,6 +242,31 @@
                                                                  manager:manager
                                                                    error:error]) return NO;
         }
+        
+        
+        // Going to cheat a little and connect attachments, graphics, media up now
+        NSArray *attachments = [manager destinationInstancesForEntityMappingNamed:@"EmbeddedImageToTextAttachment"
+                                                                  sourceInstances:[NSArray arrayWithObject:sInstance]];
+        
+        NSArray *graphics = [manager destinationInstancesForEntityMappingNamed:@"EmbeddedImageToMediaGraphic"
+                                                               sourceInstances:[NSArray arrayWithObject:sInstance]];
+        
+        NSArray *media = [manager destinationInstancesForEntityMappingNamed:@"EmbeddedImageToGraphicMedia"
+                                                            sourceInstances:[NSArray arrayWithObject:sInstance]];
+        
+        NSUInteger count = [attachments count];
+        OBASSERT(count == [graphics count]);
+        OBASSERT(count == [media count]);
+        
+        NSUInteger i;
+        for (i = 0; i < count; i++)
+        {
+            NSManagedObject *anAttachment = [attachments objectAtIndex:i];
+            NSManagedObject *aGraphic = [graphics objectAtIndex:i];
+            NSManagedObject *aMedia = [media objectAtIndex:i];
+            [anAttachment setValue:aGraphic forKey:@"graphic"];
+            [aGraphic setValue:aMedia forKey:@"media"];
+        }
     }
     else
     {
