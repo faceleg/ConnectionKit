@@ -86,6 +86,25 @@ typedef enum {
     return length;
 }
 
+- (NSNumber *)navigationArrowsStyleFromShowNavigationArrows:(NSNumber *)showArrows indexBundleIdentifier:(NSString *)indexID;
+{
+    if ([showArrows boolValue])
+    {
+        if ([indexID isEqualToString:@"sandvox.PhotoGridIndex"])
+        {
+            return [NSNumber numberWithInt:1];
+        }
+        else
+        {
+            return [NSNumber numberWithInt:2];
+        }
+    }
+    else
+    {
+        return showArrows;
+    }
+}
+
 - (NSString *)RSSFileNameFromExtensiblePropertiesData:(NSData *)data;
 {
     // If a value was ever set, use it. Otherwise fall back to prefs. #100026
