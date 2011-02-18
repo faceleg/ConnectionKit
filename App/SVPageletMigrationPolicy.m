@@ -123,8 +123,10 @@
 
 - (NSData *)extensiblePropertiesDataFromSource:(NSManagedObject *)sInstance plugInIdentifier:(NSString *)identifier;
 {
+    identifier = [self plugInIdentifierFromIdentifier:identifier];  // handle Digg
     SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
     SVPlugIn *plugIn = [[[factory plugInClass] alloc] init];
+    
     
     // Grab all reasonable attributes of source
     NSArray *attributes = [[[sInstance entity] attributesByName] allKeys];
