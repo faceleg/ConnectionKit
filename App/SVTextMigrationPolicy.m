@@ -234,6 +234,32 @@
                                                                manager:manager
                                                                  error:error]) return NO;
             
+            // Title
+            NSEntityMapping *graphicTextMapping = [[[manager mappingModel] entityMappingsByName] objectForKey:@"EmbeddedImageToPageletTitle"];
+            if (![self createDestinationMediaGraphicsForSourceInstance:sInstance
+                                                         entityMapping:graphicTextMapping
+                                                               manager:manager
+                                                                 error:error]) return NO;
+            
+            
+            
+            // Intro
+            graphicTextMapping = [[[manager mappingModel] entityMappingsByName] objectForKey:@"EmbeddedImageToPageletIntroduction"];
+            if (![self createDestinationMediaGraphicsForSourceInstance:sInstance
+                                                         entityMapping:graphicTextMapping
+                                                               manager:manager
+                                                                 error:error]) return NO;
+            
+            
+            
+            // Caption
+            graphicTextMapping = [[[manager mappingModel] entityMappingsByName] objectForKey:@"EmbeddedImageToPageletCaption"];
+            if (![self createDestinationMediaGraphicsForSourceInstance:sInstance
+                                                         entityMapping:graphicTextMapping
+                                                               manager:manager
+                                                                 error:error]) return NO;
+            
+            
             
             // Text attachment
             NSEntityMapping *attachmentMapping = [[[manager mappingModel] entityMappingsByName] objectForKey:@"EmbeddedImageToTextAttachment"];
@@ -254,21 +280,42 @@
         NSArray *media = [manager destinationInstancesForEntityMappingNamed:@"EmbeddedImageToGraphicMedia"
                                                             sourceInstances:[NSArray arrayWithObject:sInstance]];
         
-        NSUInteger count = [attachments count];
-        OBASSERT(count == [graphics count]);
+        NSArray *titles = [manager destinationInstancesForEntityMappingNamed:@"EmbeddedImageToPageletTitle"
+                                                             sourceInstances:[NSArray arrayWithObject:sInstance]];
+        
+        NSArray *introductions = [manager destinationInstancesForEntityMappingNamed:@"EmbeddedImageToPageletIntroduction"
+                                                                    sourceInstances:[NSArray arrayWithObject:sInstance]];
+        
+        NSArray *captions = [manager destinationInstancesForEntityMappingNamed:@"EmbeddedImageToPageletCaption"
+                                                               sourceInstances:[NSArray arrayWithObject:sInstance]];
+        
+        
+        
+        NSUInteger count = [graphics count];
+        OBASSERT(count == [attachments count]);
         OBASSERT(count == [media count]);
+        OBASSERT(count == [titles count]);
+        OBASSERT(count == [introductions count]);
+        OBASSERT(count == [captions count]);
+        
         
         NSUInteger i;
         for (i = 0; i < count; i++)
         {
             NSManagedObject *anAttachment = [attachments objectAtIndex:i];
             NSManagedObject *aGraphic = [graphics objectAtIndex:i];
+            NSManagedObject *aTitle = [titles objectAtIndex:i];
+            NSManagedObject *anIntro = [introductions objectAtIndex:i];
+            NSManagedObject *aCaption = [captions objectAtIndex:i];
             NSManagedObject *aMedia = [media objectAtIndex:i];
             
             NSDictionary *props = [KSExtensibleManagedObject unarchiveExtensibleProperties:[aMedia valueForKey:@"extensiblePropertiesData"]];
             [aGraphic setValue:[props objectForKey:@"mediaContainerIdentifier"] forKey:@"identifier"];
             
             [anAttachment setValue:aGraphic forKey:@"graphic"];
+            [aGraphic setValue:aTitle forKey:@"titleBox"];
+            [aGraphic setValue:anIntro forKey:@"introduction"];
+            [aGraphic setValue:aCaption forKey:@"caption"];
             [aGraphic setValue:aMedia forKey:@"media"];
         }
     }
