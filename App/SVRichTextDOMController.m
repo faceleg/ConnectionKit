@@ -129,10 +129,16 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         
         if (attachment)
         {
-            result = [self convertImageElement:imageElement toGraphic:(SVMediaGraphic *)[attachment graphic]];
+            // Convert the image. Disable undo since hopefully nothing much should happen
+            NSManagedObjectContext *context = [attachment managedObjectContext];
+            [context processPendingChanges];
+            [[context undoManager] disableUndoRegistration];
             
-            // Force update
-            [result update];
+            result = [self convertImageElement:imageElement toGraphic:(SVMediaGraphic *)[attachment graphic]];
+            [result performSelector:@selector(update)];
+            
+            [context processPendingChanges];
+            [[context undoManager] enableUndoRegistration];
         }
     }
     
