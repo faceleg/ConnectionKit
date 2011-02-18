@@ -5,7 +5,7 @@
     <databaseInfo>
         <version>134481920</version>
         <UUID>80C5EDCE-7FD9-41E4-AB5D-2568EBA8138D</UUID>
-        <nextObjectID>586</nextObjectID>
+        <nextObjectID>587</nextObjectID>
         <metadata>
             <plist version="1.0">
                 <dict>
@@ -2927,8 +2927,8 @@ GAcIExwdIiMrMDU2Oz5DSElMTVFWV1xfZVUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlw
         <attribute name="destinationname" type="string">PlugInGraphic</attribute>
         <attribute name="autogenerateexpression" type="bool">0</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z579 z586 z576 z578 z575"></relationship>
-        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z582 z584 z577 z581 z583"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z586 z578 z575 z587 z576 z579"></relationship>
+        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z584 z577 z583 z582 z581"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z574">
         <attribute name="migrationpolicyclassname" type="string">SVTitleMigrationPolicy</attribute>
@@ -3034,6 +3034,13 @@ CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNz
 CA9VJG51bGzTCQoLDA0OXxAQTlNFeHByZXNzaW9uVHlwZVYkY2xhc3NfEBhOU0NvbnN0YW50VmFsdWVDbGFzc05hbWUQAIACgADSEBESE1okY2xhc3NuYW1lWCRjbGFzc2VzXxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvbqMUFRZfEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uXE5TRXhwcmVzc2lvblhOU09iamVjdF8QD05TS2V5ZWRBcmNoaXZlctEZGlRyb290gAEACAARABoAIwAtADIANwA7AEEASABbAGIAfQB/AIEAgwCIAJMAnAC4ALwA2ADlAO4BAAEDAQgAAAAAAAACAQAAAAAAAAAbAAAAAAAAAAAAAAAAAAABCg==
 </attribute>
         <attribute name="name" type="string">width</attribute>
+        <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z573"></relationship>
+    </object>
+    <object type="XDDEVATTRIBUTEMAPPING" id="z587">
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGcnNYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8Q
+HwcIExQZGiIoLS4xMjY7PD9ARElKT1NZW2BlZmlqbnFVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5hbWVWJGNsYXNzWU5TT3BlcmFuZFtOU0FyZ3VtZW50cxAEgAKAF4ADgAZfEDRkYXRhRnJvbVNvdXJjZUV4dGVuc2libGVQcm9wZXJ0aWVzOnBsdWdJbklkZW50aWZpZXI60xUJCxYXGFpOU1ZhcmlhYmxlgAQQAoAFXGVudGl0eVBvbGljedIbHB0eWiRjbGFzc25hbWVYJGNsYXNzZXNfEBROU1ZhcmlhYmxlRXhwcmVzc2lvbqMfICFfEBROU1ZhcmlhYmxlRXhwcmVzc2lvblxOU0V4cHJlc3Npb25YTlNPYmplY3TSCyMkJVpOUy5vYmplY3RzgBaiJieAB4AY1QkKCwwNDikQKyyACIAXgAmAC18QHWV4dGVuc2libGVQcm9wZXJ0aWVzRnJvbURhdGE60xUJCy8XGIAKgAVXbWFuYWdlctILIyQ0gBahNYAM1QkKCwwNDjc4OTqADYAVgA6AEF8QEHZhbHVlRm9yS2V5UGF0aDrTFQkLPRcYgA+ABVZzb3VyY2XSCyNBQoAUoUOAEdNFCQtGR0hZTlNLZXlQYXRogBIQCoATXxAYZXh0ZW5zaWJsZVByb3BlcnRpZXNEYXRh0hscS0xfEBxOU0tleVBhdGhTcGVjaWZpZXJFeHByZXNzaW9uo01OIV8QHE5TS2V5UGF0aFNwZWNpZmllckV4cHJlc3Npb25cTlNFeHByZXNzaW9u0hscUFFeTlNNdXRhYmxlQXJyYXmjUFIhV05TQXJyYXnSGxxUVV8QE05TS2V5UGF0aEV4cHJlc3Npb26kVldYIV8QE05TS2V5UGF0aEV4cHJlc3Npb25fEBROU0Z1bmN0aW9uRXhwcmVzc2lvblxOU0V4cHJlc3Npb27SGxxSWqJSIdIbHFxdXxAUTlNGdW5jdGlvbkV4cHJlc3Npb26jXl8hXxAUTlNGdW5jdGlvbkV4cHJlc3Npb25cTlNFeHByZXNzaW9u1QkKCwwNDmE4Y2SAGYAVgBqAHF8QEHZhbHVlRm9yS2V5UGF0aDrTFQkLZxcYgBuABVZzb3VyY2XSCyNBbIAUoW2AHdNFCQtvR0iAHoATXxAQcGx1Z2luSWRlbnRpZmllcl8QD05TS2V5ZWRBcmNoaXZlctF0dVRyb290gAEACAARABoAIwAtADIANwBZAF8AagB9AIwAkwCdAKkAqwCtAK8AsQCzAOoA8QD8AP4BAAECAQ8BFAEfASgBPwFDAVoBZwFwAXUBgAGCAYUBhwGJAZQBlgGYAZoBnAG8AcMBxQHHAc8B1AHWAdgB2gHlAecB6QHrAe0CAAIHAgkCCwISAhcCGQIbAh0CJAIuAjACMgI0Ak8CVAJzAncClgKjAqgCtwK7AsMCyALeAuMC+QMQAx0DIgMlAyoDQQNFA1wDaQN0A3YDeAN6A3wDjwOWA5gDmgOhA6YDqAOqA6wDswO1A7cDygPcA98D5AAAAAAAAAIBAAAAAAAAAHYAAAAAAAAAAAAAAAAAAAPm
+</attribute>
+        <attribute name="name" type="string">extensiblePropertiesData</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z573"></relationship>
     </object>
 </database>
