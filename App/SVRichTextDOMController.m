@@ -107,14 +107,32 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [self setTextHTMLElement:element];
 }
 
-- (WEKWebEditorItem *)orphanedWebEditorItemForImageDOMElement:(DOMHTMLImageElement *)aNode;
+- (WEKWebEditorItem *)orphanedWebEditorItemForImageDOMElement:(DOMHTMLImageElement *)imageElement;
 {
-    WEKWebEditorItem *result = [super orphanedWebEditorItemForImageDOMElement:aNode];
+    WEKWebEditorItem *result = [super orphanedWebEditorItemForImageDOMElement:imageElement];
     
-    if (!result && [[[aNode absoluteImageURL] scheme] isEqualToString:@"x-svx-embedded-image"])
+    if (!result && [[[imageElement absoluteImageURL] scheme] isEqualToString:@"svxmedia"])
     {
         // See if there's an imported embedded image that wants hooking up
+        NSString *graphicID = [[imageElement absoluteImageURL] ks_lastPathComponent];
         
+        SVTextAttachment *attachment = [[[[self representedObject] attachments] filteredSetUsingPredicate:
+                                         [NSPredicate predicateWithFormat:
+                                          @"length == 32767 && graphic.identifier == %@",
+                                          graphicID]] anyObject];
+        
+        if (attachment)
+        {
+            // This has a fair bit in common with -convertImageElementToGraphic:HTMLWriter: so maybe refactor
+            result = [[attachment graphic] newDOMController];
+            [(id)result awakeFromHTMLContext:[self HTMLContext]];
+            
+            [self addChildWebEditorItem:result];
+            [result release];
+            
+            // Force update
+            [result setNeedsUpdate];    [result updateIfNeeded];
+        }
     }
     
     return result;
