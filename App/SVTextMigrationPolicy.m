@@ -310,9 +310,6 @@
     }
     
     
-    // TODO: Create a graphic for each embedded image
-    
-    
     return YES;
 }
 

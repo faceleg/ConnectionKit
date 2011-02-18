@@ -55,9 +55,13 @@
     
     for (SVTextAttachment *anAttachment in [self attachments])
     {
-        [result addAttribute:@"SVAttachment"
-                       value:anAttachment
-                       range:[anAttachment range]];
+        NSRange range = [anAttachment range];
+        if (range.length < 32767)   // signifies a 1.5 embedded image that hasn't been imported yet
+        {
+            [result addAttribute:@"SVAttachment"
+                           value:anAttachment
+                           range:range];
+        }
     }
     
     return [result autorelease];
