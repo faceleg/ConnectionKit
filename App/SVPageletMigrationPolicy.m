@@ -82,6 +82,13 @@
     return YES;
 }
 
+- (NSString *)plugInIdentifierFromIdentifier:(NSString *)identifier;
+{
+    // Convert RSS to Digg. #82975
+    if ([identifier isEqualToString:@"sandvox.DiggElement"]) identifier = @"sandvox.FeedElement";
+    return identifier;
+}
+
 - (NSNumber *)sortKeyForPagelet:(NSManagedObject *)sPagelet;
 {
     // Only sidebar pagelets get a sort key
