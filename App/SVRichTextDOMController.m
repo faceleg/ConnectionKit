@@ -47,6 +47,12 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 @end
 
 
+@interface SVRichTextDOMController ()
+- (void)convertImageElement:(DOMHTMLImageElement *)imageElement toGraphic:(SVMediaGraphic *)image;
+@end
+
+
+
 #pragma mark -
 
 
@@ -123,6 +129,9 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         
         if (attachment)
         {
+            [self convertImageElement:imageElement toGraphic:(SVMediaGraphic *)[attachment graphic]];
+            
+            
             // This has a fair bit in common with -convertImageElementToGraphic:HTMLWriter: so maybe refactor
             result = [[attachment graphic] newDOMController];
             [(id)result awakeFromHTMLContext:[self HTMLContext]];
@@ -310,22 +319,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     }
     
     
-    // Try to divine image size
-    int width = [imageElement width];
-    int height = [imageElement height];
-    
-    if (width > 0 && height > 0)
-    {
-        [image setWidth:[NSNumber numberWithInt:width]];
-        [image setHeight:[NSNumber numberWithInt:height]];
-    }
-    else
-    {
-        [image makeOriginalSize];
-    }
-    [image setConstrainProportions:YES];
-    
-    
     // Make corresponding text attachment
     SVTextAttachment *textAttachment = [SVTextAttachment textAttachmentWithGraphic:image];
     
@@ -333,22 +326,9 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
     
     
-    // Match wrap settings if possible
-    DOMCSSStyleDeclaration *style = [[[self webEditor] webView] computedStyleForElement:imageElement
-                                                                          pseudoElement:nil];
-    
-    [textAttachment setCausesWrap:[NSNumber numberWithBool:
-                                   ([[style display] isEqualToString:@"block"] ? YES : NO)]];
-    
-    NSString *floatProperty = [style getPropertyValue:@"float"];    // -cssFloat returns empty string for some reason
-    if ([floatProperty isEqualToString:@"left"])
-    {
-        [textAttachment setWrapRight:YES];  // believe it, this is the right call!
-    }
-    else if ([floatProperty isEqualToString:@"right"])
-    {
-        [textAttachment setWrapLeft:YES];  // believe it, this is the right call!
-    }
+    // Import size & wrap
+    [self convertImageElement:imageElement toGraphic:image];
+
     
     
     // Create controller for graphic and hook up to imported node
@@ -376,6 +356,45 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     return [[controller HTMLElement] nextSibling];
+}
+
+- (void)convertImageElement:(DOMHTMLImageElement *)imageElement toGraphic:(SVMediaGraphic *)image;
+{
+    SVTextAttachment *textAttachment = [image textAttachment];
+    
+    
+    // Try to divine image size
+    int width = [imageElement width];
+    int height = [imageElement height];
+    
+    if (width > 0 && height > 0)
+    {
+        [image setWidth:[NSNumber numberWithInt:width]];
+        [image setHeight:[NSNumber numberWithInt:height]];
+    }
+    else
+    {
+        [image makeOriginalSize];
+    }
+    [image setConstrainProportions:YES];
+    
+    
+    // Match wrap settings if possible
+    DOMCSSStyleDeclaration *style = [[[self webEditor] webView] computedStyleForElement:imageElement
+                                                                          pseudoElement:nil];
+    
+    [textAttachment setCausesWrap:[NSNumber numberWithBool:
+                                   ([[style display] isEqualToString:@"block"] ? YES : NO)]];
+    
+    NSString *floatProperty = [style getPropertyValue:@"float"];    // -cssFloat returns empty string for some reason
+    if ([floatProperty isEqualToString:@"left"])
+    {
+        [textAttachment setWrapRight:YES];  // believe it, this is the right call!
+    }
+    else if ([floatProperty isEqualToString:@"right"])
+    {
+        [textAttachment setWrapLeft:YES];  // believe it, this is the right call!
+    }
 }
 
 - (DOMNode *)DOMAdaptor:(SVParagraphedHTMLWriterDOMAdaptor *)writer willWriteDOMElement:(DOMElement *)element;
