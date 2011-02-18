@@ -17,7 +17,7 @@
 
 @implementation SVMediaMigrationPolicy
 
-- (BOOL)createDestinationInstanceForSourceInstance:(NSManagedObject *)sInstance mediaContainerIdentifier:(NSString *)mediaID entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
+- (NSManagedObject *)createDestinationInstanceForSourceInstance:(NSManagedObject *)sInstance mediaContainerIdentifier:(NSString *)mediaID entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
 {
     // Find Media Container & File
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", mediaID];
@@ -57,25 +57,25 @@
     // Create new media record to match
     SVMedia *media = [[SVMedia alloc] initByReferencingURL:dURL];
     
-    NSManagedObject *record = [NSEntityDescription insertNewObjectForEntityForName:[mapping destinationEntityName]
+    NSManagedObject *result = [NSEntityDescription insertNewObjectForEntityForName:[mapping destinationEntityName]
                                                             inManagedObjectContext:[manager destinationContext]];
     
-    [record setValue:filename forKey:@"filename"];
+    [result setValue:filename forKey:@"filename"];
     
     NSString *preferredFilename = [mediaFile valueForKey:@"sourceFilename"];
     if (!preferredFilename)
     {
         preferredFilename = filename;
     }
-    [record setValue:preferredFilename forKey:@"preferredFilename"];
+    [result setValue:preferredFilename forKey:@"preferredFilename"];
     
-    [manager associateSourceInstance:sInstance withDestinationInstance:record forEntityMapping:mapping];
+    [manager associateSourceInstance:sInstance withDestinationInstance:result forEntityMapping:mapping];
     
     
     // Tidy up
     [media release];
     
-    return YES;
+    return result;
 }
 
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
@@ -98,7 +98,7 @@
     
     
     // Find Media
-    return [self createDestinationInstanceForSourceInstance:sInstance mediaContainerIdentifier:mediaID entityMapping:mapping manager:manager error:error];
+    return ([self createDestinationInstanceForSourceInstance:sInstance mediaContainerIdentifier:mediaID entityMapping:mapping manager:manager error:error] != nil);
 }
 
 @end

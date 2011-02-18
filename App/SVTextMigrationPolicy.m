@@ -184,17 +184,50 @@
         NSSet *IDs = [[self class] mediaContainerIdentifiersInHTML:string];
         for (NSString *anID in IDs)
         {
+            // Media
             NSEntityMapping *mediaMapping = [[[manager mappingModel] entityMappingsByName] objectForKey:@"EmbeddedImageToGraphicMedia"];
             SVMediaMigrationPolicy *policy = [[NSClassFromString([mediaMapping entityMigrationPolicyClassName]) alloc] init];
             
-            if (![policy createDestinationInstanceForSourceInstance:sInstance
-                                           mediaContainerIdentifier:anID
-                                                      entityMapping:mediaMapping
-                                                            manager:manager
-                                                              error:error])
+            NSManagedObject *media = [policy createDestinationInstanceForSourceInstance:sInstance
+                                                               mediaContainerIdentifier:anID
+                                                                          entityMapping:mediaMapping
+                                                                                manager:manager
+                                                                                  error:error];
+            [policy release];
+            if (!media) return NO;
+            
+            
+            // Graphic
+            NSEntityMapping *graphicMapping = [[[manager mappingModel] entityMappingsByName] objectForKey:@"EmbeddedImageToMediaGraphic"];
+            Class class = NSClassFromString([graphicMapping entityMigrationPolicyClassName]);
+            if (!class) class = [NSEntityMigrationPolicy class];
+            NSEntityMigrationPolicy *graphicPolicy = [[class alloc] init];
+            
+            if (![graphicPolicy createDestinationInstancesForSourceInstance:sInstance
+                                                              entityMapping:graphicMapping
+                                                                    manager:manager
+                                                                      error:error])
             {
                 return NO;
             }
+            [graphicPolicy release];
+            
+            
+            // Text attachment
+            NSEntityMapping *attachmentMapping = [[[manager mappingModel] entityMappingsByName] objectForKey:@"EmbeddedImageToTextAttachment"];
+            class = NSClassFromString([attachmentMapping entityMigrationPolicyClassName]);
+            if (!class) class = [NSEntityMigrationPolicy class];
+            NSEntityMigrationPolicy *attachmentPolicy = [[class alloc] init];
+            
+            if (![attachmentPolicy createDestinationInstancesForSourceInstance:sInstance
+                                                              entityMapping:attachmentMapping
+                                                                    manager:manager
+                                                                      error:error])
+            {
+                return NO;
+            }
+            [attachmentPolicy release];
+            
         }
     }
     else
@@ -228,7 +261,7 @@
     for (i = 0; i < count; i++)
     {
         NSManagedObject *anAttachment = [attachments objectAtIndex:i];
-        //OBASSERT([[anAttachment valueForKey:@"placement"] intValue] == SVGraphicPlacementCallout);
+        if ([[anAttachment valueForKey:@"location"] shortValue] >= 32767) break;    // we've reached the embedded images
         
         // Correct location in case source document was a little wonky
         
@@ -237,6 +270,9 @@
         
         [anAttachment setValue:[NSNumber numberWithUnsignedInteger:i] forKey:@"location"];
     }
+    
+    
+    // TODO: Create a graphic for each embedded image
     
     
     return YES;
