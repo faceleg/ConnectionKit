@@ -20,3 +20,7 @@
 
 @interface SVTitleMigrationPolicy : NSEntityMigrationPolicy
 @end
+
+
+@interface SVFooterMigrationPolicy : NSEntityMigrationPolicy
+@end

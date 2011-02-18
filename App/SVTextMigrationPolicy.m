@@ -413,3 +413,16 @@
 }
 
 @end
+
+
+@implementation SVFooterMigrationPolicy
+
+- (NSString *)stringFromHTMLString:(NSString *)string;
+{
+    // Make sure it's non-nil is all that's needed
+    if (!string) string = @"";
+    return string;
+}
+
+@end
+
