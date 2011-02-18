@@ -48,7 +48,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 
 @interface SVRichTextDOMController ()
-- (void)convertImageElement:(DOMHTMLImageElement *)imageElement toGraphic:(SVMediaGraphic *)image;
+- (SVDOMController *)convertImageElement:(DOMHTMLImageElement *)imageElement toGraphic:(SVMediaGraphic *)image;
 @end
 
 
@@ -129,18 +129,10 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         
         if (attachment)
         {
-            [self convertImageElement:imageElement toGraphic:(SVMediaGraphic *)[attachment graphic]];
-            
-            
-            // This has a fair bit in common with -convertImageElementToGraphic:HTMLWriter: so maybe refactor
-            result = [[attachment graphic] newDOMController];
-            [(id)result awakeFromHTMLContext:[self HTMLContext]];
-            
-            [self addChildWebEditorItem:result];
-            [result release];
+            result = [self convertImageElement:imageElement toGraphic:(SVMediaGraphic *)[attachment graphic]];
             
             // Force update
-            [result setNeedsUpdate];    [result updateIfNeeded];
+            [result update];
         }
     }
     
@@ -326,17 +318,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
     
     
-    // Import size & wrap
-    [self convertImageElement:imageElement toGraphic:image];
-
-    
-    
-    // Create controller for graphic and hook up to imported node
-    SVMediaGraphicDOMController *controller = (SVMediaGraphicDOMController *)[image newDOMController];
-    [controller awakeFromHTMLContext:[self HTMLContext]];
-    [controller setHTMLElement:imageElement];
-    
-    [self addChildWebEditorItem:controller];
+    // Import size & wrap & controller
+    SVDOMController *controller = [self convertImageElement:imageElement toGraphic:image];
     
     
     // Apply size limit
@@ -348,7 +331,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     // Generate new DOM node to match what model would normally generate
     [controller update];
-    [controller release];
     
     
     // Write the replacement
@@ -358,7 +340,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     return [[controller HTMLElement] nextSibling];
 }
 
-- (void)convertImageElement:(DOMHTMLImageElement *)imageElement toGraphic:(SVMediaGraphic *)image;
+- (SVDOMController *)convertImageElement:(DOMHTMLImageElement *)imageElement toGraphic:(SVMediaGraphic *)image;
 {
     SVTextAttachment *textAttachment = [image textAttachment];
     
@@ -395,6 +377,17 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         [textAttachment setWrapLeft:YES];  // believe it, this is the right call!
     }
+    
+    
+    // Create controller for graphic and hook up to imported node
+    SVMediaGraphicDOMController *result = (SVMediaGraphicDOMController *)[image newDOMController];
+    [result awakeFromHTMLContext:[self HTMLContext]];
+    [result setHTMLElement:imageElement];
+    
+    [self addChildWebEditorItem:result];
+    [result release];
+    
+    return result;
 }
 
 - (DOMNode *)DOMAdaptor:(SVParagraphedHTMLWriterDOMAdaptor *)writer willWriteDOMElement:(DOMElement *)element;
