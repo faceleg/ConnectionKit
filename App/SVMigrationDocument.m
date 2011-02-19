@@ -12,19 +12,12 @@
 #import "SVMigrationManager.h"
 #import "KT.h"
 
+#import "KSThreadProxy.h"
+
 
 @implementation SVMigrationDocument
 
-- (BOOL)migrate:(NSError **)outError;
-{
-    if (![self saveToURL:[self fileURL] ofType:kSVDocumentTypeName forSaveOperation:NSSaveOperation error:outError]) return NO;
-    
-    [[self ks_proxyOnThread:nil] readFromURL:[self fileURL] ofType:[self fileType] error:outError];
-    [[self ks_proxyOnThread:nil] makeWindowControllers];
-    [[self ks_proxyOnThread:nil] showWindows];
-    
-    return YES;
-}
+#pragma mark Init & Dealloc
 
 - (id)initWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError;
 {
@@ -37,10 +30,46 @@
                                                                       selector:@selector(migrate:)
                                                                         object:nil];
         
-        //[queue addOperation:operation];
+        [queue addOperation:operation];
         [operation release];
     }
     return self;
+}
+
+- (void)dealloc;
+{
+    [_migrationManager release];
+    
+    [super dealloc];
+}
+
+#pragma mark 
+
+- (BOOL)migrate:(NSError **)outError;
+{
+    if (![self saveToURL:[self fileURL] ofType:kSVDocumentTypeName forSaveOperation:NSSaveOperation error:outError])
+    {
+        // Was this an actual failure, or because the user canceled?
+        if (!outError || [*outError code] == NSUserCancelledError)
+        {
+            // Send any close doc callbacks
+            //[self sendCanCloseDocumentCallbacks];
+            [[self ks_proxyOnThread:nil] close];
+        }
+        else
+        {
+            // Alert the user
+            [[self ks_proxyOnThread:nil] close];
+            [[[NSDocumentController sharedDocumentController] ks_proxyOnThread:nil] presentError:*outError];
+        }
+        return NO;
+    }
+    
+    [[self ks_proxyOnThread:nil] readFromURL:[self fileURL] ofType:[self fileType] error:outError];
+    [[self ks_proxyOnThread:nil] makeWindowControllers];
+    [[self ks_proxyOnThread:nil] showWindows];
+    
+    return YES;
 }
 
 - (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
@@ -91,13 +120,13 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Media 1.5" ofType:@"mom"]];
     NSManagedObjectModel *sMediaModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     
-    SVMigrationManager *manager = [[SVMigrationManager alloc] initWithSourceModel:sModel
-                                                                       mediaModel:sMediaModel
-                                                                 destinationModel:[KTDocument managedObjectModel]];
+    _migrationManager = [[SVMigrationManager alloc] initWithSourceModel:sModel
+                                                             mediaModel:sMediaModel
+                                                       destinationModel:[KTDocument managedObjectModel]];
     
     
-    OBASSERT(manager);
-    if (![manager migrateDocumentFromURL:inOriginalContentsURL
+    OBASSERT(_migrationManager);
+    if (![_migrationManager migrateDocumentFromURL:inOriginalContentsURL
                         toDestinationURL:inURL
                                    error:outError]) return NO;
     
@@ -170,6 +199,14 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     //[dataMigratorController setContent:[self dataMigrator]];
     [progressIndicator startAnimation:self];
     
+}
+
+- (IBAction)cancelMigration:(id)sender
+{
+    // Ask the migrator to cancel. It may take a few moments to actually stop
+    [_migrationManager cancelMigrationWithError:[NSError errorWithDomain:NSCocoaErrorDomain
+                                                                    code:NSUserCancelledError
+                                                                userInfo:nil]];
 }
 
 

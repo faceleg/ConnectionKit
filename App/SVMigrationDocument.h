@@ -17,6 +17,11 @@
 	IBOutlet NSButton				*cancelButton;
     
     IBOutlet NSObjectController    *dataMigratorController;
+    
+  @private
+    NSMigrationManager  *_migrationManager;
 }
+
+- (IBAction)cancelMigration:(id)sender;
 
 @end
