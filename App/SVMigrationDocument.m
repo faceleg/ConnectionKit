@@ -46,6 +46,7 @@
 
 - (void)dealloc;
 {
+    [_migrationManager removeObserver:self forKeyPath:@"migrationProgress"];
     [_migrationManager release];
     
     [super dealloc];
@@ -134,11 +135,12 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                                              mediaModel:sMediaModel
                                                        destinationModel:[KTDocument managedObjectModel]];
     
+    [_migrationManager addObserver:self forKeyPath:@"migrationProgress" options:0 context:NULL];
     
     OBASSERT(_migrationManager);
-    if (![_migrationManager migrateDocumentFromURL:inOriginalContentsURL
-                        toDestinationURL:inURL
-                                   error:outError]) return NO;
+    if (![(SVMigrationManager *)_migrationManager migrateDocumentFromURL:inOriginalContentsURL
+                                                        toDestinationURL:inURL
+                                                                   error:outError]) return NO;
     
     
     
@@ -219,5 +221,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                                                 userInfo:nil]];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;
+{
+    float progress = [_migrationManager migrationProgress];
+    [[progressIndicator ks_proxyOnThread:nil waitUntilDone:NO] setDoubleValue:progress];
+    [[progressIndicator ks_proxyOnThread:nil waitUntilDone:NO] setIndeterminate:NO];
+}
 
 @end
