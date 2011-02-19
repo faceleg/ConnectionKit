@@ -65,10 +65,29 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                                                  destinationModel:[KTDocument managedObjectModel]];
     
     
-    BOOL result = [manager migrateDocumentFromURL:inOriginalContentsURL
-                                 toDestinationURL:inURL
-                                            error:outError];
-    return result;
+    OBASSERT(manager);
+    if (![manager migrateDocumentFromURL:inOriginalContentsURL
+                        toDestinationURL:inURL
+                                   error:outError]) return NO;
+    
+    
+    // Ask the doc to size its media. #108740
+    KTDocument *document = [[KTDocument alloc] initWithContentsOfURL:inURL ofType:inType error:outError];
+    if (!document) return NO;
+    
+    NSArray *mediaGraphics = [[document managedObjectContext] fetchAllObjectsForEntityForName:@"MediaGraphic" error:NULL];
+    [mediaGraphics makeObjectsPerformSelector:@selector(makeOriginalSize)];
+    
+    if (![document saveToURL:inURL ofType:inType forSaveOperation:NSSaveOperation error:outError])
+    {
+        [document release];
+        return NO;
+    }
+    
+    [document release];
+    
+    
+    return YES;
 }
 
 - (BOOL)keepBackupFile;
