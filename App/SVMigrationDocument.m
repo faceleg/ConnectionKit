@@ -18,8 +18,12 @@
 - (BOOL)migrate:(NSError **)outError;
 {
     if (![self saveToURL:[self fileURL] ofType:kSVDocumentTypeName forSaveOperation:NSSaveOperation error:outError]) return NO;
+    
+    [[self ks_proxyOnThread:nil] readFromURL:[self fileURL] ofType:[self fileType] error:outError];
+    [[self ks_proxyOnThread:nil] makeWindowControllers];
+    [[self ks_proxyOnThread:nil] showWindows];
+    
     return YES;
-    return [self readFromURL:[self fileURL] ofType:[self fileType] error:outError];
 }
 
 - (id)initWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError;
