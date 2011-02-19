@@ -27,7 +27,7 @@
         NSOperationQueue *queue = [[NSOperationQueue alloc] init];
         
         NSOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
-                                                                      selector:@selector(migrate:)
+                                                                      selector:@selector(threaded_migrate)
                                                                         object:nil];
         
         [queue addOperation:operation];
@@ -43,33 +43,37 @@
     [super dealloc];
 }
 
-#pragma mark 
+#pragma mark Migration
 
-- (BOOL)migrate:(NSError **)outError;
+- (void)documentDidMigrate:(BOOL)didMigrateSuccessfully error:(NSError *)error;
 {
-    if (![self saveToURL:[self fileURL] ofType:kSVDocumentTypeName forSaveOperation:NSSaveOperation error:outError])
+    if (didMigrateSuccessfully)
     {
-        // Was this an actual failure, or because the user canceled?
-        if (!outError || [*outError code] == NSUserCancelledError)
+        didMigrateSuccessfully = [self readFromURL:[self fileURL] ofType:[self fileType] error:&error];
+        if (didMigrateSuccessfully)
         {
-            // Send any close doc callbacks
-            //[self sendCanCloseDocumentCallbacks];
-            [[self ks_proxyOnThread:nil] close];
+            [self makeWindowControllers];
+            [self showWindows];
         }
-        else
-        {
-            // Alert the user
-            [[self ks_proxyOnThread:nil] close];
-            [[[NSDocumentController sharedDocumentController] ks_proxyOnThread:nil] presentError:*outError];
-        }
-        return NO;
     }
     
-    [[self ks_proxyOnThread:nil] readFromURL:[self fileURL] ofType:[self fileType] error:outError];
-    [[self ks_proxyOnThread:nil] makeWindowControllers];
-    [[self ks_proxyOnThread:nil] showWindows];
+    if (!didMigrateSuccessfully)
+    {
+        //if ([[error domain] isEqualToString:NSCocoaErrorDomain] && [error code] == NSUserCancelledError)
+        [self close];
+        [[NSDocumentController sharedDocumentController] presentError:error];
+    }
+}
+
+- (void)threaded_migrate;
+{
+    NSError *error;
+    BOOL result = [self saveToURL:[self fileURL]
+                           ofType:kSVDocumentTypeName
+                 forSaveOperation:NSSaveOperation
+                            error:&error];
     
-    return YES;
+    [[self ks_proxyOnThread:nil waitUntilDone:NO] documentDidMigrate:result error:error];
 }
 
 - (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
@@ -77,7 +81,6 @@
     if ([typeName isEqualToString:kSVDocumentTypeName_1_5])
     {
         return YES;
-        return [self migrate:NULL];
     }
     else
     {
