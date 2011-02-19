@@ -421,5 +421,11 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 	self.showEntries = 0 != (aType & kArticleMask);
 }
 
+#pragma mark -
+#pragma mark Migration
 
+- (void)awakeFromSourceProperties:(NSDictionary *)properties
+{
+	NSLog(@"props to convert: %@", properties);
+}
 @end
