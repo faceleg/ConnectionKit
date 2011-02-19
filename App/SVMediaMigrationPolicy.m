@@ -80,16 +80,17 @@
     if (!containers) return nil;
     
     
-    NSManagedObject *mediaContainer = [containers lastObject];
-    NSManagedObject *result = [mediaContainer valueForKey:@"file"];
     
     // The container might be referencing another, so follow that up
-    while (mediaContainer && !result)
+    NSManagedObject *mediaContainer = [containers lastObject];
+    
+    while ([[[mediaContainer entity] relationshipsByName] objectForKey:@"sourceMedia"] &&
+           [mediaContainer valueForKey:@"sourceMedia"])
     {
         mediaContainer = [mediaContainer valueForKey:@"sourceMedia"];
-        result = [mediaContainer valueForKey:@"file"];
     }
     
+    NSManagedObject *result = [mediaContainer valueForKey:@"file"];
     return result;  // FIXME: return an error if nil
 }
 
