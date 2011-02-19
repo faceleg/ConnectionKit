@@ -146,7 +146,7 @@
     else if ([self externalSourceURL])
     {
         // External images become auto sized
-        [[self container] setConstrainProportions:NO];
+        [[self container] setConstrainsProportions:NO];
         [self setWidth:nil height:nil];
 		
 		[self getDimensionsFromRemoteImage];

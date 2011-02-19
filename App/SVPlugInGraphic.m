@@ -352,10 +352,10 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 - (NSUInteger)minWidth; { return [[[self plugIn] minWidth] unsignedIntegerValue]; }
 - (NSUInteger)minHeight; { return [[[self plugIn] minHeight] unsignedIntegerValue]; }
 
-- (BOOL)constrainProportions; { return [[self plugIn] constrainedAspectRatio] != nil; }
-- (void)setConstrainProportions:(BOOL)constrain;
+- (BOOL)constrainsProportions; { return [[self plugIn] constrainedAspectRatio] != nil; }
+- (void)setConstrainsProportions:(BOOL)constrain;
 {
-    [[self plugIn] setBool:constrain forKey:@"constrainProportions"];
+    [[self plugIn] setBool:constrain forKey:@"constrainsProportions"];
 }
 
 - (BOOL)isConstrainProportionsEditable;

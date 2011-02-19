@@ -82,9 +82,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     for (SVMediaGraphic *aGraphic in mediaGraphics)
     {
-        if ([aGraphic width] && [aGraphic height])
+        if ([aGraphic isConstrainProportionsEditable])
         {
-            [aGraphic setConstrainProportions:YES];
+            [aGraphic setConstrainsProportions:YES];
         }
     }
     

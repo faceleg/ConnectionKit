@@ -124,7 +124,7 @@
     
     if (width && height)
     {
-        [graphic setConstrainProportions:YES];
+        [graphic setConstrainsProportions:YES];
     }
     
     if (oldWidth && [[self width] unsignedIntegerValue] > [oldWidth unsignedIntegerValue])

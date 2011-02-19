@@ -293,7 +293,7 @@
 {
     [super didSetSource];
 
-    if ([self.container constrainProportions])    // generally true
+    if ([self.container constrainsProportions])    // generally true
     {
         /*/ Resize image to fit in space
         NSUInteger width = self.width;

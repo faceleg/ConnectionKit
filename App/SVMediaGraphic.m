@@ -70,7 +70,7 @@
         [self setSourceWithMediaRecord:media];
         [self setTypeToPublish:[media typeOfFile]];
         [self makeOriginalSize];
-        [self setConstrainProportions:[self isConstrainProportionsEditable]];
+        [self setConstrainsProportions:[self isConstrainProportionsEditable]];
     }
     
     
@@ -337,7 +337,7 @@
 
 #pragma mark Size
 
-- (void)setConstrainProportions:(BOOL)constrainProportions;
+- (void)setConstrainsProportions:(BOOL)constrainProportions;
 {
     if (constrainProportions)
     {
@@ -707,7 +707,7 @@
 		
 		NSNumber *oldWidth = [self width];
 		[self makeOriginalSize];
-		[self setConstrainProportions:[self isConstrainProportionsEditable]];
+		[self setConstrainsProportions:[self isConstrainProportionsEditable]];
 		if (oldWidth)
 		{
 			[self setContentWidth:oldWidth];

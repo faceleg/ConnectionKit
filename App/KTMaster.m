@@ -126,7 +126,7 @@
                                                       inManagedObjectContext:[self managedObjectContext]];
     [logo loadPlugInAsNew:YES];
     [logo makeOriginalSize];
-    [logo setConstrainProportions:YES];
+    [logo setConstrainsProportions:YES];
     [self setLogo:logo];
 }
 
