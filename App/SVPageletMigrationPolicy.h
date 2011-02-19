@@ -11,3 +11,7 @@
 
 @interface SVPageletMigrationPolicy : NSEntityMigrationPolicy
 @end
+
+
+@interface SVMediaGraphicMigrationPolicy : SVPageletMigrationPolicy
+@end

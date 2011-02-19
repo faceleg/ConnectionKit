@@ -5,7 +5,7 @@
     <databaseInfo>
         <version>134481920</version>
         <UUID>80C5EDCE-7FD9-41E4-AB5D-2568EBA8138D</UUID>
-        <nextObjectID>587</nextObjectID>
+        <nextObjectID>588</nextObjectID>
         <metadata>
             <plist version="1.0">
                 <dict>
@@ -1036,7 +1036,7 @@ GAcIExQZGh8gKC0yMzY3O0BBRkpQUldbXlUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlw
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z261"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z271">
-        <attribute name="migrationpolicyclassname" type="string">SVPageletMigrationPolicy</attribute>
+        <attribute name="migrationpolicyclassname" type="string">SVMediaGraphicMigrationPolicy</attribute>
         <attribute name="sourcename" type="string">Pagelet</attribute>
         <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier == "sandvox.ImageElement" || pluginIdentifier = "sandvox.VideoElement"</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
@@ -1044,8 +1044,8 @@ GAcIExQZGh8gKC0yMzY3O0BBRkpQUldbXlUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlw
         <attribute name="destinationname" type="string">MediaGraphic</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z354 z173 z456 z461 z114 z364 z264 z291 z221 z407 z467 z420 z328 z383 z181"></relationship>
-        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z406 z380 z452 z113 z163 z428 z392 z213"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z461 z354 z181 z328 z114 z364 z221 z420 z173 z407 z467 z264 z291 z383 z456"></relationship>
+        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z406 z163 z428 z452 z380 z392 z213 z113"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z272">
         <attribute name="name" type="string">aliasData</attribute>
@@ -1515,8 +1515,8 @@ cBIAAYagrxEUdwAHAAgAFwAYADQANQA2AIoAiwCMAI0AjgCPAJAAkQCSAJMAlACVAJYAlwCYAJkAmgCb
         <relationship name="entitymappings" type="0/0" destination="XDDEVENTITYMAPPING" idrefs="z506 z465 z557 z323 z250 z334 z261 z180 z212 z571 z574 z298 z548 z190 z483 z348 z271 z573 z175 z572 z164 z165 z197 z349 z205 z470 z537 z307 z558 z304 z135 z186 z554 z529 z580 z568 z405 z542 z475 z330 z570 z356 z551 z359 z560 z105 z477 z438 z569 z142 z546 z451 z482"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z354">
-        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGGBlYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKQH
-CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNzEACAAoADWnB1YmxpYy5wbmfSERITFFokY2xhc3NuYW1lWCRjbGFzc2VzXxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvbqMVFhdfEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uXE5TRXhwcmVzc2lvblhOU09iamVjdF8QD05TS2V5ZWRBcmNoaXZlctEaG1Ryb290gAEACAARABoAIwAtADIANwA8AEIASQBcAG4AdQB3AHkAewCGAIsAlgCfALsAvwDbAOgA8QEDAQYBCwAAAAAAAAIBAAAAAAAAABwAAAAAAAAAAAAAAAAAAAEN
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGcnNYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8Q
+HwcIExQZGiIoLS4zNDc4PEFCRUZKT1BVWV9hZmptbnFVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5hbWVWJGNsYXNzWU5TT3BlcmFuZFtOU0FyZ3VtZW50cxAEgAKAGYADgAZfEDF0eXBlVG9QdWJsaXNoRm9yTWVkaWFDb250YWluZXJJZGVudGlmaWVyOm1hbmFnZXI60xUJCxYXGFpOU1ZhcmlhYmxlgAQQAoAFXGVudGl0eVBvbGljedIbHB0eWiRjbGFzc25hbWVYJGNsYXNzZXNfEBROU1ZhcmlhYmxlRXhwcmVzc2lvbqMfICFfEBROU1ZhcmlhYmxlRXhwcmVzc2lvblxOU0V4cHJlc3Npb25YTlNPYmplY3TSCyMkJVpOUy5vYmplY3RzgBiiJieAB4Ad1QkKCwwNDikqKyyACIAXgAmAGl8QEHZhbHVlRm9yS2V5UGF0aDrVCQoLDA0OLxAxMoAKgBmAC4ANXxAdZXh0ZW5zaWJsZVByb3BlcnRpZXNGcm9tRGF0YTrTFQkLNRcYgAyABVdtYW5hZ2Vy0gsjJDqAGKE7gA7VCQoLDA0OPSo/QIAPgBeAEIASXxAQdmFsdWVGb3JLZXlQYXRoOtMVCQtDFxiAEYAFVnNvdXJjZdILI0dIgBahSYAT00sJC0xNTllOU0tleVBhdGiAFBAKgBVfEBhleHRlbnNpYmxlUHJvcGVydGllc0RhdGHSGxxRUl8QHE5TS2V5UGF0aFNwZWNpZmllckV4cHJlc3Npb26jU1QhXxAcTlNLZXlQYXRoU3BlY2lmaWVyRXhwcmVzc2lvblxOU0V4cHJlc3Npb27SGxxWV15OU011dGFibGVBcnJheaNWWCFXTlNBcnJhedIbHFpbXxATTlNLZXlQYXRoRXhwcmVzc2lvbqRcXV4hXxATTlNLZXlQYXRoRXhwcmVzc2lvbl8QFE5TRnVuY3Rpb25FeHByZXNzaW9uXE5TRXhwcmVzc2lvbtIbHFhgolgh0hscYmNfEBROU0Z1bmN0aW9uRXhwcmVzc2lvbqNkZSFfEBROU0Z1bmN0aW9uRXhwcmVzc2lvblxOU0V4cHJlc3Npb27SCyNHaIAWoWmAG9NLCQtrTU6AHIAVXxAYaW1hZ2UubXlPYmplY3RJZGVudGlmaWVy0xUJC28XGIAegAVXbWFuYWdlcl8QD05TS2V5ZWRBcmNoaXZlctF0dVRyb290gAEACAARABoAIwAtADIANwBZAF8AagB9AIwAkwCdAKkAqwCtAK8AsQCzAOcA7gD5APsA/QD/AQwBEQEcASUBPAFAAVcBZAFtAXIBfQF/AYIBhAGGAZEBkwGVAZcBmQGsAbcBuQG7Ab0BvwHfAeYB6AHqAfIB9wH5AfsB/QIIAgoCDAIOAhACIwIqAiwCLgI1AjoCPAI+AkACRwJRAlMCVQJXAnICdwKWApoCuQLGAssC2gLeAuYC6wMBAwYDHAMzA0ADRQNIA00DZANoA38DjAORA5MDlQOXA54DoAOiA70DxAPGA8gD0APiA+UD6gAAAAAAAAIBAAAAAAAAAHYAAAAAAAAAAAAAAAAAAAPs
 </attribute>
         <attribute name="name" type="string">typeToPublish</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z271"></relationship>
@@ -2382,7 +2382,7 @@ CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5h
         <attribute name="sourceexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGamtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8Q
 GAcIExwdIiMrMDU2Oz5DSElMTVFWV1xfZVUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlwZV8QD05TTU9DRXhwcmVzc2lvbl5OU0ZSRXhwcmVzc2lvblYkY2xhc3NfEA9OU0NvdW50T25seUZsYWcQMoANgAKAFwjVCRQMFRYXGBkaG15OU1NlbGVjdG9yTmFtZVlOU09wZXJhbmRbTlNBcmd1bWVudHMQBIADgAyABIAHXxAfcGFnZXNGZXRjaFJlcXVlc3RXaXRoUHJlZGljYXRlOtMeCQwfICFaTlNWYXJpYWJsZYAFEAKABldtYW5hZ2Vy0iQlJidaJGNsYXNzbmFtZVgkY2xhc3Nlc18QFE5TVmFyaWFibGVFeHByZXNzaW9uoygpKl8QFE5TVmFyaWFibGVFeHByZXNzaW9uXE5TRXhwcmVzc2lvblhOU09iamVjdNIMLC0uWk5TLm9iamVjdHOAC6EvgAjTCTEMMjM0XxAPTlNDb25zdGFudFZhbHVlEACACYAKXxBYcGx1Z2luSWRlbnRpZmllciA9PSAnc2FuZHZveC5JbWFnZUVsZW1lbnQnIHx8IHBsdWdpbklkZW50aWZpZXIgPT0gJ3NhbmR2b3guVmlkZW9FbGVtZW50J9IkJTc4XxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvbqM5OipfEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uXE5TRXhwcmVzc2lvbtIkJTw9V05TQXJyYXmiPCrSJCU/QF8QFE5TRnVuY3Rpb25FeHByZXNzaW9uo0FCKl8QFE5TRnVuY3Rpb25FeHByZXNzaW9uXE5TRXhwcmVzc2lvbtUJFAwVFhdERUZHgA6AFoAPgBFfEBB2YWx1ZUZvcktleVBhdGg60x4JDEogIYAQgAZXbWFuYWdlctIMLE5PgBWhUIAS01IJDFNUVVlOU0tleVBhdGiAExAKgBRdc291cmNlQ29udGV4dNIkJVhZXxAcTlNLZXlQYXRoU3BlY2lmaWVyRXhwcmVzc2lvbqNaWypfEBxOU0tleVBhdGhTcGVjaWZpZXJFeHByZXNzaW9uXE5TRXhwcmVzc2lvbtIkJV1eXk5TTXV0YWJsZUFycmF5o108KtIkJWBhXxATTlNLZXlQYXRoRXhwcmVzc2lvbqRiY2QqXxATTlNLZXlQYXRoRXhwcmVzc2lvbl8QFE5TRnVuY3Rpb25FeHByZXNzaW9uXE5TRXhwcmVzc2lvbtIkJWZnXxAYTlNGZXRjaFJlcXVlc3RFeHByZXNzaW9uo2hpKl8QGE5TRmV0Y2hSZXF1ZXN0RXhwcmVzc2lvblxOU0V4cHJlc3Npb25fEA9OU0tleWVkQXJjaGl2ZXLRbG1Ucm9vdIABAAgAEQAaACMALQAyADcAUgBYAGMAdgCIAJcAngCwALIAtAC2ALgAuQDEANMA3QDpAOsA7QDvAPEA8wEVARwBJwEpASsBLQE1AToBRQFOAWUBaQGAAY0BlgGbAaYBqAGqAawBswHFAccByQHLAiYCKwJHAksCZwJ0AnkCgQKEAokCoAKkArsCyALTAtUC1wLZAtsC7gL1AvcC+QMBAwYDCAMKAwwDEwMdAx8DIQMjAzEDNgNVA1kDeAOFA4oDmQOdA6IDuAO9A9MD6gP3A/wEFwQbBDYEQwRVBFgEXQAAAAAAAAIBAAAAAAAAAG4AAAAAAAAAAAAAAAAAAARf
 </attribute>
-        <attribute name="migrationpolicyclassname" type="string">SVPageletMigrationPolicy</attribute>
+        <attribute name="migrationpolicyclassname" type="string">SVMediaGraphicMigrationPolicy</attribute>
         <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier == "sandvox.ImageElement" || pluginIdentifier = "sandvox.VideoElement"</attribute>
         <attribute name="sourcename" type="string">Page</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
@@ -2390,8 +2390,8 @@ GAcIExwdIiMrMDU2Oz5DSElMTVFWV1xfZVUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlw
         <attribute name="destinationname" type="string">MediaGraphic</attribute>
         <attribute name="autogenerateexpression" type="bool">0</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z516 z512 z514 z519 z525 z521 z513 z511 z509 z508 z524 z518 z515 z527"></relationship>
-        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z522 z526 z510 z523 z520 z517 z507"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z511 z509 z513 z525 z515 z521 z527 z519 z518 z512 z508 z516 z514 z524"></relationship>
+        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z522 z510 z507 z526 z520 z523 z517"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z507">
         <attribute name="sourcekeypath" type="string">$source</attribute>
@@ -2492,8 +2492,8 @@ CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNz
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z506"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z525">
-        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGGBlYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKQH
-CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNzEACAAoADWnB1YmxpYy5wbmfSERITFFokY2xhc3NuYW1lWCRjbGFzc2VzXxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvbqMVFhdfEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uXE5TRXhwcmVzc2lvblhOU09iamVjdF8QD05TS2V5ZWRBcmNoaXZlctEaG1Ryb290gAEACAARABoAIwAtADIANwA8AEIASQBcAG4AdQB3AHkAewCGAIsAlgCfALsAvwDbAOgA8QEDAQYBCwAAAAAAAAIBAAAAAAAAABwAAAAAAAAAAAAAAAAAAAEN
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGcnNYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8Q
+HwcIExQZGiIoLS4zNDc4PEFCRUZKT1BVWV9hZmptbnFVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5hbWVWJGNsYXNzWU5TT3BlcmFuZFtOU0FyZ3VtZW50cxAEgAKAGYADgAZfEDF0eXBlVG9QdWJsaXNoRm9yTWVkaWFDb250YWluZXJJZGVudGlmaWVyOm1hbmFnZXI60xUJCxYXGFpOU1ZhcmlhYmxlgAQQAoAFXGVudGl0eVBvbGljedIbHB0eWiRjbGFzc25hbWVYJGNsYXNzZXNfEBROU1ZhcmlhYmxlRXhwcmVzc2lvbqMfICFfEBROU1ZhcmlhYmxlRXhwcmVzc2lvblxOU0V4cHJlc3Npb25YTlNPYmplY3TSCyMkJVpOUy5vYmplY3RzgBiiJieAB4Ad1QkKCwwNDikqKyyACIAXgAmAGl8QEHZhbHVlRm9yS2V5UGF0aDrVCQoLDA0OLxAxMoAKgBmAC4ANXxAdZXh0ZW5zaWJsZVByb3BlcnRpZXNGcm9tRGF0YTrTFQkLNRcYgAyABVdtYW5hZ2Vy0gsjJDqAGKE7gA7VCQoLDA0OPSo/QIAPgBeAEIASXxAQdmFsdWVGb3JLZXlQYXRoOtMVCQtDFxiAEYAFVnNvdXJjZdILI0dIgBahSYAT00sJC0xNTllOU0tleVBhdGiAFBAKgBVfEBhleHRlbnNpYmxlUHJvcGVydGllc0RhdGHSGxxRUl8QHE5TS2V5UGF0aFNwZWNpZmllckV4cHJlc3Npb26jU1QhXxAcTlNLZXlQYXRoU3BlY2lmaWVyRXhwcmVzc2lvblxOU0V4cHJlc3Npb27SGxxWV15OU011dGFibGVBcnJheaNWWCFXTlNBcnJhedIbHFpbXxATTlNLZXlQYXRoRXhwcmVzc2lvbqRcXV4hXxATTlNLZXlQYXRoRXhwcmVzc2lvbl8QFE5TRnVuY3Rpb25FeHByZXNzaW9uXE5TRXhwcmVzc2lvbtIbHFhgolgh0hscYmNfEBROU0Z1bmN0aW9uRXhwcmVzc2lvbqNkZSFfEBROU0Z1bmN0aW9uRXhwcmVzc2lvblxOU0V4cHJlc3Npb27SCyNHaIAWoWmAG9NLCQtrTU6AHIAVXxAYaW1hZ2UubXlPYmplY3RJZGVudGlmaWVy0xUJC28XGIAegAVXbWFuYWdlcl8QD05TS2V5ZWRBcmNoaXZlctF0dVRyb290gAEACAARABoAIwAtADIANwBZAF8AagB9AIwAkwCdAKkAqwCtAK8AsQCzAOcA7gD5APsA/QD/AQwBEQEcASUBPAFAAVcBZAFtAXIBfQF/AYIBhAGGAZEBkwGVAZcBmQGsAbcBuQG7Ab0BvwHfAeYB6AHqAfIB9wH5AfsB/QIIAgoCDAIOAhACIwIqAiwCLgI1AjoCPAI+AkACRwJRAlMCVQJXAnICdwKWApoCuQLGAssC2gLeAuYC6wMBAwYDHAMzA0ADRQNIA00DZANoA38DjAORA5MDlQOXA54DoAOiA70DxAPGA8gD0APiA+UD6gAAAAAAAAIBAAAAAAAAAHYAAAAAAAAAAAAAAAAAAAPs
 </attribute>
         <attribute name="name" type="string">typeToPublish</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z506"></relationship>
@@ -2781,13 +2781,14 @@ GAcIExwdIiMrMDU2Oz5DSElMTVFWV1xfZVUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlw
         <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z558">
+        <attribute name="migrationpolicyclassname" type="string">SVMediaGraphicMigrationPolicy</attribute>
         <attribute name="name" type="string">EmbeddedImageToMediaGraphic</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
         <attribute name="mappingnumber" type="int16">45</attribute>
         <attribute name="destinationname" type="string">MediaGraphic</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z565 z566"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z565 z588 z566"></relationship>
         <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z559">
@@ -3043,5 +3044,12 @@ FQcIExQZGiIoKywxMjU2Oj9ARUlPUVUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlwZV5O
 </attribute>
         <attribute name="name" type="string">extensiblePropertiesData</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z573"></relationship>
+    </object>
+    <object type="XDDEVATTRIBUTEMAPPING" id="z588">
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGcnNYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8Q
+HwcIExQZGiIoLS4zNDc4PEFCRUZKT1BVWV9hZmptbnFVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5hbWVWJGNsYXNzWU5TT3BlcmFuZFtOU0FyZ3VtZW50cxAEgAKAGYADgAZfEDF0eXBlVG9QdWJsaXNoRm9yTWVkaWFDb250YWluZXJJZGVudGlmaWVyOm1hbmFnZXI60xUJCxYXGFpOU1ZhcmlhYmxlgAQQAoAFXGVudGl0eVBvbGljedIbHB0eWiRjbGFzc25hbWVYJGNsYXNzZXNfEBROU1ZhcmlhYmxlRXhwcmVzc2lvbqMfICFfEBROU1ZhcmlhYmxlRXhwcmVzc2lvblxOU0V4cHJlc3Npb25YTlNPYmplY3TSCyMkJVpOUy5vYmplY3RzgBiiJieAB4Ad1QkKCwwNDikqKyyACIAXgAmAGl8QEHZhbHVlRm9yS2V5UGF0aDrVCQoLDA0OLxAxMoAKgBmAC4ANXxAdZXh0ZW5zaWJsZVByb3BlcnRpZXNGcm9tRGF0YTrTFQkLNRcYgAyABVdtYW5hZ2Vy0gsjJDqAGKE7gA7VCQoLDA0OPSo/QIAPgBeAEIASXxAQdmFsdWVGb3JLZXlQYXRoOtMVCQtDFxiAEYAFVnNvdXJjZdILI0dIgBahSYAT00sJC0xNTllOU0tleVBhdGiAFBAKgBVfEBhleHRlbnNpYmxlUHJvcGVydGllc0RhdGHSGxxRUl8QHE5TS2V5UGF0aFNwZWNpZmllckV4cHJlc3Npb26jU1QhXxAcTlNLZXlQYXRoU3BlY2lmaWVyRXhwcmVzc2lvblxOU0V4cHJlc3Npb27SGxxWV15OU011dGFibGVBcnJheaNWWCFXTlNBcnJhedIbHFpbXxATTlNLZXlQYXRoRXhwcmVzc2lvbqRcXV4hXxATTlNLZXlQYXRoRXhwcmVzc2lvbl8QFE5TRnVuY3Rpb25FeHByZXNzaW9uXE5TRXhwcmVzc2lvbtIbHFhgolgh0hscYmNfEBROU0Z1bmN0aW9uRXhwcmVzc2lvbqNkZSFfEBROU0Z1bmN0aW9uRXhwcmVzc2lvblxOU0V4cHJlc3Npb27SCyNHaIAWoWmAG9NLCQtrTU6AHIAVXxAYaW1hZ2UubXlPYmplY3RJZGVudGlmaWVy0xUJC28XGIAegAVXbWFuYWdlcl8QD05TS2V5ZWRBcmNoaXZlctF0dVRyb290gAEACAARABoAIwAtADIANwBZAF8AagB9AIwAkwCdAKkAqwCtAK8AsQCzAOcA7gD5APsA/QD/AQwBEQEcASUBPAFAAVcBZAFtAXIBfQF/AYIBhAGGAZEBkwGVAZcBmQGsAbcBuQG7Ab0BvwHfAeYB6AHqAfIB9wH5AfsB/QIIAgoCDAIOAhACIwIqAiwCLgI1AjoCPAI+AkACRwJRAlMCVQJXAnICdwKWApoCuQLGAssC2gLeAuYC6wMBAwYDHAMzA0ADRQNIA00DZANoA38DjAORA5MDlQOXA54DoAOiA70DxAPGA8gD0APiA+UD6gAAAAAAAAIBAAAAAAAAAHYAAAAAAAAAAAAAAAAAAAPs
+</attribute>
+        <attribute name="name" type="string">typeToPublish</attribute>
+        <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z558"></relationship>
     </object>
 </database>

@@ -19,26 +19,11 @@
 
 - (NSManagedObject *)createDestinationInstanceForSourceInstance:(NSManagedObject *)sInstance mediaContainerIdentifier:(NSString *)mediaID entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
 {
-    // Find Media Container & File
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", mediaID];
-    
-    NSArray *containers = [[manager sourceMediaContext] fetchAllObjectsForEntityForName:@"MediaContainer"
-                                                                              predicate:predicate
-                                                                                  error:error];
-    if (!containers) return NO;
-    
-    
-    NSManagedObject *mediaContainer = [containers lastObject];
-    NSManagedObject *mediaFile = [mediaContainer valueForKey:@"file"];
-    
-    // The container might be referencing another, so follow that up
-    while (mediaContainer && !mediaFile)
-    {
-        mediaContainer = [mediaContainer valueForKey:@"sourceMedia"];
-        mediaFile = [mediaContainer valueForKey:@"file"];
-    }
-    
-    if (!mediaContainer) return NO; // FIXME: return an error
+    // Find Media File
+    NSManagedObject *mediaFile = [[self class] sourceMediaFileForContainerIdentifier:mediaID
+                                                                             manager:manager
+                                                                               error:error];
+    if (!mediaFile) return NO; 
     
     
     
@@ -82,6 +67,30 @@
     [media release];
     
     return result;
+}
+
++ (NSManagedObject *)sourceMediaFileForContainerIdentifier:(NSString *)containerID manager:(SVMigrationManager *)manager error:(NSError **)error;
+{
+    // Find Media Container & File
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", containerID];
+    
+    NSArray *containers = [[manager sourceMediaContext] fetchAllObjectsForEntityForName:@"MediaContainer"
+                                                                              predicate:predicate
+                                                                                  error:error];
+    if (!containers) return nil;
+    
+    
+    NSManagedObject *mediaContainer = [containers lastObject];
+    NSManagedObject *result = [mediaContainer valueForKey:@"file"];
+    
+    // The container might be referencing another, so follow that up
+    while (mediaContainer && !result)
+    {
+        mediaContainer = [mediaContainer valueForKey:@"sourceMedia"];
+        result = [mediaContainer valueForKey:@"file"];
+    }
+    
+    return result;  // FIXME: return an error if nil
 }
 
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;

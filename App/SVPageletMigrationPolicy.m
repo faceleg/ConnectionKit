@@ -9,6 +9,7 @@
 #import "SVPageletMigrationPolicy.h"
 
 #import "SVGraphicFactory.h"
+#import "SVMediaMigrationPolicy.h"
 
 
 @implementation SVPageletMigrationPolicy
@@ -161,3 +162,22 @@
 }
 
 @end
+
+
+@implementation SVMediaGraphicMigrationPolicy
+
+- (NSString *)typeToPublishForMediaContainerIdentifier:(NSString *)identifier manager:(SVMigrationManager *)manager;
+{
+    NSManagedObject *mediaFile = [SVMediaMigrationPolicy sourceMediaFileForContainerIdentifier:identifier manager:manager error:NULL];
+    NSString *result = [mediaFile valueForKey:@"fileType"];
+    
+    if (![result isEqualToString:(NSString *)kUTTypePNG] && ![result isEqualToString:(NSString *)kUTTypeGIF])
+    {
+        result = (NSString *)kUTTypeJPEG;
+    }
+    
+    return result;
+}
+
+@end
+
