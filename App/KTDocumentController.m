@@ -9,7 +9,6 @@
 #import "KTDocumentController.h"
 
 #import "KT.h"
-#import "KTDataMigrator.h"
 #import "KTDataMigrationDocument.h"
 #import "SVDesignPickerController.h"
 #import "KTDesign.h"
