@@ -11,7 +11,12 @@
 
 @interface SVMigrationDocument : KTDocument
 {
-
+    IBOutlet NSTextField			*messageTextField;
+	IBOutlet NSTextField			*informativeTextField;
+	IBOutlet NSProgressIndicator	*progressIndicator;
+	IBOutlet NSButton				*cancelButton;
+    
+    IBOutlet NSObjectController    *dataMigratorController;
 }
 
 @end

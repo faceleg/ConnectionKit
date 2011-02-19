@@ -37,7 +37,7 @@
                                                                       selector:@selector(migrate:)
                                                                         object:nil];
         
-        [queue addOperation:operation];
+        //[queue addOperation:operation];
         [operation release];
     }
     return self;
@@ -140,5 +140,37 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     BOOL result = ([[self fileType] isEqualToString:kSVDocumentTypeName_1_5] ? YES : [super keepBackupFile]);
     return result;
 }
+
+#pragma mark UI
+
+- (NSString *)windowNibName { return @"DocumentMigration"; }
+
+/*  Start up the progress indicator and set text fields right
+ */
+- (void)awakeFromNib
+{
+    NSString *filename = [[NSFileManager defaultManager] displayNameAtPath:[[self fileURL] path]];
+    NSString *message = [NSString stringWithFormat:
+                         NSLocalizedString(@"Upgrading document “%@.”","document upgrade message text"), filename];
+    [messageTextField setStringValue:message];
+    
+    
+    NSString *path = [[self fileURL] path];
+    //path = [KTDataMigrator renamedFileName:path modelVersion:kKTModelVersion_ORIGINAL];
+    filename = [[NSFileManager defaultManager] displayNameAtPath:path];
+    
+    message = [NSString stringWithFormat:
+               NSLocalizedString(@"Before it can be opened, this document must be upgraded to the latest Sandvox data format. A backup of the original document will be kept in the same folder in case you need to refer back to it","document upgrade informative text"),
+               filename];
+    [informativeTextField setStringValue:message];
+    
+	[cancelButton setTitle:NSLocalizedString(@"Cancel","Button title")];
+    
+	
+    //[dataMigratorController setContent:[self dataMigrator]];
+    [progressIndicator startAnimation:self];
+    
+}
+
 
 @end
