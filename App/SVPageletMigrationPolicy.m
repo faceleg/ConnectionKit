@@ -154,6 +154,11 @@
     return result;
 }
 
+@end
+
+
+@implementation SVIndexMigrationPolicy
+
 - (NSString *)plugInIdentifierForCollectionIndexBundleIdentifier:(NSString *)identifier;
 {
     // Under 2.0 everything except photo grids becomes a general index
@@ -161,7 +166,14 @@
     return identifier;
 }
 
+- (NSData *)extensiblePropertiesDataFromSource:(NSManagedObject *)sInstance plugInIdentifier:(NSString *)identifier;
+{
+    return [super extensiblePropertiesDataFromSource:sInstance
+                                    plugInIdentifier:[self plugInIdentifierForCollectionIndexBundleIdentifier:identifier]];
+}
+
 @end
+
 
 
 @implementation SVMediaGraphicMigrationPolicy

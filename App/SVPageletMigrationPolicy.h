@@ -15,3 +15,7 @@
 
 @interface SVMediaGraphicMigrationPolicy : SVPageletMigrationPolicy
 @end
+
+
+@interface SVIndexMigrationPolicy : SVPageletMigrationPolicy
+@end
