@@ -43,6 +43,9 @@
 - (NSNumber *)naturalHeight;
 - (void)setNaturalWidth:(NSNumber *)width height:(NSNumber *)height;
 
+// Implement this to fetch the media's natural size and call -setNaturalWidth:height: with it. Default implementation sets both dimensions to nil. -makeOriginalSize calls through to this method if a suitable natural size has not been set yet.
+- (void)resetNaturalSize;
+
 
 #pragma mark HTML
 

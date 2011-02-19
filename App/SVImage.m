@@ -134,18 +134,8 @@
 	}
 }
 
-#pragma mark Media
-
-- (void)didSetSource;
+- (void)resetNaturalSize;
 {
-    [super didSetSource];
-    
-    // Adjust file type if not valid
-    if (![self validateTypeToPublish:[self typeToPublish]])
-    {
-        [self setTypeToPublish:(NSString *)kUTTypeJPEG];
-    }
-    
     if ([self media])
     {
         // Store natural size
@@ -161,6 +151,21 @@
 		
 		[self getDimensionsFromRemoteImage];
     }
+}
+
+#pragma mark Media
+
+- (void)didSetSource;
+{
+    [super didSetSource];
+    
+    // Adjust file type if not valid
+    if (![self validateTypeToPublish:[self typeToPublish]])
+    {
+        [self setTypeToPublish:(NSString *)kUTTypeJPEG];
+    }
+    
+    [self resetNaturalSize];
 }
 
 + (NSArray *)allowedFileTypes

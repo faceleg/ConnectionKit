@@ -120,7 +120,7 @@
     [graphic setNaturalHeight:height];
     
     NSNumber *oldWidth = [self width];
-    [graphic makeOriginalSize];
+    [graphic makeOriginalSize]; // why did I decide to do this? – Mike
     
     if (width && height)
     {
@@ -133,6 +133,8 @@
     }
 }
 
+- (void)resetNaturalSize; { [self setNaturalWidth:nil height:nil]; }
+
 /*  There shouldn't be any need to call this method directly. Instead, it should only be called internally from -[SVMediaGraphic makeOriginalSize]
  */
 - (void)makeOriginalSize;
@@ -140,7 +142,17 @@
     NSNumber *width = [self naturalWidth];
     NSNumber *height = [self naturalHeight];
     
-    if (width && height) [self setWidth:width height:height];
+    if (width && height)
+    {
+        [self setWidth:width height:height];
+    }
+    else
+    {
+        // Need to go back to the source
+        [self resetNaturalSize];
+        
+        if ([self naturalWidth] && [self naturalHeight]) [self makeOriginalSize];
+    }
 }
 
 #pragma mark SVEnclosure
