@@ -61,6 +61,14 @@
         didMigrateSuccessfully = [self readFromURL:[self fileURL] ofType:[self fileType] error:&error];
         if (didMigrateSuccessfully)
         {
+            // Close the migration UI
+            NSArray *migrationWindowControllers = [self windowControllers];
+            for (NSWindowController *aController in migrationWindowControllers)
+            {
+                [self removeWindowController:aController];
+            }
+            
+            // Show regular UI
             [self makeWindowControllers];
             [self showWindows];
         }
