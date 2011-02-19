@@ -73,21 +73,25 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                    error:outError]) return NO;
     
     
-    // Ask the doc to size its media. #108740
+    
+    // #108740
     KTDocument *document = [[KTDocument alloc] initWithContentsOfURL:inURL ofType:inType error:outError];
     if (!document) return NO;
     
-    NSArray *mediaGraphics = [[document managedObjectContext] fetchAllObjectsForEntityForName:@"MediaGraphic" error:NULL];
-    [mediaGraphics makeObjectsPerformSelector:@selector(makeOriginalSize)];
+    // Make each media graphic original size
+    NSArray *graphics = [[document managedObjectContext] fetchAllObjectsForEntityForName:@"MediaGraphic" error:NULL];
+    [graphics makeObjectsPerformSelector:@selector(makeOriginalSize)];
     
-    for (SVMediaGraphic *aGraphic in mediaGraphics)
+    // Constrain proportions
+    for (SVMediaGraphic *aGraphic in graphics)
     {
-        if ([aGraphic isConstrainProportionsEditable])
-        {
-            [aGraphic setConstrainsProportions:YES];
-        }
+        if ([aGraphic isConstrainProportionsEditable]) [aGraphic setConstrainsProportions:YES];
     }
     
+    // Then reduce size to fit on page
+    [document designDidChange];
+    
+    // Save
     if (![document saveToURL:inURL ofType:inType forSaveOperation:NSSaveOperation error:outError])
     {
         [document release];
