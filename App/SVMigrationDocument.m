@@ -15,17 +15,24 @@
 
 @implementation SVMigrationDocument
 
+- (BOOL)migrate:(NSError **)outError;
+{
+    if (![self saveToURL:[self fileURL] ofType:kSVDocumentTypeName forSaveOperation:NSSaveOperation error:outError]) return NO;
+    
+    return [self readFromURL:[self fileURL] ofType:[self fileType] error:outError];
+}
+
 - (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
     if ([typeName isEqualToString:kKTDocumentUTI_1_5])
     {
-        if (![self saveToURL:absoluteURL ofType:kSVDocumentTypeName forSaveOperation:NSSaveOperation error:outError]) return NO;
-
-        typeName = [[NSDocumentController sharedDocumentController] typeForContentsOfURL:absoluteURL error:outError];
-        if (!typeName) return NO;
+        return YES;
+        return [self migrate:NULL];
     }
-    
-    return [super readFromURL:absoluteURL ofType:typeName error:outError];
+    else
+    {
+        return [super readFromURL:absoluteURL ofType:typeName error:outError];
+    }
 }
 
 - (BOOL)writeToURL:(NSURL *)inURL 
