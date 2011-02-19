@@ -192,7 +192,7 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
     // not allow the user to pick a persistence store format and confuse the app.
     //
     // BUGSID:37280 If you don't specify a string the document framework recognises, hidden file extensions won't work right
-	return [NSArray arrayWithObject:kKTDocumentType];
+	return [NSArray arrayWithObject:kSVDocumentTypeName];
 }
 
 #pragma mark -

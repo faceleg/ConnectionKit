@@ -203,7 +203,7 @@
     NSString *type = [self typeForContentsOfURL:absoluteURL error:outError];	// Should we ignore this error?
 	
 	// are we opening a KTDocument?
-	if (type && ([type isEqualToString:kKTDocumentType] ||
+	if (type && ([type isEqualToString:kSVDocumentTypeName] ||
                  [type isEqualToString:kKTDocumentUTI_1_5] ||
                  [type isEqualToString:kKTDocumentUTI_ORIGINAL]))
 	{		

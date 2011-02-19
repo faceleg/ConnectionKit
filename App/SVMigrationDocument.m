@@ -19,7 +19,7 @@
 {
     if ([typeName isEqualToString:kKTDocumentUTI_1_5])
     {
-        if (![self saveToURL:absoluteURL ofType:kKTDocumentType forSaveOperation:NSSaveOperation error:outError]) return NO;
+        if (![self saveToURL:absoluteURL ofType:kSVDocumentTypeName forSaveOperation:NSSaveOperation error:outError]) return NO;
 
         typeName = [[NSDocumentController sharedDocumentController] typeForContentsOfURL:absoluteURL error:outError];
         if (!typeName) return NO;
