@@ -904,9 +904,16 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
  */
 - (void)makeWindowControllers
 {
-    NSWindowController *windowController = [[KTDocWindowController alloc] init];
-    [self addWindowController:windowController];
-    [windowController release];
+    if ([[self fileType] isEqualToString:kSVDocumentTypeName])
+    {
+        NSWindowController *windowController = [[KTDocWindowController alloc] init];
+        [self addWindowController:windowController];
+        [windowController release];
+    }
+    else
+    {
+        [super makeWindowControllers];
+    }
 }
 
 
