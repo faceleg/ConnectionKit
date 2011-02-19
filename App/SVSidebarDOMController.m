@@ -759,6 +759,8 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     if (context == sSVSidebarDOMControllerPageletsObservation)
     {
         NSArray *loadedPagelets = [[self pageletDOMControllers] valueForKey:@"representedObject"];
+        if (!loadedPagelets) loadedPagelets = [NSArray array];  // so comparing empty to equal works out
+        
         if (![[object valueForKeyPath:keyPath] isEqual:loadedPagelets])
         {
             [self setNeedsUpdateWithSelector:@selector(updatePageletOrdering)];
