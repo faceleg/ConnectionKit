@@ -8,8 +8,10 @@
 
 #import "SVMigrationDocument.h"
 
+#import "SVMediaGraphic.h"
 #import "SVMigrationManager.h"
 #import "KT.h"
+
 
 @implementation SVMigrationDocument
 
@@ -77,6 +79,14 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     NSArray *mediaGraphics = [[document managedObjectContext] fetchAllObjectsForEntityForName:@"MediaGraphic" error:NULL];
     [mediaGraphics makeObjectsPerformSelector:@selector(makeOriginalSize)];
+    
+    for (SVMediaGraphic *aGraphic in mediaGraphics)
+    {
+        if ([aGraphic width] && [aGraphic height])
+        {
+            [aGraphic setConstrainProportions:YES];
+        }
+    }
     
     if (![document saveToURL:inURL ofType:inType forSaveOperation:NSSaveOperation error:outError])
     {
