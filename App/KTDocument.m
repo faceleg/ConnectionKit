@@ -850,6 +850,25 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         SVGraphic *graphic = [aMediaRecord valueForKey:@"graphic"];
         [graphic replaceMedia:media forKeyPath:@"media"];
     }
+    
+    
+    // Let all graphics know of the change.
+	NSArray *graphics = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"Graphic" error:NULL];
+	for (SVGraphic *aGraphic in graphics)
+	{
+		for (SVSidebar *aSidebar in [aGraphic sidebars])
+		{
+			KTPage *page = [aSidebar page];
+			if (page) [aGraphic didAddToPage:page]; // how'd you have a sidebar without a page? – Mike
+		}
+		
+		SVRichText *text = [[aGraphic textAttachment] body];
+		if ([text isKindOfClass:[SVArticle class]])
+		{
+			KTPage *page = [(SVArticle *)text page];
+			if (page) [aGraphic didAddToPage:page];
+		}
+	}
 }
 
 - (NSSet *)missingMedia;

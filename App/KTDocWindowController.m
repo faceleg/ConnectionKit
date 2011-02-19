@@ -556,24 +556,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[[self document] designDidChange];
 	
 	
-	// Let all graphics know of the change.
-	NSArray *graphics = [[[self pagesController] managedObjectContext]
-						 fetchAllObjectsForEntityForName:@"Graphic" error:NULL];
-	for (SVGraphic *aGraphic in graphics)
-	{
-		for (SVSidebar *aSidebar in [aGraphic sidebars])
-		{
-			KTPage *page = [aSidebar page];
-			if (page) [aGraphic didAddToPage:page];
-		}
-		
-		SVRichText *text = [[aGraphic textAttachment] body];
-		if ([text isKindOfClass:[SVArticle class]])
-		{
-			KTPage *page = [(SVArticle *)text page];
-			if (page) [aGraphic didAddToPage:page];
-		}
-	}
 	[self showDesignIdentityWindow:aDesign];
 }
 - (void)designChooserDidEnd:(SVDesignPickerController *)designChooser returnCode:(NSInteger)returnCode;
