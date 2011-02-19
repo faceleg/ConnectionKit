@@ -36,6 +36,14 @@
     return self;
 }
 
+- (void)close;
+{
+    // Make sure migration is cancelled
+    [self cancelMigration:self];
+    
+    [super close];
+}
+
 - (void)dealloc;
 {
     [_migrationManager release];
@@ -59,9 +67,8 @@
     
     if (!didMigrateSuccessfully)
     {
-        //if ([[error domain] isEqualToString:NSCocoaErrorDomain] && [error code] == NSUserCancelledError)
         [self close];
-        [[NSDocumentController sharedDocumentController] presentError:error];
+        [[NSDocumentController sharedDocumentController] presentError:error];   // ignores cancel errors
     }
 }
 
