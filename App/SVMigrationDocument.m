@@ -94,6 +94,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         return NO;
     }
     
+    [document close];
     [document release];
     
     
