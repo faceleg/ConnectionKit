@@ -154,7 +154,7 @@
     {
         return nil;//[KTDataMigrationDocument class];
     }
-    else if ([documentTypeName isEqualToString:kKTDocumentUTI_1_5])
+    else if ([documentTypeName isEqualToString:kSVDocumentTypeName_1_5])
     {
         return [SVMigrationDocument class];
     }
@@ -186,7 +186,7 @@
             {
                 NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[inAbsoluteURL path] error:NULL];
                 
-                if (![contents containsObject:@"index"]) result = kKTDocumentUTI_1_5;
+                if (![contents containsObject:@"index"]) result = kSVDocumentTypeName_1_5;
             }
         }
     }
@@ -204,7 +204,7 @@
 	
 	// are we opening a KTDocument?
 	if (type && ([type isEqualToString:kSVDocumentTypeName] ||
-                 [type isEqualToString:kKTDocumentUTI_1_5] ||
+                 [type isEqualToString:kSVDocumentTypeName_1_5] ||
                  [type isEqualToString:kKTDocumentUTI_ORIGINAL]))
 	{		
 		// check compatibility with KTModelVersion

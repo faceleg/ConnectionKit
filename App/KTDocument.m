@@ -115,17 +115,17 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 /*	Returns the URL to the primary document persistent store. This differs dependent on the document UTI.
  *	You can pass in nil to use the default UTI for new documents.
  */
-+ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL type:(NSString *)documentUTI
++ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL type:(NSString *)typeName
 {
 	OBPRECONDITION(inURL);
 	
 	NSURL *result = nil;
 	
-	if ([documentUTI isEqualToString:kKTDocumentUTI_1_5])
+	if ([typeName isEqualToString:kSVDocumentTypeName_1_5] || [typeName isEqualToString:kKTDocumentUTI_1_5])
 	{
 		result = [inURL ks_URLByAppendingPathComponent:@"datastore.sqlite3" isDirectory:NO];
 	}
-	else if ([documentUTI isEqualToString:kKTDocumentUTI_ORIGINAL])
+	else if ([typeName isEqualToString:kKTDocumentUTI_ORIGINAL])
 	{
 		result = inURL;
 	}

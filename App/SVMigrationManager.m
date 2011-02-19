@@ -67,7 +67,7 @@
     
     _docURL = sourceDocURL;
     _destinationURL = dURL;
-    NSURL *sStoreURL = [KTDocument datastoreURLForDocumentURL:sourceDocURL type:kKTDocumentUTI_1_5];
+    NSURL *sStoreURL = [KTDocument datastoreURLForDocumentURL:sourceDocURL type:kSVDocumentTypeName_1_5];
     NSURL *dStoreURL = [KTDocument datastoreURLForDocumentURL:dURL type:nil];
     
     NSError *error;

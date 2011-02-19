@@ -342,7 +342,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	
 @try
 {
-    if (saveOperation != NSAutosaveOperation)
+    if (saveOperation != NSAutosaveOperation && [NSThread isMainThread])
     {
         // Kick off thumbnail generation
         [self startGeneratingThumbnail];

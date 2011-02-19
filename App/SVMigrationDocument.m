@@ -18,13 +18,30 @@
 - (BOOL)migrate:(NSError **)outError;
 {
     if (![self saveToURL:[self fileURL] ofType:kSVDocumentTypeName forSaveOperation:NSSaveOperation error:outError]) return NO;
-    
+    return YES;
     return [self readFromURL:[self fileURL] ofType:[self fileType] error:outError];
+}
+
+- (id)initWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError;
+{
+    if (self = [super initWithContentsOfURL:absoluteURL ofType:typeName error:outError])
+    {
+        // Kick off migration in background
+        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+        
+        NSOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
+                                                                      selector:@selector(migrate:)
+                                                                        object:nil];
+        
+        [queue addOperation:operation];
+        [operation release];
+    }
+    return self;
 }
 
 - (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
-    if ([typeName isEqualToString:kKTDocumentUTI_1_5])
+    if ([typeName isEqualToString:kSVDocumentTypeName_1_5])
     {
         return YES;
         return [self migrate:NULL];
@@ -42,7 +59,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
              error:(NSError **)outError;
 {
     // Only want special behaviour when doing a migration
-    if (![[self fileType] isEqualToString:kKTDocumentUTI_1_5])
+    if (![[self fileType] isEqualToString:kSVDocumentTypeName_1_5])
     {
         return [super writeToURL:inURL ofType:inType forSaveOperation:saveOperation originalContentsURL:inOriginalContentsURL error:outError];
     }
@@ -56,10 +73,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                                           error:outError];
     if (!attributes) return NO;
     
-    if (![[NSFileManager defaultManager] createDirectoryAtPath:[inURL path]
-                                   withIntermediateDirectories:NO
-                                                    attributes:attributes
-                                                         error:outError]) return NO;
+    NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];    // likely to run on worker thread
+    if (![fileManager createDirectoryAtPath:[inURL path]
+                withIntermediateDirectories:NO
+                                 attributes:attributes
+                                      error:outError]) return NO;
                                                                                                                          
                                                                                                                          
     // Migrate!
@@ -115,7 +133,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 - (BOOL)keepBackupFile;
 {
     // Only want to keep backup when migrating in case you need to get back to 1.6 land
-    BOOL result = ([[self fileType] isEqualToString:kKTDocumentUTI_1_5] ? YES : [super keepBackupFile]);
+    BOOL result = ([[self fileType] isEqualToString:kSVDocumentTypeName_1_5] ? YES : [super keepBackupFile]);
     return result;
 }
 
