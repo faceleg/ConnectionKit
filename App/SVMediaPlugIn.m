@@ -119,7 +119,7 @@
     [graphic setNaturalWidth:width];
     [graphic setNaturalHeight:height];
     
-    NSNumber *oldWidth = [self width];
+    NSNumber *oldWidth = [[self width] copy];
     [graphic makeOriginalSize]; // why did I decide to do this? – Mike
     
     if (width && height)
@@ -131,6 +131,7 @@
     {
         [[self container] setContentWidth:oldWidth];
     }
+    [oldWidth release];
 }
 
 - (void)resetNaturalSize; { [self setNaturalWidth:nil height:nil]; }
