@@ -468,6 +468,12 @@
 
 @dynamic thumbnailSourceGraphic;
 
+- (void)guessThumbnailSourceGraphic;
+{
+    SVGraphic *thumbnailGraphic = [[[[self article] orderedAttachments] firstObjectKS] graphic];
+    [self setThumbnailSourceGraphic:thumbnailGraphic];
+}
+
 - (BOOL)validateThumbnailType:(NSNumber **)outType error:(NSError **)error;
 {
     SVThumbnailType maxType = ([self isCollection] ? 

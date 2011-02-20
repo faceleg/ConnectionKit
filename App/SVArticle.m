@@ -44,8 +44,7 @@
     SVGraphic *thumbnailGraphic = [page thumbnailSourceGraphic];
     if (!thumbnailGraphic || ![attachments containsObject:[thumbnailGraphic textAttachment]])
     {
-        thumbnailGraphic = [[[self orderedAttachments] firstObjectKS] graphic];
-        [page setThumbnailSourceGraphic:thumbnailGraphic];
+        [page guessThumbnailSourceGraphic];
     }
     
     

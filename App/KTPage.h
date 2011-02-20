@@ -64,6 +64,7 @@ typedef enum {
 
 #pragma mark Thumbnail
 @property(nonatomic, retain) SVGraphic *thumbnailSourceGraphic;
+- (void)guessThumbnailSourceGraphic;
 
 
 #pragma mark Debugging
