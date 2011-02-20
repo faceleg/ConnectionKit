@@ -190,6 +190,21 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
+#pragma mark Autosave
+
+- (BOOL)saveToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation error:(NSError **)outError;
+{
+    // During migration, ignore any attempts to autosave, pretending they worked
+    if (saveOperation == NSAutosaveOperation && [[self fileType] isEqualToString:kSVDocumentTypeName_1_5])
+    {
+        return YES;
+    }
+    else
+    {
+        return [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
+    }
+}
+
 #pragma mark UI
 
 - (NSString *)windowNibName { return @"DocumentMigration"; }
