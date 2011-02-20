@@ -14,6 +14,7 @@
   @private
     NSManagedObjectModel    *_mediaModel;
     NSManagedObjectContext  *_mediaContext;
+    NSManagedObjectContext  *_destinationContextOverride;
     
     NSURL   *_docURL;           // weak refs
     NSURL   *_destinationURL;

@@ -82,14 +82,13 @@
             if (srcURL)
             {
                 // Create a graphic from the image
-                SVMediaGraphic *graphic = (id)[[SVGraphicFactory mediaPlaceholderFactory] insertNewGraphicInManagedObjectContext:[richText managedObjectContext]];
+                SVMediaGraphic *graphic = (id)[[SVGraphicFactory mediaPlaceholderFactory] insertNewGraphicInManagedObjectContext:[self destinationContext]];
                 
                 if ([[srcURL scheme] isEqualToString:@"svxmedia"])
                 {
                     SVMediaRecord *record = [SVMediaMigrationPolicy createDestinationInstanceForSourceInstance:nil
                                                                           mediaContainerIdentifier:[srcURL ks_lastPathComponent]
                                                                                      entityMapping:mapping
-                                                                                           context:[richText managedObjectContext]
                                                                                            manager:self
                                                                                              error:NULL];
                     
@@ -206,7 +205,9 @@
                                                                error:outError];
         if (dDoc)
         {
-            NSArray *richText = [[dDoc managedObjectContext] fetchAllObjectsForEntityForName:@"RichText" error:NULL];
+            _destinationContextOverride = [dDoc managedObjectContext];
+            
+            NSArray *richText = [_destinationContextOverride fetchAllObjectsForEntityForName:@"RichText" error:NULL];
             NSEntityMapping *mapping = [[mappingModel entityMappingsByName] objectForKey:@"EmbeddedImageToGraphicMedia"];
             
             NSUInteger i = 0;
@@ -225,7 +226,7 @@
             
             // #108740
             // Make each media graphic original size
-            NSArray *graphics = [[dDoc managedObjectContext] fetchAllObjectsForEntityForName:@"MediaGraphic" error:NULL];
+            NSArray *graphics = [_destinationContextOverride fetchAllObjectsForEntityForName:@"MediaGraphic" error:NULL];
             [graphics makeObjectsPerformSelector:@selector(makeOriginalSize)];
             
             // Constrain proportions
@@ -239,6 +240,7 @@
             
     
             result = [dDoc saveToURL:[dDoc fileURL] ofType:[dDoc fileType] forSaveOperation:NSSaveOperation error:outError];
+            _destinationContextOverride = nil;
             [dDoc close];
             [dDoc release];
         }
@@ -258,6 +260,8 @@
     return result;
 }
 
+#pragma mark Media
+
 - (NSManagedObjectModel *)sourceMediaModel; { return _mediaModel; }
 
 - (NSManagedObjectContext *)sourceMediaContext; { return _mediaContext; }
@@ -273,6 +277,13 @@
 - (NSURL *)destinationURLOfMediaWithFilename:(NSString *)filename;
 {
     return [_destinationURL ks_URLByAppendingPathComponent:filename isDirectory:NO];
+}
+
+#pragma mark General
+
+- (NSManagedObjectContext *)destinationContext;
+{
+    return (_destinationContextOverride ? _destinationContextOverride : [super destinationContext]);
 }
 
 - (NSFetchRequest *)pagesFetchRequestWithPredicate:(NSString *)predicateString;

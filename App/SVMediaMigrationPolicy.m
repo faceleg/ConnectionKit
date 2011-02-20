@@ -17,7 +17,7 @@
 
 @implementation SVMediaMigrationPolicy
 
-- (NSManagedObject *)createDestinationInstanceForSourceInstance:(NSManagedObject *)sInstance mediaContainerIdentifier:(NSString *)mediaID entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
++ (NSManagedObject *)createDestinationInstanceForSourceInstance:(NSManagedObject *)sInstance mediaContainerIdentifier:(NSString *)mediaID entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
 {
     // Find Media File
     NSManagedObject *mediaFile = [[self class] sourceMediaFileForContainerIdentifier:mediaID
@@ -63,7 +63,7 @@
     
     
     // Finish up
-    [manager associateSourceInstance:sInstance withDestinationInstance:result forEntityMapping:mapping];
+    if (sInstance) [manager associateSourceInstance:sInstance withDestinationInstance:result forEntityMapping:mapping];
     [media release];
     
     return result;
@@ -114,7 +114,7 @@
     
     
     // Find Media
-    return ([self createDestinationInstanceForSourceInstance:sInstance mediaContainerIdentifier:mediaID entityMapping:mapping manager:manager error:error] != nil);
+    return ([[self class] createDestinationInstanceForSourceInstance:sInstance mediaContainerIdentifier:mediaID entityMapping:mapping manager:manager error:error] != nil);
 }
 
 @end
