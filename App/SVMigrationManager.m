@@ -27,6 +27,9 @@
 @end
 
 
+#define SUPER_PROGRESS_MAX 0.8f
+
+
 #pragma mark -
 
 
@@ -215,7 +218,7 @@
                 
                 // Update progress to match
                 i++;
-                float override = 0.8f + 0.2f * (i / count);
+                float override = SUPER_PROGRESS_MAX + 0.2f * (i / count);
                 [self setMigrationProgressOverride:override];
             }
             
@@ -304,7 +307,7 @@
     }
     else
     {
-        result = 0.8 * [super migrationProgress];
+        result = SUPER_PROGRESS_MAX * [super migrationProgress];
     }
     return result;
 }
