@@ -2318,8 +2318,6 @@
 		27E24EEC10FCB218004EFE9F /* SVLinkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLinkManager.m; sourceTree = "<group>"; };
 		27E31C310D4B7E1600895DA1 /* KTElementPlugInWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTElementPlugInWrapper.h; sourceTree = "<group>"; };
 		27E31C320D4B7E1600895DA1 /* KTElementPlugInWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTElementPlugInWrapper.m; sourceTree = "<group>"; };
-		27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDataMigrationDocument.h; sourceTree = "<group>"; };
-		27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDataMigrationDocument.m; sourceTree = "<group>"; };
 		27E83A3710ABB1D6003B8F2F /* KSCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCollectionController.h; sourceTree = "<group>"; };
 		27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = CalloutTemplate.html; sourceTree = "<group>"; };
 		27EAA90D0E30979A0068E6C5 /* Page URLs and Paths.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Page URLs and Paths.graffle"; sourceTree = "<group>"; };
@@ -3426,8 +3424,6 @@
 			children = (
 				27E040B9130AC71D00FEA059 /* Media 1.5.xcdatamodel */,
 				27CFC5DF123E280800BF018C /* Sandvox 1.5.xcdatamodel */,
-				27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */,
-				27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */,
 				27A5C38F130933980093B397 /* Sandvox.xcmappingmodel */,
 				2736A0E413095B9800397D1A /* SVPageMigrationPolicy.h */,
 				2736A0E513095B9800397D1A /* SVPageMigrationPolicy.m */,
