@@ -56,14 +56,34 @@
     for (SVTextAttachment *anAttachment in [self attachments])
     {
         NSRange range = [anAttachment range];
-        if (range.length < 32767)   // signifies a 1.5 embedded image that hasn't been imported yet
+        if (range.length == 32767)   // signifies a 1.5 embedded image that hasn't been imported yet
         {
-            [result addAttribute:@"SVAttachment"
-                           value:anAttachment
-                           range:range];
+            // Search for such an image
+            NSString *identifier = [[anAttachment graphic] valueForKey:@"identifier"];
+            NSString *searchString = [NSString stringWithFormat:@"/%@\"", identifier];
+            
+            NSRange idRange = [[result string] rangeOfString:searchString];
+            
+            range = [[result string] rangeOfString:@"<img "
+                                           options:NSBackwardsSearch
+                                             range:NSMakeRange(0, idRange.location)];
+            
+            idRange = [[result string] rangeOfString:@">"
+                                             options:0
+                                               range:NSMakeRange(idRange.location, [result length] - idRange.location)];
+            
+            range.length = idRange.location - range.location + idRange.length;
         }
-        else
+        
+        
+        
+        [result addAttribute:@"SVAttachment"
+                       value:anAttachment
+                       range:range];
+        /*else
         {
+             
+            
             NSMutableArray *embeddedImages = [result attribute:@"KTEmbeddedImages"
                                                        atIndex:0
                                                 effectiveRange:NULL];
@@ -79,7 +99,7 @@
             }
             
             [embeddedImages addObject:anAttachment];
-        }
+        }*/
     }
     
     return [result autorelease];
