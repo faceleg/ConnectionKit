@@ -62,6 +62,24 @@
                            value:anAttachment
                            range:range];
         }
+        else
+        {
+            NSMutableArray *embeddedImages = [result attribute:@"KTEmbeddedImages"
+                                                       atIndex:0
+                                                effectiveRange:NULL];
+            if (!embeddedImages)
+            {
+                embeddedImages = [[NSMutableArray alloc] init];
+                
+                [result addAttribute:@"KTEmbeddedImages"
+                               value:embeddedImages
+                               range:NSMakeRange(0, [result length])];
+                
+                [embeddedImages release];
+            }
+            
+            [embeddedImages addObject:anAttachment];
+        }
     }
     
     return [result autorelease];
