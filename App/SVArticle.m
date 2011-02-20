@@ -513,7 +513,7 @@
     return YES;
 }
 
-- (BOOL)attachmentsCanCauseWrap; { return YES; }
+- (BOOL)attachmentsMustBeWrittenInline; { return NO; }
 
 - (CGFloat)maxGraphicWidth;
 {

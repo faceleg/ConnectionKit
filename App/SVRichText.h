@@ -39,7 +39,7 @@
 - (BOOL)endsOnAttachment;
 
 + (NSArray *)attachmentSortDescriptors;
-- (BOOL)attachmentsCanCauseWrap;
+- (BOOL)attachmentsMustBeWrittenInline;
 - (CGFloat)maxGraphicWidth;
 
 

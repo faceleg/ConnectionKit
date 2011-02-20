@@ -125,7 +125,7 @@
                     [attachment setCausesWrap:NSBOOL(YES)];
                     [attachment setWrap:[NSNumber numberWithInt:SVGraphicWrapFloat_1_0]];
                 }
-                else if ([richText attachmentsCanCauseWrap] && [class containsObject:@"wide"])
+                else if (![richText attachmentsMustBeWrittenInline] && [class containsObject:@"wide"])
                 {
                     [attachment setCausesWrap:NSBOOL(YES)];
                     [attachment setWrap:[NSNumber numberWithInt:SVGraphicWrapCenterSplit]];

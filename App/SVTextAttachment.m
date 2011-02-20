@@ -89,7 +89,7 @@
     if (wrap)
     {
         // Make sure the container supports wrapped images
-        if (![[self body] attachmentsCanCauseWrap])
+        if ([[self body] attachmentsMustBeWrittenInline] && ![[self graphic] shouldWriteHTMLInline])
         {
             result = NO;
             if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
@@ -118,11 +118,11 @@
     // By default, only certain wraps are supported
     switch ([*wrap intValue])
     {
-        case SVGraphicWrapNone:
+        case SVGraphicWrapFloat_1_0:
             if ([[self graphic] canWriteHTMLInline]) break;   // only images are allowed this
             if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
                                                     code:NSValidationNumberTooSmallError
-                                    localizedDescription:@"SVGraphicWrapNone is not supported"];
+                                    localizedDescription:@"SVGraphicWrapFloat_1_0 is not supported"];
             return NO;
     
         case SVGraphicWrapCenter:

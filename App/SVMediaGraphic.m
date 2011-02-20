@@ -459,7 +459,7 @@
                 SVGraphicWrap wrap = [[attachment wrap] intValue];
                 result = (wrap == SVGraphicWrapRight ||
                           wrap == SVGraphicWrapLeft ||
-                          wrap == SVGraphicWrapNone);
+                          wrap == SVGraphicWrapFloat_1_0);
             }
             else
             {
