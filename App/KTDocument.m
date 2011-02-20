@@ -121,11 +121,11 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	NSURL *result = nil;
 	
-	if ([typeName isEqualToString:kSVDocumentTypeName_1_5] || [typeName isEqualToString:kKTDocumentUTI_1_5])
+	if ([typeName isEqualToString:kSVDocumentTypeName_1_5] || [typeName isEqualToString:kSVDocumentType])
 	{
 		result = [inURL ks_URLByAppendingPathComponent:@"datastore.sqlite3" isDirectory:NO];
 	}
-	else if ([typeName isEqualToString:kKTDocumentUTI_ORIGINAL])
+	else if ([typeName isEqualToString:kSVDocumentType_1_0])
 	{
 		result = inURL;
 	}

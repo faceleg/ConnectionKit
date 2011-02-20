@@ -57,8 +57,8 @@ typedef enum {
 extern NSString *kSVDocumentTypeName;  // 2.0 documents
 extern NSString *kSVDocumentTypeName_1_5;
 extern NSString *kKTDocumentExtension;
-extern NSString *kKTDocumentUTI_1_5; // 1.5-1.6 documents
-extern NSString *kKTDocumentUTI_ORIGINAL; // 1.0-1.2 documents
+extern NSString *kSVDocumentType;           // The UTI
+extern NSString *kSVDocumentType_1_0;   // 1.0-1.2 documents
 
 extern NSString *kKTPageIDDesignator;
 

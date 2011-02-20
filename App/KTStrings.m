@@ -3,8 +3,8 @@
 NSString *kSVDocumentTypeName = @"Sandvox Document";
 NSString *kSVDocumentTypeName_1_5 = @"Sandvox 1.5 Document";
 NSString *kKTDocumentExtension = @"svxSite";
-NSString *kKTDocumentUTI_1_5 = @"com.karelia.Sandvox.svxSite";
-NSString *kKTDocumentUTI_ORIGINAL = @"com.karelia.sandvox.document";
+NSString *kSVDocumentType = @"com.karelia.Sandvox.svxSite";
+NSString *kSVDocumentType_1_0 = @"com.karelia.sandvox.document";
 
 NSString *kKTPageIDDesignator = @"~PAGEID~";
 

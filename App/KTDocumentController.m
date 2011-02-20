@@ -149,7 +149,7 @@
 
 - (Class)documentClassForType:(NSString *)documentTypeName
 {
-    if ([kKTDocumentUTI_ORIGINAL isEqualToString:documentTypeName])
+    if ([kSVDocumentType_1_0 isEqualToString:documentTypeName])
     {
         return nil;//[KTDataMigrationDocument class];
     }
@@ -178,10 +178,10 @@
                            
         if (fileExists)
         {
-            if ([[NSString UTIForFileAtPath:[inAbsoluteURL path]] conformsToUTI:kKTDocumentUTI_ORIGINAL] &&
+            if ([[NSString UTIForFileAtPath:[inAbsoluteURL path]] conformsToUTI:kSVDocumentType_1_0] &&
                 !fileIsDirectory)
             {
-                result = kKTDocumentUTI_ORIGINAL;
+                result = kSVDocumentType_1_0;
             }
             else if (fileIsDirectory)
             {
@@ -206,7 +206,7 @@
 	// are we opening a KTDocument?
 	if (type && ([type isEqualToString:kSVDocumentTypeName] ||
                  [type isEqualToString:kSVDocumentTypeName_1_5] ||
-                 [type isEqualToString:kKTDocumentUTI_ORIGINAL]))
+                 [type isEqualToString:kSVDocumentType_1_0]))
 	{		
 		// check compatibility with KTModelVersion
 		NSDictionary *metadata = nil;
