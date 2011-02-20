@@ -200,7 +200,7 @@
     
     
     
-    // Import embedded images
+    // Custom phase
     if (result)
     {
         KTDocument *dDoc = [[KTDocument alloc] initWithContentsOfURL:dURL
@@ -210,6 +210,13 @@
         {
             _destinationContextOverride = [dDoc managedObjectContext];
             
+            
+            // Search for thumbnails. #108951
+            NSArray *pages = [_destinationContextOverride fetchAllObjectsForEntityForName:@"Page" error:NULL];
+            [pages makeObjectsPerformSelector:@selector(guessThumbnailSourceGraphic)];
+            
+            
+            // Import embedded images
             NSArray *richText = [_destinationContextOverride fetchAllObjectsForEntityForName:@"RichText" error:NULL];
             NSEntityMapping *mapping = [[mappingModel entityMappingsByName] objectForKey:@"EmbeddedImageToGraphicMedia"];
             
