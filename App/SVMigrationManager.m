@@ -220,6 +220,21 @@
             }
             
             
+            // #108740
+            // Make each media graphic original size
+            NSArray *graphics = [[dDoc managedObjectContext] fetchAllObjectsForEntityForName:@"MediaGraphic" error:NULL];
+            [graphics makeObjectsPerformSelector:@selector(makeOriginalSize)];
+            
+            // Constrain proportions
+            for (SVMediaGraphic *aGraphic in graphics)
+            {
+                if ([aGraphic isConstrainProportionsEditable]) [aGraphic setConstrainsProportions:YES];
+            }
+            
+            // Then reduce size to fit on page
+            [dDoc designDidChange];
+            
+    
             result = [dDoc saveToURL:[dDoc fileURL] ofType:[dDoc fileType] forSaveOperation:NSSaveOperation error:outError];
             [dDoc close];
             [dDoc release];
