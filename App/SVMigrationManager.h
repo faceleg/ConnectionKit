@@ -17,6 +17,8 @@
     
     NSURL   *_docURL;           // weak refs
     NSURL   *_destinationURL;
+    
+    float   _progressOverride;
 }
 
 // Designated initializer

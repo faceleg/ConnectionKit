@@ -22,6 +22,14 @@
 #import "KSURLUtilities.h"
 
 
+@interface SVMigrationManager ()
+@property(nonatomic) float migrationProgressOverride;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVMigrationManager
 
 - (id)initWithSourceModel:(NSManagedObjectModel *)sourceModel
@@ -176,9 +184,17 @@
             NSArray *richText = [[dDoc managedObjectContext] fetchAllObjectsForEntityForName:@"RichText" error:NULL];
             NSEntityMapping *mapping = [[mappingModel entityMappingsByName] objectForKey:@"EmbeddedImageToGraphicMedia"];
             
+            NSUInteger i = 0;
+            float count = [richText count];
+            
             for (SVRichText *aRichTextObject in richText)
             {
                 [self migrateEmbeddedImagesFromRichText:aRichTextObject mapping:mapping];
+                
+                // Update progress to match
+                i++;
+                float override = 0.8f + 0.2f * (i / count);
+                [self setMigrationProgressOverride:override];
             }
             
             
@@ -239,5 +255,27 @@
     NSDictionary *result = [KSExtensibleManagedObject unarchiveExtensibleProperties:data];
     return result;
 }
+
+#pragma mark Progress
+
+- (float) migrationProgress;
+{
+    float result;
+    if (_progressOverride > 0.0f)
+    {
+        result = _progressOverride;
+    }
+    else
+    {
+        result = 0.8 * [super migrationProgress];
+    }
+    return result;
+}
++ (NSSet *)keyPathsForValuesAffectingMigrationProgress;
+{
+    return [NSSet setWithObject:@"migrationProgressOverride"];
+}
+
+@synthesize migrationProgressOverride = _progressOverride;
 
 @end
