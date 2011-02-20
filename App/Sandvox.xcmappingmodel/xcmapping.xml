@@ -1143,9 +1143,6 @@ CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5h
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z438"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z291">
-        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGGBlYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKQH
-CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNzEACAAoADEMjSERITFFokY2xhc3NuYW1lWCRjbGFzc2VzXxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvbqMVFhdfEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uXE5TRXhwcmVzc2lvblhOU09iamVjdF8QD05TS2V5ZWRBcmNoaXZlctEaG1Ryb290gAEACAARABoAIwAtADIANwA8AEIASQBcAG4AdQB3AHkAewB9AIIAjQCWALIAtgDSAN8A6AD6AP0BAgAAAAAAAAIBAAAAAAAAABwAAAAAAAAAAAAAAAAAAAEE
-</attribute>
         <attribute name="name" type="string">height</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z271"></relationship>
     </object>
@@ -2444,9 +2441,6 @@ GAcIExQZGh8gKC0yMzY3O0BBRkpQUldbXlUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlw
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z506"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z515">
-        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGGBlYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKQH
-CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNzEACAAoADEMjSERITFFokY2xhc3NuYW1lWCRjbGFzc2VzXxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvbqMVFhdfEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uXE5TRXhwcmVzc2lvblhOU09iamVjdF8QD05TS2V5ZWRBcmNoaXZlctEaG1Ryb290gAEACAARABoAIwAtADIANwA8AEIASQBcAG4AdQB3AHkAewB9AIIAjQCWALIAtgDSAN8A6AD6AP0BAgAAAAAAAAIBAAAAAAAAABwAAAAAAAAAAAAAAAAAAAEE
-</attribute>
         <attribute name="name" type="string">height</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z506"></relationship>
     </object>
