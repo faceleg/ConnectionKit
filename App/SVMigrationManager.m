@@ -18,6 +18,8 @@
 #import "SVTextAttachment.h"
 #import "KT.h"
 
+#import "NSManagedObjectContext+KTExtensions.h"
+
 #import "KSExtensibleManagedObject.h"
 #import "KSURLUtilities.h"
 
@@ -86,15 +88,16 @@
                 
                 if ([[srcURL scheme] isEqualToString:@"svxmedia"])
                 {
-                    SVMediaRecord *record = [SVMediaMigrationPolicy createDestinationInstanceForSourceInstance:nil
-                                                                          mediaContainerIdentifier:[srcURL ks_lastPathComponent]
-                                                                                     entityMapping:mapping
-                                                                                           manager:self
-                                                                                             error:NULL];
+                    SVMediaRecord *record = (id)[SVMediaMigrationPolicy
+                                                 createDestinationInstanceForSourceInstance:nil
+                                                 mediaContainerIdentifier:[srcURL ks_lastPathComponent]
+                                                 entityMapping:mapping
+                                                 manager:self
+                                                 error:NULL];
                     
                     // Media migration does not assign a SVMedia object to the record, so we do it
                     [record forceUpdateFromURL:[self destinationURLOfMediaWithFilename:[record filename]]];
-                    [graphic setSourceWithMediaRecord:record];
+                    [graphic performSelector:@selector(setSourceWithMediaRecord:) withObject:record];
                 }
                 if (![graphic media])
                 {
