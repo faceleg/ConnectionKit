@@ -8,7 +8,14 @@
 
 #import "SVMigrationManager.h"
 
+#import "SVMediaMigrationPolicy.h"
+
 #import "KTDocument.h"
+#import "SVGraphicFactory.h"
+#import "SVMediaGraphic.h"
+#import "SVMediaRecord.h"
+#import "SVRichText.h"
+#import "SVTextAttachment.h"
 #import "KT.h"
 
 #import "KSExtensibleManagedObject.h"
@@ -36,6 +43,80 @@
     return [self initWithSourceModel:sourceModel mediaModel:nil destinationModel:destinationModel];
 }
 
+#pragma mark Migration
+
+- (void)migrateEmbeddedImagesFromRichText:(SVRichText *)richText mapping:(NSEntityMapping *)mapping;
+{
+    NSMutableAttributedString *html = [[richText attributedHTMLString] mutableCopy];
+    
+    
+    // Search for embedded images
+    NSScanner *imageScanner = [[NSScanner alloc] initWithString:[html string]];
+    while (![imageScanner isAtEnd])
+    {
+        // Look for an image tag
+        [imageScanner scanUpToString:@"<img" intoString:NULL];
+        if ([imageScanner isAtEnd]) break;
+        
+        NSRange range = NSMakeRange([imageScanner scanLocation], 0);
+        NSString *fragment = [[html string] substringFromIndex:range.location];
+        NSXMLDocument *doc = [[NSXMLDocument alloc] initWithXMLString:fragment options:NSXMLDocumentTidyXML error:NULL];
+        OBASSERT(doc);  // XML tidy shouldn't fail
+        
+        NSXMLElement *imageElement = [doc rootElement];
+        NSString *src = [[imageElement attributeForName:@"src"] stringValue];
+        if (src)
+        {
+            NSURL *srcURL = [NSURL URLWithString:src];
+            if (srcURL)
+            {
+                // Create a graphic from the image
+                SVMediaGraphic *graphic = (id)[[SVGraphicFactory mediaPlaceholderFactory] insertNewGraphicInManagedObjectContext:[richText managedObjectContext]];
+                
+                if ([[srcURL scheme] isEqualToString:@"svxmedia"])
+                {
+                    SVMediaRecord *record = [SVMediaMigrationPolicy createDestinationInstanceForSourceInstance:nil
+                                                                          mediaContainerIdentifier:[srcURL ks_lastPathComponent]
+                                                                                     entityMapping:mapping
+                                                                                           context:[richText managedObjectContext]
+                                                                                           manager:self
+                                                                                             error:NULL];
+                    
+                    // Media migration does not assign a SVMedia object to the record, so we do it
+                    [record forceUpdateFromURL:[self destinationURLOfMediaWithFilename:[record filename]]];
+                    [graphic setSourceWithMediaRecord:record];
+                }
+                if (![graphic media])
+                {
+                    [graphic setSourceWithExternalURL:srcURL];
+                }
+                
+                NSString *alt = [[imageElement attributeForName:@"alt"] stringValue];
+                if (alt) [graphic setExtensibleProperty:alt forKey:@"alternateText"];
+                
+                [graphic makeOriginalSize];
+                
+                
+                // Insert attachment too
+                SVTextAttachment *attachment = [SVTextAttachment textAttachmentWithGraphic:graphic];
+                
+                [imageScanner scanUpToString:@">" intoString:NULL];
+                range.length = [imageScanner scanLocation] - range.location + 1;
+                
+                [html addAttribute:@"SVAttachment" value:attachment range:range];
+            }
+        }
+        
+        [doc release];
+    }    
+    
+    
+    [imageScanner release];
+    
+    [richText setAttributedHTMLString:html];
+    [html release];
+}
+
 - (BOOL)migrateDocumentFromURL:(NSURL *)sourceDocURL
               toDestinationURL:(NSURL *)dURL
                          error:(NSError **)outError;
@@ -61,7 +142,8 @@
     [coordinator release];
     
     
-    // Do the migration
+    
+    // Do the basic migration
     NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox" ofType:@"cdm"]];
     NSMappingModel *mappingModel = [[NSMappingModel alloc] initWithContentsOfURL:modelURL];
     
@@ -70,7 +152,7 @@
     NSURL *sStoreURL = [KTDocument datastoreURLForDocumentURL:sourceDocURL type:kSVDocumentTypeName_1_5];
     NSURL *dStoreURL = [KTDocument datastoreURLForDocumentURL:dURL type:nil];
     
-    NSError *error;
+    NSError *error; // NSMigrationManager hates it if you don't provide an error pointer
     BOOL result = [self migrateStoreFromURL:sStoreURL
                                        type:NSSQLiteStoreType
                                     options:nil
@@ -80,6 +162,37 @@
                          destinationOptions:nil
                                       error:&error];
     if (outError) *outError = error;
+    
+    
+    
+    // Import embedded images
+    if (result)
+    {
+        KTDocument *dDoc = [[KTDocument alloc] initWithContentsOfURL:dURL
+                                                              ofType:kSVDocumentTypeName
+                                                               error:outError];
+        if (dDoc)
+        {
+            NSArray *richText = [[dDoc managedObjectContext] fetchAllObjectsForEntityForName:@"RichText" error:NULL];
+            NSEntityMapping *mapping = [[mappingModel entityMappingsByName] objectForKey:@"EmbeddedImageToGraphicMedia"];
+            
+            for (SVRichText *aRichTextObject in richText)
+            {
+                [self migrateEmbeddedImagesFromRichText:aRichTextObject mapping:mapping];
+            }
+            
+            
+            result = [dDoc saveToURL:[dDoc fileURL] ofType:[dDoc fileType] forSaveOperation:NSSaveOperation error:outError];
+            [dDoc close];
+            [dDoc release];
+        }
+        else
+        {
+            result = NO;
+        }
+    }
+    
+    
     
     _docURL = nil;
     _destinationURL = nil;

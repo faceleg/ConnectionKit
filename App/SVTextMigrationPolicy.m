@@ -149,13 +149,6 @@
     return result;
 }
 
-- (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource
-{
-    
-    
-    return request;
-}
-
 - (BOOL)createDestinationMediaGraphicsForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
 {
     Class class = NSClassFromString([mapping entityMigrationPolicyClassName]);
@@ -210,6 +203,17 @@
         
     if ([string length])
     {
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*
+        
         // Import embedded images
         NSSet *IDs = [[self class] mediaContainerIdentifiersInHTML:string];
         for (NSString *anID in IDs)
@@ -317,7 +321,7 @@
             [aGraphic setValue:anIntro forKey:@"introduction"];
             [aGraphic setValue:aCaption forKey:@"caption"];
             [aGraphic setValue:aMedia forKey:@"media"];
-        }
+        }*/
     }
     else
     {
