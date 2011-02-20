@@ -136,7 +136,7 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     // Ignore attempts to autosave docs that aren't actually registered with the doc controller
     if (saveOperation == NSAutosaveOperation &&
-        [[[NSDocumentController sharedDocumentController] documents] indexOfObjectIdenticalTo:self] != NSNotFound)
+        [[[NSDocumentController sharedDocumentController] documents] indexOfObjectIdenticalTo:self] == NSNotFound)
     {
         return YES;
     }
