@@ -133,7 +133,15 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 {
 	OBPRECONDITION([absoluteURL isFileURL]);
 	
+    
+    // Ignore attempts to autosave docs that aren't actually registered with the doc controller
+    if (saveOperation == NSAutosaveOperation &&
+        ![[[NSDocumentController sharedDocumentController] documents] containsObjectIdenticalTo:self])
+    {
+        return YES;
+    }
 	
+    
     // Let anyone interested know
 	[[NSNotificationCenter defaultCenter] postNotificationName:kKTDocumentWillSaveNotification object:self];
     
