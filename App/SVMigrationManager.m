@@ -99,9 +99,13 @@
                     [graphic setSourceWithExternalURL:srcURL];
                 }
                 
+                
+                // Alt text
                 NSString *alt = [[imageElement attributeForName:@"alt"] stringValue];
                 if (alt) [graphic setExtensibleProperty:alt forKey:@"alternateText"];
                 
+                
+                // Metrics
                 [graphic makeOriginalSize];
                 
                 
@@ -112,6 +116,24 @@
                 range.length = [imageScanner scanLocation] - range.location + 1;
                 
                 [html addAttribute:@"SVAttachment" value:attachment range:range];
+                
+                
+                // Wrap?
+                NSArray *class = [[[imageElement attributeForName:@"class"] stringValue] componentsSeparatedByString:@" "];
+                if ([class containsObject:@"narrow"])
+                {
+                    [attachment setCausesWrap:NSBOOL(YES)];
+                    [attachment setWrap:[NSNumber numberWithInt:SVGraphicWrapFloat_1_0]];
+                }
+                else if ([richText attachmentsCanCauseWrap] && [class containsObject:@"wide"])
+                {
+                    [attachment setCausesWrap:NSBOOL(YES)];
+                    [attachment setWrap:[NSNumber numberWithInt:SVGraphicWrapCenterSplit]];
+                }
+                else
+                {
+                    [attachment setCausesWrap:NSBOOL(NO)];
+                }
             }
         }
         
