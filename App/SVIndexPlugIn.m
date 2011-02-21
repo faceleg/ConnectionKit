@@ -154,4 +154,15 @@
     [super dealloc];
 }
 
+#pragma mark -
+#pragma mark Awakenings
+
+- (void)awakeFromSourceProperties:(NSDictionary *)properties
+{
+	self.enableMaxItems = ([[properties objectForKey:@"collectionMaxIndexItems"] intValue] > 0);
+	self.maxItems = [[properties objectForKey:@"collectionMaxIndexItems"] intValue];
+
+	// self.indexedCollection = ?????;
+}
+
 @end
