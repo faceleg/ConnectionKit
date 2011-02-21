@@ -88,6 +88,8 @@ typedef enum {
 
 - (NSNumber *)navigationArrowsStyleFromShowNavigationArrows:(NSNumber *)showArrows indexBundleIdentifier:(NSString *)indexID;
 {
+    if (!indexID) return NSBOOL(NO);    // 109090
+    
     if ([showArrows boolValue])
     {
         if ([indexID isEqualToString:@"sandvox.PhotoGridIndex"])
