@@ -437,9 +437,13 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                     NSURL *deletionURL = [deletedMediaDirectory ks_URLByAppendingPathComponent:aKey
                                                                                    isDirectory:NO];
                     
+                    // Internally, -write… method changes the record's URL, potentially deallocate mediaURL. Removing the file at that URL will then crash. I think this is what happens in #103509
+                    mediaURL = [mediaURL copy];
+                    
                     // Could fail because:
                     // A)   The destination isn't writeable. Unlikely, but leave the file in the package and a future release will spot the orphaned file and offer to delete it upon opening the doc
                     // B)   The source isn't readable (probably necause it doesn't exist). Much the same as A)!
+                    //
                     BOOL written = [(SVMediaRecord *)record writeToURL:deletionURL
                                                          updateFileURL:YES
                                                                  error:NULL];
@@ -449,6 +453,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                         // TODO: Log any error
                         [[NSFileManager defaultManager] removeItemAtPath:[mediaURL path] error:NULL];
                     }
+                    [mediaURL release];
                 }
             }
             else
