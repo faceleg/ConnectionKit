@@ -115,6 +115,10 @@
 		}
 		CFRelease(source);
 	}
+	else
+	{
+		NSLog(@"Bad source: %@", aURL);
+	}
 	
 	[[self ks_proxyOnThread:nil waitUntilDone:NO] gotSize:theSize];
 }
@@ -122,7 +126,7 @@
 - (void)getDimensionsFromRemoteImage;
 {
 	NSURL *sourceURL = [self externalSourceURL];
-	if (sourceURL)
+	if (sourceURL && [sourceURL scheme])
 	{
 		// Use imageIO to check the dimensions, on a background thread.
 	
@@ -131,6 +135,10 @@
 																				  object:sourceURL];
 		[[[self class] sharedDimensionCheckQueue] addOperation:operation];
         [operation release];
+	}
+	else
+	{
+		NSLog(@"Unable to get dimensions from %@", sourceURL);
 	}
 }
 
