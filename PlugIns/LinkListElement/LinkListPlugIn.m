@@ -173,7 +173,6 @@
 
 - (void)awakeFromSourceProperties:(NSDictionary *)properties
 {
-    NSLog(@"props to convert: %@", properties);
     if ( [properties objectForKey:@"layout"] )
     {
         self.layout = [[properties objectForKey:@"layout"] integerValue];
