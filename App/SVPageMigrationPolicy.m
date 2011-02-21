@@ -86,6 +86,13 @@ typedef enum {
     return length;
 }
 
+- (NSNumber *)collectionSyndicateTypeFromCollectionSyndicate:(NSNumber *)showArrows indexBundleIdentifier:(NSString *)indexID;
+{
+    // Generate a photo feed if there was an index generating RSS feed before. #109103
+    NSNumber *result = [NSNumber numberWithInt:(indexID && [showArrows boolValue] ? 2 : 0)];
+    return result;
+}
+
 - (NSNumber *)navigationArrowsStyleFromShowNavigationArrows:(NSNumber *)showArrows indexBundleIdentifier:(NSString *)indexID;
 {
     if (!indexID) return NSBOOL(NO);    // 109090
