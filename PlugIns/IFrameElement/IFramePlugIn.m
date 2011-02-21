@@ -103,8 +103,9 @@
     // write iframe
     // width and height attrs are included by writer
     [context startElement:@"iframe"
-                      bindSizeToPlugIn:self
-                            attributes:attributes];
+         bindSizeToPlugIn:self
+          preferredIdName:@"iframe"
+               attributes:attributes];
 }
 - (void)endIFrameElement; { [[self currentContext] endElement]; }
 
@@ -112,7 +113,7 @@
 {
     id <SVPlugInContext> context = [self currentContext];
     
-    [context startElement:@"div" bindSizeToPlugIn:self attributes:nil];
+    [context startElement:@"div" bindSizeToPlugIn:self preferredIdName:@"iframe" attributes:nil];
     [context startPlaceholder];
 }
 
