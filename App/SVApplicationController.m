@@ -961,12 +961,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
                                                         withObject:nil];
             [insertMenu insertItem:item atIndex:(index+1)];
             
-            // Media Placeholder
-            factory = [SVGraphicFactory mediaPlaceholderFactory];
-            item = [factory makeMenuItemWithDescription:NO];
-            [item setImage:nil];
-            [insertMenu insertItem:item atIndex:index];
-            
             // Indexes
             item = [SVGraphicFactory menuItemWithGraphicFactories:[SVGraphicFactory indexFactories]
 															title:NSLocalizedString(@"Indexes", "menu item")
@@ -974,6 +968,12 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             [[[item submenu] itemArray] makeObjectsPerformSelector:@selector(setImage:)
                                                         withObject:nil];
             [insertMenu insertItem:item atIndex:index]; 
+            
+            // Media Placeholder
+            factory = [SVGraphicFactory mediaPlaceholderFactory];
+            item = [factory makeMenuItemWithDescription:NO];
+            [item setImage:nil];
+            [insertMenu insertItem:item atIndex:index];
             
             
 			// Presets. First needs shortcut

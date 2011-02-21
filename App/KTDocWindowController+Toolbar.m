@@ -244,17 +244,17 @@
 	[menu addItem:item];
 	
 	
+	// Media Placeholder
+	factory = [SVGraphicFactory mediaPlaceholderFactory];
+	item = [factory makeMenuItemWithDescription:YES];
+	[menu addItem:item];
+	
+	
 	// Indexes
 	item = [SVGraphicFactory menuItemWithGraphicFactories:[SVGraphicFactory indexFactories]
 													title:NSLocalizedString(@"Indexes", "menu item")
 										  withDescription:YES];
 	[item setIconImage:[NSImage imageNamed:@"object_index"]];
-	[menu addItem:item];
-	
-	
-	// Media Placeholder
-	factory = [SVGraphicFactory mediaPlaceholderFactory];
-	item = [factory makeMenuItemWithDescription:YES];
 	[menu addItem:item];
 	
 	
