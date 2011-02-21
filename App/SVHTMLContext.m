@@ -75,7 +75,7 @@
     
     _liveDataFeeds = YES;
     
-    _docType = KTXHTMLTransitionalDocType;
+    _docType = KTHTML5DocType;
     _maxDocType = NSIntegerMax;
     
     _headerLevel = 1;
@@ -206,7 +206,7 @@
     
     
     // Now, did that change the doctype? Retry if possible!
-    if (_maxDocType > KTHTML5DocType) _maxDocType = KTXHTMLTransitionalDocType;
+    if (_maxDocType > KTHTML5DocType) _maxDocType = KTHTML5DocType;
     if (_maxDocType != [self docType])
     {
         if ([self outputStringWriter])
