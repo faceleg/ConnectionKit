@@ -196,7 +196,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     filename = [[NSFileManager defaultManager] displayNameAtPath:path];
     
     message = [NSString stringWithFormat:
-               NSLocalizedString(@"Before it can be opened, this document must be upgraded to the latest Sandvox data format. A backup of the original document will be kept in the same folder in case you need to refer back to it","document upgrade informative text"),
+               NSLocalizedString(@"Before it can be opened, this document must be upgraded to the latest Sandvox data format. A backup of the original document will be kept in the same folder in case you need to refer back to it.","document upgrade informative text"),
                filename];
     [informativeTextField setStringValue:message];
     
