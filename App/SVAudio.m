@@ -107,6 +107,14 @@
 
 #pragma mark Metrics
 
+- (NSNumber *)width;
+{
+    // Somewhat of a hack. Non-explicitly sized graphics (e.g. audio) get given auto width when placed as a pagelet. We need width of 200 so QuickTime does the right thing
+    NSNumber *result = [super width];
+    if (!result) result = [NSNumber numberWithInt:200];
+    return result;
+}
+
 - (NSNumber *)height;
 {
     // Used when generating HTML. We want to ignore whatever value is persisted (e.g. previous media was an image) and always write out with auto height
