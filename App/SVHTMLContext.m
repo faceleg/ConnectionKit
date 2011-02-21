@@ -750,12 +750,12 @@
 
 - (NSString *)startElement:(NSString *)elementName
           bindSizeToPlugIn:(SVPlugIn *)plugIn
-           preferredIdName:(NSString *)preferredID
+           preferredIdName:(NSString *)idName
                 attributes:(NSDictionary *)attributes;
 {
-    NSString *result = [self pushPreferredIdName:preferredID];
+    if (idName) idName = [self pushPreferredIdName:idName];
     [self startElement:elementName bindSizeToPlugIn:plugIn attributes:attributes];
-    return result;
+    return idName;
 }
 
 #pragma mark Text Blocks
