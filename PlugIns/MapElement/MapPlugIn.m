@@ -86,10 +86,10 @@
         if ( [context liveDataFeeds] )
         {
             // bind size
-            NSString *idName = [context pushPreferredIdName:@"googlemap"];
-            [context startElement:@"div"
-                 bindSizeToPlugIn:self
-                       attributes:nil];
+            NSString *idName = [context startElement:@"div"
+                                    bindSizeToPlugIn:self
+                                     preferredIdName:@"googlemap"
+                                          attributes:nil];
             
             //FIXME: #107815 -- this writeCharacters: shouldn't be needed
             [context writeCharacters:@"If you see this sentence, hit reload..."];
