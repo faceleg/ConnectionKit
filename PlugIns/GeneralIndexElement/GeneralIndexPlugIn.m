@@ -426,6 +426,108 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 
 - (void)awakeFromSourceProperties:(NSDictionary *)properties
 {
-	NSLog(@"props to convert: %@", properties);
+	// NSLog(@"prop keys to convert: %@", [[[properties allKeys] description] condenseWhiteSpace]);
+	if ([[properties objectForKey:@"collectionIndexBundleIdentifier"] isEqualToString:@"sandvox.ListingIndex"])
+	{
+		self.indexLayoutType = kLayoutTitlesList;		// kLayoutTitles ?
+	}
+	else if ([[properties objectForKey:@"collectionIndexBundleIdentifier"] isEqualToString:@"sandvox.GeneralIndex"])
+	{
+		self.indexLayoutType = kLayoutArticlesAndThumbs;	// ? kLayoutArticlesAndMedia
+	}
+	else if ([[properties objectForKey:@"collectionIndexBundleIdentifier"] isEqualToString:@"sandvox.DownloadIndex"])
+	{
+		self.indexLayoutType = kLayoutTable;
+	}
+
+	self.hyperlinkTitles = [[properties objectForKey:@"collectionHyperlinkPageTitles"] boolValue];
+	self.showPermaLinks = [[properties objectForKey:@"collectionShowPermanentLink"] boolValue];
+	self.showTimestamps = [[properties objectForKey:@"includeTimestamp"] boolValue];
+	self.showComments = [[properties objectForKey:@"allowComments"] boolValue];			// disableComments ?
+	self.maxItemLength = [[properties objectForKey:@"collectionTruncateCharacters"] intValue];
+	
+	[super awakeFromSourceProperties:properties];
+
+	
+	/*
+	POSSIBLE VALUES WE MAY BE GIVEN
+	 
+	 allowComments
+	 callouts
+	 childIndex
+	 codeInjectionBeforeHTML
+	 codeInjectionBodyTag
+	 codeInjectionBodyTagEnd
+	 codeInjectionBodyTagStart
+	 codeInjectionEarlyHead
+	 codeInjectionHeadArea
+	 collectionGenerateArchives
+	 collectionGenerateAtom
+	 collectionGenerateRSS
+	 collectionHyperlinkPageTitles
+	 collectionIndexBundleIdentifier
+	 collectionMaxIndexItems
+	 collectionRSSEnclosures
+	 collectionShowNavigationArrows
+	 collectionShowPermanentLink
+	 collectionSortOrder
+	 collectionSummaryMaxPages
+	 collectionSummaryType
+	 collectionSyndicate
+	 collectionSyndicateWithParent
+	 collectionTruncateCharacters
+	 creationDate
+	 customFileExtension
+	 customPathRelativeToSite
+	 customSiteOutlineIcon
+	 customSiteOutlineIconIdentifier
+	 customSummaryHTML
+	 disableComments
+	 editableTimestamp
+	 extensiblePropertiesData
+	 fileExtensionIsEditable
+	 fileName
+	 html
+	 htmlType
+	 includeInheritedSidebar
+	 includeInIndex
+	 includeInSiteMap
+	 includeInSiteMenu
+	 includeSidebar
+	 includeTimestamp
+	 index
+	 insertHead
+	 insertPrelude
+	 introductionHTML
+	 isCollection
+	 isDraft
+	 isStale
+	 keywords
+	 keywordsData
+	 lastModificationDate
+	 menuTitle
+	 metaDescription
+	 pagesInIndex
+	 plugin
+	 pluginHTMLIsFullPage
+	 pluginIdentifier
+	 pluginVersion
+	 publishedDataDigest
+	 publishedPath
+	 richTextHTML
+	 RSSFileName
+	 setWindowTitle
+	 shouldUpdateFileNameWhenTitleChanges
+	 sidebarChangeable
+	 sidebarPagelets
+	 sortedChildren
+	 thumbnail
+	 thumbnailMediaIdentifier
+	 titleHTML
+	 uniqueID
+	 URL
+	 useAbsoluteLinks
+	 windowTitle
+*/	 
 }
 @end
