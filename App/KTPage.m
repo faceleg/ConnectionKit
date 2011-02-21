@@ -250,7 +250,7 @@
     }
     
     // Body
-    [[self article] writeCharacters:context];
+    [[self article] writeText:context];
     
     // Children
     if (recursive)
