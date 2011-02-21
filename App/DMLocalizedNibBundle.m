@@ -1369,7 +1369,7 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 						NSString *value = [newOptions objectForKey:key];
 						if ([value isKindOfClass:[NSString class]]) {
 							NSString *localizedValue = [self _localizedStringForString:value bundle:bundle table:table];
-							OFF((@"%@ -> %@", value, localizedValue));
+							if ([value length]) { DJW((@"%@ -> %@", value, localizedValue)); }
 							if (localizedValue) {
 								valueChanged = YES;
 								[newOptions setObject:localizedValue forKey:key];
@@ -1378,8 +1378,12 @@ static CGFloat ResizeToFit(NSView *view, NSUInteger level)
 					}
 					if (valueChanged) {
 						// Only unbind and rebind if there is a change.
-						OFF((@"Rebinding %@, %@", exposedBinding, path));
-						// [object unbind:exposedBinding];
+						DJW((@">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Rebinding %@, %@", exposedBinding, path));
+						if ([path isEqualToString:@"selection.metaDescription"])
+						{
+							NSLog(@"Stop!  Why is binding not getting new options? %@", newOptions);
+						}
+						[object unbind:exposedBinding];
 						[object bind:exposedBinding 
 							toObject:observedObject 
 						 withKeyPath:path 
