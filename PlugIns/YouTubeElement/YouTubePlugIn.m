@@ -137,8 +137,9 @@
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"application/x-shockwave-flash"
                                                            forKey:@"type"];
     [context startElement:@"object"
-                      bindSizeToPlugIn:self
-                            attributes:attributes];
+         bindSizeToPlugIn:self
+          preferredIdName:@"youtube"
+               attributes:attributes];
 }
 
 - (void)writeEmbedElement;
@@ -179,7 +180,10 @@
                                 @"transparent", @"wmode",
                                 nil];
     
-    [context startElement:@"embed" bindSizeToPlugIn:self attributes:attributes];
+    [context startElement:@"embed" 
+         bindSizeToPlugIn:self 
+          preferredIdName:@"youtube"
+               attributes:attributes];
     [context endElement];
 }
 
@@ -206,8 +210,9 @@
                                 @"0", @"frameborder",
                                 nil];
     [context startElement:@"iframe" 
-                      bindSizeToPlugIn:self 
-                            attributes:attributes];
+         bindSizeToPlugIn:self 
+          preferredIdName:@"youtube"
+               attributes:attributes];
     [context endElement]; // </iframe>
 }
 
@@ -223,10 +228,11 @@
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
                                                            forKey:@"class"];
     [context startElement:@"div" 
-                      bindSizeToPlugIn:self 
-                            attributes:attributes];
+         bindSizeToPlugIn:self 
+          preferredIdName:@"youtube"
+               attributes:attributes];
     
-    NSString *message = LocalizedStringInThisBundle(@"This is a placeholder for the YouTube video at:", "Live data feeds are disabled");
+    NSString *message = SVLocalizedString(@"This is a placeholder for the YouTube video at:", "Live data feeds are disabled");
     [context writeCharacters:message];
     
     [context startElement:@"p"];
@@ -237,7 +243,7 @@
     [context endElement]; // </a>
     [context endElement]; // </p>
     
-    message = LocalizedStringInThisBundle(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", "Live data feeds are disabled");
+    message = SVLocalizedString(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", "Live data feeds are disabled");
     [context writeCharacters:message];
     
     [context endElement]; // </div>
@@ -252,9 +258,10 @@
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
                                                            forKey:@"class"];
     [context startElement:@"div" 
-                      bindSizeToPlugIn:self 
-                            attributes:attributes];
-    NSString *message = LocalizedStringInThisBundle(@"Sorry, but no YouTube video was found for the code you entered.", "User entered an invalid YouTube code");
+         bindSizeToPlugIn:self 
+          preferredIdName:@"youtube"
+               attributes:attributes];
+    NSString *message = SVLocalizedString(@"Sorry, but no YouTube video was found for the code you entered.", "User entered an invalid YouTube code");
     [context writeCharacters:message];
     [context endElement];
 }
@@ -269,9 +276,10 @@
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
                                                            forKey:@"class"];
     [context startElement:@"div" 
-                      bindSizeToPlugIn:self 
-                            attributes:attributes];
-    NSString *message = LocalizedStringInThisBundle(@"Please use the Inspector to specify a YouTube video.", "No video code has been entered yet");
+         bindSizeToPlugIn:self 
+          preferredIdName:@"youtube"
+               attributes:attributes];
+    NSString *message = SVLocalizedString(@"Please use the Inspector to specify a YouTube video.", "No video code has been entered yet");
     [context writeCharacters:message];
     [context endElement];    
 }
