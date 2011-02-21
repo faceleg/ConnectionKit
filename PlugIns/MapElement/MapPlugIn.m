@@ -90,9 +90,6 @@
                                     bindSizeToPlugIn:self
                                      preferredIdName:@"googlemap"
                                           attributes:nil];
-            
-            //FIXME: #107815 -- this writeCharacters: shouldn't be needed
-            [context writeCharacters:@"If you see this sentence, hit reload..."];
             [context endElement]; // </div>
             
             // append Google Maps API functions to end body
