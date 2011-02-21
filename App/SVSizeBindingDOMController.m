@@ -214,10 +214,12 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     
     if (snapToFit)
     {
+        // Keep within max width/height
         CGFloat maxWidth = [self maxWidth];
+        NSNumber *maxHeight = [graphic maxHeight];
+        
         if (size.width > maxWidth)
         {
-            // Keep within max width
             if ([graphic isExplicitlySized])
             {
                 size.width = maxWidth;
@@ -244,6 +246,12 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
             }
             
             if (ratio) size.height = maxWidth / [ratio floatValue];
+        }
+        
+        if (maxHeight && size.height > [maxHeight floatValue])
+        {
+            size.height = [maxHeight floatValue];
+            if (ratio) size.width = size.height * [ratio floatValue];
         }
     }
     

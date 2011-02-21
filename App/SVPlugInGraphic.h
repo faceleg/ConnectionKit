@@ -41,6 +41,7 @@
 
 - (NSUInteger)minWidth;
 - (NSUInteger)minHeight;
+- (NSNumber *)maxHeight;    // nil, the default, if there isn't one
 
 @property(nonatomic) BOOL constrainsProportions;
 - (BOOL)isConstrainProportionsEditable;

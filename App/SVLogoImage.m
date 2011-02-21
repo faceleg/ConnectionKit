@@ -68,6 +68,7 @@
 #pragma mark Metrics
 
 - (CGFloat)maxWidthOnPage:(KTPage *)page; { return 200.0; }
+- (NSNumber *)maxHeight; { return [NSNumber numberWithInt:128]; }
 
 #pragma mark HTML
 
