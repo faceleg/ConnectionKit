@@ -433,7 +433,7 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 	}
 	else if ([[properties objectForKey:@"collectionIndexBundleIdentifier"] isEqualToString:@"sandvox.GeneralIndex"])
 	{
-		self.indexLayoutType = kLayoutArticlesAndThumbs;	// ? kLayoutArticlesAndMedia
+		self.indexLayoutType = kLayoutArticlesAndMedia;	// ? kLayoutArticlesAndThumbs
 	}
 	else if ([[properties objectForKey:@"collectionIndexBundleIdentifier"] isEqualToString:@"sandvox.DownloadIndex"])
 	{
