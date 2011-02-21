@@ -410,9 +410,14 @@
 {
     if (![self isForPublishing])
     {
-        [self writeLinkToStylesheet:[self relativeStringFromURL:cssURL]
+        KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
+        
+        [writer writeLinkToStylesheet:[self relativeStringFromURL:cssURL]
                               title:nil
                               media:nil];
+        
+        [writer writeString:@"\n"];
+        [writer release];
     }
 }
 
@@ -1171,9 +1176,6 @@
 
 - (void)writeAttributedHTMLString:(NSAttributedString *)attributedHTML;
 {
-    //  Pretty similar to -[SVRichText richText]. Perhaps we can merge the two eventually?
-    
-    
     NSRange range = NSMakeRange(0, [attributedHTML length]);
     NSUInteger location = 0;
     
