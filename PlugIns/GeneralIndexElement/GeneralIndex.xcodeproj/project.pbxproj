@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2705706912A90A2F0078AB0E /* GeneralIndexPullDownButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2705706812A90A2F0078AB0E /* GeneralIndexPullDownButton.m */; };
+		3C3001E21312FC280022E49A /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = 3C3001E11312FC280022E49A /* BUNDLED */; };
 		3C5D6F3D12A42EB500AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F3B12A42EB500AAAB18 /* Inspector.xib */; };
 		3C9701050D5CF85C0070D4A1 /* GeneralIndexPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9701040D5CF85C0070D4A1 /* GeneralIndexPlugIn.m */; };
 		3C9701190D5CFA2A0070D4A1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C9701170D5CFA2A0070D4A1 /* Localizable.strings */; };
@@ -33,6 +34,7 @@
 		2705706712A90A2F0078AB0E /* GeneralIndexPullDownButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralIndexPullDownButton.h; sourceTree = "<group>"; };
 		2705706812A90A2F0078AB0E /* GeneralIndexPullDownButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralIndexPullDownButton.m; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* GeneralIndex_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralIndex_Prefix.pch; sourceTree = "<group>"; };
+		3C3001E11312FC280022E49A /* BUNDLED */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BUNDLED; path = ../Configurations/BUNDLED; sourceTree = SOURCE_ROOT; };
 		3C5D6F3C12A42EB500AAAB18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		3C9701030D5CF85C0070D4A1 /* GeneralIndexPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralIndexPlugIn.h; sourceTree = "<group>"; };
 		3C9701040D5CF85C0070D4A1 /* GeneralIndexPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralIndexPlugIn.m; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C3001E11312FC280022E49A /* BUNDLED */,
 				CEDA1DCA130207E200DC6FE7 /* Inspector.strings */,
 				3C5D6F3B12A42EB500AAAB18 /* Inspector.xib */,
 				CE2802C912432C4100B00F3D /* toolbar_general_index.tiff */,
@@ -254,6 +257,7 @@
 				CE29097E12B6D9AE00815440 /* titles_list.tiff in Resources */,
 				CE29097F12B6D9AE00815440 /* titles.tiff in Resources */,
 				CEDA1DCC130207E200DC6FE7 /* Inspector.strings in Resources */,
+				3C3001E21312FC280022E49A /* BUNDLED in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

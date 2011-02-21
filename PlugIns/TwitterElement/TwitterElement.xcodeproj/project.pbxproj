@@ -10,6 +10,7 @@
 		271018410E96708F0095D365 /* twitter_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 271018400E96708F0095D365 /* twitter_logo.png */; };
 		2737B0820E9A1FC200048D1F /* twittercallbacktemplate.js in Resources */ = {isa = PBXBuildFile; fileRef = 2737B0400E9977AB00048D1F /* twittercallbacktemplate.js */; };
 		27DB7FAB0EA696C60099ED9E /* NSURL+Twitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB7FAA0EA696C60099ED9E /* NSURL+Twitter.m */; };
+		3C3002FB1312FD3A0022E49A /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = 3C3002FA1312FD3A0022E49A /* BUNDLED */; };
 		3C4A185B0D5F9BFB009476BF /* TwitterFeedPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A185A0D5F9BFB009476BF /* TwitterFeedPlugIn.m */; };
 		3C4A187F0D5F9E25009476BF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A187D0D5F9E25009476BF /* Localizable.strings */; };
 		3C4A189B0D5F9F5C009476BF /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A189A0D5F9F5C009476BF /* License.rtf */; };
@@ -32,6 +33,7 @@
 		32DBCF630370AF2F00C91783 /* TwitterElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterElement_Prefix.pch; sourceTree = "<group>"; };
 		3C110ABA12B3077A00FB34E8 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C110ABC12B307B600FB34E8 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C3002FA1312FD3A0022E49A /* BUNDLED */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BUNDLED; path = ../Configurations/BUNDLED; sourceTree = SOURCE_ROOT; };
 		3C4A18590D5F9BFB009476BF /* TwitterFeedPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFeedPlugIn.h; sourceTree = "<group>"; };
 		3C4A185A0D5F9BFB009476BF /* TwitterFeedPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterFeedPlugIn.m; sourceTree = "<group>"; };
 		3C4A18620D5F9D67009476BF /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -88,6 +90,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C3002FA1312FD3A0022E49A /* BUNDLED */,
 				CEDA1DB21302074300DC6FE7 /* Inspector.strings */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
@@ -223,6 +226,7 @@
 				CE2802F012432CA800B00F3D /* toolbar_twitter.tiff in Resources */,
 				3C5D6F4712A431BF00AAAB18 /* Inspector.xib in Resources */,
 				CEDA1DB41302074300DC6FE7 /* Inspector.strings in Resources */,
+				3C3002FB1312FD3A0022E49A /* BUNDLED in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C3001B21312FBB90022E49A /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = 3C3001B11312FBB90022E49A /* BUNDLED */; };
 		3C4A17F40D5E7C7A009476BF /* DeliciousPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A17F30D5E7C7A009476BF /* DeliciousPlugIn.m */; };
 		3C4A18240D5E7F67009476BF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A18220D5E7F67009476BF /* Localizable.strings */; };
 		3C4A18330D5E7FC1009476BF /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A18300D5E7FC1009476BF /* Template.html */; };
@@ -25,6 +26,7 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* DeliciousElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliciousElement_Prefix.pch; sourceTree = "<group>"; };
+		3C3001B11312FBB90022E49A /* BUNDLED */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BUNDLED; path = ../Configurations/BUNDLED; sourceTree = SOURCE_ROOT; };
 		3C4A17F20D5E7C7A009476BF /* DeliciousPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliciousPlugIn.h; sourceTree = "<group>"; };
 		3C4A17F30D5E7C7A009476BF /* DeliciousPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeliciousPlugIn.m; sourceTree = "<group>"; };
 		3C4A17FE0D5E7D8B009476BF /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -97,6 +99,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C3001B11312FBB90022E49A /* BUNDLED */,
 				CEDA1DE41302083400DC6FE7 /* Inspector.strings */,
 				3C5D6F6A12A4369000AAAB18 /* Inspector.xib */,
 				CE28032C12432D9E00B00F3D /* toolbar_delicious.tiff */,
@@ -230,6 +233,7 @@
 				CE28032D12432D9E00B00F3D /* toolbar_delicious.tiff in Resources */,
 				3C5D6F6C12A4369000AAAB18 /* Inspector.xib in Resources */,
 				CEDA1DE61302083400DC6FE7 /* Inspector.strings in Resources */,
+				3C3001B21312FBB90022E49A /* BUNDLED in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

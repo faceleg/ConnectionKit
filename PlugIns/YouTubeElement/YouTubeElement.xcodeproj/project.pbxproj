@@ -11,6 +11,7 @@
 		271696280DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 271696270DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m */; };
 		2716969F0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2716969E0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m */; };
 		27B0BBD011668CE60084BFE0 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B0BBCF11668CE50084BFE0 /* Quartz.framework */; };
+		3C30030A1312FD5C0022E49A /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = 3C3003091312FD5C0022E49A /* BUNDLED */; };
 		3C42E5B40D650888004F35FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E5B00D650888004F35FD /* Localizable.strings */; };
 		3C42E5C60D65091C004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E5C50D65091C004F35FD /* License.rtf */; };
 		3C5D6F4312A4317600AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F4112A4317600AAAB18 /* Inspector.xib */; };
@@ -33,6 +34,7 @@
 		2716969D0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeCocoaExtensions.h; sourceTree = "<group>"; };
 		2716969E0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeCocoaExtensions.m; sourceTree = "<group>"; };
 		27B0BBCF11668CE50084BFE0 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		3C3003091312FD5C0022E49A /* BUNDLED */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BUNDLED; path = ../Configurations/BUNDLED; sourceTree = SOURCE_ROOT; };
 		3C42E5B10D650888004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C42E5B70D650894004F35FD /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C42E5B90D65089E004F35FD /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C3003091312FD5C0022E49A /* BUNDLED */,
 				CEDA1DAC1302072C00DC6FE7 /* Inspector.strings */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				CEF120DE0D90567900FCAC70 /* InfoPlist.strings */,
@@ -243,6 +246,7 @@
 				270461D40DAE7FF000D74480 /* youtube-logo.png in Resources */,
 				3C5D6F4312A4317600AAAB18 /* Inspector.xib in Resources */,
 				CEDA1DAE1302072C00DC6FE7 /* Inspector.strings in Resources */,
+				3C30030A1312FD5C0022E49A /* BUNDLED in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

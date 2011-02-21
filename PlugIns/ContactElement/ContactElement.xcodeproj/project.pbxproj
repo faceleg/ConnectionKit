@@ -13,6 +13,7 @@
 		27FF85F50C5A91EA0077CB14 /* ContactElementFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85EF0C5A91EA0077CB14 /* ContactElementFieldCell.m */; };
 		27FF85F60C5A91EA0077CB14 /* ContactElementFieldsArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85F10C5A91EA0077CB14 /* ContactElementFieldsArrayController.m */; };
 		27FF85F70C5A91EA0077CB14 /* ContactInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85F30C5A91EA0077CB14 /* ContactInspector.m */; };
+		3C3001AB1312FB9D0022E49A /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = 3C3001AA1312FB9D0022E49A /* BUNDLED */; };
 		3C41CC7409B4D7BC0086EF83 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C41CC7309B4D7BC0086EF83 /* License.rtf */; };
 		3C5D6F6F12A4371C00AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F6D12A4371B00AAAB18 /* Inspector.xib */; };
 		3CAC4F0809A2AE2C007AB5B6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CAC4F0609A2AE2C007AB5B6 /* Localizable.strings */; };
@@ -47,6 +48,7 @@
 		27FF85F20C5A91EA0077CB14 /* ContactInspector.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ContactInspector.h; sourceTree = "<group>"; };
 		27FF85F30C5A91EA0077CB14 /* ContactInspector.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ContactInspector.m; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* ContactElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactElement_Prefix.pch; sourceTree = "<group>"; };
+		3C3001AA1312FB9D0022E49A /* BUNDLED */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BUNDLED; path = ../Configurations/BUNDLED; sourceTree = SOURCE_ROOT; };
 		3C41CC7309B4D7BC0086EF83 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../License.rtf; sourceTree = SOURCE_ROOT; };
 		3C4C69D60D640E8A00398BDA /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C4C69D70D640E8A00398BDA /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -112,6 +114,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C3001AA1312FB9D0022E49A /* BUNDLED */,
 				CEDA1DE81302084000DC6FE7 /* Inspector.strings */,
 				3C5D6F6D12A4371B00AAAB18 /* Inspector.xib */,
 				CEA32ADB1283353500648C39 /* toolbar_contact.tiff */,
@@ -255,6 +258,7 @@
 				CEA32ADC1283353500648C39 /* toolbar_contact.tiff in Resources */,
 				3C5D6F6F12A4371C00AAAB18 /* Inspector.xib in Resources */,
 				CEDA1DEA1302084000DC6FE7 /* Inspector.strings in Resources */,
+				3C3001AB1312FB9D0022E49A /* BUNDLED in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

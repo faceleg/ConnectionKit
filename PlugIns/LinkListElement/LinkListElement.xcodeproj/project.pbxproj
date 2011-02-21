@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C30020D1312FC760022E49A /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = 3C30020C1312FC760022E49A /* BUNDLED */; };
 		3C5D6F5512A4341200AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F5312A4341200AAAB18 /* Inspector.xib */; };
 		3CA9008E0D63C89400815310 /* LinkListArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA900890D63C89400815310 /* LinkListArrayController.m */; };
 		3CA900900D63C89400815310 /* LinkListPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9008D0D63C89400815310 /* LinkListPlugIn.m */; };
@@ -24,6 +25,7 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* LinkListElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkListElement_Prefix.pch; sourceTree = "<group>"; };
+		3C30020C1312FC760022E49A /* BUNDLED */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BUNDLED; path = ../Configurations/BUNDLED; sourceTree = SOURCE_ROOT; };
 		3C5D6F5412A4341200AAAB18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		3CA900880D63C89400815310 /* LinkListArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkListArrayController.h; sourceTree = "<group>"; };
 		3CA900890D63C89400815310 /* LinkListArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkListArrayController.m; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C30020C1312FC760022E49A /* BUNDLED */,
 				CEDA1DCE130207EF00DC6FE7 /* Inspector.strings */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
@@ -221,6 +224,7 @@
 				CE28031412432D1800B00F3D /* toolbar_linklist.tiff in Resources */,
 				3C5D6F5512A4341200AAAB18 /* Inspector.xib in Resources */,
 				CEDA1DD0130207EF00DC6FE7 /* Inspector.strings in Resources */,
+				3C30020D1312FC760022E49A /* BUNDLED in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
