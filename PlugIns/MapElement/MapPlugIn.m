@@ -91,8 +91,8 @@
                  bindSizeToPlugIn:self
                        attributes:nil];
             
-            //FIXME: #107815 -- this writeText: shouldn't be needed
-            [context writeText:@"If you see this sentence, hit reload..."];
+            //FIXME: #107815 -- this writeCharacters: shouldn't be needed
+            [context writeCharacters:@"If you see this sentence, hit reload..."];
             [context endElement]; // </div>
             
             // append Google Maps API functions to end body
