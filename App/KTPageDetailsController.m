@@ -188,8 +188,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self
-													name:NSViewBoundsDidChangeNotification
-												  object:[self view]];
+												 name:NSViewFrameDidChangeNotification
+											   object:[self view]];
     
     self.view = nil;		// stop observing early.
     self.webContentAreaController = nil;
