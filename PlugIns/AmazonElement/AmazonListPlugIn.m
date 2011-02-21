@@ -387,4 +387,15 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 + (BOOL)supportsMultiplePasteboardItems; { return YES; }
 
+#pragma mark Migration
+
+- (void)awakeFromSourceProperties:(NSDictionary *)properties;
+{
+    [super awakeFromSourceProperties:properties];
+    
+    // Products need to be unarchived separately
+    NSData *productsData = [properties objectForKey:@"manualListProducts"];
+    [self setSerializedValue:productsData forKey:@"products"];
+}
+
 @end
