@@ -662,7 +662,7 @@
     if (title) [self setTitle:title];
     
     
-    // Can we read a media oject from the pboard?
+    // Can we read a media object from the pboard?
     SVMediaRecord *record = nil;
     id <SVPasteboardItem> item = [items objectAtIndex:0];
     
@@ -711,6 +711,13 @@
 		if (oldWidth)
 		{
 			[self setContentWidth:oldWidth];
+            
+            // #103850
+            NSNumber *maxHeight = [self maxHeight];
+            if (maxHeight && [[self height] isGreaterThan:maxHeight])
+            {
+                [self setContentHeight:maxHeight];
+            }
 		}
 		else
 		{
