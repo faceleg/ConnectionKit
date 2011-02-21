@@ -302,7 +302,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     
     return result;
 }
-+ (NSSet *)keyPathsForValuesAffectingContentWidth; { return [NSSet setWithObject:@"plugIn.width"]; }
 
 - (NSNumber *)contentHeight;
 {
