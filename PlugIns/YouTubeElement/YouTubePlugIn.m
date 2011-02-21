@@ -227,7 +227,7 @@
                             attributes:attributes];
     
     NSString *message = LocalizedStringInThisBundle(@"This is a placeholder for the YouTube video at:", "Live data feeds are disabled");
-    [context writeText:message];
+    [context writeCharacters:message];
     
     [context startElement:@"p"];
     [context startAnchorElementWithHref:[self userVideoCode] 
@@ -238,7 +238,7 @@
     [context endElement]; // </p>
     
     message = LocalizedStringInThisBundle(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", "Live data feeds are disabled");
-    [context writeText:message];
+    [context writeCharacters:message];
     
     [context endElement]; // </div>
 }
@@ -255,7 +255,7 @@
                       bindSizeToPlugIn:self 
                             attributes:attributes];
     NSString *message = LocalizedStringInThisBundle(@"Sorry, but no YouTube video was found for the code you entered.", "User entered an invalid YouTube code");
-    [context writeText:message];
+    [context writeCharacters:message];
     [context endElement];
 }
 
@@ -272,7 +272,7 @@
                       bindSizeToPlugIn:self 
                             attributes:attributes];
     NSString *message = LocalizedStringInThisBundle(@"Please use the Inspector to specify a YouTube video.", "No video code has been entered yet");
-    [context writeText:message];
+    [context writeCharacters:message];
     [context endElement];    
 }
 

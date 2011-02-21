@@ -531,7 +531,7 @@
 		[context startElement:@"img"];
 		[context endElement];
 
-		[context writeText:[[audioSourceURL path] lastPathComponent]];
+		[context writeCharacters:[[audioSourceURL path] lastPathComponent]];
 		[context endElement];
 	}
 	

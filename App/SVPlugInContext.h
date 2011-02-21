@@ -68,7 +68,7 @@ typedef NSUInteger SVThumbnailOptions;
 - (void)endElement;                                                                 // </tag>
 
 // Escapes the string
-- (void)writeText:(NSString *)string;
+- (void)writeCharacters:(NSString *)string;
 
 // Escapes the string, and wraps in a comment tag
 - (void)writeComment:(NSString *)comment;   // <!--comment-->

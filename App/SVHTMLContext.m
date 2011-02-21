@@ -680,7 +680,7 @@
 - (void)writePlaceholderWithText:(NSString *)text;
 {
 	[self startPlaceholder];
-	[self writeText:text];
+	[self writeCharacters:text];
 	[self endPlaceholder];
 }
 
@@ -1140,7 +1140,7 @@
     
     if (plainText)
     {
-        [self writeText:[page title]];
+        [self writeCharacters:[page title]];
     }
     else
     {
@@ -1394,7 +1394,7 @@
     
     [self openComment];
     [self writeString:@" "];
-    [self writeText:comment];
+    [self writeCharacters:comment];
     [self writeString:@" "];
     [self closeComment];
 }

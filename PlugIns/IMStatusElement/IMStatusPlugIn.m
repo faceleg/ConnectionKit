@@ -214,7 +214,7 @@
     else
     {
         NSString *noIDMessage = LocalizedStringInThisBundle(@"(Please enter your IM username in the Inspector)", @"");
-        [context writeText:noIDMessage];
+        [context writeCharacters:noIDMessage];
     }
 
     [context endElement]; // </div>

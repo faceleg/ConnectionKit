@@ -114,8 +114,8 @@
                                      preferredIdName:@"victual"
                                            className:nil
                                           attributes:nil];
-            //FIXME: #107815 -- this writeText: shouldn't be needed
-            [context writeText:@"Help Me"];
+            //FIXME: #107815 -- this writeCharacters: shouldn't be needed
+            [context writeCharacters:@"Help Me"];
             [context endElement]; // </div>
             
             // append zRSSFeed jquery functions to end body (assumes jquery is already loaded)
@@ -165,7 +165,7 @@
                 if ( self.showSnippet )
                 {
                     [context writeHTMLString:@"<br />"];
-                    [context writeText:itemText];
+                    [context writeCharacters:itemText];
                 }
                 
                 [context endElement]; // </li>    

@@ -161,7 +161,7 @@
 
 #pragma mark Basic Writing
 
-- (void)writeText:(NSString *)string;
+- (void)writeCharacters:(NSString *)string;
 {
     // At start of top element, ignore whitespace. #76588
     if ([[self XMLWriter] openElementsCount] == 1 &&
@@ -171,7 +171,7 @@
         return;
     }
     
-    [super writeText:string];
+    [super writeCharacters:string];
 }
 
 #pragma mark Validation

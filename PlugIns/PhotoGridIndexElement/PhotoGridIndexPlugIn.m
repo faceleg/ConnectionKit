@@ -74,7 +74,7 @@
         [context startElement:@"h3"];
         [context startAnchorElementWithPage:[context page]];
         [context startElement:@"span" attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
-        [context writeText:LocalizedStringInThisBundle(@"Example Photo", "placeholder image name")];
+        [context writeCharacters:LocalizedStringInThisBundle(@"Example Photo", "placeholder image name")];
         [context endElement]; // </span>
         [context endElement]; // </a>
         [context endElement]; // </h3>
@@ -100,7 +100,7 @@
     {
         [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"gridItem" 
                                                                             forKey:@"class"]];
-        [context writeText:NSLocalizedString(@"Please specify the collection to use for the album.",
+        [context writeCharacters:NSLocalizedString(@"Please specify the collection to use for the album.",
                                              "set photo collection")];
         [context endElement];
     }

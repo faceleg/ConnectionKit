@@ -207,7 +207,7 @@
 		NSString *pageCode = [[self codeInjection] valueForKey:@"bodyTag"];
 		
 		if (masterCode)				[context writeString:masterCode];
-		if (masterCode && pageCode)	[context writeText:@" "];	// space in between, only if we have both
+		if (masterCode && pageCode)	[context writeCharacters:@" "];	// space in between, only if we have both
 		if (pageCode)				[context writeString:pageCode];
     }
 }

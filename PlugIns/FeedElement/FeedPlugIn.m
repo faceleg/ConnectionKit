@@ -109,7 +109,7 @@
         if ( self.summaryChars )
         {
             [context writeHTMLString:@"<br />"];
-            [context writeText:itemText];
+            [context writeCharacters:itemText];
         }
         
         [context endElement]; // </li>    

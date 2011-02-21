@@ -64,7 +64,7 @@
 
 - (void)writeTitle:(id <SVPlugInContext>)context;   // uses rich txt/html when available
 {
-    [context writeText:[self title]];
+    [context writeCharacters:[self title]];
 }
 
 #pragma mark Dates
@@ -431,7 +431,7 @@
 {
 	if ([self title])
 	{
-		[context writeText:[self title]];
+		[context writeCharacters:[self title]];
 		[context startNewline];
 	}
 }

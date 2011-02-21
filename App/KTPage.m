@@ -237,7 +237,7 @@
     NSString *windowTitle = [self windowTitle];
     if (windowTitle)
     {
-        [context writeText:windowTitle];
+        [context writeCharacters:windowTitle];
         [context writeString:@"\n"];
     }
     
@@ -245,12 +245,12 @@
     NSString *meta = [self metaDescription];
     if (meta)
     {
-        [context writeText:meta];
+        [context writeCharacters:meta];
         [context writeString:@"\n"];
     }
     
     // Body
-    [[self article] writeText:context];
+    [[self article] writeCharacters:context];
     
     // Children
     if (recursive)

@@ -159,7 +159,7 @@
 
         // write anchor
         [context startElement:@"a" attributes:tweetAttrs]; // <a>
-        [context writeText:@"Tweet"];
+        [context writeCharacters:@"Tweet"];
         [context endElement]; // </a>
         
         [context endElement]; // </div>

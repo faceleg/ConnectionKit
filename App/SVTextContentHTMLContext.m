@@ -14,7 +14,7 @@
 
 @implementation SVTextContentHTMLContext
 
-- (void)writeText:(NSString *)string;
+- (void)writeCharacters:(NSString *)string;
 {
     // Don't escape the string; write it raw
     [super writeString:string];
@@ -22,7 +22,7 @@
 
 - (void)writeHTMLString:(NSString *)html
 {
-    [self writeText:[html stringByConvertingHTMLToPlainText]];
+    [self writeCharacters:[html stringByConvertingHTMLToPlainText]];
 }
 
 - (void)startNewline

@@ -106,11 +106,11 @@
     
     if ( self.indexedCollection )
     {
-        [context writeText:NSLocalizedString(@"To see the Index, please add indexable pages to the collection.","add pages to collection")];
+        [context writeCharacters:NSLocalizedString(@"To see the Index, please add indexable pages to the collection.","add pages to collection")];
     }
     else
     {
-        [context writeText:NSLocalizedString(@"Use the Inspector to connect this index to a collection.","set index collection")];
+        [context writeCharacters:NSLocalizedString(@"Use the Inspector to connect this index to a collection.","set index collection")];
     }
     
     [context endElement];

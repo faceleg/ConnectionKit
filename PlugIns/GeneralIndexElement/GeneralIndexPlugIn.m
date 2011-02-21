@@ -268,7 +268,7 @@
 		title = @"";		// better than nil, which crashes!
 	}
 	NSString *textToWrite = [format stringByReplacing:@"@@" with:title];
-	[context writeText:textToWrite];
+	[context writeCharacters:textToWrite];
 	[context endElement];	// </a>
 	[context endElement];	// </div> continue-reading-link
 }
@@ -304,7 +304,7 @@
 			NSString *timestamp = [iteratedPage timestampDescription];
 			if (timestamp)
 			{
-				[context writeText:timestamp];
+				[context writeCharacters:timestamp];
 			}
 		}
 		else if (self.showPermaLinks)	// ... or permanent link text ..
@@ -313,7 +313,7 @@
 			NSString *language = [iteratedPage language];
 			NSString *permaLink = [bundle localizedStringForString:@"Permanent Link" language:language fallback:
 								   LocalizedStringInThisBundle(@"Permanent Link", @"Text in website's language to indicate a permanent link to the page")];
-			[context writeText:permaLink];
+			[context writeCharacters:permaLink];
 		}
 		if ( self.showPermaLinks )
 		{
