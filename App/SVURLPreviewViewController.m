@@ -281,12 +281,14 @@ webContentAreaController:(SVWebContentAreaController *)controller;
 		self.metaDescription = nil;		// clear out these data ASAP so we don't show old values
 		
         // Display best representation
+        WebFrame *frame = [[self webView] mainFrame];
         NSURL *URL = [self URLToLoad];
+        
         if (URL)
         {
-			[[[self webView] mainFrame] stopLoading];		// stop loading any previous page
+			[frame stopLoading];		// stop loading any previous page
 			OFF((@"Loading %@", URL));
-            [[[self webView] mainFrame] loadRequest:[NSURLRequest requestWithURL:URL]];
+            [frame loadRequest:[NSURLRequest requestWithURL:URL]];
         }
         else
         {
@@ -297,11 +299,26 @@ webContentAreaController:(SVWebContentAreaController *)controller;
                 NSString *type = [NSString UTIForFilenameExtension:[filename pathExtension]];
                 NSData *data = [NSData newDataWithContentsOfMedia:[record media]];
                 
-                [[[self webView] mainFrame] loadData:data
-                                            MIMEType:[NSString MIMETypeForUTI:type]
-                                    textEncodingName:nil
-                                             baseURL:[object URL]];
+                [frame loadData:data
+                       MIMEType:[NSString MIMETypeForUTI:type]
+               textEncodingName:nil
+                        baseURL:[object URL]];
                 [data release];
+            }
+            else
+            {
+                // Placeholder. #104314
+                SVTemplate *template = [SVTemplate templateNamed:@"LinkPageTemplate.html"];
+                
+                SVTemplateParser *parser = [[SVTemplateParser alloc]
+                                            initWithTemplate:[template templateString]
+                                            component:[self siteItem]];
+                
+                NSMutableString *html = [[NSMutableString alloc] init];
+                [parser parseWithOutputWriter:html];
+                
+                [frame loadHTMLString:html baseURL:nil];
+                [html release];
             }
         }
     }
