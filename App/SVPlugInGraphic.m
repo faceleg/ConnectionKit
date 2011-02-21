@@ -291,7 +291,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         [self setHeight:[NSNumber numberWithUnsignedInteger:height]];
     }
 }
-+ (NSSet *)keyPathsForValuesAffectingContentWidth; { return [NSSet setWithObject:@"width"]; }
 - (BOOL)validateContentWidth:(NSNumber **)width error:(NSError **)error;
 {
     BOOL result = YES;
@@ -303,7 +302,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     
     return result;
 }
-
++ (NSSet *)keyPathsForValuesAffectingContentWidth; { return [NSSet setWithObject:@"plugIn.width"]; }
 
 - (NSNumber *)contentHeight;
 {
