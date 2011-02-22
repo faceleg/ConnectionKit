@@ -398,7 +398,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (DOMNode *)DOMAdaptor:(SVParagraphedHTMLWriterDOMAdaptor *)writer willWriteDOMElement:(DOMElement *)element;
 {
-    // If the element is inside an DOM controller, write that out instead…
+    // If the element is inside a DOM controller, write that out instead…
     WEKWebEditorItem *item = [self itemForDOMNode:element];
     if (item)
     {

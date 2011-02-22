@@ -70,6 +70,7 @@
     self = [super initWithXMLWriter:writer];
     [writer release];
     
+    _attachments = [[NSMutableSet alloc] init];
     _pendingStartTagDOMElements = [[NSMutableArray alloc] init];
     _pendingEndDOMElements = [[NSMutableArray alloc] init];
     
@@ -86,6 +87,8 @@
         [_output release]; _output = nil;
     }
     
+    [_attachments release];
+    
     // [super dealloc] will call -flush at some point, so these ivars must be set to nil
     [_pendingStartTagDOMElements release]; _pendingStartTagDOMElements = nil;
     [_pendingEndDOMElements release]; _pendingEndDOMElements = nil;
@@ -97,6 +100,16 @@
 
 @synthesize importsGraphics = _allowsImages;
 @synthesize allowsLinks = _allowsLinks;
+
+#pragma mark Output
+
+- (NSSet *)textAttachments; { return [[_attachments copy] autorelease]; }
+
+- (void)writeTextAttachment:(SVTextAttachment *)attachment;
+{
+    [_attachments addObject:attachment];
+    [[self XMLWriter] writeString:[NSString stringWithUnichar:NSAttachmentCharacter]];
+}
 
 #pragma mark Elements
 

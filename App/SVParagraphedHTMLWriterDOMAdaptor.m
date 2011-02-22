@@ -16,36 +16,19 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithOutputStringWriter:(KSStringWriter *)stream;	// designated initializer
+- (id)initWithOutputStringWriter:(KSStringWriter *)output;	// designated initializer
 {
-    if (self = [super initWithOutputStringWriter:stream])
+    if (self = [super initWithOutputStringWriter:output])
     {
-        _attachments = [[NSMutableSet alloc] init];
         [self setImportsGraphics:YES];
     }
     
     return self;
 }
 
-- (void)dealloc
-{
-    [_attachments release];
-    [super dealloc];
-}
-
 #pragma mark Properties
 
 @synthesize allowsPagelets = _allowsBlockGraphics;
-
-#pragma mark Output
-
-- (NSSet *)textAttachments; { return [[_attachments copy] autorelease]; }
-
-- (void)writeTextAttachment:(SVTextAttachment *)attachment;
-{
-    [_attachments addObject:attachment];
-    [[self XMLWriter] writeString:[NSString stringWithUnichar:NSAttachmentCharacter]];
-}
 
 #pragma mark Cleanup
 

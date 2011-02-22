@@ -10,21 +10,16 @@
 #import "WebEditingKit.h"
 
 
-@class SVRichTextDOMController, SVTextAttachment;
+@class SVRichTextDOMController;
 
 
 @interface SVParagraphedHTMLWriterDOMAdaptor : SVFieldEditorHTMLWriterDOMAdapator
 {
   @private
     BOOL    _allowsBlockGraphics;
-    
-    NSMutableSet    *_attachments;
 }
 
 @property(nonatomic) BOOL allowsPagelets;
-
-- (NSSet *)textAttachments;
-- (void)writeTextAttachment:(SVTextAttachment *)attachment;
 
 // Pulls out the computed style values that are valid for use
 - (NSDictionary *)dictionaryWithCSSStyle:(DOMCSSStyleDeclaration *)style

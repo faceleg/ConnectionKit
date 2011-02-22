@@ -120,7 +120,7 @@
 
 #pragma mark Attributed HTML
 // Return YES if manages to write self. Otherwise return NO to treat as standard HTML
-- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriterDOMAdaptor *)writer;
+- (BOOL)writeAttributedHTML:(SVFieldEditorHTMLWriterDOMAdapator *)writer;
 
 @end
 

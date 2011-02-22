@@ -17,12 +17,17 @@
 #import "KSStringWriter.h";
 
 
+@class SVTextAttachment;
+
+
 @interface SVFieldEditorHTMLWriterDOMAdapator : KSXMLWriterDOMAdaptor
 {
     NSMutableArray          *_pendingStartTagDOMElements;
   @private
-    NSMutableArray  *_pendingEndDOMElements;
     KSStringWriter  *_output;
+    NSMutableSet    *_attachments;
+    
+    NSMutableArray  *_pendingEndDOMElements;
     
     BOOL    _allowsImages;
     BOOL    _allowsLinks;
@@ -35,6 +40,11 @@
 #pragma mark Properties
 @property(nonatomic) BOOL importsGraphics;
 @property(nonatomic) BOOL allowsLinks;
+
+
+#pragma mark Attachments
+- (NSSet *)textAttachments;
+- (void)writeTextAttachment:(SVTextAttachment *)attachment;
 
 
 #pragma mark Cleanup

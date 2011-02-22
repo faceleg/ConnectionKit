@@ -210,11 +210,12 @@
     {
         SVFieldEditorHTMLWriterDOMAdapator *adaptor = [[SVFieldEditorHTMLWriterDOMAdapator alloc]
                                                        initWithOutputStringWriter:stringWriter];
+        [adaptor setDelegate:self];
         
         [self writeText:adaptor];
         
         NSString *html = [stringWriter string];
-        [self setHTMLString:html attachments:nil];
+        [self setHTMLString:html attachments:[adaptor textAttachments]];
     }
     else
     {
@@ -510,7 +511,7 @@
 
 - (BOOL)allowsPagelets; { return NO; }
 
-- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriterDOMAdaptor *)writer; { return NO; }
+- (BOOL)writeAttributedHTML:(SVFieldEditorHTMLWriterDOMAdapator *)writer; { return NO; }
 
 @end
 

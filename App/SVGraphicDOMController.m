@@ -492,7 +492,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Attributed HTML
 
-- (BOOL)writeAttributedHTML:(SVParagraphedHTMLWriterDOMAdaptor *)adaptor;
+- (BOOL)writeAttributedHTML:(SVFieldEditorHTMLWriterDOMAdapator *)adaptor;
 {
     SVGraphic *graphic = [self representedObject];
     SVTextAttachment *attachment = [graphic textAttachment];
