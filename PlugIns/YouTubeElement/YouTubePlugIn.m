@@ -224,16 +224,13 @@
 - (void)writeNoLiveData
 {
     id <SVPlugInContext> context = [self currentContext];
-    
-    NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
-                                                           forKey:@"class"];
     [context startElement:@"div" 
          bindSizeToPlugIn:self 
           preferredIdName:@"youtube"
-               attributes:attributes];
+               attributes:nil];
     
     NSString *message = SVLocalizedString(@"This is a placeholder for the YouTube video at:", "Live data feeds are disabled");
-    [context writeCharacters:message];
+    [context writePlaceholderWithText:message options:0];
     
     [context startElement:@"p"];
     [context startAnchorElementWithHref:[self userVideoCode] 
@@ -244,7 +241,7 @@
     [context endElement]; // </p>
     
     message = SVLocalizedString(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", "Live data feeds are disabled");
-    [context writeCharacters:message];
+    [context writePlaceholderWithText:message options:0];
     
     [context endElement]; // </div>
 }
@@ -254,15 +251,12 @@
 - (void)writeNoVideoFound
 {
     id <SVPlugInContext> context = [self currentContext];
-    
-    NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
-                                                           forKey:@"class"];
     [context startElement:@"div" 
          bindSizeToPlugIn:self 
           preferredIdName:@"youtube"
-               attributes:attributes];
+               attributes:nil];
     NSString *message = SVLocalizedString(@"Sorry, but no YouTube video was found for the code you entered.", "User entered an invalid YouTube code");
-    [context writeCharacters:message];
+    [context writePlaceholderWithText:message options:0];
     [context endElement];
 }
 
@@ -272,15 +266,12 @@
 - (void)writeNoVideoSpecified
 {
     id <SVPlugInContext> context = [self currentContext];
-    
-    NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
-                                                           forKey:@"class"];
     [context startElement:@"div" 
          bindSizeToPlugIn:self 
           preferredIdName:@"youtube"
-               attributes:attributes];
+               attributes:nil];
     NSString *message = SVLocalizedString(@"Please use the Inspector to specify a YouTube video.", "No video code has been entered yet");
-    [context writeCharacters:message];
+    [context writePlaceholderWithText:message options:0];
     [context endElement];    
 }
 
