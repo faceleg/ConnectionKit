@@ -445,36 +445,6 @@
     if (elementClass) [context pushClassName:elementClass];
 }
 
-- (BOOL)shouldWriteHTMLInline;
-{
-    BOOL result = [super shouldWriteHTMLInline];    // expected to be NO
-    
-    if (![self isPagelet])
-    {
-        SVTextAttachment *attachment = [self textAttachment];
-        if (attachment)
-        {
-            if ([[attachment causesWrap] boolValue])
-            {
-                SVGraphicWrap wrap = [[attachment wrap] intValue];
-                result = (wrap == SVGraphicWrapRight ||
-                          wrap == SVGraphicWrapLeft ||
-                          wrap == SVGraphicWrapFloat_1_0);
-            }
-            else
-            {
-                result = YES;
-            }
-        }
-    }
-    
-    return result;
-}
-+ (NSSet *)keyPathsForValuesAffectingShouldWriteHTMLInline;
-{
-    return [NSSet setWithObjects:@"textAttachment.causesWrap", @"textAttachment.wrap", nil];
-}
-
 - (BOOL)canWriteHTMLInline; { return [[self plugIn] canWriteHTMLInline]; }
 
 #pragma mark Inspector

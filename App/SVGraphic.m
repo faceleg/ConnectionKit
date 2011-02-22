@@ -82,7 +82,35 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 #pragma mark Pagelet
 
-- (BOOL)shouldWriteHTMLInline; { return NO; }
+- (BOOL)shouldWriteHTMLInline;
+{
+    BOOL result = NO;
+    
+    if ([self canWriteHTMLInline] && ![self isPagelet])
+    {
+        SVTextAttachment *attachment = [self textAttachment];
+        if (attachment)
+        {
+            if ([[attachment causesWrap] boolValue])
+            {
+                SVGraphicWrap wrap = [[attachment wrap] intValue];
+                result = (wrap == SVGraphicWrapRight ||
+                          wrap == SVGraphicWrapLeft ||
+                          wrap == SVGraphicWrapFloat_1_0);
+            }
+            else
+            {
+                result = YES;
+            }
+        }
+    }
+    
+    return result;
+}
++ (NSSet *)keyPathsForValuesAffectingShouldWriteHTMLInline;
+{
+    return [NSSet setWithObjects:@"textAttachment.causesWrap", @"textAttachment.wrap", nil];
+}
 
 // Inline graphics are not pagelets, but everything else is
 - (BOOL)isPagelet;
