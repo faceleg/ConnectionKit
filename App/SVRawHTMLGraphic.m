@@ -38,6 +38,12 @@
 
 - (void)writeBody:(SVHTMLContext *)context;
 {
+    if ([self shouldWriteHTMLInline])
+    {
+        [context startElement:@"span" bindSizeToObject:self];
+    }
+    
+    
 	// Show the real HTML if it's the pro-licensed edition publishing
 	// OR we are previewing and the SVRawHTMLGraphic is marked as being OK for preview
 	
@@ -80,7 +86,15 @@
     
     // Changes to any of these properties will be a visible change
     [context addDependencyOnObject:self keyPath:@"shouldPreviewWhenEditing"];
+    
+    
+    if ([self shouldWriteHTMLInline])
+    {
+        [context endElement];
+    }
 }
+
+- (BOOL)canWriteHTMLInline { return YES; }
 
 + (SVTemplate *)placeholderTemplate;
 {
