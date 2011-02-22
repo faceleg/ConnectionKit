@@ -90,9 +90,9 @@
 {
     id<SVPlugInContext> context = [self currentContext];
     
-    NSString *exampleText = LocalizedStringInThisBundle(@"example no.", "String_On_Page_Template - followed by a number");
+    NSString *exampleText = SVLocalizedString(@"example no.", "String_On_Page_Template - followed by a number");
     
-    NSString *itemText = LocalizedStringInThisBundle(@"item summary", "String_On_Page_Template - example of a summary of an RSS item");
+    NSString *itemText = SVLocalizedString(@"item summary", "String_On_Page_Template - example of a summary of an RSS item");
     
     NSInteger writeMax = (self.max > 0) ? self.max : 4;
     NSString *host = (nil != [self.feedURL host]) ? [self.feedURL host] : @"example.com";
@@ -121,7 +121,8 @@
 - (void)writePlaceholder
 {
     id <SVPlugInContext> context = [self currentContext];
-    [context writePlaceholderWithText:LocalizedStringInThisBundle(@"Please specify the URL of the feed using the Inspector.", "String_On_Page_Template - placeholder")];
+    [context writePlaceholderWithText:SVLocalizedString(@"Please specify the URL of the feed using the Inspector.", "String_On_Page_Template - placeholder")
+                              options:0];
 }
 
 - (NSURL *)URLAsHTTP		// server requires http:// scheme
