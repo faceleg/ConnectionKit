@@ -149,8 +149,6 @@ typedef enum {
 	NSString *myEntityName;
 	NSString *myObjectIdentifier;
 }
-
-- (NSManagedObject *)realObjectInDocument:(KTDocument *)document;
 @end
 
 @implementation KTExtensiblePluginPropertiesArchivedObject
@@ -191,18 +189,6 @@ typedef enum {
 	[encoder encodeObject:myClassName forKey:@"class"];
 	[encoder encodeObject:myEntityName forKey:@"entityName"];
 	[encoder encodeObject:myObjectIdentifier forKey:@"objectIdentifier"];
-}
-
-- (NSManagedObject *)realObjectInDocument:(KTDocument *)document;
-{
-	Class objectClass = NSClassFromString(myClassName);
-	NSAssert1(objectClass, @"No class for class name '%@'", myClassName);
-	
-	NSManagedObject *result = [objectClass objectWithArchivedIdentifier:myObjectIdentifier
-															 inDocument:document];
-    
-	
-	return result;
 }
 
 @end
