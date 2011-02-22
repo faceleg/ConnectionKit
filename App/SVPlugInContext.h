@@ -24,7 +24,6 @@ typedef NSUInteger SVThumbnailOptions;
 
 #pragma mark Properties
 @property(nonatomic, copy, readonly) NSURL *baseURL;
-- (BOOL)isXHTML;
 - (id <SVPage>)page;    // the page whose HTML is being built
 
 
