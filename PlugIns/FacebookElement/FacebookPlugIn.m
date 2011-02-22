@@ -231,8 +231,8 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     }
     else 
     {
-        NSString *noLiveFeeds = LocalizedStringInThisBundle(@"Facebook Button visible only when loading data from the Internet.", "");
-        [context writePlaceholderWithText:noLiveFeeds];
+        NSString *noLiveFeeds = SVLocalizedString(@"Facebook Button visible only when loading data from the Internet.", "");
+        [context writePlaceholderWithText:noLiveFeeds options:0];
     }
     
     // add dependencies
