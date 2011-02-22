@@ -38,10 +38,7 @@
 
 - (void)writeBody:(SVHTMLContext *)context;
 {
-    if ([self shouldWriteHTMLInline])
-    {
-        [context startElement:@"span" bindSizeToObject:self];
-    }
+    [context startElement:([self shouldWriteHTMLInline] ? @"span" : @"div") bindSizeToObject:self];
     
     
 	// Show the real HTML if it's the pro-licensed edition publishing
@@ -88,10 +85,8 @@
     [context addDependencyOnObject:self keyPath:@"shouldPreviewWhenEditing"];
     
     
-    if ([self shouldWriteHTMLInline])
-    {
-        [context endElement];
-    }
+    
+    [context endElement];
 }
 
 - (BOOL)canWriteHTMLInline { return YES; }
