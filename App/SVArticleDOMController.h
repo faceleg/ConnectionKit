@@ -23,8 +23,6 @@
     BOOL        _displayDropOutline;
 }
 
-- (IBAction)insertPagelet:(id)sender;
-
 - (IBAction)moveToBlockLevel:(id)sender;
 
 
