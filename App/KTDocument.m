@@ -852,21 +852,13 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     }
     
     
-    // Let all graphics know of the change.
+    // Let all graphics know of the change. Size any embedded images to fit. #105069
 	NSArray *graphics = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"Graphic" error:NULL];
 	for (SVGraphic *aGraphic in graphics)
 	{
-		for (SVSidebar *aSidebar in [aGraphic sidebars])
+		for (id <SVPage> aPage in [aGraphic pages])
 		{
-			KTPage *page = [aSidebar page];
-			if (page) [aGraphic didAddToPage:page]; // how'd you have a sidebar without a page? – Mike
-		}
-		
-		SVRichText *text = [[aGraphic textAttachment] body];
-		if ([text isKindOfClass:[SVArticle class]])
-		{
-			KTPage *page = [(SVArticle *)text page];
-			if (page) [aGraphic didAddToPage:page];
+			[aGraphic didAddToPage:aPage];
 		}
 	}
 }

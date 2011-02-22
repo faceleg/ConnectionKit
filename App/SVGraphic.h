@@ -125,14 +125,6 @@ extern NSString *kSVGraphicPboardType;
 @property(nonatomic, copy) NSNumber *showBorder;
 
 
-#pragma mark Placement
-
-/*  There is generally no need to directly adjust a graphic's wrap setting. In particular, one hazard is that you could cause a block-level object appear inline. i.e. invalid HTML. Instead, use the higher-level DOM Controller API to modify wrap/placement of the selection.
- */
-
-@property(nonatomic, retain) SVTextAttachment *textAttachment;
-
-
 #pragma mark Metrics
 
 @property(nonatomic, copy) NSNumber *width;
@@ -146,6 +138,14 @@ extern NSString *kSVGraphicPboardType;
 - (BOOL)canMakeOriginalSize;
 
 
+#pragma mark Text Attachment
+
+/*  There is generally no need to directly adjust a graphic's wrap setting. In particular, one hazard is that you could cause a block-level object appear inline. i.e. invalid HTML. Instead, use the higher-level DOM Controller API to modify wrap/placement of the selection.
+ */
+
+@property(nonatomic, retain) SVTextAttachment *textAttachment;
+
+
 #pragma mark Sidebar
 
 // Checks that a given set of pagelets have unique sort keys
@@ -155,6 +155,10 @@ extern NSString *kSVGraphicPboardType;
 @property(nonatomic, copy) NSNumber *sortKey;
 
 @property(nonatomic, readonly) NSSet *sidebars;
+
+
+#pragma mark Pages
+- (NSSet *)pages;   // all the pages graphic is known to appear on
 
 
 #pragma mark Template

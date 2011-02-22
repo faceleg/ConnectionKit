@@ -48,7 +48,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (void)didAddToPage:(id <SVPage>)page;
 {
-    // Size any embedded images to fit. #105069
     NSSet *graphics = [[[self introduction] attachments] valueForKey:@"graphic"];
     [graphics makeObjectsPerformSelector:_cmd withObject:page];
     
@@ -314,6 +313,24 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 @dynamic sortKey;
 
 @dynamic sidebars;
+
+#pragma mark Pages
+
+- (NSSet *)pages;   // all the pages graphic is known to appear on
+{
+    NSSet *result = [[self sidebars] valueForKey:@"page"];
+    
+    if (![result count])
+    {
+        id text = [[self textAttachment] body];
+        if ([text isKindOfClass:[SVArticle class]])
+        {
+            result = [NSSet setWithObject:[text page]];
+        }
+    }
+    
+    return result;
+}
 
 #pragma mark Template
 
