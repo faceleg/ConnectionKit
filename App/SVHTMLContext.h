@@ -49,9 +49,6 @@ typedef enum {
 	BOOL                _liveDataFeeds;
     NSString            *_language;
     
-    KTDocType   _docType;
-    KTDocType   _maxDocType;
-    
     BOOL    _includeStyling;
     NSURL   *_mainCSSURL;
     
@@ -112,12 +109,6 @@ typedef enum {
 
 
 #pragma mark Doctype
-
-@property(nonatomic) KTDocType docType;
-
-// Call if your component supports only particular HTML doc types. Otherwise, leave alone! Calling mid-write may have no immediate effect; instead the system will try another write after applying the limit.
-- (void)limitToMaxDocType:(KTDocType)docType;
-
 + (NSString *)titleOfDocType:(KTDocType)docType localize:(BOOL)shouldLocalizeForDisplay;
 + (NSString *)stringFromDocType:(KTDocType)docType;
 

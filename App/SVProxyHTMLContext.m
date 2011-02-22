@@ -44,7 +44,7 @@
 - (BOOL)liveDataFeeds { return [_target liveDataFeeds]; }
 - (void)setLiveDataFeeds:(BOOL)flag { return [_target setLiveDataFeeds:flag]; }
 
-- (KTDocType)docType; { return [_target docType]; }
+- (NSString *)docType; { return [_target docType]; }
 
 - (NSStringEncoding)encoding { return [_target encoding]; }
 

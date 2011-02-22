@@ -74,10 +74,7 @@
     _includeStyling = YES;
     
     _liveDataFeeds = YES;
-    
-    _docType = KTHTML5DocType;
-    _maxDocType = NSIntegerMax;
-    
+        
     _headerLevel = 1;
     
     _headerMarkup = [[NSMutableString alloc] init];
@@ -110,7 +107,7 @@
 	OBPRECONDITION(context);
     NSStringEncoding encoding = (context ? [context encoding] : NSUTF8StringEncoding);
     
-    if (self = [self initWithOutputWriter:output encoding:encoding])
+    if (self = [self initWithOutputWriter:output docType:[context docType] encoding:encoding])
     {
         // Copy across properties
         [self setIndentationLevel:[context indentationLevel]];
@@ -118,7 +115,6 @@
         _baseURL = [[context baseURL] copy];
         [self setIncludeStyling:[context includeStyling]];
         [self setLiveDataFeeds:[context liveDataFeeds]];
-        [self setDocType:[context docType]];
         _sidebarPageletsController = [context->_sidebarPageletsController retain];
     }
     
@@ -186,10 +182,8 @@
     
     
     // Start the document
-    KTDocType docType = [self docType];
-    [self startDocument:[[self class] stringFromDocType:docType]
-               encoding:[[[page master] charset] encodingFromCharset]
-                isXHTML:(docType >= KTXHTMLTransitionalDocType)];
+    [self startDocumentWithDocType:KSHTMLWriterDocTypeHTML_5
+                          encoding:[[[page master] charset] encodingFromCharset]];
     
     
     // Global CSS
@@ -204,19 +198,6 @@
     [parser parseIntoHTMLContext:self];
     [parser release];
     
-    
-    // Now, did that change the doctype? Retry if possible!
-    if (_maxDocType > KTHTML5DocType) _maxDocType = KTHTML5DocType;
-    if (_maxDocType != [self docType])
-    {
-        if ([self outputStringWriter])
-        {
-            [self reset];
-            [self setDocType:_maxDocType];
-            [self writeDocumentWithPage:page];
-        }
-    }
-	
     
     // If we're for editing, include additional editing CSS. Used to write the design CSS just here as well, but that interferes with animations. #96704
 	if ([self isForEditing])
@@ -297,13 +278,6 @@
 @synthesize language = _language;
 
 #pragma mark Doctype
-
-@synthesize docType = _docType;
-
-- (void)limitToMaxDocType:(KTDocType)docType;
-{
-    if (docType < _maxDocType) _maxDocType = docType;
-}
 
 + (NSString *)titleOfDocType:(KTDocType)docType  localize:(BOOL)shouldLocalizeForDisplay;
 {
