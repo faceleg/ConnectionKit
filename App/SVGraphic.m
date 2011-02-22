@@ -228,6 +228,11 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 @dynamic height;
 
+- (NSUInteger)area; // 0 if either dimension is auto. Used for thumbnail
+{
+    return [[self width] unsignedIntegerValue] * [[self height] unsignedIntegerValue];
+}
+    
 - (CGFloat)maxWidthOnPage:(KTPage *)page;
 {
     KTDesign *design = [[page master] design];

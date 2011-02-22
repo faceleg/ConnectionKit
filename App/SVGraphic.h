@@ -129,6 +129,7 @@ extern NSString *kSVGraphicPboardType;
 
 @property(nonatomic, copy) NSNumber *width;
 @property(nonatomic, copy) NSNumber *height;
+- (NSUInteger)area; // 0 if either dimension is auto. Used for thumbnail
 
 - (CGFloat)maxWidthOnPage:(id <SVPage>)page;
 

@@ -211,11 +211,6 @@
             _destinationContextOverride = [dDoc managedObjectContext];
             
             
-            // Search for thumbnails. #108951
-            NSArray *pages = [_destinationContextOverride fetchAllObjectsForEntityForName:@"Page" error:NULL];
-            [pages makeObjectsPerformSelector:@selector(guessThumbnailSourceGraphic)];
-            
-            
             // Import embedded images
             NSArray *richText = [_destinationContextOverride fetchAllObjectsForEntityForName:@"RichText" error:NULL];
             NSEntityMapping *mapping = [[mappingModel entityMappingsByName] objectForKey:@"EmbeddedImageToGraphicMedia"];
@@ -249,6 +244,12 @@
             [dDoc designDidChange];
             
     
+            // Search for thumbnails. #108951
+            // Do after resizing media, so can pick the biggest. #109087
+            NSArray *pages = [_destinationContextOverride fetchAllObjectsForEntityForName:@"Page" error:NULL];
+            [pages makeObjectsPerformSelector:@selector(guessThumbnailSourceGraphic)];
+            
+            
             result = [dDoc saveToURL:[dDoc fileURL] ofType:[dDoc fileType] forSaveOperation:NSSaveOperation error:outError];
             _destinationContextOverride = nil;
             [dDoc close];

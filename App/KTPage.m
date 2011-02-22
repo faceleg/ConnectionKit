@@ -12,8 +12,8 @@
 #import "KTDesign.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
-#import "SVGraphic.h"
 #import "KTMaster.h"
+#import "SVMediaGraphic.h"
 #import "SVMediaRecord.h"
 #import "SVPageTitle.h"
 #import "SVPagesController.h"
@@ -28,8 +28,9 @@
 #import "NSAttributedString+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSError+Karelia.h"
-#import "NSSet+Karelia.h"
 #import "NSObject+Karelia.h"
+#import "NSSet+Karelia.h"
+#import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "KSContainsObjectValueTransformer.h"
@@ -470,8 +471,19 @@
 
 - (void)guessThumbnailSourceGraphic;
 {
-    SVGraphic *thumbnailGraphic = [[[[self article] orderedAttachments] firstObjectKS] graphic];
-    [self setThumbnailSourceGraphic:thumbnailGraphic];
+    NSArray *descriptors = [NSSortDescriptor sortDescriptorArrayWithKey:@"graphic.area" ascending:NO];
+    NSArray *attachments = [[[self article] attachments] KS_sortedArrayUsingDescriptors:descriptors];
+    
+    for (SVTextAttachment *anAttachment in attachments)
+    {
+        if ([[anAttachment graphic] isKindOfClass:[SVMediaGraphic class]])
+        {
+            [self setThumbnailSourceGraphic:[anAttachment graphic]];
+            return;
+        }
+    }
+    
+    [self setThumbnailSourceGraphic:nil];
 }
 
 - (BOOL)validateThumbnailType:(NSNumber **)outType error:(NSError **)error;
