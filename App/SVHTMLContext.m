@@ -637,11 +637,16 @@
     [self endElement];
 }
 
-- (void)writePlaceholderWithText:(NSString *)text;
+- (void)writePlaceholderWithText:(NSString *)text options:(NSUInteger)options;
 {
 	[self startPlaceholder];
 	[self writeCharacters:text];
 	[self endPlaceholder];
+}
+
+- (void)writePlaceholderWithText:(NSString *)text;
+{
+    [self writePlaceholderWithText:text options:0];
 }
 
 #pragma mark Metrics

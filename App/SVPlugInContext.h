@@ -114,7 +114,8 @@ typedef NSUInteger SVThumbnailOptions;
 
 #pragma mark Placeholder
 // For if you need to generate a stand-in for the real content. e.g. Live data feeds are disabled
-- (void)writePlaceholderWithText:(NSString *)text;
+// No options yet, so pass in 0, but we might add some in the future
+- (void)writePlaceholderWithText:(NSString *)text options:(NSUInteger)options;
 
 
 #pragma mark Metrics
