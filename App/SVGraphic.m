@@ -144,7 +144,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 + (NSString *)placeholderTitleText;
 {
-    return NSLocalizedString(@"Pagelet", "pagelet title placeholder");
+    return NSLocalizedString(@"Untitled", "pagelet title placeholder");
 }
 
 #pragma mark Intro & Caption
