@@ -11,6 +11,8 @@
 #import "SVGraphicFactory.h"
 #import "SVMediaMigrationPolicy.h"
 
+#import "NSError+Karelia.h"
+
 
 @implementation SVPageletMigrationPolicy
 
