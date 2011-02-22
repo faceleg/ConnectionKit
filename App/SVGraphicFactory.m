@@ -276,6 +276,8 @@
     return [NSImage imageNamed:@"toolbar_html_element"];
 }
 
+- (NSString *)identifier { return @"com.karelia.sandvox.RawHTML"; }
+
 @end
 
 

@@ -15,6 +15,7 @@
 {
     SVTextDOMController *result = [super newTextDOMController];
     [result setFieldEditor:YES];
+    [(id)result setImportsGraphics:YES];
     return result;
 }
 

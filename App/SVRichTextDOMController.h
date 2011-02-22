@@ -16,11 +16,16 @@
 @interface SVRichTextDOMController : SVTextDOMController 
 {
   @private
+    BOOL    _importsGraphics;
+    
     BOOL    _isUpdating;
     
     NSArrayController       *_graphicsController;
     DOMHTMLAnchorElement    *_selectedLink;
 }
+
+@property(nonatomic) BOOL importsGraphics;
+
 
 #pragma mark Content
 - (IBAction)insertFile:(id)sender;

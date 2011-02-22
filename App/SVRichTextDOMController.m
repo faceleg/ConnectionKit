@@ -419,6 +419,10 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     return element;
 }
 
+#pragma mark Properties
+
+@synthesize importsGraphics = _importsGraphics;
+
 #pragma mark Links
 
 @synthesize selectedLink = _selectedLink;
@@ -582,6 +586,54 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         if (select) [webEditor selectItems:[NSArray arrayWithObject:controller]
                       byExtendingSelection:NO];*/
     }
+}
+
+- (void)addGraphic:(SVGraphic *)graphic;
+{
+    [self addGraphic:graphic placeInline:YES];
+}
+
+- (IBAction)insertPagelet:(id)sender;
+{
+    BOOL insert = [self importsGraphics];
+    if (insert)
+    {
+        if (![self allowsPagelets])
+        {
+            // Graphics, but not pagelets? Only allow Raw HTML. #108221
+            SVGraphicFactory *factory = [SVGraphicFactory graphicFactoryForTag:[sender tag]];
+            insert = [SVGraphicFactory rawHTMLFactory] == factory;
+        }
+    }
+    
+    
+    // If we don't handle it, pass on
+    if (!insert)
+    {
+        if (![[self nextResponder] tryToPerform:_cmd with:sender])
+        {
+            WEKWebEditorItem *articleController = [[self webEditorViewController] articleDOMController];
+            if (![articleController tryToPerform:_cmd with:sender])
+            {
+                NSBeep();
+            }
+        }
+        
+        return;
+    }
+    
+    
+    
+    NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
+    
+    SVGraphic *graphic = [SVGraphicFactory graphicWithActionSender:sender
+                                    insertIntoManagedObjectContext:context];
+    
+    [graphic awakeFromNew];
+    
+    
+    // If graphic is small enough to go in sidebar, place there instead.
+    [self addGraphic:graphic];
 }
 
 - (IBAction)insertFile:(id)sender;

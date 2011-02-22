@@ -103,16 +103,8 @@
 
 - (BOOL)allowsPagelets; { return YES; }
 
-- (IBAction)insertPagelet:(id)sender;
+- (void)addGraphic:(SVGraphic *)graphic;
 {
-    NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
-    
-    SVGraphic *graphic = [SVGraphicFactory graphicWithActionSender:sender
-                                           insertIntoManagedObjectContext:context];
-    
-    [graphic awakeFromNew];
-    
-    
     // If graphic is small enough to go in sidebar, place there instead.
     NSNumber *width = [graphic width];
     if (width && [width unsignedIntegerValue] <= 200)
@@ -127,18 +119,13 @@
         }
         
         // No sidebar? Make it a callout. #103215
-        [self addGraphic:graphic];
+        [self addGraphic:graphic placeInline:NO];
         [[graphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementCallout]];
     }
     else
     {
-        [self addGraphic:graphic];
+        [self addGraphic:graphic placeInline:NO];
     }
-}
-
-- (void)addGraphic:(SVGraphic *)graphic;
-{
-    [self addGraphic:graphic placeInline:NO];
 }
 
 #pragma mark Selection fallback
@@ -1326,8 +1313,9 @@
 
 - (SVTextDOMController *)newTextDOMController;
 {
-    SVTextDOMController *result = [[SVArticleDOMController alloc] initWithRepresentedObject:self];
+    SVArticleDOMController *result = [[SVArticleDOMController alloc] initWithRepresentedObject:self];
     [result setRichText:YES];
+    [result setImportsGraphics:YES];
     
     return result;
 }
