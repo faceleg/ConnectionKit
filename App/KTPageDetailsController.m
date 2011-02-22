@@ -252,11 +252,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (void)awakeFromNib
 {
 	if (!_awokenFromNib)
-	{
-		// Save these so we can restore them quickly when we are re-binding
-		self.initialWindowTitleBindingOptions = [[oWindowTitleField infoForBinding:NSValueBinding] valueForKey:NSOptionsKey];
-		self.initialMetaDescriptionBindingOptions = [[oMetaDescriptionField infoForBinding:NSValueBinding] valueForKey:NSOptionsKey];
-		
+	{		
 		[oExternalURLField setFormatter:[[[KSURLFormatter alloc] init] autorelease]];
 		
 		// Detail panel needs the right appearance
@@ -763,57 +759,39 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	id selViewController = [[self webContentAreaController] selectedViewController];
 	if ([selViewController isKindOfClass:[SVWebEditorViewController class]])
 	{
-		[oWindowTitleField unbind:NSValueBinding];
-		[oWindowTitleField bind:NSValueBinding
-					   toObject:oPagesTreeController
-					withKeyPath:@"selection.comboTitleText"
-						options:self.initialWindowTitleBindingOptions];
+		NSDictionary *currentWindowTitleBinding = [oWindowTitleField     infoForBinding:NSValueBinding];
+		NSDictionary *currentMetaDescripBinding = [oMetaDescriptionField infoForBinding:NSValueBinding];
 		
-		[oMetaDescriptionField unbind:NSValueBinding];
-		[oMetaDescriptionField bind:NSValueBinding
+		if ([[currentMetaDescripBinding objectForKey:NSObservedKeyPathKey] isEqualToString:@"selection.metaDescription"])
+		{
+			// Already the binding we want.  Just hang onto the options.  Do this each time through in case localization affected this.
+			self.initialMetaDescriptionBindingOptions = [currentMetaDescripBinding valueForKey:NSOptionsKey];
+		}
+		else
+		{
+			OBASSERT(self.initialMetaDescriptionBindingOptions);		// we should already have this stored from an earlier pass
+			[oMetaDescriptionField unbind:NSValueBinding];
+			[oMetaDescriptionField bind:NSValueBinding
+							   toObject:oPagesTreeController
+							withKeyPath:@"selection.metaDescription"
+								options:self.initialMetaDescriptionBindingOptions];
+		}
+		
+		
+		if ([[currentWindowTitleBinding objectForKey:NSObservedKeyPathKey] isEqualToString:@"selection.comboTitleText"])
+		{
+			// Already the binding we want.  Just hang onto the options.  Do this each time through in case localization affected this.
+			self.initialWindowTitleBindingOptions = [currentWindowTitleBinding valueForKey:NSOptionsKey];
+		}
+		else
+		{
+			OBASSERT(self.initialWindowTitleBindingOptions);		// we should already have this stored from an earlier pass
+			[oWindowTitleField unbind:NSValueBinding];
+			[oWindowTitleField bind:NSValueBinding
 						   toObject:oPagesTreeController
-						withKeyPath:@"selection.metaDescription"
-							options:self.initialMetaDescriptionBindingOptions];
-		
-		/*
-		 NSObservedKeyPath = "selection.windowTitle";
-		 NSObservedObject = <SVPagesController: 0x1c90cf0>[entity: Page, number of selected objects: 1];
-		 NSOptions =     {
-		 NSAllowsEditingMultipleValuesSelection = 1;
-		 NSAlwaysPresentsApplicationModalAlerts = 0;
-		 NSConditionallySetsEditable = 1;
-		 NSConditionallySetsEnabled = 0;
-		 NSConditionallySetsHidden = 0;
-		 NSContinuouslyUpdatesValue = 0;
-		 NSMultipleValuesPlaceholder = "Multiple pages selected. Titles should be unique.";
-		 NSNoSelectionPlaceholder = "";
-		 NSNotApplicablePlaceholder = "Not Applicable";
-		 NSNullPlaceholder = "Home Page | Karelia Software";
-		 NSRaisesForNotApplicableKeys = 0;
-		 NSValidatesImmediately = 0;
-		 NSValueTransformer = <null>;
-		 NSValueTransformerName = <null>;
-		 };
-		 }
-		 NSObservedKeyPath = "selection.metaDescription";
-		 NSObservedObject = <SVPagesController: 0x1c90cf0>[entity: Page, number of selected objects: 1];
-		 NSOptions =     {
-		 NSAllowsEditingMultipleValuesSelection = 1;
-		 NSAlwaysPresentsApplicationModalAlerts = 0;
-		 NSConditionallySetsEditable = 1;
-		 NSConditionallySetsEnabled = 0;
-		 NSConditionallySetsHidden = 0;
-		 NSContinuouslyUpdatesValue = 0;
-		 NSMultipleValuesPlaceholder = "Multiple pages selected. Descriptions should be unique.";
-		 NSNoSelectionPlaceholder = "";
-		 NSNotApplicablePlaceholder = "Not Applicable";
-		 NSNullPlaceholder = "Summary of this page as it will appear in Google listings.";
-		 NSRaisesForNotApplicableKeys = 0;
-		 NSValidatesImmediately = 0;
-		 NSValueTransformer = <null>;
-		 NSValueTransformerName = <null>;
-		 };
-		 */		 
+						withKeyPath:@"selection.comboTitleText"
+							options:self.initialWindowTitleBindingOptions];			
+		}
 	}
 	else if ([selViewController isKindOfClass:[SVURLPreviewViewController class]])
 	{
