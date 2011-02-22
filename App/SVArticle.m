@@ -104,7 +104,7 @@
 			// Turn Markup into a tidied XML document
 			NSError *theError = NULL;
 			
-			NSString *prelude = [KTPage stringFromDocType:KTXHTMLTransitionalDocType local:YES];
+			NSString *prelude = [KTPage stringFromDocType:KSHTMLWriterDocTypeXHTML_1_0_Transitional local:YES];
 
 			NSString *wrapper = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n%@\n<html xmlns=\"http://www.w3.org/1999/xhtml\"><head><title></title></head><body>%@</body></html>", prelude, result];
 			

@@ -51,10 +51,10 @@
     {
         // Is the preview going to be understandable by WebKit? Judge this by making sure there's no problem with close tags
         NSString *html = [SVHTMLValidator HTMLStringWithFragment:(fragment ? fragment : @"")
-                                               docType:KTHTML401DocType];
+                                               docType:KSHTMLWriterDocTypeHTML_4_01_Transitional];
         
         NSError *error = nil;
-        ValidationState validation = [SVHTMLValidator validateHTMLString:html docType:KTHTML401DocType error:&error];
+        ValidationState validation = [SVHTMLValidator validateHTMLString:html docType:KSHTMLWriterDocTypeHTML_4_01_Strict error:&error];
         if (validation >= kValidationStateLocallyValid)
         {
             NSString *description = [error localizedDescription];

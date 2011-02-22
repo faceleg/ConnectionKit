@@ -353,7 +353,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithBool:YES], @"RemoveDuplicateReservedMediaRefs",
 		
 		//								   @"atom.xml", @"AtomFileName",
-		[NSNumber numberWithInt:KTHTML5DocType], @"DocType",
 					@"karelsofwa-20",	@"AmazonAssociatesToken",
 		
 		[NSNumber numberWithBool:NO],			@"PreferRelativeLinks", // obsolete

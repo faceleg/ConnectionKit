@@ -91,7 +91,7 @@
     
 	NSUInteger disabledPreviewObjectsCount = context.disabledPreviewObjectsCount;	// this will help us warn about items we are not validating
     
-	NSString *docTypeName = [SVHTMLContext titleOfDocType:KTHTML5DocType localize:NO];
+	NSString *docTypeName = [SVHTMLContext nameOfDocType:KSHTMLWriterDocTypeHTML_5 localize:NO];
     
     NSString *pageSource = [[context outputStringWriter] string];
     [context release];

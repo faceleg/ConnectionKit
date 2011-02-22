@@ -109,8 +109,7 @@ typedef enum {
 
 
 #pragma mark Doctype
-+ (NSString *)titleOfDocType:(KTDocType)docType localize:(BOOL)shouldLocalizeForDisplay;
-+ (NSString *)stringFromDocType:(KTDocType)docType;
++ (NSString *)nameOfDocType:(NSString *)docType localize:(BOOL)shouldLocalizeForDisplay;
 
 
 #pragma mark CSS

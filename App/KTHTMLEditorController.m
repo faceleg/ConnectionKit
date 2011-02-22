@@ -59,7 +59,6 @@
 @synthesize affectedCharRange = _affectedCharRange;
 @synthesize replacementString = _replacementString;
 @synthesize title = _title;
-@synthesize docType = _docType;
 @synthesize cachedLocalPrelude = _cachedLocalPrelude;
 @synthesize cachedRemotePrelude = _cachedRemotePrelude;
 @synthesize validationState = _validationState;
@@ -101,10 +100,10 @@
 
 - (void)synchronizeUI
 {
-	[[[docTypePopUp menu] itemWithTag:self.docType+1] setState:NSOnState];	// Check initially chosen one.
+	//[[[docTypePopUp menu] itemWithTag:self.docType+1] setState:NSOnState];	// Check initially chosen one.
 	[previewMenuItem setState:(self.preventPreview ? NSOnState : NSOffState)];
 	
-	[docTypePopUp setTitle:[SVHTMLContext titleOfDocType:[self docType] localize:YES]];
+	//[docTypePopUp setTitle:[SVHTMLContext titleOfDocType:[self docType] localize:YES]];
 	[self calculateCachedPreludes];
 	[self autoValidate];
 	
@@ -307,7 +306,7 @@ initial syntax coloring.
 				[thisMenuItem setState:isNewState];
 			}
 		}
-		self.docType = tag -1;	// need to convert from 1-based tags to zero-based docTypes.
+		//self.docType = tag -1;	// need to convert from 1-based tags to zero-based docTypes.
 	}
 	
 }
@@ -344,11 +343,11 @@ initial syntax coloring.
 	{
         if ([[self HTMLSourceObject] shouldValidateAsFragment])
         {
-            html = [SVHTMLValidator HTMLStringWithFragment:html docType:[self docType]];
+            html = [SVHTMLValidator HTMLStringWithFragment:html docType:KSHTMLWriterDocTypeHTML_5];
         }
         
         NSError *error = nil;
-		self.validationState = [SVHTMLValidator validateHTMLString:html docType:[self docType] error:&error];
+		self.validationState = [SVHTMLValidator validateHTMLString:html docType:KSHTMLWriterDocTypeHTML_5 error:&error];
         
         
         // Going by the docs, NSXMLDocument doesn't follow usual error handling rules. Instead it can use err to indicate warnings etc. even when parsing succeeded
@@ -403,14 +402,10 @@ initial syntax coloring.
 	NSString *html = fragment;
     if ([[self HTMLSourceObject] shouldValidateAsFragment])
     {
-        html = [SVRemoteHTMLValidator HTMLStringWithFragment:fragment docType:[self docType]];
+        html = [SVRemoteHTMLValidator HTMLStringWithFragment:fragment docType:KSHTMLWriterDocTypeHTML_5];
     }
 	
-	NSString *docTypeName = nil;
-	if ([self docType])
-	{
-		docTypeName = [SVHTMLContext titleOfDocType:[self docType] localize:NO];
-	}
+	NSString *docTypeName = [SVHTMLContext nameOfDocType:KSHTMLWriterDocTypeHTML_5 localize:NO];
 	BOOL isValid = [[SVValidatorWindowController sharedController]
 					validateSource:html
 					pageValidationType:([[self HTMLSourceObject] shouldValidateAsFragment] ? kSandvoxFragment : kNonSandvoxHTMLPage)
@@ -445,7 +440,7 @@ initial syntax coloring.
         }
         
         // Store the HTML etc.
-		[self HTMLSourceObject].docType = [NSNumber numberWithInt:self.docType];
+		//[self HTMLSourceObject].docType = [NSNumber numberWithInt:self.docType];
 		[self HTMLSourceObject].HTMLString = [[textView textStorage] string];
 		[self HTMLSourceObject].lastValidMarkupDigest = self.hashOfLastValidation;
 		[self HTMLSourceObject].shouldPreviewWhenEditing = [NSNumber numberWithBool:!self.preventPreview];
@@ -800,7 +795,7 @@ initial syntax coloring.
 	// load additional properties from the source object
 	
 	self.sourceCodeTemp = graphic.HTMLString;
-	self.docType = [graphic.docType intValue];
+	//self.docType = [graphic.docType intValue];
 	self.preventPreview = ![graphic.shouldPreviewWhenEditing boolValue];
 	self.hashOfLastValidation = graphic.lastValidMarkupDigest;
 	

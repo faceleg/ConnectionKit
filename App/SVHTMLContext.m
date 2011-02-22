@@ -279,57 +279,36 @@
 
 #pragma mark Doctype
 
-+ (NSString *)titleOfDocType:(KTDocType)docType  localize:(BOOL)shouldLocalizeForDisplay;
++ (NSString *)nameOfDocType:(NSString *)docType localize:(BOOL)shouldLocalizeForDisplay;
 {
 	NSString *result = nil;
 	NSString *localizedResult = nil;
-	switch (docType)
-	{
-		case KTHTML401DocType:
-			result = @"HTML 4.01 Transitional";
-			localizedResult = NSLocalizedString(@"HTML 4.01", @"Description of style of HTML - note that we do not say Transitional");
-			break;
-		case KTXHTMLTransitionalDocType:
-			result = @"XHTML 1.0 Transitional";
-			localizedResult = NSLocalizedString(@"XHTML 1.0 Transitional", @"Description of style of HTML");
-			break;
-		case KTXHTMLStrictDocType:
-			result = @"XHTML 1.0 Strict";
-			localizedResult = NSLocalizedString(@"XHTML 1.0 Strict", @"Description of style of HTML");
-			break;
-		case KTHTML5DocType:
-			result = @"HTML5";
-			localizedResult = NSLocalizedString(@"HTML5", @"Description of style of HTML");
-			break;
-		default:
-			break;
-	}
-	return shouldLocalizeForDisplay ? localizedResult : result;
-}
-
-+ (NSString *)stringFromDocType:(KTDocType)docType;
-{
-    NSString *result = nil;
 	
-    switch (docType)
-    {
-        case KTHTML401DocType:
-            result = @"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">";
-            break;
-        case KTXHTMLTransitionalDocType:
-            result = @"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";
-            break;
-        case KTXHTMLStrictDocType:
-            result = @"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">";
-            break;
-        case KTHTML5DocType:
-            result = [NSString stringWithFormat:@"<!DOCTYPE html>"];
-            break;
-        default:
-            break;
+    if ([docType isEqualToString:KSHTMLWriterDocTypeHTML_4_01_Strict] ||
+        [docType isEqualToString:KSHTMLWriterDocTypeHTML_4_01_Transitional] ||
+        [docType isEqualToString:KSHTMLWriterDocTypeHTML_4_01_Frameset])
+	{
+        result = @"HTML 4.01 Transitional";
+        localizedResult = NSLocalizedString(@"HTML 4.01", @"Description of style of HTML - note that we do not say Transitional");
     }
-    
-    return result;
+    else if ([docType isEqualToString:KSHTMLWriterDocTypeXHTML_1_0_Transitional] ||
+             [docType isEqualToString:KSHTMLWriterDocTypeXHTML_1_0_Frameset])
+    {
+        result = @"XHTML 1.0 Transitional";
+        localizedResult = NSLocalizedString(@"XHTML 1.0 Transitional", @"Description of style of HTML");
+    }
+    else if	([docType isEqualToString:KSHTMLWriterDocTypeXHTML_1_0_Strict])
+    {
+        result = @"XHTML 1.0 Strict";
+        localizedResult = NSLocalizedString(@"XHTML 1.0 Strict", @"Description of style of HTML");
+    }
+    else if ([docType isEqualToString:KSHTMLWriterDocTypeHTML_5])
+    {
+        result = @"HTML5";
+        localizedResult = NSLocalizedString(@"HTML5", @"Description of style of HTML");
+	}
+        
+	return shouldLocalizeForDisplay ? localizedResult : result;
 }
 
 #pragma mark Purpose

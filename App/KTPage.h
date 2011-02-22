@@ -227,7 +227,7 @@ typedef enum {
 
 - (void)write:(SVHTMLContext *)context codeInjectionSection:(NSString *)aKey masterFirst:(BOOL)aMasterFirst;
 
-+ (NSString *)stringFromDocType:(KTDocType)docType local:(BOOL)isLocal;		// UTILITY
++ (NSString *)stringFromDocType:(NSString *)docType local:(BOOL)isLocal;		// UTILITY
 
 - (NSString *)commentsTemplate;	// instance method too for key paths to work in tiger
 

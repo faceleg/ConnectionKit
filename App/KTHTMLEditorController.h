@@ -69,7 +69,6 @@
 
 		
 	// Bound Properties
-	KTDocType						_docType;
 	NSString						*_cachedLocalPrelude;
 	NSString						*_cachedRemotePrelude;
 	ValidationState					_validationState;
@@ -97,7 +96,6 @@
 @property (nonatomic, copy) NSString *replacementString;
 @property (nonatomic, copy) NSString *sourceCodeTemp;
 @property (nonatomic, copy) NSString *title;
-@property (nonatomic) KTDocType docType;
 @property (nonatomic, copy) NSString *cachedLocalPrelude;
 @property (nonatomic, copy) NSString *cachedRemotePrelude;
 @property (nonatomic) ValidationState validationState;

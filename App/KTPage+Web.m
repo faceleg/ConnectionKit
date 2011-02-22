@@ -445,38 +445,47 @@
 #pragma mark DTD
 
 // For code review:  Where can this utility class go?
-+ (NSString *)stringFromDocType:(KTDocType)docType local:(BOOL)isLocal;
++ (NSString *)stringFromDocType:(NSString *)docType local:(BOOL)isLocal;		// UTILITY
 {
-	NSString *result = nil;
+    OBPRECONDITION(docType);
+    
+	NSMutableString *result = [NSMutableString string];
+    KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:result];
+    
 	if (isLocal)
 	{
 		NSURL *dtd = nil;
-		switch (docType)
-		{
-			case KTHTML401DocType:
-				dtd = nil;	// don't load a local DTD for HTML 4.01
-				result = [NSString stringWithFormat:@"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"%@\">", [dtd absoluteString]];
-				break;
-			case KTXHTMLTransitionalDocType:
-				dtd = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"xhtml1-transitional" ofType:@"dtd" inDirectory:@"DTD"]];
-				result = [NSString stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"%@\">", [dtd absoluteString]];
-				break;
-			case KTXHTMLStrictDocType:
-				dtd = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"xhtml1-strict" ofType:@"dtd" inDirectory:@"DTD"]];
-				result = [NSString stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"%@\">", [dtd absoluteString]];
-				break;
-			case KTHTML5DocType:
-				result = [NSString stringWithFormat:@"<!DOCTYPE html>"];	// Do we do something special to deal with DTDs?
-				break;
-			default:
-				break;
+        
+		if ([docType isEqualToString:KSHTMLWriterDocTypeHTML_4_01_Strict] ||
+            [docType isEqualToString:KSHTMLWriterDocTypeHTML_4_01_Transitional] ||
+            [docType isEqualToString:KSHTMLWriterDocTypeHTML_4_01_Frameset])
+        {
+    		dtd = nil;	// don't load a local DTD for HTML 4.01
+            result = [NSString stringWithFormat:@"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"%@\">", [dtd absoluteString]];
+        }
+        else if ([docType isEqualToString:KSHTMLWriterDocTypeXHTML_1_0_Transitional] ||
+                 [docType isEqualToString:KSHTMLWriterDocTypeXHTML_1_0_Frameset])
+        {
+            dtd = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"xhtml1-transitional" ofType:@"dtd" inDirectory:@"DTD"]];
+            result = [NSString stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"%@\">", [dtd absoluteString]];
+        }
+        else if	([docType isEqualToString:KSHTMLWriterDocTypeXHTML_1_0_Strict])
+        {
+            dtd = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"xhtml1-strict" ofType:@"dtd" inDirectory:@"DTD"]];
+            result = [NSString stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"%@\">", [dtd absoluteString]];
+        }
+        else if ([docType isEqualToString:KSHTMLWriterDocTypeHTML_5])
+        {
+            result = [NSString stringWithFormat:@"<!DOCTYPE html>"];	// Do we do something special to deal with DTDs?
 		}
 		
 	}
 	else
 	{
-		result = [SVHTMLContext stringFromDocType:docType];
+		[writer startDocumentWithDocType:docType encoding:NSUTF8StringEncoding];
 	}
+    
+    [writer release];
 	return result;
 }
 
@@ -487,7 +496,7 @@
         treeLevel:(int)aTreeLevel
 {
 	KTPage *currentParserPage = [context page];
-
+    
 	if (0 == aTreeLevel)
 	{
 		[context startElement:@"ul"];
@@ -496,10 +505,10 @@
 	{
 		[context startElement:@"ul" writeInline:YES];		// for Webkit bug, don't have white space in here 
 	}
-
+    
 	int i=1;	// 1-based iteration
 	int last = [anArray count];
-
+    
 	for (SVSiteMenuItem *item in anArray)
 	{
 		SVSiteItem *siteItem = item.siteItem;

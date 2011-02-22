@@ -44,15 +44,6 @@ typedef enum {
 	KTTimestampModificationDate
 } KTTimestampType;
 
-// What kind of HTML level
-typedef enum {
-	KTHTML401DocType = 0,
-	KTXHTMLTransitionalDocType,
-	KTXHTMLStrictDocType,
-	KTXHTML11DocType,	// we never really used this
-	KTHTML5DocType
-} KTDocType;
-
 // Document
 extern NSString *kSVDocumentTypeName;  // 2.0 documents
 extern NSString *kSVDocumentTypeName_1_5;
