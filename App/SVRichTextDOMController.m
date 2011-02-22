@@ -336,7 +336,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Generate new DOM node to match what model would normally generate
-    [controller update];
+    [controller performSelector:@selector(update)];
     
     
     // Write the replacement
