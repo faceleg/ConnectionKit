@@ -37,9 +37,9 @@
 #import "RSSBadgePlugIn.h"
 
 
-// LocalizedStringInThisBundle(@"Please use the Inspector to connect this object to a suitable collection in your site.", "RSSBadge")
-// LocalizedStringInThisBundle(@"To subscribe to this feed, drag or copy/paste this link to an RSS reader application.", @"RSS Badge")
-// LocalizedStringInThisBundle(@"The chosen collection has no RSS feed. Please use the Inspector to set it to generate an RSS feed.", @"RSS Badge")
+// SVLocalizedString(@"Please use the Inspector to connect this object to a suitable collection in your site.", "RSSBadge")
+// SVLocalizedString(@"To subscribe to this feed, drag or copy/paste this link to an RSS reader application.", @"RSS Badge")
+// SVLocalizedString(@"The chosen collection has no RSS feed. Please use the Inspector to set it to generate an RSS feed.", @"RSS Badge")
 
 
 @implementation RSSBadgePlugIn
@@ -80,11 +80,10 @@
         // Make the string we want get generated, but we are forcing the string to be in target language.
         //
         NSBundle *theBundle = [NSBundle bundleForClass:[self class]];
-        NSString *language = [page language];   OBASSERT(language);
+        NSString *language = [page language];   NSParameterAssert(language);
         NSString *theString = [theBundle localizedStringForString:@"Subscribe to RSS feed" 
                                                          language:language
-                                                         fallback:LocalizedStringInThisBundle(@"Subscribe to RSS feed", 
-                                                                                              @"Prompt to subscribe to the given collection via RSS")];
+                                                         fallback:SVLocalizedString(@"Subscribe to RSS feed", @"Prompt to subscribe to the given collection via RSS")];
         self.label = theString;
     }
     
