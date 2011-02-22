@@ -101,20 +101,19 @@
 
 - (void)writePlaceholderHTML:(id <SVPlugInContext>)context;
 {
-    [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"svx-placeholder" forKey:@"class"]];
-    [context startElement:@"p"];
-    
+    NSString *text = nil;
     if ( self.indexedCollection )
     {
-        [context writeCharacters:NSLocalizedString(@"To see the Index, please add indexable pages to the collection.","add pages to collection")];
+        text = NSLocalizedString(@"To see the Index, please add indexable pages to the collection.",
+                                        "add pages to collection");
     }
     else
     {
-        [context writeCharacters:NSLocalizedString(@"Use the Inspector to connect this index to a collection.","set index collection")];
+        text = NSLocalizedString(@"Use the Inspector to connect this index to a collection.",
+                                        "set index collection");
     }
     
-    [context endElement];
-    [context endElement];
+    [context writePlaceholderWithText:text options:0];
 }
 
 - (void)writeHTML:(id <SVPlugInContext>)context
