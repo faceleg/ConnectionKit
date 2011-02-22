@@ -37,8 +37,6 @@
 #import "LinkListArrayController.h"
 #import "LinkListPlugIn.h"
 
-#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
-
 
 @implementation LinkListArrayController
 
@@ -72,7 +70,7 @@
     
     if ( !result )
     {
-        NSString *theTitle = LocalizedStringInThisBundle(@"Name",@"Initial title of an item in a list of web links");
+        NSString *theTitle = SVLocalizedString(@"Name",@"Initial title of an item in a list of web links");
 
         NSURL *theURL = [location URL];
         if ( theURL )

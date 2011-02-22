@@ -37,7 +37,6 @@
 #import "LinkListPlugIn.h"
 #import <SVWebLocation.h>
 
-#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 
 @implementation LinkListPlugIn
 
@@ -109,7 +108,8 @@
 - (void)writePlaceholder
 {
     id <SVPlugInContext> context = [self currentContext];
-    [context writePlaceholderWithText:LocalizedStringInThisBundle(@"Add links via Inspector", "String_On_Page_Template")];
+    [context writePlaceholderWithText:SVLocalizedString(@"Add links via Inspector", "String_On_Page_Template")
+                              options:0];
 }
 
 
