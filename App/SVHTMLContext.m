@@ -363,14 +363,21 @@
 {
     if (![self isForPublishing])
     {
-        KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
-        
-        [writer writeLinkToStylesheet:[self relativeStringFromURL:cssURL]
-                              title:nil
-                              media:nil];
-        
-        [writer writeString:@"\n"];
-        [writer release];
+        if (_headerMarkupIndex != NSNotFound)
+        {
+            KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
+            
+            [writer writeLinkToStylesheet:[self relativeStringFromURL:cssURL]
+                                  title:nil
+                                  media:nil];
+            
+            [writer writeString:@"\n"];
+            [writer release];
+        }
+        else
+        {
+            [self writeLinkToStylesheet:[self relativeStringFromURL:cssURL] title:nil media:nil];
+        }
     }
 }
 
@@ -1070,6 +1077,7 @@
     // Finish buffering extra header
     [[self outputStringWriter] insertString:[self extraHeaderMarkup]
                                     atIndex:_headerMarkupIndex];
+    _headerMarkupIndex = NSNotFound; // so nothign gets mistakenly written afterwards
     
     // Write the end body markup
     [self writeString:[self endBodyMarkup]];
