@@ -26,9 +26,6 @@
 //key       null	Optionally use a Google API key.
 
 
-#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
-
-
 @implementation VictualPlugIn
 
 
@@ -148,8 +145,8 @@
         {
             // write offline preview
             // impementation shamelessly stolen from FeedElement
-            NSString *exampleText = LocalizedStringInThisBundle(@"example no.", "String_On_Page_Template - followed by a number");
-            NSString *itemText = LocalizedStringInThisBundle(@"item summary", "String_On_Page_Template - example of a summary of an RSS item");
+            NSString *exampleText = SVLocalizedString(@"example no.", "String_On_Page_Template - followed by a number");
+            NSString *itemText = SVLocalizedString(@"item summary", "String_On_Page_Template - example of a summary of an RSS item");
             
             NSInteger writeMax = (self.limit > 0) ? self.limit : 4;
             NSString *host = (nil != [self.feedURL host]) ? [self.feedURL host] : @"example.com";
@@ -175,7 +172,8 @@
     }
     else 
     {
-        [context writePlaceholderWithText:LocalizedStringInThisBundle(@"Enter an RSS Feed URL in the Inspector.", "no URL placeholder")];
+        [context writePlaceholderWithText:SVLocalizedString(@"Enter an RSS Feed URL in the Inspector.", "no URL placeholder")
+                                  options:0];
     }
 }
 
