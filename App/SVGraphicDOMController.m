@@ -501,7 +501,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     // Is it allowed?
     if ([graphic isPagelet])
     {
-        if ([adaptor allowsPagelets])
+        if ([adaptor importsGraphics] && [(id)adaptor allowsPagelets])
         {
             if ([[adaptor XMLWriter] openElementsCount] > 0)
             {
