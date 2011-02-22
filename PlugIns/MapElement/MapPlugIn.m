@@ -33,8 +33,6 @@
 //tipsuffix	' (click for more)'     When enabled the tooltip text will be the same as the title. This setting adds a definable suffix.
 
 
-#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
-
 @implementation MapPlugIn
 
 #pragma mark SVPlugin
@@ -129,12 +127,14 @@
         }
         else 
         {
-            [context writePlaceholderWithText:LocalizedStringInThisBundle(@"Maps only available when Live Preview is On.", "")];
+            [context writePlaceholderWithText:SVLocalizedString(@"Maps only available when Live Preview is On.", "")
+                                      options:0];
         }
     }
     else 
     {
-        [context writePlaceholderWithText:LocalizedStringInThisBundle(@"Enter a street address in the Inspector.", "")];
+        [context writePlaceholderWithText:SVLocalizedString(@"Enter a street address in the Inspector.", "")
+                                  options:0];
     }
 }
 
