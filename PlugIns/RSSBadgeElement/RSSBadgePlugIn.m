@@ -37,9 +37,7 @@
 #import "RSSBadgePlugIn.h"
 
 
-// SVLocalizedString(@"Please use the Inspector to connect this object to a suitable collection in your site.", "RSSBadge")
-// SVLocalizedString(@"To subscribe to this feed, drag or copy/paste this link to an RSS reader application.", @"RSS Badge")
-// SVLocalizedString(@"The chosen collection has no RSS feed. Please use the Inspector to set it to generate an RSS feed.", @"RSS Badge")
+// SVLocalizedString(@"To subscribe to this feed, drag or copy/paste this link to an RSS reader application.", "RSS Badge")
 
 
 @implementation RSSBadgePlugIn
@@ -126,6 +124,20 @@
 - (void)writePlaceholderHTML:(id <SVPlugInContext>)context
 {
     ; // we'll write our own placeholder text in the Template
+}
+
+- (void)writeNoFeedPlaceholder
+{
+    id <SVPlugInContext> context = [self currentContext];
+    NSString *text = SVLocalizedString(@"The chosen collection has no RSS feed. Please use the Inspector to set it to generate an RSS feed.", "RSS Badge");
+    [context writePlaceholderWithText:text options:0];
+}
+
+- (void)writeNoCollectionPlaceholder
+{
+    id <SVPlugInContext> context = [self currentContext];
+    NSString *text = SVLocalizedString(@"Please use the Inspector to connect this object to a suitable collection in your site.", "RSSBadge");
+    [context writePlaceholderWithText:text options:0];
 }
 
 - (BOOL)useLargeIconLayout
