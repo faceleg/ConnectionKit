@@ -37,9 +37,6 @@
 #import "TweetButtonPlugIn.h"
 
 
-#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
-
-
 @implementation TweetButtonPlugIn
 
 /*
@@ -169,8 +166,8 @@
     }
     else 
     {
-        NSString *noLiveFeeds = LocalizedStringInThisBundle(@"Tweet Button visible only when loading data from the Internet.", "");
-        [context writePlaceholderWithText:noLiveFeeds];
+        NSString *noLiveFeeds = SVLocalizedString(@"Tweet Button visible only when loading data from the Internet.", "");
+        [context writePlaceholderWithText:noLiveFeeds options:0];
     }
     
     // add dependencies
