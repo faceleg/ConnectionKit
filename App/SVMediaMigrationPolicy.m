@@ -12,6 +12,8 @@
 #import "SVMediaRecord.h"
 #import "SVMigrationManager.h"
 
+#import "NSManagedObjectContext+KTExtensions.h"
+
 #import "KSExtensibleManagedObject.h"
 
 
