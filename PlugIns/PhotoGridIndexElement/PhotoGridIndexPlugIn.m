@@ -37,9 +37,6 @@
 #import "PhotoGridIndexPlugIn.h"
 
 
-#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
-
-
 @implementation PhotoGridIndexPlugIn
 
 - (void)awakeFromNew
@@ -74,7 +71,7 @@
         [context startElement:@"h3"];
         [context startAnchorElementWithPage:[context page]];
         [context startElement:@"span" attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
-        [context writeCharacters:LocalizedStringInThisBundle(@"Example Photo", "placeholder image name")];
+        [context writeCharacters:SVLocalizedString(@"Example Photo", "placeholder image name")];
         [context endElement]; // </span>
         [context endElement]; // </a>
         [context endElement]; // </h3>
