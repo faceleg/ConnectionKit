@@ -36,10 +36,9 @@
 
 #import "DeliciousPlugIn.h"
 
-#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
-// LocalizedStringInThisBundle(@"My Delicious Links", "String_On_Page_Template")
-// LocalizedStringInThisBundle(@"delicious.com example no.", "String_On_Page_Template -- followed by a number")
-// LocalizedStringInThisBundle(@"Bookmarks tagged ", "String_On_Page_Template")
+// SVLocalizedString(@"My Delicious Links", "String_On_Page_Template")
+// SVLocalizedString(@"delicious.com example no.", "String_On_Page_Template -- followed by a number")
+// SVLocalizedString(@"Bookmarks tagged ", "String_On_Page_Template")
 
 
 @implementation DeliciousPlugIn
@@ -106,7 +105,8 @@
 - (void)writePlaceholder
 {
     id <SVPlugInContext> context = [self currentContext];
-    [context writePlaceholderWithText:LocalizedStringInThisBundle(@"Enter your Delicious username in the Inspector.", "String_On_Page_Template")];
+    [context writePlaceholderWithText:SVLocalizedString(@"Enter your Delicious username in the Inspector.", "String_On_Page_Template")
+                              options:0];
 }
 
 #pragma mark Properties
