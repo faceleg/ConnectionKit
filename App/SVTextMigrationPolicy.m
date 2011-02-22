@@ -388,6 +388,8 @@
 
 @implementation SVTitleMigrationPolicy
 
+- (NSString *)placeholderTitleForSourceInstance:(NSManagedObject *)sInstance; { return @"Untitled"; }
+
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager error:(NSError **)error;
 {
     NSManagedObject *dInstance = [NSEntityDescription insertNewObjectForEntityForName:[mapping destinationEntityName]
@@ -405,7 +407,7 @@
         SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
         html = [[factory name] stringByEscapingHTMLEntities];
         
-        if (!html) html = @"Untitled";
+        if (!html) html = [self placeholderTitleForSourceInstance:sInstance];
     }
     
     [dInstance setValue:NSBOOL(hidden) forKey:@"hidden"];
@@ -414,6 +416,31 @@
     [manager associateSourceInstance:sInstance withDestinationInstance:dInstance forEntityMapping:mapping];
     
     return YES;
+}
+
+@end
+
+
+@implementation SVPageTitleMigrationPolicy
+
+- (NSString *)placeholderTitleForSourceInstance:(NSManagedObject *)sInstance;
+{
+    // #109088
+    NSString *result = [sInstance valueForKey:@"menuTitle"];
+    if (![result length])
+    {
+        if (![sInstance valueForKey:@"parent"])
+        {
+            result = [sInstance valueForKeyPath:@"master.siteTitleHTML"];
+        }
+        
+        if (![result length])
+        {
+            result = [super placeholderTitleForSourceInstance:sInstance];
+        }
+    }
+    
+    return result;
 }
 
 @end

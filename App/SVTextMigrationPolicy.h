@@ -22,5 +22,10 @@
 @end
 
 
+@interface SVPageTitleMigrationPolicy : SVTitleMigrationPolicy
+@end
+
+
+
 @interface SVFooterMigrationPolicy : NSEntityMigrationPolicy
 @end
