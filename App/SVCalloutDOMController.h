@@ -8,8 +8,9 @@
 
 #import "SVDOMController.h"
 #import "SVGraphicContainerDOMController.h"
-
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
+
+#import "SVCallout.h"
 
 
 @interface SVCalloutDOMController : SVDOMController <SVGraphicContainerDOMController, KSXMLWriterDOMAdaptorDelegate>

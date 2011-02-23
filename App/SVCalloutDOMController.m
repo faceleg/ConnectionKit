@@ -25,6 +25,17 @@
 
 #pragma mark Init & Dealloc
 
+- (id)init;
+{
+    [super init];
+    
+    SVCallout *callout = [[SVCallout alloc] init];
+    [self setRepresentedObject:callout];
+    [callout release];
+    
+    return self;
+}
+
 - (void)dealloc
 {
     [_calloutContent release];

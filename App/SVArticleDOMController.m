@@ -770,6 +770,7 @@
     OBPRECONDITION(graphicController);
     
     SVGraphic *graphic = [graphicController representedObject];
+    if ([graphic isKindOfClass:[SVCallout class]]) graphic = nil;
     
    
     // Restrict position to bounds of text

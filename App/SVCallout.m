@@ -46,4 +46,6 @@
     [SVGraphic write:context pagelet:graphic];
 }
 
+- (BOOL)shouldPublishEditingElementID { return NO; }
+
 @end
