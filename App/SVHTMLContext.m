@@ -8,6 +8,7 @@
 
 #import "SVWebEditorHTMLContext.h"
 
+#import "SVCallout.h"
 #import "KTDesign.h"
 #import "SVEnclosure.h"
 #import "KTHostProperties.h"
@@ -561,24 +562,9 @@
 
 - (void)writeCalloutWithGraphics:(NSArray *)pagelets;
 {
-    // Write the opening tags
-    [self startElement:@"div"
-                idName:[[self currentDOMController] elementIdName]
-             className:@"callout-container"];
-    
-    [self startElement:@"div" className:@"callout"];
-    
-    [self startElement:@"div" className:@"callout-content"];
-    
-    
-    
-    [self writeGraphics:pagelets];    
-    
-    
-    
-    [self endElement]; // callout-content
-    [self endElement]; // callout
-    [self endElement]; // callout-container
+    SVCallout *callout = [[SVCallout alloc] init];
+    [callout write:self pagelets:pagelets];
+    [callout release];
 }
 
 #pragma mark Placeholder
