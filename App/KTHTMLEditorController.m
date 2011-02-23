@@ -332,17 +332,18 @@ initial syntax coloring.
 
 - (void) autoValidate;	// check validity while the user is typing
 {
-	if (![self isHTML]) return;
+	if (![self isHTML])
+	{
+		self.validationState = kValidationStateDisabled;
+		return;
+	}
+
 	// Use NSXMLDocument -- not useful for errors, but it's quick.
 	NSMutableAttributedString*  textStore = [textView textStorage];
 	NSString *html = [textStore string];
 	NSData *currentHash = [self generateHashFromFragment:html];
 	
-	if (!self.shouldPreviewWhenEditing)
-	{
-		self.validationState = kValidationStateDisabled;
-	}
-	else if (!currentHash)
+	if (!currentHash)
 	{
 		self.validationState = kValidationStateUnknown;
 	}
