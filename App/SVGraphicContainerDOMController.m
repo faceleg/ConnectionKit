@@ -11,7 +11,7 @@
 
 @implementation SVGraphicDOMController (SVGraphicContainerDOMController)
 
-- (id <SVGraphicContainerDOMController>)graphicContainerDOMController;
+- (WEKWebEditorItem <SVGraphicContainerDOMController> *)graphicContainerDOMController;
 {
     id result = [self parentWebEditorItem];
     while (result && ![result conformsToProtocol:@protocol(SVGraphicContainerDOMController)])

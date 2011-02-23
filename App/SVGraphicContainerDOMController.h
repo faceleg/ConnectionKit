@@ -24,5 +24,5 @@
 
 
 @interface SVGraphicDOMController (SVGraphicContainerDOMController)
-- (id <SVGraphicContainerDOMController>)graphicContainerDOMController;
+- (WEKWebEditorItem <SVGraphicContainerDOMController> *)graphicContainerDOMController;
 @end
