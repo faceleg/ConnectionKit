@@ -11,28 +11,6 @@
 
 @implementation TweetButtonInspector
 
-- (NSString *)tweetPlaceholder
-{
-    return [self.inspectedPagesController valueForKeyPath:@"selection.title"];
-}
-
-- (void)bindTweetTextField
-{
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [self tweetPlaceholder], NSNullPlaceholderBindingOption,
-                             [NSNumber numberWithBool:YES], NSConditionallySetsEditableBindingOption,
-                             nil];
-    [self.tweetTextField bind:@"value"
-                     toObject:self
-                  withKeyPath:@"inspectedObjectsController.selection.tweetText"
-                      options:options];
-}
-
-- (void)unbindTweetTextField
-{
-    [self.tweetTextField unbind:@"value"];
-}
-
 - (void)awakeFromNib
 {
     [self.inspectedPagesController addObserver:self 
@@ -45,17 +23,25 @@
 {
     if ( [keyPath isEqualToString:@"selection.title" ] )
     {
-        [self unbindTweetTextField];
-        [self bindTweetTextField];
+        NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 [self.inspectedPagesController valueForKeyPath:@"selection.title"], NSNullPlaceholderBindingOption,
+                                 [NSNumber numberWithBool:YES], NSConditionallySetsEditableBindingOption,
+                                 nil];
+        [self.tweetTextField bind:@"value"
+                         toObject:self
+                      withKeyPath:@"inspectedObjectsController.selection.tweetText"
+                          options:options];
     }
 }
 
 - (void)dealloc
 {
-    [self unbindTweetTextField];
     [self.inspectedPagesController removeObserver:self forKeyPath:@"selection.title"];
     self.inspectedPagesController = nil;
+    
+    [self.tweetTextField unbind:@"value"];
     self.tweetTextField = nil;
+    
     [super dealloc];
 }
 
