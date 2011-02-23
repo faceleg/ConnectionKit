@@ -237,4 +237,15 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
+- (BOOL) validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
+{
+    // Disable all controls while migrating
+    BOOL result = ([[self fileType] isEqualToString:kSVDocumentTypeName_1_5] ?
+                   NO :
+                   [super validateUserInterfaceItem:anItem]);
+    
+    return result;
+}
+
+
 @end
