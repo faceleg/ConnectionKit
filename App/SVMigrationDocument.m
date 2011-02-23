@@ -223,4 +223,18 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     [[progressIndicator ks_proxyOnThread:nil waitUntilDone:NO] setIndeterminate:NO];
 }
 
++ (BOOL)isNativeType:(NSString *)aType
+{
+    // Standard implementation seems to ignore class inheritance, and look purely at the plist. So also ask KTDocument
+    BOOL result = [super isNativeType:aType] || [[self superclass] isNativeType:aType];
+    return result;
+}
+
++ (NSArray *)writableTypes
+{
+    // Standard implementation seems to ignore class inheritance, and look purely at the plist. So I override here
+    NSArray *result = [KTDocument writableTypes];
+    return result;
+}
+
 @end

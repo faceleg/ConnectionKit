@@ -2,12 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ClickToFlashOptOut</key>
-	<false/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Sandvox 1.5 Document</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<true/>
+			<key>NSDocumentClass</key>
+			<string>SVMigrationDocument</string>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>SQLite</string>
+		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
@@ -28,7 +38,7 @@
 			<key>NSDocumentClass</key>
 			<string>KTDocument</string>
 			<key>NSPersistentStoreTypeKey</key>
-			<string>SQLite</string>
+			<string>Binary</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
@@ -186,6 +196,10 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
+	<key>ClickToFlashOptOut</key>
+	<false/>
+	<key>KSFeedType</key>
+	<string>${PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE}</string>
 	<key>KTConnectionVersion</key>
 	<string>${CK_REVISION}</string>
 	<key>KTiMediaVersion</key>
@@ -203,15 +217,13 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>KTApplication</string>
+	<key>SUEnableAutomaticChecks</key>
+	<false/>
 	<key>SUFeedURL</key>
 	<string>http://launch.karelia.com/appcast.php</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
-	<key>KSFeedType</key>
-	<string>${PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE}</string>
 	<key>SUSendProfileInfo</key>
-	<false/>
-	<key>SUEnableAutomaticChecks</key>
 	<false/>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
@@ -465,10 +477,6 @@
 				<string>audio/mov</string>
 			</dict>
 		</dict>
-		
-		
-		
-		
 	</array>
 </dict>
 </plist>
