@@ -277,8 +277,13 @@
 {
 	NSURL *resultURL = nil;
 	if ([self isRoot])
-    {
-        resultURL = [self _baseExampleURL];
+    {		
+		NSURL *rootBase = [[[self site] hostProperties] siteURL];
+		if (!rootBase)
+		{
+			return NSLocalizedString(@"«unspecified»", @"placeholder for site not yet set up for publishing");
+		}
+		resultURL = [self _baseExampleURL];
     }
     else
     {

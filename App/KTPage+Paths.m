@@ -312,21 +312,6 @@
 	return (nil != [self URL]);
 }
 
-- (NSString *)baseExampleURLString
-{
-	NSURL *resultURL = nil;
-	if ([self isRoot])
-    {
-        resultURL = [self _baseExampleURL];
-    }
-    else
-    {
-        resultURL = [[self parentPage] _baseExampleURL];
-    }
-
-    NSString *result = [resultURL absoluteString];
-	return result;
-}
 + (NSSet *)keyPathsForValuesAffectingBaseExampleURLString
 {
     return [NSSet setWithObject:@"URL"];
