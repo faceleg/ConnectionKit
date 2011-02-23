@@ -138,25 +138,6 @@
 
 #pragma mark Path Extension
 
-/*	If set, returns the custom file extension. Otherwise, takes the value from the defaults
- */
-- (NSString *)pathExtension
-{
-	NSString *result = [self customPathExtension];
-	
-	if (!result) result = [self defaultPathExtension];
-	
-    OBPOSTCONDITION(result);
-    return result;
-}
-
-/*	Implemented just to stop anyone accidentally calling it.
- */
-- (void)setPathExtension:(NSString *)extension
-{
-	[NSException raise:NSInternalInconsistencyException
-			    format:@"-%@ is not supported. Please use -setCustomFileExtension instead.", NSStringFromSelector(_cmd)];
-}
 
 + (NSSet *)keyPathsForValuesAffectingPathExtension
 {
@@ -196,6 +177,36 @@
 	return result;
 }
 
+/*	If set, returns the custom file extension. Otherwise, takes the value from the defaults
+ */
+- (NSString *)pathExtension
+{
+	NSString *result = [self customPathExtension];
+	
+	if (!result) result = [self defaultPathExtension];
+	
+    OBPOSTCONDITION(result);
+    return result;
+}
+- (void) setPathExtension:(NSString *)extension
+{
+	[self setCustomPathExtension:extension];
+}
+
+
+- (NSString *)indexAndPathExtension
+{
+	NSString *result = [self customIndexAndPathExtension];
+	if (!result)
+	{
+		result = [self defaultIndexAndPathExtension];
+	}
+	return result;
+}
+- (void) setIndexAndPathExtension:(NSString *)newIndex
+{
+	[self setCustomIndexAndPathExtension:newIndex];
+}
 
 
 

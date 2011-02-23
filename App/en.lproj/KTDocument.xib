@@ -1033,6 +1033,8 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>title</string>
 					<string>comboTitleText</string>
+					<string>pathExtension</string>
+					<string>indexAndPathExtension</string>
 				</object>
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy">
@@ -1860,27 +1862,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedObject: selection.customPathExtension</string>
-						<reference key="source" ref="408006662"/>
-						<reference key="destination" ref="660072411"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="408006662"/>
-							<reference key="NSDestination" ref="660072411"/>
-							<string key="NSLabel">selectedObject: selection.customPathExtension</string>
-							<string key="NSBinding">selectedObject</string>
-							<string key="NSKeyPath">selection.customPathExtension</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSRaisesForNotApplicableKeys</string>
-								<boolean value="NO" key="NS.object.0"/>
-							</object>
-							<reference key="NSPreviousConnector" ref="601826230"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">2249</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: selection.canPreview</string>
 						<reference key="source" ref="597655839"/>
 						<reference key="destination" ref="660072411"/>
@@ -2070,27 +2051,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedObject: selection.customIndexAndPathExtension</string>
-						<reference key="source" ref="953316196"/>
-						<reference key="destination" ref="660072411"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="953316196"/>
-							<reference key="NSDestination" ref="660072411"/>
-							<string key="NSLabel">selectedObject: selection.customIndexAndPathExtension</string>
-							<string key="NSBinding">selectedObject</string>
-							<string key="NSKeyPath">selection.customIndexAndPathExtension</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSRaisesForNotApplicableKeys</string>
-								<boolean value="NO" key="NS.object.0"/>
-							</object>
-							<reference key="NSPreviousConnector" ref="71718846"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">2264</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: selection.externalLinkRepresentation.URL</string>
 						<reference key="source" ref="899980468"/>
 						<reference key="destination" ref="660072411"/>
@@ -2243,6 +2203,48 @@
 						</object>
 					</object>
 					<int key="connectionID">2286</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedObject: selection.pathExtension</string>
+						<reference key="source" ref="408006662"/>
+						<reference key="destination" ref="660072411"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="408006662"/>
+							<reference key="NSDestination" ref="660072411"/>
+							<string key="NSLabel">selectedObject: selection.pathExtension</string>
+							<string key="NSBinding">selectedObject</string>
+							<string key="NSKeyPath">selection.pathExtension</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSRaisesForNotApplicableKeys</string>
+								<boolean value="NO" key="NS.object.0"/>
+							</object>
+							<reference key="NSPreviousConnector" ref="601826230"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2287</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedObject: selection.indexAndPathExtension</string>
+						<reference key="source" ref="953316196"/>
+						<reference key="destination" ref="660072411"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="953316196"/>
+							<reference key="NSDestination" ref="660072411"/>
+							<string key="NSLabel">selectedObject: selection.indexAndPathExtension</string>
+							<string key="NSBinding">selectedObject</string>
+							<string key="NSKeyPath">selection.indexAndPathExtension</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSRaisesForNotApplicableKeys</string>
+								<boolean value="NO" key="NS.object.0"/>
+							</object>
+							<reference key="NSPreviousConnector" ref="71718846"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2288</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3505,7 +3507,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2286</int>
+			<int key="maxID">2288</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

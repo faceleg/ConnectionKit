@@ -346,7 +346,11 @@
 
 /*	A custom file extension of nil signifies that the value should be taken from the user defaults.
  */
-- (NSString *)customPathExtension { return [self wrappedValueForKey:@"customFileExtension"]; }
+- (NSString *)customPathExtension
+{
+	NSString *result = [self wrappedValueForKey:@"customFileExtension"];
+	return result;
+}
 
 - (void)setCustomPathExtension:(NSString *)extension
 {
