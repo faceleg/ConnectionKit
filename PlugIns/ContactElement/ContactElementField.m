@@ -252,7 +252,7 @@
 			break;
 	}
 	
-	//OBPOSTCONDITION(result);
+	NSAssert((nil != result), @"result may not be nil");
 	return result;
 }
 
@@ -373,8 +373,7 @@
 		}
     }
 	
-	//OBPOSTCONDITION(result);
-	
+	NSAssert((nil != result), @"result may not be nil");
 	return result;
 }
 
