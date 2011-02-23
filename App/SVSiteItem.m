@@ -275,23 +275,21 @@
 
 - (NSString *)baseExampleURLString		// make this work for pages and other things like downloadables
 {
-	NSURL *resultURL = nil;
 	if ([self isRoot])
     {		
 		NSURL *rootBase = [[[self site] hostProperties] siteURL];
 		if (!rootBase)
 		{
-			return NSLocalizedString(@"«unspecified»", @"placeholder for site not yet set up for publishing");
+			return NSLocalizedString(@"«unspecified»/", @"placeholder for site not yet set up for publishing.  (End with slash for URL style path)");
 		}
-		resultURL = [self _baseExampleURL];
+		NSURL *resultURL = [self _baseExampleURL];
+		NSString *result = [resultURL absoluteString];
+		return result;
     }
     else
     {
-        resultURL = [[self parentPage] _baseExampleURL];
+        return [[self parentPage] baseExampleURLString];
     }
-	
-    NSString *result = [resultURL absoluteString];
-	return result;
 }
 
 #pragma mark Publishing
