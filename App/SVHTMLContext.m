@@ -465,6 +465,8 @@
     _numberOfGraphics++;
     
     id <SVGraphicContainer> container = [self currentGraphicContainer];
+    [self beginGraphicContainer:graphic];
+    
     if (container)
     {
         if ([graphic isPagelet])
@@ -488,6 +490,8 @@
     {
         [graphic writeBody:self];
     }
+    
+    [self endGraphicContainer];
 }
 
 - (void)writeGraphicBody:(id <SVGraphic>)graphic;
