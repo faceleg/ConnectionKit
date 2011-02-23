@@ -26,7 +26,7 @@
 {
 	[super awakeFromNib];
 	
-	NSString *placeholder = LocalizedStringInThisBundle(@"Drag Amazon products here from your web browser",
+	NSString *placeholder = SVLocalizedString(@"Drag Amazon products here from your web browser",
 														@"Appears in an empty tableview");
 	[(KSPlaceholderTableView *)tableView setPlaceholderString: placeholder];
 }

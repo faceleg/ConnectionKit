@@ -20,10 +20,10 @@ NSString * const APDisplayTabIdentifier = @"display";
 NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 
-// LocalizedStringInThisBundle(@"Drag Amazon products here from your web browser", "String_On_Page_Template")
-// LocalizedStringInThisBundle(@"Please specify an Amazon list (e.g. a wish list or listmania) to display using the Inspector.", "String_On_Page_Template")
-// LocalizedStringInThisBundle(@"This is a placeholder; your Amazon list will appear here once published or if you enable live data feeds in the preferences.", "Placeholder text")
-// LocalizedStringInThisBundle(@"This is a placeholder for an Amazon product; It will appear here once published or if you enable live data feeds in the preferences.", "Placeholder text")
+// SVLocalizedString(@"Drag Amazon products here from your web browser", "String_On_Page_Template")
+// SVLocalizedString(@"Please specify an Amazon list (e.g. a wish list or listmania) to display using the Inspector.", "String_On_Page_Template")
+// SVLocalizedString(@"This is a placeholder; your Amazon list will appear here once published or if you enable live data feeds in the preferences.", "Placeholder text")
+// SVLocalizedString(@"This is a placeholder for an Amazon product; It will appear here once published or if you enable live data feeds in the preferences.", "Placeholder text")
 
 
 @interface AmazonListPlugIn ()
@@ -256,16 +256,16 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	// If there are existing list items, warn the user of the possible implications
 		if ([self products] && [[self products] count] > 0)
 		{
-			NSString *titleFormat = LocalizedStringInThisBundle(@"Change to the %@ Amazon store?", "alert title");
+			NSString *titleFormat = SVLocalizedString(@"Change to the %@ Amazon store?", "alert title");
 			NSString *storeName = [AmazonECSOperation nameOfStore:store];	// already localized
 			NSString *title = [NSString stringWithFormat:titleFormat, storeName];
 			
 			NSAlert *alert =
 				[NSAlert alertWithMessageText:title
-								defaultButton:LocalizedStringInThisBundle(@"Change Store", "button text")
-							  alternateButton:LocalizedStringInThisBundle(@"Cancel", "button text")
+								defaultButton:SVLocalizedString(@"Change Store", "button text")
+							  alternateButton:SVLocalizedString(@"Cancel", "button text")
 								  otherButton:nil
-					informativeTextWithFormat:LocalizedStringInThisBundle(@"Not all products are available in every country. By changing the store, some of the products in your list may no longer be found.", "alert message")];
+					informativeTextWithFormat:SVLocalizedString(@"Not all products are available in every country. By changing the store, some of the products in your list may no longer be found.", "alert message")];
 			
 			int result = [alert runModal];
 			if (result == NSAlertAlternateReturn) *outStore = [self valueForKey:@"store"];

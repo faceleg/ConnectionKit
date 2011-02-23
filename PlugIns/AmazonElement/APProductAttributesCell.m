@@ -91,7 +91,7 @@
 	// How should we display the product?
 	if ([product isLoadingData])
 	{
-		[self drawSingleLine: LocalizedStringInThisBundle(@"Loading product data\\U2026", @"table cell")
+		[self drawSingleLine: SVLocalizedString(@"Loading product data\\U2026", @"table cell")
 				   withFrame: cellFrame
 					  inView: controlView
 		   allowTextWrapping: YES
@@ -99,7 +99,7 @@
 	}
 	else if (!productCode || [productCode isEqualToString: @""])
 	{
-		[self drawSingleLine: LocalizedStringInThisBundle(@"Please specify an Amazon product to display", @"table cell")
+		[self drawSingleLine: SVLocalizedString(@"Please specify an Amazon product to display", @"table cell")
 				   withFrame: cellFrame
 					  inView: controlView
 		   allowTextWrapping: YES
@@ -111,7 +111,7 @@
 	}
 	else if (!productTitle)
 	{
-		[self drawSingleLine: LocalizedStringInThisBundle(@"No matching Amazon product found", @"table cell")
+		[self drawSingleLine: SVLocalizedString(@"No matching Amazon product found", @"table cell")
 				   withFrame: cellFrame
 					  inView: controlView
 		   allowTextWrapping: YES
@@ -143,18 +143,18 @@
 - (void)drawProductLoadingError:(NSError *)error withFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
 	NSString *errorDomain = [error domain];
-	NSString *errorDescription = LocalizedStringInThisBundle(@"There was an error loading the product", @"table cell");
+	NSString *errorDescription = SVLocalizedString(@"There was an error loading the product", @"table cell");
 	
 	if ([errorDomain isEqualToString:NSURLErrorDomain])
 	{
 		// We have a special error for no Internet connection
 		if ([error code] == -1009) {
-			errorDescription = LocalizedStringInThisBundle(@"No Internet connection", @"table cell");
+			errorDescription = SVLocalizedString(@"No Internet connection", @"table cell");
 		 }
 	}
 	else if ([errorDomain isEqualToString:@"AmazonECSOperationError"])
 	{
-		errorDescription = LocalizedStringInThisBundle(@"No matching Amazon product found", @"table cell");
+		errorDescription = SVLocalizedString(@"No matching Amazon product found", @"table cell");
 	}
 	
 	

@@ -10,7 +10,7 @@
 
 
 #import <Cocoa/Cocoa.h>
-
+#import <Sandvox.h>
 
 @class KSVerticallyAlignedTextCell;
 @interface APProductAttributesCell : NSTextFieldCell
