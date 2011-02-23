@@ -83,7 +83,7 @@
     [super close];
     
     // Also ditch controllers
-    while ([self currentDOMController] != [self rootDOMController]) // #98822
+    while ([self currentDOMController] && [self currentDOMController] != [self rootDOMController]) // #98822
     {
         [self endDOMController];
     }
@@ -185,30 +185,25 @@
 
 - (void)writeGraphic:(id <SVGraphic, SVDOMControllerRepresentedObject>)graphic;
 {
-    if ([graphic shouldWriteHTMLInline] && ![graphic isKindOfClass:[SVGraphic class]])
-    {
-        // The graphic will take care of generating its own controller(s). Unfortunately inline images cock this up at the moment, so don't apply to things like that!
-        [super writeGraphic:graphic];
-    }
-    else
-    {
-        // Create controller for the graphic
-        SVDOMController *controller = [graphic newDOMController];
-        [self startDOMController:controller];
-        [controller release];
-        
-        [super writeGraphic:graphic];
-        
-        // Tidy up. Only pagelets need to be ended explicitly since they're written with a template
-        if ([graphic isPagelet]) [self endDOMController];
-    }
+    // Create controller for the graphic
+    SVDOMController *controller = [graphic newDOMController];
+    [self startDOMController:controller];
+    [controller release];
+    
+    [super writeGraphic:graphic];
+    
+    // Tidy up. Only pagelets need to be ended explicitly since they're written with a template
+    if ([graphic isPagelet]) [self endDOMController];
 }
 
 - (void)writeGraphicBody:(id <SVGraphic>)graphic;
 {
-    SVDOMController *controller = [(SVGraphic *)graphic newBodyDOMController];
-    [self startDOMController:controller];
-    [controller release];
+    if (![graphic isKindOfClass:[SVMediaGraphic class]])
+    {
+        SVDOMController *controller = [(SVGraphic *)graphic newBodyDOMController];
+        [self startDOMController:controller];
+        [controller release];
+    }
 
     [super writeGraphicBody:graphic];
 }

@@ -250,7 +250,7 @@
     
     if ([graphic shouldWriteHTMLInline])
     {
-        return [graphic writeBody:context];
+        return [context writeGraphicBody:graphic];
     }
     
     

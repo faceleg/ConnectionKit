@@ -496,7 +496,7 @@
     @try
     {
         // Graphic body
-        if (![graphic isPagelet])
+        if (![graphic isPagelet] && ![graphic shouldWriteHTMLInline])
         {
             [self startElement:@"div"]; // <div class="graphic">, will be closed by caller
             
@@ -504,7 +504,7 @@
             [self pushClassName:@"figure-content"];  // identifies for #84956
         }
         
-        if ([graphic isKindOfClass:[SVMediaGraphic class]] || [graphic isKindOfClass:[SVTextBox class]])
+        if (![graphic isKindOfClass:[SVPlugInGraphic class]] || [graphic isKindOfClass:[SVMediaGraphic class]])
         {
             // It's almost certainly media, generate DOM controller to match
             [graphic writeBody:self];
