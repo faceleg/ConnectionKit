@@ -142,7 +142,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [context writeJQueryImport];    // for any plug-ins that might depend on it
     
     [[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
+    
+    [context beginGraphicContainer:[[self graphicContainerDOMController] representedObject]];
     [context writeGraphic:[self representedObject]];
+    [context endGraphicContainer];
     
     
     // Copy out controllers
