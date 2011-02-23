@@ -118,20 +118,20 @@
 								<object class="NSPopUpButton" key="NSToolbarItemView" id="605350875">
 									<reference key="NSNextResponder"/>
 									<int key="NSvFlags">292</int>
-									<string key="NSFrame">{{0, 14}, {139, 20}}</string>
+									<string key="NSFrame">{{0, 14}, {139, 25}}</string>
 									<reference key="NSSuperview"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSPopUpButtonCell" key="NSCell" id="764254040">
 										<int key="NSCellFlags">-2076049856</int>
-										<int key="NSCellFlags2">133120</int>
+										<int key="NSCellFlags2">134350848</int>
 										<object class="NSFont" key="NSSupport" id="26">
 											<string key="NSName">LucidaGrande</string>
 											<double key="NSSize">11</double>
 											<int key="NSfFlags">3100</int>
 										</object>
 										<reference key="NSControlView" ref="605350875"/>
-										<int key="NSButtonFlags">-2034745089</int>
-										<int key="NSButtonFlags2">34</int>
+										<int key="NSButtonFlags">-2035269377</int>
+										<int key="NSButtonFlags2">35</int>
 										<string key="NSAlternateContents"/>
 										<string key="NSKeyEquivalent"/>
 										<int key="NSPeriodicDelay">400</int>
@@ -237,7 +237,7 @@
 								<nil key="NSToolbarItemTarget"/>
 								<nil key="NSToolbarItemAction"/>
 								<string key="NSToolbarItemMinSize">{119, 20}</string>
-								<string key="NSToolbarItemMaxSize">{162, 20}</string>
+								<string key="NSToolbarItemMaxSize">{185, 25}</string>
 								<bool key="NSToolbarItemEnabled">YES</bool>
 								<bool key="NSToolbarItemAutovalidates">NO</bool>
 								<int key="NSToolbarItemTag">0</int>

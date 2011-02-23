@@ -108,7 +108,7 @@
 		sContentTypeTagArray = [[NSArray alloc] initWithObjects:
 								(NSString *)kUTTypeHTML,				// yes preview
 								(NSString *)kUTTypeHTML,				// no preview
-								@"public.php-script"
+								@"public.php-script",
 								@"com.netscape.javascript-source",
 								(NSString *)kUTTypeText,
 								nil];
@@ -116,36 +116,58 @@
 	return sContentTypeTagArray;
 }
 
+- (ContentTypeTag) tagConformingToType:(NSString *)aType
+{
+	int whichTag = NSNotFound;
+	int i = 0;
+	for (NSString *type in self.contentTypeTagArray)
+	{
+		if ([aType conformsToUTI:type])
+		{
+			whichTag = i;
+			break;
+		}
+		else
+		{
+			i++;
+		
+		}
+		if (NSNotFound == whichTag)
+		{
+			whichTag = kTagContentOther;
+		}
+	}
+	return whichTag;
+}
+
 - (void)synchronizeUI
 {
 	if (contentTypePopUp)
 	{
-		NSInteger whichTag = [self.contentTypeTagArray indexOfObject:self.contentType];
+		
+		NSInteger whichTag = [self tagConformingToType:self.contentType];
 		if ([self.contentType isEqualToString:(NSString *)kUTTypeHTML] && !self.shouldPreviewWhenEditing)
 		{
 			whichTag = kTagContentHTMLNoPreview;
 		}
-		if (NSNotFound != whichTag)
+		NSMenuItem *contentTypeMenuItem = [[contentTypePopUp menu] itemWithTag:whichTag];
+		if (contentTypeMenuItem)		// don't bother if we haven't loaded nib yet
 		{
-			NSMenuItem *contentTypeMenuItem = [[contentTypePopUp menu] itemWithTag:whichTag];
-			if (contentTypeMenuItem)		// don't bother if we haven't loaded nib yet
+			[contentTypePopUp selectItem:contentTypeMenuItem];	// Check initially chosen one.
+			
+			[self calculateCachedPreludes];
+			[self autoValidate];
+			
+			NSString *windowTitle = nil;
+			if (nil == _title || [_title isEqualToString:@""])
 			{
-				[contentTypePopUp selectItem:contentTypeMenuItem];	// Check initially chosen one.
-				
-				[self calculateCachedPreludes];
-				[self autoValidate];
-				
-				NSString *windowTitle = nil;
-				if (nil == _title || [_title isEqualToString:@""])
-				{
-					windowTitle = NSLocalizedString(@"Edit HTML", @"Window title");
-				}
-				else
-				{
-					windowTitle =[NSString stringWithFormat:NSLocalizedString(@"Edit \\U201C%@\\U201D HTML", @"Window title, showing title of element"), _title];
-				}
-				[[self window] setTitle:windowTitle];
+				windowTitle = NSLocalizedString(@"Edit HTML", @"Window title");
 			}
+			else
+			{
+				windowTitle =[NSString stringWithFormat:NSLocalizedString(@"Edit \\U201C%@\\U201D HTML", @"Window title, showing title of element"), _title];
+			}
+			[[self window] setTitle:windowTitle];
 		}
 	}
 }
@@ -866,7 +888,7 @@ initial syntax coloring.
 		case kValidationStateValidationError:	result = NSLocalizedString(@"Problems detected with the structure of the HTML. Validate for more information.", @"status of HTML text entered into window"); break;
 		case kValidationStateLocallyValid:		result = NSLocalizedString(@"HTML appears OK. Validate for detailed diagnostics.", @"status of HTML text entered into window"); break;
 		case kValidationStateVerifiedGood:		result = NSLocalizedString(@"This HTML is confirmed as being valid.", @"status of HTML text entered into window"); break;
-		case kValidationStateDisabled:			result = NSLocalizedString(@"Preview and validation is disabled for this object", @"status of HTML text entered into window"); break;
+		case kValidationStateDisabled:			result = NSLocalizedString(@"Validation is disabled for this type of content", @"status of HTML text entered into window"); break;
 
 	}
 	return result;
