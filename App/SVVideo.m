@@ -1038,8 +1038,10 @@
 							 [NSFont systemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
 							 nil];
 	NSMutableAttributedString *info = [[[NSMutableAttributedString alloc] initWithString:result attributes:attribs] autorelease];
-#warning should be help system!  How do I get it to work?
-	NSURL *url = [NSURL URLWithString:@"help:anchor=Document"];
+	NSString *helpFilePath = [[NSBundle mainBundle] pathForResource:@"Supported_Video_Formats" ofType:@"html" inDirectory:@"Sandvox Help/z"];
+	
+	NSURL *url = [[[NSURL alloc] initWithScheme:@"help" host:@"" path:helpFilePath] autorelease];
+				   
 	NSDictionary *linkAttribs
 	= [NSDictionary dictionaryWithObjectsAndKeys:
 	   url,
