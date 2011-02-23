@@ -25,6 +25,7 @@
 #import "WebEditingKit.h"
 #import "WebViewEditingHelperClasses.h"
 
+#import "DOMElement+Karelia.h"
 #import "DOMNode+Karelia.h"
 #import "NSColor+Karelia.h"
 
