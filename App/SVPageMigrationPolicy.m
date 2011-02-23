@@ -137,6 +137,13 @@ typedef enum {
     return result;
 }
 
+- (NSData *)extensiblePropertiesData;
+{
+    NSDictionary *props = [NSDictionary dictionaryWithObject:NSBOOL(YES) forKey:@"migrateRawHTMLOnNextEdit"];
+    NSData *result = [KSExtensibleManagedObject archiveExtensibleProperties:props];
+    return result;
+}
+
 @end
 
 
