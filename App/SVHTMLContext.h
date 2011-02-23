@@ -12,6 +12,7 @@
 
 #import "KSHTMLWriter.h"
 
+#import "SVGraphicContainer.h"
 #import "SVPlugIn.h"
 #import "KSMegaBufferedWriter.h"
 #import "KT.h"
@@ -61,6 +62,7 @@ typedef enum {
     NSMutableArray  *_iteratorsStack;
     BOOL            _writingPagelet;
     
+    NSMutableArray  *_graphicContainers;
     NSUInteger      _numberOfGraphics;
     
     SVSidebarPageletsController *_sidebarPageletsController;
@@ -137,6 +139,12 @@ typedef enum {
 - (void)writeGraphicBody:(id <SVGraphic>)graphic;
 
 - (NSUInteger)numberOfGraphicsOnPage; // incremented for each call to -writeGraphic:
+
+
+#pragma mark Graphic Containers
+- (id <SVGraphicContainer>)currentGraphicContainer;
+- (void)beginGraphicContainer:(id <SVGraphicContainer>)container;
+- (void)endGraphicContainer;
 
 
 #pragma mark Metrics

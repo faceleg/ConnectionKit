@@ -80,6 +80,7 @@
     _headerMarkup = [[NSMutableString alloc] init];
     _endBodyMarkup = [[NSMutableString alloc] init];
     _iteratorsStack = [[NSMutableArray alloc] init];
+    _graphicContainers = [[NSMutableArray alloc] init];
     
     return self;
 }
@@ -133,6 +134,7 @@
     [_headerMarkup release];
     [_endBodyMarkup release];
     [_iteratorsStack release];
+    [_graphicContainers release];
     
     [_sidebarPageletsController release];
     
@@ -622,6 +624,23 @@
 }
 
 - (NSUInteger)numberOfGraphicsOnPage; { return _numberOfGraphics; }
+
+#pragma mark Graphic Containers
+
+- (id <SVGraphicContainer>)currentGraphicContainer;
+{
+    return [_graphicContainers lastObject];
+}
+
+- (void)beginGraphicContainer:(id <SVGraphicContainer>)container;
+{
+    [_graphicContainers addObject:container];
+}
+
+- (void)endGraphicContainer;
+{
+    [_graphicContainers removeLastObject];
+}
 
 #pragma mark Placeholder
 
