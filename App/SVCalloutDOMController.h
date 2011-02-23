@@ -12,7 +12,7 @@
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 
 
-@interface SVCalloutDOMController : SVDOMController <KSXMLWriterDOMAdaptorDelegate>
+@interface SVCalloutDOMController : SVDOMController <SVGraphicContainerDOMController, KSXMLWriterDOMAdaptorDelegate>
 {
   @private
     DOMElement  *_calloutContent;
