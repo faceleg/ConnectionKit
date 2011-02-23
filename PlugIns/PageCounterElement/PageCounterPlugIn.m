@@ -53,11 +53,10 @@
   */
  
 
-#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 
-//LocalizedStringInThisBundle("page views", " preceeded by a number to show how many times a page has been viewed over the web");
-//LocalizedStringInThisBundle("Page Counter", "placeholder for invisible page counter");
-//LocalizedStringInThisBundle("Not visible on published site.", "placeholder for invisible page counter");
+//SVLocalizedString("page views", " preceeded by a number to show how many times a page has been viewed over the web");
+//SVLocalizedString("Page Counter", "placeholder for invisible page counter");
+//SVLocalizedString("Not visible on published site.", "placeholder for invisible page counter");
 
 
 NSString *PCThemeKey = @"theme";
@@ -101,12 +100,12 @@ NSString *PCSampleImageKey = @"sampleImage";
 		NSMutableDictionary *d;
 		
 		d = [NSMutableDictionary dictionary];
-		[d setObject:LocalizedStringInThisBundle(@"Text", @"Text style of page counter") forKey:PCThemeKey];
+		[d setObject:SVLocalizedString(@"Text", @"Text style of page counter") forKey:PCThemeKey];
 		[d setObject:[NSNumber numberWithUnsignedInteger:PC_TEXT] forKey:PCTypeKey];
 		[themes addObject:d];
 		
 		d = [NSMutableDictionary dictionary];
-		[d setObject:LocalizedStringInThisBundle(@"Invisible", @"Invisible style of page counter; outputs no number") forKey:PCThemeKey];
+		[d setObject:SVLocalizedString(@"Invisible", @"Invisible style of page counter; outputs no number") forKey:PCThemeKey];
 		[d setObject:[NSNumber numberWithUnsignedInteger:PC_INVISIBLE] forKey:PCTypeKey];
 		[themes addObject:d];
         
