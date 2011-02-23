@@ -46,13 +46,13 @@
 #include <openssl/blowfish.h>
 #include <zlib.h>
 
-// LocalizedStringInThisBundle(@"Please specify an address for the recipient using the Inspector.", "String_On_Page_Template")
-// LocalizedStringInThisBundle(@"Email address is missing.  Message cannot be sent.", "String_On_Page_Template")
-// LocalizedStringInThisBundle(@"No message has been entered.  Message cannot be sent.", "String_On_Page_Template")
-// LocalizedStringInThisBundle(@"Please leave this field empty:", "Title of invisible, anti-spam field")
-// LocalizedStringInThisBundle(@"Submitting Form...", "String_On_Page_Template")
-// LocalizedStringInThisBundle(@"Unable to Submit form. Result code = ", "String_On_Page_Template.  Followed by a number.")
-// LocalizedStringInThisBundle(@"Message sent.", "String_On_Page_Template ")
+// SVLocalizedString(@"Please specify an address for the recipient using the Inspector.", "String_On_Page_Template")
+// SVLocalizedString(@"Email address is missing.  Message cannot be sent.", "String_On_Page_Template")
+// SVLocalizedString(@"No message has been entered.  Message cannot be sent.", "String_On_Page_Template")
+// SVLocalizedString(@"Please leave this field empty:", "Title of invisible, anti-spam field")
+// SVLocalizedString(@"Submitting Form...", "String_On_Page_Template")
+// SVLocalizedString(@"Unable to Submit form. Result code = ", "String_On_Page_Template.  Followed by a number.")
+// SVLocalizedString(@"Message sent.", "String_On_Page_Template ")
 
 enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 
@@ -212,15 +212,15 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
 	switch([self subjectType])
 	{
 		case kKTContactSubjectField:
-			result = LocalizedStringInThisBundle(@"Suggested Subject (optional)",
+			result = SVLocalizedString(@"Suggested Subject (optional)",
 												 @"Label for subject field when it will be a text field");
 			break;
 		case kKTContactSubjectSelection:
-			result = LocalizedStringInThisBundle(@"List of Subjects (separate by commas)",
+			result = SVLocalizedString(@"List of Subjects (separate by commas)",
 												 @"Label for subject field when it will be a selection menu");
 			break;
 		case kKTContactSubjectHidden:
-			result = LocalizedStringInThisBundle(@"Fixed Subject for all messages",
+			result = SVLocalizedString(@"Fixed Subject for all messages",
 												 @"Label for subject field when it will be hidden");
 			break;
 	}

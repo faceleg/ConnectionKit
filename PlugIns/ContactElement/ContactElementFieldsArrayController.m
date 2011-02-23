@@ -43,7 +43,7 @@
 
 /*	Returned object should have retain count of 1
  */
-//LocalizedStringInThisBundle(@"New field", "The default label for new fields")
+//SVLocalizedString(@"New field", "The default label for new fields")
 - (id)newObject
 {
 	ContactElementField *newField = [[ContactElementField alloc] initWithIdentifier:@"other"];
@@ -52,7 +52,7 @@
 	
 	// Ideally this would be the target language since it might be published, but it's temporary.
 	// Besides, it's not easy to get to the page to find out its language from here.
-	[newField setLabel:LocalizedStringInThisBundle(@"New field", @"initial name of contact element field")];
+	[newField setLabel:SVLocalizedString(@"New field", @"initial name of contact element field")];
 	
 	return newField;
 }

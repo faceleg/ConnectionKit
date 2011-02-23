@@ -182,26 +182,26 @@
 	NSString *identifier = [self identifier];
 	
 	if ([@"visitorName" isEqualToString:identifier]) {
-		result = LocalizedStringInThisBundle(@"Name", "field label");
+		result = SVLocalizedString(@"Name", "field label");
 	}
 	else if ([@"email" isEqualToString:identifier]) {
-		result = LocalizedStringInThisBundle(@"Email", @"field label");
+		result = SVLocalizedString(@"Email", @"field label");
 	}
 	else if ([@"subject" isEqualToString:identifier]) {
-		result = LocalizedStringInThisBundle(@"Subject", @"field label");
+		result = SVLocalizedString(@"Subject", @"field label");
 	}
 	else if ([@"message" isEqualToString:identifier]) {
-		result = LocalizedStringInThisBundle(@"Message", @"field label");
+		result = SVLocalizedString(@"Message", @"field label");
 	}
 	else if ([@"send" isEqualToString:identifier]) {
-		result = LocalizedStringInThisBundle(@"Send", @"button label");
+		result = SVLocalizedString(@"Send", @"button label");
 	}
 	else {
 		result = [self label];
 	}
 	
 	if (!result || [result isEqualToString:@""]) {
-		result = LocalizedStringInThisBundle(@"N/A", @"field label");
+		result = SVLocalizedString(@"N/A", @"field label");
 	}
 	
 	return result;
@@ -252,7 +252,7 @@
 			break;
 	}
 	
-	OBPOSTCONDITION(result);
+	//OBPOSTCONDITION(result);
 	return result;
 }
 
@@ -373,7 +373,7 @@
 		}
     }
 	
-	OBPOSTCONDITION(result);
+	//OBPOSTCONDITION(result);
 	
 	return result;
 }
