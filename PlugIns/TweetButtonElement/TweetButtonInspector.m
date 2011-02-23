@@ -11,6 +11,16 @@
 
 @implementation TweetButtonInspector
 
+- (void)updatePlaceholder
+{
+    id<SVPage> inspectedPage = [[self inspectedPages] objectAtIndex:0];
+    if ( inspectedPage )
+    {
+        NSString *title = [inspectedPage title];
+        [[[self tweetTextField] cell] setPlaceholderString:title];
+    }
+}
+
 - (void)awakeFromNib
 {
     [self addObserver:self 
@@ -21,16 +31,21 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    [[self inspectedPages] addObserver:self
-                    toObjectsAtIndexes:[NSIndexSet indexSetWithIndex:0] 
-                            forKeyPath:@"title" 
-                               options:0 
-                               context:NULL];
-
-    id<SVPage> inspectedPage = [[self inspectedPages] objectAtIndex:0];
-    NSString *title = [inspectedPage title];
-    [[[self tweetTextField] cell] setPlaceholderString:title];
+    if ( [keyPath isEqualToString:@"inspectedPages" ] )
+    {
+        [[self inspectedPages] addObserver:self
+                        toObjectsAtIndexes:[NSIndexSet indexSetWithIndex:0] 
+                                forKeyPath:@"title" 
+                                   options:0 
+                                   context:NULL];
+        [self updatePlaceholder];
+    }
+    else if ( [keyPath isEqualToString:@"title"] )
+    {
+        [self updatePlaceholder];
+    }
 }
+
 
 - (void)dealloc
 {
