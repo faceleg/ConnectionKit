@@ -12,10 +12,13 @@
 
 
 #import "SVContentObject.h"
+#import "SVGraphicContainer.h"
+
 #import "SVPlugIn.h"
-#import <iMedia/iMedia.h>
 
 #import "NSManagedObject+KTExtensions.h"    // for serialization
+
+#import <iMedia/iMedia.h>
 
 
 typedef enum {
@@ -48,7 +51,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 #pragma mark -
 
 
-@protocol SVGraphic <NSObject>
+@protocol SVGraphic <SVGraphicContainer>
 
 @property(nonatomic, copy) NSNumber *width;
 @property(nonatomic, copy) NSNumber *contentWidth;  // what appears in the Inspector
