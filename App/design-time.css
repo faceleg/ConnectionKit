@@ -60,7 +60,7 @@ img[width="0"], img[height="0"] { display:none; }
     font-weight: bold;
     text-align: center !important;
     font-family: "Lucida Grande";
-    font-size: 13pt;
+    font-size: 13px;
 }
 
 div.svx-size-bound {
