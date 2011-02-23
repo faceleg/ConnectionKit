@@ -225,10 +225,9 @@
 }
 
 // No contentType stored for these.  If it's an HTML page, it's encoded in the page itself.
-- (NSString *)contentType; { return nil; }
 - (void)setContentType:(NSString *)contentType; { }
 
-- (NSString *)typeOfFile;
+- (NSString *)contentType;
 {
 	if ([self media])
 	{

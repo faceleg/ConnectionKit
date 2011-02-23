@@ -119,11 +119,6 @@
     return result;
 }
 
-- (NSString *)typeOfFile
-{
-	return (NSString *)kUTTypeHTML;
-}
-
 #pragma mark Inspector
 
 - (NSString *)plugInIdentifier; { return @"sandvox.RawHTML"; }

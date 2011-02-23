@@ -882,22 +882,6 @@
 					<int key="connectionID">160</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: isHTML</string>
-						<reference key="source" ref="975607626"/>
-						<reference key="destination" ref="132596718"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="975607626"/>
-							<reference key="NSDestination" ref="132596718"/>
-							<string key="NSLabel">enabled: isHTML</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">isHTML</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">165</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">contentTypePopupChanged:</string>
 						<reference key="source" ref="132596718"/>
@@ -912,6 +896,38 @@
 						<reference key="destination" ref="605350875"/>
 					</object>
 					<int key="connectionID">170</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: canValidate</string>
+						<reference key="source" ref="975607626"/>
+						<reference key="destination" ref="132596718"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="975607626"/>
+							<reference key="NSDestination" ref="132596718"/>
+							<string key="NSLabel">enabled: canValidate</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">canValidate</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">176</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: shouldPreviewWhenEditing</string>
+						<reference key="source" ref="474364376"/>
+						<reference key="destination" ref="132596718"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="474364376"/>
+							<reference key="NSDestination" ref="132596718"/>
+							<string key="NSLabel">enabled: shouldPreviewWhenEditing</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">shouldPreviewWhenEditing</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">177</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1240,7 +1256,7 @@
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{195, 348}, {617, 169}}</string>
+					<string>{{167, 348}, {617, 169}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1304,10 +1320,10 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{92, 141}, {823, 376}}</string>
+					<string>{{64, 141}, {823, 376}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{92, 141}, {823, 376}}</string>
+					<string>{{64, 141}, {823, 376}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{823, 376}</string>
@@ -1349,7 +1365,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">170</int>
+			<int key="maxID">177</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1432,7 +1448,6 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>contentTypePopUp</string>
-							<string>previewMenuItem</string>
 							<string>progress</string>
 							<string>status</string>
 							<string>textView</string>
@@ -1440,7 +1455,6 @@
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSPopUpButton</string>
-							<string>NSMenuItem</string>
 							<string>NSProgressIndicator</string>
 							<string>NSTextField</string>
 							<string>NSTextView</string>
@@ -1451,7 +1465,6 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>contentTypePopUp</string>
-							<string>previewMenuItem</string>
 							<string>progress</string>
 							<string>status</string>
 							<string>textView</string>
@@ -1461,10 +1474,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">contentTypePopUp</string>
 								<string key="candidateClassName">NSPopUpButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">previewMenuItem</string>
-								<string key="candidateClassName">NSMenuItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">progress</string>

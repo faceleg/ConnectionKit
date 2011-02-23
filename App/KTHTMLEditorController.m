@@ -388,24 +388,21 @@ initial syntax coloring.
 
 - (BOOL)isHTML
 {
-	NSString *typeOfFile = [self.HTMLSourceObject typeOfFile];
-	BOOL conforms = [typeOfFile conformsToUTI:(NSString *)kUTTypeHTML];
+	BOOL conforms = [self.contentType conformsToUTI:(NSString *)kUTTypeHTML];
 	return conforms;
 }
 
 - (BOOL) canValidate;
 {
-	return NO;
 	BOOL validationStateOK = self.validationState > kValidationStateDisabled;
-	NSString *typeOfFile = [self.HTMLSourceObject typeOfFile];
-	BOOL conforms = [typeOfFile conformsToUTI:(NSString *)kUTTypeHTML];
+	BOOL conforms = [self.contentType conformsToUTI:(NSString *)kUTTypeHTML];
 	BOOL result = validationStateOK && conforms;
 	return result;
 }
 
 + (NSSet *)keyPathsForValuesAffectingCanValidate;
 {
-    return [NSSet setWithObjects:@"validationState", @"HTMLSourceObject.typeOfFile", nil];
+    return [NSSet setWithObjects:@"validationState", @"contentType", @"shouldPreviewWhenEditing", nil];
 }
 
 - (IBAction) validate:(id)sender;
