@@ -36,8 +36,6 @@
 
 #import "IFramePlugIn.h"
 
-// SVLocalizedString(@"Placeholder for:", "String_On_Page_Template- followed by a URL")
-// SVLocalizedString(@"Please enter a URL in the Inspector.", "String_On_Page_Template")
 
 @implementation IFramePlugIn
 
@@ -80,51 +78,63 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
-    // call super to parse template
-    [super writeHTML:context];
-    
     // add dependencies for any ivars not references in html template
+    [context addDependencyForKeyPath:@"linkURL" ofObject:self];
     [context addDependencyForKeyPath:@"iFrameIsBordered" ofObject:self];
+    
+    if ( [context liveDataFeeds] )
+    {
+        NSString *src = (self.linkURL) ? [self.linkURL absoluteString] : @"";
+        if ( ![src isEqualToString:@""] )
+        {
+            NSString *class = (self.iFrameIsBordered) ? @"iframe-border" : @"iframe-no-border";
+            NSString *frameBorder = (self.iFrameIsBordered) ? @"1" : @"0";
+            NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        class, @"class",
+                                        src, @"src",
+                                        @"test iframe", @"title",
+                                        frameBorder, @"frameBorder",
+                                        nil];
+            // write iframe
+            // width and height attrs are included by writer
+            [context startElement:@"iframe"
+                 bindSizeToPlugIn:self
+                  preferredIdName:@"iframe"
+                       attributes:attributes];
+            
+            // write fallback link in case iframe isn't supported -- it's supported in HTML5, still needed?
+            [context startAnchorElementWithHref:[self.linkURL absoluteString]
+                                          title:self.title
+                                         target:nil 
+                                            rel:nil];
+            [context writeCharacters:self.title];
+            [context endElement]; // </a>
+            
+            [context endElement]; // </div>
+        }
+        else
+        {
+            NSString *text = SVLocalizedString(@"Please enter a URL in the Inspector.","");
+            [context writePlaceholderWithText:text options:0];
+        }
+    }
+    else
+    {
+        if ( self.linkURL )
+        {
+            NSString *placeholder = SVLocalizedString(@"Placeholder for:", "String - followed by a URL");
+            NSString *text = [NSString stringWithFormat:@"%@ %@", placeholder, self.linkURL];
+            [context writePlaceholderWithText:text options:0];
+        }
+        else 
+        {
+            NSString *text = SVLocalizedString(@"Please enter a URL in the Inspector.","");
+            [context writePlaceholderWithText:text options:0];
+        }
+    }
+
 }
                                      
-- (void)startIFrameElement
-{
-    id <SVPlugInContext> context = [self currentContext];
-    
-    NSString *class = (self.iFrameIsBordered) ? @"iframe-border" : @"iframe-no-border";
-    NSString *frameBorder = (self.iFrameIsBordered) ? @"1" : @"0";
-    NSString *src = (self.linkURL) ? [self.linkURL absoluteString] : @"";
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                class, @"class",
-                                src, @"src",
-                                @"test iframe", @"title",
-                                frameBorder, @"frameBorder",
-                                nil];
-    // write iframe
-    // width and height attrs are included by writer
-    [context startElement:@"iframe"
-         bindSizeToPlugIn:self
-          preferredIdName:@"iframe"
-               attributes:attributes];
-}
-- (void)endIFrameElement; { [[self currentContext] endElement]; }
-
-- (void)startPlaceholderElement
-{
-    id <SVPlugInContext> context = [self currentContext];
-    
-    [context startElement:@"div" bindSizeToPlugIn:self preferredIdName:@"iframe" attributes:nil];
-    [context startPlaceholder];
-}
-
-- (void)endPlaceholderElement;
-{
-    id <SVPlugInContext> context = [self currentContext];
-    
-    [context endPlaceholder];
-    [context endElement];
-}
-
 
 #pragma mark Metrics
 
