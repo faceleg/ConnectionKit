@@ -37,10 +37,8 @@
 #import "CollectionArchivePlugIn.h"
 
 
-#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
-
-// LocalizedStringInThisBundle(@"Please turn on Publish Archives in the Collection Inspector.", "String_On_Page_Template")
-// LocalizedStringInThisBundle(@"Please add at least one page to this collection.", "String_On_Page_Template")
+// SVLocalizedString(@"Please turn on Publish Archives in the Collection Inspector.", "String_On_Page_Template")
+// SVLocalizedString(@"Please add at least one page to this collection.", "String_On_Page_Template")
 
 
 @implementation CollectionArchivePlugIn
@@ -59,7 +57,7 @@
         // attempt to set container's title to localized string
         NSString *title = [NSString stringWithFormat:@"%@ %@",
                            [self.indexedCollection title],
-                           LocalizedStringInThisBundle(@"Archive", @"title of object")];
+                           SVLocalizedString(@"Archive", @"title of object")];
         self.title = title;
     }
 }
