@@ -118,27 +118,34 @@
 
 - (void)synchronizeUI
 {
-	NSInteger whichTag = [self.contentTypeTagArray indexOfObject:self.contentType];
-	if (NSNotFound != whichTag)
+	if (contentTypePopUp)
 	{
-		NSMenuItem *contentTypeMenuItem = [[contentTypePopUp menu] itemWithTag:whichTag];
-		if (contentTypeMenuItem)		// don't bother if we haven't loaded nib yet
+		NSInteger whichTag = [self.contentTypeTagArray indexOfObject:self.contentType];
+		if ([self.contentType isEqualToString:(NSString *)kUTTypeHTML] && !self.shouldPreviewWhenEditing)
 		{
-			[contentTypeMenuItem setState:NSOnState];	// Check initially chosen one.
-			
-			[self calculateCachedPreludes];
-			[self autoValidate];
-			
-			NSString *windowTitle = nil;
-			if (nil == _title || [_title isEqualToString:@""])
+			whichTag = kTagContentHTMLNoPreview;
+		}
+		if (NSNotFound != whichTag)
+		{
+			NSMenuItem *contentTypeMenuItem = [[contentTypePopUp menu] itemWithTag:whichTag];
+			if (contentTypeMenuItem)		// don't bother if we haven't loaded nib yet
 			{
-				windowTitle = NSLocalizedString(@"Edit HTML", @"Window title");
+				[contentTypePopUp selectItem:contentTypeMenuItem];	// Check initially chosen one.
+				
+				[self calculateCachedPreludes];
+				[self autoValidate];
+				
+				NSString *windowTitle = nil;
+				if (nil == _title || [_title isEqualToString:@""])
+				{
+					windowTitle = NSLocalizedString(@"Edit HTML", @"Window title");
+				}
+				else
+				{
+					windowTitle =[NSString stringWithFormat:NSLocalizedString(@"Edit \\U201C%@\\U201D HTML", @"Window title, showing title of element"), _title];
+				}
+				[[self window] setTitle:windowTitle];
 			}
-			else
-			{
-				windowTitle =[NSString stringWithFormat:NSLocalizedString(@"Edit \\U201C%@\\U201D HTML", @"Window title, showing title of element"), _title];
-			}
-			[[self window] setTitle:windowTitle];
 		}
 	}
 }
@@ -802,8 +809,20 @@ initial syntax coloring.
 	// load additional properties from the source object
 	
 	self.sourceCodeTemp = graphic.HTMLString;
-	self.contentType = graphic.contentType;
-	self.shouldPreviewWhenEditing = [graphic.shouldPreviewWhenEditing boolValue];
+	
+	NSString *contentType = graphic.contentType;
+	if (!contentType) contentType = (NSString *)kUTTypeHTML;
+	self.contentType = contentType;
+	
+	NSNumber *shouldPreviewValue = graphic.shouldPreviewWhenEditing;
+	if (shouldPreviewValue) 
+	{
+		self.shouldPreviewWhenEditing = [shouldPreviewValue boolValue];
+	}
+	else
+	{
+		self.shouldPreviewWhenEditing = YES;		// If unknown in source object, use a nice default value
+	}
 	self.hashOfLastValidation = graphic.lastValidMarkupDigest;
 	
 	[self loadFragment:graphic.HTMLString];
