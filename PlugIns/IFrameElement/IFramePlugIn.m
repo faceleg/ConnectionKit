@@ -82,11 +82,11 @@
     [context addDependencyForKeyPath:@"linkURL" ofObject:self];
     [context addDependencyForKeyPath:@"iFrameIsBordered" ofObject:self];
     
-    if ( [context liveDataFeeds] )
+    if ( self.linkURL )
     {
-        NSString *src = (self.linkURL) ? [self.linkURL absoluteString] : @"";
-        if ( ![src isEqualToString:@""] )
+        if ( [context liveDataFeeds] )
         {
+            NSString *src = (self.linkURL) ? [self.linkURL absoluteString] : @"";
             NSString *class = (self.iFrameIsBordered) ? @"iframe-border" : @"iframe-no-border";
             NSString *frameBorder = (self.iFrameIsBordered) ? @"1" : @"0";
             NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -103,6 +103,7 @@
                        attributes:attributes];
             
             // write fallback link in case iframe isn't supported -- it's supported in HTML5, still needed?
+            // I think this has nothing to do with the spec, but instead, older browsers - Mike
             [context startAnchorElementWithHref:[self.linkURL absoluteString]
                                           title:self.title
                                          target:nil 
@@ -114,25 +115,24 @@
         }
         else
         {
-            NSString *text = SVLocalizedString(@"Please enter a URL in the Inspector.","");
+            [context startElement:@"div" bindSizeToPlugIn:self preferredIdName:nil attributes:nil];
+            
+            NSString *placeholder = SVLocalizedString(@"Placeholder for:", "String - followed by a URL");
+            NSString *text = [NSString stringWithFormat:@"%@ %@", placeholder, self.linkURL];
             [context writePlaceholderWithText:text options:0];
+            
+            [context endElement];
         }
     }
     else
     {
-        if ( self.linkURL )
-        {
-            NSString *placeholder = SVLocalizedString(@"Placeholder for:", "String - followed by a URL");
-            NSString *text = [NSString stringWithFormat:@"%@ %@", placeholder, self.linkURL];
-            [context writePlaceholderWithText:text options:0];
-        }
-        else 
-        {
-            NSString *text = SVLocalizedString(@"Please enter a URL in the Inspector.","");
-            [context writePlaceholderWithText:text options:0];
-        }
+        [context startElement:@"div" bindSizeToPlugIn:self preferredIdName:nil attributes:nil];
+        
+        NSString *text = SVLocalizedString(@"Please enter a URL in the Inspector.","");
+        [context writePlaceholderWithText:text options:0];
+        
+        [context endElement];
     }
-
 }
                                      
 
