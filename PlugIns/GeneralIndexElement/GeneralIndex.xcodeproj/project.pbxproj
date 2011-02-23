@@ -267,7 +267,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		3C6DAE3C1315B51E0064929E /* Generate Localizable.strings */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -275,9 +275,10 @@
 			name = "Generate Localizable.strings";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "echo \"Generating Localizable.strings ...\"\n\ncd ${SRCROOT}\ngenstrings -littleEndian -q -u -s SVLocalizedString -o en.lproj *.m\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
