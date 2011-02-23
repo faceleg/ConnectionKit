@@ -312,7 +312,7 @@
 			NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 			NSString *language = [iteratedPage language];
 			NSString *permaLink = [bundle localizedStringForString:@"Permanent Link" language:language fallback:
-								   LocalizedStringInThisBundle(@"Permanent Link", @"Text in website's language to indicate a permanent link to the page")];
+								   SVLocalizedString(@"Permanent Link", @"Text in website's language to indicate a permanent link to the page")];
 			[context writeCharacters:permaLink];
 		}
 		if ( self.showPermaLinks )
