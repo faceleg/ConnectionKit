@@ -38,14 +38,14 @@
 #import "NSURL+Twitter.h"
 
 
-// LocalizedStringInThisBundle(@"Tweet Permalink", "String_On_JavaScript_Template")
-// LocalizedStringInThisBundle(@"less than a minute ago", "String_On_JavaScript_Template")
-// LocalizedStringInThisBundle(@"about a minute ago", "String_On_JavaScript_Template")
-// LocalizedStringInThisBundle(@"%d minutes ago", "String_On_JavaScript_Template")
-// LocalizedStringInThisBundle(@"about an hour ago", "String_On_JavaScript_Template")
-// LocalizedStringInThisBundle(@"about %d hours ago", "String_On_JavaScript_Template")
-// LocalizedStringInThisBundle(@"1 day ago", "String_On_JavaScript_Template")
-// LocalizedStringInThisBundle(@"%d days ago", "String_On_JavaScript_Template")
+// SVLocalizedString(@"Tweet Permalink", "String_On_JavaScript_Template")
+// SVLocalizedString(@"less than a minute ago", "String_On_JavaScript_Template")
+// SVLocalizedString(@"about a minute ago", "String_On_JavaScript_Template")
+// SVLocalizedString(@"%d minutes ago", "String_On_JavaScript_Template")
+// SVLocalizedString(@"about an hour ago", "String_On_JavaScript_Template")
+// SVLocalizedString(@"about %d hours ago", "String_On_JavaScript_Template")
+// SVLocalizedString(@"1 day ago", "String_On_JavaScript_Template")
+// SVLocalizedString(@"%d days ago", "String_On_JavaScript_Template")
 
 
 @interface TwitterFeedPlugIn ()
@@ -139,7 +139,7 @@
         else
         {
             [context startElement:@"div" className:@"svx-placeholder"];
-            [context writeCharacters:LocalizedStringInThisBundle(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder")];
+            [context writeCharacters:SVLocalizedString(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder")];
             [context endElement]; // </div>
         }
         
@@ -152,14 +152,14 @@
     {
         // write placeholder message to sign up for account
         [context startElement:@"div" className:@"svx-placeholder"];
-        [context writeCharacters:LocalizedStringInThisBundle(@"Please enter your Twitter username or ", "WebView prompt fragment")];
+        [context writeCharacters:SVLocalizedString(@"Please enter your Twitter username or ", "WebView prompt fragment")];
         [context startAnchorElementWithHref:@"https://twitter.com/signup"
-                                                   title:LocalizedStringInThisBundle(@"Twitter Signup", "WebView link title") 
+                                                   title:SVLocalizedString(@"Twitter Signup", "WebView link title") 
                                                   target:nil 
                                                      rel:nil];
-        [context writeCharacters:LocalizedStringInThisBundle(@"sign up", "WebView prompt fragment")];
+        [context writeCharacters:SVLocalizedString(@"sign up", "WebView prompt fragment")];
         [context endElement]; // </a>
-        [context writeCharacters:LocalizedStringInThisBundle(@" for a Twitter account", "WebView prompt fragment")];
+        [context writeCharacters:SVLocalizedString(@" for a Twitter account", "WebView prompt fragment")];
         [context endElement]; // </div>
     }
 }
