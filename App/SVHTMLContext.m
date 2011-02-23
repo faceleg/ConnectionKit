@@ -458,70 +458,6 @@
 
 #pragma mark Graphics
 
-- (void)writeInlineGraphic:(id <SVGraphic>)graphic
-{
-    if ([graphic shouldWriteHTMLInline])
-    {
-        return [graphic writeBody:self];
-    }
-    
-    
-    // Indexes want <H3>s
-    NSUInteger level = [self currentHeaderLevel];
-    [self setCurrentHeaderLevel:2];
-    @try
-    {
-        // Register dependencies that come into play regardless of the route writing takes
-        [self addDependencyOnObject:graphic keyPath:@"showsCaption"];
-        
-        // <div class="graphic-container center">
-        [(SVGraphic *)graphic buildClassName:self];
-        [self startElement:@"div"];
-        
-        
-        // <div class="graphic"> or <img class="graphic">
-        [self pushClassName:@"graphic"];
-        if (![graphic captionGraphic] && [graphic isKindOfClass:[SVMediaGraphic class]]) // special case for media
-        {
-            [graphic writeBody:self];
-            [self endElement];
-            return;
-        }
-        
-        NSString *className = [(SVGraphic *)graphic inlineGraphicClassName];
-        if (className) [self pushClassName:className];
-        
-        if (![graphic isExplicitlySized])
-        {
-            NSNumber *width = [graphic containerWidth];
-            if (width)
-            {
-                NSString *style = [NSString stringWithFormat:@"width:%upx", [width unsignedIntValue]];
-                [self pushAttribute:@"style" value:style];
-            }
-        }
-        
-        [self writeGraphicBody:graphic];    // starts the element
-        [self endElement];                  // and then closes it
-        
-        
-        // Caption if requested
-        id <SVGraphic> caption = [graphic captionGraphic];
-        if (caption) // was registered as dependency at start of if block
-        {
-            [self writeGraphic:caption];
-        }
-        
-        
-        // Finish up
-        [self endElement];
-    }
-    @finally
-    {
-        [self setCurrentHeaderLevel:level];
-    }
-}
-
 - (void)writeGraphic:(id <SVGraphic>)graphic;
 {
     // Update number of graphics
@@ -530,25 +466,26 @@
     id <SVGraphicContainer> container = [self currentGraphicContainer];
     if (container)
     {
-        return [container write:self graphic:graphic];
-    }
-    
-    
-    if ([graphic isPagelet])
-    {
-        _writingPagelet = YES;
-        @try
+        if ([graphic isPagelet])
         {
-            [SVGraphic write:self pagelet:graphic];
+            _writingPagelet = YES;
+            @try
+            {
+                [container write:self graphic:graphic];
+            }
+            @finally
+            {
+                _writingPagelet = NO;
+            }
         }
-        @finally
+        else
         {
-            _writingPagelet = NO;
+            [container write:self graphic:graphic];
         }
     }
     else 
     {
-        [self writeInlineGraphic:graphic];
+        [graphic writeBody:self];
     }
 }
 
