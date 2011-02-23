@@ -11,9 +11,11 @@
 
 @interface TweetButtonInspector : SVInspectorViewController
 {
+    NSArrayController *_inspectedPagesController;
     NSTextField *_tweetTextField;
 }
 
+@property (nonatomic, retain) IBOutlet NSArrayController *inspectedPagesController;
 @property (nonatomic, retain) IBOutlet NSTextField *tweetTextField;
 
 @end
