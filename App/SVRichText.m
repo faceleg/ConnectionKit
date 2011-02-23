@@ -10,6 +10,7 @@
 
 #import "SVTextAttachment.h"
 #import "SVGraphic.h"
+#import "SVMediaGraphic.h"
 #import "SVRichTextDOMController.h"
 #import "SVHTMLTemplateParser.h"
 
@@ -241,6 +242,85 @@
 }
 
 - (void)writeText; { [self writeText:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
+
+- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+{
+    if ([graphic isPagelet])
+    {
+        //_writingPagelet = YES;
+        @try
+        {
+            [SVGraphic write:context pagelet:graphic];
+        }
+        @finally
+        {
+            //_writingPagelet = NO;
+        }
+    }
+    else 
+    {
+        if ([graphic shouldWriteHTMLInline])
+        {
+            return [graphic writeBody:context];
+        }
+        
+        
+        // Indexes want <H3>s
+        NSUInteger level = [context currentHeaderLevel];
+        [context setCurrentHeaderLevel:2];
+        @try
+        {
+            // Register dependencies that come into play regardless of the route writing takes
+            [context addDependencyOnObject:graphic keyPath:@"showsCaption"];
+            
+            // <div class="graphic-container center">
+            [(SVGraphic *)graphic buildClassName:context];
+            [context startElement:@"div"];
+            
+            
+            // <div class="graphic"> or <img class="graphic">
+            [context pushClassName:@"graphic"];
+            if (![graphic captionGraphic] && [graphic isKindOfClass:[SVMediaGraphic class]]) // special case for media
+            {
+                [graphic writeBody:context];
+                [context endElement];
+                return;
+            }
+            
+            NSString *className = [(SVGraphic *)graphic inlineGraphicClassName];
+            if (className) [context pushClassName:className];
+            
+            if (![graphic isExplicitlySized])
+            {
+                NSNumber *width = [graphic containerWidth];
+                if (width)
+                {
+                    NSString *style = [NSString stringWithFormat:@"width:%upx", [width unsignedIntValue]];
+                    [context pushAttribute:@"style" value:style];
+                }
+            }
+            
+            [context writeGraphicBody:graphic];    // starts the element
+            [context endElement];                  // and then closes it
+            
+            
+            // Caption if requested
+            id <SVGraphic> caption = [graphic captionGraphic];
+            if (caption) // was registered as dependency at start of if block
+            {
+                [context writeGraphic:caption];
+            }
+            
+            
+            // Finish up
+            [context endElement];
+        }
+        @finally
+        {
+            [context setCurrentHeaderLevel:level];
+        }
+    }
+}
 
 #pragma mark Validation
 

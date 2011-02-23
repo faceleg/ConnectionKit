@@ -84,4 +84,17 @@
 
 - (BOOL)shouldPublishEditingElementID; { return YES; }
 
+- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+{
+    //_writingPagelet = YES;
+    @try
+    {
+        [SVGraphic write:context pagelet:graphic];
+    }
+    @finally
+    {
+        //_writingPagelet = NO;
+    }
+}
+
 @end

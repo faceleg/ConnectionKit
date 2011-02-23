@@ -9,7 +9,10 @@
 #import <Cocoa/Cocoa.h>
 
 
-@protocol SVGraphicContainer
+@class SVHTMLContext;
+@protocol SVGraphic;
 
 
+@protocol SVGraphicContainer <NSObject>
+- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
 @end

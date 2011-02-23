@@ -527,6 +527,12 @@
     // Update number of graphics
     _numberOfGraphics++;
     
+    id <SVGraphicContainer> container = [self currentGraphicContainer];
+    if (container)
+    {
+        return [container write:self graphic:graphic];
+    }
+    
     
     if ([graphic isPagelet])
     {
