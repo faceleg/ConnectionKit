@@ -337,7 +337,7 @@
 			<object class="NSCustomObject" id="310719413">
 				<string key="NSClassName">SVURLFormatter</string>
 			</object>
-			<object class="NSArrayController" id="469193494">
+			<object class="NSArrayController" id="556859407">
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
 				<bool key="NSAvoidsEmptySelection">YES</bool>
@@ -407,22 +407,6 @@
 					<int key="connectionID">55</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.tweetText</string>
-						<reference key="source" ref="122320352"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="122320352"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.tweetText</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.tweetText</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">56</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">formatter</string>
 						<reference key="source" ref="122320352"/>
@@ -458,17 +442,17 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">inspectedPagesController</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="469193494"/>
+						<reference key="destination" ref="556859407"/>
 					</object>
 					<int key="connectionID">68</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">contentArray: inspectedPages</string>
-						<reference key="source" ref="469193494"/>
+						<reference key="source" ref="556859407"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="469193494"/>
+							<reference key="NSSource" ref="556859407"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">contentArray: inspectedPages</string>
 							<string key="NSBinding">contentArray</string>
@@ -725,7 +709,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">65</int>
-						<reference key="object" ref="469193494"/>
+						<reference key="object" ref="556859407"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</object>

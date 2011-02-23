@@ -11,10 +11,26 @@
 
 @implementation TweetButtonInspector
 
-- (void)updatePlaceholder
+- (NSString *)tweetPlaceholder
 {
-    NSString *title = [self.inspectedPagesController valueForKeyPath:@"selection.title"];
-    [[[self tweetTextField] cell] setPlaceholderString:title];
+    return [self.inspectedPagesController valueForKeyPath:@"selection.title"];
+}
+
+- (void)bindTweetTextField
+{
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [self tweetPlaceholder], NSNullPlaceholderBindingOption,
+                             [NSNumber numberWithBool:YES], NSConditionallySetsEditableBindingOption,
+                             nil];
+    [self.tweetTextField bind:@"value"
+                     toObject:self
+                  withKeyPath:@"inspectedObjectsController.selection.tweetText"
+                      options:options];
+}
+
+- (void)unbindTweetTextField
+{
+    [self.tweetTextField unbind:@"value"];
 }
 
 - (void)awakeFromNib
@@ -29,12 +45,14 @@
 {
     if ( [keyPath isEqualToString:@"selection.title" ] )
     {
-        [self updatePlaceholder];
+        [self unbindTweetTextField];
+        [self bindTweetTextField];
     }
 }
 
 - (void)dealloc
 {
+    [self unbindTweetTextField];
     [self.inspectedPagesController removeObserver:self forKeyPath:@"selection.title"];
     self.inspectedPagesController = nil;
     self.tweetTextField = nil;
