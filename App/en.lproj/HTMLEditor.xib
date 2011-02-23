@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="101"/>
+			<integer value="129"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -118,16 +118,16 @@
 								<object class="NSPopUpButton" key="NSToolbarItemView" id="605350875">
 									<reference key="NSNextResponder"/>
 									<int key="NSvFlags">292</int>
-									<string key="NSFrame">{{0, 14}, {139, 25}}</string>
+									<string key="NSFrame">{{0, 14}, {162, 25}}</string>
 									<reference key="NSSuperview"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSPopUpButtonCell" key="NSCell" id="764254040">
 										<int key="NSCellFlags">-2076049856</int>
-										<int key="NSCellFlags2">134350848</int>
-										<object class="NSFont" key="NSSupport" id="26">
+										<int key="NSCellFlags2">2048</int>
+										<object class="NSFont" key="NSSupport" id="485312538">
 											<string key="NSName">LucidaGrande</string>
-											<double key="NSSize">11</double>
-											<int key="NSfFlags">3100</int>
+											<double key="NSSize">13</double>
+											<int key="NSfFlags">1044</int>
 										</object>
 										<reference key="NSControlView" ref="605350875"/>
 										<int key="NSButtonFlags">-2035269377</int>
@@ -220,11 +220,7 @@
 													<reference key="NSTarget" ref="764254040"/>
 												</object>
 											</object>
-											<object class="NSFont" key="NSMenuFont">
-												<string key="NSName">LucidaGrande</string>
-												<double key="NSSize">13</double>
-												<int key="NSfFlags">1044</int>
-											</object>
+											<reference key="NSMenuFont" ref="485312538"/>
 										</object>
 										<int key="NSSelectedIndex">2</int>
 										<int key="NSPreferredEdge">1</int>
@@ -237,7 +233,7 @@
 								<nil key="NSToolbarItemTarget"/>
 								<nil key="NSToolbarItemAction"/>
 								<string key="NSToolbarItemMinSize">{119, 20}</string>
-								<string key="NSToolbarItemMaxSize">{185, 25}</string>
+								<string key="NSToolbarItemMaxSize">{215, 25}</string>
 								<bool key="NSToolbarItemEnabled">YES</bool>
 								<bool key="NSToolbarItemAutovalidates">NO</bool>
 								<int key="NSToolbarItemTag">0</int>
@@ -357,7 +353,11 @@
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134348800</int>
 								<string key="NSContents"/>
-								<reference key="NSSupport" ref="26"/>
+								<object class="NSFont" key="NSSupport" id="26">
+									<string key="NSName">LucidaGrande</string>
+									<double key="NSSize">11</double>
+									<int key="NSfFlags">3100</int>
+								</object>
 								<reference key="NSControlView" ref="906697106"/>
 								<int key="NSButtonFlags">-2033434369</int>
 								<int key="NSButtonFlags2">33</int>
