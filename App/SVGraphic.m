@@ -125,6 +125,32 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return ([self calloutWrapClassName] != nil);
 }
 
++ (void)write:(SVHTMLContext *)context pagelet:(id <SVGraphic>)graphic;
+{
+    // Pagelets are expected to have <H4> titles. #67430
+    NSUInteger level = [context currentHeaderLevel];
+    [context setCurrentHeaderLevel:4];
+    @try
+    {
+        // Pagelet
+        [context startNewline];        // needed to simulate a call to -startElement:
+        [context stopWritingInline];
+        
+        SVTemplate *template = [self template];
+        
+        SVHTMLTemplateParser *parser =
+        [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
+                                             component:graphic];
+        
+        [parser parseIntoHTMLContext:context];
+        [parser release];
+    }
+    @finally
+    {
+        [context setCurrentHeaderLevel:level];
+    }
+}
+
 - (NSString *)calloutWrapClassName; // nil if not a callout
 {
     //  We are a callout if a floated pagelet
