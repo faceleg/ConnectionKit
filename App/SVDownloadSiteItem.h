@@ -22,7 +22,7 @@
 #pragma mark Text edting
 
 // Nil; not really stored.
-@property(nonatomic, copy) NSNumber *contentType;
+@property(nonatomic, copy) NSString *contentType;
 
 @property(nonatomic, copy) NSData *lastValidMarkupDigest;   // extensible property backed
 

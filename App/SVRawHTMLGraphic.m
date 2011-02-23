@@ -138,8 +138,8 @@
 #pragma mark -
 #pragma mark Properties
 
-- (NSNumber *)contentType; { return [self valueForUndefinedKey:@"contentType"]; }
-- (void)setContentType:(NSNumber *)contentType;
+- (NSString *)contentType; { return [self valueForUndefinedKey:@"contentType"]; }
+- (void)setContentType:(NSString *)contentType;
 {
     [self setValue:contentType forUndefinedKey:@"contentType"]; 
 }

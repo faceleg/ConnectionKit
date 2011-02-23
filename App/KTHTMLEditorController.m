@@ -64,7 +64,7 @@
 @synthesize cachedLocalPrelude = _cachedLocalPrelude;
 @synthesize cachedRemotePrelude = _cachedRemotePrelude;
 @synthesize validationState = _validationState;
-@synthesize preventPreview = _preventPreview;
+@synthesize shouldPreviewWhenEditing = _shouldPreviewWhenEditing;
 @synthesize hashOfLastValidation = _hashOfLastValidation;
 @synthesize hasRemoteLoads = _hasRemoteLoads;
 
@@ -95,33 +95,51 @@
 	{
 		// Put this in designated initializer so that when dealloc happens we are guaranteed observation was happening
 		[self addObserver:self forKeyPath:@"contentType" options:0 context:@"synchronizeUIContext"];
-		[self addObserver:self forKeyPath:@"preventPreview" options:0 context:@"synchronizeUIContext"];
+		[self addObserver:self forKeyPath:@"shouldPreviewWhenEditing" options:0 context:@"synchronizeUIContext"];
 	}
 	return self;
 }
 
+- (NSArray *)contentTypeTagArray
+{
+	static NSArray *sContentTypeTagArray = nil;
+	if (!sContentTypeTagArray)
+	{
+		sContentTypeTagArray = [[NSArray alloc] initWithObjects:
+								(NSString *)kUTTypeHTML,				// yes preview
+								(NSString *)kUTTypeHTML,				// no preview
+								@"public.php-script"
+								@"com.netscape.javascript-source",
+								(NSString *)kUTTypeText,
+								nil];
+	}
+	return sContentTypeTagArray;
+}
+
 - (void)synchronizeUI
 {
-	NSMenuItem *contentTypeMenuItem = [[contentTypePopUp menu] itemWithTag:self.contentType];
-	if (contentTypeMenuItem)		// don't bother if we haven't loaded nib yet
+	NSInteger whichTag = [self.contentTypeTagArray indexOfObject:self.contentType];
+	if (NSNotFound != whichTag)
 	{
-		[contentTypeMenuItem setState:NSOnState];	// Check initially chosen one.
-		[previewMenuItem setState:(self.preventPreview ? NSOnState : NSOffState)];
-		
-		[contentTypePopUp setTitle:[contentTypeMenuItem title]];
-		[self calculateCachedPreludes];
-		[self autoValidate];
-		
-		NSString *windowTitle = nil;
-		if (nil == _title || [_title isEqualToString:@""])
+		NSMenuItem *contentTypeMenuItem = [[contentTypePopUp menu] itemWithTag:whichTag];
+		if (contentTypeMenuItem)		// don't bother if we haven't loaded nib yet
 		{
-			windowTitle = NSLocalizedString(@"Edit HTML", @"Window title");
+			[contentTypeMenuItem setState:NSOnState];	// Check initially chosen one.
+			
+			[self calculateCachedPreludes];
+			[self autoValidate];
+			
+			NSString *windowTitle = nil;
+			if (nil == _title || [_title isEqualToString:@""])
+			{
+				windowTitle = NSLocalizedString(@"Edit HTML", @"Window title");
+			}
+			else
+			{
+				windowTitle =[NSString stringWithFormat:NSLocalizedString(@"Edit \\U201C%@\\U201D HTML", @"Window title, showing title of element"), _title];
+			}
+			[[self window] setTitle:windowTitle];
 		}
-		else
-		{
-			windowTitle =[NSString stringWithFormat:NSLocalizedString(@"Edit \\U201C%@\\U201D HTML", @"Window title, showing title of element"), _title];
-		}
-		[[self window] setTitle:windowTitle];
 	}
 }
 
@@ -140,7 +158,7 @@
 -(void)	dealloc
 {
 	[self removeObserver:self forKeyPath:@"contentType"];
-	[self removeObserver:self forKeyPath:@"preventPreview"];
+	[self removeObserver:self forKeyPath:@"shouldPreviewWhenEditing"];
 
 	[[self asyncOffscreenWebViewController] stopLoading];
 	
@@ -291,30 +309,13 @@ initial syntax coloring.
 - (IBAction)  contentTypePopupChanged:(id)sender;
 {
 	NSMenuItem *selectedItem = [sender selectedItem];		// which item just got selected
-	BOOL newState = ![[sender selectedItem] state];
-	if (previewMenuItem == selectedItem)
+
+	int tag = [selectedItem tag];
+	if (tag < [self.contentTypeTagArray count])
 	{
-		self.preventPreview = newState;
-		[previewMenuItem setState:newState];	// check or un-check as appropriate
+		self.contentType = [self.contentTypeTagArray objectAtIndex:tag];
 	}
-	else
-	{
-		int i, tag = [selectedItem tag];		// state is tag minus 1
-		
-		for (i=1; i<[sender numberOfItems]; i++)	// skip item zero ("title" of drop-down)
-		{
-			NSMenuItem *thisMenuItem = [sender itemAtIndex:i];
-			int thisTag = [thisMenuItem tag];
-			if (thisTag > 0)
-			{
-				// Turn everything off except for the selected one.
-				NSCellStateValue isNewState = (thisTag == tag) ? NSOnState : NSOffState;
-				[thisMenuItem setState:isNewState];
-			}
-		}
-		self.contentType = tag;	// need to convert from 1-based tags to zero-based contentType.
-	}
-	
+	self.shouldPreviewWhenEditing = (kTagContentHTML == tag);
 }
 
 - (void)calculateCachedPreludes;
@@ -330,7 +331,7 @@ initial syntax coloring.
 	NSString *html = [textStore string];
 	NSData *currentHash = [self generateHashFromFragment:html];
 	
-	if (self.preventPreview)
+	if (!self.shouldPreviewWhenEditing)
 	{
 		self.validationState = kValidationStateDisabled;
 	}
@@ -446,10 +447,10 @@ initial syntax coloring.
         }
         
         // Store the HTML etc.
-		[self HTMLSourceObject].contentType = [NSNumber numberWithInt:self.contentType];
+		[self HTMLSourceObject].contentType = self.contentType;
 		[self HTMLSourceObject].HTMLString = [[textView textStorage] string];
 		[self HTMLSourceObject].lastValidMarkupDigest = self.hashOfLastValidation;
-		[self HTMLSourceObject].shouldPreviewWhenEditing = [NSNumber numberWithBool:!self.preventPreview];
+		[self HTMLSourceObject].shouldPreviewWhenEditing = [NSNumber numberWithBool:self.shouldPreviewWhenEditing];
 		
         // Re-enable undo registration
         if (MOC)
@@ -801,8 +802,8 @@ initial syntax coloring.
 	// load additional properties from the source object
 	
 	self.sourceCodeTemp = graphic.HTMLString;
-	self.contentType = [graphic.contentType intValue];
-	self.preventPreview = ![graphic.shouldPreviewWhenEditing boolValue];
+	self.contentType = graphic.contentType;
+	self.shouldPreviewWhenEditing = [graphic.shouldPreviewWhenEditing boolValue];
 	self.hashOfLastValidation = graphic.lastValidMarkupDigest;
 	
 	[self loadFragment:graphic.HTMLString];

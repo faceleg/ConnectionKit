@@ -15,7 +15,7 @@
 
 @interface SVRawHTMLGraphic : SVGraphic <KTHTMLSourceObject> 
 
-@property(nonatomic, copy) NSNumber *contentType;
+@property(nonatomic, copy) NSString *contentType;
 @property(nonatomic, copy) NSString *HTMLString;
 @property(nonatomic, copy) NSData *lastValidMarkupDigest;
 @property(nonatomic, copy) NSNumber *shouldPreviewWhenEditing;    // BOOL, mandatory

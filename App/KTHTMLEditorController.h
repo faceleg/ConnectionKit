@@ -17,16 +17,16 @@
 #import "KSNoCascadeWindow.h"
 
 typedef enum {
-	kContentHTML = 0,
-	kContentHTMLNoPreview,
-	kContentPHP,
-	kContentJavaScript,
-	kContentOther
-} ContentType;
+	kTagContentHTML = 0,
+	kTagContentHTMLNoPreview,
+	kTagContentPHP,
+	kTagContentJavaScript,
+	kTagContentOther
+} ContentTypeTag;
 
 @protocol KTHTMLSourceObject <NSObject>
 
-@property(nonatomic, copy) NSNumber *contentType;
+@property(nonatomic, copy) NSString *contentType;
 @property(nonatomic, copy) NSString *HTMLString;
 @property(nonatomic, copy) NSNumber *shouldPreviewWhenEditing;    // BOOL, mandatory
 @property(nonatomic, copy, readonly) NSString *typeOfFile;
@@ -53,7 +53,6 @@ typedef enum {
 	IBOutlet NSProgressIndicator*	progress;				// Progress indicator while coloring syntax.
 	IBOutlet NSTextField*			status;					// Status display for things like syntax coloring or background syntax checks.
 	IBOutlet NSPopUpButton*			contentTypePopUp;
-	IBOutlet NSMenuItem*			previewMenuItem;
 	
 @private	
     NSUndoManager                   *_undoManager;
@@ -76,11 +75,11 @@ typedef enum {
 
 		
 	// Bound Properties
-	ContentType						_contentType;
+	NSString						*_contentType;
 	NSString						*_cachedLocalPrelude;
 	NSString						*_cachedRemotePrelude;
 	ValidationState					_validationState;
-	BOOL							_preventPreview;
+	BOOL							_shouldPreviewWhenEditing;
 	NSData							*_hashOfLastValidation;
 }
 
@@ -104,11 +103,11 @@ typedef enum {
 @property (nonatomic, copy) NSString *replacementString;
 @property (nonatomic, copy) NSString *sourceCodeTemp;
 @property (nonatomic, copy) NSString *title;
-@property (nonatomic) ContentType contentType;
+@property (nonatomic, copy) NSString *contentType;
 @property (nonatomic, copy) NSString *cachedLocalPrelude;
 @property (nonatomic, copy) NSString *cachedRemotePrelude;
 @property (nonatomic) ValidationState validationState;
-@property (nonatomic) BOOL preventPreview;
+@property (nonatomic) BOOL shouldPreviewWhenEditing;
 @property (nonatomic, copy) NSData *hashOfLastValidation;
 
 @end
