@@ -141,9 +141,9 @@
     [controller awakeFromHTMLContext:self];
 }
 
-- (void)endElement;
+- (void)popElement;
 {
-    [super endElement];
+    [super popElement];
     
     // End current DOM Controller if appropriate
     NSInteger index = [_DOMControllerPoints lastIndex];
@@ -190,10 +190,18 @@
     [self startDOMController:controller];
     [controller release];
     
-    [super writeGraphic:graphic];
     
-    // Tidy up. Only pagelets need to be ended explicitly since they're written with a template
-    if ([graphic isPagelet]) [self endDOMController];
+    if ([graphic isPagelet])
+    {
+        // Pagelets are using a HTML template, so context can't track them properly. By using the private element stack API, can maniuplate for the desired result
+        [self pushElement:@"pagelet"];
+        [super writeGraphic:graphic];
+        [self popElement];
+    }
+    else
+    {
+        [super writeGraphic:graphic];
+    }
 }
 
 - (void)writeGraphicBody:(id <SVGraphic>)graphic;
