@@ -18,7 +18,6 @@
 
 @implementation SVRawHTMLGraphic 
 
-@dynamic docType;
 @dynamic HTMLString;
 @dynamic lastValidMarkupDigest;
 @dynamic shouldPreviewWhenEditing;
@@ -79,7 +78,7 @@
         [context writeHTMLString:[[[self class] placeholderTemplate] templateString]];
     }
 	
-	[context addDependencyOnObject:self keyPath:@"docType"];
+	[context addDependencyOnObject:self keyPath:@"contentType"];
     
     // Changes to any of these properties will be a visible change
     [context addDependencyOnObject:self keyPath:@"shouldPreviewWhenEditing"];
@@ -128,5 +127,27 @@
              initWithNibName:@"RawHTMLInspector" bundle:nil]
             autorelease];
 }
+
+#pragma mark -
+#pragma mark Properties
+
+- (NSNumber *)contentType; { return [self valueForUndefinedKey:@"contentType"]; }
+- (void)setContentType:(NSNumber *)contentType;
+{
+    [self setValue:contentType forUndefinedKey:@"contentType"]; 
+}
+
+- (BOOL) usesExtensiblePropertiesForUndefinedKey:(NSString *)key;
+{
+    if ([key isEqualToString:@"contentType"])
+    {
+        return YES;
+    }
+    else
+    {
+        return [super usesExtensiblePropertiesForUndefinedKey:key];
+    }
+}
+
 
 @end

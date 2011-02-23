@@ -36,6 +36,7 @@
 
 @interface KTHTMLEditorController ()
 
+- (BOOL)isHTML;
 - (void)calculateCachedPreludes;
 - (void) autoValidate;
 - (NSData *)generateHashFromFragment:(NSString *)fragment;
@@ -59,6 +60,7 @@
 @synthesize affectedCharRange = _affectedCharRange;
 @synthesize replacementString = _replacementString;
 @synthesize title = _title;
+@synthesize contentType = _contentType;
 @synthesize cachedLocalPrelude = _cachedLocalPrelude;
 @synthesize cachedRemotePrelude = _cachedRemotePrelude;
 @synthesize validationState = _validationState;
@@ -92,7 +94,7 @@
 	if ((self = [super initWithWindow:window]) != nil)
 	{
 		// Put this in designated initializer so that when dealloc happens we are guaranteed observation was happening
-		[self addObserver:self forKeyPath:@"docType" options:0 context:@"synchronizeUIContext"];
+		[self addObserver:self forKeyPath:@"contentType" options:0 context:@"synchronizeUIContext"];
 		[self addObserver:self forKeyPath:@"preventPreview" options:0 context:@"synchronizeUIContext"];
 	}
 	return self;
@@ -100,23 +102,27 @@
 
 - (void)synchronizeUI
 {
-	//[[[docTypePopUp menu] itemWithTag:self.docType+1] setState:NSOnState];	// Check initially chosen one.
-	[previewMenuItem setState:(self.preventPreview ? NSOnState : NSOffState)];
-	
-	//[docTypePopUp setTitle:[SVHTMLContext titleOfDocType:[self docType] localize:YES]];
-	[self calculateCachedPreludes];
-	[self autoValidate];
-	
-	NSString *windowTitle = nil;
-	if (nil == _title || [_title isEqualToString:@""])
+	NSMenuItem *contentTypeMenuItem = [[contentTypePopUp menu] itemWithTag:self.contentType];
+	if (contentTypeMenuItem)		// don't bother if we haven't loaded nib yet
 	{
-		windowTitle = NSLocalizedString(@"Edit HTML", @"Window title");
+		[contentTypeMenuItem setState:NSOnState];	// Check initially chosen one.
+		[previewMenuItem setState:(self.preventPreview ? NSOnState : NSOffState)];
+		
+		[contentTypePopUp setTitle:[contentTypeMenuItem title]];
+		[self calculateCachedPreludes];
+		[self autoValidate];
+		
+		NSString *windowTitle = nil;
+		if (nil == _title || [_title isEqualToString:@""])
+		{
+			windowTitle = NSLocalizedString(@"Edit HTML", @"Window title");
+		}
+		else
+		{
+			windowTitle =[NSString stringWithFormat:NSLocalizedString(@"Edit \\U201C%@\\U201D HTML", @"Window title, showing title of element"), _title];
+		}
+		[[self window] setTitle:windowTitle];
 	}
-	else
-	{
-		windowTitle =[NSString stringWithFormat:NSLocalizedString(@"Edit \\U201C%@\\U201D HTML", @"Window title, showing title of element"), _title];
-	}
-	[[self window] setTitle:windowTitle];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -133,7 +139,7 @@
 
 -(void)	dealloc
 {
-	[self removeObserver:self forKeyPath:@"docType"];
+	[self removeObserver:self forKeyPath:@"contentType"];
 	[self removeObserver:self forKeyPath:@"preventPreview"];
 
 	[[self asyncOffscreenWebViewController] stopLoading];
@@ -282,7 +288,7 @@ initial syntax coloring.
 	[self loadFragment:[[textView textStorage] string]];
 }
 
-- (IBAction) docTypePopUpChanged:(id)sender;
+- (IBAction)  contentTypePopupChanged:(id)sender;
 {
 	NSMenuItem *selectedItem = [sender selectedItem];		// which item just got selected
 	BOOL newState = ![[sender selectedItem] state];
@@ -306,7 +312,7 @@ initial syntax coloring.
 				[thisMenuItem setState:isNewState];
 			}
 		}
-		//self.docType = tag -1;	// need to convert from 1-based tags to zero-based docTypes.
+		self.contentType = tag;	// need to convert from 1-based tags to zero-based contentType.
 	}
 	
 }
@@ -440,7 +446,7 @@ initial syntax coloring.
         }
         
         // Store the HTML etc.
-		//[self HTMLSourceObject].docType = [NSNumber numberWithInt:self.docType];
+		[self HTMLSourceObject].contentType = [NSNumber numberWithInt:self.contentType];
 		[self HTMLSourceObject].HTMLString = [[textView textStorage] string];
 		[self HTMLSourceObject].lastValidMarkupDigest = self.hashOfLastValidation;
 		[self HTMLSourceObject].shouldPreviewWhenEditing = [NSNumber numberWithBool:!self.preventPreview];
@@ -795,7 +801,7 @@ initial syntax coloring.
 	// load additional properties from the source object
 	
 	self.sourceCodeTemp = graphic.HTMLString;
-	//self.docType = [graphic.docType intValue];
+	self.contentType = [graphic.contentType intValue];
 	self.preventPreview = ![graphic.shouldPreviewWhenEditing boolValue];
 	self.hashOfLastValidation = graphic.lastValidMarkupDigest;
 	

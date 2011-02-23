@@ -16,10 +16,17 @@
 #import "SVHTMLValidator.h"
 #import "KSNoCascadeWindow.h"
 
+typedef enum {
+	kContentHTML = 0,
+	kContentHTMLNoPreview,
+	kContentPHP,
+	kContentJavaScript,
+	kContentOther
+} ContentType;
 
 @protocol KTHTMLSourceObject <NSObject>
 
-@property(nonatomic, copy) NSNumber *docType;
+@property(nonatomic, copy) NSNumber *contentType;
 @property(nonatomic, copy) NSString *HTMLString;
 @property(nonatomic, copy) NSNumber *shouldPreviewWhenEditing;    // BOOL, mandatory
 @property(nonatomic, copy, readonly) NSString *typeOfFile;
@@ -45,7 +52,7 @@
 	// Not really hooked up!
 	IBOutlet NSProgressIndicator*	progress;				// Progress indicator while coloring syntax.
 	IBOutlet NSTextField*			status;					// Status display for things like syntax coloring or background syntax checks.
-	IBOutlet NSPopUpButton*			docTypePopUp;
+	IBOutlet NSPopUpButton*			contentTypePopUp;
 	IBOutlet NSMenuItem*			previewMenuItem;
 	
 @private	
@@ -69,6 +76,7 @@
 
 		
 	// Bound Properties
+	ContentType						_contentType;
 	NSString						*_cachedLocalPrelude;
 	NSString						*_cachedRemotePrelude;
 	ValidationState					_validationState;
@@ -79,7 +87,7 @@
 - (IBAction) windowHelp:(id)sender;
 - (IBAction) applyChanges:(id)sender;
 - (IBAction) validate:(id)sender;
-- (IBAction) docTypePopUpChanged:(id)sender;
+- (IBAction)  contentTypePopupChanged:(id)sender;
 
 - (BOOL) canValidate;	// for bindings
 
@@ -96,6 +104,7 @@
 @property (nonatomic, copy) NSString *replacementString;
 @property (nonatomic, copy) NSString *sourceCodeTemp;
 @property (nonatomic, copy) NSString *title;
+@property (nonatomic) ContentType contentType;
 @property (nonatomic, copy) NSString *cachedLocalPrelude;
 @property (nonatomic, copy) NSString *cachedRemotePrelude;
 @property (nonatomic) ValidationState validationState;

@@ -224,9 +224,9 @@
     [media release];
 }
 
-// No docType stored for these.  If it's an HTML page, it's encoded in the page itself.
-- (NSNumber *)docType; { return nil; }
-- (void)setDocType:(NSNumber *)docType; { }
+// No contentType stored for these.  If it's an HTML page, it's encoded in the page itself.
+- (NSNumber *)contentType; { return nil; }
+- (void)setContentType:(NSNumber *)contentType; { }
 
 - (NSString *)typeOfFile;
 {
