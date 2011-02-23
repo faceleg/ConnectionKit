@@ -461,6 +461,7 @@
         id serializedPagelet = [aGraphic serializedProperties];
         
         // Deserialize into controller
+        if (![sidebarController managedObjectContext]) [sidebarController bindContentToPage]; // #108442
         SVGraphic *pagelet = [sidebarController addObjectFromSerializedPagelet:serializedPagelet];
         if (pagelet) [sidebarPagelets addObject:pagelet];
     }
