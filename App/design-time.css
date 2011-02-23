@@ -60,10 +60,10 @@ img[width="0"], img[height="0"] { display:none; }
     font-size: 13px;
 }
 
+/* When inside a size-bound element, adjust to fill it */
 div.svx-size-bound {
     position:relative;
 }
-
 div.svx-size-bound .svx-placeholder {
     position:absolute;
     top:0px;
@@ -71,20 +71,21 @@ div.svx-size-bound .svx-placeholder {
     left:0px;
     right:0px;
 }
-
 div.svx-size-bound .svx-placeholder > div {
     position:absolute;
-    top:5px;
-    bottom:5px;
-    left:5px;
-    right:5px;
+    top:8px;
+    bottom:8px;
+    left:8px;
+    right:8px;
 }
 
 /* Drop targets get the dashed border */
-div.svx-dragging-destination > div
+div.svx-dragging-destination .svx-placeholder > div
 {
     border-color: white; 
-    border-width: medium; 
+    border-width: 4px; 
     border-style: dashed; 
-    border-radius: .75em;
+    border-radius: 16px;
+    padding-top:16px;
+    padding-bottom:16px;
 }

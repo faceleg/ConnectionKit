@@ -749,6 +749,16 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark DOM
 
+- (void)setHTMLElement:(DOMHTMLElement *)element;
+{
+    [super setHTMLElement:element];
+    
+    if ([[self registeredDraggedTypes] count])
+    {
+        [element ks_addClassName:@"svx-dragging-destination"];
+    }
+}
+
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document
 {
     [super loadHTMLElementFromDocument:document];
