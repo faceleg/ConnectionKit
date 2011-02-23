@@ -37,7 +37,14 @@
 
 - (void)writeBody:(SVHTMLContext *)context;
 {
-    [context startElement:([self shouldWriteHTMLInline] ? @"span" : @"div") bindSizeToObject:self];
+    if ([self shouldWriteHTMLInline])
+    {
+        [context startElement:@"span"];
+    }
+    else
+    {
+        [context startElement:@"div" bindSizeToObject:self];
+    }
     
     
 	// Show the real HTML if it's the pro-licensed edition publishing
