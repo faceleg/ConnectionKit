@@ -261,35 +261,62 @@
 
 
 
+/*	Does the hard graft for -publishedPathRelativeToSite and -uploadPathRelativeToSite.
+ *	Should not generally be called outside of KTPage methods.
+ */
+- (NSString *)pathRelativeToSite
+{
+	NSString *parentPath = @"";
+	if (![self isRoot])
+	{
+		parentPath = [[self parentPage] pathRelativeToSite];
+	}
+	
+	NSString *relativePath = [self filename];
+	NSString *result = @"";
+	
+	if (relativePath)
+	{
+		result = [parentPath stringByAppendingPathComponent:relativePath];
+		
+	}
+	return result;
+}
+
 - (NSURL *)_baseExampleURL;	// support. Subclasses override to be more specific if need be
 {
 	// Root is a sepcial case where we just supply the site URL
-	NSURL *result = [[[self site] hostProperties] siteURL];
-	if (!result)
+	NSURL *base = [[[self site] hostProperties] siteURL];
+	if (!base)
 	{
-		result = [NSURL URLWithString:@"http://www.example.com/"];
+		base = [NSURL URLWithString:@"http://www.example.com/"];
 	}
-	// What if this contains an index.html at the end?
+	NSString *newPath = [[base path] stringByAppendingPathComponent:[[self parentPage] pathRelativeToSite]];
+	if ([newPath isEqualToString:@"/"]) newPath = @"";
+	NSURL *result = [[[NSURL alloc] initWithScheme:[base scheme] host:[base host] path:newPath] autorelease];
 	return result;
 }
 
 - (NSString *)baseExampleURLString		// make this work for pages and other things like downloadables
 {
-	if ([self isRoot])
-    {		
-		NSURL *rootBase = [[[self site] hostProperties] siteURL];
-		if (!rootBase)
-		{
-			return NSLocalizedString(@"«unspecified»/", @"placeholder for site not yet set up for publishing.  (End with slash for URL style path)");
-		}
-		NSURL *resultURL = [self _baseExampleURL];
-		NSString *result = [resultURL absoluteString];
-		return result;
-    }
-    else
-    {
-        return [[self parentPage] baseExampleURLString];
-    }
+	NSString *result = nil;
+	NSURL *rootBase = [[[self site] hostProperties] siteURL];
+	if (!rootBase)
+	{
+		result = NSLocalizedString(@"«unspecified»", @"placeholder for site not yet set up for publishing.");
+	}
+	else
+	{
+		result = [rootBase absoluteString];
+	}
+	
+	if (![result hasSuffix:@"/"]) result = [result stringByAppendingString:@"/"];
+	NSString *path = [[self parentPage] pathRelativeToSite];
+	if (path && ![path isEqualToString:@""])
+	{
+		result = [result stringByAppendingFormat:@"%@/", path];
+	}
+	return result;
 }
 
 #pragma mark Publishing
