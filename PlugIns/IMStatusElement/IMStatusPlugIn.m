@@ -74,9 +74,9 @@
 {
     [super awakeFromNew];
     
-    self.headlineText = LocalizedStringInThisBundle(@"Chat with me", @"Short headline for badge inviting website viewer to iChat/Skype chat with the owner of the website");
-    self.offlineText = LocalizedStringInThisBundle(@"offline", @"status indicator of chat; offline or unavailable");
-    self.onlineText = LocalizedStringInThisBundle(@"online", @"status indicator of chat; online or available");
+    self.headlineText = SVLocalizedString(@"Chat with me", @"Short headline for badge inviting website viewer to iChat/Skype chat with the owner of the website");
+    self.offlineText = SVLocalizedString(@"offline", @"status indicator of chat; offline or unavailable");
+    self.onlineText = SVLocalizedString(@"online", @"status indicator of chat; online or available");
     
     // Try to set the username and service from the user's address book
     ABPerson *card = [[ABAddressBook sharedAddressBook] me];
@@ -213,7 +213,7 @@
     }
     else
     {
-        NSString *noIDMessage = LocalizedStringInThisBundle(@"(Please enter your IM username in the Inspector)", @"");
+        NSString *noIDMessage = SVLocalizedString(@"(Please enter your IM username in the Inspector)", @"");
         [context writeCharacters:noIDMessage];
     }
 
