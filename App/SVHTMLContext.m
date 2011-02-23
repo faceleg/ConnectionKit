@@ -559,6 +559,28 @@
     [_graphicContainers removeLastObject];
 }
 
+- (void)writeCalloutWithGraphics:(NSArray *)pagelets;
+{
+    // Write the opening tags
+    [self startElement:@"div"
+                idName:[[self currentDOMController] elementIdName]
+             className:@"callout-container"];
+    
+    [self startElement:@"div" className:@"callout"];
+    
+    [self startElement:@"div" className:@"callout-content"];
+    
+    
+    
+    [self writeGraphics:pagelets];    
+    
+    
+    
+    [self endElement]; // callout-content
+    [self endElement]; // callout
+    [self endElement]; // callout-container
+}
+
 #pragma mark Placeholder
 
 - (void)startPlaceholder;
@@ -1053,28 +1075,6 @@
 }
 
 #pragma mark Rich Text
-
-- (void)writeCalloutWithGraphics:(NSArray *)pagelets;
-{
-    // Write the opening tags
-    [self startElement:@"div"
-                idName:[[self currentDOMController] elementIdName]
-             className:@"callout-container"];
-    
-    [self startElement:@"div" className:@"callout"];
-    
-    [self startElement:@"div" className:@"callout-content"];
-    
-    
-    
-    [self writeGraphics:pagelets];    
-    
-    
-    
-    [self endElement]; // callout-content
-    [self endElement]; // callout
-    [self endElement]; // callout-container
-}
 
 - (void)writeAttributedHTMLString:(NSAttributedString *)attributedHTML;
 {

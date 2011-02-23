@@ -142,9 +142,12 @@ typedef enum {
 
 
 #pragma mark Graphic Containers
+
 - (id <SVGraphicContainer>)currentGraphicContainer;
 - (void)beginGraphicContainer:(id <SVGraphicContainer>)container;
 - (void)endGraphicContainer;
+
+- (void)writeCalloutWithGraphics:(NSArray *)pagelets;
 
 
 #pragma mark Metrics
@@ -241,7 +244,6 @@ typedef enum {
 
 #pragma mark Rich Text
 - (void)writeAttributedHTMLString:(NSAttributedString *)attributedHTML;
-- (void)writeCalloutWithGraphics:(NSArray *)pagelets;
 
 
 #pragma mark RSS
