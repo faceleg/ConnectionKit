@@ -120,12 +120,12 @@ static NSArray *sAltStrings = nil;
 	if (nil == sAltStrings)
 	{
 		sAltStrings = [[NSArray alloc] initWithObjects:
-			LocalizedStringInThisBundle(@"The Website Builder for the Mac - publish blogs and photos on any host", @"Sandvox link-back blurb"),
-			LocalizedStringInThisBundle(@"The easy mac web site creator - for school, family, business", @"Sandvox link-back blurb"),
-			LocalizedStringInThisBundle(@"Create websites on the Mac and host them anywhere", @"Sandvox link-back blurb"),
-			LocalizedStringInThisBundle(@"Build websites, photo albums, and blogs on the Mac", @"Sandvox link-back blurb"),
-			LocalizedStringInThisBundle(@"Build and publish a web site with your Mac - for individuals, education, and small business", @"Sandvox link-back blurb"),
-			LocalizedStringInThisBundle(@"Using your Macintosh, publish your photo album / blog / website on any ISP", @"Sandvox link-back blurb"),
+			SVLocalizedString(@"The Website Builder for the Mac - publish blogs and photos on any host", @"Sandvox link-back blurb"),
+			SVLocalizedString(@"The easy mac web site creator - for school, family, business", @"Sandvox link-back blurb"),
+			SVLocalizedString(@"Create websites on the Mac and host them anywhere", @"Sandvox link-back blurb"),
+			SVLocalizedString(@"Build websites, photo albums, and blogs on the Mac", @"Sandvox link-back blurb"),
+			SVLocalizedString(@"Build and publish a web site with your Mac - for individuals, education, and small business", @"Sandvox link-back blurb"),
+			SVLocalizedString(@"Using your Macintosh, publish your photo album / blog / website on any ISP", @"Sandvox link-back blurb"),
 			nil];
 		// Changed 9 Oct 2008 to tweak the terms a bit, just so that the phrases used will be adjusted to mix things up a bit.
 	}
@@ -134,12 +134,12 @@ static NSArray *sAltStrings = nil;
 
 - (NSString *)badgePreludeString
 {
-	return LocalizedStringInThisBundle(@"Created with", @"string that goes before badgeLinkString, for badge - always BEFORE 'Sandvox' regardless of language");
+	return SVLocalizedString(@"Created with", @"string that goes before badgeLinkString, for badge - always BEFORE 'Sandvox' regardless of language");
 }
 
 - (NSString *)badgeLinkString
 {
-	return LocalizedStringInThisBundle(@"Sandvox", @"linked text in the text badge linking back to sandvox site.  Always FOLLOWS the 'created with' regardless of language.");
+	return SVLocalizedString(@"Sandvox", @"linked text in the text badge linking back to sandvox site.  Always FOLLOWS the 'created with' regardless of language.");
 }
 
 // Use a hash to get a sort of arbitrary string for this unique document
@@ -239,7 +239,7 @@ static NSArray *sAltStrings = nil;
 	if (nil == _badgeAltString)
 	{
 		NSString *blurb = [self generateBlurbVariant:0];
-		NSString *altString = [NSString stringWithFormat:LocalizedStringInThisBundle(@"Created with Sandvox - %@",@"Alt string for sandvox badge"), blurb];			
+		NSString *altString = [NSString stringWithFormat:SVLocalizedString(@"Created with Sandvox - %@",@"Alt string for sandvox badge"), blurb];			
 		[self setBadgeAltString:altString];
 	}
 	return _badgeAltString;		// don't want to calculate all the time.  Same for a document?
@@ -251,7 +251,7 @@ static NSArray *sAltStrings = nil;
 	if (nil == _badgeTitleString)
 	{
 		NSString *blurb = [self generateBlurbVariant:1];
-		NSString *titleString = [NSString stringWithFormat:LocalizedStringInThisBundle(@"Learn about Sandvox - %@",@"title string for sandvox badge link"), blurb];			
+		NSString *titleString = [NSString stringWithFormat:SVLocalizedString(@"Learn about Sandvox - %@",@"title string for sandvox badge link"), blurb];			
 		[self setBadgeTitleString:titleString];
 	}
 	return _badgeTitleString;		// don't want to calculate all the time.  Same for a document?
