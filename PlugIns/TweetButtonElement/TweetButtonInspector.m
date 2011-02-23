@@ -13,12 +13,8 @@
 
 - (void)updatePlaceholder
 {
-    id<SVPage> inspectedPage = [[self.inspectedPagesController selectedObjects] objectAtIndex:0];
-    if ( inspectedPage )
-    {
-        NSString *title = [inspectedPage title];
-        [[[self tweetTextField] cell] setPlaceholderString:title];
-    }
+    NSString *title = [self.inspectedPagesController valueForKeyPath:@"selection.title"];
+    [[[self tweetTextField] cell] setPlaceholderString:title];
 }
 
 - (void)awakeFromNib
