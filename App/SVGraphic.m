@@ -483,6 +483,12 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return [[[self class] placeholderTemplate] templateString];
 }
 
+- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+{
+    OBASSERT([graphic shouldWriteHTMLInline]);
+    [graphic writeBody:context];
+}
+
 #pragma mark Thumbnail
 
 - (void)writeThumbnailImage:(SVHTMLContext *)context
