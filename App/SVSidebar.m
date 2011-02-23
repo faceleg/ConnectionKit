@@ -35,7 +35,9 @@
 
 - (void)writeHTML:(SVHTMLContext *)context;
 {
+    [context beginGraphicContainer:self];
     [context startSidebar:self];
+    
     {
         SVTemplate *template = [SVTemplate templateNamed:@"SidebarTemplate.html"];
         
@@ -46,7 +48,9 @@
         [parser parseIntoHTMLContext:context];
         [parser release];
     }
+    
     [context writeEndTagWithComment:@"sidebar-container"];
+    [context endGraphicContainer];
 }
 
 - (void)writeHTML; { [self writeHTML:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }

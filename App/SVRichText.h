@@ -9,12 +9,13 @@
 #import "SVContentObject.h"
 
 #import "SVGraphic.h"
+#import "SVGraphicContainer.h"
 
 
 @class SVTextAttachment;
 
 
-@interface SVRichText : SVContentObject  
+@interface SVRichText : SVContentObject <SVGraphicContainer>
 
 + (SVRichText *)insertPageletBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
 

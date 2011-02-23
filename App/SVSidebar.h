@@ -8,13 +8,16 @@
 
 #import "SVContentObject.h"
 
+#import "SVGraphicContainer.h"
+
 
 @class KTPage;
 @class SVGraphic, SVHTMLContext;
 
-@interface SVSidebar : NSManagedObject  
 
-@property (nonatomic, retain) KTPage * page;
+@interface SVSidebar : NSManagedObject <SVGraphicContainer>
+
+@property (nonatomic, retain) KTPage *page;
 
 @property(nonatomic, retain) NSSet *pagelets;   // for sorting, use SVSidebarPageletsController
 - (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error;
