@@ -21,5 +21,6 @@
 }
 
 - (IBAction)cancelMigration:(id)sender;
+- (IBAction)windowHelp:(id)sender;
 
 @end
