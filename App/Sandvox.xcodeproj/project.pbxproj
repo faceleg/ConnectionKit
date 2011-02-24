@@ -2576,6 +2576,8 @@
 		3C6B91F31186859B00EBFAA2 /* Hudson.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Hudson.xcconfig; path = ../XCode/Configurations/Hudson.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C6DB0EA1316F29A0064929E /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = en; path = en.lproj/Download.html; sourceTree = "<group>"; };
 		3C6DB0EF1316F3910064929E /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = en; path = en.lproj/LinkPageTemplate.html; sourceTree = "<group>"; };
+		3C6DB0F41316F3EC0064929E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fr; path = fr.lproj/LinkPageTemplate.html; sourceTree = "<group>"; };
+		3C6DB0F51316F4080064929E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fr; path = fr.lproj/Download.html; sourceTree = "<group>"; };
 		3C6EA9461048E4E700B0763D /* SVDesignPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignPickerController.h; sourceTree = "<group>"; };
 		3C6EA9471048E4E700B0763D /* SVDesignPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignPickerController.m; sourceTree = "<group>"; };
 		3C6EA94C1048E59300B0763D /* SVDesignBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignBrowserViewController.h; sourceTree = "<group>"; };
@@ -8171,6 +8173,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				3C6DB0EA1316F29A0064929E /* en */,
+				3C6DB0F51316F4080064929E /* fr */,
 			);
 			name = Download.html;
 			sourceTree = "<group>";
@@ -8179,6 +8182,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				3C6DB0EF1316F3910064929E /* en */,
+				3C6DB0F41316F3EC0064929E /* fr */,
 			);
 			name = LinkPageTemplate.html;
 			sourceTree = "<group>";
