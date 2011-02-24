@@ -7,20 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27091DCD13166BF1002F3C08 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27091DCC13166BF1002F3C08 /* InfoPlist.strings */; };
 		3C43BBD613075096007ED67D /* MapPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C43BBD513075096007ED67D /* MapPlugIn.m */; };
 		3C43BBEB1307513B007ED67D /* jquery.zgooglemap.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BBE91307513B007ED67D /* jquery.zgooglemap.min.js */; };
 		3C43BC0513075A09007ED67D /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC0413075A09007ED67D /* License.rtf */; };
 		3C43BC0813075A36007ED67D /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC0613075A36007ED67D /* Inspector.xib */; };
 		3C43BC2813075B38007ED67D /* toolbar_map.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC2713075B38007ED67D /* toolbar_map.tiff */; };
-		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		27091DCE13166C06002F3C08 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		27091DD213166C2E002F3C08 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* MapElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapElement_Prefix.pch; sourceTree = "<group>"; };
 		3C43BBAC13074EDB007ED67D /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C43BBAD13074EDB007ED67D /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -29,7 +30,6 @@
 		3C43BBE81307513B007ED67D /* jquery.zgooglemap.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.zgooglemap.js; sourceTree = "<group>"; };
 		3C43BBE91307513B007ED67D /* jquery.zgooglemap.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.zgooglemap.min.js; sourceTree = "<group>"; };
 		3C43BC0413075A09007ED67D /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../License.rtf; sourceTree = SOURCE_ROOT; };
-		3C43BC0713075A36007ED67D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Inspector.xib; sourceTree = "<group>"; };
 		3C43BC2713075B38007ED67D /* toolbar_map.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_map.tiff; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* MapElement.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapElement.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,7 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+				27091DCC13166BF1002F3C08 /* InfoPlist.strings */,
 				3C43BC0613075A36007ED67D /* Inspector.xib */,
 				3C43BBE81307513B007ED67D /* jquery.zgooglemap.js */,
 				3C43BBE91307513B007ED67D /* jquery.zgooglemap.min.js */,
@@ -172,6 +172,7 @@
 				Japanese,
 				French,
 				German,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* MapElement */;
 			projectDirPath = "";
@@ -187,7 +188,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
+				27091DCD13166BF1002F3C08 /* InfoPlist.strings in Resources */,
 				3C43BC0813075A36007ED67D /* Inspector.xib in Resources */,
 				3C43BBEB1307513B007ED67D /* jquery.zgooglemap.min.js in Resources */,
 				3C43BC0513075A09007ED67D /* License.rtf in Resources */,
@@ -227,10 +228,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
+		27091DCC13166BF1002F3C08 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				089C167EFE841241C02AAC07 /* English */,
+				27091DCE13166C06002F3C08 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -238,7 +239,7 @@
 		3C43BC0613075A36007ED67D /* Inspector.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3C43BC0713075A36007ED67D /* English */,
+				27091DD213166C2E002F3C08 /* en */,
 			);
 			name = Inspector.xib;
 			sourceTree = "<group>";
