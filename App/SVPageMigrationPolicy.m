@@ -52,6 +52,25 @@ typedef enum {
     return result;
 }
 
+- (NSNumber *)thumbnailTypeFromThumbnailMediaIdentifier:(NSString *)mediaIdentifier children:(NSSet *)children;
+{
+    if (mediaIdentifier)
+    {
+        return [NSNumber numberWithInt:SVThumbnailTypeCustom];
+    }
+    else
+    {
+        if ([children count])
+        {
+            return [NSNumber numberWithInt:SVThumbnailTypeFirstChildItem];
+        }
+        else
+        {
+            return [NSNumber numberWithInt:SVThumbnailTypePickFromPage];
+        }
+    }
+}
+
 - (NSNumber *)sourceCollectionSortOrderIsAscending:(NSNumber *)sOrder;
 {
     return NSBOOL([sOrder intValue] < KTCollectionSortLatestAtTop);

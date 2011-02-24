@@ -9,8 +9,5 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface SVPageMigrationPolicy : NSEntityMigrationPolicy {
-
-}
-
+@interface SVPageMigrationPolicy : NSEntityMigrationPolicy
 @end
