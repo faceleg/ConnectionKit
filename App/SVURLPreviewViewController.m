@@ -29,6 +29,14 @@
 static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewViewControllerURLObservation";
 
 
+// NSLocalizedString(@"This page is a placeholder for the file ", "String_On_DownloadTemplate")
+// NSLocalizedString(@"A link to this page will cause the file to be downloaded by the browser.", "String_On_DownloadTemplate")
+
+// NSLocalizedString(@"No URL specified", "String_On_LinkPageTemplate")
+// NSLocalizedString(@"Drag a link here or enter the URL below", "String_On_LinkPageTemplate")
+
+
+
 @interface SVURLPreviewViewController ()
 @end
 

@@ -21,9 +21,6 @@
 #import "KSURLUtilities.h"
 
 
-// NSLocalizedString(@"This page is a placeholder for the file ", "String_On_Page_Template")
-// NSLocalizedString(@"A link to this page will cause the file to be downloaded by the browser.", "String_On_Page_Template")
-
 @implementation SVDownloadSiteItem
 
 @dynamic media;
