@@ -73,6 +73,8 @@
 // Subclassers take responsibility for overriding this to push to the model
 - (void)setHTMLString:(NSString *)html attachments:(NSSet *)attachments;
 
+- (id)newHTMLWritingDOMAdaptorWithOutputStringWriter:(KSStringWriter *)stringWriter;
+
 
 #pragma mark Undo
 

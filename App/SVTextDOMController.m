@@ -206,30 +206,15 @@
     // Validate the HTML
     KSStringWriter *stringWriter = [[KSStringWriter alloc] init];
     
-    if ([self isFieldEditor])
-    {
-        SVFieldEditorHTMLWriterDOMAdapator *adaptor = [[SVFieldEditorHTMLWriterDOMAdapator alloc]
-                                                       initWithOutputStringWriter:stringWriter];
-        [adaptor setDelegate:self];
-        
-        [self writeText:adaptor];
-        
-        NSString *html = [stringWriter string];
-        [self setHTMLString:html attachments:[adaptor textAttachments]];
-    }
-    else
-    {
-        SVParagraphedHTMLWriterDOMAdaptor *adaptor = [[SVParagraphedHTMLWriterDOMAdaptor alloc]
-                                                      initWithOutputStringWriter:stringWriter];
-        
-        [adaptor setDelegate:self];
-        [adaptor setAllowsPagelets:[self allowsPagelets]];
-        
-        [self writeText:adaptor];
-        
-        NSString *html = [stringWriter string];
-        [self setHTMLString:html attachments:[adaptor textAttachments]];
-    }
+    SVFieldEditorHTMLWriterDOMAdapator *adaptor = [self newHTMLWritingDOMAdaptorWithOutputStringWriter:stringWriter];
+    
+    [adaptor setDelegate:self];
+    if (![self isFieldEditor]) [(id)adaptor setAllowsPagelets:[self allowsPagelets]];
+    
+    [self writeText:adaptor];
+    
+    NSString *html = [stringWriter string];
+    [self setHTMLString:html attachments:[adaptor textAttachments]];
     
     
     
@@ -261,6 +246,20 @@
     {
         [undoManager enableUndoRegistration];
         _isCoalescingUndo = NO;
+    }
+}
+
+- (id)newHTMLWritingDOMAdaptorWithOutputStringWriter:(KSStringWriter *)stringWriter;
+{
+    if ([self isFieldEditor])
+    {
+        return [[SVFieldEditorHTMLWriterDOMAdapator alloc]
+                initWithOutputStringWriter:stringWriter];
+    }
+    else
+    {
+        return [[SVParagraphedHTMLWriterDOMAdaptor alloc]
+                initWithOutputStringWriter:stringWriter];
     }
 }
 
