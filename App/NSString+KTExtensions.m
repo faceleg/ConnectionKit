@@ -17,6 +17,28 @@
 
 
 // TEMPORARY FOR BETA -- HOW IS NSSTRING BEING PASSED THIS METHOD?
+//
+// Stack trace:
+// #3	0x70062534 in -[NSString(KTExtensions) identifier] at NSString+KTExtensions.m:23
+// #4	0x001c9a3a in -[IMBNode isEqual:] at IMBNode.m:420. the object asked to compare to is an NSString
+// #5	0x96618d9a in CFEqual
+// #6	0x96630441 in __CFBasicHashStandardCallback
+// #7	0x9661d339 in ___CFBasicHashFindBucket1
+// #8	0x966254cc in CFBasicHashFindBucket
+// #9	0x96625393 in CFDictionaryGetValue
+// #10	0x985d88bd in -[IKCacheDatabase indexForUID:]
+// #11	0x985dcbc9 in -[IKImageCell validateDatasource]
+// #12	0x9850402e in -[IKImageBrowserCell _computeAspectRatio]
+// #13	0x98503fc0 in -[IKImageBrowserCell aspectRatio]
+// #14	0x98504537 in -[IKImageBrowserCell imageFrameForImageContainerFrame:]
+// #15	0x985062db in -[IKImageBrowserCell _computeImageFrame]
+// #16	0x98503b8d in -[IKImageBrowserCell imageFrame]
+// #17	0x985a53fe in -[IKImageBrowserView(IKImageBrowserTasks) _sizeToImportForCell:]
+// #18	0x985a5519 in -[IKImageBrowserView(IKImageBrowserTasks) _prepareThumbnailBuildersForCells:size:start:quality:rule:arrayOut:]
+// #19	0x985a3255 in -[IKImageBrowserView(IKImageBrowserTasks) prepareThumbnailBuildersForCells:size:indexes:quality:rule:]
+// #20	0x985a4f66 in -[IKImageBrowserView(IKImageBrowserTasks) performSynchronousTasksIfAny]
+// #21	0x984fae95 in -[IKImageBrowserView(ImageBrowserDrawing) drawWithCurrentRendererInRect:]
+// #22	0x984fbb12 in -[IKImageBrowserView(ImageBrowserDrawing) drawRect:]
 #ifndef VARIANT_RELEASE
 - (NSString *)identifier
 {
