@@ -240,11 +240,13 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[IMBConfig registerDefaultValues];
 		[IMBConfig setShowsGroupNodes:NO];
 	}
+#ifdef SUPPRESS_IMEDIA_PPC
 #ifndef VARIANT_RELEASE
 	else
 	{
 		NSLog(@"BETA: PPC, Not configuring iMedia");
 	}
+#endif
 #endif
 
     
