@@ -12,6 +12,7 @@
 #import "SVCalloutDOMController.h"
 #import "SVContentDOMController.h"
 #import "SVGraphicFactory.h"
+#import "SVMigrationHTMLWriterDOMAdaptor.h"
 #import "KTPage.h"
 #import "SVSidebarPageletsController.h"
 #import "SVTextAttachment.h"
@@ -717,6 +718,22 @@
     [context close];
     [htmlString release];
     [context release];
+}
+
+#pragma mark Editing
+
+- (id)newHTMLWritingDOMAdaptorWithOutputStringWriter:(KSStringWriter *)stringWriter;
+{
+    SVArticle *article = [self representedObject];
+    
+    if ([[[[article page] extensibleProperties] valueForKey:@"migrateRawHTMLOnNextEdit"] boolValue])
+    {
+        return [[SVMigrationHTMLWriterDOMAdaptor alloc] initWithOutputStringWriter:stringWriter];
+    }
+    else
+    {
+        return [super newHTMLWritingDOMAdaptorWithOutputStringWriter:stringWriter];
+    }
 }
 
 #pragma mark Moving
