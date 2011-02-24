@@ -673,6 +673,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 				[menuItem setTitle:NSLocalizedString(@"Show Media Browser", @"menu title to show inspector panel")];
 			}
 		}
+#ifdef SUPPRESS_IMEDIA_PPC
 		else
 		{
 			result = NO;		// no imedia browser on PPC for now ... crashing a lot!
@@ -680,6 +681,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 				NSLog(@"BETA: validate iMedia item FALSE for being on PPC");
 #endif
 		}
+#endif
     }
 	else if (action == @selector(showReleaseNotes:))
 	{
