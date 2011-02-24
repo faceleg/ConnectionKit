@@ -750,14 +750,6 @@
 					<int key="connectionID">131</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">previewMenuItem</string>
-						<reference key="source" ref="132596718"/>
-						<reference key="destination" ref="423738931"/>
-					</object>
-					<int key="connectionID">137</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">hidden: hasRemoteLoads</string>
 						<reference key="source" ref="787445062"/>
