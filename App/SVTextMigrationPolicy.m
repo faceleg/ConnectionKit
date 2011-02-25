@@ -284,7 +284,7 @@
     for (i = 0; i < count; i++)
     {
         NSManagedObject *anAttachment = [attachments objectAtIndex:i];
-        if ([[anAttachment valueForKey:@"location"] shortValue] >= 32767) break;    // we've reached the embedded images
+        //if ([[anAttachment valueForKey:@"location"] shortValue] >= 32767) break;    // we've reached the embedded images
         
         // Correct location in case source document was a little wonky
         
