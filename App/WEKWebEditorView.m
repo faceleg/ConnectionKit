@@ -1322,7 +1322,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     NSPoint eventLocation = [event locationInWindow];
     WEKWebEditorItem *item = [self selectedItemAtPoint:[self convertPoint:eventLocation fromView:nil]
                                                 handle:NULL];
-    OBASSERT(item);
+    if(!item) return;
+    
     
     NSView *docView = [[item HTMLElement] documentView];
     NSPoint dragLocation = [docView convertPoint:eventLocation fromView:nil];
