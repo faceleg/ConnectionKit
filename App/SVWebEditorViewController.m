@@ -266,7 +266,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     // Record location
-    _visibleRect = [[webEditor documentView] visibleRect];
+    _visibleRect = (page == [self loadedPage] ? [[webEditor documentView] visibleRect] : NSZeroRect);
     
     
 	// Figure out the URL to use. 
