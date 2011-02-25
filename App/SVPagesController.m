@@ -145,10 +145,10 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     // Search for a KTPage
     KTPage *predecessor = nil;
-    NSUInteger i, count = [pagesByDate count];
-    for (i = 0; i < count; i++)
+    NSEnumerator *pagesEnumerator = [pagesByDate objectEnumerator];
+    
+    while (predecessor = [pagesEnumerator nextObject])
     {
-        predecessor = [pagesByDate objectAtIndex:i];
         if ([predecessor isKindOfClass:[KTPage class]]) break;
     }
     
