@@ -1251,6 +1251,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
             }
         }
     }
+#ifdef MigrateEmbeddedImagesOnDemand
     else if ([[[request URL] scheme] isEqualToString:@"svxmedia"])
     {
         NSString *graphicID = [[request URL] ks_lastPathComponent];
@@ -1271,6 +1272,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
             request = result;
         }
     }
+#endif
     else
     {
         for (SVMedia *media in [[self HTMLContext] media])
