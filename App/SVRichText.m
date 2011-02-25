@@ -9,7 +9,6 @@
 #import "SVRichText.h"
 
 #import "SVTextAttachment.h"
-#import "SVGraphic.h"
 #import "SVMediaGraphic.h"
 #import "SVRichTextDOMController.h"
 #import "SVHTMLTemplateParser.h"
@@ -245,7 +244,8 @@
 
 - (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
 {
-    OBASSERT(![graphic isPagelet]);
+    // Callouts should always be written by a dedicated SVCallout. Checking -isPagelet is just a little too flaky. #109587
+    OBASSERT(![(SVGraphic *)graphic isCallout]);
     
     
     if ([graphic shouldWriteHTMLInline])
