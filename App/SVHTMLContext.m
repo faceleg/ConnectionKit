@@ -358,7 +358,19 @@
 {
     if (![self isForPublishing])
     {
-        [self writeStyleElementWithCSSString:css];
+        if (_headerMarkupIndex != NSNotFound)
+        {
+            KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
+            
+            [writer writeStyleElementWithCSSString:css];
+            [writer writeString:@"\n"];
+            
+            [writer release];
+        }
+        else
+        {
+            [self writeStyleElementWithCSSString:css];
+        };
     }
 }
 
