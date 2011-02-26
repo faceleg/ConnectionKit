@@ -16,9 +16,11 @@
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "SVRichText.h"
+#import "SVSizeBindingDOMController.h"
 #import "SVTemplate.h"
 #import "SVTextAttachment.h"
 #import "SVTitleBox.h"
+#import "SVWebEditorHTMLContext.h"
 
 #import "KSWebLocation.h"
 #import "KSURLUtilities.h"
@@ -306,7 +308,25 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return result;
 }
 
-- (BOOL)isExplicitlySized; { return NO; }
+- (BOOL)isExplicitlySized;
+{
+    // See if our HTML includes size-binding anywhere
+    SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
+    [self writeBody:context];
+    
+    BOOL result = NO;
+    for (WEKWebEditorItem *anItem in [[context rootDOMController] enumerator])
+    {
+        if ([anItem isKindOfClass:[SVSizeBindingDOMController class]])
+        {
+            result = YES;
+            break;
+        }
+    }
+    
+    [context release];
+    return result;
+}
 
 - (NSNumber *)contentWidth;
 {

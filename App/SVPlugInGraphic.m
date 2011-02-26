@@ -345,8 +345,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (void)makeOriginalSize; { [[self plugIn] makeOriginalSize]; }
 
-- (BOOL)isExplicitlySized; { return [[[self plugIn] class] isExplicitlySized]; }
-
 - (NSUInteger)minWidth; { return [[[self plugIn] minWidth] unsignedIntegerValue]; }
 - (NSUInteger)minHeight; { return [[[self plugIn] minHeight] unsignedIntegerValue]; }
 - (NSNumber *)maxHeight; { return nil; }
