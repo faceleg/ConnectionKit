@@ -728,7 +728,10 @@
     
     if ([[[[article page] extensibleProperties] valueForKey:@"migrateRawHTMLOnNextEdit"] boolValue])
     {
-        return [[SVMigrationHTMLWriterDOMAdaptor alloc] initWithOutputStringWriter:stringWriter];
+        SVMigrationHTMLWriterDOMAdaptor *result = [[SVMigrationHTMLWriterDOMAdaptor alloc] initWithOutputStringWriter:stringWriter];
+        
+        [result setArticleDOMController:self];
+        return result;
     }
     else
     {
