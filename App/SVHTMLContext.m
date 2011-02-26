@@ -514,7 +514,7 @@
         // Graphic body
         if (![graphic isPagelet] && ![graphic shouldWriteHTMLInline])
         {
-            [self startElement:@"div"]; // <div class="graphic">, will be closed by caller
+            [self startElement:@"div"]; // <div class="graphic">
             
             
             [self pushClassName:@"figure-content"];  // identifies for #84956
@@ -537,6 +537,11 @@
                 // Was probably caused by a plug-in. Log and soldier on. #88083
                 NSLog(@"Writing graphic body raised exception, probably due to incorrect use of HTML Writer");
             }
+        }
+        
+        if (![graphic isPagelet] && ![graphic shouldWriteHTMLInline])
+        {
+            [self endElement];
         }
     }
     @finally

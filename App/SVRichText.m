@@ -289,8 +289,7 @@
             }
         }
         
-        [context writeGraphicBody:graphic];    // starts the element
-        [context endElement];                  // and then closes it
+        [context writeGraphicBody:graphic];
         
         
         // Caption if requested
