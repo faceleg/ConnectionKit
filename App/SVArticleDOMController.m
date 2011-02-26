@@ -577,7 +577,7 @@
             [result setEndBefore:penultimateNode]; changed = YES;
             
             penultimateNode = [penultimateNode previousSibling];
-            controller = [self hitTestDOMNode:penultimateNode];
+            controller = (penultimateNode ? [self hitTestDOMNode:penultimateNode] : self);
         }
     }
     
