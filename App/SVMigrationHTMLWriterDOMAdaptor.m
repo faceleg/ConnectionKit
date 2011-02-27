@@ -11,6 +11,7 @@
 #import "SVArticleDOMController.h"
 #import "SVGraphicFactory.h"
 #import "SVRawHTMLGraphic.h"
+#import "SVWebEditorHTMLContext.h"
 
 
 @implementation SVMigrationHTMLWriterDOMAdaptor
@@ -43,6 +44,10 @@
         [graphic setHTMLString:html];
         
         
+        // Create text attachment too
+        [SVTextAttachment textAttachmentWithGraphic:graphic];
+        
+        
         // Create controller for graphic and hook up to imported node
         SVDOMController *controller = [graphic newDOMController];
         [controller awakeFromHTMLContext:[[self articleDOMController] HTMLContext]];
@@ -58,7 +63,7 @@
         
         
         // Write the replacement
-        [controller writeAttributedHTML:self];
+        OBASSERT([controller writeAttributedHTML:self]);
         
         
         return [[controller HTMLElement] nextSibling];
