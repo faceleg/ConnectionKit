@@ -29,45 +29,52 @@
 
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 {
-    if ([self DOMElementContainsAWebEditorItem:element])    // can't be converted to raw HTML
+    // <FONT> tags are to be converted by super
+    if ([[element tagName] isEqualToString:@"FONT"])
     {
         return [super handleInvalidDOMElement:element];
     }
-    else
+    
+    
+    // Can't convert to raw HTML if contains an embedded image
+    if ([self DOMElementContainsAWebEditorItem:element])
     {
-        // Import as Raw HTML
-        NSString *html = [KSXMLWriterDOMAdaptor outerHTMLOfDOMElement:element];
-        
-        SVRawHTMLGraphic *graphic = [[SVGraphicFactory rawHTMLFactory] insertNewGraphicInManagedObjectContext:
-                                     [[[self articleDOMController] representedObject] managedObjectContext]];
-        
-        [graphic setHTMLString:html];
-        
-        
-        // Create text attachment too
-        [SVTextAttachment textAttachmentWithGraphic:graphic];
-        
-        
-        // Create controller for graphic and hook up to imported node
-        SVDOMController *controller = [graphic newDOMController];
-        [controller awakeFromHTMLContext:[[self articleDOMController] HTMLContext]];
-        [controller setHTMLElement:(DOMHTMLElement *)element];
-        
-        [[self articleDOMController] addChildWebEditorItem:controller];
-        OBASSERT([[self articleDOMController] hitTestDOMNode:element] == controller);
-        [controller release];
-        
-        
-        // Generate new DOM node to match what model would normally generate
-        [controller performSelector:@selector(update)];
-        
-        
-        // Write the replacement
-        OBASSERT([controller writeAttributedHTML:self]);
-        
-        
-        return [[controller HTMLElement] nextSibling];
+        return [super handleInvalidDOMElement:element];
     }
+    
+    
+    // Import as Raw HTML
+    NSString *html = [KSXMLWriterDOMAdaptor outerHTMLOfDOMElement:element];
+    
+    SVRawHTMLGraphic *graphic = [[SVGraphicFactory rawHTMLFactory] insertNewGraphicInManagedObjectContext:
+                                 [[[self articleDOMController] representedObject] managedObjectContext]];
+    
+    [graphic setHTMLString:html];
+    
+    
+    // Create text attachment too
+    [SVTextAttachment textAttachmentWithGraphic:graphic];
+    
+    
+    // Create controller for graphic and hook up to imported node
+    SVDOMController *controller = [graphic newDOMController];
+    [controller awakeFromHTMLContext:[[self articleDOMController] HTMLContext]];
+    [controller setHTMLElement:(DOMHTMLElement *)element];
+    
+    [[self articleDOMController] addChildWebEditorItem:controller];
+    OBASSERT([[self articleDOMController] hitTestDOMNode:element] == controller);
+    [controller release];
+    
+    
+    // Generate new DOM node to match what model would normally generate
+    [controller performSelector:@selector(update)];
+    
+    
+    // Write the replacement
+    OBASSERT([controller writeAttributedHTML:self]);
+    
+    
+    return [[controller HTMLElement] nextSibling];
 }
 
 @synthesize articleDOMController = _articleController;
