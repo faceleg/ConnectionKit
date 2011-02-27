@@ -307,6 +307,5 @@
 @synthesize openLinksInNewWindow = _openLinksInNewWindow;
 @synthesize max = _max;
 @synthesize summaryChars = _summaryChars;
-@synthesize key = _key;
 @synthesize feedURL = _feedURL;
 @end

@@ -43,14 +43,13 @@
     BOOL        _openLinksInNewWindow;
     NSUInteger  _max;
     NSUInteger  _summaryChars;
-    NSString    *_key;
     NSURL       *_feedURL;
 }
 
 @property(nonatomic) BOOL openLinksInNewWindow;
 @property(nonatomic) NSUInteger max;
 @property(nonatomic) NSUInteger summaryChars;
-@property(nonatomic, copy) NSString *key;
+@property(nonatomic, readonly) NSString *key;
 @property(nonatomic, copy) NSURL *feedURL;
 @end
 
