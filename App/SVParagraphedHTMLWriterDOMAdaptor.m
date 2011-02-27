@@ -166,7 +166,11 @@
     // Only a handul of block-level elements are supported. They can only appear at the top-level, or directly inside a list item
     if ([tagName isEqualToString:@"P"] ||
         [tagName isEqualToString:@"UL"] ||
-        [tagName isEqualToString:@"OL"])
+        [tagName isEqualToString:@"OL"] ||
+        [tagName isEqualToString:@"H3"] ||
+        [tagName isEqualToString:@"H4"] ||
+        [tagName isEqualToString:@"H5"] ||
+        [tagName isEqualToString:@"H6"])
     {
         result = ([[self XMLWriter] openElementsCount] == 0 ||
                   [[[self XMLWriter] topElement] isEqualToStringCaseInsensitive:@"LI"]);
@@ -194,7 +198,11 @@
                    [tagName isEqualToString:@"P"] ||
                    [tagName isEqualToString:@"A"] ||
                    [tagName isEqualToString:@"UL"] ||
-                   [tagName isEqualToString:@"OL"]);
+                   [tagName isEqualToString:@"OL"] ||
+                   [tagName isEqualToString:@"H3"] ||
+                   [tagName isEqualToString:@"H4"] ||
+                   [tagName isEqualToString:@"H5"] ||
+                   [tagName isEqualToString:@"H6"]);
     return result;
 }
 
