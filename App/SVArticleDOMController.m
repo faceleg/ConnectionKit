@@ -722,6 +722,7 @@
 
 #pragma mark Editing
 
+#ifdef DEBUG
 - (id)newHTMLWritingDOMAdaptorWithOutputStringWriter:(KSStringWriter *)stringWriter;
 {
     SVArticle *article = [self representedObject];
@@ -738,6 +739,7 @@
         return [super newHTMLWritingDOMAdaptorWithOutputStringWriter:stringWriter];
     }
 }
+#endif
 
 #pragma mark Moving
 
