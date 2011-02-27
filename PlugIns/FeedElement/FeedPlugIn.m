@@ -217,6 +217,89 @@
     return NO;    
 }
 
+- (void)awakeFromSourceProperties:(NSDictionary *)properties
+{
+    // handle Feed Element
+    if ( [[properties objectForKey:@"pluginIdentifier"] isEqualToString:@"sandvox.FeedElement"] )
+    {
+        if ( [properties objectForKey:@"openLinksInNewWindow"] )
+        {
+            self.openLinksInNewWindow = [[properties objectForKey:@"openLinksInNewWindow"] boolValue];
+        }
+        if ( [properties objectForKey:@"max"] )
+        {
+            self.max = [[properties objectForKey:@"max"] unsignedIntegerValue];
+        }
+        if ( [properties objectForKey:@"summaryChars"] )
+        {
+            self.summaryChars = [[properties objectForKey:@"summaryChars"] unsignedIntegerValue];
+        }
+        if ( [properties objectForKey:@"url"] )
+        {
+            self.feedURL = [NSURL URLWithString:[properties objectForKey:@"url"]];
+        }
+    }
+    // handle Digg Element
+    if ( [[properties objectForKey:@"pluginIdentifier"] isEqualToString:@"sandvox.DiggElement"] )
+    {
+        NSLog(@"Digg Elements are not yet converted.");
+    }
+}
+
+// available things we can set
+//@property(nonatomic) BOOL openLinksInNewWindow;
+//@property(nonatomic) NSUInteger max;
+//@property(nonatomic) NSUInteger summaryChars;
+//@property(nonatomic, copy) NSString *key;
+//@property(nonatomic, copy) NSURL *feedURL;
+
+// sample import of RSS feed
+//2011-02-27 13:05:30.419 Sandvox[82677:9f03] awakeFromSourceProperties: {
+//    introductionHTML = <null>;
+//    location = 1;
+//    max = 20;
+//    openLinksInNewWindow = 1;
+//    ordering = 0;
+//    plugin = <null>;
+//    pluginIdentifier = "sandvox.FeedElement";
+//    pluginVersion = "1.6.8";
+//    prefersBottom = 0;
+//    shouldPropagate = 1;
+//    showBorder = 0;
+//    summaryChars = 15;
+//    titleHTML = "RSS Feed";
+//    titleLinkURLPath = <null>;
+//    uniqueID = ED177128E4464FDCBCC3;
+//    url = "feed://www.karelia.com/news/index.xml";
+//}
+
+// sample import of Digg pagelet
+//2011-02-27 12:50:49.346 Sandvox[82677:5f03] awakeFromSourceProperties: {
+//    diggCategory = "all stories";
+//    diggCount = 1;
+//    diggDescriptions = 1;
+//    diggStoryPromotion = 0;
+//    diggType = 0;
+//    diggUser = kevin;
+//    diggUserOptionString = popular;
+//    diggUserOptions = 0;
+//    introductionHTML = <null>;
+//    location = 1;
+//    maximumStories = 10;
+//    openLinksInNewWindow = 1;
+//    ordering = 0;
+//    plugin = <null>;
+//    pluginIdentifier = "sandvox.DiggElement";
+//    pluginVersion = "1.6.8";
+//    prefersBottom = 0;
+//    shouldPropagate = 1;
+//    showBorder = 0;
+//    titleHTML = "My Digg Links";
+//    titleLinkURLPath = <null>;
+//    uniqueID = 1B0F673AF0AF49E0AEE5;
+//    }
+//    
+//
 
 #pragma mark -
 #pragma mark Properties
