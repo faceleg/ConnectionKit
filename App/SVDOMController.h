@@ -169,6 +169,7 @@
 
 
 #pragma mark Dependencies
+- (BOOL)isObservingDependencies;
 - (void)startObservingDependencies; // recursive
 - (void)stopObservingDependencies;  // recursive
 

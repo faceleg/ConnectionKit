@@ -317,6 +317,8 @@
 
 - (void)removeAllDependencies; { [_dependenciesTracker removeAllDependencies]; }
 
+- (BOOL)isObservingDependencies; { return [_dependenciesTracker isObservingDependencies]; }
+
 - (void)startObservingDependencies;
 {
     [_dependenciesTracker startObservingDependencies];
@@ -327,6 +329,17 @@
 {
     [_dependenciesTracker stopObservingDependencies];
     [super stopObservingDependencies]; // recurse
+}
+
+- (void)itemWillMoveToParentWebEditorItem:(WEKWebEditorItem *)newParentItem;
+{
+    [super itemWillMoveToParentWebEditorItem:newParentItem];
+    
+    // Turn off dependencies before move to match parent
+    if (![newParentItem isObservingDependencies])
+    {
+        [self stopObservingDependencies];
+    }
 }
 
 #pragma mark Sidebar
@@ -880,6 +893,12 @@
 - (SVWebEditorHTMLContext *)HTMLContext { return nil; }
 
 #pragma mark Dependencies
+
+- (BOOL)isObservingDependencies;
+{
+    WEKWebEditorItem *parent = [self parentWebEditorItem];
+    return (parent ? [parent isObservingDependencies] : YES);
+}
 
 - (void)startObservingDependencies;
 {
