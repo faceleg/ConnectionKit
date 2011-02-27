@@ -219,6 +219,7 @@
 
 - (void)awakeFromSourceProperties:(NSDictionary *)properties
 {
+    [super awakeFromSourceProperties:properties];
     // handle Feed Element
     if ( [[properties objectForKey:@"pluginIdentifier"] isEqualToString:@"sandvox.FeedElement"] )
     {
