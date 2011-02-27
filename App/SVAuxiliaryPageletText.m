@@ -42,6 +42,7 @@
 }
 
 - (BOOL)isPagelet; { return NO; }
+- (BOOL)isCallout; { return NO; }
 - (BOOL)shouldWriteHTMLInline; { return YES; }
 
 #pragma mark Metrics
