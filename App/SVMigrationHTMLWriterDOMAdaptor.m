@@ -29,12 +29,20 @@
 
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 {
-    // <FONT> tags are to be converted by super
-    if ([[element tagName] isEqualToString:@"FONT"])
+    // super will convert styling tags to <em> etc.
+    NSString *tagName = [element tagName];
+    if ([tagName isEqualToString:@"FONT"] ||    
+        [tagName isEqualToString:@"I"] ||
+        [tagName isEqualToString:@"B"])
     {
         return [super handleInvalidDOMElement:element];
     }
     
+    // If the element is invalid just because it's in the wrong location, let super take care of repositioning
+    if ([[self class] validateElement:tagName])
+    {
+        return [super handleInvalidDOMElement:element];
+    }
     
     // Can't convert to raw HTML if contains an embedded image
     if ([self DOMElementContainsAWebEditorItem:element])
