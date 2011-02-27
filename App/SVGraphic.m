@@ -312,6 +312,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 {
     // See if our HTML includes size-binding anywhere
     SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
+    [[context rootDOMController] stopObservingDependencies];
     [self writeBody:context];
     
     BOOL result = NO;
