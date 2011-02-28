@@ -476,7 +476,7 @@
         {
             // Search up to find the highest item
             WEKWebEditorItem *parent = [item parentWebEditorItem];
-            while (parent != self && parent != [parent calloutDOMController])
+            while ([parent representedObject] == anObject)
             {
                 item = parent; parent = [item parentWebEditorItem];
             }
