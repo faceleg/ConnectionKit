@@ -14,6 +14,7 @@
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
+#import "BDAlias.h"
 #import "KSExtensibleManagedObject.h"
 
 
@@ -28,33 +29,54 @@
     if (!mediaFile) return NO; 
     
     
-    
-    // Locate file on disk
-    NSString *filename = [mediaFile valueForKey:@"filename"];
-    NSURL *url = [manager sourceURLOfMediaWithFilename:filename];
-    NSURL *dURL = [manager destinationURLOfMediaWithFilename:filename];
-    
-    // Copy media. Might well fail, but if so:
-    // A) There's nothing user can really do to fix it
-    // B) Failure might be because file is already copied
-    [[NSFileManager defaultManager] copyItemAtPath:[url path] toPath:[dURL path] error:NULL];
-    
-    
-    
     // Create new media record to match
-    SVMedia *media = [[SVMedia alloc] initByReferencingURL:dURL];
-    
     NSManagedObject *result = [NSEntityDescription insertNewObjectForEntityForName:[mapping destinationEntityName]
                                                             inManagedObjectContext:[manager destinationContext]];
     
-    [result setValue:filename forKey:@"filename"];
     
-    NSString *preferredFilename = [mediaFile valueForKey:@"sourceFilename"];
-    if (!preferredFilename)
+    // Locate file on disk
+    if ([[[mediaFile entity] name] isEqualToString:@"InDocumentMediaFile"])
     {
-        preferredFilename = filename;
+        NSString *filename = [mediaFile valueForKey:@"filename"];
+        NSURL *url = [manager sourceURLOfMediaWithFilename:filename];
+        NSURL *dURL = [manager destinationURLOfMediaWithFilename:filename];
+        
+        // Copy media. Might well fail, but if so:
+        // A) There's nothing user can really do to fix it
+        // B) Failure might be because file is already copied
+        [[NSFileManager defaultManager] copyItemAtPath:[url path] toPath:[dURL path] error:NULL];
+        
+        
+        
+        // Create new media record to match
+        SVMedia *media = [[SVMedia alloc] initByReferencingURL:dURL];
+        
+        NSManagedObject *result = [NSEntityDescription insertNewObjectForEntityForName:[mapping destinationEntityName]
+                                                                inManagedObjectContext:[manager destinationContext]];
+        
+        [result setValue:filename forKey:@"filename"];
+        
+        NSString *preferredFilename = [mediaFile valueForKey:@"sourceFilename"];
+        if (!preferredFilename)
+        {
+            preferredFilename = filename;
+        }
+        [result setValue:preferredFilename forKey:@"preferredFilename"];
+        
+        
+        [media release];
     }
-    [result setValue:preferredFilename forKey:@"preferredFilename"];
+    else if ([[[mediaFile entity] name] isEqualToString:@"ExternalMediaFile"])
+    {
+        NSData *aliasData = [mediaFile valueForKey:@"aliasData"];
+        [result setValue:aliasData forKey:@"aliasData"];
+        
+        NSString *preferredFilename = [[[BDAlias aliasWithData:aliasData] lastKnownPath] lastPathComponent];
+        OBASSERT(preferredFilename);
+        [result setValue:preferredFilename forKey:@"preferredFilename"];
+        
+        [result setValue:NSBOOL(NO) forKey:@"shouldCopyFileIntoDocument"];
+    }
     
     
     // Also record old ID in case anything else needs it
@@ -66,7 +88,6 @@
     
     // Finish up
     if (sInstance) [manager associateSourceInstance:sInstance withDestinationInstance:result forEntityMapping:mapping];
-    [media release];
     
     return result;
 }
