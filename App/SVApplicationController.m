@@ -94,9 +94,13 @@ IMPLEMENTATION NOTES & CAUTIONS:
 // NSLocalizedString(@"To enable DISQUS, enter the shortname of this site into the Comments Inspector", "Prompt in webview")
 // NSLocalizedString(@"Disqus Comments", "String_On_Page_Template -- text for link on a blog posting")
 
-// Intense Debtate
+// Intense Debate
 // NSLocalizedString(@"To enable IntenseDebate, enter the Account ID of this site into the Comments Inspector", "Prompt in webview")
 // NSLocalizedString(@"IntenseDebate Comments", "String_On_Page_Template -- text for link on a blog posting")
+
+// Facebook Comments
+// NSLocalizedString(@"To enable Facebook Comments, enter the App ID of this site into the Comments Inspector", "Prompt in webview")
+// NSLocalizedString(@"Facebook Comments", "String_On_Page_Template -- text for link on a blog posting")
 
 
 // Enable this to get an Apple Design Awards Build, pre-licensed.  ALSO DEFINE AN EXPIRATION, DUDE!

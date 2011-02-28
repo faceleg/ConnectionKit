@@ -477,11 +477,17 @@
 	return (KTCommentsProviderJSKit == [[self commentsProvider] unsignedIntValue]);
 }
 
+- (BOOL)wantsFacebookComments
+{
+    return (KTCommentsProviderFacebookComments == [[self commentsProvider] unsignedIntValue]);
+}
+
 - (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key
 {
     if ( [key isEqualToString:@"disqusShortName"]
         || [key isEqualToString:@"IntenseDebateAccountID"]
-        || [key isEqualToString:@"JSKitModeratorEmail"] )
+        || [key isEqualToString:@"JSKitModeratorEmail"] 
+        || [key isEqualToString:@"facebookAppID"] )
     {
         return YES;
     }
@@ -546,6 +552,25 @@
         [self removeExtensiblePropertyForKey:@"IntenseDebateAccountID"];
     }
     [self didChangeValueForKey:@"IntenseDebateAccountID"];
+}
+
+- (NSString *)facebookAppID
+{
+    return [self extensiblePropertyForKey:@"facebookAppID"];
+}
+
+- (void)setFacebookAppID:(NSString *)aString
+{
+    [self willChangeValueForKey:@"facebookAppID"];
+    if ( aString )
+    {
+        [self setExtensibleProperty:aString forKey:@"facebookAppID"];
+    }
+    else 
+    {
+        [self removeExtensiblePropertyForKey:@"facebookAppID"];
+    }
+    [self didChangeValueForKey:@"facebookAppID"];
 }
 
 #pragma mark Placeholder Image

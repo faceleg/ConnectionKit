@@ -91,6 +91,7 @@
 - (BOOL)wantsHaloscan;  // for backward compatibility with KTCommentsProvider enum
 - (BOOL)wantsIntenseDebate;
 - (BOOL)wantsJSKit;
+- (BOOL)wantsFacebookComments;
 
 // extensible properties
 - (NSString *)disqusShortName;
@@ -101,6 +102,8 @@
 
 - (NSString *)IntenseDebateAccountID;
 - (void)setIntenseDebateAccountID:(NSString *)aString;
+
+- (NSString *)facebookAppID;
 
 #pragma mark Placeholder Image
 - (SVMediaRecord *)makePlaceholdImageMediaWithEntityName:(NSString *)entityName;

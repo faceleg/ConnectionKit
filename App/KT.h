@@ -26,7 +26,8 @@ typedef enum {
 	KTCommentsProviderHaloscan,
 	KTCommentsProviderJSKit,
 	KTCommentsProviderDisqus,
-	KTCommentsProviderIntenseDebate
+	KTCommentsProviderIntenseDebate,
+    KTCommentsProviderFacebookComments
 } KTCommentsProvider;
 
 // How to summarize a collection (for its index), based on its contents
