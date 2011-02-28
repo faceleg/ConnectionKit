@@ -23,6 +23,6 @@
 @end
 
 
-@interface SVGraphicDOMController (SVGraphicContainerDOMController)
+@interface WEKWebEditorItem (SVGraphicContainerDOMController)
 - (WEKWebEditorItem <SVGraphicContainerDOMController> *)graphicContainerDOMController;
 @end

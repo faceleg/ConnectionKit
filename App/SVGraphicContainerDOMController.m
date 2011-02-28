@@ -9,7 +9,7 @@
 #import "SVGraphicContainerDOMController.h"
 
 
-@implementation SVGraphicDOMController (SVGraphicContainerDOMController)
+@implementation WEKWebEditorItem (SVGraphicContainerDOMController)
 
 - (WEKWebEditorItem <SVGraphicContainerDOMController> *)graphicContainerDOMController;
 {
