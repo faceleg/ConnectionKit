@@ -687,7 +687,18 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 {
     if ([[pasteboard types] containsObject:@"com.karelia.html+graphics"])
     {
-        [SVAttributedHTMLWriter writeDOMRange:[[self webEditor] selectedDOMRange]
+        DOMRange *selection = [self selectedDOMRange];
+        OBASSERT(selection);
+        
+        // It's possible that WebKit has adjusted the selection slightly to be smaller than the selected item. If so, correct by copying the item
+        WEKWebEditorItem *item = [[self webEditor] selectedItem];
+        if (![selection containsNode:[item selectableDOMElement]])
+        {
+            selection = [item selectableDOMRange];
+            OBASSERT(selection);
+        }
+        
+        [SVAttributedHTMLWriter writeDOMRange:selection
                                  toPasteboard:pasteboard
                            graphicControllers:[self childWebEditorItems]];
     }
