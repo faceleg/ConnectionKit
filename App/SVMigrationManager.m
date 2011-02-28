@@ -20,6 +20,7 @@
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
+#import "NSError+Karelia.h"
 #import "KSExtensibleManagedObject.h"
 #import "KSURLUtilities.h"
 
@@ -269,6 +270,22 @@
     [_mediaContext release];
     
     return result;
+}
+
+- (BOOL)migrateStoreFromURL:(NSURL *)sourceURL type:(NSString *)sStoreType options:(NSDictionary *)sOptions withMappingModel:(NSMappingModel *)mappings toDestinationURL:(NSURL *)dURL destinationType:(NSString *)dStoreType destinationOptions:(NSDictionary *)dOptions error:(NSError **)outError;
+{
+    @try
+    {
+        return [super migrateStoreFromURL:sourceURL type:sStoreType options:sOptions withMappingModel:mappings toDestinationURL:dURL destinationType:dStoreType destinationOptions:dOptions error:outError];
+    }
+    @catch (NSException *exception)
+    {
+        NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSMigrationError localizedDescription:[exception reason]];
+        [self cancelMigrationWithError:error];
+        if (outError) *outError = error;
+    }
+    
+    return NO;
 }
 
 #pragma mark Media
