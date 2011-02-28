@@ -10,6 +10,7 @@
 #import "WEKWebEditorView.h"
 
 #import "NSColor+Karelia.h"
+#import "NSString+Karelia.h"
 #import "DOMNode+Karelia.h"
 
 
