@@ -774,7 +774,22 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         {
             // Replace with placeholder
             NSString *placeholderHTML = [[self representedObject] placeholderHTMLString];
-            [[self HTMLElement] setInnerHTML:placeholderHTML];
+            
+            NSArray *children = [self childWebEditorItems];
+            switch ([children count])
+            {
+                case 0:
+                    [[self HTMLElement] setInnerHTML:placeholderHTML];
+                    break;
+            
+                case 1:
+                    OBASSERT([[[children objectAtIndex:0] childWebEditorItems] count] <= 1);
+                    [[[children objectAtIndex:0] HTMLElement] setInnerHTML:placeholderHTML];
+                    break;
+                    
+                default:
+                    OBASSERT_NOT_REACHED("Invisible graphic with complex child DOM controllers");
+            }
         }
     }
 }
