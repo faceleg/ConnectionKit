@@ -3143,7 +3143,7 @@
 		CEFDA58B12EA397F00D3A6CD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/GraphicInspector.strings; sourceTree = "<group>"; };
 		CEFDA58D12EA397F00D3A6CD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/HostSetup.strings; sourceTree = "<group>"; };
 		CEFDA58F12EA397F00D3A6CD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/HTMLEditor.strings; sourceTree = "<group>"; };
-		CEFDA59112EA397F00D3A6CD /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEFDA59112EA397F00D3A6CD /* fr */ = {isa = PBXFileReference; fileEncoding = 2415919360; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEFDA59312EA397F00D3A6CD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KTDocument.strings; sourceTree = "<group>"; };
 		CEFDA59512EA397F00D3A6CD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KTTranscript.strings; sourceTree = "<group>"; };
 		CEFDA59712EA397F00D3A6CD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KTTransfer.strings; sourceTree = "<group>"; };
