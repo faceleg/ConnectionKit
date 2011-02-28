@@ -73,6 +73,8 @@
 - (IBAction)closeSheet:(id)sender;
 - (IBAction)windowHelp:(id)sender;
 
-- (IBAction)getFacebookAppID:(id)sender;
+- (IBAction)visitDisqus:(id)sender;
+- (IBAction)visitFacebook:(id)sender;
+- (IBAction)visitIntenseDebate:(id)sender;
 
 @end

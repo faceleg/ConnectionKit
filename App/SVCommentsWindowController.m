@@ -59,9 +59,20 @@
     [[NSApp delegate] showHelpPage:@"Comments"];    // HELPSTRING
 }
 
-- (IBAction)getFacebookAppID:(id)sender
+- (IBAction)visitDisqus:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://disqus.com/admin/register/"]];
+}
+
+- (IBAction)visitFacebook:(id)sender
 {
     [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://developers.facebook.com/setup/"]];
 }
+
+- (IBAction)visitIntenseDebate:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://intensedebate.com/signup"]];
+}
+
 
 @end
