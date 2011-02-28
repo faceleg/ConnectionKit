@@ -49,11 +49,6 @@
         
         
         // Create new media record to match
-        SVMedia *media = [[SVMedia alloc] initByReferencingURL:dURL];
-        
-        NSManagedObject *result = [NSEntityDescription insertNewObjectForEntityForName:[mapping destinationEntityName]
-                                                                inManagedObjectContext:[manager destinationContext]];
-        
         [result setValue:filename forKey:@"filename"];
         
         NSString *preferredFilename = [mediaFile valueForKey:@"sourceFilename"];
@@ -61,10 +56,8 @@
         {
             preferredFilename = filename;
         }
+        OBASSERT(preferredFilename);
         [result setValue:preferredFilename forKey:@"preferredFilename"];
-        
-        
-        [media release];
     }
     else if ([[[mediaFile entity] name] isEqualToString:@"ExternalMediaFile"])
     {
