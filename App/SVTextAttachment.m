@@ -313,6 +313,7 @@
     
     // Graphic
     NSDictionary *serializedGraphic = [propertyList valueForKeyPath:@"graphic"];
+    if (!serializedGraphic) serializedGraphic = propertyList;
     
     SVGraphic *graphic = [SVGraphic graphicWithSerializedProperties:serializedGraphic
                                      insertIntoManagedObjectContext:[self managedObjectContext]];
