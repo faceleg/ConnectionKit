@@ -6,8 +6,8 @@
 //  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
-// Sandvox 2 supports three comment providers: Disqus, Intense Debate, and JS-Kit/Echo
-//  any existing Haloscan or JS-Kit account information in 1.x documents should be converted to Echo
+// Sandvox 2 supports three comment providers: Disqus, Intense Debate, and Facebook Comments
+//  support for Haloscan/JS-Kit/Echo has been dropped
 
 // Disqus is far and away the cleanest implementation from a Sandvox user's standpoint
 // Intense Debate is nice and has a wealth of features, but installation is somewhat tedious and confusion-prone
@@ -29,6 +29,13 @@
 //  e.g., var idcomments_acct = '534f11196811abd2d2d9418c16fe2cd7';
 //  once logged in, you can get your site account id via <http://intensedebate.com/sitekey/>
 //  the tricky part is that we need the site account id, not the site key, to make the generic install work
+
+// Facebook Comments <http://developers.facebook.com/docs/reference/plugins/comments/>
+//  Facebook Comments are intriguing in that they automatically include a like button and can cross-post
+//  to the poster's Facebook page. The only trick is that the Sandvox User must obtain an "App ID" for
+//  their site and registration for this happens through the Facebook Developer's page and may be a tad
+//  intimidating for our users. We'll need careful documentation walking them through this: it's really
+//  not bad if you have some help.
 
 // JS-Kit is now called Echo Live <http://aboutecho.com/>
 //  JS-Kit requires registration of the site URL on their website
