@@ -10,6 +10,7 @@
 #import "Debug.h"
 #import "KTMaster.h"
 #import "KSAppDelegate.h"
+#import "NSWorkspace+Karelia.h"
 
 
 @implementation SVCommentsWindowController
@@ -56,6 +57,11 @@
 - (IBAction)windowHelp:(id)sender
 {
     [[NSApp delegate] showHelpPage:@"Comments"];    // HELPSTRING
+}
+
+- (IBAction)getFacebookAppID:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://developers.facebook.com/setup/"]];
 }
 
 @end

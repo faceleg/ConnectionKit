@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="2"/>
+			<integer value="84"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -329,7 +329,7 @@
 															<object class="NSTextView" id="765757820">
 																<reference key="NSNextResponder" ref="578407148"/>
 																<int key="NSvFlags">2322</int>
-																<string key="NSFrameSize">{312, 39}</string>
+																<string key="NSFrame">{{0, 9}, {312, 30}}</string>
 																<reference key="NSSuperview" ref="578407148"/>
 																<object class="NSTextContainer" key="NSTextContainer" id="355341275">
 																	<object class="NSLayoutManager" key="NSLayoutManager">
@@ -608,7 +608,7 @@
 															<object class="NSTextView" id="857996564">
 																<reference key="NSNextResponder" ref="247402172"/>
 																<int key="NSvFlags">2322</int>
-																<string key="NSFrameSize">{312, 39}</string>
+																<string key="NSFrame">{{0, -3}, {312, 42}}</string>
 																<reference key="NSSuperview" ref="247402172"/>
 																<object class="NSTextContainer" key="NSTextContainer" id="651186152">
 																	<object class="NSLayoutManager" key="NSLayoutManager">
@@ -965,11 +965,7 @@ aXMgc2l0ZS4gUmVxdWlyZXMgRmFjZWJvb2sgYWNjb3VudC4gA</bytes>
 													<int key="NSCellFlags">-2080244224</int>
 													<int key="NSCellFlags2">134217728</int>
 													<string key="NSContents">Get an ID…</string>
-													<object class="NSFont" key="NSSupport">
-														<string key="NSName">LucidaGrande</string>
-														<double key="NSSize">12</double>
-														<int key="NSfFlags">4883</int>
-													</object>
+													<reference key="NSSupport" ref="894490460"/>
 													<reference key="NSControlView" ref="79312381"/>
 													<int key="NSButtonFlags">-2038021889</int>
 													<int key="NSButtonFlags2">164</int>
@@ -1282,6 +1278,14 @@ aXMgc2l0ZS4gUmVxdWlyZXMgRmFjZWJvb2sgYWNjb3VudC4gA</bytes>
 						</object>
 					</object>
 					<int key="connectionID">95</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">getFacebookAppID:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="79312381"/>
+					</object>
+					<int key="connectionID">100</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1864,9 +1868,9 @@ aXMgc2l0ZS4gUmVxdWlyZXMgRmFjZWJvb2sgYWNjb3VudC4gA</bytes>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>{{458, 768}, {489, 207}}</string>
+					<string>{{458, 649}, {489, 207}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{458, 768}, {489, 207}}</string>
+					<string>{{458, 649}, {489, 207}}</string>
 					<boolean value="NO"/>
 					<string>{196, 240}</string>
 					<string>{{202, 428}, {480, 270}}</string>
@@ -2003,7 +2007,7 @@ aXMgc2l0ZS4gUmVxdWlyZXMgRmFjZWJvb2sgYWNjb3VudC4gA</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">99</int>
+			<int key="maxID">100</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2315,12 +2319,14 @@ aXMgc2l0ZS4gUmVxdWlyZXMgRmFjZWJvb2sgYWNjb3VudC4gA</bytes>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>closeSheet:</string>
 							<string>configureComments:</string>
+							<string>getFacebookAppID:</string>
 							<string>windowHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
 							<string>NSWindowController</string>
+							<string>id</string>
 							<string>id</string>
 						</object>
 					</object>
@@ -2330,6 +2336,7 @@ aXMgc2l0ZS4gUmVxdWlyZXMgRmFjZWJvb2sgYWNjb3VudC4gA</bytes>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>closeSheet:</string>
 							<string>configureComments:</string>
+							<string>getFacebookAppID:</string>
 							<string>windowHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -2341,6 +2348,10 @@ aXMgc2l0ZS4gUmVxdWlyZXMgRmFjZWJvb2sgYWNjb3VudC4gA</bytes>
 							<object class="IBActionInfo">
 								<string key="name">configureComments:</string>
 								<string key="candidateClassName">NSWindowController</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">getFacebookAppID:</string>
+								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">windowHelp:</string>

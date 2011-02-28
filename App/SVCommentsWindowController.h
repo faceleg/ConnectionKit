@@ -73,4 +73,6 @@
 - (IBAction)closeSheet:(id)sender;
 - (IBAction)windowHelp:(id)sender;
 
+- (IBAction)getFacebookAppID:(id)sender;
+
 @end
