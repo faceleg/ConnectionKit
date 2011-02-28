@@ -276,18 +276,22 @@
         // Prepare to write HTML
         NSMutableString *editingHTML = [[NSMutableString alloc] init];
         SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:editingHTML
-                                                               inheritFromContext:[self HTMLContext]];
+                                                                            inheritFromContext:[self HTMLContext]];
         
         
         // Try to de-archive custom HTML
+        SVArticle *article = [self representedObject];
+        
         NSAttributedString *attributedHTML = [NSAttributedString
                                               attributedHTMLStringFromPasteboard:pasteboard
-                                              insertAttachmentsIntoManagedObjectContext:[[self representedObject] managedObjectContext]];
+                                              insertAttachmentsIntoManagedObjectContext:[article managedObjectContext]];
         
         if (attributedHTML)
         {
             // Generate HTML for the DOM
+            [context beginGraphicContainer:article];
             [context writeAttributedHTMLString:attributedHTML];
+            [context endGraphicContainer];
         }
         
         
