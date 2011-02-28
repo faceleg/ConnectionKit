@@ -130,7 +130,7 @@
         [[self childWebEditorItems] makeObjectsPerformSelector:_cmd withObject:document];
         
         
-        if (![[self representedObject] shouldPublishEditingElementID])
+        if (element && ![[self representedObject] shouldPublishEditingElementID])
         {
             // Ideally, as we're clearing out value from the DOM, should also stop referencing it ourselves. If an update occurs, the id should be regenerated. This isn't quite working yet though.
             [self setElementIdName:nil];
