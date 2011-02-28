@@ -264,96 +264,23 @@
                     replacingDOMRange:(DOMRange *)range
                           givenAction:(WebViewInsertAction)action;
 {
-    // When moving an inline element, want to actually do that move
+    // Strip out <br class="Apple-interchange-newline" />
+    // WebKit inserts these when creating a WebArchive out of something it thinks deserves them (display:block elements I believe). Thus, we strip back out since messes up formatting.
+    DOMNodeIterator *iterator = [[node ownerDocument] createNodeIterator:node whatToShow:DOM_SHOW_ELEMENT filter:nil expandEntityReferences:NO];
     
-    BOOL result = YES;
-    
-    
-    WEKWebEditorView *webEditor = [self webEditor];
-    NSPasteboard *pasteboard = [webEditor insertionPasteboard];
-    if (pasteboard)
+    DOMElement *aNode;
+    while (aNode = (DOMElement *)[iterator nextNode])
     {
-        // Prepare to write HTML
-        NSMutableString *editingHTML = [[NSMutableString alloc] init];
-        SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:editingHTML
-                                                                            inheritFromContext:[self HTMLContext]];
-        
-        
-        // Try to de-archive custom HTML
-        SVArticle *article = [self representedObject];
-        
-        NSAttributedString *attributedHTML = [NSAttributedString
-                                              attributedHTMLStringFromPasteboard:pasteboard
-                                              insertAttachmentsIntoManagedObjectContext:[article managedObjectContext]];
-        
-        if (attributedHTML)
+        if ([[aNode getAttribute:@"class"] isEqualToString:@"Apple-interchange-newline"])
         {
-            // Generate HTML for the DOM
-            [context beginGraphicContainer:article];
-            [context writeAttributedHTMLString:attributedHTML];
-            [context endGraphicContainer];
+            [[aNode parentNode] removeChild:aNode];
         }
-        
-        
-        
-        
-        // Insert HTML into the DOM
-        if ([editingHTML length])
-        {
-            DOMHTMLDocument *domDoc = (DOMHTMLDocument *)[node ownerDocument];
-            
-            DOMDocumentFragment *fragment = [domDoc
-                                             createDocumentFragmentWithMarkupString:editingHTML
-                                             baseURL:nil];
-            
-            [[node mutableChildDOMNodes] removeAllObjects];
-            [node appendChildNodes:[fragment childNodes]];
-            
-            
-            // Remove source dragged items if they came from us. No need to call -didChangeText as the insertion will do that
-            if (action == WebViewInsertActionDropped) [webEditor removeDraggedItems];
-            
-            
-            // Insert controllers. They will be hooked up lazily by -hitTestDOMNode:
-            for (WEKWebEditorItem *anItem in [[context rootDOMController] childWebEditorItems])
-            {
-                [self addChildWebEditorItem:anItem];
-            }
-        }
-        
-        [context release];
-        [editingHTML release];
     }
     
-    
-    if (result)
-    {
-        // Strip out <br class="Apple-interchange-newline" />
-        // WebKit inserts these when creating a WebArchive out of something it thinks deserves them (display:block elements I believe). Thus, we strip back out since messes up formatting.
-        DOMNodeIterator *iterator = [[node ownerDocument] createNodeIterator:node whatToShow:DOM_SHOW_ELEMENT filter:nil expandEntityReferences:NO];
-        
-        DOMElement *aNode;
-        while (aNode = (DOMElement *)[iterator nextNode])
-        {
-            if ([[aNode getAttribute:@"class"] isEqualToString:@"Apple-interchange-newline"])
-            {
-                [[aNode parentNode] removeChild:aNode];
-            }
-        }
-        
-        [iterator detach];
-    }
+    [iterator detach];
     
     
-    // Pretend we Inserted nothing. MUST supply empty text node otherwise WebKit interprets as a paragraph break for some reason
-    if (!result)
-    {
-        [[node mutableChildDOMNodes] removeAllObjects];
-        [node appendChild:[[node ownerDocument] createTextNode:@""]];
-        result = YES;
-    }
-    
-    if (result) result = [super webEditorTextShouldInsertNode:node replacingDOMRange:range givenAction:action];
+    BOOL result = [super webEditorTextShouldInsertNode:node replacingDOMRange:range givenAction:action];
     return result;
 }
 

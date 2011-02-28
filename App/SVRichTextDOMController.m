@@ -181,6 +181,72 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Responding to Changes
 
+- (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node
+                    replacingDOMRange:(DOMRange *)range
+                          givenAction:(WebViewInsertAction)action;
+{
+    // When moving an inline element, want to actually do that move
+    
+    WEKWebEditorView *webEditor = [self webEditor];
+    NSPasteboard *pasteboard = [webEditor insertionPasteboard];
+    if (pasteboard)
+    {
+        // Prepare to write HTML
+        NSMutableString *editingHTML = [[NSMutableString alloc] init];
+        SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:editingHTML
+                                                                            inheritFromContext:[self HTMLContext]];
+        
+        
+        // Try to de-archive custom HTML
+        SVRichText *text = [self representedObject];
+        
+        NSAttributedString *attributedHTML = [NSAttributedString
+                                              attributedHTMLStringFromPasteboard:pasteboard
+                                              insertAttachmentsIntoManagedObjectContext:[text managedObjectContext]];
+        
+        if (attributedHTML)
+        {
+            // Generate HTML for the DOM
+            [context beginGraphicContainer:text];
+            [context writeAttributedHTMLString:attributedHTML];
+            [context endGraphicContainer];
+        }
+        
+        
+        
+        
+        // Insert HTML into the DOM
+        if ([editingHTML length])
+        {
+            DOMHTMLDocument *domDoc = (DOMHTMLDocument *)[node ownerDocument];
+            
+            DOMDocumentFragment *fragment = [domDoc
+                                             createDocumentFragmentWithMarkupString:editingHTML
+                                             baseURL:nil];
+            
+            [[node mutableChildDOMNodes] removeAllObjects];
+            [node appendChildNodes:[fragment childNodes]];
+            
+            
+            // Remove source dragged items if they came from us. No need to call -didChangeText as the insertion will do that
+            if (action == WebViewInsertActionDropped) [webEditor removeDraggedItems];
+            
+            
+            // Insert controllers. They will be hooked up lazily by -hitTestDOMNode:
+            for (WEKWebEditorItem *anItem in [[context rootDOMController] childWebEditorItems])
+            {
+                [self addChildWebEditorItem:anItem];
+            }
+        }
+        
+        [context release];
+        [editingHTML release];
+    }
+    
+    
+    return [super webEditorTextShouldInsertNode:node replacingDOMRange:range givenAction:action];
+}
+
 - (void)webEditorTextDidChange;
 {    
     _isUpdating = YES;
