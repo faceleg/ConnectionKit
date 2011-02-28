@@ -109,8 +109,6 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 @property(nonatomic, copy, readonly) NSArray *editingItems;
 
-- (BOOL)shouldTrySelectingDOMElementInline:(DOMElement *)element;
-
 
 #pragma mark Editing
 

@@ -830,6 +830,12 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return result;
 }
 
+- (BOOL)shouldTrySelectingInline;
+{
+    if ([[self representedObject] shouldWriteHTMLInline]) return YES;
+    return [super shouldTrySelectingInline];
+}
+
 #pragma mark Drag & Drop
 
 - (void) setRepresentedObject:(id)object;

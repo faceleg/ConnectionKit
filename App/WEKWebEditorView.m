@@ -679,10 +679,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     // Try to match WebView selection to item when reasonable
-    DOMElement *domElement = [item selectableDOMElement];
-    
-    if ([self shouldTrySelectingDOMElementInline:domElement])
+    if ([item shouldTrySelectingInline])
     {
+        DOMElement *domElement = [item selectableDOMElement];
         DOMRange *range = [[domElement ownerDocument] createRange];
         [range selectNode:domElement];
         [self setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
@@ -690,16 +689,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // Was it a success though?
         if (![[self selectedDOMRange] collapsed]) return;
     }
-}
-
-- (BOOL)shouldTrySelectingDOMElementInline:(DOMElement *)element;
-{
-    // Whether selecting the element should be inline (set the WebView's selection) or not (no WebView selection)
-    BOOL result = ([[element tagName] isEqualToString:@"IMG"] &&
-                   ![[[element className] componentsSeparatedByWhitespace] containsObject:@"graphic"] &&
-                   [(DOMHTMLElement *)element isContentEditable]);
-    
-    return result;
 }
 
 @synthesize editingItems = _selectionParentItems;
@@ -1452,8 +1441,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
             [self selectItem:item event:event];
             
             // If the item is non-inline, simulate -acceptsFirstResponder by making self the first responder
-            DOMHTMLElement *element = [item HTMLElement];
-            if (![self shouldTrySelectingDOMElementInline:element] || ![element isContentEditable])
+            if (![item shouldTrySelectingInline] || ![[item HTMLElement] isContentEditable])
             {
                 [[self window] makeFirstResponder:self];
             }
@@ -2067,7 +2055,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 WEKWebEditorItem *item = [self selectableItemForDOMNode:aNode];
                 if (item)
                 {
-                    if ([self shouldTrySelectingDOMElementInline:[item selectableDOMElement]])
+                    if ([item shouldTrySelectingInline])
                     {
                         [range selectNode:aNode]; rangeEdited = YES;
                         break;
@@ -2101,7 +2089,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 WEKWebEditorItem *item = [self selectableItemForDOMNode:aNode];
                 if (item)
                 {
-                    if ([self shouldTrySelectingDOMElementInline:[item selectableDOMElement]])
+                    if ([item shouldTrySelectingInline])
                     {
                         [range selectNode:aNode]; rangeEdited = YES;
                         break;

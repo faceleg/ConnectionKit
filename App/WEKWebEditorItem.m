@@ -256,6 +256,19 @@
 
 - (DOMElement *)selectableDOMElement; { return nil; }
 
+- (BOOL)shouldTrySelectingInline;
+{
+    // Whether selecting the element should be inline (set the WebView's selection) or not (no WebView selection)
+    
+    DOMHTMLElement *element = (id)[self selectableDOMElement];
+    
+    BOOL result = ([[element tagName] isEqualToString:@"IMG"] &&
+                   ![[[element className] componentsSeparatedByWhitespace] containsObject:@"graphic"] &&
+                   [element isContentEditable]);
+    
+    return result;
+}
+
 - (void)updateToReflectSelection;
 {
 }
