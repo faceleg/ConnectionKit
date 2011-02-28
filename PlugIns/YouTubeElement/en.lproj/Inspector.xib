@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="532"/>
+			<integer value="7"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -167,7 +167,7 @@
 					<object class="NSMatrix" id="533155529">
 						<reference key="NSNextResponder" ref="717826297"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{69, 57}, {170, 108}}</string>
+						<string key="NSFrame">{{69, 57}, {151, 108}}</string>
 						<reference key="NSSuperview" ref="717826297"/>
 						<bool key="NSEnabled">YES</bool>
 						<int key="NSNumRows">6</int>
@@ -195,9 +195,9 @@
 								<int key="NSPeriodicInterval">25</int>
 							</object>
 							<object class="NSButtonCell" id="483114823">
-								<int key="NSCellFlags">-2080244224</int>
+								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Related Videos</string>
+								<string key="NSContents">Include Related Videos</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="533155529"/>
 								<int key="NSButtonFlags">1211912703</int>
@@ -260,7 +260,7 @@
 								<int key="NSPeriodicInterval">25</int>
 							</object>
 						</object>
-						<string key="NSCellSize">{170, 18}</string>
+						<string key="NSCellSize">{151, 18}</string>
 						<string key="NSIntercellSpacing">{0, 0}</string>
 						<int key="NSMatrixFlags">-2080366592</int>
 						<nil key="NSCellClass"/>
@@ -276,8 +276,8 @@
 							<int key="NSPeriodicDelay">200</int>
 							<int key="NSPeriodicInterval">25</int>
 						</object>
-						<int key="NSSelectedRow">-1</int>
-						<int key="NSSelectedCol">-1</int>
+						<int key="NSSelectedRow">1</int>
+						<reference key="NSSelectedCell" ref="483114823"/>
 						<reference key="NSBackgroundColor" ref="641998819"/>
 						<reference key="NSCellBackgroundColor" ref="641998819"/>
 					</object>
@@ -1013,7 +1013,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{651, 463}, {230, 293}}</string>
+					<string>{{492, 463}, {230, 293}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 				</object>
