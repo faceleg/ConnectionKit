@@ -573,6 +573,21 @@
     [self didChangeValueForKey:@"facebookAppID"];
 }
 
+- (NSString *)fbNumberOfPosts
+{
+    return @"10";
+}
+
+- (NSString *)fbPublishFeed
+{
+    return @"true";
+}
+
+- (NSString *)fbWidth
+{
+    return @"425";
+}
+
 #pragma mark Placeholder Image
 
 - (SVMediaRecord *)makePlaceholdImageMediaWithEntityName:(NSString *)entityName;

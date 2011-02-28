@@ -104,6 +104,9 @@
 - (void)setIntenseDebateAccountID:(NSString *)aString;
 
 - (NSString *)facebookAppID;
+- (NSString *)fbNumberOfPosts;
+- (NSString *)fbPublishFeed;
+- (NSString *)fbWidth;
 
 #pragma mark Placeholder Image
 - (SVMediaRecord *)makePlaceholdImageMediaWithEntityName:(NSString *)entityName;
