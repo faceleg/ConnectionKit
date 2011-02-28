@@ -167,10 +167,10 @@
 					<object class="NSMatrix" id="533155529">
 						<reference key="NSNextResponder" ref="717826297"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{69, 57}, {151, 108}}</string>
+						<string key="NSFrame">{{69, 73}, {151, 90}}</string>
 						<reference key="NSSuperview" ref="717826297"/>
 						<bool key="NSEnabled">YES</bool>
-						<int key="NSNumRows">6</int>
+						<int key="NSNumRows">5</int>
 						<int key="NSNumCols">1</int>
 						<object class="NSMutableArray" key="NSCells">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -246,19 +246,6 @@
 								<int key="NSPeriodicDelay">200</int>
 								<int key="NSPeriodicInterval">25</int>
 							</object>
-							<object class="NSButtonCell" id="886264262">
-								<int key="NSCellFlags">67239424</int>
-								<int key="NSCellFlags2">131072</int>
-								<string key="NSContents">Use HTML5 Player</string>
-								<reference key="NSSupport" ref="26"/>
-								<reference key="NSControlView" ref="533155529"/>
-								<int key="NSButtonFlags">1211912703</int>
-								<int key="NSButtonFlags2">2</int>
-								<reference key="NSAlternateImage" ref="763374957"/>
-								<string key="NSAlternateContents"/>
-								<int key="NSPeriodicDelay">200</int>
-								<int key="NSPeriodicInterval">25</int>
-							</object>
 						</object>
 						<string key="NSCellSize">{151, 18}</string>
 						<string key="NSIntercellSpacing">{0, 0}</string>
@@ -276,8 +263,8 @@
 							<int key="NSPeriodicDelay">200</int>
 							<int key="NSPeriodicInterval">25</int>
 						</object>
-						<int key="NSSelectedRow">1</int>
-						<reference key="NSSelectedCell" ref="483114823"/>
+						<int key="NSSelectedRow">-1</int>
+						<int key="NSSelectedCol">-1</int>
 						<reference key="NSBackgroundColor" ref="641998819"/>
 						<reference key="NSCellBackgroundColor" ref="641998819"/>
 					</object>
@@ -616,22 +603,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.useIFrame</string>
-						<reference key="source" ref="886264262"/>
-						<reference key="destination" ref="217433952"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="886264262"/>
-							<reference key="NSDestination" ref="217433952"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.useIFrame</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.useIFrame</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">557</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: inspectedObjectsController.selection.useIFrame</string>
 						<reference key="source" ref="481413878"/>
 						<reference key="destination" ref="217433952"/>
@@ -804,7 +775,6 @@
 							<reference ref="534324659"/>
 							<reference ref="360979401"/>
 							<reference ref="94432564"/>
-							<reference ref="886264262"/>
 						</object>
 						<reference key="parent" ref="717826297"/>
 					</object>
@@ -913,11 +883,6 @@
 						<int key="objectID">553</int>
 						<reference key="object" ref="427138602"/>
 						<reference key="parent" ref="717826297"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">556</int>
-						<reference key="object" ref="886264262"/>
-						<reference key="parent" ref="533155529"/>
 					</object>
 				</object>
 			</object>
