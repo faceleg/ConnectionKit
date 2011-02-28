@@ -55,7 +55,7 @@
     return [NSArray arrayWithObjects:
             @"feedURL", 
             @"max", 
-            @"key", 
+//            @"key", 
             @"openLinksInNewWindow", 
             @"summaryChars", 
             nil];
