@@ -453,9 +453,17 @@
     if ([webEditor shouldChangeText:self])
     {
         NSArray *selection = [self selectedItems];
-        for (SVDOMController *anItem in selection)
+        for (SVGraphicDOMController *anItem in selection)
         {
-            [anItem delete];
+            // Only graphics can be deleted with -delete. #108128
+            if ([anItem graphicContainerDOMController] == [anItem parentWebEditorItem])
+            {
+                [anItem delete];
+            }
+            else
+            {
+                [[[self webEditorViewController] graphicsController] removeObject:[anItem representedObject]];
+            }
         }
         
         [webEditor didChangeText];
