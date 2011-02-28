@@ -391,13 +391,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
  */
 - (void)selectItem:(WEKWebEditorItem *)item event:(NSEvent *)event
 {
-    NSArray *currentSelection = [self selectedItems];
-    BOOL itemIsSelected = [currentSelection containsObjectIdenticalTo:item];
     
     
     // Depending on the command key, add/remove from the selection, or become the selection. 
     if ([event modifierFlags] & NSCommandKeyMask)
     {
+        NSArray *currentSelection = [self selectedItems];
+        BOOL itemIsSelected = [currentSelection containsObjectIdenticalTo:item];
+        
         if (itemIsSelected)
         {
             [self deselectItem:item isUIAction:YES];
@@ -427,10 +428,28 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     else
     {
+        // Is it possible for this event to start editing of the item?
+        DOMRange *currentSelection = [self selectedDOMRange];
+        DOMRange *selectableRange = [item selectableDOMRange];
+        
+        BOOL canBeginEditing = NO;
+        if (selectableRange)
+        {
+            DOMElement *selectableElement = [item selectableDOMElement];
+            canBeginEditing = [[currentSelection commonAncestorContainer] ks_isDescendantOfElement:selectableElement];
+        }
+        else
+        {
+            canBeginEditing = [[self selectedItems] isEqualToArray:[NSArray arrayWithObject:item]];
+        }
+        
+        
+        // Select the item
         [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:NO isUIAction:YES];
         
+        
         // Done all we can?
-        if (!event || [item allowsDirectAccessToWebViewWhenSelected]) return; 
+        if (!event || [item allowsDirectAccessToWebViewWhenSelected]) return;
         
         
         // Should start a move/drag?
@@ -444,8 +463,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
         NSEvent *mouseUp = [[self window] nextEventMatchingMask:NSLeftMouseUpMask];
         
         
-        // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
-        if (itemIsSelected && ([mouseUp timestamp] - [event timestamp] < 0.5))
+        // Start editing the item? Needs the item to be sole selection, and mouse up to be quick enough
+        if (canBeginEditing &&
+            ([mouseUp timestamp] - [event timestamp] < 0.5))
         {
             // Is the item at that location supposed to be for editing?
             // This is true if the clicked child item is either:
@@ -681,10 +701,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Try to match WebView selection to item when reasonable
     if ([item shouldTrySelectingInline])
     {
-        DOMElement *domElement = [item selectableDOMElement];
-        DOMRange *range = [[domElement ownerDocument] createRange];
-        [range selectNode:domElement];
-        [self setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
+        [self setSelectedDOMRange:[item selectableDOMRange] affinity:NSSelectionAffinityDownstream];
         
         // Was it a success though?
         if (![[self selectedDOMRange] collapsed]) return;
