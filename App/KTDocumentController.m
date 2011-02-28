@@ -153,12 +153,10 @@
     {
         return nil;//[KTDataMigrationDocument class];
     }
-#ifdef DEBUG
     else if ([documentTypeName isEqualToString:kSVDocumentTypeName_1_5])
     {
         return [SVMigrationDocument class];
     }
-#endif
     else
     {
         return [super documentClassForType:documentTypeName];
