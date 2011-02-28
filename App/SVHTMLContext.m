@@ -1248,6 +1248,8 @@
 
 - (void)startAnchorElementWithPage:(id <SVPage>)page;
 {
+    OBPRECONDITION(page);
+    
     NSString *href = [self relativeURLStringOfSiteItem:(SVSiteItem *)page];
     if (!href) href = @"";  // happens for a site with no -siteURL set yet
     
