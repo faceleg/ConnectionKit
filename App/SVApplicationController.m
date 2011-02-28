@@ -1135,13 +1135,20 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	
 	if ([inParser isKindOfClass:[IMBFlickrParser class]])
 	{
-		IMBFlickrParser* flickrParser = (IMBFlickrParser*)inParser;
-		flickrParser.delegate = self;
-		
-		// For your actual app, you would put in the hard-wired strings here.
-		
-		flickrParser.flickrAPIKey = @"263df73e82720248908c08946c4303ad";		// Karelia's key
-		flickrParser.flickrSharedSecret = @"e91e1638196e3c3d";					// Karelia's shared secret
+		if (IMBRunningOnSnowLeopardOrNewer())
+		{
+			IMBFlickrParser* flickrParser = (IMBFlickrParser*)inParser;
+			flickrParser.delegate = self;
+			
+			// For your actual app, you would put in the hard-wired strings here.
+			
+			flickrParser.flickrAPIKey = @"263df73e82720248908c08946c4303ad";		// Karelia's key
+			flickrParser.flickrSharedSecret = @"e91e1638196e3c3d";					// Karelia's shared secret
+		}
+		else
+		{
+			return NO;		// disable Flickr on Leopard! Crashy!
+		}
 		
 	}		// end IMBFlickrParser code
 	return YES;
