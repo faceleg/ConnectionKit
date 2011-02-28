@@ -796,7 +796,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Selection
 
-- (DOMElement *) selectableDOMElement;
+- (DOMElement *)selectableDOMElement;
 {
     // Normally selectable, unless there's a selectable child. #96670
     BOOL selectable = YES;
@@ -806,6 +806,21 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
     
     return (selectable ? [self HTMLElement] : nil);
+}
+
+- (DOMRange *)selectableDOMRange;
+{
+    if ([self shouldTrySelectingInline])
+    {
+        DOMElement *element = [self selectableDOMElement];
+        DOMRange *result = [[element ownerDocument] createRange];
+        [result selectNode:element];
+        return result;
+    }
+    else
+    {
+        return [super selectableDOMRange];
+    }
 }
 
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;

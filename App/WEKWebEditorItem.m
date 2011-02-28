@@ -256,6 +256,8 @@
 
 - (DOMElement *)selectableDOMElement; { return nil; }
 
+- (DOMRange *)selectableDOMRange; { return nil; }
+
 - (BOOL)shouldTrySelectingInline;
 {
     // Whether selecting the element should be inline (set the WebView's selection) or not (no WebView selection)

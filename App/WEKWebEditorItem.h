@@ -55,6 +55,7 @@
 
 - (BOOL)isSelectable;   // convenience for -selectableDOMElement
 - (DOMElement *)selectableDOMElement;   // default is nil. Subclass for more complexity, shouldn't worry about KVO
+- (DOMRange *)selectableDOMRange;
 - (BOOL)shouldTrySelectingInline;
 - (unsigned int)resizingMask;
 
