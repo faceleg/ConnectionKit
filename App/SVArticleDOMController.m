@@ -311,10 +311,10 @@
             
             
             // Remove source dragged items if they came from us. No need to call -didChangeText as the insertion will do that
-            [webEditor removeDraggedItems];
+            if (action == WebViewInsertActionDropped) [webEditor removeDraggedItems];
             
             
-            // Insert controllers. They will be hooked up lazily by -hitTest:
+            // Insert controllers. They will be hooked up lazily by -hitTestDOMNode:
             for (WEKWebEditorItem *anItem in [[context rootDOMController] childWebEditorItems])
             {
                 [self addChildWebEditorItem:anItem];
