@@ -12,7 +12,7 @@
 #import "SVGraphicFactory.h"
 #import "SVRawHTMLGraphic.h"
 #import "SVWebEditorHTMLContext.h"
-
+#import "DOMNode+Karelia.h"
 
 @implementation SVMigrationHTMLWriterDOMAdaptor
 
