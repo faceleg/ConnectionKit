@@ -506,7 +506,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
 {
-    OBASSERT([graphic shouldWriteHTMLInline]);
     [graphic writeBody:context];
 }
 
