@@ -69,11 +69,11 @@
                            attributes:nil
                               options:(SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)];
         [context startElement:@"h3"];
-        [context startAnchorElementWithPage:[context page]];
+        if ([context page]) [context startAnchorElementWithPage:[context page]];
         [context startElement:@"span" attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
         [context writeCharacters:SVLocalizedString(@"Example Photo", "placeholder image name")];
         [context endElement]; // </span>
-        [context endElement]; // </a>
+        if ([context page]) [context endElement]; // </a>
         [context endElement]; // </h3>
         [context endElement]; // </div>
         
