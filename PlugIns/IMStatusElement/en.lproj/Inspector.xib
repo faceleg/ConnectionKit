@@ -611,22 +611,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">hidden: values.LiveDataFeeds</string>
-						<reference key="source" ref="708871209"/>
-						<reference key="destination" ref="412999468"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="708871209"/>
-							<reference key="NSDestination" ref="412999468"/>
-							<string key="NSLabel">hidden: values.LiveDataFeeds</string>
-							<string key="NSBinding">hidden</string>
-							<string key="NSKeyPath">values.LiveDataFeeds</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">146</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">contentArray: inspectedObjectsController.selection.services</string>
 						<reference key="source" ref="1016304741"/>
 						<reference key="destination" ref="544088952"/>
