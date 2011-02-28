@@ -39,8 +39,6 @@
 
 #import "SiteMapPlugIn.h"
 
-#import "assertions.h"
-
 
 @implementation SiteMapPlugIn
 
@@ -191,7 +189,7 @@
     if ( thisPage ) // only generate a map if the context has a page
     {
         id<SVPage> rootPage = [thisPage rootPage];
-        OBASSERT(rootPage);
+        NSAssert((nil != rootPage), @"rootPage cannot be nil");
         
         // add our dependencies manually since we have no template for the parser to handle this for us
         [context addDependencyForKeyPath:@"compact" ofObject:self];
