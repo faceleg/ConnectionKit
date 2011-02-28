@@ -3,14 +3,14 @@
 #include "/private/tmp/build-sandvox/BuildSettings.xcconfig"
 
 // the "marketing" version is baked into CFBundleShortVersionString
-SANDVOX_VERSION = 2.0a64
+SANDVOX_VERSION = 2.0b1
 
 // the SLA variant to wrap around the .dmg [ALPHA,BETA,RELEASE]
 // Also determines if VARIANT_ALPHA or VARIANT_BETA or VARIANT_RELEASE is defined.
 // For checking alpha/beta behaviors, better to test for being *not* VARIANT_RELEASE
 // We use the macro with the secret key so that sparkle can match with key on the server end.
-PRODUCT_VARIANT = ALPHA
-PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE = ALPHA_19R
+PRODUCT_VARIANT = BETA
+PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE = BETA_C3PO
 
 
 // expiry for beta
