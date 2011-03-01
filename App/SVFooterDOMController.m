@@ -22,7 +22,7 @@
     {
         SVMigrationHTMLWriterDOMAdaptor *result = [[SVMigrationHTMLWriterDOMAdaptor alloc] initWithOutputStringWriter:stringWriter];
         
-        [result setArticleDOMController:self];
+        [result setTextDOMController:self];
         return result;
     }
     else

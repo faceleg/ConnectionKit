@@ -21,7 +21,7 @@
 
 - (BOOL)DOMElementContainsAWebEditorItem:(DOMElement *)element;
 {
-    NSArray *items = [[self articleDOMController] childWebEditorItems];
+    NSArray *items = [[self textDOMController] childWebEditorItems];
     for (WEKWebEditorItem *anItem in items)
     {
         if ([[anItem HTMLElement] ks_isDescendantOfElement:element]) return YES;
@@ -58,7 +58,7 @@
     NSString *html = [KSXMLWriterDOMAdaptor outerHTMLOfDOMElement:element];
     
     SVRawHTMLGraphic *graphic = [[SVGraphicFactory rawHTMLFactory] insertNewGraphicInManagedObjectContext:
-                                 [[[self articleDOMController] representedObject] managedObjectContext]];
+                                 [[[self textDOMController] representedObject] managedObjectContext]];
     
     [graphic setHTMLString:html];
     
@@ -70,11 +70,11 @@
     
     // Create controller for graphic and hook up to imported node
     SVDOMController *controller = [graphic newDOMController];
-    [controller awakeFromHTMLContext:[[self articleDOMController] HTMLContext]];
+    [controller awakeFromHTMLContext:[[self textDOMController] HTMLContext]];
     [controller setHTMLElement:(DOMHTMLElement *)element];
     
-    [[self articleDOMController] addChildWebEditorItem:controller];
-    OBASSERT([[self articleDOMController] hitTestDOMNode:element] == controller);
+    [[self textDOMController] addChildWebEditorItem:controller];
+    OBASSERT([[self textDOMController] hitTestDOMNode:element] == controller);
     [controller release];
     
     
@@ -89,6 +89,6 @@
     return [[controller HTMLElement] nextSibling];
 }
 
-@synthesize articleDOMController = _articleController;
+@synthesize textDOMController = _articleController;
 
 @end

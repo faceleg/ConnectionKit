@@ -9,15 +9,15 @@
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 
 
-@class SVArticleDOMController;
+@class SVRichTextDOMController;
 
 
 @interface SVMigrationHTMLWriterDOMAdaptor : SVParagraphedHTMLWriterDOMAdaptor
 {
   @private
-    SVArticleDOMController  *_articleController;
+    SVRichTextDOMController *_articleController;
 }
 
-@property(nonatomic, assign) SVArticleDOMController *articleDOMController;
+@property(nonatomic, assign) SVRichTextDOMController *textDOMController;
 
 @end
