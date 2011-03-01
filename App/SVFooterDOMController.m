@@ -8,8 +8,28 @@
 
 #import "SVFooterDOMController.h"
 
+#import "KTMaster.h"
+#import "SVMigrationHTMLWriterDOMAdaptor.h"
+
 
 @implementation SVFooterDOMController
+
+- (id)newHTMLWritingDOMAdaptorWithOutputStringWriter:(KSStringWriter *)stringWriter;
+{
+    KTMaster *master = [[self representedObject] valueForKey:@"master"];
+    
+    if ([[[master extensibleProperties] valueForKey:@"migrateRawHTMLOnNextEdit"] boolValue])
+    {
+        SVMigrationHTMLWriterDOMAdaptor *result = [[SVMigrationHTMLWriterDOMAdaptor alloc] initWithOutputStringWriter:stringWriter];
+        
+        [result setArticleDOMController:self];
+        return result;
+    }
+    else
+    {
+        return [super newHTMLWritingDOMAdaptorWithOutputStringWriter:stringWriter];
+    }
+}
 
 @end
 
@@ -18,7 +38,7 @@
 #pragma mark -
 
 
-@implementation SVFooter (SVFooterDOMController)
+@implementation SVFooter
 
 - (SVTextDOMController *)newTextDOMController;
 {

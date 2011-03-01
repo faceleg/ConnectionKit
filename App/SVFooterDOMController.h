@@ -8,7 +8,10 @@
 
 #import "SVRichTextDOMController.h"
 
-#import "SVFooter.h"
+
+@interface SVFooter : SVRichText
+@end
+
 
 
 @interface SVFooterDOMController : SVRichTextDOMController
