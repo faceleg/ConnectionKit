@@ -244,10 +244,6 @@
 
 - (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
 {
-    // Callouts should always be written by a dedicated SVCallout. Checking -isPagelet is just a little too flaky. #109587
-    OBASSERT(![(SVGraphic *)graphic isCallout]);
-    
-    
     if ([graphic shouldWriteHTMLInline])
     {
         return [context writeGraphicBody:graphic];
