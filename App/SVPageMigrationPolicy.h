@@ -11,3 +11,8 @@
 
 @interface SVPageMigrationPolicy : NSEntityMigrationPolicy
 @end
+
+
+
+@interface SVMasterMigrationPolicy : NSEntityMigrationPolicy
+@end
