@@ -331,9 +331,18 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (NSNumber *)contentWidth;
 {
-    return ([[self placement] intValue] == SVGraphicPlacementInline ?
-            [self width] :
-            NSNotApplicableMarker);
+    NSNumber *result = nil;
+    if (([[self placement] intValue] == SVGraphicPlacementInline && ![self shouldWriteHTMLInline]) ||
+        [self isExplicitlySized])
+    {
+        result = [self width];
+    }
+    else
+    {
+        result = NSNotApplicableMarker;
+    }
+    
+    return result;
 }
 - (void)setContentWidth:(NSNumber *)width;
 {

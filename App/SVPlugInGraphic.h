@@ -36,7 +36,6 @@
 
 #pragma mark Metrics
 
-@property(nonatomic, copy) NSNumber *contentWidth;
 @property(nonatomic, copy) NSNumber *contentHeight;
 
 - (NSUInteger)minWidth;

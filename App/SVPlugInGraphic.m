@@ -265,20 +265,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 #pragma mark Metrics
 
-- (NSNumber *)contentWidth;
-{
-    NSNumber *result = nil;
-    if ([self isExplicitlySized] || [[self placement] intValue] == SVGraphicPlacementInline)
-    {
-        result = [self width];
-    }
-    else
-    {
-        result = NSNotApplicableMarker;
-    }
-    
-    return result;
-}
 - (void)setContentWidth:(NSNumber *)width;
 {
     [self setWidth:width];
