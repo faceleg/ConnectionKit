@@ -77,6 +77,8 @@
                 NSData *png = [icon PNGRepresentation];
                 
                 NSURL *URL = [[[self media] media] mediaURL];
+                if (!URL) return NO;
+                
                 SVMedia *media = [[SVMedia alloc] initWithData:png URL:URL];
                 
                 [context writeImageWithSourceMedia:media
