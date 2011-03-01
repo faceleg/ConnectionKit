@@ -23,6 +23,10 @@
         SVMigrationHTMLWriterDOMAdaptor *result = [[SVMigrationHTMLWriterDOMAdaptor alloc] initWithOutputStringWriter:stringWriter];
         
         [result setTextDOMController:self];
+        
+        // Stop this happening again
+        [master removeExtensiblePropertyForKey:@"migrateRawHTMLOnNextEdit"];
+        
         return result;
     }
     else

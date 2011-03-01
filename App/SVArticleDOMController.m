@@ -661,7 +661,6 @@
 
 #pragma mark Editing
 
-#ifdef DEBUG
 - (id)newHTMLWritingDOMAdaptorWithOutputStringWriter:(KSStringWriter *)stringWriter;
 {
     SVArticle *article = [self representedObject];
@@ -671,6 +670,10 @@
         SVMigrationHTMLWriterDOMAdaptor *result = [[SVMigrationHTMLWriterDOMAdaptor alloc] initWithOutputStringWriter:stringWriter];
         
         [result setTextDOMController:self];
+        
+        // Stop this happening again
+        [[article page] removeExtensiblePropertyForKey:@"migrateRawHTMLOnNextEdit"];
+        
         return result;
     }
     else
@@ -678,7 +681,6 @@
         return [super newHTMLWritingDOMAdaptorWithOutputStringWriter:stringWriter];
     }
 }
-#endif
 
 #pragma mark Moving
 
