@@ -24,8 +24,10 @@
 #import "NSOutlineView+KTExtensions.h"
 #import "NSSet+KTExtensions.h"
 
+#import "KSLicensedAppDelegate.h"
 #import "KSPlugInWrapper.h"
 #import "KSProgressPanel.h"
+
 #import "NSArray+Karelia.h"
 #import "NSDate+Karelia.h"
 #import "NSEvent+Karelia.h"
@@ -136,6 +138,10 @@
 - (void)setOutlineView:(NSOutlineView *)outlineView
 {
 	// Dump the old outline
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kKSLicenseStatusChangeNotification
+                                                  object:nil];
+    
 	[_outlineView setDataSource:nil];  // don't call [self outlineView] as that may try to load the nib when we don't want it to
 	[_outlineView setDelegate:nil];
     [_outlineView setNextResponder:[self nextResponder]];   // reset responder chain
@@ -175,6 +181,11 @@
 														name:@"KTDisplaySmallPageIconsDidChange"
 													  object:[[[_outlineView window] windowController] document]];
 	}
+    
+    
+    // Licensing
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(licenseDidChange:) name:kKSLicenseStatusChangeNotification object:nil];
+    
 	
 	// Finally, hook up outline delegate & data source
 	if (outlineView)
@@ -201,6 +212,11 @@
 }
 
 - (BOOL)isOutlineViewLoaded; { return _outlineView != nil; }
+
+- (void)licenseDidChange:(NSNotification *)notification;
+{
+    [[self outlineView] setNeedsDisplay:YES];
+}
 
 #pragma mark Other Accessors
 
