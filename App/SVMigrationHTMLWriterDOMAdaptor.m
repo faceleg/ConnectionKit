@@ -11,8 +11,11 @@
 #import "SVArticleDOMController.h"
 #import "SVGraphicFactory.h"
 #import "SVRawHTMLGraphic.h"
+#import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
+
 #import "DOMNode+Karelia.h"
+
 
 @implementation SVMigrationHTMLWriterDOMAdaptor
 
@@ -61,7 +64,8 @@
     
     
     // Create text attachment too
-    [SVTextAttachment textAttachmentWithGraphic:graphic];
+    SVTextAttachment *attachment = [SVTextAttachment textAttachmentWithGraphic:graphic];
+    [attachment setCausesWrap:NSBOOL([self allowsPagelets])];
     
     
     // Create controller for graphic and hook up to imported node
