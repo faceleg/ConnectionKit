@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="7"/>
+			<integer value="84"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -87,10 +87,9 @@
 								<object class="NSTabViewItem" id="460162439">
 									<string key="NSIdentifier">0</string>
 									<object class="NSView" key="NSView" id="587549441">
-										<reference key="NSNextResponder" ref="715536680"/>
+										<nil key="NSNextResponder"/>
 										<int key="NSvFlags">274</int>
 										<string key="NSFrameSize">{489, 101}</string>
-										<reference key="NSSuperview" ref="715536680"/>
 									</object>
 									<string key="NSLabel">None</string>
 									<object class="NSColor" key="NSColor" id="214740488">
@@ -803,7 +802,7 @@
 								<object class="NSTabViewItem" id="707701864">
 									<string key="NSIdentifier">5</string>
 									<object class="NSView" key="NSView" id="524619067">
-										<nil key="NSNextResponder"/>
+										<reference key="NSNextResponder" ref="715536680"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -853,6 +852,29 @@
 															<object class="NSTextView" id="189962744">
 																<reference key="NSNextResponder" ref="733304381"/>
 																<int key="NSvFlags">2322</int>
+																<object class="NSMutableSet" key="NSDragTypes">
+																	<bool key="EncodedWithXMLCoder">YES</bool>
+																	<object class="NSArray" key="set.sortedObjects">
+																		<bool key="EncodedWithXMLCoder">YES</bool>
+																		<string>Apple HTML pasteboard type</string>
+																		<string>Apple PDF pasteboard type</string>
+																		<string>Apple PICT pasteboard type</string>
+																		<string>Apple PNG pasteboard type</string>
+																		<string>Apple URL pasteboard type</string>
+																		<string>CorePasteboardFlavorType 0x6D6F6F76</string>
+																		<string>NSColor pasteboard type</string>
+																		<string>NSFilenamesPboardType</string>
+																		<string>NSStringPboardType</string>
+																		<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
+																		<string>NeXT RTFD pasteboard type</string>
+																		<string>NeXT Rich Text Format v1.0 pasteboard type</string>
+																		<string>NeXT TIFF v4.0 pasteboard type</string>
+																		<string>NeXT font pasteboard type</string>
+																		<string>NeXT ruler pasteboard type</string>
+																		<string>WebURLsWithTitlesPboardType</string>
+																		<string>public.url</string>
+																	</object>
+																</object>
 																<string key="NSFrameSize">{312, 26}</string>
 																<reference key="NSSuperview" ref="733304381"/>
 																<object class="NSTextContainer" key="NSTextContainer" id="995926790">
@@ -1020,18 +1042,19 @@ aXMgc2l0ZS4</bytes>
 											</object>
 										</object>
 										<string key="NSFrameSize">{489, 101}</string>
+										<reference key="NSSuperview" ref="715536680"/>
 									</object>
 									<string key="NSLabel">Facebook</string>
 									<reference key="NSColor" ref="214740488"/>
 									<reference key="NSTabView" ref="715536680"/>
 								</object>
 							</object>
-							<reference key="NSSelectedTabViewItem" ref="460162439"/>
+							<reference key="NSSelectedTabViewItem" ref="707701864"/>
 							<reference key="NSFont" ref="67376933"/>
 							<int key="NSTvFlags">6</int>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
-								<reference ref="587549441"/>
+								<reference ref="524619067"/>
 							</object>
 						</object>
 						<object class="NSPopUpButton" id="185460951">
@@ -1301,26 +1324,6 @@ aXMgc2l0ZS4</bytes>
 					<int key="connectionID">81</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.facebookAppID</string>
-						<reference key="source" ref="590165823"/>
-						<reference key="destination" ref="451029195"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="590165823"/>
-							<reference key="NSDestination" ref="451029195"/>
-							<string key="NSLabel">value: selection.facebookAppID</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.facebookAppID</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSNullPlaceholder</string>
-								<string key="NS.object.0">e.g., 105318726211517</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">95</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">visitDisqus:</string>
 						<reference key="source" ref="1001"/>
@@ -1343,6 +1346,26 @@ aXMgc2l0ZS4</bytes>
 						<reference key="destination" ref="116733951"/>
 					</object>
 					<int key="connectionID">109</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.facebookAppID</string>
+						<reference key="source" ref="590165823"/>
+						<reference key="destination" ref="451029195"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="590165823"/>
+							<reference key="NSDestination" ref="451029195"/>
+							<string key="NSLabel">value: selection.facebookAppID</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.facebookAppID</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSNullPlaceholder</string>
+								<string key="NS.object.0">105318726211517</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">110</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2110,7 +2133,7 @@ aXMgc2l0ZS4</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">109</int>
+			<int key="maxID">110</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
