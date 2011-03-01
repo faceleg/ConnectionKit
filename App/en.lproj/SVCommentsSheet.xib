@@ -1281,26 +1281,6 @@ aXMgc2l0ZS4</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.IntenseDebateAccountID</string>
-						<reference key="source" ref="958076720"/>
-						<reference key="destination" ref="451029195"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="958076720"/>
-							<reference key="NSDestination" ref="451029195"/>
-							<string key="NSLabel">value: selection.IntenseDebateAccountID</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.IntenseDebateAccountID</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSNullPlaceholder</string>
-								<string key="NS.object.0">e.g., 5d9c1ea6f026465c2fcaa7366a6e60e0</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">77</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: selection.disqusShortName</string>
 						<reference key="source" ref="576434557"/>
 						<reference key="destination" ref="451029195"/>
@@ -1349,6 +1329,22 @@ aXMgc2l0ZS4</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.IntenseDebateAccountID</string>
+						<reference key="source" ref="958076720"/>
+						<reference key="destination" ref="451029195"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="958076720"/>
+							<reference key="NSDestination" ref="451029195"/>
+							<string key="NSLabel">value: selection.IntenseDebateAccountID</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.IntenseDebateAccountID</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">112</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: selection.facebookAppID</string>
 						<reference key="source" ref="590165823"/>
 						<reference key="destination" ref="451029195"/>
@@ -1358,14 +1354,10 @@ aXMgc2l0ZS4</bytes>
 							<string key="NSLabel">value: selection.facebookAppID</string>
 							<string key="NSBinding">value</string>
 							<string key="NSKeyPath">selection.facebookAppID</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSNullPlaceholder</string>
-								<string key="NS.object.0">105318726211517</string>
-							</object>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">110</int>
+					<int key="connectionID">113</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2133,7 +2125,7 @@ aXMgc2l0ZS4</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">110</int>
+			<int key="maxID">113</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
