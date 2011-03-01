@@ -258,7 +258,7 @@
 			result = [KTPage dateCreatedSortDescriptorsAscending:ascending];
 			break;
 		case SVCollectionSortByDateModified:
-			result = [KTPage dateCreatedSortDescriptorsAscending:ascending];
+			result = [KTPage dateModifiedSortDescriptorsAscending:ascending];
 			break;
 		default:
 			result = [KTPage unsortedPagesSortDescriptors];	// use the "childIndex" values
