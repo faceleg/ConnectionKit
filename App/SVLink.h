@@ -52,6 +52,7 @@ typedef enum {
 
 
 #pragma mark Deriving a new Link
+- (SVLink *)linkWithOpensInNewWindow:(BOOL)openInNewWindow;
 
 
 #pragma mark HTML

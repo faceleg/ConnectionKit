@@ -13,6 +13,12 @@
 #import "SVSiteItem.h"
 
 
+@interface SVLink()
+@property(nonatomic, readwrite) BOOL openInNewWindow;
+@end
+
+
+
 @implementation SVLink
 
 #pragma mark Creating a Link
@@ -127,6 +133,18 @@
         result = [url resourceSpecifier];
         [url release];
     }
+    
+    return result;
+}
+
+#pragma mark Deriving New Links
+
+- (SVLink *)linkWithOpensInNewWindow:(BOOL)openInNewWindow;
+{
+    SVLink *result = [NSKeyedUnarchiver unarchiveObjectWithData:
+                      [NSKeyedArchiver archivedDataWithRootObject:self]];
+    
+    [result setOpenInNewWindow:openInNewWindow];
     
     return result;
 }
