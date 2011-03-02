@@ -497,6 +497,9 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 										 
 		[NSNumber numberWithBool:YES], @"ShowCodeInjectionInPreview",
 
+		[NSNumber numberWithInt:21844], kKSCurrentAppBuildVersionDefaultsKey, // if last version lanched is less than this, re-welcome to try and get signup again.
+
+										 
 		nil];
 	
 	OBASSERT(defaultsBase);
