@@ -1046,9 +1046,6 @@
 
 - (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
 {
-    // Finish buffering extra header
-    [self flush];
-    
     // Write the end body markup
     [self writeString:[self endBodyMarkup]];
 }
