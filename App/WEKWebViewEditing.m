@@ -66,6 +66,21 @@
     return result;
 }
 
+- (SVLink *)selectedLink;
+{
+    SVLink *result = nil;
+    
+    NSArray *anchors = [self selectedAnchorElements];
+    if ([anchors count] == 1)
+    {
+        DOMHTMLAnchorElement *anchor = [anchors objectAtIndex:0];
+        
+        result = [SVLink linkWithURLString:[anchor href] openInNewWindow:NO];
+    }
+    
+    return result;
+}
+
 - (NSArray *)selectedAnchorElements;
 {
     DOMRange *selection = [self selectedDOMRange];

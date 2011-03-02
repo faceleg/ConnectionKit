@@ -2429,17 +2429,8 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     
     //  Update Link Manager to match
-    SVLink *link = nil;
-    
-    NSArray *anchors = [webView selectedAnchorElements];
-    if ([anchors count] == 1)
-    {
-        DOMHTMLAnchorElement *anchor = [anchors objectAtIndex:0];
-        
-        link = [SVLink linkWithURLString:[anchor href] openInNewWindow:NO];
-        link = [[self delegate] webEditor:self willSelectLink:link];
-    }
-    
+    SVLink *link = [webView selectedLink];
+    if (link) link = [[self delegate] webEditor:self willSelectLink:link];
     [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[webView canCreateLink]];
     
     

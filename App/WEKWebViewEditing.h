@@ -18,6 +18,8 @@
 
 - (BOOL)canCreateLink;
 - (BOOL)canUnlink;
+
+- (SVLink *)selectedLink;
 - (NSArray *)selectedAnchorElements;
 - (NSString *)linkValue;
 
