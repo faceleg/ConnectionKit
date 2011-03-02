@@ -452,6 +452,11 @@
 	[self setWindowTitle:aTitle];
 }
 
++ (NSSet *)keyPathsForValuesAffectingComboTitleText;
+{
+    return [NSSet setWithObjects:@"titleBox.text", @"master.siteTitle.textHTMLString", @"master.author", nil];
+}
+
 #pragma mark DTD
 
 // For code review:  Where can this utility class go?
