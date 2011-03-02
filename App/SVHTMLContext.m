@@ -1058,7 +1058,7 @@
     [super flush];
     
     // Finish buffering extra header
-    if (_headerMarkupIndex < NSNotFound)
+    if (_headerMarkupIndex < NSNotFound && _headerMarkup)
     {
         [[self outputStringWriter] insertString:[self extraHeaderMarkup]
                                         atIndex:_headerMarkupIndex];
