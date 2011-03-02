@@ -138,6 +138,15 @@
         // Let the system take care of turning the current selection into a link
         if ([document execCommand:@"createLink" userInterface:userInterface value:[link URLString]])
         {
+            if ([link openInNewWindow])
+            {
+                NSArray *anchors = [self selectedAnchorElements];
+                for (DOMHTMLAnchorElement *anAnchor in anchors)
+                {
+                    [anAnchor setTarget:@"_blank"];
+                }
+            }
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
         }
         else
