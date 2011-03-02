@@ -75,7 +75,8 @@
     {
         DOMHTMLAnchorElement *anchor = [anchors objectAtIndex:0];
         
-        result = [SVLink linkWithURLString:[anchor href] openInNewWindow:NO];
+        result = [SVLink linkWithURLString:[anchor href]
+                           openInNewWindow:[[anchor target] isEqualToString:@"_blank"]];
     }
     
     return result;
