@@ -37,6 +37,7 @@
 - (IBAction)selectLinkType:(NSPopUpButton *)sender;
 
 - (IBAction)setLinkURL:(id)sender;
+- (IBAction)openInNewWindow:(NSButton *)sender;
 - (IBAction)clearLinkDestination:(id)sender;
 
 @end

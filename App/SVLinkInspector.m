@@ -168,6 +168,15 @@
     }
 }
 
+- (IBAction)openInNewWindow:(NSButton *)sender;
+{
+    // Apply to model
+    SVLink *link = [[[SVLinkManager sharedLinkManager] selectedLink]
+                    linkWithOpensInNewWindow:[sender intValue]];
+    
+    [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
+}
+
 - (IBAction)clearLinkDestination:(id)sender;
 {
 	//[oLinkLocalPageField setStringValue:@""];

@@ -856,6 +856,22 @@
 					</object>
 					<int key="connectionID">190</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openInNewWindow:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="695373859"/>
+					</object>
+					<int key="connectionID">192</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openInNewWindow:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1003532112"/>
+					</object>
+					<int key="connectionID">193</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1430,7 +1446,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">190</int>
+			<int key="maxID">193</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1740,12 +1756,14 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>clearLinkDestination:</string>
+							<string>openInNewWindow:</string>
 							<string>selectLinkType:</string>
 							<string>setLinkURL:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
+							<string>NSButton</string>
 							<string>NSPopUpButton</string>
 							<string>id</string>
 						</object>
@@ -1755,6 +1773,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>clearLinkDestination:</string>
+							<string>openInNewWindow:</string>
 							<string>selectLinkType:</string>
 							<string>setLinkURL:</string>
 						</object>
@@ -1763,6 +1782,10 @@
 							<object class="IBActionInfo">
 								<string key="name">clearLinkDestination:</string>
 								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">openInNewWindow:</string>
+								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">selectLinkType:</string>
