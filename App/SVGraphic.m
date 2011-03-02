@@ -153,6 +153,13 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     }
 }
 
+// For the benefit of pagelet HTML template
+- (void)writeBody
+{
+    SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+    [context writeGraphic:self];
+}
+
 - (NSString *)calloutWrapClassName; // nil if not a callout
 {
     //  We are a callout if a floated pagelet

@@ -443,21 +443,6 @@
 @end
 
 
-#pragma mark -
-
-
-@implementation SVGraphic (SVWebEditorHTMLContext)
-
-// For the benefit of pagelet HTML template
-- (void)writeBody
-{
-    SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
-    [context writeGraphic:self];
-}
-
-@end
-
-
 
 #pragma mark -
 
