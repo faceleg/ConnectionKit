@@ -135,10 +135,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Setup the context
-    NSMutableString *htmlString = [[NSMutableString alloc] init];
+    KSStringWriter *html = [[KSStringWriter alloc] init];
     
     SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
-                                       initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
+                                       initWithOutputWriter:html inheritFromContext:[self HTMLContext]];
     
     [context writeJQueryImport];    // for any plug-ins that might depend on it
     [context writeExtraHeaders];
@@ -195,8 +195,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         [_offscreenWebViewController setDelegate:self];
     }
     
-    [_offscreenWebViewController loadHTMLFragment:htmlString];
-    [htmlString release];
+    [_offscreenWebViewController loadHTMLFragment:[html string]];
+    [html release];
 }
 
 - (void)updateWithDOMNode:(DOMNode *)node items:(NSArray *)items;
@@ -233,6 +233,19 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 		[subNode setSrc:@""];
 		[subNode setType:@""];
 	}
+    
+    
+    // Import headers too
+    DOMDocument *offscreenDoc = [loadedBody ownerDocument];
+    DOMNodeList *headNodes = [(DOMNode *)[offscreenDoc performSelector:@selector(head)] childNodes];
+    DOMHTMLElement *head = [document performSelector:@selector(head)];
+    
+    for (int i = 0; i < [headNodes length]; i++)
+    {
+        DOMNode *aNode = [headNodes item:i];
+        aNode = [document importNode:aNode deep:YES];
+        [head appendChild:aNode];
+    }
     
     
     // Are we missing a callout?
