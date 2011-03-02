@@ -169,7 +169,7 @@
 {
     NSString *result = [super typeForContentsOfURL:inAbsoluteURL error:outError];
     
-    if ([inAbsoluteURL isFileURL])
+    if ([result isEqualToString:kSVDocumentTypeName] && [inAbsoluteURL isFileURL])
     {
         BOOL fileIsDirectory = YES;
         BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[inAbsoluteURL path] isDirectory:&fileIsDirectory];
