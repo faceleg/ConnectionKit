@@ -91,6 +91,7 @@
     [oTabView selectTabViewItemAtIndex:[oLinkTypePopUpButton indexOfSelectedItem]];
     [[oEmailAddressField cell] setSendsActionOnEndEditing:YES];
     
+    [oExternalLinkOpenInNewWindowCheckbox setState:([link openInNewWindow] ? NSOnState : NSOffState)];
     [oOpenInNewWindowCheckbox setState:([link openInNewWindow] ? NSOnState : NSOffState)];
 }
 

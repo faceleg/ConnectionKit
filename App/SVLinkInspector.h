@@ -24,6 +24,7 @@
     
     IBOutlet KTLinkSourceView       *oLinkSourceView;
     IBOutlet NSTextField            *oLinkField;
+    IBOutlet NSButton               *oExternalLinkOpenInNewWindowCheckbox;
     IBOutlet KSEmailAddressComboBox *oEmailAddressField;
     IBOutlet NSButton               *oOpenInNewWindowCheckbox;
     
