@@ -131,13 +131,8 @@ typedef enum {
 
 
 #pragma mark Graphics
-
 - (void)writeGraphic:(id <SVGraphic>)graphic;
 - (void)writeGraphics:(NSArray *)graphics;  // uses Iterations to process each graphic
-
-// For subclassers:
-- (void)writeGraphicBody:(id <SVGraphic>)graphic;
-
 - (NSUInteger)numberOfGraphicsOnPage; // incremented for each call to -writeGraphic:
 
 

@@ -473,42 +473,7 @@
 
 #pragma mark Graphics
 
-- (void)writeGraphic:(id <SVGraphic>)graphic;
-{
-    // Update number of graphics
-    _numberOfGraphics++;
-    
-    id <SVGraphicContainer> container = [self currentGraphicContainer];
-    [self beginGraphicContainer:graphic];
-    
-    if (container)
-    {
-        if ([graphic isPagelet])
-        {
-            _writingPagelet = YES;
-            @try
-            {
-                [container write:self graphic:graphic];
-            }
-            @finally
-            {
-                _writingPagelet = NO;
-            }
-        }
-        else
-        {
-            [container write:self graphic:graphic];
-        }
-    }
-    else 
-    {
-        [graphic writeBody:self];
-    }
-    
-    [self endGraphicContainer];
-}
-
-- (void)writeGraphicBody:(id <SVGraphic>)graphic;
+- (void)writeBodyOfGraphic:(id <SVGraphic>)graphic;
 {
     [self incrementHeaderLevel];
     @try
@@ -550,6 +515,48 @@
     {
         [self decrementHeaderLevel];
     }
+}
+
+- (void)writeGraphic:(id <SVGraphic>)graphic;
+{
+    // Special case. When writing a graphic nested in itself that's our cue to generate the body
+    if (graphic == [self currentGraphicContainer])
+    {
+        return [self writeBodyOfGraphic:graphic];
+    }
+    
+    
+    // Update number of graphics
+    _numberOfGraphics++;
+    
+    id <SVGraphicContainer> container = [self currentGraphicContainer];
+    [self beginGraphicContainer:graphic];
+    
+    if (container)
+    {
+        if ([graphic isPagelet])
+        {
+            _writingPagelet = YES;
+            @try
+            {
+                [container write:self graphic:graphic];
+            }
+            @finally
+            {
+                _writingPagelet = NO;
+            }
+        }
+        else
+        {
+            [container write:self graphic:graphic];
+        }
+    }
+    else 
+    {
+        [graphic writeBody:self];
+    }
+    
+    [self endGraphicContainer];
 }
 
 - (void)writeGraphics:(NSArray *)graphics;  // convenience

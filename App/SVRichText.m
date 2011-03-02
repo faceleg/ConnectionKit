@@ -246,7 +246,7 @@
 {
     if ([graphic shouldWriteHTMLInline])
     {
-        return [context writeGraphicBody:graphic];
+        return [context writeGraphic:graphic];
     }
     
     
@@ -285,7 +285,7 @@
             }
         }
         
-        [context writeGraphicBody:graphic];
+        [context writeGraphic:graphic];
         
         
         // Caption if requested
