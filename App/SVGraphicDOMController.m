@@ -584,7 +584,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     if ([super moveToPosition:position event:event]) return YES;
     
     
-    id <SVGraphicContainerDOMController> dragController = [self graphicContainerDOMController];
+    WEKWebEditorItem <SVGraphicContainerDOMController> *dragController = [self graphicContainerDOMController];
+    if ([dragController graphicContainerDOMController]) dragController = [dragController graphicContainerDOMController];
     
     [dragController moveGraphicWithDOMController:self toPosition:position event:event];
     
