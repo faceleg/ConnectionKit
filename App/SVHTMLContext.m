@@ -111,6 +111,8 @@
     
     if (self = [self initWithOutputWriter:output docType:[context docType] encoding:encoding])
     {
+        if ([output isKindOfClass:[KSStringWriter class]]) _output = [output retain];
+        
         // Copy across properties
         [self setIndentationLevel:[context indentationLevel]];
         _currentPage = [[context page] retain];
@@ -132,7 +134,7 @@
     
     [_mainCSSURL release];
         
-    [_headerMarkup release];
+    [_headerMarkup release]; _headerMarkup = nil;   // accessed in -flush
     [_endBodyMarkup release];
     [_iteratorsStack release];
     [_graphicContainers release];
@@ -1045,12 +1047,25 @@
 - (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
 {
     // Finish buffering extra header
-    [[self outputStringWriter] insertString:[self extraHeaderMarkup]
-                                    atIndex:_headerMarkupIndex];
-    _headerMarkupIndex = NSNotFound; // so nothign gets mistakenly written afterwards
+    [self flush];
     
     // Write the end body markup
     [self writeString:[self endBodyMarkup]];
+}
+
+- (void)flush;
+{
+    [super flush];
+    
+    // Finish buffering extra header
+    if (_headerMarkupIndex < NSNotFound)
+    {
+        [[self outputStringWriter] insertString:[self extraHeaderMarkup]
+                                        atIndex:_headerMarkupIndex];
+        
+        [_headerMarkup deleteCharactersInRange:NSMakeRange(0, [_headerMarkup length])];
+        _headerMarkupIndex = NSNotFound; // so nothing gets mistakenly written afterwards
+    }
 }
 
 #pragma mark Content
