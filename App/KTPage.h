@@ -223,7 +223,7 @@ typedef enum {
 + (NSString *)pageTemplate;
 
 - (NSString *)javascriptURLPath;
-- (NSString *)comboTitleText;
+@property(nonatomic, assign) NSString *comboTitleText;
 
 - (void)write:(SVHTMLContext *)context codeInjectionSection:(NSString *)aKey masterFirst:(BOOL)aMasterFirst;
 
