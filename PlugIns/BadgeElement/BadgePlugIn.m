@@ -64,14 +64,6 @@ static NSArray *sAltStrings = nil;
     [self setShowsTitle:NO];
     [self setBadgeTypeTag:1];
     [self setIncludeReferralCode:YES];
-    
-    NSString *altBlurb = [self generateBlurbVariant:0];
-    NSString *altString = [NSString stringWithFormat:SVLocalizedString(@"Created with Sandvox - %@", @"Alt string for sandvox badge"), altBlurb];			
-    self.badgeAltString = altString;
-    
-    NSString *titleBlurb = [self generateBlurbVariant:1];
-    NSString *titleString = [NSString stringWithFormat:SVLocalizedString(@"Learn about Sandvox - %@", @"title string for sandvox badge link"), titleBlurb];	
-    self.badgeTitleString = titleString;
 }
 
 
@@ -249,8 +241,30 @@ static NSArray *sAltStrings = nil;
 #pragma mark -
 #pragma mark Properties
 
+- (NSString *)badgeAltString
+{
+	if (nil == _badgeAltString)
+	{
+		NSString *blurb = [self generateBlurbVariant:0];
+		NSString *altString = [NSString stringWithFormat:SVLocalizedString(@"Created with Sandvox - %@",@"Alt string for sandvox badge"), blurb];			
+		[self setBadgeAltString:altString];
+	}
+	return _badgeAltString;		// don't want to calculate all the time.  Same for a document?
+}
 @synthesize badgeAltString = _badgeAltString;
+
+- (NSString *)badgeTitleString
+{
+	if (nil == _badgeTitleString)
+	{
+		NSString *blurb = [self generateBlurbVariant:1];
+		NSString *titleString = [NSString stringWithFormat:SVLocalizedString(@"Learn about Sandvox - %@",@"title string for sandvox badge link"), blurb];			
+		[self setBadgeTitleString:titleString];
+	}
+	return _badgeTitleString;		// don't want to calculate all the time.  Same for a document?
+}
 @synthesize badgeTitleString = _badgeTitleString;
+
 @synthesize badgeTypeTag = _badgeTypeTag;
 @synthesize includeReferralCode = _includeReferralCode;
 @synthesize openLinkInNewWindow = _openLinkInNewWindow;
