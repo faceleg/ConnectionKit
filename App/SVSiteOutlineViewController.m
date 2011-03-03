@@ -184,7 +184,7 @@
     
     
     // Licensing
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(licenseDidChange:) name:kKSLicenseStatusChangeNotification object:nil];
+    if (outlineView) [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(licenseDidChange:) name:kKSLicenseStatusChangeNotification object:nil];
     
 	
 	// Finally, hook up outline delegate & data source
