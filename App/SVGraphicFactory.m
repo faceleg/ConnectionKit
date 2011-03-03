@@ -698,7 +698,7 @@ static SVGraphicFactory *sRawHTMLFactory;
 
 #pragma mark SVGraphicFactory
 
-- (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+- (id)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
     return nil;
 }

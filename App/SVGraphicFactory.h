@@ -56,7 +56,7 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 
 #pragma mark General
 
-- (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+- (id)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 
 - (NSString *)name;
 - (NSString *)graphicDescription;
