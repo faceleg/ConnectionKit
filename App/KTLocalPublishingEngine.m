@@ -250,7 +250,7 @@
             
             NSString *pingURLString = [[NSString alloc] initWithFormat:
                                        @"http://www.google.com/webmasters/tools/ping?sitemap=%@",
-                                       [[sitemapURL absoluteString] ks_stringByAddingURLQueryPercentEscapes]];
+                                       [[sitemapURL absoluteString] ks_stringByAddingQueryComponentPercentEscapes]];
             
             NSURL *pingURL = [[NSURL alloc] initWithString:pingURLString];
             [pingURLString release];
