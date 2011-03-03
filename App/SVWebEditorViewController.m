@@ -1291,12 +1291,24 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     {
         NSMutableURLRequest *result = [[request mutableCopy] autorelease];
         [result setCachePolicy:NSURLRequestReloadIgnoringCacheData];
-        return result;
+        request = result;
     }
-    else
+    
+    
+    // Don't load remote stuff unless requested
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey])
     {
-        return request;
+        BOOL local = [[request URL] isFileURL];
+        if (!local)
+        {
+            NSMutableURLRequest *result = [[request mutableCopy] autorelease];
+            [result setCachePolicy:NSURLRequestReturnCacheDataDontLoad];
+            request = result;
+        }
     }
+    
+    
+    return request;
 }
 
 - (void)webEditor:(WEKWebEditorView *)sender handleNavigationAction:(NSDictionary *)actionInfo request:(NSURLRequest *)request;
