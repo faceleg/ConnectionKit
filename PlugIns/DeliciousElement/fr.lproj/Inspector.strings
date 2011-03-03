@@ -14,7 +14,7 @@
 "Separate Lines" = "Lignes séparées";
 
 /* Class = "NSButtonCell"; title = "Bulleted List"; ObjectID = "49"; */
-"Bulleted List" = "Liste de puces";
+"Bulleted List" = "Liste à puces";
 
 /* Class = "NSTextFieldCell"; title = "maximum"; ObjectID = "103"; */
 "maximum" = "maximum";

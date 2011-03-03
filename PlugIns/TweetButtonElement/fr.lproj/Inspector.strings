@@ -26,4 +26,4 @@
 "This user will be @mentioned in the Tweet." = "Cet utilisateur sera mentionné@ dans le Tweet.";
 
 /* Class = "NSTextFieldCell"; title = "If not specified, the URL of the page will be used."; ObjectID = "41"; */
-"If not specified, the URL of the page will be used." = "Si non indiqué, l’URL de la page sera utilisée.";
+"If not specified, the URL of the page will be used." = "Si rien n'est indiqué, l’URL de la page sera utilisée.";

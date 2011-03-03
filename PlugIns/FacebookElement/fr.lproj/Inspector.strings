@@ -38,7 +38,7 @@
 "Other Page" = "Autre page";
 
 /* Class = "IBBindingConnection"; designableIsNilPlaceholder = "www.facebook.com/yournamehere"; ObjectID = "55"; */
-"www.facebook.com/yournamehere" = "www.facebook.com/votreNomIci";
+"www.facebook.com/yournamehere" = "www.facebook.com/votrenomici";
 
 /* Class = "NSTextFieldCell"; title = "Appearance"; ObjectID = "57"; */
 "Appearance" = "Aspect";

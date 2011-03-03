@@ -19,9 +19,6 @@
 /* Class = "NSButtonCell"; title = "Widescreen"; ObjectID = "529"; */
 "Widescreen" = "Écran large";
 
-/* Class = "NSButtonCell"; title = "Related Videos"; ObjectID = "530"; */
-"Related Videos" = "Vidéos connexes";
-
 /* Class = "NSButtonCell"; title = "HD Video"; ObjectID = "531"; */
 "HD Video" = "Vidéos HD";
 /* Class = "NSButtonCell"; title = "Privacy Enhancement"; ObjectID = "533"; */
@@ -35,5 +32,8 @@
 
 /* Class = "NSBox"; title = "Box"; ObjectID = "551"; */
 "Box" = "Box";
-/* Class = "NSButtonCell"; title = "Use HTML5 Player"; ObjectID = "556"; */
-"Use HTML5 Player" = "Utiliser un lecteur HTML 5";
+/* Class = "NSButtonCell"; title = "Link to Related Videos"; ObjectID = "566"; */
+"Link to Related Videos" = "Lien vers les vidéos concernées";
+
+/* Class = "NSTextFieldCell"; title = "After playback finishes"; ObjectID = "569"; */
+"After playback finishes" = "Après la fin du playback";

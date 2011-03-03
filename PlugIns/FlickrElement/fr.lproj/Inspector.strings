@@ -35,10 +35,10 @@
 /* Class = "NSTextFieldCell"; title = "photos"; ObjectID = "257"; */
 "photos" = "photos";
 /* Class = "NSMenuItem"; title = "random"; ObjectID = "260"; */
-"random" = "Aléatoire";
+"random" = "aléatoire";
 
 /* Class = "NSMenuItem"; title = "most recent"; ObjectID = "261"; */
-"most recent" = "Plus récent";
+"most recent" = "plus récent";
 /* Class = "NSMenuItem"; title = "8"; ObjectID = "264"; */
 "8" = "8";
 
