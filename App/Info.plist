@@ -197,7 +197,7 @@
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
 	<key>ClickToFlashOptOut</key>
-	<false/>
+	<true/>
 	<key>KSFeedType</key>
 	<string>${PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE}</string>
 	<key>KTConnectionVersion</key>
