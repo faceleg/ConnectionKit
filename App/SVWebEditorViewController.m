@@ -1298,7 +1298,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     // Don't load remote stuff unless requested
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey])
     {
-        BOOL local = [[request URL] isFileURL];
+        BOOL local = [[request URL] isFileURL] || [[[request URL] scheme] isEqualToString:@"x-sandvox-image"];
         if (!local)
         {
             NSMutableURLRequest *result = [[request mutableCopy] autorelease];
