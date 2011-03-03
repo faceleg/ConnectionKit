@@ -126,15 +126,18 @@
         DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:idName];
         
         
-        // Load descendants since they might share the same element
-        [[self childWebEditorItems] makeObjectsPerformSelector:_cmd withObject:document];
-        
-        
-        if (element && ![[self representedObject] shouldPublishEditingElementID])
+        if (element)
         {
-            // Ideally, as we're clearing out value from the DOM, should also stop referencing it ourselves. If an update occurs, the id should be regenerated. This isn't quite working yet though.
-            [self setElementIdName:nil];
-            [element setIdName:nil];
+            // Load descendants since they might share the same element
+            [[self childWebEditorItems] makeObjectsPerformSelector:_cmd withObject:document];
+            
+            
+            if (![[self representedObject] shouldPublishEditingElementID])
+            {
+                // Ideally, as we're clearing out value from the DOM, should also stop referencing it ourselves. If an update occurs, the id should be regenerated. This isn't quite working yet though.
+                [self setElementIdName:nil];
+                [element setIdName:nil];
+            }
         }
         
         [self setHTMLElement:element];
