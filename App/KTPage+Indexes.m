@@ -29,6 +29,7 @@
 #import "NSError+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
+#import "NSSet+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
 
