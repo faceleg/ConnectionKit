@@ -8,7 +8,9 @@
 
 #import "SVLogoImage.h"
 
+#import "KTDesign.h"
 #import "SVHTMLContext.h"
+#import "KTImageScalingSettings.h"
 #import "SVMediaRecord.h"
 #import "KTPage.h"
 
@@ -67,8 +69,21 @@
 
 #pragma mark Metrics
 
-- (CGFloat)maxWidthOnPage:(KTPage *)page; { return 200.0; }
-- (NSNumber *)maxHeight; { return [NSNumber numberWithInt:128]; }
+- (CGFloat)maxWidthOnPage:(KTPage *)page;
+{
+    KTDesign *design = [self valueForKeyPath:@"master.design"];
+    KTImageScalingSettings *settings = [design imageScalingSettingsForUse:@"pageHeaderImage"];
+    CGFloat result = [settings size].width;
+    return result;
+}
+
+- (NSNumber *)maxHeight;
+{
+    KTDesign *design = [self valueForKeyPath:@"master.design"];
+    KTImageScalingSettings *settings = [design imageScalingSettingsForUse:@"pageHeaderImage"];
+    CGFloat result = [settings size].height;
+    return [NSNumber numberWithFloat:result];
+}
 
 #pragma mark HTML
 
