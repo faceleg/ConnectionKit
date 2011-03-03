@@ -2,7 +2,7 @@
 "Products" = "Produits";
 
 /* Class = "NSTextField"; gToolTip = "Copy the URL (address) or ASIN of an Amazon product from your web browser.\nISBN numbers can be found on the back of a book."; ObjectID = "36"; */
-"Copy the URL (address) or ASIN of an Amazon product from your web browser.\nISBN numbers can be found on the back of a book." = "Copier l'URL (adresse) ou l'ASIN d'un produit Amazon de votre navigateur Web. Les numéros ISBN peuvent être trouvés au dos d'un livre.";
+"Copy the URL (address) or ASIN of an Amazon product from your web browser.\nISBN numbers can be found on the back of a book." = "Copier l'URL (adresse) ou l'ASIN d'un produit Amazon depuis votre navigateur Web. Les numéros ISBN peuvent être trouvés au dos d'un livre.";
 
 /* Class = "NSTextField"; gToolTip = "Your thoughts on the product."; ObjectID = "37"; */
 "Your thoughts on the product." = "Ce que vous pensez du produit.";
@@ -64,10 +64,10 @@
 "Hide or display product titles." = "Affichez ou masquez les titres des produits.";
 
 /* Class = "NSSegmentedControl"; gToolTip = "Select the list's layout:\n• Left-aligned\n• Right-aligned\n• Alternating\n• Centered\n• Two-across\n• Bullets (no thumbnails)\n• Enhanced (can include pricing)\n• Random product"; ObjectID = "363"; */
-"Select the list's layout:\n• Left-aligned\n• Right-aligned\n• Alternating\n• Centered\n• Two-across\n• Bullets (no thumbnails)\n• Enhanced (can include pricing)\n• Random product" = "Choisissez la disposition de la liste :\n• Alignée à gauche\n• Alignée à droite\n\n• Alternative\n• Centrée\n• Deux colonnes\n• Puces (aucune vignette)• Mis en valeur (peut inclure le prix)\n• Produit aléatoire";
+"Select the list's layout:\n• Left-aligned\n• Right-aligned\n• Alternating\n• Centered\n• Two-across\n• Bullets (no thumbnails)\n• Enhanced (can include pricing)\n• Random product" = "Choisissez la disposition de la liste :\n• Alignée à gauche\n• Alignée à droite\n\n• En alternance\n• Centrée\n• Deux colonnes\n• Puces (aucune vignette)• Mis en valeur (peut inclure le prix)\n• Produit aléatoire";
 
 /* Class = "NSButton"; gToolTip = "Displays a floating preview popup over links to Amazon products."; ObjectID = "490"; */
-"Displays a floating preview popup over links to Amazon products." = "Affiche une fenêtre flottante de prévision au-dessus des liens vers les produits d'Amazon.";
+"Displays a floating preview popup over links to Amazon products." = "Affiche une fenêtre flottante d'aperçu au-dessus des liens vers les produits d'Amazon.";
 
 /* Class = "NSBox"; title = "Box"; ObjectID = "492"; */
 "Box" = "Box";
