@@ -16,9 +16,12 @@
 #import "SVHTMLTemplateParser.h"
 #import "SVMediaGraphic.h"
 #import "SVPagesController.h"
+#import "SVProxyHTMLContext.h"
 #import "SVTextAttachment.h"
+#import "SVWebEditorHTMLContext.h"
 
-#import "NSString+Karelia.h"
+#import "NSString+KTExtensions.h"
+
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
@@ -27,12 +30,12 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
-#import "NSString+KTExtensions.h"
-#import "KSURLUtilities.h"
-#import "SVWebEditorHTMLContext.h"
+#import "NSString+Karelia.h"
+
 #import "KSStringHTMLEntityUnescaping.h"
 #import "KSStringXMLEntityEscaping.h"
-#import "SVProxyHTMLContext.h"
+#import "KSURLUtilities.h"
+
 
 @interface KTPage (IndexesPrivate)
 - (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
@@ -152,7 +155,7 @@
     }
     
     
-    [[self childItems] makeObjectsPerformSelector:@selector(guessEnclosures)];
+    [[self childItems] ks_tryToMakeObjectsPerformSelector:@selector(guessEnclosures)];
 }
 
 @dynamic collectionMaxSyndicatedPagesCount;
