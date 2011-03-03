@@ -157,133 +157,132 @@
               toDestinationURL:(NSURL *)dURL
                          error:(NSError **)outError;
 {
-    // Create context for accessing media during migration
-    NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc]
-                                                 initWithManagedObjectModel:[self sourceMediaModel]];
-    
-    NSURL *sMediaStoreURL = [sourceDocURL ks_URLByAppendingPathComponent:@"media.xml" isDirectory:NO];
-    
-    if (![coordinator addPersistentStoreWithType:NSXMLStoreType
-                                   configuration:nil
-                                             URL:sMediaStoreURL
-                                         options:nil
-                                           error:outError])
-    {
-        [coordinator release];
-        return NO;
-    }
-    
-    _mediaContext = [[NSManagedObjectContext alloc] init];
-    [_mediaContext setPersistentStoreCoordinator:coordinator];
-    [coordinator release];
-    
-    
-    
-    // Do the basic migration
-    NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox" ofType:@"cdm"]];
-    NSMappingModel *mappingModel = [[NSMappingModel alloc] initWithContentsOfURL:modelURL];
-    
-    _docURL = sourceDocURL;
-    _destinationURL = dURL;
-    NSURL *sStoreURL = [KTDocument datastoreURLForDocumentURL:sourceDocURL type:kSVDocumentTypeName_1_5];
-    NSURL *dStoreURL = [KTDocument datastoreURLForDocumentURL:dURL type:nil];
-    
-    NSError *error; // NSMigrationManager hates it if you don't provide an error pointer
-    BOOL result = [self migrateStoreFromURL:sStoreURL
-                                       type:NSSQLiteStoreType
-                                    options:nil
-                           withMappingModel:mappingModel
-                           toDestinationURL:dStoreURL
-                            destinationType:NSBinaryStoreType
-                         destinationOptions:nil
-                                      error:&error];
-    if (outError) *outError = error;
-    
-    
-    
-    // Custom phase
-    if (result)
-    {
-        KTDocument *dDoc = [[KTDocument alloc] initWithContentsOfURL:dURL
-                                                              ofType:kSVDocumentTypeName
-                                                               error:outError];
-        if (dDoc)
-        {
-            _destinationContextOverride = [dDoc managedObjectContext];
-            
-            
-            // Import embedded images
-            NSArray *richText = [_destinationContextOverride fetchAllObjectsForEntityForName:@"RichText" error:NULL];
-            NSEntityMapping *mapping = [[mappingModel entityMappingsByName] objectForKey:@"EmbeddedImageToGraphicMedia"];
-            
-            NSUInteger i = 0;
-            float count = [richText count];
-            
-            for (SVRichText *aRichTextObject in richText)
-            {
-                [self migrateEmbeddedImagesFromRichText:aRichTextObject mapping:mapping];
-                
-                // Update progress to match
-                i++;
-                float override = SUPER_PROGRESS_MAX + 0.2f * (i / count);
-                [self setMigrationProgressOverride:override];
-            }
-            
-            
-            // #108740
-            // Make each media graphic original size
-            NSArray *graphics = [_destinationContextOverride fetchAllObjectsForEntityForName:@"MediaGraphic" error:NULL];
-            [graphics makeObjectsPerformSelector:@selector(makeOriginalSize)];
-            
-            // Constrain proportions
-            for (SVMediaGraphic *aGraphic in graphics)
-            {
-                if ([aGraphic isConstrainProportionsEditable]) [aGraphic setConstrainsProportions:YES];
-            }
-            
-            // Then reduce size to fit on page
-            [dDoc designDidChange];
-            
-    
-            // Search for thumbnails. #108951
-            // Do after resizing media, so can pick the biggest. #109087
-            NSArray *pages = [_destinationContextOverride fetchAllObjectsForEntityForName:@"Page" error:NULL];
-            [pages makeObjectsPerformSelector:@selector(guessThumbnailSourceGraphic)];
-            
-            
-            result = [dDoc saveToURL:[dDoc fileURL] ofType:[dDoc fileType] forSaveOperation:NSSaveOperation error:outError];
-            _destinationContextOverride = nil;
-            [dDoc close];
-            [dDoc release];
-        }
-        else
-        {
-            result = NO;
-        }
-    }
-    
-    
-    
-    _docURL = nil;
-    _destinationURL = nil;
-    [mappingModel release];
-    [_mediaContext release];
-    
-    return result;
-}
-
-- (BOOL)migrateStoreFromURL:(NSURL *)sourceURL type:(NSString *)sStoreType options:(NSDictionary *)sOptions withMappingModel:(NSMappingModel *)mappings toDestinationURL:(NSURL *)dURL destinationType:(NSString *)dStoreType destinationOptions:(NSDictionary *)dOptions error:(NSError **)outError;
-{
     @try
     {
-        return [super migrateStoreFromURL:sourceURL type:sStoreType options:sOptions withMappingModel:mappings toDestinationURL:dURL destinationType:dStoreType destinationOptions:dOptions error:outError];
+        // Create context for accessing media during migration
+        NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc]
+                                                     initWithManagedObjectModel:[self sourceMediaModel]];
+        
+        NSURL *sMediaStoreURL = [sourceDocURL ks_URLByAppendingPathComponent:@"media.xml" isDirectory:NO];
+        
+        if (![coordinator addPersistentStoreWithType:NSXMLStoreType
+                                       configuration:nil
+                                                 URL:sMediaStoreURL
+                                             options:nil
+                                               error:outError])
+        {
+            [coordinator release];
+            return NO;
+        }
+        
+        _mediaContext = [[NSManagedObjectContext alloc] init];
+        [_mediaContext setPersistentStoreCoordinator:coordinator];
+        [coordinator release];
+        
+        
+        
+        // Do the basic migration
+        NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox" ofType:@"cdm"]];
+        NSMappingModel *mappingModel = [[NSMappingModel alloc] initWithContentsOfURL:modelURL];
+        
+        _docURL = sourceDocURL;
+        _destinationURL = dURL;
+        NSURL *sStoreURL = [KTDocument datastoreURLForDocumentURL:sourceDocURL type:kSVDocumentTypeName_1_5];
+        NSURL *dStoreURL = [KTDocument datastoreURLForDocumentURL:dURL type:nil];
+        
+        NSError *error; // NSMigrationManager hates it if you don't provide an error pointer
+        BOOL result = [self migrateStoreFromURL:sStoreURL
+                                           type:NSSQLiteStoreType
+                                        options:nil
+                               withMappingModel:mappingModel
+                               toDestinationURL:dStoreURL
+                                destinationType:NSBinaryStoreType
+                             destinationOptions:nil
+                                          error:&error];
+        if (outError) *outError = error;
+        
+        
+        
+        // Custom phase
+        if (result)
+        {
+            KTDocument *dDoc = [[KTDocument alloc] initWithContentsOfURL:dURL
+                                                                  ofType:kSVDocumentTypeName
+                                                                   error:outError];
+            if (dDoc)
+            {
+                _destinationContextOverride = [dDoc managedObjectContext];
+                
+                
+                // Import embedded images
+                NSArray *richText = [_destinationContextOverride fetchAllObjectsForEntityForName:@"RichText" error:NULL];
+                NSEntityMapping *mapping = [[mappingModel entityMappingsByName] objectForKey:@"EmbeddedImageToGraphicMedia"];
+                
+                NSUInteger i = 0;
+                float count = [richText count];
+                
+                for (SVRichText *aRichTextObject in richText)
+                {
+                    [self migrateEmbeddedImagesFromRichText:aRichTextObject mapping:mapping];
+                    
+                    // Update progress to match
+                    i++;
+                    float override = SUPER_PROGRESS_MAX + 0.2f * (i / count);
+                    [self setMigrationProgressOverride:override];
+                }
+                
+                
+                // #108740
+                // Make each media graphic original size
+                NSArray *graphics = [_destinationContextOverride fetchAllObjectsForEntityForName:@"MediaGraphic" error:NULL];
+                [graphics makeObjectsPerformSelector:@selector(makeOriginalSize)];
+                
+                // Constrain proportions
+                for (SVMediaGraphic *aGraphic in graphics)
+                {
+                    if ([aGraphic isConstrainProportionsEditable]) [aGraphic setConstrainsProportions:YES];
+                }
+                
+                // Then reduce size to fit on page
+                [dDoc designDidChange];
+                
+                
+                // Search for thumbnails. #108951
+                // Do after resizing media, so can pick the biggest. #109087
+                NSArray *pages = [_destinationContextOverride fetchAllObjectsForEntityForName:@"Page" error:NULL];
+                [pages makeObjectsPerformSelector:@selector(guessThumbnailSourceGraphic)];
+                
+                
+                result = [dDoc saveToURL:[dDoc fileURL] ofType:[dDoc fileType] forSaveOperation:NSSaveOperation error:outError];
+                _destinationContextOverride = nil;
+                [dDoc close];
+                [dDoc release];
+            }
+            else
+            {
+                result = NO;
+            }
+        }
+        
+        
+        
+        _docURL = nil;
+        _destinationURL = nil;
+        [mappingModel release];
+        [_mediaContext release];
+        
+        return result;
     }
     @catch (NSException *exception)
     {
         NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSMigrationError localizedDescription:[exception reason]];
         [self cancelMigrationWithError:error];
         if (outError) *outError = error;
+        
+        
+        [NSApp reportException:exception];
     }
+    
     
     return NO;
 }
