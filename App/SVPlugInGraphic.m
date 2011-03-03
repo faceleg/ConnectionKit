@@ -9,6 +9,7 @@
 #import "SVPlugInGraphic.h"
 
 #import "SVDOMController.h"
+#import "SVLogoImage.h"
 #import "SVMediaProtocol.h"
 #import "KTPage.h"
 #import "SVPlugIn.h"
@@ -92,7 +93,9 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     if (width)
     {
         // …but only if actually appearing somewhere!
-        if ([self textAttachment] || [[self sidebars] count])
+        if ([self textAttachment] ||
+            [self isKindOfClass:[SVLogoImage class]] ||
+            [[self sidebars] count])
         {
             NSUInteger maxWidth = [self maxWidthOnPage:page];
             
