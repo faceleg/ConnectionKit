@@ -38,7 +38,6 @@
 
 @property(nonatomic, copy) NSNumber *contentHeight;
 
-- (NSUInteger)minWidth;
 - (NSUInteger)minHeight;
 - (NSNumber *)maxHeight;    // nil, the default, if there isn't one
 

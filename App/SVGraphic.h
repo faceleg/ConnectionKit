@@ -136,7 +136,9 @@ extern NSString *kSVGraphicPboardType;
 @property(nonatomic, copy) NSNumber *height;
 - (NSUInteger)area; // 0 if either dimension is auto. Used for thumbnail
 
+- (NSUInteger)minWidth; // 200 by default
 - (CGFloat)maxWidthOnPage:(id <SVPage>)page;
+- (BOOL)validateWidth:(NSNumber **)width error:(NSError **)error;
 
 - (NSNumber *)constrainedProportionsRatio;
 

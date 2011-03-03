@@ -251,8 +251,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 @dynamic width;
 - (BOOL)validateWidth:(NSNumber **)width error:(NSError **)error;
 {
-    // Subclasses can override to accept smaller widths
-    BOOL result = ((*width == nil) || [*width unsignedIntegerValue] >= 200);
+    BOOL result = ((*width == nil) || [*width unsignedIntegerValue] >= [self minWidth]);
     if (!result && error)
     {
         *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationNumberTooSmallError localizedDescription:@"Width of standard pagelets must be 200 pixels or greater"];
@@ -267,7 +266,9 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 {
     return [[self width] unsignedIntegerValue] * [[self height] unsignedIntegerValue];
 }
-    
+
+- (NSUInteger)minWidth; { return 200; }
+
 - (CGFloat)maxWidthOnPage:(KTPage *)page;
 {
     KTDesign *design = [[page master] design];
