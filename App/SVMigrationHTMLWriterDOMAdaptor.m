@@ -67,6 +67,9 @@
     SVTextAttachment *attachment = [SVTextAttachment textAttachmentWithGraphic:graphic];
     [attachment setCausesWrap:NSBOOL([self allowsPagelets])];
     
+    SVRichText *container = [[self textDOMController] representedObject];
+    if ([container attachmentsMustBeWrittenInline]) [attachment setWrap:[NSNumber numberWithInt:SVGraphicWrapFloat_1_0]];
+    
     
     // Create controller for graphic and hook up to imported node
     SVDOMController *controller = [graphic newDOMController];
