@@ -243,7 +243,12 @@
                 // Constrain proportions
                 for (SVMediaGraphic *aGraphic in graphics)
                 {
-                    if ([aGraphic isConstrainProportionsEditable]) [aGraphic setConstrainsProportions:YES];
+                    if ([aGraphic isConstrainProportionsEditable] &&
+                        [[aGraphic width] intValue] > 0 &&
+                        [[aGraphic height] intValue] > 0)
+                    {
+                        [aGraphic setConstrainsProportions:YES];
+                    }
                 }
                 
                 // Then reduce size to fit on page

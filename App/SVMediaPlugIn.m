@@ -119,19 +119,23 @@
     [graphic setNaturalWidth:width];
     [graphic setNaturalHeight:height];
     
-    NSNumber *oldWidth = [[self width] copy];
-    [graphic makeOriginalSize]; // why did I decide to do this? – Mike
     
-    if (width && height)
+    if (![self width] && ![self height] && width && height)
     {
-        [graphic setConstrainsProportions:YES];
+        NSNumber *oldWidth = [[self width] copy];
+        [graphic makeOriginalSize]; // why did I decide to do this? – Mike
+
+        if (width && height)
+        {
+            [graphic setConstrainsProportions:YES];
+        }
+
+        if (oldWidth && [[self width] unsignedIntegerValue] > [oldWidth unsignedIntegerValue])
+        {
+            [[self container] setContentWidth:oldWidth];
+        }
+        [oldWidth release];
     }
-    
-    if (oldWidth && [[self width] unsignedIntegerValue] > [oldWidth unsignedIntegerValue])
-    {
-        [[self container] setContentWidth:oldWidth];
-    }
-    [oldWidth release];
 }
 
 - (void)resetNaturalSize; { [self setNaturalWidth:nil height:nil]; }
