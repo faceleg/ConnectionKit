@@ -84,17 +84,8 @@
 
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 {
-    // SVGraphic.width is optional. For media graphics it becomes compulsary unless using external URL
-    BOOL result = (*height != nil || (![self media] && [self externalSourceURL]));
-    
-    if (!result && error)
-    {
-        *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                     code:NSValidationMissingMandatoryPropertyError
-                     localizedDescription:@"height is a mandatory property"];
-    }
-    
-    return result;
+    // By default allow anything since it may be imported external media whose size is not yet known
+    return YES;
 }
 
 - (NSNumber *)minWidth; { return [NSNumber numberWithInt:1]; }
