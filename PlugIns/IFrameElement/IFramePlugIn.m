@@ -73,6 +73,39 @@
     self.iFrameIsBordered = [[NSUserDefaults standardUserDefaults] boolForKey:@"iFramePageletIsBordered"];
 }
 
+- (void)awakeFromSourceProperties:(NSDictionary *)properties
+{
+    [super awakeFromSourceProperties:properties];
+    
+    if ( [properties objectForKey:@"linkURL"] )
+    {
+        self.linkURL = [NSURL URLWithString:[properties objectForKey:@"linkURL"]];
+    }
+    if ( [properties objectForKey:@"titleHTML"] )
+    {
+        self.title = [properties objectForKey:@"titleHTML"]; //FIXME: we need a plug-in accessible version of stringByConvertingHTMLToPlainText
+    }
+}
+
+// possible Sandvox 1 properties
+//iFrameHeight = 200;
+//iFrameIsBordered = 0;
+//iFrameWidth = 0;
+//introductionHTML = <null>;
+//linkURL = "http://www.apple.com/";
+//location = 1;
+//ordering = 0;
+//plugin = <null>;
+//pluginIdentifier = "sandvox.IFrameElement";
+//pluginVersion = "1.6.8";
+//prefersBottom = 0;
+//shouldPropagate = 1;
+//showBorder = 0;
+//titleHTML = Apple;
+//titleLinkURLPath = <null>;
+//uniqueID = 44E953B5D6D94A06B3C1;
+
+
 
 #pragma mark HTML Generation
 
