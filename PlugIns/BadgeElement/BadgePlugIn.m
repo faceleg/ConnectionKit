@@ -58,12 +58,34 @@ static NSArray *sAltStrings = nil;
 	[super dealloc];
 }
 
+- (void)configureAltAndTitleStrings
+{
+    NSString *altBlurb = [self generateBlurbVariant:0];
+    NSString *altString = [NSString stringWithFormat:SVLocalizedString(@"Created with Sandvox - %@",@"Alt string for sandvox badge"), altBlurb];			
+    self.badgeAltString = altString;
+    
+    NSString *titleBlurb = [self generateBlurbVariant:1];
+    NSString *titleString = [NSString stringWithFormat:SVLocalizedString(@"Learn about Sandvox - %@",@"title string for sandvox badge link"), titleBlurb];
+    self.badgeTitleString = titleString;
+}
+
 - (void)awakeFromNew;
 {
     [super awakeFromNew];
     [self setShowsTitle:NO];
     [self setBadgeTypeTag:1];
     [self setIncludeReferralCode:YES];
+    [self configureAltAndTitleStrings];
+}
+
+- (void)awakeFromSourceProperties:(NSDictionary *)properties
+{
+    [super awakeFromSourceProperties:properties];
+    if ( [properties objectForKey:@"anonymous"] )
+    {
+        self.includeReferralCode = [[properties objectForKey:@"anonymous"] boolValue];
+    }
+    [self configureAltAndTitleStrings];
 }
 
 
@@ -241,30 +263,8 @@ static NSArray *sAltStrings = nil;
 #pragma mark -
 #pragma mark Properties
 
-- (NSString *)badgeAltString
-{
-	if (nil == _badgeAltString)
-	{
-		NSString *blurb = [self generateBlurbVariant:0];
-		NSString *altString = [NSString stringWithFormat:SVLocalizedString(@"Created with Sandvox - %@",@"Alt string for sandvox badge"), blurb];			
-		[self setBadgeAltString:altString];
-	}
-	return _badgeAltString;		// don't want to calculate all the time.  Same for a document?
-}
 @synthesize badgeAltString = _badgeAltString;
-
-- (NSString *)badgeTitleString
-{
-	if (nil == _badgeTitleString)
-	{
-		NSString *blurb = [self generateBlurbVariant:1];
-		NSString *titleString = [NSString stringWithFormat:SVLocalizedString(@"Learn about Sandvox - %@",@"title string for sandvox badge link"), blurb];			
-		[self setBadgeTitleString:titleString];
-	}
-	return _badgeTitleString;		// don't want to calculate all the time.  Same for a document?
-}
 @synthesize badgeTitleString = _badgeTitleString;
-
 @synthesize badgeTypeTag = _badgeTypeTag;
 @synthesize includeReferralCode = _includeReferralCode;
 @synthesize openLinkInNewWindow = _openLinkInNewWindow;
