@@ -27,16 +27,21 @@
 
 @implementation SVLogoImage
 
-- (void)awakeFromInsert
+- (void)setSourceToLogoPlaceholder;
 {
-    [super awakeFromInsert];
-    
     NSURL *placeholderURL = [NSURL fileURLWithPath:
                              [[NSBundle mainBundle] pathForImageResource:@"LogoPlaceholder"]];
     
     [self setSourceWithMediaRecord:[SVMediaRecord mediaWithBundledURL:placeholderURL
                                                            entityName:[[self class] mediaEntityName]
                                        insertIntoManagedObjectContext:[self managedObjectContext]]];
+}
+
+- (void)awakeFromInsert
+{
+    [super awakeFromInsert];
+    
+    [self setSourceToLogoPlaceholder];
     
     [[self plugIn] setWidth:[NSNumber numberWithUnsignedInteger:200]
                      height:[NSNumber numberWithUnsignedInteger:128]];
@@ -53,6 +58,14 @@
 + (NSString *)mediaEntityName; { return @"LogoMedia"; }
 
 @dynamic hidden;
+- (void)setHidden:(NSNumber *)hidden;
+{
+    if (![self media])[self setSourceToLogoPlaceholder];    
+    
+    [self willChangeValueForKey:@"hidden"];
+    [self setPrimitiveValue:hidden forKey:@"hidden"];
+    [self didChangeValueForKey:@"hidden"];
+}
 
 - (SVTitleBox *)titleBox { return nil; }
 - (void)setTitle:(NSString *)title; { }
