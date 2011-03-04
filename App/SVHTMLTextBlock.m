@@ -374,58 +374,6 @@
 	[context endElement];
 }
 
-+ (NSCharacterSet *)uniqueIDCharacters
-{
-	static NSCharacterSet *result;
-	
-	if (!result)
-	{
-		result = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789ABCDEF"] retain];
-	}
-	
-	return result;
-}
-
-/*!	Given the page text, scan for all page ID references and convert to the proper relative links.
- */
-- (NSString *)fixPageLinksFromString:(NSString *)originalString context:(SVHTMLContext *)context;
-{
-	NSMutableString *buffer = [NSMutableString string];
-	if (originalString)
-	{
-		NSScanner *scanner = [NSScanner scannerWithString:originalString];
-		while (![scanner isAtEnd])
-		{
-			NSString *beforeLink = nil;
-			BOOL found = [scanner scanUpToString:kKTPageIDDesignator intoString:&beforeLink];
-			if (found)
-			{
-				[buffer appendString:beforeLink];
-				if (![scanner isAtEnd])
-				{
-					[scanner scanString:kKTPageIDDesignator intoString:nil];
-					NSString *idString = nil;
-					BOOL foundNumber = [scanner scanCharactersFromSet:[[self class] uniqueIDCharacters]
-														   intoString:&idString];
-					if (foundNumber)
-					{
-						KTPage *thePage = [KTPage pageWithUniqueID:idString inManagedObjectContext:[[self HTMLSourceObject] managedObjectContext]];
-						NSString *newPath = nil;
-						if (thePage)
-						{
-							newPath = [context relativeURLStringOfSiteItem:thePage];
-						}
-						
-						if (!newPath) newPath = @"#";	// Fallback
-						[buffer appendString:newPath];
-					}
-				}
-			}
-		}
-	}
-	return [NSString stringWithString:buffer];
-}
-
 - (BOOL)generateSpanIn;
 {
     return ([self isFieldEditor] && 
@@ -438,15 +386,6 @@
  */
 - (NSString *)processHTML:(NSString *)result context:(SVHTMLContext *)context;
 {
-    // Perform additional processing of the text according to HTML generation purpose
-	if (![context isForEditing])
-	{
-		// Fix page links
-		result = [self fixPageLinksFromString:result context:context];
-	}
-    
-    
-    
     return result;
 }
 

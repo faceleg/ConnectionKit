@@ -8,10 +8,11 @@
 
 #import "SVRichText.h"
 
-#import "SVTextAttachment.h"
-#import "SVMediaGraphic.h"
-#import "SVRichTextDOMController.h"
 #import "SVHTMLTemplateParser.h"
+#import "SVMediaGraphic.h"
+#import "KTPage.h"
+#import "SVRichTextDOMController.h"
+#import "SVTextAttachment.h"
 
 #import "NSArray+Karelia.h"
 #import "NSError+Karelia.h"
@@ -221,17 +222,87 @@
 
 #pragma mark HTML
 
++ (NSCharacterSet *)uniqueIDCharacters
+{
+	static NSCharacterSet *result;
+	
+	if (!result)
+	{
+		result = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789ABCDEF"] retain];
+	}
+	
+	return result;
+}
+
 - (void)writeText:(SVHTMLContext *)context;
 {
     NSRange range = NSMakeRange(0, [[self string] length]);
     [self writeText:context range:range];
 }
 
-- (void)writeText:(SVHTMLContext *)context range:(NSRange)range;
+- (void)writeText:(SVHTMLContext *)context range:(NSRange)searchRange;
 {
     [context beginGraphicContainer:self];
     
-    NSAttributedString *html = [[self attributedHTMLString] attributedSubstringFromRange:range];
+    NSAttributedString *html = [[self attributedHTMLString] attributedSubstringFromRange:searchRange];
+    
+    
+    
+    if (![context isForEditing])
+    {
+        /*!	Given the page text, scan for all page ID references and convert to the proper relative links. #110486
+         */
+        NSCharacterSet *nonIDChars = [[[self class] uniqueIDCharacters] invertedSet];
+        
+        
+        NSMutableAttributedString *buffer = [html mutableCopy];
+        
+        NSRange searchRange = NSMakeRange(0, [buffer length]);
+        while (searchRange.length)
+        {
+            // Look for a page ID designator
+            NSRange idDesignatorRange = [[buffer string] rangeOfString:kKTPageIDDesignator
+                                                               options:0
+                                                                 range:searchRange];
+            
+            if (idDesignatorRange.location == NSNotFound) break;
+            
+            // Look for page ID
+            searchRange.location = idDesignatorRange.location + idDesignatorRange.length;
+            searchRange.length = [buffer length] - searchRange.location;
+            
+            NSRange postIDRange = [[buffer string] rangeOfCharacterFromSet:nonIDChars
+                                                                   options:0
+                                                                     range:searchRange];
+            
+            if (postIDRange.location == NSNotFound) postIDRange.location = [buffer length];
+            
+            // Locate the corresponding page
+            NSRange idRange = NSMakeRange(idDesignatorRange.location + idDesignatorRange.length, 0);
+            idRange.length = postIDRange.location - idRange.location;
+            
+            NSString *idString = [[buffer string] substringWithRange:idRange];
+            KTPage *thePage = [KTPage pageWithUniqueID:idString inManagedObjectContext:[self managedObjectContext]];
+            
+            // Figure out correct path
+            NSString *newPath = nil;
+            if (thePage) newPath = [context relativeURLStringOfSiteItem:thePage];
+            if (!newPath) newPath = @"#";	// Fallback
+            
+            // Substitute new path
+            NSRange replacementRange = NSMakeRange(idDesignatorRange.location, idDesignatorRange.length + idRange.length);
+            [buffer replaceCharactersInRange:replacementRange withString:newPath];
+            
+            // Carry on searching
+            searchRange.location = replacementRange.location + [newPath length];
+            searchRange.length = [buffer length] - searchRange.location;
+        }
+        
+        html = [buffer autorelease];
+    }
+    
+    
+    
     [context writeAttributedHTMLString:html];
     
     //[context addDependencyOnObject:self keyPath:@"string"];
