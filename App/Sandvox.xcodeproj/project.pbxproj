@@ -1345,7 +1345,6 @@
 		CEFDA5C312EA397F00D3A6CD /* CollectionInfo.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEFDA57812EA397F00D3A6CD /* CollectionInfo.strings */; };
 		CEFDA5C412EA397F00D3A6CD /* CollectionInspector.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEFDA57A12EA397F00D3A6CD /* CollectionInspector.strings */; };
 		CEFDA5C512EA397F00D3A6CD /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = CEFDA57C12EA397F00D3A6CD /* Credits.html */; };
-		CEFDA5C612EA397F00D3A6CD /* DebugMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEFDA57E12EA397F00D3A6CD /* DebugMenu.strings */; };
 		CEFDA5C712EA397F00D3A6CD /* DebugTable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEFDA58012EA397F00D3A6CD /* DebugTable.strings */; };
 		CEFDA5C812EA397F00D3A6CD /* DocumentInspector.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEFDA58212EA397F00D3A6CD /* DocumentInspector.strings */; };
 		CEFDA5C912EA397F00D3A6CD /* DocumentMigration.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEFDA58412EA397F00D3A6CD /* DocumentMigration.strings */; };
@@ -3134,7 +3133,6 @@
 		CEFDA57912EA397F00D3A6CD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/CollectionInfo.strings; sourceTree = "<group>"; };
 		CEFDA57B12EA397F00D3A6CD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/CollectionInspector.strings; sourceTree = "<group>"; };
 		CEFDA57D12EA397F00D3A6CD /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = fr; path = fr.lproj/Credits.html; sourceTree = "<group>"; };
-		CEFDA57F12EA397F00D3A6CD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/DebugMenu.strings; sourceTree = "<group>"; };
 		CEFDA58112EA397F00D3A6CD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/DebugTable.strings; sourceTree = "<group>"; };
 		CEFDA58312EA397F00D3A6CD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/DocumentInspector.strings; sourceTree = "<group>"; };
 		CEFDA58512EA397F00D3A6CD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/DocumentMigration.strings; sourceTree = "<group>"; };
@@ -5801,7 +5799,6 @@
 				CEFDA57812EA397F00D3A6CD /* CollectionInfo.strings */,
 				CEFDA57A12EA397F00D3A6CD /* CollectionInspector.strings */,
 				CEFDA57C12EA397F00D3A6CD /* Credits.html */,
-				CEFDA57E12EA397F00D3A6CD /* DebugMenu.strings */,
 				CEFDA58012EA397F00D3A6CD /* DebugTable.strings */,
 				CEFDA58212EA397F00D3A6CD /* DocumentInspector.strings */,
 				CEFDA58412EA397F00D3A6CD /* DocumentMigration.strings */,
@@ -6942,7 +6939,6 @@
 				CEFDA5C312EA397F00D3A6CD /* CollectionInfo.strings in Resources */,
 				CEFDA5C412EA397F00D3A6CD /* CollectionInspector.strings in Resources */,
 				CEFDA5C512EA397F00D3A6CD /* Credits.html in Resources */,
-				CEFDA5C612EA397F00D3A6CD /* DebugMenu.strings in Resources */,
 				CEFDA5C712EA397F00D3A6CD /* DebugTable.strings in Resources */,
 				CEFDA5C812EA397F00D3A6CD /* DocumentInspector.strings in Resources */,
 				CEFDA5C912EA397F00D3A6CD /* DocumentMigration.strings in Resources */,
@@ -8594,14 +8590,6 @@
 				CEFDA63012EA3A1500D3A6CD /* en */,
 			);
 			name = Credits.html;
-			sourceTree = "<group>";
-		};
-		CEFDA57E12EA397F00D3A6CD /* DebugMenu.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CEFDA57F12EA397F00D3A6CD /* fr */,
-			);
-			name = DebugMenu.strings;
 			sourceTree = "<group>";
 		};
 		CEFDA58012EA397F00D3A6CD /* DebugTable.strings */ = {
