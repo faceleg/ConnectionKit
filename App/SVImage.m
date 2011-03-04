@@ -148,8 +148,12 @@
     {
         // Store natural size
         CGSize size = IMBImageItemGetSize((id <IMBImageItem>)[self media]);
-        [self setNaturalWidth:[NSNumber numberWithUnsignedInt:size.width]
-                       height:[NSNumber numberWithUnsignedInt:size.height]];
+        
+        NSUInteger width = size.width;
+        NSUInteger height = size.height;
+        
+        [self setNaturalWidth:(width ? [NSNumber numberWithUnsignedInt:width] : nil)
+                       height:(height ? [NSNumber numberWithUnsignedInt:height] : nil)];
     }
     else if ([self externalSourceURL])
     {
