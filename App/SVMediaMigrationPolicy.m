@@ -26,7 +26,7 @@
     NSManagedObject *mediaFile = [[self class] sourceMediaFileForContainerIdentifier:mediaID
                                                                              manager:manager
                                                                                error:error];
-    if (!mediaFile) return NO; 
+    if (!mediaFile) return nil; 
     
     
     // Create new media record to match
@@ -107,7 +107,9 @@
     }
     
     NSManagedObject *result = [mediaContainer valueForKey:@"file"];
-    return result;  // FIXME: return an error if nil
+    if (!result && error) *error = nil; // report nil error since the media just doesn't exist
+    
+    return result;
 }
 
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
@@ -129,8 +131,14 @@
     if (!mediaID) return YES;   // there was no media to import
     
     
-    // Find Media
-    return ([[self class] createDestinationInstanceForSourceInstance:sInstance mediaContainerIdentifier:mediaID entityMapping:mapping manager:manager error:error] != nil);
+    // Find Media. Can be given nil result with a nil error to signify media not existing. #110320
+    NSManagedObject *dInstance = [[self class] createDestinationInstanceForSourceInstance:sInstance
+                                                                 mediaContainerIdentifier:mediaID
+                                                                            entityMapping:mapping
+                                                                                  manager:manager
+                                                                                    error:error];
+    if (!dInstance && error && !*error) return YES;
+    return (dInstance != nil);
 }
 
 @end
