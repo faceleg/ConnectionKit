@@ -366,20 +366,6 @@
 
 #pragma mark Size, inherited
 
-- (BOOL)validateWidth:(NSNumber **)width error:(NSError **)error;
-{
-    // SVGraphic.width is optional. For media graphics it becomes compulsory unless using external URL
-    BOOL result = (*width != nil || (![self media] && [self externalSourceURL]));
-    if (!result && error)
-    {
-        *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                     code:NSValidationMissingMandatoryPropertyError
-                     localizedDescription:@"width is a mandatory property"];
-    }
-    
-    return result;
-}
-
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 {
     // Push off validation to plug-in
