@@ -3028,7 +3028,7 @@
 		CE6EE00C11F129F100F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSKeepInTouch.xib; sourceTree = "<group>"; };
 		CE6EE00E11F129F100F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSPluginInstaller.xib; sourceTree = "<group>"; };
 		CE6EE01011F129F100F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSRegistration.xib; sourceTree = "<group>"; };
-		CE6EE03811F12B7200F00AAC /* DMLocalizedNibBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMLocalizedNibBundle.m; sourceTree = "<group>"; };
+		CE6EE03811F12B7200F00AAC /* DMLocalizedNibBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DMLocalizedNibBundle.m; path = ../../Shared/ThirdParty/GoldenBraeburn/DeliciousLocalization/DMLocalizedNibBundle.m; sourceTree = SOURCE_ROOT; };
 		CE733A5F1113A6F5009582EA /* SVBlogEntryBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBlogEntryBorderView.h; sourceTree = "<group>"; };
 		CE733A601113A6F5009582EA /* SVBlogEntryBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBlogEntryBorderView.m; sourceTree = "<group>"; };
 		CE733AAB1113B952009582EA /* SVBlogSummaryDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBlogSummaryDOMController.h; sourceTree = "<group>"; };
