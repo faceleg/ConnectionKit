@@ -303,6 +303,7 @@
 
 - (NSURL *)destinationURLOfMediaWithFilename:(NSString *)filename;
 {
+    OBPRECONDITION(filename);
     return [_destinationURL ks_URLByAppendingPathComponent:filename isDirectory:NO];
 }
 
