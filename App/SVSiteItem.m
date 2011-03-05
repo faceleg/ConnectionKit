@@ -600,6 +600,11 @@
 
 - (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount; { return NO; }
 
+#pragma mark Comments
+
+// This will be a private API for use by General index
+- (void)writeComments:(SVHTMLContext *)context; { }
+
 #pragma mark UI
 
 - (BOOL)isCollection { return NO; }
