@@ -16,11 +16,15 @@
 
 @implementation SVPageletMigrationPolicy
 
-- (BOOL) createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager error:(NSError **)error;
+- (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager error:(NSError **)error;
 {
     @try
     {
-        return [super createDestinationInstancesForSourceInstance:sInstance entityMapping:mapping manager:manager error:error];
+        BOOL result = [super createDestinationInstancesForSourceInstance:sInstance
+                                                           entityMapping:mapping
+                                                                 manager:manager
+                                                                   error:error];
+        return result;
     }
     @catch (NSException *exception)
     {
@@ -188,6 +192,13 @@
 
 
 @implementation SVMediaGraphicMigrationPolicy
+
+- (NSString *)externalSourceURLStringFromExtensibleProperties:(NSDictionary *)properties pluginIdentifier:(NSString *)identifier;
+{
+    NSString *key = ([identifier isEqualToString:@"sandvox.VideoElement"] ? @"remoteURL" : @"externalImageURL");
+    NSString *result = [properties objectForKey:key];
+    return result;
+}
 
 - (NSString *)typeToPublishForMediaContainerIdentifier:(NSString *)identifier manager:(SVMigrationManager *)manager;
 {
