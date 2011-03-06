@@ -254,7 +254,11 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     BOOL result = ((*width == nil) || [*width unsignedIntegerValue] >= [self minWidth]);
     if (!result && error)
     {
-        *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationNumberTooSmallError localizedDescription:@"Width of standard pagelets must be 200 pixels or greater"];
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationNumberTooSmallError localizedDescription:
+                  [NSString stringWithFormat:
+                   @"Graphic '%@' must be %u pixels wide or more",
+                   [self title],
+                   [self minWidth]]];
     }
     
     return result;
