@@ -1210,17 +1210,17 @@
     return NSDragOperationNone;
 }
 
-- (NSDragOperation)validateLinkDrop:(NSString *)pboardString onProposedItem:(SVSiteItem *)item;
+- (NSDragOperation)validateLinkDrop:(NSString *)pboardString onProposedItem:(NSTreeNode *)node;
 {
     // If our input string is a collection, then return NO if it's not a collection.
-    if ([pboardString isEqualToString:@"KTCollection"] && ![item isCollection])
+    if ([pboardString isEqualToString:@"KTCollection"] && ![[node representedObject] isCollection])
     {
         return NSDragOperationNone;
     }
     //set up a pulsating window
-    if (item)
+    if (node)
     {
-        NSInteger row = [[self outlineView] rowForItem:item];
+        NSInteger row = [[self outlineView] rowForItem:node];
         NSRect rowRect = [[self outlineView] rectOfRow:row];
         //covert the origin to window coords
         rowRect.origin = [[[self view] window] convertBaseToScreen:[[self outlineView] convertPoint:rowRect.origin toView:nil]];
@@ -1255,7 +1255,7 @@
         if (siteItem && anIndex == NSOutlineViewDropOnItemIndex)
         {
             NSString *pboardString = [pboard stringForType:kKTLocalLinkPboardAllowedType];
-            return [self validateLinkDrop:pboardString onProposedItem:siteItem];
+            return [self validateLinkDrop:pboardString onProposedItem:node];
         }
         else
         {
