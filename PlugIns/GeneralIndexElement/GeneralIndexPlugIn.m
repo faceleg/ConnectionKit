@@ -426,7 +426,7 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 
 - (void)awakeFromSourceProperties:(NSDictionary *)properties
 {
-	// NSLog(@"prop keys to convert: %@", [[[properties allKeys] description] condenseWhiteSpace]);
+	//NSLog(@"prop keys to convert: %@", [[[properties allKeys] description] condenseWhiteSpace]);
 	if ([[properties objectForKey:@"collectionIndexBundleIdentifier"] isEqualToString:@"sandvox.ListingIndex"])
 	{
 		self.indexLayoutType = kLayoutTitlesList;		// kLayoutTitles ?
@@ -439,6 +439,10 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 	{
 		self.indexLayoutType = kLayoutTable;
 	}
+    else 
+    {
+        self.indexLayoutType = kLayoutTitlesList; //FIXME: what should the fallback be?
+    }
 
 	self.hyperlinkTitles = [[properties objectForKey:@"collectionHyperlinkPageTitles"] boolValue];
 	self.showPermaLinks = [[properties objectForKey:@"collectionShowPermanentLink"] boolValue];
