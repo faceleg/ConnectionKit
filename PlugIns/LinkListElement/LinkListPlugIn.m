@@ -173,6 +173,8 @@
 
 - (void)awakeFromSourceProperties:(NSDictionary *)properties
 {
+    [super awakeFromSourceProperties:properties];
+    
     if ( [properties objectForKey:@"layout"] )
     {
         self.layout = [[properties objectForKey:@"layout"] integerValue];
