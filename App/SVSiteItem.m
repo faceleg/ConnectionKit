@@ -44,7 +44,7 @@
 		if (NSNotFound != whereTilde)
 		{
 			NSString *idString = [path substringFromIndex:whereTilde+[kKTPageIDDesignator length]];
-			result = [KTPage pageWithUniqueID:idString inManagedObjectContext:context];
+			result = [self pageWithUniqueID:idString inManagedObjectContext:context];
 		}
 		
         // This logic was in the SVSite equivalent of this method. Still applies?
