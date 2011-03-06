@@ -1324,7 +1324,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     if (([[URL scheme] isEqualToString:@"applewebdata"] || [relativePath hasPrefix:kKTPageIDDesignator]) &&
         [[actionInfo objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther)
     {
-        SVSiteItem *page = [KTPage siteItemForPreviewPath:relativePath inManagedObjectContext:[myPage managedObjectContext]];
+        SVSiteItem *page = [SVSiteItem siteItemForPreviewPath:relativePath inManagedObjectContext:[myPage managedObjectContext]];
         if (page)
         {
             [[self delegate] webEditorViewController:self openSiteItem:page];
