@@ -192,14 +192,21 @@
 			[context endElement];
 		}
 	}
-	else
+	else	// Not a table
 	{
 		if (self.indexLayoutType & kTitleMask)
 		{
-			[context startHeaderWithAttributes:
-				[NSDictionary dictionaryWithObject:@"index-title" forKey:@"class"]];
-			[self writeTitleOfIteratedPage];
-			[context endElement];
+			if (self.indexLayoutType & kListMask)
+			{
+				[self writeTitleOfIteratedPage];		// List: Just the title, no header
+			}
+			else
+			{
+				[context startHeaderWithAttributes:
+				 [NSDictionary dictionaryWithObject:@"index-title" forKey:@"class"]];
+				[self writeTitleOfIteratedPage];
+				[context endElement];
+			}
 		}
 		if (self.indexLayoutType & kThumbMask)
 		{
@@ -440,7 +447,11 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 	{
 		self.indexLayoutType = kLayoutTable;
 	}
-    else 
+ 	else if ([[properties objectForKey:@"pluginIdentifier"] isEqualToString:@"sandvox.IndexElement"])
+	{
+		self.indexLayoutType = kLayoutTitlesList;	// A collection index pagelet
+	}
+	else 
     {
         self.indexLayoutType = kLayoutTitlesList; //FIXME: what should the fallback be?
     }
