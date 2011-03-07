@@ -113,6 +113,36 @@
     [self setInitialProperties];
 }
 
+- (void)awakeFromSourceProperties:(NSDictionary *)properties
+{
+    [super awakeFromSourceProperties:properties];
+    [self setWidth:[properties objectForKey:@"videoWidth"] height:[properties objectForKey:@"videoHeight"]];
+}
+
+// possible S1 values
+//color1 = NSCalibratedRGBColorSpace 0.81 0.81 0.81 1;
+//color2 = NSCalibratedWhiteColorSpace 0.62 1;
+//
+//includeRelatedVideos = 0;
+//introductionHTML = "<p style=\"text-align: center;\"><span style=\"color: rgb(0, 0, 0);\"><i style=\"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px;\">Credit lovegymnasts</i></span></p>\n\n";
+//location = 1;
+//ordering = 4;
+//plugin = <null>;
+//pluginIdentifier = "sandvox.YouTubeElement";
+//pluginVersion = "1.6.6";
+//prefersBottom = 0;
+//shouldPropagate = 0;
+//showBorder = 0;
+//titleHTML = "Kidnapped 1";
+//titleLinkURLPath = <null>;
+//uniqueID = DC58995640684C509B94;
+//useCustomSecondaryColor = 1;
+//userVideoCode = "http://www.youtube.com/watch?v=Gy0Ze1xKOXw";
+//videoHeight = 169;
+//videoID = Gy0Ze1xKOXw;
+//videoSize = 0;
+//videoWidth = 200;
+
 
 #pragma mark HTML Generation
 
