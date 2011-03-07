@@ -458,7 +458,9 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 
 	if (nil != [properties objectForKey:@"collectionHyperlinkPageTitles"])
 	{
-		self.hyperlinkTitles = [[properties objectForKey:@"collectionHyperlinkPageTitles"] boolValue];
+		self.hyperlinkTitles = 
+		[collectionIndexBundleIdentifier isEqualToString:@"sandvox.ListingIndex"]		// listing index automatically gets hyperlinks
+		|| [[properties objectForKey:@"collectionHyperlinkPageTitles"] boolValue];
 	}
 	else
 	{
