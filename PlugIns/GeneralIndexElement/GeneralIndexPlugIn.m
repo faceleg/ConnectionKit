@@ -427,15 +427,16 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 - (void)awakeFromSourceProperties:(NSDictionary *)properties
 {
 	//NSLog(@"prop keys to convert: %@", [[[properties allKeys] description] condenseWhiteSpace]);
-	if ([[properties objectForKey:@"collectionIndexBundleIdentifier"] isEqualToString:@"sandvox.ListingIndex"])
+	NSString *collectionIndexBundleIdentifier = [properties objectForKey:@"collectionIndexBundleIdentifier"];
+	if ([collectionIndexBundleIdentifier isEqualToString:@"sandvox.ListingIndex"])
 	{
 		self.indexLayoutType = kLayoutTitlesList;		// kLayoutTitles ?
 	}
-	else if ([[properties objectForKey:@"collectionIndexBundleIdentifier"] isEqualToString:@"sandvox.GeneralIndex"])
+	else if ([collectionIndexBundleIdentifier isEqualToString:@"sandvox.GeneralIndex"])
 	{
 		self.indexLayoutType = kLayoutArticlesAndMedia;	// ? kLayoutArticlesAndThumbs
 	}
-	else if ([[properties objectForKey:@"collectionIndexBundleIdentifier"] isEqualToString:@"sandvox.DownloadIndex"])
+	else if ([collectionIndexBundleIdentifier isEqualToString:@"sandvox.DownloadIndex"])
 	{
 		self.indexLayoutType = kLayoutTable;
 	}
@@ -444,7 +445,14 @@ extern NSUInteger kLargeMediaTruncationThreshold;
         self.indexLayoutType = kLayoutTitlesList; //FIXME: what should the fallback be?
     }
 
-	self.hyperlinkTitles = [[properties objectForKey:@"collectionHyperlinkPageTitles"] boolValue];
+	if (nil != [properties objectForKey:@"collectionHyperlinkPageTitles"])
+	{
+		self.hyperlinkTitles = [[properties objectForKey:@"collectionHyperlinkPageTitles"] boolValue];
+	}
+	else
+	{
+		self.hyperlinkTitles = YES;
+	}
 	self.showPermaLinks = [[properties objectForKey:@"collectionShowPermanentLink"] boolValue];
 	self.showTimestamps = [[properties objectForKey:@"includeTimestamp"] boolValue];
 	self.showComments = [[properties objectForKey:@"allowComments"] boolValue];			// disableComments ?
