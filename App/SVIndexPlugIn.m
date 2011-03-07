@@ -158,9 +158,17 @@
 
 - (void)awakeFromSourceProperties:(NSDictionary *)properties
 {
-	self.enableMaxItems = ([[properties objectForKey:@"collectionMaxIndexItems"] intValue] > 0);
-	self.maxItems = [[properties objectForKey:@"collectionMaxIndexItems"] intValue];
-
+	if (nil != [properties objectForKey:@"collectionMaxIndexItems"])
+	{
+		self.enableMaxItems = ([[properties objectForKey:@"collectionMaxIndexItems"] intValue] > 0);
+		self.maxItems = [[properties objectForKey:@"collectionMaxIndexItems"] intValue];
+	}
+	if (nil != [properties objectForKey:@"maxItems"])
+	{
+		self.enableMaxItems = ([[properties objectForKey:@"maxItems"] intValue] > 0);
+		self.maxItems = [[properties objectForKey:@"maxItems"] intValue];
+	}
+	
 	// self.indexedCollection = ?????;
 }
 
