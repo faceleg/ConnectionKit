@@ -21,7 +21,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="5"/>
+			<integer value="83"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -57,14 +57,14 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="NSTabViewItem" id="831528578">
 								<object class="NSView" key="NSView" id="1053057408">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder" ref="957327062"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
 										<object class="NSComboBox" id="495639454">
 											<reference key="NSNextResponder" ref="1053057408"/>
 											<int key="NSvFlags">266</int>
-											<string key="NSFrame">{{70, 243}, {163, 22}}</string>
+											<string key="NSFrame">{{70, 223}, {163, 22}}</string>
 											<reference key="NSSuperview" ref="1053057408"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSComboBoxCell" key="NSCell" id="1050958392">
@@ -182,7 +182,7 @@
 										<object class="NSTextField" id="66096918">
 											<reference key="NSNextResponder" ref="1053057408"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{17, 247}, {48, 14}}</string>
+											<string key="NSFrame">{{17, 227}, {48, 14}}</string>
 											<reference key="NSSuperview" ref="1053057408"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="508353849">
@@ -203,7 +203,7 @@
 										<object class="NSTextField" id="697116481">
 											<reference key="NSNextResponder" ref="1053057408"/>
 											<int key="NSvFlags">266</int>
-											<string key="NSFrame">{{68, 233}, {142, 11}}</string>
+											<string key="NSFrame">{{68, 213}, {142, 11}}</string>
 											<reference key="NSSuperview" ref="1053057408"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="27644855">
@@ -223,7 +223,7 @@
 										<object class="NSButton" id="434604529">
 											<reference key="NSNextResponder" ref="1053057408"/>
 											<int key="NSvFlags">264</int>
-											<string key="NSFrame">{{67, 211}, {183, 16}}</string>
+											<string key="NSFrame">{{67, 191}, {183, 16}}</string>
 											<reference key="NSSuperview" ref="1053057408"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="702187604">
@@ -250,7 +250,7 @@
 										<object class="NSTextField" id="579931076">
 											<reference key="NSNextResponder" ref="1053057408"/>
 											<int key="NSvFlags">290</int>
-											<string key="NSFrame">{{17, 62}, {216, 42}}</string>
+											<string key="NSFrame">{{17, 81}, {216, 70}}</string>
 											<reference key="NSSuperview" ref="1053057408"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="466249040">
@@ -270,7 +270,7 @@
 										<object class="NSTextField" id="720109396">
 											<reference key="NSNextResponder" ref="1053057408"/>
 											<int key="NSvFlags">290</int>
-											<string key="NSFrame">{{17, 10}, {216, 44}}</string>
+											<string key="NSFrame">{{17, 10}, {216, 66}}</string>
 											<reference key="NSSuperview" ref="1053057408"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="49676328">
@@ -284,7 +284,8 @@
 											</object>
 										</object>
 									</object>
-									<string key="NSFrame">{{10, 25}, {250, 270}}</string>
+									<string key="NSFrame">{{10, 25}, {250, 250}}</string>
+									<reference key="NSSuperview" ref="957327062"/>
 								</object>
 								<string key="NSLabel">Message</string>
 								<reference key="NSColor" ref="387374723"/>
@@ -292,7 +293,7 @@
 							</object>
 							<object class="NSTabViewItem" id="487548817">
 								<object class="NSView" key="NSView" id="989325031">
-									<reference key="NSNextResponder" ref="957327062"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1032,21 +1033,20 @@
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {250, 250}}</string>
-									<reference key="NSSuperview" ref="957327062"/>
 								</object>
 								<string key="NSLabel">Fields</string>
 								<reference key="NSColor" ref="387374723"/>
 								<reference key="NSTabView" ref="957327062"/>
 							</object>
 						</object>
-						<reference key="NSSelectedTabViewItem" ref="487548817"/>
+						<reference key="NSSelectedTabViewItem" ref="831528578"/>
 						<reference key="NSFont" ref="26"/>
 						<int key="NSTvFlags">134217728</int>
 						<bool key="NSAllowTruncatedLabels">YES</bool>
 						<bool key="NSDrawsBackground">YES</bool>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="989325031"/>
+							<reference ref="1053057408"/>
 						</object>
 					</object>
 				</object>
@@ -1885,9 +1885,9 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="495639454"/>
 							<reference ref="66096918"/>
-							<reference ref="579931076"/>
 							<reference ref="697116481"/>
 							<reference ref="434604529"/>
+							<reference ref="579931076"/>
 							<reference ref="720109396"/>
 						</object>
 						<reference key="parent" ref="831528578"/>
@@ -2579,6 +2579,7 @@
 					<string>149.IBPluginDependency</string>
 					<string>149.ImportedFromIB2</string>
 					<string>15.IBPluginDependency</string>
+					<string>15.IBViewBoundsToFrameTransform</string>
 					<string>15.ImportedFromIB2</string>
 					<string>150.IBPluginDependency</string>
 					<string>150.ImportedFromIB2</string>
@@ -2615,8 +2616,10 @@
 					<string>44.ImportedFromIB2</string>
 					<string>5.IBEditorWindowLastContentRect</string>
 					<string>5.IBPluginDependency</string>
+					<string>5.IBViewEditorWindowController.showingLayoutRectangles</string>
 					<string>5.ImportedFromIB2</string>
 					<string>509.IBPluginDependency</string>
+					<string>509.IBViewBoundsToFrameTransform</string>
 					<string>509.ImportedFromIB2</string>
 					<string>511.IBPluginDependency</string>
 					<string>512.IBPluginDependency</string>
@@ -2741,6 +2744,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAwxUAAA</bytes>
+					</object>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -2778,7 +2784,11 @@
 					<string>{{418, 374}, {230, 280}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAwqIAAA</bytes>
+					</object>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
