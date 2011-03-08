@@ -337,6 +337,11 @@
 - (NSNumber *)isNotNil:(id)anObject; { return NSBOOL(anObject != nil); }
 - (NSNumber *)boolValue:(id)anObject; { return NSBOOL([anObject boolValue]); }
 
+- (id)propertyListFromData:(NSData *)data;
+{
+    return [NSPropertyListSerialization propertyListFromData:data mutabilityOption:NSPropertyListImmutable format:NULL errorDescription:NULL];
+}
+
 - (NSDictionary *)extensiblePropertiesFromData:(NSData *)data;
 {
     NSDictionary *result = [KSExtensibleManagedObject unarchiveExtensibleProperties:data];
