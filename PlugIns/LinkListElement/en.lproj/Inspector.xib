@@ -63,7 +63,7 @@
 										<bool key="EncodedWithXMLCoder">YES</bool>
 										<object class="NSScrollView" id="118978594">
 											<reference key="NSNextResponder" ref="972752083"/>
-											<int key="NSvFlags">282</int>
+											<int key="NSvFlags">274</int>
 											<object class="NSMutableArray" key="NSSubviews">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 												<object class="NSClipView" id="26915287">
@@ -199,7 +199,7 @@
 										</object>
 										<object class="BWAnchoredButtonBar" id="1005744294">
 											<reference key="NSNextResponder" ref="972752083"/>
-											<int key="NSvFlags">266</int>
+											<int key="NSvFlags">258</int>
 											<object class="NSMutableArray" key="NSSubviews">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 												<object class="BWAnchoredButton" id="1049587597">
@@ -260,7 +260,7 @@
 										</object>
 										<object class="NSCustomView" id="196929145">
 											<reference key="NSNextResponder" ref="972752083"/>
-											<int key="NSvFlags">266</int>
+											<int key="NSvFlags">290</int>
 											<object class="NSMutableArray" key="NSSubviews">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 												<object class="NSTextField" id="363936151">
@@ -334,7 +334,7 @@
 										</object>
 										<object class="NSCustomView" id="442696841">
 											<reference key="NSNextResponder" ref="972752083"/>
-											<int key="NSvFlags">268</int>
+											<int key="NSvFlags">292</int>
 											<object class="NSMutableArray" key="NSSubviews">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 												<object class="NSTextField" id="874077140">
