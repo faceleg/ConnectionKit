@@ -203,8 +203,8 @@
 
 - (void)makeOriginalSize;
 {
-    float height = 490 / [[self constrainedAspectRatio] floatValue];
-    [self setWidth:[NSNumber numberWithInt:490] height:[NSNumber numberWithUnsignedInteger:height]];
+    float height = 480 / [[self constrainedAspectRatio] floatValue];
+    [self setWidth:[NSNumber numberWithInt:480] height:[NSNumber numberWithFloat:height]];
 }
 
 
@@ -285,6 +285,13 @@
 
 @synthesize videoID = _videoID;
 @synthesize widescreen = _widescreen;
+- (void)setWidescreen:(BOOL)flag
+{
+    _widescreen = flag;
+    
+    float height = [self.width floatValue] / [[self constrainedAspectRatio] floatValue];
+    [self setWidth:self.width height:[NSNumber numberWithFloat:height]];
+}
 @synthesize includeRelatedVideos = _includeRelatedVideos;
 
 @end
