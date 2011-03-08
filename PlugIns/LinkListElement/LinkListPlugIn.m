@@ -173,8 +173,7 @@
 
 - (void)awakeFromSourceProperties:(NSDictionary *)properties
 {
-    [super awakeFromSourceProperties:properties];
-    
+    // DO NOT call super (otherwise, it will create a bogus linkList with double entries, half empty)
     if ( [properties objectForKey:@"layout"] )
     {
         self.layout = [[properties objectForKey:@"layout"] integerValue];
@@ -195,7 +194,6 @@
                              nil];
             [self addLink:newLink];
         }
-        
     }
 }
 
