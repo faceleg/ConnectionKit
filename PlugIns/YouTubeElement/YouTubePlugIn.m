@@ -39,11 +39,6 @@
 #import "YouTubeCocoaExtensions.h"
 
 
-#define YOUTUBE_BORDER_HEIGHT 12
-#define YOUTUBE_CONTROLBAR_HEIGHT 26
-#define HTML5_CONTROLBAR_HEIGHT 42
-
-
 @implementation YouTubePlugIn
 
 
@@ -53,15 +48,10 @@
 { 
     return [NSArray arrayWithObjects:
             @"userVideoCode", 
-            @"color2", 
-            @"color1", 
-            @"widescreen", 
-            @"showBorder", 
-            @"includeRelatedVideos", 
-            @"useCustomSecondaryColor",
-            @"useIFrame",
+            //@"videoID", 
             @"privacy", 
-            @"playHD", 
+            @"widescreen", 
+            @"includeRelatedVideos", 
             nil];
 }
 
@@ -72,26 +62,14 @@
 {
 	self.userVideoCode = nil;
 	self.videoID = nil;
-	self.color2 = nil;
-	self.color1 = nil;
 		
 	[super dealloc];
 }
 
 - (void)setInitialProperties
 {
-    // hint to user: prefer widescreen
     self.widescreen = YES;
-    
-    // try the HTML5 iFrame
-    self.useIFrame = NO;
-    
-    // Prepare initial colors
-    self.useCustomSecondaryColor = NO;
-    self.color2 = [YouTubePlugIn defaultPrimaryColor];
-    
     self.includeRelatedVideos = NO;
-    self.showBorder = NO;
 }
 
 - (void)awakeFromNew;
@@ -113,11 +91,16 @@
     [self setInitialProperties];
 }
 
+
+#pragma mark Migration
+
 - (void)awakeFromSourceProperties:(NSDictionary *)properties
 {
     [super awakeFromSourceProperties:properties];
     [self setWidth:[properties objectForKey:@"videoWidth"] height:[properties objectForKey:@"videoHeight"]];
 }
+
+//FIXME: what about titleHTML? is that getting converted?
 
 // possible S1 values
 //color1 = NSCalibratedRGBColorSpace 0.81 0.81 0.81 1;
@@ -149,79 +132,16 @@
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
     [super writeHTML:context];
-    [context addDependencyForKeyPath:@"includeRelatedVideos" ofObject:self];
-    [context addDependencyForKeyPath:@"privacy" ofObject:self];
-    [context addDependencyForKeyPath:@"useIFrame" ofObject:self];
     [context addDependencyForKeyPath:@"userVideoCode" ofObject:self];
+    [context addDependencyForKeyPath:@"videoID" ofObject:self];
+    [context addDependencyForKeyPath:@"privacy" ofObject:self];
     [context addDependencyForKeyPath:@"widescreen" ofObject:self];
+    [context addDependencyForKeyPath:@"includeRelatedVideos" ofObject:self];
 }
 
+//<iframe title="YouTube video player" width="425" height="349" src="http://www.youtube.com/embed/R-mUh4MOuvk?rel=0" frameborder="0" <iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/ulluhQQd9Bw?rel=0" frameborder="0" allowfullscreen></iframe>></iframe>
 
-//<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/R-mUh4MOuvk?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/R-mUh4MOuvk?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>
-
-- (void)startObjectElement;
-{
-    id <SVPlugInContext> context = [self currentContext];
-    
-    NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"application/x-shockwave-flash"
-                                                           forKey:@"type"];
-    [context startElement:@"object"
-         bindSizeToPlugIn:self
-          preferredIdName:@"youtube"
-               attributes:attributes];
-}
-
-- (void)writeEmbedElement;
-{
-    id <SVPlugInContext> context = [self currentContext];
-    
-    // Build src URL parameters
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    
-    if (![self includeRelatedVideos]) [parameters setObject:@"0" forKey:@"rel"];
-    
-    if ([self playHD]) [parameters setObject:@"1" forKey:@"hd"];
-    [context addDependencyForKeyPath:@"playHD" ofObject:self];
-    
-    [parameters setObject:[[self color1] youTubeVideoColorString] forKey:@"color1"];
-    [parameters setObject:[[self color2] youTubeVideoColorString] forKey:@"color2"];
-    [context addDependencyForKeyPath:@"color1" ofObject:self];
-    [context addDependencyForKeyPath:@"color2" ofObject:self];
-    [context addDependencyForKeyPath:@"useCustomSecondaryColor" ofObject:self];
-    
-    if (self.showBorder) [parameters setObject:@"1" forKey:@"border"];
-    [context addDependencyForKeyPath:@"showBorder" ofObject:self];
-
-    [parameters setValue:[[context page] language] forKey:@"hl"];
-    
-
-    // Build src URL
-    NSURL *base = [NSURL svURLWithScheme:@"http"
-                                    host:([self privacy] ? @"www.youtube-nocookie.com" : @"www.youtube.com")
-                                    path:[@"/v/" stringByAppendingString:[self videoID]]
-                         queryParameters:parameters];
-                                          
-    
-    // Write <EMBED>
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [base absoluteString], @"src",
-                                @"application/x-shockwave-flash", @"type",
-                                @"transparent", @"wmode",
-                                nil];
-    
-    [context startElement:@"embed" 
-         bindSizeToPlugIn:self 
-          preferredIdName:@"youtube"
-               attributes:attributes];
-    [context endElement];
-}
-
-- (void)endObjectElement; { [[self currentContext] endElement]; }
-
-
-//<iframe title="YouTube video player" class="youtube-player" width="425" height="349" src="http://www.youtube.com/embed/R-mUh4MOuvk?rel=0" frameborder="0"></iframe>
-
-- (void)writeIFrameCode
+- (void)writeIFrameEmbed
 {
     id <SVPlugInContext> context = [self currentContext];
     
@@ -233,8 +153,7 @@
     }
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                @"YouTube", @"title",
-                                @"youtube-player", @"class",
+                                @"YouTube video player", @"title",
                                 embed, @"src",
                                 @"0", @"frameborder",
                                 nil];
@@ -245,11 +164,6 @@
     [context endElement]; // </iframe>
 }
 
-
-//<div class="svx-placeholder" style="width:[[=elementWidth]]px; height:[[=elementHeight]]px;">[['This is a placeholder for the YouTube video at:]]
-//<p><a href="[[=&userVideoCode]]">[[=&userVideoCode]]</a></p>
-//[['To see the video in Sandvox, please enable live data feeds in the Preferences.]]</div>
-
 - (void)writeNoLiveData
 {
     id <SVPlugInContext> context = [self currentContext];
@@ -258,7 +172,8 @@
           preferredIdName:@"youtube"
                attributes:nil];
     
-    NSString *message = SVLocalizedString(@"This is a placeholder for the YouTube video at:", "Live data feeds are disabled");
+    NSString *message = SVLocalizedString(@"This is a placeholder for the YouTube video at:", 
+                                          "Live data feeds are disabled");
     [context writePlaceholderWithText:message options:0];
     
     [context startElement:@"p"];
@@ -269,13 +184,12 @@
     [context endElement]; // </a>
     [context endElement]; // </p>
     
-    message = SVLocalizedString(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", "Live data feeds are disabled");
+    message = SVLocalizedString(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", 
+                                "Live data feeds are disabled");
     [context writePlaceholderWithText:message options:0];
     
     [context endElement]; // </div>
 }
-
-//<div class="svx-placeholder" style="width:[[=elementWidth]]px; height:[[=elementHeight]]px;">[['Sorry, but no YouTube video was found for the code you entered.]]</div>
 
 - (void)writeNoVideoFound
 {
@@ -284,13 +198,11 @@
          bindSizeToPlugIn:self 
           preferredIdName:@"youtube"
                attributes:nil];
-    NSString *message = SVLocalizedString(@"Sorry, but no YouTube video was found for the code you entered.", "User entered an invalid YouTube code");
+    NSString *message = SVLocalizedString(@"Sorry, but no YouTube video was found for the code you entered.", 
+                                          "User entered an invalid YouTube code");
     [context writePlaceholderWithText:message options:0];
     [context endElement];
 }
-
-
-//<div class="svx-placeholder" style="width:[[=elementWidth]]px; height:[[=elementHeight]]px;">[['Please use the Inspector to specify a YouTube video.]]</div>
 
 - (void)writeNoVideoSpecified
 {
@@ -299,29 +211,14 @@
          bindSizeToPlugIn:self 
           preferredIdName:@"youtube"
                attributes:nil];
-    NSString *message = SVLocalizedString(@"Please use the Inspector to specify a YouTube video.", "No video code has been entered yet");
+    NSString *message = SVLocalizedString(@"Please use the Inspector to specify a YouTube video.", 
+                                          "No video code has been entered yet");
     [context writePlaceholderWithText:message options:0];
     [context endElement];    
 }
 
 
 #pragma mark Metrics
-
-- (NSNumber *)elementWidthPadding
-{
-    return ( (self.showBorder && !self.useIFrame) ? [NSNumber numberWithUnsignedInteger:(YOUTUBE_BORDER_HEIGHT * 2)] : nil );
-}
-
-- (NSNumber *)elementHeightPadding
-{
-    // always leave room for control bar
-    NSUInteger result = (YES == self.useIFrame) ? HTML5_CONTROLBAR_HEIGHT : YOUTUBE_CONTROLBAR_HEIGHT;
-    
-    // leave room for colored border, if applicable
-    if ( self.showBorder && !self.useIFrame ) result += (YOUTUBE_BORDER_HEIGHT * 2);
-    
-    return [NSNumber numberWithUnsignedInteger:result];
-}
 
 - (NSNumber *)constrainedAspectRatio;
 {
@@ -335,19 +232,6 @@
 {
     float height = 490 / [[self constrainedAspectRatio] floatValue];
     [self setWidth:[NSNumber numberWithInt:490] height:[NSNumber numberWithUnsignedInteger:height]];
-}
-
-#pragma mark Colors
-
-+ (NSColor *)defaultPrimaryColor;
-{
-	return [NSColor colorWithCalibratedWhite:0.62 alpha:1.0];
-}
-
-- (void)resetColors;
-{
-	self.useCustomSecondaryColor = NO;
-	self.color2 = [[self class] defaultPrimaryColor];
 }
 
 
@@ -414,42 +298,6 @@
 
 #pragma mark Properties
 
-@synthesize videoID = _videoID;
-@synthesize widescreen = _widescreen;
-@synthesize playHD = _playHD;
-@synthesize privacy = _privacy;
-@synthesize includeRelatedVideos = _includeRelatedVideos;
-@synthesize useCustomSecondaryColor = _useCustomSecondaryColor;
-@synthesize useIFrame = _useIFrame;
-
-@synthesize showBorder = _showBorder;
-- (void)setShowBorder:(BOOL)showBorder;
-{
-    if (![self useIFrame])
-    {
-        if (showBorder && ![self showBorder])
-        {
-            // Decrease width to match border
-            NSUInteger width = [[self width] unsignedIntegerValue] - 2*YOUTUBE_BORDER_HEIGHT;
-            NSUInteger height = width / [[self constrainedAspectRatio] floatValue];
-            
-            [self setWidth:[NSNumber numberWithUnsignedInteger:width]
-                    height:[NSNumber numberWithUnsignedInteger:height]];
-        }
-        else if (!showBorder && [self showBorder])
-        {
-            // Increase width to match border
-            NSUInteger width = [[self width] unsignedIntegerValue] + 2*YOUTUBE_BORDER_HEIGHT;
-            NSUInteger height = width / [[self constrainedAspectRatio] floatValue];
-            
-            [self setWidth:[NSNumber numberWithUnsignedInteger:width]
-                    height:[NSNumber numberWithUnsignedInteger:height]];
-        }
-    }
-    
-    _showBorder = showBorder;
-}
-
 @synthesize userVideoCode = _userVideoCode;
 - (void)setUserVideoCode:(NSString *)string
 {
@@ -462,36 +310,9 @@
     self.videoID = videoID;
 }
 
-@synthesize color2 = _color2;
-- (void)setColor2:(NSColor *)color
-{
-    [_color2 autorelease];
-    _color2 = [color copy];
-    
-    // When the user adjusts the main colour WITHOUT having adjusted the secondary color, re-generate
-	// a new second colour from it
-	if ( !self.useCustomSecondaryColor )
-	{
-		NSColor *lightenedColor = [[NSColor whiteColor] blendedColorWithFraction:0.5 ofColor:_color2];
-		
-		myAutomaticallyUpdatingSecondaryColorFlag = YES;	// The flag is needed to stop us mis-interpeting the setter
-		self.color1 = lightenedColor;
-		myAutomaticallyUpdatingSecondaryColorFlag = NO;
-	}
-    
-}
-
-@synthesize color1 = _color1;
-- (void)setColor1:(NSColor *)color
-{
-    [_color1 autorelease];
-    _color1 = [color copy];
-    
-    // When the user sets their own secondary color mark it so no future changes are made by accident
-	if ( !myAutomaticallyUpdatingSecondaryColorFlag )
-	{
-		self.useCustomSecondaryColor = YES;
-	}
-}
+@synthesize videoID = _videoID;
+@synthesize privacy = _privacy;
+@synthesize widescreen = _widescreen;
+@synthesize includeRelatedVideos = _includeRelatedVideos;
 
 @end

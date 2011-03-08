@@ -35,6 +35,11 @@
 //
 
 
+// docs on embedding a YouTube video <http://www.google.com/support/youtube/bin/answer.py?hl=en&answer=171780>
+// docs on player parameters <http://code.google.com/apis/youtube/player_parameters.html>
+// note that border, color1, color2, hd are deprecated and not supported by the modern Flash or HTML5 players
+
+
 #import <Sandvox.h>
 
 // Wouldn't it be cool to have a way to click on a YouTube video and have it then fill up your page with a lightbox of a larger video?
@@ -43,36 +48,17 @@
 @interface YouTubePlugIn : SVPlugIn
 {
   @private
-	BOOL myAutomaticallyUpdatingSecondaryColorFlag;
-	
 	NSString *_userVideoCode;
 	NSString *_videoID;
-	NSColor *_color2;
-	NSColor *_color1;
-	BOOL _showBorder;
-	BOOL _widescreen;
 	BOOL _privacy;
-	BOOL _playHD;
+	BOOL _widescreen;
 	BOOL _includeRelatedVideos;
-	BOOL _useCustomSecondaryColor;
-    BOOL _useIFrame;
 }
 
 @property (nonatomic, copy) NSString *userVideoCode;
 @property (nonatomic, copy) NSString *videoID;
-
-@property (nonatomic, copy) NSColor *color2;
-@property (nonatomic, copy) NSColor *color1;
-
-@property (nonatomic) BOOL showBorder;
-@property (nonatomic) BOOL widescreen;
-@property (nonatomic) BOOL playHD;
 @property (nonatomic) BOOL privacy;
+@property (nonatomic) BOOL widescreen;
 @property (nonatomic) BOOL includeRelatedVideos;
-@property (nonatomic) BOOL useCustomSecondaryColor;
-@property (nonatomic) BOOL useIFrame;
-
-+ (NSColor *)defaultPrimaryColor;
-- (void)resetColors;
 
 @end

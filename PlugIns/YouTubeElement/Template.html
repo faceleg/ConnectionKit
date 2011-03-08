@@ -2,15 +2,7 @@
 <div class="VideoElement">
     <div class="video">
         [[if currentContext.liveDataFeeds]]
-            [[if useIFrame]]
-                [[=writeIFrameCode]]
-            [[else3]]
-                [[=startObjectElement]]
-                    <param name="movie" value="http://www.[[if privacy]]youtube-nocookie[[else4]]youtube[[endif4]].com/v/[[=videoID]][[if !includeRelatedVideos]]&amp;rel=0[[endif4]][[if playHD]]&amp;hd=1[[endif4]]&amp;color1=[[=color1.youTubeVideoColorString]]&amp;color2=[[=color2.youTubeVideoColorString]][[if showBorder]]&amp;border=1[[endif4]]&amp;hl=[[=&parser.outputWriter.language]]"></param>
-                    <param name="wmode" value="transparent"></param>
-                [[=writeEmbedElement]]
-                [[=endObjectElement]]
-            [[endif3]]
+            [[=writeIFrameEmbed]]
         [[else2]]
             [[=writeNoLiveData]]
         [[endif2]]

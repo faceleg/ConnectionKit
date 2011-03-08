@@ -161,30 +161,3 @@
 }
 
 @end
-
-
-@implementation NSColor (YouTubeExtensions)
-
-/*	Constructs a six-hexadecimal-character representation of the color.
- *	-htmlString then builds on this to make a regular HTML string.
- */
-- (NSString *)youTubeVideoColorString
-{
-	NSString *result = @"";
-	
-	NSColor *rgbColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-	if (nil != rgbColor)
-	{
-		float red,green,blue,alpha;
-		[rgbColor getRed:&red green:&green blue:&blue alpha:&alpha];
-        
-		int r = 0.5 + red	* 255.0;
-		int g = 0.5 + green	* 255.0;
-		int b = 0.5 + blue	* 255.0;
-		result = [[NSString stringWithFormat:@"0x%02X%02X%02X",r,g,b] lowercaseString];
-    }
-	
-	return result;
-}
-
-@end

@@ -45,13 +45,4 @@
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.youtube.com/"]];
 }
 
-- (IBAction)resetColors:(id)sender
-{
-	NSArray *objects = [[self inspectedObjectsController] selectedObjects];
-	for (YouTubePlugIn *plugin in objects)
-	{
-		[plugin resetColors];
-	}
-}
-
 @end

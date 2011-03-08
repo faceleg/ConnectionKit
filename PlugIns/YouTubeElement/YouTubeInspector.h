@@ -39,7 +39,6 @@
 
 @interface YouTubeInspector : SVInspectorViewController { }
 
-- (IBAction)resetColors:(id)sender;
 - (IBAction)openYouTubeURL:(id)sender;
 
 @end

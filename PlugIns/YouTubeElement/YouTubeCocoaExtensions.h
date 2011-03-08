@@ -47,8 +47,3 @@
 + (NSURL *)youTubeVideoURLWithID:(NSString *)videoID;
 - (NSString *)youTubeVideoID;
 @end
-
-
-@interface NSColor (YouTubeExtensions)
-- (NSString *)youTubeVideoColorString;
-@end
