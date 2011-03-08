@@ -86,6 +86,48 @@ static NSArray *sAltStrings = nil;
         self.includeReferralCode = [[properties objectForKey:@"anonymous"] boolValue];
     }
     [self configureAltAndTitleStrings];
+    
+    // #110070 - "fix" badgeTypeTag
+    // arrays are treated as 1-ordered since 0 is text-only
+    // S1 defines sharedBadgeNames as
+    //@"sandvox_castle_white", 
+    //@"sandvox_castle_top", 
+    //@"sandvox_bucket_white",
+    //@"sandvox_bucket",
+    //@"sandvox_icon_white"
+    
+    // S2 defines sharedBadgeNames as
+    //@"sandvox_icon_white",
+    //@"sandvox_castle", 
+    //@"sandvox_castle_white", 
+    //@"sandvox_castle_top", 
+    //@"sandvox_castle_top_white", 
+    //@"sandvox_bucket",
+    //@"sandvox_bucket_white",
+    
+    NSUInteger oldTag = self.badgeTypeTag;
+    NSUInteger newTag = oldTag;
+    switch ( oldTag )
+    {
+        case 1:
+            newTag = 3;
+            break;
+        case 2:
+            newTag = 4;
+            break;
+        case 3:
+            newTag = 7;
+            break;
+        case 4:
+            newTag = 6;
+            break;
+        case 5:
+            newTag = 1;
+            break;
+        default:
+            break;
+    }
+    self.badgeTypeTag = newTag;
 }
 
 
@@ -111,6 +153,8 @@ static NSArray *sAltStrings = nil;
 {
 	if (nil == sBadgeNames)
 	{
+        // #110070 - any change to this ordering
+        // needs to be reflected in -awakeFromSourceProperties:
 		sBadgeNames = [[NSArray alloc] initWithObjects:
 					   @"sandvox_icon_white",
 					   @"sandvox_castle", 
