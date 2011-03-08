@@ -48,6 +48,8 @@
 
 @protocol PagePrivate
 
+- (NSNumber *)includeTimestamp;
+- (NSNumber *)allowComments;
 - (id) master;
 - (void)writeComments:(id<SVPlugInContext>)context;
 @end
@@ -282,7 +284,12 @@
 
 - (BOOL) hasArticleInfo;		// Do we have settings to show an article info column or section?
 {
-	return self.showTimestamps || self.showPermaLinks || self.showComments;
+	id<SVPlugInContext> context = [self currentContext]; 
+    id<SVPage, PagePrivate> iteratedPage = [context objectForCurrentTemplateIteration];
+
+	return (self.showTimestamps && iteratedPage.includeTimestamp.boolValue)
+		|| self.showPermaLinks
+		|| (self.showComments && iteratedPage.allowComments.boolValue);
 }
 
 - (void)writeArticleInfoWithContinueReadingLink:(BOOL)continueReading;
@@ -297,7 +304,8 @@
 		[self writeContinueReadingLink];
 	}
 	
-	if (self.showTimestamps || self.showPermaLinks)		// timestamps and/or permanent links need timestamp <div>
+	if ( (self.showTimestamps && iteratedPage.includeTimestamp.boolValue)
+			|| self.showPermaLinks)		// timestamps and/or permanent links need timestamp <div>
 	{
 		
 		[context startElement:@"div" className:@"timestamp"];
@@ -306,7 +314,7 @@
 		{
 			[context startAnchorElementWithPage:iteratedPage];
 		}
-		if (self.showTimestamps)	// Write out either timestamp ....
+		if (self.showTimestamps && iteratedPage.includeTimestamp.boolValue)	// Write out either timestamp ....
 		{
 			NSString *timestamp = [iteratedPage timestampDescription];
 			if (timestamp)
@@ -329,7 +337,7 @@
 		[context endElement];	// </div> timestamp
 	}
 	
-	if (self.showComments)
+	if (self.showComments && iteratedPage.allowComments.boolValue)
 	{
 		[iteratedPage writeComments:context];		// PRIVATE		
 	}
