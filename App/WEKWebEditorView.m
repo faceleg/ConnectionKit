@@ -1131,8 +1131,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Draw items
     for (WEKWebEditorItem *anItem in [self itemsToDisplay])
     {
-        // #95073
-        OBASSERT([anItem isDescendantOfWebEditorItem:[self contentItem]]);
+        // Ignore items that can't be displayed. #95073
+        if (![anItem isDescendantOfWebEditorItem:[self contentItem]])
+        {
+            [_itemsToDisplay removeObjectIdenticalTo:anItem];
+            continue;
+        }
         
         // Is the item actually for drawing?
         NSRect drawingRect = [anItem drawingRect];
