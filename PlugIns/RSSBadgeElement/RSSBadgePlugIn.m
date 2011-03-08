@@ -92,6 +92,31 @@
     }
 }
 
+- (void)dealloc
+{
+    self.label = nil;
+    [super dealloc];
+}
+
+#pragma mark Migration
+
+- (void)awakeFromSourceProperties:(NSDictionary *)properties
+{
+    [super awakeFromSourceProperties:properties];
+    if ( [properties objectForKey:@"label"] )
+    {
+        self.label = [properties objectForKey:@"label"];
+    }
+    if ( [properties objectForKey:@"iconPosition"] )
+    {
+        self.iconPosition = [[properties objectForKey:@"iconPosition"] intValue];
+    }
+    if ( [properties objectForKey:@"iconStyle"] )
+    {
+        self.iconStyle = [[properties objectForKey:@"iconStyle"] intValue];
+    }
+}
+
 
 #pragma mark HTML Generation
 
