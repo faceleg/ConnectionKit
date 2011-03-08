@@ -40,9 +40,12 @@
     NSMutableArray      *_childNodes;
     SVPagesController   *_childPagesController;
     BOOL                _syncingChildren;
+    NSTreeController    *_treeController;   // weak ref
 }
 
 + (SVPageProxy *)proxyForTargetPage:(SVSiteItem *)page;
+
+@property(nonatomic, assign) NSTreeController *treeController;
 
 @end
 
@@ -302,6 +305,7 @@
     
     // Actually insert proxy for the page
     SVPageProxy *proxy = [SVPageProxy proxyForTargetPage:object];
+    [proxy setTreeController:self];
     [super insertObject:proxy atArrangedObjectIndexPath:indexPath];
     
     
@@ -657,6 +661,7 @@
         for (SVSiteItem *anItem in content)
         {
             SVPageProxy *proxy = [SVPageProxy proxyForTargetPage:anItem];
+            [proxy setTreeController:self];
             [buffer addObject:proxy];
         }
         content = buffer;
@@ -664,6 +669,7 @@
     else if (content)
     {
         content = [SVPageProxy proxyForTargetPage:content];
+        [content setTreeController:self];
     }
     
     [super setContent:content];
@@ -1030,6 +1036,10 @@
 
 - (NSUInteger)hash; { return [_page hash]; }
 
+#pragma mark Tree
+
+@synthesize treeController = _treeController;
+
 #pragma mark Children
 
 - (BOOL)isLeaf; { return ![_page isCollection]; }
@@ -1044,6 +1054,11 @@
         {
             _childPagesController = [[SVPagesController controllerWithPagesInCollection:_page] retain];
             
+            [_childPagesController bind:NSManagedObjectContextBinding
+                               toObject:[self treeController]
+                            withKeyPath:@"managedObjectContext"
+                                options:nil];
+            
             [_childPagesController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:NULL];
         }
         
@@ -1055,6 +1070,7 @@
         for (SVSiteItem *aPage in pages)
         {
             SVPageProxy *proxy = [SVPageProxy proxyForTargetPage:aPage];
+            [proxy setTreeController:[self treeController]];
             [_childNodes addObject:proxy];
         }
     }
