@@ -353,20 +353,27 @@
     else
     {
         SVLink *link = [self link];
-        NSString *href = @"";
-        if ([link linkType] == SVLinkToFullSizeImage)
+        if (link)
         {
-            NSURL *URL = [context addMedia:[self media]];
-            if (URL) href = [context relativeStringFromURL:URL];
+            NSString *href = @"";
+            if ([link linkType] == SVLinkToFullSizeImage)
+            {
+                NSURL *URL = [context addMedia:[self media]];
+                if (URL) href = [context relativeStringFromURL:URL];
+            }
+            else
+            {
+                href = [[self link] URLString];
+            }
+            
+            [context startAnchorElementWithHref:href title:nil target:nil rel:nil];
+            [self writeImageElement:context];
+            [context endElement];
         }
         else
         {
-            href = [[self link] URLString];
+            [self writeImageElement:context];
         }
-        
-        [context startAnchorElementWithHref:href title:nil target:nil rel:nil];
-        [self writeImageElement:context];
-        [context endElement];
     }
 }
 
