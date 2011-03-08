@@ -197,67 +197,6 @@
 											<reference key="NSContentView" ref="26915287"/>
 											<bytes key="NSScrollAmts">QSAAAEEgAABBgAAAQYAAAA</bytes>
 										</object>
-										<object class="BWAnchoredButtonBar" id="1005744294">
-											<reference key="NSNextResponder" ref="972752083"/>
-											<int key="NSvFlags">258</int>
-											<object class="NSMutableArray" key="NSSubviews">
-												<bool key="EncodedWithXMLCoder">YES</bool>
-												<object class="BWAnchoredButton" id="1049587597">
-													<reference key="NSNextResponder" ref="1005744294"/>
-													<int key="NSvFlags">268</int>
-													<string key="NSFrameSize">{24, 24}</string>
-													<reference key="NSSuperview" ref="1005744294"/>
-													<bool key="NSEnabled">YES</bool>
-													<object class="BWAnchoredButtonCell" key="NSCell" id="496051788">
-														<int key="NSCellFlags">67239424</int>
-														<int key="NSCellFlags2">134348800</int>
-														<string key="NSContents"/>
-														<reference key="NSSupport" ref="26"/>
-														<reference key="NSControlView" ref="1049587597"/>
-														<int key="NSButtonFlags">-2033958657</int>
-														<int key="NSButtonFlags2">163</int>
-														<object class="NSCustomResource" key="NSNormalImage">
-															<string key="NSClassName">NSImage</string>
-															<string key="NSResourceName">NSAddTemplate</string>
-														</object>
-														<string key="NSAlternateContents"/>
-														<string key="NSKeyEquivalent"/>
-														<int key="NSPeriodicDelay">200</int>
-														<int key="NSPeriodicInterval">25</int>
-													</object>
-												</object>
-												<object class="BWAnchoredButton" id="990316572">
-													<reference key="NSNextResponder" ref="1005744294"/>
-													<int key="NSvFlags">268</int>
-													<string key="NSFrame">{{23, 0}, {24, 24}}</string>
-													<reference key="NSSuperview" ref="1005744294"/>
-													<bool key="NSEnabled">YES</bool>
-													<object class="BWAnchoredButtonCell" key="NSCell" id="536248845">
-														<int key="NSCellFlags">67239424</int>
-														<int key="NSCellFlags2">134348800</int>
-														<string key="NSContents"/>
-														<reference key="NSSupport" ref="26"/>
-														<reference key="NSControlView" ref="990316572"/>
-														<int key="NSButtonFlags">-2033958657</int>
-														<int key="NSButtonFlags2">163</int>
-														<object class="NSCustomResource" key="NSNormalImage">
-															<string key="NSClassName">NSImage</string>
-															<string key="NSResourceName">NSRemoveTemplate</string>
-														</object>
-														<string key="NSAlternateContents"/>
-														<string key="NSKeyEquivalent"/>
-														<int key="NSPeriodicDelay">200</int>
-														<int key="NSPeriodicInterval">25</int>
-													</object>
-												</object>
-											</object>
-											<string key="NSFrame">{{10, 102}, {210, 24}}</string>
-											<reference key="NSSuperview" ref="972752083"/>
-											<bool key="BWABBIsResizable">NO</bool>
-											<bool key="BWABBIsAtBottom">NO</bool>
-											<bool key="BWABBHandleIsRightAligned">NO</bool>
-											<int key="BWABBSelectedIndex">2</int>
-										</object>
 										<object class="NSCustomView" id="196929145">
 											<reference key="NSNextResponder" ref="972752083"/>
 											<int key="NSvFlags">290</int>
@@ -394,6 +333,67 @@
 											<string key="NSFrame">{{10, 17}, {54, 74}}</string>
 											<reference key="NSSuperview" ref="972752083"/>
 											<string key="NSClassName">NSView</string>
+										</object>
+										<object class="BWAnchoredButtonBar" id="1005744294">
+											<reference key="NSNextResponder" ref="972752083"/>
+											<int key="NSvFlags">258</int>
+											<object class="NSMutableArray" key="NSSubviews">
+												<bool key="EncodedWithXMLCoder">YES</bool>
+												<object class="BWAnchoredButton" id="1049587597">
+													<reference key="NSNextResponder" ref="1005744294"/>
+													<int key="NSvFlags">268</int>
+													<string key="NSFrameSize">{24, 24}</string>
+													<reference key="NSSuperview" ref="1005744294"/>
+													<bool key="NSEnabled">YES</bool>
+													<object class="BWAnchoredButtonCell" key="NSCell" id="496051788">
+														<int key="NSCellFlags">67239424</int>
+														<int key="NSCellFlags2">134348800</int>
+														<string key="NSContents"/>
+														<reference key="NSSupport" ref="26"/>
+														<reference key="NSControlView" ref="1049587597"/>
+														<int key="NSButtonFlags">-2033958657</int>
+														<int key="NSButtonFlags2">163</int>
+														<object class="NSCustomResource" key="NSNormalImage">
+															<string key="NSClassName">NSImage</string>
+															<string key="NSResourceName">NSAddTemplate</string>
+														</object>
+														<string key="NSAlternateContents"/>
+														<string key="NSKeyEquivalent"/>
+														<int key="NSPeriodicDelay">200</int>
+														<int key="NSPeriodicInterval">25</int>
+													</object>
+												</object>
+												<object class="BWAnchoredButton" id="990316572">
+													<reference key="NSNextResponder" ref="1005744294"/>
+													<int key="NSvFlags">268</int>
+													<string key="NSFrame">{{23, 0}, {24, 24}}</string>
+													<reference key="NSSuperview" ref="1005744294"/>
+													<bool key="NSEnabled">YES</bool>
+													<object class="BWAnchoredButtonCell" key="NSCell" id="536248845">
+														<int key="NSCellFlags">67239424</int>
+														<int key="NSCellFlags2">134348800</int>
+														<string key="NSContents"/>
+														<reference key="NSSupport" ref="26"/>
+														<reference key="NSControlView" ref="990316572"/>
+														<int key="NSButtonFlags">-2033958657</int>
+														<int key="NSButtonFlags2">163</int>
+														<object class="NSCustomResource" key="NSNormalImage">
+															<string key="NSClassName">NSImage</string>
+															<string key="NSResourceName">NSRemoveTemplate</string>
+														</object>
+														<string key="NSAlternateContents"/>
+														<string key="NSKeyEquivalent"/>
+														<int key="NSPeriodicDelay">200</int>
+														<int key="NSPeriodicInterval">25</int>
+													</object>
+												</object>
+											</object>
+											<string key="NSFrame">{{10, 102}, {210, 24}}</string>
+											<reference key="NSSuperview" ref="972752083"/>
+											<bool key="BWABBIsResizable">NO</bool>
+											<bool key="BWABBIsAtBottom">NO</bool>
+											<bool key="BWABBHandleIsRightAligned">NO</bool>
+											<int key="BWABBSelectedIndex">2</int>
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {230, 238}}</string>
