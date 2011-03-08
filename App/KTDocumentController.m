@@ -107,6 +107,7 @@
     KTDesign *design = [designChooser design];
     KTDocument *doc = [self openUntitledDocumentAndDisplay:NO error:NULL];
     [[[[doc site] rootPage] master] setDesign:design];
+    [doc designDidChange];
     
     
     // Present the doc as if new
