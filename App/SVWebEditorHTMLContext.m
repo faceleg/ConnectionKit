@@ -35,11 +35,6 @@
 @end
 
 
-@interface SVHTMLContext (Internal)
-- (void)writeBodyOfGraphic:(id <SVGraphic>)graphic;
-@end
-
-
 
 #pragma mark -
 
@@ -191,9 +186,16 @@
 
 - (void)writeGraphic:(id <SVGraphic, SVDOMControllerRepresentedObject>)graphic;
 {
-    // Special case
+    // Special case, want to write the body of the graphic
     if (graphic == [self currentGraphicContainer])
     {
+        if (![graphic isKindOfClass:[SVMediaGraphic class]])
+        {
+            SVDOMController *controller = [(SVGraphic *)graphic newBodyDOMController];
+            [self startDOMController:controller];
+            [controller release];
+        }
+        
         return [super writeGraphic:graphic];
     }
     
@@ -215,18 +217,6 @@
     {
         [super writeGraphic:graphic];
     }
-}
-
-- (void)writeBodyOfGraphic:(id <SVGraphic>)graphic;
-{
-    if (![graphic isKindOfClass:[SVMediaGraphic class]])
-    {
-        SVDOMController *controller = [(SVGraphic *)graphic newBodyDOMController];
-        [self startDOMController:controller];
-        [controller release];
-    }
-
-    [super writeBodyOfGraphic:graphic];
 }
 
 #pragma mark Metrics
