@@ -50,14 +50,12 @@
   @private
 	NSString *_userVideoCode;
 	NSString *_videoID;
-	BOOL _privacy;
 	BOOL _widescreen;
 	BOOL _includeRelatedVideos;
 }
 
 @property (nonatomic, copy) NSString *userVideoCode;
 @property (nonatomic, copy) NSString *videoID;
-@property (nonatomic) BOOL privacy;
 @property (nonatomic) BOOL widescreen;
 @property (nonatomic) BOOL includeRelatedVideos;
 

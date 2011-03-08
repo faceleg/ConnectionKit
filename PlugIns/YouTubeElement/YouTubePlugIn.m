@@ -46,10 +46,9 @@
 
 + (NSArray *)plugInKeys
 { 
+    // not including videoID since setUserVideoCode: sets it
     return [NSArray arrayWithObjects:
             @"userVideoCode", 
-            //@"videoID", 
-            @"privacy", 
             @"widescreen", 
             @"includeRelatedVideos", 
             nil];
@@ -108,7 +107,6 @@
     [super writeHTML:context];
     [context addDependencyForKeyPath:@"userVideoCode" ofObject:self];
     [context addDependencyForKeyPath:@"videoID" ofObject:self];
-    [context addDependencyForKeyPath:@"privacy" ofObject:self];
     [context addDependencyForKeyPath:@"widescreen" ofObject:self];
     [context addDependencyForKeyPath:@"includeRelatedVideos" ofObject:self];
 }
@@ -119,7 +117,8 @@
 {
     id <SVPlugInContext> context = [self currentContext];
     
-    NSString *embedHost = (self.privacy) ? @"www.youtube-nocookie.com" : @"www.youtube.com";
+    //NSString *embedHost = (self.privacy) ? @"www.youtube-nocookie.com" : @"www.youtube.com";
+    NSString *embedHost = @"www.youtube.com";
     NSString *embed = [NSString stringWithFormat:@"http://%@/embed/%@", embedHost, [self videoID]];
     if ( !self.includeRelatedVideos )
     {
@@ -285,7 +284,6 @@
 }
 
 @synthesize videoID = _videoID;
-@synthesize privacy = _privacy;
 @synthesize widescreen = _widescreen;
 @synthesize includeRelatedVideos = _includeRelatedVideos;
 
