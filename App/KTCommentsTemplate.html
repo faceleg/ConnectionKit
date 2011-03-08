@@ -21,13 +21,13 @@
 									</div>
 									[[endif5]]
 									[[else4]]
-									<div class="comments">
+									<div class="svx-placeholder">
 										<p>[['Disqus Comments]]</p>
 									</div>
 									[[endif4]]
 [[else3]]
 [[if parser.HTMLContext.isForEditing]]
-									<div class="comments">
+									<div class="svx-placeholder">
 										<p style="color:red;">[['To enable DISQUS, enter the shortname of this site into the Comments Inspector]]</p>
 									</div>
 [[endif4]]
@@ -54,13 +54,13 @@
 									<script type="text/javascript" src="http://www.intensedebate.com/js/genericLinkWrapperV2.js"></script>
 									[[endif5]]
 									[[else4]]
-									<div class="comments">
+									<div class="svx-placeholder">
 										<p>[['IntenseDebate Comments]]</p>
 									</div>
 									[[endif4]]
 [[else3]]
 [[if parser.HTMLContext.isForEditing]]
-									<div class="comments">
+									<div class="svx-placeholder">
 										<p style="color:red;">[['To enable IntenseDebate, enter the Account ID of this site into the Comments Inspector]]</p>
 									</div>
 [[endif4]]
@@ -74,13 +74,13 @@
                                     <fb:comments numposts="[[=master.fbNumberOfPosts]]" width="[[=master.fbWidth]]" publish_feed="[[=master.fbPublishFeed]]"></fb:comments>
                                     [[endif5]]
                                     [[else4]]
-									<div class="comments">
+									<div class="svx-placeholder">
 										<p>[['Facebook Comments]]</p>
 									</div>
                                     [[endif4]]
 [[else3]]
 [[if parser.HTMLContext.isForEditing]]
-									<div class="comments">
+									<div class="svx-placeholder">
 										<p style="color:red;">[['To enable Facebook Comments, enter the App ID of this site into the Comments Inspector]]</p>
 									</div>
 [[endif4]]
@@ -92,7 +92,7 @@
 [[if allowComments]]
 [[if !master.commentsProvider]]
 [[if parser.HTMLContext.isForEditing]]
-									<div class="comments">
+									<div class="svx-placeholder">
 										<p style="color:red;">[['To enable comments, please choose a provider in the Comments Inspector]]</p>
 									</div>
 [[endif3]]
