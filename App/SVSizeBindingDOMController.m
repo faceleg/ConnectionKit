@@ -143,12 +143,12 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Take into account padding
-    SVPlugInGraphic *graphic = [self representedObject];
+    SVGraphic *graphic = [self representedObject];
     
-    NSNumber *widthPadding = [[graphic plugIn] elementWidthPadding];
+    NSNumber *widthPadding = [graphic elementWidthPadding];
     if (widthPadding) size.width -= [widthPadding floatValue];
     
-    NSNumber *heightPadding = [[graphic plugIn] elementHeightPadding];
+    NSNumber *heightPadding = [graphic elementHeightPadding];
     if (heightPadding) size.height -= [heightPadding floatValue];
     
     

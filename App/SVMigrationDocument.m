@@ -105,8 +105,8 @@
     }
 }
 
-- (BOOL)writeToURL:(NSURL *)inURL 
-            ofType:(NSString *)inType 
+- (BOOL)writeToURL:(NSURL *)inURL
+            ofType:(NSString *)inType
   forSaveOperation:(NSSaveOperationType)saveOperation
 originalContentsURL:(NSURL *)inOriginalContentsURL
              error:(NSError **)outError;

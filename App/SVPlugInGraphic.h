@@ -39,7 +39,6 @@
 @property(nonatomic, copy) NSNumber *contentHeight;
 
 - (NSUInteger)minHeight;
-- (NSNumber *)maxHeight;    // nil, the default, if there isn't one
 
 @property(nonatomic) BOOL constrainsProportions;
 - (BOOL)isConstrainProportionsEditable;

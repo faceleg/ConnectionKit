@@ -138,12 +138,16 @@ extern NSString *kSVGraphicPboardType;
 
 - (NSUInteger)minWidth; // 200 by default
 - (CGFloat)maxWidthOnPage:(id <SVPage>)page;
+- (NSNumber *)maxHeight;    // nil, the default, if there isn't one
 - (BOOL)validateWidth:(NSNumber **)width error:(NSError **)error;
 
 - (NSNumber *)constrainedProportionsRatio;
 
 - (void)makeOriginalSize;
 - (BOOL)canMakeOriginalSize;
+
+- (NSNumber *)elementWidthPadding;
+- (NSNumber *)elementHeightPadding;
 
 
 #pragma mark Text Attachment

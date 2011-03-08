@@ -272,6 +272,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 }
 
 - (NSUInteger)minWidth; { return 200; }
+- (NSNumber *)maxHeight; { return nil; }
 
 - (CGFloat)maxWidthOnPage:(KTPage *)page;
 {
@@ -319,6 +320,9 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
                    [[self placement] intValue] == SVGraphicPlacementInline);
     return result;
 }
+
+- (NSNumber *)elementWidthPadding; { return nil; }
+- (NSNumber *)elementHeightPadding; { return nil; }
 
 - (BOOL)isExplicitlySized;
 {
