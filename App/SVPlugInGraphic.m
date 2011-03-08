@@ -88,6 +88,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 {
     [super didAddToPage:page];
     
+    
     // Size to fit…
     NSNumber *width = [self width];
     if (width)
@@ -107,6 +108,25 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
             }
         }
     }
+    
+    NSNumber *height = [self height];
+    NSUInteger maxHeight = [[self maxHeight] unsignedIntegerValue];
+    if (height && maxHeight)
+    {
+        // …but only if actually appearing somewhere!
+        if ([self textAttachment] ||
+            [self isKindOfClass:[SVLogoImage class]] ||
+            [[self sidebars] count])
+        {
+            NSUInteger elementHeight = [height unsignedIntegerValue] + [[[self plugIn] elementHeightPadding] unsignedIntegerValue];
+            if (elementHeight > maxHeight)
+            {
+                maxHeight = MAX(maxHeight, [self minHeight]);
+                [self setContentHeight:[NSNumber numberWithUnsignedInteger:maxHeight]];
+            }
+        }
+    }
+    
     
     // Pass on
     [[self plugIn] didAddToPage:page];
