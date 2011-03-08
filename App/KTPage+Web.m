@@ -118,7 +118,6 @@
 {
     SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
 	[context writeDocumentWithPage:self];
-    [context close];
     
 	NSString *result = [[context outputStringWriter] string];
     [context release];

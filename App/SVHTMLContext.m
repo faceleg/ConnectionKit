@@ -217,6 +217,7 @@
 {
     [self startDocumentWithPage:page];
     [self writeDocumentContentsWithPage:page];
+    [self flush];   // so any extra headers etc. get written
 }
 
 - (void)writeDocumentWithArchivePage:(SVArchivePage *)archive;
