@@ -215,6 +215,19 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
 }
 
++ (DOMHTMLHeadElement *)headOfDocument:(DOMDocument *)document;
+{
+    if ([document respondsToSelector:@selector(head)])
+    {
+        return [document performSelector:@selector(head)];
+    }
+    else
+    {
+        DOMNodeList *nodes = [document getElementsByTagName:@"HEAD"];
+        return (DOMHTMLHeadElement *)[nodes item:0];
+    }
+}
+
 - (void)offscreenWebViewController:(SVOffscreenWebViewController *)controller
                        didLoadBody:(DOMHTMLElement *)loadedBody;
 {
@@ -237,8 +250,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     // Import headers too
     DOMDocument *offscreenDoc = [loadedBody ownerDocument];
-    DOMNodeList *headNodes = [(DOMNode *)[offscreenDoc performSelector:@selector(head)] childNodes];
-    DOMHTMLElement *head = [document performSelector:@selector(head)];
+    DOMNodeList *headNodes = [[[self class] headOfDocument:offscreenDoc] childNodes];
+    DOMHTMLElement *head = [[self class] headOfDocument:document];
     
     for (int i = 0; i < [headNodes length]; i++)
     {
