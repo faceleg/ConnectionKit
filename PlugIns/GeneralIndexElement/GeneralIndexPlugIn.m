@@ -438,6 +438,28 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 #pragma mark -
 #pragma mark Migration
 
+- (void)awakeFromSourceInstance:(NSManagedObject *)sInstance;
+{
+	[super awakeFromSourceInstance:sInstance];		// this will get awakeFromSourceProperties called
+	
+	NSSet *children = [sInstance valueForKey:@"children"];
+	
+	BOOL foundOneTimestamp = NO;
+	for (NSManagedObject *child in children)
+	{
+		NSNumber *includeTimestamp = [child valueForKey:@"includeTimestamp"];
+		if (includeTimestamp && [includeTimestamp boolValue])
+		{
+			foundOneTimestamp = YES;
+		}
+	}
+	if (foundOneTimestamp)
+	{
+		self.showTimestamps = YES;
+	}
+}
+
+
 - (void)awakeFromSourceProperties:(NSDictionary *)properties
 {
 	//NSLog(@"prop keys to convert: %@", [[[properties allKeys] description] condenseWhiteSpace]);
