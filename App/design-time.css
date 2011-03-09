@@ -47,6 +47,7 @@ img[width="0"], img[height="0"] { display:none; }
 	/*min-height: 50px;*/
     color: white; 
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #AEAEAE), color-stop(1, #CBCBCB));
+    margin-top:5px !important;
     padding:5px !important;
     border:1px solid #404040;
 }
