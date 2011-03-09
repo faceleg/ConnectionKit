@@ -26,7 +26,7 @@
 
 
 #pragma mark Primitive Text
-// In general you should be working with attributed HTML strings from the above API, rather than this lower level support
+// In general you should be working with attributed HTML strings from the above API, rather than this lower level support. e.g. I make no guarantee that -string and -attributedHTMLString.string will be equal
 
 @property(nonatomic, copy) NSString *string;
 - (void)setString:(NSString *)string attachments:(NSSet *)attachments;  // deletes old attachments

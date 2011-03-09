@@ -81,6 +81,19 @@
         [result addAttribute:@"SVAttachment"
                        value:anAttachment
                        range:range];
+        
+        
+        // Imported text doesn't use NSAttachmentCharacter, so we have to sub it in
+        if (range.length > 1)
+        {
+            NSString *string = [@""
+                                stringByPaddingToLength:range.length
+                                withString:[NSString stringWithUnichar:NSAttachmentCharacter]
+                                startingAtIndex:0];
+            
+            [result replaceCharactersInRange:range withString:string];
+        }
+        
         /*else
         {
              
