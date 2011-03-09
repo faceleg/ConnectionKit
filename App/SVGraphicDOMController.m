@@ -809,17 +809,13 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
             NSArray *children = [self childWebEditorItems];
             switch ([children count])
             {
-                case 0:
-                    [[self HTMLElement] setInnerHTML:placeholderHTML];
-                    break;
-            
                 case 1:
                     OBASSERT([[[children objectAtIndex:0] childWebEditorItems] count] <= 1);
                     [[[children objectAtIndex:0] HTMLElement] setInnerHTML:placeholderHTML];
                     break;
                     
                 default:
-                    OBASSERT_NOT_REACHED("Invisible graphic with complex child DOM controllers");
+                    [[self HTMLElement] setInnerHTML:placeholderHTML];
             }
         }
     }
