@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Photo Album | Test Sandvox</title>
+		<meta name="robots" content="all" />
+		<meta name="generator" content="Sandvox 2.0b6 (21888)" />
+		<meta name="viewport" content="width=800" />
+		<link rel="alternate" type="application/rss+xml" title="RSS: Photo Album" href="//photo-album/index.rss" charset="UTF-8" />
+		<link rel="canonical" href="//photo-album/" />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" charset="UTF-8"></script>
+        
+		<link rel="stylesheet" type="text/css" href="http://designerskit.karelia.com/sandvox.css" /> <!-- This is loaded across ALL designs, no matter what - do not remove or replace -->
+		<link rel="stylesheet" type="text/css" href="../main.css" title="YOUR_DESIGN_NAME" />  <!-- This will be replaced by the reference to YOUR NEW STYLE SHEET -->
+				<link rel="stylesheet" type="text/css" href="../color.css" />  <!-- Optional load of color variation.  Rename any .css file to "color.css" so that this will load. -->
+        
+	</head>
+	<body class="sandvox has-page-title allow-sidebar no-custom-banner has-text-navigation no-IR" id="host-not-yet-set" >
+		<div id="page-container">
+			<div id="page">
+				<div id="page-top" class="no-logo has-title has-tagline">
+					<div id="title">
+						<h1 class="title in"><a href="index.html"><span class="in">Test Sandvox</span></a></h1>
+						<p class="tagline"><span class="in">A website thoughtfully crafted with Sandvox</span></p>
+					</div><!-- title -->
+					<div id="sitemenu-container">
+						<div id="sitemenu">
+	<h2 class="hidden">Site Navigation<a href="#page-content" rel="nofollow">[Skip]</a></h2>
+	<div id="sitemenu-content">
+		<ul><li class="i1 o last currentPage"><span class="in">Photo Album</span></li></ul>
+	</div> <!-- /sitemenu-content -->
+</div> <!-- /sitemenu -->
+					</div> <!-- sitemenu-container -->
+				</div> <!-- page-top -->
+				<div class="clear below-page-top"></div>
+				<div id="page-content" class="has-text-navigation">
+					<div id="sidebar-container">
+	<div id="sidebar">
+  		<div id="sidebar-top"></div>
+		<div id="sidebar-content">
+			<h3 class="hidden">Sidebar<a rel="nofollow" href="#main">[Skip]</a></h3>
+	<div class="pagelet SVPlugInGraphic untitled i1 o last-item">
+    
+    <div class="pagelet-body">
+        
+        
+	<div><!-- sandvox.BadgeElement --><p style="text-align:center; padding-top:30px; padding-bottom:30px;">
+<a class="imageLink" style="background:none; border:none;" href="http://www.sandvox.com/?utm_source=cust_site&amp;utm_medium=banner&amp;utm_content=b1&amp;utm_campaign=pointback&amp;h=VrezNYDsRzd0RCSP44u6giBAOPc%3D" title="Learn about Sandvox - Build and publish a web site with your Mac - for individuals, education, and small business"><img src="_Resources/sandvox_icon_white.png" alt="Created with Sandvox - Using your Macintosh, publish your photo album / blog / website on any ISP" width="88" height="31"/></a>
+</p>
+<!-- /sandvox.BadgeElement --></div>
+        
+    </div>
+</div>
+		</div> <!-- sidebar-content -->
+		<div id="sidebar-bottom"></div>	
+	</div> <!-- sidebar -->
+</div> <!-- sidebar-container -->
+					<div id="main">
+						<div id="main-top"></div>
+                            						<div id="main-content">
+							<h2 class="title"><span class="in">Photo Album</span></h2>
+							
+
+							<div class="article">
+								<div class="article-content">
+	<div class="RichTextElement">
+		<div><p><br /></p>
+			<div class="first graphic-container wide center">
+				<div class="graphic photogrid-index">
+					<div class="figure-content"><!-- sandvox.PhotoGridIndex -->
+<div class="gridItem i1 o">
+	<a href="//photo-album/dottie-in-brussels-1958.html" title="Dottie in Brussels 1958" class="imageLink"><img src="http://designerskit.karelia.com/thumbs/rotate.php?x=16" alt="" width="85" height="128" /></a>
+    <h3><a href="//photo-album/dottie-in-brussels-1958.html"><span class="in">Dottie in Brussels 1958</span></a></h3>
+    
+</div>
+<div class="gridItem i2 e">
+	<a href="//photo-album/beautiful-cornfield-w-d-and.html" title="Beautiful Cornfield w-D and K" class="imageLink"><img src="http://designerskit.karelia.com/thumbs/rotate.php?x=16" alt="" width="92" height="128" /></a>
+    <h3><a href="//photo-album/beautiful-cornfield-w-d-and.html"><span class="in">Beautiful Cornfield w-D and K</span></a></h3>
+    
+</div>
+<div class="gridItem i3 o">
+	<a href="//photo-album/george-from-alameda-bicycle.html" title="George from Alameda Bicycle explains shifting" class="imageLink"><img src="http://designerskit.karelia.com/thumbs/rotate.php?x=16" alt="" width="98" height="128" /></a>
+    <h3><a href="//photo-album/george-from-alameda-bicycle.html"><span class="in">George from Alameda Bicycle explains shifting</span></a></h3>
+    
+</div>
+<div class="gridItem i4 e">
+	<a href="//photo-album/bikealameda-board-members.html" title="BikeAlameda Board Members Joce Mercado and Jeff Cambra accept the Bike to Work Day Proclamation from Mayor Beverly Johnson" class="imageLink"><img src="http://designerskit.karelia.com/thumbs/rotate.php?x=16" alt="" width="128" height="97" /></a>
+    <h3><a href="//photo-album/bikealameda-board-members.html"><span class="in">BikeAlameda Board Members Joce Mercado and Jeff Cambra accept the Bike to Work Day Proclamation from Mayor Beverly Johnson</span></a></h3>
+    
+</div>
+<div class="gridItem i5 o">
+	<a href="//photo-album/dan-with-apple-ii.html" title="Dan with Apple II" class="imageLink"><img src="http://designerskit.karelia.com/thumbs/rotate.php?x=16" alt="" width="128" height="91" /></a>
+    <h3><a href="//photo-album/dan-with-apple-ii.html"><span class="in">Dan with Apple II</span></a></h3>
+    
+</div>
+<div class="gridItem i6 e last-item">
+	<a href="//photo-album/summer-1986-gigli.html" title="Summer 1986 Gigli" class="imageLink"><img src="http://designerskit.karelia.com/thumbs/rotate.php?x=16" alt="" width="128" height="99" /></a>
+    <h3><a href="//photo-album/summer-1986-gigli.html"><span class="in">Summer 1986 Gigli</span></a></h3>
+    
+</div>
+<div class="photogrid-index-bottom"></div>
+<!-- /sandvox.PhotoGridIndex --></div>
+				</div>
+			</div><br />
+		</div>
+	</div>
+</div> <!-- /article-content -->
+								<div class="article-info">
+
+
+
+
+								</div> <!-- /article-info -->
+							</div> <!-- /article -->
+						</div> <!-- main-content -->
+
+						<div id="main-bottom"></div>
+					</div> <!-- main -->
+				</div> <!-- content -->
+				<div class="clear below-content"></div>
+				<div id="page-bottom">
+					<div id="page-bottom-contents">
+						<div>© Test Sandvox</div>
+						<div class="hidden"> <a rel="nofollow" href="#title">[Back To Top]</a></div>
+					</div>
+				</div> <!-- page-bottom -->
+			</div> <!-- container -->
+			<div id="extraDiv1"><span></span></div><div id="extraDiv2"><span></span></div><div id="extraDiv3"><span></span></div><div id="extraDiv4"><span></span></div><div id="extraDiv5"><span></span></div><div id="extraDiv6"><span></span></div>
+		</div> <!-- specific body type -->
+	</body>
+</html>
