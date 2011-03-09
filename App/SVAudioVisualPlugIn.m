@@ -79,4 +79,11 @@
 + (NSString *) elementClassName; { return @"VideoElement"; }
 + (NSString *) contentClassName; { return @"video"; }
 
+#pragma mark Migration
+
+- (void)awakeFromSourceProperties:(NSDictionary *)properties
+{
+	NSLog(@"%@", properties);
+}
+
 @end
