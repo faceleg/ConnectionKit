@@ -48,19 +48,17 @@ enum {
 	kLargeMediaIfBigEnough = 1UL << 8	// 256
 };
 
+// If these change, we need to change the tags on the popup menu in the nib.
 typedef enum {
 	kLayoutNone					= 0,
-	kLayoutTitles				= kTitleMask,
-	kLayoutTitlesList			= kTitleMask | kListMask,
-	kLayoutTable				= kTitleMask | kArticleMask | kThumbMask		| kTableMask,
-	kLayoutArticlesOnly			= kTitleMask | kArticleMask,
-	kLayoutArticlesAndThumbs	= kTitleMask | kArticleMask | kThumbMask | kFloatThumbMask,
-	kLayoutArticlesAndMedia		= kTitleMask | kArticleMask | kLargeMediaMask | kLargeMediaIfBigEnough
+	kLayoutTitles				= kTitleMask,																// 2
+	kLayoutTitlesList			= kTitleMask | kListMask,													// 6
+	kLayoutTable				= kTitleMask | kArticleMask | kThumbMask		| kTableMask,				// 43
+	kLayoutArticlesAndThumbs	= kTitleMask | kArticleMask | kThumbMask | kFloatThumbMask,					// 99
+	kLayoutArticlesAndMedia		= kTitleMask | kArticleMask | kLargeMediaMask | kLargeMediaIfBigEnough,		// 275
 
 } IndexLayoutType;
-
-
-	
+ 	
 @interface GeneralIndexPlugIn : SVIndexPlugIn 
 {
 	BOOL _showTimestamps;

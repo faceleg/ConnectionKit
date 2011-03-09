@@ -48,7 +48,6 @@
 
 @protocol PagePrivate
 
-- (NSNumber *)includeTimestamp;
 - (NSNumber *)allowComments;
 - (id) master;
 - (void)writeComments:(id<SVPlugInContext>)context;
@@ -287,7 +286,7 @@
 	id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage, PagePrivate> iteratedPage = [context objectForCurrentTemplateIteration];
 
-	return (self.showTimestamps && iteratedPage.includeTimestamp.boolValue)
+	return self.showTimestamps
 		|| self.showPermaLinks
 		|| (self.showComments && iteratedPage.allowComments.boolValue);
 }
@@ -304,7 +303,7 @@
 		[self writeContinueReadingLink];
 	}
 	
-	if ( (self.showTimestamps && iteratedPage.includeTimestamp.boolValue)
+	if ( (self.showTimestamps)
 			|| self.showPermaLinks)		// timestamps and/or permanent links need timestamp <div>
 	{
 		
@@ -314,7 +313,7 @@
 		{
 			[context startAnchorElementWithPage:iteratedPage];
 		}
-		if (self.showTimestamps && iteratedPage.includeTimestamp.boolValue)	// Write out either timestamp ....
+		if (self.showTimestamps)	// Write out either timestamp ....
 		{
 			NSString *timestamp = [iteratedPage timestampDescription];
 			if (timestamp)
