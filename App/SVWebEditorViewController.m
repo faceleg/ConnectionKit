@@ -287,6 +287,10 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     // Tidy up. Web Editor HTML Contexts create a retain cycle until -close is called. Yes, I should fix this at some point, but it's part of the design for now. We call -close once the webview has loaded, but sometimes that point is never reached! As far as I can tell it's not a problem to close the context after starting a load. Researched into this prompted by #
     [context close];
     [context release];
+    
+    
+    // If no page, might be teardown time, so ditch content
+    if (!page) [[self graphicsController] setContent:nil];
 }
 
 - (KTPage *)loadedPage; // the last page to successfully load into Web Editor
