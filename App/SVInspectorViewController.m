@@ -42,6 +42,15 @@
     }
 }
 
+- (void)loadView;
+{
+    [super loadView];
+    
+    // Enforce the standard mask. #111153
+    NSUInteger mask = NSViewWidthSizable | NSViewHeightSizable;
+    [[self view] setAutoresizingMask:mask];
+}
+
 @synthesize contentHeightForViewInInspector = _tabHeight;
 
 #pragma mark -
