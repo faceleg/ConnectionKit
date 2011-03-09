@@ -657,6 +657,33 @@
     // Replace content with proxies
     if ([content isKindOfClass:[NSArray class]])
     {
+        // Occasionally (and I have no idea what exactly prompts it!), changing a tree controller's content will leave it still observing the previous selected object(s), despite no longer having any obvious reference to them. This can well mean that a MOC tears down an object which the tree controller is trying to observe, having nasty repercussions.
+        // We can avoid by explictly clearing out the controller's selection before changing content, since that prompts it to stop observing the selection.
+        // 
+        // Symptom is a backtrace like so:
+        // #5	0x91e6f012 in -[_NSInvalidationFaultHandler fulfillFault:withContext:]
+        // #6	0x91e08e41 in _PF_FulfillDeferredFault
+        // #7	0x91e0cdd1 in _sharedIMPL_pvfk_core
+        // #8	0x91e0cf4f in -[NSManagedObject(_PFDynamicAccessorsAndPropertySupport) _genericValueForKey:withIndex:flags:]
+        // #9	0x91e118d4 in -[NSManagedObject valueForKey:]
+        // #10	0x90f1825e in -[NSKeyValueNestedProperty object:didRemoveObservance:recurse:]
+        // #11	0x90f17b11 in -[NSObject(NSKeyValueObserverRegistration) _removeObserver:forProperty:]
+        // #12	0x90f17864 in -[NSObject(NSKeyValueObserverRegistration) removeObserver:forKeyPath:]
+        // #13	0x90f370b6 in -[NSKeyValueNestedProperty object:withObservance:didChangeValueForKeyOrKeys:recurse:forwardingValues:]
+        // #14	0x90f1b4b9 in -[NSKeyValueUnnestedProperty object:withObservance:didChangeValueForKeyOrKeys:recurse:forwardingValues:]
+        // #15	0x90f1b0bf in NSKeyValueDidChange
+        // #16	0x90ffb2aa in -[NSObject(NSKeyValueObservingPrivate) _didChangeValuesForKeys:]
+        // #17	0x91e134b4 in -[NSFaultHandler turnObject:intoFaultWithContext:]
+        // #18	0x91e26e68 in -[NSManagedObjectContext(_NSInternalAdditions) _disposeObjects:count:notifyParent:]
+        // #19	0x91e2665f in -[NSManagedObjectContext(_NSInternalAdditions) _dispose:]
+        // #20	0x91e2616a in -[NSManagedObjectContext dealloc]
+        //
+        // Introspecting the object in frame 17 will show you it still has a bunch of observers attached
+        //
+        // #111246
+        if (![content count]) [self setSelectionIndexPaths:nil];
+        
+        
         NSMutableArray *buffer = [NSMutableArray arrayWithCapacity:[content count]];
         for (SVSiteItem *anItem in content)
         {
