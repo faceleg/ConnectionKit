@@ -21,9 +21,12 @@
 
 
 #pragma mark Text
-
 - (NSAttributedString *)attributedHTMLString;
 - (void)setAttributedHTMLString:(NSAttributedString *)attributedHTML;
+
+
+#pragma mark Primitive Text
+// In general you should be working with attributed HTML strings from the above API, rather than this lower level support
 
 @property(nonatomic, copy) NSString *string;
 - (void)setString:(NSString *)string attachments:(NSSet *)attachments;  // deletes old attachments
