@@ -76,18 +76,20 @@
 }
 
 - (NSArray *)allSidebarPagelets;
+{    
+    return [[self class] allSidebarPageletsInManagedObjectContext:[self managedObjectContext]];
+}
+
++ (NSArray *)allSidebarPageletsInManagedObjectContext:(NSManagedObjectContext *)context;
 {
     //  Fetches all sidebar pagelets in the receiver's MOC and sorts them.
-    
-    
-    NSManagedObjectContext *context = [self managedObjectContext];
     OBASSERT(context);  // #107523
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"Graphic"
                                    inManagedObjectContext:context]];
     [request setPredicate:[NSPredicate predicateWithFormat:@"textAttachment == nil"]];
-    [request setSortDescriptors:[[self class] pageletSortDescriptors]];
+    [request setSortDescriptors:[self pageletSortDescriptors]];
     
     NSArray *result = [context executeFetchRequest:request error:NULL];
     

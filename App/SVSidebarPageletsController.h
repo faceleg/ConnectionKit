@@ -33,6 +33,7 @@
 
 #pragma mark Arranging Objects
 - (void)bindContentToPage;  // see -initWithPage: docs above
++ (NSArray *)allSidebarPageletsInManagedObjectContext:(NSManagedObjectContext *)context;
 + (NSArray *)pageletSortDescriptors;
 
 
