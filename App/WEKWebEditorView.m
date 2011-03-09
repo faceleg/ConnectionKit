@@ -2420,6 +2420,13 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (void)webViewDidChange:(NSNotification *)notification;
 {
+    //  Update Link Manager to match
+    WebView *webView = [notification object];
+    SVLink *link = [webView selectedLink];
+    [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[webView canCreateLink]];
+    
+    
+    // Process change
     [self didChangeText];
     
     // Bring the change into view #80762
