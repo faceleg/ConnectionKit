@@ -289,18 +289,19 @@
 #pragma mark -
 #pragma mark Media
 
-- (void)didSetSource;
-{
-    [super didSetSource];
+// May be called from migration, but didSetSource: is not called then.  If called from standard usage,
+// then didSetSource: was already called, so we don't want to kick off the loading.
 
-    if ([self.container constrainsProportions])    // generally true
+- (void) initializeProperties;
+{
+	if ([self.container constrainsProportions])    // generally true
     {
         /*/ Resize image to fit in space
-        NSUInteger width = self.width;
-        [self.container makeOriginalSize];
-        if (self.width > width) self.width = width;*/
+		 NSUInteger width = self.width;
+		 [self.container makeOriginalSize];
+		 if (self.width > width) self.width = width;*/
     }
- 
+	
 	if (nil == self.posterFrame || self.posterFrameType != kPosterTypeChoose)		// get poster frame image UNLESS we have an override chosen.
 	{
 		[self getPosterFrameFromQuickLook];
@@ -322,7 +323,27 @@
 	
 	// Try to make a QTMovie out of this, or parse as FLV which is a special case (since QT is not needed to show.)
 	
-	[self loadMovieFromURL:movieSourceURL];
+	[self loadMovieFromURL:movieSourceURL];	
+}
+
+
+- (void)didAddToPage:(id <SVPage>)page;
+{
+	if (!_didSetSourceWasCalled)
+	{
+		[self initializeProperties];
+	}
+}
+
+
+
+- (void)didSetSource;
+{
+	_didSetSourceWasCalled = TRUE;		// don't let didAddToPage initialize the properties
+	
+    [super didSetSource];
+
+	[self initializeProperties];
 }
 
 
