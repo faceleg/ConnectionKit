@@ -141,12 +141,19 @@
 
 - (SVLink *)linkWithOpensInNewWindow:(BOOL)openInNewWindow;
 {
-    SVLink *result = [NSKeyedUnarchiver unarchiveObjectWithData:
-                      [NSKeyedArchiver archivedDataWithRootObject:self]];
-    
-    [result setOpenInNewWindow:openInNewWindow];
-    
-    return result;
+    if ([self linkType] == SVLinkToPage)
+    {
+        return [SVLink linkWithSiteItem:[self page] openInNewWindow:openInNewWindow];
+    }
+    else
+    {
+        SVLink *result = [NSKeyedUnarchiver unarchiveObjectWithData:
+                          [NSKeyedArchiver archivedDataWithRootObject:self]];
+        
+        [result setOpenInNewWindow:openInNewWindow];
+        
+        return result;
+    }
 }
 
 #pragma mark HTML
