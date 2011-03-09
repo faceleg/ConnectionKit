@@ -328,7 +328,7 @@
 			whereAttachment = [markup rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(NSAttachmentCharacter, 1)] options:0 range:NSMakeRange(offset, [markup length] - offset) ];
 			if (NSNotFound != whereAttachment.location)
 			{
-				OFF((@"Source: Attachment at offset %d", whereAttachment.location));
+				DJW((@"Source: Attachment at offset %d", whereAttachment.location));
 				offset = whereAttachment.location + 1;
 			}
 		}
@@ -341,7 +341,7 @@
 			whereAttachment = [truncatedMarkup rangeOfCharacterFromSet:[NSCharacterSet characterSetWithRange:NSMakeRange(NSAttachmentCharacter, 1)] options:0 range:NSMakeRange(offset, [truncatedMarkup length] - offset) ];
 			if (NSNotFound != whereAttachment.location)
 			{
-				OFF((@"Truncd: Attachment at offset %d", whereAttachment.location));
+				DJW((@"Truncd: Attachment at offset %d", whereAttachment.location));
 				offset = whereAttachment.location + 1;
 			}
 		}
