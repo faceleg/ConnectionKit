@@ -88,7 +88,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 @implementation SVWebEditorViewController
 
-#pragma mark Init & Dealloc
+#pragma mark Lifecycle
 
 - (id)init
 {
@@ -104,7 +104,13 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
         
     return self;
 }
-    
+
+- (void)close;
+{
+    [super close];
+    [self loadPage:nil];
+}
+
 - (void)dealloc
 {
     [_graphicsController removeObserver:self forKeyPath:@"selection.link"];
@@ -238,7 +244,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     WEKWebEditorView *webEditor = [self webEditor];
     
     
-    // Tear down old dependencies and DOM controllers.
+    // Tear down old dependencies and DOM controllers. Once decision has been made to load entire page, dependencies of existing DOM controllers becomes useless, so tear down. Particularly, as it can lead to #111246
+    [[webEditor contentItem] stopObservingDependencies];
     [webEditor setContentItem:nil];
     
     
