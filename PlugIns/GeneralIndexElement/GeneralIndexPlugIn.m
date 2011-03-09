@@ -48,6 +48,7 @@
 
 @protocol PagePrivate
 
+- (NSNumber *)includeTimestamp;
 - (NSNumber *)allowComments;
 - (id) master;
 - (void)writeComments:(id<SVPlugInContext>)context;
@@ -286,7 +287,7 @@
 	id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage, PagePrivate> iteratedPage = [context objectForCurrentTemplateIteration];
 
-	return self.showTimestamps
+	return (self.showTimestamps && iteratedPage.includeTimestamp.boolValue)
 		|| self.showPermaLinks
 		|| (self.showComments && iteratedPage.allowComments.boolValue);
 }
@@ -303,7 +304,7 @@
 		[self writeContinueReadingLink];
 	}
 	
-	if ( (self.showTimestamps)
+	if ( (self.showTimestamps && iteratedPage.includeTimestamp.boolValue)
 			|| self.showPermaLinks)		// timestamps and/or permanent links need timestamp <div>
 	{
 		
@@ -313,7 +314,7 @@
 		{
 			[context startAnchorElementWithPage:iteratedPage];
 		}
-		if (self.showTimestamps)	// Write out either timestamp ....
+		if (self.showTimestamps && iteratedPage.includeTimestamp.boolValue)	// Write out either timestamp ....
 		{
 			NSString *timestamp = [iteratedPage timestampDescription];
 			if (timestamp)
@@ -438,6 +439,8 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 #pragma mark -
 #pragma mark Migration
 
+/* We set the comments and timestamp checkboxes if at least one page has that visibility set.
+ */
 - (void)awakeFromSourceInstance:(NSManagedObject *)sInstance;
 {
 	[super awakeFromSourceInstance:sInstance];		// this will get awakeFromSourceProperties called
@@ -445,6 +448,7 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 	NSSet *children = [sInstance valueForKey:@"children"];
 	
 	BOOL foundOneTimestamp = NO;
+	BOOL foundOneComment = NO;
 	for (NSManagedObject *child in children)
 	{
 		NSNumber *includeTimestamp = [child valueForKey:@"includeTimestamp"];
@@ -452,10 +456,23 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 		{
 			foundOneTimestamp = YES;
 		}
+		NSNumber *allowComments = [child valueForKey:@"allowComments"];
+		if (allowComments && [allowComments boolValue])
+		{
+			foundOneComment = YES;
+		}
+		if (foundOneTimestamp && foundOneComment)
+		{
+			break;		// no point in continuing if both are turned on
+		}
 	}
 	if (foundOneTimestamp)
 	{
 		self.showTimestamps = YES;
+	}
+	if (foundOneComment)
+	{
+		self.showComments = YES;
 	}
 }
 
