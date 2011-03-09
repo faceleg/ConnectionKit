@@ -188,7 +188,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 {
     NSString *filename = [[NSFileManager defaultManager] displayNameAtPath:[[self fileURL] path]];
     NSString *message = [NSString stringWithFormat:
-                         NSLocalizedString(@"Upgrading document “%@.”","document upgrade message text"), filename];
+                         NSLocalizedString(@"Upgrading document “%@”","document upgrade message text"), filename];
     [messageTextField setStringValue:message];
     
     
