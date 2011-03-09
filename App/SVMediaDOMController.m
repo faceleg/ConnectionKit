@@ -35,6 +35,21 @@
     return [self HTMLElement];
 }
 
+- (DOMRange *)selectableDOMRange;
+{
+    if ([self shouldTrySelectingInline])
+    {
+        DOMElement *element = [self selectableDOMElement];
+        DOMRange *result = [[element ownerDocument] createRange];
+        [result selectNode:element];
+        return result;
+    }
+    else
+    {
+        return [super selectableDOMRange];
+    }
+}
+
 - (BOOL)allowsDirectAccessToWebViewWhenSelected;
 {
     // Generally, no. EXCEPT for inline, non-wrap-causing images
