@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="303"/>
+			<integer value="143"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -74,7 +74,7 @@
 													<string key="NSColorName">controlColor</string>
 													<object class="NSColor" key="NSColor" id="514712999">
 														<int key="NSColorSpace">3</int>
-														<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
+														<bytes key="NSWhite">MC42NjY2NjY2ODY1AA</bytes>
 													</object>
 												</object>
 												<object class="NSColor" key="NSTextColor" id="422175849">
@@ -600,7 +600,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 													<string key="NSColorName">disabledControlTextColor</string>
 													<object class="NSColor" key="NSColor">
 														<int key="NSColorSpace">3</int>
-														<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
+														<bytes key="NSWhite">MC4zMzMzMzMzNDMzAA</bytes>
 													</object>
 												</object>
 											</object>
@@ -674,7 +674,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<object class="NSTabViewItem" id="100596452">
 								<string key="NSIdentifier">appearance</string>
 								<object class="NSView" key="NSView" id="758005953">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder" ref="40048264"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1075,7 +1075,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 										<object class="NSPopUpButton" id="205583924">
 											<reference key="NSNextResponder" ref="758005953"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{24, 380}, {111, 22}}</string>
+											<string key="NSFrame">{{24, 380}, {93, 22}}</string>
 											<reference key="NSSuperview" ref="758005953"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSPopUpButtonCell" key="NSCell" id="699652627">
@@ -1090,9 +1090,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 												<string key="NSKeyEquivalent"/>
 												<int key="NSPeriodicDelay">400</int>
 												<int key="NSPeriodicInterval">75</int>
-												<object class="NSMenuItem" key="NSMenuItem" id="803058234">
+												<object class="NSMenuItem" key="NSMenuItem" id="86290846">
 													<reference key="NSMenu" ref="1026940669"/>
-													<string key="NSTitle">Date Created</string>
+													<string key="NSTitle">Date Modified</string>
 													<string key="NSKeyEquiv"/>
 													<int key="NSKeyEquivModMask">1048576</int>
 													<int key="NSMnemonicLoc">2147483647</int>
@@ -1100,7 +1100,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 													<reference key="NSOnImage" ref="608116968"/>
 													<reference key="NSMixedImage" ref="170692254"/>
 													<string key="NSAction">_popUpItemAction:</string>
-													<int key="NSTag">1</int>
+													<int key="NSTag">2</int>
 													<reference key="NSTarget" ref="699652627"/>
 												</object>
 												<bool key="NSMenuItemRespectAlignment">YES</bool>
@@ -1108,22 +1108,23 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 													<string key="NSTitle">OtherViews</string>
 													<object class="NSMutableArray" key="NSMenuItems">
 														<bool key="EncodedWithXMLCoder">YES</bool>
-														<reference ref="803058234"/>
-														<object class="NSMenuItem" id="86290846">
+														<object class="NSMenuItem" id="803058234">
 															<reference key="NSMenu" ref="1026940669"/>
-															<string key="NSTitle">Date Modified</string>
+															<string key="NSTitle">Date Created</string>
 															<string key="NSKeyEquiv"/>
 															<int key="NSKeyEquivModMask">1048576</int>
 															<int key="NSMnemonicLoc">2147483647</int>
 															<reference key="NSOnImage" ref="608116968"/>
 															<reference key="NSMixedImage" ref="170692254"/>
 															<string key="NSAction">_popUpItemAction:</string>
-															<int key="NSTag">2</int>
+															<int key="NSTag">1</int>
 															<reference key="NSTarget" ref="699652627"/>
 														</object>
+														<reference ref="86290846"/>
 													</object>
 													<reference key="NSMenuFont" ref="511600138"/>
 												</object>
+												<int key="NSSelectedIndex">1</int>
 												<int key="NSPreferredEdge">1</int>
 												<bool key="NSUsesItemFromMenu">YES</bool>
 												<bool key="NSAltersState">YES</bool>
@@ -1197,6 +1198,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {244, 446}}</string>
+									<reference key="NSSuperview" ref="40048264"/>
 								</object>
 								<string key="NSLabel">Appearance</string>
 								<reference key="NSColor" ref="991363190"/>
@@ -1205,7 +1207,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<object class="NSTabViewItem" id="773659695">
 								<string key="NSIdentifier">collection</string>
 								<object class="NSView" key="NSView" id="658615396">
-									<reference key="NSNextResponder" ref="40048264"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1856,21 +1858,20 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {244, 446}}</string>
-									<reference key="NSSuperview" ref="40048264"/>
 								</object>
 								<string key="NSLabel">Collection</string>
 								<reference key="NSColor" ref="991363190"/>
 								<reference key="NSTabView" ref="40048264"/>
 							</object>
 						</object>
-						<reference key="NSSelectedTabViewItem" ref="773659695"/>
+						<reference key="NSSelectedTabViewItem" ref="100596452"/>
 						<reference key="NSFont" ref="26"/>
 						<int key="NSTvFlags">134217728</int>
 						<bool key="NSAllowTruncatedLabels">YES</bool>
 						<bool key="NSDrawsBackground">YES</bool>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="658615396"/>
+							<reference ref="758005953"/>
 						</object>
 					</object>
 				</object>
@@ -4907,7 +4908,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{1005, 756}, {158, 37}}</string>
+					<string>{{733, 643}, {135, 37}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
