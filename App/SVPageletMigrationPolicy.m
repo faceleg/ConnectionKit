@@ -143,16 +143,7 @@
     SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
     SVPlugIn *plugIn = [[[factory plugInClass] alloc] init];
     
-    
-    // Grab all reasonable attributes of source
-    NSArray *attributes = [[[sInstance entity] attributesByName] allKeys];
-    NSMutableDictionary *properties = [[sInstance dictionaryWithValuesForKeys:attributes] mutableCopy];
-    
-    [properties addEntriesFromDictionary:[KSExtensibleManagedObject unarchiveExtensibleProperties:
-                                          [sInstance valueForKey:@"extensiblePropertiesData"]]];
-    
-    [plugIn awakeFromSourceProperties:properties];
-    [properties release];
+    [plugIn awakeFromSourceInstance:sInstance];
     
     
     // Serialize the plug-in

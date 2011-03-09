@@ -357,6 +357,19 @@ static id <SVPlugInContext> sCurrentContext;
     [self setValuesForKeysWithDictionary:properties];
 }
 
+- (void)awakeFromSourceInstance:(NSManagedObject *)sInstance;   // calls -awakeFromSourceProperties:
+{
+    // Grab all reasonable attributes of source
+    NSArray *attributes = [[[sInstance entity] attributesByName] allKeys];
+    NSMutableDictionary *properties = [[sInstance dictionaryWithValuesForKeys:attributes] mutableCopy];
+    
+    [properties addEntriesFromDictionary:[KSExtensibleManagedObject unarchiveExtensibleProperties:
+                                          [sInstance valueForKey:@"extensiblePropertiesData"]]];
+    
+    [self awakeFromSourceProperties:properties];
+    [properties release];
+}
+
 @end
 
 
