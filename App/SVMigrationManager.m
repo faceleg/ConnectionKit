@@ -15,6 +15,7 @@
 #import "SVMediaGraphic.h"
 #import "SVMediaRecord.h"
 #import "SVRichText.h"
+#import "SVSidebarPageletsController.h"
 #import "SVTextAttachment.h"
 #import "KT.h"
 
@@ -156,6 +157,34 @@
     [html release];
 }
 
+- (void)uniqueSidebarPageletSortKeys
+{
+    // Make sure sidebar pagelets have unique sort keys
+    NSArray *pagelets = [SVSidebarPageletsController allSidebarPageletsInManagedObjectContext:[self destinationContext]];
+    if ([pagelets count] < 2) return;
+    
+    
+    // Bump following pagelets along as needed
+    NSInteger nextSortKey = [[[pagelets objectAtIndex:0] sortKey] integerValue];
+    NSUInteger i = 1;
+    
+    for (; i < [pagelets count]; i++)
+    {
+        SVGraphic *nextPagelet = [pagelets objectAtIndex:i];
+        
+        if ([[nextPagelet sortKey] integerValue] < nextSortKey)
+        {
+            [nextPagelet setSortKey:[NSNumber numberWithInteger:nextSortKey]];
+        }
+        else
+        {
+            nextSortKey = [[nextPagelet sortKey] integerValue];
+        }
+        
+        nextSortKey++;
+    }
+}
+
 - (BOOL)migrateDocumentFromURL:(NSURL *)sourceDocURL
               toDestinationURL:(NSURL *)dURL
                          error:(NSError **)outError;
@@ -259,6 +288,12 @@
                 // Do after resizing media, so can pick the biggest. #109087
                 NSArray *pages = [_destinationContextOverride fetchAllObjectsForEntityForName:@"Page" error:NULL];
                 [pages makeObjectsPerformSelector:@selector(guessThumbnailSourceGraphic)];
+                
+                
+                
+                [self uniqueSidebarPageletSortKeys];
+
+                
                 
                 
                 result = [dDoc saveToURL:[dDoc fileURL] ofType:[dDoc fileType] forSaveOperation:NSSaveOperation error:outError];
