@@ -124,6 +124,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [super dealloc];
 }
 
+#pragma mark Window
+
 - (void)windowDidLoad
 {	
     [super windowDidLoad];
@@ -908,7 +910,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     }
     
     
-	[self setSiteOutlineViewController:nil];
+	[[self webContentAreaController] close];
+    [self setSiteOutlineViewController:nil];
 }
 
 #pragma mark Code Injection & other pro stuff
