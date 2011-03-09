@@ -86,6 +86,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"Graphic"
                                    inManagedObjectContext:context]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"textAttachment == nil"]];
     [request setSortDescriptors:[[self class] pageletSortDescriptors]];
     
     NSArray *result = [context executeFetchRequest:request error:NULL];
