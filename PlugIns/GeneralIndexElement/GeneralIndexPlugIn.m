@@ -445,34 +445,37 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 {
 	[super awakeFromSourceInstance:sInstance];		// this will get awakeFromSourceProperties called
 	
-	NSSet *children = [sInstance valueForKey:@"children"];
-	
-	BOOL foundOneTimestamp = NO;
-	BOOL foundOneComment = NO;
-	for (NSManagedObject *child in children)
+	if ([[[sInstance entity] name] isEqualToString:@"Page"])	// make sure it's not an index pagelet
 	{
-		NSNumber *includeTimestamp = [child valueForKey:@"includeTimestamp"];
-		if (includeTimestamp && [includeTimestamp boolValue])
+		NSSet *children = [sInstance valueForKey:@"children"];
+		
+		BOOL foundOneTimestamp = NO;
+		BOOL foundOneComment = NO;
+		for (NSManagedObject *child in children)
 		{
-			foundOneTimestamp = YES;
+			NSNumber *includeTimestamp = [child valueForKey:@"includeTimestamp"];
+			if (includeTimestamp && [includeTimestamp boolValue])
+			{
+				foundOneTimestamp = YES;
+			}
+			NSNumber *allowComments = [child valueForKey:@"allowComments"];
+			if (allowComments && [allowComments boolValue])
+			{
+				foundOneComment = YES;
+			}
+			if (foundOneTimestamp && foundOneComment)
+			{
+				break;		// no point in continuing if both are turned on
+			}
 		}
-		NSNumber *allowComments = [child valueForKey:@"allowComments"];
-		if (allowComments && [allowComments boolValue])
+		if (foundOneTimestamp)
 		{
-			foundOneComment = YES;
+			self.showTimestamps = YES;
 		}
-		if (foundOneTimestamp && foundOneComment)
+		if (foundOneComment)
 		{
-			break;		// no point in continuing if both are turned on
-		}
-	}
-	if (foundOneTimestamp)
-	{
-		self.showTimestamps = YES;
-	}
-	if (foundOneComment)
-	{
-		self.showComments = YES;
+			self.showComments = YES;
+		}		
 	}
 }
 
