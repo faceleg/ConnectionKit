@@ -28,4 +28,12 @@
 }
 
 
+#pragma mark Timestamp
+
+- (IBAction)selectTimestampType:(NSPopUpButton *)sender;
+{
+    //  When the user selects a timestamp type, want to treat it as if they hit the checkbox too
+    if (![oShowTimestampCheckbox integerValue]) [oShowTimestampCheckbox performClick:self];
+}
+
 @end

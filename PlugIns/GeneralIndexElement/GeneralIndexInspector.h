@@ -6,8 +6,10 @@
 
 @interface GeneralIndexInspector : SVIndexInspectorViewController 
 {
-	IBOutlet id oTruncationController;
+	IBOutlet NSButton   *oShowTimestampCheckbox;
+    IBOutlet id         oTruncationController;
 }
 
+- (IBAction)selectTimestampType:(NSPopUpButton *)sender;
 
 @end
