@@ -17,7 +17,7 @@ typedef enum { kPosterFrameTypeUndefined = 0, kPosterFrameTypeNone, kPosterFrame
 
 @interface SVVideo : SVAudioVisualPlugIn
 {
-	BOOL _didSetSourceWasCalled;
+	BOOL _didInitializePropertiesWasCalled;
 	QTMovie *_dimensionCalculationMovie;
 	KSSimpleURLConnection *_dimensionCalculationConnection;	// load some remote data if we can't load as a QTMovie
 	PosterFrameType _posterFrameType;

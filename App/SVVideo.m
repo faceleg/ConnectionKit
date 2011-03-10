@@ -329,9 +329,17 @@
 
 - (void)didAddToPage:(id <SVPage>)page;
 {
-	if (!_didSetSourceWasCalled)
+	if (!_didInitializePropertiesWasCalled)
 	{
-		[self initializeProperties];
+		_didInitializePropertiesWasCalled = YES;
+		if ([NSThread isMainThread])
+		{
+			[self initializeProperties];
+		}
+		else
+		{
+			[self performSelectorOnMainThread:@selector(initializeProperties) withObject:nil waitUntilDone:NO];
+		}
 	}
 }
 
@@ -339,7 +347,7 @@
 
 - (void)didSetSource;
 {
-	_didSetSourceWasCalled = TRUE;		// don't let didAddToPage initialize the properties
+	_didInitializePropertiesWasCalled = TRUE;		// don't let didAddToPage initialize the properties
 	
     [super didSetSource];
 
