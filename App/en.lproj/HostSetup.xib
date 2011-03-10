@@ -12,8 +12,8 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1962"/>
 			<integer value="1009"/>
+			<integer value="62"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -4221,55 +4221,6 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 					<int key="connectionID">1733</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.dotMacPersonalDomain</string>
-						<reference key="source" ref="524784898"/>
-						<reference key="destination" ref="50983015"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="524784898"/>
-							<reference key="NSDestination" ref="50983015"/>
-							<string key="NSLabel">value: selection.dotMacPersonalDomain</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.dotMacPersonalDomain</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSAllowsEditingMultipleValuesSelection</string>
-									<string>NSAlwaysPresentsApplicationModalAlerts</string>
-									<string>NSConditionallySetsEditable</string>
-									<string>NSConditionallySetsEnabled</string>
-									<string>NSConditionallySetsHidden</string>
-									<string>NSContinuouslyUpdatesValue</string>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSRaisesForNotApplicableKeys</string>
-									<string>NSValidatesImmediately</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<boolean value="YES"/>
-									<boolean value="NO"/>
-									<boolean value="YES"/>
-									<boolean value="NO"/>
-									<boolean value="NO"/>
-									<boolean value="YES"/>
-									<string/>
-									<string/>
-									<string/>
-									<string/>
-									<boolean value="YES"/>
-									<boolean value="NO"/>
-								</object>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">1961</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">doGetDotMacAccount:</string>
 						<reference key="source" ref="839278234"/>
@@ -4396,6 +4347,22 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 						</object>
 					</object>
 					<int key="connectionID">2093</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.dotMacPersonalDomain</string>
+						<reference key="source" ref="524784898"/>
+						<reference key="destination" ref="50983015"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="524784898"/>
+							<reference key="NSDestination" ref="50983015"/>
+							<string key="NSLabel">value: selection.dotMacPersonalDomain</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.dotMacPersonalDomain</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2094</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -7128,7 +7095,7 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2093</int>
+			<int key="maxID">2094</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
