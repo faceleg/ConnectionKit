@@ -10,11 +10,15 @@
 
 #import "SVMediaMigrationPolicy.h"
 
+#import "SVArticle.h"
+#import "KTDesign.h"
 #import "KTDocument.h"
 #import "SVGraphicFactory.h"
+#import "KTImageScalingSettings.h"
+#import "KTMaster.h"
 #import "SVMediaGraphic.h"
 #import "SVMediaRecord.h"
-#import "SVRichText.h"
+#import "KTPage.h"
 #import "SVSidebarPageletsController.h"
 #import "SVTextAttachment.h"
 #import "KT.h"
@@ -115,8 +119,20 @@
                 if (alt) [graphic setExtensibleProperty:alt forKey:@"alternateText"];
                 
                 
-                // Metrics
+                // Metrics. Limit in article to old width 
                 [graphic makeOriginalSize];
+                
+                if ([richText isKindOfClass:[SVArticle class]])
+                {
+                    KTDesign *design = [[[(SVArticle *)richText page] master] design];
+                    KTImageScalingSettings *settings = [design imageScalingSettingsForUse:@"inTextMediumImage"];
+                    NSUInteger width = [settings size].width;
+                    
+                    if ([[graphic width] unsignedIntegerValue] > width)
+                    {
+                        [graphic setContentWidth:[NSNumber numberWithUnsignedInteger:width]];
+                    }
+                }
                 
                 
                 // Insert attachment too
@@ -246,6 +262,22 @@
                 _destinationContextOverride = [dDoc managedObjectContext];
                 
                 
+                // #108740
+                // Make each non-embedded media graphic original size
+                NSArray *graphics = [_destinationContextOverride fetchAllObjectsForEntityForName:@"MediaGraphic" error:NULL];
+                [graphics makeObjectsPerformSelector:@selector(makeOriginalSize)];
+                
+                // Constrain proportions
+                for (SVMediaGraphic *aGraphic in graphics)
+                {
+                    if ([aGraphic isConstrainProportionsEditable] &&
+                        [[aGraphic width] intValue] > 0 &&
+                        [[aGraphic height] intValue] > 0)
+                    {
+                        [aGraphic setConstrainsProportions:YES];
+                    }
+                }
+                
                 // Import embedded images
                 NSArray *richText = [_destinationContextOverride fetchAllObjectsForEntityForName:@"RichText" error:NULL];
                 NSEntityMapping *mapping = [[mappingModel entityMappingsByName] objectForKey:@"EmbeddedImageToGraphicMedia"];
@@ -263,22 +295,6 @@
                     [self setMigrationProgressOverride:override];
                 }
                 
-                
-                // #108740
-                // Make each media graphic original size
-                NSArray *graphics = [_destinationContextOverride fetchAllObjectsForEntityForName:@"MediaGraphic" error:NULL];
-                [graphics makeObjectsPerformSelector:@selector(makeOriginalSize)];
-                
-                // Constrain proportions
-                for (SVMediaGraphic *aGraphic in graphics)
-                {
-                    if ([aGraphic isConstrainProportionsEditable] &&
-                        [[aGraphic width] intValue] > 0 &&
-                        [[aGraphic height] intValue] > 0)
-                    {
-                        [aGraphic setConstrainsProportions:YES];
-                    }
-                }
                 
                 // Then reduce size to fit on page
                 [dDoc designDidChange];
