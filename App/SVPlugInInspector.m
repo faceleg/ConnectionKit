@@ -171,7 +171,7 @@ change context:(void *)context
 - (void)setTitle:(NSString *)title;
 {
     // Fallback to standard title
-    if (!title) title = NSLocalizedString(@"Plug-in", @"Plug-in Inspector");
+    if (!title) title = NSLocalizedString(@"Object", @"Object Inspector");
     [super setTitle:title];
 }
 
