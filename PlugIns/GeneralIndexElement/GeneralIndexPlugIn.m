@@ -97,6 +97,7 @@
 	[context addDependencyForKeyPath:@"showPermaLinks"		ofObject:self];
 	[context addDependencyForKeyPath:@"showComments"		ofObject:self];
 	[context addDependencyForKeyPath:@"showTimestamps"		ofObject:self];
+    [context addDependencyForKeyPath:@"timestampType"       ofObject:self];
 	[context addDependencyForKeyPath:@"maxItemLength"		ofObject:self];
 
 	// parse template
