@@ -305,6 +305,40 @@
 	return result;
 }
 
+- (NSString *)stringWithSingleAttachmentCharacterPerAttachmentFrom:(NSAttributedString *)inAttributedMarkupString;
+{
+	// Go through attributed strings, looking for range with attachment, and substitute a single attachment character
+	NSMutableAttributedString *result = [[[NSMutableAttributedString alloc] initWithAttributedString:inAttributedMarkupString] autorelease];
+	[result beginEditing];
+	
+	NSString *oneAttachmentCharString = [NSString stringWithUnichar:NSAttachmentCharacter];
+	
+	NSUInteger cursor = 0;
+	while (cursor < [result length]) 
+	{
+		NSRange effectiveRange;
+		
+		// - (id)attribute:(NSString *)attributeName atIndex:(NSUInteger)index longestEffectiveRange:(NSRangePointer)aRange inRange:(NSRange)rangeLimit
+
+		id attr = [result attribute:@"SVAttachment" atIndex:cursor effectiveRange:&effectiveRange];
+		
+		if(attr)
+		{
+			[result replaceCharactersInRange:effectiveRange withString:oneAttachmentCharString];
+			cursor+=1;
+		}
+		else
+		{
+			cursor = NSMaxRange(effectiveRange);
+		}
+	}
+
+	[result endEditing];
+	return [result string];
+}
+
+
+
 - (NSAttributedString *)attributedHTMLStringWithTruncation:(NSUInteger)maxItemLength
                                                       type:(SVTruncationType)truncationType
                                          includeLargeMedia:(BOOL)includeLargeMedia
@@ -313,12 +347,11 @@
     // take the normally generated HTML for the summary  
     
     // complete page markup would be:
-    NSString *markup = [self string];
-	
+    NSString *markup = [self stringWithSingleAttachmentCharacterPerAttachmentFrom:[self attributedHTMLString]];
     
     NSString *truncatedMarkup = [self truncateMarkup:markup truncation:maxItemLength truncationType:truncationType didTruncate:truncated];
   
-#ifdef DEBUG
+#if 0
 	if ([NSUserName() isEqualToString:@"dwood"])			// DEBUGGGING OF TRUNCATION FOR DAN.
 	{
 		int offset = 0;
