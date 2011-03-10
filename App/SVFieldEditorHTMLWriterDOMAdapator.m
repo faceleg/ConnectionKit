@@ -328,6 +328,12 @@
         result = [self replaceDOMElement:element withElementWithTagName:@"EM"];
     }
     
+    // Convert <TT> to <CODE>
+    else if ([tagName isEqualToString:@"TT"])
+    {
+        result = [self replaceDOMElement:element withElementWithTagName:@"CODE"];
+    }
+    
     // Convert a <FONT> tag to <SPAN> with appropriate styling
     else if ([tagName isEqualToString:@"FONT"])
     {

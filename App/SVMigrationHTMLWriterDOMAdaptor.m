@@ -36,7 +36,8 @@
     NSString *tagName = [element tagName];
     if ([tagName isEqualToString:@"FONT"] ||    
         [tagName isEqualToString:@"I"] ||
-        [tagName isEqualToString:@"B"])
+        [tagName isEqualToString:@"B"] ||
+        [tagName isEqualToString:@"TT"])
     {
         return [super handleInvalidDOMElement:element];
     }
