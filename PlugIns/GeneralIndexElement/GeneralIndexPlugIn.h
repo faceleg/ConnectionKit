@@ -62,6 +62,7 @@ typedef enum {
 @interface GeneralIndexPlugIn : SVIndexPlugIn 
 {
 	BOOL _showTimestamps;
+    NSUInteger _timestampType;
 	IndexLayoutType _indexLayoutType;
     BOOL _hyperlinkTitles;
     BOOL _showPermaLinks;
@@ -76,6 +77,7 @@ typedef enum {
 @property  BOOL showEntries;
 @property  BOOL showTitles;
 @property  BOOL showTimestamps;
+@property(nonatomic) NSUInteger timestampType;
 @property  BOOL showComments;
 @property  IndexLayoutType indexLayoutType;
 @property  NSUInteger maxItemLength;

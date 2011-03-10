@@ -72,6 +72,7 @@
 						   @"showPermaLinks",
                            @"showComments",
 						   @"showTimestamps",
+                           @"timestampType",
 						   @"maxItemLength",
                            nil];    
     return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
@@ -427,6 +428,7 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 @synthesize showTitles = _showTitles;
 @synthesize showComments	= _showComments;
 @synthesize showTimestamps	= _showTimestamps;
+@synthesize timestampType = _timestampType;
 @synthesize maxItemLength	= _maxItemLength;
 
 - (void) setIndexLayoutType:(IndexLayoutType)aType	// custom setter to also set dependent flags
