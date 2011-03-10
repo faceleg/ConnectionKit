@@ -506,6 +506,7 @@
     BOOL result = ([tagName isEqualToString:@"SPAN"] ||
                    [tagName isEqualToString:@"STRONG"] ||
                    [tagName isEqualToString:@"EM"] ||
+                   [tagName isEqualToString:@"CODE"] ||
                    [tagName isEqualToString:@"BR"] ||
                    [tagName isEqualToString:@"SUP"] ||
                    [tagName isEqualToString:@"SUB"] ||
