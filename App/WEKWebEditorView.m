@@ -296,6 +296,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [selection release];
     
     
+    // If item is or contains focused text, this can no longer be true. #111365
+    if ([item isDescendantOfWebEditorItem:[self focusedText]])
+    {
+        [self setFocusedText:nil notification:nil];
+    }
+    
+    
     // No longer need to display item or descendants
     for (WEKWebEditorItem *anItem in [self itemsToDisplay])
     {
@@ -1903,7 +1910,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 - (BOOL)webView:(WebView *)sender shouldPerformAction:(SEL)action fromSender:(id)fromObject;
 {
     // Give focused text a chance
-    BOOL result = ![_focusedText tryToPerform:action with:fromObject];
+    BOOL result = ![(WEKWebEditorItem *)_focusedText tryToPerform:action with:fromObject];
     return result;
 }
 
@@ -1914,7 +1921,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     SEL action = [item action];
     
     
-    id target = [_focusedText ks_targetForAction:action];
+    id target = [(WEKWebEditorItem *)_focusedText ks_targetForAction:action];
     if (target)
     {
         if ([target conformsToProtocol:@protocol(NSUserInterfaceValidations)])

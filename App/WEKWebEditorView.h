@@ -36,10 +36,10 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     BOOL        _isStartingLoad;
     
     // Selection
-    NSResponder <SVWebEditorText>   *_focusedText;
-    NSArray                         *_selectedItems;
-    NSArray                         *_selectionParentItems;
-    BOOL                            _isChangingSelectedItems;
+    WEKWebEditorItem <SVWebEditorText>  *_focusedText;
+    NSArray                             *_selectedItems;
+    NSArray                             *_selectionParentItems;
+    BOOL                                _isChangingSelectedItems;
     
     // Editing
     NSUndoManager   *_undoManager;
@@ -99,7 +99,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 @property(nonatomic, readonly) DOMRange *selectedDOMRange;
 - (void)setSelectedDOMRange:(DOMRange *)range affinity:(NSSelectionAffinity)selectionAffinity;
-@property(nonatomic, retain, readonly) id <SVWebEditorText> focusedText;    // KVO-compliant
+@property(nonatomic, retain, readonly) WEKWebEditorItem <SVWebEditorText> *focusedText;    // KVO-compliant
 
 @property(nonatomic, copy, readonly) NSArray *selectedItems;
 @property(nonatomic, retain, readonly) WEKWebEditorItem *selectedItem;
