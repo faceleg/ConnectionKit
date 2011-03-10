@@ -33,20 +33,20 @@
 		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&title]]" href="[[=&feedURL]]" charset="UTF-8" />
 [[endif2]][[endif]]
 		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
-		[[=parser.HTMLContext.writeJQueryImport]]
-        [[=writeHierMenuLoader]]
-[[if javascriptURLPath]]
-		<script src="[[=&javascriptURLPath]]" type="text/javascript" charset="UTF-8"></script>
-[[endif]]
 [[if parser.includeStyling]]
         [[=writeStylesheetLinks]]
 [[endif]]
+        [[=parser.outputWriter.writeExtraHeaders]]
 [[comment ESCAPE THE URL SO THAT ANY DOUBLE-DASH FROM AN IDN DOESNT PRODUCE ILLEGAL MARKUP]]
         <!--
         Photo credits for this website's design: <[[=-master.designDirectoryURL]]Credits.rtf>
         Licensing for this website's design:     <[[=-master.designDirectoryURL]]License.rtf>
         -->
-        [[=parser.outputWriter.writeExtraHeaders]]
+		[[=parser.HTMLContext.writeJQueryImport]]
+        [[=writeHierMenuLoader]]
+[[if javascriptURLPath]]
+		<script src="[[=&javascriptURLPath]]" type="text/javascript" charset="UTF-8"></script>
+[[endif]]
 [[=writeCodeInjectionHeadArea]]
 [[if parser.HTMLContext.isForPublishing]][[if currentContext.canWriteProMarkup]][[if site.googleAnalyticsCode]]
 [[=site.googleAnalyticsCode]]
