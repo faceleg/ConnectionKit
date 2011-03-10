@@ -81,7 +81,12 @@
 
 - (NSArray *)archivePages; { return nil; }
 
+#pragma mark Timestamp
+
 - (NSString *)timestampDescription; { return nil; }
+- (NSDate *)creationDate; { return nil; }
+- (NSDate *)modificationDate; { return nil; }
+- (NSString *)timestampDescriptionWithDate:(NSDate *)date; { return nil; }
 
 #pragma mark Being for the benefit of index pages controller
 

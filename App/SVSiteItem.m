@@ -11,6 +11,7 @@
 #import "KTHostProperties.h"
 #import "SVHTMLContext.h"
 #import "SVLink.h"
+#import "KTMaster.h"
 #import "SVMediaRecord.h"
 #import "KTPage.h"
 #import "KTSite.h"]
@@ -81,8 +82,33 @@
 	[self setPrimitiveValue:now forKey:@"modificationDate"];
 }
 
+- (NSString *)timestampDescription; { return nil; }
+
 @dynamic creationDate;
 @dynamic modificationDate;
+
+- (NSString *)timestampDescriptionWithDate:(NSDate *)date;
+{
+    NSDateFormatterStyle style = [[self master] timestampFormat];
+	BOOL showTime = [[[self master] timestampShowTime] boolValue];
+	
+	NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+	[formatter setDateStyle:style]; 
+	
+	// Minor adjustments to timestampFormat for the time style
+	if (!showTime)
+	{
+		style = NSDateFormatterNoStyle;
+	}
+	else
+	{
+		style = kCFDateFormatterShortStyle;	// downgrade to short to avoid seconds
+	}
+	[formatter setTimeStyle:style];
+	
+	NSString *result = [formatter stringForObjectValue:date];
+	return result;
+}
 
 #pragma mark Keywords
 
@@ -669,7 +695,6 @@
 }
 
 - (NSString *)language { return nil; }
-- (NSString *)timestampDescription; { return nil; }
 
 #pragma mark Core Data
 

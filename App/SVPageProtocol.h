@@ -23,7 +23,13 @@ typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSent
 
 #pragma mark Properties
 - (NSString *)language;             // KVO-compliant
+
+
+#pragma mark Dates
 - (NSString *)timestampDescription; // nil if page does't have/want timestamp
+@property(nonatomic, copy, readonly) NSDate *creationDate;
+@property(nonatomic, copy, readonly) NSDate *modificationDate;
+- (NSString *)timestampDescriptionWithDate:(NSDate *)date;
 
 
 #pragma mark Children
