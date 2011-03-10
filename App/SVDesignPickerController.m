@@ -295,7 +295,7 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 #pragma mark View Controller
 
 @synthesize browserViewController = _browserViewController;
-- (SVDesignBrowserViewController *) browserViewController;
+- (SVDesignBrowserViewController *)browserViewController;
 {
     [self window];  // make sure it's loaded
     return _browserViewController;
