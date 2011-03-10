@@ -97,7 +97,7 @@
     {
         [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"gridItem" 
                                                                             forKey:@"class"]];
-        [context writeCharacters:NSLocalizedString(@"Please specify the collection to use for the album.",
+        [context writeCharacters:SVLocalizedString(@"Please specify the collection to use for the album.",
                                              "set photo collection")];
         [context endElement];
     }
