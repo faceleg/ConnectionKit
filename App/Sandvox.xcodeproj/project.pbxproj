@@ -1237,6 +1237,7 @@
 		CE75EA95111A550600474753 /* ESCursors.h in Headers */ = {isa = PBXBuildFile; fileRef = CE75EA92111A550600474753 /* ESCursors.h */; };
 		CE75EA96111A550600474753 /* ESCursors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE75EA93111A550600474753 /* ESCursors.m */; };
 		CE7779E60AE499C3002E6844 /* SVWelcomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7779E40AE499C3002E6844 /* SVWelcomeController.m */; };
+		CE788A111329936D00CDF0B9 /* Shared.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE788A0F1329936D00CDF0B9 /* Shared.strings */; };
 		CE7B67CA11EE784600F56D8B /* MissingMediaQMark.png in Resources */ = {isa = PBXBuildFile; fileRef = CE7B67C911EE784600F56D8B /* MissingMediaQMark.png */; };
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CE84FA481304C7760091B8F8 /* KSInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE84FA471304C7760091B8F8 /* KSInspector.xib */; };
@@ -3038,6 +3039,8 @@
 		CE75EA93111A550600474753 /* ESCursors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESCursors.m; sourceTree = "<group>"; };
 		CE7779E30AE499C2002E6844 /* SVWelcomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWelcomeController.h; sourceTree = "<group>"; };
 		CE7779E40AE499C3002E6844 /* SVWelcomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWelcomeController.m; sourceTree = "<group>"; };
+		CE788A101329936D00CDF0B9 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Shared.strings; sourceTree = "<group>"; };
+		CE788A121329937400CDF0B9 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Shared.strings; sourceTree = "<group>"; };
 		CE7B67C911EE784600F56D8B /* MissingMediaQMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MissingMediaQMark.png; sourceTree = "<group>"; };
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		CE84FB85130588900091B8F8 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSInspector.strings; sourceTree = "<group>"; };
@@ -5740,6 +5743,7 @@
 		CEC11A2E0D78BE0100513E70 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				CE788A0F1329936D00CDF0B9 /* Shared.strings */,
 				273E288312D73B9100A80A54 /* KSSelectionBorder */,
 				27FDA7051238F483006E1A0D /* KSFileUtilities */,
 				CE22E5B80D7C71A10055D8E9 /* Interfaces */,
@@ -6262,7 +6266,6 @@
 				8D15AC300486D014006FF6A4 /* Sources */,
 				8D15AC330486D014006FF6A4 /* Frameworks */,
 				3C99107209298C4400ED5CBF /* Generate Localizable.strings */,
-				CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings (UNUSED) */,
 				3C202F4D07E0140100DE4994 /* Copy Frameworks */,
 				CEC10DFF0D7793AE00513E70 /* Copy Frameworks ALWAYS */,
 				CEC65E5D0E1AFD170065C3D0 /* Copy Sparkle - Strip Localizations */,
@@ -6983,6 +6986,7 @@
 				CE84FB86130588900091B8F8 /* KSInspector.strings in Resources */,
 				3C6DB0EB1316F29A0064929E /* Download.html in Resources */,
 				3C6DB0F01316F3910064929E /* LinkPageTemplate.html in Resources */,
+				CE788A111329936D00CDF0B9 /* Shared.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7200,7 +7204,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Generating Localizable.strings ...\"\ncd ${SRCROOT}\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\n# The weird code on the end searches the Shared repo\n\ngenstrings -littleEndian -q -u -o en.lproj *.[hm] ${SRCROOT}/../../Shared/App/*.[hm] ${SRCROOT}/../../Shared/AppKit/*.[hm] ${SRCROOT}/../../Shared/Foundation/*.[hm] ${SRCROOT}/../../Shared/Imported/*.[hm] ${SRCROOT}/../../Shared/WebKit/*.[hm]\n\n";
+			shellScript = "echo \"Generating Localizable.strings ...\"\ncd ${SRCROOT}\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\n# The weird code on the end searches the Shared repo\n\ngenstrings -littleEndian -q -u -o en.lproj *.[hm]\n\nls -al ../../Shared/en.lproj\n\ngenstrings -littleEndian -q -u -o ../../Shared/en.lproj -s SVSharedLocalizedString \\\n\t${SRCROOT}/../../Shared/AppKit/*.[hm]\t\t\\\n\t${SRCROOT}/../../Shared/Core\\ Data/*.[hm]\t\\\n\t${SRCROOT}/../../Shared/Core\\ Image/*.[hm]\\\n\t${SRCROOT}/../../Shared/Foundation/*.[hm]\t\\\n\t${SRCROOT}/../../Shared/Imported/*.[hm]\t\\\n\t${SRCROOT}/../../Shared/QTKit/*.[hm]\t\t\\\n\t${SRCROOT}/../../Shared/WebKit/*.[hm]\n\nmv ../../Shared/en.lproj/Localizable.strings ../../Shared/en.lproj/Shared.strings\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66B00BFA83D6007A4871 /* Script - Remove AmazonSupport Headers */ = {
@@ -7419,21 +7423,6 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n# our original list from 1.2\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\.|/fr\\.|/it\\.|/ja\\.|/zh_CN\\.|/zh_TW\\.' | xargs rm -rf\n\n# our current list for 1.5\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\.|/fr\\.|/zh_CN\\.|/zh_TW\\.' | xargs rm -rf\n\n# for ALPHA, we remove everything but en\n# find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.' | xargs rm -rf\n\n# for BETA, only a few languages are let in....\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/fr\\.' | xargs rm -rf\n";
-			showEnvVarsInLog = 0;
-		};
-		CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings (UNUSED) */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Smarter Localizable.strings (UNUSED)";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = "#!/bin/sh -";
-			shellScript = "exit\n\n\n/usr/bin/osascript <<-EOF\ntell application \"Xcode\"\n set AppleScript's text item delimiters to \" \"\n set argz to (full path of file reference of every build file of compile sources phase of active target of project of active project document) as string\nend tell\ndo shell script \"genstrings -littleEndian -q -u -o ${SRCROOT}/en.lproj \" & argz\nEOF\n";
 			showEnvVarsInLog = 0;
 		};
 		CEC65E5D0E1AFD170065C3D0 /* Copy Sparkle - Strip Localizations */ = {
@@ -8382,6 +8371,16 @@
 			);
 			name = KSRegistration.xib;
 			sourceTree = "<group>";
+		};
+		CE788A0F1329936D00CDF0B9 /* Shared.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE788A101329936D00CDF0B9 /* en */,
+				CE788A121329937400CDF0B9 /* fr */,
+			);
+			name = Shared.strings;
+			path = ../../Shared;
+			sourceTree = SOURCE_ROOT;
 		};
 		CE84FA471304C7760091B8F8 /* KSInspector.xib */ = {
 			isa = PBXVariantGroup;
