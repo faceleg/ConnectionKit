@@ -89,7 +89,6 @@ typedef enum {
 #pragma mark Timestamp
 
 - (NSString *)timestamp;
-- (NSString *)timestampWithStyle:(NSDateFormatterStyle)aStyle;
 - (NSDate *)timestampDate;
 
 @property(nonatomic, copy) NSNumber *includeTimestamp;

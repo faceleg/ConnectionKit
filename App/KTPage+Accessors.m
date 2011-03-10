@@ -71,8 +71,7 @@
 
 - (NSString *)timestamp
 {
-	NSDateFormatterStyle style = [[self master] timestampFormat];
-	return [self timestampWithStyle:style];
+	return [self timestampDescriptionWithDate:[self timestampDate]];
 }
 
 + (NSSet *)keyPathsForValuesAffectingTimestamp
@@ -81,29 +80,6 @@
             @"timestampDate",
             @"master.timestampFormat",
             @"master.timestampShowTime", nil];
-}
-
-- (NSString *)timestampWithStyle:(NSDateFormatterStyle)aStyle;
-{
-	BOOL showTime = [[[self master] timestampShowTime] boolValue];
-	NSDate *date = [self timestampDate];
-	
-	NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
-	[formatter setDateStyle:aStyle]; 
-	
-	// Minor adjustments to timestampFormat for the time style
-	if (!showTime)
-	{
-		aStyle = NSDateFormatterNoStyle;
-	}
-	else
-	{
-		aStyle = kCFDateFormatterShortStyle;	// downgrade to short to avoid seconds
-	}
-	[formatter setTimeStyle:aStyle];
-	
-	NSString *result = [formatter stringForObjectValue:date];
-	return result;
 }
 
 - (NSDate *)timestampDate;
