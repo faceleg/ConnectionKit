@@ -423,6 +423,11 @@
 - (NSArray *)contextMenuItemsForElement:(NSDictionary *)element
                        defaultMenuItems:(NSArray *)defaultMenuItems;
 {
+    if ([self parentWebEditorItem])
+    {
+        defaultMenuItems = [[self parentWebEditorItem] contextMenuItemsForElement:element
+                                                                 defaultMenuItems:defaultMenuItems];
+    }
     return defaultMenuItems;
 }
 
