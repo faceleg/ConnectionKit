@@ -26,13 +26,6 @@
 
 @implementation SVTextFieldDOMController
 
-- (id)init;
-{
-    [super init];
-    [self setPlaceholderString:NSLocalizedString(@"Title", "placeholder")];
-    return self;
-}
-
 - (void)dealloc
 {
     // Bindings don't automatically unbind themselves; have to do it ourself
@@ -374,7 +367,8 @@
 
 - (SVTextDOMController *)newTextDOMController;
 {
-    SVTextDOMController *result = [[SVTextFieldDOMController alloc] initWithRepresentedObject:self];
+    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithRepresentedObject:self];
+    [result setPlaceholderString:NSLocalizedString(@"Title", "placeholder")];
     [result setRichText:YES];
     [result setFieldEditor:YES];
     
