@@ -161,28 +161,6 @@
 }
 
 #pragma mark -
-#pragma mark Metrics
-
-// Allow zero height for external URL.
-- (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
-{
-    BOOL result = (*height != nil	// height is non-nil is one way for it to be OK
-				   || (![self media] && [self externalSourceURL])	// or, if height was nil, then if media is external
-				   || (0 == [self.naturalHeight intValue])			// or, if neither of those, it's *natural* height is zero (no video track)
-				   );
-    
-    if (!result && error)
-    {
-        *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                     code:NSValidationMissingMandatoryPropertyError
-                     localizedDescription:@"height is a mandatory property"];
-    }
-    
-    return result;
-}
-
-
-#pragma mark -
 #pragma mark Poster Frame
 
 - (id <SVMedia>)thumbnail
