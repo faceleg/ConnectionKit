@@ -289,7 +289,7 @@
 
 	return (self.showTimestamps)
 		|| self.showPermaLinks
-		|| (self.showComments && iteratedPage.allowComments.boolValue);
+		|| (self.showComments && [[iteratedPage allowComments] boolValue]);
 }
 
 - (void)writeArticleInfoWithContinueReadingLink:(BOOL)continueReading;
@@ -338,7 +338,7 @@
 		[context endElement];	// </div> timestamp
 	}
 	
-	if (self.showComments && iteratedPage.allowComments.boolValue)
+	if (self.showComments && [[iteratedPage allowComments] boolValue])
 	{
 		[iteratedPage writeComments:context];		// PRIVATE		
 	}
