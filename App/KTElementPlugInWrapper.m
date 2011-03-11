@@ -39,7 +39,15 @@
 		{
 			result = YES;
 		}
+        else
+        {
+            NSLog(@"Not loading %@ as it has too low a minimum app version", [aCandidateBundle bundlePath]);
+        }
 	}
+    else
+    {
+        NSLog(@"Not loading %@ as it has no minimum app version", [aCandidateBundle bundlePath]);
+    }
 	
 	return result;
 }
