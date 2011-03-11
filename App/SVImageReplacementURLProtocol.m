@@ -23,7 +23,7 @@
                                          size:(NSNumber *)size;
 {
     OBPRECONDITION([rendererURL isFileURL]);
-    OBPRECONDITION(string);
+    if(!string) string = @"";
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             string, @"string",
