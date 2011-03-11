@@ -1375,6 +1375,12 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         }
     }
     
+    // x-sandvox-comments:// links open Comment Configuraion sheet
+    else if ([[URL scheme] isEqualToString:@"x-sandvox-comments"])
+    {
+        [[NSApplication sharedApplication] sendAction:@selector(configureComments:) to:nil from:self];
+    }
+    
     // We used to do [listener use] for file: URLs. Why?
     // And again the fallback option for to -use. Why?
 }
