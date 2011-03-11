@@ -254,8 +254,8 @@
 
 #pragma mark Placeholder
 
-@synthesize placeholderString = _placeholder;
-- (void)setPlaceholderString:(NSString *)placeholder
+@synthesize placeholderHTMLString = _placeholder;
+- (void)setPlaceholderHTMLString:(NSString *)placeholder
 {
     // Store placeholder
     placeholder = [placeholder copy];
@@ -279,9 +279,9 @@
     [super setTextHTMLElement:element];
     
     // Once attached to our DOM node, give it the placeholder text if needed
-    if ([self placeholderString] && [[[self innerTextHTMLElement] innerText] isWhitespace])
+    if ([self placeholderHTMLString] && [[[self innerTextHTMLElement] innerText] isWhitespace])
     {
-        [[self innerTextHTMLElement] setInnerText:[self placeholderString]];
+        [[self innerTextHTMLElement] setInnerHTML:[self placeholderHTMLString]];
     }
 }
 
@@ -368,7 +368,7 @@
 - (SVTextDOMController *)newTextDOMController;
 {
     SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithRepresentedObject:self];
-    [result setPlaceholderString:NSLocalizedString(@"Title", "placeholder")];
+    [result setPlaceholderHTMLString:NSLocalizedString(@"Title", "placeholder")];
     [result setRichText:YES];
     [result setFieldEditor:YES];
     

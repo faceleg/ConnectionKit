@@ -30,7 +30,7 @@
 @property(nonatomic, copy) NSString *string;
 
 
-@property(nonatomic, copy) NSString *placeholderString;
+@property(nonatomic, copy) NSString *placeholderHTMLString;
 
 
 @end
