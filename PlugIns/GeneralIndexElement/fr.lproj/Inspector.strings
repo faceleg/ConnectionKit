@@ -4,9 +4,6 @@
 /* Class = "NSButtonCell"; title = "Permanent links"; ObjectID = "21"; */
 "Permanent links" = "Liens permanents";
 
-/* Class = "NSButtonCell"; title = "Timestamps"; ObjectID = "44"; */
-"Timestamps" = "Horodateur";
-
 /* Class = "NSButtonCell"; title = "Comments"; ObjectID = "109"; */
 "Comments" = "Commentaires";
 
@@ -38,3 +35,8 @@
 
 /* Class = "NSMenuItem"; designAccessibilityDescription = "Articles"; ObjectID = "229"; */
 "Articles" = "Articles";
+/* Class = "NSMenuItem"; title = "Date created"; ObjectID = "282"; */
+"Date created" = "Date de création";
+
+/* Class = "NSMenuItem"; title = "Date modified"; ObjectID = "283"; */
+"Date modified" = "Date de modification";
