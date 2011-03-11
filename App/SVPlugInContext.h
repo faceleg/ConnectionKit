@@ -108,6 +108,7 @@ typedef NSUInteger SVThumbnailOptions;
 
 
 #pragma mark Scripts
+- (void)writeJavascriptWithSrc:(NSString *)src;
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
                                         plugIn:(SVPlugIn *)plugIn;
 
