@@ -68,6 +68,7 @@
 
 #pragma mark Pasteboard Support
 - (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pasteboard;
+- (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pasteboard toObjectAtArrangedObjectIndexPath:(NSIndexPath *)indexPath;
 - (BOOL)insertObjectsFromPasteboard:(NSPasteboard *)pboard atArrangedObjectIndexPath:(NSIndexPath *)startingIndexPath;
 
 

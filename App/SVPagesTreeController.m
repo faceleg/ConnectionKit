@@ -878,13 +878,23 @@
         indexPath = [indexPath indexPathByAddingIndex:0];
     }
     
+    
     // Insert
     BOOL result = [self insertObjectsFromPasteboard:pboard atArrangedObjectIndexPath:indexPath];
+    if (result) [self didAddObjectsByInsertingAtArrangedObjectIndexPath:indexPath]; // sort
+
     
-    if (result)
-    {
-        [self didAddObjectsByInsertingAtArrangedObjectIndexPath:indexPath];
-    }
+    return result;
+}
+
+- (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pasteboard toObjectAtArrangedObjectIndexPath:(NSIndexPath *)indexPath;
+{
+    // Add to end of collection
+    NSTreeNode *collectionNode = [[self arrangedObjects] descendantNodeAtIndexPath:indexPath];
+    indexPath = [indexPath indexPathByAddingIndex:[[collectionNode childNodes] count]];
+    
+    BOOL result = [self insertObjectsFromPasteboard:pasteboard atArrangedObjectIndexPath:indexPath];
+    if (result) [self didAddObjectsByInsertingAtArrangedObjectIndexPath:indexPath];
     
     return result;
 }

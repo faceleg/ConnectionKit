@@ -1321,11 +1321,18 @@
     else
     {
         // Create a page for the content
-        if (index < 0) index = [[node childNodes] count];
-        NSIndexPath *path = [[node indexPath] indexPathByAddingIndex:index];
-        
-        return [[self content] insertObjectsFromPasteboard:[info draggingPasteboard]
-                                    atArrangedObjectIndexPath:path];
+        if (index == NSOutlineViewDropOnItemIndex)
+        {
+            return [[self content] addObjectsFromPasteboard:[info draggingPasteboard]
+                          toObjectAtArrangedObjectIndexPath:[node indexPath]];
+        }
+        else
+        {
+            NSIndexPath *path = [[node indexPath] indexPathByAddingIndex:index];
+            
+            return [[self content] insertObjectsFromPasteboard:[info draggingPasteboard]
+                                     atArrangedObjectIndexPath:path];
+        }
     }
 }
 
