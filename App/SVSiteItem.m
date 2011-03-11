@@ -624,12 +624,19 @@
 
 - (void)writeRSSFeedItemDescription { }
 
-- (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount;
+- (BOOL)writeSummary:(SVHTMLContext *)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount;
 {
-    if ([self customSummaryHTML])
-    {
-        [context writeHTMLString:[self customSummaryHTML]];
-    }
+    SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
+    [textBlock setEditable:YES];
+    [textBlock setRichText:YES];
+    [textBlock setFieldEditor:NO];
+    [textBlock setImportsGraphics:NO];
+    
+    [textBlock setHTMLSourceObject:self];
+    [textBlock setHTMLSourceKeyPath:@"customSummaryHTML"];
+    
+    [textBlock writeHTML:context];
+    
     return NO;
 }
 
