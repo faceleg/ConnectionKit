@@ -35,7 +35,7 @@
 	if (minVersion)
 	{
 		float floatMinVersion = [minVersion floatVersion];
-		if (floatMinVersion >= 1.5)
+		if (floatMinVersion >= 2.0f)
 		{
 			result = YES;
 		}
