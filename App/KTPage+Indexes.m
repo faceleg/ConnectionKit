@@ -485,7 +485,14 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 		
 		
 		// Write it
-		[context writeAttributedHTMLString:summary];
+        if ([summary length])
+        {
+            [context writeAttributedHTMLString:summary];
+        }
+        else
+        {
+            [super writeSummary:context includeLargeMedia:includeLargeMedia truncation:truncationType];
+        }
 		
 		[summary release];
 		
