@@ -406,11 +406,12 @@
     
     
     // Copy basic properties from text block
-    SVTextDOMController *result = [[SVTextFieldDOMController alloc] init];
+    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] init];
     [result setTextBlock:self];
     [result setEditable:[self isEditable]];
     [result setRichText:[self isRichText]];
     [result setFieldEditor:[self isFieldEditor]];
+    if (![self isFieldEditor]) [result setPlaceholderHTMLString:@"<p><br /></p>"];
     
     // Bind to model
     [result bind:NSValueBinding
