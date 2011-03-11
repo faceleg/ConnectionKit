@@ -60,7 +60,17 @@
 
 - (void)toggleCustomSummary:(NSMenuItem *)sender;
 {
-    [[self itemToSummarize] setCustomSummaryHTML:nil];
+    SVSiteItem *item = [self itemToSummarize];
+    if ([item customSummaryHTML])
+    {
+        [item setCustomSummaryHTML:nil];
+    }
+    else
+    {
+        [item setCustomSummaryHTML:@"<p><br /></p>"];
+    }
+    
+    [self setNeedsUpdate];
 }
 
 @end
