@@ -65,9 +65,18 @@ mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/App/$1.lproj
 
 echo "Copy all then remove KS Files...."
 
-# silly hack: copy in all the files, then remove the KS* files
+# silly hack: copy in all the files, then remove the KS* files and Shared.strings
 cp -R$VERBOSE ./Contents/Resources/$1.lproj/* $WD/Subversion/Sandvox$CURRENTBRANCH/App/$1.lproj/
 rm -rf$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/App/$1.lproj/KS*
+rm -rf$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/App/$1.lproj/Shared.strings
+
+echo "Shared strings...."
+
+mkdir -p$VERBOSE $WD/Subversion/Shared/$1.lproj
+cp -R$VERBOSE ./Contents/Resources/$1.lproj/Shared.strings $WD/Subversion/Shared/$1.lproj/
+
+
+
 
 echo "Shared KS Files...."
 
