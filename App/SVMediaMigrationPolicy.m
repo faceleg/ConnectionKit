@@ -14,11 +14,13 @@
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
+#import "NSError+Karelia.h"
+
 #import "BDAlias.h"
 #import "KSExtensibleManagedObject.h"
 
 
-@implementation SVMediaMigrationPolicy
+@implementation SVMediaMigrationPolicy 
 
 + (NSManagedObject *)createDestinationInstanceForSourceInstance:(NSManagedObject *)sInstance mediaContainerIdentifier:(NSString *)mediaID entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
 {
@@ -62,6 +64,14 @@
     else if ([[[mediaFile entity] name] isEqualToString:@"ExternalMediaFile"])
     {
         NSData *aliasData = [mediaFile valueForKey:@"aliasData"];
+        if (!aliasData)
+        {
+            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                    code:NSValidationMissingMandatoryPropertyError
+                                    localizedDescription:@"External media has no alias data"];
+            return nil;
+        }
+        
         [result setValue:aliasData forKey:@"aliasData"];
         
         NSString *preferredFilename = [[[BDAlias aliasWithData:aliasData] lastKnownPath] lastPathComponent];
