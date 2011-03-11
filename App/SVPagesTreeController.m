@@ -867,8 +867,26 @@
 
 - (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard;
 {
-    return [self insertObjectsFromPasteboard:pboard
-                   atArrangedObjectIndexPath:[[self lastSelectionIndexPath] indexPathByIncrementingLastIndex]];
+    // Figure where to insert. Generally want to follow selection. In the case of the home page being selected, adjust to insert as first child
+    NSIndexPath *indexPath = [self lastSelectionIndexPath];
+    if ([indexPath length] > 1)
+    {
+        indexPath = [indexPath indexPathByIncrementingLastIndex];
+    }
+    else
+    {
+        indexPath = [indexPath indexPathByAddingIndex:0];
+    }
+    
+    // Insert
+    BOOL result = [self insertObjectsFromPasteboard:pboard atArrangedObjectIndexPath:indexPath];
+    
+    if (result)
+    {
+        [self didAddObjectsByInsertingAtArrangedObjectIndexPath:indexPath];
+    }
+    
+    return result;
 }
 
 - (BOOL)insertObjectsFromPasteboard:(NSPasteboard *)pboard atArrangedObjectIndexPath:(NSIndexPath *)startingIndexPath;
