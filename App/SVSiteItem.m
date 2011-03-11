@@ -10,11 +10,12 @@
 
 #import "KTHostProperties.h"
 #import "SVHTMLContext.h"
+#import "SVHTMLTextBlock.h"
 #import "SVLink.h"
 #import "KTMaster.h"
 #import "SVMediaRecord.h"
 #import "KTPage.h"
-#import "KTSite.h"]
+#import "KTSite.h"
 #import "SVWebEditingURL.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
