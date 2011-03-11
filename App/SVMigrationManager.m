@@ -104,7 +104,11 @@
                     // Media migration does not assign a SVMedia object to the record, so we do it
                     if (record)
                     {
-                        [record forceUpdateFromURL:[self destinationURLOfMediaWithFilename:[record filename]]];
+                        if ([record filename])
+                        {
+                            [record forceUpdateFromURL:[self destinationURLOfMediaWithFilename:[record filename]]];
+                        }
+                        
                         [graphic performSelector:@selector(setSourceWithMediaRecord:) withObject:record];
                     }
                 }
