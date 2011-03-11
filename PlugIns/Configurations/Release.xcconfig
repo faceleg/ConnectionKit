@@ -9,7 +9,7 @@ BUNDLE_LOADER = $(SYMROOT)/Release/Sandvox.app/Contents/MacOS/Sandvox
 // release builds are Universal, using Leopard's SDK
 ARCHS = ppc i386
 MACOSX_DEPLOYMENT_TARGET = 10.5
-SDKROOT = /Developer/SDKs/MacOSX10.5.sdk
+SDKROOT = macosx10.5
 
 // plugins are Cocoa Bundles
 INSTALL_PATH = $(HOME)/Library/Bundles
