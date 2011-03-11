@@ -408,7 +408,7 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 - (BOOL)writeSummary:(SVHTMLContext *)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxItemLength;
 {
 	SVTruncationType truncationType = [[self class] chooseTruncTypeFromMaxItemLength:maxItemLength];
-	BOOL truncated = NO;
+	BOOL result = NO;
 	
 	[context willWriteSummaryOfPage:self];
     [context startElement:@"div" className:@"article-summary"];
@@ -416,8 +416,8 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 	// do we have a custom summary? if so just write it
     if ( nil != [self customSummaryHTML] )
     {
-        [context writeHTMLString:[self customSummaryHTML]];
-		truncated = YES;		// A custom summary means we want to make an obvious link to more
+        [super writeSummary:context includeLargeMedia:includeLargeMedia truncation:maxItemLength];
+		result = YES;		// A custom summary means we want to make an obvious link to more
     }
     else
 	{
@@ -428,7 +428,7 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 			html = [[self article] attributedHTMLStringWithTruncation:maxItemLength
                                                                  type:truncationType
                                                     includeLargeMedia:includeLargeMedia
-                                                          didTruncate:&truncated];
+                                                          didTruncate:&result];
 		}
 		else
 		{
@@ -494,7 +494,7 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 
     [context endElement];
 
-	return truncated;
+	return result;
 }
 
 /*!	Here is the main information about how summaryHTML works.

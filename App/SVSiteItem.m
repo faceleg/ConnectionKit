@@ -624,7 +624,14 @@
 
 - (void)writeRSSFeedItemDescription { }
 
-- (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount; { return NO; }
+- (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount;
+{
+    if ([self customSummaryHTML])
+    {
+        [context writeHTMLString:[self customSummaryHTML]];
+    }
+    return NO;
+}
 
 #pragma mark Comments
 
