@@ -2430,6 +2430,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     //  Update Link Manager to match
     WebView *webView = [notification object];
     SVLink *link = [webView selectedLink];
+    if (link) link = [[self delegate] webEditor:self willSelectLink:link];  // search for corresponding page
     [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[webView canCreateLink]];
     
     
@@ -2448,7 +2449,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     //  Update Link Manager to match
     SVLink *link = [webView selectedLink];
-    if (link) link = [[self delegate] webEditor:self willSelectLink:link];
+    if (link) link = [[self delegate] webEditor:self willSelectLink:link];  // search for corresponding page
     [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[webView canCreateLink]];
     
     
