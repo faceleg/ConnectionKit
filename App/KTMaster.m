@@ -585,7 +585,16 @@
 
 - (NSString *)fbWidth
 {
-    return @"425";
+    KTImageScalingSettings *settings = [[self design] imageScalingSettingsForUse:@"KTSidebarPageMedia"];
+    if ( settings )
+    {
+        CGFloat width = [settings size].width;
+        return [[NSNumber numberWithFloat:width] stringValue];
+    }
+    else
+    {
+        return @"425";
+    }
 }
 
 #pragma mark Placeholder Image
