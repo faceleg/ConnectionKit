@@ -339,7 +339,7 @@
     NSString *element = [self tagName];
     if ([element isEqualToStringCaseInsensitive:@"h"])
     {
-        [context startHeaderWithAttributes:nil];
+        [context startHeadingWithAttributes:nil];
     }
     else
     {
