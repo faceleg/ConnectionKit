@@ -247,13 +247,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     SVMedia *favicon = [master favicon];
     if (favicon)
     {
-        NSString *path = [[self baseRemotePath] stringByAppendingPathComponent:@"favicon.ico"];
-        
         SVMediaRequest *request = [[SVMediaRequest alloc] initWithMedia:favicon
                                                                   width:nil
                                                                  height:nil
                                                                    type:(NSString *)kUTTypeICO
-                                                    preferredUploadPath:path];
+                                                    preferredUploadPath:@"favicon.ico"];
         
         [self publishMediaWithRequest:request];
         [request release];
