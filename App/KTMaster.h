@@ -61,7 +61,7 @@
 
 
 #pragma mark Favicon
-@property(nonatomic, readonly) SVMediaRecord *favicon;
+@property(nonatomic, readonly) SVMedia *favicon;
 @property(nonatomic, copy) NSNumber *faviconType;   // mandatory
 @property(nonatomic, retain) SVMediaRecord *faviconMedia;
 - (void)setFaviconWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one

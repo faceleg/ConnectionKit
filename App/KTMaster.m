@@ -333,13 +333,13 @@
 
 #pragma mark Favicon
 
-- (SVMediaRecord *)favicon
+- (SVMedia *)favicon
 {
-    SVMediaRecord *result = nil;
+    SVMedia *result = nil;
     
     if ([[self faviconType] integerValue] > 0)
     {
-        result = [self faviconMedia];
+        result = [[self faviconMedia] media];
     }
     
     return result;

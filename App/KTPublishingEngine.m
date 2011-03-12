@@ -242,6 +242,25 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [self publishDesign];
     
     
+    // Favicon
+    KTMaster *master = [[[self site] rootPage] master];
+    SVMedia *favicon = [master favicon];
+    if (favicon)
+    {
+        NSString *path = [[self baseRemotePath] stringByAppendingPathComponent:@"favicon.ico"];
+        
+        SVMediaRequest *request = [[SVMediaRequest alloc] initWithMedia:favicon
+                                                                  width:nil
+                                                                 height:nil
+                                                                   type:(NSString *)kUTTypeICO
+                                                    preferredUploadPath:path];
+        
+        [self publishMediaWithRequest:request];
+        [request release];
+    }
+    
+    
+    
     // Once all is done (the op should now have most dependencies it needs), finish up
     [_coreImageQueue addOperation:nextOp];
     [nextOp release];
