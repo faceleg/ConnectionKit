@@ -32,7 +32,8 @@ preferredUploadPath:(NSString *)path;
         // Warn if trying a non-standard format
         if (![type isEqualToUTI:(NSString *)kUTTypeJPEG] &&
             ![type isEqualToUTI:(NSString *)kUTTypePNG] &&
-            ![type isEqualToUTI:(NSString *)kUTTypeGIF])
+            ![type isEqualToUTI:(NSString *)kUTTypeGIF] &&
+            ![type isEqualToUTI:(NSString *)kUTTypeICO])
         {
             NSLog(@"Warning: Request for non-standard image format: %@", type);
         }
@@ -87,7 +88,7 @@ preferredUploadPath:(NSString *)path;
 
 - (BOOL)isNativeRepresentation;
 {
-    BOOL result = !([self width] || [self height]);
+    BOOL result = ![self width] && ![self height] && ![self type];
     return result;
 }
 
