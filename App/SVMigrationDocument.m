@@ -26,11 +26,7 @@
 	va_start(argList, format);
 	NSString *desc = [[[NSString alloc] initWithFormat:format arguments:argList] autorelease];
 	va_end(argList);
-	if ([fileName hasSuffix:@"NSXMLDocument.m"])
-	{
-		NSLog(@"Here's the NSXMLDocument assertion failure ===> %@   %@", desc, object);
-	}
-	else
+	if (![fileName hasSuffix:@"NSXMLDocument.m"])		// Shut up NSXMLDocument assertion failures
 	{
 		[super handleFailureInMethod:selector object:object file:fileName lineNumber:line description:desc];
 	}
