@@ -25,6 +25,8 @@
                type:(NSString *)type
 preferredUploadPath:(NSString *)path;
 {
+    OBPRECONDITION(mediaRecord);
+    
     if (type)
     {
         // Warn if trying a non-standard format
