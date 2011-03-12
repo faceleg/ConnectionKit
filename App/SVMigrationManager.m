@@ -166,6 +166,10 @@
                 }
             }
         }
+        else
+        {
+            [imageScanner scanString:@"<img" intoString:NULL];
+        }
         
         [doc release];
     }    
