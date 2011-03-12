@@ -90,6 +90,7 @@
 - (void)calculatePosterImageFromPlayableMovie:(QTMovie *)aMovie;
 - (BOOL)calculateMovieDimensions:(QTMovie *)aMovie;
 - (BOOL) enablePoster;
+- (void)loadStateChanged:(NSNotification *)notif;
 
 @end
 
@@ -307,18 +308,17 @@
 	}
 	else
 	{
-		[self performSelectorOnMainThread
-		 :@selector(loadMovieFromURL:) withObject:movieSourceURL waitUntilDone:YES];
+		[self performSelectorOnMainThread:@selector(loadMovieFromURL:) withObject:movieSourceURL waitUntilDone:YES];
 		
 		NSDate *timeoutDate = [NSDate dateWithTimeIntervalSinceNow:20];
-		// Keep waiting until dimension calculation movie is gone, which means we got what we want.
-		while (self.dimensionCalculationMovie && [timeoutDate timeIntervalSinceNow] > 0)
+		while (self.dimensionCalculationMovie
+			   && [timeoutDate timeIntervalSinceNow] > 0
+			   && [[[self.dimensionCalculationMovie ks_proxyOnThread:nil] attributeForKey:QTMovieLoadStateAttribute] intValue] < QTMovieLoadStateLoaded)
 		{
-			NSLog(@"Waiting for dimension calculation movie to finish %@", [[NSRunLoop currentRunLoop] currentMode]);
-			[[NSRunLoop currentRunLoop] runMode:NSRunLoopCommonModes beforeDate:timeoutDate];
+			sleep(1);
 		}
+		[self loadStateChanged:nil];
 	}
-	NSLog(@"Done loading");
 }
 
 - (void)didAddToPage:(id <SVPage>)page;
