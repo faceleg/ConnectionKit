@@ -81,7 +81,7 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
     
     // Bind Favicon
     [oFaviconPickerController bind:@"fillType" toObject:self withKeyPath:@"inspectedObjectsController.selection.master.faviconType" options:nil];
-    [oFaviconPickerController bind:@"imageMedia" toObject:self withKeyPath:@"inspectedObjectsController.selection.master.favicon.media" options:nil];
+    [oFaviconPickerController bind:@"imageMedia" toObject:self withKeyPath:@"inspectedObjectsController.selection.master.faviconMedia.media" options:nil];
 }
 
 #pragma mark Presentation
