@@ -131,7 +131,7 @@
         }
         
         // if asSection emit <h3>/<h4>, else emit <li>
-        (asSection) ? [context startHeaderWithAttributes:nil] : [context startElement:@"li" attributes:nil];
+        (asSection) ? [context startHeadingWithAttributes:nil] : [context startElement:@"li" attributes:nil];
         
         // process aPage
         [self writeLinkOfPage:aPage toContext:context];
@@ -201,7 +201,7 @@
         {
             // Note: if site map IS home, it will still be shown regardless of show site map checkbox
             
-            (self.sections) ? [context startHeaderWithAttributes:nil] : [context startElement:@"p" attributes:nil];
+            (self.sections) ? [context startHeadingWithAttributes:nil] : [context startElement:@"p" attributes:nil];
             [self writeLinkOfPage:rootPage toContext:context];
             [context endElement];
             

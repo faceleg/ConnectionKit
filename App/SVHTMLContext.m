@@ -419,7 +419,7 @@
     [self setCurrentHeaderLevel:[self currentHeaderLevel] - 1];
 }
 
-- (void)startHeaderWithAttributes:(NSDictionary *)attributes;
+- (void)startHeadingWithAttributes:(NSDictionary *)attributes;
 {
     [self startElement:[self currentHeaderLevelTagName] attributes:attributes];
 }

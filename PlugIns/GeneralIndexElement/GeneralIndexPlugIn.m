@@ -166,7 +166,7 @@
 		if (self.indexLayoutType & kTitleMask)
 		{
 			[context startElement:@"td" className:@"dli2"];
-			[context startHeaderWithAttributes:
+			[context startHeadingWithAttributes:
 				[NSDictionary dictionaryWithObject:@"index-title" forKey:@"class"]];
 			[self writeTitleOfIteratedPage];
 			[context endElement];
@@ -204,7 +204,7 @@
 			}
 			else
 			{
-				[context startHeaderWithAttributes:
+				[context startHeadingWithAttributes:
 				 [NSDictionary dictionaryWithObject:@"index-title" forKey:@"class"]];
 				[self writeTitleOfIteratedPage];
 				[context endElement];

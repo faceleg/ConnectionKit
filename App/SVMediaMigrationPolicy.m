@@ -40,6 +40,7 @@
     if ([[[mediaFile entity] name] isEqualToString:@"InDocumentMediaFile"])
     {
         NSString *filename = [mediaFile valueForKey:@"filename"];
+        OBASSERT(filename);
         NSURL *url = [manager sourceURLOfMediaWithFilename:filename];
         NSURL *dURL = [manager destinationURLOfMediaWithFilename:filename];
         
@@ -79,6 +80,10 @@
         [result setValue:preferredFilename forKey:@"preferredFilename"];
         
         [result setValue:NSBOOL(NO) forKey:@"shouldCopyFileIntoDocument"];
+    }
+    else
+    {
+        OBASSERT_NOT_REACHED("WTF? How is there a third type of media?");
     }
     
     
