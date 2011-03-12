@@ -301,26 +301,34 @@
 	
 	// Try to make a QTMovie out of this, or parse as FLV which is a special case (since QT is not needed to show.)
 	
-	[self loadMovieFromURL:movieSourceURL];	
+	if ([NSThread isMainThread])
+	{
+		[self loadMovieFromURL:movieSourceURL];
+	}
+	else
+	{
+		[self performSelectorOnMainThread
+		 :@selector(loadMovieFromURL:) withObject:movieSourceURL waitUntilDone:YES];
+		
+		NSDate *timeoutDate = [NSDate dateWithTimeIntervalSinceNow:20];
+		// Keep waiting until dimension calculation movie is gone, which means we got what we want.
+		while (self.dimensionCalculationMovie && [timeoutDate timeIntervalSinceNow] > 0)
+		{
+			NSLog(@"Waiting for dimension calculation movie to finish %@", [[NSRunLoop currentRunLoop] currentMode]);
+			[[NSRunLoop currentRunLoop] runMode:NSRunLoopCommonModes beforeDate:timeoutDate];
+		}
+	}
+	NSLog(@"Done loading");
 }
-
 
 - (void)didAddToPage:(id <SVPage>)page;
 {
 	if (!_didInitializePropertiesWasCalled)
 	{
 		_didInitializePropertiesWasCalled = YES;
-		if ([NSThread isMainThread])
-		{
-			[self initializeProperties];
-		}
-		else
-		{
-			[self performSelectorOnMainThread:@selector(initializeProperties) withObject:nil waitUntilDone:NO];
-		}
+		[self initializeProperties];
 	}
 }
-
 
 
 - (void)didSetSource;
