@@ -157,12 +157,15 @@
     else
     {
         // e.g. RSS
-        NSString *mediaPathRelativeToBase = [mediaPath ks_pathRelativeToDirectory:[_publisher baseRemotePath]];
-        
-        NSURL *result = [NSURL URLWithString:mediaPathRelativeToBase
-                               relativeToURL:[[[_publisher site] rootPage] URL]];
-        
-        return result;
+        if (mediaPath)
+        {
+            NSString *mediaPathRelativeToBase = [mediaPath ks_pathRelativeToDirectory:[_publisher baseRemotePath]];
+            
+            NSURL *result = [NSURL URLWithString:mediaPathRelativeToBase
+                                   relativeToURL:[[[_publisher site] rootPage] URL]];
+            
+            return result;
+        }
     }
     
     return nil;

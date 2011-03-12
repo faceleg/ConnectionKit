@@ -8,25 +8,10 @@
 
 #import "SVMediaGatheringPublisher.h"
 
-#import "SVMediaGatheringHTMLContext.h"
+#import "SVPublishingHTMLContext.h"
 
 
 @implementation SVMediaGatheringPublisher
-
-- (id)init
-{
-    [super init];
-    
-    _context = [[SVMediaGatheringHTMLContext alloc] initWithUploadPath:nil publisher:self];
-    
-    return self;
-}
-
-- (void)dealloc;
-{
-    [_context release];
-    [super dealloc];
-}
 
 @synthesize publishingEngine = _mediaPublisher;
 
@@ -62,7 +47,7 @@
 
 - (SVHTMLContext *)beginPublishingHTMLToPath:(NSString *)path
 {
-    return _context;
+    return [[[SVPublishingHTMLContext alloc] initWithUploadPath:nil publisher:self] autorelease];
 }
 
 - (NSString *)publishMediaWithRequest:(SVMediaRequest *)mediaRep;

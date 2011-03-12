@@ -787,7 +787,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         // Calculate hash of media so can decide where to place it
         NSData *fileContents = [SVImageScalingOperation dataWithMediaRequest:request];
         
-        if (fileContents)    // TODO: would be nice if we could report an error
+        if (fileContents)
         {
             if (cachedDigest)
             {
@@ -808,6 +808,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                 [[self defaultQueue] addOperation:op];
                 [op release];
             }
+        }
+        else
+        {
+            NSLog(@"Unable to load scaled image");
         }
     }
 }

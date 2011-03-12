@@ -536,8 +536,6 @@
 		27939A7E1196264E0091B5B4 /* WebEditingKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 27939A7D1196264E0091B5B4 /* WebEditingKit.h */; };
 		2794A45412B235B40077A291 /* SVFaviconPickerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2794A45212B235B40077A291 /* SVFaviconPickerController.h */; };
 		2794A45512B235B40077A291 /* SVFaviconPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2794A45312B235B40077A291 /* SVFaviconPickerController.m */; };
-		2796DEE311733440000DD6EC /* SVMediaGatheringHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 2796DEE111733440000DD6EC /* SVMediaGatheringHTMLContext.h */; };
-		2796DEE411733440000DD6EC /* SVMediaGatheringHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2796DEE211733440000DD6EC /* SVMediaGatheringHTMLContext.m */; };
 		2796DF0A11733C4D000DD6EC /* SVMediaRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 2796DF0811733C4D000DD6EC /* SVMediaRequest.h */; };
 		2796DF0B11733C4D000DD6EC /* SVMediaRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2796DF0911733C4D000DD6EC /* SVMediaRequest.m */; };
 		2796DFC711736375000DD6EC /* SVImageScalingOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 2796DFC511736375000DD6EC /* SVImageScalingOperation.h */; };
@@ -2251,8 +2249,6 @@
 		27939A7D1196264E0091B5B4 /* WebEditingKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebEditingKit.h; sourceTree = "<group>"; };
 		2794A45212B235B40077A291 /* SVFaviconPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVFaviconPickerController.h; sourceTree = "<group>"; };
 		2794A45312B235B40077A291 /* SVFaviconPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFaviconPickerController.m; sourceTree = "<group>"; };
-		2796DEE111733440000DD6EC /* SVMediaGatheringHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaGatheringHTMLContext.h; sourceTree = "<group>"; };
-		2796DEE211733440000DD6EC /* SVMediaGatheringHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaGatheringHTMLContext.m; sourceTree = "<group>"; };
 		2796DF0811733C4D000DD6EC /* SVMediaRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaRequest.h; sourceTree = "<group>"; };
 		2796DF0911733C4D000DD6EC /* SVMediaRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaRequest.m; sourceTree = "<group>"; };
 		2796DFC511736375000DD6EC /* SVImageScalingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVImageScalingOperation.h; sourceTree = "<group>"; };
@@ -3702,8 +3698,6 @@
 				27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */,
 				278ACCC6116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h */,
 				278ACCC7116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m */,
-				2796DEE111733440000DD6EC /* SVMediaGatheringHTMLContext.h */,
-				2796DEE211733440000DD6EC /* SVMediaGatheringHTMLContext.m */,
 				270172B411CFB566001512F6 /* SVProxyHTMLContext.h */,
 				270172B511CFB566001512F6 /* SVProxyHTMLContext.m */,
 				27DD0A551202FC120083C7C1 /* SVWebEditingURL.h */,
@@ -6157,7 +6151,6 @@
 				274B8CC7116A76EE00AAADB6 /* SVVideo.h in Headers */,
 				278ACCC8116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h in Headers */,
 				CED05D25116E5105003228C5 /* SVPublishingHTMLContext.h in Headers */,
-				2796DEE311733440000DD6EC /* SVMediaGatheringHTMLContext.h in Headers */,
 				2796DF0A11733C4D000DD6EC /* SVMediaRequest.h in Headers */,
 				2796DFC711736375000DD6EC /* SVImageScalingOperation.h in Headers */,
 				273B400B1176305600A275E6 /* SVMediaGatheringPublisher.h in Headers */,
@@ -7807,7 +7800,6 @@
 				274B8CC8116A76EE00AAADB6 /* SVVideo.m in Sources */,
 				278ACCC9116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m in Sources */,
 				CED05D26116E5105003228C5 /* SVPublishingHTMLContext.m in Sources */,
-				2796DEE411733440000DD6EC /* SVMediaGatheringHTMLContext.m in Sources */,
 				2796DF0B11733C4D000DD6EC /* SVMediaRequest.m in Sources */,
 				2796DFC811736375000DD6EC /* SVImageScalingOperation.m in Sources */,
 				273B400C1176305600A275E6 /* SVMediaGatheringPublisher.m in Sources */,
