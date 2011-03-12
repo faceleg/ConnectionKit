@@ -341,6 +341,15 @@
     {
         result = [[self faviconMedia] media];
     }
+    else if ([[self faviconType] integerValue] == -1)
+    {
+        NSString *faviconPath = [[NSBundle mainBundle] pathForResource:@"favicon" ofType:@"icns"];
+        if (faviconPath)
+        {
+            result = [[SVMedia alloc] initByReferencingURL:[NSURL fileURLWithPath:faviconPath]];
+            [result autorelease];
+        }
+    }
     
     return result;
 }
