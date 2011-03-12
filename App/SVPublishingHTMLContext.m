@@ -20,7 +20,7 @@
 #import "KSSHA1Stream.h"
 #import "NSString+Karelia.h"
 
-#import "KSMutableDataWriter.h"
+#import "KSOutputStreamWriter.h"
 #import "KSURLUtilities.h"
 #import "KSPathUtilities.h"
 
@@ -63,10 +63,12 @@
         // Upload page data. Store the page and its digest with the record for processing later
         if (fullUploadPath)
         {
+            [_contentHashStream close];
+            
             [publishingEngine publishData:pageData
                                    toPath:fullUploadPath
                          cachedSHA1Digest:nil
-                              contentHash:[_contentHashData SHA1Digest]
+                              contentHash:[_contentHashStream SHA1Digest]
                                    object:page];
         }
     }
@@ -77,7 +79,7 @@
     
     //[_publishingEngine release]; _publishingEngine = nil;     Messes up media gathering
     [_contentHashDataOutput release]; _contentHashDataOutput = nil;
-    [_contentHashData release]; _contentHashData = nil;
+    [_contentHashStream release]; _contentHashStream = nil;
     [_path release]; _path = nil;
 }
 
@@ -241,13 +243,12 @@
     
     if ([self isChangeTrackingEnabled])
     {
-        if (!_contentHashDataOutput && !_contentHashData)
+        if (!_contentHashDataOutput && !_contentHashStream)
         {
-            NSMutableData *output = [[NSMutableData alloc] init];
-            _contentHashData = output;
+            _contentHashStream = [[KSSHA1Stream alloc] init];
             
-            _contentHashDataOutput = [[KSMutableDataWriter alloc] initWithMutableData:output                                   
-                                                                             encoding:[self encoding]];
+            _contentHashDataOutput = [[KSOutputStreamWriter alloc] initWithOutputStream:_contentHashStream
+                                                                               encoding:[self encoding]];
         }
         
         [_contentHashDataOutput writeString:string];

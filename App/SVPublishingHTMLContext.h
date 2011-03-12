@@ -9,7 +9,7 @@
 #import "SVHTMLContext.h"
 
 
-@class SVMediaRequest, KSMutableDataWriter;
+@class SVMediaRequest, KSSHA1Stream, KSOutputStreamWriter;
 @protocol SVPublisher;
 
 
@@ -20,9 +20,9 @@
     NSString            *_path;
     
     // Change tracking
-    NSUInteger          _disableChangeTracking;
-    NSData              *_contentHashData;
-    KSMutableDataWriter *_contentHashDataOutput;
+    NSUInteger              _disableChangeTracking;
+    KSSHA1Stream            *_contentHashStream;
+    KSOutputStreamWriter    *_contentHashDataOutput;
 }
 
 - (id)initWithUploadPath:(NSString *)path
