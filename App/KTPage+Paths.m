@@ -72,7 +72,7 @@
 - (void)setFileName:(NSString *)fileName
 {
 	[self setWrappedValue:fileName forKey:@"fileName"];
-	[self recursivelyInvalidateURL:YES];	// For collections this affects all children
+	if (![self isRootPage]) [self recursivelyInvalidateURL:YES];	// For collections this affects all children
 }
 
 /*  Legalize the filename
