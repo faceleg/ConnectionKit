@@ -15,26 +15,6 @@
 
 #import "KSThreadProxy.h"
 
-@interface SVAssertionHandler : NSAssertionHandler
-@end
-
-@implementation SVAssertionHandler
-
-- (void)handleFailureInMethod:(SEL)selector object:(id)object file:(NSString *)fileName lineNumber:(NSInteger)line description:(NSString *)format,...;
-{
-	va_list argList;
-	va_start(argList, format);
-	NSString *desc = [[[NSString alloc] initWithFormat:format arguments:argList] autorelease];
-	va_end(argList);
-	if (![fileName hasSuffix:@"NSXMLDocument.m"])		// Shut up NSXMLDocument assertion failures
-	{
-		[super handleFailureInMethod:selector object:object file:fileName lineNumber:line description:desc];
-	}
-}
-	 
-	 
-@end
-
 
 @implementation SVMigrationDocument
 
@@ -104,11 +84,6 @@
 
 - (void)threaded_migrate;
 {
-	NSMutableDictionary *dict = [[NSThread currentThread] threadDictionary];
-    SVAssertionHandler *handler = [[SVAssertionHandler alloc] init];
-	[dict setObject: handler forKey: @"NSAssertionHandler"];
-	[handler release];
-	
     NSError *error;
     BOOL result = [self saveToURL:[self fileURL]
                            ofType:kSVDocumentTypeName
