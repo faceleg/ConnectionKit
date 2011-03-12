@@ -17,7 +17,7 @@
 #import "KTSite.h"
 #import "SVTemplate.h"
 
-#import "NSData+Karelia.h"
+#import "KSSHA1Stream.h"
 #import "NSString+Karelia.h"
 
 #import "KSMutableDataWriter.h"

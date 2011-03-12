@@ -432,6 +432,8 @@
 		2756671E0F0167C700878A05 /* KTDocWindowController+Publishing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */; };
 		27579A31132BAAE00006C605 /* KSMutableDataWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27579A2F132BAAE00006C605 /* KSMutableDataWriter.h */; };
 		27579A32132BAAE00006C605 /* KSMutableDataWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27579A30132BAAE00006C605 /* KSMutableDataWriter.m */; };
+		27579B25132BD6D30006C605 /* KSSHA1Stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 27579B23132BD6D30006C605 /* KSSHA1Stream.h */; };
+		27579B26132BD6D30006C605 /* KSSHA1Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 27579B24132BD6D30006C605 /* KSSHA1Stream.m */; };
 		2759CC9B1039711200E2C046 /* SVWebEditorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CC991039711200E2C046 /* SVWebEditorViewController.h */; };
 		2759CC9C1039711300E2C046 /* SVWebEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */; };
 		2759CC9F103976D800E2C046 /* SVWebContentAreaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */; };
@@ -2136,6 +2138,8 @@
 		2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Publishing.m"; sourceTree = "<group>"; };
 		27579A2F132BAAE00006C605 /* KSMutableDataWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMutableDataWriter.h; sourceTree = "<group>"; };
 		27579A30132BAAE00006C605 /* KSMutableDataWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMutableDataWriter.m; sourceTree = "<group>"; };
+		27579B23132BD6D30006C605 /* KSSHA1Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSHA1Stream.h; sourceTree = "<group>"; };
+		27579B24132BD6D30006C605 /* KSSHA1Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSHA1Stream.m; sourceTree = "<group>"; };
 		2759CC991039711200E2C046 /* SVWebEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorViewController.h; sourceTree = "<group>"; };
 		2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorViewController.m; sourceTree = "<group>"; };
 		2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebContentAreaController.h; sourceTree = "<group>"; };
@@ -5281,6 +5285,8 @@
 				2728C12412E31390008B6CD2 /* KSIsNotNSNotFound.m */,
 				27A8223B12EF532D00152934 /* KSDependenciesTracker.h */,
 				27A8223C12EF532D00152934 /* KSDependenciesTracker.m */,
+				27579B23132BD6D30006C605 /* KSSHA1Stream.h */,
+				27579B24132BD6D30006C605 /* KSSHA1Stream.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -6251,6 +6257,7 @@
 				275388E2131D190F00EFF536 /* SVFooterDOMController.h in Headers */,
 				2761E1A1132948E300266D69 /* KSOutputStreamWriter.h in Headers */,
 				27579A31132BAAE00006C605 /* KSMutableDataWriter.h in Headers */,
+				27579B25132BD6D30006C605 /* KSSHA1Stream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7899,6 +7906,7 @@
 				275388E3131D190F00EFF536 /* SVFooterDOMController.m in Sources */,
 				2761E1A2132948E300266D69 /* KSOutputStreamWriter.m in Sources */,
 				27579A32132BAAE00006C605 /* KSMutableDataWriter.m in Sources */,
+				27579B26132BD6D30006C605 /* KSSHA1Stream.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

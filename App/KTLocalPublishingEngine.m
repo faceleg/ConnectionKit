@@ -19,7 +19,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 
 #import "NSBundle+Karelia.h"
-#import "NSData+Karelia.h"
+#import "KSSHA1Stream.h"
 #import "NSError+Karelia.h"
 #import "NSInvocation+Karelia.h"
 #import "NSObject+Karelia.h"

@@ -18,7 +18,7 @@
 #import "KTPage.h"
 #import "KSAppDelegate.h"
 #import "NSString+Karelia.h"
-#import "NSData+Karelia.h"
+#import "KSSHA1Stream.h"
 #import "NSImage+Karelia.h"
 #import "NSTextView+KTExtensions.h"
 #import "SVValidatorWindowController.h"

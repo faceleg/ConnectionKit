@@ -15,7 +15,7 @@
 
 #import "NSImage+KTExtensions.h"
 
-#import "NSData+Karelia.h"
+#import "KSSHA1Stream.h"
 #import "NSString+Karelia.h"
 
 #import "KSURLUtilities.h"

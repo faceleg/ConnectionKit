@@ -20,7 +20,7 @@
 #import "SVTextFieldDOMController.h"
 #import "SVTitleBox.h"
 
-#import "NSData+Karelia.h"
+#import "KSSHA1Stream.h"
 #import "NSObject+Karelia.h"
 #import "NSScanner+Karelia.h"
 #import "NSString+Karelia.h"

@@ -37,6 +37,7 @@
 
 #import "KSCSSWriter.h"
 #import "KSPlugInWrapper.h"
+#import "KSSHA1Stream.h"
 #import "KSThreadProxy.h"
 
 #import "Debug.h"
