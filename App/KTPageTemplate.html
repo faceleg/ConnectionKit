@@ -20,8 +20,8 @@
 [[if metaDescription]]
 		<meta name="description" content="[[=&parser.currentPage.metaDescription]]" />
 [[endif]]
-		<meta name="robots" content="[[=&userDefaults.metaRobots]]" />
-		<meta name="generator" content="[[=&site.appNameVersion]]" />
+		<meta name="robots" content="[[=&userDefaults.metaRobots]]" />[[=parser.context.disableChangeTracking]]
+		<meta name="generator" content="[[=&site.appNameVersion]]" />[[=parser.context.enableChangeTracking]]
 		<meta name="viewport" content="width=[[=master.design.viewport]]" />
 [[if parser.HTMLContext.isForPublishing]][[if currentContext.canWriteProMarkup]][[if site.googleSiteVerification]]
 		[[=site.googleSiteVerification]]
