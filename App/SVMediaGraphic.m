@@ -61,7 +61,6 @@
 
 - (void)didAddToPage:(KTPage *)page;
 {
-	DJW((@"%p didAddToPage:%p", self, page));
     // Placeholder image
     if (![self media] && ![self externalSourceURL])
     {
