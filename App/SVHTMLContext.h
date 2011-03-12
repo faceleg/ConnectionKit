@@ -245,6 +245,13 @@ typedef enum {
 - (void)writeEnclosure:(id <SVEnclosure>)enclosure;
 
 
+#pragma mark Publishing
+// During publishing, you can ask context to ignore some sections of the markup when deciding if changes need publishing
+- (void)disableChangeTracking;
+- (void)enableChangeTracking;
+- (BOOL)isChangeTrackingEnabled;
+
+
 @end
 
 

@@ -1248,6 +1248,12 @@
     }
 }
 
+#pragma mark Publishing
+
+- (void)disableChangeTracking; { }
+- (void)enableChangeTracking; { }
+- (BOOL)isChangeTrackingEnabled; { return NO; }
+
 #pragma mark SVPlugInContext
 
 - (id)objectForCurrentTemplateIteration;
