@@ -19,11 +19,15 @@
 
 #import "NSData+Karelia.h"
 #import "NSString+Karelia.h"
+
+#import "KSMutableDataWriter.h"
 #import "KSURLUtilities.h"
 #import "KSPathUtilities.h"
 
 
 @implementation SVPublishingHTMLContext
+
+#pragma mark Lifecycle
 
 - (id)initWithUploadPath:(NSString *)path
                publisher:(id <SVPublisher>)publisher;
@@ -56,21 +60,13 @@
                                     stringByAppendingPathComponent:_path];
         
         
-        // Generate data digest. It has to ignore the app version string
-        NSString *versionString = [NSString stringWithFormat:@"<meta name=\"generator\" content=\"%@\" />",
-                                   [[page site] appNameVersion]];
-        NSString *versionFreeHTML = [html stringByReplacing:versionString with:@"<meta name=\"generator\" content=\"Sandvox\" />"];
-        NSData *digest = [[versionFreeHTML dataUsingEncoding:encoding allowLossyConversion:YES] SHA1Digest];
-        
-        
-        
         // Upload page data. Store the page and its digest with the record for processing later
         if (fullUploadPath)
         {
             [publishingEngine publishData:pageData
                                    toPath:fullUploadPath
                          cachedSHA1Digest:nil
-                              contentHash:digest
+                              contentHash:[_contentHashData SHA1Digest]
                                    object:page];
         }
     }
@@ -78,9 +74,14 @@
     
     // Tidy up
     [super close];
+    
     //[_publishingEngine release]; _publishingEngine = nil;     Messes up media gathering
+    [_contentHashDataOutput release]; _contentHashDataOutput = nil;
+    [_contentHashData release]; _contentHashData = nil;
     [_path release]; _path = nil;
 }
+
+#pragma mark Media
 
 - (NSURL *)addMedia:(SVMedia *)media;
 {
@@ -224,11 +225,33 @@
     [_publisher addCSSWithURL:cssURL];
 }
 
+#pragma mark Change Tracking
+
+- (void)disableChangeTracking; { _disableChangeTracking++; }
+
+- (void)enableChangeTracking; { _disableChangeTracking--; }
+
+- (BOOL)isChangeTrackingEnabled; { return _disableChangeTracking == 0; }
+
 #pragma mark Raw Writing
 
 - (void)writeString:(NSString *)string;
 {
     [super writeString:string];
+    
+    if ([self isChangeTrackingEnabled])
+    {
+        if (!_contentHashDataOutput && !_contentHashData)
+        {
+            NSMutableData *output = [[NSMutableData alloc] init];
+            _contentHashData = output;
+            
+            _contentHashDataOutput = [[KSMutableDataWriter alloc] initWithMutableData:output                                   
+                                                                             encoding:[self encoding]];
+        }
+        
+        [_contentHashDataOutput writeString:string];
+    }
     
     // Run event loop to avoid stalling the GUI too long
     NSEvent *event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantPast] inMode:NSDefaultRunLoopMode dequeue:YES];
