@@ -432,7 +432,7 @@
 		2756671E0F0167C700878A05 /* KTDocWindowController+Publishing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */; };
 		27579A31132BAAE00006C605 /* KSMutableDataWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27579A2F132BAAE00006C605 /* KSMutableDataWriter.h */; };
 		27579A32132BAAE00006C605 /* KSMutableDataWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27579A30132BAAE00006C605 /* KSMutableDataWriter.m */; };
-		27579B25132BD6D30006C605 /* KSSHA1Stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 27579B23132BD6D30006C605 /* KSSHA1Stream.h */; };
+		27579B25132BD6D30006C605 /* KSSHA1Stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 27579B23132BD6D30006C605 /* KSSHA1Stream.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		27579B26132BD6D30006C605 /* KSSHA1Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 27579B24132BD6D30006C605 /* KSSHA1Stream.m */; };
 		2759CC9B1039711200E2C046 /* SVWebEditorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CC991039711200E2C046 /* SVWebEditorViewController.h */; };
 		2759CC9C1039711300E2C046 /* SVWebEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */; };

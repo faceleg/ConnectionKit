@@ -36,7 +36,7 @@
 
 #import "FeedPlugIn.h"
 
-#import "NSData+Karelia.h"
+#import "KSSHA1Stream.h"
 
 
 //FIXME: is this still needed/valid?

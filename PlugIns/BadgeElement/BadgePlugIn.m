@@ -36,7 +36,7 @@
 
 #import "BadgePlugIn.h"
 
-#import "NSData+Karelia.h"
+#import "KSSHA1Stream.h"
 
 
 static NSArray *sBadgeNames = nil;
