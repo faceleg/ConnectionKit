@@ -92,6 +92,8 @@
         [context startElement:@"img" attributes:attrs];
         [context endElement]; // </img>
         [context endElement]; // </div>
+        [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"clear:both" forKey:@"style"]];
+        [context endElement]; // </div>
     }
     else
     {
