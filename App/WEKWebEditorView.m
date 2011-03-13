@@ -1857,10 +1857,11 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     NSArray *result = defaultMenuItems;
     
     // Ask editing item if it wants to do anything about this
-    NSArray *editingItems = [self editingItems];
-    if ([editingItems count])
+    DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
+    WEKWebEditorItem *controller = [[self contentItem] hitTestDOMNode:node];
+    if (controller)
     {
-        result = [[editingItems objectAtIndex:0] contextMenuItemsForElement:element defaultMenuItems:result];
+        result = [controller contextMenuItemsForElement:element defaultMenuItems:result];
     }
     
     return result;

@@ -386,21 +386,6 @@
 
 - (BOOL)shouldHighlightWhileEditing; { return NO; }
 
-#pragma mark Summary
-
-- (NSArray *)contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems;
-{
-    // Pass off to a better target if there is one
-    DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
-    WEKWebEditorItem *item = [self hitTestDOMNode:node];
-    if (item != self)
-    {
-        return [item contextMenuItemsForElement:element defaultMenuItems:defaultMenuItems];
-    }
-    
-    return [super contextMenuItemsForElement:element defaultMenuItems:defaultMenuItems];
-}
-
 #pragma mark Resizing
 
 - (NSSize)minSize; { return NSMakeSize(200.0f, 16.0f); }
