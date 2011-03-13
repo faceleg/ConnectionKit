@@ -8,8 +8,8 @@
 [[endif]]
 		<link>[[path self]]</link>
 		<description></description>
-		<language>[[=master.language]]</language>
-		<lastBuildDate>[[=parser.RFC822Date]]</lastBuildDate>
+		<language>[[=master.language]]</language>[[=parser.context.disableChangeTracking]]
+		<lastBuildDate>[[=parser.RFC822Date]]</lastBuildDate>[[=parser.context.enableChangeTracking]]
 		<docs>http://blogs.law.harvard.edu/tech/rss</docs>
 		<generator>[[=&site.appNameVersion]]</generator>
 [[foreach pagesInRSSFeed item]]
