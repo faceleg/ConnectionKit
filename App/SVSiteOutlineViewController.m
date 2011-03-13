@@ -167,6 +167,7 @@
         // Register for fairly generic stuff since don't want to block on plug-in loading
         NSArray *dragTypes = NSARRAY((NSString *)kUTTypeItem,
                                      kKTPagesPboardType,
+                                     NSFilenamesPboardType,
                                      kKTLocalLinkPboardAllowedType);
         [outlineView registerForDraggedTypes:dragTypes];
         
