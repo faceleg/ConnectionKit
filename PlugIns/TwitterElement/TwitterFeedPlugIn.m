@@ -143,10 +143,7 @@
             [context endElement]; // </div>
         }
         
-        if ( [context isForPublishing] || [context isForEditing] )
-        {
-            [self writeScriptToEndBodyMarkup:uniqueID context:context];            
-        }
+        [self writeScriptToEndBodyMarkup:uniqueID context:context];            
     }
     else if ( [context isForEditing] )
     {

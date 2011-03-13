@@ -30,7 +30,6 @@ typedef NSUInteger SVThumbnailOptions;
 #pragma mark Purpose
 - (BOOL)isForEditing; // YES if HTML is intended to be edited directly in a Web Editor
 - (BOOL)isForQuickLookPreview;  // yeah, you get the idea
-- (BOOL)isForPublishing;
 - (BOOL)liveDataFeeds;  // When NO, you should write placeholders instead of loading from the web
 
 

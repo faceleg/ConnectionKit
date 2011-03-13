@@ -131,7 +131,7 @@
         IMStatusService *service = [self selectedService];
         
         NSString *serviceHTMLCode = nil;
-        if ( [context isForPublishing] ) 
+        if (![context isForEditing]) 
         {
             serviceHTMLCode = [service publishingHTMLCode];
         }
