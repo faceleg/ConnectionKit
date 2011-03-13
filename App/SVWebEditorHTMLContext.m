@@ -119,7 +119,9 @@
 
 - (void)startDOMController:(SVDOMController *)controller; // call one of the -didEndWriting… methods after
 {
+    OBPRECONDITION(controller);
     OBPRECONDITION(_currentDOMController);
+    
     [_currentDOMController addChildWebEditorItem:controller];
     
     // Record the start. When open elements count gets back to its present value, current controller will be automatically ended
@@ -186,6 +188,9 @@
 
 - (void)writeGraphic:(id <SVGraphic, SVDOMControllerRepresentedObject>)graphic;
 {
+    OBPRECONDITION(graphic);
+    
+    
     // Special case, want to write the body of the graphic
     if (graphic == [self currentGraphicContainer])
     {
