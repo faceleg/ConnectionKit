@@ -107,6 +107,10 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     [_graphicsController bind:@"page" toObject:_pageController withKeyPath:@"content" options:nil];
     
+    [[_graphicsController sidebarPageletsController] bind:NSManagedObjectContextBinding
+                                                 toObject:_pageController
+                                              withKeyPath:@"managedObjectContext"
+                                                  options:nil];
     [[_graphicsController sidebarPageletsController] bind:NSContentSetBinding
                                                  toObject:_pageController
                                               withKeyPath:@"selection.sidebar.pagelets"
