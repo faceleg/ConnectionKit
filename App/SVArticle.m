@@ -320,9 +320,9 @@
 		
 		// - (id)attribute:(NSString *)attributeName atIndex:(NSUInteger)index longestEffectiveRange:(NSRangePointer)aRange inRange:(NSRange)rangeLimit
 
-		id attr = [result attribute:@"SVAttachment" atIndex:cursor effectiveRange:&effectiveRange];
-		
-		if(attr)
+		SVTextAttachment *att = [result attribute:@"SVAttachment" atIndex:cursor effectiveRange:&effectiveRange];
+		[att setRange:NSMakeRange(effectiveRange.location, 1)];
+		if(att)
 		{
 			[result replaceCharactersInRange:effectiveRange withString:oneAttachmentCharString];
 			cursor+=1;
@@ -395,6 +395,10 @@
 				BOOL causesWrap = [[anAttachment causesWrap] boolValue];
 				if (includeLargeMedia || !causesWrap)
 				{
+					if (NSMaxRange(range) > [result length])
+					{
+						NSLog(@"Gonna be a problem adding SVAttachment at range:%@ length = %d", NSStringFromRange(range), [result length]);
+					} 
 					[result addAttribute:@"SVAttachment" value:anAttachment range:range];
 				}
 				else
