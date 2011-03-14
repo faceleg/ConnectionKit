@@ -28,7 +28,7 @@
 // Populates the controller with the sidebar pagelets for the given page. Changes are NOT observed though. To turn that on, call -bindContentToPage.
 - (id)initWithPageletsInSidebarOfPage:(KTPage *)page;
 
-@property(nonatomic, retain, readonly) KTPage *page;
+@property(nonatomic, retain) KTPage *page;
 
 
 #pragma mark Arranging Objects
