@@ -392,6 +392,17 @@
     return result;
 }
 
+- (NSArray *)pagesWithUniqueID:(NSString *)identifier;
+{
+    if (!identifier) return nil;
+    
+    NSArray *result = [[self sourceContext]
+                       fetchAllObjectsForEntityForName:@"Page"
+                       predicate:[NSPredicate predicateWithFormat:@"uniqueID == %@", identifier]
+                       error:NULL];
+    return result;
+}
+
 - (NSNumber *)isNil:(id)anObject; { return NSBOOL(anObject == nil); }
 - (NSNumber *)isNotNil:(id)anObject; { return NSBOOL(anObject != nil); }
 - (NSNumber *)boolValue:(id)anObject; { return NSBOOL([anObject boolValue]); }
