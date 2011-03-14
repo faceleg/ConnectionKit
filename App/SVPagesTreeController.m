@@ -1089,10 +1089,10 @@
         {
             _childPagesController = [[SVPagesController controllerWithPagesInCollection:_page] retain];
             
-            [_childPagesController bind:NSManagedObjectContextBinding
+            /*[_childPagesController bind:NSManagedObjectContextBinding
                                toObject:[self treeController]
                             withKeyPath:@"managedObjectContext"
-                                options:nil];
+                                options:nil];*/
             
             [_childPagesController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:NULL];
         }
