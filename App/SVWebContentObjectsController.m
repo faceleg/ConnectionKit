@@ -26,6 +26,20 @@
 
 @implementation SVWebContentObjectsController
 
+#pragma mark Lifecycle
+
+- (id) initWithContent:(id)content;
+{
+    self = [super initWithContent:content];
+    
+    _sidebarPageletsController = [[SVSidebarPageletsController alloc] init];
+    [_sidebarPageletsController setEntityName:@"Graphic"];
+    [_sidebarPageletsController setAvoidsEmptySelection:NO];
+    
+    
+    return self;
+}
+
 - (void)dealloc
 {
     [self unbind:@"page"];
@@ -42,14 +56,7 @@
     if (page != _page)
     {
         [_page release]; _page = [page retain];
-        
-        // Generate new sidebar controller
-        [_sidebarPageletsController release]; _sidebarPageletsController = nil;
-        if (page)
-        {
-            _sidebarPageletsController = [[SVSidebarPageletsController alloc] initWithPageletsInSidebarOfPage:page];
-            [self synchronizeSidebarPageletsController];
-        }
+        [_sidebarPageletsController setPage:page];
     }
 }
 
