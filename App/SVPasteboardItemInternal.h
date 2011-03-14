@@ -25,11 +25,12 @@
 @end
 
 
-@interface SVPasteboardItem : NSObject
+@interface SVPasteboardItem : KSWebLocation
 {
   @private
-    NSString    *_title;
-    NSURL       *_URL;
+    NSDictionary    *_metadata;
 }
+
++ (id)pasteboardItemWithURL:(NSURL *)url title:(NSString *)title metadata:(NSDictionary *)metadata;
 
 @end

@@ -13,13 +13,20 @@
 
 @implementation SVPasteboardItem
 
++ (id)pasteboardItemWithURL:(NSURL *)url title:(NSString *)title metadata:(NSDictionary *)metadata;
+{
+    SVPasteboardItem *result = [self webLocationWithURL:url title:title];
+    result->_metadata = [metadata copy];
+    return result;
+}
+
 - (void)dealloc;
 {
-    [_title release];
-    [_URL release];
-    
+    [_metadata release];
     [super dealloc];
 }
+
+- (NSDictionary *)metadata; { return _metadata; }
 
 @end
 
@@ -33,6 +40,8 @@
 - (NSString *)title; { return [WebView URLTitleFromPasteboard:self]; }
 
 - (NSURL *)URL { return [WebView URLFromPasteboard:self]; }
+
+- (NSDictionary *)metadata; { return nil; }
 
 - (NSArray *)sv_pasteboardItems;
 {
@@ -55,7 +64,9 @@
         for (IMBObject *anObject in objects)
         {
             NSURL *aURL = [promise fileURLForObject:anObject];
-            [result addObject:[KSWebLocation webLocationWithURL:aURL title:[anObject name]]];
+            [result addObject:[SVPasteboardItem pasteboardItemWithURL:aURL
+                                                                title:[anObject name]
+                                                             metadata:[anObject metadata]]];
         }
         
         return result;
@@ -88,6 +99,8 @@
 
 
 @implementation KSWebLocation (SVPasteboardItem)
+
+- (NSDictionary *)metadata; { return nil; }
 
 - (NSArray *)types;
 {

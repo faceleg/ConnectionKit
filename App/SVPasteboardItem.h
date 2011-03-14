@@ -14,6 +14,7 @@
 // These methods try their best to infer the info from pasteboard.
 - (NSString *)title;
 - (NSURL *)URL;
+- (NSDictionary *)metadata;
 
 /* Returns an array of UTI strings of the data types supported by the receiver.
  */
