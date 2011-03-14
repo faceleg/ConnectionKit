@@ -324,6 +324,7 @@ webContentAreaController:(SVWebContentAreaController *)controller;
                 
                 NSMutableString *html = [[NSMutableString alloc] init];
                 [parser parseWithOutputWriter:html];
+                [parser release];
                 
                 [frame loadHTMLString:html baseURL:nil];
                 [html release];
