@@ -738,7 +738,6 @@
 		3C202DB807E00B9300DE4994 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C202DB207E00B9300DE4994 /* IOKit.framework */; };
 		3C202DB907E00B9300DE4994 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C202DB307E00B9300DE4994 /* QuickTime.framework */; };
 		3C202E9507E00F5700DE4994 /* document2.toolbar in Resources */ = {isa = PBXBuildFile; fileRef = 3C202E9307E00F5700DE4994 /* document2.toolbar */; };
-		3C202F4407E0132000DE4994 /* documentJavascript.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3C202F4307E0132000DE4994 /* documentJavascript.txt */; };
 		3C26D8040BC5B7DD00FF874D /* KTCodeInjectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C26D8020BC5B7DD00FF874D /* KTCodeInjectionController.m */; };
 		3C27FE03096F198E00702991 /* KTReleaseNotesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C27FE01096F198E00702991 /* KTReleaseNotesController.m */; };
 		3C27FF28096F4E4A00702991 /* KTAcknowledgmentsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C27FF26096F4E4A00702991 /* KTAcknowledgmentsController.m */; };
@@ -2495,7 +2494,6 @@
 		3C202E9407E00F5700DE4994 /* KTToolbars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTToolbars.h; sourceTree = "<group>"; };
 		3C202E9607E00F8000DE4994 /* png2ico */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = png2ico; path = ../Code/png2ico/png2ico; sourceTree = "<group>"; };
 		3C202EA307E0101100DE4994 /* Acknowledgments.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Acknowledgments.rtf; sourceTree = "<group>"; };
-		3C202F4307E0132000DE4994 /* documentJavascript.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = documentJavascript.txt; sourceTree = "<group>"; };
 		3C26D8010BC5B7DD00FF874D /* KTCodeInjectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCodeInjectionController.h; sourceTree = "<group>"; };
 		3C26D8020BC5B7DD00FF874D /* KTCodeInjectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCodeInjectionController.m; sourceTree = "<group>"; };
 		3C27FDA8096EFE6E00702991 /* License Agreement.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "License Agreement.rtf"; sourceTree = "<group>"; };
@@ -4521,7 +4519,6 @@
 				CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */,
 				CE214BF9098060CD006DD2B1 /* Languages.plist */,
 				CED45AEC0947891100BB172E /* CheckOpenGL.qtz */,
-				3C202F4307E0132000DE4994 /* documentJavascript.txt */,
 				CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */,
 				CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */,
 				CEA962C20AF6A924008A1367 /* sandvox.css */,
@@ -6751,7 +6748,6 @@
 				CE89F9C611F6152D00B180EB /* ddsmoothmenu.js in Resources */,
 				3C202E9507E00F5700DE4994 /* document2.toolbar in Resources */,
 				CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */,
-				3C202F4407E0132000DE4994 /* documentJavascript.txt in Resources */,
 				CE250ADC08204B120061BE9B /* imageReplacementHeader.txt in Resources */,
 				CE66D15E083D305700AD46CD /* imageReplacementEntry.txt in Resources */,
 				CEAE132C08450536007025D4 /* RSSTemplate.xml in Resources */,
