@@ -82,6 +82,7 @@ extern const int kDesignThumbHeight;
 - (BOOL)isFamilyPrototype;
 - (void) scrub:(float)howFar;
 - (NSArray *)imports;
+- (NSDictionary *)conditionalCommentsForIE;
 
 
 #pragma mark Image Replacement

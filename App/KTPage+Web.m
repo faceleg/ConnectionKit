@@ -245,7 +245,8 @@
 {
     SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
     NSString *path = nil;
-    
+	
+	// Bring in any import" statements that the design wants
 	KTDesign *design = [[self master] design];
 	NSArray *imports = [design imports];
 	for (NSString *urlString in imports)
@@ -253,6 +254,24 @@
         [context writeLinkToStylesheet:urlString
                                  title:nil
                                  media:nil];
+	}
+	
+	// Bring in any IE conditional comment stylesheets that the design wants.
+	// Since the @import statements we used to use were generally at
+	// the start of the file, it's best to load these *before* the main style sheet.
+	NSDictionary *conditionalCommentsForIE = [design conditionalCommentsForIE];
+	for (NSString *predicate in conditionalCommentsForIE)
+	{
+		NSString *ieFile = [conditionalCommentsForIE objectForKey:predicate];
+		NSURL *ieURL = [context URLOfDesignFile:ieFile];
+		
+		[context openComment];
+		[context writeString:[NSString stringWithFormat:@"[if %@]>", predicate]];		// Do not escape XML
+		[context writeLinkToStylesheet:[context relativeStringFromURL:ieURL]
+								 title:nil
+								 media:nil];
+		[context writeString:@"<![endif]"];		// Do not escape XML
+		[context closeComment];
 	}
 	
     // Write link to main.CSS file -- the most specific

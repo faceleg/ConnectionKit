@@ -240,8 +240,14 @@ const int kDesignThumbHeight = 65;
 
 - (NSArray *)imports;
 {
-	NSArray *imports = [[[self bundle] infoDictionary] objectForKey:@"import"];
-	return imports;
+	NSArray *result = [[[self bundle] infoDictionary] objectForKey:@"import"];
+	return result;
+}
+
+- (NSDictionary *)conditionalCommentsForIE;
+{
+	NSDictionary *result = [[[self bundle] infoDictionary] objectForKey:@"IE"];
+	return result;
 }
 
 #pragma mark -
