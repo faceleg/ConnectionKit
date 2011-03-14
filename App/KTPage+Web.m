@@ -246,6 +246,15 @@
     SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
     NSString *path = nil;
     
+	KTDesign *design = [[self master] design];
+	NSArray *imports = [design imports];
+	for (NSString *urlString in imports)
+	{
+        [context writeLinkToStylesheet:urlString
+                                 title:nil
+                                 media:nil];
+	}
+	
     // Write link to main.CSS file -- the most specific
     NSURL *mainCSSURL = [context mainCSSURL];
     if (mainCSSURL)

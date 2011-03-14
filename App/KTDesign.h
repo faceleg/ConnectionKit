@@ -81,6 +81,7 @@ extern const int kDesignThumbHeight;
 - (BOOL)hasLocalFonts;
 - (BOOL)isFamilyPrototype;
 - (void) scrub:(float)howFar;
+- (NSArray *)imports;
 
 
 #pragma mark Image Replacement

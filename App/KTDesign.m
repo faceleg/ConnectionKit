@@ -236,6 +236,15 @@ const int kDesignThumbHeight = 65;
 }
 
 #pragma mark -
+#pragma mark Imports
+
+- (NSArray *)imports;
+{
+	NSArray *imports = [[[self bundle] infoDictionary] objectForKey:@"import"];
+	return imports;
+}
+
+#pragma mark -
 #pragma mark Variations
 
 - (NSDictionary *)variationDict		// nil if no variation
