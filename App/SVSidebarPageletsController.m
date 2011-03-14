@@ -26,6 +26,13 @@
 
 #pragma mark Init & Dealloc
 
+- (id)initWithContent:(id)content;
+{
+    self = [super initWithContent:content];
+    [self didChangeArrangementCriteria];
+    return self;
+}
+
 - (id)initWithPageletsInSidebarOfPage:(KTPage *)page;    // sets .managedObjectContext too
 {
     self = [self initWithContent:[[page sidebar] pagelets]];
@@ -35,7 +42,6 @@
     //[self setManagedObjectContext:[page managedObjectContext]];   // if on, causes a fetch. Don't want
     [self setEntityName:@"Graphic"];
     [self setAvoidsEmptySelection:NO];
-    [self didChangeArrangementCriteria];
     
     return self;
 }
