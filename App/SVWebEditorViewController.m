@@ -256,7 +256,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     // Prepare the environment for generating HTML
-    [_pageController setContent:page];
+    if (page) OBASSERT([[self pageController] managedObjectContext] == [page managedObjectContext]);
+    [[self pageController] setContent:page];
     
     
     // Construct HTML Context
@@ -527,6 +528,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 }
 
 #pragma mark Content
+
+@synthesize pageController = _pageController;
 
 @synthesize primitiveSelectedObjectsController = _graphicsController;
 - (id <KSCollectionController>)graphicsController

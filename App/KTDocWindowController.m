@@ -168,6 +168,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	
     // Tie the web content area to the source list's selection
+    [[[[self webContentAreaController] webEditorViewController] pageController]
+     bind:NSManagedObjectContextBinding
+     toObject:[self siteOutlineViewController]
+     withKeyPath:@"pagesController.managedObjectContext"
+     options:nil];
+    
     [[self webContentAreaController] bind:@"selectedPages"
                                  toObject:[self siteOutlineViewController]
                               withKeyPath:@"pagesController.selectedObjects"
