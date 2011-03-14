@@ -16,6 +16,7 @@
 @property(nonatomic, copy) NSString *text;
 
 @property(nonatomic, copy) NSNumber *hidden;    // BOOL, required
+@property(nonatomic, readonly) NSTextAlignment alignment;
 
 - (NSString *)graphicalTextCode:(SVHTMLContext *)context;
 

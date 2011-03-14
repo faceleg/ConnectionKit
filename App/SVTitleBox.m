@@ -43,6 +43,8 @@
 
 @dynamic hidden;
 
+- (NSTextAlignment)alignment; { return NSNaturalTextAlignment; }
+
 #pragma mark Graphical Text
 
 - (NSString *)graphicalTextCode:(SVHTMLContext *)context;
