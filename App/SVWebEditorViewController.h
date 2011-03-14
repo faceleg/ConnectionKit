@@ -34,6 +34,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     SVWebEditorHTMLContext      *_context;
     
     // Selection
+    NSObjectController              *_pageController;
     SVWebContentObjectsController   *_graphicsController;
     BOOL                            _isChangingSelection;
     

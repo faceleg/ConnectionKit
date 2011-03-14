@@ -94,6 +94,9 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 {
     self = [super init];
     
+    _pageController = [[NSObjectController alloc] init];
+    [_pageController setEntityName:@"Page"];
+    
     _graphicsController = [[SVWebContentObjectsController alloc] init];
     [_graphicsController setAvoidsEmptySelection:NO];
     [_graphicsController setPreservesSelection:NO];    // we'll take care of that
@@ -101,6 +104,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     [_graphicsController setObjectClass:[NSObject class]];
     
     [_graphicsController addObserver:self forKeyPath:@"selection.link" options:0 context:sSelectedLinkObservationContext];
+    
+    [_graphicsController bind:@"page" toObject:_pageController withKeyPath:@"content" options:nil];
         
     return self;
 }
@@ -123,6 +128,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     [_firstResponderItem release];
     [_context release];
+    [_pageController release];
     [_graphicsController release];
     [_loadedPage release];
     
@@ -250,8 +256,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     // Prepare the environment for generating HTML
-    [_graphicsController setPage:page]; // do NOT set the controller's MOC. Unless you set both MOC
-                                                        // and entity name, saving will raise an exception. (crazy I know!)
+    [_pageController setContent:page];
     
     
     // Construct HTML Context

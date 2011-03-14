@@ -28,7 +28,9 @@
 
 - (void)dealloc
 {
+    [self unbind:@"page"];
     [_page release];
+    
     [_sidebarPageletsController release];
     
     [super dealloc];
