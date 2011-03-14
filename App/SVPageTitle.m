@@ -17,6 +17,20 @@
 
 @implementation SVPageTitle
 
+- (NSTextAlignment)alignment;
+{
+    return [[self valueForKeyPath:@"page.titleAlignment"] intValue];
+}
+- (void)setAlignment:(NSTextAlignment)alignment;
+{
+    [self setValue:[NSNumber numberWithInt:alignment]
+        forKeyPath:@"page.titleAlignment"];
+}
++ (NSSet *)keyPathsForValuesAffectingAlignment;
+{
+    return [NSSet setWithObject:@"page.titleAlignment"];
+}
+
 @dynamic page;
 
 - (void)setTextHTMLString:(NSString *)html

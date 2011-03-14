@@ -214,6 +214,13 @@
     [context writeHTMLString:[self titleHTMLString]];
 }
 
+- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key;
+{
+    return ([key isEqualToString:@"titleAlignment"] ?
+            YES :
+            [super usesExtensiblePropertiesForUndefinedKey:key]);
+}
+
 - (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
 {
     // Make sure .titleBox is already faulted in before observing title. #108418

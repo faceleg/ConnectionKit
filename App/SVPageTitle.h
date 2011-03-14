@@ -17,6 +17,8 @@
 
 }
 
+@property(nonatomic) NSTextAlignment alignment;
+
 @property(nonatomic, readonly) KTPage *page;
 
 @end
