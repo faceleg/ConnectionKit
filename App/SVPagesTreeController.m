@@ -40,12 +40,11 @@
     NSMutableArray      *_childNodes;
     SVPagesController   *_childPagesController;
     BOOL                _syncingChildren;
-    NSTreeController    *_treeController;   // weak ref
 }
 
 + (SVPageProxy *)proxyForTargetPage:(SVSiteItem *)page;
 
-@property(nonatomic, assign) NSTreeController *treeController;
+- (void)setManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end
 
@@ -313,7 +312,6 @@
     
     // Actually insert proxy for the page
     SVPageProxy *proxy = [SVPageProxy proxyForTargetPage:object];
-    [proxy setTreeController:self];
     [super insertObject:proxy atArrangedObjectIndexPath:indexPath];
     
     
@@ -669,7 +667,7 @@
         for (SVSiteItem *anItem in content)
         {
             SVPageProxy *proxy = [SVPageProxy proxyForTargetPage:anItem];
-            [proxy setTreeController:self];
+            [proxy setManagedObjectContext:[self managedObjectContext]];
             [buffer addObject:proxy];
         }
         content = buffer;
@@ -677,7 +675,6 @@
     else if (content)
     {
         content = [SVPageProxy proxyForTargetPage:content];
-        [content setTreeController:self];
     }
     
     [super setContent:content];
@@ -868,6 +865,16 @@
     NSIndexPath *parentPath = [indexPath indexPathByRemovingLastIndex];
     KTPage *result = [[[self arrangedObjects] descendantNodeAtIndexPath:parentPath] representedObject];
     return result;
+}
+
+#pragma mark MOC
+
+- (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+{
+    [super setManagedObjectContext:managedObjectContext];
+    
+    // Pass context onto Page Proxies
+    [[self content] makeObjectsPerformSelector:_cmd withObject:managedObjectContext];
 }
 
 #pragma mark Pasteboard Support
@@ -1071,10 +1078,6 @@
 
 - (NSUInteger)hash; { return [_page hash]; }
 
-#pragma mark Tree
-
-@synthesize treeController = _treeController;
-
 #pragma mark Children
 
 - (BOOL)isLeaf; { return ![_page isCollection]; }
@@ -1105,7 +1108,6 @@
         for (SVSiteItem *aPage in pages)
         {
             SVPageProxy *proxy = [SVPageProxy proxyForTargetPage:aPage];
-            [proxy setTreeController:[self treeController]];
             [_childNodes addObject:proxy];
         }
     }
@@ -1124,6 +1126,7 @@
     {
         [_childPagesController insertObject:[proxy representedObject] atArrangedObjectIndex:index];
         [_childNodes insertObject:proxy atIndex:index];
+        [proxy setManagedObjectContext:[_childPagesController managedObjectContext]];
     }
     @finally {
         _syncingChildren = NO;
@@ -1154,6 +1157,12 @@
     
     
     OBPOSTCONDITION([_childNodes isEqualToArray:[_childPagesController arrangedObjects]]);
+}
+
+- (void)setManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    [_childPagesController setManagedObjectContext:context];
+    [[self childNodes] makeObjectsPerformSelector:_cmd withObject:context];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;
