@@ -178,10 +178,10 @@
 /*  Text fields don't support alignment, so trap such calls. Bwahahaha!!
  */
 
-- (IBAction)alignCenter:(id)sender; { NSBeep(); }
-- (IBAction)alignJustified:(id)sender; { NSBeep(); }
-- (IBAction)alignLeft:(id)sender; { NSBeep(); }
-- (IBAction)alignRight:(id)sender; { NSBeep(); }
+- (IBAction)alignCenter:(id)sender; { [[self representedObject] setAlignment:NSCenterTextAlignment]; }
+- (IBAction)alignJustified:(id)sender; { [[self representedObject] setAlignment:NSJustifiedTextAlignment]; }
+- (IBAction)alignLeft:(id)sender; { [[self representedObject] setAlignment:NSLeftTextAlignment]; }
+- (IBAction)alignRight:(id)sender; { [[self representedObject] setAlignment:NSRightTextAlignment]; }
 
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
 {
@@ -193,7 +193,7 @@
         action == @selector(alignLeft:) ||
         action == @selector(alignRight:))
     {
-        result = NO;
+        result = [[self representedObject] respondsToSelector:@selector(setAlignment:)];
     }
     
     return result;
