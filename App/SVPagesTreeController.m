@@ -841,8 +841,7 @@
             // Search for the best match to the original keypath
             NSIndexPath *path = _fallbackSelection;
             
-            NSTreeNode *node;
-            while (!(node = [[self arrangedObjects] descendantNodeAtIndexPath:path]))
+            while ([[self arrangedObjects] descendantNodeAtIndexPath:path])
             {
                 path = ([path lastIndex] > 0 ?
                         [path indexPathByDecrementingLastIndex] :
