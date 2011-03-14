@@ -129,6 +129,9 @@
 	
 	[result setHTMLSourceObject:object];
 	[result setHTMLSourceKeyPath:keypath];
+    
+    id value = [object valueForKeyPath:keypath];
+    if ([value respondsToSelector:@selector(alignment)]) [result setAlignment:[value alignment]];
 	
     
     // Only generate the block if there is text to use
