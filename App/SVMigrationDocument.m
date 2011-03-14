@@ -144,6 +144,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                                              mediaModel:sMediaModel
                                                        destinationModel:[KTDocument managedObjectModel]];
     
+    [sModel release];
+    [sMediaModel release];
+    
     [_migrationManager addObserver:self forKeyPath:@"migrationProgress" options:0 context:NULL];
     
     OBASSERT(_migrationManager);
