@@ -154,6 +154,8 @@
         if (value) [serializedProperties setObject:value forKey:aKey];
     }
     
+    [plugIn release];
+    
     NSData *result = [KSExtensibleManagedObject archiveExtensibleProperties:serializedProperties];
     [serializedProperties release];
     
