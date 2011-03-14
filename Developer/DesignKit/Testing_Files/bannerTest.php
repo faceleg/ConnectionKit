@@ -167,6 +167,30 @@ if (isset($plist['KTScaledImageTypes']))
 	}
 }
 
+$fontMarkup = '';
+$fontInfo = '';
+if (isset($plist['import']))
+{
+	$imports = $plist['import'];
+	foreach($imports as $importURL)
+	{
+		$ieMarkup .= "<link rel='stylesheet' type='text/css' href='$importURL' />\n";
+		$fontInfo .= "<p style='font-size:150%;'><b>Font:</b> We are importing <a href='" . htmlspecialchars($importURL) . "'>this</a></p>\n";
+	}
+}
+
+$ieMarkup = '';
+$ieInfo = '';
+if (isset($plist['IE']))
+{
+	$dictForIE = $plist['IE'];
+	foreach($dictForIE as $predicate => $file)
+	{
+		$ieMarkup .= "<!--[if $predicate]><link rel='stylesheet' type='text/css' href='../$file' /><![endif]-->\n";
+		$ieInfo .= "<p style='font-size:150%;'><b>Internet Explorer:</b> We are loading <a href='../$file'>$file</a> for <span style='color:red;'>[if $predicate]</span></p>\n";
+	}
+}
+
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -194,6 +218,14 @@ if (isset($plist['KTScaledImageTypes']))
 ddsmoothmenu.arrowimages = {down:['downarrowclass', '_Resources/down.gif', 23], right:['rightarrowclass', '_Resources/right.gif']}
 ddsmoothmenu.init({ mainmenuid: 'sitemenu-content',orientation:'h', classname:'ddsmoothmenu',contentsource:'markup'})
 </script>
+<?php
+echo "<!-- IE conditional based on Info.plist -->\n";
+echo $ieMarkup;
+echo "\n";
+echo "<!-- Font import markup based on Info.plist -->\n";
+echo $fontMarkup;
+echo "\n";
+?>
 <link rel="stylesheet" type="text/css" href="../main.css" title="YOUR_DESIGN_NAME" />  <!-- This will be replaced by the reference to YOUR NEW STYLE SHEET -->
 <link rel="stylesheet" type="text/css" href="../color.css" />  <!-- Optional load of color variation.  Rename any .css file to "color.css" so that this will load. -->
 <style type="text/css">
@@ -313,6 +345,11 @@ Licensing for this website's design:     <<NOT APPLICABLE MARKER>License.rtf>
 The banner is cropped to <span style="font-size:200%;"><?php echo htmlspecialchars($bannerWidth); ?> &times; <?php echo htmlspecialchars($bannerHeight); ?></span> pixels.
 <?php if ($isFromKTScaledImageTypesBannerImage) echo "(KTScaledImageTypes)"; ?>
 </p>
+	<?php
+   if (!empty($fontInfo)) echo $fontInfo;
+   if (!empty($ieInfo)) echo $ieInfo;
+
+	?>
 
 </div>
 </div>
