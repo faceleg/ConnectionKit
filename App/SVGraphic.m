@@ -423,7 +423,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (BOOL) usesExtensiblePropertiesForUndefinedKey:(NSString *)key;
 {
-    if ([key isEqualToString:@"wasCreatedByTemplate"])
+    if ([key isEqualToString:@"wasCreatedByTemplate"] || [key isEqualToString:@"titleAlignment"])
     {
         return YES;
     }
