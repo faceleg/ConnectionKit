@@ -30,6 +30,7 @@
 {
     // Bindings don't automatically unbind themselves; have to do it ourself
     [self unbind:NSValueBinding];
+    [self unbind:NSAlignmentBinding];
     
     [_placeholder release];
     [_uneditedValue release];
@@ -175,8 +176,35 @@
 
 #pragma mark Alignment
 
-/*  Text fields don't support alignment, so trap such calls. Bwahahaha!!
- */
+@synthesize alignment = _alignment;
+- (void)setAlignment:(NSTextAlignment)alignment;
+{
+    _alignment = alignment;
+    
+    if ([self isHTMLElementCreated])
+    {
+        DOMCSSStyleDeclaration *style = [[self textHTMLElement] style];
+        
+        switch (alignment)
+        {
+            case NSLeftTextAlignment:
+                [style setTextAlign:@"left"];
+                break;
+            case NSRightTextAlignment:
+                [style setTextAlign:@"right"];
+                break;
+            case NSCenterTextAlignment:
+                [style setTextAlign:@"center"];
+                break;
+            case NSJustifiedTextAlignment:
+                [style setTextAlign:@"justify"];
+                break;
+            default:
+                [style setTextAlign:nil];
+                break;
+        }
+    }
+}
 
 - (IBAction)alignCenter:(id)sender; { [[self representedObject] setAlignment:NSCenterTextAlignment]; }
 - (IBAction)alignJustified:(id)sender; { [[self representedObject] setAlignment:NSJustifiedTextAlignment]; }
@@ -377,6 +405,9 @@
         toObject:self
      withKeyPath:@"textHTMLString"
          options:nil];
+    
+    [result bind:NSAlignmentBinding toObject:self withKeyPath:@"alignment" options:nil];
+    
     
     return result;
 }

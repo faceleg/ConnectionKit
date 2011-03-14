@@ -21,6 +21,7 @@
     // Bindings
     NSString        *_uneditedValue;
     BOOL            _isCommittingEditing;
+    NSTextAlignment _alignment;
 }
 
 #pragma mark Properties
@@ -29,6 +30,7 @@
 @property(nonatomic, copy) NSString *HTMLString;
 @property(nonatomic, copy) NSString *string;
 
+@property(nonatomic) NSTextAlignment alignment; // bindable
 
 @property(nonatomic, copy) NSString *placeholderHTMLString;
 
