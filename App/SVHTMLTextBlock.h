@@ -22,6 +22,7 @@
 	BOOL			myIsRichText;
     NSString        *_placeholder;
 	BOOL			myImportsGraphics;
+    NSTextAlignment _alignment;
 	
     NSString		*myHTMLTag;
     NSString        *_className;
@@ -48,6 +49,7 @@
 @property(nonatomic, setter=setFieldEditor:) BOOL isFieldEditor;
 - (BOOL)importsGraphics;
 - (void)setImportsGraphics:(BOOL)flag;
+@property(nonatomic) NSTextAlignment alignment;
 
 //  Like .editable, has no effect on the HTML generated. But when editing, UI code will check the value to see if a custom string has been requested
 @property(nonatomic, copy) NSString *placeholderString;

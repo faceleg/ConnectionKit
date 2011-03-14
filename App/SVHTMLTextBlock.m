@@ -47,6 +47,7 @@
     if (self)
     {
         myIsEditable = YES;
+        _alignment = NSNaturalTextAlignment;
         [self setTagName:@"div"];
     }
 	
@@ -146,21 +147,18 @@
 #pragma mark NSTextView clone
 
 - (BOOL)isEditable { return myIsEditable; }
-
 - (void)setEditable:(BOOL)flag { myIsEditable = flag; }
 
 - (BOOL)isFieldEditor { return myIsFieldEditor; }
-
 - (void)setFieldEditor:(BOOL)flag { myIsFieldEditor = flag; }
 
 - (BOOL)isRichText { return myIsRichText; }
-
 - (void)setRichText:(BOOL)flag { myIsRichText = flag; }
 
 - (BOOL)importsGraphics { return myImportsGraphics; }
-
 - (void)setImportsGraphics:(BOOL)flag { myImportsGraphics = flag; }
 
+@synthesize alignment = _alignment;
 
 #pragma mark Graphical Text
 
@@ -332,6 +330,23 @@
 	if ([context includeStyling])
 	{
 		[self buildGraphicalText:context];
+    }
+    
+    
+    // Alignment
+    switch ([self alignment])
+    {
+        case NSLeftTextAlignment:
+            [context pushAttribute:@"style" value:@"text-align:left;"];
+            break;
+        case NSCenterTextAlignment:
+            [context pushAttribute:@"style" value:@"text-align:center;"];
+            break;
+        case NSRightTextAlignment:
+            [context pushAttribute:@"style" value:@"text-align:right;"];
+            break;
+        default:
+            break;
     }
     
     
