@@ -228,7 +228,14 @@ typedef enum {
 
 + (NSString *)stringFromDocType:(NSString *)docType local:(BOOL)isLocal;		// UTILITY
 
+
+#pragma mark Site Menu
+- (NSArray *)createSiteMenuForestIsHierarchical:(BOOL *)outHierarchical;
+
+
+#pragma mark Comments
 - (NSString *)commentsTemplate;	// instance method too for key paths to work in tiger
+
 
 @end
 

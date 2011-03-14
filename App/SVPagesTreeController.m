@@ -261,11 +261,19 @@
 
 - (void)willInsertOrMoveObjectToTopLevel:(id)object;
 {
-    // Include in site menu if appropriate
-    NSTreeNode *rootNode = [[[self arrangedObjects] childNodes] objectAtIndex:0];
-    if ([[rootNode childNodes] count] < 6)
+    // Include in site menu if appropriate. #104544
+    KTPage *home = [[[[self arrangedObjects] childNodes] objectAtIndex:0] representedObject];
+    NSArray *menuItems = [home createSiteMenuForestIsHierarchical:NULL];
+    
+    if ([menuItems count] < 6)
     {
-        [object setIncludeInSiteMenu:[NSNumber numberWithBool:YES]];
+        NSSet *include = [[home childItems] valueForKey:@"includeInSiteMenu"];
+        
+        if ([include count] == 0 ||
+            ([include count] == 1 && [[include anyObject] isEqual:NSBOOL(YES)]))
+        {
+            [object setIncludeInSiteMenu:[NSNumber numberWithBool:YES]];
+        }
     }
 }
 
