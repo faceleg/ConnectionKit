@@ -194,9 +194,30 @@ NSString *PCSampleImageKey = @"sampleImage";
     // add dependencies
     [context addDependencyForKeyPath:@"selectedThemeIndex" ofObject:self];
     
-    // add resources
+    // make it all happen
+    //<div class="page_counter" style="text-align: center;" id="pc-[[=elementID]]">
+    NSDictionary *attrs = [NSDictionary dictionaryWithObject:@"text-align: center;" forKey:@"style"];
+    _divID = [context startElement:@"div"
+                   preferredIdName:@"pc"
+                         className:@"page_counter"
+                        attributes:attrs];
+    // parse template
+    [super writeHTML:context];
+    _divID = nil;
+    
+    // </div>
+    [context endElement];
+}
+
+- (NSURL *)resourcesURL
+{
+    // add resources and return URL
+    NSURL *result = nil;
+    
 	if (PC_GRAPHICS == self.themeType)
 	{
+        id<SVPlugInContext> context = [self currentContext]; 
+
 		NSString *theme = self.themeTitle;
 		NSBundle *b = [NSBundle bundleForClass:[self class]];
 		NSString *imagePath = [self.selectedTheme objectForKey:PCImagesPathKey];	// from default
@@ -227,31 +248,18 @@ NSString *PCSampleImageKey = @"sampleImage";
                                                                         kCFAllocatorDefault,
                                                                         (CFURLRef)contextResourceURL
                                                                         );
-            self.resourcesURL = (NSURL *)pathURL;
+            result = [[(NSURL *)pathURL retain] autorelease];
             CFRelease(pathURL);
         }        
 	}
     
-    // make it all happen
-    //<div class="page_counter" style="text-align: center;" id="pc-[[=elementID]]">
-    NSDictionary *attrs = [NSDictionary dictionaryWithObject:@"text-align: center;" forKey:@"style"];
-    _divID = [context startElement:@"div"
-                   preferredIdName:@"pc"
-                         className:@"page_counter"
-                        attributes:attrs];
-    // parse template
-    [super writeHTML:context];
-    _divID = nil;
-    
-    // </div>
-    [context endElement];
+    return result;
 }
 
 
 #pragma mark Properties
 
 @synthesize divID = _divID;
-@synthesize resourcesURL = _resourcesURL;
 @synthesize selectedThemeIndex = _selectedThemeIndex;
 
 - (NSArray *)themes
