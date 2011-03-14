@@ -533,6 +533,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         [self setEntityNameWithPageTemplate:nil];
         result = [self newObject];
         [result setTitle:[aGraphic title]];
+        [result setKeywords:[[pboardItem metadata] objectForKey:@"iMediaKeywords"]];
         
         
         // First media added to a collection probably doesn't want sidebar. #96013
