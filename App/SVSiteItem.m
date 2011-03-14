@@ -637,6 +637,7 @@
     [textBlock setHTMLSourceKeyPath:@"customSummaryHTML"];
     
     [textBlock writeHTML:context];
+    [textBlock release];
     
     return NO;
 }
