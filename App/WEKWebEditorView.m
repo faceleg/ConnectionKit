@@ -2458,7 +2458,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 - (void)webViewDidChange:(NSNotification *)notification;
 {
     //  Update Link Manager to match
-    WebView *webView = [notification object];
     [self updateLinkManager];
     
     // Process change
