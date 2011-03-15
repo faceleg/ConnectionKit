@@ -18,6 +18,8 @@
     WebResource *_webResource;
     
     NSString    *_preferredFilename;
+    
+    NSUInteger  _hash;
 }
 
 - (id)initByReferencingURL:(NSURL *)fileURL;

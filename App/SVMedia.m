@@ -29,6 +29,9 @@
     _fileURL = [fileURL copy];
     [self setPreferredFilename:[fileURL ks_lastPathComponent]];
     
+    // Cache the hash since calculating it requires a memory allocation. Use path so file URLs have the correct hash
+    _hash = [[[self mediaURL] path] hash];
+    
     return self;
 }
 
@@ -160,7 +163,7 @@
     return result;
 }
 
-- (NSUInteger)hash; { return 0; }
+- (NSUInteger)hash; { return _hash; }
 
 #pragma mark Comparing Media
 
