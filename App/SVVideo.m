@@ -528,15 +528,17 @@
 	NSString *elementID = [context pushPreferredIdName:@"video"];
     [context startElement:@"video"];
 	
-	// Remove poster on iOS < 4; prevents video from working
-	[context startJavascriptElementWithSrc:nil];
-	[context stopWritingInline];
-	[context writeString:@"// Remove poster from buggy iOS before 4\n"];
-	[context writeString:@"if (navigator.userAgent.match(/CPU( iPhone)*( OS )*([123][_0-9]*)? like Mac OS X/)) {\n"];
-	[context writeString:[NSString stringWithFormat:@"\t$('#%@').removeAttr('poster');\n", elementID]];
-	[context writeString:@"}\n"];
-	[context endElement];	
-	
+	if (posterSourceURL)
+	{
+		// Remove poster on iOS < 4; prevents video from working
+		[context startJavascriptElementWithSrc:nil];
+		[context stopWritingInline];
+		[context writeString:@"// Remove poster from buggy iOS before 4\n"];
+		[context writeString:@"if (navigator.userAgent.match(/CPU( iPhone)*( OS )*([123][_0-9]*)? like Mac OS X/)) {\n"];
+		[context writeString:[NSString stringWithFormat:@"\t$('#%@').removeAttr('poster');\n", elementID]];
+		[context writeString:@"}"];
+		[context endElement];	
+	}
 	
 	// source
 	[context pushAttribute:@"src" value:movieSourcePath];
@@ -982,7 +984,7 @@
 			result = [NSImage imageFromOSType:kAlertStopIcon];	// Not locally hosted media, and no override -- thus can't view.
 		}
 	}
-	else if ([type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-​media-wmv"])
+	else if ([type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"])
 	{
 		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
 	}
@@ -1036,7 +1038,7 @@
 		}
 
 	}
-	else if ([type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-​media-wmv"])
+	else if ([type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"])
 	{
 		result = NSLocalizedString(@"Video will not play on Macs unless \\U201CFlip4Mac\\U201D is installed", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
