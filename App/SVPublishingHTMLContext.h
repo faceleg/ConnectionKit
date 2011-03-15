@@ -23,6 +23,9 @@
     NSUInteger              _disableChangeTracking;
     KSSHA1Stream            *_contentHashStream;
     KSOutputStreamWriter    *_contentHashDataOutput;
+    
+    // Event loop
+    NSUInteger  _disableRunningEventLoop;
 }
 
 - (id)initWithUploadPath:(NSString *)path

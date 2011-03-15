@@ -257,12 +257,24 @@
         [_contentHashDataOutput writeString:string];
     }
     
+    
     // Run event loop to avoid stalling the GUI too long
-    NSEvent *event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantPast] inMode:NSDefaultRunLoopMode dequeue:YES];
-    if (event)
+    if (!_disableRunningEventLoop)
     {
-        [NSApp sendEvent:event];
+        NSEvent *event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantPast] inMode:NSDefaultRunLoopMode dequeue:YES];
+        if (event)
+        {
+            [NSApp sendEvent:event];
+        }
     }
+}
+
+- (void)writeGraphic:(id <SVGraphic>)graphic;
+{
+    // Disable running the event loop while writing a graphic, since it might mess with the graphic's state. #111825
+    _disableRunningEventLoop++;
+    [super writeGraphic:graphic];
+    _disableRunningEventLoop--;
 }
 
 #pragma mark Page
