@@ -109,7 +109,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 @implementation WEKWebEditorView
 
-#pragma mark Initialization & Deallocation
+#pragma mark Lifecycle
 
 - (id)initWithFrame:(NSRect)frameRect
 {
@@ -181,27 +181,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return self;
 }
 
-- (void)viewDidMoveToWindow
-{
-    if ([self window])
-    {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(updateMouseoverWithFakeEvent)
-                                                     name:KTApplicationDidSendFlagsChangedEvent
-                                                   object:[KTApplication sharedApplication]];
-    }
-}
-
-- (void)viewWillMoveToWindow:(NSWindow *)newWindow
-{
-    if ([self window])
-    {
-        [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                        name:KTApplicationDidSendFlagsChangedEvent
-                                                      object:[KTApplication sharedApplication]];
-    }
-}
-
 - (void)dealloc
 {
     [self unbind:@"liveEditableAndSelectableLinks"];
@@ -220,6 +199,38 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [_undoManager release];
         
     [super dealloc];
+}
+
+#pragma mark Window Tracking
+
+- (void)viewDidMoveToWindow
+{
+    if ([self window])
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(updateMouseoverWithFakeEvent)
+                                                     name:KTApplicationDidSendFlagsChangedEvent
+                                                   object:[KTApplication sharedApplication]];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(updateLinkManager)
+                                                     name:NSWindowDidBecomeKeyNotification
+                                                   object:[self window]];
+    }
+}
+
+- (void)viewWillMoveToWindow:(NSWindow *)newWindow
+{
+    if ([self window])
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:KTApplicationDidSendFlagsChangedEvent
+                                                      object:[KTApplication sharedApplication]];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:NSWindowDidBecomeKeyNotification
+                                                      object:[self window]];
+    }
 }
 
 #pragma mark Document
@@ -762,6 +773,24 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     
     return result;
+}
+
+#pragma mark Links
+
+- (void)updateLinkManager;
+{
+    NSWindow *window = [self window];
+    if ([window isKeyWindow])
+    {
+        NSResponder *firstResponder = [window firstResponder];
+        if ([self ks_followsResponder:firstResponder])
+        {
+            WebView *webView = [self webView];
+            SVLink *link = [webView selectedLink];
+            if (link) link = [[self delegate] webEditor:self willSelectLink:link];  // search for corresponding page
+            [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[webView canCreateLink]];;
+        }
+    }
 }
 
 #pragma mark Editing
@@ -2430,10 +2459,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     //  Update Link Manager to match
     WebView *webView = [notification object];
-    SVLink *link = [webView selectedLink];
-    if (link) link = [[self delegate] webEditor:self willSelectLink:link];  // search for corresponding page
-    [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[webView canCreateLink]];
-    
+    [self updateLinkManager];
     
     // Process change
     [self didChangeText];
@@ -2449,9 +2475,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     
     //  Update Link Manager to match
-    SVLink *link = [webView selectedLink];
-    if (link) link = [[self delegate] webEditor:self willSelectLink:link];  // search for corresponding page
-    [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[webView canCreateLink]];
+    [self updateLinkManager];
     
     
     // Let focused text know its selection has changed
