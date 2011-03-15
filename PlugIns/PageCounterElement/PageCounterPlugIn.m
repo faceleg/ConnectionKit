@@ -53,11 +53,6 @@
  
 
 
-//SVLocalizedString("page views", " preceeded by a number to show how many times a page has been viewed over the web");
-//;
-//;
-
-
 NSString *PCThemeKey = @"theme";
 NSString *PCTypeKey = @"type";		
 NSString *PCWidthKey = @"width";
@@ -227,10 +222,7 @@ NSString *PCSampleImageKey = @"sampleImage";
         {
             if ( [context isForEditing] )
             {
-                [context writePlaceholderWithText:SVLocalizedString(@"Page Counter", "placeholder for invisible page counter") 
-                                          options:0];
-                [context writePlaceholderWithText:SVLocalizedString(@"Not visible on published site.", "placeholder for invisible page counter")
-                                          options:0];
+                [context writePlaceholderWithText:SVLocalizedString(@"Invisible Page Counter", "placeholder for invisible page counter") options:0];
             }
             NSString *script = [NSString stringWithFormat:
                                 @"<script type=\"text/javascript\">\n"
