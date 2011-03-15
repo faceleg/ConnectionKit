@@ -453,8 +453,15 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 		
 		BOOL foundOneTimestamp = NO;
 		BOOL foundOneComment = NO;
+		BOOL foundOneThumbnail = NO;
 		for (NSManagedObject *child in children)
 		{
+			NSString *thumbnailMediaIdentifier = [child valueForKey:@"thumbnailMediaIdentifier"];
+			if (thumbnailMediaIdentifier)
+			{
+				foundOneThumbnail = YES;
+			}
+			
 			NSNumber *includeTimestamp = [child valueForKey:@"includeTimestamp"];
 			if (includeTimestamp && [includeTimestamp boolValue])
 			{
@@ -465,9 +472,9 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 			{
 				foundOneComment = YES;
 			}
-			if (foundOneTimestamp && foundOneComment)
+			if (foundOneTimestamp && foundOneComment && foundOneThumbnail)
 			{
-				break;		// no point in continuing if both are turned on
+				break;		// no point in continuing if all are turned on
 			}
 		}
 		if (foundOneTimestamp)
@@ -477,7 +484,11 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 		if (foundOneComment)
 		{
 			self.showComments = YES;
-		}		
+		}
+		if (foundOneThumbnail && kLayoutArticlesAndMedia == self.indexLayoutType)
+		{
+			self.indexLayoutType = kLayoutArticlesAndThumbs;		// we had thumbs before, so use this instead.
+		}
 	}
 }
 
