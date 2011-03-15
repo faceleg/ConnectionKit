@@ -156,7 +156,17 @@
     
     // Do the insert
     [super insertObject:object atArrangedObjectIndex:index];
+    
+    
+    // Inform of the insert. Turn on archives if needed
     [object didAddToPage:[self page]];
+    
+    if ([object isKindOfClass:[SVPlugInGraphic class]] &&
+        [[object plugInIdentifier] isEqualToString:@"sandvox.CollectionArchiveElement"] &&
+        [object indexedCollection] == [self page])
+    {
+        [[self page] setCollectionGenerateArchives:NSBOOL(YES)];
+    }
     
     
     // Detach from text attachment
