@@ -42,6 +42,4 @@
 	IBOutlet NSPopUpButton *oThemePopUp;
 }
 
-- (IBAction)changeTheme:(id)sender;
-
 @end

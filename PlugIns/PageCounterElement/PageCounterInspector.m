@@ -86,18 +86,7 @@
 		}
 	}
     
-    //NSUInteger themeType = [[[[self inspectedObjectsController] selection] valueForKey:@"themeType"] unsignedIntegerValue];
-    //[oThemePopUp setBordered:(themeType == PC_INVISIBLE || themeType == PC_TEXT)];
     [oThemePopUp setBordered:NO];
-}
-
-
-#pragma mark Selected Theme
-
-- (IBAction)changeTheme:(id)sender
-{
-    //NSInteger index = [sender indexOfSelectedItem];
-    //[oThemePopUp setBordered:(index == PC_INVISIBLE || index == PC_TEXT)];
 }
 
 @end
