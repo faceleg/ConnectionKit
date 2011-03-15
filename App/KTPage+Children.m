@@ -90,15 +90,16 @@
 @dynamic collectionSortOrder;
 - (void)setCollectionSortOrder:(NSNumber *)sorting
 {
-    [self willChangeValueForKey:@"collectionSortOrder"];
-	[self setPrimitiveValue:sorting forKey:@"collectionSortOrder"];
-    [self didChangeValueForKey:@"collectionSortOrder"];
-	
 	// When switching TO manual sorting ensure child indexes are up-to-date
+    // Should do this first. #111644
 	if ([sorting integerValue] == SVCollectionSortManually)
 	{
 		[KTPage setCollectionIndexForPages:[self sortedChildren]];
 	}
+    
+	[self willChangeValueForKey:@"collectionSortOrder"];
+	[self setPrimitiveValue:sorting forKey:@"collectionSortOrder"];
+    [self didChangeValueForKey:@"collectionSortOrder"];
 }
 
 - (BOOL)isSortedChronologically;
