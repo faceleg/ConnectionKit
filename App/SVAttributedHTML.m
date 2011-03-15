@@ -16,6 +16,7 @@
 #import "NSManagedObject+KTExtensions.h"
 
 #import "NSString+Karelia.h"
+#import "NSXMLElement+Karelia.h"
 
 
 @implementation NSAttributedString (SVAttributedHTML)

@@ -21,7 +21,6 @@
 #import "NSArray+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
 #import "NSError+Karelia.h"
-#import "NSXMLElement+Karelia.h"
 
 
 @implementation SVArticle 
