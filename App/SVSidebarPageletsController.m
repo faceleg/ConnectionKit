@@ -9,6 +9,7 @@
 #import "SVSidebarPageletsController.h"
 
 #import "KTPage.h"
+#import "SVPlugInGraphic.h"
 #import "SVSidebar.h"
 
 #import "NSSortDescriptor+Karelia.h"
@@ -194,6 +195,29 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     }
 }
 
+#pragma mark Removing Objects
+
+- (void)willDeleteCollectionArchive:(SVPlugInGraphic *)archive;
+{
+    KTPage *page = [archive indexedCollection];
+    if ([[page collectionGenerateArchives] boolValue])
+    {
+        // Are there any other archives attached? If so, definitely don't want to disable archive generation
+        NSSet *indexGraphics = [page valueForKey:@"indexGraphics"];
+        for (SVPlugInGraphic *aGraphic in indexGraphics)
+        {
+            if (aGraphic != archive &&
+                [[aGraphic plugInIdentifier] isEqualToString:@"sandvox.CollectionArchiveElement"])
+            {
+                return;
+            }
+        }
+        
+        
+        [page setCollectionGenerateArchives:NSBOOL(NO)];
+    }
+}
+
 - (void)willRemoveObject:(id)object
 {
     [super willRemoveObject:object];
@@ -201,13 +225,22 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     
     OBPRECONDITION([object isKindOfClass:[SVGraphic class]]);
     SVGraphic *pagelet = object;
-                   
+    
+    
     // Recurse down the page tree removing the pagelet from their sidebars.
     [self removePagelet:pagelet fromSidebarOfPage:(KTPage *)[self page]];
     
     // Delete the pagelet if it no longer appears on any pages
     if ([[pagelet sidebars] count] == 0 && ![pagelet textAttachment])
     {
+        // Should this turn off archives? #65207
+        if ([pagelet isKindOfClass:[SVPlugInGraphic class]] &&
+            [[object plugInIdentifier] isEqualToString:@"sandvox.CollectionArchiveElement"])
+        {
+            [self willDeleteCollectionArchive:object];
+        }
+        
+        
         [[self managedObjectContext] deleteObject:pagelet];
     }
 }
