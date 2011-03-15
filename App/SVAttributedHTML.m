@@ -251,7 +251,7 @@
 
 - (NSString *)truncateMarkup:(NSString *)markup truncation:(NSUInteger)maxItemLength truncationType:(SVTruncationType)truncationType didTruncate:(BOOL *)outDidTruncate;
 {
-	OFF((@"TRUNCATE TO: %d [%d]", maxItemLength, truncationType));
+	LOG((@"TRUNCATE TO: %d [%d]", maxItemLength, truncationType));
 	OBPRECONDITION(markup);
 	NSString *result = markup;
 	BOOL removedAnything = NO;
@@ -296,7 +296,7 @@
 			{
 				NSLog(@"%@", e);
 			}
-			if (theError) OFF((@"NSXMLDocument from truncation: %@", theError));
+			if (theError) LOG((@"NSXMLDocument err from truncation: %@", theError));
 			
 			if (xmlDoc)
 			{
