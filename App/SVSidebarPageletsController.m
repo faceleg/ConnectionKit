@@ -8,9 +8,11 @@
 
 #import "SVSidebarPageletsController.h"
 
-#import "KTPage.h"
+#import "KTHostProperties.h"
+#import "KTPage+Paths.h"
 #import "SVPlugInGraphic.h"
 #import "SVSidebar.h"
+#import "KTSite.h"
 
 #import "NSSortDescriptor+Karelia.h"
 
@@ -202,6 +204,15 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     KTPage *page = [archive indexedCollection];
     if ([[page collectionGenerateArchives] boolValue])
     {
+        // Have the archives been published? If so, want to keep them
+        if ([page datePublished])
+        {
+            NSString *archivePath = [[page uploadPath] stringByAppendingPathComponent:[page archivesFilename]];
+            
+            if ([[[page site] hostProperties] publishingRecordForPath:archivePath]) return;
+        }
+        
+        
         // Are there any other archives attached? If so, definitely don't want to disable archive generation
         NSSet *indexGraphics = [page valueForKey:@"indexGraphics"];
         for (SVPlugInGraphic *aGraphic in indexGraphics)
