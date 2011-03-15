@@ -208,6 +208,7 @@ typedef enum {
                                        alt:(NSString *)altText
                                      width:(NSUInteger)width
                                     height:(NSUInteger)height
+                                      type:(NSString *)type // may be nil for context to guess
                                    options:(SVThumbnailOptions)options;
 
 

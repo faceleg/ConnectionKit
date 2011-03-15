@@ -583,6 +583,7 @@
                                                     alt:@""
                                                   width:width
                                                  height:height
+                                                   type:nil
                                                 options:options];
         }
         return YES;

@@ -859,7 +859,7 @@
             NSURL *thumbURL = [KTDesign placeholderImageURLForDesign:design];
             SVMedia *media = [[SVMedia alloc] initByReferencingURL:thumbURL];
             
-            [self writeThumbnailImageWithSourceMedia:media alt:@"" width:width height:height options:options];
+            [self writeThumbnailImageWithSourceMedia:media alt:@"" width:width height:height type:nil options:options];
         }
         
         return YES;
@@ -870,6 +870,7 @@
                                        alt:(NSString *)altText
                                      width:(NSUInteger)width
                                     height:(NSUInteger)height
+                                      type:(NSString *)type // may be nil for context to guess
                                    options:(SVThumbnailOptions)options;
 {
     // Scale to fit?
@@ -892,6 +893,8 @@
     }
     
     
+    if (!type) type = (NSString *)kUTTypePNG;
+    
     // During editing, cheat and use special URL if possible. #98041
     if ([self isForEditing] && ![media mediaData])
     {
@@ -900,12 +903,12 @@
                                            scalingMode:scaling
                                             sharpening:0.0f
                                      compressionFactor:1.0f
-                                              fileType:(NSString *)kUTTypePNG];
+                                              fileType:type];
         
         [self writeImageWithSrc:[self relativeStringFromURL:url]
-                               alt:@""
-                             width:[NSNumber numberWithUnsignedInteger:width]
-                            height:[NSNumber numberWithUnsignedInteger:height]];
+                            alt:@""
+                          width:[NSNumber numberWithUnsignedInteger:width]
+                         height:[NSNumber numberWithUnsignedInteger:height]];
     }
     else
     {
@@ -913,7 +916,7 @@
                                    alt:altText
                                  width:[NSNumber numberWithUnsignedInteger:width]
                                 height:[NSNumber numberWithUnsignedInteger:height]
-                                  type:(NSString *)kUTTypePNG
+                                  type:type
                      preferredFilename:nil];
     }
 }
