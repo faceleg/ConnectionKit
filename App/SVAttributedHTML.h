@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "KSWriter.h"
+#import "SVPageProtocol.h"
 
 
 @class SVHTMLContext, SVGraphic;
@@ -38,5 +39,15 @@
 #pragma mark Convenience
 + (NSAttributedString *)attributedHTMLStringWithAttachment:(id)attachment;
 + (NSAttributedString *)attributedHTMLStringWithGraphic:(SVGraphic *)graphic;
+
+
+#pragma mark Truncation
+- (NSAttributedString *)attributedHTMLStringWithTruncation:(NSUInteger)maxCount
+                                                      type:(SVTruncationType)truncationType
+                                         includeLargeMedia:(BOOL)includeLargeMedia
+                                               didTruncate:(BOOL *)truncated;
+
+
+
 
 @end

@@ -21,12 +21,6 @@
 
 
 #pragma mark HTML
-
-- (NSAttributedString *)attributedHTMLStringWithTruncation:(NSUInteger)maxCount
-                                                      type:(SVTruncationType)truncationType
-                                         includeLargeMedia:(BOOL)includeLargeMedia
-                                               didTruncate:(BOOL *)truncated;
-
 - (NSUInteger)writeEarlyCallouts:(SVHTMLContext *)context;
 
 @end

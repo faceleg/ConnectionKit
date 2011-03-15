@@ -12,6 +12,7 @@
 
 #import "SVArticle.h"
 #import "SVArchivePage.h"
+#import "SVAttributedHTML.h"
 #import "SVHTMLContext.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVMediaGraphic.h"
@@ -425,10 +426,11 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 		
 		if ( maxItemLength > 0 && kTruncateNone != truncationType )
 		{
-			html = [[self article] attributedHTMLStringWithTruncation:maxItemLength
-                                                                 type:truncationType
-                                                    includeLargeMedia:includeLargeMedia
-                                                          didTruncate:&result];
+			html = [[[self article] attributedHTMLString]
+                    attributedHTMLStringWithTruncation:maxItemLength
+                    type:truncationType
+                    includeLargeMedia:includeLargeMedia
+                    didTruncate:&result];
 		}
 		else
 		{
