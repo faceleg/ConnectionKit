@@ -859,7 +859,13 @@
             NSURL *thumbURL = [KTDesign placeholderImageURLForDesign:design];
             SVMedia *media = [[SVMedia alloc] initByReferencingURL:thumbURL];
             
-            [self writeThumbnailImageWithSourceMedia:media alt:@"" width:width height:height type:nil options:options];
+            [self writeThumbnailImageWithSourceMedia:media
+                                                 alt:@""
+                                               width:width
+                                              height:height
+                                                type:nil
+                                   preferredFilename:nil
+                                             options:options];
         }
         
         return YES;
@@ -871,6 +877,7 @@
                                      width:(NSUInteger)width
                                     height:(NSUInteger)height
                                       type:(NSString *)type // may be nil for context to guess
+                         preferredFilename:(NSString *)filename
                                    options:(SVThumbnailOptions)options;
 {
     // Scale to fit?
@@ -917,7 +924,7 @@
                                  width:[NSNumber numberWithUnsignedInteger:width]
                                 height:[NSNumber numberWithUnsignedInteger:height]
                                   type:type
-                     preferredFilename:nil];
+                     preferredFilename:filename];
     }
 }
 

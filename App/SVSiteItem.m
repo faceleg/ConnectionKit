@@ -584,6 +584,7 @@
                                                   width:width
                                                  height:height
                                                    type:nil
+                                      preferredFilename:nil
                                                 options:options];
         }
         return YES;
