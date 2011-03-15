@@ -574,12 +574,19 @@
         increment = NSMaxRange(sAttachmentRange) - sRange.location;
         sRange.location += increment; sRange.length -= increment;
         
-        NSObject *attachment = [untruncatedHTML attribute:@"SVAttachment"
-                                                  atIndex:sAttachmentRange.location
-                                           effectiveRange:NULL];
+        SVTextAttachment *attachment = [untruncatedHTML attribute:@"SVAttachment"
+                                                          atIndex:sAttachmentRange.location
+                                                   effectiveRange:NULL];
         
         // Copy the actual attachment across to the result
-        if (attachment) [result addAttribute:@"SVAttachment" value:attachment range:dAttachmentRange];
+        if (attachment)
+        {
+            BOOL causesWrap = [[attachment causesWrap] boolValue];
+            if (includeLargeMedia || !causesWrap)
+            {    
+                [result addAttribute:@"SVAttachment" value:attachment range:dAttachmentRange];
+            }
+        }
     }
     
     
