@@ -15,6 +15,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
 #import "KTImageScalingSettings.h"
+#import "KTImageScalingURLProtocol.h"
 #import "KTMaster.h"
 #import "SVMediaGraphic.h"
 #import "KTPage.h"
@@ -872,8 +873,12 @@
                                    options:(SVThumbnailOptions)options;
 {
     // Scale to fit?
+    KSImageScalingMode scaling = KSImageScalingModeCropCenter;
+    
     if (options & SVThumbnailScaleAspectFit)
     {
+        scaling = KSImageScalingModeFill;
+        
         KTImageScalingSettings *settings = [KTImageScalingSettings settingsWithBehavior:KTScaleToSize size:NSMakeSize(width, height)];
         
         CIImage *image = [[CIImage alloc] initWithContentsOfURL:[media mediaURL]];
@@ -886,12 +891,31 @@
         [image release];
     }
     
-    [self writeImageWithSourceMedia:media
+    
+    // During editing, cheat and use special URL if possible. #98041
+    if ([self isForEditing] && ![media mediaData])
+    {
+        NSURL *url = [NSURL sandvoxImageURLWithFileURL:[media mediaURL]
+                                                  size:NSMakeSize(width, height)
+                                           scalingMode:scaling
+                                            sharpening:0.0f
+                                     compressionFactor:1.0f
+                                              fileType:(NSString *)kUTTypePNG];
+        
+        [self writeImageWithSrc:[self relativeStringFromURL:url]
+                               alt:@""
+                             width:[NSNumber numberWithUnsignedInteger:width]
+                            height:[NSNumber numberWithUnsignedInteger:height]];
+    }
+    else
+    {
+        [self writeImageWithSourceMedia:media
                                    alt:altText
                                  width:[NSNumber numberWithUnsignedInteger:width]
                                 height:[NSNumber numberWithUnsignedInteger:height]
                                   type:(NSString *)kUTTypePNG
                      preferredFilename:nil];
+    }
 }
 
 #pragma mark Resource Files
