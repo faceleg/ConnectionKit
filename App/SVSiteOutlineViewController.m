@@ -1221,6 +1221,10 @@
     //set up a pulsating window
     if (node)
     {
+        // #111648 - only allow internal drops if within main window
+        NSWindow *window = [[self outlineView] window];
+        if ( ![window isMainWindow] ) return NSDragOperationNone;
+        
         NSInteger row = [[self outlineView] rowForItem:node];
         NSRect rowRect = [[self outlineView] rectOfRow:row];
         //covert the origin to window coords
