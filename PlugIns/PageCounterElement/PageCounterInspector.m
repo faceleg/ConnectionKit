@@ -42,49 +42,50 @@
 
 - (void)awakeFromNib
 {
-	[oThemePopUp removeAllItems];
-	
-	NSEnumerator *themeEnum = [[[PageCounterPlugIn class] themes] objectEnumerator];
-	NSDictionary *themeDict;
-	BOOL hasDoneGraphicsYet = NO;
-	int tag = 0;
-	
-	while ((themeDict = [themeEnum nextObject]) != nil)
-	{
-		NSString *themeTitle = [themeDict objectForKey:PCThemeKey];
+    [oThemePopUp removeAllItems];
+    
+    NSArray *themes = [[PageCounterPlugIn class] themes];
+    BOOL hasDoneGraphicsYet = NO;
+	NSInteger tag = 0;
+
+    for ( NSUInteger i = 0; i < [themes count] ; i++ )
+    {
+        NSDictionary *themeInfo = [themes objectAtIndex:i];
+        
+        NSString *themeTitle = [themeInfo objectForKey:PCThemeKey];
         if ( !themeTitle ) continue; // skip separator
         
-		if ([[themeDict objectForKey:PCTypeKey] unsignedIntegerValue] == PC_GRAPHICS)
-		{
-			if (!hasDoneGraphicsYet)
-			{
-				hasDoneGraphicsYet = YES;
-				[[oThemePopUp menu] addItem:[NSMenuItem separatorItem]];
+        if ( PC_GRAPHICS == [[themeInfo objectForKey:PCTypeKey] unsignedIntegerValue] )
+        {
+            if ( !hasDoneGraphicsYet )
+            {
+                hasDoneGraphicsYet = YES;
+                [[oThemePopUp menu] addItem:[NSMenuItem separatorItem]];
                 [[oThemePopUp lastItem] setTag:-1];
-			}
-			[oThemePopUp addItemWithTitle:@""];	// ADD THE MENU
+            }
+            [oThemePopUp addItemWithTitle:@""];             // ADD THE MENU
             
-			NSImage *sampleImage = [themeDict objectForKey:PCSampleImageKey];
-			if (sampleImage)
-			{
-				[[oThemePopUp lastItem] setImage:sampleImage];
-			}
+            NSImage *sampleImage = [themeInfo objectForKey:PCSampleImageKey];
+            if ( sampleImage )
+            {
+                [[oThemePopUp lastItem] setImage:sampleImage];
+            }
+            [[oThemePopUp lastItem] setTag:tag++];
+        }
+        else 
+        {
+            [oThemePopUp addItemWithTitle:themeTitle];      // ADD THE MENU
+			[[oThemePopUp lastItem] setAttributedTitle:     // make it small system font since pop-up size is normal
+             [[[NSAttributedString alloc]
+               initWithString:themeTitle
+               attributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                           [NSFont systemFontOfSize:[NSFont smallSystemFontSize]],
+                           NSFontAttributeName,
+                           nil]
+               ] autorelease]];
 			[[oThemePopUp lastItem] setTag:tag++];
-		}
-		else
-		{
-			[oThemePopUp addItemWithTitle:themeTitle];	// ADD THE MENU
-			[[oThemePopUp lastItem] setAttributedTitle:	// make it small system font since pop-up size is normal
-				[[[NSAttributedString alloc]
-					initWithString:themeTitle
-						attributes:[NSDictionary dictionaryWithObjectsAndKeys:
-										[NSFont systemFontOfSize:[NSFont smallSystemFontSize]],
-										NSFontAttributeName,
-										nil]
-					] autorelease]];
-			[[oThemePopUp lastItem] setTag:tag++];
-		}
-	}
+        }
+    }
     
     [oThemePopUp setBordered:NO];
 }
