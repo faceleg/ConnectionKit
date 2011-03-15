@@ -36,7 +36,6 @@
 
 
 #import "PageCounterPlugIn.h"
-#import <assertions.h>
 
  /*
   
@@ -55,8 +54,8 @@
 
 
 //SVLocalizedString("page views", " preceeded by a number to show how many times a page has been viewed over the web");
-//SVLocalizedString("Page Counter", "placeholder for invisible page counter");
-//SVLocalizedString("Not visible on published site.", "placeholder for invisible page counter");
+//;
+//;
 
 
 NSString *PCThemeKey = @"theme";
@@ -65,6 +64,12 @@ NSString *PCWidthKey = @"width";
 NSString *PCHeightKey = @"height";
 NSString *PCImagesPathKey = @"path";
 NSString *PCSampleImageKey = @"sampleImage";
+
+
+@interface PageCounterPlugIn ()
+- (NSURL *)resourcesURL:(id <SVPlugInContext>)context;
+@end
+
 
 
 @implementation PageCounterPlugIn
@@ -191,33 +196,138 @@ NSString *PCSampleImageKey = @"sampleImage";
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
+    // write replaceable div
+    NSDictionary *attrs = [NSDictionary dictionaryWithObject:@"text-align: center;" forKey:@"style"];
+    NSString *divID = [context startElement:@"div"
+                            preferredIdName:@"pc"
+                                  className:@"page_counter"
+                                 attributes:attrs];
+    [context endElement]; // </div>
+    
+    // write appropriate scripts to endBody
+    [context addMarkupToEndOfBody:@"<!-- pagecounter scripts -->\n"];
+
+    // [[=%&parser.currentPage.URL]]
+    NSURL *currentPageURL = [context baseURL];
+
+    NSString *countScript = nil;
+    if ( [context isForEditing] )
+    {
+        countScript = @"<script type=\"text/javascript\">var svxPageCount = \"1234\";</script>\n";
+    }
+    else 
+    {
+        countScript = [NSString stringWithFormat:@"<script type=\"text/javascript\" src=\"http://service.karelia.com/ctr/count.js?u=%@\"></script>\n", currentPageURL];
+    }
+    [context addMarkupToEndOfBody:countScript];
+    
+    switch ( self.themeType ) 
+    {
+        case 0: // invisible
+        {
+            if ( [context isForEditing] )
+            {
+                [context writePlaceholderWithText:SVLocalizedString(@"Page Counter", "placeholder for invisible page counter") 
+                                          options:0];
+                [context writePlaceholderWithText:SVLocalizedString(@"Not visible on published site.", "placeholder for invisible page counter")
+                                          options:0];
+            }
+            NSString *script = [NSString stringWithFormat:
+                                @"<script type=\"text/javascript\">\n"
+                                @"    var commentNode = document.createComment(svxPageCount);\n"
+                                @"    document.getElementById(\"%@\").appendChild(commentNode);\n"
+                                @"</script>\n",
+                                divID];
+            [context addMarkupToEndOfBody:script];
+        }
+            break;
+            
+        case 1: // text-only
+        {
+            NSString *script = [NSString stringWithFormat:
+                                @"<script type=\"text/javascript\">\n"
+                                @"    var paragraph = document.createElement(\"p\");\n"
+                                @"    var text = document.createTextNode(svxPageCount);\n"
+                                @"    paragraph.appendChild(text);\n"
+                                @"    document.getElementById(\"%@\").appendChild(paragraph);\n"
+                                @"</script>\n",
+                                divID];
+            [context addMarkupToEndOfBody:script];
+        }
+            break;
+            
+        case 2: // graphical
+        {
+            NSString *script = [NSString stringWithFormat:
+                                @"<script type=\"text/javascript\">\n"
+                                @"    var resourceDir = \"%@\";\n"                                  // resourcesURL
+                                @"    var theme = \"%@\";\n"                                        // themeTitle
+                                @"    var countRequest = false;\n"
+                                @"    var pcWidth = \"%@\";\n"                                      // themeWidth
+                                @"    var pcHeight = \"%@\";\n"                                     // themeHeight
+                                @"\n"
+                                @"    function showCount(countStr)\n"
+                                @"    {\n"
+                                @"        var pagelet = document.getElementById(\"%@\");\n"         // divID
+                                @"        var i, c = countStr.length;\n"
+                                @"        for (i = 0; i < c; i++)\n"
+                                @"        {\n"
+                                @"            var image = document.createElement(\"img\");\n"
+                                @"            image.setAttribute(\"style\", \"padding:0px; margin:0px;\");\n"
+                                @"            image.setAttribute(\"src\", resourceDir+\"/\"+theme+\"-\"+countStr.charAt(i)+\".png\");\n"
+                                @"            image.setAttribute(\"width\", pcWidth);\n"
+                                @"            image.setAttribute(\"height\", pcHeight);\n"
+                                @"            image.setAttribute(\"alt\", "" + countStr.charAt(i));\n"
+                                @"            pagelet.appendChild(image);\n"
+                                @"        }\n"
+                                @"    }\n"
+                                @"    showCount(svxPageCount);\n"
+                                @"</script>\n",
+                                [[self resourcesURL:context] absoluteString], [self themeTitle], [self themeWidth], [self themeHeight], divID];
+            [context addMarkupToEndOfBody:script];
+        }
+            break;
+        default:
+            break;
+    }
+    
+    if ( ![context isForEditing] )
+    {
+        NSString *noscriptScript  = nil;
+        if ( self.themeType > 0 )
+        {
+            noscriptScript = [NSString stringWithFormat:
+                              @"<noscript>\n"
+                              @"    <!-- tickle pagecounter by loading a small image -->\n"
+                              @"    <p><img src=\"http://service.karelia.com/ctr/noscript.gif?u=%@\" alt=\"\" /></p>\n"
+                              @"</noscript>\n",
+                              currentPageURL];
+        }
+        else 
+        {
+            noscriptScript = [NSString stringWithFormat:
+                              @"<noscript>\n"
+                              @"    <!-- tickle pagecounter by loading a small image -->\n"
+                              @"    <div><img src=\"http://service.karelia.com/ctr/1x1.gif?u=%@\" alt=\"\" height=\"1\" width=\"1\" /></div>\n"
+                              @"</noscript>\n",
+                              currentPageURL];
+        }
+        [context addMarkupToEndOfBody:noscriptScript];
+    }
+    
+    [context addMarkupToEndOfBody:@"<!-- /pagecounter scripts -->\n"];
+
     // add dependencies
     [context addDependencyForKeyPath:@"selectedThemeIndex" ofObject:self];
-    
-    // make it all happen
-    //<div class="page_counter" style="text-align: center;" id="pc-[[=elementID]]">
-    NSDictionary *attrs = [NSDictionary dictionaryWithObject:@"text-align: center;" forKey:@"style"];
-    _divID = [context startElement:@"div"
-                   preferredIdName:@"pc"
-                         className:@"page_counter"
-                        attributes:attrs];
-    // parse template
-    [super writeHTML:context];
-    _divID = nil;
-    
-    // </div>
-    [context endElement];
 }
 
-- (NSURL *)resourcesURL
+- (NSURL *)resourcesURL:(id <SVPlugInContext>)context
 {
     // add resources and return URL
     NSURL *result = nil;
     
 	if (PC_GRAPHICS == self.themeType)
 	{
-        id<SVPlugInContext> context = [self currentContext]; 
-
 		NSString *theme = self.themeTitle;
 		NSBundle *b = [NSBundle bundleForClass:[self class]];
 		NSString *imagePath = [self.selectedTheme objectForKey:PCImagesPathKey];	// from default
@@ -236,7 +346,7 @@ NSString *PCSampleImageKey = @"sampleImage";
 				NSString *resource = [b pathForResource:[format stringByDeletingPathExtension]
                                                  ofType:[format pathExtension] 
                                             inDirectory:@"digits"];
-                OBASSERT(resource);
+                NSAssert((nil != resource), @"resource cannot be nil");
                 NSURL *resourceURL = [NSURL fileURLWithPath:resource];
                 contextResourceURL = [context addResourceWithURL:resourceURL];
 			}
@@ -259,7 +369,6 @@ NSString *PCSampleImageKey = @"sampleImage";
 
 #pragma mark Properties
 
-@synthesize divID = _divID;
 @synthesize selectedThemeIndex = _selectedThemeIndex;
 
 - (NSArray *)themes

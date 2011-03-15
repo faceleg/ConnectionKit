@@ -48,16 +48,10 @@ extern NSString *PCSampleImageKey;
 
 @interface PageCounterPlugIn : SVPlugIn
 {
-    NSString *_divID;   // weak ref
     NSUInteger _selectedThemeIndex;
 }
 
 + (NSArray *)themes;
-
-@property (nonatomic, readonly) NSString *divID;
-
-// "published" resources location
-@property (nonatomic, readonly) NSURL *resourcesURL;
 
 // index into themes array
 @property (nonatomic) NSUInteger selectedThemeIndex;

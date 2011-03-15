@@ -12,7 +12,6 @@
 		3C42DEFD0D64CF25004F35FD /* PageCounterPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42DEFC0D64CF25004F35FD /* PageCounterPlugIn.m */; };
 		3C42E2290D64D050004F35FD /* digits in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E1870D64D050004F35FD /* digits */; };
 		3C42E22D0D64D07D004F35FD /* counter.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E22A0D64D07D004F35FD /* counter.icns */; };
-		3C42E22E0D64D07D004F35FD /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E22B0D64D07D004F35FD /* Template.html */; };
 		3C42E2350D64D093004F35FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E2310D64D093004F35FD /* Localizable.strings */; };
 		3C42E24D0D64D116004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E24C0D64D116004F35FD /* License.rtf */; };
 		3C5D6F5212A4339600AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F5012A4339600AAAB18 /* Inspector.xib */; };
@@ -33,7 +32,6 @@
 		3C42DEFC0D64CF25004F35FD /* PageCounterPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageCounterPlugIn.m; sourceTree = "<group>"; };
 		3C42E1870D64D050004F35FD /* digits */ = {isa = PBXFileReference; lastKnownFileType = folder; path = digits; sourceTree = "<group>"; };
 		3C42E22A0D64D07D004F35FD /* counter.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = counter.icns; sourceTree = "<group>"; };
-		3C42E22B0D64D07D004F35FD /* Template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Template.html; sourceTree = "<group>"; };
 		3C42E22C0D64D07D004F35FD /* pagecounter.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = pagecounter.php; sourceTree = "<group>"; };
 		3C42E2300D64D093004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E2320D64D093004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -110,7 +108,6 @@
 				3C42E24C0D64D116004F35FD /* License.rtf */,
 				3C42E2310D64D093004F35FD /* Localizable.strings */,
 				3C42E22C0D64D07D004F35FD /* pagecounter.php */,
-				3C42E22B0D64D07D004F35FD /* Template.html */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -230,7 +227,6 @@
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				3C42E2290D64D050004F35FD /* digits in Resources */,
 				3C42E22D0D64D07D004F35FD /* counter.icns in Resources */,
-				3C42E22E0D64D07D004F35FD /* Template.html in Resources */,
 				3C42E2350D64D093004F35FD /* Localizable.strings in Resources */,
 				3C42E24D0D64D116004F35FD /* License.rtf in Resources */,
 				3C5D6F5212A4339600AAAB18 /* Inspector.xib in Resources */,
