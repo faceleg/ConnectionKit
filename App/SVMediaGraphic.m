@@ -445,7 +445,7 @@
                   height:(NSUInteger)height
                   options:(SVThumbnailOptions)options;
 {
-    id <SVMedia> media = [[self plugIn] thumbnailMedia];
+    SVMedia *media = (id)[[self plugIn] thumbnailMedia];
     if (media)
     {
         KSImageScalingMode scaling = KSImageScalingModeCropCenter;
@@ -488,36 +488,14 @@
         CFRelease(types);
         
         
-        // During editing, cheat and use special URL if possible. #98041
-        if ([context isForEditing] && ![media mediaData])
-        {
-            NSURL *url = [NSURL sandvoxImageURLWithFileURL:[media mediaURL]
-                                                      size:NSMakeSize(width, height)
-                                               scalingMode:scaling
-                                                sharpening:0.0f
-                                         compressionFactor:1.0f
-                                                  fileType:type];
-            
-            [context writeImageWithSrc:[context relativeStringFromURL:url]
-                                   alt:@""
-                                 width:[NSNumber numberWithUnsignedInteger:width]
-                                height:[NSNumber numberWithUnsignedInteger:height]];
-        }
-        else
-        {
-            // Where to publish?
-            NSString *filename = [[[media preferredUploadPath] lastPathComponent] stringByDeletingPathExtension];
-            filename = [filename stringByAppendingFormat:@"_%u", width];
-            filename = [filename stringByAppendingPathExtension:[NSString filenameExtensionForUTI:type]];
-            
-            // Write out the image
-            [context writeImageWithSourceMedia:media
-                                           alt:@""
-                                         width:[NSNumber numberWithUnsignedInteger:width]
-                                        height:[NSNumber numberWithUnsignedInteger:height]
-                                          type:type
-                             preferredFilename:filename];
-        }
+        // Where to publish?
+        NSString *filename = [[[media preferredUploadPath] lastPathComponent] stringByDeletingPathExtension];
+        filename = [filename stringByAppendingFormat:@"_%u", width];
+        filename = [filename stringByAppendingPathExtension:[NSString filenameExtensionForUTI:type]];
+        
+        
+        // Write the thumbnail
+        [context writeThumbnailImageWithSourceMedia:media alt:@"" width:width height:height type:type preferredFilename:filename options:0];
     }
 }
 
