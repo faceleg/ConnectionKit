@@ -491,7 +491,7 @@
 	 Audio (kUTTypeAudio) UTIs:
 	 
 	 kUTTypeMP3
-	 kUTTypeMPEG4Audio but not kUTTypeAppleProtected​MPEG4Audio
+	 kUTTypeMPEG4Audio but not kUTTypeAppleProtected\0x200BMPEG4Audio
 	 public.ogg-vorbis
 	 public.aiff-audio
 	 com.microsoft.waveform-audio  (.wav)
