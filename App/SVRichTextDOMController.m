@@ -430,7 +430,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         [image makeOriginalSize];
     }
-    [image setConstrainsProportions:YES];
+    if ([image width] && [image height]) [image setConstrainsProportions:YES];
     
     
     // Match wrap settings if possible
