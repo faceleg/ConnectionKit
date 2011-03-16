@@ -142,7 +142,13 @@
     }
 }
 
-#pragma mark Basic Writing
+#pragma mark Characters
+
+- (DOMNode *)didWriteDOMText:(DOMText *)textNode nextNode:(DOMNode *)nextNode;
+{
+    DOMNode *result = [super didWriteDOMText:textNode nextNode:nextNode];
+    return result;
+}
 
 - (void)writeCharacters:(NSString *)string;
 {
@@ -263,7 +269,7 @@
 
 @implementation DOMText (SVBodyText)
 
-- (DOMNode *)writeTopLevelParagraph:(SVParagraphedHTMLWriterDOMAdaptor *)context;
+- (DOMNode *)writeTopLevelParagraph:(SVParagraphedHTMLWriterDOMAdaptor *)adaptor;
 {
     NSString *text = [self textContent];
     if ([text isWhitespace])
@@ -274,11 +280,12 @@
         {
             if ([previousNode nodeType] == DOM_TEXT_NODE)
             {
-                return [super writeTopLevelParagraph:context];  // delete self
+                return [super writeTopLevelParagraph:adaptor];  // delete self
             }
             else
             {
                 [self setTextContent:@"\n"];    // XML Writer will take care of writing its own whitespace
+                [[adaptor XMLWriter] writeCharacters:@"\n"];
             }
         }
         
