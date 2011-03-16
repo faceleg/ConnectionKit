@@ -32,6 +32,9 @@
 [[if !parser.HTMLContext.isForEditing]][[if feedURL]]
 		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&title]]" href="[[=&feedURL]]" charset="UTF-8" />
 [[endif2]][[endif]]
+[[if !parser.HTMLContext.isForEditing]]
+		[[=writeThumbnailRel]]
+[[endif]]
 		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
 [[if parser.includeStyling]]
         [[=writeStylesheetLinks]]

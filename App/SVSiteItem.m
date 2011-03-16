@@ -548,7 +548,7 @@
                                   height:height
                                  options:options];
     }
-    else
+	else
     {
         if (options & SVThumbnailLinkToPage)
         {
@@ -577,6 +577,7 @@
 {
     if (type == SVThumbnailTypeCustom && [self customThumbnail])
     {
+		
         if (!(options & SVThumbnailDryRun))
         {
             [context writeThumbnailImageWithSourceMedia:[[self customThumbnail] media]

@@ -12,7 +12,8 @@
 enum {
     SVThumbnailDryRun = 1 << 0,         // nothing will actually be written
     SVThumbnailScaleAspectFit = 1 << 1,  // without this, image will be cropped to fill width & height
-    SVThumbnailLinkToPage = 1 << 2      // if possible an <A> element will also be written linking to the page
+    SVThumbnailLinkToPage = 1 << 2,     // if possible an <A> element will also be written linking to the page
+	SVThumbnailLinkRel = 1 << 3			// Generate a link rel
 };
 typedef NSUInteger SVThumbnailOptions;
 

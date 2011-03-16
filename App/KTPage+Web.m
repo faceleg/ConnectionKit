@@ -237,6 +237,14 @@
 	return result;
 }
 
+#pragma mark thumbnail
+
+- (void)writeThumbnailRel	// For facebook, digg, Yahoo, MySpace, etc.
+{
+    SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+	[self writeThumbnail:context width:90 height:90 attributes:nil options:SVThumbnailLinkRel];		// This seems to be largest size used by facebook. Yahoo is 98x54?
+}
+
 #pragma mark CSS
 
 /*  Used by KTPageTemplate.html to generate links to the stylesheets needed by this page. Used to be a dedicated [[stylesheet]] parser function

@@ -495,7 +495,7 @@
         
         
         // Write the thumbnail
-        [context writeThumbnailImageWithSourceMedia:media alt:@"" width:width height:height type:type preferredFilename:filename options:0];
+        [context writeThumbnailImageWithSourceMedia:media alt:@"" width:width height:height type:type preferredFilename:filename options:options & SVThumbnailLinkRel];	// keep the link rel, but no other flag
     }
 }
 

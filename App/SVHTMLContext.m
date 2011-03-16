@@ -819,6 +819,25 @@
     return [self addMedia:media];
 }
 
+- (void)writeLinkRelWithSourceMedia:(id <SVMedia>)media
+								alt:(NSString *)altText
+							  width:(NSNumber *)width
+							 height:(NSNumber *)height
+							   type:(NSString *)type
+				  preferredFilename:(NSString *)filename;
+{
+    NSURL *URL = [self addImageMedia:media width:width height:height type:type preferredFilename:filename];
+	if (URL)
+	{
+		NSString *href = [URL absoluteString];	// leave it an absolute URL for Facebook's benefit
+		[self pushAttribute:@"rel" value:@"image_src"];
+		[self pushAttribute:@"href" value:href];
+		[self pushAttribute:@"type" value:type];
+		[self startElement:@"link"];
+		[self endElement];
+	}
+}
+
 - (void)writeImageWithSourceMedia:(id <SVMedia>)media
                               alt:(NSString *)altText
                             width:(NSNumber *)width
@@ -902,6 +921,7 @@
     
     if (!type) type = (NSString *)kUTTypePNG;
     
+	
     // During editing, cheat and use special URL if possible. #98041
     if ([self isForEditing] && ![media mediaData])
     {
@@ -919,12 +939,24 @@
     }
     else
     {
-        [self writeImageWithSourceMedia:media
-                                   alt:altText
-                                 width:[NSNumber numberWithUnsignedInteger:width]
-                                height:[NSNumber numberWithUnsignedInteger:height]
-                                  type:type
-                     preferredFilename:filename];
+		if (options & SVThumbnailLinkRel)
+		{
+			[self writeLinkRelWithSourceMedia:media
+										  alt:altText
+										width:[NSNumber numberWithUnsignedInteger:width]
+									   height:[NSNumber numberWithUnsignedInteger:height]
+										 type:type
+							preferredFilename:filename];
+		}
+		else
+		{
+			[self writeImageWithSourceMedia:media
+										alt:altText
+									  width:[NSNumber numberWithUnsignedInteger:width]
+									 height:[NSNumber numberWithUnsignedInteger:height]
+									   type:type
+						  preferredFilename:filename];
+		}
     }
 }
 
