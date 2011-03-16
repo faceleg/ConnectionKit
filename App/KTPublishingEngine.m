@@ -693,7 +693,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSString *result = [self pathForFileWithSHA1Digest:digest];
     if (!result)
     {
-        // New media should only be published once we know where all the existing stuff is going
         if ([self status] > KTPublishingEngineStatusGatheringMedia)
         {
             //  The media rep does not already exist on the server, so need to assign it a new path
@@ -711,6 +710,13 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             }
             
             OBASSERT(result);
+        }
+        else
+        {
+            // This is new media. Is its preferred filename definitely available? If so, can go ahead and publish immediately. #111549. Otherwise, wait until all meda is known to figure out the best available path
+            result = [[self baseRemotePath] stringByAppendingPathComponent:[request preferredUploadPath]];
+            
+            if (![self shouldPublishToPath:result]) result = nil;
         }
     }
     
