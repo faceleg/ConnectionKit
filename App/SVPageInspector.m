@@ -19,6 +19,8 @@
 #import "SVSidebarPageletsController.h"
 #import "SVTextAttachment.h"
 
+#import "NSManagedObjectContext+KTExtensions.h"
+
 #import "KSIsEqualValueTransformer.h"
 
 #import "NSImage+Karelia.h"
@@ -441,13 +443,41 @@
 
 - (IBAction)toggledArchives:(NSButton *)sender;
 {
-    if ([sender state] != NSOnState) return;
-    
-    
-    NSArray *pages = [self inspectedObjects];
-    for (KTPage *page in pages)
+    switch ([sender state])
     {
-        [self addArchivePageletForCollectionIfNeeded:page];
+        case NSOnState:
+        {
+            NSArray *pages = [self inspectedObjects];
+            for (KTPage *page in pages)
+            {
+                [self addArchivePageletForCollectionIfNeeded:page];
+            }
+            break;
+        }
+            
+        case NSOffState:
+        {
+            // Remove any corresponding archive graphics
+            NSArray *pages = [self inspectedObjects];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                      @"plugInIdentifier == 'sandvox.CollectionArchiveElement' && indexedCollection IN %@",
+                                      pages];
+            
+            NSArray *archiveGraphics = [[[pages lastObject] managedObjectContext]
+                                        fetchAllObjectsForEntityForName:@"PlugInGraphic"
+                                        predicate:predicate
+                                        error:NULL];
+            
+            for (NSManagedObject *anArchive in archiveGraphics)
+            {
+                // Possibly a sidebar pagelets controller should be asked to do this, but no harm at present
+                [[anArchive managedObjectContext] deleteObject:anArchive];
+            }
+        }
+            
+        default:
+            break;
     }
 }
 
