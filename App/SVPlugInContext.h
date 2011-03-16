@@ -24,7 +24,7 @@ typedef NSUInteger SVThumbnailOptions;
 @protocol SVPlugInContext
 
 #pragma mark Properties
-@property(nonatomic, copy, readonly) NSURL *baseURL;
+@property(nonatomic, copy, readonly) NSURL *baseURL;    // where the HTML is destined for. -relativeStringFromURL: figures its result by comparing a URL to -baseURL.
 - (id <SVPage>)page;    // the page whose HTML is being built
 
 
