@@ -124,6 +124,9 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
     }
     else
     {
+        // Figure out home page x first if needed
+        if (_homePageX == 0.0f) [self frameOfCellAtColumn:columnIndex row:0];
+        
         NSUInteger levelToDrawAt = ([super levelForRow:rowIndex] - 1);  // NEED to call super!
         CGFloat left = ([self indentationPerLevel] * levelToDrawAt) + _homePageX;
         
