@@ -65,7 +65,8 @@
             }
             [oThemePopUp addItemWithTitle:@""];             // ADD THE MENU
             
-            NSImage *sampleImage = [themeInfo objectForKey:PCSampleImageKey];
+            NSString *filename = [themeInfo objectForKey:PCFilenameKey];
+            NSImage *sampleImage = [[PageCounterPlugIn class] sampleImageForFilename:filename];
             if ( sampleImage )
             {
                 [[oThemePopUp lastItem] setImage:sampleImage];

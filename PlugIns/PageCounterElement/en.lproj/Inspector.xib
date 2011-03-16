@@ -60,7 +60,7 @@
 								<string key="NSColorName">controlColor</string>
 								<object class="NSColor" key="NSColor">
 									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MC42NjY2NjY2ODY1AA</bytes>
+									<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 								</object>
 							</object>
 							<object class="NSColor" key="NSTextColor">
@@ -193,14 +193,6 @@
 						<reference key="destination" ref="968125511"/>
 					</object>
 					<int key="connectionID">48</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">changeTheme:</string>
-						<reference key="source" ref="213639357"/>
-						<reference key="destination" ref="923522688"/>
-					</object>
-					<int key="connectionID">49</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -388,17 +380,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">PageCounterInspector</string>
 					<string key="superclassName">SVInspectorViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">changeTheme:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">changeTheme:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">changeTheme:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">oThemePopUp</string>
 						<string key="NS.object.0">NSPopUpButton</string>

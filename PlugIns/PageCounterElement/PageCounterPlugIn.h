@@ -44,6 +44,7 @@ extern NSString *PCWidthKey;
 extern NSString *PCHeightKey;
 extern NSString *PCImagesPathKey;
 extern NSString *PCSampleImageKey;
+extern NSString *PCFilenameKey;
 
 
 @interface PageCounterPlugIn : SVPlugIn
@@ -52,6 +53,12 @@ extern NSString *PCSampleImageKey;
 }
 
 + (NSArray *)themes;
++ (NSMutableDictionary *)themeImages;
++ (NSImage *)sampleImageForFilename:(NSString *)filename;
++ (NSNumber *)widthOfSampleImageForFilename:(NSString *)filename;
++ (NSNumber *)heightOfSampleImageForFilename:(NSString *)filename;
+
+
 
 // index into themes array
 @property (nonatomic) NSUInteger selectedThemeIndex;

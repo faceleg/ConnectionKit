@@ -59,6 +59,7 @@ NSString *PCWidthKey = @"width";
 NSString *PCHeightKey = @"height";
 NSString *PCImagesPathKey = @"path";
 NSString *PCSampleImageKey = @"sampleImage";
+NSString *PCFilenameKey = @"filename";
 
 
 @interface PageCounterPlugIn ()
@@ -90,6 +91,88 @@ NSString *PCSampleImageKey = @"sampleImage";
 
 #pragma mark Initialization
 
++ (NSMutableDictionary *)themeImages
+{
+    static NSMutableDictionary *sThemeImages = nil;
+    if ( ! sThemeImages )
+    {
+        sThemeImages = [[NSMutableDictionary alloc] initWithCapacity:10];
+    }
+    
+    return sThemeImages;
+}
+
++ (NSImage *)sampleImageForFilename:(NSString *)filename
+{
+    NSMutableDictionary *themeImage = [[self themeImages] objectForKey:filename];
+    if ( !themeImage )
+    {
+        // if we don't have one, we need to make one
+		NSString *resourcePath = [[NSBundle bundleForClass:[PageCounterPlugIn class]] resourcePath];
+		resourcePath = [resourcePath stringByAppendingPathComponent:@"digits"];
+        NSString *path = [resourcePath stringByAppendingPathComponent:filename];
+        
+        // Determine image size
+        NSURL *url = [NSURL fileURLWithPath:path];
+        CGImageSourceRef source = CGImageSourceCreateWithURL((CFURLRef)url, NULL);
+        if (source)
+        {
+            NSDictionary *props = (NSDictionary *) CGImageSourceCopyPropertiesAtIndex(source,  0,  NULL );
+            
+            NSSize size = NSMakeSize([[props objectForKey:(NSString *)kCGImagePropertyPixelWidth] integerValue],
+                                     [[props objectForKey:(NSString *)kCGImagePropertyPixelHeight] integerValue]);
+            CFRelease(source);
+            [props release];
+            
+            if (!NSEqualSizes(size, NSZeroSize))
+            {              
+                unsigned int whereZeroPng = [filename rangeOfString:@"-0.png"].location;
+                NSString *baseName = [filename substringToIndex:whereZeroPng];
+
+                // make a new themeImage
+
+                themeImage = [NSMutableDictionary dictionary];
+                [themeImage setObject:[NSNumber numberWithInteger:(NSInteger)size.width] forKey:PCWidthKey];
+                [themeImage setObject:[NSNumber numberWithInteger:(NSInteger)size.height] forKey:PCHeightKey];
+                
+#define MAX_SAMPLE_WIDTH 180	// best width for a 230 pixel inspector; depends on nib width!
+                
+                int maxDigits = MAX_SAMPLE_WIDTH / (NSInteger)size.width;
+                
+                NSRect digitRect = NSMakeRect(0,0,size.width, size.height);
+                NSImage *sampleImage = [[[NSImage alloc] initWithSize:NSMakeSize(size.width * maxDigits, size.height)] autorelease];
+                [sampleImage lockFocus];
+                for (NSUInteger i = 0 ; i < maxDigits ; i++)
+                {
+                    NSString *digitFilePath = [resourcePath stringByAppendingPathComponent:
+                                               [NSString stringWithFormat:@"%@-%d.png", baseName, i]];
+                    NSImage *digitImage = [[[NSImage alloc] initWithContentsOfFile:digitFilePath] autorelease];
+                    [digitImage drawAtPoint:NSMakePoint(size.width * i, 0) fromRect:digitRect operation:NSCompositeSourceOver fraction:1.0];
+                }
+                
+                [sampleImage unlockFocus];
+                [themeImage setObject:sampleImage forKey:PCSampleImageKey];
+            }
+        }
+    }
+    
+    id result = [themeImage objectForKey:PCSampleImageKey];
+    return result;
+}
+
++ (NSNumber *)widthOfSampleImageForFilename:(NSString *)filename
+{
+    NSMutableDictionary *themeImage = [[self themeImages] objectForKey:filename];
+    return [themeImage objectForKey:PCWidthKey];
+}
+
++ (NSNumber *)heightOfSampleImageForFilename:(NSString *)filename
+{
+    NSMutableDictionary *themeImage = [[self themeImages] objectForKey:filename];
+    return [themeImage objectForKey:PCHeightKey];
+}
+
+// returns dictionaries with keys PCThemeKey, PCTypeKey, PCFilenameKey
 + (NSArray *)themes
 {
 	static NSArray *sThemes;
@@ -114,71 +197,26 @@ NSString *PCSampleImageKey = @"sampleImage";
 		
 		NSString *resourcePath = [[NSBundle bundleForClass:[PageCounterPlugIn class]] resourcePath];
 		resourcePath = [resourcePath stringByAppendingPathComponent:@"digits"];
-		NSString *fileName;
-		NSDirectoryEnumerator *dirEnum =
-		[[NSFileManager defaultManager] enumeratorAtPath:resourcePath];
+		NSString *filename;
+		NSDirectoryEnumerator *dirEnum = [[NSFileManager defaultManager] enumeratorAtPath:resourcePath];
 		
-		while (fileName = [dirEnum nextObject])
+		while (filename = [dirEnum nextObject])
 		{
+
 			// Look for all "0" digits to represent the whole group.
 			// MUST END WITH .png
-			unsigned int whereZeroPng = [fileName rangeOfString:@"-0.png"].location;
+			unsigned int whereZeroPng = [filename rangeOfString:@"-0.png"].location;
 			if (NSNotFound != whereZeroPng)
 			{
-				NSString *path = [resourcePath stringByAppendingPathComponent:fileName];
-				
-				// Determine image size
-				NSURL *url = [NSURL fileURLWithPath:path];
-				CGImageSourceRef source = CGImageSourceCreateWithURL((CFURLRef)url, NULL);
-				if (source)
-				{
-					NSDictionary *props = (NSDictionary *) CGImageSourceCopyPropertiesAtIndex(source,  0,  NULL );
-					
-					NSSize size = NSMakeSize([[props objectForKey:(NSString *)kCGImagePropertyPixelWidth] integerValue],
-									  [[props objectForKey:(NSString *)kCGImagePropertyPixelHeight] integerValue]);
-					CFRelease(source);
-					[props release];
-					
-					if (!NSEqualSizes(size, NSZeroSize))
-					{
-						// Get the other properties into a dictionary
-						NSString *baseName = [fileName substringToIndex:whereZeroPng];
-						d = [NSMutableDictionary dictionary];
-						[d setObject:[NSNumber numberWithUnsignedInteger:PC_GRAPHICS] forKey:PCTypeKey];
-						[d setObject:baseName forKey:PCThemeKey];	// Used internally not for display
-						[d setObject:[NSNumber numberWithInteger:(NSInteger)size.width] forKey:PCWidthKey];
-						[d setObject:[NSNumber numberWithInteger:(NSInteger)size.height] forKey:PCHeightKey];
-						[themes addObject:d];
-						
-	#define MAX_SAMPLE_WIDTH 180	// best width for a 230 pixel inspector; depends on nib width!
-						
-						int maxDigits = MAX_SAMPLE_WIDTH / (NSInteger)size.width;
-						
-						NSRect digitRect = NSMakeRect(0,0,size.width, size.height);
-						NSImage *sampleImage = [[[NSImage alloc] initWithSize:NSMakeSize(size.width * maxDigits, size.height)] autorelease];
-						[sampleImage lockFocus];
-						for (NSUInteger i = 0 ; i < maxDigits ; i++)
-						{
-							NSString *digitFilePath = [resourcePath stringByAppendingPathComponent:
-								[NSString stringWithFormat:@"%@-%d.png", baseName, i]];
-							NSImage *digitImage = [[[NSImage alloc] initWithContentsOfFile:digitFilePath] autorelease];
-							[digitImage drawAtPoint:NSMakePoint(size.width * i, 0) fromRect:digitRect operation:NSCompositeSourceOver fraction:1.0];
-						}
-								
-						[sampleImage unlockFocus];
-						[d setObject:sampleImage forKey:PCSampleImageKey];
-					}
-				}
+                d = [NSMutableDictionary dictionary];
+                [d setObject:[NSNumber numberWithUnsignedInteger:PC_GRAPHICS] forKey:PCTypeKey];
+                NSString *baseName = [filename substringToIndex:whereZeroPng];
+                [d setObject:baseName forKey:PCThemeKey];	// Used internally not for display
+                [d setObject:filename forKey:PCFilenameKey]; // used to fetch image, when needed
+                [themes addObject:d];
 			}
 		}
-		
-		// Add any from user defaults
-		NSArray *ud = [[NSUserDefaults standardUserDefaults] objectForKey:@"PageCounterThemes"];
-		if (ud)
-		{ 
-			[themes addObjectsFromArray:ud];
-		}
-		
+				
 		// Store the themes
 		sThemes = [[NSArray alloc] initWithArray:themes];
 	}
@@ -315,7 +353,7 @@ NSString *PCSampleImageKey = @"sampleImage";
 
 - (NSURL *)resourcesURL:(id <SVPlugInContext>)context
 {
-    // add resources and return URL
+    // add resources to context and return base _Resources URL
     NSURL *result = nil;
     
 	if (PC_GRAPHICS == self.themeType)
@@ -382,12 +420,18 @@ NSString *PCSampleImageKey = @"sampleImage";
 
 - (id)themeWidth
 {
-	return [self.selectedTheme objectForKey:PCWidthKey];
+	//return [self.selectedTheme objectForKey:PCWidthKey];
+    NSDictionary *themeInfo = [self selectedTheme];
+    NSString *filename = [themeInfo objectForKey:PCFilenameKey];
+    return [[self class] widthOfSampleImageForFilename:filename];
 }
 
 - (id)themeHeight
 {
-	return [self.selectedTheme objectForKey:PCHeightKey];
+	//return [self.selectedTheme objectForKey:PCHeightKey];
+    NSDictionary *themeInfo = [self selectedTheme];
+    NSString *filename = [themeInfo objectForKey:PCFilenameKey];
+    return [[self class] heightOfSampleImageForFilename:filename];    
 }
 
 - (NSUInteger)themeType
