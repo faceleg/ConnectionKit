@@ -358,7 +358,8 @@
  */
 - (void)recursivelyInvalidateURL:(BOOL)recursive
 {
-    [self setDatePublished:nil]; // #83550
+    // Avoid changing .datePublished unecessarily, since it may have many observers. #110596
+    if ([self datePublished]) [self setDatePublished:nil]; // #83550
 }
 
 #pragma mark Site
