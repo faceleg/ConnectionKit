@@ -832,7 +832,7 @@
 		NSString *href = [URL absoluteString];	// leave it an absolute URL for Facebook's benefit
 		[self pushAttribute:@"rel" value:@"image_src"];
 		[self pushAttribute:@"href" value:href];
-		[self pushAttribute:@"type" value:type];
+		[self pushAttribute:@"type" value:[NSString MIMETypeForUTI:type]];
 		[self startElement:@"link"];
 		[self endElement];
 	}
