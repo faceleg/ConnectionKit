@@ -181,6 +181,53 @@
 }
 
 
+#pragma mark Drag and Drop
+
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
+{
+    return SVWebLocationGetReadablePasteboardTypes(pasteboard);
+}
+
++ (SVPasteboardPriority)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
+{
+    NSURL *URL = [item URL];
+    if ( URL )
+    {
+        if ( [URL isFileURL ] )
+        {
+            return SVPasteboardPriorityNone;
+        }
+        else
+        {
+            return SVPasteboardPriorityReasonable;
+        }
+        
+    }
+    return [super priorityForPasteboardItem:item];
+}
+
+- (BOOL)awakeFromPasteboardItems:(NSArray *)items;
+{
+    BOOL didAwakeAnItem = NO;
+    
+    if ( items && [items count] )
+    {      
+        id<SVPasteboardItem, SVWebLocation> item = [items objectAtIndex:0];
+        
+        if ( [item conformsToProtocol:@protocol(SVWebLocation)] )
+        {
+            if ( [item  URL] ) self.linkURL = [item URL];
+            if ( [item title] ) [self setTitle:[item title]];
+            didAwakeAnItem = YES;
+        }
+    }
+    
+    return didAwakeAnItem;    
+}
+
++ (BOOL)supportsMultiplePasteboardItems; { return NO; }
+
+
 #pragma mark Properties
 
 @synthesize linkURL = _linkURL;
