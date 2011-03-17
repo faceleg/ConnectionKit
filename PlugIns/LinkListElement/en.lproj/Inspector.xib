@@ -1217,6 +1217,7 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 						<int key="objectID">247</int>
 						<reference key="object" ref="98052312"/>
 						<reference key="parent" ref="0"/>
+						<string key="objectName">URL Formatter</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">252</int>
@@ -1469,7 +1470,7 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{384, 456}, {230, 271}}</string>
+					<string>{{830, 423}, {230, 271}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>LinkListArrayController</string>
