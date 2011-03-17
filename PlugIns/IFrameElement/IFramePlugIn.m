@@ -171,8 +171,6 @@
 
 #pragma mark Metrics
 
-+ (BOOL)isExplicitlySized { return YES; }
-
 - (NSNumber *)minWidth { return [NSNumber numberWithInt:100]; }
 - (NSNumber *)minHeight { return [NSNumber numberWithInt:100]; }
 

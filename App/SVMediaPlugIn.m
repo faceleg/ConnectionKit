@@ -80,8 +80,6 @@
 
 #pragma mark Metrics
 
-+ (BOOL)isExplicitlySized; { return YES; }
-
 - (BOOL)validateHeight:(NSNumber **)height error:(NSError **)error;
 {
     // By default allow anything since it may be imported external media whose size is not yet known

@@ -199,8 +199,6 @@
     return [NSNumber numberWithFloat:result];
 }
 
-+ (BOOL)isExplicitlySized; { return YES; }
-
 - (void)makeOriginalSize;
 {
     float height = 480 / [[self constrainedAspectRatio] floatValue];

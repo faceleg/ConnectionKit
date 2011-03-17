@@ -307,11 +307,6 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 #pragma mark Resizing
 
-+ (BOOL)isExplicitlySized
-{
-    return NO;
-}
-
 - (void)makeOriginalSize
 {
     switch ( self.layout )

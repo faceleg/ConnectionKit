@@ -213,12 +213,13 @@ static id <SVPlugInContext> sCurrentContext;
 {
     NSNumber *result = [[self container] width];
     
+    /*
     if (result &&
-        ![[self class] isExplicitlySized] &&
+        ![[self container] isExplicitlySized] &&
         [[self container] isPagelet])
     {
         result = nil;
-    }
+    }*/
     
     return result;
 }
@@ -241,8 +242,6 @@ static id <SVPlugInContext> sCurrentContext;
 }
 
 #pragma mark Resizing
-
-+ (BOOL)isExplicitlySized; { return NO; }
 
 - (NSNumber *)elementWidthPadding; { return nil; }
 - (NSNumber *)elementHeightPadding; { return nil; }

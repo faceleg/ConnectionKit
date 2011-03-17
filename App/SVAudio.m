@@ -127,8 +127,6 @@
     return (*height == nil || [super validateHeight:height error:error]);
 }
 
-+ (BOOL)isExplicitlySized; { return NO; }
-
 #pragma mark General
 + (NSArray *)allowedFileTypes;
 {
