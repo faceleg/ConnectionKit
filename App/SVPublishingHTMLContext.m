@@ -181,10 +181,10 @@
 }
 
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
-                                        plugIn:(SVPlugIn *)plugIn;
+                                        object:(id)object;
 {
     // Run through template parser
-    NSString *parsedResource = [self parseTemplateAtURL:templateURL plugIn:plugIn];
+    NSString *parsedResource = [self parseTemplateAtURL:templateURL object:object];
     if (parsedResource)
     {        
         // Figure path
@@ -200,7 +200,7 @@
         [[[[self page] site] hostProperties] URLForResourceFile:[resourceRemotePath lastPathComponent]];
     }
     
-    [super addJavascriptResourceWithTemplateAtURL:templateURL plugIn:plugIn];
+    [super addJavascriptResourceWithTemplateAtURL:templateURL object:object];
 }
 
 - (NSURL *)addGraphicalTextData:(NSData *)imageData idName:(NSString *)idName;

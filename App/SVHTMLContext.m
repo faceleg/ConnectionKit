@@ -403,7 +403,7 @@
 - (void)addCSSWithTemplateAtURL:(NSURL *)templateURL object:(id)object;
 {
     // Run through template
-    NSString *css = [self parseTemplateAtURL:templateURL plugIn:object];
+    NSString *css = [self parseTemplateAtURL:templateURL object:object];
     [self addCSSString:css];
 }
 
@@ -976,7 +976,7 @@
 }
 
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
-                                        plugIn:(SVPlugIn *)plugIn;
+                                        object:(id)object;
 {
     NSMutableString *script = [[NSMutableString alloc] init];
     SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:script inheritFromContext:self];
@@ -990,7 +990,7 @@
     else
     {
         // Run through template
-        NSString *parsedResource = [self parseTemplateAtURL:templateURL plugIn:plugIn];
+        NSString *parsedResource = [self parseTemplateAtURL:templateURL object:object];
         if (parsedResource)
         {
             // Publish
@@ -1003,7 +1003,7 @@
     [script release];
 }
 
-- (NSString *)parseTemplateAtURL:(NSURL *)templateURL plugIn:(SVPlugIn *)plugIn;
+- (NSString *)parseTemplateAtURL:(NSURL *)templateURL object:(id)object;
 {
     // Run through template
     SVTemplate *template = [[SVTemplate alloc] initWithContentsOfURL:templateURL];
@@ -1011,7 +1011,7 @@
     {
         SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc]
                                         initWithTemplate:[template templateString]
-                                        component:plugIn];
+                                        component:object];
         
         NSMutableString *result = [NSMutableString string];
         

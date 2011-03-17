@@ -117,7 +117,7 @@ typedef NSUInteger SVThumbnailOptions;
 - (NSURL *)addResourceWithURL:(NSURL *)fileURL;
 
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
-                                        plugIn:(SVPlugIn *)plugIn;
+                                        object:(id)object;
 
 
 #pragma mark Placeholder
