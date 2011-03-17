@@ -46,6 +46,7 @@
     
     [tableView setDataSource:self];
     [tableView setDelegate:self];
+    [self setAllowsDragAndDropTableReordering:YES];
 }
 
 #pragma mark Inserting Objects
@@ -108,22 +109,34 @@
                  proposedRow:(NSInteger)row 
        proposedDropOperation:(NSTableViewDropOperation)operation
 {
-    BOOL result = NSDragOperationNone;
+    NSDragOperation result = NSDragOperationNone;
     
-    // Get the URLs and titles from the pasteboard
-	NSPasteboard *pasteboard = [info draggingPasteboard];
-	NSArray *webLocations = [pasteboard readWebLocations];
-	
-	// Run through the URLs looking for something we can use
-    for ( id<SVWebLocation> location in webLocations )
-	{
-        NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:location];
-        if ( link )
+    // are we moving rows around in the table?
+    NSPasteboard *pasteboard = [info draggingPasteboard];
+    NSArray *DNDArraryControllerTypes = [NSArray arrayWithObjects:@"COPIED_ROWS_TYPE", @"MOVED_ROWS_TYPE", nil];
+    BOOL isDNDArrayControllerDrop = (nil != [pasteboard availableTypeFromArray:DNDArraryControllerTypes]);
+    
+    if ( isDNDArrayControllerDrop )
+    {
+        result = [super tableView:tv validateDrop:info proposedRow:row proposedDropOperation:operation];
+    }
+    else
+    {
+        // Get the URLs and titles from the pasteboard
+        NSArray *webLocations = [pasteboard readWebLocations];
+        
+        // Run through the URLs looking for something we can use
+        for ( id<SVWebLocation> location in webLocations )
         {
-            result = NSDragOperationPrivate;
-            break;
+            NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:location];
+            if ( link )
+            {
+                result = NSDragOperationPrivate;
+                break;
+            }
         }
-	}
+        
+    }
     
     return result;
 }
