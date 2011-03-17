@@ -119,9 +119,10 @@
     NSString *path = nil;
     if (preferredFilename)
     {
-        path = [[[media preferredUploadPath]
-                 stringByDeletingLastPathComponent]
-                stringByAppendingPathComponent:preferredFilename];
+        path = [[[[media preferredUploadPath]
+                  stringByDeletingLastPathComponent]
+                 stringByAppendingPathComponent:preferredFilename]
+                stringByStandardizingHTTPPath];
     }
     
     SVMediaRequest *request = [[SVMediaRequest alloc] initWithMedia:media

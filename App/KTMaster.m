@@ -14,6 +14,7 @@
 #import "KTSite.h"
 #import "KTHostProperties.h"
 #import "SVHTMLContext.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTImageScalingSettings.h"
 #import "KTImageScalingURLProtocol.h"
 #import "SVLogoImage.h"
@@ -367,6 +368,25 @@
     SVMediaRecord *media = [SVMediaRecord mediaByReferencingURL:URL entityName:@"Favicon" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
     
     [self replaceMedia:media forKeyPath:@"faviconMedia"];
+}
+
+- (NSString *)writeFavicon;
+{
+    SVMedia *favicon = [self favicon];
+    if (favicon)
+    {
+        SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+        
+        NSURL *url = [context addImageMedia:favicon
+                                      width:nil
+                                     height:nil
+                                       type:(NSString *)kUTTypeICO
+                          preferredFilename:@"../favicon.ico"];  // dirty HACK to get it at top-level
+        
+        if (url) return [context relativeStringFromURL:url];
+    }
+    
+    return nil;
 }
 
 #pragma mark Graphical Text

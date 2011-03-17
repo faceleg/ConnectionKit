@@ -27,7 +27,7 @@
 		[[=site.googleSiteVerification]]
 [[endif3]][[endif2]][[endif]]
 [[if !parser.HTMLContext.isForEditing]][[if master.favicon]]
-		<link rel="Shortcut Icon" type="image/x-icon" href="favicon.ico" />
+		<link rel="Shortcut Icon" type="image/x-icon" href="[[=&master.writeFavicon]]" />
 [[endif2]][[endif]]
 [[if !parser.HTMLContext.isForEditing]][[if feedURL]]
 		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&title]]" href="[[=&feedURL]]" charset="UTF-8" />
