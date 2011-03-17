@@ -563,7 +563,7 @@
 {
 	NSString *result = nil;
     
-    if ([anObject isKindOfClass:[KTPage class]])
+    if ([anObject respondsToSelector:@selector(URL)])
     {
         result = [[self HTMLContext] relativeStringFromURL:[anObject URL]];
     }
