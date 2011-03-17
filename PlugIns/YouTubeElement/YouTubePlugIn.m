@@ -130,20 +130,22 @@
                                 embed, @"src",
                                 @"0", @"frameborder",
                                 nil];
-    [context startElement:@"iframe" 
-         bindSizeToPlugIn:self 
-          preferredIdName:@"youtube"
-               attributes:attributes];
+    [context startResizeableElement:@"iframe"
+                             plugIn:self
+                            options:0
+                    preferredIdName:@"youtube"
+                         attributes:attributes];
     [context endElement]; // </iframe>
 }
 
 - (void)writeNoLiveData
 {
     id <SVPlugInContext> context = [self currentContext];
-    [context startElement:@"div" 
-         bindSizeToPlugIn:self 
-          preferredIdName:@"youtube"
-               attributes:nil];
+    [context startResizeableElement:@"div"
+                             plugIn:self
+                            options:0
+                    preferredIdName:@"youtube"
+                         attributes:nil];
     
     NSString *message = SVLocalizedString(@"This is a placeholder for the YouTube video at:", 
                                           "Live data feeds are disabled");
@@ -167,10 +169,11 @@
 - (void)writeNoVideoFound
 {
     id <SVPlugInContext> context = [self currentContext];
-    [context startElement:@"div" 
-         bindSizeToPlugIn:self 
-          preferredIdName:@"youtube"
-               attributes:nil];
+    [context startResizeableElement:@"div"
+                             plugIn:self
+                            options:0
+                    preferredIdName:@"youtube"
+                         attributes:nil];
     NSString *message = SVLocalizedString(@"Sorry, but no YouTube video was found for the code you entered.", 
                                           "User entered an invalid YouTube code");
     [context writePlaceholderWithText:message options:0];
@@ -180,10 +183,11 @@
 - (void)writeNoVideoSpecified
 {
     id <SVPlugInContext> context = [self currentContext];
-    [context startElement:@"div" 
-         bindSizeToPlugIn:self 
-          preferredIdName:@"youtube"
-               attributes:nil];
+    [context startResizeableElement:@"div"
+                             plugIn:self
+                            options:0
+                    preferredIdName:@"youtube"
+                         attributes:nil];
     NSString *message = SVLocalizedString(@"Please use the Inspector to specify a YouTube video.", 
                                           "No video code has been entered yet");
     [context writePlaceholderWithText:message options:0];

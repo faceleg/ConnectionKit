@@ -130,10 +130,12 @@
                                         nil];
             // write iframe
             // width and height attrs are included by writer
-            [context startElement:@"iframe"
-                 bindSizeToPlugIn:self
-                  preferredIdName:@"iframe"
-                       attributes:attributes];
+            [context startResizeableElement:@"iframe"
+                                     plugIn:self
+                                    options:0
+                            preferredIdName:@"iframe"
+                                 attributes:attributes];
+             
             
             // write fallback link in case iframe isn't supported -- it's supported in HTML5, still needed?
             // I think this has nothing to do with the spec, but instead, older browsers - Mike
@@ -148,7 +150,7 @@
         }
         else
         {
-            [context startElement:@"div" bindSizeToPlugIn:self preferredIdName:nil attributes:nil];
+            [context startResizeableElement:@"div" plugIn:self options:0 preferredIdName:nil attributes:nil];
             
             NSString *placeholder = SVLocalizedString(@"Placeholder for:", "String - followed by a URL");
             NSString *text = [NSString stringWithFormat:@"%@ %@", placeholder, self.linkURL];
@@ -159,7 +161,7 @@
     }
     else
     {
-        [context startElement:@"div" bindSizeToPlugIn:self preferredIdName:nil attributes:nil];
+        [context startResizeableElement:@"div" plugIn:self options:0 preferredIdName:nil attributes:nil];
         
         NSString *text = SVLocalizedString(@"Please enter a URL in the Inspector.","");
         [context writePlaceholderWithText:text options:0];

@@ -84,10 +84,11 @@
         if ( [context liveDataFeeds] )
         {
             // bind size
-            NSString *idName = [context startElement:@"div"
-                                    bindSizeToPlugIn:self
-                                     preferredIdName:@"googlemap"
-                                          attributes:nil];
+            NSString *idName = [context startResizeableElement:@"div"
+                                                        plugIn:self
+                                                       options:0
+                                               preferredIdName:@"googlemap"
+                                                    attributes:nil];
             [context endElement]; // </div>
             
             // append Google Maps API functions to end body
