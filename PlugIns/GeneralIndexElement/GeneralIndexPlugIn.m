@@ -495,6 +495,10 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 
 - (void)awakeFromSourceProperties:(NSDictionary *)properties
 {
+    NSMutableDictionary *propertiesByRemovingNSNull = [[NSMutableDictionary alloc] initWithCapacity:[properties count]];
+    [propertiesByRemovingNSNull setValuesForKeysWithDictionary:properties];
+    
+    
 	//NSLog(@"prop keys to convert: %@", [[[properties allKeys] description] condenseWhiteSpace]);
 	NSString *collectionIndexBundleIdentifier = [properties objectForKey:@"collectionIndexBundleIdentifier"];
 	if ([collectionIndexBundleIdentifier isEqualToString:@"sandvox.ListingIndex"])
@@ -520,19 +524,22 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 
 	if (nil != [properties objectForKey:@"collectionHyperlinkPageTitles"])
 	{
-		self.hyperlinkTitles = 
+        self.hyperlinkTitles = 
 		[collectionIndexBundleIdentifier isEqualToString:@"sandvox.ListingIndex"]		// listing index automatically gets hyperlinks
-			|| [[properties objectForKey:@"collectionHyperlinkPageTitles"] boolValue];
+			|| [[propertiesByRemovingNSNull objectForKey:@"collectionHyperlinkPageTitles"] boolValue];
 	}
 	else
 	{
 		self.hyperlinkTitles = YES;
 	}
-	self.showPermaLinks = [[properties objectForKey:@"collectionShowPermanentLink"] boolValue];
+	self.showPermaLinks = [[propertiesByRemovingNSNull objectForKey:@"collectionShowPermanentLink"] boolValue];
 	self.showTimestamps = [[properties objectForKey:@"includeTimestamp"] boolValue];
 	self.showComments = [[properties objectForKey:@"allowComments"] boolValue];			// disableComments ?
 	self.maxItemLength = [[properties objectForKey:@"collectionTruncateCharacters"] intValue];
 	
+    
+    // Finish up
+    [propertiesByRemovingNSNull release];
 	[super awakeFromSourceProperties:properties];
 
 	
