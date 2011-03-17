@@ -45,13 +45,13 @@ typedef NSUInteger SVThumbnailOptions;
 - (NSString *)relativeStringFromURL:(NSURL *)URL;
 
 
-#pragma mark Resources
-
-// Resources get published to the _Resources directory. These methods return the URL to use for the resource in relation to this context. You can then pass it to -relativeStringFromURL: for example.
-- (NSURL *)addResourceWithURL:(NSURL *)fileURL;
+#pragma mark CSS
 
 - (void)addCSSString:(NSString *)css;
 - (void)addCSSWithURL:(NSURL *)cssURL;
+
+// For CSS that refers to other files, the context must be asked where those files are. You can do this by hand, building up a string and passing to -addCSSString: or there's this method. The CSS will be parsed just like Template.html. Generally, your plug-in is the object to be parsed
+- (void)addCSSWithTemplateAtURL:(NSURL *)templateURL object:(id)object;
 
 
 #pragma mark Basic HTML Writing
@@ -109,6 +109,13 @@ typedef NSUInteger SVThumbnailOptions;
 
 #pragma mark Scripts
 - (void)writeJavascriptWithSrc:(NSString *)src;
+
+
+#pragma mark Resources
+
+// Resources get published to the _Resources directory. These methods return the URL to use for the resource in relation to this context. You can then pass it to -relativeStringFromURL: for example.
+- (NSURL *)addResourceWithURL:(NSURL *)fileURL;
+
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
                                         plugIn:(SVPlugIn *)plugIn;
 

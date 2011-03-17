@@ -400,6 +400,13 @@
     }
 }
 
+- (void)addCSSWithTemplateAtURL:(NSURL *)templateURL object:(id)object;
+{
+    // Run through template
+    NSString *css = [self parseTemplateAtURL:templateURL plugIn:object];
+    [self addCSSString:css];
+}
+
 #pragma mark Header Tags
 
 @synthesize currentHeaderLevel = _headerLevel;
