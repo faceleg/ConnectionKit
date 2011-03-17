@@ -706,6 +706,15 @@
     return idName;
 }
 
+- (NSString *)startResizeableElement:(NSString *)elementName
+                              plugIn:(SVPlugIn *)plugIn
+                             options:(NSUInteger)options    // pass 0 for now, we may add options later
+                     preferredIdName:(NSString *)preferredID
+                          attributes:(NSDictionary *)attributes;
+{
+    return [self startElement:elementName bindSizeToPlugIn:plugIn preferredIdName:preferredID attributes:attributes];
+}
+
 #pragma mark Text Blocks
 
 - (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)block; { }
