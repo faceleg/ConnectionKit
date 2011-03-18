@@ -111,7 +111,7 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
-    // add dependencies for any ivars not references in html template
+    // add dependencies for any ivars not referenced in html template
     [context addDependencyForKeyPath:@"linkURL" ofObject:self];
     [context addDependencyForKeyPath:@"iFrameIsBordered" ofObject:self];
     
@@ -137,8 +137,7 @@
                                  attributes:attributes];
              
             
-            // write fallback link in case iframe isn't supported -- it's supported in HTML5, still needed?
-            // I think this has nothing to do with the spec, but instead, older browsers - Mike
+            // write fallback link in case iframe isn't supported by older browsers
             [context startAnchorElementWithHref:[self.linkURL absoluteString]
                                           title:self.title
                                          target:nil 
@@ -152,7 +151,6 @@
         {
             [context startResizeableElement:@"div" plugIn:self options:0 preferredIdName:nil attributes:nil];
             
-            //NSString *placeholder = SVLocalizedString(@"Placeholder for:", "String - followed by a URL");
             NSString *text = [self.linkURL absoluteString];
             [context writePlaceholderWithText:text options:0];
             
