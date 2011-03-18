@@ -264,39 +264,42 @@
 		{			
 			// Turn Markup into a tidied XML document
 			NSError *theError = NULL;
-			
-			NSString *prelude = [KTPage stringFromDocType:KSHTMLWriterDocTypeXHTML_1_0_Transitional local:YES];
-            
-			NSString *wrapper = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n%@\n<html xmlns=\"http://www.w3.org/1999/xhtml\"><head><title></title></head><body>%@</body></html>", prelude, result];
-			
+						
 			NSUInteger mask = 
-			NSXMLNodePreserveAll 
-			
-			// Something in here is causing errors ... need to figure out which when I can find a test pattern
-            //			& ~NSXMLNodePreserveNamespaceOrder 
-            //			& ~NSXMLNodePreserveAttributeOrder 
-            //			& ~NSXMLNodePreserveEntities 
-            //			& ~NSXMLNodePreservePrefixes 
-            //			& ~NSXMLNodePreserveCDATA 
-            //			& ~NSXMLNodePreserveEmptyElements 
-            //			& ~NSXMLNodePreserveQuotes				
-            //			& ~NSXMLNodePreserveWhitespace			
-            //			& ~NSXMLNodePreserveDTD					
-            //			& ~NSXMLNodePreserveCharacterReferences	
-            //			& ~(0xFFF00000)
+//			(NSXMLNodePreserveAll 
+//			
+//			// Something in here is causing errors ... need to figure out which when I can find a test pattern
+//            //			& ~NSXMLNodePreserveNamespaceOrder 
+//            //			& ~NSXMLNodePreserveAttributeOrder 
+//            //			& ~NSXMLNodePreserveEntities 
+//            //			& ~NSXMLNodePreservePrefixes 
+//            //			& ~NSXMLNodePreserveCDATA 
+//            //			& ~NSXMLNodePreserveEmptyElements 
+//            //			& ~NSXMLNodePreserveQuotes				
+//            //			& ~NSXMLNodePreserveWhitespace			
+//            //			& ~NSXMLNodePreserveDTD					
+//            //			& ~NSXMLNodePreserveCharacterReferences	
+//            //			& ~(0xFFF00000)
+//			
+//				)
+//			|
+			NSXMLDocumentTidyHTML
 			;
 			
 			NSXMLDocument *xmlDoc = nil;
 			
 			@try
 			{
-				xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:wrapper options:mask error:&theError] autorelease];
+				xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:result options:mask error:&theError] autorelease];
 			}
 			@catch ( NSException * e )
 			{
-				NSLog(@"%@", e);
+				NSLog(@"NSXMLDocument exception: %@", e);
 			}
-			if (theError) LOG((@"NSXMLDocument err from truncation: %@", theError));
+			if (nil == xmlDoc && nil != theError)
+			{
+				NSLog(@"NSXMLDocument err from truncation: %@", theError);
+			}
 			
 			if (xmlDoc)
 			{
@@ -444,7 +447,7 @@
 					}
 				}
 				
-				result = [theBody XMLStringWithOptions:NSXMLDocumentTidyXML];
+				result = [theBody XMLStringWithOptions:NSXMLDocumentTidyXML];  // NSXMLDocumentTidyHTML ??????
 				// DON'T use NSXMLNodePreserveAll -- it converted " to ' and ' to &apos;  !!!
 				
 				NSRange rangeOfBodyStart = [result rangeOfString:@"<body>" options:0];
