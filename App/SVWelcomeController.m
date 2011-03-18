@@ -153,6 +153,7 @@
 			}
 			else
 			{
+				LOG((@"Going to open '%@'; it is NOT in the trash", path));
 				[filesFound addObject:alias];
 			}
 		}
