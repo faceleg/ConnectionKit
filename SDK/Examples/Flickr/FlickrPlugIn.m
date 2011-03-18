@@ -38,9 +38,9 @@
 #import "FlickrInspector.h"
 
 
-// LocalizedStringInThisBundle(@"Flickr (Placeholder)", "String_On_Page_Template")
-// LocalizedStringInThisBundle(@"Flickr photos", "String_On_Page_Template")
-// LocalizedStringInThisBundle(@" tagged with ", "String_On_Page_Template")
+// SVLocalizedString(@"Flickr (Placeholder)", "String_On_Page_Template")
+// SVLocalizedString(@"Flickr photos", "String_On_Page_Template")
+// SVLocalizedString(@" tagged with ", "String_On_Page_Template")
 
 
 @implementation FlickrPlugIn
