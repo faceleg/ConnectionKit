@@ -1138,7 +1138,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	
 	if ([inParser isKindOfClass:[IMBFlickrParser class]])
 	{
-		if (IMBRunningOnSnowLeopardOrNewer())
+		// if (IMBRunningOnSnowLeopardOrNewer())
 		{
 			IMBFlickrParser* flickrParser = (IMBFlickrParser*)inParser;
 			flickrParser.delegate = self;
