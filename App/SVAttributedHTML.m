@@ -251,7 +251,7 @@
 
 - (NSString *)truncateMarkup:(NSString *)markup truncation:(NSUInteger)maxItemLength truncationType:(SVTruncationType)truncationType didTruncate:(BOOL *)outDidTruncate;
 {
-	LOG((@"TRUNCATE TO: %d [%d]", maxItemLength, truncationType));
+	OFF((@"TRUNCATE TO: %d [%d]", maxItemLength, truncationType));
 	OBPRECONDITION(markup);
 	NSString *result = markup;
 	BOOL removedAnything = NO;

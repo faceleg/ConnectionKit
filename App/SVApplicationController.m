@@ -69,6 +69,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "NSMenuItem+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 #import "SVPageTemplate.h"
+#import "KSURLUtilities.h"
 
 #import <AmazonSupport/AmazonSupport.h>
 #import <Connection/Connection.h>
@@ -1291,10 +1292,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 								@"application", @"utm_medium",
 								@"utm_campaign", @"product_menu",
 						  nil];
-	NSString *queryString = [dict formatForHTTP];
-	NSString *urlString = [NSString stringWithFormat:
-						   @"http://www.sandvox.com/?%@", queryString];
-    [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:urlString]];
+	NSURL *url = [[NSURL URLWithString:@"http://www.sandvox.com/"] ks_URLWithQueryParameters:dict];
+    [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
 }
 
 - (IBAction)toggleMediaBrowserShown:(id)sender
