@@ -280,8 +280,17 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     }
     else
     {
-        [context writePlaceholderWithText:NSLocalizedString(@"Plug-in couldn't be loaded", "placeholder")
+        SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:[self plugInIdentifier]];
+        if (factory)
+        {
+            [context writePlaceholderWithText:NSLocalizedString(@"Plug-in failed to load", "placeholder")
                                   options:0];
+        }
+        else
+        {
+            [context writePlaceholderWithText:NSLocalizedString(@"Plug-in not found", "placeholder")
+                                      options:0];
+        }
     }
     
     
