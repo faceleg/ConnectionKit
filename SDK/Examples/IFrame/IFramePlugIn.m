@@ -36,7 +36,6 @@
 
 #import "IFramePlugIn.h"
 
-// LocalizedStringInThisBundle(@"Placeholder for:", "String_On_Page_Template- followed by a URL")
 
 @implementation IFramePlugIn
 
@@ -79,48 +78,65 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
-    // call super to parse template
-    [super writeHTML:context];
-    
-    // add dependencies for any ivars not references in html template
+    // add dependencies for any ivars not referenced in html template
+    [context addDependencyForKeyPath:@"linkURL" ofObject:self];
     [context addDependencyForKeyPath:@"iFrameIsBordered" ofObject:self];
-}
-                                     
-- (void)startIFrameElement
-{
-    id <SVPlugInContext> context = [self currentContext];
     
-    NSString *class = (self.iFrameIsBordered) ? @"iframe-border" : @"iframe-no-border";
-    NSString *frameBorder = (self.iFrameIsBordered) ? @"1" : @"0";
-    NSString *src = (self.linkURL) ? [self.linkURL absoluteString] : @"";
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                class, @"class",
-                                src, @"src",
-                                @"test iframe", @"title",
-                                frameBorder, @"frameBorder",
-                                nil];
-    // write iframe
-    // width and height attrs are included by writer
-    [context startElement:@"iframe"
-                      bindSizeToPlugIn:self
-                            attributes:attributes];
+    if ( self.linkURL )
+    {
+        if ( [context liveDataFeeds] )
+        {
+            NSString *src = (self.linkURL) ? [self.linkURL absoluteString] : @"";
+            NSString *class = (self.iFrameIsBordered) ? @"iframe-border" : @"iframe-no-border";
+            NSString *frameBorder = (self.iFrameIsBordered) ? @"1" : @"0";
+            NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        class, @"class",
+                                        src, @"src",
+                                        @"test iframe", @"title",
+                                        frameBorder, @"frameBorder",
+                                        nil];
+            // write iframe
+            // width and height attrs are included by writer
+            [context startResizeableElement:@"iframe"
+                                     plugIn:self
+                                    options:0
+                            preferredIdName:@"iframe"
+                                 attributes:attributes];
+             
+            
+            // write fallback link in case iframe isn't supported by older browsers
+            [context startAnchorElementWithHref:[self.linkURL absoluteString]
+                                          title:self.title
+                                         target:nil 
+                                            rel:nil];
+            [context writeCharacters:self.title];
+            [context endElement]; // </a>
+            
+            [context endElement]; // </div>
+        }
+        else
+        {
+            [context startResizeableElement:@"div" plugIn:self options:0 preferredIdName:nil attributes:nil];
+            
+            NSString *text = [self.linkURL absoluteString];
+            [context writePlaceholderWithText:text options:0];
+            
+            [context endElement];
+        }
+    }
+    else
+    {
+        [context startResizeableElement:@"div" plugIn:self options:0 preferredIdName:nil attributes:nil];
+        
+        NSString *text = SVLocalizedString(@"Drag a URL here","");
+        [context writePlaceholderWithText:text options:0];
+        
+        [context endElement];
+    }
 }
-- (void)endIFrameElement; { [[self currentContext] endElement]; }
-
-- (void)startPlaceholderElement
-{
-    NSDictionary *attributes = [NSDictionary dictionaryWithObject:@"svx-placeholder"
-                                                           forKey:@"class"];
-    [[self currentContext] startElement:@"div" 
-                                        bindSizeToPlugIn:self 
-                                              attributes:attributes];
-}
-- (void)endPlaceholderElement; { [[self currentContext] endElement]; }
 
 
 #pragma mark Metrics
-
-+ (BOOL)isExplicitlySized { return YES; }
 
 - (NSNumber *)minWidth { return [NSNumber numberWithInt:100]; }
 - (NSNumber *)minHeight { return [NSNumber numberWithInt:100]; }
@@ -130,6 +146,52 @@
     // pick an artibrary, yet visible, size to start with
     [self setWidth:[NSNumber numberWithInt:320] height:[NSNumber numberWithInt:640]];
 }
+
+#pragma mark Drag and Drop
+
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
+{
+    return SVWebLocationGetReadablePasteboardTypes(pasteboard);
+}
+
++ (SVPasteboardPriority)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
+{
+    NSURL *URL = [item URL];
+    if ( URL )
+    {
+        if ( [URL isFileURL ] )
+        {
+            return SVPasteboardPriorityNone;
+        }
+        else
+        {
+            return SVPasteboardPriorityReasonable;
+        }
+        
+    }
+    return [super priorityForPasteboardItem:item];
+}
+
+- (BOOL)awakeFromPasteboardItems:(NSArray *)items;
+{
+    BOOL didAwakeAnItem = NO;
+    
+    if ( items && [items count] )
+    {      
+        id<SVPasteboardItem, SVWebLocation> item = [items objectAtIndex:0];
+        
+        if ( [item conformsToProtocol:@protocol(SVWebLocation)] )
+        {
+            if ( [item  URL] ) self.linkURL = [item URL];
+            if ( [item title] ) [self setTitle:[item title]];
+            didAwakeAnItem = YES;
+        }
+    }
+    
+    return didAwakeAnItem;    
+}
+
++ (BOOL)supportsMultiplePasteboardItems; { return NO; }
 
 
 #pragma mark Properties
