@@ -1622,7 +1622,19 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     
     NSObject *result = nil;
     
-    if ([node ks_isDescendantOfElement:[self HTMLElement]] || ![self HTMLElement])
+    // Node might be in a different frame. #112424
+    DOMNode *nodeToTest = node;
+    DOMHTMLElement *myElement = [self HTMLElement];
+    if (myElement)
+    {
+        while ([nodeToTest ownerDocument] != [myElement ownerDocument])
+        {
+            nodeToTest = [[[nodeToTest ownerDocument] webFrame] frameElement];
+        }
+    }
+    
+    
+    if (!myElement || [nodeToTest ks_isDescendantOfElement:myElement])
     {
         for (WEKWebEditorItem *anItem in [self childWebEditorItems])
         {
