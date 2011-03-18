@@ -79,10 +79,13 @@
         
         NSRange range = NSMakeRange([imageScanner scanLocation], 0);
         NSString *fragment = [[html string] substringFromIndex:range.location];
-        NSXMLDocument *doc = [[NSXMLDocument alloc] initWithXMLString:fragment options:NSXMLDocumentTidyXML error:NULL];
-        OBASSERT(doc);  // XML tidy shouldn't fail
+        NSXMLDocument *xmlDoc = [[NSXMLDocument alloc] initWithXMLString:fragment options:NSXMLDocumentTidyHTML error:NULL];
+        OBASSERT(xmlDoc);  // HTML tidy shouldn't fail if you give it a simple enough fragment and no prelude stuff to restrict parsing
         
-        NSXMLElement *imageElement = [doc rootElement];
+		NSError *theError = nil;
+		NSArray *theNodes = [xmlDoc nodesForXPath:@"/html/body" error:&theError];
+		NSXMLElement *imageElement = [theNodes lastObject];
+		
         NSString *src = [[imageElement attributeForName:@"src"] stringValue];
         if (src)
         {
@@ -171,7 +174,7 @@
             [imageScanner scanString:@"<img" intoString:NULL];
         }
         
-        [doc release];
+        [xmlDoc release];
     }    
     
     
