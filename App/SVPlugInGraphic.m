@@ -260,20 +260,30 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     }
     
     
-    @try
+    SVPlugIn *plugIn = [self plugIn];
+    if (plugIn)
     {
-        [[self plugIn] writeHTML:context];
-    }
-    @catch (NSException *exception)
-    {
-        // TODO: Log or report exception
-        
-        // Correct open elements count if plug-in managed to break this. #88083
-        while ([context openElementsCount] > openElements)
+        @try
         {
-            [context endElement];
+            [[self plugIn] writeHTML:context];
+        }
+        @catch (NSException *exception)
+        {
+            // TODO: Log or report exception
+            
+            // Correct open elements count if plug-in managed to break this. #88083
+            while ([context openElementsCount] > openElements)
+            {
+                [context endElement];
+            }
         }
     }
+    else
+    {
+        [context writePlaceholderWithText:NSLocalizedString(@"Plug-in couldn't be loaded", "placeholder")
+                                  options:0];
+    }
+    
     
     if (![self shouldWriteHTMLInline])
     {
