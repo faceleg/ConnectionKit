@@ -152,8 +152,8 @@
         {
             [context startResizeableElement:@"div" plugIn:self options:0 preferredIdName:nil attributes:nil];
             
-            NSString *placeholder = SVLocalizedString(@"Placeholder for:", "String - followed by a URL");
-            NSString *text = [NSString stringWithFormat:@"%@ %@", placeholder, self.linkURL];
+            //NSString *placeholder = SVLocalizedString(@"Placeholder for:", "String - followed by a URL");
+            NSString *text = [self.linkURL absoluteString];
             [context writePlaceholderWithText:text options:0];
             
             [context endElement];
@@ -163,7 +163,7 @@
     {
         [context startResizeableElement:@"div" plugIn:self options:0 preferredIdName:nil attributes:nil];
         
-        NSString *text = SVLocalizedString(@"Please enter a URL in the Inspector.","");
+        NSString *text = SVLocalizedString(@"Drag a URL here","");
         [context writePlaceholderWithText:text options:0];
         
         [context endElement];
