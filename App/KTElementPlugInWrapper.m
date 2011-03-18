@@ -25,15 +25,16 @@
 	[self registerPluginClass:[self class] forFileExtension:kKTElementExtension];
 }
 
-/*	We only want to load 1.5 and later plugins
+/*	We only want to load 2.0 style plug-ins
  */
 + (BOOL)validateBundle:(NSBundle *)aCandidateBundle
 {
 	BOOL result = NO;
 	
-	NSString *minVersion = [aCandidateBundle minimumAppVersion];
+	NSString *minVersion = [aCandidateBundle objectForInfoDictionaryKey:@"SVMinimumAppVersion"];
 	if (minVersion)
 	{
+        // It's a 2.0-style plug-in. Is the app suitable to load it?
 		float floatMinVersion = [minVersion floatVersion];
 		if (floatMinVersion >= 2.0f)
 		{
@@ -46,7 +47,15 @@
 	}
     else
     {
-        NSLog(@"Not loading %@ as it has no minimum app version", [aCandidateBundle bundlePath]);
+        // No minimum app version specified; does it look to be a Sandvox 1 plug-in?
+        result = YES;
+        
+        if ([aCandidateBundle objectForInfoDictionaryKey:@"KSMinimumAppVersion"] ||
+            [aCandidateBundle objectForInfoDictionaryKey:@"KTMinimumAppVersion"])
+        {
+            result = NO;
+            NSLog(@"Not loading %@ as it looks to be a plug-in for Sandvox 1", [aCandidateBundle bundlePath]);
+        }
     }
 	
 	return result;
