@@ -26,6 +26,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 
 #import "NSError+Karelia.h"
+#import "NSArray+Karelia.h"
 #import "KSExtensibleManagedObject.h"
 #import "KSURLUtilities.h"
 
@@ -83,8 +84,8 @@
         OBASSERT(xmlDoc);  // HTML tidy shouldn't fail if you give it a simple enough fragment and no prelude stuff to restrict parsing
         
 		NSError *theError = nil;
-		NSArray *theNodes = [xmlDoc nodesForXPath:@"/html/body" error:&theError];
-		NSXMLElement *imageElement = [theNodes lastObject];
+		NSArray *theNodes = [xmlDoc nodesForXPath:@"/html/body/img" error:&theError];
+		NSXMLElement *imageElement = [theNodes firstObjectKS];
 		
         NSString *src = [[imageElement attributeForName:@"src"] stringValue];
         if (src)
