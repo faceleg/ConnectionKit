@@ -1148,10 +1148,10 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			flickrParser.flickrAPIKey = @"263df73e82720248908c08946c4303ad";		// Karelia's key
 			flickrParser.flickrSharedSecret = @"e91e1638196e3c3d";					// Karelia's shared secret
 		}
-		else
-		{
-			return NO;		// disable Flickr on Leopard! Crashy!
-		}
+//		else
+//		{
+//			return NO;		// disable Flickr on Leopard! Crashy!
+//		}
 		
 	}		// end IMBFlickrParser code
 	return YES;
