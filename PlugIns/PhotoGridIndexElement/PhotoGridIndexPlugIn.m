@@ -43,6 +43,7 @@
 {
     [super awakeFromNew];
     self.enableMaxItems = NO;
+    self.maxItems = 10;
 }
 
 
