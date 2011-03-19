@@ -27,8 +27,8 @@
 - (void)awakeFromNew
 {
     [super awakeFromNew];
-    self.enableMaxItems = YES;
-    self.maxItems = 10;
+    self.enableMaxItems = NO;
+    self.maxItems = 0;
 }
 
 - (void)didAddToPage:(id <SVPage>)page;
