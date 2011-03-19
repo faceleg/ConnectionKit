@@ -63,6 +63,8 @@
     self.iconPosition = 1;
     self.iconStyle = 1;
     self.showsTitle = NO;
+    self.enableMaxItems = YES;
+    self.maxItems = 10;
 }
 
 - (void)didAddToPage:(id <SVPage>)page;
