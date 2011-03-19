@@ -1225,17 +1225,18 @@
         NSWindow *window = [[self outlineView] window];
         if ( ![window isMainWindow] ) return NSDragOperationNone;
         
-        NSInteger row = [[self outlineView] rowForItem:node];
-        NSRect rowRect = [[self outlineView] rectOfRow:row];
-        //covert the origin to window coords
-        rowRect.origin = [[[self view] window] convertBaseToScreen:[[self outlineView] convertPoint:rowRect.origin toView:nil]];
-        rowRect.origin.y -= NSHeight(rowRect); //handle it because it is flipped.
-        if (!NSEqualSizes(rowRect.size, NSZeroSize))
-        {
-        }
-        else
-        {
-        }
+        //FIXME: why is there code here that does nothing? original intent?
+//        NSInteger row = [[self outlineView] rowForItem:node];
+//        NSRect rowRect = [[self outlineView] rectOfRow:row];
+//        //covert the origin to window coords
+//        rowRect.origin = [[[self view] window] convertBaseToScreen:[[self outlineView] convertPoint:rowRect.origin toView:nil]];
+//        rowRect.origin.y -= NSHeight(rowRect); //handle it because it is flipped.
+//        if (!NSEqualSizes(rowRect.size, NSZeroSize))
+//        {
+//        }
+//        else
+//        {
+//        }
         
         return NSDragOperationLink;
     }
