@@ -79,6 +79,9 @@
 - (void)awakeFromNew;
 {
 	[super awakeFromNew];
+    
+    self.enableMaxItems = YES;
+    self.maxItems = 10;
 	
 	NSNumber *isPagelet = [self valueForKeyPath:@"container.isPagelet"];	// Private. If creating in sidebar, make it more minimal
 	if (isPagelet && [isPagelet boolValue])
