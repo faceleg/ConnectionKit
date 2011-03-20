@@ -186,13 +186,34 @@
     {
         for ( NSDictionary *oldLink in [properties objectForKey:@"linkList"] )
         {
-            NSString *title = [oldLink objectForKey:@"titleHTML"];
-            NSURL *url = [NSURL URLWithString:[oldLink objectForKey:@"url"]];
-            Link *newLink = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                             title, @"title",
-                             url, @"url",
-                             nil];
-            [self addLink:newLink];
+            NSString *oldTitle = [oldLink objectForKey:@"titleHTML"];
+            NSString *oldURLString = [oldLink objectForKey:@"url"];
+            NSString *oldComment = [oldLink objectForKey:@"comment"];
+
+            Link *newLink = [NSMutableDictionary dictionary];
+            
+            if ( oldTitle )
+            {
+                NSString *title = [[oldTitle copy] autorelease];
+                [newLink setObject:title forKey:@"title"];
+            }
+            
+            if ( oldURLString )
+            {
+                NSURL *url = [NSURL URLWithString:oldURLString];
+                [newLink setObject:url forKey:@"url"];
+            }
+            
+            if ( oldComment )
+            {
+                NSString *comment = [[oldComment copy] autorelease];
+                [newLink setObject:comment forKey:@"comment"];
+            }
+            
+            if ( [newLink count] > 0 )
+            {
+                [self addLink:newLink];
+            }
         }
     }
 }
