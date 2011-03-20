@@ -128,7 +128,7 @@
         }
         else 
         {
-            [context writePlaceholderWithText:SVLocalizedString(@"Maps only available when Live Preview is On.", "")
+            [context writePlaceholderWithText:[NSString stringWithFormat:SVLocalizedString(@"Map of %@", "placeholder"), [self location]]
                                       options:0];
         }
     }
