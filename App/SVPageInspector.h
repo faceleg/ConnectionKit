@@ -35,6 +35,8 @@
 
 - (IBAction)chooseNavigationArrowsStyle:(NSPopUpButton *)sender;
 
+- (IBAction)toggleComments:(NSButton *)sender;
+
 - (IBAction)selectTimestampType:(NSPopUpButton *)sender;
 
 - (IBAction)pickThumbnailFromPage:(NSPopUpButton *)sender;

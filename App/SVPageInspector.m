@@ -104,6 +104,19 @@
     }
 }
 
+#pragma mark Comments
+
+- (IBAction)toggleComments:(NSButton *)sender;
+{
+    if ([sender state] == NSOnState)
+    {
+        if (![[[self inspectedObjectsController] valueForKeyPath:@"selection.master.commentsProvider"] boolValue])
+        {
+            [NSApp sendAction:@selector(configureComments:) to:nil from:self];
+        }
+    }
+}
+
 #pragma mark Timestamp
 
 - (IBAction)selectTimestampType:(NSPopUpButton *)sender;
@@ -120,11 +133,11 @@
     
     if ([identifier isEqualToString:@"page"])
     {
-        return 474.0f;
+        return 496.0f;
     }
     else if ([identifier isEqualToString:@"appearance"])
     {
-        return 380.0f;
+        return 420.0f;
     }
     else if ([identifier isEqualToString:@"collection"])
     {
