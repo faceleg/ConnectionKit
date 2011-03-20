@@ -119,6 +119,14 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 - (BOOL)shouldResizeInline; { return [[self representedObject] shouldWriteHTMLInline]; }
 
+- (NSSize)minSize;
+{
+    SVPlugInGraphic *graphic = [self representedObject];
+    
+    NSSize result = NSMakeSize([graphic minHeight], [graphic minWidth]);
+    return result;
+}
+
 - (CGFloat)maxWidth; { return [[self enclosingGraphicDOMController] maxWidth]; }
 
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
