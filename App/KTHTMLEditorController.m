@@ -462,22 +462,37 @@ initial syntax coloring.
 
 - (void)saveBackToSource:(NSNumber *)disableUndoRegistration
 {
-	if ([self HTMLSourceObject])
+	id <KTHTMLSourceObject> sourceObject = [self HTMLSourceObject];
+	if (sourceObject)
 	{
         // Disable undo registration if requested
         NSManagedObjectContext *MOC = nil;
-        if (disableUndoRegistration && [[self HTMLSourceObject] isKindOfClass:[NSManagedObject class]])
+        if (disableUndoRegistration && [sourceObject isKindOfClass:[NSManagedObject class]])
         {
-            MOC = [(NSManagedObject *)[self HTMLSourceObject] managedObjectContext];
+            MOC = [(NSManagedObject *)sourceObject managedObjectContext];
             [MOC processPendingChanges];
             [[MOC undoManager] disableUndoRegistration];
         }
         
         // Store the HTML etc.
-		[self HTMLSourceObject].contentType = self.contentType;
-		[self HTMLSourceObject].HTMLString = [[textView textStorage] string];
-		[self HTMLSourceObject].lastValidMarkupDigest = self.hashOfLastValidation;
-		[self HTMLSourceObject].shouldPreviewWhenEditing = [NSNumber numberWithBool:self.shouldPreviewWhenEditing];
+		if (![[[textView textStorage] string]	isEqualToString:sourceObject.HTMLString])		
+		{
+			sourceObject.HTMLString = [[textView textStorage] string];
+			
+			// Only also update these other properties if the string changed
+			if (self.contentType				!= sourceObject.contentType)	
+			{
+				sourceObject.contentType = self.contentType;
+			}
+			if (![self.hashOfLastValidation isEqual:sourceObject.lastValidMarkupDigest])
+			{
+				sourceObject.lastValidMarkupDigest = self.hashOfLastValidation;
+			}			
+		}
+		if (self.shouldPreviewWhenEditing	!= [sourceObject.shouldPreviewWhenEditing boolValue])
+		{
+			sourceObject.shouldPreviewWhenEditing = [NSNumber numberWithBool:self.shouldPreviewWhenEditing];
+		}
 		
         // Re-enable undo registration
         if (MOC)
