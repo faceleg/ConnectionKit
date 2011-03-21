@@ -50,17 +50,24 @@
 - (NSString *)title;
 {
 	// set up a formatter since descriptionWithCalendarFormat:timeZone:locale: may not match site locale
-	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-	[dateFormatter setDateFormat:@"MMMM yyyy"]; // unicode pattern for @"%B %Y"
+	static NSDateFormatter *sDateFormatter;
+    if (!sDateFormatter)
+    {
+        sDateFormatter = [[NSDateFormatter alloc] init];
+        [sDateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+        [sDateFormatter setDateFormat:@"MMMM yyyy"]; // unicode pattern for @"%B %Y"
+    }
     
 	// find our locale from the site itself
 	NSString *language = [self language];
-	NSLocale *locale = [[[NSLocale alloc] initWithLocaleIdentifier:language] autorelease];
-	[dateFormatter setLocale:locale];
+    if (![language isEqualToString:[[sDateFormatter locale] localeIdentifier]])
+    {
+        NSLocale *locale = [[[NSLocale alloc] initWithLocaleIdentifier:language] autorelease];
+        [sDateFormatter setLocale:locale];
+    }
 	
 	NSDate *date = [[[self childPages] lastObject] creationDate];
-	NSString *result = [dateFormatter stringFromDate:date];
+	NSString *result = [sDateFormatter stringFromDate:date];
 	return result;
 }
 
@@ -127,13 +134,16 @@
 - (NSString *)filename;
 {
     // Get the month formatted like "01_2008"
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-    [formatter setDateFormat:@"MM'-'yyyy'.html'"];
+    static NSDateFormatter *sFormatter;
+    if (!sFormatter)
+    {
+        sFormatter = [[NSDateFormatter alloc] init];
+        [sFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+        [sFormatter setDateFormat:@"MM'-'yyyy'.html'"];
+    }
     
     NSDate *date = [[[self childPages] lastObject] creationDate];
-	NSString *result = [formatter stringFromDate:date];
-    [formatter release];
+	NSString *result = [sFormatter stringFromDate:date];
     
     return result;
 }
