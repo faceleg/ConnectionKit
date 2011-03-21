@@ -323,6 +323,20 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
         
         [oInformativeTextLabel setTextColor:[NSColor redColor]];
         NSString *errorDescription = [error localizedDescription];
+        
+        if ( [errorDescription isEqualToString:NSLocalizedString(@"Stream Unavailable", @"connection kit error")] )
+        {
+            NSDictionary *userInfo = [error userInfo];
+            if ( [userInfo objectForKey:@"ConnectionHostKey"] )
+            {
+                errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Unable to connect to %@. Please verify your host connection information or try again later.", @"more informative connection kit error with hostname"), [userInfo objectForKey:@"ConnectionHostKey"]];
+            }
+            else
+            {
+                errorDescription = NSLocalizedString(@"Unable to connect to host. Please verify your host connection information or try again later.", @"more informative connection kit error"); 
+            }
+        }
+        
         [self setInformativeText:errorDescription];
         
         [oProgressIndicator stopAnimation:self];
