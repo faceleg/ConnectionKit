@@ -32,7 +32,8 @@
 - (id)initWithUploadPath:(NSString *)path
                publisher:(id <SVPublisher>)publisher;
 {    
-    self = [self init];
+    // If there's no destination, don't bother storing the HTML!
+    self = (path ? [self init] : [self initWithOutputStringWriter:nil]);
     
     _path = [path copy];
     _publisher = [publisher retain];

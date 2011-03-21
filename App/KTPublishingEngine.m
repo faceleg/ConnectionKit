@@ -314,6 +314,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (SVHTMLContext *)beginPublishingHTMLToPath:(NSString *)path;
 {
+    // Don't let data be published twice
+    NSString *fullPath = [[self baseRemotePath] stringByAppendingPathComponent:path];
+    
+    if (![self shouldPublishToPath:fullPath])
+    {
+        path = nil;
+    }
+    
     // Make context
     SVPublishingHTMLContext *result = [[SVPublishingHTMLContext alloc] initWithUploadPath:path
                                                                                 publisher:self];
