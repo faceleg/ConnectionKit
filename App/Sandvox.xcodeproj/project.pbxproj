@@ -370,8 +370,6 @@
 		2736A10A1309606200397D1A /* SVMigrationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2736A1081309606200397D1A /* SVMigrationManager.m */; };
 		273864330D50A6F900A8A209 /* KTPage+Children.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864320D50A6F900A8A209 /* KTPage+Children.m */; };
 		273864660D50BB1D00A8A209 /* KTPage+Indexes.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864650D50BB1D00A8A209 /* KTPage+Indexes.m */; };
-		273B400B1176305600A275E6 /* SVMediaGatheringPublisher.h in Headers */ = {isa = PBXBuildFile; fileRef = 273B40091176305600A275E6 /* SVMediaGatheringPublisher.h */; };
-		273B400C1176305600A275E6 /* SVMediaGatheringPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 273B400A1176305600A275E6 /* SVMediaGatheringPublisher.m */; };
 		273B438411786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273B438211786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h */; };
 		273B438511786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273B438311786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m */; };
 		273B443A1179046500A275E6 /* SVDocumentFileWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 273B44381179046500A275E6 /* SVDocumentFileWrapper.h */; };
@@ -2066,8 +2064,6 @@
 		2736A1081309606200397D1A /* SVMigrationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMigrationManager.m; sourceTree = "<group>"; };
 		273864320D50A6F900A8A209 /* KTPage+Children.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Children.m"; sourceTree = "<group>"; };
 		273864650D50BB1D00A8A209 /* KTPage+Indexes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Indexes.m"; sourceTree = "<group>"; };
-		273B40091176305600A275E6 /* SVMediaGatheringPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaGatheringPublisher.h; sourceTree = "<group>"; };
-		273B400A1176305600A275E6 /* SVMediaGatheringPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaGatheringPublisher.m; sourceTree = "<group>"; };
 		273B43731178676900A275E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DocumentSavePanelAccessoryView.xib; sourceTree = "<group>"; };
 		273B438211786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocumentSavePanelAccessoryViewController.h; sourceTree = "<group>"; };
 		273B438311786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocumentSavePanelAccessoryViewController.m; sourceTree = "<group>"; };
@@ -3910,8 +3906,6 @@
 				275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */,
 				27BCCCA00F09609E00B06B35 /* KTRemotePublishingEngine.h */,
 				27BCCCA10F09609E00B06B35 /* KTRemotePublishingEngine.m */,
-				273B40091176305600A275E6 /* SVMediaGatheringPublisher.h */,
-				273B400A1176305600A275E6 /* SVMediaGatheringPublisher.m */,
 				277FDC3711CD3F810083F1BF /* SVPublishDataWriter.h */,
 				277FDC3811CD3F810083F1BF /* SVPublishDataWriter.m */,
 				3C11079312AF122800FB34E8 /* SVGoogleSitemapPinger.h */,
@@ -6150,7 +6144,6 @@
 				CED05D25116E5105003228C5 /* SVPublishingHTMLContext.h in Headers */,
 				2796DF0A11733C4D000DD6EC /* SVMediaRequest.h in Headers */,
 				2796DFC711736375000DD6EC /* SVImageScalingOperation.h in Headers */,
-				273B400B1176305600A275E6 /* SVMediaGatheringPublisher.h in Headers */,
 				273B438411786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h in Headers */,
 				273B443A1179046500A275E6 /* SVDocumentFileWrapper.h in Headers */,
 				27D9A259117FB49000049638 /* SVAuxiliaryPageletTextDOMController.h in Headers */,
@@ -7798,7 +7791,6 @@
 				CED05D26116E5105003228C5 /* SVPublishingHTMLContext.m in Sources */,
 				2796DF0B11733C4D000DD6EC /* SVMediaRequest.m in Sources */,
 				2796DFC811736375000DD6EC /* SVImageScalingOperation.m in Sources */,
-				273B400C1176305600A275E6 /* SVMediaGatheringPublisher.m in Sources */,
 				273B438511786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m in Sources */,
 				27D9A25A117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m in Sources */,
 				2764AA1F1188D16C00D8E1BB /* SVArticleDOMController.m in Sources */,

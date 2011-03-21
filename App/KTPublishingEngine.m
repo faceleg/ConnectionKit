@@ -13,7 +13,6 @@
 #import "KTHostProperties.h"
 #import "KTSite.h"
 #import "KTMaster.h"
-#import "SVMediaGatheringPublisher.h"
 #import "SVMediaRequest.h"
 #import "KTPage+Internal.h"
 #import "SVPublishingHTMLContext.h"
@@ -617,13 +616,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)gatherMedia;
 {
     // Publish any media that has been published before (so it maintains its path). Ignore all else
-    SVMediaGatheringPublisher *pubContext = [[SVMediaGatheringPublisher alloc] init];
-    [pubContext setPublishingEngine:self];
-    
     KTPage *homePage = [[self site] rootPage];
     [homePage publish:self recursively:YES];
-    
-    [pubContext release];
 }
 
 - (void)startPublishingMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)cachedDigest;
