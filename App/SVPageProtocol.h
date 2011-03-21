@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import "SVPlugIn.h"
-#import "SVGraphic.h"
 
 typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSentences, kTruncateParagraphs } SVTruncationType;
 
