@@ -31,6 +31,7 @@
         contentHash:(NSData *)hash
              object:(id <SVPublishedObject>)object;
 {
+    [[self publishingEngine] publishData:data toPath:remotePath cachedSHA1Digest:digest contentHash:hash object:object];
 }
 
 - (void)publishContentsOfURL:(NSURL *)localURL
@@ -47,7 +48,7 @@
 
 - (SVHTMLContext *)beginPublishingHTMLToPath:(NSString *)path
 {
-    return [[[SVPublishingHTMLContext alloc] initWithUploadPath:nil publisher:self] autorelease];
+    return [[[SVPublishingHTMLContext alloc] initWithUploadPath:path publisher:self] autorelease];
 }
 
 - (NSString *)publishMediaWithRequest:(SVMediaRequest *)mediaRep;

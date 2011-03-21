@@ -24,6 +24,9 @@
     KSSHA1Stream            *_contentHashStream;
     KSOutputStreamWriter    *_contentHashDataOutput;
     
+    // Media
+    BOOL    _didAddMediaWithoutPath;
+    
     // Event loop
     NSUInteger  _disableRunningEventLoop;
 }
@@ -32,5 +35,6 @@
                publisher:(id <SVPublisher>)publisher;
 
 - (NSURL *)addMediaWithRequest:(SVMediaRequest *)request;
+- (BOOL)didAddMediaWithoutPath;
 
 @end

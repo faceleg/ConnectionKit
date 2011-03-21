@@ -42,34 +42,37 @@
 
 - (void)close;
 {
-    // Generate HTML data
-    NSString *html = [[self outputStringWriter] string];
-	if (html)
+    // Publish HTML if complete
+    if (![self didAddMediaWithoutPath])
     {
-        NSStringEncoding encoding = [self encoding];
-        
-        NSData *pageData = [[html unicodeNormalizedString] dataUsingEncoding:encoding
-                                                        allowLossyConversion:YES];
-        OBASSERT(pageData);
-        
-        
-        // Give subclasses a chance to ignore the upload
-        id <SVPublisher> publishingEngine = _publisher;
-        KTPage *page = [self page];
-        NSString *fullUploadPath = [[publishingEngine baseRemotePath]
-                                    stringByAppendingPathComponent:_path];
-        
-        
-        // Upload page data. Store the page and its digest with the record for processing later
-        if (fullUploadPath)
+        NSString *html = [[self outputStringWriter] string];
+        if (html)
         {
-            [_contentHashStream close];
+            NSStringEncoding encoding = [self encoding];
             
-            [publishingEngine publishData:pageData
-                                   toPath:fullUploadPath
-                         cachedSHA1Digest:nil
-                              contentHash:[_contentHashStream SHA1Digest]
-                                   object:page];
+            NSData *pageData = [[html unicodeNormalizedString] dataUsingEncoding:encoding
+                                                            allowLossyConversion:YES];
+            OBASSERT(pageData);
+            
+            
+            // Give subclasses a chance to ignore the upload
+            id <SVPublisher> publishingEngine = _publisher;
+            KTPage *page = [self page];
+            NSString *fullUploadPath = [[publishingEngine baseRemotePath]
+                                        stringByAppendingPathComponent:_path];
+            
+            
+            // Upload page data. Store the page and its digest with the record for processing later
+            if (fullUploadPath)
+            {
+                [_contentHashStream close];
+                
+                [publishingEngine publishData:pageData
+                                       toPath:fullUploadPath
+                             cachedSHA1Digest:nil
+                                  contentHash:[_contentHashStream SHA1Digest]
+                                       object:page];
+            }
         }
     }
     
@@ -140,6 +143,7 @@
 - (NSURL *)addMediaWithRequest:(SVMediaRequest *)request;
 {
     NSString *mediaPath = [_publisher publishMediaWithRequest:request];
+    if (!mediaPath) _didAddMediaWithoutPath = YES;
     
     KTPage *page = [self page];
     if (page)
@@ -169,8 +173,13 @@
         }
     }
     
+    
     return nil;
 }
+
+- (BOOL)didAddMediaWithoutPath; { return _didAddMediaWithoutPath; }
+
+#pragma mark Resources
 
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
 {
