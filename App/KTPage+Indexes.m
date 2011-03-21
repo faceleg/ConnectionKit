@@ -273,7 +273,7 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 	
 	(void) [self writeSummary:xmlContext
 			includeLargeMedia:includeLargeMedia
-			 includeThumbnail:includeLargeMedia
+			 excludeThumbnail:NO		// don't exclude any thumbnail images
 				   truncation:truncationLength];
 	
 	// Do we want to insert anything into the feed if it is truncated?
@@ -409,9 +409,11 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 
 - (BOOL)writeSummary:(SVHTMLContext *)context
    includeLargeMedia:(BOOL)includeLargeMedia
-	includeThumbnail:(BOOL)includeThumbnail
+	excludeThumbnail:(BOOL)excludeThumbnail
 		  truncation:(NSUInteger)maxItemLength;
 {
+	SVGraphic *thumbnailToExclude = excludeThumbnail ? [self thumbnailSourceGraphic] : nil;		// CORRECT FOR ALL CASES?
+	
 	SVTruncationType truncationType = [[self class] chooseTruncTypeFromMaxItemLength:maxItemLength];
 	BOOL result = NO;
 	
@@ -421,7 +423,7 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 	// do we have a custom summary? if so just write it
     if ( nil != [self customSummaryHTML] )
     {
-        [super writeSummary:context includeLargeMedia:includeLargeMedia includeThumbnail:includeThumbnail truncation:maxItemLength];
+        [super writeSummary:context includeLargeMedia:includeLargeMedia excludeThumbnail:excludeThumbnail truncation:maxItemLength];
 		result = YES;		// A custom summary means we want to make an obvious link to more
     }
     else
@@ -430,11 +432,11 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 		
 		if ( maxItemLength > 0 && kTruncateNone != truncationType )
 		{
-			html = [[[self article] attributedHTMLString]
-                    attributedHTMLStringWithTruncation:maxItemLength
-                    type:truncationType
-                    includeLargeMedia:includeLargeMedia
-                    didTruncate:&result];
+			html = [[[self article] attributedHTMLString] attributedHTMLStringWithTruncation:maxItemLength
+																						type:truncationType
+																		   includeLargeMedia:includeLargeMedia
+																		  thumbnailToExclude:thumbnailToExclude
+																				 didTruncate:&result];
 		}
 		else
 		{
@@ -497,7 +499,7 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
         }
         else
         {
-            [super writeSummary:context includeLargeMedia:includeLargeMedia includeThumbnail:includeThumbnail truncation:truncationType];
+            [super writeSummary:context includeLargeMedia:includeLargeMedia excludeThumbnail:excludeThumbnail truncation:truncationType];
         }
 		
 		[summary release];

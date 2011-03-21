@@ -505,6 +505,7 @@
 - (NSAttributedString *)attributedHTMLStringWithTruncation:(NSUInteger)maxItemLength
                                                       type:(SVTruncationType)truncationType
                                          includeLargeMedia:(BOOL)includeLargeMedia
+										thumbnailToExclude:(SVGraphic *) thumbnailToExclude
                                                didTruncate:(BOOL *)truncated;
 {
     // take the normally generated HTML for the summary  
@@ -583,9 +584,8 @@
         SVTextAttachment *attachment = [untruncatedHTML attribute:@"SVAttachment"
                                                           atIndex:sAttachmentRange.location
                                                    effectiveRange:NULL];
-        
         // Copy the actual attachment across to the result
-        if (attachment)
+        if (attachment && thumbnailToExclude != [attachment graphic])
         {
             BOOL causesWrap = [[attachment causesWrap] boolValue];
             if (includeLargeMedia || !causesWrap)

@@ -631,7 +631,7 @@
 
 - (BOOL)writeSummary:(SVHTMLContext *)context
    includeLargeMedia:(BOOL)includeLargeMedia
-	includeThumbnail:(BOOL)includeThumbnail
+	excludeThumbnail:(BOOL)excludeThumbnail
 		  truncation:(NSUInteger)maxCount;
 {
     SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];

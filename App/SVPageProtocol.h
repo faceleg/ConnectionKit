@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "SVPlugIn.h"
+#import "SVGraphic.h"
 
 typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSentences, kTruncateParagraphs } SVTruncationType;
 
@@ -18,7 +19,7 @@ typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSent
 - (NSString *)title;
 - (BOOL)showsTitle;
 
-- (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia includeThumbnail:(BOOL)includeThumbnail truncation:(NSUInteger)maxCount;
+- (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia excludeThumbnail:(BOOL)excludeThumbnail truncation:(NSUInteger)maxCount;
 
 
 #pragma mark Properties

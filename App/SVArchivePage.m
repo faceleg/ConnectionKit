@@ -79,7 +79,7 @@
 
 - (BOOL)writeSummary:(id <SVPlugInContext>)context
    includeLargeMedia:(BOOL)includeLargeMedia
-	includeThumbnail:(BOOL)includeThumbnail
+	excludeThumbnail:(BOOL)excludeThumbnail
 		  truncation:(NSUInteger)maxCount;
 { return NO; }
 
