@@ -621,7 +621,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [pubContext setPublishingEngine:self];
     
     KTPage *homePage = [[self site] rootPage];
-    [homePage publish:pubContext recursively:YES];
+    [homePage publish:self recursively:YES];
     
     [pubContext release];
 }
