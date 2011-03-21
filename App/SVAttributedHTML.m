@@ -253,9 +253,11 @@
 {
 	OFF((@"TRUNCATE TO: %d [%d]", maxItemLength, truncationType));
 	OBPRECONDITION(markup);
-	NSString *result = markup;
+	NSString *result = [markup stringByTrimmingWhitespace];
 	BOOL removedAnything = NO;
-	if ((kTruncateNone != truncationType) && maxItemLength)	// only do something if we want to actually truncate something
+	if (![result isEqualToString:@""]
+		&& (kTruncateNone != truncationType)
+		&& maxItemLength)	// only do something if we want to actually truncate something
 	{
 		// Only want run through this if:
 		// 1. We are truncating something other than characters, OR....
@@ -298,7 +300,7 @@
 			}
 			if (nil == xmlDoc && nil != theError)
 			{
-				NSLog(@"NSXMLDocument err from truncation: %@", theError);
+				NSLog(@"CANNOT create NSXMLDocument to truncate: %@", theError);
 			}
 			
 			if (xmlDoc)
