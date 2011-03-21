@@ -272,8 +272,9 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 	BOOL includeLargeMedia = truncationLength >= kLargeMediaTruncationThreshold;
 	
 	(void) [self writeSummary:xmlContext
-					  includeLargeMedia:includeLargeMedia 
-							 truncation:truncationLength];
+			includeLargeMedia:includeLargeMedia
+			 includeThumbnail:includeLargeMedia
+				   truncation:truncationLength];
 	
 	// Do we want to insert anything into the feed if it is truncated?
 	[xmlContext release];
@@ -406,7 +407,10 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 
 // Returns YES if truncated.
 
-- (BOOL)writeSummary:(SVHTMLContext *)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxItemLength;
+- (BOOL)writeSummary:(SVHTMLContext *)context
+   includeLargeMedia:(BOOL)includeLargeMedia
+	includeThumbnail:(BOOL)includeThumbnail
+		  truncation:(NSUInteger)maxItemLength;
 {
 	SVTruncationType truncationType = [[self class] chooseTruncTypeFromMaxItemLength:maxItemLength];
 	BOOL result = NO;
@@ -417,7 +421,7 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 	// do we have a custom summary? if so just write it
     if ( nil != [self customSummaryHTML] )
     {
-        [super writeSummary:context includeLargeMedia:includeLargeMedia truncation:maxItemLength];
+        [super writeSummary:context includeLargeMedia:includeLargeMedia includeThumbnail:includeThumbnail truncation:maxItemLength];
 		result = YES;		// A custom summary means we want to make an obvious link to more
     }
     else
@@ -493,7 +497,7 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
         }
         else
         {
-            [super writeSummary:context includeLargeMedia:includeLargeMedia truncation:truncationType];
+            [super writeSummary:context includeLargeMedia:includeLargeMedia includeThumbnail:includeThumbnail truncation:truncationType];
         }
 		
 		[summary release];

@@ -377,6 +377,7 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 - (BOOL)writeSummaryOfIteratedPage;
 {
 	BOOL includeLargeMedia = self.indexLayoutType & kLargeMediaMask;
+	BOOL includeThumbnail = self.indexLayoutType & kThumbMask;
 	if (includeLargeMedia && (self.indexLayoutType & kLargeMediaIfBigEnough) )
 	{
 		includeLargeMedia = self.maxItemLength >= kLargeMediaTruncationThreshold;
@@ -386,6 +387,7 @@ extern NSUInteger kLargeMediaTruncationThreshold;
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     BOOL truncated = [iteratedPage writeSummary:context
 							  includeLargeMedia:includeLargeMedia
+							   includeThumbnail:includeThumbnail		// Generally this will be NO since we want thumb excluded
 									 truncation:self.maxItemLength];
 	return truncated;
 }

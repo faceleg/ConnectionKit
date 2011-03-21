@@ -18,7 +18,7 @@ typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSent
 - (NSString *)title;
 - (BOOL)showsTitle;
 
-- (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount;
+- (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia includeThumbnail:(BOOL)includeThumbnail truncation:(NSUInteger)maxCount;
 
 
 #pragma mark Properties

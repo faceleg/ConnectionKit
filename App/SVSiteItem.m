@@ -629,7 +629,10 @@
 
 - (void)writeRSSFeedItemDescription { }
 
-- (BOOL)writeSummary:(SVHTMLContext *)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount;
+- (BOOL)writeSummary:(SVHTMLContext *)context
+   includeLargeMedia:(BOOL)includeLargeMedia
+	includeThumbnail:(BOOL)includeThumbnail
+		  truncation:(NSUInteger)maxCount;
 {
     SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
     [textBlock setEditable:YES];

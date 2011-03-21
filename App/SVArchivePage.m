@@ -77,7 +77,11 @@
 
 - (void)writeRSSFeedItemDescription { }
 
-- (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia truncation:(NSUInteger)maxCount; { return NO; }
+- (BOOL)writeSummary:(id <SVPlugInContext>)context
+   includeLargeMedia:(BOOL)includeLargeMedia
+	includeThumbnail:(BOOL)includeThumbnail
+		  truncation:(NSUInteger)maxCount;
+{ return NO; }
 
 - (NSString *)language; { return [[self collection] language]; }
 
