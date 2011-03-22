@@ -76,20 +76,19 @@ static NSImage *sTargetSetImage = nil;
 		[sTargetSetImage setSize:NSMakeSize(16,16)];
 	}
 	
-	NSRect centeredRect = NSMakeRect(NSMidX(rect) - 8, NSMidY(rect) - 8, 16, 16);
-
+	NSRect centeredRect = NSMakeRect(roundf(NSMidX(rect)) - 8, roundf(NSMidY(rect)) - 8, 16, 16);
 	[NSGraphicsContext saveGraphicsState];
 
 	if (!_flags.isConnecting)	// no shadow when we're connecting
 	{
 		NSShadow *aShadow = [[[NSShadow alloc] init] autorelease];
-		[aShadow setShadowOffset:NSMakeSize(0,-2)];
-		[aShadow setShadowBlurRadius:2.0];
-		[aShadow setShadowColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.67]];
+		[aShadow setShadowOffset:NSMakeSize(0,-1)];
+		[aShadow setShadowBlurRadius:1.5];
+		[aShadow setShadowColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.33]];
 		[aShadow set];
 	}
 	
-	[(_flags.isConnected ? sTargetSetImage : sTargetImage)
+	[sTargetImage
 		drawInRect:centeredRect
 		  fromRect:NSZeroRect
 		 operation:NSCompositeSourceOver
@@ -98,7 +97,7 @@ static NSImage *sTargetSetImage = nil;
 	
 	if (_flags.isConnecting)	// while connecting, draw a rectangle around it
 	{
-		NSRect anOutline = NSInsetRect(centeredRect, -2, -2);
+		NSRect anOutline = NSInsetRect(centeredRect, -2.5, -2.5);
 		
 		NSBezierPath *path = [NSBezierPath bezierPathWithRect:anOutline];
 		[path setLineWidth:1.0];
