@@ -248,6 +248,12 @@ initial syntax coloring.
 												 name: NSTextStorageDidProcessEditingNotification
 											   object: [textView textStorage]];
 	
+	// Register for MOC changes so we know if we need to close the window.
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(mocDidChange:)
+												 name:NSManagedObjectContextObjectsDidChangeNotification
+											   object:nil];
+
 	// Put selection at top like Project Builder has it, so user sees it:
 	[textView setSelectedRange: NSMakeRange(0,0)];
 	
@@ -503,7 +509,7 @@ initial syntax coloring.
 	}
 	else
     {
-        NSLog(@"Don't have any destination to save the HTML window");
+        LOG((@"Don't have any destination to save the HTML window"));
     }
 }
 
@@ -837,7 +843,7 @@ initial syntax coloring.
 
 @synthesize HTMLSourceObject = _HTMLSourceObject;
 - (void) setHTMLSourceObject:(id <KTHTMLSourceObject>)graphic;
-{
+{	
 	[_HTMLSourceObject release];
 	_HTMLSourceObject = [graphic retain];
 	
@@ -861,6 +867,18 @@ initial syntax coloring.
 	self.hashOfLastValidation = graphic.lastValidMarkupDigest;
 	
 	[self loadFragment:graphic.HTMLString];
+}
+
+/*	Whenever pages are inserted or deleted 
+ */
+- (void)mocDidChange:(NSNotification *)notification
+{
+	NSSet *deletedObjects = [[notification userInfo] objectForKey:NSDeletedObjectsKey];
+	if ([deletedObjects containsObject:self.HTMLSourceObject])
+	{
+		self.HTMLSourceObject = nil;			// be sure not to save back!
+		[self close];
+	}
 }
 
 @synthesize completionSelector = _completionSelector;
