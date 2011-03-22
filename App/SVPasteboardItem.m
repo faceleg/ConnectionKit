@@ -64,9 +64,12 @@
         for (IMBObject *anObject in objects)
         {
             NSURL *aURL = [promise fileURLForObject:anObject];
-            [result addObject:[SVPasteboardItem pasteboardItemWithURL:aURL
-                                                                title:[anObject name]
-                                                             metadata:[anObject metadata]]];
+			if (aURL)
+			{
+				[result addObject:[SVPasteboardItem pasteboardItemWithURL:aURL
+																	title:[anObject name]
+																 metadata:[anObject metadata]]];
+			}
         }
         
         return result;
