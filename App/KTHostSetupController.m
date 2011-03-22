@@ -189,8 +189,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	if ([[self valueForKey:@"protocol"] isEqualToString:@".Mac"] 
 		&& nil == [self valueForKey:@"dotMacDomainStyle"])
 	{
-		// It was not set, so assume it's a legacy document, which is homepage.mac.com
-		[self setValue:[NSNumber numberWithInt:HOMEPAGE_MAC_COM] forKey:@"dotMacDomainStyle"];
+		[self setValue:[NSNumber numberWithInt:WEB_ME_COM] forKey:@"dotMacDomainStyle"];
 	}
 	
 	// Try to reach localhost when localHosting checkbox is checked -- and abort it when unchecked.
@@ -353,7 +352,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[self setValue:[NSNumber numberWithInt:0] forKey:@"remoteHosting"];	// choose NEITHER
 	[self setValue:[NSNumber numberWithInt:0] forKey:@"localHosting"];
 	[self setValue:[NSNumber numberWithInt:0] forKey:@"hostTypeMatrix"];
-	[self setValue:[NSNumber numberWithInt:WEB_ME_COM] forKey:@"dotMacDomainStyle"];	// initially homepage.mac.com
+	[self setValue:[NSNumber numberWithInt:WEB_ME_COM] forKey:@"dotMacDomainStyle"];	// initially web.me.com
 	[self doNext:sender];
 }
 
@@ -453,7 +452,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		
 	// Connect at the chosen document root if possible. iDisk is odd though and CANNOT connect at the root dir
 	NSString *documentRoot = [self valueForKey:@"docRoot"];
-	if ([host isEqualToStringCaseInsensitive:@"idisk.mac.com"] &&
+	if ([host isEqualToStringCaseInsensitive:@"idisk.me.com"] &&
 		[protocol isEqualToString:@"WebDAV"] &&
 		(!documentRoot || [documentRoot isEqualToString:@""] || [documentRoot isEqualToString:@"/"]))
 	{
@@ -739,7 +738,6 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	// If not yet set, initialize .mac style to Mobile Me for new sites
 	if ([nextState isEqualToString:@"mac"] && nil == [self valueForKey:@"dotMacDomainStyle"])
 	{
-		// It was not set, so assume it's a legacy document, which is homepage.mac.com
 		[self setValue:[NSNumber numberWithInt:WEB_ME_COM] forKey:@"dotMacDomainStyle"];
 	}
 	
@@ -835,7 +833,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		{
 			NSString *pass = [self password];
 			if (pass && ![pass isEqualToString:@""] 
-				&& !([[myProperties valueForKey:@"hostName"] isEqualToString:@"idisk.mac.com"] 
+				&& !([[myProperties valueForKey:@"hostName"] isEqualToString:@"idisk.me.com"] 
 					 && [[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"]) )  // TODO - excise .Mac by name from this code
 			{
 				[self setKeychainPassword:pass];		// finally, store the password in the keychain
@@ -1757,11 +1755,11 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		
 		// Put .Mac-specific properties into general properties
 		NSDictionary *ispInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-			@"mac.com", @"domainName",
-			@"http://www.mac.com/", @"homePageURL",
-			@"idisk.mac.com", @"hostName",
+			@"me.com", @"domainName",
+			@"http://web.me.com/", @"homePageURL",
+			@"idisk.me.com", @"hostName",
 			@"webDAV", @"protocol",
-			nil];
+			nil];        
 				
 		[[self properties] setValuesForKeysWithDictionary:ispInfo];
 		[self setValuesForKeysWithDictionary:ispInfo];
@@ -2493,6 +2491,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		[oDotMacLabel setStringValue:[NSString stringWithFormat:NSLocalizedString(@"This website will be published on your \\U201C%@\\U201D account.", "format for summary of dot mac account"), iToolsMember]];
 		[self setValue:iToolsMember forKey:@"userName"];
 		[oGetDotMacButton setHidden:YES];
+        [self setDotMacTimer:nil];
 	}
 }
 
@@ -3017,6 +3016,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				[self setValue:@"/Sites/" forKey:@"docRoot"];
 				[self setValue:@"http://homepage.mac.com/?/" forKey:@"stemURL"];
 				[self setValue:@"mac.com" forKey:@"domainName"];
+                NSLog(@"warning: .Mac HomPage is no longer supported, by Apple or Karelia");
 				break;
 		}
 	}
