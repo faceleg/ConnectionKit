@@ -3016,7 +3016,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				[self setValue:@"/Sites/" forKey:@"docRoot"];
 				[self setValue:@"http://homepage.mac.com/?/" forKey:@"stemURL"];
 				[self setValue:@"mac.com" forKey:@"domainName"];
-                NSLog(@"warning: .Mac HomPage is no longer supported, by Apple or Karelia");
+                NSLog(@"warning: .Mac HomePage is no longer supported, by Apple or Karelia");
 				break;
 		}
 	}
