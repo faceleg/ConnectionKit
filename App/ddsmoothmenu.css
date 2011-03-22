@@ -35,7 +35,7 @@
 */
 
 #sitemenu-content ul {
-	z-index: 100000;
+	z-index: 5000;
 }
 
 #sitemenu-content ul ul {

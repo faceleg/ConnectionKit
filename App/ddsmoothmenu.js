@@ -61,7 +61,7 @@ buildmenu:function($, setting){
 		/* 2010-08-01, ssp:
 			Use really high z-index, so we are sure to exceed z-indices used in all designs.
 		*/
-		var $curobj=$(this).css({zIndex: 100000-i}) //reference current LI header
+		var $curobj=$(this).css({zIndex: 6000-i}) //reference current LI header
 		var $subul=$(this).find('ul:eq(0)').css({display:'block'})
 		$subul.data('timers', {})
 		this._dimensions={w:this.offsetWidth, h:this.offsetHeight, subulw:$subul.outerWidth(), subulh:$subul.outerHeight()}
