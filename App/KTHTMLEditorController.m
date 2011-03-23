@@ -485,15 +485,15 @@ initial syntax coloring.
 		{
 			sourceObject.HTMLString = [[textView textStorage] string];
 			
-			// Only also update these other properties if the string changed
-			if (self.contentType				!= sourceObject.contentType)	
-			{
-				sourceObject.contentType = self.contentType;
-			}
 			if (![self.hashOfLastValidation isEqual:sourceObject.lastValidMarkupDigest])
 			{
 				sourceObject.lastValidMarkupDigest = self.hashOfLastValidation;
 			}			
+		}
+		// Only also update these other properties if the string changed
+		if (self.contentType				!= sourceObject.contentType)	
+		{
+			sourceObject.contentType = self.contentType;
 		}
 		if (self.shouldPreviewWhenEditing	!= [sourceObject.shouldPreviewWhenEditing boolValue])
 		{
