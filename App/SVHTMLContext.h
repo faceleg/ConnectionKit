@@ -33,6 +33,7 @@ typedef enum {
 
 @class KSStringWriter;
 @class KTPage, SVSiteItem, SVArchivePage, SVGraphic, SVHTMLTextBlock, SVLink, SVMedia, SVSidebarPageletsController;
+@class SVTemplate;
 @protocol SVGraphic, SVMedia, SVEnclosure;
 
 
@@ -217,6 +218,7 @@ typedef enum {
 // Call to register the resource for needing publishing. Returns the URL to reference the resource by
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
 - (NSString *)parseTemplateAtURL:(NSURL *)resource object:(SVPlugIn *)plugIn;
+- (NSString *)parseTemplate:(SVTemplate *)template object:(id)object;
 
 
 #pragma mark Design

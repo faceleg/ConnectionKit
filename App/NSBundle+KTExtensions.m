@@ -7,8 +7,6 @@
 
 #import "NSBundle+KTExtensions.h"
 
-#import "SVTemplate.h"
-
 #import "NSApplication+Karelia.h"
 #import "KSAppDelegate.h"
 #import "NSImage+Karelia.h"

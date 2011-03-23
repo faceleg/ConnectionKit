@@ -9,10 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import "KTHTMLParserCache.h"
 
-
-@class SVTemplateParser;
-
-
 @interface KTHTMLParserMasterCache : KTHTMLParserCache
 {
 	NSMutableDictionary	*myOverrides;

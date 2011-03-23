@@ -78,12 +78,14 @@
         }
         else
         {
-            [context writeHTMLString:[[[self class] invalidHTMLPlaceholderTemplate] templateString]];
+			SVTemplate *template = [[self class] invalidHTMLPlaceholderTemplate];
+            [context writeHTMLString:[template templateString]];
         }
     }
     else
     {
-        [context writeHTMLString:[[[self class] placeholderTemplate] templateString]];
+		SVTemplate *template = [[self class] placeholderTemplate];
+        [context writeHTMLString:[template templateString]];
     }
 	
 	[context addDependencyOnObject:self keyPath:@"contentType"];

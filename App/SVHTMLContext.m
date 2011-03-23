@@ -1012,30 +1012,35 @@
     [script release];
 }
 
-- (NSString *)parseTemplateAtURL:(NSURL *)templateURL object:(id)object;
+- (NSString *)parseTemplate:(SVTemplate *)template object:(id)object;
 {
+	NSString *result = nil;
     // Run through template
-    SVTemplate *template = [[SVTemplate alloc] initWithContentsOfURL:templateURL];
     if (template)
     {
         SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc]
                                         initWithTemplate:[template templateString]
                                         component:object];
         
-        NSMutableString *result = [NSMutableString string];
+        NSMutableString *buffer = [NSMutableString string];
         
-        SVHTMLContext *fakeContext = [[SVHTMLContext alloc] initWithOutputWriter:result
+        SVHTMLContext *fakeContext = [[SVHTMLContext alloc] initWithOutputWriter:buffer
                                                               inheritFromContext:self];
         
         [parser parseIntoHTMLContext:fakeContext];
         [parser release];
         [fakeContext release];
         [template release];
-        
-        return result;
-    }
-    
-    return nil;
+		result = [NSString stringWithString:buffer];
+	}
+    return result;
+}
+
+- (NSString *)parseTemplateAtURL:(NSURL *)templateURL object:(id)object;
+{
+    // Run through template
+    SVTemplate *template = [[SVTemplate alloc] initWithContentsOfURL:templateURL];
+	return [self parseTemplate:template object:object];
 }
 
 #pragma mark Design

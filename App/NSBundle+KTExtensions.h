@@ -19,10 +19,6 @@
 
 #import <Foundation/Foundation.h>
 
-
-@class SVTemplate;
-
-
 @interface NSBundle ( KTExtensions )
 
 - (NSString *)entityName;
