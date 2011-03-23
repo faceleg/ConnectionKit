@@ -108,10 +108,6 @@
 {
     NSMutableDictionary *divAttrs = [NSMutableDictionary dictionaryWithObject:@"text-align:center; padding:15px 0; margin:0;" 
                                                                        forKey:@"style"];
-//    if ( ![context liveDataFeeds] )
-//    {
-//        [divAttrs setObject:@"svx-placeholder" forKey:@"class"];
-//    }
     [context startElement:@"div" attributes:divAttrs];
     
     [context addDependencyForKeyPath:@"username" ofObject:self];
