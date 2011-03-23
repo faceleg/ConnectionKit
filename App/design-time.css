@@ -60,6 +60,21 @@ img[width="0"], img[height="0"] { display:none; }
     font-size: 13px;
 }
 
+/* Little badge to indicate invisible content */
+.svx-invisibadge
+{
+	background:rgb(0,127,255);
+	-webkit-border-radius:3px;
+	padding:2px 5px;
+	color:white;
+	font-size:80%;
+}
+
+.svx-warning
+{
+	background:rgb(205,0,0) !important;
+}
+
 /* When inside a size-bound element, adjust to fill it */
 div.svx-size-bound {
     position:relative;
