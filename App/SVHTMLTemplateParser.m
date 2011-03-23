@@ -563,7 +563,7 @@
 {
 	NSString *result = nil;
     
-    if ([anObject respondsToSelector:@selector(URL)])
+    if ([anObject respondsToSelector:@selector(URL)] && [anObject URL])
     {
         result = [[self HTMLContext] relativeStringFromURL:[anObject URL]];
     }
