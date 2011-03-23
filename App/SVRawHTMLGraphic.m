@@ -91,6 +91,7 @@
     }
 	
 	[context addDependencyOnObject:self keyPath:@"contentType"];
+	[context addDependencyOnObject:self keyPath:@"typeString"];
     
     // Changes to any of these properties will be a visible change
     [context addDependencyOnObject:self keyPath:@"shouldPreviewWhenEditing"];
@@ -160,8 +161,13 @@
 
 - (NSString *)typeString
 {
-	if ([self.contentType conformsToUTI:(NSString *)kUTTypeHTML])	return @"HTML";
+	NSString *contentType = self.contentType;
+	if ([contentType conformsToUTI:(NSString *)kUTTypeHTML])	return @"HTML";
+	if ([contentType conformsToUTI:@"public.php-script"])		return @"PHP";
+	if ([contentType conformsToUTI:@"com.netscape.javascript-source"])	return @"JavaScript";
+	if ([contentType conformsToUTI:(NSString *)kUTTypeText])	return NSLocalizedString(@"Other Markup", @"description of other kind of HTML/scripting code");
 	
+	// Fallback
 	NSString *result = NSMakeCollectable(UTTypeCopyDescription((CFStringRef)self.contentType));
 	[NSMakeCollectable(result) autorelease];
 	return result;
