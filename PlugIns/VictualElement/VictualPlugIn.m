@@ -118,7 +118,7 @@
             // append zRSSFeed jquery functions to end body (assumes jquery is already loaded)
             NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"jquery.zrssfeed.min" ofType:@"js"];
             NSURL *URL = [context addResourceWithURL:[NSURL fileURLWithPath:path]];
-            NSString *script = [NSString stringWithFormat:@"<script type=\"text/javascript\" src=\"%@\"></script>\n", [URL absoluteURL]];
+            NSString *script = [NSString stringWithFormat:@"<script type=\"text/javascript\" src=\"%@\"></script>\n", [context relativeStringFromURL:URL]];
             [context addMarkupToEndOfBody:script];
             
             // append zRSSFeed <script> to end body
