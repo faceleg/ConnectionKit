@@ -138,9 +138,8 @@
         }
         else
         {
-            [context startElement:@"div" className:@"svx-placeholder"];
-            [context writeCharacters:SVLocalizedString(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder")];
-            [context endElement]; // </div>
+            [context writePlaceholderWithText:SVLocalizedString(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder")
+                                      options:0];
         }
         
         [self writeScriptToEndBodyMarkup:uniqueID context:context];            
