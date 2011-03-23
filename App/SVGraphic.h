@@ -186,7 +186,7 @@ extern NSString *kSVGraphicPboardType;
 
 + (SVTemplate *)template;
 
-- (NSString *)placeholderHTMLString;
+- (NSString *)parsedPlaceholderHTMLFromContext:(SVHTMLContext *)context;
 
 
 #pragma mark Thumbnail

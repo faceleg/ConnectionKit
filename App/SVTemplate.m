@@ -56,13 +56,15 @@ static NSMapTable *sNamedImages;
         
         if (path)
         {
-            result = [[self alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path
-                                                                    isDirectory:NO]];
-            [result setName:name];
-            [result autorelease];
+			NSURL *url = [NSURL fileURLWithPath:path isDirectory:NO];
+            SVTemplate *newTemplate = [[self alloc] initWithContentsOfURL:url];
+            [newTemplate setName:name];
+            [newTemplate autorelease];
+			
+			result = newTemplate;
         }
     }
-    
+   
     return result;
 }
 

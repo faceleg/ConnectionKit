@@ -12,7 +12,7 @@
 #import "SVHTMLValidator.h"
 #import "SVInspectorViewController.h"
 #import "SVTemplate.h"
-
+#import "NSString+Karelia.h"
 #import "Registration.h"
 
 
@@ -79,13 +79,15 @@
         else
         {
 			SVTemplate *template = [[self class] invalidHTMLPlaceholderTemplate];
-            [context writeHTMLString:[template templateString]];
+			NSString *parsed = [context parseTemplate:template object:self];
+            [context writeHTMLString:parsed];
         }
     }
     else
     {
 		SVTemplate *template = [[self class] placeholderTemplate];
-        [context writeHTMLString:[template templateString]];
+		NSString *parsed = [context parseTemplate:template object:self];
+        [context writeHTMLString:parsed];
     }
 	
 	[context addDependencyOnObject:self keyPath:@"contentType"];
@@ -102,24 +104,26 @@
 
 + (SVTemplate *)placeholderTemplate;
 {
-    static SVTemplate *result;
-    if (!result)
+	// gets "placeholderString" from properties
+    static SVTemplate *sRawHTMLPlaceholderTemplate = nil;
+    if (!sRawHTMLPlaceholderTemplate)
     {
-        result = [[SVTemplate templateNamed:@"RawHTMLPlaceholder.html"] retain];
-    }
-    
-    return result;
+		SVTemplate *template = [SVTemplate templateNamed:@"RawHTMLPlaceholder.html"];
+        sRawHTMLPlaceholderTemplate = [template retain];
+    }   
+    return sRawHTMLPlaceholderTemplate;
 }
 
 + (SVTemplate *)invalidHTMLPlaceholderTemplate;
 {
-    static SVTemplate *result;
-    if (!result)
+	// String:  NSLocalizedString(@"Invalid HTML", "shown in raw HTML object");
+    static SVTemplate *sInvalidHTMLPlaceholderTemplate = nil;
+    if (!sInvalidHTMLPlaceholderTemplate)
     {
-        result = [[SVTemplate templateNamed:@"InvalidHTMLPlaceholder.html"] retain];
+        sInvalidHTMLPlaceholderTemplate = [[SVTemplate templateNamed:@"InvalidHTMLPlaceholder.html"] retain];
     }
     
-    return result;
+    return sInvalidHTMLPlaceholderTemplate;
 }
 
 #pragma mark Inspector
@@ -153,6 +157,22 @@
         return [super usesExtensiblePropertiesForUndefinedKey:key];
     }
 }
+
+- (NSString *)typeString
+{
+	if ([self.contentType conformsToUTI:(NSString *)kUTTypeHTML])	return @"HTML";
+	
+	NSString *result = NSMakeCollectable(UTTypeCopyDescription((CFStringRef)self.contentType));
+	[NSMakeCollectable(result) autorelease];
+	return result;
+}
+
++ (NSSet *)keyPathsForValuesAffectingTypeString
+{
+    return [NSSet setWithObject:@"contentType"];
+}
+
+
 
 
 @end

@@ -515,7 +515,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 + (SVTemplate *)placeholderTemplate;
 {
-    static SVTemplate *result;
+    static SVTemplate *result = nil;
     if (!result)
     {
         result = [[SVTemplate templateNamed:@"GraphicPlaceholder.html"] retain];
@@ -524,9 +524,11 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return result;
 }
 
-- (NSString *)placeholderHTMLString;
+- (NSString *)parsedPlaceholderHTMLFromContext:(SVHTMLContext *)context;
 {
-    return [[[self class] placeholderTemplate] templateString];
+	SVTemplate *template = [[self class] placeholderTemplate];
+	NSString *result = [context parseTemplate:template object:self];
+	return result;
 }
 
 - (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;

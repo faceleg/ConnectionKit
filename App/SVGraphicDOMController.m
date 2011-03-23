@@ -804,18 +804,18 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         if (box.size.width <= 0.0f || box.size.height <= 0.0f)
         {
             // Replace with placeholder
-            NSString *placeholderHTML = [[self representedObject] placeholderHTMLString];
+            NSString *parsedPlaceholderHTML = [[self representedObject] parsedPlaceholderHTMLFromContext:self.HTMLContext];
             
             NSArray *children = [self childWebEditorItems];
             switch ([children count])
             {
                 case 1:
                     OBASSERT([[[children objectAtIndex:0] childWebEditorItems] count] <= 1);
-                    [[[children objectAtIndex:0] HTMLElement] setInnerHTML:placeholderHTML];
+                    [[[children objectAtIndex:0] HTMLElement] setInnerHTML:parsedPlaceholderHTML];
                     break;
                     
                 default:
-                    [[self HTMLElement] setInnerHTML:placeholderHTML];
+                    [[self HTMLElement] setInnerHTML:parsedPlaceholderHTML];
             }
         }
     }
