@@ -794,7 +794,6 @@
 		3C682BD50D62353300B4D485 /* KTLinkSourceView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B6D0D62328600B4D485 /* KTLinkSourceView.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BD60D62353500B4D485 /* KTMagnifyButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B700D62329500B4D485 /* KTMagnifyButton.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BDC0D62354700B4D485 /* KTView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B820D6232EA00B4D485 /* KTView.h */; settings = {ATTRIBUTES = (); }; };
-		3C6DB0EB1316F29A0064929E /* Download.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C6DB0E91316F29A0064929E /* Download.html */; };
 		3C6EA9491048E4E700B0763D /* SVDesignPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EA9471048E4E700B0763D /* SVDesignPickerController.m */; };
 		3C6EA94F1048E59300B0763D /* SVDesignBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EA94D1048E59300B0763D /* SVDesignBrowserViewController.m */; };
 		3C72D3C6094A23880061A876 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D3C5094A23880061A876 /* Carbon.framework */; };
@@ -1204,6 +1203,7 @@
 		CE4FE30D1085427A00C43E31 /* KSShadowedRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4FE30B1085427A00C43E31 /* KSShadowedRectView.m */; };
 		CE510FCE090EA74C00547CFF /* KTTranscriptController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE510FCC090EA74C00547CFF /* KTTranscriptController.m */; };
 		CE54FC64133A6869003F635A /* LinkPageTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C6DB0EF1316F3910064929E /* LinkPageTemplate.html */; };
+		CE54FFD2133A9FF6003F635A /* Download.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C6DB0EA1316F29A0064929E /* Download.html */; };
 		CE578C8510A895DC004C5380 /* KSNonBlackTextFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CE578C8310A895DC004C5380 /* KSNonBlackTextFieldCell.h */; };
 		CE578C8610A895DC004C5380 /* KSNonBlackTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE578C8410A895DC004C5380 /* KSNonBlackTextFieldCell.m */; };
 		CE58139111DEA45D008478AF /* NSStatusAvailable.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE58138E11DEA45D008478AF /* NSStatusAvailable.tiff */; };
@@ -2575,9 +2575,8 @@
 		3C682BB60D62348400B4D485 /* NSString+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KTExtensions.h"; sourceTree = "<group>"; };
 		3C682BB80D62348A00B4D485 /* NSString+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KTExtensions.m"; sourceTree = "<group>"; };
 		3C6B91F31186859B00EBFAA2 /* Hudson.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Hudson.xcconfig; path = ../XCode/Configurations/Hudson.xcconfig; sourceTree = SOURCE_ROOT; };
-		3C6DB0EA1316F29A0064929E /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = en; path = en.lproj/Download.html; sourceTree = "<group>"; };
+		3C6DB0EA1316F29A0064929E /* Download.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Download.html; sourceTree = "<group>"; };
 		3C6DB0EF1316F3910064929E /* LinkPageTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = LinkPageTemplate.html; sourceTree = "<group>"; };
-		3C6DB0F51316F4080064929E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fr; path = fr.lproj/Download.html; sourceTree = "<group>"; };
 		3C6EA9461048E4E700B0763D /* SVDesignPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignPickerController.h; sourceTree = "<group>"; };
 		3C6EA9471048E4E700B0763D /* SVDesignPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignPickerController.m; sourceTree = "<group>"; };
 		3C6EA94C1048E59300B0763D /* SVDesignBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignBrowserViewController.h; sourceTree = "<group>"; };
@@ -3536,7 +3535,7 @@
 		274DF473114E487E00AC8C03 /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				3C6DB0E91316F29A0064929E /* Download.html */,
+				3C6DB0EA1316F29A0064929E /* Download.html */,
 				276A6F72110B5B7B006FD9F7 /* SVDownloadSiteItem.h */,
 				276A6F73110B5B7B006FD9F7 /* SVDownloadSiteItem.m */,
 				2747DA3810FE8DE6007428BB /* SVExternalLink.h */,
@@ -6981,7 +6980,7 @@
 				CE44C881130216C600015A24 /* KSPluginInstaller.strings in Resources */,
 				CE44C882130216C600015A24 /* KSRegistration.strings in Resources */,
 				CE84FB86130588900091B8F8 /* KSInspector.strings in Resources */,
-				3C6DB0EB1316F29A0064929E /* Download.html in Resources */,
+				CE54FFD2133A9FF6003F635A /* Download.html in Resources */,
 				CE54FC64133A6869003F635A /* LinkPageTemplate.html in Resources */,
 				CE788A111329936D00CDF0B9 /* Shared.strings in Resources */,
 			);
@@ -8150,15 +8149,6 @@
 				3C30161A103DE0580036A9D0 /* en */,
 			);
 			name = KTDocument.xib;
-			sourceTree = "<group>";
-		};
-		3C6DB0E91316F29A0064929E /* Download.html */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3C6DB0EA1316F29A0064929E /* en */,
-				3C6DB0F51316F4080064929E /* fr */,
-			);
-			name = Download.html;
 			sourceTree = "<group>";
 		};
 		3C9BC1E0103DF7FD00D2CF47 /* MissingMedia.xib */ = {
