@@ -515,6 +515,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 + (SVTemplate *)placeholderTemplate;
 {
+	// For display on template: NSLocalizedString(@"Plug-in not visible", @"warning shown when a plug-in cannot be displayed");
     static SVTemplate *result = nil;
     if (!result)
     {
