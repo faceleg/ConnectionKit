@@ -620,6 +620,28 @@
     [self endElement];
 }
 
+- (void)startInvisibleBadge;
+{
+    [self startElement:@"span" className:@"svx-invisibadge"];
+}
+
+- (void)endInvisibleBadge;
+{
+    [self endElement];
+}
+
+- (void)writeInvisibleBadgeWithText:(NSString *)text options:(NSUInteger)options;
+{
+	[self startInvisibleBadge];
+	[self writeCharacters:text];
+	[self endInvisibleBadge];
+}
+
+- (void)writeInvisibleBadgeWithText:(NSString *)text;
+{
+    [self writeInvisibleBadgeWithText:text options:0];
+}
+
 - (void)writePlaceholderWithText:(NSString *)text options:(NSUInteger)options;
 {
 	[self startPlaceholder];
@@ -1030,7 +1052,6 @@
         [parser parseIntoHTMLContext:fakeContext];
         [parser release];
         [fakeContext release];
-        [template release];
 		result = [NSString stringWithString:buffer];
 	}
     return result;
@@ -1040,7 +1061,9 @@
 {
     // Run through template
     SVTemplate *template = [[SVTemplate alloc] initWithContentsOfURL:templateURL];
-	return [self parseTemplate:template object:object];
+	NSString *result = [self parseTemplate:template object:object];
+	[template release];
+	return result;
 }
 
 #pragma mark Design
