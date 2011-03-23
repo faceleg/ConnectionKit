@@ -121,10 +121,12 @@ typedef NSUInteger SVThumbnailOptions;
 
 
 #pragma mark Placeholder
-// For if you need to generate a stand-in for the real content. e.g. Live data feeds are disabled
+// If you need to generate a stand-in for the real content. e.g. Live data feeds are disabled
 // No options yet, so pass in 0, but we might add some in the future
 - (void)writePlaceholderWithText:(NSString *)text options:(NSUInteger)options;
 
+// If there is content that will not show up on the page, but you need something to select.
+- (void)writeInvisibleBadgeWithText:(NSString *)text options:(NSUInteger)options;
 
 #pragma mark Metrics
 // The element's size will be taken from plug-in's .width and .height properties. When editing, that will be kept up-to-date, with resize handles if appropriate
