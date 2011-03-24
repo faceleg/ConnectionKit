@@ -121,7 +121,7 @@
 - (void)writePlaceholder
 {
     id <SVPlugInContext> context = [self currentContext];
-    [context writePlaceholderWithText:SVLocalizedString(@"Please specify the URL of the feed using the Inspector.", "String_On_Page_Template - placeholder")
+    [context writePlaceholderWithText:SVLocalizedString(@"Drag feed URL here", "String_On_Page_Template - placeholder")
                               options:0];
 }
 
