@@ -395,11 +395,11 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 								if (urlEncodeLocation < htmlEscapeLocation)	// URL Encode first
 								{
 									toAppend = [toAppend ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
-									toAppend = [toAppend stringByEscapingHTMLEntities];
+									toAppend = [toAppend stringByEscapingHTMLEntitiesWithQuot:YES];
 								}
 								else	// HTML escape first
 								{
-									toAppend = [toAppend stringByEscapingHTMLEntities];
+									toAppend = [toAppend stringByEscapingHTMLEntitiesWithQuot:YES];
 									toAppend = [toAppend ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
 								}
 								
@@ -416,7 +416,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 								}
 								if (NSNotFound != htmlEscapeLocation)
 								{
-									toAppend = [toAppend stringByEscapingHTMLEntities];
+									toAppend = [toAppend stringByEscapingHTMLEntitiesWithQuot:YES];
 								}
 							}
 							OBASSERT(toAppend);
@@ -499,7 +499,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	NSString *theNewString = [theBundle localizedStringForKey:theString value:@"" table:nil];
 	//LOG((@"USER %@ -> %@", theString, theNewString));
 	
-	return [theNewString stringByEscapingHTMLEntities];
+	return [KSXMLWriter stringFromCharacters:theNewString];
 }
 
 - (NSString *)componentTargetLocalizedString:(NSString *)tag
@@ -515,7 +515,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	
 	// LOG((@"TARGET %@ -> %@", theString, theNewString));
 	
-	return [theNewString stringByEscapingHTMLEntities];
+	return [KSXMLWriter stringFromCharacters:theNewString];
 }
 
 - (NSString *)mainBundleLocalizedString:(NSString *)tag
@@ -528,7 +528,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 		result = [[NSBundle mainBundle] localizedStringForString:result language:language];
 	}
 	
-	return [result stringByEscapingHTMLEntities];
+	return [KSXMLWriter stringFromCharacters:result];
 }
 
 + (NSCharacterSet *)keyPathIndicatorCharacters

@@ -108,6 +108,7 @@
     
     
     [self setContent:nil];  // implementation relies on .rootPage being non-nil, so must do this first
+    OBASSERT(!_pagesController);
     //[self setRootPage:nil];
     
     // Dump the pages list

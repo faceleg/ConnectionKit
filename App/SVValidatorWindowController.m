@@ -296,7 +296,7 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 			// [WebView _addOriginAccessWhitelistEntryWithSourceOrigin:@"localhost" destinationProtocol:@"file" destinationHost:@"localhost" allowDestinationSubdomains:NO];
 			
 			NSMutableString *replacementString = [NSMutableString stringWithString:@"</h2>"];	// start with what we're going to replace
-			[replacementString appendFormat:@"\n<h3>%@</h3>\n<div id='appicon'><img src='%@' width='64' height='64' alt='' /></div>\n<div id='explain-impact'>\n", [headline stringByEscapingHTMLEntities], [appIconURL absoluteString]];
+			[replacementString appendFormat:@"\n<h3>%@</h3>\n<div id='appicon'><img src='%@' width='64' height='64' alt='' /></div>\n<div id='explain-impact'>\n", [KSXMLWriter stringFromCharacters:headline], [appIconURL absoluteString]];
 			
 			
 			NSString *explanation1a = NSLocalizedString(@"Some HTML that you have entered is invalid", @"Explanation Text for validator output");
@@ -347,19 +347,19 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 			if (!docTypeString) docTypeString = @"";		// make sure nil doctype is just not output
 			
 			[replacementString appendFormat:@"<p>%@</p>\n<dl style='font-size:0.8em; line-height:1.6em; margin-left:120px;'><dt style='display: list-item;'>%@</dt><dd style='font-style:italic;'>%@</dd><dt style='display: list-item;'>%@</dt><dd style='font-style:italic;'>%@</dd><dt style='display: list-item;'>%@</dt><dd><dd>%@</dd><dd style='font-style:italic;'>%@</dd>",
-			 [explanation1 stringByEscapingHTMLEntities],
+			 [KSXMLWriter stringFromCharacters:explanation1],
 			 
-			 [explanation1a stringByEscapingHTMLEntities],
-			 [fix1a stringByEscapingHTMLEntities],
+			 [KSXMLWriter stringFromCharacters:explanation1a],
+			 [KSXMLWriter stringFromCharacters:fix1a],
 			 
 			 // Explanation 1b -- put the doctype as boldface after escaping the format string (which won't mess up the %@)
-			 [NSString stringWithFormat:[explanation1bFmt stringByEscapingHTMLEntities], 
+			 [NSString stringWithFormat:[KSXMLWriter stringFromCharacters:explanation1bFmt], 
 			  [NSString stringWithFormat:@"<b>%@</b>", docTypeString]],
-			 [fix1b stringByEscapingHTMLEntities],
+			 [KSXMLWriter stringFromCharacters:fix1b],
 			 
-			 [explanation1c stringByEscapingHTMLEntities],
-			 [examples1c stringByEscapingHTMLEntities],
-			 [fix1c stringByEscapingHTMLEntities]];
+			 [KSXMLWriter stringFromCharacters:explanation1c],
+			 [KSXMLWriter stringFromCharacters:examples1c],
+			 [KSXMLWriter stringFromCharacters:fix1c]];
 			
 			
 			if (kSandvoxPage == pageValidationType)
@@ -378,12 +378,12 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 				NSString *linkString = [NSString stringWithFormat:@"<a href='sandvox:r/val=1&s=%@&d=%@'>", escapedSubject, escapedAttachmentMessage];
 				
 				// Hyperlink what's between the [ and the ]
-				NSMutableString *newFix1d = [NSMutableString stringWithString:[fix1d stringByEscapingHTMLEntities]];
+				NSMutableString *newFix1d = [NSMutableString stringWithString:[KSXMLWriter stringFromCharacters:fix1d]];
 				[newFix1d replace:@"[" with:linkString];
 				[newFix1d replace:@"]" with:@"</a>"];
 				
 				[replacementString appendFormat:@"<dt style='display: list-item;'>%@</dt><dd style='font-style:italic;'>%@</dd>",
-				 [explanation1d stringByEscapingHTMLEntities],
+				 [KSXMLWriter stringFromCharacters:explanation1d],
 				 newFix1d];
 			}
 			[replacementString appendString:@"</dl>\n"];
@@ -393,9 +393,9 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 			{
 				// Get the HTML badge, same as you see in the markup
 				NSString *HTMLBadge = @"<span style=\"background:rgb(0,127,255); -webkit-border-radius:3px; padding:2px 5px; color:white; font-size:80%;\">HTML</span>";
-				NSString *noteEscaped = [disabledPreviewNote stringByEscapingHTMLEntities];
+				NSString *noteEscaped = [KSXMLWriter stringFromCharacters:disabledPreviewNote];
 				NSString *noteEscapedBadged = [noteEscaped stringByReplacing:@"HTML" with:HTMLBadge];
-				NSString *explanationEscaped = [disabledPreviewExplanation stringByEscapingHTMLEntities];
+				NSString *explanationEscaped = [KSXMLWriter stringFromCharacters:disabledPreviewExplanation];
 				NSString *explanationHyperlinked = [explanationEscaped stringByReplacing:@"validator.w3.org" with:@"<a target='_blank' href='http://validator.w3.org/'>validator.w3.org</a>"];
 				[replacementString appendFormat:@"<p>\n%@ %@\n</p>\n", noteEscapedBadged, explanationHyperlinked];
 			}
@@ -413,8 +413,8 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 			
 			
 			[replacementString appendFormat:@"<p><b>%@</b></p>\n<p>%@</p>\n",
-			 [dontWorry stringByEscapingHTMLEntities],
-			 [fixIfProblems stringByEscapingHTMLEntities]];
+			 [KSXMLWriter stringFromCharacters:dontWorry],
+			 [KSXMLWriter stringFromCharacters:fixIfProblems]];
 			
 			[replacementString appendString:@"</div>\n"];	// finally done
 			[resultingPageString replace:@"</h2>" with:replacementString];

@@ -350,7 +350,7 @@
         
         NSString *identifier = [sInstance valueForKey:@"pluginIdentifier"];
         SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
-        html = [[factory name] stringByEscapingHTMLEntities];
+        html = [KSXMLWriter stringFromCharacters:[factory name]];
         
         if (!html) html = [self placeholderTitleForSourceInstance:sInstance];
     }

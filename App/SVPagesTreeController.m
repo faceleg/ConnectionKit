@@ -453,7 +453,7 @@
             
 			NSString *boilerplateFormat = // Minimal, clean, but empty
 			@"<!DOCTYPE html>\n<html>\n<head>\n<meta charset='UTF-8' />\n<title></title>\n</head>\n<body>\n\n%@\n\n</body>\n</html>\n";
-			NSString *boilerplateHTML = [NSString stringWithFormat:boilerplateFormat, [boilerplateText stringByEscapingHTMLEntities]];
+			NSString *boilerplateHTML = [NSString stringWithFormat:boilerplateFormat, [KSXMLWriter stringFromCharacters:boilerplateText]];
 			NSData *data = [boilerplateHTML dataUsingEncoding:NSUTF8StringEncoding];
 			
 			SVMedia *media = [[SVMedia alloc]

@@ -280,7 +280,7 @@
 	{
 		[result appendFormat:
          @"<url><loc>%@</loc><lastmod>%@</lastmod><priority>%.02f</priority></url>\n",
-         [[dict objectForKey:@"loc"] stringByEscapingHTMLEntities],
+         [KSXMLWriter stringFromCharacters:[dict objectForKey:@"loc"]],
          [dict objectForKey:@"lastmod"],
          [[dict objectForKey:@"priority"] floatValue] ];
 	}

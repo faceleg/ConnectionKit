@@ -555,7 +555,7 @@
 	}
 	
 	id target = [[self cache] valueForKeyPath:inRestOfTag];
-	NSString *result = [[self pathToObject:target] stringByEscapingHTMLEntities];
+	NSString *result = [[self pathToObject:target] stringByEscapingHTMLEntitiesWithQuot:YES];
 	return result;
 }
 

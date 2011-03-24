@@ -33,7 +33,7 @@
 
 - (void)setText:(NSString *)value
 {
-	[self setTextHTMLString:[value stringByEscapingHTMLEntities]];
+	[self setTextHTMLString:[KSXMLWriter stringFromCharacters:value]];
 }
 
 + (NSSet *)keyPathsForValuesAffectingText
