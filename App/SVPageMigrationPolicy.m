@@ -43,7 +43,7 @@ typedef enum {
     // collectionMaxSyndicatedPagesCount can no longer be zero. Instead make it rather large
     if ([[sInstance valueForKey:@"collectionMaxIndexItems"] intValue] < 1)
     {
-        [sInstance setValue:[NSNumber numberWithInt:20] forKey:@"collectionMaxIndexItems"];
+        [sInstance setValue:[NSNumber numberWithInt:9999] forKey:@"collectionMaxIndexItems"];
     }
     
     
