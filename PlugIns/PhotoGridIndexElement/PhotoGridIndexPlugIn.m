@@ -84,7 +84,7 @@
         [context addResourceWithURL:URL];
         
         NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                               URL, @"src",
+                               [context relativeStringFromURL:URL], @"src",
                                [NSNumber numberWithInt:128], @"width",
                                [NSNumber numberWithInt:128], @"height",
                                nil];
@@ -126,5 +126,30 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
                        attributes:nil
                           options:(SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)];
 }
+
+- (void)writeHiddenLinkToPhoto
+{
+    id<SVPlugInContext> context = [self currentContext]; 
+    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+	if ([iteratedPage respondsToSelector:@selector(thumbnailSourceGraphic)])
+	{
+		id source = [iteratedPage thumbnailSourceGraphic];
+		
+		if ([source respondsToSelector:@selector(media)])
+		{
+			id mediaRecord = [source media];		// SVMediaRecord
+			id media = [mediaRecord media];
+			NSURL *URL = [context addMedia:media];
+			if (URL)
+			{
+				NSString *href = [context relativeStringFromURL:URL];
+				[context startAnchorElementWithHref:href title:nil target:nil rel:@"enclosure"];
+				[context endElement];
+			}
+		}
+	}
+}
+
+
 
 @end
