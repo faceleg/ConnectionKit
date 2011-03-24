@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="541"/>
+			<integer value="755"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -226,13 +226,13 @@
 												<object class="NSTextField" id="732934695">
 													<reference key="NSNextResponder" ref="288995462"/>
 													<int key="NSvFlags">268</int>
-													<string key="NSFrame">{{7, 45}, {206, 14}}</string>
+													<string key="NSFrame">{{7, 45}, {216, 14}}</string>
 													<reference key="NSSuperview" ref="288995462"/>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSTextFieldCell" key="NSCell" id="234528375">
 														<int key="NSCellFlags">68288064</int>
 														<int key="NSCellFlags2">4326400</int>
-														<string key="NSContents">Google Tools</string>
+														<string key="NSContents">Google Webmaster Tools &amp; Analytics</string>
 														<reference key="NSSupport" ref="747072673"/>
 														<reference key="NSControlView" ref="732934695"/>
 														<reference key="NSBackgroundColor" ref="512321341"/>
