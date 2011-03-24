@@ -74,3 +74,10 @@ img.narrow.right { float:right!important; }
 #dsq-content .dsq-by { margin: 4px 6px 0px 0px; }
 #dsq-content .dsq-by a, #dsq-content .dsq-by a:hover { border: 0px none; }
 #dsq-content h3 { margin:0px; }
+
+/* Facebook Comments corrections */
+.generic_dialog_popup { overflow:visible !important; z-index:500 !important; }
+.pop_container_advanced { overflow:visible !important; z-index:500 !important; }
+.gigaboxx_composer { overflow:visible !important; z-index:500 !important; }
+.generic_dialog.pop_dialog.MessageComposerDialog.omitDialogFooter { overflow:visible !important; z-index:500 !important; }
+
