@@ -105,23 +105,23 @@
         [type conformsToUTI:(NSString *)kUTTypeVideo] ||
         [type isEqualToString:@"unloadable-video"])	// special case for video we can't actually play on this machine
     {
-        return @"com.karelia.sandvox.SVVideo";
+        return [[SVGraphicFactory videoFactory] identifier];
     }
     else if ([type conformsToUTI:(NSString *)kUTTypeAudio] ||
              [type conformsToUTI:@"com.apple.quicktime-audio"] ||   // nothing built-in that I can see
 			 [type isEqualToString:@"unloadable-audio"])	// special case for audio we can't actually play on this machine
     {
-        return @"com.karelia.sandvox.SVAudio";
+        return [[SVGraphicFactory audioFactory] identifier];
     }
     else if ([type conformsToUTI:@"com.adobe.shockwave-flash"] ||
              [type conformsToUTI:@"com.macromedia.shockwave-flash"])
 		// annoying to have to check both, but somehow I got the macromedia UTI....
     {
-        return @"com.karelia.sandvox.SVFlash";
+        return [[SVGraphicFactory flashFactory] identifier];
     }
     else
     {
-        return @"com.karelia.sandvox.Image";
+        return [[SVGraphicFactory mediaPlaceholderFactory] identifier];
     }
 }
 
