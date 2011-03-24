@@ -29,7 +29,7 @@
 //  ARISING IN ANY WAY OUR OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 //  POSSIBILITY OF SUCH DAMAGE.
 //
-//  Community Note: This code is distrubuted under a modified BSD License.
+//  Community Note: This code is distributed under a modified BSD License.
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
