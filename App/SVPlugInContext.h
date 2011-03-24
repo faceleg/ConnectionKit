@@ -29,7 +29,7 @@ typedef NSUInteger SVThumbnailOptions;
 
 
 #pragma mark Purpose
-- (BOOL)isForEditing; // YES if HTML is intended to be edited directly in a Web Editor
+- (BOOL)isForEditing; // YES if the HTML is to appear in Sandvox's web view
 - (BOOL)isForQuickLookPreview;  // yeah, you get the idea
 - (BOOL)liveDataFeeds;  // When NO, you should write placeholders instead of loading from the web
 
@@ -127,6 +127,7 @@ typedef NSUInteger SVThumbnailOptions;
 
 // If there is content that will not show up on the page, but you need something to select.
 - (void)writeInvisibleBadgeWithText:(NSString *)text options:(NSUInteger)options;
+
 
 #pragma mark Metrics
 // The element's size will be taken from plug-in's .width and .height properties. When editing, that will be kept up-to-date, with resize handles if appropriate
