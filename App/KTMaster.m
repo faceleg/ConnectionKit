@@ -492,6 +492,7 @@
             @"disqusShortName", 
             @"IntenseDebateAccountID", 
             @"JSKitModeratorEmail", 
+            @"facebookAppID", 
             nil];
 }
 
