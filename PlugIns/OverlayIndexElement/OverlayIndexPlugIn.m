@@ -203,7 +203,7 @@
 		
 		// Build up HTML to show the slideshow, based on the indexed pages
 		NSString *idName = [context startElement:@"div"
-								 preferredIdName:@"overlay"
+								 preferredIdName:@"gallery"
 									   className:nil
 									  attributes:nil];
 		
@@ -218,7 +218,7 @@
 			}
 			else
 			{
-				title	= [bundle localizedStringForString:@"Click to view overlay."	language:language fallback:SVLocalizedString(@"Click to view overlay.", @"Tooltip")];
+				title	= [bundle localizedStringForString:@"Click to view gallery."	language:language fallback:SVLocalizedString(@"Click to view gallery.", @"Tooltip")];
 			}
 			[context pushAttribute:@"title" value:title];
 			
@@ -252,10 +252,10 @@
 		
 		if (!showingSomething && [context isForEditing])
 		{
-			[context writeInvisibleBadgeWithText:SVLocalizedString(@"Overlay", "placeholder for invisible overlay") options:0];
+			[context writeInvisibleBadgeWithText:SVLocalizedString(@"Gallery", "placeholder for invisible gallery index") options:0];
 		}
 		
-		// If we have something to show, hook up overlay (or slideshow) to start when item is clicked.
+		// If we have something to show, hook up gallery (or slideshow) to start when item is clicked.
 		
 		if (showingSomething)
 		{			
@@ -295,7 +295,7 @@
 		else if (!self.connectPhotoGrids)
 		{
 			// This is kind of hidden, but I don't want to advertise it since it is not worth showing the extra complexity.
-			// When no controls, not hooked up to photo grid too: Write markup so overlay (or slideshow) automatically starts when page loads.
+			// When no controls, not hooked up to photo grid too: Write markup so gallery (or slideshow) automatically starts when page loads.
 			
 			NSString *autostartScript = [NSString stringWithFormat:
 										 @"<script type=\"text/javascript\">\n"
@@ -360,7 +360,7 @@
 	{
 		if ([context isForEditing])
 		{
-			[context writeInvisibleBadgeWithText:SVLocalizedString(@"Overlay", "placeholder for invisible overlay") options:0];
+			[context writeInvisibleBadgeWithText:SVLocalizedString(@"Gallery", "placeholder for invisible gallery") options:0];
 		}
 	}
 	// If no indexed pages, and we are not connecting to the photo grids, superclass will handle to show conventional placeholder.

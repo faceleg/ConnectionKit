@@ -133,12 +133,12 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
 	if ([iteratedPage respondsToSelector:@selector(thumbnailSourceGraphic)])
 	{
-		id source = [iteratedPage thumbnailSourceGraphic];
+		id source = [iteratedPage thumbnailSourceGraphic];	// SVMediaGraphic
 		
 		if ([source respondsToSelector:@selector(media)])
 		{
 			id mediaRecord = [source media];		// SVMediaRecord
-			id media = [mediaRecord media];
+			id media = [mediaRecord media];			// SVMedia
 			NSURL *URL = [context addMedia:media];
 			if (URL)
 			{
