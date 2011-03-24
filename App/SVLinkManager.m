@@ -15,6 +15,8 @@
 
 #import "NSWorkspace+Karelia.h"
 
+#import "KSURLFormatter.h"
+
 
 @interface SVLinkManager ()
 @property(nonatomic, retain, readwrite) SVLink *selectedLink;
@@ -154,21 +156,45 @@ static SVLinkManager *sSharedLinkManager;
     SVLink *result = nil;
     
     
-    // Is there something suitable on the pasteboard?
-    NSURL *URL = [WebView URLFromPasteboard:[NSPasteboard generalPasteboard]];
-    if (!URL)
+    // Is the selection an email address?
+    NSWindow *mainWindow = [NSApp mainWindow];
+    NSResponder *responder = [mainWindow firstResponder];
+    while (responder && ![responder conformsToProtocol:@protocol(WebDocumentText)])
     {
-        // Try to populate from frontmost Safari URL
-        // someday, we could populate the link title as well!
-        URL = [[[NSWorkspace sharedWorkspace] fetchBrowserWebLocation] URL];
+        responder = [responder nextResponder];
     }
-	NSString *scheme = [URL scheme];
+    if (responder)
+    {
+        NSString *text = [(id <WebDocumentText>)responder selectedString];
+        KSURLFormatter *formatter = [[KSURLFormatter alloc] init];
+        NSURL *url = [formatter URLFromString:text];
+        [formatter release];
+        
+        if ([[url scheme] isEqualToString:@"mailto"])
+        {
+            result = [SVLink linkWithURLString:[url absoluteString] openInNewWindow:NO];
+        }
+    }
     
-    if (URL && ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"]) )
-	{
-        result = [[SVLink alloc] initWithURLString:[URL absoluteString]
-                                   openInNewWindow:NO];
-        [result autorelease];
+    
+    if (!result)
+    {
+        // Is there something suitable on the pasteboard?
+        NSURL *URL = [WebView URLFromPasteboard:[NSPasteboard generalPasteboard]];
+        if (!URL)
+        {
+            // Try to populate from frontmost Safari URL
+            // someday, we could populate the link title as well!
+            URL = [[[NSWorkspace sharedWorkspace] fetchBrowserWebLocation] URL];
+        }
+        NSString *scheme = [URL scheme];
+        
+        if (URL && ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"]) )
+        {
+            result = [[SVLink alloc] initWithURLString:[URL absoluteString]
+                                       openInNewWindow:NO];
+            [result autorelease];
+        }
     }
     
     
