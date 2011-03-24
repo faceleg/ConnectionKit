@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="171"/>
+			<integer value="2"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -48,7 +48,7 @@
 							<object class="NSTabViewItem" id="409530022">
 								<string key="NSIdentifier">site</string>
 								<object class="NSView" key="NSView" id="324127978">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder" ref="812452045"/>
 									<int key="NSvFlags">261</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -275,6 +275,22 @@
 											<int key="NSvFlags">266</int>
 											<object class="NSMutableArray" key="NSSubviews">
 												<bool key="EncodedWithXMLCoder">YES</bool>
+												<object class="NSTextField" id="870781728">
+													<reference key="NSNextResponder" ref="288995462"/>
+													<int key="NSvFlags">268</int>
+													<string key="NSFrame">{{7, 45}, {182, 14}}</string>
+													<reference key="NSSuperview" ref="288995462"/>
+													<bool key="NSEnabled">YES</bool>
+													<object class="NSTextFieldCell" key="NSCell" id="227397379">
+														<int key="NSCellFlags">68288064</int>
+														<int key="NSCellFlags2">4326400</int>
+														<string key="NSContents">Analytics and WebMaster Tools</string>
+														<reference key="NSSupport" ref="747072673"/>
+														<reference key="NSControlView" ref="870781728"/>
+														<reference key="NSBackgroundColor" ref="512321341"/>
+														<reference key="NSTextColor" ref="438326776"/>
+													</object>
+												</object>
 												<object class="NSButton" id="677465902">
 													<reference key="NSNextResponder" ref="288995462"/>
 													<int key="NSvFlags">269</int>
@@ -284,7 +300,7 @@
 													<object class="NSButtonCell" key="NSCell" id="914717846">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">134348800</int>
-														<string key="NSContents">Google…</string>
+														<string key="NSContents">Configure…</string>
 														<reference key="NSSupport" ref="26"/>
 														<reference key="NSControlView" ref="677465902"/>
 														<int key="NSButtonFlags">-2034876161</int>
@@ -298,7 +314,7 @@
 												<object class="NSBox" id="860155217">
 													<reference key="NSNextResponder" ref="288995462"/>
 													<int key="NSvFlags">10</int>
-													<string key="NSFrame">{{10, 45}, {210, 5}}</string>
+													<string key="NSFrame">{{10, 65}, {210, 5}}</string>
 													<reference key="NSSuperview" ref="288995462"/>
 													<string key="NSOffsets">{0, 0}</string>
 													<object class="NSTextFieldCell" key="NSTitleCell">
@@ -318,7 +334,7 @@
 													<bool key="NSTransparent">NO</bool>
 												</object>
 											</object>
-											<string key="NSFrame">{{7, 109}, {230, 48}}</string>
+											<string key="NSFrame">{{7, 103}, {230, 68}}</string>
 											<reference key="NSSuperview" ref="324127978"/>
 											<string key="NSClassName">NSView</string>
 										</object>
@@ -667,6 +683,7 @@
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {244, 468}}</string>
+									<reference key="NSSuperview" ref="812452045"/>
 								</object>
 								<string key="NSLabel">Site</string>
 								<reference key="NSColor" ref="512321341"/>
@@ -675,7 +692,7 @@
 							<object class="NSTabViewItem" id="708745229">
 								<string key="NSIdentifier">appearance</string>
 								<object class="NSView" key="NSView" id="865099582">
-									<reference key="NSNextResponder" ref="812452045"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1403,21 +1420,20 @@
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {244, 468}}</string>
-									<reference key="NSSuperview" ref="812452045"/>
 								</object>
 								<string key="NSLabel">Appearance</string>
 								<reference key="NSColor" ref="512321341"/>
 								<reference key="NSTabView" ref="812452045"/>
 							</object>
 						</object>
-						<reference key="NSSelectedTabViewItem" ref="708745229"/>
+						<reference key="NSSelectedTabViewItem" ref="409530022"/>
 						<reference key="NSFont" ref="26"/>
 						<int key="NSTvFlags">134217728</int>
 						<bool key="NSAllowTruncatedLabels">YES</bool>
 						<bool key="NSDrawsBackground">YES</bool>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="865099582"/>
+							<reference ref="324127978"/>
 						</object>
 					</object>
 				</object>
@@ -2780,6 +2796,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="860155217"/>
 							<reference ref="677465902"/>
+							<reference ref="870781728"/>
 						</object>
 						<reference key="parent" ref="324127978"/>
 					</object>
@@ -3261,6 +3278,20 @@
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Favicon Picker Controller</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">754</int>
+						<reference key="object" ref="870781728"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="227397379"/>
+						</object>
+						<reference key="parent" ref="288995462"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">755</int>
+						<reference key="object" ref="227397379"/>
+						<reference key="parent" ref="870781728"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -3325,6 +3356,7 @@
 					<string>4.IBPluginDependency</string>
 					<string>4.ImportedFromIB2</string>
 					<string>420.IBPluginDependency</string>
+					<string>420.IBViewBoundsToFrameTransform</string>
 					<string>420.ImportedFromIB2</string>
 					<string>421.IBAttributePlaceholdersKey</string>
 					<string>421.IBPluginDependency</string>
@@ -3381,6 +3413,7 @@
 					<string>523.IBPluginDependency</string>
 					<string>524.IBPluginDependency</string>
 					<string>541.IBPluginDependency</string>
+					<string>541.IBViewBoundsToFrameTransform</string>
 					<string>586.IBPluginDependency</string>
 					<string>592.IBPluginDependency</string>
 					<string>592.ImportedFromIB2</string>
@@ -3477,11 +3510,15 @@
 					<string>692.IBPluginDependency</string>
 					<string>693.IBPluginDependency</string>
 					<string>716.ImportedFromIB2</string>
+					<string>754.IBPluginDependency</string>
+					<string>754.IBViewBoundsToFrameTransform</string>
+					<string>754.ImportedFromIB2</string>
+					<string>755.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{689, 505}, {230, 501}}</string>
+					<string>{{512, 431}, {230, 501}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3552,6 +3589,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABBYAAAw1oAAA</bytes>
+					</object>
 					<boolean value="YES"/>
 					<object class="NSMutableDictionary">
 						<string key="NS.key.0">AccessibilityDescription</string>
@@ -3662,6 +3702,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">AUDgAABC9gAAA</bytes>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -3835,6 +3878,12 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABBYAAAw1oAAA</bytes>
+					</object>
+					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -3853,7 +3902,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">753</int>
+			<int key="maxID">755</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4325,12 +4374,18 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>closeSheet:</string>
 							<string>configureComments:</string>
+							<string>visitDisqus:</string>
+							<string>visitFacebook:</string>
+							<string>visitIntenseDebate:</string>
 							<string>windowHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
 							<string>NSWindowController</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 						</object>
 					</object>
@@ -4340,6 +4395,9 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>closeSheet:</string>
 							<string>configureComments:</string>
+							<string>visitDisqus:</string>
+							<string>visitFacebook:</string>
+							<string>visitIntenseDebate:</string>
 							<string>windowHelp:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -4351,6 +4409,18 @@
 							<object class="IBActionInfo">
 								<string key="name">configureComments:</string>
 								<string key="candidateClassName">NSWindowController</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">visitDisqus:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">visitFacebook:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">visitIntenseDebate:</string>
+								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">windowHelp:</string>
