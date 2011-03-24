@@ -60,7 +60,7 @@
     [self init];
     
     _webResource = [resource copy];
-    [self setPreferredFilename:[[resource URL] ks_lastPathComponent]];
+    [self setPreferredFilename:[[[resource ks_proxyOnThread:nil] URL] ks_lastPathComponent]];
     
     return self;
 }
@@ -72,11 +72,11 @@
     NSString *type = [NSString UTIForFilenameExtension:[url ks_pathExtension]];
     NSString *mimeType = ([type length] ? [NSString MIMETypeForUTI:type] : @"application/octet-stream");
     
-    WebResource *resource = [[WebResource alloc] initWithData:data
-                                                          URL:url
-                                                     MIMEType:mimeType
-                                             textEncodingName:nil
-                                                    frameName:nil];
+    WebResource *resource = [[[WebResource alloc] ks_proxyOnThread:nil] initWithData:data   // yes, HACK
+                                                                                 URL:url
+                                                                            MIMEType:mimeType
+                                                                    textEncodingName:nil
+                                                                           frameName:nil];
     
     self = [self initWithWebResource:resource];
     [resource release];
