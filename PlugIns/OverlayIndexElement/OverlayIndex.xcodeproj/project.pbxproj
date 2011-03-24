@@ -1,0 +1,340 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 44;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3C06888613353F06007A73EA /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C06888413353F06007A73EA /* Inspector.xib */; };
+		3C0951390D5D0DBE00DE6F62 /* OverlayIndexPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0951380D5D0DBE00DE6F62 /* OverlayIndexPlugIn.m */; };
+		3C0951520D5D0E8100DE6F62 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C0951500D5D0E8100DE6F62 /* Localizable.strings */; };
+		3C09515D0D5D0EE200DE6F62 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C09515C0D5D0EE200DE6F62 /* License.rtf */; };
+		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
+		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CE6B2FBA133B263D0012CA51 /* OverlayIndexInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6B2FB9133B263D0012CA51 /* OverlayIndexInspector.m */; };
+		CE774A1F13385E48004B42A6 /* ColorBox - customizable lightbox plugin for jQuery 1.3, 1.4, & 1.5.webloc in Resources */ = {isa = PBXBuildFile; fileRef = CE774A1E13385E48004B42A6 /* ColorBox - customizable lightbox plugin for jQuery 1.3, 1.4, & 1.5.webloc */; };
+		CE774A2213385EB4004B42A6 /* colorbox in Resources */ = {isa = PBXBuildFile; fileRef = CE7749C913385E3B004B42A6 /* colorbox */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		32DBCF630370AF2F00C91783 /* OverlayIndex_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayIndex_Prefix.pch; sourceTree = "<group>"; };
+		3C06888513353F06007A73EA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
+		3C0951370D5D0DBE00DE6F62 /* OverlayIndexPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayIndexPlugIn.h; sourceTree = "<group>"; };
+		3C0951380D5D0DBE00DE6F62 /* OverlayIndexPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayIndexPlugIn.m; sourceTree = "<group>"; };
+		3C09513D0D5D0DE700DE6F62 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C09513E0D5D0DE700DE6F62 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C0951480D5D0E3100DE6F62 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C0951510D5D0E8100DE6F62 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C09515C0D5D0EE200DE6F62 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../License.rtf; sourceTree = SOURCE_ROOT; };
+		8D5B49B6048680CD000E48DA /* OverlayIndex.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OverlayIndex.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE6B2FB8133B263D0012CA51 /* OverlayIndexInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayIndexInspector.h; sourceTree = "<group>"; };
+		CE6B2FB9133B263D0012CA51 /* OverlayIndexInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayIndexInspector.m; sourceTree = "<group>"; };
+		CE7749C913385E3B004B42A6 /* colorbox */ = {isa = PBXFileReference; lastKnownFileType = folder; path = colorbox; sourceTree = "<group>"; };
+		CE774A1E13385E48004B42A6 /* ColorBox - customizable lightbox plugin for jQuery 1.3, 1.4, & 1.5.webloc */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "ColorBox - customizable lightbox plugin for jQuery 1.3, 1.4, & 1.5.webloc"; sourceTree = "<group>"; };
+		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D5B49B3048680CD000E48DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* OverlayIndex */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AFFE84173DC02AAC07 /* Classes */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
+				19C28FB8FE9D52D311CA2CBB /* Products */,
+				3C0951410D5D0DEE00DE6F62 /* Xcode Configurations */,
+			);
+			name = OverlayIndex;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
+			);
+			name = "Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CE774A1E13385E48004B42A6 /* ColorBox - customizable lightbox plugin for jQuery 1.3, 1.4, & 1.5.webloc */,
+				CE7749C913385E3B004B42A6 /* colorbox */,
+				8D5B49B7048680CD000E48DA /* Info.plist */,
+				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+				3C06888413353F06007A73EA /* Inspector.xib */,
+				3C09515C0D5D0EE200DE6F62 /* License.rtf */,
+				3C0951500D5D0E8100DE6F62 /* Localizable.strings */,
+				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AFFE84173DC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				32DBCF630370AF2F00C91783 /* OverlayIndex_Prefix.pch */,
+				3C0951380D5D0DBE00DE6F62 /* OverlayIndexPlugIn.m */,
+				3C0951370D5D0DBE00DE6F62 /* OverlayIndexPlugIn.h */,
+				CE6B2FB8133B263D0012CA51 /* OverlayIndexInspector.h */,
+				CE6B2FB9133B263D0012CA51 /* OverlayIndexInspector.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				089C167FFE841241C02AAC07 /* AppKit.framework */,
+				D2F7E65807B2D6F200F64583 /* CoreData.framework */,
+				089C1672FE841209C02AAC07 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FB8FE9D52D311CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D5B49B6048680CD000E48DA /* OverlayIndex.svxElement */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3C0951410D5D0DEE00DE6F62 /* Xcode Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				3C09513E0D5D0DE700DE6F62 /* Release.xcconfig */,
+				3C09513D0D5D0DE700DE6F62 /* Debug.xcconfig */,
+			);
+			name = "Xcode Configurations";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D5B49AC048680CD000E48DA /* OverlayIndex */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "OverlayIndex" */;
+			buildPhases = (
+				8D5B49B1048680CD000E48DA /* Sources */,
+				8D5B49B3048680CD000E48DA /* Frameworks */,
+				3C15B444131460790038DAE3 /* Generate Localizable.strings */,
+				8D5B49AF048680CD000E48DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OverlayIndex;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = OverlayIndex;
+			productReference = 8D5B49B6048680CD000E48DA /* OverlayIndex.svxElement */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "OverlayIndex" */;
+			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				da,
+				de,
+				es,
+				fr,
+				it,
+				ja,
+				pt_BR,
+				zh_CN,
+				zh_TW,
+				en,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* OverlayIndex */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D5B49AC048680CD000E48DA /* OverlayIndex */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D5B49AF048680CD000E48DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
+				3C0951520D5D0E8100DE6F62 /* Localizable.strings in Resources */,
+				3C09515D0D5D0EE200DE6F62 /* License.rtf in Resources */,
+				3C06888613353F06007A73EA /* Inspector.xib in Resources */,
+				CE774A1F13385E48004B42A6 /* ColorBox - customizable lightbox plugin for jQuery 1.3, 1.4, & 1.5.webloc in Resources */,
+				CE774A2213385EB4004B42A6 /* colorbox in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3C15B444131460790038DAE3 /* Generate Localizable.strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Localizable.strings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Generating Localizable.strings ...\"\n\ncd ${SRCROOT}\ngenstrings -littleEndian -q -u -s SVLocalizedString -o en.lproj *.m\n\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D5B49B1048680CD000E48DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C0951390D5D0DBE00DE6F62 /* OverlayIndexPlugIn.m in Sources */,
+				CE6B2FBA133B263D0012CA51 /* OverlayIndexInspector.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C0951480D5D0E3100DE6F62 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3C06888413353F06007A73EA /* Inspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C06888513353F06007A73EA /* en */,
+			);
+			name = Inspector.xib;
+			sourceTree = "<group>";
+		};
+		3C0951500D5D0E8100DE6F62 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C0951510D5D0E8100DE6F62 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB913B08733D840010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C09513D0D5D0DE700DE6F62 /* Debug.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x50320000,
+				);
+				PRODUCT_NAME = OverlayIndex;
+				WRAPPER_EXTENSION = svxElement;
+			};
+			name = Debug;
+		};
+		1DEB913C08733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C09513E0D5D0DE700DE6F62 /* Release.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x50320000,
+				);
+				PRODUCT_NAME = OverlayIndex;
+				WRAPPER_EXTENSION = svxElement;
+			};
+			name = Release;
+		};
+		1DEB913F08733D840010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+			};
+			name = Debug;
+		};
+		1DEB914008733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "OverlayIndex" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB913B08733D840010E9CD /* Debug */,
+				1DEB913C08733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "OverlayIndex" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB913F08733D840010E9CD /* Debug */,
+				1DEB914008733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}
