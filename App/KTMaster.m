@@ -431,7 +431,7 @@
 
 - (NSString *)commentsSummary
 {
-    NSString *result = NSLocalizedString(@"None Selected", @"no comments");
+    NSString *result = NSLocalizedString(@"None", @"no comments provider selected");
     
     switch ( [[self commentsProvider] unsignedIntValue] )
     {
@@ -442,18 +442,18 @@
             }
             else
             {
-                result = NSLocalizedString(@"Disqus, short name not set", @"");
+                result = NSLocalizedString(@"Disqus, shortname not set", @"do not localize Disqus");
             }
             break;
         case KTCommentsProviderIntenseDebate:
             if ( [self IntenseDebateAccountID] )
             {
-                // AccountID is cryptic and long, don't display it
+                // Account ID is cryptic and long, don't display it
                 result = @"IntenseDebate";
             }
             else
             {
-                result = NSLocalizedString(@"IntenseDebate, no Account ID", @"");
+                result = NSLocalizedString(@"IntenseDebate, no Account ID", @"do not localize IntenseDebate");
             }
             break;
         case KTCommentsProviderJSKit:
@@ -464,8 +464,18 @@
             }
             else
             {
-                result = [NSString stringWithFormat:@"Echo/JS-Kit"];
-                result = NSLocalizedString(@"Echo/JS-Kit, no moderator", @"");
+                result = NSLocalizedString(@"Echo/JS-Kit, no moderator", @"do not localize Echo/JS-Kit");
+            }
+            break;
+        case KTCommentsProviderFacebookComments:
+            if ( [self facebookAppID] )
+            {
+                // App ID is cryptic and long, don't display it
+                result = @"Facebook";
+            }
+            else
+            {
+                result = NSLocalizedString(@"Facebook, no App ID", @"do not localize Facebook");
             }
             break;
         default:
