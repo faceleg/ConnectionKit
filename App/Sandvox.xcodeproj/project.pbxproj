@@ -1202,6 +1202,7 @@
 		CE4FE30C1085427A00C43E31 /* KSShadowedRectView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE4FE30A1085427A00C43E31 /* KSShadowedRectView.h */; };
 		CE4FE30D1085427A00C43E31 /* KSShadowedRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4FE30B1085427A00C43E31 /* KSShadowedRectView.m */; };
 		CE510FCE090EA74C00547CFF /* KTTranscriptController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE510FCC090EA74C00547CFF /* KTTranscriptController.m */; };
+		CE540302133BC9DA003F635A /* object_overlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE540301133BC9DA003F635A /* object_overlay.tiff */; };
 		CE54FC64133A6869003F635A /* LinkPageTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C6DB0EF1316F3910064929E /* LinkPageTemplate.html */; };
 		CE54FFD2133A9FF6003F635A /* Download.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C6DB0EA1316F29A0064929E /* Download.html */; };
 		CE578C8510A895DC004C5380 /* KSNonBlackTextFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CE578C8310A895DC004C5380 /* KSNonBlackTextFieldCell.h */; };
@@ -3001,6 +3002,7 @@
 		CE4FE30B1085427A00C43E31 /* KSShadowedRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSShadowedRectView.m; sourceTree = "<group>"; };
 		CE510FCB090EA74C00547CFF /* KTTranscriptController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTranscriptController.h; sourceTree = "<group>"; };
 		CE510FCC090EA74C00547CFF /* KTTranscriptController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTTranscriptController.m; sourceTree = "<group>"; };
+		CE540301133BC9DA003F635A /* object_overlay.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = object_overlay.tiff; sourceTree = "<group>"; };
 		CE578C8310A895DC004C5380 /* KSNonBlackTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSNonBlackTextFieldCell.h; sourceTree = "<group>"; };
 		CE578C8410A895DC004C5380 /* KSNonBlackTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSNonBlackTextFieldCell.m; sourceTree = "<group>"; };
 		CE58138E11DEA45D008478AF /* NSStatusAvailable.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = NSStatusAvailable.tiff; sourceTree = "<group>"; };
@@ -5633,6 +5635,7 @@
 				CE390973127BA2D100C994C6 /* object_grid.tiff */,
 				CE390974127BA2D100C994C6 /* object_summaries.tiff */,
 				CEA32B2E12833AEB00648C39 /* object_index.tiff */,
+				CE540301133BC9DA003F635A /* object_overlay.tiff */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -6983,6 +6986,7 @@
 				CE54FFD2133A9FF6003F635A /* Download.html in Resources */,
 				CE54FC64133A6869003F635A /* LinkPageTemplate.html in Resources */,
 				CE788A111329936D00CDF0B9 /* Shared.strings in Resources */,
+				CE540302133BC9DA003F635A /* object_overlay.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
