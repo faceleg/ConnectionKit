@@ -140,7 +140,13 @@
 - (NSData *)extensiblePropertiesDataFromSource:(NSManagedObject *)sInstance plugInIdentifier:(NSString *)identifier;
 {
     identifier = [self plugInIdentifierFromIdentifier:identifier];  // handle Digg
+    
     SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:identifier];
+    if (!factory)
+    {
+        NSLog(@"%@ plug-in not found for migration", identifier);
+    }
+    
     SVPlugIn *plugIn = [[[factory plugInClass] alloc] init];
     
     [plugIn awakeFromSourceInstance:sInstance];
