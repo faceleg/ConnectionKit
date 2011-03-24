@@ -1,2 +1,3 @@
 ﻿CFBundleDisplayName = "Tweet Button";
-SVPlugInDescription = "Help visitors tweet about your site";
+/* Description of plugin, as a verb that you (the website creator) do by putting this in your website. */
+"SVPlugInDescription" = "Help visitors tweet about your site";

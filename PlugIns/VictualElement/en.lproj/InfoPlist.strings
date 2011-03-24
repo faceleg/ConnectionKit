@@ -1,4 +1,5 @@
 ﻿/* Localized versions of Info.plist keys */
 
 CFBundleDisplayName = "Victuals";
-SVPlugInDescription = "Feed your site with the goodness of jQuery and the Google Feeds API";
+/* Description of plugin, as a verb that you (the website creator) do by putting this in your website. */
+"SVPlugInDescription" = "Feed your site with the goodness of jQuery and the Google Feeds API";

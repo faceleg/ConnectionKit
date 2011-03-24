@@ -1,4 +1,5 @@
 ﻿/* Localized versions of Info.plist keys */
 
 CFBundleDisplayName = "Google Maps";
-SVPlugInDescription = "Add a Google Map to your site";
+/* Description of plugin, as a verb that you (the website creator) do by putting this in your website. */
+"SVPlugInDescription" = "Embed a Google Map on your site";

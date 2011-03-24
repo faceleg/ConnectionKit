@@ -1,2 +1,3 @@
 ﻿CFBundleDisplayName = "Facebook Button";
-SVPlugInDescription = "Add a Facebook Like button to your site";
+/* Description of plugin, as a verb that you (the website creator) do by putting this in your website. */
+"SVPlugInDescription" = "Make it easy for visitors to “like” your page";

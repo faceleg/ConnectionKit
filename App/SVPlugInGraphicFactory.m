@@ -59,6 +59,7 @@
     return result;
 }
 
+// The "rule" on the SVPlugInDescription is that it should be presented as a verb that you, the website creator, do by having this in your website.
 - (NSString *)graphicDescription; { return [[self plugInBundle] objectForInfoDictionaryKey:@"SVPlugInDescription"]; }
 
 - (NSImage *)iconWithName:(NSString *)aName;
