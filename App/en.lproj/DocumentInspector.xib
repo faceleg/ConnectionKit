@@ -232,7 +232,7 @@
 													<object class="NSTextFieldCell" key="NSCell" id="234528375">
 														<int key="NSCellFlags">68288064</int>
 														<int key="NSCellFlags2">4326400</int>
-														<string key="NSContents">Google Webmaster Tools &amp; Analytics</string>
+														<string key="NSContents">Google Tools</string>
 														<reference key="NSSupport" ref="747072673"/>
 														<reference key="NSControlView" ref="732934695"/>
 														<reference key="NSBackgroundColor" ref="512321341"/>
