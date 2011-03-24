@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.SystemVersion">10J869</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">823</string>
@@ -629,7 +629,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 												<object class="NSTokenTextView" id="290141619">
 													<reference key="NSNextResponder" ref="952809946"/>
 													<int key="NSvFlags">2304</int>
-													<string key="NSFrame">{{2, 3}, {206, 78}}</string>
+													<string key="NSFrame">{{2, 3}, {206, 42}}</string>
 													<reference key="NSSuperview" ref="952809946"/>
 													<object class="NSTextContainer" key="NSTextContainer" id="100061057">
 														<object class="NSLayoutManager" key="NSLayoutManager">
@@ -782,7 +782,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																<reference ref="100061057"/>
 															</object>
 															<int key="NSLMFlags">6</int>
-															<reference key="NSDelegate" ref="947280715"/>
+															<nil key="NSDelegate"/>
 														</object>
 														<reference key="NSTextView" ref="290141619"/>
 														<double key="NSWidth">206</double>
@@ -844,7 +844,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 													<int key="NSTVFlags">6</int>
 													<string key="NSMaxSize">{40000, 40000}</string>
 													<string key="NSMinize">{206, 36}</string>
-													<reference key="NSDelegate" ref="952809946"/>
+													<nil key="NSDelegate"/>
 												</object>
 											</object>
 											<object class="NSMutableSet" key="NSDragTypes">
@@ -893,7 +893,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																<reference ref="422175849"/>
 																<reference ref="26"/>
 																<reference ref="26"/>
-																<reference ref="530290909"/>
+																<object class="NSMutableParagraphStyle" id="491410196">
+																	<nil key="NSTabStops"/>
+																</object>
 															</object>
 														</object>
 														<object class="NSDictionary">
@@ -923,7 +925,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																<reference ref="422175849"/>
 																<reference ref="26"/>
 																<reference ref="26"/>
-																<reference ref="530290909"/>
+																<reference ref="491410196"/>
 															</object>
 														</object>
 														<object class="NSDictionary">
@@ -953,7 +955,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																<reference ref="422175849"/>
 																<reference ref="26"/>
 																<reference ref="26"/>
-																<reference ref="530290909"/>
+																<reference ref="491410196"/>
 															</object>
 														</object>
 														<object class="NSDictionary">
@@ -983,7 +985,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																<reference ref="422175849"/>
 																<reference ref="26"/>
 																<reference ref="26"/>
-																<reference ref="530290909"/>
+																<reference ref="491410196"/>
 															</object>
 														</object>
 														<object class="NSDictionary">
@@ -1013,7 +1015,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 																<reference ref="422175849"/>
 																<reference ref="26"/>
 																<reference ref="26"/>
-																<reference ref="530290909"/>
+																<reference ref="491410196"/>
 															</object>
 														</object>
 													</object>
@@ -3626,6 +3628,22 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					</object>
 					<int key="connectionID">627</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.master.commentsSummary</string>
+						<reference key="source" ref="242996543"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="242996543"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.master.commentsSummary</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.master.commentsSummary</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">631</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -5078,7 +5096,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{921, 432}, {230, 496}}</string>
+					<string>{{878, 432}, {230, 496}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5448,7 +5466,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">629</int>
+			<int key="maxID">631</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
