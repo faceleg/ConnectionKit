@@ -2,17 +2,17 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.SystemVersion">10J869</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="84"/>
+			<integer value="2"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1109,6 +1109,17 @@ aXMgc2l0ZS4</bytes>
 											<int key="NSTag">3</int>
 											<reference key="NSTarget" ref="834431286"/>
 										</object>
+										<object class="NSMenuItem" id="236998152">
+											<reference key="NSMenu" ref="120549219"/>
+											<string key="NSTitle">Facebook</string>
+											<string key="NSKeyEquiv"/>
+											<int key="NSMnemonicLoc">2147483647</int>
+											<reference key="NSOnImage" ref="1070082892"/>
+											<reference key="NSMixedImage" ref="707806963"/>
+											<string key="NSAction">_popUpItemAction:</string>
+											<int key="NSTag">5</int>
+											<reference key="NSTarget" ref="834431286"/>
+										</object>
 										<object class="NSMenuItem" id="273680639">
 											<reference key="NSMenu" ref="120549219"/>
 											<string key="NSTitle">IntenseDebate</string>
@@ -1119,17 +1130,6 @@ aXMgc2l0ZS4</bytes>
 											<reference key="NSMixedImage" ref="707806963"/>
 											<string key="NSAction">_popUpItemAction:</string>
 											<int key="NSTag">4</int>
-											<reference key="NSTarget" ref="834431286"/>
-										</object>
-										<object class="NSMenuItem" id="236998152">
-											<reference key="NSMenu" ref="120549219"/>
-											<string key="NSTitle">Facebook</string>
-											<string key="NSKeyEquiv"/>
-											<int key="NSMnemonicLoc">2147483647</int>
-											<reference key="NSOnImage" ref="1070082892"/>
-											<reference key="NSMixedImage" ref="707806963"/>
-											<string key="NSAction">_popUpItemAction:</string>
-											<int key="NSTag">5</int>
 											<reference key="NSTarget" ref="834431286"/>
 										</object>
 									</object>
@@ -2001,7 +2001,7 @@ aXMgc2l0ZS4</bytes>
 						<bytes key="NSTransformStruct">P4AAAL+AAABDHwAAwzsAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{261, 755}, {164, 83}}</string>
+					<string>{{606, 756}, {313, 83}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
