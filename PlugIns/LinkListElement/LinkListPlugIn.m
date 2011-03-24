@@ -108,7 +108,7 @@
 - (void)writePlaceholder
 {
     id <SVPlugInContext> context = [self currentContext];
-    [context writePlaceholderWithText:SVLocalizedString(@"Add links via Inspector", "String_On_Page_Template")
+    [context writePlaceholderWithText:SVLocalizedString(@"Drag URLs here", "String_On_Page_Template")
                               options:0];
 }
 
