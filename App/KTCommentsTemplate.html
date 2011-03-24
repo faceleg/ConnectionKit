@@ -25,12 +25,6 @@
 										[['Disqus Comments]]
 									</div>
 									[[endif4]]
-[[else3]]
-[[if parser.HTMLContext.isForEditing]]
-									<div class="svx-placeholder">
-                                        <button onclick="window.location = 'x-sandvox-comments://configure';">[['Configure Disqus...]]</button>
-									</div>
-[[endif4]]
 [[endif3]]
 [[endif2]]
 [[if master.wantsIntenseDebate]]
@@ -58,12 +52,6 @@
 										<p>[['IntenseDebate Comments]]</p>
 									</div>
 									[[endif4]]
-[[else3]]
-[[if parser.HTMLContext.isForEditing]]
-									<div class="svx-placeholder">
-                                        <button onclick="window.location = 'x-sandvox-comments://configure';">[['Configure IntenseDebate...]]</button>
-									</div>
-[[endif4]]
 [[endif3]]
 [[endif2]]
 [[if master.wantsFacebookComments]]
@@ -80,23 +68,7 @@
 										[['Facebook Comments]]
 									</div>
                                     [[endif4]]
-[[else3]]
-[[if parser.HTMLContext.isForEditing]]
-									<div class="svx-placeholder">
-                                        <button onclick="window.location = 'x-sandvox-comments://configure';">[['Configure Facebook Comments...]]</button>
-									</div>
-[[endif4]]
 [[endif3]]
 [[endif2]]
 									<!-- comments -->
-[[endif]]
-
-[[if allowComments]]
-[[if !master.commentsProvider]]
-[[if parser.HTMLContext.isForEditing]]
-									<div class="svx-placeholder">
-                                        <button onclick="window.location = 'x-sandvox-comments://configure';">&nbsp;[['Configure Comments...]]&nbsp;</button>
-									</div>
-[[endif3]]
-[[endif2]]
 [[endif]]

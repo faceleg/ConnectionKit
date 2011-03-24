@@ -1367,14 +1367,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
              [URL path]];
         }
     }
-    
-    
-    // x-sandvox-comments:// links open Comment Configuraion sheet
-    else if ([[URL scheme] isEqualToString:@"x-sandvox-comments"])
-    {
-        [[NSApplication sharedApplication] sendAction:@selector(configureComments:) to:nil from:self];
-    }
-    
+        
     // Open normal links in the user's browser
     else
     {
