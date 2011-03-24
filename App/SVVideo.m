@@ -137,6 +137,11 @@
 			 nil]];
 }
 
+- (void)awakeFromSourceProperties:(NSDictionary *)properties;
+{
+	[super awakeFromSourceProperties:properties];
+}
+
 #pragma mark -
 #pragma mark General
 
