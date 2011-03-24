@@ -1369,8 +1369,14 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     }
     
     
+    // x-sandvox-comments:// links open Comment Configuraion sheet
+    else if ([[URL scheme] isEqualToString:@"x-sandvox-comments"])
+    {
+        [[NSApplication sharedApplication] sendAction:@selector(configureComments:) to:nil from:self];
+    }
+    
     // Open normal links in the user's browser
-    else if ([[URL scheme] isEqualToString:@"http"])
+    else
     {
         int navigationType = [[actionInfo objectForKey:WebActionNavigationTypeKey] intValue];
         switch (navigationType)
@@ -1390,12 +1396,6 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
                 // load with user's preferred browser:
                 [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
         }
-    }
-    
-    // x-sandvox-comments:// links open Comment Configuraion sheet
-    else if ([[URL scheme] isEqualToString:@"x-sandvox-comments"])
-    {
-        [[NSApplication sharedApplication] sendAction:@selector(configureComments:) to:nil from:self];
     }
     
     // We used to do [listener use] for file: URLs. Why?
