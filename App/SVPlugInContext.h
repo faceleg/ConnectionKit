@@ -131,7 +131,7 @@ typedef NSUInteger SVThumbnailOptions;
 
 #pragma mark Metrics
 // The element's size will be taken from plug-in's .width and .height properties. When editing, that will be kept up-to-date, with resize handles if appropriate
-- (NSString *)startResizeableElement:(NSString *)elementName
+- (NSString *)startResizableElement:(NSString *)elementName
                               plugIn:(SVPlugIn *)plugIn
                              options:(NSUInteger)options    // pass 0 for now, we may add options later
                      preferredIdName:(NSString *)preferredID

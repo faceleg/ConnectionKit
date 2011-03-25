@@ -726,7 +726,7 @@
     return idName;
 }
 
-- (NSString *)startResizeableElement:(NSString *)elementName
+- (NSString *)startResizableElement:(NSString *)elementName
                               plugIn:(SVPlugIn *)plugIn
                              options:(NSUInteger)options    // pass 0 for now, we may add options later
                      preferredIdName:(NSString *)preferredID

@@ -119,7 +119,7 @@
         if ( [context liveDataFeeds] )
         {
             // bind size
-            NSString *idName = [context startResizeableElement:@"div"
+            NSString *idName = [context startResizableElement:@"div"
                                                         plugIn:self
                                                        options:0
                                                preferredIdName:@"googlemap"

@@ -130,7 +130,7 @@
                                         nil];
             // write iframe
             // width and height attrs are included by writer
-            [context startResizeableElement:@"iframe"
+            [context startResizableElement:@"iframe"
                                      plugIn:self
                                     options:0
                             preferredIdName:@"iframe"
@@ -149,7 +149,7 @@
         }
         else
         {
-            [context startResizeableElement:@"div" plugIn:self options:0 preferredIdName:nil attributes:nil];
+            [context startResizableElement:@"div" plugIn:self options:0 preferredIdName:nil attributes:nil];
             
             NSString *text = [self.linkURL absoluteString];
             [context writePlaceholderWithText:text options:0];
@@ -159,7 +159,7 @@
     }
     else
     {
-        [context startResizeableElement:@"div" plugIn:self options:0 preferredIdName:nil attributes:nil];
+        [context startResizableElement:@"div" plugIn:self options:0 preferredIdName:nil attributes:nil];
         
         NSString *text = SVLocalizedString(@"Drag a URL here","");
         [context writePlaceholderWithText:text options:0];

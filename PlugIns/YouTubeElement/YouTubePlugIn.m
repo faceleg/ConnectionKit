@@ -130,7 +130,7 @@
                                 embed, @"src",
                                 @"0", @"frameborder",
                                 nil];
-    [context startResizeableElement:@"iframe"
+    [context startResizableElement:@"iframe"
                              plugIn:self
                             options:0
                     preferredIdName:@"youtube"
@@ -141,7 +141,7 @@
 - (void)writeNoLiveData
 {
     id <SVPlugInContext> context = [self currentContext];
-    [context startResizeableElement:@"div"
+    [context startResizableElement:@"div"
                              plugIn:self
                             options:0
                     preferredIdName:@"youtube"
@@ -169,7 +169,7 @@
 - (void)writeNoVideoFound
 {
     id <SVPlugInContext> context = [self currentContext];
-    [context startResizeableElement:@"div"
+    [context startResizableElement:@"div"
                              plugIn:self
                             options:0
                     preferredIdName:@"youtube"
@@ -183,7 +183,7 @@
 - (void)writeNoVideoSpecified
 {
     id <SVPlugInContext> context = [self currentContext];
-    [context startResizeableElement:@"div"
+    [context startResizableElement:@"div"
                              plugIn:self
                             options:0
                     preferredIdName:@"youtube"
