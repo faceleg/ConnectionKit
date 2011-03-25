@@ -213,6 +213,23 @@
     }
 }
 
+- (void)sizeGraphics:(NSArray *)graphics
+{
+    [graphics makeObjectsPerformSelector:@selector(makeOriginalSize)];
+    
+    // Constrain proportions
+    for (SVMediaGraphic *aGraphic in graphics)
+    {
+        if ([aGraphic isConstrainProportionsEditable] &&
+            [[aGraphic width] intValue] > 0 &&
+            [[aGraphic height] intValue] > 0)
+        {
+            [aGraphic setConstrainsProportions:YES];
+        }
+    }
+    
+}
+
 - (BOOL)migrateDocumentFromURL:(NSURL *)sourceDocURL
               toDestinationURL:(NSURL *)dURL
                          error:(NSError **)outError;
@@ -277,18 +294,11 @@
                 // #108740
                 // Make each non-embedded media graphic original size
                 NSArray *graphics = [_destinationContextOverride fetchAllObjectsForEntityForName:@"MediaGraphic" error:NULL];
-                [graphics makeObjectsPerformSelector:@selector(makeOriginalSize)];
+                [self sizeGraphics:graphics];
+
+                graphics = [_destinationContextOverride fetchAllObjectsForEntityForName:@"Logo" error:NULL];
+                [self sizeGraphics:graphics];
                 
-                // Constrain proportions
-                for (SVMediaGraphic *aGraphic in graphics)
-                {
-                    if ([aGraphic isConstrainProportionsEditable] &&
-                        [[aGraphic width] intValue] > 0 &&
-                        [[aGraphic height] intValue] > 0)
-                    {
-                        [aGraphic setConstrainsProportions:YES];
-                    }
-                }
                 
                 // Import embedded images
                 NSArray *richText = [_destinationContextOverride fetchAllObjectsForEntityForName:@"RichText" error:NULL];
