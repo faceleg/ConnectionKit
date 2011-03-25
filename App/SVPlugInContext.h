@@ -12,9 +12,8 @@
 enum {
     SVImageScaleAspectFit = 1 << 0,             // without this, image will be cropped to fill width & height
                                                 // one day, might have option to control if can scale up
-    SVPageImageRepresentationDryRun = 1 << 5,   // nothing will actually be written
-    SVPageImageRepresentationLink = 1 << 6,    // if possible an <A> element will also be written linking to the page
-	SVPageImageRepresentationLinkRel = 1 << 7		// generate a link rel
+    SVPageImageRepresentationLink = 1 << 5,     // if possible an <A> element will also be written linking to the page
+	SVPageImageRepresentationLinkRel = 1 << 6   // generate a link rel
 };
 typedef NSUInteger SVPageImageRepresentationOptions;
 
@@ -22,6 +21,9 @@ enum {
     SVPlaceholderInvisible = 1 << 0,    // placeholder represents content visible only on published site
 };
 typedef NSUInteger SVPlaceholderOptions;
+
+
+#pragma mark -
 
 
 @class SVPlugIn, SVInspectorViewController;

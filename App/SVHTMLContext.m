@@ -896,10 +896,10 @@
 }
 
 - (BOOL)writeImageRepresentationOfPage:(SVSiteItem *)page  // nil page will write a placeholder image
-                       width:(NSUInteger)width
-                      height:(NSUInteger)height
-                  attributes:(NSDictionary *)attributes  // e.g. custom CSS class
-                     options:(SVPageImageRepresentationOptions)options;
+                                 width:(NSUInteger)width
+                                height:(NSUInteger)height
+                            attributes:(NSDictionary *)attributes  // e.g. custom CSS class
+                               options:(SVPageImageRepresentationOptions)options;
 {
     if (page)
     {
@@ -910,23 +910,19 @@
                             options:options];
     }
     else
-    {
-        if (!(options & SVPageImageRepresentationDryRun))
-        {
-            
-            // Write design's example image
-            KTDesign *design = [[[self page] master] design];
-            NSURL *thumbURL = [KTDesign placeholderImageURLForDesign:design];
-            SVMedia *media = [[SVMedia alloc] initByReferencingURL:thumbURL];
-            
-            [self writeThumbnailImageWithSourceMedia:media
-                                                 alt:@""
-                                               width:width
-                                              height:height
-                                                type:nil
-                                   preferredFilename:nil
-                                             options:options];
-        }
+    {            
+        // Write design's example image
+        KTDesign *design = [[[self page] master] design];
+        NSURL *thumbURL = [KTDesign placeholderImageURLForDesign:design];
+        SVMedia *media = [[SVMedia alloc] initByReferencingURL:thumbURL];
+        
+        [self writeThumbnailImageWithSourceMedia:media
+                                             alt:@""
+                                           width:width
+                                          height:height
+                                            type:nil
+                               preferredFilename:nil
+                                         options:options];
         
         return YES;
     }

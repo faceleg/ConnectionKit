@@ -541,33 +541,22 @@
     // Write placeholder if there's no built-in image
     
     
-    if (options & SVPageImageRepresentationDryRun) // just test if there is a thumbnail
+    if (options & SVPageImageRepresentationLink)
     {
-        return [self writeImageRepresentation:context
-                                    type:[[self thumbnailType] intValue]
-                                   width:width
-                                  height:height
-                                 options:options];
+        [context pushClassName:@"imageLink"];
+        [context startAnchorElementWithPage:self];
     }
-	else
-    {
-        if (options & SVPageImageRepresentationLink)
-        {
-            [context pushClassName:@"imageLink"];
-            [context startAnchorElementWithPage:self];
-        }
-        
-        if (attributes) [context pushAttributes:attributes];
-        BOOL result = [self writeImageRepresentation:context
-                                           type:[[self thumbnailType] intValue]
-                                          width:width
-                                         height:height
-                                        options:options];
-        
-        if (options & SVPageImageRepresentationLink) [context endElement];
-        
-        return result;
-    }
+    
+    if (attributes) [context pushAttributes:attributes];
+    BOOL result = [self writeImageRepresentation:context
+                                            type:[[self thumbnailType] intValue]
+                                           width:width
+                                          height:height
+                                         options:options];
+    
+    if (options & SVPageImageRepresentationLink) [context endElement];
+    
+    return result;
 }
 
 - (BOOL)writeImageRepresentation:(SVHTMLContext *)context
@@ -576,30 +565,25 @@
                           height:(NSUInteger)height
                          options:(SVPageImageRepresentationOptions)options;
 {
-    BOOL push = !(options & SVPageImageRepresentationDryRun);
-    
     NSURL *url = [self addImageRepresentationToContext:context
                                                   type:type
                                                  width:width
                                                 height:height
                                                options:options
-                              pushSizeToCurrentElement:push];
+                              pushSizeToCurrentElement:YES];
     
-    if (push)
+    if (url)
     {
-        if (url)
-        {
-            [context writeImageWithSrc:[context relativeStringFromURL:url]
-                                   alt:@""
-                                 width:nil
-                                height:nil];
-        }
-        else
-        {
-            [self writeThumbnailPlaceholder:context width:width height:height];
-        }
+        [context writeImageWithSrc:[context relativeStringFromURL:url]
+                               alt:@""
+                             width:nil
+                            height:nil];
     }
-    
+    else
+    {
+        [self writeThumbnailPlaceholder:context width:width height:height];
+    }
+
     return url != nil;
 }
 
