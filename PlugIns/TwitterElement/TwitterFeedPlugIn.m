@@ -147,17 +147,8 @@
     }
     else if ( [context isForEditing] )
     {
-        // write placeholder message to sign up for account
-        [context startElement:@"div" className:@"svx-placeholder"];
-        [context writeCharacters:SVLocalizedString(@"Please enter your Twitter username or ", "WebView prompt fragment")];
-        [context startAnchorElementWithHref:@"https://twitter.com/signup"
-                                                   title:SVLocalizedString(@"Twitter Signup", "WebView link title") 
-                                                  target:nil 
-                                                     rel:nil];
-        [context writeCharacters:SVLocalizedString(@"sign up", "WebView prompt fragment")];
-        [context endElement]; // </a>
-        [context writeCharacters:SVLocalizedString(@" for a Twitter account", "WebView prompt fragment")];
-        [context endElement]; // </div>
+        // write placeholder message to enter username
+        [context writePlaceholderWithText:SVLocalizedString(@"Enter your Twitter username in the Inspector", "missing Twitter username") options:0];
     }
 }
 
