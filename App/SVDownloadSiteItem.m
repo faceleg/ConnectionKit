@@ -53,14 +53,14 @@
                        type:(SVThumbnailType)type
                       width:(NSUInteger)width
                      height:(NSUInteger)height
-                    options:(SVThumbnailOptions)options;
+                    options:(SVPageImageRepresentationOptions)options;
 {
     if (type == SVThumbnailTypePickFromPage)
     {
         NSString *type = [NSString UTIForFilenameExtension:
                           [[[[self media] media] mediaURL] ks_pathExtension]];
         
-        if (!(options & SVThumbnailDryRun))
+        if (!(options & SVPageImageRepresentationDryRun))
         {
             if ([type conformsToUTI:(NSString *)kUTTypeImage])
             {

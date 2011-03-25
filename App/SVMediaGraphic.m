@@ -443,14 +443,14 @@
 - (void)writeThumbnailImage:(SVHTMLContext *)context
                    width:(NSUInteger)width
                   height:(NSUInteger)height
-                  options:(SVThumbnailOptions)options;
+                  options:(SVPageImageRepresentationOptions)options;
 {
     SVMedia *media = (id)[[self plugIn] thumbnailMedia];
     if (media)
     {
         KSImageScalingMode scaling = KSImageScalingModeCropCenter;
         
-        if (options & SVThumbnailScaleAspectFit)
+        if (options & SVImageScaleAspectFit)
         {
             scaling = KSImageScalingModeFill;
             
@@ -495,7 +495,7 @@
         
         
         // Write the thumbnail
-        [context writeThumbnailImageWithSourceMedia:media alt:@"" width:width height:height type:type preferredFilename:filename options:options & SVThumbnailLinkRel];	// keep the link rel, but no other flag
+        [context writeThumbnailImageWithSourceMedia:media alt:@"" width:width height:height type:type preferredFilename:filename options:options & SVPageImageRepresentationLinkRel];	// keep the link rel, but no other flag
     }
 }
 

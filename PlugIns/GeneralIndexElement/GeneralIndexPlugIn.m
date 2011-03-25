@@ -406,19 +406,19 @@ extern NSUInteger kLargeMediaTruncationThreshold;
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
     // Do a dry-run to see if there's actually a thumbnail
-    if ([context writeThumbnailOfPage:iteratedPage
+    if ([context writeImageRepresentationOfPage:iteratedPage
                                 width:64
                                height:64
                            attributes:nil
-                              options:(SVThumbnailDryRun | SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)])
+                              options:(SVPageImageRepresentationDryRun | SVImageScaleAspectFit | SVPageImageRepresentationLink)])
     {
         [context startElement:@"div" className:@"article-thumbnail"];
         
-        [context writeThumbnailOfPage:iteratedPage
+        [context writeImageRepresentationOfPage:iteratedPage
                                 width:64
                                height:64
                            attributes:nil
-                              options:(SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)];
+                              options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
         
         [context endElement];
     }

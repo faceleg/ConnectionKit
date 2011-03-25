@@ -79,7 +79,7 @@
         [context setDelegate:self];
         
         // This will call a delegate methods which will update the UI
-        [context writeThumbnailOfPage:page width:32 height:32 attributes:nil options:SVThumbnailScaleAspectFit];
+        [context writeImageRepresentationOfPage:page width:32 height:32 attributes:nil options:SVImageScaleAspectFit];
         
         [context setDelegate:nil];
         [context release];

@@ -895,11 +895,11 @@
                      height:height];
 }
 
-- (BOOL)writeThumbnailOfPage:(SVSiteItem *)page  // nil page will write a placeholder image
+- (BOOL)writeImageRepresentationOfPage:(SVSiteItem *)page  // nil page will write a placeholder image
                        width:(NSUInteger)width
                       height:(NSUInteger)height
                   attributes:(NSDictionary *)attributes  // e.g. custom CSS class
-                     options:(SVThumbnailOptions)options;
+                     options:(SVPageImageRepresentationOptions)options;
 {
     if (page)
     {
@@ -911,7 +911,7 @@
     }
     else
     {
-        if (!(options & SVThumbnailDryRun))
+        if (!(options & SVPageImageRepresentationDryRun))
         {
             
             // Write design's example image
@@ -938,12 +938,12 @@
                                     height:(NSUInteger)height
                                       type:(NSString *)type // may be nil for context to guess
                          preferredFilename:(NSString *)filename
-                                   options:(SVThumbnailOptions)options;
+                                   options:(SVPageImageRepresentationOptions)options;
 {
     // Scale to fit?
     KSImageScalingMode scaling = KSImageScalingModeCropCenter;
     
-    if (options & SVThumbnailScaleAspectFit)
+    if (options & SVImageScaleAspectFit)
     {
         scaling = KSImageScalingModeFill;
         
@@ -980,7 +980,7 @@
     }
     else
     {
-		if (options & SVThumbnailLinkRel)
+		if (options & SVPageImageRepresentationLinkRel)
 		{
 			[self writeLinkRelWithSourceMedia:media
 										  alt:altText

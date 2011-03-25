@@ -542,7 +542,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 - (void)writeThumbnailImage:(SVHTMLContext *)context
                    width:(NSUInteger)width
                   height:(NSUInteger)height
-                  options:(SVThumbnailOptions)options;
+                  options:(SVPageImageRepresentationOptions)options;
 {
     // Default is for no thumbnail!
 }

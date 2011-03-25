@@ -242,7 +242,7 @@
 - (void)writeThumbnailRel	// For facebook, digg, Yahoo, MySpace, etc.
 {
     SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
-	[self writeThumbnail:context width:90 height:90 attributes:nil options:SVThumbnailLinkRel];		// This seems to be largest size used by facebook. Yahoo is 98x54?
+	[self writeThumbnail:context width:90 height:90 attributes:nil options:SVPageImageRepresentationLinkRel];		// This seems to be largest size used by facebook. Yahoo is 98x54?
 }
 
 #pragma mark CSS

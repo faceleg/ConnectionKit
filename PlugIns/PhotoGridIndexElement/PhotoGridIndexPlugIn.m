@@ -64,11 +64,11 @@
     {        
         // write thumbnail <DIV> of design's example image
         [context startElement:@"div" className:@"gridItem"];
-        [context writeThumbnailOfPage:nil
+        [context writeImageRepresentationOfPage:nil
                                 width:128
                                height:128
                            attributes:nil
-                              options:(SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)];
+                              options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
         [context startElement:@"h3"];
         if ([context page]) [context startAnchorElementWithPage:[context page]];
         [context startElement:@"span" attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
@@ -120,11 +120,11 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
     id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
-    [context writeThumbnailOfPage:iteratedPage
+    [context writeImageRepresentationOfPage:iteratedPage
                             width:128
                            height:128
                        attributes:nil
-                          options:(SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)];
+                          options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
 }
 
 - (void)writeHiddenLinkToPhoto

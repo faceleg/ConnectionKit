@@ -415,7 +415,7 @@
                        type:(SVThumbnailType)type
                       width:(NSUInteger)width
                      height:(NSUInteger)height
-                    options:(SVThumbnailOptions)options;
+                    options:(SVPageImageRepresentationOptions)options;
 {
     switch (type)
     {
@@ -425,7 +425,7 @@
             SVGraphic *source = [self thumbnailSourceGraphic];
             if ([source imageRepresentation])
             {
-                if (!(options & SVThumbnailDryRun))
+                if (!(options & SVPageImageRepresentationDryRun))
                 {
                     [source writeThumbnailImage:context width:width height:height options:options];
                 }

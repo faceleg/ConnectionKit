@@ -80,11 +80,11 @@
                        type:(SVThumbnailType)type
                       width:(NSUInteger)width
                      height:(NSUInteger)height
-                    options:(SVThumbnailOptions)options;
+                    options:(SVPageImageRepresentationOptions)options;
 {
     if (type == SVThumbnailTypePickFromPage)
     {
-        if (!(options & SVThumbnailDryRun))
+        if (!(options & SVPageImageRepresentationDryRun))
         {
             NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"webloc"];
             NSData *png = [icon PNGRepresentation];

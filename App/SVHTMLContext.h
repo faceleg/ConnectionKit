@@ -211,7 +211,7 @@ typedef enum {
                                     height:(NSUInteger)height
                                       type:(NSString *)type // may be nil for context to guess
                          preferredFilename:(NSString *)filename
-                                   options:(SVThumbnailOptions)options;
+                                   options:(SVPageImageRepresentationOptions)options;
 
 
 #pragma mark Resource Files

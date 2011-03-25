@@ -227,11 +227,11 @@
 			
 			// TODO: Show the image at the size of this element, so we can resize the starting image to whatever we want!
 			
-			[context writeThumbnailOfPage:[self indexedCollection]
+			[context writeImageRepresentationOfPage:[self indexedCollection]
 									width:128
 								   height:128
 							   attributes:nil
-								  options:(SVThumbnailScaleAspectFit | SVThumbnailLinkToPage)];
+								  options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
 			[context endElement];
 		}
 		

@@ -10,12 +10,13 @@
 
 
 enum {
-    SVThumbnailDryRun = 1 << 0,         // nothing will actually be written
-    SVThumbnailScaleAspectFit = 1 << 1,  // without this, image will be cropped to fill width & height
-    SVThumbnailLinkToPage = 1 << 2,     // if possible an <A> element will also be written linking to the page
-	SVThumbnailLinkRel = 1 << 3			// Generate a link rel
+    SVImageScaleAspectFit = 1 << 0,             // without this, image will be cropped to fill width & height
+                                                // one day, might have option to control if can scale up
+    SVPageImageRepresentationDryRun = 1 << 5,   // nothing will actually be written
+    SVPageImageRepresentationLink = 1 << 6,    // if possible an <A> element will also be written linking to the page
+	SVPageImageRepresentationLinkRel = 1 << 7		// generate a link rel
 };
-typedef NSUInteger SVThumbnailOptions;
+typedef NSUInteger SVPageImageRepresentationOptions;
 
 enum {
     SVPlaceholderInvisible = 1 << 0,    // placeholder represents content visible only on published site
@@ -154,11 +155,11 @@ typedef NSUInteger SVPlaceholderOptions;
 
 #pragma mark Page Thumbnails
 // Return value is whether a thumbnail was found to be written. Pass in the dryrun option to be informed of the presence of a thumbnail without actually writing anything
-- (BOOL)writeThumbnailOfPage:(id <SVPage>)page  // nil page will write a placeholder image
-                       width:(NSUInteger)width
-                      height:(NSUInteger)height
-                  attributes:(NSDictionary *)attributes  // e.g. custom CSS class
-                     options:(SVThumbnailOptions)options;
+- (BOOL)writeImageRepresentationOfPage:(id <SVPage>)page  // nil page will write a placeholder image
+                                 width:(NSUInteger)width
+                                height:(NSUInteger)height
+                            attributes:(NSDictionary *)attributes  // e.g. custom CSS class
+                               options:(SVPageImageRepresentationOptions)options;
 
 
 #pragma mark Extra markup

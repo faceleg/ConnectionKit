@@ -533,7 +533,7 @@
                  width:(NSUInteger)width
                 height:(NSUInteger)height
             attributes:(NSDictionary *)attributes  // e.g. custom CSS class
-               options:(SVThumbnailOptions)options;
+               options:(SVPageImageRepresentationOptions)options;
 {
     [context addDependencyOnObject:self keyPath:@"thumbnailType"];
     
@@ -541,7 +541,7 @@
     // Write placeholder if there's no built-in image
     
     
-    if (options & SVThumbnailDryRun) // just test if there is a thumbnail
+    if (options & SVPageImageRepresentationDryRun) // just test if there is a thumbnail
     {
         return [self writeThumbnailImage:context
                                     type:[[self thumbnailType] intValue]
@@ -551,7 +551,7 @@
     }
 	else
     {
-        if (options & SVThumbnailLinkToPage)
+        if (options & SVPageImageRepresentationLink)
         {
             [context pushClassName:@"imageLink"];
             [context startAnchorElementWithPage:self];
@@ -564,7 +564,7 @@
                                          height:height
                                         options:options];
         
-        if (options & SVThumbnailLinkToPage) [context endElement];
+        if (options & SVPageImageRepresentationLink) [context endElement];
         
         return result;
     }
@@ -574,12 +574,12 @@
                        type:(SVThumbnailType)type
                       width:(NSUInteger)width
                      height:(NSUInteger)height
-                    options:(SVThumbnailOptions)options;
+                    options:(SVPageImageRepresentationOptions)options;
 {
     if (type == SVThumbnailTypeCustom && [self customThumbnail])
     {
 		
-        if (!(options & SVThumbnailDryRun))
+        if (!(options & SVPageImageRepresentationDryRun))
         {
             [context writeThumbnailImageWithSourceMedia:[[self customThumbnail] media]
                                                     alt:@""
@@ -591,7 +591,7 @@
         }
         return YES;
     }
-    else if (!(options & SVThumbnailDryRun))
+    else if (!(options & SVPageImageRepresentationDryRun))
     {
         [self writeThumbnailPlaceholder:context width:width height:height];
     }
