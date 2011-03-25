@@ -1198,6 +1198,21 @@
 		CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */; };
 		CE487741108FE2C9008417FD /* KSYellowStickyWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */; };
 		CE487742108FE2C9008417FD /* KSYellowStickyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE487740108FE2C9008417FD /* KSYellowStickyWindow.m */; };
+		CE495CE5133D38C50060FFDF /* jquery.colorbox-min.js in Sources */ = {isa = PBXBuildFile; fileRef = CE495CE3133D38C50060FFDF /* jquery.colorbox-min.js */; };
+		CE495CE6133D38C50060FFDF /* jquery.colorbox.js in Sources */ = {isa = PBXBuildFile; fileRef = CE495CE4133D38C50060FFDF /* jquery.colorbox.js */; };
+		CE495CE8133D38D50060FFDF /* colorbox.css in Resources */ = {isa = PBXBuildFile; fileRef = CE495CE7133D38D50060FFDF /* colorbox.css */; };
+		CE495CF8133D38E90060FFDF /* border.png in Resources */ = {isa = PBXBuildFile; fileRef = CE495CEA133D38E90060FFDF /* border.png */; };
+		CE495CF9133D38E90060FFDF /* controls.png in Resources */ = {isa = PBXBuildFile; fileRef = CE495CEB133D38E90060FFDF /* controls.png */; };
+		CE495CFA133D38E90060FFDF /* borderBottomCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = CE495CED133D38E90060FFDF /* borderBottomCenter.png */; };
+		CE495CFB133D38E90060FFDF /* borderBottomLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = CE495CEE133D38E90060FFDF /* borderBottomLeft.png */; };
+		CE495CFC133D38E90060FFDF /* borderBottomRight.png in Resources */ = {isa = PBXBuildFile; fileRef = CE495CEF133D38E90060FFDF /* borderBottomRight.png */; };
+		CE495CFD133D38E90060FFDF /* borderMiddleLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = CE495CF0133D38E90060FFDF /* borderMiddleLeft.png */; };
+		CE495CFE133D38E90060FFDF /* borderMiddleRight.png in Resources */ = {isa = PBXBuildFile; fileRef = CE495CF1133D38E90060FFDF /* borderMiddleRight.png */; };
+		CE495CFF133D38E90060FFDF /* borderTopCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = CE495CF2133D38E90060FFDF /* borderTopCenter.png */; };
+		CE495D00133D38E90060FFDF /* borderTopLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = CE495CF3133D38E90060FFDF /* borderTopLeft.png */; };
+		CE495D01133D38E90060FFDF /* borderTopRight.png in Resources */ = {isa = PBXBuildFile; fileRef = CE495CF4133D38E90060FFDF /* borderTopRight.png */; };
+		CE495D02133D38E90060FFDF /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE495CF5133D38E90060FFDF /* loading.gif */; };
+		CE495D03133D38E90060FFDF /* loading_background.png in Resources */ = {isa = PBXBuildFile; fileRef = CE495CF6133D38E90060FFDF /* loading_background.png */; };
 		CE4BFDBC108E287C00CFBC6A /* KSFocusingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = CE4BFDBA108E287C00CFBC6A /* KSFocusingTextField.h */; };
 		CE4BFDBD108E287C00CFBC6A /* KSFocusingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4BFDBB108E287C00CFBC6A /* KSFocusingTextField.m */; };
 		CE4FE30C1085427A00C43E31 /* KSShadowedRectView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE4FE30A1085427A00C43E31 /* KSShadowedRectView.h */; };
@@ -3011,6 +3026,21 @@
 		CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginInstaller.m; sourceTree = "<group>"; };
 		CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYellowStickyWindow.h; sourceTree = "<group>"; };
 		CE487740108FE2C9008417FD /* KSYellowStickyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYellowStickyWindow.m; sourceTree = "<group>"; };
+		CE495CE3133D38C50060FFDF /* jquery.colorbox-min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.colorbox-min.js"; sourceTree = "<group>"; };
+		CE495CE4133D38C50060FFDF /* jquery.colorbox.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.colorbox.js; sourceTree = "<group>"; };
+		CE495CE7133D38D50060FFDF /* colorbox.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = colorbox.css; sourceTree = "<group>"; };
+		CE495CEA133D38E90060FFDF /* border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border.png; sourceTree = "<group>"; };
+		CE495CEB133D38E90060FFDF /* controls.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls.png; sourceTree = "<group>"; };
+		CE495CED133D38E90060FFDF /* borderBottomCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = borderBottomCenter.png; sourceTree = "<group>"; };
+		CE495CEE133D38E90060FFDF /* borderBottomLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = borderBottomLeft.png; sourceTree = "<group>"; };
+		CE495CEF133D38E90060FFDF /* borderBottomRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = borderBottomRight.png; sourceTree = "<group>"; };
+		CE495CF0133D38E90060FFDF /* borderMiddleLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = borderMiddleLeft.png; sourceTree = "<group>"; };
+		CE495CF1133D38E90060FFDF /* borderMiddleRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = borderMiddleRight.png; sourceTree = "<group>"; };
+		CE495CF2133D38E90060FFDF /* borderTopCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = borderTopCenter.png; sourceTree = "<group>"; };
+		CE495CF3133D38E90060FFDF /* borderTopLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = borderTopLeft.png; sourceTree = "<group>"; };
+		CE495CF4133D38E90060FFDF /* borderTopRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = borderTopRight.png; sourceTree = "<group>"; };
+		CE495CF5133D38E90060FFDF /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
+		CE495CF6133D38E90060FFDF /* loading_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_background.png; sourceTree = "<group>"; };
 		CE4BFDBA108E287C00CFBC6A /* KSFocusingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSFocusingTextField.h; path = ../../Shared/AppKit/KSFocusingTextField.h; sourceTree = "<group>"; };
 		CE4BFDBB108E287C00CFBC6A /* KSFocusingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSFocusingTextField.m; path = ../../Shared/AppKit/KSFocusingTextField.m; sourceTree = "<group>"; };
 		CE4FE30A1085427A00C43E31 /* KSShadowedRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSShadowedRectView.h; sourceTree = "<group>"; };
@@ -4522,6 +4552,10 @@
 				CE89F96511F6149500B180EB /* ddsmoothmenu.css */,
 				CEC85A0E1269FB0C0062666A /* jquery-1.5.1.min.js */,
 				CEC85A111269FB180062666A /* jquery-1.5.1.js */,
+				CE495CE3133D38C50060FFDF /* jquery.colorbox-min.js */,
+				CE495CE4133D38C50060FFDF /* jquery.colorbox.js */,
+				CE495CE7133D38D50060FFDF /* colorbox.css */,
+				CE495CE9133D38E90060FFDF /* colorbox */,
 				CE8D5A7B112B339A007AC2F0 /* validator.css */,
 				CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */,
 				CE214BF9098060CD006DD2B1 /* Languages.plist */,
@@ -5663,6 +5697,33 @@
 				CE44B84A13020DAA00015A24 /* PhotoGridIndex.svxElement */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CE495CE9133D38E90060FFDF /* colorbox */ = {
+			isa = PBXGroup;
+			children = (
+				CE495CEA133D38E90060FFDF /* border.png */,
+				CE495CEB133D38E90060FFDF /* controls.png */,
+				CE495CEC133D38E90060FFDF /* ie6 */,
+				CE495CF5133D38E90060FFDF /* loading.gif */,
+				CE495CF6133D38E90060FFDF /* loading_background.png */,
+			);
+			path = colorbox;
+			sourceTree = "<group>";
+		};
+		CE495CEC133D38E90060FFDF /* ie6 */ = {
+			isa = PBXGroup;
+			children = (
+				CE495CED133D38E90060FFDF /* borderBottomCenter.png */,
+				CE495CEE133D38E90060FFDF /* borderBottomLeft.png */,
+				CE495CEF133D38E90060FFDF /* borderBottomRight.png */,
+				CE495CF0133D38E90060FFDF /* borderMiddleLeft.png */,
+				CE495CF1133D38E90060FFDF /* borderMiddleRight.png */,
+				CE495CF2133D38E90060FFDF /* borderTopCenter.png */,
+				CE495CF3133D38E90060FFDF /* borderTopLeft.png */,
+				CE495CF4133D38E90060FFDF /* borderTopRight.png */,
+			);
+			path = ie6;
 			sourceTree = "<group>";
 		};
 		CE541508133C08DA003F635A /* Products */ = {
@@ -7023,6 +7084,19 @@
 				CE54FC64133A6869003F635A /* LinkPageTemplate.html in Resources */,
 				CE788A111329936D00CDF0B9 /* Shared.strings in Resources */,
 				CE540302133BC9DA003F635A /* object_overlay.tiff in Resources */,
+				CE495CE8133D38D50060FFDF /* colorbox.css in Resources */,
+				CE495CF8133D38E90060FFDF /* border.png in Resources */,
+				CE495CF9133D38E90060FFDF /* controls.png in Resources */,
+				CE495CFA133D38E90060FFDF /* borderBottomCenter.png in Resources */,
+				CE495CFB133D38E90060FFDF /* borderBottomLeft.png in Resources */,
+				CE495CFC133D38E90060FFDF /* borderBottomRight.png in Resources */,
+				CE495CFD133D38E90060FFDF /* borderMiddleLeft.png in Resources */,
+				CE495CFE133D38E90060FFDF /* borderMiddleRight.png in Resources */,
+				CE495CFF133D38E90060FFDF /* borderTopCenter.png in Resources */,
+				CE495D00133D38E90060FFDF /* borderTopLeft.png in Resources */,
+				CE495D01133D38E90060FFDF /* borderTopRight.png in Resources */,
+				CE495D02133D38E90060FFDF /* loading.gif in Resources */,
+				CE495D03133D38E90060FFDF /* loading_background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7920,6 +7994,8 @@
 				2761E1A2132948E300266D69 /* KSOutputStreamWriter.m in Sources */,
 				27579A32132BAAE00006C605 /* KSMutableDataWriter.m in Sources */,
 				27579B26132BD6D30006C605 /* KSSHA1Stream.m in Sources */,
+				CE495CE5133D38C50060FFDF /* jquery.colorbox-min.js in Sources */,
+				CE495CE6133D38C50060FFDF /* jquery.colorbox.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
