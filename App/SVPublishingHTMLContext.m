@@ -190,6 +190,16 @@
     return [[[_publisher site] hostProperties] URLForResourceFile:[resourceURL ks_lastPathComponent]];
 }
 
+- (NSURL *)addDesignResourceWithURL:(NSURL *)fileURL;
+{
+    NSString *filename = [fileURL ks_lastPathComponent];
+    
+    [_publisher publishContentsOfURL:fileURL
+                              toPath:[[_publisher designDirectoryPath] stringByAppendingPathComponent:filename]];
+    
+    return [NSURL URLWithString:filename relativeToURL:[self mainCSSURL]];
+}
+
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
                                         object:(id)object;
 {
