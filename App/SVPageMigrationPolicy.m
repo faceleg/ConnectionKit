@@ -92,6 +92,12 @@ typedef enum {
     }
 }
 
+- (NSNumber *)collectionMaxSyndicatedPagesCount:(NSNumber *)count;
+{
+    if ([count intValue] < 1) count = [NSNumber numberWithInt:9999];
+    return count;
+}
+
 - (NSNumber *)collectionMaxFeedItemLength:(NSNumber *)length;
 {
     if (![length boolValue]) length = [NSNumber numberWithInt:1000];
