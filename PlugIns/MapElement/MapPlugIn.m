@@ -105,8 +105,11 @@
             // prepare parameters
             NSString *pin = (self.clickable) ? @"true" : @"false"; // clicking pin shows details pop-up
             NSString *more = (self.tooltip) ? @"true" : @"false"; // display tooltip of title on pin
-            NSString *suffix = @"\' (click for details)\'";
-            
+                        
+            NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+            NSString *language = [[context page] language];
+            NSString *suffix = [bundle localizedStringForString:@"\' (click for details)\'" language:language fallback:SVLocalizedString(@"\' (click for details)\'", @"tooltip suffix")];
+                        
             // append zGoogleMap <script> to end body
             NSString *map = [NSString stringWithFormat:
                              @"<script type=\"text/javascript\">\n"
