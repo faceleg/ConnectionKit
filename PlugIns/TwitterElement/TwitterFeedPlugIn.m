@@ -38,6 +38,7 @@
 #import "NSURL+Twitter.h"
 
 
+// SVLocalizedStrings are declared here for genstrings, they are [[" ]] strings in template
 // SVLocalizedString(@"Tweet Permalink", "String_On_JavaScript_Template")
 // SVLocalizedString(@"less than a minute ago", "String_On_JavaScript_Template")
 // SVLocalizedString(@"about a minute ago", "String_On_JavaScript_Template")
