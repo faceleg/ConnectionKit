@@ -31,9 +31,9 @@
     self.maxItems = 10;
 }
 
-- (void)didAddToPage:(id <SVPage>)page;
+- (void)pageDidChange:(id <SVPage>)page;
 {
-    [super didAddToPage:page];
+    [super pageDidChange:page];
     
     if (![self indexedCollection])
     {

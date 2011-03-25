@@ -203,7 +203,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
                 [article setAttributedHTMLString:html];
                 [html release];
                 
-                [initialGraphic didAddToPage:result];
+                [initialGraphic pageDidChange:result];
             }
         }
     }
@@ -576,7 +576,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         [article setAttributedHTMLString:html];
         [html release];
         
-        // Inserting the page will call -didAddToPage: on all graphics
+        // Inserting the page will call -pageDidChange: on all graphics
     }
     else
     {

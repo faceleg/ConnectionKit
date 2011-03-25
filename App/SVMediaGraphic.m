@@ -59,7 +59,7 @@
     return result;
 }
 
-- (void)didAddToPage:(KTPage *)page;
+- (void)pageDidChange:(KTPage *)page;
 {
     // Placeholder image
     if (![self media] && ![self externalSourceURL])
@@ -80,7 +80,7 @@
         [self didSetSource];
     }
     
-    [super didAddToPage:page];
+    [super pageDidChange:page];
     
     
     

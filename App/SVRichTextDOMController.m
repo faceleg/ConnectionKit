@@ -606,7 +606,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         
         // Tell the graphic what's happened. Wait until after -didChangeText so full model has been hooked up
         KTPage *page = [[self HTMLContext] page];        
-        [graphic didAddToPage:page];
+        [graphic pageDidChange:page];
         [controller update];	// push it through quickly
     }
     

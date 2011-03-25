@@ -36,9 +36,9 @@
     [self setBody:[SVRichText insertPageletBodyIntoManagedObjectContext:[self managedObjectContext]]];
 }
 
-- (void)didAddToPage:(id <SVPage>)page;
+- (void)pageDidChange:(id <SVPage>)page;
 {
-    [super didAddToPage:page];
+    [super pageDidChange:page];
     
     // Size any embedded images to fit. #105069
     NSSet *graphics = [[[self body] attachments] valueForKey:@"graphic"];

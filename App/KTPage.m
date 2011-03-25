@@ -289,13 +289,13 @@
 
 @dynamic master;
 
-- (void)setMaster:(KTMaster *)master recursive:(BOOL)recursive; // calls -didAddToPage: on graphics
+- (void)setMaster:(KTMaster *)master recursive:(BOOL)recursive; // calls -pageDidChange: on graphics
 {
     [self setMaster:master];
     
     // When adding via the pboard, graphics need to fit within the page
     NSSet *graphics = [[[self article] attachments] valueForKey:@"graphic"];
-    [graphics makeObjectsPerformSelector:@selector(didAddToPage:) withObject:self];
+    [graphics makeObjectsPerformSelector:@selector(pageDidChange:) withObject:self];
     
     // Carry on down the tree
     if (recursive)

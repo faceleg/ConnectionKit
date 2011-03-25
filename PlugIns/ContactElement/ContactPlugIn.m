@@ -118,7 +118,7 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
  *	suitable value is found.
  */
 
-- (void)didAddToPage:(id <SVPage>)page;
+- (void)pageDidChange:(id <SVPage>)page;
 {
     // Create initial fields if needed
     if (![self fields])

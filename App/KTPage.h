@@ -39,7 +39,7 @@ typedef enum {
 
 #pragma mark Site/Master
 @property(nonatomic, retain, readwrite) KTMaster *master;
-- (void)setMaster:(KTMaster *)master recursive:(BOOL)recursive; // calls -didAddToPage: on graphics
+- (void)setMaster:(KTMaster *)master recursive:(BOOL)recursive; // calls -pageDidChange: on graphics
 
 
 #pragma mark Title

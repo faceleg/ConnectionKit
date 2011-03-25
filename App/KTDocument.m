@@ -858,13 +858,13 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	{
 		for (id <SVPage> aPage in [aGraphic pages])
 		{
-			[aGraphic didAddToPage:aPage];
+			[aGraphic pageDidChange:aPage];
 		}
 	}
     
     KTPage *root = [[self site] rootPage];
     SVLogoImage *logo = [[root master] logo];
-    [logo didAddToPage:root];
+    [logo pageDidChange:root];
 }
 
 - (NSSet *)missingMedia;

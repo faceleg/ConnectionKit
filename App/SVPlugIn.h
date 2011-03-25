@@ -132,8 +132,14 @@ typedef enum {
 
 
 #pragma mark Pages
-// Called whenever the plug-in is added to a different page, moves placement within a page, or a significant feature of the page changes such as the design.
-- (void)didAddToPage:(id <SVPage>)page;
+// Called whenever the environment for the plug-in changes significantly. This covers:
+//
+//  - Inserting the plug-in into a page
+//  - Changing placement within a page (e.g. from callout to inline)
+//  - A significant feature of the page changes, such as the design
+//
+// Plug-ins might use this to populate some default settings based off the page. e.g. using the page's language
+- (void)pageDidChange:(id <SVPage>)page;
 
 
 #pragma mark UI

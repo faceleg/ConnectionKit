@@ -251,7 +251,7 @@ static id <SVPlugInContext> sCurrentContext;
 
 #pragma mark Pages
 
-- (void)didAddToPage:(id <SVPage>)page; { }
+- (void)pageDidChange:(id <SVPage>)page; { }
 
 #pragma mark Thumbnail
 

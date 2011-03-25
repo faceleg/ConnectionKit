@@ -231,7 +231,7 @@
         {
             // Give pagelet a chance to resize etc.
             [self insertGraphic:aGraphic range:range];
-            [aGraphic didAddToPage:[[self HTMLContext] page]];
+            [aGraphic pageDidChange:[[self HTMLContext] page]];
         }
         
         
@@ -360,7 +360,7 @@
                 
             case SVGraphicPlacementInline:
                 [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementCallout]];
-                [aGraphic didAddToPage:[[self HTMLContext] page]];
+                [aGraphic pageDidChange:[[self HTMLContext] page]];
                 break;
         
             default:

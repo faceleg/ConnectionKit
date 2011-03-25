@@ -84,9 +84,9 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     }
 }
 
-- (void)didAddToPage:(id <SVPage>)page;
+- (void)pageDidChange:(id <SVPage>)page;
 {
-    [super didAddToPage:page];
+    [super pageDidChange:page];
     
     
     // Size to fit…
@@ -129,7 +129,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     
     
     // Pass on
-    [[self plugIn] didAddToPage:page];
+    [[self plugIn] pageDidChange:page];
 }
 
 /*  Where possible (i.e. Leopard) tear down the plug-in early to avoid any KVO issues.

@@ -326,7 +326,7 @@
 	}
 }
 
-- (void)didAddToPage:(id <SVPage>)page;
+- (void)pageDidChange:(id <SVPage>)page;
 {
 	if (!_didInitializePropertiesWasCalled)
 	{

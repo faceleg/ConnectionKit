@@ -48,7 +48,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (void)awakeFromNew; { }
 
-- (void)didAddToPage:(id <SVPage>)page;
+- (void)pageDidChange:(id <SVPage>)page;
 {
     NSSet *graphics = [[[self introduction] attachments] valueForKey:@"graphic"];
     [graphics makeObjectsPerformSelector:_cmd withObject:page];

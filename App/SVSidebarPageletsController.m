@@ -159,7 +159,7 @@
     
     
     // Inform of the insert. Turn on archives if needed
-    [object didAddToPage:[self page]];
+    [object pageDidChange:[self page]];
     
     if ([object isKindOfClass:[SVPlugInGraphic class]] &&
         [[object plugInIdentifier] isEqualToString:@"sandvox.CollectionArchiveElement"] &&

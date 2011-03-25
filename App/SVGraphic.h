@@ -86,7 +86,7 @@ extern NSString *kSVGraphicPboardType;
 
 #pragma mark Initialization
 - (void)awakeFromNew;
-- (void)didAddToPage:(id <SVPage>)page;
+- (void)pageDidChange:(id <SVPage>)page;
 
 
 #pragma mark Placement

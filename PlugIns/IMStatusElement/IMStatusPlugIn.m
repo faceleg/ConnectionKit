@@ -96,7 +96,7 @@
     self.username = serviceUsername;
 }
 
-- (void)didAddToPage:(id <SVPage>)page
+- (void)pageDidChange:(id <SVPage>)page
 {
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 	NSString *language = [page language];

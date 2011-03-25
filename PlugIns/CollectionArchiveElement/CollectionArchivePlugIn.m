@@ -46,11 +46,11 @@
 
 #pragma mark Initialization
 
-- (void)didAddToPage:(id <SVPage>)page
+- (void)pageDidChange:(id <SVPage>)page
 {
     BOOL isNew = (nil == self.indexedCollection);
     
-    [super didAddToPage:page]; // sets indexedCollection
+    [super pageDidChange:page]; // sets indexedCollection
     
     if ( isNew && self.indexedCollection )
     {

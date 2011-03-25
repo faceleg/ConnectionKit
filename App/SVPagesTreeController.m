@@ -431,7 +431,7 @@
                 [article setAttributedHTMLString:html];
                 [html release];
                 
-                [initialGraphic didAddToPage:result];
+                [initialGraphic pageDidChange:result];
             }
         }
     }
