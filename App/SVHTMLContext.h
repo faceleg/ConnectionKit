@@ -215,13 +215,15 @@ typedef enum {
 
 
 #pragma mark Resource Files
-// Call to register the resource for needing publishing. Returns the URL to reference the resource by
-- (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
+
+
+#pragma mark Templates
 - (NSString *)parseTemplateAtURL:(NSURL *)resource object:(SVPlugIn *)plugIn;
 - (NSString *)parseTemplate:(SVTemplate *)template object:(id)object;
 
 
 #pragma mark Design
+- (NSURL *)addDesignResourceWithURL:(NSURL *)fileURL; // can pass in a folder URL and whole thing will be published
 - (NSURL *)addBannerWithURL:(NSURL *)sourceURL;
 - (NSURL *)addGraphicalTextData:(NSData *)imageData idName:(NSString *)idName;
 

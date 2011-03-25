@@ -1071,6 +1071,11 @@
 
 #pragma mark Design
 
+- (NSURL *)addDesignResourceWithURL:(NSURL *)fileURL; // can pass in a folder URL and whole thing will be published
+{
+    return fileURL;
+}
+
 - (NSURL *)addBannerWithURL:(NSURL *)sourceURL;
 {
     return sourceURL;
