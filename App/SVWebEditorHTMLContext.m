@@ -58,8 +58,6 @@
     [_DOMControllerPoints release];
     
     [super dealloc];
-    OBASSERT(!_rootController);
-    OBASSERT(!_media);
 }
 
 #pragma mark Status
