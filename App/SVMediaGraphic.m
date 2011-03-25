@@ -84,11 +84,11 @@
     
     
     
-    // Show caption
-    if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)
+    // Show caption. Why did I want to do this? Upsets migration - Mike. #112749
+    /*if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)
     {
         [self setShowsCaption:YES];
-    }
+    }*/
 }
 
 #pragma mark Plug-in
