@@ -40,8 +40,7 @@
 + (NSArray *)plugInKeys
 { 
     return [NSArray arrayWithObjects:
-            @"location",
-            @"locationTitle",
+            @"locations",
             @"type",
             @"zoom",
             @"clickable",
@@ -56,13 +55,19 @@
 {
     [super awakeFromNew];
     
-    // make some initial guesses at params
-    self.location = @"Alameda, California";
-    self.locationTitle = @"Karelia Software HQ";
+    // make some initial guesses at params    
+    NSMutableDictionary *defaultLocation = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                            @"Alameda, California", @"location",
+                                            @"Karelia Software HQ", @"title",
+                                            @"Where it all began...", @"details",
+                                            nil];
+    
+    self.locations = [NSArray arrayWithObject:defaultLocation];
+    
     self.type = 0;
     self.zoom = 10;
     self.clickable = YES;
-    self.tooltip = NO;
+    self.tooltip = YES;
 }
 
 
@@ -79,7 +84,7 @@
     [context addDependencyForKeyPath:@"tooltip" ofObject:self];
     
     // write HTML
-    if ( self.location )
+    if ( self.locations )
     {
         if ( [context liveDataFeeds] )
         {
@@ -109,6 +114,41 @@
             NSBundle *bundle = [NSBundle bundleForClass:[self class]];
             NSString *language = [[context page] language];
             NSString *suffix = [bundle localizedStringForString:@"\' (click for details)\'" language:language fallback:SVLocalizedString(@"\' (click for details)\'", @"tooltip suffix")];
+            
+            
+            NSString *theLocations = @"";
+            NSString *theTitles = @"";
+            NSString *theDetails = @"";
+            
+            for ( NSDictionary *location in self.locations )
+            {
+                if ( [location objectForKey:@"location"] )
+                {
+                    theLocations = [theLocations stringByAppendingFormat:@"\'%@\', ", [location objectForKey:@"location"]];
+                }
+                else 
+                {
+                    theLocations = [theLocations stringByAppendingString:@"\'\', "];
+                }
+
+                if ( [location objectForKey:@"title"] )
+                {
+                    theTitles = [theTitles stringByAppendingFormat:@"\'%@\', ", [location objectForKey:@"title"]];
+                }
+                else 
+                {
+                    theTitles = [theTitles stringByAppendingString:@"\'\', "];
+                }
+
+                if ( [location objectForKey:@"details"] )
+                {
+                    theDetails = [theDetails stringByAppendingFormat:@"\'%@\', ", [location objectForKey:@"details"]];
+                }
+                else 
+                {
+                    theDetails = [theDetails stringByAppendingString:@"\'\', "];
+                }
+            }
                         
             // append zGoogleMap <script> to end body
             NSString *map = [NSString stringWithFormat:
@@ -117,16 +157,17 @@
                              "  var aTitles = new Array();\n"
                              "  var aDetails = new Array();\n"
                              "\n"
-                             "  aLocations = ['%@'];\n"
-                             "  aTitles = ['%@'];\n"
-                             "  aDetails = ['Some details about this address'];\n"
+                             "  aLocations = [%@];\n"
+                             "  aTitles = [%@];\n"
+                             "  aDetails = [%@];\n"
                              "\n"
                              @"$(document).ready(function () {\n"
                              @"	$('#%@').GoogleMap(aLocations, aTitles, aDetails, {type:%@, zoom:%@, clickable:%@, tooltip:%@, tipsuffix:%@, width:'%@px', height:'%@px'});\n"
                              @"});\n"
                              @"</script>\n",
-                             self.location,
-                             self.locationTitle,
+                             theLocations,
+                             theTitles,
+                             theDetails,
                              idName,
                              [[NSNumber numberWithUnsignedInt:self.type] stringValue],
                              [[NSNumber numberWithUnsignedInt:self.zoom] stringValue],
@@ -139,13 +180,13 @@
         }
         else 
         {
-            [context writePlaceholderWithText:[NSString stringWithFormat:SVLocalizedString(@"Map of %@", "placeholder"), [self location]]
+            [context writePlaceholderWithText:SVLocalizedString(@"Google Map", "placeholder")
                                       options:0];
         }
     }
     else 
     {
-        [context writePlaceholderWithText:SVLocalizedString(@"Enter a street address in the Inspector.", "")
+        [context writePlaceholderWithText:SVLocalizedString(@"Enter a location in the Inspector", "")
                                   options:0];
     }
 }
@@ -165,8 +206,7 @@
 
 #pragma mark Properties
 
-@synthesize location = _location;
-@synthesize locationTitle = _locationTitle;
+@synthesize locations = _locations;
 @synthesize type = _type;
 @synthesize zoom = _zoom;
 @synthesize clickable = _clickable;

@@ -11,16 +11,17 @@
 
 @interface MapPlugIn : SVPlugIn
 {
-    NSString *_location;
-    NSString *_locationTitle;
+    NSArray *_locations;
     NSUInteger _type;
     NSUInteger _zoom;
     BOOL _clickable;
     BOOL _tooltip;
 }
 
-@property (nonatomic, copy) NSString *location;
-@property (nonatomic, copy) NSString *locationTitle;
+// array of dictionaries, keys are location, title, details
+@property (nonatomic, retain) NSArray *locations;
+
+// options
 @property (nonatomic) NSUInteger type;
 @property (nonatomic) NSUInteger zoom;
 @property (nonatomic) BOOL clickable;
