@@ -47,7 +47,7 @@
 
 @implementation IMStatusPlugIn
 
-#pragma mark -
+
 #pragma mark SVPlugIn
 
 + (NSArray *)plugInKeys
@@ -101,7 +101,19 @@
 }
 
 
-#pragma mark -
+#pragma mark Migration
+
+- (void)awakeFromSourceProperties:(NSDictionary *)properties
+{
+    [super awakeFromSourceProperties:properties];
+    
+    if ( [properties objectForKey:@"selectedIMService"] )
+    {
+        self.selectedServiceIndex = [[properties objectForKey:@"selectedIMService"] unsignedIntegerValue];
+    }
+}
+
+
 #pragma mark HTML Generation
 
 - (void)writeHTML:(id <SVPlugInContext>)context
@@ -215,6 +227,7 @@
 
     [context endElement]; // </div>
 }
+
 
 #pragma mark Properties
 
