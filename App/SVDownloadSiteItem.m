@@ -49,54 +49,49 @@
 #pragma mark Thumbnail
 
 // #105408 - in progress
-- (BOOL)writeImageRepresentation:(SVHTMLContext *)context
-                       type:(SVThumbnailType)type
-                      width:(NSUInteger)width
-                     height:(NSUInteger)height
-                    options:(SVPageImageRepresentationOptions)options;
+- (NSURL *)addImageRepresentationToContext:(SVHTMLContext *)context
+                                      type:(SVThumbnailType)type
+                                     width:(NSUInteger)width
+                                    height:(NSUInteger)height
+                                   options:(SVPageImageRepresentationOptions)options
+                  pushSizeToCurrentElement:(BOOL)push;
 {
     if (type == SVThumbnailTypePickFromPage)
     {
         NSString *type = [NSString UTIForFilenameExtension:
                           [[[[self media] media] mediaURL] ks_pathExtension]];
         
-        if (!(options & SVPageImageRepresentationDryRun))
+        if ([type conformsToUTI:(NSString *)kUTTypeImage])
         {
-            if ([type conformsToUTI:(NSString *)kUTTypeImage])
-            {
-                [context writeImageWithSourceMedia:[[self media] media]
-                                               alt:@""
-                                             width:[NSNumber numberWithUnsignedInteger:width]
-                                            height:[NSNumber numberWithUnsignedInteger:height]
-                                              type:(NSString *)kUTTypePNG
-                                 preferredFilename:nil];
-            }
-            else
-            {
-                NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:type];
-                NSData *png = [icon PNGRepresentation];
-                
-                NSURL *URL = [[[self media] media] mediaURL];
-                if (!URL) return NO;
-                
-                SVMedia *media = [[SVMedia alloc] initWithData:png URL:URL];
-                
-                [context writeImageWithSourceMedia:media
-                                               alt:@""
-                                             width:[NSNumber numberWithUnsignedInteger:width]
-                                            height:[NSNumber numberWithUnsignedInteger:height]
-                                              type:(NSString *)kUTTypePNG
-                                 preferredFilename:nil];
-                
-                [media release];
-            }
+            return [context addImageMedia:[[self media] media]
+                                    width:[NSNumber numberWithUnsignedInteger:width]
+                                   height:[NSNumber numberWithUnsignedInteger:height]
+                                     type:(NSString *)kUTTypePNG
+                        preferredFilename:nil];
         }
-        
-        return YES;
-    }
+        else
+        {
+            NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:type];
+            NSData *png = [icon PNGRepresentation];
+            
+            NSURL *URL = [[[self media] media] mediaURL];
+            if (!URL) return NO;
+            
+            SVMedia *media = [[SVMedia alloc] initWithData:png URL:URL];
+            
+            NSURL *result = [context addImageMedia:media
+                                             width:[NSNumber numberWithUnsignedInteger:width]
+                                            height:[NSNumber numberWithUnsignedInteger:height]
+                                              type:(NSString *)kUTTypePNG
+                                 preferredFilename:nil];
+            
+            [media release];
+            return result;
+        }
+    }    
     else
     {
-        return [super writeImageRepresentation:context type:type width:width height:height options:options];
+        return [super addImageRepresentationToContext:context type:type width:width height:height options:options pushSizeToCurrentElement:push];
     }
 }
 
