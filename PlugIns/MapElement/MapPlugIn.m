@@ -55,13 +55,44 @@
 {
     [super awakeFromNew];
     
-    // make some initial guesses at params    
-    NSMutableDictionary *defaultLocation = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                            @"Alameda, CA", @"location",
-                                            @"Karelia Software HQ", @"title",
-                                            @"Where it all began...", @"details",
-                                            nil];
+    // make some initial guesses at params
     
+    // pick a number between 1 and 3
+    NSInteger min = 1;
+    NSInteger max = 3;
+    NSInteger adjustedMax = (max + 1) - min; // arc4random returns within the set {min, (max - 1)}
+    NSInteger random = arc4random() % adjustedMax;
+    NSInteger location = random + min;
+    
+    NSMutableDictionary *defaultLocation = nil;
+    switch ( location) 
+    {
+        case 1:
+            defaultLocation = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                               @"Alameda, CA", @"location",
+                               @"Karelia Software HQ", @"title",
+                               @"Where it all began...", @"details",
+                               nil];
+            
+            break;
+        case 2:
+            defaultLocation = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                               @"Altadena, CA", @"location",
+                               @"Karelia Software SoCal", @"title",
+                               @"Where the builds happen...", @"details",
+                               nil];
+            
+            break;
+        case 3:
+        default:
+            defaultLocation = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                               @"Reading, England", @"location",
+                               @"Karelia Software Europe", @"title",
+                               @"Code + Band + Pubs = Rock Solid Surfaces", @"details",
+                               nil];
+            
+            break;
+    }
     self.locations = [NSArray arrayWithObject:defaultLocation];
     
     self.type = 0;
