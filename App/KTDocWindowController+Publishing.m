@@ -308,10 +308,10 @@
         if (returnCode == NSOKButton)
         {
             KTHostProperties *hostProperties = [[[self document] site] hostProperties];
-            NSString *stemURL = [[controller siteURL] absoluteString];
-            if (![stemURL isEqualToString:[hostProperties stemURL]])
+            NSString *siteURLString = [[controller siteURL] absoluteString];
+            if (![siteURLString isEqualToString:[[hostProperties siteURL] absoluteString]])
             {
-                [hostProperties setStemURL:stemURL];
+                [hostProperties setStemURL:siteURLString];
             
                 // host properties has an insane design from the 1.0 days. May need to reset localHosting value for stemURL to take effect. #43405
                 if (![hostProperties siteURL])
