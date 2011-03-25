@@ -34,6 +34,8 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
+// Uses Colorbox 1.3.16, from http://colorpowered.com/colorbox/
+
 #import "OverlayIndexPlugIn.h"
 
 
@@ -116,12 +118,20 @@
 	
 	// Load ColorBox at end of file
 	
-	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"jquery.colorbox-min" ofType:@"js" inDirectory:@"colorbox/colorbox"];
+	
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSString *minimizationSuffix = @"-min";
+	if ([defaults boolForKey:@"jQueryDevelopment"])
+	{
+		minimizationSuffix = @"";		// Use the development version instead, not the minimized. Same user default for jquery.
+	}
+		
+	NSString *baseFileName = [NSString stringWithFormat:@"jquery.colorbox%@", minimizationSuffix];
+	NSString *path = [[NSBundle mainBundle] pathForResource:baseFileName ofType:@"js"];
 	if (path)
 	{
 		NSURL *URL = [context addResourceWithURL:[NSURL fileURLWithPath:path]];
 		NSString *srcPath = [context relativeStringFromURL:URL];
-		
 		NSString *script = [NSString stringWithFormat:@"<script type=\"text/javascript\" src=\"%@\"></script>\n", srcPath];
 		[context addMarkupToEndOfBody:script];
 	}
@@ -171,7 +181,7 @@
 	
 	// Prepare CSS
 	
-	path = [[NSBundle bundleForClass:[self class]] pathForResource:@"colorbox" ofType:@"css" inDirectory:@"colorbox/example1"];
+	path = [[NSBundle mainBundle] pathForResource:@"colorbox" ofType:@"css"];
 	if (path && ![path isEqualToString:@""]) 
 	{
 		NSURL *cssURL = [NSURL fileURLWithPath:path];
