@@ -252,7 +252,7 @@
 		
 		if (!showingSomething && [context isForEditing])
 		{
-			[context writeInvisibleBadgeWithText:SVLocalizedString(@"Gallery", "placeholder for invisible gallery index") options:0];
+			[context writePlaceholderWithText:SVLocalizedString(@"Gallery", "placeholder for invisible gallery index") options:SVPlaceholderInvisible];
 		}
 		
 		// If we have something to show, hook up gallery (or slideshow) to start when item is clicked.
@@ -360,7 +360,7 @@
 	{
 		if ([context isForEditing])
 		{
-			[context writeInvisibleBadgeWithText:SVLocalizedString(@"Gallery", "placeholder for invisible gallery") options:0];
+			[context writePlaceholderWithText:SVLocalizedString(@"Gallery", "placeholder for invisible gallery") options:SVPlaceholderInvisible];
 		}
 	}
 	// If no indexed pages, and we are not connecting to the photo grids, superclass will handle to show conventional placeholder.
