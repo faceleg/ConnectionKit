@@ -615,12 +615,32 @@
 
 - (NSString *)fbNumberOfPosts
 {
-    return @"10";
+    NSString *result = @"10";
+    
+    if ( [[NSUserDefaults standardUserDefaults] objectForKey:@"FacebookCommentsNumberOfPosts"] )
+    {
+        NSInteger num = [[NSUserDefaults standardUserDefaults] integerForKey:@"FacebookCommentsNumberOfPosts"];
+        if ( num > 0 && num < 501 )
+        {
+            result = [[NSUserDefaults standardUserDefaults] stringForKey:@"FacebookCommentsNumberOfPosts"];
+        }
+    }
+    
+    return result;
 }
 
 - (NSString *)fbPublishFeed
 {
-    return @"true";
+    NSString *result = @"true";
+    if ( [[NSUserDefaults standardUserDefaults] objectForKey:@"FacebookCommentsPublishFeed"] )
+    {
+        if ( ![[NSUserDefaults standardUserDefaults] boolForKey:@"FacebookCommentsPublishFeed"] )
+        {
+            result = @"false";
+        }
+    }
+
+    return result;
 }
 
 - (NSString *)fbWidth
