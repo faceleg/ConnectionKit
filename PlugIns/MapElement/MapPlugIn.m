@@ -57,7 +57,7 @@
     
     // make some initial guesses at params    
     NSMutableDictionary *defaultLocation = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                            @"Alameda, California", @"location",
+                                            @"Alameda, CA", @"location",
                                             @"Karelia Software HQ", @"title",
                                             @"Where it all began...", @"details",
                                             nil];
@@ -76,8 +76,7 @@
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
     // add dependencies
-    [context addDependencyForKeyPath:@"location" ofObject:self];
-    [context addDependencyForKeyPath:@"locationTitle" ofObject:self];
+    [context addDependencyForKeyPath:@"locations" ofObject:self];
     [context addDependencyForKeyPath:@"type" ofObject:self];
     [context addDependencyForKeyPath:@"zoom" ofObject:self];
     [context addDependencyForKeyPath:@"clickable" ofObject:self];
