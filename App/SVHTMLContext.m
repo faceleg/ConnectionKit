@@ -143,8 +143,6 @@
     [_sidebarPageletsController release];
     
     [super dealloc];
-    
-    OBASSERT(!_output);
 }
 
 #pragma mark Status
