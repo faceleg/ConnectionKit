@@ -148,7 +148,7 @@
     else if ( [context isForEditing] )
     {
         // write placeholder message to enter username
-        [context writePlaceholderWithText:SVLocalizedString(@"Enter your Twitter username in the Inspector", "missing Twitter username") options:0];
+        [context writePlaceholderWithText:SVLocalizedString(@"Enter Twitter username in the Inspector", "missing Twitter username") options:0];
     }
 }
 
