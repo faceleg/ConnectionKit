@@ -20,12 +20,6 @@ NSString * const APDisplayTabIdentifier = @"display";
 NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 
-// SVLocalizedString(@"Drag Amazon products here from your web browser", "String_On_Page_Template")
-// SVLocalizedString(@"Please specify an Amazon list (e.g. a wish list or listmania) to display using the Inspector.", "String_On_Page_Template")
-// SVLocalizedString(@"This is a placeholder; your Amazon list will appear here once published or if you enable live data feeds in the preferences.", "Placeholder text")
-// SVLocalizedString(@"This is a placeholder for an Amazon product; It will appear here once published or if you enable live data feeds in the preferences.", "Placeholder text")
-
-
 @interface AmazonListPlugIn ()
 @end
 
@@ -34,6 +28,20 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 
 @implementation AmazonListPlugIn
+
+#pragma mark Placeholders
+
+- (void)writePlaceholder
+{
+    [[self currentContext] writePlaceholderWithText:SVLocalizedString(@"Drag Amazon products here", "String_On_Page_Template")
+                                            options:0];
+}
+
+- (void)writeProductPlaceholder;
+{
+    [[self currentContext] writePlaceholderWithText:SVLocalizedString(@"This is a placeholder for an Amazon product; It will appear here once published or if you enable live data feeds in the preferences.", "Placeholder text")
+                                            options:0];
+}
 
 #pragma mark Initalization
 

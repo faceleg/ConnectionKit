@@ -34,9 +34,7 @@
 	frameborder="0">
 </iframe>
 [[else6]]
-<div class="amazonListPlaceholder">
-	[['This is a placeholder for an Amazon product; It will appear here once published or if you enable live data feeds in the preferences.]]
-</div>
+[[=writeProductPlaceholder]]
 [[endif6]]
 [[else5]]
 [[if showThumbnails&&aProduct.publishingThumbnailURLString]]
@@ -72,7 +70,7 @@
 [[else2]]
 [[comment NO PRODUCTS SUITABLE FOR PUBLISHING ]]
 [[if HTMLGenerationPurpose==0]]
-<div class="svx-placeholder">[['Drag Amazon products here from your web browser]]</div>
+[[=writePlaceholder]]
 [[endif3]]
 [[endif2]]
 [[endif]]
