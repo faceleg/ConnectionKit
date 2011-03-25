@@ -642,6 +642,11 @@
 
 - (void)writePlaceholderWithText:(NSString *)text options:(NSUInteger)options;
 {
+    if (options & SVPlaceholderInvisible)
+    {
+        return [self writeInvisibleBadgeWithText:text];
+    }
+    
 	[self startPlaceholder];
 	[self writeCharacters:text];
 	[self endPlaceholder];

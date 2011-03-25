@@ -17,9 +17,18 @@ enum {
 };
 typedef NSUInteger SVThumbnailOptions;
 
+enum {
+    SVPlaceholderInvisible = 1 << 0,    // placeholder represents content visible only on published site
+};
+typedef NSUInteger SVPlaceholderOptions;
+
 
 @class SVPlugIn, SVInspectorViewController;
 @protocol SVPage;
+
+
+#pragma mark -
+
 
 @protocol SVPlugInContext
 
@@ -122,11 +131,7 @@ typedef NSUInteger SVThumbnailOptions;
 
 #pragma mark Placeholder
 // If you need to generate a stand-in for the real content. e.g. Live data feeds are disabled
-// No options yet, so pass in 0, but we might add some in the future
-- (void)writePlaceholderWithText:(NSString *)text options:(NSUInteger)options;
-
-// If there is content that will not show up on the page, but you need something to select.
-- (void)writeInvisibleBadgeWithText:(NSString *)text options:(NSUInteger)options;
+- (void)writePlaceholderWithText:(NSString *)text options:(SVPlaceholderOptions)options;
 
 
 #pragma mark Metrics
