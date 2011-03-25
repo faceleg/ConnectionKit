@@ -937,7 +937,12 @@
                                     height:(NSUInteger)height
                                    options:(SVPageImageRepresentationOptions)options;
 {
-    return nil;
+    return [page addImageRepresentationToContext:self
+                                            type:[[page thumbnailType] intValue]
+                                           width:width
+                                          height:height
+                                         options:options
+                        pushSizeToCurrentElement:NO];
 }
 
 - (NSURL *)addThumbnailMedia:(SVMedia *)media

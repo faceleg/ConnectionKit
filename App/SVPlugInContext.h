@@ -154,12 +154,19 @@ typedef NSUInteger SVPlaceholderOptions;
 
 
 #pragma mark Page Thumbnails
+
 // Return value is whether a thumbnail was found to be written. Pass in the dryrun option to be informed of the presence of a thumbnail without actually writing anything
 - (BOOL)writeImageRepresentationOfPage:(id <SVPage>)page  // nil page will write a placeholder image
                                  width:(NSUInteger)width
                                 height:(NSUInteger)height
                             attributes:(NSDictionary *)attributes  // e.g. custom CSS class
                                options:(SVPageImageRepresentationOptions)options;
+
+// Pass in 0 width and height to get the largest image available
+- (NSURL *)URLForImageRepresentationOfPage:(id <SVPage>)page
+                                     width:(NSUInteger)width
+                                    height:(NSUInteger)height
+                                   options:(SVPageImageRepresentationOptions)options;
 
 
 #pragma mark Extra markup
