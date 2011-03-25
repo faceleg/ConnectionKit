@@ -76,36 +76,33 @@
 
 #pragma mark Thumbnail
 
-- (BOOL)writeImageRepresentation:(SVHTMLContext *)context
-                       type:(SVThumbnailType)type
-                      width:(NSUInteger)width
-                     height:(NSUInteger)height
-                    options:(SVPageImageRepresentationOptions)options;
+- (NSURL *)addImageRepresentationToContext:(SVHTMLContext *)context
+                                      type:(SVThumbnailType)type
+                                     width:(NSUInteger)width
+                                    height:(NSUInteger)height
+                                   options:(SVPageImageRepresentationOptions)options
+                  pushSizeToCurrentElement:(BOOL)push;
 {
     if (type == SVThumbnailTypePickFromPage)
     {
-        if (!(options & SVPageImageRepresentationDryRun))
-        {
-            NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"webloc"];
-            NSData *png = [icon PNGRepresentation];
-            
-            SVMedia *media = [[SVMedia alloc] initWithData:png URL:[NSURL URLWithString:@"x-sandvox:///webloc.png"]];
-            
-            [context writeImageWithSourceMedia:media
-                                           alt:@""
+        NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"webloc"];
+        NSData *png = [icon PNGRepresentation];
+        
+        SVMedia *media = [[SVMedia alloc] initWithData:png URL:[NSURL URLWithString:@"x-sandvox:///webloc.png"]];
+        
+        NSURL *result = [context addImageMedia:media
                                          width:[NSNumber numberWithUnsignedInteger:width]
                                         height:[NSNumber numberWithUnsignedInteger:height]
                                           type:(NSString *)kUTTypePNG
                              preferredFilename:nil];
-            
-            [media release];
-        }
         
-        return YES;
+        [media release];
+        
+        return result;
     }
     else
     {
-        return [super writeImageRepresentation:context type:type width:width height:height options:options];
+        return [super addImageRepresentationToContext:context type:type width:width height:height options:options pushSizeToCurrentElement:push];
     }
 }
 
