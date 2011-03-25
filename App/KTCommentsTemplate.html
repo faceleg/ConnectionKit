@@ -21,9 +21,15 @@
 									</div>
 									[[endif5]]
 									[[else4]]
-									<div class="svx-placeholder">
+									[[if self==parser.currentPage]]
+                                    <div class="svx-placeholder">
 										[['Disqus Comments]]
 									</div>
+                                    [[else5]]
+                                    <div class="comments">
+										<p>View Comments</p>
+									</div>
+                                    [[endif5]]
 									[[endif4]]
 [[endif3]]
 [[endif2]]
@@ -48,9 +54,15 @@
 									<script type="text/javascript" src="http://www.intensedebate.com/js/genericLinkWrapperV2.js"></script>
 									[[endif5]]
 									[[else4]]
+									[[if self==parser.currentPage]]
 									<div class="svx-placeholder">
 										<p>[['IntenseDebate Comments]]</p>
 									</div>
+                                    [[else5]]
+                                    <div class="comments">
+										<p>View Comments</p>
+									</div>
+                                    [[endif5]]
 									[[endif4]]
 [[endif3]]
 [[endif2]]
@@ -64,9 +76,15 @@
                                     <iframe src="http://www.facebook.com/plugins/comments.php?href=[[=&URL]]&permalink=1" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:16px;" allowTransparency="true"></iframe>
                                     [[endif5]]
                                     [[else4]]
+									[[if self==parser.currentPage]]
 									<div class="svx-placeholder">
 										[['Facebook Comments]]
 									</div>
+                                    [[else5]]
+                                    <div class="comments">
+										<p>View Comments</p>
+									</div>
+                                    [[endif5]]
                                     [[endif4]]
 [[endif3]]
 [[endif2]]
