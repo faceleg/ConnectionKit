@@ -74,10 +74,6 @@
 {
     [super awakeFromNew];
     
-    self.headlineText = SVLocalizedString(@"Chat with me", @"Short headline for badge inviting website viewer to iChat/Skype chat with the owner of the website");
-    self.offlineText = SVLocalizedString(@"offline", @"status indicator of chat; offline or unavailable");
-    self.onlineText = SVLocalizedString(@"online", @"status indicator of chat; online or available");
-    
     // Try to set the username and service from the user's address book
     ABPerson *card = [[ABAddressBook sharedAddressBook] me];
     
@@ -98,6 +94,27 @@
     
     self.selectedServiceIndex = serviceIndex;
     self.username = serviceUsername;
+}
+
+- (void)didAddToPage:(id <SVPage>)page
+{
+	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+	NSString *language = [page language];
+	
+	if ( !self.headlineText )
+	{
+		self.headlineText = [bundle localizedStringForString:@"Chat with me" language:language fallback:SVLocalizedString(@"Chat with me", @"Short headline for badge inviting website viewer to iChat/Skype chat with the owner of the website")];
+	}
+    
+    if ( !self.offlineText )
+    {
+        self.offlineText = [bundle localizedStringForString:@"offline" language:language fallback:SVLocalizedString(@"offline", @"status indicator of chat; offline or unavailable")];
+    }
+    
+    if ( !self.onlineText )
+    {
+        self.onlineText = [bundle localizedStringForString:@"online" language:language fallback:SVLocalizedString(@"online", @"status indicator of chat; online or available")];
+    }
 }
 
 
@@ -221,7 +238,7 @@
     }
     else
     {
-        NSString *noIDMessage = SVLocalizedString(@"(Please enter your IM username in the Inspector)", @"");
+        NSString *noIDMessage = SVLocalizedString(@"Enter your IM username in the Inspector", @"");
         [context writeCharacters:noIDMessage];
     }
 
