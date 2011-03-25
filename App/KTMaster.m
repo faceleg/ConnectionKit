@@ -643,7 +643,7 @@
     return result;
 }
 
-- (NSString *)fbWidth
+- (NSString *)fbSidebarWidth
 {
     KTImageScalingSettings *settings = [[self design] imageScalingSettingsForUse:@"KTSidebarPageMedia"];
     if ( settings )
@@ -654,6 +654,20 @@
     else
     {
         return @"425";
+    }
+}
+
+- (NSString *)fbPageWidth
+{
+    KTImageScalingSettings *settings = [[self design] imageScalingSettingsForUse:@"KTPageMedia"];
+    if ( settings )
+    {
+        CGFloat width = [settings size].width;
+        return [[NSNumber numberWithFloat:width] stringValue];
+    }
+    else
+    {
+        return @"635";
     }
 }
 

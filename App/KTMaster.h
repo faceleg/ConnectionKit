@@ -106,7 +106,8 @@
 - (NSString *)facebookAppID;
 - (NSString *)fbNumberOfPosts;
 - (NSString *)fbPublishFeed;
-- (NSString *)fbWidth;
+- (NSString *)fbSidebarWidth;
+- (NSString *)fbPageWidth;
 
 #pragma mark Placeholder Image
 - (SVMediaRecord *)makePlaceholdImageMediaWithEntityName:(NSString *)entityName;
