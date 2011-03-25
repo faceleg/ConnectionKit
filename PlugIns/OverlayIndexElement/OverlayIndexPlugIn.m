@@ -191,7 +191,18 @@
 	NSRange cboxOverlayInHeader = [[context extraHeaderMarkup] rangeOfString:@"#cboxOverlay"];
 	if (NSNotFound == cboxOverlayInHeader.location)
 	{
-		[[context extraHeaderMarkup] appendFormat:@"<style type='text/css'>%@</style>", colorCSS];
+		[[context extraHeaderMarkup] appendFormat:@"\n<style type='text/css'>%@</style>", colorCSS];
+		
+		if ([context isForEditing])
+		{
+			[[context extraHeaderMarkup] appendFormat:@"\n<style type='text/css'>\n"
+			 @"#cboxWrapper { -webkit-transform: rotateY(0deg); }"
+			 @"\n</style>", colorCSS];
+		}
+//#colorbox, #cboxOverlay, #cboxWrapper{position:absolute; top:0; left:0; z-index:9999; overflow:hidden;}
+		
+		
+		
 	}
 	
 		
