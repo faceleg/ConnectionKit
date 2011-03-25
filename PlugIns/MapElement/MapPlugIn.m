@@ -61,7 +61,7 @@
     self.locationTitle = @"Karelia Software HQ";
     self.type = 0;
     self.zoom = 10;
-    self.clickable = NO;
+    self.clickable = YES;
     self.tooltip = NO;
 }
 
@@ -102,6 +102,11 @@
             script = [NSString stringWithFormat:@"<script type=\"text/javascript\" src=\"%@\"></script>\n", [context relativeStringFromURL:URL]];
             [context addMarkupToEndOfBody:script];
             
+            // prepare parameters
+            NSString *pin = (self.clickable) ? @"true" : @"false"; // clicking pin shows details pop-up
+            NSString *more = (self.tooltip) ? @"true" : @"false"; // display tooltip of title on pin
+            NSString *suffix = @"\' (click for details)\'";
+            
             // append zGoogleMap <script> to end body
             NSString *map = [NSString stringWithFormat:
                              @"<script type=\"text/javascript\">\n"
@@ -114,7 +119,7 @@
                              "  aDetails = ['Some details about this address'];\n"
                              "\n"
                              @"$(document).ready(function () {\n"
-                             @"	$('#%@').GoogleMap(aLocations, aTitles, aDetails, {type:%@, zoom:%@, width:'%@px', height:'%@px'});\n"
+                             @"	$('#%@').GoogleMap(aLocations, aTitles, aDetails, {type:%@, zoom:%@, clickable:%@, tooltip:%@, tipsuffix:%@, width:'%@px', height:'%@px'});\n"
                              @"});\n"
                              @"</script>\n",
                              self.location,
@@ -122,6 +127,9 @@
                              idName,
                              [[NSNumber numberWithUnsignedInt:self.type] stringValue],
                              [[NSNumber numberWithUnsignedInt:self.zoom] stringValue],
+                             pin,
+                             more,
+                             suffix,
                              [self.width stringValue],
                              [self.height stringValue]];
             [context addMarkupToEndOfBody:map];
