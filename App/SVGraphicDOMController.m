@@ -354,7 +354,14 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 {
     if (context == sGraphicSizeObservationContext)
     {
-        [self setNeedsUpdateWithSelector:@selector(updateSize)];
+        if ([[self webEditor] inLiveGraphicResize])
+        {
+            [self updateSize];  // needs to happen immediately
+        }
+        else
+        {
+            [self setNeedsUpdateWithSelector:@selector(updateSize)];
+        }
     }
     
     else

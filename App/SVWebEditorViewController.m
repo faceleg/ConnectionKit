@@ -487,11 +487,12 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     if (!_willUpdate)
 	{
 		// Install a fresh observer for the end of the run loop
+        // This used to include NSEventTrackingRunLoopMode, but that can make plug-ins repeatedly try to update themselves mid-resize which we don't want. Instead, if you need an update mid-reszie, force it through yourself
 		[[NSRunLoop currentRunLoop] performSelector:@selector(updateIfNeeded)
                                              target:self
                                            argument:nil
                                               order:0
-                                              modes:NSARRAY(NSDefaultRunLoopMode, NSEventTrackingRunLoopMode)];
+                                              modes:NSARRAY(NSDefaultRunLoopMode)];
 	}
     _willUpdate = YES;
 }
