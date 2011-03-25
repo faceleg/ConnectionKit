@@ -260,7 +260,7 @@ NSString *PCFilenameKey = @"filename";
         {
             if ( [context isForEditing] )
             {
-                [context writeInvisibleBadgeWithText:SVLocalizedString(@"Page Counter", "placeholder for invisible page counter") options:0];
+                [context writePlaceholderWithText:SVLocalizedString(@"Page Counter", "placeholder for invisible page counter") options:SVPlaceholderInvisible];
             }
             NSString *script = [NSString stringWithFormat:
                                 @"<script type=\"text/javascript\">\n"
