@@ -55,9 +55,11 @@
     if ( isNew && self.indexedCollection )
     {
         // attempt to set container's title to localized string
-        NSString *title = [NSString stringWithFormat:@"%@ %@",
-                           [self.indexedCollection title],
-                           SVLocalizedString(@"Archive", @"title of object")];
+		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+		NSString *language = [page language];
+        NSString *title = [NSString stringWithFormat:@"%@ %@", 
+                           [self.indexedCollection title], 
+                           [bundle localizedStringForString:@"Archive" language:language fallback:SVLocalizedString(@"Archive", @"title of object")]];
         self.title = title;
     }
 }
