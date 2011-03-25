@@ -571,32 +571,36 @@
 }
 
 - (BOOL)writeImageRepresentation:(SVHTMLContext *)context
-                       type:(SVThumbnailType)type
-                      width:(NSUInteger)width
-                     height:(NSUInteger)height
-                    options:(SVPageImageRepresentationOptions)options;
+                            type:(SVThumbnailType)type
+                           width:(NSUInteger)width
+                          height:(NSUInteger)height
+                         options:(SVPageImageRepresentationOptions)options;
 {
-    if (type == SVThumbnailTypeCustom && [self customThumbnail])
+    BOOL push = !(options & SVPageImageRepresentationDryRun);
+    
+    NSURL *url = [self addImageRepresentationToContext:context
+                                                  type:type
+                                                 width:width
+                                                height:height
+                                               options:options
+                              pushSizeToCurrentElement:push];
+    
+    if (push)
     {
-		
-        if (!(options & SVPageImageRepresentationDryRun))
+        if (url)
         {
-            [context writeThumbnailImageWithSourceMedia:[[self customThumbnail] media]
-                                                    alt:@""
-                                                  width:width
-                                                 height:height
-                                                   type:nil
-                                      preferredFilename:nil
-                                                options:options];
+            [context writeImageWithSrc:[context relativeStringFromURL:url]
+                                   alt:@""
+                                 width:nil
+                                height:nil];
         }
-        return YES;
-    }
-    else if (!(options & SVPageImageRepresentationDryRun))
-    {
-        [self writeThumbnailPlaceholder:context width:width height:height];
+        else
+        {
+            [self writeThumbnailPlaceholder:context width:width height:height];
+        }
     }
     
-    return NO;
+    return url != nil;
 }
 
 - (NSURL *)addImageRepresentationToContext:(SVHTMLContext *)context
