@@ -39,6 +39,7 @@
 
 
 // SVLocalizedString(@"Flickr (Placeholder)", "String_On_Page_Template")
+// SVLocalizedString(@"More ", "String_On_Page_Template")
 // SVLocalizedString(@"Flickr photos", "String_On_Page_Template")
 // SVLocalizedString(@" tagged with ", "String_On_Page_Template")
 
