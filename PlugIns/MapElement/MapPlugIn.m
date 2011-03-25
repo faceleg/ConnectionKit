@@ -60,7 +60,7 @@
     self.location = @"Alameda, California";
     self.locationTitle = @"Karelia Software HQ";
     self.type = 0;
-    self.zoom = 15;
+    self.zoom = 10;
     self.clickable = NO;
     self.tooltip = NO;
 }
