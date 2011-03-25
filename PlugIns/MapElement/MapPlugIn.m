@@ -57,10 +57,10 @@
     [super awakeFromNew];
     
     // make some initial guesses at params
-    self.location = @"alameda, california";
-    self.locationTitle = @"HQ";
-    self.type = 2;
-    self.zoom = 6;
+    self.location = @"Alameda, California";
+    self.locationTitle = @"Karelia Software HQ";
+    self.type = 0;
+    self.zoom = 15;
     self.clickable = NO;
     self.tooltip = NO;
 }
@@ -148,7 +148,7 @@
 - (void)makeOriginalSize;
 {
     // pick an artibrary, yet visible, size to start with
-    [self setWidth:[NSNumber numberWithInt:430] height:[NSNumber numberWithInt:286]];
+    [self setWidth:[NSNumber numberWithInt:400] height:[NSNumber numberWithInt:400]];
 }
 
 
