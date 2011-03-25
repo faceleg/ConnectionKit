@@ -20,7 +20,7 @@
 #import "KSDependenciesTracker.h"
 
 
-@class SVWebEditorHTMLContext, KSObjectKeyPathPair, SVWebEditorViewController, SVGraphic, SVSizeBindingDOMController;
+@class SVWebEditorHTMLContext, KSObjectKeyPathPair, SVWebEditorViewController, SVGraphic, SVResizableDOMController;
 @protocol SVDOMControllerRepresentedObject;
 
 

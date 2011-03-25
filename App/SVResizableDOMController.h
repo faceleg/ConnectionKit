@@ -1,5 +1,5 @@
 //
-//  SVSizeBindingDOMController.h
+//  SVResizableDOMController.h
 //  Sandvox
 //
 //  Created by Mike on 12/08/2010.
@@ -9,7 +9,7 @@
 #import "SVDOMController.h"
 
 
-@interface SVSizeBindingDOMController : SVDOMController
+@interface SVResizableDOMController : SVDOMController
 {
   @private
     NSSize  _delta;

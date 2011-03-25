@@ -286,8 +286,8 @@
 		270228E712A5C3CB00873AF4 /* SVHTMLValidator.h in Headers */ = {isa = PBXBuildFile; fileRef = 270228E512A5C3CB00873AF4 /* SVHTMLValidator.h */; };
 		270228E812A5C3CB00873AF4 /* SVHTMLValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 270228E612A5C3CB00873AF4 /* SVHTMLValidator.m */; };
 		270229E512A5DC3D00873AF4 /* InvalidHTMLPlaceholder.html in Resources */ = {isa = PBXBuildFile; fileRef = 270229E412A5DC3D00873AF4 /* InvalidHTMLPlaceholder.html */; };
-		2704228112142F710077298A /* SVSizeBindingDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2704227F12142F710077298A /* SVSizeBindingDOMController.h */; };
-		2704228212142F710077298A /* SVSizeBindingDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2704228012142F710077298A /* SVSizeBindingDOMController.m */; };
+		2704228112142F710077298A /* SVResizableDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2704227F12142F710077298A /* SVResizableDOMController.h */; };
+		2704228212142F710077298A /* SVResizableDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2704228012142F710077298A /* SVResizableDOMController.m */; };
 		27080FBE113DD9C900E66F92 /* SVLogoImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 27080FBC113DD9C900E66F92 /* SVLogoImage.h */; };
 		27080FBF113DD9C900E66F92 /* SVLogoImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 27080FBD113DD9C900E66F92 /* SVLogoImage.m */; };
 		27092E0D13168D69002F3C08 /* SVMigrationHTMLWriterDOMAdaptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 27092E0B13168D69002F3C08 /* SVMigrationHTMLWriterDOMAdaptor.h */; };
@@ -1857,7 +1857,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = CE541507133C08DA003F635A /* OverlayIndex.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* OverlayIndex */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = OverlayIndex;
 		};
 		CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */ = {
@@ -1985,8 +1985,8 @@
 		270228E512A5C3CB00873AF4 /* SVHTMLValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVHTMLValidator.h; sourceTree = "<group>"; };
 		270228E612A5C3CB00873AF4 /* SVHTMLValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLValidator.m; sourceTree = "<group>"; };
 		270229E412A5DC3D00873AF4 /* InvalidHTMLPlaceholder.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = InvalidHTMLPlaceholder.html; sourceTree = "<group>"; };
-		2704227F12142F710077298A /* SVSizeBindingDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSizeBindingDOMController.h; sourceTree = "<group>"; };
-		2704228012142F710077298A /* SVSizeBindingDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSizeBindingDOMController.m; sourceTree = "<group>"; };
+		2704227F12142F710077298A /* SVResizableDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVResizableDOMController.h; sourceTree = "<group>"; };
+		2704228012142F710077298A /* SVResizableDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVResizableDOMController.m; sourceTree = "<group>"; };
 		27080FBC113DD9C900E66F92 /* SVLogoImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLogoImage.h; sourceTree = "<group>"; };
 		27080FBD113DD9C900E66F92 /* SVLogoImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLogoImage.m; sourceTree = "<group>"; };
 		27092E0B13168D69002F3C08 /* SVMigrationHTMLWriterDOMAdaptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMigrationHTMLWriterDOMAdaptor.h; sourceTree = "<group>"; };
@@ -3497,8 +3497,8 @@
 				277E724C1133595A0081389F /* SVGraphicDOMController.m */,
 				27FA98831194BC0C003B8308 /* SVSidebarDOMController.h */,
 				27FA98841194BC0C003B8308 /* SVSidebarDOMController.m */,
-				2704227F12142F710077298A /* SVSizeBindingDOMController.h */,
-				2704228012142F710077298A /* SVSizeBindingDOMController.m */,
+				2704227F12142F710077298A /* SVResizableDOMController.h */,
+				2704228012142F710077298A /* SVResizableDOMController.m */,
 				27503418126C6BCF006F87ED /* SVMediaDOMController.h */,
 				27503419126C6BCF006F87ED /* SVMediaDOMController.m */,
 				27F33BDA126E101600CDC551 /* SVIndexDOMController.h */,
@@ -6206,7 +6206,7 @@
 				CEDA2DC0120CD437005FE23E /* SVVideoInspector.h in Headers */,
 				27D7340612118E3400722189 /* SVIndexPlugIn.h in Headers */,
 				27D7345512119C6600722189 /* SVMediaGraphicInspector.h in Headers */,
-				2704228112142F710077298A /* SVSizeBindingDOMController.h in Headers */,
+				2704228112142F710077298A /* SVResizableDOMController.h in Headers */,
 				2725BA46121DE9990074EAA0 /* NSImageView+IMBImageItem.h in Headers */,
 				2725BC38121F3F690074EAA0 /* SVArchivePage.h in Headers */,
 				275C5F88122831CE00CD22B8 /* SVMedia.h in Headers */,
@@ -7862,7 +7862,7 @@
 				CEDA2DC1120CD437005FE23E /* SVVideoInspector.m in Sources */,
 				27D7340712118E3400722189 /* SVIndexPlugIn.m in Sources */,
 				27D7345612119C6600722189 /* SVMediaGraphicInspector.m in Sources */,
-				2704228212142F710077298A /* SVSizeBindingDOMController.m in Sources */,
+				2704228212142F710077298A /* SVResizableDOMController.m in Sources */,
 				CE65643B1219DAC8006C5B0D /* KSSimpleURLConnection.m in Sources */,
 				2725BA47121DE9990074EAA0 /* NSImageView+IMBImageItem.m in Sources */,
 				2725BC39121F3F690074EAA0 /* SVArchivePage.m in Sources */,

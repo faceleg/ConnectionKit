@@ -16,7 +16,7 @@
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "SVRichText.h"
-#import "SVSizeBindingDOMController.h"
+#import "SVResizableDOMController.h"
 #import "SVTemplate.h"
 #import "SVTextAttachment.h"
 #import "SVTitleBox.h"
@@ -334,7 +334,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     BOOL result = NO;
     for (WEKWebEditorItem *anItem in [[context rootDOMController] enumerator])
     {
-        if ([anItem isKindOfClass:[SVSizeBindingDOMController class]])
+        if ([anItem isKindOfClass:[SVResizableDOMController class]])
         {
             result = YES;
             break;

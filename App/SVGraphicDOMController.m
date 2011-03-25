@@ -676,7 +676,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
-    /*  This logic is almost identical to SVSizeBindingDOMController, although the code here can probably be pared down to deal only with width
+    /*  This logic is almost identical to SVResizableDOMController, although the code here can probably be pared down to deal only with width
      */
     
     

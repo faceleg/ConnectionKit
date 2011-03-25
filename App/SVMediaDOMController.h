@@ -6,13 +6,13 @@
 //  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
-#import "SVSizeBindingDOMController.h"
+#import "SVResizableDOMController.h"
 #import "SVGraphicDOMController.h"
 
 #import "SVMediaGraphic.h"
 
 
-@interface SVMediaDOMController : SVSizeBindingDOMController
+@interface SVMediaDOMController : SVResizableDOMController
 {
 @private
     BOOL    _drawAsDropTarget;

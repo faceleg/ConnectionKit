@@ -237,13 +237,13 @@
         }
         else
         {
-            controllerClass = [SVSizeBindingDOMController class];
+            controllerClass = [SVResizableDOMController class];
         }
     }
     
     
     // 
-    SVSizeBindingDOMController *controller = [[controllerClass alloc] initWithRepresentedObject:
+    SVResizableDOMController *controller = [[controllerClass alloc] initWithRepresentedObject:
                                               [[self currentDOMController] representedObject]];
     [controller setSizeDelta:sizeDelta];
     

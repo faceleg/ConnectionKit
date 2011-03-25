@@ -1,12 +1,12 @@
 //
-//  SVSizeBindingDOMController.m
+//  SVResizableDOMController.m
 //  Sandvox
 //
 //  Created by Mike on 12/08/2010.
 //  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
-#import "SVSizeBindingDOMController.h"
+#import "SVResizableDOMController.h"
 
 #import "SVGraphicDOMController.h"
 #import "SVPlugInGraphic.h"
@@ -17,7 +17,7 @@
 static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 
-@implementation SVSizeBindingDOMController
+@implementation SVResizableDOMController
 
 #pragma mark Dealloc
 
@@ -329,10 +329,10 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 // Plug-ins don't implement this stuff, so we're going to have to fake it for now.
 
-@interface SVPlugIn (SVSizeBindingDOMController) //<SVDOMControllerRepresentedObject>
+@interface SVPlugIn (SVResizableDOMController) //<SVDOMControllerRepresentedObject>
 @end
 
-@implementation SVPlugIn (SVSizeBindingDOMController)
+@implementation SVPlugIn (SVResizableDOMController)
 
 - (BOOL)shouldPublishEditingElementID; { return NO; }
 
