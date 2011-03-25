@@ -659,7 +659,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (BOOL)awakeFromPasteboardItems:(NSArray *)items; { return YES; }
 
-#pragma mark SVPlugInContainer
+#pragma mark Title
 
 - (NSString *)title	// get title, but without attributes
 {
@@ -694,6 +694,24 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 }
 - (void)setShowsTitle:(BOOL)show { [[self titleBox] setHidden:[NSNumber numberWithBool:!show]]; }
 + (NSSet *)keyPathsForValuesAffectingShowsTitle; { return [NSSet setWithObject:@"titleBox.hidden"]; }
+
+- (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
+{
+    // Trying to observe while a fault tends to end in tears. #111366, similar to #108418. Pattern goes:
+    //
+    //  1. Observe simple key
+    //  2. Observe compound key path, which:
+    //  3. Faults in the object as key path is traversed, triggering change notification
+    //  4. First observer is notified, but very confused by the weird state and throws exception
+    //
+    // All in all, safest not to observe while a fault!
+    [self willAccessValueForKey:nil];
+    
+    
+    [super addObserver:observer forKeyPath:keyPath options:options context:context];
+}
+
+#pragma mark SVPlugInContainer
 
 - (BOOL)isBordered { return [[self showBorder] boolValue]; }
 - (void)setBordered:(BOOL)border { [self setShowBorder:[NSNumber numberWithBool:border]]; }
