@@ -3,7 +3,7 @@
 [[if master.wantsDisqus]]
 [[if master.disqusShortName]]
 									[[if parser.isPublishing]]
-									[[if self==parser.currentPage]]
+									[[if self==parser.HTMLContext.page]]
                                     <div id="disqus_thread"></div>
                                         <script type="text/javascript">
                                             var disqus_shortname = '[[=&%master.disqusShortName]]';
@@ -21,7 +21,7 @@
 									</div>
 									[[endif5]]
 									[[else4]]
-									[[if self==parser.currentPage]]
+									[[if self==parser.HTMLContext.page]]
                                     <div class="svx-placeholder">
 										[['Disqus Comments]]
 									</div>
@@ -36,7 +36,7 @@
 [[if master.wantsIntenseDebate]]
 [[if master.IntenseDebateAccountID]]
 									[[if parser.isPublishing]]
-									[[if self==parser.currentPage]]
+									[[if self==parser.HTMLContext.page]]
 									<script type="text/javascript">
 										var idcomments_acct = "[[=master.IntenseDebateAccountID]]";
 										var idcomments_post_id = "[[=&URL]]";
@@ -54,7 +54,7 @@
 									<script type="text/javascript" src="http://www.intensedebate.com/js/genericLinkWrapperV2.js"></script>
 									[[endif5]]
 									[[else4]]
-									[[if self==parser.currentPage]]
+									[[if self==parser.HTMLContext.page]]
 									<div class="svx-placeholder">
 										<p>[['IntenseDebate Comments]]</p>
 									</div>
@@ -69,14 +69,14 @@
 [[if master.wantsFacebookComments]]
 [[if master.facebookAppID]]
 									[[if parser.isPublishing]]
-									[[if self==parser.currentPage]]
+									[[if self==parser.HTMLContext.page]]
                                     <div id="fb-root"></div>
-                                    <fb:comments numposts="[[=master.fbNumberOfPosts]]" width=[[if parser.currentPage.showSidebar]]"[[=master.fbSidebarWidth]]"[[else6]]"[[=master.fbPageWidth]]"[[endif6]] publish_feed="[[=master.fbPublishFeed]]"></fb:comments>
+                                    <fb:comments numposts="[[=master.fbNumberOfPosts]]" width=[[if parser.HTMLContext.page.showSidebar]]"[[=master.fbSidebarWidth]]"[[else6]]"[[=master.fbPageWidth]]"[[endif6]] publish_feed="[[=master.fbPublishFeed]]"></fb:comments>
                                     [[else5]]
                                     <iframe src="http://www.facebook.com/plugins/comments.php?href=[[=&URL]]&permalink=1" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:16px;" allowTransparency="true"></iframe>
                                     [[endif5]]
                                     [[else4]]
-									[[if self==parser.currentPage]]
+									[[if self==parser.HTMLContext.page]]
 									<div class="svx-placeholder">
 										[['Facebook Comments]]
 									</div>
