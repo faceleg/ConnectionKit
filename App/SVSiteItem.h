@@ -98,6 +98,7 @@ typedef enum {
 
 - (BOOL) canPreview;
 
+
 #pragma mark Publishing
 @property(nonatomic, copy) NSDate *datePublished;
 - (void)recursivelyInvalidateURL:(BOOL)recursive;
@@ -135,7 +136,7 @@ typedef enum {
 - (void)writeContent:(SVHTMLContext *)context recursively:(BOOL)recursive;
 
 
-#pragma mark Thumbnail
+#pragma mark Image Representation
 
 - (BOOL)writeThumbnail:(SVHTMLContext *)context
                  width:(NSUInteger)width
@@ -148,6 +149,13 @@ typedef enum {
                       width:(NSUInteger)width           // writes only the image, not anchor
                      height:(NSUInteger)height
                     options:(SVPageImageRepresentationOptions)options;
+
+- (NSURL *)addImageRepresentationToContext:(SVHTMLContext *)context
+                                      type:(SVThumbnailType)type
+                                     width:(NSUInteger)width
+                                    height:(NSUInteger)height
+                                   options:(SVPageImageRepresentationOptions)options
+                  pushSizeToCurrentElement:(BOOL)push;
 
 - (void)writeThumbnailPlaceholder:(SVHTMLContext *)context width:(NSUInteger)width height:(NSUInteger)height;
 

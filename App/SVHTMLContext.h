@@ -213,6 +213,14 @@ typedef enum {
                          preferredFilename:(NSString *)filename
                                    options:(SVPageImageRepresentationOptions)options;
 
+- (NSURL *)addThumbnailMedia:(SVMedia *)media
+                       width:(NSUInteger)width
+                      height:(NSUInteger)height
+                        type:(NSString *)type
+           preferredFilename:(NSString *)filename
+                     options:(SVPageImageRepresentationOptions)options
+    pushSizeToCurrentElement:(BOOL)push;
+
 
 #pragma mark Resource Files
 

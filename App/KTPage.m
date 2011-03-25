@@ -478,6 +478,77 @@
     }
 }
 
+- (NSURL *)addImageRepresentationToContext:(SVHTMLContext *)context
+                                      type:(SVThumbnailType)type
+                                     width:(NSUInteger)width
+                                    height:(NSUInteger)height
+                                   options:(SVPageImageRepresentationOptions)options
+                  pushSizeToCurrentElement:(BOOL)push;
+{
+    switch (type)
+    {
+        case SVThumbnailTypePickFromPage:
+        {
+            // Grab thumbnail from appropriate graphic and write that
+            SVGraphic *source = [self thumbnailSourceGraphic];
+            if ([source imageRepresentation])
+            {
+                if (!(options & SVPageImageRepresentationDryRun))
+                {
+                    [source writeThumbnailImage:context width:width height:height options:options];
+                }
+                return YES;
+            }
+            else
+            {
+                // Write placeholder if desired
+                return [super writeImageRepresentation:context type:type width:width height:height options:options];
+            }
+        }
+            
+        case SVThumbnailTypeFirstChildItem:
+        {
+            // Just ask the page in question to write its thumbnail
+            NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:self];
+            
+            SVSiteItem *page = [[controller arrangedObjects] firstObjectKS];
+            [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
+            
+            return [page addImageRepresentationToContext:context
+                                                    type:[[page thumbnailType] intValue]
+                                                   width:width
+                                                  height:height
+                                                 options:options
+                                pushSizeToCurrentElement:push];
+        }
+            
+        case SVThumbnailTypeLastChildItem:
+        {
+            // Just ask the page in question to write its thumbnail
+            NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:self];
+            
+            SVSiteItem *page = [[controller arrangedObjects] lastObject];
+            [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
+            
+            return [page addImageRepresentationToContext:context
+                                                    type:[[page thumbnailType] intValue]
+                                                   width:width
+                                                  height:height
+                                                 options:options
+                                pushSizeToCurrentElement:push];
+        }
+            
+        default:
+            // Hand off to super for custom/no thumbnail
+            return [super addImageRepresentationToContext:context
+                                                     type:type
+                                                    width:width
+                                                   height:height
+                                                  options:options
+                                 pushSizeToCurrentElement:push];
+    }
+}
+
 @dynamic thumbnailSourceGraphic;
 
 - (void)guessThumbnailSourceGraphic;

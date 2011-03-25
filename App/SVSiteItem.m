@@ -599,6 +599,29 @@
     return NO;
 }
 
+- (NSURL *)addImageRepresentationToContext:(SVHTMLContext *)context
+                                      type:(SVThumbnailType)type
+                                     width:(NSUInteger)width
+                                    height:(NSUInteger)height
+                                   options:(SVPageImageRepresentationOptions)options
+                  pushSizeToCurrentElement:(BOOL)push;
+{
+    if (type == SVThumbnailTypeCustom && [self customThumbnail])
+    {
+		NSURL *result = [context addThumbnailMedia:[[self customThumbnail] media]
+                                             width:width
+                                            height:height
+                                              type:nil
+                                 preferredFilename:nil
+                                           options:options
+                          pushSizeToCurrentElement:push];
+
+        return result;
+    }
+    
+    return nil;
+}
+
 - (id)imageRepresentation;
 {
     id result = nil;
