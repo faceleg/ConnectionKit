@@ -129,6 +129,7 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
 
 - (void)writeHiddenLinkToPhoto
 {
+    return;
     id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
 	if ([iteratedPage respondsToSelector:@selector(thumbnailSourceGraphic)])
