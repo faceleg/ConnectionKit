@@ -49,7 +49,7 @@
 #pragma mark Thumbnail
 
 // #105408 - in progress
-- (BOOL)writeThumbnailImage:(SVHTMLContext *)context
+- (BOOL)writeImageRepresentation:(SVHTMLContext *)context
                        type:(SVThumbnailType)type
                       width:(NSUInteger)width
                      height:(NSUInteger)height
@@ -96,7 +96,7 @@
     }
     else
     {
-        return [super writeThumbnailImage:context type:type width:width height:height options:options];
+        return [super writeImageRepresentation:context type:type width:width height:height options:options];
     }
 }
 

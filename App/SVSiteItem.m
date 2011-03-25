@@ -543,7 +543,7 @@
     
     if (options & SVPageImageRepresentationDryRun) // just test if there is a thumbnail
     {
-        return [self writeThumbnailImage:context
+        return [self writeImageRepresentation:context
                                     type:[[self thumbnailType] intValue]
                                    width:width
                                   height:height
@@ -558,7 +558,7 @@
         }
         
         if (attributes) [context pushAttributes:attributes];
-        BOOL result = [self writeThumbnailImage:context
+        BOOL result = [self writeImageRepresentation:context
                                            type:[[self thumbnailType] intValue]
                                           width:width
                                          height:height
@@ -570,7 +570,7 @@
     }
 }
 
-- (BOOL)writeThumbnailImage:(SVHTMLContext *)context
+- (BOOL)writeImageRepresentation:(SVHTMLContext *)context
                        type:(SVThumbnailType)type
                       width:(NSUInteger)width
                      height:(NSUInteger)height

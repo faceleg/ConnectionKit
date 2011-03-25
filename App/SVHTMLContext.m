@@ -932,13 +932,21 @@
     }
 }
 
-- (void)writeThumbnailImageWithSourceMedia:(SVMedia *)media
-                                       alt:(NSString *)altText
+- (NSURL *)URLForImageRepresentationOfPage:(SVSiteItem *)page
                                      width:(NSUInteger)width
                                     height:(NSUInteger)height
-                                      type:(NSString *)type // may be nil for context to guess
-                         preferredFilename:(NSString *)filename
                                    options:(SVPageImageRepresentationOptions)options;
+{
+    return nil;
+}
+
+- (NSURL *)addThumbnailMedia:(SVMedia *)media
+                       width:(NSUInteger)width
+                      height:(NSUInteger)height
+                        type:(NSString *)type
+           preferredFilename:(NSString *)filename
+                     options:(SVPageImageRepresentationOptions)options
+    pushSizeToCurrentElement:(BOOL)push;
 {
     // Scale to fit?
     KSImageScalingMode scaling = KSImageScalingModeCropCenter;
@@ -959,6 +967,12 @@
         [image release];
     }
     
+    if (push)
+    {
+        [self pushAttribute:@"width" value:[NSNumber numberWithUnsignedInteger:width]];
+        [self pushAttribute:@"height" value:[NSNumber numberWithUnsignedInteger:height]];
+    }
+    
     
     if (!type) type = (NSString *)kUTTypePNG;
     
@@ -973,31 +987,49 @@
                                      compressionFactor:1.0f
                                               fileType:type];
         
-        [self writeImageWithSrc:[self relativeStringFromURL:url]
-                            alt:@""
-                          width:[NSNumber numberWithUnsignedInteger:width]
-                         height:[NSNumber numberWithUnsignedInteger:height]];
+        return url;
     }
     else
     {
-		if (options & SVPageImageRepresentationLinkRel)
-		{
-			[self writeLinkRelWithSourceMedia:media
-										  alt:altText
-										width:[NSNumber numberWithUnsignedInteger:width]
-									   height:[NSNumber numberWithUnsignedInteger:height]
-										 type:type
-							preferredFilename:filename];
-		}
-		else
-		{
-			[self writeImageWithSourceMedia:media
-										alt:altText
-									  width:[NSNumber numberWithUnsignedInteger:width]
-									 height:[NSNumber numberWithUnsignedInteger:height]
-									   type:type
-						  preferredFilename:filename];
-		}
+		return [self addImageMedia:media
+                             width:[NSNumber numberWithUnsignedInteger:width]
+                            height:[NSNumber numberWithUnsignedInteger:height]
+                              type:type
+                 preferredFilename:filename];
+    }
+}
+
+- (void)writeThumbnailImageWithSourceMedia:(SVMedia *)media
+                                       alt:(NSString *)altText
+                                     width:(NSUInteger)width
+                                    height:(NSUInteger)height
+                                      type:(NSString *)type // may be nil for context to guess
+                         preferredFilename:(NSString *)filename
+                                   options:(SVPageImageRepresentationOptions)options;
+{
+    if (options & SVPageImageRepresentationLinkRel)
+    {
+        [self writeLinkRelWithSourceMedia:media
+                                      alt:altText
+                                    width:[NSNumber numberWithUnsignedInteger:width]
+                                   height:[NSNumber numberWithUnsignedInteger:height]
+                                     type:type
+                        preferredFilename:filename];
+    }
+    else
+    {
+        NSURL *url = [self addThumbnailMedia:media
+                                       width:width
+                                      height:height
+                                        type:type
+                           preferredFilename:filename
+                                     options:options
+                    pushSizeToCurrentElement:YES];
+        
+        [self writeImageWithSrc:[self relativeStringFromURL:url]
+                            alt:altText
+                          width:nil     // -addThumbnailMedia… took care of suppluying width & height for us
+                         height:nil];
     }
 }
 

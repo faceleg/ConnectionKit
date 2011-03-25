@@ -411,7 +411,7 @@
 
 #pragma mark Thumbnail
 
-- (BOOL)writeThumbnailImage:(SVHTMLContext *)context
+- (BOOL)writeImageRepresentation:(SVHTMLContext *)context
                        type:(SVThumbnailType)type
                       width:(NSUInteger)width
                      height:(NSUInteger)height
@@ -434,7 +434,7 @@
             else
             {
                 // Write placeholder if desired
-                return [super writeThumbnailImage:context type:type width:width height:height options:options];
+                return [super writeImageRepresentation:context type:type width:width height:height options:options];
             }
         }
             
@@ -446,7 +446,7 @@
             SVSiteItem *page = [[controller arrangedObjects] firstObjectKS];
             [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
             
-            return [page writeThumbnailImage:context
+            return [page writeImageRepresentation:context
                                         type:[[page thumbnailType] intValue]
                                        width:width
                                       height:height
@@ -461,7 +461,7 @@
             SVSiteItem *page = [[controller arrangedObjects] lastObject];
             [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
             
-            return [page writeThumbnailImage:context
+            return [page writeImageRepresentation:context
                                         type:[[page thumbnailType] intValue]
                                        width:width
                                       height:height
@@ -470,7 +470,7 @@
             
         default:
             // Hand off to super for custom/no thumbnail
-            return [super writeThumbnailImage:context
+            return [super writeImageRepresentation:context
                                          type:type
                                         width:width
                                        height:height

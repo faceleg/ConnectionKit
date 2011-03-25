@@ -237,7 +237,7 @@
         SVPageThumbnailHTMLContext *context = [[SVPageThumbnailHTMLContext alloc] init];
         [context setDelegate:self];
         
-        [page writeThumbnailImage:context
+        [page writeImageRepresentation:context
                              type:SVThumbnailTypeFirstChildItem
                             width:32
                            height:32
@@ -253,7 +253,7 @@
         context = [[SVPageThumbnailHTMLContext alloc] init];
         [context setDelegate:self];
         
-        [page writeThumbnailImage:context
+        [page writeImageRepresentation:context
                              type:SVThumbnailTypeLastChildItem
                             width:32
                            height:32

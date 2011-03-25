@@ -143,7 +143,7 @@ typedef enum {
             attributes:(NSDictionary *)attributes  // e.g. custom CSS class
                options:(SVPageImageRepresentationOptions)options;
 
-- (BOOL)writeThumbnailImage:(SVHTMLContext *)context    // support method for subclasses to override
+- (BOOL)writeImageRepresentation:(SVHTMLContext *)context    // support method for subclasses to override
                        type:(SVThumbnailType)type
                       width:(NSUInteger)width           // writes only the image, not anchor
                      height:(NSUInteger)height
