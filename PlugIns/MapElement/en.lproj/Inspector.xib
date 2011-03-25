@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
-		<string key="IBDocument.InterfaceBuilderVersion">851</string>
+		<string key="IBDocument.SystemVersion">10J869</string>
+		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">851</string>
+			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -139,7 +139,7 @@
 					<object class="NSSlider" id="295987319">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{18, 71}, {96, 15}}</string>
+						<string key="NSFrame">{{20, 73}, {196, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSSliderCell" key="NSCell" id="55333982">
@@ -147,26 +147,26 @@
 							<int key="NSCellFlags2">131072</int>
 							<string key="NSContents"/>
 							<reference key="NSControlView" ref="295987319"/>
-							<double key="NSMaxValue">10</double>
-							<double key="NSMinValue">1</double>
-							<double key="NSValue">5</double>
+							<double key="NSMaxValue">20</double>
+							<double key="NSMinValue">0.0</double>
+							<double key="NSValue">10</double>
 							<double key="NSAltIncValue">0.0</double>
-							<int key="NSNumberOfTickMarks">0</int>
-							<int key="NSTickMarkPosition">1</int>
-							<bool key="NSAllowsTickMarkValuesOnly">NO</bool>
+							<int key="NSNumberOfTickMarks">21</int>
+							<int key="NSTickMarkPosition">0</int>
+							<bool key="NSAllowsTickMarkValuesOnly">YES</bool>
 							<bool key="NSVertical">NO</bool>
 						</object>
 					</object>
 					<object class="NSButton" id="725944434">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{15, 29}, {147, 18}}</string>
+						<string key="NSFrame">{{15, 29}, {186, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="108369821">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">131072</int>
-							<string key="NSContents">Display address on piin</string>
+							<string key="NSContents">Display address on pin</string>
 							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="725944434"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -485,10 +485,10 @@
 							<reference ref="524485443"/>
 							<reference ref="280961646"/>
 							<reference ref="655451502"/>
-							<reference ref="295987319"/>
 							<reference ref="24810193"/>
 							<reference ref="442954997"/>
 							<reference ref="725944434"/>
+							<reference ref="295987319"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -744,7 +744,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABCZAAAwoYAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABBkAAAwqgAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
