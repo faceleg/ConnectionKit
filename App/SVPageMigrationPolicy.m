@@ -40,13 +40,6 @@ typedef enum {
         [sInstance setValue:[dAttribute defaultValue] forKey:@"collectionTruncateCharacters"];
     }
     
-    // collectionMaxSyndicatedPagesCount can no longer be zero. Instead make it rather large
-    if ([[sInstance valueForKey:@"collectionMaxIndexItems"] intValue] < 1)
-    {
-        [sInstance setValue:[NSNumber numberWithInt:9999] forKey:@"collectionMaxIndexItems"];
-    }
-    
-    
     BOOL result = [super createDestinationInstancesForSourceInstance:sInstance entityMapping:mapping manager:manager error:error];
 
     return result;
