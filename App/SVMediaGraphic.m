@@ -499,6 +499,73 @@
     }
 }
 
+- (NSURL *)addImageRepresentationToContext:(SVHTMLContext *)context
+                                  width:(NSUInteger)width
+                                 height:(NSUInteger)height
+                                options:(SVPageImageRepresentationOptions)options;
+{
+    SVMedia *media = (id)[[self plugIn] thumbnailMedia];
+    if (media)
+    {
+        KSImageScalingMode scaling = KSImageScalingModeCropCenter;
+        
+        if (options & SVImageScaleAspectFit)
+        {
+            scaling = KSImageScalingModeFill;
+            
+            // Calculate dimensions
+            NSNumber *aspectRatioNumber = [self constrainedAspectRatio];
+            [context addDependencyOnObject:self keyPath:@"constrainedAspectRatio"];
+            
+            CGFloat aspectRatio;
+            if (aspectRatioNumber)
+            {
+                aspectRatio = [aspectRatioNumber floatValue];
+            }
+            else
+            {
+                aspectRatio = [[self width] floatValue] / [[self height] floatValue];
+                [context addDependencyOnObject:self keyPath:@"width"];
+                [context addDependencyOnObject:self keyPath:@"height"];
+            }
+            
+            if (aspectRatio > 1.0f)
+            {
+                height = width / aspectRatio;
+            }
+            else if (aspectRatio < 1.0f)
+            {
+                width = height * aspectRatio;
+            }
+        }
+        
+        
+        // Type? Images want to pick their own, but movies etc. must be converted to JPEG
+        NSString *type = [self typeToPublish];
+        CFArrayRef types = CGImageDestinationCopyTypeIdentifiers();
+        if (![(NSArray *)types containsObject:type]) type = (NSString *)kUTTypeJPEG;
+        CFRelease(types);
+        
+        
+        // Where to publish?
+        NSString *filename = [[[media preferredUploadPath] lastPathComponent] stringByDeletingPathExtension];
+        filename = [filename stringByAppendingFormat:@"_%u", width];
+        filename = [filename stringByAppendingPathExtension:[NSString filenameExtensionForUTI:type]];
+        
+        
+        // Write the thumbnail
+        return [context addThumbnailMedia:media
+                                    width:width
+                                   height:height
+                                     type:type
+                        preferredFilename:filename
+                                  options:options & SVPageImageRepresentationLinkRel	// keep the link rel, but no other flag
+                 pushSizeToCurrentElement:YES];
+    }
+    
+    return nil;
+}
+
 - (id <SVMedia>)thumbnailMedia;
 {
     return [[self plugIn] thumbnailMedia];	// video may want to return poster frame

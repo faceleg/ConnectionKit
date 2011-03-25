@@ -190,10 +190,16 @@ extern NSString *kSVGraphicPboardType;
 
 
 #pragma mark Thumbnail
+
 - (void)writeThumbnailImage:(SVHTMLContext *)context
                    width:(NSUInteger)width
                   height:(NSUInteger)height
                   options:(SVPageImageRepresentationOptions)options;
+
+- (NSURL *)addImageRepresentationToContext:(SVHTMLContext *)context
+                                     width:(NSUInteger)width
+                                    height:(NSUInteger)height
+                                   options:(SVPageImageRepresentationOptions)options;
 
 
 #pragma mark RSS

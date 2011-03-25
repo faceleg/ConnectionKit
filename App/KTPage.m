@@ -493,16 +493,15 @@
             SVGraphic *source = [self thumbnailSourceGraphic];
             if ([source imageRepresentation])
             {
-                if (!(options & SVPageImageRepresentationDryRun))
-                {
-                    [source writeThumbnailImage:context width:width height:height options:options];
-                }
-                return YES;
+                return [source addImageRepresentationToContext:context
+                                                         width:width
+                                                        height:height
+                                                       options:options];
             }
             else
             {
                 // Write placeholder if desired
-                return [super writeImageRepresentation:context type:type width:width height:height options:options];
+                return [super addImageRepresentationToContext:context type:type width:width height:height options:options pushSizeToCurrentElement:push];
             }
         }
             
