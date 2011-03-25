@@ -245,9 +245,7 @@
 			
 			[context pushClassName:@"imageLink"];
 			[context startAnchorElementWithPage:[self indexedCollection]];
-			
-			// TODO: Show the image at the size of this element, so we can resize the starting image to whatever we want!
-			
+						
 			[context writeImageRepresentationOfPage:[self indexedCollection]
 									width:128
 								   height:128
@@ -259,9 +257,7 @@
 		if (self.showCollectionTitle)
 		{
 			showingSomething = YES;
-			
-			// TODO: FIGURE OUT HOW TO ALIGN THE TEXT WITH THE ALIGNMENT OF THE WHOLE BLOCK. (OR CENTER WITHIN BLOCK?)
-			
+						
 			[context startElement:@"div"];
 			[context startAnchorElementWithPage:[self indexedCollection]];
 			[context writeCharacters:[self.indexedCollection title]];
@@ -438,12 +434,8 @@
 	
 }
 
-// TODO: Figure out how to copy the resources in the (example1) CSS into the design package.
 
-// FIXME: Changing a property in the inspector makes the whole thing disappear.  Some problem with offscreen loading, no doubt.
 
-// FIXME: In Sandvox editor, you can't properly turn off Photo Grid linking; it "sticks" this property.
 
-// FIXME: Some way to make this appear "above" the dimmed background we use for the WebKit focus, and the outline of the selected SVGraphic?
 
 @end
