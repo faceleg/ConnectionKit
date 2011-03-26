@@ -1894,9 +1894,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
         NSDictionary *userInfoDict =
 			[NSDictionary dictionaryWithObject:errorString
 										forKey:NSLocalizedDescriptionKey];
-        NSError *error = [[[NSError alloc] initWithDomain:kKTHostSetupErrorDomain
-													 code:1
-												 userInfo:userInfoDict] autorelease];
+        NSError *error = [NSError errorWithDomain:kKTHostSetupErrorDomain
+                                             code:1
+                                         userInfo:userInfoDict];
 		if (outError)
 		{
 			*outError = error;
@@ -2048,9 +2048,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
         NSDictionary *userInfoDict =
 			[NSDictionary dictionaryWithObject:errorString
 										forKey:NSLocalizedDescriptionKey];
-        NSError *error = [[[NSError alloc] initWithDomain:kKTHostSetupErrorDomain
-													 code:2
-												 userInfo:userInfoDict] autorelease];
+        NSError *error = [NSError errorWithDomain:kKTHostSetupErrorDomain
+                                             code:2
+                                         userInfo:userInfoDict];
  		if (outError)
 		{
 			*outError = error;
