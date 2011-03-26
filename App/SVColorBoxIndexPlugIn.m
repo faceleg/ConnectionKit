@@ -228,6 +228,12 @@
 
 	if (self.useColorBox)	// Photo grid might not have any color box, so only add markup if needed.
 	{
+		NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"colorbox"];
+		if (path)
+		{
+			(void) [context addDesignResourceWithURL:[NSURL fileURLWithPath:path isDirectory:YES]];
+		}
+		
 		[self writeCSS:context];
 		[self writeJavaScriptLoader:context];
 	}
