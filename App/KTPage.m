@@ -441,7 +441,9 @@
         case SVThumbnailTypeFirstChildItem:
         {
             // Just ask the page in question to write its thumbnail
-            NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:self];
+            NSArrayController *controller = [SVPagesController
+                                             controllerWithPagesToIndexInCollection:self
+                                             bind:YES];
             
             SVSiteItem *page = [[controller arrangedObjects] firstObjectKS];
             [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
@@ -457,7 +459,9 @@
         case SVThumbnailTypeLastChildItem:
         {
             // Just ask the page in question to write its thumbnail
-            NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:self];
+            NSArrayController *controller = [SVPagesController
+                                             controllerWithPagesToIndexInCollection:self
+                                             bind:YES];
             
             SVSiteItem *page = [[controller arrangedObjects] lastObject];
             [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];

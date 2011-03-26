@@ -517,7 +517,7 @@
         KTPage *firstChild = [self newObjectWithPredecessor:collection followTemplate:NO];
         
         // Insert at right place.
-        [[SVPagesController controllerWithPagesInCollection:collection] addObject:firstChild];
+        [[SVPagesController controllerWithPagesInCollection:collection bind:YES] addObject:firstChild];
         [firstChild release];
         
         // Initial properties
@@ -1090,7 +1090,7 @@
         // Create pages controller on-demand
         if (!_childPagesController)
         {
-            _childPagesController = [[SVPagesController controllerWithPagesInCollection:_page] retain];
+            _childPagesController = [[SVPagesController controllerWithPagesInCollection:_page bind:YES] retain];
             
             /*[_childPagesController bind:NSManagedObjectContextBinding
                                toObject:[self treeController]

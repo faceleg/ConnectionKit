@@ -32,8 +32,8 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 }
 
 #pragma mark Creating a Pages Controller
-+ (SVPagesController *)controllerWithPagesInCollection:(id <SVPage>)collection;
-+ (NSArrayController *)controllerWithPagesToIndexInCollection:(id <SVPage>)collection;
++ (SVPagesController *)controllerWithPagesInCollection:(id <SVPage>)collection bind:(BOOL)bind;
++ (SVPagesController *)controllerWithPagesToIndexInCollection:(id <SVPage>)collection bind:(BOOL)bind;
 
 
 #pragma mark Core Data Support

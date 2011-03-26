@@ -30,7 +30,7 @@
     // Add pages to the collection, corresponding to media
     id <SVPage> collection = [(SVIndexPlugIn *)[[self representedObject] plugIn] indexedCollection];
     
-    SVPagesController *controller = [SVPagesController controllerWithPagesInCollection:collection];
+    SVPagesController *controller = [SVPagesController controllerWithPagesInCollection:collection bind:YES];
     
     BOOL result = [controller addObjectsFromPasteboard:[sender draggingPasteboard]];
     return result;

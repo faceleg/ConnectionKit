@@ -67,15 +67,26 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 #pragma mark Creating a Pages Controller
 
-+ (SVPagesController *)controllerWithPagesInCollection:(id <SVPage>)collection;
++ (SVPagesController *)controllerWithPagesInCollection:(id <SVPage>)collection bind:(BOOL)bind;
 {
     NSArrayController *result = [[self alloc] init];
     
-    [result bind:NSSortDescriptorsBinding
-        toObject:collection
-     withKeyPath:@"childItemsSortDescriptors"
-         options:nil];
     
+    // Sort
+    if (bind)
+    {
+        [result bind:NSSortDescriptorsBinding
+            toObject:collection
+         withKeyPath:@"childItemsSortDescriptors"
+             options:nil];
+    }
+    else
+    {
+        [result setSortDescriptors:[(KTPage *)collection childItemsSortDescriptors]];
+    }
+    
+    
+    // MOC
     if ([collection isKindOfClass:[NSManagedObject class]])
     {
         // #101711
@@ -83,16 +94,25 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         [result setManagedObjectContext:[(NSManagedObject *)collection managedObjectContext]];
     }
     
-    [result setAutomaticallyRearrangesObjects:YES];
     
-    [result bind:NSContentSetBinding toObject:collection withKeyPath:@"childItems" options:nil];
+    // Content
+    [result setAutomaticallyRearrangesObjects:bind];
+    if (bind)
+    {
+        [result bind:NSContentSetBinding toObject:collection withKeyPath:@"childItems" options:nil];
+    }
+    else
+    {
+        [result setContent:[(SVSiteItem *)collection childItems]];
+    }
+    
     
     return [result autorelease];
 }
 
-+ (NSArrayController *)controllerWithPagesToIndexInCollection:(id <SVPage>)collection;
++ (SVPagesController *)controllerWithPagesToIndexInCollection:(id <SVPage>)collection bind:(BOOL)bind;
 {
-    NSArrayController *result = [self controllerWithPagesInCollection:collection];
+    SVPagesController *result = [self controllerWithPagesInCollection:collection bind:bind];
     
     // Filter out pages not in index
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shouldIncludeInIndexes == YES"];
@@ -289,7 +309,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
         KTPage *firstChild = [self newObjectWithPredecessor:collection followTemplate:NO];
         
         // Insert at right place.
-        [[SVPagesController controllerWithPagesInCollection:collection] addObject:firstChild];
+        [[SVPagesController controllerWithPagesInCollection:collection bind:YES] addObject:firstChild];
         [firstChild release];
         
         // Initial properties

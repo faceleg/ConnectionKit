@@ -163,7 +163,7 @@
     if (!_pagesController && [[self content] isCollection])
     {
         _pagesController = [SVPagesController controllerWithPagesToIndexInCollection:
-                            [self content]];
+                            [self content] bind:YES];
         [_pagesController retain];
         
         [self bind:@"childPagesToIndex"

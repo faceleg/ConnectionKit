@@ -61,7 +61,7 @@
 	
 	if ([self isCollection])
 	{
-		NSArray *pages = [[SVPagesController controllerWithPagesToIndexInCollection:self] arrangedObjects];
+		NSArray *pages = [[SVPagesController controllerWithPagesToIndexInCollection:self bind:NO] arrangedObjects];
 		for ( id page in pages )
 		{
 			if ([page isKindOfClass:[KTPage class]] && [[page allowComments] boolValue])
