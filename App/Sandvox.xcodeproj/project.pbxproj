@@ -612,6 +612,8 @@
 		27B48D750C3D94AA00F37B9A /* Sandvox.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */; };
 		27B5921411AE85C100E10A1E /* WEKWebViewEditing.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B5921211AE85C100E10A1E /* WEKWebViewEditing.h */; };
 		27B5921511AE85C100E10A1E /* WEKWebViewEditing.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B5921311AE85C100E10A1E /* WEKWebViewEditing.m */; };
+		27B5DA35133E4AA6002AAEA2 /* KSMutableError.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B5DA33133E4AA6002AAEA2 /* KSMutableError.h */; };
+		27B5DA36133E4AA6002AAEA2 /* KSMutableError.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B5DA34133E4AA6002AAEA2 /* KSMutableError.m */; };
 		27B82D9611D4A9A00086CB6E /* SVRawHTMLGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B82D9411D4A9A00086CB6E /* SVRawHTMLGraphic.h */; };
 		27B82D9711D4A9A00086CB6E /* SVRawHTMLGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B82D9511D4A9A00086CB6E /* SVRawHTMLGraphic.m */; };
 		27B82F1B11D50F260086CB6E /* KSXMLWriterDOMAdaptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B82F1A11D50F260086CB6E /* KSXMLWriterDOMAdaptor.h */; };
@@ -2348,6 +2350,8 @@
 		27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = wrapper.xcdatamodel; path = Sandvox.xcdatamodel; sourceTree = "<group>"; };
 		27B5921211AE85C100E10A1E /* WEKWebViewEditing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebViewEditing.h; sourceTree = "<group>"; };
 		27B5921311AE85C100E10A1E /* WEKWebViewEditing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEKWebViewEditing.m; sourceTree = "<group>"; };
+		27B5DA33133E4AA6002AAEA2 /* KSMutableError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMutableError.h; sourceTree = "<group>"; };
+		27B5DA34133E4AA6002AAEA2 /* KSMutableError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMutableError.m; sourceTree = "<group>"; };
 		27B82D9411D4A9A00086CB6E /* SVRawHTMLGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRawHTMLGraphic.h; sourceTree = "<group>"; };
 		27B82D9511D4A9A00086CB6E /* SVRawHTMLGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRawHTMLGraphic.m; sourceTree = "<group>"; };
 		27B82F1A11D50F260086CB6E /* KSXMLWriterDOMAdaptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSXMLWriterDOMAdaptor.h; path = DOM/KSXMLWriterDOMAdaptor.h; sourceTree = "<group>"; };
@@ -3958,6 +3962,8 @@
 		27B5DA13133E46EA002AAEA2 /* KSError */ = {
 			isa = PBXGroup;
 			children = (
+				27B5DA33133E4AA6002AAEA2 /* KSMutableError.h */,
+				27B5DA34133E4AA6002AAEA2 /* KSMutableError.m */,
 			);
 			name = KSError;
 			path = ../KSError;
@@ -6291,6 +6297,7 @@
 				27579A31132BAAE00006C605 /* KSMutableDataWriter.h in Headers */,
 				27579B25132BD6D30006C605 /* KSSHA1Stream.h in Headers */,
 				CE495E05133D4C690060FFDF /* SVColorBoxIndexPlugIn.h in Headers */,
+				27B5DA35133E4AA6002AAEA2 /* KSMutableError.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7953,6 +7960,7 @@
 				27579A32132BAAE00006C605 /* KSMutableDataWriter.m in Sources */,
 				27579B26132BD6D30006C605 /* KSSHA1Stream.m in Sources */,
 				CE495E06133D4C690060FFDF /* SVColorBoxIndexPlugIn.m in Sources */,
+				27B5DA36133E4AA6002AAEA2 /* KSMutableError.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
