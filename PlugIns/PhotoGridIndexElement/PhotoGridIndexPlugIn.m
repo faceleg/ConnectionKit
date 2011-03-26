@@ -91,8 +91,11 @@
 						  [self colorBoxParametersWithGroupID:@"gridItem"]
 						  ];
 		[context addMarkupToEndOfBody:feed];
+		
+		// And, output our markup.
+		[self writeInvisibleLinksToImages:context];
+
 	}
-	
 	
 }
 

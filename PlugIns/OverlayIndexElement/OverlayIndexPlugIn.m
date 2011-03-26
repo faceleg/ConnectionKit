@@ -73,7 +73,7 @@
 	
 	[context addDependencyForKeyPath:@"showCollectionTitle"		ofObject:self];
 	[context addDependencyForKeyPath:@"showCollectionThumbnail"	ofObject:self];
-		
+
 	// Link (if showing) for the indexed photos
 	
 	if ([self.indexedPages count])
@@ -168,11 +168,12 @@
 			[context addMarkupToEndOfBody:autostartScript];			
 		}
 		
-		
+		// Ready for the invisible links, inside this element
+		[self writeInvisibleLinksToImages:context];
+
 		// Done - end the DIV.
 
 		[context endElement]; // </div>
-		
 	}
 }
 

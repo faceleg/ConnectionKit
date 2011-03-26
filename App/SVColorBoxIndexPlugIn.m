@@ -194,6 +194,8 @@
 	}
 }
 
+/* Must be called by subclass at the appropriate spot. */
+
 - (void)writeInvisibleLinksToImages:(SVHTMLContext *)context;
 {
 	// Write out the invisible links
@@ -228,7 +230,6 @@
 	{
 		[self writeCSS:context];
 		[self writeJavaScriptLoader:context];
-		[self writeInvisibleLinksToImages:context];
 	}
 }
 
