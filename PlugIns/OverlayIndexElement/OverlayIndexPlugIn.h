@@ -35,30 +35,15 @@
 //
 
 #import <Sandvox.h>
+#import "SVColorBoxIndexPlugIn.h"
 
-enum { kOverlayTransitionNone, kOverlayTransitionElastic, kOverlayTransitionFade };
-
-@interface OverlayIndexPlugIn : SVIndexPlugIn
+@interface OverlayIndexPlugIn : SVColorBoxIndexPlugIn
 {
-	int			_transitionType;
-	NSColor *	_backgroundColor;
-	BOOL		_enableSlideshow;
-	BOOL		_loop;
-	BOOL		_autoStartSlideshow;
-	BOOL		_connectPhotoGrids;
 	BOOL		_showCollectionTitle;
 	BOOL		_showCollectionThumbnail;
-	float		_slideshowSpeed;
 }
 
-@property  int transitionType;
-@property (retain) NSColor *backgroundColor;
-@property  BOOL enableSlideshow;
-@property  BOOL loop;
-@property  BOOL autoStartSlideshow;
-@property  BOOL connectPhotoGrids;
 @property  BOOL showCollectionTitle;
 @property  BOOL showCollectionThumbnail;
-@property  float slideshowSpeed;
 
 @end

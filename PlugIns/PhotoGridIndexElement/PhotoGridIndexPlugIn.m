@@ -39,9 +39,16 @@
 
 @implementation PhotoGridIndexPlugIn
 
+
+
+
+
+
 - (void)awakeFromNew
 {
     [super awakeFromNew];
+	self.useColorBox = NO;		// Initially don't turn this on
+
     self.enableMaxItems = NO;
     self.maxItems = 10;
 }
@@ -56,6 +63,37 @@
     
     // parse template
     [super writeHTML:context];
+	
+	// Connect ColorBox to any Photo Grids
+	
+	// FIXME: If we had more than one on a single page, both would try to hook up.
+	// Maybe only output this if endBodyMarkup doesn't already contain a similar block.
+	
+	if (self.useColorBox)
+	{		
+		// FIXME: Really, to group multiple photo grids together, we need a function for rel to return a unique ID of the enclosing photogrid-index
+		// FIXME: Instead of '.gridItem' could we search for all .gridItem with a sub-node of an a[rel='enclosure'] ? (To skip non-photo entries)
+		
+		
+		// FIXME -- maybe I don't need custom title, if we can use the function like this?
+		
+		NSString *feed = [NSString stringWithFormat:
+						  @"<script type=\"text/javascript\">\n"
+						  @"/* Connect Colorbox to Photo Grids */\n"
+						  @"$(document).ready(function () {\n"
+						  @"	$('.gridItem').colorbox({\n"
+						  @"			href: function(){ return $(this).find(\"a[rel='enclosure']\").attr('href'); },\n"
+						  @"			title: function(){ return $(this).text(); },\n"
+						  @"%@"
+						  @"	});\n"
+						  @"});\n"
+						  @"</script>\n",		// ^^ Watch out for the percent signs
+						  [self colorBoxParametersWithGroupID:@"gridItem"]
+						  ];
+		[context addMarkupToEndOfBody:feed];
+	}
+	
+	
 }
 
 - (void)writePlaceholderHTML:(id <SVPlugInContext>)context;
@@ -126,31 +164,6 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
                        attributes:nil
                           options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
 }
-
-- (void)writeHiddenLinkToPhoto
-{
-    return;
-    id<SVPlugInContext> context = [self currentContext]; 
-    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
-	if ([iteratedPage respondsToSelector:@selector(thumbnailSourceGraphic)])
-	{
-		id source = [iteratedPage thumbnailSourceGraphic];	// SVMediaGraphic
-		
-		if ([source respondsToSelector:@selector(media)])
-		{
-			id mediaRecord = [source media];		// SVMediaRecord
-			id media = [mediaRecord media];			// SVMedia
-			NSURL *URL = [context addMedia:media];
-			if (URL)
-			{
-				NSString *href = [context relativeStringFromURL:URL];
-				[context startAnchorElementWithHref:href title:nil target:nil rel:@"enclosure"];
-				[context endElement];
-			}
-		}
-	}
-}
-
 
 
 @end

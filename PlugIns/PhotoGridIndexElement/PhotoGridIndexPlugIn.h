@@ -35,11 +35,11 @@
 //
 
 #import <Sandvox.h>
+#import "SVColorBoxIndexPlugIn.h"
 
 
-@interface PhotoGridIndexPlugIn : SVIndexPlugIn
+@interface PhotoGridIndexPlugIn : SVColorBoxIndexPlugIn
 {
-
 }
 
 @end

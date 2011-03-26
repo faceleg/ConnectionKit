@@ -1213,6 +1213,8 @@
 		CE495D01133D38E90060FFDF /* borderTopRight.png in Resources */ = {isa = PBXBuildFile; fileRef = CE495CF4133D38E90060FFDF /* borderTopRight.png */; };
 		CE495D02133D38E90060FFDF /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE495CF5133D38E90060FFDF /* loading.gif */; };
 		CE495D03133D38E90060FFDF /* loading_background.png in Resources */ = {isa = PBXBuildFile; fileRef = CE495CF6133D38E90060FFDF /* loading_background.png */; };
+		CE495E05133D4C690060FFDF /* SVColorBoxIndexPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = CE495E03133D4C690060FFDF /* SVColorBoxIndexPlugIn.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		CE495E06133D4C690060FFDF /* SVColorBoxIndexPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = CE495E04133D4C690060FFDF /* SVColorBoxIndexPlugIn.m */; };
 		CE4BFDBC108E287C00CFBC6A /* KSFocusingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = CE4BFDBA108E287C00CFBC6A /* KSFocusingTextField.h */; };
 		CE4BFDBD108E287C00CFBC6A /* KSFocusingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4BFDBB108E287C00CFBC6A /* KSFocusingTextField.m */; };
 		CE4FE30C1085427A00C43E31 /* KSShadowedRectView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE4FE30A1085427A00C43E31 /* KSShadowedRectView.h */; };
@@ -3041,6 +3043,8 @@
 		CE495CF4133D38E90060FFDF /* borderTopRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = borderTopRight.png; sourceTree = "<group>"; };
 		CE495CF5133D38E90060FFDF /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		CE495CF6133D38E90060FFDF /* loading_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_background.png; sourceTree = "<group>"; };
+		CE495E03133D4C690060FFDF /* SVColorBoxIndexPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVColorBoxIndexPlugIn.h; sourceTree = "<group>"; };
+		CE495E04133D4C690060FFDF /* SVColorBoxIndexPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVColorBoxIndexPlugIn.m; sourceTree = "<group>"; };
 		CE4BFDBA108E287C00CFBC6A /* KSFocusingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSFocusingTextField.h; path = ../../Shared/AppKit/KSFocusingTextField.h; sourceTree = "<group>"; };
 		CE4BFDBB108E287C00CFBC6A /* KSFocusingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSFocusingTextField.m; path = ../../Shared/AppKit/KSFocusingTextField.m; sourceTree = "<group>"; };
 		CE4FE30A1085427A00C43E31 /* KSShadowedRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSShadowedRectView.h; sourceTree = "<group>"; };
@@ -3370,6 +3374,8 @@
 				27DD0B57120329A80083C7C1 /* SVURLFormatter.m */,
 				27D7340412118E3400722189 /* SVIndexPlugIn.h */,
 				27D7340512118E3400722189 /* SVIndexPlugIn.m */,
+				CE495E03133D4C690060FFDF /* SVColorBoxIndexPlugIn.h */,
+				CE495E04133D4C690060FFDF /* SVColorBoxIndexPlugIn.m */,
 				3CA17FC7122DB2C700331125 /* SVIndexInspectorViewController.h */,
 				3CA17FC8122DB2C700331125 /* SVIndexInspectorViewController.m */,
 				CEFD1D2D12E9F7C000D3A6CD /* CollectionInfo.xib */,
@@ -6324,6 +6330,7 @@
 				2761E1A1132948E300266D69 /* KSOutputStreamWriter.h in Headers */,
 				27579A31132BAAE00006C605 /* KSMutableDataWriter.h in Headers */,
 				27579B25132BD6D30006C605 /* KSSHA1Stream.h in Headers */,
+				CE495E05133D4C690060FFDF /* SVColorBoxIndexPlugIn.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7996,6 +8003,7 @@
 				2761E1A2132948E300266D69 /* KSOutputStreamWriter.m in Sources */,
 				27579A32132BAAE00006C605 /* KSMutableDataWriter.m in Sources */,
 				27579B26132BD6D30006C605 /* KSSHA1Stream.m in Sources */,
+				CE495E06133D4C690060FFDF /* SVColorBoxIndexPlugIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
