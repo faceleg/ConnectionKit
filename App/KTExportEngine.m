@@ -22,15 +22,10 @@
         NSString *exportPath = [self baseRemotePath];
         if ([[NSFileManager defaultManager] fileExistsAtPath:exportPath])
         {
-            if (![[NSFileManager defaultManager] removeFileAtPath:exportPath handler:nil])
+            NSError *error = nil;
+            if (![[NSFileManager defaultManager] removeItemAtPath:exportPath error:&error])
             {
                 // We can't continue because the pesky file can't be removed
-                NSError *error = [NSError errorWithLocalizedDescription:
-                                  [NSString stringWithFormat:
-                                   NSLocalizedString(@"The site could not be exported. Could not remove the existing file at:\r%@",
-                                                     @"Export error"),
-                                   exportPath]];
-                
                 [self engineDidPublish:NO error:error];
                 return;
             }
