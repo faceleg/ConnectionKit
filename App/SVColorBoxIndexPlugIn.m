@@ -28,6 +28,8 @@
 @synthesize slideshowSpeed		= _slideshowSpeed;
 @synthesize backgroundColor		= _backgroundColor;
 
+@synthesize slideshowType		= _slideshowType;
+
 + (NSArray *)plugInKeys
 { 
     NSArray *plugInKeys = [NSArray arrayWithObjects:
@@ -54,6 +56,22 @@
 	self.backgroundColor			= [NSColor colorWithCalibratedWhite:0.0 alpha:0.5];
 	
     [super awakeFromNew];
+}
+
++ (NSSet *) keyPathsForValuesAffectingSlideshowType;
+{
+    return [NSSet setWithObjects:@"enableSlideshow", @"autoStartSlideshow", nil];
+}
+- (int)slideshowType;
+{
+	if (!self.enableSlideshow)		return kSlideshowNone;
+	if (!self.autoStartSlideshow)	return kSlideshowManual;
+	return kSlideshowAutomatic;
+}
+- (void)setSlideshowType:(int)slideshowType;
+{
+	self.enableSlideshow = (kSlideshowNone != slideshowType);
+	self.autoStartSlideshow = (kSlideshowAutomatic == slideshowType);
 }
 
 // Called by subclass when building up script
@@ -182,7 +200,7 @@
 	
 	for (KTPage *aPage in self.indexedPages)
 	{
-		NSURL *URLdd = [context URLForImageRepresentationOfPage:aPage
+		NSURL *URL = [context URLForImageRepresentationOfPage:aPage
 														width:0
 													   height:0		// we want full-size
 													  options:0];

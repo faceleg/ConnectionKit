@@ -9,6 +9,7 @@
 #import "SVIndexPlugIn.h"
 
 enum { kOverlayTransitionNone, kOverlayTransitionElastic, kOverlayTransitionFade };
+enum { kSlideshowNone, kSlideshowManual, kSlideshowAutomatic };
 
 @interface SVColorBoxIndexPlugIn : SVIndexPlugIn {
 
@@ -21,6 +22,8 @@ enum { kOverlayTransitionNone, kOverlayTransitionElastic, kOverlayTransitionFade
 	float		_slideshowSpeed;
 	NSColor *	_backgroundColor;
 	
+	int			_slideshowType;	// transient, just for binding to the popup.
+	
 }
 
 @property  BOOL useColorBox;		// will be on for Gallery plugin, but might not be active for photo grid index.
@@ -31,6 +34,8 @@ enum { kOverlayTransitionNone, kOverlayTransitionElastic, kOverlayTransitionFade
 @property  BOOL autoStartSlideshow;
 @property  float slideshowSpeed;
 @property (retain) NSColor *backgroundColor;
+
+@property  int	slideshowType;
 
 - (NSString *)colorBoxParametersWithGroupID:(NSString *)idName;
 

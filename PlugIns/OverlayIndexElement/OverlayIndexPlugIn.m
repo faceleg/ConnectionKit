@@ -67,6 +67,8 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
+	[super writeHTML:context];	// super will deal with placeholder, vars, main script, etc.
+
 	// add dependencies
 	
 	[context addDependencyForKeyPath:@"showCollectionTitle"		ofObject:self];
@@ -172,7 +174,6 @@
 		[context endElement]; // </div>
 		
 	}
-	[super writeHTML:context];	// super will deal with placeholder, vars, template etc.  (We don't use a template though.)
 }
 
 
