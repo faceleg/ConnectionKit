@@ -68,9 +68,7 @@
             {
                 *outError = [NSError errorWithDomain:kKareliaErrorDomain
                                                 code:KareliaError
-                                localizedDescription:NSLocalizedString(@"The document could not be copied. Sandvox was unable to remove an existing file or folder at the same location.", "alert message")
-                         localizedRecoverySuggestion:nil
-                                     underlyingError:nil];
+                                localizedDescription:NSLocalizedString(@"The document could not be copied. Sandvox was unable to remove an existing file or folder at the same location.", "alert message")];
             }
             
             return NO;
@@ -101,9 +99,7 @@
         {
             *outError = [NSError errorWithDomain:kKareliaErrorDomain
                                             code:KareliaError
-                            localizedDescription:NSLocalizedString(@"The document could not be copied.", "alert message")
-                     localizedRecoverySuggestion:nil
-                                 underlyingError:nil];
+                            localizedDescription:NSLocalizedString(@"The document could not be copied.", "alert message")];
         }
     }
 
