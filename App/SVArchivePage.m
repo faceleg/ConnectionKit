@@ -220,6 +220,7 @@
 		[plugIn setInteger:275 forKey:@"indexLayoutType"]; // kLayoutArticlesAndMedia
 	}
 	
+    [plugIn setValue:[NSMutableDictionary dictionary] forKey:@"container"]; // improvised backing store
     [plugIn setIndexedCollection:self];	// Obviously this has to change from what got copied over
     
     [plugIn writeHTML:context];
