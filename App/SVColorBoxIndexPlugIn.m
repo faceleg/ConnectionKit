@@ -182,22 +182,15 @@
 	
 	for (KTPage *aPage in self.indexedPages)
 	{
-		if ([aPage respondsToSelector:@selector(thumbnailSourceGraphic)])
+		NSURL *URLdd = [context URLForImageRepresentationOfPage:aPage
+														width:0
+													   height:0		// we want full-size
+													  options:0];
+		if (URL)
 		{
-			id source = [aPage thumbnailSourceGraphic];
-			
-			if ([source respondsToSelector:@selector(media)])
-			{
-				id mediaRecord = [source media];		// SVMediaRecord
-				id media = [mediaRecord media];
-				NSURL *URL = [context addMedia:media];
-				if (URL)
-				{
-					NSString *href = [context relativeStringFromURL:URL];
-					[context startAnchorElementWithHref:href title:[aPage title] target:nil rel:@"enclosure"];
-					[context endElement];
-				}
-			}
+			NSString *href = [context relativeStringFromURL:URL];
+			[context startAnchorElementWithHref:href title:[aPage title] target:nil rel:@"enclosure"];
+			[context endElement];
 		}
 	}	
 }
