@@ -3955,6 +3955,14 @@
 			name = Registration;
 			sourceTree = "<group>";
 		};
+		27B5DA13133E46EA002AAEA2 /* KSError */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = KSError;
+			path = ../KSError;
+			sourceTree = "<group>";
+		};
 		27BDA73E10C5E410008C8199 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -5787,13 +5795,13 @@
 		CEC11A2E0D78BE0100513E70 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				CE788A0F1329936D00CDF0B9 /* Shared.strings */,
-				273E288312D73B9100A80A54 /* KSSelectionBorder */,
-				27FDA7051238F483006E1A0D /* KSFileUtilities */,
-				CE22E5B80D7C71A10055D8E9 /* Interfaces */,
 				27CC248211F07277007FB3FE /* KSHTMLWriter */,
+				27FDA7051238F483006E1A0D /* KSFileUtilities */,
 				27CC0E2511EFBA02007FB3FE /* KSExtensibleManagedObject */,
+				27B5DA13133E46EA002AAEA2 /* KSError */,
+				273E288312D73B9100A80A54 /* KSSelectionBorder */,
 				27DD06E21201BC950083C7C1 /* KSThreadProxy */,
+				CE22E5B80D7C71A10055D8E9 /* Interfaces */,
 				CE1BE7AF11D2AD0700D875AE /* Graphics */,
 				CE01A6B50EAFD63600BDF264 /* Foundation */,
 				27FDEF10111B4C84001F4E60 /* Core Data */,
@@ -5803,6 +5811,7 @@
 				2778D34E10AC59440027C323 /* Core Image */,
 				CEC69B02108E6F91000E6E84 /* ThirdParty */,
 				CE01A7050EAFD63600BDF264 /* Imported */,
+				CE788A0F1329936D00CDF0B9 /* Shared.strings */,
 			);
 			name = Shared;
 			path = ../../Shared;
@@ -8427,8 +8436,7 @@
 				CE788A121329937400CDF0B9 /* fr */,
 			);
 			name = Shared.strings;
-			path = ../../Shared;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 		CE84FA471304C7760091B8F8 /* KSInspector.xib */ = {
 			isa = PBXVariantGroup;
