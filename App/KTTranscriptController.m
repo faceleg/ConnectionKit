@@ -58,3 +58,11 @@
 
 
 @end
+
+
+@implementation KTTranscriptPanel
+
+- (BOOL)canBecomeMainWindow; { return NO; }
+
+@end
+

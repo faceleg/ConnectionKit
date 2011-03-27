@@ -19,3 +19,7 @@
 - (IBAction) clearTranscript:(id)sender;
 
 @end
+
+
+@interface KTTranscriptPanel : NSPanel
+@end
