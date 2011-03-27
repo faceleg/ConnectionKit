@@ -534,8 +534,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     KTPage *rootPage = [[self site] rootPage];
     KTMaster *master = [rootPage master];
     KTDesign *design = [master design];
-    [master writeCSS:(id)self];	// WILL THIS WORK?  SELF IS KTPublishingEngine  ... AN NSOPERATION !!!! IT'S AN UGLY HACK FOR NOW TO GET OUT THE DATA WE NEED.
-
+    
+    SVPublishingHTMLContext *context = [[SVPublishingHTMLContext alloc] initWithUploadPath:nil publisher:self];
+    
+    [master writeCSS:context];
+    [context release];
+    
     NSString *remoteDesignDirectoryPath = [self designDirectoryPath];
     
     // Upload the design's resources
