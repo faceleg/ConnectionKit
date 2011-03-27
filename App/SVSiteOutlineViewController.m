@@ -998,30 +998,6 @@
     return result;
 }
 
-/*	If the current selection is about to be collapsed away, select the parent.
- */
-- (void)outlineViewItemWillCollapse:(NSNotification *)notification
-{
-	KTPage *collapsingPage = [[notification userInfo] objectForKey:@"NSObject"];
-	BOOL shouldSelectCollapsingItem = YES;
-	NSEnumerator *selectionEnumerator = [[[self content] selectedObjects] objectEnumerator];
-	SVSiteItem *anItem;
-	
-	while (anItem = [selectionEnumerator nextObject])
-	{
-		if (![anItem isDescendantOfCollection:collapsingPage])
-		{
-			shouldSelectCollapsingItem = NO;
-			break;
-		}
-	}
-	
-	if (shouldSelectCollapsingItem)
-	{
-		[[self outlineView] selectItem:collapsingPage];
-	}
-}
-
 - (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(NSTreeNode *)item
 {
     float result = [outlineView rowHeight];
