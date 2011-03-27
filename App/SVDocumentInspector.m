@@ -92,7 +92,7 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
     
     if ([identifier isEqualToString:@"site"])
     {
-        return 386.0f;
+        return 337.0f;
     }
     else if ([identifier isEqualToString:@"appearance"])
     {
