@@ -24,6 +24,8 @@
 #import "KSURLUtilities.h"
 #import "KSPathUtilities.h"
 
+#import <Connection/Connection.h>
+
 
 @implementation SVPublishingHTMLContext
 
