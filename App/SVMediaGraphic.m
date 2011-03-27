@@ -236,6 +236,7 @@
     
     
     [[self plugIn] didSetSource];
+    if (self.width && self.height) [self setConstrainsProportions:YES];
 }
 
 - (NSURL *)sourceURL;
