@@ -56,7 +56,9 @@
     if (page != _page)
     {
         [_page release]; _page = [page retain];
+        
         [_sidebarPageletsController setPage:page];
+        [_sidebarPageletsController bindContentToPage];
     }
 }
 

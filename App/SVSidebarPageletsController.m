@@ -67,14 +67,22 @@
 
 - (void)bindContentToPage;
 {
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNumber numberWithBool:YES],
-                             NSRaisesForNotApplicableKeysBindingOption,
-                             nil];
-    [self bind:NSContentSetBinding toObject:[self page] withKeyPath:@"sidebar.pagelets" options:options];
-    
-    [self setAutomaticallyRearrangesObjects:YES];
-    [self setManagedObjectContext:[[self page] managedObjectContext]];
+    if ([self page])
+    {
+        NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 [NSNumber numberWithBool:YES],
+                                 NSRaisesForNotApplicableKeysBindingOption,
+                                 nil];
+        [self bind:NSContentSetBinding toObject:[self page] withKeyPath:@"sidebar.pagelets" options:options];
+        
+        [self setAutomaticallyRearrangesObjects:YES];
+        [self setManagedObjectContext:[[self page] managedObjectContext]];
+    }
+    else
+    {
+        [self unbind:NSContentSetBinding];
+        [self setManagedObjectContext:nil];
+    }
 }
 
 - (NSArray *)arrangeObjects:(NSArray *)objects;
