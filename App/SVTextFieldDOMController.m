@@ -99,6 +99,7 @@
     
     NSString *style = [[[context currentElementInfo] attributesAsDictionary] objectForKey:@"style"];
     [[[self textHTMLElement] style] setCssText:style];
+    [self setAlignment:[self alignment]];   // repair alignemnt #113613
     
     [context close];
     [context release];
