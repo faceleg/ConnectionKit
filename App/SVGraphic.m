@@ -208,7 +208,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     BOOL result = ((*caption != nil) == [self canHaveCaption]);
     if (!result && error)
     {
-        *error = [NSError errorWithDomain:NSCocoaErrorDomain
+        *error = [KSError errorWithDomain:NSCocoaErrorDomain
                                      code:NSValidationMissingMandatoryPropertyError
                      localizedDescription:@"caption is non-optional"];
     }
@@ -231,7 +231,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     BOOL result = ((*introduction != nil) == [self canHaveIntroduction]);
     if (!result && error)
     {
-        *error = [NSError errorWithDomain:NSCocoaErrorDomain
+        *error = [KSError errorWithDomain:NSCocoaErrorDomain
                                      code:NSValidationMissingMandatoryPropertyError
                      localizedDescription:@"introduction is non-optional"];
     }
@@ -254,7 +254,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     BOOL result = ((*width == nil) || [*width unsignedIntegerValue] >= [self minWidth]);
     if (!result && error)
     {
-        *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationNumberTooSmallError localizedDescription:
+        *error = [KSError errorWithDomain:NSCocoaErrorDomain code:NSValidationNumberTooSmallError localizedDescription:
                   [NSString stringWithFormat:
                    @"Graphic '%@' must be %u pixels wide or more",
                    [self title],

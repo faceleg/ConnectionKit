@@ -356,7 +356,7 @@
     }
     @catch (NSException *exception)
     {
-        NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSMigrationError localizedDescription:[exception reason]];
+        NSError *error = [KSError errorWithDomain:NSCocoaErrorDomain code:NSMigrationError localizedDescription:[exception reason]];
         [self cancelMigrationWithError:error];
         if (outError) *outError = error;
         

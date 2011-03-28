@@ -277,7 +277,7 @@
     // Must have media OR external URL as soure. #92086
     if (![self media] && ![self externalSourceURL])
     {
-        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+        if (error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
                                                code:NSValidationMissingMandatoryPropertyError
                                localizedDescription:@"Must have either media or external URL as source"];
         
@@ -295,7 +295,7 @@
     BOOL result = [[self plugIn] validatePosterFrame:*media];
     if (!result && error)
     {
-        *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationMissingMandatoryPropertyError localizedDescription:@"Plug-in doesn't want a poster image"];
+        *error = [KSError errorWithDomain:NSCocoaErrorDomain code:NSValidationMissingMandatoryPropertyError localizedDescription:@"Plug-in doesn't want a poster image"];
     }
     
     return result;
@@ -329,7 +329,7 @@
     BOOL result = [[self plugIn] validateTypeToPublish:*type];
     if (!result && error)
     {
-        *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationMissingMandatoryPropertyError localizedDescription:@"typeToPublish is non-optional for images"];
+        *error = [KSError errorWithDomain:NSCocoaErrorDomain code:NSValidationMissingMandatoryPropertyError localizedDescription:@"typeToPublish is non-optional for images"];
     }
     
     return result;

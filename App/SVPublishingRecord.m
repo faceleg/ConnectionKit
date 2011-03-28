@@ -53,7 +53,7 @@
     {
         if (![[self filename] isEqualToString:*outFilename])
         {
-            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+            if (error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
                                                     code:NSManagedObjectValidationError
                                     localizedDescription:@"Publishing record paths are immutable"];
             return NO;

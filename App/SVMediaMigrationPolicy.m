@@ -67,7 +67,7 @@
         NSData *aliasData = [mediaFile valueForKey:@"aliasData"];
         if (!aliasData)
         {
-            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+            if (error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
                                                     code:NSValidationMissingMandatoryPropertyError
                                     localizedDescription:@"External media has no alias data"];
             return nil;

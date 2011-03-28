@@ -174,7 +174,7 @@
     if (placement != SVGraphicPlacementInline &&
         placement != SVGraphicPlacementCallout)
     {
-        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+        if (error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
                                                 code:NSValidationNumberTooLargeError
                                 localizedDescription:@"Unsupported graphic placement in article"];
         

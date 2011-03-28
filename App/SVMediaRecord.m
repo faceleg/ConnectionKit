@@ -353,7 +353,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     BOOL result = ([self filename] || [self alias] || [self extensiblePropertyForKey:@"media"]);
     if (!result && error)
     {
-        *error = [NSError errorWithDomain:NSCocoaErrorDomain
+        *error = [KSError errorWithDomain:NSCocoaErrorDomain
                                      code:NSValidationMissingMandatoryPropertyError
                      localizedDescription:@"Media has no source"];
     }

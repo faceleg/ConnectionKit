@@ -92,7 +92,7 @@
         if ([[self body] attachmentsMustBeWrittenInline] && ![[self graphic] shouldWriteHTMLInline])
         {
             result = NO;
-            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+            if (error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
                                                     code:NSValidationNumberTooLargeError
                                     localizedDescription:@"Graphics in this text area cannot cause wrap"];
         }
@@ -103,7 +103,7 @@
         if (![[self graphic] canWriteHTMLInline])
         {
             result = NO;
-            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+            if (error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
                                                     code:NSValidationNumberTooSmallError
                                     localizedDescription:@"Graphic must cause wrap"];
         }
@@ -120,13 +120,13 @@
     {
         case SVGraphicWrapFloat_1_0:
             if ([[self graphic] canWriteHTMLInline]) break;   // only images are allowed this
-            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+            if (error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
                                                     code:NSValidationNumberTooSmallError
                                     localizedDescription:@"SVGraphicWrapFloat_1_0 is not supported"];
             return NO;
     
         case SVGraphicWrapCenter:
-            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+            if (error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
                                                     code:NSManagedObjectValidationError
                                     localizedDescription:@"Wrap Center not supported"];
             return NO;

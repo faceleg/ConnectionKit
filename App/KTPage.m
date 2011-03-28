@@ -513,7 +513,7 @@
     BOOL result = ([*outType intValue] <= maxType);
     if (!result && error)
     {
-        *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationNumberTooLargeError localizedDescription:@"thumbnailType is too large for this type of page"];
+        *error = [KSError errorWithDomain:NSCocoaErrorDomain code:NSValidationNumberTooLargeError localizedDescription:@"thumbnailType is too large for this type of page"];
     }
     
     return result;

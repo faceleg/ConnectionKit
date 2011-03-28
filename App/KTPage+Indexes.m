@@ -168,7 +168,7 @@
     {
         if (!*max)
         {
-            if (outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+            if (outError) *outError = [KSError errorWithDomain:NSCocoaErrorDomain
                                                           code:NSValidationMissingMandatoryPropertyError
                                           localizedDescription:@"collectionMaxSyndicatedPagesCount is non-optional for collections"];
             

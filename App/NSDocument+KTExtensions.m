@@ -33,7 +33,7 @@
     {
         if (outError)
         {
-            *outError = [NSError errorWithDomain:kKareliaErrorDomain
+            *outError = [KSError errorWithDomain:kKareliaErrorDomain
                                             code:KareliaError
                             localizedDescription:NSLocalizedString(@"Cannot copy document over itself.", "alert message")
                      localizedRecoverySuggestion:NSLocalizedString(@"Please choose a different location to copy to.", "error recovery suggestion")
@@ -66,7 +66,7 @@
         {
             if (outError)
             {
-                *outError = [NSError errorWithDomain:kKareliaErrorDomain
+                *outError = [KSError errorWithDomain:kKareliaErrorDomain
                                                 code:KareliaError
                                 localizedDescription:NSLocalizedString(@"The document could not be copied. Sandvox was unable to remove an existing file or folder at the same location.", "alert message")];
             }
@@ -97,7 +97,7 @@
     {
         if (outError)
         {
-            *outError = [NSError errorWithDomain:kKareliaErrorDomain
+            *outError = [KSError errorWithDomain:kKareliaErrorDomain
                                             code:KareliaError
                             localizedDescription:NSLocalizedString(@"The document could not be copied.", "alert message")];
         }

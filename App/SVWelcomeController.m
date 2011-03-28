@@ -99,7 +99,7 @@
 
 	}
 								 
-	NSError *result = [NSError errorWithDomain:[anError domain] code:[anError code]
+	NSError *result = [KSError errorWithDomain:[anError domain] code:[anError code]
 						  localizedDescription:desc
 			 localizedRecoverySuggestion:secondary		// we want to show the reason on the alert
 						 underlyingError:anError];

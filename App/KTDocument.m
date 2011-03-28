@@ -557,7 +557,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         [self setSite:site];
         if (!site)
         {
-            if (outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+            if (outError) *outError = [KSError errorWithDomain:NSCocoaErrorDomain
                                                           code:NSFileReadCorruptFileError
                                           localizedDescription:NSLocalizedString(@"Site not found", "doc open error")];
             result = NO;
