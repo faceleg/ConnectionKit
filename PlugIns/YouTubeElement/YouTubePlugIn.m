@@ -188,7 +188,7 @@
                             options:0
                     preferredIdName:@"youtube"
                          attributes:nil];
-    NSString *message = SVLocalizedString(@"Please use the Inspector to specify a YouTube video.", 
+    NSString *message = SVLocalizedString(@"Drag YouTube video URL here", 
                                           "No video code has been entered yet");
     [context writePlaceholderWithText:message options:0];
     [context endElement];    
