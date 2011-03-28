@@ -163,7 +163,7 @@
 - (void)writeNoCollectionPlaceholder
 {
     id <SVPlugInContext> context = [self currentContext];
-    NSString *text = SVLocalizedString(@"Please use the Inspector to connect this object to a suitable collection in your site.", "RSSBadge");
+    NSString *text = SVLocalizedString(@"Choose collection in the Inspector", "RSSBadge");
     [context writePlaceholderWithText:text options:0];
 }
 
