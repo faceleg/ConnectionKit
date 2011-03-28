@@ -272,6 +272,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 }
 
 - (NSUInteger)minWidth; { return 200; }
+- (NSUInteger)minHeight; { return 1; }
 - (NSNumber *)maxHeight; { return nil; }
 
 - (CGFloat)maxWidthOnPage:(KTPage *)page;

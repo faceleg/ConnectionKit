@@ -138,8 +138,10 @@ extern NSString *kSVGraphicPboardType;
 
 - (NSUInteger)minWidth; // 200 by default
 - (CGFloat)maxWidthOnPage:(id <SVPage>)page;
-- (NSNumber *)maxHeight;    // nil, the default, if there isn't one
 - (BOOL)validateWidth:(NSNumber **)width error:(NSError **)error;
+
+- (NSUInteger)minHeight;
+- (NSNumber *)maxHeight;    // nil, the default, if there isn't one
 
 - (NSNumber *)constrainedProportionsRatio;
 
