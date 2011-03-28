@@ -30,11 +30,9 @@
     {
         if (error)
         {
-            NSString *description = [NSString stringWithFormat:NSLocalizedString(@"%@ plug-in threw an exception while migrating", "migration error"), [sInstance valueForKey:@"pluginIdentifier"]]
-            ;
             *error = [KSError errorWithDomain:NSCocoaErrorDomain
                                          code:NSEntityMigrationPolicyError
-                         localizedDescription:description];
+                   localizedDescriptionFormat:NSLocalizedString(@"%@ plug-in threw an exception while migrating", "migration error"), [sInstance valueForKey:@"pluginIdentifier"]];
         }
         
         return NO;
