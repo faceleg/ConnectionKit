@@ -90,7 +90,9 @@
                  forSaveOperation:NSSaveOperation
                             error:&error];
     
-    [[self ks_proxyOnThread:nil waitUntilDone:NO] documentDidMigrate:result error:error];
+    [[self ks_proxyOnThread:nil waitUntilDone:NO]
+     documentDidMigrate:result
+     error:(result ? nil : error)]; // if successful, error might be random pointer, so can't pass to main thread. #113018
 }
 
 - (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
