@@ -738,6 +738,31 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [self addGraphic:graphic placeInline:YES];
 }
 
+#pragma mark Queries
+
+- (BOOL)isDOMRangeStartOfParagraph:(DOMRange *)range;
+{
+    // To be the start of a paragraph, there must be no preceeding content other than the paragraph itself
+    
+    if ([range startOffset] == 0)
+    {
+        DOMNode *innerTextNode = [self innerTextHTMLElement];
+        
+        DOMNode *node = [range startContainer];
+        do
+        {
+            DOMNode *parent = [node parentNode];
+            if (parent == innerTextNode) return YES;    // node's a paragraph!
+            if ([node previousSibling]) return NO;      // can't be start of a paragraph
+            
+            // Move up the tree
+            node = parent;
+        } while (node);
+    }
+    
+    return NO;
+}
+
 #pragma mark Pasteboard
 
 - (void)webEditorTextDidSetSelectionTypesForPasteboard:(NSPasteboard *)pasteboard;

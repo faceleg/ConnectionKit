@@ -51,5 +51,9 @@
 @property(nonatomic, retain, readonly) DOMHTMLAnchorElement *selectedLink;
 
 
+#pragma mark Queries
+- (BOOL)isDOMRangeStartOfParagraph:(DOMRange *)range;
+
+
 @end
 
