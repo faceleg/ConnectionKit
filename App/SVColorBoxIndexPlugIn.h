@@ -11,6 +11,8 @@
 enum { kOverlayTransitionNone, kOverlayTransitionElastic, kOverlayTransitionFade };
 enum { kSlideshowNone, kSlideshowManual, kSlideshowAutomatic };
 
+@class SVPlugInContext;
+
 @interface SVColorBoxIndexPlugIn : SVIndexPlugIn {
 
 	BOOL		_useColorBox;
@@ -38,6 +40,7 @@ enum { kSlideshowNone, kSlideshowManual, kSlideshowAutomatic };
 @property  int	slideshowType;
 
 - (NSString *)colorBoxParametersWithGroupID:(NSString *)idName;
+- (void)writeInvisibleLinksToImages:(SVPlugInContext *)context;
 
 
 @end

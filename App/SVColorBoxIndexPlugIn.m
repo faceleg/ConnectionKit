@@ -196,7 +196,7 @@
 
 /* Must be called by subclass at the appropriate spot. */
 
-- (void)writeInvisibleLinksToImages:(SVHTMLContext *)context;
+- (void)writeInvisibleLinksToImages:(SVPlugInContext *)context;
 {
 	// Write out the invisible links
 	

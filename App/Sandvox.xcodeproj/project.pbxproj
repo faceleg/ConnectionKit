@@ -6458,6 +6458,10 @@
 					ProjectRef = 3C42E4F10D650429004F35FD /* FlickrElement.xcodeproj */;
 				},
 				{
+					ProductGroup = CE541508133C08DA003F635A /* Products */;
+					ProjectRef = CE541507133C08DA003F635A /* GalleryIndex.xcodeproj */;
+				},
+				{
 					ProductGroup = 3C9CF9A712120196005CFDD4 /* Products */;
 					ProjectRef = 3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */;
 				},
@@ -6488,10 +6492,6 @@
 				{
 					ProductGroup = 27BDA73E10C5E410008C8199 /* Products */;
 					ProjectRef = CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */;
-				},
-				{
-					ProductGroup = CE541508133C08DA003F635A /* Products */;
-					ProjectRef = CE541507133C08DA003F635A /* GalleryIndex.xcodeproj */;
 				},
 				{
 					ProductGroup = 3C104A1E121B016700899C3B /* Products */;
