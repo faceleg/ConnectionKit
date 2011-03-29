@@ -711,9 +711,11 @@
     
     
     // Restore selection if user undoes
+    NSArray *selection = [self selectionIndexPaths];
     NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
+    
     [[undoManager prepareWithInvocationTarget:self]
-     undoRedo_setSelectionIndexPaths:[self selectionIndexPaths] registerIndexPaths:indexPaths];
+     undoRedo_setSelectionIndexPaths:selection registerIndexPaths:indexPaths];
     
     
     // Sort the index paths backwards so as we remove each one the remaining paths are not affected
@@ -813,8 +815,13 @@
     [_fallbackSelection release]; _fallbackSelection = [[self selectionIndexPath] copy];
 }
 
-- (void)pageProxyDidChange:(NSNotificationCenter *)notification;
+- (void)pageProxyDidChange:(NSNotification *)notification;
 {
+    // Selection restoration for undo/redo is already handled, so can ignore this
+    NSUndoManager *undoManager = [[[notification object] managedObjectContext] undoManager];
+    if ([undoManager isUndoing] || [undoManager isRedoing]) return;
+    
+    
     if (_selectionToRestore)
     {
         NSTimeInterval timestamp = [[NSApp currentEvent] timestamp];
