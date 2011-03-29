@@ -83,7 +83,7 @@
 			[context startAnchorElementWithHref:href title:[aPage title] target:nil rel:@"enclosure"];
 			[context endElement];
 		}
-	}	
+	}
 }
 
 - (void)writeHTML:(id <SVPlugInContext>)context
@@ -160,6 +160,7 @@
 									 @"	$('#%@').click(function(event) {\n"
 									 @"		event.preventDefault()\n"
 									 @"		$(this).find(\"a[rel='enclosure']\").colorbox({\n"
+									 @"			open: true,\n"
 									 @"%@"
 									 @"		});\n"
 									 @"	});\n"
