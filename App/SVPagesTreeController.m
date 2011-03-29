@@ -277,20 +277,8 @@
     }
 }
 
-- (void)insertObject:(id)object atArrangedObjectIndexPath:(NSIndexPath *)indexPath;
+- (void)sv_insertObject:(id)object atArrangedObjectIndexPath:(NSIndexPath *)indexPath;
 {
-    // Restore current selection if user undoes
-    // In general, creating the object in order to insert it will have already opened an undo group and registered the present selection. So this registration corrects the selection upon redo
-    if ([self selectsInsertedObjects])
-    {
-        NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
-        
-        [[undoManager prepareWithInvocationTarget:self]
-         undoRedo_setSelectionIndexPaths:[self selectionIndexPaths]
-         registerIndexPaths:[NSArray arrayWithObject:indexPath]];
-    }
-    
-    
     // Is the name already taken?
     KTPage *collection = [[[self arrangedObjects] descendantNodeAtIndexPath:[indexPath indexPathByRemovingLastIndex]] 
                           representedObject];
@@ -318,6 +306,40 @@
     
     
     [[NSNotificationCenter defaultCenter] postNotificationName:SVPagesControllerDidInsertObjectNotification object:self];
+}
+
+- (void)insertObject:(id)object atArrangedObjectIndexPath:(NSIndexPath *)indexPath;
+{
+    // Restore current selection if user undoes
+    // In general, creating the object in order to insert it will have already opened an undo group and registered the present selection. So this registration corrects the selection upon redo
+    if ([self selectsInsertedObjects])
+    {
+        NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
+        
+        [[undoManager prepareWithInvocationTarget:self]
+         undoRedo_setSelectionIndexPaths:[self selectionIndexPaths]
+         registerIndexPaths:[NSArray arrayWithObject:indexPath]];
+        
+        
+        // Make the insert
+        NSArray *selectedNodes = [self selectedNodes];
+        [self sv_insertObject:object atArrangedObjectIndexPath:indexPath];
+        
+        
+        // Record how to get back to the selection. Means when undoing, sequence of events goes:
+        //  1.  Restore previous selected objects
+        //  2.  Rearrange objects
+        //  3.  If rearrange affected selection, restore again
+        // Seems that if a selected object gets removed from the model, NSTreeController observes it too long
+        NSArray *indexPaths = [selectedNodes valueForKey:@"indexPath"];
+        
+        [[undoManager sv_prepareWithCheckpointAndInvocationTarget:self]
+         setSelectionIndexPaths:indexPaths];
+    }
+    else
+    {
+        [self sv_insertObject:object atArrangedObjectIndexPath:indexPath];
+    }
 }
 
 - (BOOL)canAddChild;
