@@ -13,9 +13,18 @@
 // Declaring the deleted media API on a vanilla undo manager, so you can use without typescasting. The default implementations don't do a lot!
 
 @interface NSUndoManager (SVDeletedMedia)
+
+#pragma mark Media
 - (NSURL *)deletedMediaDirectory;
 - (BOOL)haveCreatedDeletedMediaDirectory;
 - (BOOL)removeDeletedMediaDirectory:(NSError **)error; // returns YES if directory was never created
+
+
+#pragma mark Registration
+// Posts a checkpoint before calling -prepareWithInvocationTarget:
+- (id)sv_prepareWithCheckpointAndInvocationTarget:(id)target;
+
+
 @end
 
 

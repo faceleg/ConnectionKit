@@ -23,6 +23,13 @@
     return YES;
 }
 
+- (id)sv_prepareWithCheckpointAndInvocationTarget:(id)target;
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification object:self];
+    
+    return [self prepareWithInvocationTarget:target];
+}
+
 @end
 
 
