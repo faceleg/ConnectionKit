@@ -139,7 +139,7 @@
     return result;
 }
 
-#pragma mark Inserting Objects
+#pragma mark Adding Objects
 
 - (void)add:(id)sender;
 {
@@ -244,6 +244,20 @@
     [self didAddObjectsByInsertingAtArrangedObjectIndexPath:path];
 }
 
+- (BOOL)canAddChild;
+{
+    // The selection must be a collection
+    // For reasons I can't fathom, NSTreeController's implementation always returns NO, so have to write our own.
+    return ![[self selectedNode] isLeaf];
+}
+
+- (NSIndexPath *)indexPathForAddingObjects;
+{
+    return [[self lastSelectionIndexPath] indexPathByIncrementingLastIndex];
+}
+
+#pragma mark Inserting Objects
+
 - (void)insertObjects:(NSArray *)objects atArrangedObjectIndexPath:(NSIndexPath *)startingIndexPath;
 {
     NSIndexPath *aPath = startingIndexPath;
@@ -315,7 +329,7 @@
     if ([self selectsInsertedObjects])
     {
         // Make the insert
-        NSArray *selectedNodes = [self selectedNodes];
+        NSArray *selectedNodes = [[self selectedNodes] copy];
         [self sv_insertObject:object atArrangedObjectIndexPath:indexPath];
         
         
@@ -324,8 +338,10 @@
         //  2.  Rearrange objects
         //  3.  If rearrange affected selection, restore again
         // Seems that if a selected object gets removed from the model, NSTreeController observes it too long
-        NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
         NSArray *indexPaths = [selectedNodes valueForKey:@"indexPath"];
+        [selectedNodes release];
+        
+        NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
         
         [[undoManager sv_prepareWithCheckpointAndInvocationTarget:self]
          setSelectionIndexPaths:indexPaths];
@@ -334,18 +350,6 @@
     {
         [self sv_insertObject:object atArrangedObjectIndexPath:indexPath];
     }
-}
-
-- (BOOL)canAddChild;
-{
-    // The selection must be a collection
-    // For reasons I can't fathom, NSTreeController's implementation always returns NO, so have to write our own.
-    return ![[self selectedNode] isLeaf];
-}
-
-- (NSIndexPath *)indexPathForAddingObjects;
-{
-    return [[self lastSelectionIndexPath] indexPathByIncrementingLastIndex];
 }
 
 #pragma mark Grouping
