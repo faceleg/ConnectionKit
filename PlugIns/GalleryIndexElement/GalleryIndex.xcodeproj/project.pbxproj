@@ -14,7 +14,6 @@
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		CE6B2FBA133B263D0012CA51 /* GalleryIndexInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6B2FB9133B263D0012CA51 /* GalleryIndexInspector.m */; };
-		CECF3B4D13428D6E0005E476 /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = CECF3B4C13428D6E0005E476 /* BUNDLED */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +33,6 @@
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE6B2FB8133B263D0012CA51 /* GalleryIndexInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryIndexInspector.h; sourceTree = "<group>"; };
 		CE6B2FB9133B263D0012CA51 /* GalleryIndexInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryIndexInspector.m; sourceTree = "<group>"; };
-		CECF3B4C13428D6E0005E476 /* BUNDLED */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BUNDLED; path = ../Configurations/BUNDLED; sourceTree = SOURCE_ROOT; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -73,7 +71,6 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CECF3B4C13428D6E0005E476 /* BUNDLED */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C06888413353F06007A73EA /* Inspector.xib */,
@@ -193,7 +190,6 @@
 				3C0951520D5D0E8100DE6F62 /* Localizable.strings in Resources */,
 				3C09515D0D5D0EE200DE6F62 /* License.rtf in Resources */,
 				3C06888613353F06007A73EA /* Inspector.xib in Resources */,
-				CECF3B4D13428D6E0005E476 /* BUNDLED in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
