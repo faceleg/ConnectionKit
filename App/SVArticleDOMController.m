@@ -661,6 +661,28 @@
 
 #pragma mark Editing
 
+- (BOOL)webEditorTextDoCommandBySelector:(SEL)selector
+{
+    BOOL result = [super webEditorTextDoCommandBySelector:selector];
+    
+    // Make sure deletions don't throw away wrapped graphics
+    if (!result &&
+        [[self class] isDeleteBackwardsSelector:selector])
+    {
+        DOMRange *selection = [self selectedDOMRange];
+        if ([selection collapsed])
+        {
+            if ([self isDOMRangeStartOfParagraph:selection])
+            {
+                // By moving left, skip the graphic, ready to delete the real content
+                [[self webEditor] moveLeft:self];
+            }
+        }
+    }
+    
+    return result;
+}
+
 - (id)newHTMLWritingDOMAdaptorWithOutputStringWriter:(KSStringWriter *)stringWriter;
 {
     SVArticle *article = [self representedObject];
