@@ -876,7 +876,7 @@
                      height:height];
 }
 
-- (BOOL)writeImageRepresentationOfPage:(SVSiteItem *)page  // nil page will write a placeholder image
+- (void)writeImageRepresentationOfPage:(SVSiteItem *)page  // nil page will write a placeholder image
                                  width:(NSUInteger)width
                                 height:(NSUInteger)height
                             attributes:(NSDictionary *)attributes  // e.g. custom CSS class
@@ -884,7 +884,7 @@
 {
     if (page)
     {
-        return [page writeThumbnail:self
+         [page writeThumbnail:self
                               width:width
                              height:height
                          attributes:attributes
@@ -904,8 +904,6 @@
                                             type:nil
                                preferredFilename:nil
                                          options:options];
-        
-        return YES;
     }
 }
 

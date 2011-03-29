@@ -157,7 +157,7 @@ typedef NSUInteger SVPlaceholderOptions;
 #pragma mark Page Thumbnails
 
 // Return value is whether a thumbnail was found to be written. Call -URLForImageRepresentationOfPage:… first if you want to know if there is a decent thumbnail before proceeding to write
-- (BOOL)writeImageRepresentationOfPage:(id <SVPage>)page  // nil page will write a placeholder image
+- (void)writeImageRepresentationOfPage:(id <SVPage>)page  // nil page will write a placeholder image
                                  width:(NSUInteger)width
                                 height:(NSUInteger)height
                             attributes:(NSDictionary *)attributes  // e.g. custom CSS class
