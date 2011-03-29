@@ -17,6 +17,7 @@
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		CE2802A112432BBD00B00F3D /* toolbar_photogrid.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE2802A012432BBD00B00F3D /* toolbar_photogrid.tiff */; };
+		CECF2AE213426F120005E476 /* PhotoGridIndexInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF2AE113426F120005E476 /* PhotoGridIndexInspector.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,8 @@
 		CE2802A012432BBD00B00F3D /* toolbar_photogrid.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_photogrid.tiff; sourceTree = "<group>"; };
 		CEB4FDA810309DF60054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEB4FDA910309DF60054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CECF2AE013426F120005E476 /* PhotoGridIndexInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoGridIndexInspector.h; sourceTree = "<group>"; };
+		CECF2AE113426F120005E476 /* PhotoGridIndexInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoGridIndexInspector.m; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -116,6 +119,8 @@
 			children = (
 				3C0951370D5D0DBE00DE6F62 /* PhotoGridIndexPlugIn.h */,
 				3C0951380D5D0DBE00DE6F62 /* PhotoGridIndexPlugIn.m */,
+				CECF2AE013426F120005E476 /* PhotoGridIndexInspector.h */,
+				CECF2AE113426F120005E476 /* PhotoGridIndexInspector.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -258,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C0951390D5D0DBE00DE6F62 /* PhotoGridIndexPlugIn.m in Sources */,
+				CECF2AE213426F120005E476 /* PhotoGridIndexInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
