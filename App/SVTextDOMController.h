@@ -75,6 +75,8 @@
 
 - (id)newHTMLWritingDOMAdaptorWithOutputStringWriter:(KSStringWriter *)stringWriter;
 
++ (BOOL)isDeleteBackwardsSelector:(SEL)action;
+
 
 #pragma mark Undo
 

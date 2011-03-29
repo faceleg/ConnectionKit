@@ -348,10 +348,7 @@
     BOOL result = NO;
     
     
-    if (selector == @selector(deleteBackward:) ||
-        selector == @selector(deleteWordBackward:) ||
-        selector == @selector(deleteToBeginningOfLine:) ||
-        selector == @selector(deleteBackwardByDecomposingPreviousCharacter:))
+    if ([[self class] isDeleteBackwardsSelector:selector])
     {
         // Bit of a bug in WebKit that means when you delete backwards from start of a text area, the empty paragraph object gets deleted. Fair enough, but WebKit doesn't send you a delegate message asking permission! #71489 #75402
         DOMRange *range = [self selectedDOMRange];
@@ -404,6 +401,14 @@
 }
 
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification; { }
+
++ (BOOL)isDeleteBackwardsSelector:(SEL)action;
+{
+    return (action == @selector(deleteBackward:) ||
+            action == @selector(deleteWordBackward:) ||
+            action == @selector(deleteToBeginningOfLine:) ||
+            action == @selector(deleteBackwardByDecomposingPreviousCharacter:));
+}
 
 #pragma mark Pasteboard / Drag
 
