@@ -124,6 +124,12 @@
 				title	= [bundle localizedStringForString:@"Click to view gallery."	language:language fallback:SVLocalizedString(@"Click to view gallery.", @"Tooltip")];
 			}
 			
+			// Do I do something along these lines?
+			// [context buildAttributesForElement:@"img" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
+			
+			// Here, I write out a FIXED size thumbnail of the collection.
+			// What I want to do is to have this size be user-resizable instead....
+			
 			[context writeImageRepresentationOfPage:[self indexedCollection]
 									width:128
 								   height:128
