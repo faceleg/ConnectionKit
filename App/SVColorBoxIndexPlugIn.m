@@ -78,6 +78,13 @@
 
 - (NSString *)colorBoxParametersWithGroupID:(NSString *)idName;
 {
+	// Hidden defaults to specify the width.  If we specify zero, then false (no scaling!) is passed in. 
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	int widthPercent = [defaults integerForKey:@"GalleryPercentWidth"];
+	int heightPercent = [defaults integerForKey:@"GalleryPercentHeight"];
+	NSString *widthPercentString  = widthPercent  ? [NSString stringWithFormat:@"%d", widthPercent]  : @"false";
+	NSString *heightPercentString = heightPercent ? [NSString stringWithFormat:@"%d", heightPercent] : @"false";
+
 	// Prepare Parameters
 	
 	NSString *transitionString = nil;
@@ -109,7 +116,6 @@
 	NSString *opacityString = [NSString stringWithFormat:@"%.2f", alphaComponent];
 	
 	NSString *result = [NSString stringWithFormat:
-						@"			open: true,\n"
 						@"			rel: '%@',\n"
 						@"			opacity: '%@',\n"
 						@"			transition: '%@',\n"
@@ -124,11 +130,13 @@
 						@"			next: '%@',\n"
 						@"			close: '%@',\n"
 						@"			scale: true,\n"
-						@"			maxWidth: '90%%',\n"
-						@"			maxHeight: '90%%',\n"
+						@"			maxWidth: '%@%%',\n"
+						@"			maxHeight: '%@%%',\n"
+						//					// ^^ Watch out for the percent signs
 						, idName,
 						opacityString, transitionString, loopString, slideshowString, slideshowAutoString, slideshowSpeedString,
-						startString, stopString, currentFormat, previousString, nextString, closeString
+						startString, stopString, currentFormat, previousString, nextString, closeString,
+						widthPercentString, heightPercentString
 						];
 	return result;
 	
@@ -192,27 +200,6 @@
 			 @"\n</style>", colorCSS];
 		}
 	}
-}
-
-/* Must be called by subclass at the appropriate spot. */
-
-- (void)writeInvisibleLinksToImages:(id <SVPlugInContext>)context;
-{
-	// Write out the invisible links
-	
-	for (KTPage *aPage in self.indexedPages)
-	{
-		NSURL *URL = [context URLForImageRepresentationOfPage:aPage
-														width:0
-													   height:0		// we want full-size
-													  options:0];
-		if (URL)
-		{
-			NSString *href = [context relativeStringFromURL:URL];
-			[context startAnchorElementWithHref:href title:[aPage title] target:nil rel:@"enclosure"];
-			[context endElement];
-		}
-	}	
 }
 
 - (void)writeHTML:(SVHTMLContext *)context;

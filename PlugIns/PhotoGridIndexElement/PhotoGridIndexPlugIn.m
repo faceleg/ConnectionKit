@@ -87,16 +87,31 @@
 						  @"%@"
 						  @"	});\n"
 						  @"});\n"
-						  @"</script>\n",		// ^^ Watch out for the percent signs
+						  @"</script>\n",
 						  [self colorBoxParametersWithGroupID:@"gridItem"]
 						  ];
 		[context addMarkupToEndOfBody:feed];
-		
-		// And, output our markup.
-		[self writeInvisibleLinksToImages:context];
-
 	}
-	
+}
+
+- (void)writeHiddenLinkToPhoto
+{
+	if (self.useColorBox)
+	{
+		id<SVPlugInContext> context = [self currentContext]; 
+		id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+		
+		NSURL *URL = [context URLForImageRepresentationOfPage:iteratedPage
+														width:0
+													   height:0		// we want full-size
+													  options:0];
+		if (URL)
+		{
+			NSString *href = [context relativeStringFromURL:URL];
+			[context startAnchorElementWithHref:href title:[iteratedPage title] target:nil rel:@"enclosure"];
+			[context endElement];
+		}
+	}
 }
 
 - (void)writePlaceholderHTML:(id <SVPlugInContext>)context;

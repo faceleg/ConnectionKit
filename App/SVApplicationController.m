@@ -396,6 +396,11 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithBool:NO],			@"ShowSearchPaths",			// NSLog where items are searched for
 		
 		[NSNumber numberWithInt:kReportAsk],	@"ReportErrors",
+										 
+										 
+		[NSNumber numberWithInt:90],			@"GalleryPercentWidth",
+		[NSNumber numberWithInt:90],			@"GalleryPercentHeight",
+
 		
 		@"sandvox.Aqua",		@"designBundleIdentifier",
 		

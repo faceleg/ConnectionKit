@@ -65,6 +65,27 @@
 
 }
 
+/* Must be called by subclass at the appropriate spot. */
+
+- (void)writeInvisibleLinksToImages:(id <SVPlugInContext>)context;
+{
+	// Write out the invisible links
+	
+	for (id <SVPage> aPage in self.indexedPages)
+	{
+		NSURL *URL = [context URLForImageRepresentationOfPage:aPage
+														width:0
+													   height:0		// we want full-size
+													  options:0];
+		if (URL)
+		{
+			NSString *href = [context relativeStringFromURL:URL];
+			[context startAnchorElementWithHref:href title:[aPage title] target:nil rel:@"enclosure"];
+			[context endElement];
+		}
+	}	
+}
+
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
 	[super writeHTML:context];	// super will deal with placeholder, vars, main script, etc.
@@ -161,6 +182,7 @@
 										 @"/* Automatically open colorbox in '#%@' */\n"
 										 @"$(document).ready(function () {\n"
 										 @"		$('#%@').find(\"a[rel='enclosure']\").colorbox({\n"
+										 @"			open: true,\n"
 										 @"%@"
 										 @"	});\n"
 										 @"});\n"
