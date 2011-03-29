@@ -983,7 +983,12 @@
 
 - (void)undoRedo_setSelectionIndexPaths:(NSArray *)indexPaths registerIndexPaths:(NSArray *)undoRedoIndexPaths;
 {
+    // Technically, I think, we should try and persuade Core Data to register its own pending changes before ours
     NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification object:undoManager];
+    
+    // Do it
     [[undoManager prepareWithInvocationTarget:self]
      undoRedo_setSelectionIndexPaths:undoRedoIndexPaths registerIndexPaths:indexPaths];
     
