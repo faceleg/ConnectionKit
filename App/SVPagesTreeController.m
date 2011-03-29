@@ -279,6 +279,7 @@
 - (void)insertObject:(id)object atArrangedObjectIndexPath:(NSIndexPath *)indexPath;
 {
     // Restore current selection if user undoes
+    // In general, creating the object in order to insert it will have already opened an undo group and registered the present selection. So this registration corrects the selection upon redo
     if ([self selectsInsertedObjects])
     {
         NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
@@ -750,7 +751,7 @@
         NSTreeNode *node = [[self arrangedObjects] descendantNodeAtIndexPath:aPath];
         
         [node retain];
-        [[[node parentNode] mutableChildNodes] removeObjectAtIndex:[aPath lastIndex]];
+        //[[[node parentNode] mutableChildNodes] removeObjectAtIndex:[aPath lastIndex]];
         
         // Delete. Pages have to be treated specially, but I forget quite why
         id page = [[node representedObject] self]; // self accounts for proxy
