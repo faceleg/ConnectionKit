@@ -52,6 +52,8 @@
     
     [_dragTypes release];
     
+    [_moc release];
+    
     [super dealloc];
 }
 
@@ -342,6 +344,21 @@
     if (![newParentItem isObservingDependencies])
     {
         [self stopObservingDependencies];
+    }
+}
+
+#pragma mark Content
+
+@synthesize managedObjectContext = _moc;
+
+- (void)setRepresentedObject:(id)object;
+{
+    [super setRepresentedObject:object];
+    
+    if (![self managedObjectContext] &&
+        [object respondsToSelector:@selector(managedObjectContext)])
+    {
+        [self setManagedObjectContext:[object managedObjectContext]];
     }
 }
 

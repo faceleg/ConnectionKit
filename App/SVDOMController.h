@@ -36,6 +36,9 @@
     KSDependenciesTracker   *_dependenciesTracker;
     SVWebEditorHTMLContext  *_context;
     
+    // MOC
+    NSManagedObjectContext  *_moc;
+    
     // Moving
     BOOL    _moving;
     CGPoint _relativePosition;
@@ -95,6 +98,12 @@
 @property(nonatomic, copy, readonly) NSSet *dependencies;
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 - (void)removeAllDependencies;
+
+
+#pragma mark Content
+// Automatically set from represented object is possible
+// In general this is an ugly workaround for the problem of DOM controllers outliving their represented object's MOC. I think ideally the DOM Controller ought to observe an NSObjectController (or subclass) such that the MOC is handled there
+@property(nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 
 #pragma mark Editing
