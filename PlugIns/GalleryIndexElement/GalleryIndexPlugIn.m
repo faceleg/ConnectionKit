@@ -123,17 +123,12 @@
 			{
 				title	= [bundle localizedStringForString:@"Click to view gallery."	language:language fallback:SVLocalizedString(@"Click to view gallery.", @"Tooltip")];
 			}
-			[context pushAttribute:@"title" value:title];
 			
-			[context pushClassName:@"imageLink"];
-			[context startAnchorElementWithPage:[self indexedCollection]];
-						
 			[context writeImageRepresentationOfPage:[self indexedCollection]
 									width:128
 								   height:128
-							   attributes:nil
+							   attributes:[NSDictionary dictionaryWithObjectsAndKeys:title, @"title", nil]
 								  options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
-			[context endElement];
 		}
 		
 		if (self.showCollectionTitle)
