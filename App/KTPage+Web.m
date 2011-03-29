@@ -241,9 +241,24 @@
 
 - (void)writeThumbnailRel	// For facebook, digg, Yahoo, MySpace, etc.
 {
-    return;
     SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
-	[self writeThumbnail:context width:90 height:90 attributes:nil options:SVPageImageRepresentationLinkRel];		// This seems to be largest size used by facebook. Yahoo is 98x54?
+	NSURL *URL = [context URLForImageRepresentationOfPage:self
+													width:90 height:90	// This seems to be largest size used by facebook. Yahoo is 98x54?
+												  options:0];
+	if (URL)
+	{
+		NSString *href = [URL absoluteString];	// leave it an absolute URL for Facebook's benefit
+		
+		NSString *pathExtension = [[URL path] pathExtension];
+		NSString *UTI = [NSString UTIForFilenameExtension:pathExtension];
+		NSString *mimeType = [NSString MIMETypeForUTI:UTI];
+		
+		[context pushAttribute:@"rel" value:@"image_src"];
+		[context pushAttribute:@"href" value:href];
+		[context pushAttribute:@"type" value:mimeType];
+		[context startElement:@"link"];
+		[context endElement];
+	}
 }
 
 #pragma mark CSS

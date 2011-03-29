@@ -860,25 +860,6 @@
     return [self addMedia:media];
 }
 
-- (void)writeLinkRelWithSourceMedia:(id <SVMedia>)media
-								alt:(NSString *)altText
-							  width:(NSNumber *)width
-							 height:(NSNumber *)height
-							   type:(NSString *)type
-				  preferredFilename:(NSString *)filename;
-{
-    NSURL *URL = [self addImageMedia:media width:width height:height type:type preferredFilename:filename];
-	if (URL)
-	{
-		NSString *href = [URL absoluteString];	// leave it an absolute URL for Facebook's benefit
-		[self pushAttribute:@"rel" value:@"image_src"];
-		[self pushAttribute:@"href" value:href];
-		[self pushAttribute:@"type" value:[NSString MIMETypeForUTI:type]];
-		[self startElement:@"link"];
-		[self endElement];
-	}
-}
-
 - (void)writeImageWithSourceMedia:(id <SVMedia>)media
                               alt:(NSString *)altText
                             width:(NSNumber *)width
@@ -1008,30 +989,18 @@
                          preferredFilename:(NSString *)filename
                                    options:(SVPageImageRepresentationOptions)options;
 {
-    if (options & SVPageImageRepresentationLinkRel)
-    {
-        [self writeLinkRelWithSourceMedia:media
-                                      alt:altText
-                                    width:[NSNumber numberWithUnsignedInteger:width]
-                                   height:[NSNumber numberWithUnsignedInteger:height]
-                                     type:type
-                        preferredFilename:filename];
-    }
-    else
-    {
-        NSURL *url = [self addThumbnailMedia:media
-                                       width:width
-                                      height:height
-                                        type:type
-                           preferredFilename:filename
-                                     options:options
-                    pushSizeToCurrentElement:YES];
-        
-        [self writeImageWithSrc:[self relativeStringFromURL:url]
-                            alt:altText
-                          width:nil     // -addThumbnailMedia… took care of suppluying width & height for us
-                         height:nil];
-    }
+	NSURL *url = [self addThumbnailMedia:media
+								   width:width
+								  height:height
+									type:type
+					   preferredFilename:filename
+								 options:options
+				pushSizeToCurrentElement:YES];
+	
+	[self writeImageWithSrc:[self relativeStringFromURL:url]
+						alt:altText
+					  width:nil     // -addThumbnailMedia… took care of suppluying width & height for us
+					 height:nil];
 }
 
 #pragma mark Resource Files

@@ -501,7 +501,7 @@
                                    height:height
                                      type:type
                         preferredFilename:filename
-                                  options:options & SVPageImageRepresentationLinkRel	// keep the link rel, but no other flag
+                                  options:0
                  pushSizeToCurrentElement:YES];
     }
     
