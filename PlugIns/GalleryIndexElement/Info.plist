@@ -33,6 +33,6 @@
 	<key>SVPlugInIconPath</key>
 	<string>object_overlay.tiff</string>
 	<key>NSPrincipalClass</key>
-	<string>OverlayIndexPlugIn</string>
+	<string>GalleryIndexPlugIn</string>
 </dict>
 </plist>

@@ -1863,10 +1863,10 @@
 		};
 		CE15E154133C095700D9963F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = CE541507133C08DA003F635A /* OverlayIndex.xcodeproj */;
+			containerPortal = CE541507133C08DA003F635A /* GalleryIndex.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = OverlayIndex;
+			remoteInfo = GalleryIndex;
 		};
 		CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1884,10 +1884,10 @@
 		};
 		CE54150E133C08DA003F635A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = CE541507133C08DA003F635A /* OverlayIndex.xcodeproj */;
+			containerPortal = CE541507133C08DA003F635A /* GalleryIndex.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = OverlayIndex;
+			remoteInfo = GalleryIndex;
 		};
 		CE559B611085296D008870B5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3032,7 +3032,7 @@
 		CE510FCB090EA74C00547CFF /* KTTranscriptController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTranscriptController.h; sourceTree = "<group>"; };
 		CE510FCC090EA74C00547CFF /* KTTranscriptController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTTranscriptController.m; sourceTree = "<group>"; };
 		CE540301133BC9DA003F635A /* object_overlay.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = object_overlay.tiff; sourceTree = "<group>"; };
-		CE541507133C08DA003F635A /* OverlayIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OverlayIndex.xcodeproj; path = ../PlugIns/OverlayIndexElement/OverlayIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CE541507133C08DA003F635A /* GalleryIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GalleryIndex.xcodeproj; path = ../PlugIns/GalleryIndexElement/GalleryIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CE578C8310A895DC004C5380 /* KSNonBlackTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSNonBlackTextFieldCell.h; sourceTree = "<group>"; };
 		CE578C8410A895DC004C5380 /* KSNonBlackTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSNonBlackTextFieldCell.m; sourceTree = "<group>"; };
 		CE58138E11DEA45D008478AF /* NSStatusAvailable.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = NSStatusAvailable.tiff; sourceTree = "<group>"; };
@@ -4952,7 +4952,7 @@
 		3CA9FD200D63A06A00815310 /* Indexes */ = {
 			isa = PBXGroup;
 			children = (
-				CE541507133C08DA003F635A /* OverlayIndex.xcodeproj */,
+				CE541507133C08DA003F635A /* GalleryIndex.xcodeproj */,
 				274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */,
 				3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */,
 				3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */,
@@ -5696,7 +5696,7 @@
 		CE541508133C08DA003F635A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CE54150F133C08DA003F635A /* OverlayIndex.svxElement */,
+				CE54150F133C08DA003F635A /* GalleryIndex.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6491,7 +6491,7 @@
 				},
 				{
 					ProductGroup = CE541508133C08DA003F635A /* Products */;
-					ProjectRef = CE541507133C08DA003F635A /* OverlayIndex.xcodeproj */;
+					ProjectRef = CE541507133C08DA003F635A /* GalleryIndex.xcodeproj */;
 				},
 				{
 					ProductGroup = 3C104A1E121B016700899C3B /* Products */;
@@ -6737,10 +6737,10 @@
 			remoteRef = CE44B84913020DAA00015A24 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CE54150F133C08DA003F635A /* OverlayIndex.svxElement */ = {
+		CE54150F133C08DA003F635A /* GalleryIndex.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = OverlayIndex.svxElement;
+			path = GalleryIndex.svxElement;
 			remoteRef = CE54150E133C08DA003F635A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -8201,7 +8201,7 @@
 		};
 		CE15E155133C095700D9963F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = OverlayIndex;
+			name = GalleryIndex;
 			targetProxy = CE15E154133C095700D9963F /* PBXContainerItemProxy */;
 		};
 		CE559B621085296D008870B5 /* PBXTargetDependency */ = {

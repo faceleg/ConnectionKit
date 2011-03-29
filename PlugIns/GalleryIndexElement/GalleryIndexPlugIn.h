@@ -1,6 +1,6 @@
 //
-//  OverlayIndex.PlugInh
-//  OverlayIndex
+//  GalleryIndex.PlugInh
+//  GalleryIndex
 //
 //  Copyright 2011 Karelia Software. All rights reserved.
 //
@@ -37,7 +37,7 @@
 #import <Sandvox.h>
 #import "SVColorBoxIndexPlugIn.h"
 
-@interface OverlayIndexPlugIn : SVColorBoxIndexPlugIn
+@interface GalleryIndexPlugIn : SVColorBoxIndexPlugIn
 {
 	BOOL		_showCollectionTitle;
 	BOOL		_showCollectionThumbnail;

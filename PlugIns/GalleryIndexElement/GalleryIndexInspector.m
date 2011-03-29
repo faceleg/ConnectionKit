@@ -1,5 +1,5 @@
 //
-//  OverlayIndexInspector.m
+//  GalleryIndexInspector.m
 //
 //  Copyright (c) 2011 Karelia Software. All rights reserved.
 //
@@ -33,10 +33,10 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "OverlayIndexInspector.h"
+#import "GalleryIndexInspector.h"
 
 
-@implementation OverlayIndexInspector
+@implementation GalleryIndexInspector
 
 - (void)loadView;
 {

@@ -1,5 +1,5 @@
 //
-//  OverlayIndexInspector.h
+//  GalleryIndexInspector.h
 //
 //  Copyright (c) 2011 Karelia Software. All rights reserved.
 //
@@ -35,6 +35,6 @@
 
 #import <Sandvox.h>
 
-@interface OverlayIndexInspector : SVIndexInspectorViewController
+@interface GalleryIndexInspector : SVIndexInspectorViewController
 
 @end

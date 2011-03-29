@@ -1,6 +1,6 @@
 //
-//  OverlayIndexPlugIn.m
-//  OverlayIndex
+//  GalleryIndexPlugIn.m
+//  GalleryIndex
 //
 //  Copyright 2011 Karelia Software. All rights reserved.
 //
@@ -35,9 +35,9 @@
 //
 
 
-#import "OverlayIndexPlugIn.h"
+#import "GalleryIndexPlugIn.h"
 
-@implementation OverlayIndexPlugIn
+@implementation GalleryIndexPlugIn
 
 // Properties of this index only
 @synthesize showCollectionTitle	= _showCollectionTitle;
