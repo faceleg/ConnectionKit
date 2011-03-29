@@ -344,7 +344,8 @@
         NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
         
         [[undoManager sv_prepareWithCheckpointAndInvocationTarget:self]
-         setSelectionIndexPaths:indexPaths];
+         undoRedo_setSelectionIndexPaths:indexPaths
+         registerIndexPaths:[NSArray arrayWithObject:indexPath]];   // select upon redo
     }
     else
     {
