@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.SystemVersion">10J869</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">823</string>
@@ -88,7 +88,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="1063348639">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">272891904</int>
-							<string key="NSContents">This user will be @mentioned in the Tweet.</string>
+							<string key="NSContents">Tweet will end with “via @YourName”.</string>
 							<reference key="NSSupport" ref="22"/>
 							<reference key="NSControlView" ref="227390108"/>
 							<reference key="NSBackgroundColor" ref="696032827"/>
@@ -319,7 +319,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="893097200">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272761856</int>
-							<string key="NSContents">Twitter Account</string>
+							<string key="NSContents">Your Twitter Account</string>
 							<reference key="NSSupport" ref="233977784"/>
 							<reference key="NSControlView" ref="401682484"/>
 							<reference key="NSBackgroundColor" ref="696032827"/>
@@ -731,6 +731,7 @@
 					<string>15.IBPluginDependency</string>
 					<string>18.IBPluginDependency</string>
 					<string>19.IBPluginDependency</string>
+					<string>19.IBViewBoundsToFrameTransform</string>
 					<string>2.IBPluginDependency</string>
 					<string>20.IBPluginDependency</string>
 					<string>21.IBPluginDependency</string>
@@ -770,6 +771,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAwoAAAA</bytes>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
