@@ -40,7 +40,7 @@ enum { kSlideshowNone, kSlideshowManual, kSlideshowAutomatic };
 @property  int	slideshowType;
 
 - (NSString *)colorBoxParametersWithGroupID:(NSString *)idName;
-- (void)writeInvisibleLinksToImages:(SVPlugInContext *)context;
+- (void)writeInvisibleLinksToImages:(id <SVPlugInContext>)context;
 
 
 @end
