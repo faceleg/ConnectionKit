@@ -395,10 +395,13 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Apply size limit
-    NSSize size = NSMakeSize([[image width] floatValue], [[image height] floatValue]);
-    size = [controller constrainSize:size handle:kSVGraphicNoHandle snapToFit:YES];
-    [image setWidth:[NSNumber numberWithInt:size.width]];
-    [image setHeight:[NSNumber numberWithInt:size.height]];
+    if ([image width] && [image height])
+    {
+        NSSize size = NSMakeSize([[image width] floatValue], [[image height] floatValue]);
+        size = [controller constrainSize:size handle:kSVGraphicNoHandle snapToFit:YES];
+        [image setWidth:[NSNumber numberWithInt:size.width]];
+        [image setHeight:[NSNumber numberWithInt:size.height]];
+    }
     
     
     // Generate new DOM node to match what model would normally generate
@@ -421,15 +424,14 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     int width = [imageElement width];
     int height = [imageElement height];
     
-    if (width > 0 && height > 0)
-    {
-        [image setWidth:[NSNumber numberWithInt:width]];
-        [image setHeight:[NSNumber numberWithInt:height]];
-    }
-    else
+    [image setWidth:(width > 0 ? [NSNumber numberWithInt:width] : nil)];
+    [image setHeight:(height > 0 ? [NSNumber numberWithInt:height] : nil)];
+    
+    if (![image width] || ![image height])
     {
         [image makeOriginalSize];
     }
+    
     if ([image width] && [image height]) [image setConstrainsProportions:YES];
     
     
