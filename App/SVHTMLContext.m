@@ -951,8 +951,8 @@
     
     if (push)
     {
-        [self pushAttribute:@"width" value:[NSNumber numberWithUnsignedInteger:width]];
-        [self pushAttribute:@"height" value:[NSNumber numberWithUnsignedInteger:height]];
+		if (width)  [self pushAttribute:@"width" value:[NSNumber numberWithUnsignedInteger:width]];
+		if (height) [self pushAttribute:@"height" value:[NSNumber numberWithUnsignedInteger:height]];
     }
     
     
