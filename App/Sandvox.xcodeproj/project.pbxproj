@@ -2634,8 +2634,6 @@
 		3CA17FC8122DB2C700331125 /* SVIndexInspectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndexInspectorViewController.m; sourceTree = "<group>"; };
 		3CA6B98B11F9130B004A4794 /* YRKSpinningProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YRKSpinningProgressIndicator.h; path = "../../yrk-spinning-progress-indicator/Code/YRKSpinningProgressIndicator.h"; sourceTree = SOURCE_ROOT; };
 		3CA6B98C11F9130B004A4794 /* YRKSpinningProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YRKSpinningProgressIndicator.m; path = "../../yrk-spinning-progress-indicator/Code/YRKSpinningProgressIndicator.m"; sourceTree = SOURCE_ROOT; };
-		3CA6BB480A086E54009DBBA8 /* KTUndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTUndoManager.h; sourceTree = "<group>"; };
-		3CA6BB490A086E54009DBBA8 /* KTUndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTUndoManager.m; sourceTree = "<group>"; };
 		3CA900670D63C76100815310 /* IFrameElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IFrameElement.xcodeproj; path = ../PlugIns/IFrameElement/IFrameElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CA901A20D63D45B00815310 /* LinkListElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LinkListElement.xcodeproj; path = ../PlugIns/LinkListElement/LinkListElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CA9B30D0804643200C3053B /* KTDocument+Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Properties.m"; sourceTree = "<group>"; };
@@ -4782,8 +4780,6 @@
 		3C5A73770BF7B82600776464 /* Debugging */ = {
 			isa = PBXGroup;
 			children = (
-				3CA6BB480A086E54009DBBA8 /* KTUndoManager.h */,
-				3CA6BB490A086E54009DBBA8 /* KTUndoManager.m */,
 			);
 			name = Debugging;
 			sourceTree = "<group>";
