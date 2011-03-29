@@ -371,16 +371,18 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         }
     }
     
+    
+    // Can't import; delete it
+    if (!media)
+    {
+        return imageElement;
+    }
+    
+    
+    // Import
     SVMediaGraphic *image = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
-    if (media)
-    {
-        [image setSourceWithMedia:media];
-        [media release];
-    }
-    else
-    {
-        [image setSourceWithExternalURL:URL];
-    }
+    [image setSourceWithMedia:media];
+    [media release];
     
     
     // Make corresponding text attachment
