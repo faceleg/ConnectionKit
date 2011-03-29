@@ -490,9 +490,13 @@
         
         
         // Where to publish?
-        NSString *filename = [[[media preferredUploadPath] lastPathComponent] stringByDeletingPathExtension];
-        filename = [filename stringByAppendingFormat:@"_%u", width];
-        filename = [filename stringByAppendingPathExtension:[NSString filenameExtensionForUTI:type]];
+        NSString *filename = nil;
+        if (width)
+        {
+            [[[media preferredUploadPath] lastPathComponent] stringByDeletingPathExtension];
+            filename = [filename stringByAppendingFormat:@"_%u", width];
+            filename = [filename stringByAppendingPathExtension:[NSString filenameExtensionForUTI:type]];
+        }
         
         
         // Write the thumbnail
