@@ -11,6 +11,7 @@
 #import "SVApplicationController.h"
 #import "SVArticle.h"
 #import "SVAttributedHTML.h"
+#import "SVDocumentUndoManager.h"
 #import "SVDownloadSiteItem.h"
 #import "KTElementPlugInWrapper.h"
 #import "SVLinkManager.h"
@@ -986,10 +987,7 @@
     // Technically, I think, we should try and persuade Core Data to register its own pending changes before ours
     NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification object:undoManager];
-    
-    // Do it
-    [[undoManager prepareWithInvocationTarget:self]
+    [[undoManager sv_prepareWithCheckpointAndInvocationTarget:self]
      undoRedo_setSelectionIndexPaths:undoRedoIndexPaths registerIndexPaths:indexPaths];
     
     
