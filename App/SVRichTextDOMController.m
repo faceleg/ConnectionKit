@@ -80,11 +80,6 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     [_graphicsController setSortDescriptors:[SVRichText attachmentSortDescriptors]];
     [_graphicsController setAutomaticallyRearrangesObjects:YES];
     
-    [_graphicsController bind:NSContentSetBinding
-                     toObject:content
-                  withKeyPath:@"attachments"
-                      options:nil];
-    
     [_graphicsController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:sBodyTextObservationContext];
     
     
@@ -96,7 +91,8 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     [_graphicsController removeObserver:self forKeyPath:@"arrangedObjects"];
     
     // Release ivars
-    [_graphicsController release];
+    [self stopObservingDependencies];                           // otherwise super will crash trying..
+    [_graphicsController release]; _graphicsController = nil;   // ... to access _graphicsController
     
     [super dealloc];
 }
@@ -841,12 +837,40 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 #pragma mark Dependencies
 
+- (void)setRepresentedObject:(id)object;
+{
+    [super setRepresentedObject:object];
+    
+    if ([self isObservingDependencies])
+    {
+        if (object)
+        {
+            [_graphicsController bind:NSContentSetBinding
+                             toObject:[self representedObject]
+                          withKeyPath:@"attachments"
+                              options:nil];
+        }
+        else
+        {
+            [_graphicsController unbind:NSContentSetBinding];
+        }
+    }
+}
+
 - (void)startObservingDependencies;
 {
     if (![self isObservingDependencies])
     {
         // Keep an eye on model
-        [self addObserver:self forKeyPath:@"representedObject.string" options:0 context:sBodyTextObservationContext];    
+        [self addObserver:self forKeyPath:@"representedObject.string" options:0 context:sBodyTextObservationContext];
+        
+        if ([self representedObject])
+        {
+            [_graphicsController bind:NSContentSetBinding
+                             toObject:[self representedObject]
+                          withKeyPath:@"attachments"
+                              options:nil];
+        }
     }
     
     [super startObservingDependencies];
@@ -858,6 +882,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     {
         [self removeObserver:self forKeyPath:@"representedObject.string"];
     }
+    [_graphicsController unbind:NSContentSetBinding];
     
     [super stopObservingDependencies];
 }
