@@ -407,7 +407,16 @@
     return (action == @selector(deleteBackward:) ||
             action == @selector(deleteWordBackward:) ||
             action == @selector(deleteToBeginningOfLine:) ||
+            action == @selector(deleteToBeginningOfParagraph:) ||
             action == @selector(deleteBackwardByDecomposingPreviousCharacter:));
+}
+
++ (BOOL)isDeleteForwardsSelector:(SEL)action;
+{
+    return (action == @selector(deleteForward:) ||
+            action == @selector(deleteWordForward:) ||
+            action == @selector(deleteToEndOfLine:) ||
+            action == @selector(deleteToEndOfParagraph:));
 }
 
 #pragma mark Pasteboard / Drag
