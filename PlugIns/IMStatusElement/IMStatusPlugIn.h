@@ -52,9 +52,9 @@ typedef enum { IMServiceIChat, IMServiceSkype, IMServiceYahoo = 2, } IMService;
     NSString *_onlineText;
 }
 
-@property (readonly) NSArray *services;
-@property (readonly) IMStatusService *selectedService;
-@property (readonly) BOOL selectedServiceIsIChat;
+@property (nonatomic, readonly) NSArray *services;
+@property (nonatomic, readonly) IMStatusService *selectedService;
+@property (nonatomic, readonly) BOOL selectedServiceIsIChat;
 
 @property (nonatomic, retain) NSString *username;
 @property (nonatomic, assign) NSUInteger selectedServiceIndex;
