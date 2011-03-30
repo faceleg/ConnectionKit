@@ -947,7 +947,15 @@
 
 - (void)moveItemDown:(WEKWebEditorItem *)item;
 {
+    // Save and then restore selection for if it's inside an item that's getting exchanged
     WEKWebEditorView *webEditor = [item webEditor];
+    DOMRange *selection = [webEditor selectedDOMRange];
+    DOMNode *selectionStart = [selection startContainer];
+    int selectionStartOffset = [selection startOffset];
+    DOMNode *selectionEnd = [selection endContainer];
+    int selectionEndOffset = [selection endOffset];
+    NSSelectionAffinity affinity = [[webEditor webView] selectionAffinity];
+    
     DOMNode *nextNode = [item nextDOMNode];
     
     while (nextNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])
@@ -959,7 +967,12 @@
         
         nextNode = [item nextDOMNode];
     }
+    
     [webEditor didChangeText];
+    
+    [selection setStart:selectionStart offset:selectionStartOffset];
+    [selection setEnd:selectionEnd offset:selectionEndOffset];
+    [webEditor setSelectedDOMRange:selection affinity:affinity];
 }
 
 #pragma mark Drawing
