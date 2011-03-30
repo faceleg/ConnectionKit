@@ -17,6 +17,7 @@
 #import "SVSidebarPageletsController.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorViewController.h"
+#import "WEKWebViewEditing.h"
 
 #import "NSArray+Karelia.h"
 #import "NSColor+Karelia.h"
@@ -949,12 +950,7 @@
 {
     // Save and then restore selection for if it's inside an item that's getting exchanged
     WEKWebEditorView *webEditor = [item webEditor];
-    DOMRange *selection = [webEditor selectedDOMRange];
-    DOMNode *selectionStart = [selection startContainer];
-    int selectionStartOffset = [selection startOffset];
-    DOMNode *selectionEnd = [selection endContainer];
-    int selectionEndOffset = [selection endOffset];
-    NSSelectionAffinity affinity = [[webEditor webView] selectionAffinity];
+    WEKSelection *selection = [[webEditor webView] wek_selection];
     
     DOMNode *nextNode = [item nextDOMNode];
     
@@ -970,9 +966,7 @@
     
     [webEditor didChangeText];
     
-    [selection setStart:selectionStart offset:selectionStartOffset];
-    [selection setEnd:selectionEnd offset:selectionEndOffset];
-    [webEditor setSelectedDOMRange:selection affinity:affinity];
+    [[webEditor webView] wek_setSelection:selection];
 }
 
 #pragma mark Drawing
