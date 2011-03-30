@@ -39,7 +39,7 @@
 #import "KSURLUtilities.h"
 
 
-static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
+static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 
 @interface DOMElement (SVParagraphedHTMLWriter)
@@ -65,9 +65,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // Super
     self = [super init];
     
-    
-    // Keep an eye on model
-    [self addObserver:self forKeyPath:@"representedObject.string" options:0 context:sBodyTextObservationContext];    
     
     // Finish up
     return self;
@@ -96,7 +93,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:@"representedObject.string"];
     [_graphicsController removeObserver:self forKeyPath:@"arrangedObjects"];
     
     // Release ivars
@@ -843,7 +839,28 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     return result;
 }
 
-#pragma mark KVO
+#pragma mark Dependencies
+
+- (void)startObservingDependencies;
+{
+    if (![self isObservingDependencies])
+    {
+        // Keep an eye on model
+        [self addObserver:self forKeyPath:@"representedObject.string" options:0 context:sBodyTextObservationContext];    
+    }
+    
+    [super startObservingDependencies];
+}
+
+- (void)stopObservingDependencies;
+{
+    if ([self isObservingDependencies])
+    {
+        [self removeObserver:self forKeyPath:@"representedObject.string"];
+    }
+    
+    [super stopObservingDependencies];
+}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
