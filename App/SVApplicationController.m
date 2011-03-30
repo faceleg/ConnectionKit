@@ -568,7 +568,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
     [self registerDefaults];
     
 #ifdef DEBUG
-    [KSExtensibleManagedObject setLogObservers:YES];
+    [KSExtensibleManagedObject setLogsObserversWhenTurningIntoFault:YES];
 #endif
 	
 	[pool release];
