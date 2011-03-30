@@ -667,23 +667,45 @@
     BOOL result = [super webEditorTextDoCommandBySelector:selector];
     
     // Make sure deletions don't throw away wrapped graphics
-    if (!result &&
-        [[self class] isDeleteBackwardsSelector:selector])
+    if (!result)
     {
-        DOMRange *selection = [self selectedDOMRange];
-        if ([selection collapsed])
+        if ([[self class] isDeleteBackwardsSelector:selector])
         {
-            DOMNode *paragraph = [self isDOMRangeStartOfParagraph:selection];
-            if (paragraph)
+            DOMRange *selection = [self selectedDOMRange];
+            if ([selection collapsed])
             {
-                WEKWebEditorItem *controller = [self hitTestDOMNode:
-                                                [paragraph previousSiblingOfClass:[DOMElement class]]];
-                
-                if (controller != self && controller)
+                DOMNode *paragraph = [self isDOMRangeStartOfParagraph:selection];
+                if (paragraph)
                 {
-                    // Move the controller down so as to avoid deleting it
-                    [controller moveDown];
-                    //[[self webEditor] moveLeft:self];
+                    WEKWebEditorItem *controller = [self hitTestDOMNode:
+                                                    [paragraph previousSiblingOfClass:[DOMElement class]]];
+                    
+                    if (controller != self && controller)
+                    {
+                        // Move the controller down so as to avoid deleting it
+                        [controller moveDown];
+                        //[[self webEditor] moveLeft:self];
+                    }
+                }
+            }
+        }
+        else if ([[self class] isDeleteForwardsSelector:selector])
+        {
+            DOMRange *selection = [self selectedDOMRange];
+            if ([selection collapsed])
+            {
+                DOMNode *paragraph = [self isDOMRangeEndOfParagraph:selection];
+                if (paragraph)
+                {
+                    WEKWebEditorItem *controller = [self hitTestDOMNode:
+                                                    [paragraph nextSiblingOfClass:[DOMElement class]]];
+                    
+                    if (controller != self && controller)
+                    {
+                        // Move the controller down so as to avoid deleting it
+                        [controller moveDown];
+                        //[[self webEditor] moveLeft:self];
+                    }
                 }
             }
         }
