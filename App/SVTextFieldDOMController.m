@@ -375,6 +375,16 @@
     return result;
 }
 
+#pragma mark Dependencies
+
+- (void)stopObservingDependencies;
+{
+    [self unbind:NSAlignmentBinding];
+    [self unbind:NSValueBinding];
+    
+    [super stopObservingDependencies];
+}
+
 #pragma mark Debugging
 
 - (NSString *)blurb
