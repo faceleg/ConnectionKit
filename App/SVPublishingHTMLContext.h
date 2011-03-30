@@ -25,7 +25,7 @@
     KSOutputStreamWriter    *_contentHashDataOutput;
     
     // Media
-    BOOL    _didAddMediaWithoutPath;
+    NSUInteger  _didAddMediaWithoutPath;
     
     // Event loop
     NSUInteger  _disableRunningEventLoop;

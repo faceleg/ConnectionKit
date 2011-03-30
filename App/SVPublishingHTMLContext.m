@@ -146,7 +146,7 @@
 - (NSURL *)addMediaWithRequest:(SVMediaRequest *)request;
 {
     NSString *mediaPath = [_publisher publishMediaWithRequest:request];
-    if (!mediaPath) _didAddMediaWithoutPath = YES;
+    if (!mediaPath) _didAddMediaWithoutPath++;
     
     KTPage *page = [self page];
     if (page)
