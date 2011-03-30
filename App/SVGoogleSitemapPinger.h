@@ -14,6 +14,6 @@
     NSDate *_datePublished;
 }
 
-@property(retain) NSDate *datePublished;
+@property (nonatomic, retain) NSDate *datePublished;
 
 @end

@@ -33,6 +33,6 @@
 	NSIndexSet *_draggedRows;
 }
 
-@property (retain) NSIndexSet *draggedRows;
+@property (nonatomic, retain) NSIndexSet *draggedRows;
 
 @end
