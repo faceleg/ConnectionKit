@@ -111,6 +111,8 @@ typedef NSUInteger SVPlaceholderOptions;
 // Takes care of using the right href, title and target for the page
 - (void)startAnchorElementWithPage:(id <SVPage>)page;
 
+- (void)writeAnchorElementWithRSSFeedOfPage:(id <SVPage>)page;
+
 
 #pragma mark Headings
 //  <hX>
