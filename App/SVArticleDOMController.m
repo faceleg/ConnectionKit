@@ -932,6 +932,7 @@
 - (void)moveItemUp:(WEKWebEditorItem *)item;
 {
     WEKWebEditorView *webEditor = [self webEditor];
+    WEKSelection *selection = [[webEditor webView] wek_selection];
     DOMNode *previousNode = [item previousDOMNode];
     
     while (previousNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])
@@ -943,7 +944,9 @@
         
         previousNode = [item previousDOMNode];
     }
+    
     [webEditor didChangeText];
+    [[webEditor webView] wek_setSelection:selection];
 }
 
 - (void)moveItemDown:(WEKWebEditorItem *)item;
@@ -951,7 +954,6 @@
     // Save and then restore selection for if it's inside an item that's getting exchanged
     WEKWebEditorView *webEditor = [item webEditor];
     WEKSelection *selection = [[webEditor webView] wek_selection];
-    
     DOMNode *nextNode = [item nextDOMNode];
     
     while (nextNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])
