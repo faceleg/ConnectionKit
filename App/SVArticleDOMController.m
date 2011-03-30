@@ -672,10 +672,17 @@
         DOMRange *selection = [self selectedDOMRange];
         if ([selection collapsed])
         {
-            if ([self isDOMRangeStartOfParagraph:selection])
+            DOMNode *paragraph = [self isDOMRangeStartOfParagraph:selection];
+            if (paragraph)
             {
-                // By moving left, skip the graphic, ready to delete the real content
-                [[self webEditor] moveLeft:self];
+                WEKWebEditorItem *controller = [self hitTestDOMNode:
+                                                [paragraph previousSiblingOfClass:[DOMElement class]]];
+                
+                if (controller != self && controller)
+                {
+                    // By moving left, skip the graphic, ready to delete the real content
+                    [[self webEditor] moveLeft:self];
+                }
             }
         }
     }

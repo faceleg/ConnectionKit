@@ -744,7 +744,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Queries
 
-- (BOOL)isDOMRangeStartOfParagraph:(DOMRange *)range;
+- (DOMNode *)isDOMRangeStartOfParagraph:(DOMRange *)range;
 {
     // To be the start of a paragraph, there must be no preceeding content other than the paragraph itself
     
@@ -756,15 +756,15 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         do
         {
             DOMNode *parent = [node parentNode];
-            if (parent == innerTextNode) return YES;    // node's a paragraph!
-            if ([node previousSibling]) return NO;      // can't be start of a paragraph
+            if (parent == innerTextNode) return node;    // node's a paragraph!
+            if ([node previousSibling]) return nil;      // can't be start of a paragraph
             
             // Move up the tree
             node = parent;
         } while (node);
     }
     
-    return NO;
+    return nil;
 }
 
 #pragma mark Pasteboard
