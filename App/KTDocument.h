@@ -74,7 +74,7 @@ extern NSString *kKTDocumentWillSaveNotification;
 
 }
 
-@property (retain) NSURL *lastExportDirectory;
+@property(nonatomic, copy) NSURL *lastExportDirectory;
 
 
 #pragma mark Managing the Persistence Objects
