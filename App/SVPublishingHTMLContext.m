@@ -14,6 +14,7 @@
 #import "SVMediaRequest.h"
 #import "KTPage+Paths.h"
 #import "SVPublisher.h"
+#import "KTPublishingEngine.h"
 #import "KTSite.h"
 #import "SVTemplate.h"
 
@@ -46,7 +47,8 @@
 - (void)close;
 {
     // Publish HTML if complete
-    if (![self didAddMediaWithoutPath])
+    if (![self didAddMediaWithoutPath] ||
+        [(KTPublishingEngine *)_publisher status] >= KTPublishingEngineStatusParsing)
     {
         NSString *html = [[self outputStringWriter] string];
         if (html)
