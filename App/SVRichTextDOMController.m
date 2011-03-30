@@ -767,6 +767,38 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     return nil;
 }
 
+- (DOMNode *)isDOMRangeEndOfParagraph:(DOMRange *)range;
+{
+    // To be the end of a paragraph, there must be no following content other than the paragraph itself
+    
+    
+    // Bail if not the end of the node
+    DOMNode *node = [range endContainer];
+    if ([node isKindOfClass:[DOMCharacterData class]])
+    {
+        if ([range endOffset] < [(DOMCharacterData *)node length]) return nil;
+    }
+    else
+    {
+        if ([range endOffset] < [[node childNodes] length]) return nil;
+    }
+    
+
+    DOMNode *innerTextNode = [self innerTextHTMLElement];
+    
+    do
+    {
+        DOMNode *parent = [node parentNode];
+        if (parent == innerTextNode) return node;    // node's a paragraph!
+        if ([node nextSibling]) return nil;      // can't be start of a paragraph
+        
+        // Move up the tree
+        node = parent;
+    } while (node);
+    
+    return nil;
+}
+
 #pragma mark Pasteboard
 
 - (void)webEditorTextDidSetSelectionTypesForPasteboard:(NSPasteboard *)pasteboard;

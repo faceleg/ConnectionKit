@@ -54,6 +54,7 @@
 #pragma mark Queries
 // Returns the paragraph in question if it is at the start, otherwise nil
 - (DOMNode *)isDOMRangeStartOfParagraph:(DOMRange *)range;
+- (DOMNode *)isDOMRangeEndOfParagraph:(DOMRange *)range;
 
 
 @end
