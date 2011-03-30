@@ -98,6 +98,8 @@
 @property(nonatomic, copy, readonly) NSSet *dependencies;
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 - (void)removeAllDependencies;
+- (void)startObservingDependencies; // recursive
+- (void)stopObservingDependencies;  // guaranteed to be called by -dealloc if needed
 
 
 #pragma mark Content
