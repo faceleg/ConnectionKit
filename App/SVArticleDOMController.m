@@ -680,8 +680,9 @@
                 
                 if (controller != self && controller)
                 {
-                    // By moving left, skip the graphic, ready to delete the real content
-                    [[self webEditor] moveLeft:self];
+                    // Move the controller down so as to avoid deleting it
+                    [controller moveDown];
+                    //[[self webEditor] moveLeft:self];
                 }
             }
         }
