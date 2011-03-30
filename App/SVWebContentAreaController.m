@@ -129,7 +129,7 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidUndoChangeNotification object:undoManager];
         
         // Stop observation early. #106099
-        [[[[self webEditorViewController] webEditor] contentItem] stopObservingDependencies];
+        [[self webEditorViewController] loadPage:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didUndoOrRedo:)
@@ -142,7 +142,7 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidRedoChangeNotification object:undoManager];
         
         // Stop observation early. #106099
-        [[[[self webEditorViewController] webEditor] contentItem] stopObservingDependencies];
+        [[self webEditorViewController] loadPage:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didUndoOrRedo:)
