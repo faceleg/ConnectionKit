@@ -93,8 +93,8 @@ typedef enum {
  */
 - (void)writeHTML:(id <SVPlugInContext>)context;
 
-// For the benefit of methods which don't have direct access to the context. e.g. methods called from an HTML template.
-- (id <SVPlugInContext>)currentContext;
+// Sandvox supplies the current context for template-based plug-ins. Generally no reason to override this
+@property(nonatomic, readonly) id <SVPlugInContext> currentContext;
 
 
 #pragma mark Layout
