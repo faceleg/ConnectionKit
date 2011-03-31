@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
+			<integer value="118"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -410,6 +410,18 @@
 										<string key="NSTitle">OtherViews</string>
 										<object class="NSMutableArray" key="NSMenuItems">
 											<bool key="EncodedWithXMLCoder">YES</bool>
+											<object class="NSMenuItem" id="457778360">
+												<reference key="NSMenu" ref="522669827"/>
+												<string key="NSTitle">None</string>
+												<string key="NSKeyEquiv"/>
+												<int key="NSKeyEquivModMask">1048576</int>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="507203415"/>
+												<reference key="NSMixedImage" ref="527708614"/>
+												<string key="NSAction">_popUpItemAction:</string>
+												<reference key="NSTarget" ref="890931918"/>
+											</object>
+											<reference ref="798062798"/>
 											<object class="NSMenuItem" id="693402110">
 												<reference key="NSMenu" ref="522669827"/>
 												<string key="NSTitle">Elastic</string>
@@ -420,18 +432,6 @@
 												<reference key="NSMixedImage" ref="527708614"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<int key="NSTag">1</int>
-												<reference key="NSTarget" ref="890931918"/>
-											</object>
-											<reference ref="798062798"/>
-											<object class="NSMenuItem" id="457778360">
-												<reference key="NSMenu" ref="522669827"/>
-												<string key="NSTitle">None</string>
-												<string key="NSKeyEquiv"/>
-												<int key="NSKeyEquivModMask">1048576</int>
-												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="507203415"/>
-												<reference key="NSMixedImage" ref="527708614"/>
-												<string key="NSAction">_popUpItemAction:</string>
 												<reference key="NSTarget" ref="890931918"/>
 											</object>
 										</object>
@@ -1140,9 +1140,9 @@
 						<reference key="object" ref="522669827"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="693402110"/>
 							<reference ref="457778360"/>
 							<reference ref="798062798"/>
-							<reference ref="693402110"/>
 						</object>
 						<reference key="parent" ref="890931918"/>
 					</object>
@@ -1496,7 +1496,7 @@
 						<bytes key="NSTransformStruct">P4AAAL+AAADAQAAAwtYAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{1105, 727}, {137, 54}}</string>
+					<string>{{1104, 686}, {137, 54}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
