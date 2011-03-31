@@ -1370,7 +1370,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     }
     
     // x-sandvox-rssfeed-activate:// links turn on RSS feed (Standard) for referenced collection
-    else if ([[URL scheme] isEqualToString:@"x-sandvox-rssfeed-activate:"])
+    else if ([[URL scheme] isEqualToString:@"x-sandvox-rssfeed-activate"])
     {
         NSString *collectionID = [URL path];
         //FIXME: somehow track down collection by uniqueID in moc and turn on feed?
