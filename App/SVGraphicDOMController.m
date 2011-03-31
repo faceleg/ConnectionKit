@@ -233,11 +233,18 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 {
     // Pull the nodes across to the Web Editor
     DOMDocument *document = [[self HTMLElement] ownerDocument];
-    DOMNode *imported = [document importNode:[loadedBody firstChild] deep:YES];
-	
+    DOMDocumentFragment *fragment = [document createDocumentFragment];
+    DOMNodeList *children = [loadedBody childNodes];
+    
+    for (int i = 0; i < [children length]; i++)
+    {
+        DOMNode *imported = [document importNode:[children item:i] deep:YES];
+        [fragment appendChild:imported];
+    }
+    
     
     // I have to turn off the script nodes from actually executing
-	DOMNodeIterator *it = [document createNodeIterator:imported whatToShow:DOM_SHOW_ELEMENT filter:[ScriptNodeFilter sharedFilter] expandEntityReferences:NO];
+	DOMNodeIterator *it = [document createNodeIterator:fragment whatToShow:DOM_SHOW_ELEMENT filter:[ScriptNodeFilter sharedFilter] expandEntityReferences:NO];
 	DOMHTMLScriptElement *subNode;
     
 	while ((subNode = (DOMHTMLScriptElement *)[it nextNode]))
@@ -284,7 +291,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Update
-    [self updateWithDOMNode:imported items:_offscreenDOMControllers];
+    [self updateWithDOMNode:fragment items:_offscreenDOMControllers];
     
     
     // Teardown
