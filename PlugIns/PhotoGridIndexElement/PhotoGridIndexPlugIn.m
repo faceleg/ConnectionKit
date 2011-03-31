@@ -75,7 +75,19 @@
 		// FIXME: Instead of '.gridItem' could we search for all .gridItem with a sub-node of an a[rel='enclosure'] ? (To skip non-photo entries)
 		
 		NSString *previewOnlyOptions = [context isForEditing]
-		?	@"			onLoad: function(){ $(this).blur() },\n"
+		?	@"			onLoad: function(){ "
+		"\n"
+		"var range = document.createRange();"
+		"\n"
+		"range.selectNodeContents($('h1').get(0));"
+		"\n"
+		"var selection = window.getSelection();"
+		"\n"
+		"selection.removeAllRanges();"
+		"\n"
+        "selection.addRange(range);"
+		"\n"
+		"},\n"
 		:	@"";
 		
 		NSString *feed = [NSString stringWithFormat:
