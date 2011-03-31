@@ -520,7 +520,7 @@
 - (NSString *)resourceFilePath:(NSURL *)resourceURL relativeToPage:(KTPage *)page
 {
     SVHTMLContext *context = [self HTMLContext];
-	NSURL *result = [context addResourceAtURL:resourceURL preferredPath:SVResourcesDirectory options:0];
+	NSURL *result = [context addResourceAtURL:resourceURL destination:SVDestinationResourcesDirectory options:0];
     
     
 	// Tell the delegate

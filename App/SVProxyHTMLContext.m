@@ -53,9 +53,9 @@
     return [_target addMedia:media];
 }
 
-- (NSURL *)addResourceAtURL:(NSURL *)fileURL preferredPath:(NSString *)uploadPath options:(NSUInteger)options;
+- (NSURL *)addResourceAtURL:(NSURL *)fileURL destination:(NSString *)uploadPath options:(NSUInteger)options;
 {
-    return [_target addResourceAtURL:fileURL preferredPath:uploadPath options:options];
+    return [_target addResourceAtURL:fileURL destination:uploadPath options:options];
 }
 
 @end

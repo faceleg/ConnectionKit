@@ -155,7 +155,7 @@
 	NSString *path = [[NSBundle mainBundle] pathForResource:baseFileName ofType:@"js"];
 	if (path)
 	{
-		NSURL *URL = [context addResourceAtURL:[NSURL fileURLWithPath:path] preferredPath:SVResourcesDirectory options:0];
+		NSURL *URL = [context addResourceAtURL:[NSURL fileURLWithPath:path] destination:SVDestinationResourcesDirectory options:0];
 		NSString *srcPath = [context relativeStringFromURL:URL];
 		NSString *script = [NSString stringWithFormat:@"<script type=\"text/javascript\" src=\"%@\"></script>\n", srcPath];
 		[context addMarkupToEndOfBody:script];
@@ -219,7 +219,7 @@
 		if (path)
 		{
 			(void) [context addResourceAtURL:[NSURL fileURLWithPath:path isDirectory:YES]
-                               preferredPath:SVDesignDirectory
+                               destination:SVDestinationDesignDirectory
                                      options:0];
 		}
 		

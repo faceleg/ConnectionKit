@@ -39,8 +39,8 @@
 #import "Registration.h"
 
 
-NSString * const SVResourcesDirectory = @"_Resources";
-NSString * const SVDesignDirectory = @"_Design";
+NSString * const SVDestinationResourcesDirectory = @"_Resources";
+NSString * const SVDestinationDesignDirectory = @"_Design";
 
 
 @interface SVHTMLIterator : NSObject
@@ -260,7 +260,7 @@ NSString * const SVDesignDirectory = @"_Design";
                                                         pathForResource:[NSString stringWithFormat:@"jquery-%@%@", JQUERY_VERSION, minimizationSuffix]
                                                         ofType:@"js"]];
 		
-		jQueryURL = [self addResourceAtURL:localJQueryURL preferredPath:SVResourcesDirectory options:0];
+		jQueryURL = [self addResourceAtURL:localJQueryURL destination:SVDestinationResourcesDirectory options:0];
 		
 	}
 	else	// Normal publishing case: remote version from google, fastest for downloading.
@@ -1024,11 +1024,11 @@ NSString * const SVDesignDirectory = @"_Design";
 
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
 {
-    return [self addResourceAtURL:resourceURL preferredPath:SVDesignDirectory options:0];
+    return [self addResourceAtURL:resourceURL destination:SVDestinationDesignDirectory options:0];
 }
 
 - (NSURL *)addResourceAtURL:(NSURL *)fileURL
-              preferredPath:(NSString *)uploadPath
+                destination:(NSString *)uploadPath
                     options:(NSUInteger)options;    // pass in 0
 {
     OBPRECONDITION(fileURL);

@@ -186,9 +186,9 @@
 
 #pragma mark Resources
 
-- (NSURL *)addResourceAtURL:(NSURL *)fileURL preferredPath:(NSString *)uploadPath options:(NSUInteger)options;
+- (NSURL *)addResourceAtURL:(NSURL *)fileURL destination:(NSString *)uploadPath options:(NSUInteger)options;
 {
-    NSURL *result = [super addResourceAtURL:fileURL preferredPath:uploadPath options:options];
+    NSURL *result = [super addResourceAtURL:fileURL destination:uploadPath options:options];
     NSURL *siteURL = [[[_publisher site] hostProperties] siteURL];
     NSURL *uploadURL = [result ks_URLRelativeToURL:siteURL];
     

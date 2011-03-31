@@ -13,8 +13,8 @@
 #import <Cocoa/Cocoa.h>
 
 
-extern NSString * const SVResourcesDirectory;   // _Resources (for now)
-extern NSString * const SVDesignDirectory;      // gets bundled in with design files
+extern NSString * const SVDestinationResourcesDirectory;   // upload *into* the _Resources folder
+extern NSString * const SVDestinationDesignDirectory;      // upload *into* the design's folder
 
 
 enum {
@@ -141,9 +141,9 @@ typedef NSUInteger SVPlaceholderOptions;
 #pragma mark Resources
 
 // These methods return the URL to use for the resource in relation to this context. You can then pass it to -relativeStringFromURL: for example
-// Almost always want to use one of the string constants declared above for upload path, but are welcome to append path components to them
+// You almost always want to use one of the string constants declared above for the destination. If more control is needed, you are welcome to append path components to a directory constant to specify the exact path
 - (NSURL *)addResourceAtURL:(NSURL *)fileURL
-              preferredPath:(NSString *)uploadPath
+                destination:(NSString *)uploadPath
                     options:(NSUInteger)options;    // pass in 0
 
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
