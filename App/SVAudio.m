@@ -408,7 +408,7 @@
 	else
 	{
 		NSString *localPlayerPath = [[NSBundle mainBundle] pathForResource:@"player_mp3_maxi" ofType:@"swf"];
-		NSURL *playerURL = [context addResourceWithURL:[NSURL fileURLWithPath:localPlayerPath]];
+		NSURL *playerURL = [context addResourceAtURL:[NSURL fileURLWithPath:localPlayerPath] preferredPath:SVResourcesDirectory options:0];
 		playerPath = [context relativeStringFromURL:playerURL];
 	}
 	

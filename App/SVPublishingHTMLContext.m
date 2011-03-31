@@ -186,12 +186,12 @@
 
 #pragma mark Resources
 
-- (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
+- (NSURL *)addResourceAtURL:(NSURL *)fileURL preferredPath:(NSString *)uploadPath optins:(NSUInteger)options;
 {
-    [super addResourceWithURL:resourceURL];
-    [_publisher publishResourceAtURL:resourceURL];
+    [super addResourceAtURL:fileURL preferredPath:uploadPath options:options];
+    [_publisher publishResourceAtURL:fileURL];
     
-    return [[[_publisher site] hostProperties] URLForResourceFile:[resourceURL ks_lastPathComponent]];
+    return [[[_publisher site] hostProperties] URLForResourceFile:[fileURL ks_lastPathComponent]];
 }
 
 - (NSURL *)addDesignResourceWithURL:(NSURL *)fileURL;

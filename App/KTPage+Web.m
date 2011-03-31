@@ -752,13 +752,13 @@
 			
 			// Note: We want to add the CSS as a separate link; *not* merging it into main.css, so that it can access the arrow images in _Resources.
 			path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"css"];
-			src = [context addResourceWithURL:[NSURL fileURLWithPath:path]];
+			src = [context addResourceAtURL:[NSURL fileURLWithPath:path] preferredPath:SVResourcesDirectory options:0];
 			srcPath = [context relativeStringFromURL:src];
 			
 			[context writeLinkToStylesheet:srcPath title:nil media:nil];	// nil title; we don't want a title! https://bugs.webkit.org/show_bug.cgi?id=43870
 			
 			path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"js"];
-			src = [context addResourceWithURL:[NSURL fileURLWithPath:path]];
+			src = [context addResourceAtURL:[NSURL fileURLWithPath:path] preferredPath:SVResourcesDirectory options:0];
 			srcPath = [context relativeStringFromURL:src];
 			
 			NSString *prelude = [NSString stringWithFormat:@"\n%@\n%@\n%@\n%@\n%@", 
@@ -786,12 +786,12 @@
 			NSURL *arrowDown = [NSURL fileURLWithPath:[[NSBundle mainBundle]
 													   pathForResource:@"down"
 													   ofType:@"gif"]];
-			NSURL *arrowDownSrc = [context addResourceWithURL:arrowDown];
+			NSURL *arrowDownSrc = [context addResourceAtURL:arrowDown preferredPath:SVResourcesDirectory options:0];
 
 			NSURL *arrowRight = [NSURL fileURLWithPath:[[NSBundle mainBundle]
 														pathForResource:@"right"
 														ofType:@"gif"]];
-			NSURL *arrowRightSrc = [context addResourceWithURL:arrowRight];
+			NSURL *arrowRightSrc = [context addResourceAtURL:arrowRight preferredPath:SVResourcesDirectory options:0];
 			
 			[context startJavascriptElementWithSrc:nil];
 			

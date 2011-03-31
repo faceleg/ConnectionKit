@@ -39,6 +39,10 @@
 #import "Registration.h"
 
 
+NSString * const SVResourcesDirectory = @"_Resources";
+NSString * const SVDesignDirectory = @"_Design";
+
+
 @interface SVHTMLIterator : NSObject
 {
     NSUInteger  _iteration;
@@ -256,7 +260,7 @@
                                                         pathForResource:[NSString stringWithFormat:@"jquery-%@%@", JQUERY_VERSION, minimizationSuffix]
                                                         ofType:@"js"]];
 		
-		jQueryURL = [self addResourceWithURL:localJQueryURL];
+		jQueryURL = [self addResourceAtURL:localJQueryURL preferredPath:SVResourcesDirectory options:0];
 		
 	}
 	else	// Normal publishing case: remote version from google, fastest for downloading.
@@ -1012,7 +1016,7 @@
 	
 	[self writeImageWithSrc:[self relativeStringFromURL:url]
 						alt:altText
-					  width:nil     // -addThumbnailMedia… took care of suppluying width & height for us
+					  width:nil     // -addThumbnailMedia… took care of supplying width & height for us
 					 height:nil];
 }
 
@@ -1020,8 +1024,17 @@
 
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
 {
-    OBPRECONDITION(resourceURL);
-    return resourceURL; // subclasses will correct for publishing
+    return [self addResourceAtURL:resourceURL preferredPath:SVDesignDirectory options:0];
+}
+
+- (NSURL *)addResourceAtURL:(NSURL *)fileURL
+              preferredPath:(NSString *)uploadPath
+                    options:(NSUInteger)options;    // pass in 0
+{
+    OBPRECONDITION(fileURL);
+    OBPRECONDITION(uploadPath);
+    
+    return fileURL; // subclasses will correct for publishing
 }
 
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL

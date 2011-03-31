@@ -13,6 +13,10 @@
 #import <Cocoa/Cocoa.h>
 
 
+extern NSString * const SVResourcesDirectory;   // _Resources (for now)
+extern NSString * const SVDesignDirectory;      // gets bundled in with design files
+
+
 enum {
     SVImageScaleAspectFit = 1 << 0,             // without this, image will be cropped to fill width & height
                                                 // one day, might have option to control if can scale up
@@ -136,8 +140,11 @@ typedef NSUInteger SVPlaceholderOptions;
 
 #pragma mark Resources
 
-// Resources get published to the _Resources directory. These methods return the URL to use for the resource in relation to this context. You can then pass it to -relativeStringFromURL: for example.
-- (NSURL *)addResourceWithURL:(NSURL *)fileURL;
+// These methods return the URL to use for the resource in relation to this context. You can then pass it to -relativeStringFromURL: for example
+// Almost always want to use one of the string constants declared above for upload path, but are welcome to append path components to them
+- (NSURL *)addResourceAtURL:(NSURL *)fileURL
+              preferredPath:(NSString *)uploadPath
+                    options:(NSUInteger)options;    // pass in 0
 
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
                                         object:(id)object;
