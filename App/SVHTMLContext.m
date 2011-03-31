@@ -1406,6 +1406,32 @@
     
 }
 
+- (BOOL)startAnchorElementWithPageRSSFeed:(id <SVPage>)page options:(NSUInteger)options
+{
+    OBPRECONDITION(page);
+    if ( [page feedURL] )
+    {
+        // write out link
+        NSString *href = [[page feedURL] ks_stringRelativeToURL:[self baseURL]];
+        if ( href ) [self pushAttribute:@"href" value:href];
+
+        NSString *title = NSLocalizedString(@"To subscribe to this feed, drag or copy/paste this link to an RSS reader application.", "RSS Badge");
+        if ( title ) [self pushAttribute:@"title" value:href];
+
+        if ( options == 1 ) [self pushAttribute:@"class" value:@"imageLink"];
+        
+        [self startElement:@"a"];
+        return YES;
+    }
+    else
+    {
+        // write out placeholder with button to turn on feed for page
+//         NSString *text = NSLocalizedString(@"The chosen collection has no RSS feed. Please use the Inspector to set it to generate an RSS feed.", "RSS Badge");
+//        [self writePlaceholderWithText:text];
+        return NO;
+    }
+}
+
 @end
 
 
