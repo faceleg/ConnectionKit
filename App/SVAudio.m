@@ -564,14 +564,14 @@
 
 	// I would like to put a warning inside the object tags, but this seems to overpower the controller, at least on webkit.  So don't.
 	// So only do this if it's truly playable.
-	if (unknownTag)
+	//if (unknownTag)
 	{
 		[self startUnknown:context];
 	}
 	
 	// END THE TAGS, in reverse order
 
-	if (unknownTag)
+	//if (unknownTag)
 	{
 		OBASSERT([@"div" isEqualToString:[context topElement]]);
 		[context endElement];
@@ -636,7 +636,7 @@
 	{
 		result =[NSImage imageNamed:@"checkmark"];
 	}
-	else if ([type conformsToUTI:@"public.mp3.ios"])		// HAPPY!  everything-compatible  (This is only there is we know for sure it's iOS compatible!
+	else if ([type conformsToUTI:@"public.mp3.ios"])		// HAPPY!  everything-compatible  (This is only if there is a way to know for sure it's iOS compatible!
 	{
 		result =[NSImage imageNamed:@"checkmark"];
 	}
@@ -699,7 +699,7 @@
 			 || [type conformsToUTI:@"com.apple.quicktime-audio"]
 			 || [type conformsToUTI:(NSString *)kUTTypeMPEG4Audio])
 	{
-		result = NSLocalizedString(@"Audio will not play on Windows PCs unless QuickTime is installed", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
+		result = NSLocalizedString(@"Audio cannot be played in many browsers", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
 	}
 	else		// Other kinds of audio files, or maybe not even an audio file, we don't handle them.
 	{
