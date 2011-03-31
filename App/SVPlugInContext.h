@@ -114,7 +114,7 @@ typedef NSUInteger SVPlaceholderOptions;
 // Returns YES to signify success.
 // Returns NO if the page has no RSS feed, so cannot be linked to. The context will write a placeholder instead if appropriate; you should *not* write any content of your own or call -endElement; just move on!
 // Maybe this should be private API until we target 10.6+?
-- (BOOL)startAnchorElementWithPageRSSFeed:(id <SVPage>)page options:(NSUInteger)options;
+- (BOOL)startAnchorElementWithPageRSSFeed:(id <SVPage>)page attributes:(NSDictionary *)attributes;
 
 
 #pragma mark Headings

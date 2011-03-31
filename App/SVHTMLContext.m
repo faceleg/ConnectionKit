@@ -1480,19 +1480,25 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
 }
 
-- (BOOL)startAnchorElementWithPageRSSFeed:(id <SVPage>)page options:(NSUInteger)options
+- (BOOL)startAnchorElementWithPageRSSFeed:(id <SVPage>)page attributes:(NSDictionary *)attributes
 {
     OBPRECONDITION(page);
     if ( [page hasFeed] )
     {
-        // write out link
         NSString *href = [self relativeStringFromURL:[(KTPage *)page feedURL]];
         if ( href ) [self pushAttribute:@"href" value:href];
 
-        NSString *title = NSLocalizedString(@"To subscribe to this feed, drag or copy/paste this link to an RSS reader application.", "RSS Badge");
+        NSString *title = NSLocalizedString(@"To subscribe to this feed, drag or copy/paste this link to an RSS reader application.", "RSS badge tooltip");
         if ( title ) [self pushAttribute:@"title" value:href];
-
-        if ( options == 1 ) [self pushAttribute:@"class" value:@"imageLink"];
+        
+        for ( NSString *attribute in [attributes allKeys] )
+        {
+            id value = [attributes objectForKey:attribute];
+            if ( value )
+            {
+                [self pushAttribute:attribute value:value];
+            }
+        }
         
         [self startElement:@"a"];
         return YES;
