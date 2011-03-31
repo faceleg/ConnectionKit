@@ -708,7 +708,7 @@
                     openInNewWindow:[[self openInNewWindow] boolValue]];
 }
 
-- (NSURL *)feedURL { return nil; }
+- (BOOL)hasFeed; { return NO; }
 
 - (BOOL)shouldIncludeInIndexes;
 {

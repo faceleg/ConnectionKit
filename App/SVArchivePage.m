@@ -124,7 +124,7 @@
                      openInNewWindow:NO];
 }
 
-- (NSURL *)feedURL { return nil; }
+- (BOOL)hasFeed; { return NO; }
 
 - (NSString *)uploadPath;
 {

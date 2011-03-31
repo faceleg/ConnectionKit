@@ -1483,7 +1483,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 - (BOOL)startAnchorElementWithPageRSSFeed:(id <SVPage>)page options:(NSUInteger)options
 {
     OBPRECONDITION(page);
-    if ( [(KTPage *)page feedURL] )
+    if ( [page hasFeed] )
     {
         // write out link
         NSString *href = [self relativeStringFromURL:[(KTPage *)page feedURL]];
