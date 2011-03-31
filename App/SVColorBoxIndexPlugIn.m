@@ -230,4 +230,9 @@
 	}
 }
 
+- (BOOL)requiresPageLoad;
+{
+    return [self useColorBox];
+}
+
 @end
