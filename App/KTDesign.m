@@ -626,7 +626,7 @@ const int kDesignThumbHeight = 65;
 + (NSString *)remotePathForDesignWithIdentifier:(NSString *)identifier
 {
     NSString *result = [identifier stringByRemovingWhiteSpace];
-	result = [result stringByReplacing:@"." with:@"_"];		// some ISPs don't like "."
+	result = [result stringByReplacingOccurrencesOfString:@"." withString:@"_"];		// some ISPs don't like "."
 	return result;
 }
 

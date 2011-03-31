@@ -68,7 +68,7 @@
 	{
 		title = @"";		// better than nil, which crashes!
 	}
-	NSString *result = [contentFormat stringByReplacing:@"@@" with:title];
+	NSString *result = [contentFormat stringByReplacingOccurrencesOfString:@"@@" withString:title];
 	return result;
 }
 

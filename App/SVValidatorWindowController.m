@@ -394,9 +394,9 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 				// Get the HTML badge, same as you see in the markup
 				NSString *HTMLBadge = @"<span style=\"background:rgb(0,127,255); -webkit-border-radius:3px; padding:2px 5px; color:white; font-size:80%;\">HTML</span>";
 				NSString *noteEscaped = [KSXMLWriter stringFromCharacters:disabledPreviewNote];
-				NSString *noteEscapedBadged = [noteEscaped stringByReplacing:@"HTML" with:HTMLBadge];
+				NSString *noteEscapedBadged = [noteEscaped stringByReplacingOccurrencesOfString:@"HTML" withString:HTMLBadge];
 				NSString *explanationEscaped = [KSXMLWriter stringFromCharacters:disabledPreviewExplanation];
-				NSString *explanationHyperlinked = [explanationEscaped stringByReplacing:@"validator.w3.org" with:@"<a target='_blank' href='http://validator.w3.org/'>validator.w3.org</a>"];
+				NSString *explanationHyperlinked = [explanationEscaped stringByReplacingOccurrencesOfString:@"validator.w3.org" withString:@"<a target='_blank' href='http://validator.w3.org/'>validator.w3.org</a>"];
 				[replacementString appendFormat:@"<p>\n%@ %@\n</p>\n", noteEscapedBadged, explanationHyperlinked];
 			}
 			
@@ -440,7 +440,7 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 			}
 			
 			// In case of feedback reporter use, put in a base HREF. I think I didn't want to do that when loading the URL though.
-			self.validationReportString = [resultingPageString stringByReplacing:@"<head>" with:@"<head><base href='http://validator.w3.org' />"];
+			self.validationReportString = [resultingPageString stringByReplacingOccurrencesOfString:@"<head>" withString:@"<head><base href='http://validator.w3.org' />"];
 			[[oWebView mainFrame] loadHTMLString:resultingPageString
 										 baseURL:[NSURL URLWithString:@"http://validator.w3.org/"]];
 			

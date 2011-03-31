@@ -273,7 +273,7 @@ static id <SVPlugInContext> sCurrentContext;
     
     // Take a stab at Inspector class name
     NSString *className = [NSStringFromClass([self class])
-                           stringByReplacing:@"PlugIn" with:@"Inspector"];
+                           stringByReplacingOccurrencesOfString:@"PlugIn" withString:@"Inspector"];
     
     
     // Take a stab at Inspector nib

@@ -54,7 +54,7 @@
 
 
 @interface NSString (KareliaPrivate)
-- (NSString*)stringByReplacing:(NSString *)value with:(NSString *)newValue;
+- (NSString*)stringByReplacingOccurrencesOfString:(NSString *)value withString:(NSString *)newValue;
 @end
 
 @implementation GeneralIndexPlugIn
@@ -279,7 +279,7 @@
 	{
 		title = @"";		// better than nil, which crashes!
 	}
-	NSString *textToWrite = [format stringByReplacing:@"@@" with:title];
+	NSString *textToWrite = [format stringByReplacingOccurrencesOfString:@"@@" withString:title];
 	[context writeCharacters:textToWrite];
 	[context endElement];	// </a>
 	[context endElement];	// </div> continue-reading-link
