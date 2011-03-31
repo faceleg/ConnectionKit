@@ -696,29 +696,34 @@
 		playerPath = [context relativeStringFromURL:playerURL];
 	}
 	
-	if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context];
-	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
-	[context pushAttribute:@"data" value:playerPath];	
-	
-	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSMakeSize(0,barHeight)];
+	if (playerPath) 
+    {
+        if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context];
+        [context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
+        [context pushAttribute:@"data" value:playerPath];
+        
+        [context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSMakeSize(0,barHeight)];
 
-	// ID on <object> apparently required for IE8
-	NSString *elementID = [context pushPreferredIdName:[playerPath lastPathComponent]];
-    [context startElement:@"object"];
-	
-	[context writeParamElementWithName:@"movie" value:playerPath];
-	[context writeParamElementWithName:@"flashvars" value:flashVars];
-	
-	NSDictionary *videoFlashExtraParams = [defaults objectForKey:@"videoFlashExtraParams"];
-	if ([videoFlashExtraParams respondsToSelector:@selector(keyEnumerator)])	// sanity check
-	{
-		for (NSString *key in videoFlashExtraParams)
-		{
-			[context writeParamElementWithName:key value:[videoFlashExtraParams objectForKey:key]];
-		}
-	}
+        // ID on <object> apparently required for IE8
+        NSString *elementID = [context pushPreferredIdName:[playerPath lastPathComponent]];
+        [context startElement:@"object"];
+        
+        [context writeParamElementWithName:@"movie" value:playerPath];
+        [context writeParamElementWithName:@"flashvars" value:flashVars];
+        
+        NSDictionary *videoFlashExtraParams = [defaults objectForKey:@"videoFlashExtraParams"];
+        if ([videoFlashExtraParams respondsToSelector:@selector(keyEnumerator)])	// sanity check
+        {
+            for (NSString *key in videoFlashExtraParams)
+            {
+                [context writeParamElementWithName:key value:[videoFlashExtraParams objectForKey:key]];
+            }
+        }
 
-	return elementID;
+        return elementID;
+    }
+    
+    return nil;
 }
 
 - (NSString *)cannotViewTitle:(SVHTMLContext *)context

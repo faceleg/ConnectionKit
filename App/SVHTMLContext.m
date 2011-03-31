@@ -1098,7 +1098,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     {
         // Proper publishing subclass will override to publish parsed string
         NSURL *url = [self addResourceWithURL:templateURL]; 
-        [context writeJavascriptWithSrc:[self relativeStringFromURL:url]];
+        if (url) [context writeJavascriptWithSrc:[self relativeStringFromURL:url]];
     }
     else
     {
