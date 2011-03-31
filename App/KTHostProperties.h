@@ -42,8 +42,6 @@
 - (NSString *)documentRoot;
 - (NSString *)subfolder;
 
-- (NSURL *)resourcesDirectoryURL;
-
 - (NSString *)hostPropertiesReport;
 
 

@@ -440,18 +440,6 @@ to be verified.
 	}
 }
 
-#pragma mark -
-#pragma mark Resources
-
-- (NSURL *)resourcesDirectoryURL
-{
-	NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
-	NSURL *result = [NSURL ks_URLWithPath:resourcesDirectoryName relativeToURL:[self siteURL] isDirectory:YES];
-	
-	OBPOSTCONDITION(result);
-	return result;
-}
-
 #pragma mark Troubleshooting
 
 - (NSString *)hostPropertiesReport
