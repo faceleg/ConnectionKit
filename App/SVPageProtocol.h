@@ -49,7 +49,7 @@ typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSent
 #pragma mark Navigation
 - (BOOL)shouldIncludeInIndexes;
 - (BOOL)shouldIncludeInSiteMaps;
-- (BOOL)hasFeed;
+@property(nonatomic, readonly) BOOL hasFeed;    // KVO-compliant
 
 
 @end

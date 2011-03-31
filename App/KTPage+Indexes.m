@@ -201,6 +201,7 @@
 }
 
 - (BOOL)hasFeed; { return [self feedURL] != nil; }
++ (NSString *)keyPathsForValuesAffectingHasFeed; { return [NSSet setWithObject:@"feedURL"]; }
 
 /*  The pages that will go into the RSS feed. Sort chronologically and apply the limit
  */
