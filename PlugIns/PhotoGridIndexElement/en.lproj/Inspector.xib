@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
+			<integer value="118"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -319,11 +319,11 @@
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<object class="NSCustomResource" key="NSOnImage" id="281343863">
+										<object class="NSCustomResource" key="NSOnImage" id="414098552">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">NSMenuCheckmark</string>
 										</object>
-										<object class="NSCustomResource" key="NSMixedImage" id="72524923">
+										<object class="NSCustomResource" key="NSMixedImage" id="476368951">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">NSMenuMixedState</string>
 										</object>
@@ -342,8 +342,8 @@
 												<string key="NSKeyEquiv"/>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="281343863"/>
-												<reference key="NSMixedImage" ref="72524923"/>
+												<reference key="NSOnImage" ref="414098552"/>
+												<reference key="NSMixedImage" ref="476368951"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<int key="NSTag">1</int>
 												<reference key="NSTarget" ref="965888276"/>
@@ -354,8 +354,8 @@
 												<string key="NSKeyEquiv"/>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="281343863"/>
-												<reference key="NSMixedImage" ref="72524923"/>
+												<reference key="NSOnImage" ref="414098552"/>
+												<reference key="NSMixedImage" ref="476368951"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<int key="NSTag">2</int>
 												<reference key="NSTarget" ref="965888276"/>
@@ -397,8 +397,8 @@
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
 										<int key="NSState">1</int>
-										<reference key="NSOnImage" ref="281343863"/>
-										<reference key="NSMixedImage" ref="72524923"/>
+										<reference key="NSOnImage" ref="414098552"/>
+										<reference key="NSMixedImage" ref="476368951"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<int key="NSTag">1</int>
 										<reference key="NSTarget" ref="890931918"/>
@@ -414,8 +414,8 @@
 												<string key="NSKeyEquiv"/>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="281343863"/>
-												<reference key="NSMixedImage" ref="72524923"/>
+												<reference key="NSOnImage" ref="414098552"/>
+												<reference key="NSMixedImage" ref="476368951"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<reference key="NSTarget" ref="890931918"/>
 											</object>
@@ -426,8 +426,8 @@
 												<string key="NSKeyEquiv"/>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="281343863"/>
-												<reference key="NSMixedImage" ref="72524923"/>
+												<reference key="NSOnImage" ref="414098552"/>
+												<reference key="NSMixedImage" ref="476368951"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<int key="NSTag">2</int>
 												<reference key="NSTarget" ref="890931918"/>
@@ -603,22 +603,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: inspectedObjectsController.selection.enableSlideshow</string>
-						<reference key="source" ref="1064813887"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="441628022">
-							<reference key="NSSource" ref="1064813887"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">enabled: inspectedObjectsController.selection.enableSlideshow</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.enableSlideshow</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">96</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: inspectedObjectsController.selection.slideshowSpeed</string>
 						<reference key="source" ref="1064813887"/>
 						<reference key="destination" ref="1001"/>
@@ -680,22 +664,6 @@
 						</object>
 					</object>
 					<int key="connectionID">134</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: inspectedObjectsController.selection.enableSlideshow</string>
-						<reference key="source" ref="11480484"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="1053813422">
-							<reference key="NSSource" ref="11480484"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">enabled: inspectedObjectsController.selection.enableSlideshow</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.enableSlideshow</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">135</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -923,14 +891,68 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled2: inspectedObjectsController.selection.useColorBox</string>
+						<string key="label">enabled: inspectedObjectsController.selection.useColorBox</string>
+						<reference key="source" ref="1064813887"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector" id="252071941">
+							<reference key="NSSource" ref="1064813887"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.useColorBox</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.useColorBox</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+								</object>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">171</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: inspectedObjectsController.selection.enableSlideshow</string>
 						<reference key="source" ref="1064813887"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="1064813887"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">enabled2: inspectedObjectsController.selection.useColorBox</string>
-							<string key="NSBinding">enabled2</string>
+							<string key="NSLabel">hidden: inspectedObjectsController.selection.enableSlideshow</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.enableSlideshow</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<reference key="NSPreviousConnector" ref="252071941"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">173</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.useColorBox</string>
+						<reference key="source" ref="11480484"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector" id="80896255">
+							<reference key="NSSource" ref="11480484"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.useColorBox</string>
+							<string key="NSBinding">enabled</string>
 							<string key="NSKeyPath">inspectedObjectsController.selection.useColorBox</string>
 							<object class="NSDictionary" key="NSOptions">
 								<bool key="EncodedWithXMLCoder">YES</bool>
@@ -949,45 +971,31 @@
 									<integer value="-1"/>
 								</object>
 							</object>
-							<reference key="NSPreviousConnector" ref="441628022"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">167</int>
+					<int key="connectionID">174</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled2: inspectedObjectsController.selection.useColorBox</string>
+						<string key="label">hidden: inspectedObjectsController.selection.enableSlideshow</string>
 						<reference key="source" ref="11480484"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="11480484"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">enabled2: inspectedObjectsController.selection.useColorBox</string>
-							<string key="NSBinding">enabled2</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.useColorBox</string>
+							<string key="NSLabel">hidden: inspectedObjectsController.selection.enableSlideshow</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.enableSlideshow</string>
 							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-								</object>
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
 							</object>
-							<reference key="NSPreviousConnector" ref="1053813422"/>
+							<reference key="NSPreviousConnector" ref="80896255"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">169</int>
+					<int key="connectionID">176</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1105,8 +1113,8 @@
 							<reference ref="974426840"/>
 							<reference ref="270821824"/>
 							<reference ref="501850727"/>
-							<reference ref="11480484"/>
 							<reference ref="1064813887"/>
+							<reference ref="11480484"/>
 						</object>
 						<reference key="parent" ref="1005"/>
 					</object>
@@ -1186,34 +1194,6 @@
 						<int key="objectID">122</int>
 						<reference key="object" ref="229483012"/>
 						<reference key="parent" ref="724412007"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">81</int>
-						<reference key="object" ref="1064813887"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="633053453"/>
-						</object>
-						<reference key="parent" ref="361331653"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">82</int>
-						<reference key="object" ref="633053453"/>
-						<reference key="parent" ref="1064813887"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">123</int>
-						<reference key="object" ref="11480484"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="975631762"/>
-						</object>
-						<reference key="parent" ref="361331653"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">124</int>
-						<reference key="object" ref="975631762"/>
-						<reference key="parent" ref="11480484"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">125</int>
@@ -1328,6 +1308,34 @@
 						<int key="objectID">153</int>
 						<reference key="object" ref="567314691"/>
 						<reference key="parent" ref="223598361"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">81</int>
+						<reference key="object" ref="1064813887"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="633053453"/>
+						</object>
+						<reference key="parent" ref="361331653"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">82</int>
+						<reference key="object" ref="633053453"/>
+						<reference key="parent" ref="1064813887"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">123</int>
+						<reference key="object" ref="11480484"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="975631762"/>
+						</object>
+						<reference key="parent" ref="361331653"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">124</int>
+						<reference key="object" ref="975631762"/>
+						<reference key="parent" ref="11480484"/>
 					</object>
 				</object>
 			</object>
@@ -1539,7 +1547,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">169</int>
+			<int key="maxID">176</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.1+">
