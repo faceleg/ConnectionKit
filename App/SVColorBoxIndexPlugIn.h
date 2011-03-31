@@ -40,6 +40,6 @@ enum { kSlideshowNone, kSlideshowManual, kSlideshowAutomatic };
 @property  int	slideshowType;
 
 - (NSString *)colorBoxParametersWithGroupID:(NSString *)idName;
-
+- (NSString *)parameterLineForPreviewOnly:(id<SVPlugInContext>)context;
 
 @end

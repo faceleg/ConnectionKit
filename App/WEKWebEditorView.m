@@ -1828,6 +1828,39 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
+- (void)webView:(WebView *)webView windowScriptObjectAvailable:(WebScriptObject *)windowScriptObject;
+{
+	VALIDATION((@"%s %@",__FUNCTION__, frame));
+	
+	[windowScriptObject setValue:self forKey:@"WEKWebEditorView"];
+
+}
+
+
+- (id)objectForWebScript
+{
+    return self;
+}
+
++ (NSString *)webScriptNameForSelector:(SEL)aSelector
+{
+	if (aSelector == @selector(deselectDOMRange))
+	{
+		return @"ks_deselectDOMRange";
+	}
+	return @"";
+}
+
++ (BOOL)isSelectorExcludedFromWebScript:(SEL)selector
+{
+    return (selector != @selector(deselectDOMRange));
+}
+
+- (void)deselectDOMRange
+{
+	[self setSelectedDOMRange:nil affinity:NSSelectionAffinityUpstream];
+}
+
 #pragma mark WebPolicyDelegate
 
 /*	We don't want to allow navigation within Sandvox! Open in web browser instead

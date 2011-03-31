@@ -74,6 +74,30 @@
 	self.autoStartSlideshow = (kSlideshowAutomatic == slideshowType);
 }
 
+- (NSString *)parameterLineForPreviewOnly:(id <SVPlugInContext>)context;
+{
+	NSString *result = [context isForEditing]
+	?
+	@"			onLoad: function(){ "
+	@"\n"
+	@"var range = document.createRange();"
+	@"\n"
+	@"range.selectNodeContents($('h1').get(0));"
+	@"\n"
+	@"var selection = window.getSelection();"
+	@"\n"
+	@"selection.removeAllRanges();"
+	@"\n"
+	@"selection.addRange(range);"
+	@"\n"
+	@"window.WEKWebEditorView.ks_deselectDOMRange();"
+	@"\n"
+	@"},\n"
+	:	@"";
+	
+	return result;
+	
+}
 // Called by subclass when building up script
 
 - (NSString *)colorBoxParametersWithGroupID:(NSString *)idName;

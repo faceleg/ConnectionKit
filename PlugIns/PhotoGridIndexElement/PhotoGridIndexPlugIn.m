@@ -74,21 +74,6 @@
 		// FIXME: Really, to group multiple photo grids together, we need a function for rel to return a unique ID of the enclosing photogrid-index
 		// FIXME: Instead of '.gridItem' could we search for all .gridItem with a sub-node of an a[rel='enclosure'] ? (To skip non-photo entries)
 		
-		NSString *previewOnlyOptions = [context isForEditing]
-		?	@"			onLoad: function(){ "
-		"\n"
-		"var range = document.createRange();"
-		"\n"
-		"range.selectNodeContents($('h1').get(0));"
-		"\n"
-		"var selection = window.getSelection();"
-		"\n"
-		"selection.removeAllRanges();"
-		"\n"
-        "selection.addRange(range);"
-		"\n"
-		"},\n"
-		:	@"";
 		
 		NSString *feed = [NSString stringWithFormat:
 						  @"<script type=\"text/javascript\">\n"
@@ -103,7 +88,7 @@
 						  @"});\n"
 						  @"</script>\n",
 						  [self colorBoxParametersWithGroupID:@"gridItem"],
-						  previewOnlyOptions
+						  [self parameterLineForPreviewOnly:context]
 						  ];
 		[context addMarkupToEndOfBody:feed];
 	}
