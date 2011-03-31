@@ -1499,15 +1499,23 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                 [self pushAttribute:attribute value:value];
             }
         }
-        
         [self startElement:@"a"];
+        
         return YES;
     }
     else
     {
         // write out placeholder with button to turn on feed for page
-        NSString *text = NSLocalizedString(@"The chosen collection has no RSS feed. Please use the Inspector to set it to generate an RSS feed.", "RSS badge feed placeholder");
+        NSString *text = NSLocalizedString(@"The chosen collection has no RSS feed. ", "RSS badge feed placeholder");
         [self writePlaceholderWithText:text];
+        
+        NSDictionary *attrs = [NSDictionary dictionaryWithObject:@"svx-placeholder" forKey:@"class"];
+        [self startElement:@"div" attributes:attrs];
+        
+        NSString *buttonTitle = NSLocalizedString(@"Generate Feed", "");
+        [self writeHTMLFormat:@"<button onclick=\"window.location = 'x-sandvox-rssfeed-activate://%@';\">%@</button>", [page uniqueID], buttonTitle];
+        [self endElement]; // </div>
+        
         return NO;
     }
 }
