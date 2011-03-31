@@ -1828,36 +1828,40 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
-- (void)webView:(WebView *)webView windowScriptObjectAvailable:(WebScriptObject *)windowScriptObject;
+- (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
 {
 	VALIDATION((@"%s %@",__FUNCTION__, frame));
 	
-	[windowScriptObject setValue:self forKey:@"WEKWebEditorView"];
+	[windowObject setValue:self forKey:@"WEKWebEditorView"];
 
 }
 
 
 - (id)objectForWebScript
 {
+	VALIDATION((@"%s",__FUNCTION__));
     return self;
 }
 
 + (NSString *)webScriptNameForSelector:(SEL)aSelector
 {
+	VALIDATION((@"%s %@",__FUNCTION__, NSStringFromSelector(aSelector)));
 	if (aSelector == @selector(deselectDOMRange))
 	{
-		return @"ks_deselectDOMRange";
+		return @"deselectDOMRange";
 	}
 	return @"";
 }
 
-+ (BOOL)isSelectorExcludedFromWebScript:(SEL)selector
++ (BOOL)isSelectorExcludedFromWebScript:(SEL)aSelector
 {
-    return (selector != @selector(deselectDOMRange));
+	VALIDATION((@"%s %@",__FUNCTION__, NSStringFromSelector(aSelector)));
+    return (aSelector != @selector(deselectDOMRange));
 }
 
 - (void)deselectDOMRange
 {
+	LOG((@"%s",__FUNCTION__));
 	[self setSelectedDOMRange:nil affinity:NSSelectionAffinityUpstream];
 }
 
