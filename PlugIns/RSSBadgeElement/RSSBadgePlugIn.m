@@ -207,7 +207,6 @@
                     [context endElement]; // </img>
                     [context endElement]; // </a>                    
                 }
-
             }
             else
             {

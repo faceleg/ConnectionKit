@@ -1372,9 +1372,31 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     // x-sandvox-rssfeed-activate: turns on (standard) RSS feed for referenced collection
     else if ([[URL scheme] isEqualToString:@"x-sandvox-rssfeed-activate"])
     {
-        NSString *collectionID = [URL resourceSpecifier];
-        //FIXME: somehow track down collection by uniqueID in moc and turn on feed?
-        LOG((@"wants to turn on RSS feed for page with uniqueID %@", collectionID));
+        NSString *uniqueID = [URL resourceSpecifier];
+        if ( uniqueID )
+        {
+            KTPage *page = [KTPage pageWithUniqueID:uniqueID 
+                             inManagedObjectContext:[[self loadedPage] managedObjectContext]];
+            if ( page )
+            {
+                if ( [page isCollection] )
+                {
+                    page.collectionSyndicationType = [NSNumber numberWithInt:1]; //FIXME: where are syndication types defined?
+                }
+                else
+                {
+                    LOG((@"x-sandvox-rssfeed-activate: not a collection, could not activate"));
+                }
+            }
+            else
+            {
+                LOG((@"x-sandvox-rssfeed-activate: could not locate collection to activate"));
+            }
+        }
+        else
+        {
+            LOG((@"x-sandvox-rssfeed-activate: could not determine uniqueID of collection to activate"));
+        }        
     }
     
         
