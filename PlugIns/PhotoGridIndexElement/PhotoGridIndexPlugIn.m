@@ -74,8 +74,9 @@
 		// FIXME: Really, to group multiple photo grids together, we need a function for rel to return a unique ID of the enclosing photogrid-index
 		// FIXME: Instead of '.gridItem' could we search for all .gridItem with a sub-node of an a[rel='enclosure'] ? (To skip non-photo entries)
 		
-		
-		// FIXME -- maybe I don't need custom title, if we can use the function like this?
+		NSString *previewOnlyOptions = [context isForEditing]
+		?	@"			onLoad: function(){ $(this).blur() },\n"
+		:	@"";
 		
 		NSString *feed = [NSString stringWithFormat:
 						  @"<script type=\"text/javascript\">\n"
@@ -85,10 +86,12 @@
 						  @"			href: function(){ return $(this).find(\"a[rel='enclosure']\").attr('href'); },\n"
 						  @"			title: function(){ return $(this).text(); },\n"
 						  @"%@"
+						  @"%@"
 						  @"	});\n"
 						  @"});\n"
 						  @"</script>\n",
-						  [self colorBoxParametersWithGroupID:@"gridItem"]
+						  [self colorBoxParametersWithGroupID:@"gridItem"],
+						  previewOnlyOptions
 						  ];
 		[context addMarkupToEndOfBody:feed];
 	}
