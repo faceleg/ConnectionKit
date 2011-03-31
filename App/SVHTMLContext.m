@@ -761,10 +761,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (NSString *)relativeStringFromURL:(NSURL *)URL;
 {
-    OBPRECONDITION(URL);
-    
     NSString *result;
-    
     switch ([self generationPurpose])
     {
         case kSVHTMLGenerationPurposeEditing:
@@ -1086,7 +1083,8 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     // Figure URL from upload path
     NSURL *siteURL = [[[[self page] site] hostProperties] siteURL];
-    OBASSERT(siteURL);
+    if (!siteURL) return nil;
+    
     return [NSURL ks_URLWithPath:uploadPath relativeToURL:siteURL isDirectory:NO];
 }
 
