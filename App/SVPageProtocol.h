@@ -6,6 +6,10 @@
 //  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
+//  This header should be well commented as to its functionality. Further information can be found at 
+//  http://docs.karelia.com/z/Sandvox_Developers_Guide.html
+
+
 #import <Cocoa/Cocoa.h>
 #import "SVPlugIn.h"
 
@@ -34,7 +38,6 @@ typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSent
 
 #pragma mark Children
 
-// Most SVPage methods aren't KVO-compliant. Instead, observe all of -automaticRearrangementKeyPaths.
 @property(nonatomic, readonly) BOOL isCollection;   // or is it enough to test if childPages is non-nil?
 - (NSArray *)childPages;
 - (id <SVPage>)parentPage;

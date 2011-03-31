@@ -6,6 +6,10 @@
 //  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
+//  This header should be well commented as to its functionality. Further information can be found at 
+//  http://docs.karelia.com/z/Sandvox_Developers_Guide.html
+
+
 #import <Cocoa/Cocoa.h>
 #import "SVPlugInContext.h"
 #import "SVPasteboardItem.h"

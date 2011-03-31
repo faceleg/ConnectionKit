@@ -6,6 +6,10 @@
 //  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
+//  Represents a web location (e.g. a .webloc file). This is a URL and, optionally, a title. Further information can be found at
+//  http://docs.karelia.com/z/Sandvox_Developers_Guide.html
+
+
 #import <Cocoa/Cocoa.h>
 
 

@@ -6,7 +6,13 @@
 //  Copyright 2011 Karelia Software. All rights reserved.
 //
 
+//  Provides the standard Sandvox UI for selecting a collection to index. Further information can be found at
+//  http://docs.karelia.com/z/Sandvox_Developers_Guide.html
+
+
 #import "SVInspectorViewController.h"
+
+
 @class KTLinkSourceView;
 
 @interface SVIndexInspectorViewController : SVInspectorViewController 

@@ -6,9 +6,10 @@
 //  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
-//
-//  +makeInspectorViewController will return a SVIndexInspectorViewController if no better class is provided by the plug-in
-//
+//  +makeInspectorViewController will return a SVIndexInspectorViewController if no better class is provided by the plug-in. Further information can be found at 
+//  http://docs.karelia.com/z/Sandvox_Developers_Guide.html
+
+
 
 
 #import "SVPlugIn.h"
