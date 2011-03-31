@@ -390,6 +390,20 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [self didUpdateWithSelector:_cmd];
 }
 
+- (void)setNeedsUpdate;
+{
+    if ([[self representedObject] requiresPageLoad])
+    {
+        [[self webEditorViewController] setNeedsUpdate];
+    }
+    else
+    {
+        [super setNeedsUpdate];
+    }
+}
+
+#pragma mark Dependencies
+
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary *)change
@@ -1059,5 +1073,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 }
 
 - (BOOL)shouldPublishEditingElementID { return NO; }
+
+- (BOOL)requiresPageLoad; { return NO; }
 
 @end

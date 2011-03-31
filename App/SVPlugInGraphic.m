@@ -479,5 +479,12 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [propertyList setObject:[self extensibleProperties] forKey:@"plugInProperties"];
 }
 
+#pragma mark DOM
+
+- (BOOL)requiresPageLoad;
+{
+    return ([[self plugIn] respondsToSelector:_cmd] ? [(id)[self plugIn] requiresPageLoad] : NO);
+}
+
 @end
 
