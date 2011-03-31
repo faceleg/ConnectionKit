@@ -201,13 +201,6 @@
 		NSString *colorCSS = [NSString stringWithFormat:@"#cboxOverlay{background:%@;}", colorString];
 		
 		[[context extraHeaderMarkup] appendFormat:@"\n<style type='text/css'>%@</style>", colorCSS];
-		
-		if ([context isForEditing])
-		{
-			[[context extraHeaderMarkup] appendFormat:@"\n<style type='text/css'>\n"
-			 @"#cboxWrapper { -webkit-transform: rotateY(0deg); }"
-			 @"\n</style>", colorCSS];
-		}
 	}
 }
 
