@@ -1369,10 +1369,10 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         }
     }
     
-    // x-sandvox-rssfeed-activate:// links turn on RSS feed (Standard) for referenced collection
+    // x-sandvox-rssfeed-activate: turns on (standard) RSS feed for referenced collection
     else if ([[URL scheme] isEqualToString:@"x-sandvox-rssfeed-activate"])
     {
-        NSString *collectionID = [URL path];
+        NSString *collectionID = [URL resourceSpecifier];
         //FIXME: somehow track down collection by uniqueID in moc and turn on feed?
         LOG((@"wants to turn on RSS feed for page with uniqueID %@", collectionID));
     }
