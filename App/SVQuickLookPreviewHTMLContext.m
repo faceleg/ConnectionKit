@@ -58,7 +58,7 @@
         // Yes, this check should be done better than just the filename
         if ([[fileURL ks_lastPathComponent] isEqualToString:@"main.css"])
         {
-            return [super addCSSWithURL:fileURL];
+            return [super addResourceAtURL:fileURL destination:SVDestinationMainCSS options:0];
         }
         
         

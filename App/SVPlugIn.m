@@ -119,7 +119,7 @@ static id <SVPlugInContext> sCurrentContext;
         if ( cssPath )
         {
             NSURL *cssURL = [NSURL fileURLWithPath:cssPath];
-            [context addCSSWithURL:cssURL];
+            [context addResourceAtURL:cssURL destination:SVDestinationMainCSS options:0];
         }
     }
     

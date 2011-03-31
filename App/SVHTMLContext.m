@@ -197,7 +197,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     // Global CSS
     NSString *path = [[NSBundle mainBundle] pathForResource:@"sandvox" ofType:@"css"];
-    if (path) [self addCSSWithURL:[NSURL fileURLWithPath:path]];
+    if (path) [self addResourceAtURL:[NSURL fileURLWithPath:path] destination:SVDestinationMainCSS options:0];
 }
 
 - (void)writeDocumentContentsWithPage:(KTPage *)page;
@@ -213,7 +213,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 	{
 		NSString *editingCSSPath = [[NSBundle mainBundle] pathForResource:@"design-time"
                                                                    ofType:@"css"];
-        if (editingCSSPath) [self addCSSWithURL:[NSURL fileURLWithPath:editingCSSPath]];
+        if (editingCSSPath) [self addResourceAtURL:[NSURL fileURLWithPath:editingCSSPath] destination:SVDestinationMainCSS options:0];
 	}    
 }
 

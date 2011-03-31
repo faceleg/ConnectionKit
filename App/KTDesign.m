@@ -784,7 +784,7 @@ const int kDesignThumbHeight = 65;
 	{
 		NSString *basePath = [[self bundle] resourcePath];
 		NSString *fullPath = [basePath stringByAppendingPathComponent:@"main.css"];
-		[context addCSSWithURL:[NSURL fileURLWithPath:fullPath]];
+		[context addResourceAtURL:[NSURL fileURLWithPath:fullPath] destination:SVDestinationMainCSS options:0];
 		
 		NSDictionary *variationDict = [self variationDict];
 		id file = [variationDict objectForKey:@"file"];
@@ -792,7 +792,7 @@ const int kDesignThumbHeight = 65;
 		{
 			NSString *fileCSS = [NSString stringWithFormat:@"%@.css", file];
 			fullPath = [basePath stringByAppendingPathComponent:fileCSS];
-			[context addCSSWithURL:[NSURL fileURLWithPath:fullPath]];
+			[context addResourceAtURL:[NSURL fileURLWithPath:fullPath] destination:SVDestinationMainCSS options:0];
 		}	
 	}
 }
