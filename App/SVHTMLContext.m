@@ -1506,8 +1506,8 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     else
     {
         // write out placeholder with button to turn on feed for page
-//         NSString *text = NSLocalizedString(@"The chosen collection has no RSS feed. Please use the Inspector to set it to generate an RSS feed.", "RSS Badge");
-//        [self writePlaceholderWithText:text];
+        NSString *text = NSLocalizedString(@"The chosen collection has no RSS feed. Please use the Inspector to set it to generate an RSS feed.", "RSS badge feed placeholder");
+        [self writePlaceholderWithText:text];
         return NO;
     }
 }
