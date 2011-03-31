@@ -188,6 +188,15 @@
 
 - (NSURL *)addResourceAtURL:(NSURL *)fileURL destination:(NSString *)uploadPath options:(NSUInteger)options;
 {
+    if ([uploadPath isEqualToString:SVDestinationMainCSS])
+    {
+        // Append to main.css
+        [_publisher addCSSWithURL:fileURL];
+        return [super addResourceAtURL:fileURL destination:uploadPath options:options];
+    }
+    
+    
+    
     NSURL *result = [super addResourceAtURL:fileURL destination:uploadPath options:options];
     NSURL *siteURL = [[[_publisher site] hostProperties] siteURL];
     NSURL *uploadURL = [result ks_URLRelativeToURL:siteURL];
@@ -243,14 +252,6 @@
     [_publisher addCSSString:css];
     
     return [super addCSSString:css];
-}
-
-- (NSURL *)addCSSWithURL:(NSURL *)cssURL;
-{
-    // Append to main.css
-    [_publisher addCSSWithURL:cssURL];
-
-    return [super addCSSWithURL:cssURL];
 }
 
 #pragma mark Change Tracking

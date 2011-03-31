@@ -48,20 +48,27 @@
 
 #pragma mark CSS
 
-- (NSURL *)addCSSWithURL:(NSURL *)cssURL;
+- (NSURL *)addResourceAtURL:(NSURL *)fileURL
+                destination:(NSString *)uploadPath
+                    options:(NSUInteger)options;    // pass in 0
 {
-    // CSS other than design should be written inline
-    // Yes, this check should be done better than just the filename
-    if ([[cssURL ks_lastPathComponent] isEqualToString:@"main.css"])
+    if ([uploadPath isEqualToString:SVDestinationMainCSS])
     {
-        return [super addCSSWithURL:cssURL];
+        // CSS other than design should be written inline
+        // Yes, this check should be done better than just the filename
+        if ([[fileURL ks_lastPathComponent] isEqualToString:@"main.css"])
+        {
+            return [super addCSSWithURL:fileURL];
+        }
+        
+        
+        NSString *css = [NSString stringWithContentsOfURL:fileURL
+                                                 encoding:NSUTF8StringEncoding
+                                                    error:NULL];
+        return [self addCSSString:css];
     }
     
-    
-    NSString *css = [NSString stringWithContentsOfURL:cssURL
-                                             encoding:NSUTF8StringEncoding
-                                                error:NULL];
-    return [self addCSSString:css];
+    return [super addResourceAtURL:fileURL destination:uploadPath options:options];
 }
 
 @end

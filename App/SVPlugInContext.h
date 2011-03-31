@@ -13,8 +13,9 @@
 #import <Cocoa/Cocoa.h>
 
 
-extern NSString * const SVDestinationResourcesDirectory;   // upload *into* the _Resources folder
-extern NSString * const SVDestinationDesignDirectory;      // upload *into* the design's folder
+extern NSString * const SVDestinationResourcesDirectory;    // upload *into* the _Resources folder
+extern NSString * const SVDestinationDesignDirectory;       // upload *into* the design's folder
+extern NSString * const SVDestinationMainCSS;               // *append* to design's main.css
 
 
 enum {
@@ -62,18 +63,6 @@ typedef NSUInteger SVPlaceholderOptions;
 #pragma mark URLs
 // To make markup more flexible, relative string should generally be used instead of full URLs. This method quickly generates the best way to get from the current page to a given URL.
 - (NSString *)relativeStringFromURL:(NSURL *)URL;
-
-
-#pragma mark CSS
-
-/*  All these methods return the URL of the file where the CSS will end up. Presently while editing this is nil
- */
-
-- (NSURL *)addCSSString:(NSString *)css;    // css can be nil if you just want to find location
-- (NSURL *)addCSSWithURL:(NSURL *)cssURL;
-
-// For CSS that refers to other files, the context must be asked where those files are. You can do this by hand, building up a string and passing to -addCSSString: or there's this method. The CSS will be parsed just like Template.html. Generally, your plug-in is the object to be parsed
-- (NSURL *)addCSSWithTemplateAtURL:(NSURL *)templateURL object:(id)object;
 
 
 #pragma mark Basic HTML Writing
@@ -138,7 +127,7 @@ typedef NSUInteger SVPlaceholderOptions;
 - (void)writeJavascriptWithSrc:(NSString *)src;
 
 
-#pragma mark Resources
+#pragma mark CSS, Javascript and other Resources
 
 // These methods return the URL to use for the resource in relation to this context. You can then pass it to -relativeStringFromURL: for example
 // You almost always want to use one of the string constants declared above for the destination. If more control is needed, you are welcome to append path components to a directory constant to specify the exact path
@@ -148,6 +137,17 @@ typedef NSUInteger SVPlaceholderOptions;
 
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
                                         object:(id)object;
+
+
+/*  All these methods return the URL of the file where the CSS will end up. Presently while editing this is nil
+ */
+
+- (NSURL *)addCSSString:(NSString *)css;    // css can be nil if you just want to find location
+
+// For CSS that refers to other files, the context must be asked where those files are. You can do this by hand, building up a string and passing to -addCSSString: or there's this method. The CSS will be parsed just like Template.html. Generally, your plug-in is the object to be parsed
+- (NSURL *)addCSSWithTemplateAtURL:(NSURL *)templateURL object:(id)object;
+
+// -addCSSWithURL: has been superseded by the general resource API above
 
 
 #pragma mark Placeholder

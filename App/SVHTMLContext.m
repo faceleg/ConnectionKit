@@ -41,6 +41,7 @@
 
 NSString * const SVDestinationResourcesDirectory = @"_Resources";
 NSString * const SVDestinationDesignDirectory = @"_Design";
+NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 
 @interface SVHTMLIterator : NSObject
@@ -391,30 +392,7 @@ NSString * const SVDestinationDesignDirectory = @"_Design";
 
 - (NSURL *)addCSSWithURL:(NSURL *)cssURL;
 {
-    if ([self isForPublishing])
-    {
-        return [self mainCSSURL];
-    }
-    else
-    {
-        if (_headerMarkupIndex != NSNotFound)
-        {
-            KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
-            
-            [writer writeLinkToStylesheet:[self relativeStringFromURL:cssURL]
-                                  title:nil
-                                  media:nil];
-            
-            [writer writeString:@"\n"];
-            [writer release];
-        }
-        else
-        {
-            [self writeLinkToStylesheet:[self relativeStringFromURL:cssURL] title:nil media:nil];
-        }
-        
-        return cssURL;
-    }
+    return [self addResourceAtURL:cssURL destination:SVDestinationMainCSS options:0];
 }
 
 - (NSURL *)addCSSWithTemplateAtURL:(NSURL *)templateURL object:(id)object;
@@ -1034,11 +1012,40 @@ NSString * const SVDestinationDesignDirectory = @"_Design";
     OBPRECONDITION(fileURL);
     OBPRECONDITION(uploadPath);
     
-    if ([self isForEditing]) return fileURL;
+    
+    if ([self isForEditing])
+    {
+        // CSS must be handled specially
+        if ([uploadPath isEqualToString:SVDestinationMainCSS])
+        {
+            if (_headerMarkupIndex != NSNotFound)
+            {
+                KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
+                
+                [writer writeLinkToStylesheet:[self relativeStringFromURL:fileURL]
+                                        title:nil
+                                        media:nil];
+                
+                [writer writeString:@"\n"];
+                [writer release];
+            }
+            else
+            {
+                [self writeLinkToStylesheet:[self relativeStringFromURL:fileURL] title:nil media:nil];
+            }
+        }
+        
+    
+        return fileURL;
+    }
     
     
     // Handle constants to figure real upload path
-    if ([uploadPath hasPrefix:SVDestinationResourcesDirectory]) // not exhaustive check, but good first pass
+    if ([uploadPath isEqualToString:SVDestinationMainCSS])
+    {
+        return [self mainCSSURL];
+    }
+    else if ([uploadPath hasPrefix:SVDestinationResourcesDirectory]) // not exhaustive check, but good first pass
     {
         NSString *resourcesPath = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultResourcesPath"];
         
