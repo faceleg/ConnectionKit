@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3C3002D61312FCE10022E49A /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = 3C3002D51312FCE10022E49A /* BUNDLED */; };
 		3C42DDCA0D64CA9B004F35FD /* RSSBadgePlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42DDC90D64CA9B004F35FD /* RSSBadgePlugIn.m */; };
-		3C42DDCD0D64CAAD004F35FD /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDCB0D64CAAD004F35FD /* Template.html */; };
 		3C42DDCE0D64CAAD004F35FD /* rssbadge.css in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDCC0D64CAAD004F35FD /* rssbadge.css */; };
 		3C42DDDA0D64CAC0004F35FD /* Gray Badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDD00D64CAC0004F35FD /* Gray Badge.png */; };
 		3C42DDDB0D64CAC0004F35FD /* gray_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDD10D64CAC0004F35FD /* gray_large.png */; };
@@ -253,7 +252,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
-				3C42DDCD0D64CAAD004F35FD /* Template.html in Resources */,
 				3C42DDCE0D64CAAD004F35FD /* rssbadge.css in Resources */,
 				3C42DDDA0D64CAC0004F35FD /* Gray Badge.png in Resources */,
 				3C42DDDB0D64CAC0004F35FD /* gray_large.png in Resources */,

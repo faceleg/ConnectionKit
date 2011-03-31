@@ -37,9 +37,6 @@
 #import "RSSBadgePlugIn.h"
 
 
-// SVLocalizedString(@"To subscribe to this feed, drag or copy/paste this link to an RSS reader application.", "RSS Badge")
-
-
 @implementation RSSBadgePlugIn
 
 
@@ -124,14 +121,12 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
-    [super writeHTML:context];
-    
     // add dependencies
     [context addDependencyForKeyPath:@"iconStyle" ofObject:self];
     [context addDependencyForKeyPath:@"iconPosition" ofObject:self];
     [context addDependencyForKeyPath:@"label" ofObject:self];
     [context addDependencyForKeyPath:@"feedURL" ofObject:self.indexedCollection];
-
+    
     // add resources
     NSString *path = [self feedIconResourcePath];
 	if (path && ![path isEqualToString:@""]) 
@@ -145,26 +140,96 @@
     {
         NSURL *cssURL = [NSURL fileURLWithPath:path];
         [context addCSSWithURL:cssURL];
+    } 
+
+    // write HTML
+    if ( self.indexedCollection )
+    {
+        [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"rssBadge" forKey:@"class"]];
+        if ( [self useLargeIconLayout] )
+        {
+            NSDictionary *attrs = [NSDictionary dictionaryWithObject:@"largeRSSBadgeIcon" forKey:@"class"];
+            [context startElement:@"div" attributes:attrs];
+            
+            if ( self.iconStyle != 0 )
+            {
+                if ( [context startAnchorElementWithPageRSSFeed:self.indexedCollection options:1] )
+                {
+                    NSDictionary *imgAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                                              @"largeRSSBadgeIcon", @"class",
+                                              [self feedIconResourcePath], @"src",
+                                              @"RSS", @"alt",
+                                              nil];
+                    [context startElement:@"img" attributes:imgAttrs];
+                    [context endElement]; // </img>
+                    [context endElement]; // </a>
+                }
+            }
+            else
+            {
+                [context startElement:@"p" attributes:attrs];
+                if ( [context startAnchorElementWithPageRSSFeed:self.indexedCollection options:0] )
+                {
+                    [context writeCharacters:self.label];
+                    [context endElement]; // </a>
+                }
+                [context endElement]; // </p>                
+            }
+            
+            [context endElement]; // </div>
+        }
+        else
+        {
+            [context startElement:@"p"];
+            
+            if ( self.iconStyle != 0 )
+            {
+                if ( [context startAnchorElementWithPageRSSFeed:self.indexedCollection options:1] )
+                {
+                    NSString *imgClass = nil;
+                    if ( RSSBadgeIconPositionLeft == self.iconPosition )
+                    {
+                        imgClass = @"smallRSSBadgeIcon smallRSSBadgeIconLeft";
+                    }
+                    else
+                    {
+                        imgClass = @"smallRSSBadgeIcon smallRSSBadgeIconRight";
+                    }
+                    
+                    NSDictionary *imgAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                                              imgClass, @"class",
+                                              [self feedIconResourcePath], @"src",
+                                              @"RSS", @"alt",
+                                              nil];
+                    [context startElement:@"img" attributes:imgAttrs];
+                    [context endElement]; // </img>
+                    [context endElement]; // </a>                    
+                }
+
+            }
+            else
+            {
+                if ( [context startAnchorElementWithPageRSSFeed:self.indexedCollection options:0] )
+                {
+                    [context writeCharacters:self.label];
+                    [context endElement]; // </a>
+                }
+            }
+
+            [context endElement]; // </p>
+        }
+        [context endElement]; // <div>
+    }
+    else
+    {
+        NSString *text = SVLocalizedString(@"Choose collection in the Inspector", "RSSBadge");
+        [context writePlaceholderWithText:text options:0];
     }
 }
 
 - (void)writePlaceholderHTML:(id <SVPlugInContext>)context
 {
-    ; // we'll write our own placeholder text in the Template
-}
-
-- (void)writeNoFeedPlaceholder
-{
-    id <SVPlugInContext> context = [self currentContext];
-    NSString *text = SVLocalizedString(@"The chosen collection has no RSS feed. Please use the Inspector to set it to generate an RSS feed.", "RSS Badge");
-    [context writePlaceholderWithText:text options:0];
-}
-
-- (void)writeNoCollectionPlaceholder
-{
-    id <SVPlugInContext> context = [self currentContext];
-    NSString *text = SVLocalizedString(@"Choose collection in the Inspector", "RSSBadge");
-    [context writePlaceholderWithText:text options:0];
+    ; // we'll write our own placeholder text in -writeHTML:
 }
 
 - (BOOL)useLargeIconLayout
