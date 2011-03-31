@@ -47,9 +47,6 @@ typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSent
 
 
 #pragma mark Navigation
-
-@property(nonatomic, readonly) NSURL *feedURL;  // KVO-compliant
-
 - (BOOL)shouldIncludeInIndexes;
 - (BOOL)shouldIncludeInSiteMaps;
 

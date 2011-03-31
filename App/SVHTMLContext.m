@@ -1409,10 +1409,10 @@
 - (BOOL)startAnchorElementWithPageRSSFeed:(id <SVPage>)page options:(NSUInteger)options
 {
     OBPRECONDITION(page);
-    if ( [page feedURL] )
+    if ( [(KTPage *)page feedURL] )
     {
         // write out link
-        NSString *href = [[page feedURL] ks_stringRelativeToURL:[self baseURL]];
+        NSString *href = [[(KTPage *)page feedURL] ks_stringRelativeToURL:[self baseURL]];
         if ( href ) [self pushAttribute:@"href" value:href];
 
         NSString *title = NSLocalizedString(@"To subscribe to this feed, drag or copy/paste this link to an RSS reader application.", "RSS Badge");
