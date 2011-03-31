@@ -220,8 +220,6 @@
         // Publish
         [_publisher publishData:[parsedResource dataUsingEncoding:NSUTF8StringEncoding]
                          toPath:resourceRemotePath];
-        
-        [[[[self page] site] hostProperties] URLForResourceFile:[resourceRemotePath lastPathComponent]];
     }
     
     [super addJavascriptResourceWithTemplateAtURL:templateURL object:object];

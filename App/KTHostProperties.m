@@ -452,18 +452,6 @@ to be verified.
 	return result;
 }
 
-- (NSURL *)URLForResourceFile:(NSString *)filename
-{
-	OBPRECONDITION(filename);
-	
-	NSURL *result = [NSURL ks_URLWithPath:[filename lastPathComponent] 
-						 relativeToURL:[self resourcesDirectoryURL]
-						   isDirectory:NO];
-	
-	OBPOSTCONDITION(result);
-	return result;
-}
-
 #pragma mark Troubleshooting
 
 - (NSString *)hostPropertiesReport

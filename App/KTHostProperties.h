@@ -43,7 +43,6 @@
 - (NSString *)subfolder;
 
 - (NSURL *)resourcesDirectoryURL;
-- (NSURL *)URLForResourceFile:(NSString *)filename;
 
 - (NSString *)hostPropertiesReport;
 
