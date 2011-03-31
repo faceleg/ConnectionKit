@@ -85,7 +85,7 @@
     }
     
     // Default behaviour is to hook the index up to the collection it was inserted into. If collection doesn't support RSS, undo that
-    if (!oldPage && ![self.indexedCollection feedURL])
+    if (!oldPage && ![self.indexedCollection hasFeed])
     {
         self.indexedCollection = nil;
     }
