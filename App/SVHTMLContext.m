@@ -1010,7 +1010,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     OBPRECONDITION(uploadPath);
     
     
-    if ([self isForEditing])
+    if (![self isForPublishing])
     {
         // CSS must be handled specially
         if ([uploadPath isEqualToString:SVDestinationMainCSS])

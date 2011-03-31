@@ -33,4 +33,6 @@
 // Ignore!
 - (void)writeString:(NSString *)string { }
 
+- (BOOL)isForPublishing; { return NO; }
+
 @end
