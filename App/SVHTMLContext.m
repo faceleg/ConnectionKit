@@ -1412,7 +1412,7 @@
     if ( [(KTPage *)page feedURL] )
     {
         // write out link
-        NSString *href = [[(KTPage *)page feedURL] ks_stringRelativeToURL:[self baseURL]];
+        NSString *href = [self relativeStringFromURL:[(KTPage *)page feedURL]];
         if ( href ) [self pushAttribute:@"href" value:href];
 
         NSString *title = NSLocalizedString(@"To subscribe to this feed, drag or copy/paste this link to an RSS reader application.", "RSS Badge");
