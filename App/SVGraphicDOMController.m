@@ -228,23 +228,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
 }
 
-- (void)offscreenWebViewController:(SVOffscreenWebViewController *)controller
-                       didLoadBody:(DOMHTMLElement *)loadedBody;
+- (void)disableScriptsInNode:(DOMNode *)fragment;
 {
-    // Pull the nodes across to the Web Editor
-    DOMDocument *document = [[self HTMLElement] ownerDocument];
-    DOMDocumentFragment *fragment = [document createDocumentFragment];
-    DOMNodeList *children = [loadedBody childNodes];
-    
-    for (int i = 0; i < [children length]; i++)
-    {
-        DOMNode *imported = [document importNode:[children item:i] deep:YES];
-        [fragment appendChild:imported];
-    }
-    
-    
     // I have to turn off the script nodes from actually executing
-	DOMNodeIterator *it = [document createNodeIterator:fragment whatToShow:DOM_SHOW_ELEMENT filter:[ScriptNodeFilter sharedFilter] expandEntityReferences:NO];
+	DOMNodeIterator *it = [[fragment ownerDocument] createNodeIterator:fragment whatToShow:DOM_SHOW_ELEMENT filter:[ScriptNodeFilter sharedFilter] expandEntityReferences:NO];
 	DOMHTMLScriptElement *subNode;
     
 	while ((subNode = (DOMHTMLScriptElement *)[it nextNode]))
@@ -253,6 +240,51 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 		[subNode setSrc:@""];
 		[subNode setType:@""];
 	}
+}
+
+- (void)offscreenWebViewController:(SVOffscreenWebViewController *)controller
+                       didLoadBody:(DOMHTMLElement *)loadedBody;
+{
+    // Pull the nodes across to the Web Editor
+    DOMDocument *document = [[self HTMLElement] ownerDocument];
+    DOMDocumentFragment *fragment = [document createDocumentFragment];
+    DOMDocumentFragment *bodyFragment = [document createDocumentFragment];
+    DOMNodeList *children = [loadedBody childNodes];
+    
+    BOOL importedContent = NO;
+    for (int i = 0; i < [children length]; i++)
+    {
+        DOMNode *imported = [document importNode:[children item:i] deep:YES];
+        
+        // Is this supposed to be inserted at top of doc?
+        if (importedContent)
+        {
+            [fragment appendChild:imported];
+        }
+        else
+        {
+            if ([imported isKindOfClass:[DOMElement class]])
+            {
+                DOMHTMLElement *element = (DOMHTMLElement *)imported;
+                NSString *ID = [element idName];
+                
+                if ([ID isEqualToString:[[_offscreenDOMControllers objectAtIndex:0] elementIdName]])
+                {
+                    [fragment appendChild:imported];
+                    importedContent = YES;
+                    continue;
+                }
+            }
+            
+            [bodyFragment appendChild:imported];
+        }
+    }
+    
+    
+    
+    // I have to turn off the script nodes from actually executing
+	[self disableScriptsInNode:fragment];
+    [self disableScriptsInNode:bodyFragment];
     
     
     // Import headers too
@@ -292,6 +324,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     // Update
     [self updateWithDOMNode:fragment items:_offscreenDOMControllers];
+    
+    DOMNode *body = [(DOMHTMLDocument *)document body];
+    [body insertBefore:bodyFragment refChild:[body firstChild]];
+    
     
     
     // Teardown
