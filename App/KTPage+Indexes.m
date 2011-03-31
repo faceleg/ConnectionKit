@@ -200,6 +200,8 @@
     return [NSSet setWithObjects:@"collectionSyndicationType", @"URL", @"RSSFileName", nil];
 }
 
+- (BOOL)hasFeed; { return [self feedURL] != nil; }
+
 /*  The pages that will go into the RSS feed. Sort chronologically and apply the limit
  */
 - (NSArray *)pagesInRSSFeed
