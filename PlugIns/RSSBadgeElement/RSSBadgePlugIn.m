@@ -132,14 +132,14 @@
 	if (path && ![path isEqualToString:@""]) 
     {
         NSURL *feedIconURL = [NSURL fileURLWithPath:path];
-        [context addResourceWithURL:feedIconURL];
+        [context addResourceAtURL:feedIconURL destination:SVDestinationResourcesDirectory options:0];
     }
     
     path = [[NSBundle bundleForClass:[self class]] pathForResource:@"rssbadge" ofType:@"css"];
     if (path && ![path isEqualToString:@""]) 
     {
         NSURL *cssURL = [NSURL fileURLWithPath:path];
-        [context addCSSWithURL:cssURL];
+        [context addResourceAtURL:cssURL destination:SVDestinationMainCSS options:0];
     } 
 
     // write HTML

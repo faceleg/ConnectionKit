@@ -369,7 +369,7 @@ NSString *PCFilenameKey = @"filename";
 			if (imagePath)
 			{
                 NSURL *imageURL = [NSURL fileURLWithPath:[imagePath stringByAppendingPathComponent:format]];
-                contextResourceURL = [context addResourceWithURL:imageURL];
+                contextResourceURL = [context addResourceAtURL:imageURL destination:SVDestinationResourcesDirectory options:0];
 			}
 			else
 			{
@@ -378,7 +378,7 @@ NSString *PCFilenameKey = @"filename";
                                             inDirectory:@"digits"];
                 NSAssert((nil != resource), @"resource cannot be nil");
                 NSURL *resourceURL = [NSURL fileURLWithPath:resource];
-                contextResourceURL = [context addResourceWithURL:resourceURL];
+                contextResourceURL = [context addResourceAtURL:resourceURL destination:SVDestinationResourcesDirectory options:0];
 			}
 		}
         

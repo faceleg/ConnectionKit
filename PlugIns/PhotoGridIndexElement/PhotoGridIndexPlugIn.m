@@ -137,7 +137,7 @@
         // write (localized) placeholder image
         NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"placeholder" ofType:@"png"];
         NSURL *URL = [NSURL fileURLWithPath:path];
-        [context addResourceWithURL:URL];
+        [context addResourceAtURL:URL destination:SVDestinationResourcesDirectory options:0];
         
         NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
                                [context relativeStringFromURL:URL], @"src",

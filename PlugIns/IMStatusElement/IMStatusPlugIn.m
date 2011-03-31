@@ -186,7 +186,7 @@
         if (onlineImageURL)
         {
             // add resource to context
-            NSURL *contextURL = [context addResourceWithURL:onlineImageURL];
+            NSURL *contextURL = [context addResourceAtURL:onlineImageURL destination:SVDestinationResourcesDirectory options:0];
             
             // generate relative string
             NSString *onlineImagePath = [context relativeStringFromURL:contextURL];    
@@ -211,7 +211,7 @@
         if ( offlineImageURL )
         {
             // add resource to context
-            NSURL *contextURL = [context addResourceWithURL:offlineImageURL];
+            NSURL *contextURL = [context addResourceAtURL:offlineImageURL destination:SVDestinationResourcesDirectory options:0];
             
             // generate relative string
             NSString *offlineImagePath = [context relativeStringFromURL:contextURL];    

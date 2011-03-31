@@ -133,7 +133,7 @@
 
             // append zGoogleMap jquery functions to end body (assumes jquery is already loaded)
             NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"jquery.zgooglemap.min" ofType:@"js"];
-            NSURL *URL = [context addResourceWithURL:[NSURL fileURLWithPath:path]];
+            NSURL *URL = [context addResourceAtURL:[NSURL fileURLWithPath:path] destination:SVDestinationResourcesDirectory options:0];
             script = [NSString stringWithFormat:@"<script type=\"text/javascript\" src=\"%@\"></script>\n", [context relativeStringFromURL:URL]];
             [context addMarkupToEndOfBody:script];
             

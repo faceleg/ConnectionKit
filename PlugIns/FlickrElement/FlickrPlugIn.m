@@ -98,12 +98,12 @@
     [context addDependencyForKeyPath:@"random" ofObject:self];
     [context addDependencyForKeyPath:@"showInfo" ofObject:self];
     
-    // add resources
+    // add resources 
     NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"FlickrPlugIn" ofType:@"css"];
     if (path && ![path isEqualToString:@""]) 
     {
         NSURL *cssURL = [NSURL fileURLWithPath:path];
-        [context addCSSWithURL:cssURL];
+        [context addResourceAtURL:cssURL destination:SVDestinationMainCSS options:0];
     }
 }
 

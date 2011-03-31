@@ -280,7 +280,7 @@ static NSArray *sAltStrings = nil;
     NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
     
     // add resource to context
-    NSURL *contextURL = [[self currentContext] addResourceWithURL:resourceURL];
+    NSURL *contextURL = [[self currentContext] addResourceAtURL:resourceURL destination:SVDestinationResourcesDirectory options:0];
     
     // generate relative string for template
     NSString *result = [[self currentContext] relativeStringFromURL:contextURL];    
