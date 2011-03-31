@@ -48,7 +48,7 @@
 
 #pragma mark CSS
 
-- (void)addCSSWithURL:(NSURL *)cssURL;
+- (NSURL *)addCSSWithURL:(NSURL *)cssURL;
 {
     // CSS other than design should be written inline
     // Yes, this check should be done better than just the filename
@@ -61,7 +61,7 @@
     NSString *css = [NSString stringWithContentsOfURL:cssURL
                                              encoding:NSUTF8StringEncoding
                                                 error:NULL];
-    if (css) [self addCSSString:css];
+    return [self addCSSString:css];
 }
 
 @end

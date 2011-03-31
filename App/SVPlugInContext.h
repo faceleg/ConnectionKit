@@ -62,11 +62,14 @@ typedef NSUInteger SVPlaceholderOptions;
 
 #pragma mark CSS
 
-- (void)addCSSString:(NSString *)css;
-- (void)addCSSWithURL:(NSURL *)cssURL;
+/*  All these methods return the URL of the file where the CSS will end up. Presently while editing this is nil
+ */
+
+- (NSURL *)addCSSString:(NSString *)css;    // css can be nil if you just want to find location
+- (NSURL *)addCSSWithURL:(NSURL *)cssURL;
 
 // For CSS that refers to other files, the context must be asked where those files are. You can do this by hand, building up a string and passing to -addCSSString: or there's this method. The CSS will be parsed just like Template.html. Generally, your plug-in is the object to be parsed
-- (void)addCSSWithTemplateAtURL:(NSURL *)templateURL object:(id)object;
+- (NSURL *)addCSSWithTemplateAtURL:(NSURL *)templateURL object:(id)object;
 
 
 #pragma mark Basic HTML Writing

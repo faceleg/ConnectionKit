@@ -356,29 +356,42 @@
 
 @synthesize mainCSSURL = _mainCSSURL;
 
-- (void)addCSSString:(NSString *)css;
+- (NSURL *)addCSSString:(NSString *)css;
 {
-    if (![self isForPublishing])
+    if ([self isForPublishing])
     {
-        if (_headerMarkupIndex != NSNotFound)
+        return [self mainCSSURL];
+    }
+    else
+    {
+        if (css)
         {
-            KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
-            
-            [writer writeStyleElementWithCSSString:css];
-            [writer writeString:@"\n"];
-            
-            [writer release];
+            if (_headerMarkupIndex != NSNotFound)
+            {
+                KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
+                
+                [writer writeStyleElementWithCSSString:css];
+                [writer writeString:@"\n"];
+                
+                [writer release];
+            }
+            else
+            {
+                [self writeStyleElementWithCSSString:css];
+            }
         }
-        else
-        {
-            [self writeStyleElementWithCSSString:css];
-        };
+        
+        return nil;
     }
 }
 
-- (void)addCSSWithURL:(NSURL *)cssURL;
+- (NSURL *)addCSSWithURL:(NSURL *)cssURL;
 {
-    if (![self isForPublishing])
+    if ([self isForPublishing])
+    {
+        return [self mainCSSURL];
+    }
+    else
     {
         if (_headerMarkupIndex != NSNotFound)
         {
@@ -395,14 +408,16 @@
         {
             [self writeLinkToStylesheet:[self relativeStringFromURL:cssURL] title:nil media:nil];
         }
+        
+        return cssURL;
     }
 }
 
-- (void)addCSSWithTemplateAtURL:(NSURL *)templateURL object:(id)object;
+- (NSURL *)addCSSWithTemplateAtURL:(NSURL *)templateURL object:(id)object;
 {
     // Run through template
     NSString *css = [self parseTemplateAtURL:templateURL object:object];
-    [self addCSSString:css];
+    return [self addCSSString:css];
 }
 
 #pragma mark Header Tags

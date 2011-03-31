@@ -239,20 +239,20 @@
     return result;
 }
 
-- (void)addCSSString:(NSString *)css;
+- (NSURL *)addCSSString:(NSString *)css;
 {
-    [super addCSSString:css];   // should have no effect
-    
     // Append to main.css
     [_publisher addCSSString:css];
+    
+    return [super addCSSString:css];
 }
 
-- (void)addCSSWithURL:(NSURL *)cssURL;
+- (NSURL *)addCSSWithURL:(NSURL *)cssURL;
 {
-    [super addCSSWithURL:cssURL];   // should have no effect
-    
     // Append to main.css
     [_publisher addCSSWithURL:cssURL];
+
+    return [super addCSSWithURL:cssURL];
 }
 
 #pragma mark Change Tracking
