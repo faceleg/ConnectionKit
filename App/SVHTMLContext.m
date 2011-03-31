@@ -1066,6 +1066,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     else if ([uploadPath hasPrefix:SVDestinationDesignDirectory])
     {
         NSString *designPath = [[[[self page] master] design] remotePath];
+        if (!designPath) return nil;
         
         if ([uploadPath isEqualToString:SVDestinationDesignDirectory])
         {
