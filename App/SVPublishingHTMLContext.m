@@ -186,22 +186,22 @@
 
 #pragma mark Resources
 
-- (NSURL *)addResourceAtURL:(NSURL *)fileURL preferredPath:(NSString *)uploadPath optins:(NSUInteger)options;
+- (NSURL *)addResourceAtURL:(NSURL *)fileURL preferredPath:(NSString *)uploadPath options:(NSUInteger)options;
 {
-    [super addResourceAtURL:fileURL preferredPath:uploadPath options:options];
-    [_publisher publishResourceAtURL:fileURL];
+    NSURL *result = [super addResourceAtURL:fileURL preferredPath:uploadPath options:options];
+    NSURL *siteURL = [[[_publisher site] hostProperties] siteURL];
+    NSURL *uploadURL = [result ks_URLRelativeToURL:siteURL];
     
-    return [[[_publisher site] hostProperties] URLForResourceFile:[fileURL ks_lastPathComponent]];
-}
-
-- (NSURL *)addDesignResourceWithURL:(NSURL *)fileURL;
-{
-    NSString *filename = [fileURL ks_lastPathComponent];
+    // Only publish if figured a decent URL for it
+    if ([uploadURL ks_isSubpathOfURL:siteURL])
+    {
+        NSString *uploadPath = [[_publisher baseRemotePath]
+                                stringByAppendingPathComponent:[uploadURL relativeString]];
+        
+        [_publisher publishContentsOfURL:fileURL toPath:uploadPath];
+    }
     
-    [_publisher publishContentsOfURL:fileURL
-                              toPath:[[_publisher designDirectoryPath] stringByAppendingPathComponent:filename]];
-    
-    return [NSURL URLWithString:filename relativeToURL:[self mainCSSURL]];
+    return result;
 }
 
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL

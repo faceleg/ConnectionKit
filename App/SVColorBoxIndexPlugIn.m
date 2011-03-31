@@ -218,7 +218,9 @@
 		NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"colorbox"];
 		if (path)
 		{
-			(void) [context addDesignResourceWithURL:[NSURL fileURLWithPath:path isDirectory:YES]];
+			(void) [context addResourceAtURL:[NSURL fileURLWithPath:path isDirectory:YES]
+                               preferredPath:SVDesignDirectory
+                                     options:0];
 		}
 		
 		[self writeCSS:context];
