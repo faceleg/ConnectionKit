@@ -1024,7 +1024,7 @@ NSString * const SVDestinationDesignDirectory = @"_Design";
 
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
 {
-    return [self addResourceAtURL:resourceURL destination:SVDestinationDesignDirectory options:0];
+    return [self addResourceAtURL:resourceURL destination:SVDestinationResourcesDirectory options:0];
 }
 
 - (NSURL *)addResourceAtURL:(NSURL *)fileURL
@@ -1034,7 +1034,52 @@ NSString * const SVDestinationDesignDirectory = @"_Design";
     OBPRECONDITION(fileURL);
     OBPRECONDITION(uploadPath);
     
-    return fileURL; // subclasses will correct for publishing
+    if ([self isForEditing]) return fileURL;
+    
+    
+    // Handle constants to figure real upload path
+    if ([uploadPath hasPrefix:SVDestinationResourcesDirectory]) // not exhaustive check, but good first pass
+    {
+        NSString *resourcesPath = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultResourcesPath"];
+        
+        if ([uploadPath isEqualToString:SVDestinationResourcesDirectory])
+        {
+            uploadPath = [resourcesPath stringByAppendingPathComponent:[fileURL ks_lastPathComponent]];
+        }
+        else
+        {
+            NSArray *components = [uploadPath pathComponents];
+            if ([[components objectAtIndex:0] isEqualToString:SVDestinationResourcesDirectory])
+            {
+                NSRange range = NSMakeRange(0, [SVDestinationResourcesDirectory length]);
+                uploadPath = [uploadPath stringByReplacingCharactersInRange:range withString:resourcesPath];
+            }
+        }
+    }
+    else if ([uploadPath hasPrefix:SVDestinationDesignDirectory])
+    {
+        NSString *designPath = [[[[self page] master] design] remotePath];
+        
+        if ([uploadPath isEqualToString:SVDestinationDesignDirectory])
+        {
+            uploadPath = [designPath stringByAppendingPathComponent:[fileURL ks_lastPathComponent]];
+        }
+        else
+        {
+            NSArray *components = [uploadPath pathComponents];
+            if ([[components objectAtIndex:0] isEqualToString:SVDestinationDesignDirectory])
+            {
+                NSRange range = NSMakeRange(0, [SVDestinationDesignDirectory length]);
+                uploadPath = [uploadPath stringByReplacingCharactersInRange:range withString:designPath];
+            }
+        }
+    }
+    
+    
+    // Figure URL from upload path
+    NSURL *siteURL = [[[[self page] site] hostProperties] siteURL];
+    OBASSERT(siteURL);
+    return [NSURL ks_URLWithPath:uploadPath relativeToURL:siteURL isDirectory:NO];
 }
 
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
