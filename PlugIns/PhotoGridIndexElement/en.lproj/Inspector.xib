@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
+			<integer value="117"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -313,23 +313,21 @@
 									<string key="NSKeyEquivalent"/>
 									<int key="NSPeriodicDelay">400</int>
 									<int key="NSPeriodicInterval">75</int>
-									<object class="NSMenuItem" key="NSMenuItem" id="96178502">
+									<object class="NSMenuItem" key="NSMenuItem" id="592805627">
 										<reference key="NSMenu" ref="157762745"/>
-										<string key="NSTitle">Start automatically</string>
+										<string key="NSTitle">Disabled</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<int key="NSState">1</int>
-										<object class="NSCustomResource" key="NSOnImage" id="507203415">
+										<object class="NSCustomResource" key="NSOnImage" id="260723238">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">NSMenuCheckmark</string>
 										</object>
-										<object class="NSCustomResource" key="NSMixedImage" id="527708614">
+										<object class="NSCustomResource" key="NSMixedImage" id="942411496">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">NSMenuMixedState</string>
 										</object>
 										<string key="NSAction">_popUpItemAction:</string>
-										<int key="NSTag">2</int>
 										<reference key="NSTarget" ref="965888276"/>
 									</object>
 									<bool key="NSMenuItemRespectAlignment">YES</bool>
@@ -337,28 +335,29 @@
 										<string key="NSTitle">OtherViews</string>
 										<object class="NSMutableArray" key="NSMenuItems">
 											<bool key="EncodedWithXMLCoder">YES</bool>
+											<reference ref="592805627"/>
 											<object class="NSMenuItem" id="231880860">
 												<reference key="NSMenu" ref="157762745"/>
 												<string key="NSTitle">Start manually</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="507203415"/>
-												<reference key="NSMixedImage" ref="527708614"/>
+												<reference key="NSOnImage" ref="260723238"/>
+												<reference key="NSMixedImage" ref="942411496"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<int key="NSTag">1</int>
 												<reference key="NSTarget" ref="965888276"/>
 											</object>
-											<reference ref="96178502"/>
-											<object class="NSMenuItem" id="592805627">
+											<object class="NSMenuItem" id="96178502">
 												<reference key="NSMenu" ref="157762745"/>
-												<string key="NSTitle">Disabled</string>
+												<string key="NSTitle">Start automatically</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="507203415"/>
-												<reference key="NSMixedImage" ref="527708614"/>
+												<reference key="NSOnImage" ref="260723238"/>
+												<reference key="NSMixedImage" ref="942411496"/>
 												<string key="NSAction">_popUpItemAction:</string>
+												<int key="NSTag">2</int>
 												<reference key="NSTarget" ref="965888276"/>
 											</object>
 										</object>
@@ -368,7 +367,6 @@
 											<int key="NSfFlags">1044</int>
 										</object>
 									</object>
-									<int key="NSSelectedIndex">1</int>
 									<int key="NSPreferredEdge">1</int>
 									<bool key="NSUsesItemFromMenu">YES</bool>
 									<bool key="NSAltersState">YES</bool>
@@ -399,8 +397,8 @@
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
 										<int key="NSState">1</int>
-										<reference key="NSOnImage" ref="507203415"/>
-										<reference key="NSMixedImage" ref="527708614"/>
+										<reference key="NSOnImage" ref="260723238"/>
+										<reference key="NSMixedImage" ref="942411496"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<int key="NSTag">1</int>
 										<reference key="NSTarget" ref="890931918"/>
@@ -416,8 +414,8 @@
 												<string key="NSKeyEquiv"/>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="507203415"/>
-												<reference key="NSMixedImage" ref="527708614"/>
+												<reference key="NSOnImage" ref="260723238"/>
+												<reference key="NSMixedImage" ref="942411496"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<reference key="NSTarget" ref="890931918"/>
 											</object>
@@ -428,8 +426,8 @@
 												<string key="NSKeyEquiv"/>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="507203415"/>
-												<reference key="NSMixedImage" ref="527708614"/>
+												<reference key="NSOnImage" ref="260723238"/>
+												<reference key="NSMixedImage" ref="942411496"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<int key="NSTag">2</int>
 												<reference key="NSTarget" ref="890931918"/>
@@ -1141,8 +1139,8 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="457778360"/>
-							<reference ref="798062798"/>
 							<reference ref="693402110"/>
+							<reference ref="798062798"/>
 						</object>
 						<reference key="parent" ref="890931918"/>
 					</object>
@@ -1462,7 +1460,7 @@
 						<bytes key="NSTransformStruct">P4AAAL+AAABB8AAAwqQAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{1105, 677}, {160, 54}}</string>
+					<string>{{1104, 636}, {160, 54}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
