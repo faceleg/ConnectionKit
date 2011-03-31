@@ -183,5 +183,9 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
                           options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
 }
 
+- (BOOL)requiresPageLoad;
+{
+    return YES;
+}
 
 @end
