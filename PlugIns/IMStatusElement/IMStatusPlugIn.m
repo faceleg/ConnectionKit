@@ -190,16 +190,19 @@
             
             // generate relative string
             NSString *onlineImagePath = [context relativeStringFromURL:contextURL];    
-            onlineImagePath = NSMakeCollectable(CFXMLCreateStringByEscapingEntities(NULL,
-                                                                                    (CFStringRef)onlineImagePath,
-                                                                                    NULL));
-            
-            // fix up HTML
-            [writeableHTMLCode replaceOccurrencesOfString:@"#ONLINE#" 
-                                               withString:onlineImagePath
-                                                  options:NSLiteralSearch 
-                                                    range:NSMakeRange(0,[writeableHTMLCode length])];
-             [onlineImagePath release];
+            if (onlineImagePath)
+            {
+                onlineImagePath = NSMakeCollectable(CFXMLCreateStringByEscapingEntities(NULL,
+                                                                                        (CFStringRef)onlineImagePath,
+                                                                                        NULL));
+                
+                // fix up HTML
+                [writeableHTMLCode replaceOccurrencesOfString:@"#ONLINE#" 
+                                                   withString:onlineImagePath
+                                                      options:NSLiteralSearch 
+                                                        range:NSMakeRange(0,[writeableHTMLCode length])];
+                [onlineImagePath release];
+            }
         }
         
         NSURL *offlineImageURL = [[service serviceIdentifier] isEqualToString:@"aim"] 
@@ -215,16 +218,19 @@
             
             // generate relative string
             NSString *offlineImagePath = [context relativeStringFromURL:contextURL];    
-            offlineImagePath = NSMakeCollectable(CFXMLCreateStringByEscapingEntities(NULL,
-                                                                                     (CFStringRef)offlineImagePath,
-                                                                                     NULL));
-            
-            // fix up HTML
-            [writeableHTMLCode replaceOccurrencesOfString:@"#OFFLINE#" 
-                                               withString:offlineImagePath 
-                                                  options:NSLiteralSearch 
-                                                    range:NSMakeRange(0,[writeableHTMLCode length])];
-            [offlineImagePath release];
+            if (offlineImagePath)
+            {
+                offlineImagePath = NSMakeCollectable(CFXMLCreateStringByEscapingEntities(NULL,
+                                                                                         (CFStringRef)offlineImagePath,
+                                                                                         NULL));
+                
+                // fix up HTML
+                [writeableHTMLCode replaceOccurrencesOfString:@"#OFFLINE#" 
+                                                   withString:offlineImagePath 
+                                                      options:NSLiteralSearch 
+                                                        range:NSMakeRange(0,[writeableHTMLCode length])];
+                [offlineImagePath release];
+            }
         }
         
         if ( self.headlineText )
