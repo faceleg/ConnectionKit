@@ -47,7 +47,10 @@ typedef enum {
  */
 - (void)awakeFromNew;
 
-- (void)awakeFromFetch; // like the Core Data method
+// like the Core Data method
+- (void)awakeFromFetch;
+
+// More details at http://docs.karelia.com/z/Sandvox_Developers_Guide.html#Plug-In_Initialization
 
 
 #pragma mark Storage
