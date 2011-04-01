@@ -124,7 +124,7 @@ typedef NSUInteger SVPlaceholderOptions;
 
 
 #pragma mark Scripts
-- (void)writeJavascriptWithSrc:(NSString *)src;
+- (void)writeJavascriptWithSrc:(NSString *)src encoding:(NSStringEncoding)encoding;
 
 
 #pragma mark CSS, Javascript and other Resources

@@ -272,7 +272,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 					  scheme, JQUERY_VERSION, minimizationSuffix]];
 	}
 	
-	[self writeJavascriptWithSrc:[self relativeStringFromURL:jQueryURL]];
+	[self writeJavascriptWithSrc:[self relativeStringFromURL:jQueryURL] encoding:NSUTF8StringEncoding];
     
 	// Note: I may want to also get: http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js
 	// I would just put in parallel code.  However this might be better to be added with code injection by people who want it.
@@ -1098,7 +1098,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     {
         // Proper publishing subclass will override to publish parsed string
         NSURL *url = [self addResourceWithURL:templateURL]; 
-        if (url) [context writeJavascriptWithSrc:[self relativeStringFromURL:url]];
+        if (url) [context writeJavascriptWithSrc:[self relativeStringFromURL:url] encoding:NSUTF8StringEncoding];
     }
     else
     {
