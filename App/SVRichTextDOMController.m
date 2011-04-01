@@ -863,6 +863,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     {
         // Keep an eye on model
         [self addObserver:self forKeyPath:@"representedObject.string" options:0 context:sBodyTextObservationContext];
+        _trackingString = YES;
         
         if ([self representedObject])
         {
@@ -874,13 +875,15 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     }
     
     [super startObservingDependencies];
+    OBPOSTCONDITION([self isObservingDependencies]);
 }
 
 - (void)stopObservingDependencies;
 {
-    if ([self isObservingDependencies])
+    if (_trackingString)    // should be able to test isObservingDependencies but that's lying for reasons I cannot figure
     {
         [self removeObserver:self forKeyPath:@"representedObject.string"];
+        _trackingString = NO;
     }
     [_graphicsController unbind:NSContentSetBinding];
     
