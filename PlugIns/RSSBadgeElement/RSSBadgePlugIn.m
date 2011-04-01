@@ -156,7 +156,7 @@
             if ( self.iconStyle != 0 )
             {
                 NSDictionary *aAttrs = [NSDictionary dictionaryWithObject:@"imageLink" forKey:@"class"];
-                if ( [context startAnchorElementWithPageRSSFeed:self.indexedCollection attributes:aAttrs] )
+                if ( [context startAnchorElementWithFeedForPage:self.indexedCollection attributes:aAttrs] )
                 {
                     NSDictionary *imgAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
                                               @"largeRSSBadgeIcon", @"class",
@@ -171,7 +171,7 @@
             else
             {
                 [context startElement:@"p" attributes:attrs];
-                if ( [context startAnchorElementWithPageRSSFeed:self.indexedCollection attributes:nil] )
+                if ( [context startAnchorElementWithFeedForPage:self.indexedCollection attributes:nil] )
                 {
                     [context writeCharacters:self.label];
                     [context endElement]; // </a>
@@ -188,7 +188,7 @@
             if ( self.iconStyle != 0 )
             {
                 NSDictionary *aAttrs = [NSDictionary dictionaryWithObject:@"imageLink" forKey:@"class"];
-                if ( [context startAnchorElementWithPageRSSFeed:self.indexedCollection attributes:aAttrs] )
+                if ( [context startAnchorElementWithFeedForPage:self.indexedCollection attributes:aAttrs] )
                 {
                     NSString *imgClass = nil;
                     if ( RSSBadgeIconPositionLeft == self.iconPosition )
@@ -212,7 +212,7 @@
             }
             else
             {
-                if ( [context startAnchorElementWithPageRSSFeed:self.indexedCollection attributes:nil] )
+                if ( [context startAnchorElementWithFeedForPage:self.indexedCollection attributes:nil] )
                 {
                     [context writeCharacters:self.label];
                     [context endElement]; // </a>

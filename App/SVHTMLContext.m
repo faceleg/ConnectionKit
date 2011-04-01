@@ -1440,6 +1440,46 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     }
 }
 
+- (BOOL)startAnchorElementWithFeedForPage:(id <SVPage>)page attributes:(NSDictionary *)attributes
+{
+    OBPRECONDITION(page);
+    if ( [page hasFeed] )
+    {
+        NSString *href = [self relativeStringFromURL:[(KTPage *)page feedURL]];
+        if ( href ) [self pushAttribute:@"href" value:href];
+        
+        NSString *title = NSLocalizedString(@"To subscribe to this feed, drag or copy/paste this link to an RSS reader application.", "RSS badge tooltip");
+        if ( title ) [self pushAttribute:@"title" value:href];
+        
+        for ( NSString *attribute in [attributes allKeys] )
+        {
+            id value = [attributes objectForKey:attribute];
+            if ( value )
+            {
+                [self pushAttribute:attribute value:value];
+            }
+        }
+        [self startElement:@"a"];
+        
+        return YES;
+    }
+    else
+    {
+        // write out placeholder with button to turn on feed for page
+        NSString *text = NSLocalizedString(@"The chosen collection has no RSS feed. ", "RSS badge feed placeholder");
+        [self writePlaceholderWithText:text];
+        
+        NSDictionary *attrs = [NSDictionary dictionaryWithObject:@"svx-placeholder" forKey:@"class"];
+        [self startElement:@"div" attributes:attrs];
+        
+        NSString *buttonTitle = NSLocalizedString(@"Generate Feed", "");
+        [self writeHTMLFormat:@"<center><button onclick=\"window.location = 'x-sandvox-rssfeed-activate:%@';\">%@</button></center>", [page uniqueID], buttonTitle];
+        [self endElement]; // </div>
+        
+        return NO;
+    }
+}
+
 #pragma mark Publishing
 
 - (void)disableChangeTracking; { }
@@ -1478,46 +1518,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                               target:target
                                  rel:nil];
     
-}
-
-- (BOOL)startAnchorElementWithPageRSSFeed:(id <SVPage>)page attributes:(NSDictionary *)attributes
-{
-    OBPRECONDITION(page);
-    if ( [page hasFeed] )
-    {
-        NSString *href = [self relativeStringFromURL:[(KTPage *)page feedURL]];
-        if ( href ) [self pushAttribute:@"href" value:href];
-
-        NSString *title = NSLocalizedString(@"To subscribe to this feed, drag or copy/paste this link to an RSS reader application.", "RSS badge tooltip");
-        if ( title ) [self pushAttribute:@"title" value:href];
-        
-        for ( NSString *attribute in [attributes allKeys] )
-        {
-            id value = [attributes objectForKey:attribute];
-            if ( value )
-            {
-                [self pushAttribute:attribute value:value];
-            }
-        }
-        [self startElement:@"a"];
-        
-        return YES;
-    }
-    else
-    {
-        // write out placeholder with button to turn on feed for page
-        NSString *text = NSLocalizedString(@"The chosen collection has no RSS feed. ", "RSS badge feed placeholder");
-        [self writePlaceholderWithText:text];
-        
-        NSDictionary *attrs = [NSDictionary dictionaryWithObject:@"svx-placeholder" forKey:@"class"];
-        [self startElement:@"div" attributes:attrs];
-        
-        NSString *buttonTitle = NSLocalizedString(@"Generate Feed", "");
-        [self writeHTMLFormat:@"<center><button onclick=\"window.location = 'x-sandvox-rssfeed-activate:%@';\">%@</button></center>", [page uniqueID], buttonTitle];
-        [self endElement]; // </div>
-        
-        return NO;
-    }
 }
 
 @end
