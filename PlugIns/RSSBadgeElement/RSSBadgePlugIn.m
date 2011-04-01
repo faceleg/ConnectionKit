@@ -125,6 +125,7 @@
     [context addDependencyForKeyPath:@"iconStyle" ofObject:self];
     [context addDependencyForKeyPath:@"iconPosition" ofObject:self];
     [context addDependencyForKeyPath:@"label" ofObject:self];
+    [context addDependencyForKeyPath:@"indexedCollection" ofObject:self];
     [context addDependencyForKeyPath:@"hasFeed" ofObject:self.indexedCollection];
     
     // add resources
