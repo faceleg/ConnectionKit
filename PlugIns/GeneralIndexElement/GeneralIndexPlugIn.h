@@ -72,15 +72,15 @@ typedef enum {
     NSUInteger _maxItemLength;
 }
 
-@property  BOOL hyperlinkTitles;
-@property  BOOL showPermaLinks;
-@property  BOOL showEntries;
-@property  BOOL showTitles;
-@property  BOOL showTimestamps;
-@property(nonatomic) NSUInteger timestampType;
-@property  BOOL showComments;
-@property  IndexLayoutType indexLayoutType;
-@property  NSUInteger maxItemLength;
+@property (nonatomic) BOOL hyperlinkTitles;
+@property (nonatomic) BOOL showPermaLinks;
+@property (nonatomic) BOOL showEntries;
+@property (nonatomic) BOOL showTitles;
+@property (nonatomic) BOOL showTimestamps;
+@property (nonatomic) NSUInteger timestampType;
+@property (nonatomic) BOOL showComments;
+@property (nonatomic) IndexLayoutType indexLayoutType;
+@property (nonatomic) NSUInteger maxItemLength;
 
 
 

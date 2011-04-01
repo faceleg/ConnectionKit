@@ -43,7 +43,7 @@
 	BOOL		_showCollectionThumbnail;
 }
 
-@property  BOOL showCollectionTitle;
-@property  BOOL showCollectionThumbnail;
+@property (atomic) BOOL showCollectionTitle;
+@property (atomic) BOOL showCollectionThumbnail;
 
 @end

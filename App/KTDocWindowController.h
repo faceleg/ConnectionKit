@@ -125,7 +125,7 @@ extern NSString *gInfoWindowAutoSaveName;
 
 - (IBAction)windowHelp:(id)sender;
 
-@property(retain) SVDesignPickerController *designChooserWindowController;
+@property(nonatomic, retain) SVDesignPickerController *designChooserWindowController;
 - (IBAction)chooseDesign:(id)sender;
 - (IBAction)nextDesign:(id)sender;
 - (IBAction)previousDesign:(id)sender;

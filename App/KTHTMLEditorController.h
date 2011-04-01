@@ -90,7 +90,7 @@ typedef enum {
 - (BOOL) canValidate;	// for bindings
 
 @property (nonatomic, retain) id <KTHTMLSourceObject> HTMLSourceObject;
-@property (assign) SEL completionSelector;  // TODO: appears to be unused
+@property (nonatomic, assign) SEL completionSelector;  // TODO: appears to be unused
 
 @property (nonatomic) BOOL hasRemoteLoads;
 @property (nonatomic, retain) NSUndoManager *undoManager;

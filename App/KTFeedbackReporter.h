@@ -14,6 +14,6 @@
 	BOOL		_attachValidation;
 }
 
-@property (assign) BOOL attachValidation;
+@property (nonatomic, assign) BOOL attachValidation;
 
 @end

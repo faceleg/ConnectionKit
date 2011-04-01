@@ -25,10 +25,10 @@ typedef enum {
 	PreloadState _preload;
 }
 
-@property  BOOL autoplay;
-@property  BOOL loop;
-@property  BOOL controller;
-@property  PreloadState preload;
+@property (nonatomic) BOOL autoplay;
+@property (nonatomic) BOOL loop;
+@property (nonatomic) BOOL controller;
+@property (nonatomic) PreloadState preload;
 
 // Determined from file's UTI, or by further analysis. NOT KVO-compliant. Will reload plug-in if needed
 @property(nonatomic, copy) NSString *codecType;
