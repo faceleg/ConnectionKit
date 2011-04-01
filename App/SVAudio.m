@@ -519,7 +519,7 @@
 	BOOL quicktimeTag =  [type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie]
 	|| [type conformsToUTI:@"com.apple.quicktime-audio"];		// latter is our made-up tag for recognizing .mov without video track
 	
-	BOOL unknownTag = !(audioTag || flashTag || microsoftTag || quicktimeTag);
+	// BOOL unknownTag = !(audioTag || flashTag || microsoftTag || quicktimeTag);
 	
 	// WHEN EDITING, AND NO CONTROLLER, PUT IN SOMETHING VISIBLE SO WE CAN SELECT THE GRAPHIC.
 	if (!self.controller && [context isForEditing])
@@ -727,6 +727,8 @@
 	return info;
 }
 
++ (NSString *) elementClassName; { return @"AudioElement"; }
++ (NSString *) contentClassName; { return @"audio"; }
 
 
 
