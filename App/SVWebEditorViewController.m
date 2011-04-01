@@ -277,7 +277,11 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     // Go for it. You write that HTML girl!
-	if (page) [context writeDocumentWithPage:page];
+	if (page)
+    {
+        //[context setBaseURL:[page URL]];
+        [context writeDocumentWithPage:page];
+    }
     [context flush];
         
     
@@ -303,6 +307,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     // Load the HTML into the webview
     NSString *pageHTML = [[context outputStringWriter] string];
+    if (pageURL) [WebView registerURLSchemeAsLocal:[pageURL scheme]];
     [webEditor loadHTMLString:pageHTML baseURL:pageURL];
     
     
