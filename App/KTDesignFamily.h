@@ -20,7 +20,7 @@
 
 - (void) addDesign:(KTDesign *)aDesign;
 
-@property (assign) NSPointerArray *designs;			// weak reference so we don't have retain cycles; this is retained by a design.
-@property (retain) KTDesign *familyPrototype;	// which design acts as the prototype, for default thumbnail.
+@property (nonatomic, assign) NSPointerArray *designs;			// weak reference so we don't have retain cycles; this is retained by a design.
+@property (nonatomic, retain) KTDesign *familyPrototype;	// which design acts as the prototype, for default thumbnail.
 
 @end

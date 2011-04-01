@@ -15,7 +15,7 @@
 	NSArray *_rangesOfGroups;
 }
 
-@property (retain) NSArray *rangesOfGroups;
+@property (nonatomic, retain) NSArray *rangesOfGroups;
 
 - (KTDesign *)designWithIdentifier:(NSString *)anIdentifier;
 

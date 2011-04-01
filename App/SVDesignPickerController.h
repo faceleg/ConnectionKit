@@ -34,15 +34,15 @@
 	id	_targetWhenChosen;		// weak to avoid retain cycle
 }
 
-@property(nonatomic, retain) KTDesign *design;
-@property (copy) NSString *genre;
-@property (copy) NSString *color;
-@property (copy) NSString *width;
-@property (readonly) NSString *matchString;
+@property (nonatomic, retain) KTDesign *design;
+@property (nonatomic, copy) NSString *genre;
+@property (nonatomic, copy) NSString *color;
+@property (nonatomic, copy) NSString *width;
+@property (nonatomic, readonly) NSString *matchString;
 
-@property(nonatomic, retain) IBOutlet NSWindow *window;
-@property(nonatomic, retain) IBOutlet NSArrayController *designsController;
-@property(nonatomic, retain) IBOutlet SVDesignBrowserViewController *browserViewController;
+@property (nonatomic, retain) IBOutlet NSWindow *window;
+@property (nonatomic, retain) IBOutlet NSArrayController *designsController;
+@property (nonatomic, retain) IBOutlet SVDesignBrowserViewController *browserViewController;
 
 - (IBAction)cancelSheet:(id)sender;
 - (IBAction)chooseDesign:(id)sender;

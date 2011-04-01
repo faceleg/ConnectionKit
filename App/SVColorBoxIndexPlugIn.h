@@ -28,16 +28,16 @@ enum { kSlideshowNone, kSlideshowManual, kSlideshowAutomatic };
 	
 }
 
-@property  BOOL useColorBox;		// will be on for Gallery plugin, but might not be active for photo grid index.
+@property (nonatomic) BOOL useColorBox;		// will be on for Gallery plugin, but might not be active for photo grid index.
 
-@property  int transitionType;
-@property  BOOL loop;
-@property  BOOL enableSlideshow;
-@property  BOOL autoStartSlideshow;
-@property  float slideshowSpeed;
-@property (retain) NSColor *backgroundColor;
+@property (nonatomic) int transitionType;
+@property (nonatomic) BOOL loop;
+@property (nonatomic) BOOL enableSlideshow;
+@property (nonatomic) BOOL autoStartSlideshow;
+@property (nonatomic) float slideshowSpeed;
+@property (nonatomic, retain) NSColor *backgroundColor;
 
-@property  int	slideshowType;
+@property (nonatomic) int slideshowType;
 
 - (NSString *)colorBoxParametersWithGroupID:(NSString *)idName;
 - (NSString *)parameterLineForPreviewOnly:(id<SVPlugInContext>)context;

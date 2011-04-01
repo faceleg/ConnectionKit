@@ -20,7 +20,7 @@
 	NSNumber *_maxItemLength;
 }
 
-@property (retain) NSNumber *maxItemLength;
+@property (nonatomic, retain) NSNumber *maxItemLength;
 
 - (IBAction)makeShortest:(id)sender;	// click on icon to make truncation the shortest
 - (IBAction)makeLongest:(id)sender;		// click on icon to make truncation the longest (remove truncation)

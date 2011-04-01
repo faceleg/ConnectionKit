@@ -36,16 +36,16 @@ extern const int kDesignThumbHeight;
 	NSUInteger _variationIndex;
 }
 
-@property (copy) NSImage *thumbnail;
-@property  CGImageRef thumbnailCG;
+@property (nonatomic, copy) NSImage *thumbnail;
+@property (nonatomic) CGImageRef thumbnailCG;
 @property (nonatomic, copy) NSSet *resourceFileURLs;
-@property (retain) KTDesign *familyPrototype;
-@property (retain) KTDesignFamily *family;
-@property (retain) NSMutableDictionary *thumbnails;
-@property  BOOL fontsLoaded;
-@property  (assign, getter=isContracted) BOOL contracted;
-@property  NSUInteger imageVersion;
-@property  NSUInteger variationIndex;
+@property (nonatomic, retain) KTDesign *familyPrototype;
+@property (nonatomic, retain) KTDesignFamily *family;
+@property (nonatomic, retain) NSMutableDictionary *thumbnails;
+@property (nonatomic) BOOL fontsLoaded;
+@property (nonatomic, assign, getter=isContracted) BOOL contracted;
+@property (nonatomic) NSUInteger imageVersion;
+@property (nonatomic) NSUInteger variationIndex;
 
 + (NSArray *)reorganizeDesigns:(NSArray *)designs familyRanges:(NSArray **)outRanges;
 - (NSString *)parentBundleIdentifier;

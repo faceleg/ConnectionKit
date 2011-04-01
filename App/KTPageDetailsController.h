@@ -79,11 +79,11 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 	
 }
 
-@property (retain) NSTrackingArea *windowTitleTrackingArea;
-@property (retain) NSTrackingArea *metaDescriptionTrackingArea;
-@property (retain) NSTrackingArea *externalURLTrackingArea;
-@property (retain) NSTrackingArea *fileNameTrackingArea;
-@property (retain) NSTrackingArea *mediaFilenameTrackingArea;
+@property (nonatomic, retain) NSTrackingArea *windowTitleTrackingArea;
+@property (nonatomic, retain) NSTrackingArea *metaDescriptionTrackingArea;
+@property (nonatomic, retain) NSTrackingArea *externalURLTrackingArea;
+@property (nonatomic, retain) NSTrackingArea *fileNameTrackingArea;
+@property (nonatomic, retain) NSTrackingArea *mediaFilenameTrackingArea;
 
 @property(nonatomic, retain) IBOutlet SVWebContentAreaController *webContentAreaController;
 
@@ -101,12 +101,12 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 - (NSNumber *)windowTitleCount;
 - (NSNumber *)fileNameCount;
 
-@property (retain) 	NSDictionary *initialWindowTitleBindingOptions;
-@property (retain) 	NSDictionary *initialMetaDescriptionBindingOptions;
+@property (nonatomic, retain) 	NSDictionary *initialWindowTitleBindingOptions;
+@property (nonatomic, retain) 	NSDictionary *initialMetaDescriptionBindingOptions;
 
-@property (retain) NSTextField *activeTextField;
-@property (retain) MAAttachedWindow *attachedWindow;
+@property (nonatomic, retain) NSTextField *activeTextField;
+@property (nonatomic, retain) MAAttachedWindow *attachedWindow;
 
-@property (assign) int whatKindOfItemsAreSelected;
+@property (nonatomic, assign) int whatKindOfItemsAreSelected;
 
 @end

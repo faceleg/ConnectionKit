@@ -33,7 +33,7 @@
 
 
 @property(nonatomic, copy) NSString *flashvars;	// http://kb2.adobe.com/cps/164/tn_16417.html
-@property  BOOL showMenu;
+@property (nonatomic) BOOL showMenu;
 
 @end
 

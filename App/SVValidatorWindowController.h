@@ -18,7 +18,7 @@
 
 typedef enum { kNonSandvoxHTMLPage, kSandvoxPage, kSandvoxFragment } PageValidationType;
 
-@property (copy) NSString *validationReportString;
+@property (nonatomic, copy) NSString *validationReportString;
 
 
 - (BOOL) validatePage:(KTPage *)page
