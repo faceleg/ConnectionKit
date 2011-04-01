@@ -1863,6 +1863,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 {
 	LOG((@"%s",__FUNCTION__));
 	[self setSelectedDOMRange:nil affinity:NSSelectionAffinityUpstream];
+	[[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeSelectionNotification object:self.webView];
 }
 
 #pragma mark WebPolicyDelegate
