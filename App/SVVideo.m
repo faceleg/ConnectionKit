@@ -210,8 +210,6 @@
 	}
 	if (videoURL)		// just in case we got cleared out from switching to an audio
 	{
-		LOG((@"%s       %@",__FUNCTION__, videoURL));
-
 		// Rebuild URL by substituting in path. Create a FAKE URL for a synthesized thumbnail.
 		NSString *newPath = [[[videoURL path] stringByDeletingPathExtension] stringByAppendingString:@".jpg"];
 		
@@ -231,8 +229,6 @@
 
 - (void)getQuickLookForFileURL:(NSURL *)fileURL		// CALLED FROM OPERATION
 {
-	LOG((@"%s %@",__FUNCTION__, fileURL));
-
 	OBASSERT(![NSThread isMainThread]);
 	OBPRECONDITION(fileURL);
 	NSData *jpegData = nil;
@@ -264,12 +260,21 @@
 	{
 		NSURL *mediaURL = [media fileURL];
 		OBASSERT(mediaURL);
-		NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
-																				selector:@selector(getQuickLookForFileURL:)
-																				  object:mediaURL];
-		
-		[[[self class] sharedQuickLookQueue] addOperation:operation];
-        [operation release];
+		if ([[NSFileManager defaultManager] fileExistsAtPath:[mediaURL path]])
+		{
+			// Only try to get thumbnail if the file can actually be found
+			NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
+																					selector:@selector(getQuickLookForFileURL:)
+																					  object:mediaURL];
+			
+			[[[self class] sharedQuickLookQueue] addOperation:operation];
+			[operation release];
+		}
+		else
+		{
+			NSLog(@"Not able to create thumbnail for file at '%@' since it cannot be found", [mediaURL path]);
+		}
+
 	}
 }
 
