@@ -200,7 +200,8 @@
             
             if ( oldURLString )
             {
-                NSURL *url = [NSURL URLWithString:oldURLString];
+                NSString *encodedString = [oldURLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                NSURL *url = [NSURL URLWithString:encodedString];
                 [newLink setObject:url forKey:@"url"];
             }
             
