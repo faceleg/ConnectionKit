@@ -1473,7 +1473,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         [self startElement:@"div" attributes:attrs];
         
         NSString *buttonTitle = NSLocalizedString(@"Generate Feed", "");
-        [self writeHTMLFormat:@"<center><button onclick=\"window.location = 'x-sandvox-rssfeed-activate:%@';\">%@</button></center>", [page uniqueID], buttonTitle];
+        [self writeHTMLFormat:@"<center><button onclick=\"window.location = 'x-sandvox-rssfeed-activate:%@';\">%@</button></center>", [(SVSiteItem *)page identifier], buttonTitle];
         [self endElement]; // </div>
         
         return NO;
