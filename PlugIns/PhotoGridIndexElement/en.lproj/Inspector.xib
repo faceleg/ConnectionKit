@@ -227,12 +227,12 @@
 							<object class="NSTextField" id="11480484">
 								<reference key="NSNextResponder" ref="361331653"/>
 								<int key="NSvFlags">268</int>
-								<string key="NSFrame">{{-3, 22}, {40, 14}}</string>
+								<string key="NSFrame">{{45, 1}, {40, 14}}</string>
 								<reference key="NSSuperview" ref="361331653"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSTextFieldCell" key="NSCell" id="975631762">
 									<int key="NSCellFlags">68288064</int>
-									<int key="NSCellFlags2">4326400</int>
+									<int key="NSCellFlags2">138544128</int>
 									<string key="NSContents">Speed</string>
 									<reference key="NSSupport" ref="26"/>
 									<reference key="NSControlView" ref="11480484"/>
@@ -256,7 +256,7 @@
 							<object class="NSSlider" id="1064813887">
 								<reference key="NSNextResponder" ref="361331653"/>
 								<int key="NSvFlags">266</int>
-								<string key="NSFrameSize">{131, 18}</string>
+								<string key="NSFrame">{{0, 16}, {131, 18}}</string>
 								<reference key="NSSuperview" ref="361331653"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSSliderCell" key="NSCell" id="633053453">
@@ -319,11 +319,11 @@
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<object class="NSCustomResource" key="NSOnImage" id="1063738420">
+										<object class="NSCustomResource" key="NSOnImage" id="760647572">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">NSMenuCheckmark</string>
 										</object>
-										<object class="NSCustomResource" key="NSMixedImage" id="1046904564">
+										<object class="NSCustomResource" key="NSMixedImage" id="567653146">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">NSMenuMixedState</string>
 										</object>
@@ -342,8 +342,8 @@
 												<string key="NSKeyEquiv"/>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="1063738420"/>
-												<reference key="NSMixedImage" ref="1046904564"/>
+												<reference key="NSOnImage" ref="760647572"/>
+												<reference key="NSMixedImage" ref="567653146"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<int key="NSTag">1</int>
 												<reference key="NSTarget" ref="965888276"/>
@@ -354,8 +354,8 @@
 												<string key="NSKeyEquiv"/>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="1063738420"/>
-												<reference key="NSMixedImage" ref="1046904564"/>
+												<reference key="NSOnImage" ref="760647572"/>
+												<reference key="NSMixedImage" ref="567653146"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<int key="NSTag">2</int>
 												<reference key="NSTarget" ref="965888276"/>
@@ -397,8 +397,8 @@
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
 										<int key="NSState">1</int>
-										<reference key="NSOnImage" ref="1063738420"/>
-										<reference key="NSMixedImage" ref="1046904564"/>
+										<reference key="NSOnImage" ref="760647572"/>
+										<reference key="NSMixedImage" ref="567653146"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<int key="NSTag">1</int>
 										<reference key="NSTarget" ref="890931918"/>
@@ -414,8 +414,8 @@
 												<string key="NSKeyEquiv"/>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="1063738420"/>
-												<reference key="NSMixedImage" ref="1046904564"/>
+												<reference key="NSOnImage" ref="760647572"/>
+												<reference key="NSMixedImage" ref="567653146"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<reference key="NSTarget" ref="890931918"/>
 											</object>
@@ -426,8 +426,8 @@
 												<string key="NSKeyEquiv"/>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="1063738420"/>
-												<reference key="NSMixedImage" ref="1046904564"/>
+												<reference key="NSOnImage" ref="760647572"/>
+												<reference key="NSMixedImage" ref="567653146"/>
 												<string key="NSAction">_popUpItemAction:</string>
 												<int key="NSTag">2</int>
 												<reference key="NSTarget" ref="890931918"/>
@@ -894,7 +894,7 @@
 						<string key="label">enabled: inspectedObjectsController.selection.useColorBox</string>
 						<reference key="source" ref="1064813887"/>
 						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="1004081007">
+						<object class="NSNibBindingConnector" key="connector" id="265723664">
 							<reference key="NSSource" ref="1064813887"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">enabled: inspectedObjectsController.selection.useColorBox</string>
@@ -937,7 +937,7 @@
 								<string key="NS.key.0">NSValueTransformerName</string>
 								<string key="NS.object.0">NSNegateBoolean</string>
 							</object>
-							<reference key="NSPreviousConnector" ref="1004081007"/>
+							<reference key="NSPreviousConnector" ref="265723664"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
@@ -948,7 +948,7 @@
 						<string key="label">enabled: inspectedObjectsController.selection.useColorBox</string>
 						<reference key="source" ref="11480484"/>
 						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector" id="624033664">
+						<object class="NSNibBindingConnector" key="connector" id="236196625">
 							<reference key="NSSource" ref="11480484"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">enabled: inspectedObjectsController.selection.useColorBox</string>
@@ -991,7 +991,7 @@
 								<string key="NS.key.0">NSValueTransformerName</string>
 								<string key="NS.object.0">NSNegateBoolean</string>
 							</object>
-							<reference key="NSPreviousConnector" ref="624033664"/>
+							<reference key="NSPreviousConnector" ref="236196625"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
@@ -1113,8 +1113,8 @@
 							<reference ref="974426840"/>
 							<reference ref="270821824"/>
 							<reference ref="501850727"/>
-							<reference ref="11480484"/>
 							<reference ref="1064813887"/>
+							<reference ref="11480484"/>
 						</object>
 						<reference key="parent" ref="1005"/>
 					</object>
@@ -1460,7 +1460,7 @@
 					<string>KSLabel</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABBEAAAweAAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABCNAAAwUAAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
